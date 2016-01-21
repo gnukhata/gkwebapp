@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>GNUKhata</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="create_user.css">
+    <link rel="stylesheet" href="lib/css/bootstrap/dist/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="lib/css/bootstrap/dist/js/bootstrap.min.js"></script>
+  </head>
+  <body class="create-user">
+
+    <div class="container">
+      <div class="text-center"><h2>Create New User</h2></div>
+      <form name="myForm" class="form-horizontal" role="form">
+        <div class="form-group">
+          <label class="control-label col-xs-4" for="username">User Name:</label>
+          <div class="col-xs-6">          
+            <input type="text" name="fname" class="form-control" id="grp">
+          </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-4" for="pwd">Password:</label>
+            <div class="col-xs-6">
+              <input type="password" name="fpass" class="form-control" id="pwd">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-4" for="pwd">Confirm Password:</label>
+            <div class="col-xs-6">
+              <input type="password" name="cpass" class="form-control" id="pwd">
+            </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-xs-4" for="role">Select Role:</label>
+          <div class="col-xs-8">
+            <select class="select2" id="GroupForms" name="filter">
+              <option value="closing_stock">Manager</option>
+              <option value="closing_stock">Operator</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-xs-4" for="acc">Security Question:</label>
+          <div class="col-xs-8">
+            <select class="select2" id="GroupForms" name="filter">
+              <option value="que1">What is your Birth Date?</option>
+              <option value="que2">Which is your Favourite fruit?</option>
+              <option value="que3">What is your Lucky Number?</option>
+              <option value="que4">Which is your First Phone Number?</option>
+	      <option value="que5">Which is your First Pet Animal?</option>
+	      <option value="que6">What is your Mother's First Name?</option>
+	      <option value="que7">Which is your Favourite Dish?</option>
+	      <option value="que8">Which is your Favourite Color?</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-xs-4" for="answer">Answer:</label>
+          <div class="col-xs-6">          
+            <input type="text" name="fansw" class="form-control" id="grp">
+          </div>
+        </div>
+        <div class="form-group">        
+          <div class="row">
+            <div class="text-center">
+              <button type="button" onclick="return validateForm()" class="btn btn-primary btn-lg">Save</button>
+              <button type="button" class="btn btn-danger btn-lg">Cancel</button>
+            </div>
+          </div>
+        </div>
+        <script>
+          function validateForm() 
+          {
+              var x = document.forms["myForm"]["fname"].value;
+              if (x == null || x == "") 
+              {
+                  alert("Please Enter User Name");
+                  return false;
+              }
+              var y = document.forms["myForm"]["fpass"].value;
+              if (y == null || y == "") 
+              {
+                  alert("Please Enter Password");
+                  return false;
+              }
+              var z = document.forms["myForm"]["cpass"].value;
+              if (z == null || z == "" || z != y) 
+              {
+                  alert("Password Does not Match");
+                  return false;
+              }
+              var p = document.forms["myForm"]["fansw"].value;
+              if (p == null || p == "") 
+              {
+                  alert("Please Enter the Answer");
+                  return false;
+              }
+          }   
+        </script>
+      </form>
+    </div>
+
+  </body>
+</html>
