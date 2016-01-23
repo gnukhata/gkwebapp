@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Account Creation Form</title>
+	<link rel="stylesheet" href="../../lib/css/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="account/css/account_creation_style.css">
+	 
+<style>
+ 
+</style>      
+   
+</head>
+<body>
+    
+                  
+                <form action="account_creation" id="" method="post">
+                
+                <div class="well span9" align="center">       
+                <h1><b>Account Creation</b></h1>
+                </div>
+                 
+        <div class="container-fluid">
+         
+        <div  class="col-md-12" >
+		             
+       
+<div class="well span9">
+ 
+
+        
+    <div id="group_name" class="form-group"> 
+         <label for="group_name" class="control-label col-md-12 requiredField">
+                Group Name : <span class="asteriskField">*</span> </label><div class="controls col-md-12"> 
+	<select name="group_name">
+	    <option hidden="true">----Please select----</option>
+	    <option value="Corpus">Corpus</option>
+	    <option value="Direct_Income">Direct Income</option>
+	    <option value="Direct_Expense">Direct Expense</option>
+	    <option value="Indirect_Expense">Indirect Expense</option>
+	    <option value="Indirect_Income">Indirect Income</option>
+       <option value="Current Assets">Current Assets</option>
+       <option value="Fixed_Assets">Fixed Assets</option>
+       <option value="Investments">Investments</option>
+	    <option value="Current_Liability">Current Liability</option>
+	    <option value="Loans_Asset">Loans(Asset)</option>
+	    <option value="Loans_Liability">Loans(Liability)</option>
+	    <option value="Miscellaneous_Expenses_Asset">Miscellaneous Expenses(Asset)</option>
+	    <option value="Reserves">Reserves</option>
+	</select>  
+   </div>
+    
+    
+	   <div id="subgroup_name" class="form-group"> 
+         <label for="subgroup_name" class="control-label col-md-12 requiredField">
+                Sub-group Name : <span class="asteriskField">*</span> </label><div class="controls col-md-12"> 
+	 <select name="Subgroup_Name">
+	    <option hidden="true">----Please select----</option>
+	    <option value="Corpus">Corpus</option>
+	    <option value="Direct_Income">Direct Income</option>
+	    <option value="Direct_Expense">Direct Expense</option>
+	    <option value="Indirect_Expense">Indirect Expense</option>
+	    <option value="Indirect_Income">Indirect Income</option>
+       <option value="Current Assets">Current Assets</option>
+       <option value="Fixed_Assets">Fixed Assets</option>
+       <option value="Investments">Investments</option>
+	    <option value="Current_Liability">Current Liability</option>
+	    <option value="Loans_Asset">Loans(Asset)</option>
+	    <option value="Loans_Liability">Loans(Liability)</option>
+	    <option value="Miscellaneous_Expenses_Asset">Miscellaneous Expenses(Asset)</option>
+	    <option value="Reserves">Reserves</option>
+	</select> </div>
+	</div>
+ 
+           
+         <label> <input type="checkbox"> Create Multiple Accounts</label>
+   	   
+          
+          
+         <div id="account_name" class="form-group"> 
+         <label for="account_name" class="control-label col-md-12 requiredField">
+                Account Name : <span class="asteriskField">*</span> </label> 
+           <div class="controls col-md-12"><input  class="textinput textInput form-control" id="account_name"  name="account_name" type="text" />
+           </div> </div> 
+         
+         
+          <div id="opening_balance" class="form-group"> 
+         <label for="opening_balance" class="control-label col-md-12 requiredField">
+                Opening Balance : <span class="asteriskField">*</span> </label> 
+           <div class="controls col-md-12"><input  class="textinput textInput form-control" id="opening_balance"  name="opening_balance" type="text" placeholder="0.00"/>
+           </div> </div> 
+          
+			<div id="total_debit_opening_balance" class="form-group"> 
+         <label for="total_debit_opening_balance" class="control-label col-md-12 requiredField">
+               Total Debit Opening Balance : <span class="asteriskField"></span> </label> 
+           <div class="controls col-md-12"><input  class="textinput textInput form-control" id="total_debit_opening_balance"  name="total_debit_opening_balance" type="text" placeholder="0.00" />
+           </div> </div>          
+           
+         <div id="total_credit_opening_balance" class="form-group"> 
+         <label for="total_credit_opening_balance" class="control-label col-md-12 requiredField">
+               Total Credit Opening Balance : <span class="asteriskField"></span> </label> 
+           <div class="controls col-md-12"><input  class="textinput textInput form-control" id="total_credit_opening_balance"  name="total_credit_opening_balance" type="text" placeholder="0.00" />
+           </div> </div> 
+             
+         <div id="difference_in_opening_balance" class="form-group"> 
+         <label for="total_debit_opening_balance" class="control-label col-md-12 requiredField">
+               Difference in Opening Balance : <span class="asteriskField"></span> </label> 
+           <div class="controls col-md-12"><input  class="textinput textInput form-control" id="difference_in_opening_balance"  name="difference_in_opening_balance" type="text" placeholder="0.00" />
+           </div> </div>            
+         	
+         	
+         	
+ 		   <button type="submit" class="btn btn-primary" id="submit" name="submit">Submit</button>   
+        <button type="submit" class="btn btn-primary" id="reset" name="reset">Reset</button>
+        
+	 
+      </div>
+           
+     
+    </form>
+    </body>
+	</html>
