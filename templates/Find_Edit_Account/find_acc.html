@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>GNUKhata</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="edit_acc/css/edit_acc_style.css">
+    <link rel="stylesheet" href="../../lib/css/bootstrap/dist/css/bootstrap.min.css">
+  </head>
+  <body class="find-acc">
+
+    <div class="container">
+      <div class="text-center"><h2>Find Account</h2></div>
+      <form class="form-horizontal" role="form">
+        <div class="form-group">
+          <label class="control-label col-xs-2" for="acc">Account Name:</label>
+          <div class="col-xs-10">
+            <select class="select2" id="GroupForms" name="filter">
+              <option value="">Select an Account</option>
+              <option value="closing_stock">Closing Stock</option>
+              <option value="opening">Opening stock</option>
+              <option value="profit_loss">Profit & Loss</option>
+              <option value="stock">Stock at the Beginning</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-xs-2" for="grp">Group Name:</label>
+          <div class="col-xs-4">          
+            <input type="text" class="form-control" id="grp">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-xs-2" for="subgrp">Sub-Group Name:</label>
+          <div class="col-xs-4">          
+            <input type="text" class="form-control" id="subgrp">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-xs-2" for="acc">Account Name:</label>
+          <div class="col-xs-4">          
+            <input type="text" class="form-control" id="acc">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-xs-2" for="open">Opening Balance (₹):</label>
+          <div class="col-xs-4">          
+            <input type="text" class="form-control" id="open" placeholder="0.00">
+          </div>
+        </div><br><br><br>
+        <div class="form-group">        
+          <div class="row">
+            <div class="text-center">
+              <button type="button" class="btn btn-primary btn-lg">Edit</button>
+              <button type="button" class="btn btn-primary btn-lg">Confirm</button>
+              <button type="button" class="btn btn-danger btn-lg">Delete</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </body>
+</html>
