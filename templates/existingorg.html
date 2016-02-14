@@ -1,0 +1,140 @@
+
+
+<!DOCTYPE HTML >
+<html>
+<head>
+<link href="../lib/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="../lib/css/create_organisation_style.css" rel="stylesheet" type="text/css" />
+
+<style>
+#subbutton{margin-top:2%}
+</style>
+<script src="../lib/js/angular.min.js"></script>
+    <script>
+    var app = angular.module('myApp', []);
+    app.controller('getOrgs', function($scope, $http) {
+    $http.get('http://0.0.0.0:6543/organisations').
+        then(function(response) {
+            $scope.orgs = response.data;
+        });
+});
+    </script>
+
+</head>
+<body ng-app>
+
+    <div class="container">    
+        <div id="selectorg" style="margin-top:50px;" class="mainbox col-md-6 pull-right">                    
+            <div class="panel panel-info" >
+                    <div class="panel-heading">
+                        <div class="panel-title">Select Organisation</div>
+                        
+                    </div>     
+
+                    <div style="padding-top:30px" class="panel-body" >
+
+                       
+                            
+                        <form id="orgform" action="{{tg.url('loginAfterExistingForm')}}" class="form-horizontal" role="form">
+                                    
+                            <div ng-controller="getOrgs" style="margin-bottom: 25px" class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-th-list"></i></span>
+                                        <select class = "form-control" id="org-name"  name = "orgname" placeholder="Select Organisation">
+                                        	<option>Please Select</option>
+                                        	<option ng-repeat="x in orgs.orgname">{{x}}</option>
+                                        	
+                                        </select>                                        
+                                    </div>
+                                
+                            <div style="margin-bottom: 25px" class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-th-list"></i></span>
+                                         <select class = "form-control" id="finalyears" name="financialYear" placeholder="Select Financial Year">
+                                        	
+                                        	
+                                        </select> 
+                                    </div>
+                                    <div ng-app="myApp" ng-controller="getOrgs">
+                                    <h1>{{orgs.orgname}}</h1>
+                                    </div>
+
+                                
+                            
+
+
+                                <div style="margin-top:10px" class="form-group">
+                                    <!-- Button -->
+
+                                    <div class="col-sm-12 controls">
+                                      <button class="btn btn-success "><span class="glyphicon glyphicon-arrow-right"></span>Next</button>
+
+                                    </div>
+                                </div>
+  
+                            </form>     
+
+
+
+                        </div>                     
+                    </div>  
+                     
+        </div>
+       
+                                    
+                             
+           
+    </div>
+ <hr />    
+<script src="../lib/js/jquery-2.2.0.min.js"></script>
+    <script src="../lib/js/bootstrap.min.js"></script>
+    
+    
+    <script>
+    $(document).ready(function()
+    {
+    $("#org-name").bind("change keyup", function(){
+    //alert("click happened with selection " + $("#org-name option:selected").text());
+    var org = $("#org-name option:selected").val(); 
+    $.ajax({
+            type: "POST",
+        url: "{{ tg.url('/getFinancialYears') }}",
+        data: {"orgname": org},  
+        
+         global: false,
+        async: false,
+        dataType: "json",
+        success: function(jsonObj) {
+            //alert(jsonObj["years"]),
+         	ListofYears = jsonObj["years"],
+         	//alert(ListofYears),
+         	$('#finalyears').empty();
+            for (i in ListofYears ) {
+            $('#finalyears').append('<option value="' + ListofYears[i] + '">' + ListofYears[i][0]+" to "+ListofYears[i][1] + '</option>');
+        }
+            }
+    
+    });
+    });
+    $( "option:contains('(NGO)')" ).css( "color", "green");
+	$( "option:contains('(Profit Making)')" ).css( "color", "blue" );
+	$('#org-name').css('color','black');
+   $("#org-name").bind("change keyup", function() {
+      var current = $('#org-name option:selected').text();
+
+      if (current.indexOf('(NGO)')==-1) {
+          $('#org-name').css('color','blue');
+      } else {
+          $('#org-name').css('color','green');
+      }
+      if(current=="Please Select")
+      {
+      	$('#org-name').css('color','black');
+      }
+   }); 
+    return false;
+    });
+    
+    </script>
+</body>
+
+</html>
+
