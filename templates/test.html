@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="../lib/js/angular.min.js"></script>
 <body>
 
 <div ng-app="myApp" ng-controller="customersCtrl"> 
@@ -15,9 +15,11 @@
 
 <script>
 var app = angular.module('myApp', []);
+
 app.controller('customersCtrl', function($scope, $http) {
-  $http.get("http://0.0.0.0:6543/organisations").then(function (response) {
-      $scope.myData = response.data.orgs;
+  
+  $http.get("http://127.0.0.1:6543/organisations").then(function (response) {
+      $scope.myData = response.data;
   });
 });
 </script>
@@ -25,4 +27,49 @@ app.controller('customersCtrl', function($scope, $http) {
 </body>
 </html>
 
+<!--    <script>
+    $(document).ready(function()
+    {
+    $("#org-name").bind("change keyup", function(){
+    //alert("click happened with selection " + $("#org-name option:selected").text());
+    var org = $("#org-name option:selected").val(); 
+    $.ajax({
+            type: "POST",
+        url: "{{ tg.url('/getFinancialYears') }}",
+        data: {"orgname": org},  
+        
+         global: false,
+        async: false,
+        dataType: "json",
+        success: function(jsonObj) {
+            //alert(jsonObj["years"]),
+         	ListofYears = jsonObj["years"],
+         	//alert(ListofYears),
+         	$('#finalyears').empty();
+            for (i in ListofYears ) {
+            $('#finalyears').append('<option value="' + ListofYears[i] + '">' + ListofYears[i][0]+" to "+ListofYears[i][1] + '</option>');
+        }
+            }
+    
+    });
+    });
+    $( "option:contains('(NGO)')" ).css( "color", "green");
+	$( "option:contains('(Profit Making)')" ).css( "color", "blue" );
+	$('#org-name').css('color','black');
+   $("#org-name").bind("change keyup", function() {
+      var current = $('#org-name option:selected').text();
 
+      if (current.indexOf('(NGO)')==-1) {
+          $('#org-name').css('color','blue');
+      } else {
+          $('#org-name').css('color','green');
+      }
+      if(current=="Please Select")
+      {
+      	$('#org-name').css('color','black');
+      }
+   }); 
+    return false;
+    });
+    
+    </script> -->
