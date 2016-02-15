@@ -1,0 +1,99 @@
+
+<!DOCTYPE HTML >
+<html>
+
+<head>
+<link href="../lib/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="../lib/css/create_organisation_style.css" rel="stylesheet" type="text/css" />
+<script src="../lib/js/angular.min.js"></script>
+<style>
+#subbutton{margin-top:2%}
+</style>
+    
+
+</head>
+<body ng-app = "myApp" ng-controller="getOrgs">
+
+    <div class="container">    
+        <div id="selectorg" style="margin-top:50px;" class="mainbox col-md-6 pull-right">                    
+            <div class="panel panel-info" >
+                    <div class="panel-heading">
+                        <div class="panel-title">Select Organisation</div>
+                        
+                    </div>     
+
+                    <div style="padding-top:30px" class="panel-body" >
+
+                       
+                            
+                        <form id="orgform" class="form-horizontal" role="form">
+                                    
+                            <div style="margin-bottom: 25px" class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-th-list"></i></span>
+                                        <select ng-model="selected" class = "form-control" id="org-name"  name = "orgname" placeholder="Select Organisation" ng-options="x as x.orgname+' , '+ x.orgtype for x in myData" ng-change="getDetails()">
+                                        	
+                                        	
+                                        	
+                                        </select> 
+                                                                              
+                                    </div>
+                                
+                            <div style="margin-bottom: 25px" class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-th-list"></i></span>
+                                         <select class = "form-control" id="finalyears" name="financialYear" placeholder="Select Financial Year">
+                                        	<option ng-repeat="x in years" value="{{x.orgcode}}">{{x.yearstart + ' , ' + x.yearend}}</option>
+                                        	
+                                        </select> 
+                                    </div>
+                                    
+
+
+                                <div style="margin-top:10px" class="form-group">
+                                    <!-- Button -->
+
+                                    <div class="col-sm-12 controls">
+                                      <button class="btn btn-success "><span class="glyphicon glyphicon-arrow-right"></span>Next</button>
+
+                                    </div>
+                                </div>
+  
+                            </form>     
+
+
+
+                        </div>                     
+                    </div>  
+                     
+        </div>
+       
+                                    
+                             
+           
+    </div>
+ <hr />    
+<script src="../lib/js/jquery-2.2.0.min.js"></script>
+    <script src="../lib/js/bootstrap.min.js"></script>
+    
+    <script>
+var app = angular.module('myApp', []);
+
+app.controller('getOrgs', function($scope, $http) {
+  
+  $http.get("http://127.0.0.1:6543/organisations").then(function (response) {
+      $scope.myData = response.data;
+      $scope.getDetails = function(){
+      	$http.get("http://127.0.0.1:6543/orgyears/"+$scope.selected.orgname+"/"+$scope.selected.orgtype).then(function(response)
+      	{
+      		$scope.years = response.data;
+      	});
+      }
+  });
+});
+
+
+</script>
+
+</body>
+
+</html>
+
