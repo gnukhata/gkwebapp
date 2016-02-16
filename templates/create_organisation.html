@@ -3,7 +3,7 @@
 <head>
 <link href="../lib/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="../lib/css/create_organisation_style.css" rel="stylesheet" type="text/css" />
-
+<script src="../lib/js/angular.min.js"></script>
 <style>
 .content{ margin-top:4%
 }
@@ -12,10 +12,10 @@
 
 
 </head>
-<body>
+<body ng-app="Orgs">
 
 
-<div class="container">
+<div class="container" ng-controller="postOrgs">
 	<div class="row clearfix">
 		<div class="col-md-6 column">
 		</div>
@@ -27,59 +27,78 @@
                     </div>    
                      <div style="padding-top:30px" class="panel-body" >
 		
-			<form method="get" action="{{tg.url('orgdetail')}}" role="form">
+			<form ng-submit="create()">
 				<div class="form-group">
-					 <label for="orgName">Organisation Name</label><input name="orgname" class="form-control" placeholder="Enter Organisation Name" id="orgName" type="text" data-validation-required-message="Please Enter Organisation Name" />
+					 <label for="orgName">Organisation Name</label>
+					 <input name="orgname" class="form-control" ng-model="name" placeholder="Enter Organisation Name" id="orgName" type="text" data-validation-required-message="Please Enter Organisation Name" />
 				</div>
 				<div class="form-group">
-					 <label for="orgType">Organisation Type</label><select name="orgtype" class="form-control" id="orgType" data-validation-required-message="Please select Organisation Type">
+					 <label for="orgCase">Case</label>
+					 <select name="orgcase" class="form-control" id="orgCase">
+					 <option value="As-Is">As-is</option>
+					 <option value="Upper Case">Upper Case</option>
+					 <option value="Lower Case">Lower Case</option>
+					 </select>
+				</div>
+				<div class="form-group">
+					 <label for="orgType">Organisation Type</label>
+					 <select name="orgtype" class="form-control" ng-model="type" id="orgType" data-validation-required-message="Please select Organisation Type">
 					 <option value="Profit Making">Profit Making</option>
-					 <option value="NGO">NGO</option>
+					 <option value="Not For Profit">Not For Profit</option>
 					 </select>
 				</div>
 				<div class="form-group">
            <label for="Fdate">Financial Year:</label>
           
               <div class="form-inline">
-              <div class="form-group">
+                     
+                      <div class="form-group">
                           
-                         <label class="sr-only" for="txt_day">Enter Day</label> 
-                         <input type="text" id="txt_fromday" name="from_day" class="form-control" style="width:60px"  placeholder="DD" required maxlength="2" data-validation-required-message="Day is required" >
+                         <label class="sr-only" for="txt_day">Enter From Day</label> 
+                         <input type="text" ng-model="fday" id="txt_fromday" name="from_day" class="form-control" style="width:60px"  placeholder="DD" >
                          
                       </div>
+                     
+                                    
                       <div class="form-group ">
                          
-                        <label class="sr-only" for="txt_month">Enter Month</label> 
-                        <input type="text" id="txt_frommonth" name="from_month" class="form-control" style="width:60px"  placeholder="MM" required maxlength="2" data-validation-required-message="Month is required" >
+                        <label class="sr-only" for="txt_month">Enter From Month</label> 
+                        <input type="text" ng-model="fmonth" id="txt_frommonth" name="from_month" class="form-control" style="width:60px"  placeholder="MM" >
                         
                       </div>
                       
                       <div class="form-group">
                         
-                          <label class="sr-only" for="txt_year">Enter Year</label> 
-                          <input type="text" id="txt_fromyear" name="from_year" class="form-control" style="width:60px"  placeholder="YY" required maxlength="4" data-validation-required-message="Year is required" >
+                          <label class="sr-only" for="txt_year">Enter From Year</label> 
+                          <input type="text" ng-model="fyear" id="txt_fromyear" name="from_year" class="form-control" style="width:65px"  placeholder="YYYY"  >
                        
                       </div>
+                                          
+                                           
                       <div class="form-group"><label>--To--</label></div>
-                      <div class="form-group">
+                     
+                     <div class="form-group">
                           
-                         <label class="sr-only" for="txt_day">Enter Day</label> 
-                         <input type="text" id="txt_today" name="to_day" class="form-control" style="width:60px"  placeholder="DD" required maxlength="2" data-validation-required-message="Day is required" >
+                         <label class="sr-only" for="txt_day">Enter To Day</label> 
+                         <input type="text" ng-model="tday" id="txt_today" name="to_day" class="form-control" style="width:60px"  placeholder="DD" >
                          
-                      </div>
-                      <div class="form-group ">
-                         
-                        <label class="sr-only" for="txt_month">Enter Month</label> 
-                        <input type="text" id="txt_tomonth" name="to_month" class="form-control" style="width:60px"  placeholder="MM" required maxlength="2" data-validation-required-message="Month is required" >
-                        
                       </div>
                       
+                      <div class="form-group ">
+                         
+                        <label class="sr-only" for="txt_month">Enter To Month</label> 
+                        <input type="text" ng-model="tmonth" id="txt_tomonth" name="to_month" class="form-control" style="width:60px"  placeholder="MM"  >
+                        
+                      </div>
+                     
                       <div class="form-group">
                         
-                          <label class="sr-only" for="txt_year">Enter Year</label> 
-                          <input type="text" id="txt_toyear" name="to_year" class="form-control" style="width:60px"  placeholder="YY" required maxlength="4" data-validation-required-message="Year is required" >
+                          <label class="sr-only" for="txt_year">Enter To Year</label> 
+                          <input type="text" ng-model="tyear" id="txt_toyear" name="to_year" class="form-control" style="width:65px"  placeholder="YYYY"  >
                        
                       </div>
+                                          
+                      
                  </div>
                  <br />
                  <div style="margin-top:10px" class="form-group">
@@ -92,16 +111,34 @@
                                     
                                 </div>
           
-			</form>
+	</form>		
 		
 		</div>
 		</div>
+		<h1> {{name}} , {{type}}, {{fday}}</h1>
 		</div>
 	</div>
 </div>
 
 <script src="../lib/js/jquery-2.2.0.min.js"></script>
     <script src="../lib/js/bootstrap.min.js"></script>
+  <script>
+  var app = angular.module('Orgs', []);
+  app.controller('postOrgs', function($scope, $http) {
+  
+  $scope.create = function(){
+  var fdate = $scope.fyear + '-' + $scope.fmonth + '-'+ $scope.fday;
+  var tdate = $scope.tyear + '-' + $scope.tmonth + '-'+ $scope.tday;
+  var orgdetails = {orgname:$scope.name, orgtype:$scope.type, yearstart:fdate, yearend:tdate};
+  var config = {headers :{'Content-type': undefined}}
+  $http.post("http://127.0.0.1:6543/organisations",orgdetails, config).then(function(response)
+      	{
+      		alert(response.data);
+      	});
+      };
+  });
+  
+  </script>
   <script>
   	$('input:text:first,select').focus();
     
