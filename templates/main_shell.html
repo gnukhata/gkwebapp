@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app="main_shell">
+<head>
+<meta charset="utf-8" />
+<title>Main Shell</title>
+<link href="../lib/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="../lib/css/main_shell_style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body ng-app="main_shell" ng-controller="shellcontroller" ui-keypress="{enter:'keypresscount()'}">
+<div class="container">
+		<div id="toolbar" ng-hide="hide()">
+			<ul class="nav">
+				<li><a href="#">Create/Edit Account: F2</a></li>
+				<li><a href="#">List of Accounts: CTRL + L</a></li>
+				<li><a href="#">Ledger: F3</a></li>
+				<li><a href="#">Contra: F4</a></li>
+				<li><a href="#">Payment: F5</a></li>
+				<li><a href="#">Receipt: F6</a></li>
+				<li><a href="#">Journal: F7</a></li>
+				<li><a href="#">Sales: F8</a></li>
+				<li><a href="#">Purchase: F9</a></li>
+				<li><a href="#">Credit Note: CTRL + F2</a></li>
+				<li><a href="#">Debit Note: CTRL +F3</a></li>
+				<li><a href="#">Sales Return: CTRL+F4</a></li>
+				<li><a href="#">Purchase Return: CTRL+F5</a></li>
+				<li><a href="#">Trial Balance: CTRL+F7</a></li>
+				<li><a href="#">Income & Expenditure : CTRL+F8</a></li>
+				<li><a href="#">Statement of Affairs: CTRL+F9</a></li>
+				<li><a href="#">Cash Flow: CTRL+F10</a></li>
+				<li><a href="#">Project Statement: CTRL+F11</a></li>
+				<li><a href="#">Bank Reconciliation Statement: F12</a></li>
+				<li><a href="#">Project: CTRL+P</a></li>
+				<li><a href="#">Find Voucher: CTRL+F</a></li>
+				<li><a href="#">Logout: CTRL+G</a></li>
+				<li><a href="#">Change Organisation: CTRL+H</a></li>
+				<li><a href="#">Quit: CTRL+Q</a></li>
+			</ul>
+			</div>
+	<div class="row">
+		<h1>GNUKhata</h1>
+		<h3>A Free And Open Source Accounting Software<h3>
+		<p class="organisation"><b>BATU</b></p>
+		<p class="financial_year"><b>From Financial Year 2015-16</b></p>
+	</div>
+</div>
+<script src="../lib/js/angular.min.js"></script>
+<script src="../lib/js/angular-ui.min.js"></script>
+<script>
+var app = angular.module('main_shell', ['ui.directives']);
+app.controller('shellcontroller', function($scope) {
+    $scope.count=0;
+    $scope.flag =0;
+    $scope.fullName = function() {
+        return $scope.count;
+    };
+    $scope.hide = function() {
+		$scope.flag = $scope.count%2;
+        return $scope.flag;
+    };    
+    $scope.keypresscount = function () {
+    $scope.count = $scope.count+1;
+  };
+});
+</script>
+</body>
+</html>
