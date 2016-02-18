@@ -73,3 +73,20 @@ app.controller('customersCtrl', function($scope, $http) {
     });
     
     </script> -->
+<!--    <script>
+  	$('input:text:first,select').focus();
+    
+$('input:text,select').bind("keydown", function(e) {
+   var n = $("input:text,select").length;
+   var f = $('input:text,select'); 
+   if (e.which == 13) 
+   { 
+    
+     var nextIndex = f.index(this) + 1;
+     if(nextIndex < n){
+      e.preventDefault();
+       f[nextIndex].focus();}
+     
+   }
+});
+  </script> -->

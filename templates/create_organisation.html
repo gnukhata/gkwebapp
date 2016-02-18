@@ -115,45 +115,13 @@
 		
 		</div>
 		</div>
-		<h1> {{name}} , {{type}}, {{fday}}</h1>
+		
 		</div>
 	</div>
 </div>
 
 <script src="../lib/js/jquery-2.2.0.min.js"></script>
     <script src="../lib/js/bootstrap.min.js"></script>
-  <script>
-  var app = angular.module('Orgs', []);
-  app.controller('postOrgs', function($scope, $http) {
+  <script src="../controller/organisationcontroller.js"></script>
   
-  $scope.create = function(){
-  var fdate = $scope.fyear + '-' + $scope.fmonth + '-'+ $scope.fday;
-  var tdate = $scope.tyear + '-' + $scope.tmonth + '-'+ $scope.tday;
-  var orgdetails = {orgname:$scope.name, orgtype:$scope.type, yearstart:fdate, yearend:tdate};
-  var config = {headers :{'Content-type': undefined}}
-  $http.post("http://127.0.0.1:6543/organisations",orgdetails, config).then(function(response)
-      	{
-      		alert(response.data);
-      	});
-      };
-  });
-  
-  </script>
-  <script>
-  	$('input:text:first,select').focus();
-    
-$('input:text,select').bind("keydown", function(e) {
-   var n = $("input:text,select").length;
-   var f = $('input:text,select'); 
-   if (e.which == 13) 
-   { 
-    
-     var nextIndex = f.index(this) + 1;
-     if(nextIndex < n){
-      e.preventDefault();
-       f[nextIndex].focus();}
-     
-   }
-});
-  </script>
 </body>
