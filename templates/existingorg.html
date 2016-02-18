@@ -12,7 +12,7 @@
     
 
 </head>
-<body ng-app = "myApp" ng-controller="getOrgs">
+<body ng-app = "existingorg" ng-controller="getOrgs">
 
     <div class="container">    
         <div id="selectorg" style="margin-top:50px;" class="mainbox col-md-6 pull-right">                    
@@ -74,25 +74,7 @@
 <script src="../lib/js/jquery-2.2.0.min.js"></script>
     <script src="../lib/js/bootstrap.min.js"></script>
     
-    <script>
-var app = angular.module('myApp', []);
-
-app.controller('getOrgs', function($scope, $http) {
-  
-  $http.get("http://127.0.0.1:6543/organisations").then(function (response) {
-      $scope.myData = response.data;
-      $scope.getDetails = function(){
-      	$http.get("http://127.0.0.1:6543/orgyears/"+$scope.selected.orgname+"/"+$scope.selected.orgtype).then(function(response)
-      	{
-      		$scope.years = response.data;
-      	});
-      }
-  });
-});
-
-
-</script>
-
+<script src="../controller/organisationcontroller.js"></script>
 </body>
 
 </html>
