@@ -1,9 +1,25 @@
 /**
  * 
  */
+  var orgs = angular.module('orgs', ['ngRoute'])
+  orgs.config([
+    '$routeProvider', function($routeProvider) {
+      $routeProvider.when('/about', {
+        templateUrl: 'about.html'
+      });
+      $routeProvider.when('/selectorg', {
+        controller: "getOrgs",
+        templateUrl: 'existingorg.html'
+      });
+      $routeProvider.when('/createorg', {
+        controller: "postOrgs",
+        templateUrl: 'create_organisation.html'
+      });
+    }
+  ]);
 
-var app = angular.module('Orgs', []);
-  app.controller('postOrgs', function($scope, $http) {
+
+  orgs.controller('postOrgs', function($scope, $http) {
   
   $scope.create = function(){
   var fdate = $scope.fyear + '-' + $scope.fmonth + '-'+ $scope.fday;
@@ -17,9 +33,9 @@ var app = angular.module('Orgs', []);
       };
   });
   
-var app = angular.module('existingorg', []);
-  app.controller('getOrgs', function($scope, $http) {
-    
+  
+
+  orgs.controller('getOrgs', function($scope, $http) {
     $http.get("http://127.0.0.1:6543/organisations").then(function (response) {
         $scope.myData = response.data;
         $scope.getDetails = function(){

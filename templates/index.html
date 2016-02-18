@@ -1,5 +1,5 @@
 <!DOCTYPE HTML >
-<html ng-app="tabCtrl">
+<html ng-app="orgs">
 <head>
 <link href="../lib/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="../lib/css/create_organisation_style.css" rel="stylesheet" type="text/css" />
@@ -42,26 +42,7 @@
   <div class="container" ng-view></div>
 	<script src="../lib/js/angular.min.js"></script>
     <script type="text/javascript" src="../lib/js/angular-route.min.js"></script>
-    
-      <script>
-  (function() {
-  'use strict';
-  angular.module('tabCtrl', ['ngRoute'])
-  .config([
-    '$routeProvider', function($routeProvider) {
-      $routeProvider.when('/about', {
-        templateUrl: 'about.html'
-      });
-      $routeProvider.when('/selectorg', {
-        templateUrl: 'existingorg.html'
-      });
-      $routeProvider.when('/createorg', {
-        templateUrl: 'create_organisation.html'
-      });
-    }
-  ]);
-}).call(this);
- 
-</script>
+    <script type="text/javascript" src="../controller/organisationcontroller.js"></script>
+   
   </body>
 </html>
