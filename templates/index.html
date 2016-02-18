@@ -1,5 +1,5 @@
 <!DOCTYPE HTML >
-<html>
+<html ng-app="orgs">
 <head>
 <link href="../lib/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="../lib/css/create_organisation_style.css" rel="stylesheet" type="text/css" />
@@ -30,46 +30,19 @@
   <div class="collapse navbar-collapse" id="navbar-ex-collapse">
   <ul class="nav navbar-nav pull-right">
   
-    <li class="active"><a class="navbar-brand" data-toggle="tab" href="#about">About</a></li>
-    <li><a data-toggle="tab" href="#selectorg"> <span class="sr-only">Select Existing Organisation</span>Select Existing Organisation</a></li>
-    <li><a data-toggle="tab" href="#createorg">Create Organisation</a></li>
+    <li class="active"><a class="navbar-brand" data-toggle="tab" href="#/about">About</a></li>
+    <li><a data-toggle="tab" href="#/selectorg">Select Existing Organisation</a></li>
+    <li><a data-toggle="tab" href="#/createorg">Create Organisation</a></li>
 
   </ul>
   </div>
   </div>
 </div>
 <br />
-  <div class="tab-content">
-    <div id="about" class="tab-pane fade in active">
-      
-      
-    </div>
-    <div id="selectorg" class="tab-pane fade">
-      
-     
-    </div>
-    <div id="createorg" class="tab-pane fade">
-      
-    </div>
+  <div class="container" ng-view></div>
+	<script src="../lib/js/angular.min.js"></script>
+    <script type="text/javascript" src="../lib/js/angular-route.min.js"></script>
+    <script type="text/javascript" src="../controller/organisationcontroller.js"></script>
    
-  </div>
-
-  <script src="../lib/js/jquery-2.2.0.min.js"></script>
-    <script src="../lib/js/bootstrap.min.js"></script>
-    
-      <script>
-  
-  $(document).ready(function(){
-  
-$("#about").load("/info");
-  
- $("#selectorg").load("existingorg.html");
-  
-   $("#createorg").load("create_organisation.html");
-   
-   
-  return;
-  });
-</script>
   </body>
 </html>
