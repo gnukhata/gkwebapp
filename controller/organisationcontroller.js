@@ -47,3 +47,34 @@
     });
   });
 
+  
+  
+orgs.controller('showLogin', function($scope, $window){     
+	$scope.loginPage = function()
+	{
+		orgcode.set("1");
+		alert(orgcode.get())
+		$window.location.href="login.html";
+	};
+});
+
+orgs.factory("orgcode", function() {
+	var orgcode = {}
+	function set(data) {
+		orgcode = data;
+	}
+	function get() {
+		return orgcode;
+	}
+	
+	return{
+		set:set,
+		get:get
+	}
+	
+});
+
+orgs.controller("login", function($scope, orgcode) {
+	$scope.code = orgcode.get();
+	alert(orgcode.get())
+})

@@ -1,9 +1,12 @@
  <!DOCTYPE html>
-<html>
+<html ng-app="orgs">
 	<head>
 	
 <link href="../lib/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="../lib/css/create_organisation_style.css" rel="stylesheet" type="text/css" />
+<script src="../lib/js/angular.min.js"></script>
+<script src="../lib/js/angular-route.min.js"></script>
+<script src="../controller/organisationcontroller.js"></script>
 		<title>
 		GNUKhata
 		</title>
@@ -14,7 +17,7 @@
 			}
 		</style>
 	</head>
-	<body>
+	<body ng-controller="login">
 <header class='navbar navbar-empty'>
 <div class='container'>
 <div>
@@ -28,7 +31,7 @@
 
 	<div class="container">
 	                        
-                        <h2 align="center" color="red" >Invalid user name or password: please try again </h2> 
+                        <h2 align="center" color="red" >{{code}} </h2> 
                         
 	    
         <div id="loginbox" style="margin-top:10px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    

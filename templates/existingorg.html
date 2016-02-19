@@ -1,15 +1,16 @@
 
 <!DOCTYPE HTML >
-<html>
+<html ng-app="orgs">
 
 <head>
 <link href="../lib/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="../lib/css/create_organisation_style.css" rel="stylesheet" type="text/css" />
 <script src="../lib/js/angular.min.js"></script>
+<script src="../lib/js/angular-route.min.js"></script>
+<script src="../controller/organisationcontroller.js"></script>
 <style>
 #subbutton{margin-top:2%}
 </style>
-    
 
 </head>
 <body>
@@ -26,7 +27,7 @@
 
                        
                             
-                        <form id="orgform" class="form-horizontal" role="form">
+                        <div id="orgform" class="form-horizontal" ng-controller="showLogin">
                                     
                             <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-th-list"></i></span>
@@ -52,12 +53,12 @@
                                     <!-- Button -->
 
                                     <div class="col-sm-12 controls">
-                                      <button class="btn btn-success "><span class="glyphicon glyphicon-arrow-right"></span>Next</button>
+                                      <button class="btn btn-success " accesskey="n" ng-click="loginPage()" ><span class="glyphicon glyphicon-arrow-right"></span>Next</button>
 
                                     </div>
                                 </div>
   
-                            </form>     
+                            </div>     
 
 
 
