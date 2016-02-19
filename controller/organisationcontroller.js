@@ -15,6 +15,10 @@
         controller: "postOrgs",
         templateUrl: 'create_organisation.html'
       });
+      $routeProvider.when('/login', {
+          controller: "login",
+          templateUrl: 'login.html'
+        });
     }
   ]);
 
@@ -35,7 +39,7 @@
   
   
 
-  orgs.controller('getOrgs', function($scope, $http) {
+  orgs.controller('getOrgs', function($scope, $http, orgcode, $location) {
     $http.get("http://127.0.0.1:6543/organisations").then(function (response) {
         $scope.myData = response.data;
         $scope.getDetails = function(){
@@ -44,19 +48,16 @@
         		$scope.years = response.data;
         	});
         }
+        
     });
+    orgcode.set("1");
+    $scope.showlogin = function() {
+		$location.path("/login");
+	}
   });
 
   
-  
-orgs.controller('showLogin', function($scope, $window){     
-	$scope.loginPage = function()
-	{
-		orgcode.set("1");
-		alert(orgcode.get())
-		$window.location.href="login.html";
-	};
-});
+
 
 orgs.factory("orgcode", function() {
 	var orgcode = {}
