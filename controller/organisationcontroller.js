@@ -15,6 +15,10 @@
         controller: "postOrgs",
         templateUrl: 'create_organisation.html'
       });
+      $routeProvider.when('/login', {
+          controller: "login",
+          templateUrl: 'login.html'
+        });
     }
   ]);
 
@@ -35,15 +39,60 @@
   
   
 
-  orgs.controller('getOrgs', function($scope, $http) {
+  orgs.controller('getOrgs', function($scope, $http, orgcode, $location) {
     $http.get("http://127.0.0.1:6543/organisations").then(function (response) {
-        $scope.myData = response.data;
+        $scope.nameType = response.data;
         $scope.getDetails = function(){
-        	$http.get("http://127.0.0.1:6543/orgyears/"+$scope.selected.orgname+"/"+$scope.selected.orgtype).then(function(response)
+        	$http.get("http://127.0.0.1:6543/orgyears/"+$scope.selectednameType.orgname+"/"+$scope.selectednameType.orgtype).then(function(response)
         	{
         		$scope.years = response.data;
         	});
         }
+        
     });
+    $scope.getOrgCode = function(){
+    $http.get("http://127.0.0.1:6543/organisation/"+$scope.selectednameType.orgname+"/"+$scope.selectednameType.orgtype+"/"+$scope.selectedYears.yearstart+"/"+$scope.selectedYears.yearend).then(function (response) {
+    	$scope.orgid = response.data;
+    	orgcode.set($scope.orgid);
+    	});
+    
+    }
+    
+    $scope.showlogin = function() {
+		$location.path("/login");
+	}
   });
+
+  
+
+
+orgs.factory("orgcode", function() {
+	var orgcode = {}
+	function set(data) {
+		orgcode = data;
+	}
+	function get() {
+		return orgcode;
+	}
+	
+	return{
+		set:set,
+		get:get
+	}
+	
+});
+orgs.controller("login", function($scope, $window, $http, orgcode) {
+
+	$scope.code = orgcode.get().orgcode;
+	 $scope.showMainshell = function() {
+		 var userdetails = {orgcode:$scope.code, username:$scope.name, userpassword:$scope.password};
+		 var config = {headers :{'Content-type': undefined}}
+		 $http.post("http://127.0.0.1:6543/login",userdetails, config).then(function(response)
+	      	{
+	      		alert(response.data.status);
+	      		$window.sessionStorage.setItem("gktoken",response.data.token);
+	      		$window.location.href ="main_shell.html"
+	      	});
+	 }
+})
 
