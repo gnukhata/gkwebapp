@@ -19,24 +19,59 @@
           controller: "login",
           templateUrl: 'login.html'
         });
+      $routeProvider.when('/createadmin', {
+          controller: "createOrg",
+          templateUrl: 'createadmin.html'
+        });
     }
   ]);
 
 
-  orgs.controller('postOrgs', function($scope, $http) {
+  orgs.controller('postOrgs', function($scope, orgDetails, $location) {
   
   $scope.create = function(){
   var fdate = $scope.fyear + '-' + $scope.fmonth + '-'+ $scope.fday;
   var tdate = $scope.tyear + '-' + $scope.tmonth + '-'+ $scope.tday;
   var orgdetails = {orgname:$scope.name, orgtype:$scope.type, yearstart:fdate, yearend:tdate};
-  var config = {headers :{'Content-type': undefined}}
-  $http.post("http://127.0.0.1:6543/organisations",orgdetails, config).then(function(response)
-      	{
-      		alert(response.data);
-      	});
+  orgDetails.set(orgdetails);
+  $location.path("/createadmin");
       };
   });
   
+  orgs.factory("orgDetails", function() {
+		var orgdetails = {}
+		function set(data) {
+			orgdetails = data;
+		}
+		function get() {
+			return orgdetails;
+		}
+		
+		return{
+			set:set,
+			get:get
+		}
+		
+	});
+  
+  orgs.controller('createOrg', function($scope, $http, orgDetails, $window) {
+	  alert(orgDetails.get().orgname)
+	$scope.createOrg = function() {
+		var odetails = orgDetails.get()
+		alert(odetails.orgname)
+		var udetails = {username:$scope.name,userpassword:$scope.cnfpassword,userquestion:$scope.question,useranswer:$scope.answer}
+		var allDetails = {orgdetails:odetails,userdetails:udetails}
+		
+		var config = {headers :{'Content-type': undefined}}
+		  $http.post("http://127.0.0.1:6543/organisations",allDetails, config).then(function(response)
+		      	{
+			  		alert(response.data.status)
+			  		$window.sessionStorage.setItem("gktoken",response.data.token);
+		      		$window.location.href ="main_shell.html"
+		      	});
+		
+	}
+});
   
 
   orgs.controller('getOrgs', function($scope, $http, orgcode, $location) {
@@ -97,7 +132,8 @@ orgs.controller("login", function($scope, $window, $http, orgcode) {
 })
 
 var main_shell = angular.module('main_shell', ['ui.directives']);
-main_shell.controller('shellcontroller', function($scope) {
+main_shell.controller('shellcontroller', function($scope, $window) {
+	alert($window.sessionStorage.getItem("gktoken"))
     $scope.count=0;
     $scope.flag =0;
     $scope.show = function() {
@@ -107,4 +143,5 @@ main_shell.controller('shellcontroller', function($scope) {
     $scope.keypresscount = function () {
     	$scope.count = $scope.count+1;
   	};
+  	
 });
