@@ -1,91 +1,95 @@
-	body {
-		margin: 0px;
-		padding: 0px;
-		background: url("../images/bg.png");
-		font-size: 12pt;
-		font-weight: normal;
-		color: #444444;
-	}
-
-	h1, h2 {
-		margin: 10px;
-		padding: 10px;
-		text-align:center;
-		font-weight: 300;
-	}
-	h3 {
-		margin: 10px;
-		padding: 0px;
-		text-align:center;
-		font-weight: 300;
-	}
-
-	p {
-		margin-bottom: 1.5em;
-		line-height: 180%;
-	}
-	
-	p.organisation {
-		margin-top: 1.5;
-		margin-bottom: 1.5;
-		line-height: 200%;
-		float: left;
-		font-size: 16pt;
-	}
-	p.financial_year {
-		margin-top: 1.5;
-		margin-bottom: 1.5;
-		line-height: 200%;
-		float: right;
-		font-size: 16pt;
-	}
-
-	a {
-		color: #D1551F;
-	}
-
-	strong {
-		font-weight: 700;
-		color: #2A2A2A;
-	}
-
-	div {margin-bottom: 10px;}
-		
-	.asteriskField {
-    		display: none;
-	}
-	label {
-		font-weight : normal;
-		font-size : 12pt	
-	}
-	
-
-	ul {
+ul.menu {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    background-color: #c7ddf5;
-    text-align: center;
-	}
-
-	li a {
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+ul.menu li a {
     display: block;
     color: #000;
-    padding: 8px 10px 8px 16px;
+    padding: 8px 0 8px 16px;
     text-decoration: none;
-	}
-
-	li a.active {
-    background-color: #4CAF50;
+}
+ul.menu li.gnukhata a{
+    display: block;
+    padding: 16px 0 8px 16px;
+    text-decoration: none;
+}
+ul.menu li.gnukhata a:hover{
+    color: #999999;
+    background-color: #f1f1f1;
+}
+a.gnukhata {
+    font-size: 14pt;
+}
+ul.menu li a:hover {
+    background-color: #a72210;
     color: white;
-	}
-
-	li a:hover:not(.active) {
-    background-color: #555;
+}
+ul.dropdown-content {
+	list-style-type: none;
+	background-color: #f1f1f1;
+}
+ul.dropdown-content li a {
+	display: block;
+	text-decoration: none;
+}
+ul.toolbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 95%;
+    overflow: auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+ul.toolbar li a {
+    display: block;
+    color: #000;
+    padding: 8px 0 8px 16px;
+    text-decoration: none;
+}
+ul.toolbar li a:hover {
+    background-color: #a72210;
     color: white;
+}
+button.toolbar {
+	width: 220px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+div.info{padding: 16px 0 8px 16px;}
+ul.info {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	padding: 16px 0 16px 16px;
+	list-style-type: none;
+}
+ul.info li {
+	padding: 6px 0 6px 6px;
 	}
-	#toolbar {
-	float: right;
-	font-size: 10pt;
-	line-height: 80%;
-	}
+ul.info li.h3 li.h4 {
+	padding: 8px 0 8px 8px;
+}
+@media screen and (max-width: 1200px){
+    ul.menu {
+        width:100%;
+        height:auto;
+        position:relative;
+    }
+    ul.menu li a {
+        float: left;
+        padding: 15px;
+    }
+    div.content {margin-left:0;}
+}
+
+@media screen and (max-width: 400px){
+    ul.menu li a {
+        text-align: center;
+        float: none;
+    }
+}

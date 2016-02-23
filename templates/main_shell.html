@@ -1,66 +1,127 @@
 <!DOCTYPE html>
 <html ng-app="main_shell">
 <head>
-<meta charset="utf-8" />
+<meta charset="utf-8"/>
 <title>Main Shell</title>
 <link href="../lib/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 <link href="../lib/css/main_shell_style.css" rel="stylesheet" type="text/css"/>
 </head>
-<body ng-app="main_shell" ng-controller="shellcontroller" ui-keypress="{enter:'keypresscount()'}">
-<div class="container">
-		<div id="toolbar" ng-hide="hide()">
-			<ul class="nav">
-				<li><a href="#">Create/Edit Account: F2</a></li>
-				<li><a href="#">List of Accounts: CTRL + L</a></li>
-				<li><a href="#">Ledger: F3</a></li>
-				<li><a href="#">Contra: F4</a></li>
-				<li><a href="#">Payment: F5</a></li>
-				<li><a href="#">Receipt: F6</a></li>
-				<li><a href="#">Journal: F7</a></li>
-				<li><a href="#">Sales: F8</a></li>
-				<li><a href="#">Purchase: F9</a></li>
-				<li><a href="#">Credit Note: CTRL + F2</a></li>
-				<li><a href="#">Debit Note: CTRL +F3</a></li>
-				<li><a href="#">Sales Return: CTRL+F4</a></li>
-				<li><a href="#">Purchase Return: CTRL+F5</a></li>
-				<li><a href="#">Trial Balance: CTRL+F7</a></li>
-				<li><a href="#">Income & Expenditure : CTRL+F8</a></li>
-				<li><a href="#">Statement of Affairs: CTRL+F9</a></li>
-				<li><a href="#">Cash Flow: CTRL+F10</a></li>
-				<li><a href="#">Project Statement: CTRL+F11</a></li>
-				<li><a href="#">Bank Reconciliation Statement: F12</a></li>
-				<li><a href="#">Project: CTRL+P</a></li>
-				<li><a href="#">Find Voucher: CTRL+F</a></li>
-				<li><a href="#">Logout: CTRL+G</a></li>
-				<li><a href="#">Change Organisation: CTRL+H</a></li>
-				<li><a href="#">Quit: CTRL+Q</a></li>
-			</ul>
-			</div>
+<body ng-app="main_shell" ng-controller="shellcontroller" ui-keypress="{'shift-112':'keypresscount()'}">
+<div class="container-fluid">
+	<div class="menu  col-lg-2">
+	<ul class="menu col-lg-2">
+		<li class="dropdown" ng-init="gnukhata=0" ng-click="gnukhata=gnukhata+1">
+			<a class="gnukhata" href="#">GNUkhata</a>
+			<ul class="dropdown-content" ng-show="gnukhata%2">
+          		<li><a href="#">Logout</a></li>
+          		<li><a href="#">Change Organisaation</a></li>
+          		<li><a href="#">Quit</a></li>
+        	</ul>
+      	</li>
+		<li class="dropdown" ng-init="master=0" ng-click="master=master+1">
+			<a href="#">Master</a>
+			<ul class="dropdown-content" ng-show="master%2">
+          		<li><a href="#">Create/Edit Account</a></li>
+          		<li><a href="#">Edit Organisation</a></li>
+          		<li><a href="#">Project</a></li>
+          		<li><a href="#">Bank Reconciliation Statement</a></li>
+        	</ul>
+		</li>
+		<li class="dropdown" ng-init="transaction=0" ng-click="transaction=transaction+1">
+			<a href="#">Transaction</a>
+			<ul class="dropdown-content" ng-show="transaction%2">
+          		<li><a href="#">Contra</a></li>
+          		<li><a href="#">Payment</a></li>
+          		<li><a href="#">Receipt</a></li>
+          		<li><a href="#">Journal</a></li>
+          		<li><a href="#">Sales</a></li>
+          		<li><a href="#">Purchase</a></li>
+          		<li><a href="#">Credit Note</a></li>
+          		<li><a href="#">Debit Note</a></li>
+          		<li><a href="#">Sales Return</a></li>
+          		<li><a href="#">Purchase Return</a></li>
+        	</ul>
+		</li>
+		<li class="dropdown" ng-init="report=0" ng-click="report=report+1">
+			<a href="#">Report</a>
+			<ul class="dropdown-content" ng-show="report%2">
+          		<li><a href="#">Ledger</a></li>
+          		<li><a href="trial_balance.html">Trial Balance</a></li>
+          		<li><a href="#">Project Statement</a></li>
+          		<li><a href="#">Cash Flow</a></li>
+          		<li><a href="#">Statement of Affairs</a></li>
+          		<li><a href="#">Income and Expenditure Account</a></li>
+          		<li><a href="#">List of Accounts</a></li>
+        	</ul>
+		</li>
+		<li class="dropdown" ng-init="administration=0" ng-click="administration=administration+1">
+			<a href="#">Administration</a>
+			<ul class="dropdown-content" ng-show="administration%2">
+          		<li><a href="#">New User</a></li>
+          		<li><a href="#">Remove User</a></li>
+          		<li><a href="#">Change Password</a></li>
+          		<li><a href="#">Close Books/Roll Over</a></li>
+          		<li><a href="#">Delete Organisation</a></li>
+        	</ul>
+		</li>
+		<li class="dropdown" ng-init="help=0" ng-click="help=help+1">
+			<a href="#">Help</a>
+			<ul class="dropdown-content" ng-show="help%2">
+          		<li><a href="#">GNUKhata Manual</a></li>
+          		<li><a href="#">Authors</a></li>
+          		<li><a href="#">GNUKhata License</a></li>
+          		<li><a href="#">About GNUkhata</a></li>
+          	</ul>
+		</li>
+	</ul>
+	</div>
+	<div class = "col-lg-9 col-lg-offset-1">
 	<div class="row">
-		<h1>GNUKhata</h1>
-		<h3>A Free And Open Source Accounting Software<h3>
-		<p class="organisation"><b>BATU</b></p>
-		<p class="financial_year"><b>From Financial Year 2015-16</b></p>
+	<div class="toolbar col-lg-offset-9 col-lg-2">
+	<button type="button" class="toolbar btn btn-info hidden-xs" ng-click="keypresscount()">Toolbar</button>		
+	<ul class="toolbar col-lg-2 pull-right" ng-show="show()">
+		<li><a accesskey="z" href="create_account.html">Create/Edit Account - Z</a></li>
+		<li><a accesskey="a" href="#">List of Accounts - A</a></li>
+		<li><a accesskey="l" href="#">Ledger - L</a></li>
+		<li><a accesskey="y" href="#">Contra - Y</a></li>
+		<li><a accesskey="p" href="#">Payment - P</a></li>
+		<li><a accesskey="r" href="#">Receipt - R</p</li>
+		<li><a accesskey="j" href="#">Journal - J</a></li>
+		<li><a accesskey="s" href="#">Sales - S</a></li>
+		<li><a accesskey="x" href="#">Purchase - X</p</li>
+		<li><a accesskey="c" href="#">Credit Note - C</a></li>
+		<li><a accesskey="d" href="#">Debit Note - D</a></li>
+		<li><a accesskey="w" href="#">Sales Return - W</a></li>
+		<li><a accesskey="u" href="#">Purchase Return - U</a></li>
+		<li><a accesskey="b" href="trial_balance.html">Trial Balance - B</p</li>
+		<li><a accesskey="i" href="#">Income & Expenditure - I</a></li>
+		<li><a accesskey="t" href="#">Statement of Affairs - T</a></li>
+		<li><a accesskey="f" href="#">Cash Flow - F</a></li>
+		<li><a accesskey="k" href="#">Project Statement - K</a></li>
+		<li><a accesskey="n" href="#">Bank Reconciliation Statement - N</a></li>
+		<li><a accesskey="m" href="#">Project - M</p class="tool"></li>
+		<li><a accesskey="v" href="#">Find Voucher - V</a></li>
+		<li><a accesskey="g" href="#">Logout - G</a></li>
+		<li><a accesskey="o" href="#">Change Organisation - O</a></li>
+		<li><a accesskey="q" href="#">Quit - Q</a></li>
+	</ul>
+	</div>
+	</div>
+	<div class="info row">
+	<ul class="info">
+		<li><h3>Welcome to GNUKhata</h3></li>
+		<li><h4>A free and open source accounting software</h4></li>
+		<li>Access the toolbar with a list of accesskeys using the "Toolbar" button or the shortcut "Shift+F1".</li>
+		<li>Access any element in the toolbar by pressing the shortcut key of your browser along with the key mentioned along.</li>
+		<li>For example, in Firefox, access "create account" using "Alt + Shift + Z".</li>
+		<li>For Google Chrome, Opera and Internet Explorer the shortcut key is Alt. So use "Alt + Z" instead.</li>
+		<li>In older versions of Opera(than 12.1) use "Shift + Esc + Z"</li>
+	</ul>
+	</div>
 	</div>
 </div>
 <script src="../lib/js/angular.min.js"></script>
 <script src="../lib/js/angular-ui.min.js"></script>
-<script>
-var app = angular.module('main_shell', ['ui.directives']);
-app.controller('shellcontroller', function($scope) {
-    $scope.count=0;
-    $scope.flag =0;
-    $scope.fullName = function() {
-        return $scope.count;
-    };
-    $scope.hide = function() {
-		$scope.flag = $scope.count%2;
-        return $scope.flag;
-    };    
-    $scope.keypresscount = function () {
-    $scope.count = $scope.count+1;
-  };
-});
-</script>
+<script type="text/javascript" src="../controller/organisationcontroller.js"></script>
 </body>
 </html>
