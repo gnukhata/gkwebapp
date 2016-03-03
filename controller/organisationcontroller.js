@@ -133,7 +133,6 @@ orgs.controller("login", function($scope, $window, $http, orgcode) {
 
 var main_shell = angular.module('main_shell', ['ui.directives']);
 main_shell.controller('shellcontroller', function($scope, $window) {
-	alert($window.sessionStorage.getItem("gktoken"))
     $scope.count=0;
     $scope.flag =0;
     $scope.show = function() {
