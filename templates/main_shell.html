@@ -3,22 +3,19 @@
 <head>
 <meta charset="utf-8"/>
 <title>Main Shell</title>
-<link href="../lib/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 <link href="../lib/css/main_shell_style.css" rel="stylesheet" type="text/css"/>
 </head>
-<body ng-app="main_shell" ng-controller="shellcontroller" ui-keypress="{'shift-112':'keypresscount()'}">
-<div class="container-fluid">
-	<div class="menu  col-lg-2">
-	<ul class="menu col-lg-2">
-		<li class="dropdown" ng-init="gnukhata=0" ng-click="gnukhata=gnukhata+1">
-			<a class="gnukhata" href="#">GNUkhata</a>
+<body ng-controller="shellcontroller" ui-keypress="{'shift-112':'keypresscount()'}">
+<ul class="menu">
+		<li class="dropdown">
+			<a ng-init="gnukhata=0" ng-click="gnukhata=gnukhata+1" ng-mouseleave="gnukhata=0" href="#">GNUkhata</a>
 			<ul class="dropdown-content" ng-show="gnukhata%2">
           		<li><a href="#">Logout</a></li>
-          		<li><a href="#">Change Organisaation</a></li>
+          		<li><a href="#">Change Organisation</a></li>
           		<li><a href="#">Quit</a></li>
         	</ul>
       	</li>
-		<li class="dropdown" ng-init="master=0" ng-click="master=master+1">
+		<li class="dropdown" ng-init="master=0" ng-click="master=master+1" ng-mouseleave="master=0">
 			<a href="#">Master</a>
 			<ul class="dropdown-content" ng-show="master%2">
           		<li><a href="#">Create/Edit Account</a></li>
@@ -27,7 +24,7 @@
           		<li><a href="#">Bank Reconciliation Statement</a></li>
         	</ul>
 		</li>
-		<li class="dropdown" ng-init="transaction=0" ng-click="transaction=transaction+1">
+		<li class="dropdown" ng-init="transaction=0" ng-click="transaction=transaction+1" ng-mouseleave="transaction=0">
 			<a href="#">Transaction</a>
 			<ul class="dropdown-content" ng-show="transaction%2">
           		<li><a href="#">Contra</a></li>
@@ -42,7 +39,7 @@
           		<li><a href="#">Purchase Return</a></li>
         	</ul>
 		</li>
-		<li class="dropdown" ng-init="report=0" ng-click="report=report+1">
+		<li class="dropdown" ng-init="report=0" ng-click="report=report+1" ng-mouseleave="report=0">
 			<a href="#">Report</a>
 			<ul class="dropdown-content" ng-show="report%2">
           		<li><a href="#">Ledger</a></li>
@@ -54,7 +51,7 @@
           		<li><a href="#">List of Accounts</a></li>
         	</ul>
 		</li>
-		<li class="dropdown" ng-init="administration=0" ng-click="administration=administration+1">
+		<li class="dropdown" ng-init="administration=0" ng-click="administration=administration+1" ng-mouseleave="administration=0">
 			<a href="#">Administration</a>
 			<ul class="dropdown-content" ng-show="administration%2">
           		<li><a href="#">New User</a></li>
@@ -64,7 +61,7 @@
           		<li><a href="#">Delete Organisation</a></li>
         	</ul>
 		</li>
-		<li class="dropdown" ng-init="help=0" ng-click="help=help+1">
+		<li class="dropdown" ng-init="help=0" ng-click="help=help+1" ng-mouseleave="help=0">
 			<a href="#">Help</a>
 			<ul class="dropdown-content" ng-show="help%2">
           		<li><a href="#">GNUKhata Manual</a></li>
@@ -74,11 +71,7 @@
           	</ul>
 		</li>
 	</ul>
-	</div>
-	<div class = "col-lg-9 col-lg-offset-1">
-	<div class="row">
-	<div class="toolbar col-lg-offset-9 col-lg-2">
-	<button type="button" class="toolbar btn btn-info hidden-xs" ng-click="keypresscount()">Toolbar</button>		
+	<button type="button" class="toolbar" ng-click="keypresscount()">Toolbar</button>		
 	<ul class="toolbar col-lg-2 pull-right" ng-show="show()">
 		<li><a accesskey="z" href="create_account.html">Create/Edit Account - Z</a></li>
 		<li><a accesskey="a" href="#">List of Accounts - A</a></li>
@@ -99,27 +92,25 @@
 		<li><a accesskey="f" href="#">Cash Flow - F</a></li>
 		<li><a accesskey="k" href="#">Project Statement - K</a></li>
 		<li><a accesskey="n" href="#">Bank Reconciliation Statement - N</a></li>
-		<li><a accesskey="m" href="#">Project - M</p class="tool"></li>
+		<li><a accesskey="m" href="#">Project - M</a></li>
 		<li><a accesskey="v" href="#">Find Voucher - V</a></li>
 		<li><a accesskey="g" href="#">Logout - G</a></li>
 		<li><a accesskey="o" href="#">Change Organisation - O</a></li>
 		<li><a accesskey="q" href="#">Quit - Q</a></li>
 	</ul>
+	<div class="info">
+		<ul class="info">
+			<li><h3>Welcome to GNUKhata</h3></li>
+			<li><h4>A free and open source accounting software</h4></li>
+			<li class="matter">
+			<p>To access the Toolbar press "Shift+F1".</p>
+			<p>To access Menu from the Toolbar : </p>
+			<p class="shortcut">If using Firefox, press "Alt + Shift + the shortcut key".</p>
+			<p class="shortcut">If using Google Chrome, Opera or Internet Explorer press "Alt + the shortcut key".</p>
+			<p class="shortcut">If using older versions of Opera(prior to version 12.1) use "Shift + Esc + the shortcut key".</p>
+			</li>
+		</ul>
 	</div>
-	</div>
-	<div class="info row">
-	<ul class="info">
-		<li><h3>Welcome to GNUKhata</h3></li>
-		<li><h4>A free and open source accounting software</h4></li>
-		<li>Access the toolbar with a list of accesskeys using the "Toolbar" button or the shortcut "Shift+F1".</li>
-		<li>Access any element in the toolbar by pressing the shortcut key of your browser along with the key mentioned along.</li>
-		<li>For example, in Firefox, access "create account" using "Alt + Shift + Z".</li>
-		<li>For Google Chrome, Opera and Internet Explorer the shortcut key is Alt. So use "Alt + Z" instead.</li>
-		<li>In older versions of Opera(than 12.1) use "Shift + Esc + Z"</li>
-	</ul>
-	</div>
-	</div>
-</div>
 <script src="../lib/js/angular.min.js"></script>
 <script src="../lib/js/angular-ui.min.js"></script>
 <script type="text/javascript" src="../controller/organisationcontroller.js"></script>
