@@ -4,7 +4,7 @@
 var acc = angular.module('acc',[])
 
 acc.controller('getGroups', function($scope, $http) {
-	$http.get("http://127.0.0.1:6543/groupsubgroups/1").then(function (response) {
+	$http.get("http://127.0.0.1:6543/groupsubgroups").then(function (response) {
 		$scope.groups = response.data;
 	});
 	
@@ -16,7 +16,7 @@ acc.controller('getGroups', function($scope, $http) {
 	$scope.createAccount = function() {
 		 var accdetails = {groupcode:"a call to be made by sending the subgrp", accountname:$scope.accname, openingbalance:$scope.openingbal,orgcode:"from token"};
 		 var config = {headers :{'Content-type': undefined}}
-		 $http.post("http://127.0.0.1:6543/accounts/1",accdetails, config).then(function(response)
+		 $http.post("http://127.0.0.1:6543/accounts",accdetails, config).then(function(response)
 	      	{
 	      		alert(response.data.status);
 	      		
