@@ -7,16 +7,16 @@
 </head>
 <body ng-controller="shellcontroller" ui-keypress="{'shift-112':'keypresscount()'}">
 <ul class="menu">
-		<li class="dropdown">
-			<a ng-init="gnukhata=0" ng-click="gnukhata=gnukhata+1" ng-mouseleave="gnukhata=0" href="#">GNUkhata</a>
+		<li class="dropdown" ng-init="gnukhata=0" ng-mouseleave="gnukhata=0">
+			<a ng-click="gnukhata=gnukhata+1" ng-mouseover="gnukhata=gnukhata+1" href="#">GNUkhata</a>
 			<ul class="dropdown-content" ng-show="gnukhata%2">
           		<li><a href="#">Logout</a></li>
           		<li><a href="#">Change Organisation</a></li>
           		<li><a href="#">Quit</a></li>
         	</ul>
       	</li>
-		<li class="dropdown" ng-init="master=0" ng-click="master=master+1" ng-mouseleave="master=0">
-			<a href="#">Master</a>
+		<li class="dropdown" ng-init="master=0" ng-mouseleave="master=0">
+			<a href="#" ng-click="master=master+1" ng-mouseover="master=master+1">Master</a>
 			<ul class="dropdown-content" ng-show="master%2">
           		<li><a href="#">Create/Edit Account</a></li>
           		<li><a href="#">Edit Organisation</a></li>
@@ -24,8 +24,8 @@
           		<li><a href="#">Bank Reconciliation Statement</a></li>
         	</ul>
 		</li>
-		<li class="dropdown" ng-init="transaction=0" ng-click="transaction=transaction+1" ng-mouseleave="transaction=0">
-			<a href="#">Transaction</a>
+		<li class="dropdown" ng-init="transaction=0" ng-mouseleave="transaction=0">
+			<a href="#" ng-click="transaction=transaction+1" ng-mouseover="transaction=transaction+1">Transaction</a>
 			<ul class="dropdown-content" ng-show="transaction%2">
           		<li><a href="#">Contra</a></li>
           		<li><a href="#">Payment</a></li>
@@ -39,8 +39,8 @@
           		<li><a href="#">Purchase Return</a></li>
         	</ul>
 		</li>
-		<li class="dropdown" ng-init="report=0" ng-click="report=report+1" ng-mouseleave="report=0">
-			<a href="#">Report</a>
+		<li class="dropdown" ng-init="report=0" ng-mouseleave="report=0">
+			<a href="#" ng-click="report=report+1" ng-mouseover="report=report+1">Report</a>
 			<ul class="dropdown-content" ng-show="report%2">
           		<li><a href="#">Ledger</a></li>
           		<li><a href="trial_balance.html">Trial Balance</a></li>
@@ -51,8 +51,8 @@
           		<li><a href="#">List of Accounts</a></li>
         	</ul>
 		</li>
-		<li class="dropdown" ng-init="administration=0" ng-click="administration=administration+1" ng-mouseleave="administration=0">
-			<a href="#">Administration</a>
+		<li class="dropdown" ng-init="administration=0" ng-mouseleave="administration=0">
+			<a href="# ng-click="administration=administration+1" ng-mouseover="administration=administration+1"">Administration</a>
 			<ul class="dropdown-content" ng-show="administration%2">
           		<li><a href="#">New User</a></li>
           		<li><a href="#">Remove User</a></li>
@@ -61,8 +61,8 @@
           		<li><a href="#">Delete Organisation</a></li>
         	</ul>
 		</li>
-		<li class="dropdown" ng-init="help=0" ng-click="help=help+1" ng-mouseleave="help=0">
-			<a href="#">Help</a>
+		<li class="dropdown" ng-init="help=0" ng-mouseleave="help=0">
+			<a href="#" ng-click="help=help+1" ng-mouseover="help=help+1">Help</a>
 			<ul class="dropdown-content" ng-show="help%2">
           		<li><a href="#">GNUKhata Manual</a></li>
           		<li><a href="#">Authors</a></li>
@@ -111,8 +111,8 @@
 			</li>
 		</ul>
 	</div>
-<script src="../lib/js/angular.min.js"></script>
-<script src="../lib/js/angular-ui.min.js"></script>
-<script type="text/javascript" src="../controller/organisationcontroller.js"></script>
+<script type="text/javascript" src="../lib/js/angular.min.js"></script>
+<script type="text/javascript" src="../lib/js/angular-ui.min.js"></script>
+<script type="text/javascript" src="../controller/shellcontroller.js"></script>
 </body>
 </html>

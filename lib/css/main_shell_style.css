@@ -2,42 +2,56 @@ ul.menu {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    overflow: hidden;
     background-color: #f1f1f1;
-    position: fixed;
-    height: 100%;
-    overflow: auto;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
+
+ul.menu li {
+    float: left;
+}
+
 ul.menu li a {
-    display: block;
-    color: #000;
-    padding: 8px 0 8px 16px;
+    display: inline-block;
+    color: #333333;
+    text-align: center;
+    padding: 14px 16px;
     text-decoration: none;
 }
-ul.menu li.gnukhata a{
-    display: block;
-    padding: 16px 0 8px 16px;
-    text-decoration: none;
-}
-ul.menu li.gnukhata a:hover{
-    color: #999999;
-    background-color: #f1f1f1;
-}
-a.gnukhata {
-    font-size: 14pt;
-}
+
 ul.menu li a:hover {
-    background-color: #a72210;
-    color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
+
+ul.menu li.dropdown {
+    display: block;
+    text-decoration: none;
+}
+
 ul.dropdown-content {
-	list-style-type: none;
-	background-color: #f1f1f1;
+    display: block;
+    position: absolute;
+    background-color: #f1f1f1;
+    width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+ul.dropdown-content li {
+    color: black;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    float: left;
+    width: 160px;
 }
 ul.dropdown-content li a {
-	display: block;
-	text-decoration: none;
+    color: black;
+    padding: 4px;
+    text-decoration: none;
+    text-align: left;
+    font-size: 10pt;
+    float: left;
 }
+
 ul.toolbar {
     list-style-type: none;
     margin: 0;
@@ -45,6 +59,9 @@ ul.toolbar {
     background-color: #f1f1f1;
     position: fixed;
     height: 95%;
+    right: 8px;
+    width: 220px;
+    float: right;
     overflow: auto;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -53,43 +70,33 @@ ul.toolbar li a {
     color: #000;
     padding: 8px 0 8px 16px;
     text-decoration: none;
+    font-size: 10pt;
 }
 ul.toolbar li a:hover {
-    background-color: #a72210;
-    color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 button.toolbar {
+	background-color: #31afd4;
+    border: none;
+    color: white;
+    font-size: 16px;
+	margin: 8px;
+	position: fixed;
+	top: 0;
+	right: 0;
 	width: 220px;
+	padding: 10px 0 10px 16px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-div.info{padding: 16px 0 8px 16px;}
 ul.info {
+	color: #333;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-	padding: 16px 0 16px 16px;
+	padding: 16px 0 8px 16px;
 	list-style-type: none;
 }
-ul.info li {
-	padding: 6px 0 6px 6px;
-	}
-ul.info li.h3 li.h4 {
-	padding: 8px 0 8px 8px;
+li.matter {
+	padding: 4px 0 4px 0px;
 }
-@media screen and (max-width: 1200px){
-    ul.menu {
-        width:100%;
-        height:auto;
-        position:relative;
-    }
-    ul.menu li a {
-        float: left;
-        padding: 15px;
-    }
-    div.content {margin-left:0;}
-}
-
-@media screen and (max-width: 400px){
-    ul.menu li a {
-        text-align: center;
-        float: none;
-    }
+p.shortcut {
+	padding: 0px 0 0px 40px;
 }
