@@ -3,15 +3,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Account Creation Form</title>
-	<link rel="stylesheet" href="../lib/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../lib/css/account_creation_style.css">
-	 
-<style>
- 
-</style>      
-   
+	 <link href="../lib/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 </head>
-<body ng-app="acc">
+<body >
     
                   
 	    <form ng-submit="createAccount()">
@@ -20,7 +14,7 @@
 			<h1><b>Account Creation</b></h1>
 			</div>
 			
-			<div  class="col-md-12 well" >
+			
 				<div  class="col-md-6" >
 				    <div id="group_name" class="form-group"> 
 				    
@@ -29,7 +23,7 @@
 				    	</select>
 				   		
 				   		<label for="subgroup_name" class="control-label col-md-12 ">Sub-group Name :</label>
-					    <select ng-model="subgrp" ng-change= "" class = "form-control" ng-options="x as x.subgroupname for x in subgrp">
+					    <select ng-model="subgrp" ng-change= "" class = "form-control" ng-options="x as x.subgroupname for x in subgroups">
 					    </select>
 					    
 					    <label> <input type="checkbox"> Create Multiple Accounts</label>
@@ -47,7 +41,7 @@
 				    
 				    </div> 
 				</div>
-			</div>
+			
 		</form>
 	</body>
 </html>

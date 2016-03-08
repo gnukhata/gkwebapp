@@ -67,7 +67,7 @@
 		      	{
 			  		alert(response.data.status)
 			  		$window.sessionStorage.setItem("gktoken",response.data.token);
-		      		$window.location.href ="main_shell.html"
+		      		$window.location.href ="mainshell.html"
 		      	});
 		
 	}
@@ -126,7 +126,7 @@ orgs.controller("login", function($scope, $window, $http, orgcode) {
 	      	{
 	      		alert(response.data.status);
 	      		$window.sessionStorage.setItem("gktoken",response.data.token);
-	      		$window.location.href ="main_shell.html"
+	      		$window.location.href ="mainshell.html"
 	      	});
 	 }
 })

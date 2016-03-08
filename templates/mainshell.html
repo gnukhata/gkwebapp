@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html ng-app="main_shell">
+<html ng-app="mainapp">
 <head>
 <meta charset="utf-8"/>
 <title>Main Shell</title>
 <link href="../lib/css/main_shell_style.css" rel="stylesheet" type="text/css"/>
+
 </head>
-<body ng-controller="shellcontroller" ui-keypress="{'shift-112':'keypresscount()'}">
+<body ng-controller="mainController" ui-keypress="{'shift-112':'keypresscount()'}">
+<div>
 <ul class="menu">
 		<li class="dropdown" ng-init="gnukhata=0" ng-mouseleave="gnukhata=0">
 			<a ng-click="gnukhata=gnukhata+1" ng-mouseover="gnukhata=gnukhata+1" href="#">GNUkhata</a>
@@ -18,7 +20,8 @@
 		<li class="dropdown" ng-init="master=0" ng-mouseleave="master=0">
 			<a href="#" ng-click="master=master+1" ng-mouseover="master=master+1">Master</a>
 			<ul class="dropdown-content" ng-show="master%2">
-          		<li><a href="#">Create/Edit Account</a></li>
+          		<li><a href="#/account">Create Account</a></li>
+          		<li><a href="#">Edit Account</a></li>
           		<li><a href="#">Edit Organisation</a></li>
           		<li><a href="#">Project</a></li>
           		<li><a href="#">Bank Reconciliation Statement</a></li>
@@ -78,15 +81,15 @@
 		<li><a accesskey="l" href="#">Ledger - L</a></li>
 		<li><a accesskey="y" href="#">Contra - Y</a></li>
 		<li><a accesskey="p" href="#">Payment - P</a></li>
-		<li><a accesskey="r" href="#">Receipt - R</p</li>
+		<li><a accesskey="r" href="#">Receipt - R</a></li>
 		<li><a accesskey="j" href="#">Journal - J</a></li>
 		<li><a accesskey="s" href="#">Sales - S</a></li>
-		<li><a accesskey="x" href="#">Purchase - X</p</li>
+		<li><a accesskey="x" href="#">Purchase - X</a></li>
 		<li><a accesskey="c" href="#">Credit Note - C</a></li>
 		<li><a accesskey="d" href="#">Debit Note - D</a></li>
 		<li><a accesskey="w" href="#">Sales Return - W</a></li>
 		<li><a accesskey="u" href="#">Purchase Return - U</a></li>
-		<li><a accesskey="b" href="trial_balance.html">Trial Balance - B</p</li>
+		<li><a accesskey="b" href="trial_balance.html">Trial Balance - B</a></li>
 		<li><a accesskey="i" href="#">Income & Expenditure - I</a></li>
 		<li><a accesskey="t" href="#">Statement of Affairs - T</a></li>
 		<li><a accesskey="f" href="#">Cash Flow - F</a></li>
@@ -98,21 +101,24 @@
 		<li><a accesskey="o" href="#">Change Organisation - O</a></li>
 		<li><a accesskey="q" href="#">Quit - Q</a></li>
 	</ul>
-	<div class="info">
-		<ul class="info">
+	</div>
+	<div ng-view >
+			<ul class="info">
 			<li><h3>Welcome to GNUKhata</h3></li>
 			<li><h4>A free and open source accounting software</h4></li>
 			<li class="matter">
 			<p>To access the Toolbar press "Shift+F1".</p>
 			<p>To access Menu from the Toolbar : </p>
-			<p class="shortcut">If using Firefox, press "Alt + Shift + the shortcut key".</p>
-			<p class="shortcut">If using Google Chrome, Opera or Internet Explorer press "Alt + the shortcut key".</p>
-			<p class="shortcut">If using older versions of Opera(prior to version 12.1) use "Shift + Esc + the shortcut key".</p>
+			<p class="shortcut">For Firefox, press "Alt + Shift + the shortcut key".</p>
+			<p class="shortcut">For Google Chrome, Opera or Internet Explorer press "Alt + the shortcut key".</p>
+			<p class="shortcut">For older versions of Opera(prior to version 12.1) use "Shift + Esc + the shortcut key".</p>
 			</li>
-		</ul>
+		</ul>	
 	</div>
 <script type="text/javascript" src="../lib/js/angular.min.js"></script>
 <script type="text/javascript" src="../lib/js/angular-ui.min.js"></script>
-<script type="text/javascript" src="../controller/shellcontroller.js"></script>
+<script type="text/javascript" src="../lib/js/angular-route.min.js"></script>
+<script type="text/javascript" src="../controller/maincontroller.js"></script>
+<script type="text/javascript" src=../controller/accountController.js></script>
 </body>
 </html>
