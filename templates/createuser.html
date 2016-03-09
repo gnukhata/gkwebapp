@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html ng-app="users">
+	<head>
+	
+        <link href="../lib/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <script src="../lib/js/angular.min.js"></script>
+        <script src="../controller/usercontroller.js"></script>
+
+		<title>
+		GNUKhata
+		</title>
+			
+		<style>
+			.login-box{
+			background-color: rgba(220, 225,225,0.4);
+			}
+			
+		</style>
+
+	</head>
+	<body ng-controller="createuser">
+
+<div class='container'>
+<div>
+<img  height="70" src="../lib/images/icon.svg" width="70" class="center-block" />
+
+</div>
+
+</div>
+<hr class="divider">
+
+
+	<div class="container">
+	                     
+	    
+        <div id="loginbox" style="margin-top:10px;" class="mainbox col-md-6 col-md-offset-3">                    
+            <div class="panel panel-info" >
+                    <div class="panel-heading">
+                        <div class="panel-title">Create New User</div>
+                        
+                    </div>     
+
+                    <div style="padding-top:30px" class="panel-body" >
+
+                            
+                        <form id="loginform" ng-submit="create()" class="form-horizontal">
+                                    
+                            <div style="margin-bottom: 20px" class="input-group col-xs-12">
+                                        
+                                        <input ng-model="name" type="text" class="form-control" name="username" placeholder="Username"></input>                                        
+                                    </div>
+                                
+                            <div style="margin-bottom: 20px" class="input-group col-xs-12">
+                                        
+                                        <input ng-model="password" type="password" class="form-control" name="password" placeholder="Password"></input>
+                                    </div>
+                                    
+                             <div style="margin-bottom: 20px" class="input-group col-xs-12">
+                                        
+                                        <input ng-model="cnfpassword" type="password" class="form-control" value="" placeholder="Confirm Password"></input>                                        
+                                    </div>
+                                    
+                             <div style="margin-bottom: 20px" class="input-group col-xs-12">
+                                        
+                                <select ng-model="role" type="text" class="form-control" value="" placeholder="Security Question" ng-options="x as x.role for x in roles">
+                                    <option style="display:none" value="">Select a role</option>                
+                                </select>                                        
+                                    </div>
+                             <div style="margin-bottom: 20px" class="input-group col-xs-12">
+                                        
+                                        <input ng-model="question" type="text" class="form-control" value="" placeholder="Security Question"></input>                                        
+                                    </div>
+                                    
+                             <div style="margin-bottom: 20px" class="input-group col-xs-12">
+                                       
+                                       <input ng-model="answer" type="text" class="form-control" value="" placeholder="Security Answer"></input>                                        
+                                   </div>
+
+                            
+
+
+                   				
+
+                                   
+                                     
+									    <button type="submit" class="btn btn-success">Create</button>
+									  
+									 
+                                      
+                                     
+                                
+
+                                   </form> 
+                                    </div>
+                                </div>    
+                             
+
+
+
+                        </div>                     
+                     
+        </div>
+        
+            
+</body>
+
+</html>
