@@ -4,6 +4,7 @@
         <link href="../lib/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <script src="../lib/js/bootstrap.min.js"></script>
         <script src="../lib/js/angular.min.js"></script>
+        <script src="../lib/js/shortcut.js"></script>
         <script type="text/javascript" src="../lib/js/angular-route.min.js"></script>
         <script type="text/javascript" src="../controller/maincontroller.js"></script>
         <script type="text/javascript" src="../controller/userController.js"></script>
@@ -21,14 +22,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#"><img src="../lib/images/icon.svg" alt="GNUKhata Icon" style="width:42px;height:42px;margin-top: -11px"></a>
+              <a class="navbar-brand" href=""><img src="../lib/images/icon.svg" alt="GNUKhata Icon" style="width:42px;height:42px;margin-top: -11px"></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
               <li class="dropdown">
-                  <a href="#" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">GNUKhata</a>
+                  <a href="" id="gnukhata" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">GNUKhata</a>
                   <ul class="dropdown-menu">
                     <li><a href="#">Logout</a></li>
                     <li><a href="#">Change Organisation</a></li>
@@ -36,7 +37,7 @@
                   </ul>
               </li>
               <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Master</a>
+                  <a href="" id="master" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Master</a>
                   <ul class="dropdown-menu">
                     <li><a href="#/account">Create Account</a></li>
                     <li><a href="#">Edit Account</a></li>
@@ -46,7 +47,7 @@
                   </ul>
                </li>
                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transaction</a>
+                  <a href="" id="transaction" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transaction</a>
                   <ul class="dropdown-menu">
                     <li><a href="#">Contra</a></li>
                     <li><a href="#">Payment</a></li>
@@ -61,7 +62,7 @@
                   </ul>
                 </li>
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Report</a>
+                  <a href="" id="report" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Report</a>
                   <ul class="dropdown-menu">
                     <li><a href="#">Ledger</a></li>
                     <li><a href="#">Trial Balance</a></li>
@@ -73,7 +74,7 @@
                   </ul>
                 </li>
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration</a>
+                  <a href="" id="administration" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration</a>
                   <ul class="dropdown-menu">
                     <li><a href="#/createuser">New User</a></li>
                     <li><a href="#">Remove User</a></li>
@@ -83,7 +84,7 @@
                   </ul>
                  </li>
                  <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help</a>
+                  <a href="" id="help" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help</a>
                   <ul class="dropdown-menu">
                     <li><a href="#">GNUKhata Manual</a></li>
                     <li><a href="#">Authors</a></li>
@@ -94,7 +95,7 @@
               </ul>
               <ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
-				<a accesskey="t" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Toolbar</a>
+				<a href="" id="toolbar" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Toolbar</a>
 				<ul class="dropdown-menu scrollable">
 					<li><a accesskey="z" href="create_account.html">Create/Edit Account - Z</a></li>
 					<li><a accesskey="a" href="#">List of Accounts - A</a></li>
@@ -127,6 +128,29 @@
           </div><!-- /.container-fluid -->
         </nav>
     	<div class="container-fluid" ng-view>
-	</div>	
+	</div>
+	<script>
+	shortcut.add("f1",function() {
+	document.getElementById("toolbar").click();
+	})
+	shortcut.add("Alt+G",function() {
+	document.getElementById("gnukhata").click();
+	})
+	shortcut.add("Alt+M",function() {
+	document.getElementById("master").click();
+	})
+	shortcut.add("Alt+T",function() {
+	document.getElementById("transaction").click();
+	})
+	shortcut.add("Alt+R",function() {
+	document.getElementById("report").click();
+	})
+	shortcut.add("Alt+A",function() {
+	document.getElementById("administration").click();
+	})
+	shortcut.add("Alt+H",function() {
+	document.getElementById("help").click();
+	})
+	</script>	
     </body>
 </html>
