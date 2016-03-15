@@ -1,15 +1,10 @@
-<html ng-app="mainapp">
+<html>
     <head>
         <script src="../lib/js/jquery-2.1.4.min.js"></script>
         <link href="../lib/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <script src="../lib/js/bootstrap.min.js"></script>
-        <script src="../lib/js/angular.min.js"></script>
         <script src="../lib/js/shortcut.js"></script>
-        <script type="text/javascript" src="../lib/js/angular-route.min.js"></script>
-        <script type="text/javascript" src="../controller/maincontroller.js"></script>
-        <script type="text/javascript" src="../controller/userController.js"></script>
-        <script type="text/javascript" src="../controller/accountController.js"></script>
-        <link href="../lib/css/main_shell_style.css" rel="stylesheet" type="text/css"/>
+        <link href="../lib/css/mainshellstyle.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <nav class="navbar navbar-inverse">
@@ -29,7 +24,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
               <li class="dropdown">
-                  <a href="" id="gnukhata" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">GNUKhata</a>
+                  <a href="" id="gnukhata" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>G</u>NUKhata</a>
                   <ul class="dropdown-menu">
                     <li><a href="#">Logout</a></li>
                     <li><a href="#">Change Organisation</a></li>
@@ -37,7 +32,7 @@
                   </ul>
               </li>
               <li class="dropdown">
-                  <a href="" id="master" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Master</a>
+                  <a href="" id="master" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>M</u>aster</a>
                   <ul class="dropdown-menu">
                     <li><a href="#/account">Create Account</a></li>
                     <li><a href="#">Edit Account</a></li>
@@ -47,7 +42,7 @@
                   </ul>
                </li>
                <li class="dropdown">
-                  <a href="" id="transaction" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transaction</a>
+                  <a href="" id="transaction" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>T</u>ransaction</a>
                   <ul class="dropdown-menu">
                     <li><a href="#">Contra</a></li>
                     <li><a href="#">Payment</a></li>
@@ -62,7 +57,7 @@
                   </ul>
                 </li>
                 <li class="dropdown">
-                  <a href="" id="report" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Report</a>
+                  <a href="" id="report" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>R</u>eport</a>
                   <ul class="dropdown-menu">
                     <li><a href="#">Ledger</a></li>
                     <li><a href="#">Trial Balance</a></li>
@@ -74,7 +69,7 @@
                   </ul>
                 </li>
                 <li class="dropdown">
-                  <a href="" id="administration" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration</a>
+                  <a href="" id="administration" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>A</u>dministration</a>
                   <ul class="dropdown-menu">
                     <li><a href="#/createuser">New User</a></li>
                     <li><a href="#">Remove User</a></li>
@@ -84,7 +79,7 @@
                   </ul>
                  </li>
                  <li class="dropdown">
-                  <a href="" id="help" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help</a>
+                  <a href="" id="help" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>H</u>elp</a>
                   <ul class="dropdown-menu">
                     <li><a href="#">GNUKhata Manual</a></li>
                     <li><a href="#">Authors</a></li>
@@ -127,8 +122,9 @@
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
         </nav>
-    	<div class="container-fluid" ng-view>
-	</div>
+    	<div class="container-fluid">
+			<div id="info" class="tab-pane fade in active"></div>
+		</div>
 	<script>
 	shortcut.add("f1",function() {
 	document.getElementById("toolbar").click();
@@ -151,6 +147,9 @@
 	shortcut.add("Alt+H",function() {
 	document.getElementById("help").click();
 	})
+	</script>
+	<script>
+	$("#info").load("info.html");
 	</script>	
     </body>
 </html>

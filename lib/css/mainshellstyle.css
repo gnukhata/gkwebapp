@@ -1,0 +1,20 @@
+ul.scrollable {
+	height: auto;
+	max-height: 400px;
+	overflow-x: hidden;
+}
+nav {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+div.info{padding: 16px 0 8px 16px;}
+ul.info {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	padding: 16px 0 8px 16px;
+	list-style-type: none;
+}
+li.matter {
+	padding: 4px 0 4px 0px;
+}
+p.shortcut {
+	padding: 0px 0 0px 40px;
+}
