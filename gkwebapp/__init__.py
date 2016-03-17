@@ -16,7 +16,7 @@ def main(global_config, **settings):
     config.include('pyramid_jinja2')
 
     config.add_static_view('static', 'static')
-    config.add_view('gkwebapp.views.my_view',
+    config.add_view('gkwebapp.views.views.my_view',
                     context='gkwebapp.resources.MyResource', 
                     renderer="templates/mytemplate.jinja2")
 
