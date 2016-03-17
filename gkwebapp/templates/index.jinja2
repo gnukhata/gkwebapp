@@ -1,0 +1,72 @@
+
+<!DOCTYPE HTML >
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" media="screen" href="{{request.static_url('gkwebapp:static/css/bootstrap.min.css')}}" />
+
+
+  <style>
+  .content{ margin-top:4%
+  }
+  </style>
+
+
+
+</head>
+<body>
+
+  <div class="nav navbar-default navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" >GNUKhata</a>
+
+      </div>
+
+      <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+        <ul class="nav navbar-nav pull-right">
+
+          <li class="active"><a class="navbar-brand" data-toggle="tab" href="#about">About</a></li>
+          <li><a data-toggle="tab" href="#selectorg"> <span class="sr-only">Select Existing Organisation</span>Select Existing Organisation</a></li>
+          <li><a data-toggle="tab" href="#createorg">Create Organisation</a></li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="tab-content">
+    <div id="about" class="tab-pane fade in active">
+
+
+    </div>
+    <div id="selectorg" class="tab-pane fade">
+
+
+    </div>
+    <div id="createorg" class="tab-pane fade">
+
+    </div>
+
+  </div>
+
+
+  <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
+  <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
+  <script>
+  $(document).ready(function(){
+    $("#about").load("/about");
+    $("#selectorg").load("/existingorg");
+    $("#createorg").load("/createorg");
+    return;
+  });
+
+	</script>
+
+</body>
+</html>
