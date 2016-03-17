@@ -14,7 +14,11 @@ def existingorg(request):
     s = requests.session()
     result = s.get("http://127.0.0.1:6543/organisations")
     print result.json()
-    return result.json()
+    strData = []
+    for records in result.json():
+        sdata = {"orgname":str(records["orgname"]),"orgtype":str(records["orgtype"])}
+        strData.append(sdata)
+    return {"gkresult":strData}
 
 @view_config(route_name="createorg", renderer="gkwebapp:templates/createorg.jinja2")
 def createorg(request):

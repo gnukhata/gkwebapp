@@ -28,6 +28,9 @@
               <span class="input-group-addon"><i class="glyphicon glyphicon-th-list"></i></span>
               <select class = "form-control" id="org-name"  name = "orgname" placeholder="Select Organisation">
                 <option>Please Select</option>
+                {% for orgs in gkresult %}
+                <option value="{{orgs}}">{{orgs["orgname"]}} , {{orgs["orgtype"]}}</option>
+                {% endfor %}
               </select>
             </div>
 
@@ -70,7 +73,17 @@
 
   <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
   <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
-  
+  <script>
+  $(document).ready(function()
+   {
+   $("#org-name").bind("change keyup", function(){
+   alert("click happened with selection " + $("#org-name option:selected").text());
+   var org = $("#org-name option:selected").val();
+   var orgobj = eval('('+org+')');
+   alert(orgobj.orgname);
+ });
+});
+  </script>
 </body>
 
 </html>
