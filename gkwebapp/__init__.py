@@ -23,5 +23,6 @@ def main(global_config, **settings):
     config.add_route('about', '/about')
     config.add_route('existingorg', '/existingorg')
     config.add_route('createorg', '/createorg')
+    config.add_route('yearcode', '/yearcode')
     config.scan('gkwebapp')
     return config.make_wsgi_app()

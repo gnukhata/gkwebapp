@@ -75,14 +75,28 @@
   <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
   <script>
   $(document).ready(function()
-   {
-   $("#org-name").bind("change keyup", function(){
-   alert("click happened with selection " + $("#org-name option:selected").text());
-   var org = $("#org-name option:selected").val();
-   var orgobj = eval('('+org+')');
-   alert(orgobj.orgname);
- });
-});
+  {
+    $("#org-name").bind("change keyup", function(){
+      var org = $("#org-name option:selected").val();
+      var orgobj = eval('('+org+')');
+      $.ajax({
+        type: "POST",
+        url: "/yearcode",
+        data: orgobj,
+        global: false,
+        async: false,
+        dataType: "json",
+        success: function(jsonObj) {
+          ListofYears = jsonObj["gkresult"],
+          $('#finalyears').empty();
+          for (i in ListofYears ) {
+            $('#finalyears').append('<option value="' + ListofYears[i].orgcode + '">' + ListofYears[i].yearstart+' to '+ListofYears[i].yearend + '</option>');
+          }
+        }
+
+      });
+    });
+  });
   </script>
 </body>
 
