@@ -33,6 +33,12 @@ def yearcode(request):
         strData.append(sdata)
     return {"gkresult":strData}
 
+@view_config(route_name="login", renderer="gkwebapp:templates/login.jinja2")
+def login(request):
+    print request.params["orgcode"]
+    return {"code":request.params["orgcode"]}
+
+
 @view_config(route_name="createorg", renderer="gkwebapp:templates/createorg.jinja2")
 def createorg(request):
     return {"a":1}
