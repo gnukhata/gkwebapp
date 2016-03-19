@@ -97,19 +97,11 @@
 
       });
     });
+    
     $("#callLogin").click(function(event){
       event.preventDefault();
       var orgcode = $("#finalyears option:selected").val();
-      $.ajax({
-        type: "POST",
-        url: "/login",
-        data: {"orgcode":orgcode},
-        global: false,
-        async: false,
-        dataType: "json",
-
-      });
-      $("#existingorg").load("/login");
+            $("#existingorg").load("/login?orgcode="+ orgcode );
 
     });
   });
