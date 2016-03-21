@@ -4,8 +4,8 @@ from gkwebapp.resources import get_root
 
 def main(global_config, **settings):
     """ This function returns a WSGI application.
-    
-    It is usually called by the PasteDeploy framework during 
+
+    It is usually called by the PasteDeploy framework during
     ``paster serve``.
     """
     settings = dict(settings)
@@ -17,7 +17,13 @@ def main(global_config, **settings):
 
     config.add_static_view('static', 'static')
     config.add_view('gkwebapp.views.views.my_view',
-                    context='gkwebapp.resources.MyResource', 
+                    context='gkwebapp.resources.MyResource',
                     renderer="templates/mytemplate.jinja2")
-
+    config.add_route('index', '/')
+    config.add_route('about', '/about')
+    config.add_route('existingorg', '/existingorg')
+    config.add_route('createorg', '/createorg')
+    config.add_route('yearcode', '/yearcode')
+    config.add_route('login', '/login')
+    config.scan('gkwebapp')
     return config.make_wsgi_app()
