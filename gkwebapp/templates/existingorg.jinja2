@@ -26,8 +26,8 @@
 
             <div style="margin-bottom: 25px" class="input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-th-list"></i></span>
-              <select class = "form-control" id="org-name"  name = "orgname" placeholder="Select Organisation">
-                <option>Please Select</option>
+              <select class = "form-control" id="org-name"  name = "orgname">
+                <option value="" disabled selected hidden>Select Organisation</option>
                 {% for orgs in gkresult %}
                 <option value="{{orgs}}">{{orgs["orgname"]}} , {{orgs["orgtype"]}}</option>
                 {% endfor %}
@@ -36,9 +36,8 @@
 
             <div style="margin-bottom: 25px" class="input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-th-list"></i></span>
-              <select class = "form-control" id="finalyears" name="orgcode" placeholder="Select Financial Year">
-
-
+              <select class = "form-control" id="finalyears" name="orgcode" >
+                <option value="" disabled selected hidden>Select Financial Year</option>
               </select>
             </div>
 
@@ -97,11 +96,11 @@
 
       });
     });
-    
+
     $("#callLogin").click(function(event){
       event.preventDefault();
       var orgcode = $("#finalyears option:selected").val();
-            $("#existingorg").load("/login?orgcode="+ orgcode );
+            $("#selectorg").load("/login?orgcode="+ orgcode );
 
     });
   });
