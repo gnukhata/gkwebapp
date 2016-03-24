@@ -32,8 +32,8 @@
         <ul class="nav navbar-nav pull-right">
 
           <li class="active"><a class="navbar-brand" data-toggle="tab" href="#about">About</a></li>
-          <li><a data-toggle="tab" href="#selectorg"> <span class="sr-only">Select Existing Organisation</span>Select Existing Organisation</a></li>
-          <li><a data-toggle="tab" href="#createorg">Create Organisation</a></li>
+          <li><a data-toggle="tab" id="selectnav" href="#selectorg"> <span class="sr-only">Select Existing Organisation</span>Select Existing Organisation</a></li>
+          <li><a data-toggle="tab" id="createnav" href="#createorg">Create Organisation</a></li>
 
         </ul>
       </div>
@@ -61,7 +61,12 @@
   <script>
   $(document).ready(function(){
     $("#about").load("/about");
-    $("#selectorg").load("/existingorg");
+    $("#selectnav").click(function(event){
+    $("#selectorg").load("/existingorg",setTimeout( function() { $("#org-name").focus(); }, 500 ));
+  });
+  $("#createnav").click(function(event){
+  $("#createorg").load("/createorg",setTimeout( function() { $("#orgName").focus(); }, 500 ));
+});
     $("#createorg").load("/createorg");
     return;
   });
