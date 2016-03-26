@@ -99,6 +99,7 @@
 
     $("#callLogin").click(function(event){
       event.preventDefault();
+
       var orgcode = $("#finalyears option:selected").val();
             $("#selectorg").load("/login?orgcode="+ orgcode );
 

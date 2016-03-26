@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<link rel="stylesheet" type="text/css" media="screen" href="{{request.static_url('gkwebapp:static/css/bootstrap.min.css')}}" />
+	<title>
+		GNUKhata
+	</title>
+
+	<style>
+	.login-box{
+		background-color: rgba(220, 225,225,0.4);
+	}
+
+	</style>
+
+</head>
+<body>
+
+	<div class='container'>
+		<div>
+			<img  height="70" src="../lib/images/icon.svg" width="70" class="center-block" />
+
+		</div>
+
+	</div>
+	<hr class="divider">
+
+
+	<div class="container">
+
+
+		<div id="loginbox" style="margin-top:10px;" class="mainbox col-md-6 col-md-offset-3">
+			<div class="panel panel-info" >
+				<div class="panel-heading">
+					<div class="panel-title">Create Admin</div>
+
+				</div>
+
+				<div style="padding-top:30px" class="panel-body" >
+
+
+					<form id="loginform" ng-submit="createOrg()" class="form-horizontal">
+
+						<div style="margin-bottom: 25px" class="input-group col-xs-12">
+
+							<input ng-model="name" type="text" class="form-control" name="username" placeholder="Username"></input>
+						</div>
+
+						<div style="margin-bottom: 25px" class="input-group col-xs-12">
+
+							<input ng-model="password" type="password" class="form-control" name="password" placeholder="Password"></input>
+						</div>
+
+						<div style="margin-bottom: 25px" class="input-group col-xs-12">
+
+							<input ng-model="cnfpassword" type="password" class="form-control" value="" placeholder="Confirm Password"></input>
+						</div>
+
+						<div style="margin-bottom: 25px" class="input-group col-xs-12">
+
+							<input ng-model="question" type="text" class="form-control" value="" placeholder="Security Question"></input>
+						</div>
+
+						<div style="margin-bottom: 25px" class="input-group col-xs-12">
+
+							<input ng-model="answer" type="text" class="form-control" value="" placeholder="Security Answer"></input>
+						</div>
+
+
+
+
+
+
+
+
+						<button type="submit" class="btn btn-success">Create & Login</button>
+
+
+
+
+
+
+					</form>
+				</div>
+			</div>
+
+
+
+
+		</div>
+
+	</div>
+	<script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
+	<script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
+
+
+</body>
+
+</html>

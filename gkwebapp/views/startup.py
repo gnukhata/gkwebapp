@@ -42,3 +42,19 @@ def login(request):
 @view_config(route_name="createorg", renderer="gkwebapp:templates/createorg.jinja2")
 def createorg(request):
 	return {"a":1}
+
+@view_config(route_name="createadmin", renderer="gkwebapp:templates/createadmin.jinja2")
+def createadmin(request):
+	orgname = request.params["orgname"]
+	print request.params["orgname"]
+
+	orgtype = request.params["orgtype"]
+	print request.params["orgtype"]
+
+	fromdate = request.params["fdate"]
+	print request.params["fdate"]
+
+	todate = request.params["tdate"]
+	print request.params["tdate"]
+
+	return {"orgname":orgname, "orgtype":orgtype, "fromdate":fromdate, "todate":todate}
