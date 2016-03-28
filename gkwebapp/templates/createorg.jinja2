@@ -111,11 +111,11 @@
 
   $("#btnsubmit").click(function(event){
         event.preventDefault();
-        var orgname = $("#orgname").val();
+        var orgname = $("#orgname").val().replace(/\s/g, "+");
 
-        var orgtype = $("#orgtype option:selected").val();
-        var fdate = $("#fromday").val()+"-"+$("#frommonth").val()+"-"+$("#fromyear").val();
-        var tdate = $("#today").val()+"-"+$("#tomonth").val()+"-"+$("#toyear").val();
+        var orgtype = $("#orgtype option:selected").val().replace(/\s/g, "+");
+        var fdate = $("#fromyear").val()+"-"+$("#frommonth").val()+"-"+$("#fromday").val();
+        var tdate = $("#toyear").val()+"-"+$("#tomonth").val()+"-"+$("#today").val();
         alert("orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate);
 
         $("#createorg").load("/createadmin?orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate );

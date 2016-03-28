@@ -55,6 +55,6 @@ def createadmin(request):
 	print request.params["fdate"]
 
 	todate = request.params["tdate"]
-	print request.params["tdate"]
+	print type(datetime.strptime(request.params["tdate"],"%Y-%m-%d"))
 
 	return {"orgname":orgname, "orgtype":orgtype, "fromdate":fromdate, "todate":todate}
