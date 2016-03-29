@@ -1,6 +1,7 @@
 from pyramid.view import view_config
 import requests, json
 from datetime import datetime
+from pyramid.renderers import render_to_response
 s = requests.session()
 
 @view_config(route_name="index", renderer="gkwebapp:templates/index.jinja2")
@@ -15,7 +16,7 @@ def about(request):
 def existingorg(request):
 	result = s.get("http://127.0.0.1:6543/organisations")
 	strData = []
-	for records in result.json():
+	for records in result.json()["gkdata"]:
 		sdata = {"orgname":str(records["orgname"]),"orgtype":str(records["orgtype"])}
 		strData.append(sdata)
 	return {"gkresult":strData}
@@ -41,4 +42,30 @@ def login(request):
 
 @view_config(route_name="createorg", renderer="gkwebapp:templates/createorg.jinja2")
 def createorg(request):
+	print "asdasdasdasdasdasdasdasdas"
 	return {"a":1}
+
+@view_config(route_name="createadmin", renderer="gkwebapp:templates/createadmin.jinja2")
+def createadmin(request):
+	orgname = request.params["orgname"]
+	print request.params["orgname"]
+
+	orgtype = request.params["orgtype"]
+	print request.params["orgtype"]
+
+	fromdate = request.params["fdate"]
+	print request.params["fdate"]
+
+	todate = request.params["tdate"]
+	print type(datetime.strptime(request.params["tdate"],"%Y-%m-%d"))
+
+	return {"orgname":orgname, "orgtype":orgtype, "fromdate":fromdate, "todate":todate}
+
+@view_config(route_name="showmainshell")
+def showmainshell(request):
+
+	gkdata = {"orgdetails":{"orgname":request.params["orgname"], "orgtype":request.params["orgtype"], "yearstart":request.params["yearstart"], "yearend":request.params["yearend"]}, "userdetails":{"username":request.params["username"], "userpassword":request.params["password"],"userquestion":request.params["securityquestion"], "useranswer":request.params["securityanswer"]}}
+	print gkdata
+	result = s.post("http://127.0.0.1:6543/organisations", data =json.dumps(gkdata))
+	print result.json()
+	return render_to_response('gkwebapp:templates/mainshell.jinja2',{"gktoken":result.json()["token"]}, request=request)

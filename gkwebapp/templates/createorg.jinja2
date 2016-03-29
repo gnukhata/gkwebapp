@@ -15,91 +15,84 @@
 
   <div class="container">
     <div class="row clearfix">
-      <div class="col-md-6 column">
-      </div>
-      <div id="selectorg" style="margin-top:50px;" class="mainbox col-md-6 pull-right">
+      <div id="createtorg" style="margin-top:50px;" class="mainbox col-md-6 pull-right">
         <div class="panel panel-info" >
           <div class="panel-heading">
             <div class="panel-title">Create Organisation</div>
-
           </div>
           <div style="padding-top:30px" class="panel-body" >
 
-            <form method="get" action="" role="form">
+            <form id="createorgform"  role="form">
               <div class="form-group">
-                <label for="orgName">Organisation Name</label><input name="orgname" class="form-control" placeholder="Enter Organisation Name" id="orgName" type="text" data-validation-required-message="Please Enter Organisation Name" />
-              </div>
-              <div class="form-group">
-                <label for="orgType">Organisation Type</label><select name="orgtype" class="form-control" id="orgType" data-validation-required-message="Please select Organisation Type">
-                  <option value="Profit Making">Profit Making</option>
-                  <option value="NGO">NGO</option>
+                <label for="orgname">Organisation Name:</label>
+                <input name="orgname" class="form-control" placeholder="Enter Organisation Name" id="orgname" type="text" data-validation-required-message="Please Enter Organisation Name" />
+                <br/>
+
+                <label for="orgcase">Case</label>
+                <select name="orgcase" class="form-control" id="orgcase">
+                  <option value="As-Is">As-is</option>
+                  <option value="Upper Case">Upper Case</option>
+                  <option value="Lower Case">Lower Case</option>
                 </select>
-              </div>
-              <div class="form-group">
-                <label for="Fdate">Financial Year:</label>
+
+                <br/>
+
+                <label for="orgtype">Organisation Type:</label>
+                <select name="orgtype" class="form-control" id="orgtype" data-validation-required-message="Please select Organisation Type">
+                  <option value="Profit Making">Profit Making</option>
+                  <option value="Not For Profit">Not For Profit</option>
+                </select>
+
+                <br/>
+
+                <label for="financialdate">Financial Year:</label>
 
                 <div class="form-inline">
-                  <div class="form-group">
 
-                    <label class="sr-only" for="txt_day">Enter Day</label>
-                    <input type="text" id="txt_fromday" name="from_day" class="form-control" style="width:60px"  placeholder="DD" required maxlength="2" data-validation-required-message="Day is required" >
+                  <label class="sr-only" for="fromday">Enter From Day</label>
+                  <input type="text" id="fromday" name="fromday" class="form-control" style="width:60px"  placeholder="DD" >
 
-                  </div>
-                  <div class="form-group ">
+                  <label class="sr-only" for="frommonth">Enter From Month</label>
+                  <input type="text" id="frommonth" name="frommonth" class="form-control" style="width:60px"  placeholder="MM" >
 
-                    <label class="sr-only" for="txt_month">Enter Month</label>
-                    <input type="text" id="txt_frommonth" name="from_month" class="form-control" style="width:60px"  placeholder="MM" required maxlength="2" data-validation-required-message="Month is required" >
+                  <label class="sr-only" for="txt_year">Enter From Year</label>
+                  <input type="text" id="fromyear" name="fromyear" class="form-control" style="width:65px"  placeholder="YYYY"  >
 
-                  </div>
+                  <label>--To--</label>
 
-                  <div class="form-group">
+                  <label class="sr-only" for="today">Enter To Day</label>
+                  <input type="text" id="today" name="day" class="form-control" style="width:60px"  placeholder="DD" >
 
-                    <label class="sr-only" for="txt_year">Enter Year</label>
-                    <input type="text" id="txt_fromyear" name="from_year" class="form-control" style="width:60px"  placeholder="YY" required maxlength="4" data-validation-required-message="Year is required" >
+                  <label class="sr-only" for="tomonth">Enter To Month</label>
+                  <input type="text" id="tomonth" name="tomonth" class="form-control" style="width:60px"  placeholder="MM"  >
 
-                  </div>
-                  <div class="form-group"><label>--To--</label></div>
-                  <div class="form-group">
+                  <label class="sr-only" for="toyear">Enter To Year</label>
+                  <input type="text" id="toyear" name="toyear" class="form-control" style="width:65px"  placeholder="YYYY"  >
 
-                    <label class="sr-only" for="txt_day">Enter Day</label>
-                    <input type="text" id="txt_today" name="to_day" class="form-control" style="width:60px"  placeholder="DD" required maxlength="2" data-validation-required-message="Day is required" >
 
-                  </div>
-                  <div class="form-group ">
-
-                    <label class="sr-only" for="txt_month">Enter Month</label>
-                    <input type="text" id="txt_tomonth" name="to_month" class="form-control" style="width:60px"  placeholder="MM" required maxlength="2" data-validation-required-message="Month is required" >
-
-                  </div>
-
-                  <div class="form-group">
-
-                    <label class="sr-only" for="txt_year">Enter Year</label>
-                    <input type="text" id="txt_toyear" name="to_year" class="form-control" style="width:60px"  placeholder="YY" required maxlength="4" data-validation-required-message="Year is required" >
-
-                  </div>
                 </div>
                 <br />
-                <div style="margin-top:10px" class="form-group">
-                  <!-- Button -->
-
-
-                  <button class="btn btn-success" id="btnSubmit" type="submit"><span class="glyphicon glyphicon-arrow-right"></span>Proceed</button>
-
-                </div>
-
+                <button class="btn btn-success" id="btnsubmit" type="submit"><span class="glyphicon glyphicon-arrow-right"></span>Proceed</button>
               </div>
+
 
             </form>
 
           </div>
         </div>
+
       </div>
     </div>
   </div>
+
+
+
   <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
   <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
   <script>
+  $(document).ready(function()
+  {
+
   $('input:text:first,select').focus();
 
   $('input:text,select').bind("keydown", function(e) {
@@ -115,5 +108,23 @@
 
       }
     });
+
+  $("#btnsubmit").click(function(event){
+        event.preventDefault();
+        var orgname = $("#orgname").val().replace(/\s/g, "+");
+
+        var orgtype = $("#orgtype option:selected").val().replace(/\s/g, "+");
+        var fdate = $("#fromyear").val()+"-"+$("#frommonth").val()+"-"+$("#fromday").val();
+        var tdate = $("#toyear").val()+"-"+$("#tomonth").val()+"-"+$("#today").val();
+        alert("orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate);
+
+        $("#createorg").load("/createadmin?orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate );
+
+      });
+    });
+
+
     </script>
+
   </body>
+  </html>
