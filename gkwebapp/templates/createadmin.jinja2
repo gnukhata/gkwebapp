@@ -29,7 +29,7 @@
 				<div style="padding-top:30px" class="panel-body" >
 
 
-					<form id="loginform" class="form-horizontal">
+					<form id="loginform" method="post" action="showmainshell" class="form-horizontal">
 
 						<div style="margin-bottom: 25px" class="col-xs-12 from-group">
 
@@ -37,11 +37,15 @@
 							<br/>
 							<input type="password" id="password" class="form-control" name="password" placeholder="Password"></input>
 							<br/>
-							<input type="password" name="cnfpassword" id="cnfpassword" class="form-control" value="" placeholder="Confirm Password"></input>
+							<input type="password" name="confirmpassword" id="confirmpassword" class="form-control" value="" placeholder="Confirm Password"></input>
 							<br/>
-							<input type="text" class="form-control" value="" id="secquestion" name="secquestion" placeholder="Security Question"></input>
+							<input type="text" class="form-control" value="" id="securityquestion" name="securityquestion" placeholder="Security Question"></input>
 							<br/>
-							<input type="text" class="form-control" value="" id="secans" name="secans" placeholder="Security Answer"></input>
+							<input type="text" class="form-control" value="" id="securityanswer" name="securityanswer" placeholder="Security Answer"></input>
+							<input type="hidden" class="form-control" value="{{orgname}}" id="orgname" name="orgname"></input>
+							<input type="hidden" class="form-control" value="{{orgtype}}" id="orgtype" name="orgtype"></input>
+							<input type="hidden" class="form-control" value="{{fromdate}}" id="yearstart" name="yearstart"></input>
+							<input type="hidden" class="form-control" value="{{todate}}" id="yearend" name="yearend"></input>
 							<br/>
 							<button type="submit" class="btn btn-success">Create & Login</button>
 

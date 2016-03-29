@@ -25,6 +25,7 @@ def main(global_config, **settings):
     config.add_route('createorg', '/createorg')
     config.add_route('yearcode', '/yearcode')
     config.add_route('login', '/login')
+    config.add_route('showmainshell', '/showmainshell')
     config.add_route('createadmin', '/createadmin')
     config.scan('gkwebapp')
     return config.make_wsgi_app()
