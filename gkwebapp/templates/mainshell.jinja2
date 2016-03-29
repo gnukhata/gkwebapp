@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
+        <link href="{{request.static_url('gkwebapp:static/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
+        <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/shortcut.js')}}"></script>
+        <link href="{{request.static_url('gkwebapp:static/css/mainshellstyle.css')}}" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href=""><img src="{{request.static_url('gkwebapp:static/images/icon.svg')}}" alt="GNUKhata Icon" style="width:42px;height:42px;margin-top: -11px" /></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+              <li class="dropdown">
+                  <a href="" id="gnukhata" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>G</u>NUKhata</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Logout</a></li>
+                    <li><a href="#">Change Organisation</a></li>
+                    <li><a href="#">Quit</a></li>
+                  </ul>
+              </li>
+              <li class="dropdown">
+                  <a href="" id="master" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>M</u>aster</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#/account">Create Account</a></li>
+                    <li><a href="#">Edit Account</a></li>
+                    <li><a href="#">Edit Organisation</a></li>
+                    <li><a href="#">Project</a></li>
+                    <li><a href="#">Bank Reconciliation Statement</a></li>
+                  </ul>
+               </li>
+               <li class="dropdown">
+                  <a href="" id="transaction" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>T</u>ransaction</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Contra</a></li>
+                    <li><a href="#">Payment</a></li>
+                    <li><a href="#">Receipt</a></li>
+                    <li><a href="#">Journal</a></li>
+                    <li><a href="#">Sales</a></li>
+                    <li><a href="#">Purchase</a></li>
+                    <li><a href="#">Credit Note</</a></li>
+                    <li><a href="#">Debit Note</a></li>
+                    <li><a href="#">Sales Return</a></li>
+                    <li><a href="#">Purchase Return</a></li>
+                  </ul>
+                </li>
+                <li class="dropdown">
+                  <a href="" id="report" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>R</u>eport</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Ledger</a></li>
+                    <li><a href="#">Trial Balance</a></li>
+                    <li><a href="#">Project Statement</a></li>
+                    <li><a href="#">Cash Flow</a></li>
+                    <li><a href="#">Statement of Affairs</a></li>
+                    <li><a href="#">Income and Expenditure Account</a></li>
+                    <li><a href="#">List of Accounts</a></li>
+                  </ul>
+                </li>
+                <li class="dropdown">
+                  <a href="" id="administration" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>A</u>dministration</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#/createuser">New User</a></li>
+                    <li><a href="#">Remove User</a></li>
+                    <li><a href="#">Change Password</a></li>
+                    <li><a href="#">Close Books/Roll Over</a></li>
+                    <li><a href="#">Delete Organisation</a></li>
+                  </ul>
+                 </li>
+                 <li class="dropdown">
+                  <a href="" id="help" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>H</u>elp</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">GNUKhata Manual</a></li>
+                    <li><a href="#">Authors</a></li>
+                    <li><a href="#">GNUKhata License</a></li>
+                    <li><a href="#">About GNUkhata</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+				<a href="" id="toolbar" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Toolbar</a>
+				<ul class="dropdown-menu scrollable">
+					<li><a accesskey="z" href="create_account.html">Create/Edit Account - Z</a></li>
+					<li><a accesskey="a" href="#">List of Accounts - A</a></li>
+					<li><a accesskey="l" href="#">Ledger - L</a></li>
+					<li><a accesskey="y" href="#">Contra - Y</a></li>
+					<li><a accesskey="p" href="#">Payment - P</a></li>
+					<li><a accesskey="r" href="#">Receipt - R</p</li>
+					<li><a accesskey="j" href="#">Journal - J</a></li>
+					<li><a accesskey="s" href="#">Sales - S</a></li>
+					<li><a accesskey="x" href="#">Purchase - X</p</li>
+					<li><a accesskey="c" href="#">Credit Note - C</a></li>
+					<li><a accesskey="d" href="#">Debit Note - D</a></li>
+					<li><a accesskey="w" href="#">Sales Return - W</a></li>
+					<li><a accesskey="u" href="#">Purchase Return - U</a></li>
+					<li><a accesskey="b" href="trial_balance.html">Trial Balance - B</p</li>
+					<li><a accesskey="i" href="#">Income & Expenditure - I</a></li>
+					<li><a accesskey="e" href="#">Statement of Affairs - E</a></li>
+					<li><a accesskey="f" href="#">Cash Flow - F</a></li>
+					<li><a accesskey="k" href="#">Project Statement - K</a></li>
+					<li><a accesskey="n" href="#">Bank Reconciliation Statement - N</a></li>
+					<li><a accesskey="m" href="#">Project - M</a></li>
+					<li><a accesskey="v" href="#">Find Voucher - V</a></li>
+					<li><a accesskey="g" href="#">Logout - G</a></li>
+					<li><a accesskey="o" href="#">Change Organisation - O</a></li>
+					<li><a accesskey="q" href="#">Quit - Q</a></li>
+				</ul>
+				</li>
+			</ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+    	<div class="container-fluid">
+			<div id="info" class="tab-pane fade in active"></div>
+		</div>
+	<script>
+	shortcut.add("f1",function() {
+	document.getElementById("toolbar").click();
+	})
+	shortcut.add("Alt+G",function() {
+	document.getElementById("gnukhata").click();
+	})
+	shortcut.add("Alt+M",function() {
+	document.getElementById("master").click();
+	})
+	shortcut.add("Alt+T",function() {
+	document.getElementById("transaction").click();
+	})
+	shortcut.add("Alt+R",function() {
+	document.getElementById("report").click();
+	})
+	shortcut.add("Alt+A",function() {
+	document.getElementById("administration").click();
+	})
+	shortcut.add("Alt+H",function() {
+	document.getElementById("help").click();
+	})
+	</script>
+	<script>
+	$("#info").load("/info");
+	</script>
+    </body>
+</html>
