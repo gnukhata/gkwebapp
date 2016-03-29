@@ -29,7 +29,7 @@
 				<div style="padding-top:30px" class="panel-body" >
 
 
-					<form id="loginform" method="post" action="showmainshell" class="form-horizontal">
+					<form id="loginform" method="post"  action="createorglogin" class="form-horizontal">
 
 						<div style="margin-bottom: 25px" class="col-xs-12 from-group">
 
@@ -57,6 +57,36 @@
 	</div>
 	<script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
 	<script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
+<script>
+$(document).ready(function()
+{
+alert("document is ready ");
+$("#loginform").submit(function(e)
+{
+alert("submit in process");
+    $.ajax(
+    {
+    //alert("starting ajax");
+    type: "POST",
+    url: "/createorglogin",
+    global: false,
+    async: false,
+    datatype: "json",
+    data: $("#loginform").serialize(),
+    success: function(resp)
+    {
+    var gt = resp['gktoken'];
+    alert(gt);
+    }
+    
+    }
+    );
+    e.preventDefault();
+}
+);
+}
+);
+</script>
 
 
 </body>

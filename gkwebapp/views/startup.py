@@ -28,7 +28,7 @@ def yearcode(request):
 	result = s.get("http://127.0.0.1:6543/orgyears/%s/%s"%(oname,otype))
 	strData = []
 
-	for records in result.json():
+	for records in result.json()["gkdata"]:
 		print datetime.strftime(datetime.strptime(records["yearstart"],"%Y-%m-%d"),"%d-%m-%Y")
 		sdata = {"yearstart":datetime.strftime(datetime.strptime(records["yearstart"],"%Y-%m-%d"),"%d-%m-%Y"),"yearend":datetime.strftime(datetime.strptime(records["yearend"],"%Y-%m-%d"),"%d-%m-%Y"), "orgcode":records["orgcode"]}
 		strData.append(sdata)
@@ -42,30 +42,31 @@ def login(request):
 
 @view_config(route_name="createorg", renderer="gkwebapp:templates/createorg.jinja2")
 def createorg(request):
-	print "asdasdasdasdasdasdasdasdas"
+	#print "asdasdasdasdasdasdasdasdas"
 	return {"a":1}
 
 @view_config(route_name="createadmin", renderer="gkwebapp:templates/createadmin.jinja2")
 def createadmin(request):
 	orgname = request.params["orgname"]
-	print request.params["orgname"]
+	#print request.params["orgname"]
 
 	orgtype = request.params["orgtype"]
-	print request.params["orgtype"]
+	#print request.params["orgtype"]
 
 	fromdate = request.params["fdate"]
-	print request.params["fdate"]
+	#print request.params["fdate"]
 
 	todate = request.params["tdate"]
-	print type(datetime.strptime(request.params["tdate"],"%Y-%m-%d"))
+	#print type(datetime.strptime(request.params["tdate"],"%Y-%m-%d"))
 
 	return {"orgname":orgname, "orgtype":orgtype, "fromdate":fromdate, "todate":todate}
 
-@view_config(route_name="showmainshell")
-def showmainshell(request):
+@view_config(route_name="createorglogin",renderer="json")
+def orglogin(request):
+	print "about to create organization"
 
 	gkdata = {"orgdetails":{"orgname":request.params["orgname"], "orgtype":request.params["orgtype"], "yearstart":request.params["yearstart"], "yearend":request.params["yearend"]}, "userdetails":{"username":request.params["username"], "userpassword":request.params["password"],"userquestion":request.params["securityquestion"], "useranswer":request.params["securityanswer"]}}
 	print gkdata
 	result = s.post("http://127.0.0.1:6543/organisations", data =json.dumps(gkdata))
 	print result.json()
-	return render_to_response('gkwebapp:templates/mainshell.jinja2',{"gktoken":result.json()["token"]}, request=request)
+	return  {"gktoken":result.json()["token"]}

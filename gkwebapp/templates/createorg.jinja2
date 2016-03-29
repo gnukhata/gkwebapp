@@ -116,7 +116,7 @@
         var orgtype = $("#orgtype option:selected").val().replace(/\s/g, "+");
         var fdate = $("#fromyear").val()+"-"+$("#frommonth").val()+"-"+$("#fromday").val();
         var tdate = $("#toyear").val()+"-"+$("#tomonth").val()+"-"+$("#today").val();
-        alert("orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate);
+        //alert("orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate);
 
         $("#createorg").load("/createadmin?orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate );
 
