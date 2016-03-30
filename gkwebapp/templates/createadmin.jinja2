@@ -60,7 +60,7 @@
 <script>
 $(document).ready(function()
 {
-alert("document is ready ");
+
 $("#loginform").submit(function(e)
 {
 
@@ -76,8 +76,9 @@ $("#loginform").submit(function(e)
     success: function(resp)
     {
     var gt = resp['gktoken'];
-    //alert(gt);
-    //$window.sessionStorage.accessToken = gt;
+
+    sessionStorage.gktoken = gt;
+
     window.location= "/showmainshell";
     }
     
