@@ -63,7 +63,6 @@ def createadmin(request):
 
 @view_config(route_name="createorglogin",renderer="json")
 def orglogin(request):
-	print "about to create organization"
 
 	gkdata = {"orgdetails":{"orgname":request.params["orgname"], "orgtype":request.params["orgtype"], "yearstart":request.params["yearstart"], "yearend":request.params["yearend"]}, "userdetails":{"username":request.params["username"], "userpassword":request.params["password"],"userquestion":request.params["securityquestion"], "useranswer":request.params["securityanswer"]}}
 	print gkdata
@@ -71,7 +70,16 @@ def orglogin(request):
 	print result.json()
 	return  {"gktoken":result.json()["token"]}
 
+@view_config(route_name="userlogin",renderer="json")
+def selectorglogin(request):
+
+	gkdata = {"username":request.params["username"], "userpassword":request.params["userpassword"],"orgcode":request.params["orgcode"]}
+	print gkdata
+	result = s.post("http://127.0.0.1:6543/login", data =json.dumps(gkdata))
+	print result.json()
+	return  {"gktoken":result.json()["token"]}
+
+
 @view_config(route_name="showmainshell",renderer="gkwebapp:templates/mainshell.jinja2")
 def mainshell(request):
-	print "going to main shell"
 	return {"status":"ok"}
