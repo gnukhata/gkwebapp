@@ -70,3 +70,8 @@ def orglogin(request):
 	result = s.post("http://127.0.0.1:6543/organisations", data =json.dumps(gkdata))
 	print result.json()
 	return  {"gktoken":result.json()["token"]}
+
+@view_config(route_name="showmainshell",renderer="gkwebapp:templates/mainshell.jinja2")
+def mainshell(request):
+	print "going to main shell"
+	return {"status":"ok"}

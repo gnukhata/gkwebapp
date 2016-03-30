@@ -63,7 +63,7 @@ $(document).ready(function()
 alert("document is ready ");
 $("#loginform").submit(function(e)
 {
-alert("submit in process");
+
     $.ajax(
     {
     //alert("starting ajax");
@@ -76,11 +76,14 @@ alert("submit in process");
     success: function(resp)
     {
     var gt = resp['gktoken'];
-    alert(gt);
+    //alert(gt);
+    //$window.sessionStorage.accessToken = gt;
+    window.location= "/showmainshell";
     }
     
     }
     );
+
     e.preventDefault();
 }
 );
