@@ -36,7 +36,7 @@
 
 			<div style="margin-bottom: 25px" class="input-group">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
-				<input id="openbal" name="openbal" class=" form-control" type="text" placeholder="0.00"/>
+				<input id="openbal" name="openbal" value="0.00" class=" form-control" type="text" placeholder="0.00"/>
 			</div>
 
 			<div style="margin-top:10px">
@@ -82,6 +82,13 @@
 
 		$("#accountform").submit(function(e)
 		{
+			var ob = $('#openbal').val();
+			alert(ob);
+			if(ob=="")
+			{
+				alert(ob);
+				$('#openbal').val("0.00");
+			}
 			$.ajax(
 				{
 
