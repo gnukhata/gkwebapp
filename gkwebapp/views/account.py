@@ -22,11 +22,9 @@ def getsubgroup(request):
     subgrpdata=[]
     for record in result.json()["gkresult"]:
         sgdata= {"subgroupname":record["subgroupname"],"subgroupcode":record["groupcode"]}
+        print "this idddddddddd: ", sgdata
         subgrpdata.append(sgdata)
 
-    if request.params["groupname"]=="Direct Expense" or request.params["groupname"]=="Indirect Expense" or request.params["groupname"]=="Direct Income" or request.params["groupname"]=="Indirect Income" or request.params["groupname"]=="Loans(Asset)" or request.params["groupname"]=="Reserves" or request.params["groupname"]=="Capital" or request.params["groupname"]=="Miscellaneous Expenses(Asset)" or request.params["groupname"]=="Corpus":
-        sgdata={"subgroupname":"None","subgroupcode":"None"}
-    subgrpdata.append(sgdata)
     return {"gkresult":subgrpdata}
 
 @view_config(route_name="addaccount", renderer="json")
@@ -36,7 +34,8 @@ def addaccount(request):
     gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openbal"]}
     if request.params["subgroupname"]=="None":
         grpcode= request.params["groupname"]
-        gkdata["groupcode"] = grpcode["groupcode"]
+        print "thissssssssssssssssssssss: ",grpcode
+        gkdata["groupcode"] = grpcode
     else:
         gkdata["groupcode"] = request.params["subgroupname"]
     result = s.post("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata))
