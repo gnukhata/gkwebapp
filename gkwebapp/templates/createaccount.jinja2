@@ -16,7 +16,7 @@
 				<select class = "form-control" id="groupname"  name = "groupname">
 					<option value="" disabled selected hidden>Select Group</option>
 					{% for grps in gkresult %}
-					<option value="{{grps}}">{{grps["groupname"]}}</option>
+					<option value="{{grps["groupcode"]}}">{{grps["groupname"]}}</option>
 					{% endfor %}
 				</select>
 			</div>
@@ -51,6 +51,7 @@
 		</div>
 
 	</form>
+
 
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/createaccount.js')}}"></script>
 </body>

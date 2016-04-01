@@ -17,12 +17,10 @@ $(document).ready(function()
     }
 
     var groups = $("#groupname option:selected").val();
-    var grpobj = eval('('+groups+')');
-
     $.ajax({
       type: "POST",
       url: "/getsubgroup",
-      data: grpobj ,
+      data: {"groupcode":groups},
       global: false,
       async: false,
       dataType: "json",
@@ -35,6 +33,11 @@ $(document).ready(function()
         $('#subgroupname').empty();
         for (i in subgroups ) {
           $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</option>');
+        }
+        var grpnam=$("#groupname option:selected").text();
+        if (grpnam=="Direct Expense" || grpnam=="Indirect Expense" || grpnam=="Direct Income" || grpnam=="Indirect Income" || grpnam=="Loans(Asset)" || grpnam=="Reserves" || grpnam=="Capital" || grpnam=="Miscellaneous Expenses(Asset)" || grpnam=="Corpus")
+        {
+            $('#subgroupname').prepend('<option value="None">None</option>');
         }
       }
 
@@ -74,4 +77,8 @@ $(document).ready(function()
     e.preventDefault();
   }
 );
+
+
+
+
 });
