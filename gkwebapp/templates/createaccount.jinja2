@@ -6,60 +6,58 @@
 
 </head>
 <body >
-	<form id="accountform" method="post"  action="addaccount" class="form-horizontal">
-		<div  class="col-md-6" >
+	<div class="container">
 
 
-			<label for="groupname" id="gname">Group Name :</label>
-			<div style="margin-bottom: 25px" class="input-group">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-th-list"></i></span>
-				<select class = "form-control" id="groupname"  name = "groupname">
-					<option value="" disabled selected hidden>Select Group</option>
-					{% for grps in gkresult %}
-					<option value="{{grps["groupcode"]}}">{{grps["groupname"]}}</option>
-					{% endfor %}
-				</select>
+		<div style="padding-top:15px" class="mainbox col-md-6">
+			<div class="panel panel-info" >
+				<div class="panel-heading">
+					<div class="panel-title">Create Account</div>
+
+				</div>
+
+				<div style="padding-top:5px" class="panel-body" >
+
+
+					<form id="accountform" method="post"  action="addaccount" class="form-horizontal">
+
+						<div style="margin-bottom: 5px" class="col-xs-12 from-group">
+							<label for="groupname" id="gname">Group Name :</label>
+							<select class = "form-control gsselect" id="groupname"  name = "groupname" required data-msg="Please select a group">
+								<option value="" disabled selected hidden>Select Group</option>
+								{% for grps in gkresult %}
+								<option value="{{grps["groupcode"]}}">{{grps["groupname"]}}</option>
+								{% endfor %}
+							</select>
+							<br/>
+							<label for="subgroupname" id="sname">Sub-Group Name :</label>
+							<select class = "form-control gsselect" id="subgroupname" name="subgroupname" required data-msg="Please select a sub-group" >
+								<option value="" disabled selected hidden>Select Sub-Group</option>
+							</select>
+							<br/>
+							<div id="nsgp" style="margin-bottom: 25px" class="input-group">
+								<label for="newsubgroup" id="newsgrp">Sub-Group Name :</label>
+								<input type="text" id="newsubgroup" class="form-control" name="newsubgroup" placeholder="New Sub-Group Name" required data-msg="Please enter sub-group name" ></input>
+							</div>
+
+							<label> <input type="checkbox" id="maccounts"> Create Multiple Accounts</label>
+							<br/>
+							<label for="accountname" id="accname">Account Name :</label>
+							<input type="text" id="accountname" class="form-control" name="accountname" placeholder="Accountname" required data-msg="Please enter account name"></input>
+							<br/>
+							<label for="openbal" id="obal">Opening Balance :</label>
+							<input id="openbal" name="openbal" value="0.00" class=" form-control" type="text" placeholder="0.00"/>
+							<br/>
+							<button type="submit" class="btn btn-primary" id="submit" name="submit">Submit</button>
+							<button id="reset" class="btn btn-danger">Reset</button>
+
+						</div>
+					</form>
+				</div>
 			</div>
-
-			<label for="subgroupname" id="sname">Sub-Group Name :</label>
-			<div style="margin-bottom: 25px" class="input-group">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-th-list"></i></span>
-				<select class = "form-control" id="subgroupname" name="subgroupname" >
-					<option value="" disabled selected hidden>Select Sub-Group</option>
-				</select>
-			</div>
-
-
-			<label for="newsubgroup" id="newsgrp">Sub-Group Name :</label>
-			<div id="nsgp" style="margin-bottom: 25px" class="input-group">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
-				<input type="text" id="newsubgroup" class="form-control" name="newsubgroup" placeholder="New Sub-Group Name" ></input>
-			</div>
-
-			<label> <input type="checkbox" id="maccounts"> Create Multiple Accounts</label>
-			<br/><br/>
-			<label for="accountname" id="accname">Account Name :</label>
-			<div style="margin-bottom: 25px" class="input-group">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
-				<input type="text" id="accountname" class="form-control" name="accountname" placeholder="Accountname" required></input>
-			</div>
-
-			<label for="openbal" id="obal">Opening Balance :</label>
-			<div id="opbal" style="margin-bottom: 25px" class="input-group">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
-				<input id="openbal" name="openbal" value="0.00" class=" form-control" type="text" placeholder="0.00"/>
-			</div>
-
-			<div style="margin-top:10px">
-				<button type="submit" class="btn btn-primary" id="submit" name="submit">Submit</button>
-				<button id="reset" class="btn btn-danger">Reset</button>
-			</div>
-
 		</div>
-
-	</form>
-
-
+	</div>
+	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/createaccount.js')}}"></script>
 </body>
 </html>

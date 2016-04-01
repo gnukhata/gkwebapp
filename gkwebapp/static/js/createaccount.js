@@ -1,6 +1,8 @@
 $(document).ready(function()
 {
+  $("#accountform").validate({
 
+  });
   $("#groupname").bind("change keyup", function(){
     var gname = $("#groupname option:selected").text();
 
@@ -45,19 +47,18 @@ $(document).ready(function()
     });
   });
 
+$("#nsgp").hide();
 
-$("#subgroupname").bind("change keyup", function(){
+$(".gsselect").bind("change keyup", function(){
 var sgroups = $("#subgroupname option:selected").val();
 if (sgroups=="New")
 {
   $("#nsgp").show();
-  $("#newsgrp").show();
+
 }
 else
 {
   $("#nsgp").hide();
-  $("#newsgrp").hide();
-
 }
 
 
@@ -66,6 +67,9 @@ else
 
   $("#accountform").submit(function(e)
   {
+var isvalidate=$("#adduser").valid();
+if(isvalidate)
+{
     var ob = $('#openbal').val();
     if(ob=="")
     {
@@ -75,7 +79,7 @@ else
 
 
 
-    
+
       $.ajax(
         {
 
@@ -100,7 +104,7 @@ else
 
 
 
-
+}
     e.preventDefault();
   }
 );
