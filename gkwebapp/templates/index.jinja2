@@ -58,20 +58,7 @@
 
   <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
   <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
-  <script>
-  $(document).ready(function(){
-    $("#about").load("/about");
-    $("#selectnav").click(function(event){
-    $("#selectorg").load("/existingorg",setTimeout( function() { $("#org-name").focus(); }, 500 ));
-  });
-  $("#createnav").click(function(event){
-  $("#createorg").load("/createorg",setTimeout( function() { $("#orgname").focus(); }, 500 ));
-});
-
-    return;
-  });
-
-	</script>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/index.js')}}"></script>
 
 </body>
 </html>
