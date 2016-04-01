@@ -40,5 +40,8 @@ $(document).ready(function(){
     }
   );
   });
+  $('#addaccounttb').click(function(){
+    $('#addaccount').click();
+  });
 
 });
