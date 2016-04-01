@@ -55,46 +55,7 @@
 
   <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
   <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
-
-  <script>
-  $(document).ready(function()
-  {
-    $("#back").click(function(event){
-      event.preventDefault();
-      $("#selectorg").load("/existingorg" );
-
-    });
-
-    $("#loginform").submit(function(e)
-    {
-
-        $.ajax(
-        {
-        //alert("starting ajax");
-        type: "POST",
-        url: "/userlogin",
-        global: false,
-        async: false,
-        datatype: "json",
-        data: $("#loginform").serialize(),
-        success: function(resp)
-        {
-        var gt = resp['gktoken'];
-
-        sessionStorage.gktoken = gt;
-
-        window.location= "/showmainshell";
-        }
-
-        }
-        );
-
-        e.preventDefault();
-    }
-    );
-  });
-  </script>
-
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/login.js')}}"></script>
 </body>
 
 </html>

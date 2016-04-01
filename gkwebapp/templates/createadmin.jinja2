@@ -57,40 +57,7 @@
 	</div>
 	<script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
 	<script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
-<script>
-$(document).ready(function()
-{
-
-$("#loginform").submit(function(e)
-{
-
-    $.ajax(
-    {
-    //alert("starting ajax");
-    type: "POST",
-    url: "/createorglogin",
-    global: false,
-    async: false,
-    datatype: "json",
-    data: $("#loginform").serialize(),
-    success: function(resp)
-    {
-    var gt = resp['gktoken'];
-
-    sessionStorage.gktoken = gt;
-
-    window.location= "/showmainshell";
-    }
-    
-    }
-    );
-
-    e.preventDefault();
-}
-);
-}
-);
-</script>
+	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/createadmin.js')}}"></script>
 
 
 </body>

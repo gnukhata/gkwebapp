@@ -89,42 +89,7 @@
 
   <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
   <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
-  <script>
-  $(document).ready(function()
-  {
-
-  $('input:text:first,select').focus();
-
-  $('input:text,select').bind("keydown", function(e) {
-    var n = $("input:text,select").length;
-    var f = $('input:text,select');
-    if (e.which == 13)
-    {
-
-      var nextIndex = f.index(this) + 1;
-      if(nextIndex < n){
-        e.preventDefault();
-        f[nextIndex].focus();}
-
-      }
-    });
-
-  $("#btnsubmit").click(function(event){
-        event.preventDefault();
-        var orgname = $("#orgname").val().replace(/\s/g, "+");
-
-        var orgtype = $("#orgtype option:selected").val().replace(/\s/g, "+");
-        var fdate = $("#fromyear").val()+"-"+$("#frommonth").val()+"-"+$("#fromday").val();
-        var tdate = $("#toyear").val()+"-"+$("#tomonth").val()+"-"+$("#today").val();
-        //alert("orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate);
-
-        $("#createorg").load("/createadmin?orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate );
-
-      });
-    });
-
-
-    </script>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/createorg.js')}}"></script>
 
   </body>
   </html>
