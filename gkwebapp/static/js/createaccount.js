@@ -39,10 +39,29 @@ $(document).ready(function()
         {
             $('#subgroupname').prepend('<option value="None">None</option>');
         }
+        $('#subgroupname').append('<option value="New">New Sub-Group</option>');
       }
 
     });
   });
+
+
+$("#subgroupname").bind("change keyup", function(){
+var sgroups = $("#subgroupname option:selected").val();
+if (sgroups=="New")
+{
+  $("#nsgp").show();
+  $("#newsgrp").show();
+}
+else
+{
+  $("#nsgp").hide();
+  $("#newsgrp").hide();
+
+}
+
+
+});
 
 
   $("#accountform").submit(function(e)
@@ -52,27 +71,35 @@ $(document).ready(function()
     {
       $('#openbal').val("0.00");
     }
-    $.ajax(
-      {
 
-        type: "POST",
-        url: "/addaccount",
-        global: false,
-        async: false,
-        datatype: "json",
-        data: $("#accountform").serialize(),
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-        success: function(resp)
+
+
+
+    
+      $.ajax(
         {
 
-          alert(resp["gkstatus"])
+          type: "POST",
+          url: "/addaccount",
+          global: false,
+          async: false,
+          datatype: "json",
+          data: $("#accountform").serialize(),
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+          success: function(resp)
+          {
+
+            alert(resp["gkstatus"]);
+          }
+
         }
+      );
 
-      }
-    );
+
+
 
     e.preventDefault();
   }

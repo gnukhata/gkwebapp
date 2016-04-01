@@ -30,16 +30,22 @@ def getsubgroup(request):
 @view_config(route_name="addaccount", renderer="json")
 def addaccount(request):
     header={"gktoken":request.headers["gktoken"]}
+    if request.params["subgroupname"]=="New"
+        gkdata={"groupname":request.params["newsubgroup"],"subgroupof":request.params["groupname"]}
+        result = requests.post("http://127.0.0.1:6543/groupsubgroups", data =json.dumps(gkdata),headers=header)
 
-    gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openbal"]}
-    if request.params["subgroupname"]=="None":
-        grpcode= request.params["groupname"]
-        print "thissssssssssssssssssssss: ",grpcode
-        gkdata["groupcode"] = grpcode
-    else:
-        gkdata["groupcode"] = request.params["subgroupname"]
-    result = requests.post("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
     if result.json()["gkstatus"]==0:
-        return {"gkstatus":True}
+        gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openbal"]}
+        if request.params["subgroupname"]=="None":
+            grpcode= request.params["groupname"]
+            print "thissssssssssssssssssssss: ",grpcode
+            gkdata["groupcode"] = grpcode
+        else:
+            gkdata["groupcode"] = request.params["subgroupname"]
+        result = requests.post("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
+        if result.json()["gkstatus"]==0:
+            return {"gkstatus":True}
+        else:
+            return {"gkstatus":False}
     else:
         return {"gkstatus":False}
