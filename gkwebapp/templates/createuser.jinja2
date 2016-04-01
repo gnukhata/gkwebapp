@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+    GNUKhata
+  </title>
+
+  <style>
+  .login-box{
+    background-color: rgba(220, 225,225,0.4);
+  }
+
+  </style>
+</head>
+<body>
+
+  <div class='container'>
+
+  </div>
+  <hr class="divider">
+
+  <div class="container">
+
+    <div id="loginbox" style="margin-top:10px;" class="mainbox col-md-6 col-md-offset-3">
+      <div class="panel panel-info" >
+        <div class="panel-heading">
+          <div class="panel-title">Create New User</div>
+        </div>
+
+        <div style="padding-top:30px" class="panel-body" >
+          <form id="adduser" method="post" action="createuser" class="form-horizontal">
+            <div style="margin-bottom: 20px" class="input-group col-xs-12">
+              <input id="name" type="text" class="form-control" name="username" placeholder="Username" required data-msg="Please enter username"></input>
+            </div>
+            <div style="margin-bottom: 20px" class="input-group col-xs-12">
+              <input name="userpassword" id="password" type="password" class="form-control" placeholder="Password" required data-msg="Please enter password"></input>
+            </div>
+            <div style="margin-bottom: 20px" class="input-group col-xs-12">
+              <input name="cnfpassword" type="password" id="confirm_password" class="form-control" placeholder="Confirm Password" required data-msg="Please enter the same password as above"></input>
+            </div>
+            <div style="margin-bottom: 20px" class="input-group col-xs-12">
+              <select name="userrole" type="text" class="form-control" required data-msg="Please select a role">
+                <option value="" disabled selected hidden>Select a role</option>
+                <option value="0">Manager</option>
+                <option value="1">Operator</option>
+              </select>
+            </div>
+            <div style="margin-bottom: 20px" class="input-group col-xs-12">
+              <input name="userquestion" type="text" class="form-control" placeholder="Security Question" required data-msg="Please enter security question"></input>
+            </div>
+            <div style="margin-bottom: 20px" class="input-group col-xs-12">
+              <input name="useranswer" type="text" class="form-control" placeholder="Security Answer" required data-msg="Please enter security answer"></input>
+            </div>
+            <button type="submit" class="btn btn-success">Create</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/createuser.js')}}"></script>
+
+</body>
+</html>
