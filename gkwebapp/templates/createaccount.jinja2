@@ -26,7 +26,7 @@
 							<select class = "form-control gsselect" id="groupname"  name = "groupname" required data-msg="Please select a group">
 								<option value="" disabled selected hidden>Select Group</option>
 								{% for grps in gkresult %}
-								<option value="{{grps["groupcode"]}}">{{grps["groupname"]}}</option>
+								<option value="{{grps['groupcode']}}">{{grps["groupname"]}}</option>
 								{% endfor %}
 							</select>
 							<br/>

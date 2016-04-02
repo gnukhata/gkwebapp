@@ -37,17 +37,17 @@ def addaccount(request):
 
         if result.json()["gkstatus"]==0:
             gkdata["groupcode"] = result.json()["gkresult"]
-            print "newwwwww code:",gkdata["groupcode"]
+
         else:
             return {"gkstatus":False}
 
     elif request.params["subgroupname"]=="None":
         grpcode= request.params["groupname"]
-        print "code with none: ",grpcode
+
         gkdata["groupcode"] = grpcode
     else:
         gkdata["groupcode"] = request.params["subgroupname"]
-        print "code as it is :",gkdata["groupcode"]
+
     result = requests.post("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
     if result.json()["gkstatus"]==0:
         return {"gkstatus":True}
