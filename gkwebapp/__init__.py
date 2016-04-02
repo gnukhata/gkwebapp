@@ -30,6 +30,7 @@ def main(global_config, **settings):
     config.add_route('showuser', '/showuser')
     config.add_route('createuser', '/createuser')
     config.add_route('addaccount', '/addaccount')
+    config.add_route('addsubgroup', '/addsubgroup')
     config.add_route('getsubgroup','/getsubgroup')
     config.add_route('createorglogin','/createorglogin')
     config.add_route('userlogin','/userlogin')

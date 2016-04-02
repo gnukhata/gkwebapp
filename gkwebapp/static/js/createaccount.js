@@ -1,6 +1,8 @@
 $(document).ready(function()
 {
+  $("#accountform").validate({
 
+  });
   $("#groupname").bind("change keyup", function(){
     var gname = $("#groupname option:selected").text();
 
@@ -39,41 +41,70 @@ $(document).ready(function()
         {
             $('#subgroupname').prepend('<option value="None">None</option>');
         }
+        $('#subgroupname').append('<option value="New">New Sub-Group</option>');
       }
 
     });
   });
 
+$("#nsgp").hide();
+
+$(".gsselect").bind("change keyup", function(){
+var sgroups = $("#subgroupname option:selected").val();
+if (sgroups=="New")
+{
+  $("#nsgp").show();
+
+}
+else
+{
+  $("#nsgp").hide();
+}
+
+
+});
+
 
   $("#accountform").submit(function(e)
   {
+var isvalidate=$("#adduser").valid();
+if(isvalidate)
+{
     var ob = $('#openbal').val();
     if(ob=="")
     {
       $('#openbal').val("0.00");
     }
-    $.ajax(
-      {
 
-        type: "POST",
-        url: "/addaccount",
-        global: false,
-        async: false,
-        datatype: "json",
-        data: $("#accountform").serialize(),
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-        success: function(resp)
+
+
+
+
+      $.ajax(
         {
 
-          alert(resp["gkstatus"])
+          type: "POST",
+          url: "/addaccount",
+          global: false,
+          async: false,
+          datatype: "json",
+          data: $("#accountform").serialize(),
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+          success: function(resp)
+          {
+
+            alert(resp["gkstatus"]);
+          }
+
         }
+      );
 
-      }
-    );
 
+
+}
     e.preventDefault();
   }
 );
