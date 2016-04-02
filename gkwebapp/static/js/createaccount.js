@@ -1,8 +1,6 @@
 $(document).ready(function()
 {
-  $("#accountform").validate({
-
-  });
+  $("#accountform").validate();
   $("#groupname").bind("change keyup", function(){
     var gname = $("#groupname option:selected").text();
 
@@ -67,7 +65,7 @@ else
 
   $("#accountform").submit(function(e)
   {
-var isvalidate=$("#adduser").valid();
+var isvalidate=$("#accountform").valid();
 if(isvalidate)
 {
     var ob = $('#openbal').val();
