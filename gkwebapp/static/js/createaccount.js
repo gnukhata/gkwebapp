@@ -7,13 +7,13 @@ $(document).ready(function()
     if (gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income")
     {
       $("#obal").hide();
-      $("#opbal").hide();
+      $("#openbal").hide();
     }
     else
     {
 
       $("#obal").show();
-      $("#opbal").show();
+      $("#openbal").show();
     }
 
     var groups = $("#groupname option:selected").val();
