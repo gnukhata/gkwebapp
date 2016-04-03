@@ -17,6 +17,20 @@ $('input:text,select').bind("keydown", function(e) {
     }
   });
 
+$("#fromyear").blur(function(){
+    var startday = $("#fromday").val();
+    var startmonth = $("#frommonth").val();
+    var startyear = $("#fromyear").val();
+    var startdate = startday+startmonth+startyear;
+    var enddate = Date.parseExact(startdate, "ddMMyyyy").add({days: -1, years: 1}).toString("ddMMyyyy");
+    var endday = enddate[0]+enddate[1];
+    var endmonth = enddate[2]+enddate[3];
+    var endyear = enddate[4]+enddate[5]+enddate[6]+enddate[7];
+    $("#today").val(endday);
+    $("#tomonth").val(endmonth);
+    $("#toyear").val(endyear);
+    });
+
 $("#btnsubmit").click(function(event){
       event.preventDefault();
       var orgname = $("#orgname").val().replace(/\s/g, "+");
