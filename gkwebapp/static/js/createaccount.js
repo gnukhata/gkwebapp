@@ -94,7 +94,7 @@ if(isvalidate)
           success: function(resp)
           {
 
-            alert(resp["gkstatus"]);
+            alert("Account created successfully!");
           }
 
         }
