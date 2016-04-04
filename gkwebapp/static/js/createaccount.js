@@ -1,5 +1,6 @@
 $(document).ready(function()
 {
+  setTimeout($("#groupname").focus(), 500);
   $("#accountform").validate();
   $("#groupname").bind("change keyup", function(){
     var gname = $("#groupname option:selected").text();
@@ -94,7 +95,7 @@ if(isvalidate)
           success: function(resp)
           {
 
-            alert(resp["gkstatus"]);
+            alert("Account created successfully!");
           }
 
         }

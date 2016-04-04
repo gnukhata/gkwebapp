@@ -1,5 +1,6 @@
 $(document).ready(function()
 {
+  $("#username").focus();
   $("#back").click(function(event){
     event.preventDefault();
     $("#selectorg").load("/existingorg" );

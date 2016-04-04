@@ -28,5 +28,17 @@ $(document).ready(function()
     var orgcode = $("#finalyears option:selected").val();
           $("#selectorg").load("/login?orgcode="+ orgcode );
 
+    var financialyears = $("#finalyears option:selected").html();
+    var org = $("#org-name option:selected").val();
+    var orgobj = eval('('+org+')');
+    var oname = orgobj.orgname;
+    var otype = orgobj.orgtype;
+    var syear = financialyears[6]+financialyears[7]+financialyears[8]+financialyears[9];
+    var eyear = financialyears[22]+financialyears[23];
+    sessionStorage.setItem('orgn', oname);
+    sessionStorage.setItem('orgt', otype);
+    sessionStorage.setItem('year1', syear);
+    sessionStorage.setItem('year2', eyear);
+
   });
 });
