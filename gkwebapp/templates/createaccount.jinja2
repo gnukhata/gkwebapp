@@ -7,9 +7,7 @@
 </head>
 <body >
 	<div class="container">
-
-
-		<div style="padding-top:15px" class="mainbox col-md-6">
+		<div style="padding-top:5px" class="mainbox col-md-6">
 			<div class="panel panel-info" >
 				<div class="panel-heading">
 					<div class="panel-title">Create Account</div>
@@ -55,6 +53,60 @@
 					</form>
 				</div>
 			</div>
+		</div>
+		<div style="padding-top:5px" class="col-md-6">
+			<table class="table table-striped">
+				<thead>
+					<tr class="success">
+						<th>{{baltbl[0]}}</th>
+					</tr>
+					<tr class="info">
+						<th>Group Name</th>
+						<th>No. of accounts</th>
+						<th>Group Balance</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for i in range(1,5) %}
+					<tr>
+						<td>{{baltbl[i]["groupname"]}}</td>
+						<td align="right">{{baltbl[i]["numberofaccounts"]}}</td>
+						<td align="right">{{baltbl[i]["groupbalance"]}}</td>
+					</tr>
+					{% endfor %}
+					<tr class="info">
+						<th>Total</th>
+						<th></th>
+						<td align="right"><b>{{baltbl[5]["Total"]}}</b></td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="table table-striped">
+				<thead>
+					<tr class="success">
+						<th >{{baltbl[6]}}</th>
+					</tr>
+					<tr class="info">
+						<th>Group Name</th>
+						<th>No. of accounts</th>
+						<th>Group Balance</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for i in range(7,12) %}
+					<tr>
+						<td>{{baltbl[i]["groupname"]}}</td>
+						<td align="right">{{baltbl[i]["numberofaccounts"]}}</td>
+						<td align="right">{{baltbl[i]["groupbalance"]}}</td>
+					</tr>
+					{% endfor %}
+					<tr class="info">
+						<th>Total</th>
+						<th></th>
+						<td align="right"><b>{{baltbl[12]["Total"]}}</b></td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
