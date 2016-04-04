@@ -20,6 +20,14 @@ shortcut.add("Alt+H",function() {
 document.getElementById("help").click();
 })
 $(document).ready(function(){
+  var orname = sessionStorage.getItem('orgn');
+  var ortype = sessionStorage.getItem('orgt');
+  var styear = sessionStorage.getItem('year1');
+  var enyear = sessionStorage.getItem('year2');
+  var orgdata = orname + " (" + ortype + ")";
+  var yeardata = "Financial year : " + styear + "-" + enyear;
+  $("#orgdata").html(orgdata);
+  $("#yeardata").html(yeardata);
   $('#addaccount').click(function (e) {
     $.ajax(
     {
