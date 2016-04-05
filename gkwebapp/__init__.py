@@ -27,6 +27,7 @@ def main(global_config, **settings):
     config.add_route('login', '/login')
     config.add_route('showmainshell', '/showmainshell')
     config.add_route('showaccount', '/showaccount')
+    config.add_route('showeditaccount', '/showeditaccount')
     config.add_route('showuser', '/showuser')
     config.add_route('createuser', '/createuser')
     config.add_route('addaccount', '/addaccount')
