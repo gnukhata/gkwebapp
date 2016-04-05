@@ -13,7 +13,29 @@ def showaccount(request):
     for record in result.json()["gkresult"]:
         gdata= {"groupname":str(record["groupname"]),"groupcode":str(record["groupcode"])}
         grpdata.append(gdata)
-    return {"gkresult":grpdata}
+    return {"gkresult":grpdata,"baltbl":result.json()["baltbl"]}
+
+@view_config(route_name="showeditaccount", renderer="gkwebapp:templates/createaccount.jinja2")
+def showeditaccount(request):
+
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/accounts", headers=header)
+    accdata=[]
+    for record in result.json()["gkresult"]:
+        adata= {"accountname":str(record["accountname"]),"accountcode":str(record["accountcode"])}
+        accdata.append(adata)
+    return {"gkresult":accdata}
+
+
+@view_config(route_name="getaccdetails", renderer="json")
+def getaccdetails(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/account/%s"%(request.params["accountcode"]), headers=header)
+    subgrpdata=[]
+    record = result.fetchone()
+
+    return {"gkresult":subgrpdata}
+
 
 @view_config(route_name="getsubgroup", renderer="json")
 def getsubgroup(request):
