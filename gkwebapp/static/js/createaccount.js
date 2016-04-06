@@ -1,6 +1,6 @@
 $(document).ready(function()
 {
-  setTimeout($("#groupname").focus(), 500);
+  $("#groupname").focus();
   $("#accountform").validate();
   $("#groupname").bind("change keyup", function(){
     var gname = $("#groupname option:selected").text();

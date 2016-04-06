@@ -1,6 +1,6 @@
 $(document).ready(function()
 {
-  setTimeout($("#editaccountname").focus(), 500);
+  $("#editaccountname").focus();
   $("#editaccountform").validate();
   $("#editaccountform").hide();
   $("#alertmsg").hide();
