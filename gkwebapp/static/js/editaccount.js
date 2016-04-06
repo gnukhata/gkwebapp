@@ -5,6 +5,7 @@ $(document).ready(function()
   $("#editaccountform").hide();
   $("#alertmsg").hide();
   $("#submit").hide();
+  $("#delete").hide();
   $("#editaccountname").bind("change keyup", function()
   {
     var acccode = $("#editaccountname option:selected").val();
@@ -12,12 +13,13 @@ $(document).ready(function()
     if(accname=="Closing Stock" || accname=="Stock at the Beginning" ||  accname=="Opening Stock" ||  accname=="Income & Expenditure" ||  accname=="Profit & Loss" )
         {
             $("#alertmsg").show();
+            $("#delete").hide();
 
         }
         else
         {
           $("#alertmsg").hide();
-
+          $("#delete").show();
         }
     $.ajax({
             type: "POST",
@@ -93,6 +95,50 @@ $("#reset").click(function()
   );
 }
 );
+
+
+$("#delete").click(function()
+{
+  var answer = confirm('Are you sure?');
+  if (answer)
+  {
+      var code = $("#editaccountname option:selected").val();
+      $.ajax(
+      {
+
+          type: "POST",
+          url: "/deleteaccount",
+          global: false,
+          async: false,
+          datatype: "json",
+          data:{"accountcode":code},
+          beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            },
+          success: function(resp)
+          {
+            if(resp["gkstatus"])
+            {
+            alert("Account Deleted Successfully");
+            $("#reset").click();
+            }
+            else
+            {
+              alert("Account Could Not Be Deleted");
+            }
+          }
+      }
+      );
+    }
+    else
+    {
+      $("#editaccountname").focus();
+    }
+}
+);
+
+
 
 $("#editaccountform").submit(function(e)
 {

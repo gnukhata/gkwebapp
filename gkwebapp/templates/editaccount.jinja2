@@ -25,7 +25,7 @@
             <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
             {% endfor %}
           </select>
-					<font color="red" id="alertmsg">A system generated account, cannot be edited</font>
+					<font color="red" id="alertmsg">A system generated account, cannot be edited/deleted.</font>
 					<form id="editaccountform" method="post"  action="editaccount" class="form-horizontal">
 
 						<div style="margin-bottom: 5px" class="col-xs-12 from-group">
@@ -40,14 +40,15 @@
 							<input type="hidden" id="accountcode" class="form-control" name="accountcode" ></input>
 							<br/>
 							<button type="submit" class="btn btn-primary" id="submit" name="submit">Submit</button>
-							<button id="reset" class="btn btn-danger">Reset</button>
+							<button id="reset" class="btn btn-warning">Reset</button>
+							<button id="delete" class="btn btn-danger">Delete</button>
 
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
-		
+
 
 
 	</div>

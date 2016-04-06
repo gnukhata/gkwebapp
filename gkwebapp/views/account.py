@@ -17,7 +17,7 @@ def showaccount(request):
 
 @view_config(route_name="showeditaccount", renderer="gkwebapp:templates/editaccount.jinja2")
 def showeditaccount(request):
-	print "wenttttttt in editttttt"
+
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/accounts", headers=header)
 	accdata=[]
@@ -25,6 +25,20 @@ def showeditaccount(request):
 		adata= {"accountname":str(record["accountname"]),"accountcode":str(record["accountcode"])}
 		accdata.append(adata)
 	return {"gkresult":accdata}
+
+
+@view_config(route_name="deleteaccount", renderer="json")
+def deleteaccount(request):
+
+	header={"gktoken":request.headers["gktoken"]}
+	gkdata={"accountcode":request.params["accountcode"]}
+	result = requests.delete("http://127.0.0.1:6543/accounts",data =json.dumps(gkdata), headers=header)
+	if result.json()["gkstatus"]==0:
+		return {"gkstatus":True}
+	else:
+		return {"gkstatus":False}
+
+
 
 
 @view_config(route_name="getaccdetails", renderer="json")
