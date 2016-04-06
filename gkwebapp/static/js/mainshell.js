@@ -21,7 +21,7 @@ document.getElementById("help").click();
 })
 $(document).ready(function(){
   $('#editaccount').click(function (e) {
-    alert("editttt");
+    
       $.ajax(
       {
 

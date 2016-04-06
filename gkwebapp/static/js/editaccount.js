@@ -1,12 +1,23 @@
 $(document).ready(function()
 {
+  setTimeout($("#editaccountname").focus(), 500);
   $("#editaccountform").validate();
   $("#editaccountform").hide();
-
+  $("#alertmsg").hide();
   $("#editaccountname").bind("change keyup", function()
   {
     var acccode = $("#editaccountname option:selected").val();
-
+    var accname= $("#editaccountname option:selected").text();
+    if(accname=="Closing Stock" || accname=="Stock at the Beginning" ||  accname=="Opening Stock" ||  accname=="Income & Expenditure" ||  accname=="Profit & Loss" )
+        {
+            $("#alertmsg").show();
+            $("#submit").hide();
+        }
+        else
+        {
+          $("#alertmsg").hide();
+          $("#submit").show();
+        }
     $.ajax({
             type: "POST",
             url: "/getaccdetails",
@@ -40,16 +51,28 @@ $(document).ready(function()
     if($("#editaccountform").is(':visible'))
     {
       if(e.which == 13)
-     {
-       $("#editaccountname").hide();
-       $("#accname").hide();
-       $("#accountname").prop("disabled",false);
-       $("#openingbal").prop("disabled", false);
-       $("#accountname").focus(function() { $(this).select(); } );
+     {  if($("#editaccountname option:selected").text()=="Closing Stock" || $("#editaccountname option:selected").text()=="Stock at the Beginning" ||  $("#editaccountname option:selected").text()=="Opening Stock" ||  $("#editaccountname option:selected").text()=="Income & Expenditure" ||  $("#editaccountname option:selected").text()=="Profit & Loss" )
+          {
+              $("#alertmsg").show();
+          }
+        else
+         { $("#alertmsg").hide();
+           $("#editaccountname").hide();
+           $("#accname").hide();
+           $("#accountname").prop("disabled",false);
+           $("#openingbal").prop("disabled", false);
+           $("#accountname").focus().select();
+        }
      }
     }
 
   });
+
+$("#reset").click(function()
+{
+$("#editaccount").click();
+}
+);
 
 $("#editaccountform").submit(function(e)
 {

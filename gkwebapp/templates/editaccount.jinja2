@@ -25,7 +25,7 @@
             <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
             {% endfor %}
           </select>
-
+					<font color="red" id="alertmsg">A system generated account, cannot be edited</font>
 					<form id="editaccountform" method="post"  action="editaccount" class="form-horizontal">
 
 						<div style="margin-bottom: 5px" class="col-xs-12 from-group">
@@ -47,6 +47,9 @@
 				</div>
 			</div>
 		</div>
+		
+
+
 	</div>
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editaccount.js')}}"></script>
