@@ -21,11 +21,12 @@ document.getElementById("help").click();
 })
 $(document).ready(function(){
   $('#editaccount').click(function (e) {
+    alert("editttt");
       $.ajax(
       {
 
       type: "POST",
-      url: "/showaeditccount",
+      url: "/showeditaccount",
       global: false,
       async: false,
       datatype: "text/html",
