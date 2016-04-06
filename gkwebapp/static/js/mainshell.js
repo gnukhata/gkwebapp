@@ -20,6 +20,28 @@ shortcut.add("Alt+H",function() {
 document.getElementById("help").click();
 })
 $(document).ready(function(){
+  $('#editaccount').click(function (e) {
+    
+      $.ajax(
+      {
+
+      type: "POST",
+      url: "/showeditaccount",
+      global: false,
+      async: false,
+      datatype: "text/html",
+      beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      success: function(resp)
+      {
+        $("#info").html(resp);
+      }
+      }
+    );
+    });
+
   var orname = sessionStorage.getItem('orgn');
   var ortype = sessionStorage.getItem('orgt');
   var styear = sessionStorage.getItem('year1');

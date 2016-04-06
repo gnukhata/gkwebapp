@@ -1,18 +1,20 @@
 $(document).ready(function()
 {
-  setTimeout($("#groupname").focus(), 500);
+  $("#groupname").focus();
   $("#accountform").validate();
   $("#groupname").bind("change keyup", function(){
     var gname = $("#groupname option:selected").text();
 
-    if (gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income")
+    if (gname=="Select Group" || gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income")
     {
       $("#obal").hide();
       $("#openbal").hide();
+      $("#baltbl").hide();
+
     }
     else
     {
-
+      $("#baltbl").show();
       $("#obal").show();
       $("#openbal").show();
     }
@@ -63,6 +65,30 @@ else
 
 });
 
+$("#reset").click(function()
+{
+  $.ajax(
+  {
+
+  type: "POST",
+  url: "/showaccount",
+  global: false,
+  async: false,
+  datatype: "text/html",
+  beforeSend: function(xhr)
+    {
+      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    },
+  success: function(resp)
+  {
+    $("#info").html(resp);
+  }
+  }
+  );
+}
+);
+
+
 
   $("#accountform").submit(function(e)
   {
@@ -94,8 +120,15 @@ if(isvalidate)
           },
           success: function(resp)
           {
-
-            alert("Account created successfully!");
+            if(resp["gkstatus"])
+            {
+            alert("Account Created Successfully");
+            $("#reset").click();
+            }
+            else
+            {
+              alert("Account Could Not Be Created");
+            }
           }
 
         }

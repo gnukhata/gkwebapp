@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Account Creation</title>
+
+</head>
+<body >
+	<div class="container">
+
+
+		<div style="padding-top:15px" class="mainbox col-md-6">
+			<div class="panel panel-info" >
+				<div class="panel-heading">
+					<div class="panel-title">Edit Account</div>
+
+				</div>
+
+				<div style="padding-top:5px" class="panel-body" >
+
+          <label for="editaccountname" id="accname">Account Name :</label>
+          <select class = "form-control" id="editaccountname"  name = "editaccountname" required data-msg="Please select an account">
+            <option value="" disabled selected hidden>Select Account</option>
+            {% for accs in gkresult %}
+            <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
+            {% endfor %}
+          </select>
+					<font color="red" id="alertmsg">A system generated account, cannot be edited/deleted.</font>
+					<form id="editaccountform" method="post"  action="editaccount" class="form-horizontal">
+
+						<div style="margin-bottom: 5px" class="col-xs-12 from-group">
+							<label for="groupname" id="gname">Group Name :</label>
+							<input type="text" id="groupname" name="groupname" class="form-control" value=""></input>
+							<label for="subgroupname" id="sname">Sub-Group Name :</label>
+							<input type="text" id="subgroupname" name="subgroupname" class="form-control" value=""></input>
+							<label for="accountname" id="accname">Account Name :</label>
+							<input type="text" id="accountname" class="form-control" name="accountname" required data-msg="Please enter an account name" ></input>
+							<label for="openingbal" id="openbal">Opening Balance :</label>
+							<input type="text" id="openingbal" class="form-control" name="openingbal" ></input>
+							<input type="hidden" id="accountcode" class="form-control" name="accountcode" ></input>
+							<br/>
+							<button type="submit" class="btn btn-primary" id="submit" name="submit">Submit</button>
+							<button id="reset" class="btn btn-warning">Reset</button>
+							<button id="delete" class="btn btn-danger">Delete</button>
+
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+
+	</div>
+	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
+	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editaccount.js')}}"></script>
+</body>
+</html>
