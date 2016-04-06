@@ -4,6 +4,7 @@ $(document).ready(function()
   $("#editaccountform").validate();
   $("#editaccountform").hide();
   $("#alertmsg").hide();
+  $("#submit").hide();
   $("#editaccountname").bind("change keyup", function()
   {
     var acccode = $("#editaccountname option:selected").val();
@@ -11,12 +12,12 @@ $(document).ready(function()
     if(accname=="Closing Stock" || accname=="Stock at the Beginning" ||  accname=="Opening Stock" ||  accname=="Income & Expenditure" ||  accname=="Profit & Loss" )
         {
             $("#alertmsg").show();
-            $("#submit").hide();
+
         }
         else
         {
           $("#alertmsg").hide();
-          $("#submit").show();
+
         }
     $.ajax({
             type: "POST",
@@ -56,7 +57,9 @@ $(document).ready(function()
               $("#alertmsg").show();
           }
         else
-         { $("#alertmsg").hide();
+         {
+           $("#submit").show();
+           $("#alertmsg").hide();
            $("#editaccountname").hide();
            $("#accname").hide();
            $("#accountname").prop("disabled",false);
@@ -70,7 +73,24 @@ $(document).ready(function()
 
 $("#reset").click(function()
 {
-$("#editaccount").click();
+  $.ajax(
+  {
+
+  type: "POST",
+  url: "/showeditaccount",
+  global: false,
+  async: false,
+  datatype: "text/html",
+  beforeSend: function(xhr)
+    {
+      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    },
+  success: function(resp)
+  {
+    $("#info").html(resp);
+  }
+  }
+  );
 }
 );
 
@@ -101,11 +121,12 @@ $("#editaccountform").submit(function(e)
             {
               if(resp["gkstatus"])
               {
-              alert(resp["gkstatus"]);
+              alert("Account Edited Successfully");
+              $("#reset").click();
               }
               else
               {
-                alert(resp["gkstatus"]);
+                alert("Account Could Not Be Edited");
               }
 
             }
