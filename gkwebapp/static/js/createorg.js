@@ -43,7 +43,7 @@ $("#btnsubmit").click(function(event){
       var oname = $("#orgname").val();
       var otype = $("#orgtype option:selected").val();
       var syear = financialyears[0]+financialyears[1]+financialyears[2]+financialyears[3];
-      var eyear = financialyears[9]+financialyears[10]+financialyears[11]+financialyears[12];
+      var eyear = financialyears[10]+financialyears[11]+financialyears[12]+financialyears[13];
       sessionStorage.setItem('orgn', oname);
       sessionStorage.setItem('orgt', otype);
       sessionStorage.setItem('year1', syear);
