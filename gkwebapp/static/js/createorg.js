@@ -29,6 +29,7 @@ $("#fromyear").blur(function(){
     $("#today").val(endday);
     $("#tomonth").val(endmonth);
     $("#toyear").val(endyear);
+    $("#btnsubmit").focus();
     });
 
 $("#btnsubmit").click(function(event){
@@ -38,6 +39,15 @@ $("#btnsubmit").click(function(event){
       var orgtype = $("#orgtype option:selected").val().replace(/\s/g, "+");
       var fdate = $("#fromyear").val()+"-"+$("#frommonth").val()+"-"+$("#fromday").val();
       var tdate = $("#toyear").val()+"-"+$("#tomonth").val()+"-"+$("#today").val();
+      var financialyears = fdate+tdate;
+      var oname = $("#orgname").val();
+      var otype = $("#orgtype option:selected").val();
+      var syear = financialyears[0]+financialyears[1]+financialyears[2]+financialyears[3];
+      var eyear = financialyears[9]+financialyears[10]+financialyears[11]+financialyears[12];
+      sessionStorage.setItem('orgn', oname);
+      sessionStorage.setItem('orgt', otype);
+      sessionStorage.setItem('year1', syear);
+      sessionStorage.setItem('year2', eyear);
       //alert("orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate);
 
       $("#createorg").load("/createadmin?orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate );
