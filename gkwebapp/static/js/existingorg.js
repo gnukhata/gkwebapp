@@ -34,7 +34,7 @@ $(document).ready(function()
     var oname = orgobj.orgname;
     var otype = orgobj.orgtype;
     var syear = financialyears[6]+financialyears[7]+financialyears[8]+financialyears[9];
-    var eyear = financialyears[20]+financialyears[21]+financialyears[22]+financialyears[23];
+    var eyear = financialyears[22]+financialyears[23];
     sessionStorage.setItem('orgn', oname);
     sessionStorage.setItem('orgt', otype);
     sessionStorage.setItem('year1', syear);

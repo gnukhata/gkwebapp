@@ -47,7 +47,7 @@ $(document).ready(function(){
   var styear = sessionStorage.getItem('year1');
   var enyear = sessionStorage.getItem('year2');
   var orgdata = orname + " (" + ortype + ")";
-  var yeardata = "Financial year : " + styear + "-" + enyear;
+  var yeardata = "Financial Year : " + styear + "-" + enyear;
   $("#orgdata").html(orgdata);
   $("#yeardata").html(yeardata);
   $('#addaccount').click(function (e) {
