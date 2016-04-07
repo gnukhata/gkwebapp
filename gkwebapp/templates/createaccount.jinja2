@@ -75,7 +75,7 @@
 					</tr>
 					{% endfor %}
 					<tr class="info">
-						<th>Total (A)</th>
+						<th>Total</th>
 						<th></th>
 						<td align="right"><b>{{baltbl[5]["Total"]}}</b></td>
 					</tr>
@@ -93,7 +93,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					{% for i in range(7,12) %}
+					{% for i in range(7,((baltbl|length)-2)) %}
 					<tr>
 						<td>{{baltbl[i]["groupname"]}}</td>
 						<td align="right">{{baltbl[i]["numberofaccounts"]}}</td>
@@ -101,14 +101,14 @@
 					</tr>
 					{% endfor %}
 					<tr class="info">
-						<th>Total (B)</th>
+						<th>Total</th>
 						<th></th>
-						<td align="right"><b>{{baltbl[12]["Total"]}}</b></td>
+						<td align="right"><b>{{baltbl[((baltbl|length)-2)]["Total"]}}</b></td>
 					</tr>
 					<tr class="info">
-						<th>Difference in Total Balance (A-B)</th>
+						<th>Difference in Total Balance</th>
 						<th></th>
-						<td align="right"><b>{{baltbl[13]["Difference in balance"]}}</b></td>
+						<td align="right"><b>{{baltbl[((baltbl|length)-1)]["Difference in balance"]}}</b></td>
 					</tr>
 				</tbody>
 			</table>
