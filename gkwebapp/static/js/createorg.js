@@ -1,6 +1,9 @@
 $(document).ready(function()
 {
-
+var forname = "";
+$("#orgname").focusout(function(){
+  forname = $("#orgname").val();
+});
 $('input:text:first,select').focus();
 
 $('input:text,select').bind("keydown", function(e) {
@@ -16,6 +19,28 @@ $('input:text,select').bind("keydown", function(e) {
 
     }
   });
+
+$("#orgcase").bind("change keyup", function(e){
+  var ocase = $("#orgcase option:selected").val();
+  var oname = "";
+  if(ocase == "As-Is")
+  {
+    sessionStorage.setItem('orgn', forname);
+    $("#orgname").val(forname);
+  }
+  if(ocase == "Upper Case")
+  {
+    oname = forname.toUpperCase();
+    $("#orgname").val(oname);
+    sessionStorage.setItem('orgn', oname);
+  }
+  if(ocase == "Lower Case")
+  {
+    oname = forname.toLowerCase();
+    $("#orgname").val(oname);
+    sessionStorage.setItem('orgn', oname);
+  }
+});
 
 $("#fromyear").blur(function(){
     var startday = $("#fromday").val();
@@ -34,23 +59,6 @@ $("#fromyear").blur(function(){
 
 $("#btnsubmit").click(function(event){
       event.preventDefault();
-      var ocase = $("#orgcase option:selected").val();
-      var orname = $("#orgname").val();
-      var oname = "";
-      if(ocase == "As-Is")
-      {
-        sessionStorage.setItem('orgn', orname);
-      }
-      if(ocase == "Upper Case")
-      {
-        oname = orname.toUpperCase();
-        sessionStorage.setItem('orgn', oname);
-      }
-      if(ocase == "Lower Case")
-      {
-        oname = orname.toLowerCase();
-        sessionStorage.setItem('orgn', oname);
-      }
       var orgname = $("#orgname").val().replace(/\s/g, "+");
       var orgtype = $("#orgtype option:selected").val().replace(/\s/g, "+");
       var fdate = $("#fromyear").val()+"-"+$("#frommonth").val()+"-"+$("#fromday").val();
