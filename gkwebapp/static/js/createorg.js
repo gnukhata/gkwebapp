@@ -34,17 +34,31 @@ $("#fromyear").blur(function(){
 
 $("#btnsubmit").click(function(event){
       event.preventDefault();
+      var ocase = $("#orgcase option:selected").val();
+      var orname = $("#orgname").val();
+      var oname = "";
+      if(ocase == "As-Is")
+      {
+        sessionStorage.setItem('orgn', orname);
+      }
+      if(ocase == "Upper Case")
+      {
+        oname = orname.toUpperCase();
+        sessionStorage.setItem('orgn', oname);
+      }
+      if(ocase == "Lower Case")
+      {
+        oname = orname.toLowerCase();
+        sessionStorage.setItem('orgn', oname);
+      }
       var orgname = $("#orgname").val().replace(/\s/g, "+");
-
       var orgtype = $("#orgtype option:selected").val().replace(/\s/g, "+");
       var fdate = $("#fromyear").val()+"-"+$("#frommonth").val()+"-"+$("#fromday").val();
       var tdate = $("#toyear").val()+"-"+$("#tomonth").val()+"-"+$("#today").val();
       var financialyears = fdate+tdate;
-      var oname = $("#orgname").val();
       var otype = $("#orgtype option:selected").val();
       var syear = financialyears[0]+financialyears[1]+financialyears[2]+financialyears[3];
       var eyear = financialyears[12]+financialyears[13];
-      sessionStorage.setItem('orgn', oname);
       sessionStorage.setItem('orgt', otype);
       sessionStorage.setItem('year1', syear);
       sessionStorage.setItem('year2', eyear);
