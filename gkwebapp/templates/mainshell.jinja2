@@ -119,17 +119,17 @@
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
         </nav>
-        <div class="container-fluid">
-          <div class = "container" style="margin-top: 70px;">
-            <p style="float: left; text-transform: uppercase;	font-size: 120%; font-weight: bold;" id="orgdata"></p>
-            <p style="float: right; font-size: 120%; font-weight: bold;" id="yeardata"></p>
+        <div id="info" class="tab-pane fade in active"></div>
+        <nav class="navbar-xs navbar-inverse navbar-fixed-bottom">
+          <div class="container-fluid" style="color: #aaaaaa; margin-top:5px;">
+            <p style="float: left;" id="orgdata"></p>
+            <p style="float: right;" id="yeardata"></p>
           </div>
-          <div id="info" class="tab-pane fade in active"></div>
-        </div>
+        </nav>
         <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
         <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
         <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/shortcut.js')}}"></script>
         <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/mainshell.js')}}"></script>
         <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/showuser.js')}}"></script>
-  </body>
-</html>
+      </body>
+      </html>
