@@ -1,6 +1,5 @@
 $(document).ready(function()
 {
-
   $("#org-name").bind("change keyup", function(){
     var org = $("#org-name option:selected").val();
     var orgobj = eval('('+org+')');
