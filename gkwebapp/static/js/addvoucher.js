@@ -40,7 +40,7 @@ $(document).on("keyup",".dramt",function(event)
 				 var nxtindex = curindex+1
 				if($('tr:eq('+nxtindex+') td:eq(3) input').val()=="" || $('tr:eq('+nxtindex+') td:eq(3) input').val()=="0.00"){
           $('tr:eq('+nxtindex+') td:eq(3) input').val(diff);
-          $('.table .accs').focus();
+          $('tr:eq('+nxtindex+') td:eq(1) select').focus();
         }
         else{
           $('tr:eq('+nxtindex+') td:eq(3) input').focus();
@@ -76,6 +76,10 @@ $(document).on("keyup",".dramt",function(event)
                 '<input class="form-control input-sm cramt" type="text" name="cr" value="0.00">'+
               '</td>'+
             '</tr>');
+            for (i in accs ) {
+              $('tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
+            }
+            $('tr:last td:eq(1) select').focus();
           }
         });
 
@@ -90,7 +94,7 @@ $(document).on("keyup",".dramt",function(event)
 				 var nxtindex = curindex+1
 				if($('tr:eq('+nxtindex+') td:eq(2) input').val()=="" || $('tr:eq('+nxtindex+') td:eq(2) input').val()=="0.00"){
           $('tr:eq('+nxtindex+') td:eq(2) input').val(diff);
-          $('.table .accs').focus();
+          $('tr:eq('+nxtindex+') td:eq(1) select').focus();
         }
         else{
           $('tr:eq('+nxtindex+') td:eq(2) input').focus();
@@ -126,6 +130,10 @@ $(document).on("keyup",".dramt",function(event)
                 '<input class="form-control input-sm cramt" type="text" name="cr" value="" disabled>'+
               '</td>'+
             '</tr>');
+            for (i in accs ) {
+              $('tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
+            }
+            $('tr:last td:eq(1) select').focus();
           }
         });
 
@@ -151,7 +159,7 @@ $(document).on("keyup",".cramt",function(event)
 				 var nxtindex = curindex+1
 				if($('tr:eq('+nxtindex+') td:eq(3) input').val()=="" || $('tr:eq('+nxtindex+') td:eq(3) input').val()=="0.00"){
           $('tr:eq('+nxtindex+') td:eq(3) input').val(diff);
-          $('.table .accs').focus();
+          $('tr:eq('+nxtindex+') td:eq(1) select').focus();
         }
         else{
           $('tr:eq('+nxtindex+') td:eq(3) input').focus();
@@ -187,6 +195,10 @@ $(document).on("keyup",".cramt",function(event)
                 '<input class="form-control input-sm cramt" type="text" name="cr" value="0.00">'+
               '</td>'+
             '</tr>');
+            for (i in accs ) {
+              $('tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
+            }
+            $('tr:last td:eq(1) select').focus();
           }
         });
 
@@ -201,7 +213,7 @@ $(document).on("keyup",".cramt",function(event)
 				 var nxtindex = curindex+1
 				if($('tr:eq('+nxtindex+') td:eq(2) input').val()=="" || $('tr:eq('+nxtindex+') td:eq(2) input').val()=="0.00"){
           $('tr:eq('+nxtindex+') td:eq(2) input').val(diff);
-          $('.table .accs').focus();
+          $('tr:eq('+nxtindex+') td:eq(1) select').focus();
         }
         else{
           $('tr:eq('+nxtindex+') td:eq(2) input').focus();
@@ -237,6 +249,10 @@ $(document).on("keyup",".cramt",function(event)
                 '<input class="form-control input-sm cramt" type="text" name="cr" value="" disabled>'+
               '</td>'+
             '</tr>');
+            for (i in accs ) {
+              $('tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
+            }
+            $('tr:last td:eq(1) select').focus();
           }
         });
 
