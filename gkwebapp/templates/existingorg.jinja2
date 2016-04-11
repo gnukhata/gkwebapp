@@ -24,9 +24,9 @@
 
           <form id="orgform" class="form-horizontal" role="form">
 
-            <div style="margin-bottom: 25px" class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon-th-list"></i></span>
-              <select class = "form-control" id="org-name"  name = "orgname">
+            <div style="margin-bottom: 25px" class="input-group col-xs-12">
+              <label for="org-name" id="orname">Select <u>O</u>rganisation :</label><br/>
+              <select class = "form-control col-xs-12" id="org-name"  name = "orgname" accesskey="o">
                 <option value="" disabled selected hidden>Select Organisation</option>
                 {% for orgs in gkresult %}
                 <option value="{{orgs}}">{{orgs["orgname"]}} , {{orgs["orgtype"]}}</option>
@@ -34,9 +34,9 @@
               </select>
             </div>
 
-            <div style="margin-bottom: 25px" class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon-th-list"></i></span>
-              <select class = "form-control" id="finalyears" name="orgcode" >
+            <div style="margin-bottom: 25px" class="input-group col-xs-12">
+              <label for="org-name" id="orname">Select <u>F</u>inancial Year :</label><br/>
+              <select class = "form-control col-xs-12" id="finalyears" name="orgcode" accesskey="f">
                 <option value="" disabled selected hidden>Select Financial Year</option>
               </select>
             </div>
@@ -50,7 +50,7 @@
               <!-- Button -->
 
               <div class="col-sm-12 controls">
-                <button id="callLogin" class="btn btn-success "><span class="glyphicon glyphicon-arrow-right"></span>Next</button>
+                <button id="callLogin" class="btn btn-success " accesskey="n"><span class="glyphicon glyphicon-arrow-right"></span><u>N</u>ext</button>
 
               </div>
             </div>

@@ -1,6 +1,9 @@
 $(document).ready(function()
 {
-
+var forname = "";
+$("#orgname").focusout(function(){
+  forname = $("#orgname").val();
+});
 $('input:text:first,select').focus();
 
 $('input:text,select').bind("keydown", function(e) {
@@ -16,6 +19,28 @@ $('input:text,select').bind("keydown", function(e) {
 
     }
   });
+
+$("#orgcase").bind("change keyup", function(e){
+  var ocase = $("#orgcase option:selected").val();
+  var oname = "";
+  if(ocase == "As-Is")
+  {
+    sessionStorage.setItem('orgn', forname);
+    $("#orgname").val(forname);
+  }
+  if(ocase == "Upper Case")
+  {
+    oname = forname.toUpperCase();
+    $("#orgname").val(oname);
+    sessionStorage.setItem('orgn', oname);
+  }
+  if(ocase == "Lower Case")
+  {
+    oname = forname.toLowerCase();
+    $("#orgname").val(oname);
+    sessionStorage.setItem('orgn', oname);
+  }
+});
 
 $("#fromyear").blur(function(){
     var startday = $("#fromday").val();
@@ -35,16 +60,13 @@ $("#fromyear").blur(function(){
 $("#btnsubmit").click(function(event){
       event.preventDefault();
       var orgname = $("#orgname").val().replace(/\s/g, "+");
-
       var orgtype = $("#orgtype option:selected").val().replace(/\s/g, "+");
       var fdate = $("#fromyear").val()+"-"+$("#frommonth").val()+"-"+$("#fromday").val();
       var tdate = $("#toyear").val()+"-"+$("#tomonth").val()+"-"+$("#today").val();
       var financialyears = fdate+tdate;
-      var oname = $("#orgname").val();
       var otype = $("#orgtype option:selected").val();
       var syear = financialyears[0]+financialyears[1]+financialyears[2]+financialyears[3];
       var eyear = financialyears[12]+financialyears[13];
-      sessionStorage.setItem('orgn', oname);
       sessionStorage.setItem('orgt', otype);
       sessionStorage.setItem('year1', syear);
       sessionStorage.setItem('year2', eyear);

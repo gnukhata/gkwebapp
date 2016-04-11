@@ -33,21 +33,26 @@
 
 						<div style="margin-bottom: 25px" class="col-xs-12 from-group">
 
-							<input type="text" id="username" class="form-control" name="username" placeholder="Username"></input>
+							<label for="username"><u>U</u>sername</label>
+							<input type="text" id="username" class="form-control" name="username" accesskey="u"></input>
 							<br/>
-							<input type="password" id="password" class="form-control" name="password" placeholder="Password"></input>
+							<label for="password"><u>P</u>assword</label>
+							<input type="password" id="password" class="form-control" name="password" accesskey="p"></input>
 							<br/>
-							<input type="password" name="confirmpassword" id="confirmpassword" class="form-control" value="" placeholder="Confirm Password"></input>
+							<label for="confirmpassword"><u>C</u>onfirm Password</label>
+							<input type="password" name="confirmpassword" id="confirmpassword" class="form-control" value="" accesskey="c"></input>
 							<br/>
-							<input type="text" class="form-control" value="" id="securityquestion" name="securityquestion" placeholder="Security Question"></input>
+							<label for="securityanswer">Security <u>Q</u>uestion</label>
+							<input type="text" class="form-control" value="" id="securityquestion" name="securityquestion" accesskey="q"></input>
 							<br/>
-							<input type="text" class="form-control" value="" id="securityanswer" name="securityanswer" placeholder="Security Answer"></input>
+							<label for="securityanswer">Security <u>A</u>nswer</label>
+							<input type="text" class="form-control" value="" id="securityanswer" name="securityanswer" accesskey="a"></input>
 							<input type="hidden" class="form-control" value="{{orgname}}" id="orgname" name="orgname"></input>
 							<input type="hidden" class="form-control" value="{{orgtype}}" id="orgtype" name="orgtype"></input>
 							<input type="hidden" class="form-control" value="{{fromdate}}" id="yearstart" name="yearstart"></input>
 							<input type="hidden" class="form-control" value="{{todate}}" id="yearend" name="yearend"></input>
 							<br/>
-							<button type="submit" class="btn btn-success">Create & Login</button>
+							<button type="submit" class="btn btn-success" accesskey="l">Create & <u>L</u>ogin</button>
 
 						</div>
 					</form>

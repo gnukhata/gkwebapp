@@ -89,47 +89,47 @@
           <li class="dropdown">
             <a href="" id="toolbar" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Toolbar</a>
             <ul class="dropdown-menu scrollable">
-              <li><a accesskey="z" id="addaccount" href="">Create/Edit Account - Z</a></li>
-              <li><a accesskey="a" href="#">List of Accounts - A</a></li>
-              <li><a accesskey="l" href="#">Ledger - L</a></li>
-              <li><a accesskey="y" href="#">Contra - Y</a></li>
-              <li><a accesskey="p" href="#">Payment - P</a></li>
-              <li><a accesskey="r" href="#">Receipt - R</a</li>
-                <li><a accesskey="j" href="#">Journal - J</a></li>
-                <li><a accesskey="s" href="#">Sales - S</a></li>
-                <li><a accesskey="x" href="#">Purchase - X</a</li>
-                  <li><a accesskey="c" href="#">Credit Note - C</a></li>
-                  <li><a accesskey="d" href="#">Debit Note - D</a></li>
-                  <li><a accesskey="w" href="#">Sales Return - W</a></li>
-                  <li><a accesskey="u" href="#">Purchase Return - U</a></li>
-                  <li><a accesskey="b" href="">Trial Balance - B</a</li>
-                    <li><a accesskey="i" href="#">Income & Expenditure - I</a></li>
-                    <li><a accesskey="e" href="#">Statement of Affairs - E</a></li>
-                    <li><a accesskey="f" href="#">Cash Flow - F</a></li>
-                    <li><a accesskey="k" href="#">Project Statement - K</a></li>
-                    <li><a accesskey="n" href="#">Bank Reconciliation Statement - N</a></li>
-                    <li><a accesskey="m" href="#">Project - M</a></li>
-                    <li><a accesskey="v" href="#">Find Voucher - V</a></li>
-                    <li><a accesskey="g" href="#">Logout - G</a></li>
-                    <li><a accesskey="o" href="#">Change Organisation - O</a></li>
-                    <li><a accesskey="q" href="#">Quit - Q</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div><!-- /.navbar-collapse -->
-          </div><!-- /.container-fluid -->
-        </nav>
-        <div class="container-fluid">
-          <div class = "container" style="margin-top: 70px;">
-            <p style="float: left; text-transform: uppercase;	font-size: 120%; font-weight: bold;" id="orgdata"></p>
-            <p style="float: right; font-size: 120%; font-weight: bold;" id="yeardata"></p>
-          </div>
-          <div id="info" class="tab-pane fade in active"></div>
-        </div>
-        <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
-        <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
-        <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/shortcut.js')}}"></script>
-        <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/mainshell.js')}}"></script>
-        <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/showuser.js')}}"></script>
-  </body>
+              <li><a data-toggle="tab" id="addaccounttb" href="">Create/Edit Account - F2</a></li>
+              <li><a data-toggle="tab" id="listofaccountstb" href="">List of Accounts - CTRL+L</a></li>
+              <li><a data-toggle="tab" id="ledgertb" href="">Ledger - F3</a></li>
+              <li><a data-toggle="tab" id="contratb" href="">Contra - F4</a></li>
+              <li><a data-toggle="tab" id="paymenttb" href="">Payment - F5</a></li>
+              <li><a data-toggle="tab" id="receipttb" href="">Receipt - F6</a></li>
+              <li><a data-toggle="tab" id="journaltb" href="">Journal - F7</a></li>
+              <li><a data-toggle="tab" id="salestb" href="">Sales - F8</a></li>
+              <li><a data-toggle="tab" id="purchasetb" href="">Purchase - F9</a></li>
+              <li><a data-toggle="tab" id="creditnotetb" href="">Credit Note - CTRL+F2</a></li>
+              <li><a data-toggle="tab" id="debitnotetb" href="">Debit Note - CTRL+F3</a></li>
+              <li><a data-toggle="tab" id="salesreturntb" href="">Sales Return - CTRL+F4</a></li>
+              <li><a data-toggle="tab" id="purchasereturntb" href="">Purchase Return - CTRL+F5</a></li>
+              <li><a data-toggle="tab" id="trialbalancetb" href="">Trial Balance - CTRL+F7</a</li>
+              <li><a data-toggle="tab" id="listofaccountstb" href="">Income & Expenditure - CTRL+F8</a></li>
+              <li><a data-toggle="tab" id="statementofaffairstb" href="">Statement of Affairs - CTRL+F9</a></li>
+              <li><a data-toggle="tab" id="cashflowtb" href="">Cash Flow - CTRL+F10</a></li>
+              <li><a data-toggle="tab" id="projectstatementtb" href="">Project Statement - CTRL+F11</a></li>
+              <li><a data-toggle="tab" id="brstb" href="">Bank Reconciliation Statement - CTRL+F12</a></li>
+              <li><a data-toggle="tab" id="projecttb" href="">Project - CTRL+E</a></li>
+              <li><a data-toggle="tab" id="findvouchertb" href="">Find Voucher - CTRL+F</a></li>
+              <li><a data-toggle="tab" id="logouttb" href="">Logout - CTRL+G</a></li>
+              <li><a data-toggle="tab" id="changeogtb" href="">Change Organisation - H</a></li>
+              <li><a data-toggle="tab" id="quittb" href="">Quit - CTRL+Q</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<div id="info" style="margin-top: 60px; margin-bottom: 40px;" class="tab-pane fade in active"></div>
+<nav class="navbar-xs navbar-inverse navbar-fixed-bottom">
+  <div class="container-fluid" style="color: #aaaaaa; margin-top:5px;">
+    <p style="float: left;" id="orgdata"></p>
+    <p style="float: right;" id="yeardata"></p>
+  </div>
+</nav>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/shortcut.js')}}"></script>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/mainshell.js')}}"></script>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/showuser.js')}}"></script>
+</body>
 </html>

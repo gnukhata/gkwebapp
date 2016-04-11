@@ -24,12 +24,12 @@
 
             <form id="createorgform"  role="form">
               <div class="form-group">
-                <label for="orgname">Organisation Name:</label>
-                <input name="orgname" class="form-control" placeholder="Enter Organisation Name" id="orgname" type="text" data-validation-required-message="Please Enter Organisation Name" />
+                <label for="orgname">Organisation <u>N</u>ame:</label>
+                <input name="orgname" class="form-control" placeholder="Enter Organisation Name" id="orgname" type="text" data-validation-required-message="Please Enter Organisation Name" accesskey="n"/>
                 <br/>
 
-                <label for="orgcase">Case</label>
-                <select name="orgcase" class="form-control" id="orgcase">
+                <label for="orgcase"><u>C</u>ase</label>
+                <select name="orgcase" class="form-control" id="orgcase" accesskey="c">
                   <option value="As-Is">As-is</option>
                   <option value="Upper Case">Upper Case</option>
                   <option value="Lower Case">Lower Case</option>
@@ -37,20 +37,20 @@
 
                 <br/>
 
-                <label for="orgtype">Organisation Type:</label>
-                <select name="orgtype" class="form-control" id="orgtype" data-validation-required-message="Please select Organisation Type">
+                <label for="orgtype">Organisation <u>T</u>ype:</label>
+                <select name="orgtype" class="form-control" id="orgtype" data-validation-required-message="Please select Organisation Type" accesskey="t">
                   <option value="Profit Making">Profit Making</option>
                   <option value="Not For Profit">Not For Profit</option>
                 </select>
 
                 <br/>
 
-                <label for="financialdate">Financial Year:</label>
+                <label for="financialdate"><u>F</u>inancial Year:</label>
 
                 <div class="form-inline">
 
                   <label class="sr-only" for="fromday">Enter From Day</label>
-                  <input type="text" id="fromday" name="fromday" class="form-control" style="width:60px"  placeholder="DD" >
+                  <input type="text" id="fromday" name="fromday" class="form-control" style="width:60px"  placeholder="DD" accesskey="f" >
 
                   <label class="sr-only" for="frommonth">Enter From Month</label>
                   <input type="text" id="frommonth" name="frommonth" class="form-control" style="width:60px"  placeholder="MM" >
@@ -72,7 +72,7 @@
 
                 </div>
                 <br />
-                <button class="btn btn-success" id="btnsubmit" type="submit"><span class="glyphicon glyphicon-arrow-right"></span>Proceed</button>
+                <button class="btn btn-success" id="btnsubmit" type="submit" accesskey="p"><span class="glyphicon glyphicon-arrow-right"></span><u>P</u>roceed</button>
               </div>
 
 

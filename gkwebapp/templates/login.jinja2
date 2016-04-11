@@ -29,22 +29,22 @@
         <div style="padding-top:30px" class="panel-body" >
           <form id="loginform" action="userlogin" class="form-horizontal">
 
-            <div style="margin-bottom: 25px" class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-              <input id="username" type="text" class="form-control" name="username" value="" placeholder="username"></input>
+            <div style="margin-bottom: 25px" class="input-group col-xs-12">
+              <label for="username"><u>U</u>sername :</label>
+              <input id="username" type="text" class="form-control col-xs-12" name="username" value="" accesskey="u"></input>
             </div>
 
-            <div style="margin-bottom: 25px" class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-              <input id="userpassword" type="password" class="form-control" name="userpassword" placeholder="password"></input>
+            <div style="margin-bottom: 25px" class="input-group col-xs-12">
+              <label for="password"><u>P</u>assword :</label>
+              <input id="userpassword" type="password" class="form-control col-xs-12" name="userpassword" accesskey="p"></input>
             </div>
 
             <input id="orgcode" type="hidden" name="orgcode" value="{{code}}" class="form-control" ></input>
             <div style="margin-top:10px" class="form-group">
               <!-- Button -->
               <div class="col-sm-12 controls">
-                <button id="login" type="submit" class="btn btn-success "><span class="glyphicon glyphicon-arrow-right"></span>Login</button>
-                <button id="back" class="btn btn-warning"><span class="glyphicon glyphicon-arrow-left"></span>Back</button>
+                <button id="login" type="submit" class="btn btn-success " accesskey="l"><span class="glyphicon glyphicon-arrow-right"></span><u>L</u>ogin</button>
+                <button id="back" class="btn btn-warning" accesskey="b"><span class="glyphicon glyphicon-arrow-left"></span><u>B</u>ack</button>
               </div>
             </div>
           </form>
