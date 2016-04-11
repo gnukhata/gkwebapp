@@ -1,41 +1,41 @@
 $(document).ready(function(){
   $("#adduser").validate({
     rules: {
-  uesrpassword: "required",
-  cnfpassword: {
-    equalTo: "#password"
-  }
-}
+      userpassword: "required",
+      cnfpassword: {
+        equalTo: "#password"
+      }
+    }
 
   });
   $("#adduser").submit(function(e)
   {
     var isvalidate=$("#adduser").valid();
     if(isvalidate)
+    {
+      $.ajax(
         {
-          $.ajax(
-            {
-              type: "POST",
-              url: "/createuser",
-              global: false,
-              async: false,
-              datatype: "json",
-              data: $("#adduser").serialize(),
-              beforeSend: function(xhr)
-              {
-                xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-              },
-              success: function(resp)
-              {
+          type: "POST",
+          url: "/createuser",
+          global: false,
+          async: false,
+          datatype: "json",
+          data: $("#adduser").serialize(),
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+          success: function(resp)
+          {
 
-                alert(resp["gkstatus"])
-              }
+            alert(resp["gkstatus"])
+          }
 
-            }
-          );
-
-          e.preventDefault();
         }
+      );
+
+      e.preventDefault();
+    }
     e.preventDefault();
   }
 );
