@@ -67,24 +67,7 @@ else
 
 $("#reset").click(function()
 {
-  $.ajax(
-  {
-
-  type: "POST",
-  url: "/showaccount",
-  global: false,
-  async: false,
-  datatype: "text/html",
-  beforeSend: function(xhr)
-    {
-      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-    },
-  success: function(resp)
-  {
-    $("#info").html(resp);
-  }
-  }
-  );
+  $('#addaccount').click();
 }
 );
 

@@ -75,24 +75,7 @@ $(document).ready(function()
 
 $("#reset").click(function()
 {
-  $.ajax(
-  {
-
-  type: "POST",
-  url: "/showeditaccount",
-  global: false,
-  async: false,
-  datatype: "text/html",
-  beforeSend: function(xhr)
-    {
-      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-    },
-  success: function(resp)
-  {
-    $("#info").html(resp);
-  }
-  }
-  );
+  $('#editaccount').click();
 }
 );
 
