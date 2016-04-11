@@ -1,24 +1,27 @@
 shortcut.add("f1",function() {
 document.getElementById("toolbar").click();
-})
+});
 shortcut.add("Alt+G",function() {
 document.getElementById("gnukhata").click();
-})
+});
 shortcut.add("Alt+M",function() {
 document.getElementById("master").click();
-})
+});
 shortcut.add("Alt+T",function() {
 document.getElementById("transaction").click();
-})
+});
 shortcut.add("Alt+R",function() {
 document.getElementById("report").click();
-})
+});
 shortcut.add("Alt+A",function() {
 document.getElementById("administration").click();
-})
+});
 shortcut.add("Alt+H",function() {
 document.getElementById("help").click();
-})
+});
+shortcut.add("f2",function() {
+document.getElementById("addaccounttb").click();
+});
 $(document).ready(function(){
   $('#editaccount').click(function (e) {
 
@@ -76,5 +79,4 @@ $(document).ready(function(){
   $('#addaccounttb').click(function(){
     $('#addaccount').click();
   });
-
 });

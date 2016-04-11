@@ -26,7 +26,7 @@
 
             <div style="margin-bottom: 25px" class="input-group col-xs-12">
               <label for="org-name" id="orname">Select <u>O</u>rganisation :</label><br/>
-              <select class = "form-control" id="org-name"  name = "orgname" accesskey="o">
+              <select class = "form-control col-xs-12" id="org-name"  name = "orgname" accesskey="o">
                 <option value="" disabled selected hidden>Select Organisation</option>
                 {% for orgs in gkresult %}
                 <option value="{{orgs}}">{{orgs["orgname"]}} , {{orgs["orgtype"]}}</option>
@@ -36,7 +36,7 @@
 
             <div style="margin-bottom: 25px" class="input-group col-xs-12">
               <label for="org-name" id="orname">Select <u>F</u>inancial Year :</label><br/>
-              <select class = "form-control" id="finalyears" name="orgcode" accesskey="f">
+              <select class = "form-control col-xs-12" id="finalyears" name="orgcode" accesskey="f">
                 <option value="" disabled selected hidden>Select Financial Year</option>
               </select>
             </div>

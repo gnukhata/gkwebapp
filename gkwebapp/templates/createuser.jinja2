@@ -31,28 +31,34 @@
         <div style="padding-top:30px" class="panel-body" >
           <form id="adduser" method="post" action="createuser" class="form-horizontal">
             <div style="margin-bottom: 20px" class="input-group col-xs-12">
-              <input id="name" type="text" class="form-control" name="username" placeholder="Username" required data-msg="Please enter username"></input>
+              <label for="name" id="usrname"><u>U</u>sername :</label>
+              <input id="name" type="text" class="form-control" name="username" required data-msg="Please enter username" accesskey="u"></input>
             </div>
             <div style="margin-bottom: 20px" class="input-group col-xs-12">
-              <input name="userpassword" id="password" type="password" class="form-control" placeholder="Password" required data-msg="Please enter password"></input>
+              <label for="password" id="usrpwd"><u>P</u>assword :</label>
+              <input name="userpassword" id="password" type="password" class="form-control" required data-msg="Please enter password"  accesskey="p"></input>
             </div>
             <div style="margin-bottom: 20px" class="input-group col-xs-12">
-              <input name="cnfpassword" type="password" id="confirm_password" class="form-control" placeholder="Confirm Password" required data-msg="Please enter the same password as above"></input>
+              <label for="confirm_password" id="pwdconfirm"><u>C</u>onfirm Password :</label>
+              <input name="cnfpassword" type="password" id="confirm_password" class="form-control" required data-msg="Please enter the same password as above" accesskey="c"></input>
             </div>
             <div style="margin-bottom: 20px" class="input-group col-xs-12">
-              <select name="userrole" type="text" class="form-control" required data-msg="Please select a role">
+              <label for="confirm_password" id="pwdconfirm">Select <u>R</u>ole :</label>
+              <select name="userrole" type="text" class="form-control" required data-msg="Please select a role" accesskey="r">
                 <option value="" disabled selected hidden>Select a role</option>
                 <option value="0">Manager</option>
                 <option value="1">Operator</option>
               </select>
             </div>
             <div style="margin-bottom: 20px" class="input-group col-xs-12">
-              <input name="userquestion" type="text" class="form-control" placeholder="Security Question" required data-msg="Please enter security question"></input>
+              <label for="question" id="secquestion">Security <u>Q</u>uestion :</label>
+              <input name="userquestion" type="text" class="form-control" placeholder="Security Question" required data-msg="Please enter security question" id="question" accesskey="q"></input>
             </div>
             <div style="margin-bottom: 20px" class="input-group col-xs-12">
-              <input name="useranswer" type="text" class="form-control" placeholder="Security Answer" required data-msg="Please enter security answer"></input>
+              <label for="answer" id="secanswer">Security <u>A</u>nswer :</label>
+              <input name="useranswer" type="text" class="form-control" placeholder="Security Answer" required data-msg="Please enter security answer" id="answer" accesskey="a"></input>
             </div>
-            <button type="submit" class="btn btn-success">Create</button>
+            <button type="submit" class="btn btn-success" accesskey="c"><u>C</u>reate</button>
           </form>
         </div>
       </div>

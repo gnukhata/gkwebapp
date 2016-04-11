@@ -20,16 +20,16 @@
 					<form id="accountform" method="post"  action="addaccount" class="form-horizontal">
 
 						<div style="margin-bottom: 5px" class="col-xs-12 from-group">
-							<label for="groupname" id="gname">Group Name :</label>
-							<select class = "form-control gsselect" id="groupname"  name = "groupname" required data-msg="Please select a group">
+							<label for="groupname" id="gname"><u>G</u>roup Name :</label>
+							<select class = "form-control gsselect" id="groupname"  name = "groupname" required data-msg="Please select a group" accesskey="g">
 								<option value="" disabled selected hidden>Select Group</option>
 								{% for grps in gkresult %}
 								<option value="{{grps['groupcode']}}">{{grps["groupname"]}}</option>
 								{% endfor %}
 							</select>
 							<br/>
-							<label for="subgroupname" id="sname">Sub-Group Name :</label>
-							<select class = "form-control gsselect" id="subgroupname" name="subgroupname" required data-msg="Please select a sub-group" >
+							<label for="subgroupname" id="sname">Sub-Group <u>N</u>ame :</label>
+							<select class = "form-control gsselect" id="subgroupname" name="subgroupname" required data-msg="Please select a sub-group" accesskey="n">
 								<option value="" disabled selected hidden>Select Sub-Group</option>
 							</select>
 							<br/>
@@ -38,16 +38,16 @@
 								<input type="text" id="newsubgroup" class="form-control" name="newsubgroup" placeholder="New Sub-Group Name" required data-msg="Please enter sub-group name" ></input>
 							</div>
 
-							<label> <input type="checkbox" id="maccounts"> Create Multiple Accounts</label>
+							<label> <input type="checkbox" id="maccounts" accesskey="m"> Create <u>M</u>ultiple Accounts</label>
 							<br/>
-							<label for="accountname" id="accname">Account Name :</label>
-							<input type="text" id="accountname" class="form-control" name="accountname" placeholder="Accountname" required data-msg="Please enter account name"></input>
+							<label for="accountname" id="accname"><u>A</u>ccount Name :</label>
+							<input type="text" id="accountname" class="form-control" name="accountname" required data-msg="Please enter account name" accesskey="a"></input>
 							<br/>
-							<label for="openbal" id="obal">Opening Balance :</label>
-							<input id="openbal" name="openbal" value="0.00" class=" form-control" type="text" placeholder="0.00"/>
+							<label for="openbal" id="obal"><u>O</u>pening Balance :</label>
+							<input id="openbal" name="openbal" value="0.00" class=" form-control" type="text" placeholder="0.00" accesskey="o"/>
 							<br/>
-							<button type="submit" class="btn btn-primary" id="submit" name="submit">Submit</button>
-							<button id="reset" class="btn btn-danger">Reset</button>
+							<button type="submit" class="btn btn-primary" id="submit" name="submit" accesskey="s"><u>S</u>ubmit</button>
+							<button id="reset" class="btn btn-danger" accesskey="r"><u>R</u>eset</button>
 
 						</div>
 					</form>
