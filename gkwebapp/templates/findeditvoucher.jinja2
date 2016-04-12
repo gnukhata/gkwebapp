@@ -1,0 +1,74 @@
+<!DOCTYPE HTML >
+<html>
+<head>
+
+</head>
+<body>
+
+  <div class="container-fluid" id="inner">
+    <div  class="mainbox col-md-12">
+      <div class="panel panel-info" >
+        <div class="panel-heading">
+          <div class="panel-title">Find Voucher</div>
+        </div>
+        <div class="panel-body" >
+          <form id="findvoucher" class="form-horizontal" role="form">
+
+              <label for="searchby" id="sby">Search Voucher By :</label><br/>
+
+            <div class="form-group col-md-3">
+              <select class = "form-control" id="searchby"  name = "searchby">
+                <option value="" disabled selected hidden>Select Criteria</option>
+                <option value="vnum" >Voucher Number</option>
+                <option value="type" >Type</option>
+                <option value="amount" >Amount</option>
+                <option value="date" >Date</option>
+                <option value="narration" >Narration</option>
+              </select>
+            </div>
+            <div class=" col-md-6 vtp">
+              <div class=" col-md-6">
+                <input type="text" class="form-control" name="vtype" id="vtype" placeholder="Voucher Type">
+              </div>
+            </div>
+            <div class=" col-md-6 vno">
+              <div class=" col-md-6">
+                <input type="text" class="form-control" name="vnum" id="vnum" placeholder="Voucher Number">
+              </div>
+            </div>
+            <div class=" col-md-6 amt">
+              <div class=" col-md-6">
+                <input type="text" class="form-control" name="amount" id="amount" placeholder="Amount">
+              </div>
+            </div>
+            <div class=" col-md-6 vdate">
+
+                  <input type="text" name="fday"  value="" class="vdate" size="2" maxlength="2" placeholder="dd">
+                  <label>-</label>
+                  <input type="text" name="fmonth" value="" class="vdate" size="2" maxlength="2" placeholder="mm">
+                  <label>-</label>
+                  <input type="text" name="fyear" value="" class="vdate" size="4" maxlength="4" placeholder="yyyy">
+                  <label>to</label>
+                  <input type="text" name="tday"  value="" class="vdate" size="2" maxlength="2" placeholder="dd">
+                  <label>-</label>
+                  <input type="text" name="tmonth" value="" class="vdate" size="2" maxlength="2" placeholder="mm">
+                  <label>-</label>
+                  <input type="text" name="tyear" value="" class="vdate" size="4" maxlength="4" placeholder="yyyy">
+            </div>
+            <div class=" col-md-6 nar">
+                <input type="text" class="form-control" name="narration" id="amount" placeholder="Narration">
+            </div>
+            <div class="pull-right col-md-3">
+              <button type="submit" class="btn btn-primary" id="submit" name="submit">Submit</button>
+              <button id="reset" class="btn btn-danger">Reset</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.autotab.min.js')}}"></script>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/findeditvoucher.js')}}"></script>
+</body>
+
+</html>
