@@ -14,7 +14,7 @@ var diff = 0;
    drsum=0;
     $(".dramt").each(function(){
         drsum += +$(this).val();
-        $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+        $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
     });
 });
 
@@ -22,8 +22,36 @@ $(document).on("change", ".cramt", function() {
   crsum=0;
   $(".cramt").each(function(){
       crsum += +$(this).val();
-      $('tfoot tr:last td:eq(2) input').val(crsum.toFixed(2));
+      $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
   });
+});
+
+$(document).on("focusout",".dramt",function(event)
+{
+  $(this).val((parseFloat($(this).val()).toFixed(2)));
+});
+
+$(document).on("focusout",".cramt",function(event)
+{
+  $(this).val((parseFloat($(this).val()).toFixed(2)));
+});
+
+$(document).on("change",".crdr",function(event)
+{
+  var curindex = $(this).closest('tr').index();
+  $('tbody tr:eq('+curindex+') input:disabled').val("0.00");
+  $('tbody tr:eq('+curindex+') input:enabled').val("");
+  $('tbody tr:eq('+curindex+') input').prop('disabled', function(i, v) { return !v; });
+  drsum=0;
+   $(".dramt").each(function(){
+       drsum += +$(this).val();
+       $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+   });
+   crsum=0;
+   $(".cramt").each(function(){
+       crsum += +$(this).val();
+       $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+   });
 });
 
 
@@ -43,11 +71,11 @@ $(document).on("keyup",".dramt",function(event)
 			{
 				 var nxtindex = curindex+1
 				if($('tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0){
-          $('tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(diff.toFixed(2));
+          $('tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
           crsum=0;
           $(".cramt").each(function(){
               crsum += +$(this).val();
-              $('tfoot tr:last td:eq(2) input').val(crsum.toFixed(2));
+              $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
           });
           $('tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
         }
@@ -89,11 +117,11 @@ $(document).on("keyup",".dramt",function(event)
               $('tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
             }
             $('tbody tr:last td:eq(1) select').focus();
-            $('tbody tr:last td:eq(3) input:enabled').val(diff.toFixed(2));
+            $('tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
             crsum=0;
             $(".cramt").each(function(){
                 crsum += +$(this).val();
-                $('tfoot tr:last td:eq(2) input').val(crsum.toFixed(2));
+                $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
             });
           }
         });
@@ -108,11 +136,11 @@ $(document).on("keyup",".dramt",function(event)
 			{
 				 var nxtindex = curindex+1
 				if($('tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()=="" || $('tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()==0){
-          $('tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val(diff.toFixed(2));
+          $('tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val(parseFloat(diff).toFixed(2));
           drsum=0;
           $(".dramt").each(function(){
               drsum += +$(this).val();
-              $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+              $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
           });
           $('tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
         }
@@ -154,11 +182,11 @@ $(document).on("keyup",".dramt",function(event)
               $('tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
             }
             $('tbody tr:last td:eq(1) select').focus();
-            $('tbody tr:last td:eq(2) input:enabled').val(diff.toFixed(2));
+            $('tbody tr:last td:eq(2) input:enabled').val(parseFloat(diff).toFixed(2));
             drsum=0;
              $(".dramt").each(function(){
                  drsum += +$(this).val();
-                 $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+                 $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
              });
           }
         });
@@ -186,11 +214,11 @@ $(document).on("keyup",".cramt",function(event)
 			{
 				 var nxtindex = curindex+1
 				if($('tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0){
-          $('tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(diff.toFixed(2));
+          $('tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
           crsum=0;
           $(".cramt").each(function(){
               crsum += +$(this).val();
-              $('tfoot tr:last td:eq(2) input').val(crsum.toFixed(2));
+              $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
           });
           $('tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
         }
@@ -232,11 +260,11 @@ $(document).on("keyup",".cramt",function(event)
               $('tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
             }
             $('tbody tr:last td:eq(1) select').focus();
-            $('tbody tr:last td:eq(3) input:enabled').val(diff.toFixed(2));
+            $('tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
             crsum=0;
             $(".cramt").each(function(){
                 crsum += +$(this).val();
-                $('tfoot tr:last td:eq(2) input').val(crsum.toFixed(2));
+                $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
             });
           }
         });
