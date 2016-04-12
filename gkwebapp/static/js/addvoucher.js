@@ -107,10 +107,10 @@ $(document).on("keyup",".dramt",function(event)
                 '</select>'+
               '</td>'+
               '<td>'+
-                '<input class="form-control input-sm dramt" type="text" name="dr" value="" disabled>'+
+                '<input class="form-control input-sm dramt rightJustified" type="text" name="dr" value="" disabled>'+
               '</td>'+
               '<td>'+
-                '<input class="form-control input-sm cramt" type="text" name="cr" value="0.00">'+
+                '<input class="form-control input-sm cramt rightJustified" type="text" name="cr" value="0.00">'+
               '</td>'+
             '</tr>');
             for (i in accs ) {
@@ -172,10 +172,10 @@ $(document).on("keyup",".dramt",function(event)
                 '</select>'+
               '</td>'+
               '<td>'+
-                '<input class="form-control input-sm dramt" type="text" name="dr" value="0.00">'+
+                '<input class="form-control input-sm dramt rightJustified" type="text" name="dr" value="0.00">'+
               '</td>'+
               '<td>'+
-                '<input class="form-control input-sm cramt" type="text" name="cr" value="" disabled>'+
+                '<input class="form-control input-sm cramt rightJustified" type="text" name="cr" value="" disabled>'+
               '</td>'+
             '</tr>');
             for (i in accs ) {
@@ -246,14 +246,14 @@ $(document).on("keyup",".cramt",function(event)
                 '</select>'+
               '</td>'+
               '<td>'+
-                '<select class="form-control input-sm accs" name="type">'+
+                '<select class="form-control input-sm accs" name="account">'+
                 '</select>'+
               '</td>'+
               '<td>'+
-                '<input class="form-control input-sm dramt" type="text" name="dr" value="" disabled>'+
+                '<input class="form-control input-sm dramt rightJustified" type="text" name="dr" value="" disabled>'+
               '</td>'+
               '<td>'+
-                '<input class="form-control input-sm cramt" type="text" name="cr" value="0.00">'+
+                '<input class="form-control input-sm cramt rightJustified" type="text" name="cr" value="0.00">'+
               '</td>'+
             '</tr>');
             for (i in accs ) {
@@ -311,14 +311,14 @@ $(document).on("keyup",".cramt",function(event)
                 '</select>'+
               '</td>'+
               '<td>'+
-                '<select class="form-control input-sm accs" name="type">'+
+                '<select class="form-control input-sm accs" name="account">'+
                 '</select>'+
               '</td>'+
               '<td>'+
-                '<input class="form-control input-sm dramt" type="text" name="dr" value="0.00">'+
+                '<input class="form-control input-sm dramt rightJustified" type="text" name="dr" value="0.00">'+
               '</td>'+
               '<td>'+
-                '<input class="form-control input-sm cramt" type="text" name="cr" value="" disabled>'+
+                '<input class="form-control input-sm cramt rightJustified" type="text" name="cr" value="" disabled>'+
               '</td>'+
             '</tr>');
             for (i in accs ) {
@@ -339,5 +339,17 @@ $(document).on("keyup",".cramt",function(event)
 		}
 
 	}
+});
+$('#save').click(function(event) {
+  var output = [];
+    $("tbody tr").each(function() {
+        var obj = {};
+        obj.accountcode = $(".accs", this).val();
+        obj.cramount = $(":input[name=cr]", this).val();
+        obj.dramount = $(":input[name=dr]", this).val();
+        output.push(obj);
+    });
+    alert(JSON.stringify(output));
+    return false;
 });
 });

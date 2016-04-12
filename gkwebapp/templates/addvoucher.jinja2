@@ -5,12 +5,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>GNUKhata | {{vtype}}</title>
+  <style media="screen">
+  .rightJustified {
+      text-align: right;
+  }
+  </style>
 </head>
 <body>
   <div class="container">
     <div class="panel panel-info">
       <div class="panel-body">
-        <form name="voucher" class="" action="" method="post">
+          <form id="voucher" name="voucher" class="" action="" method="get">
           <div class="well well-sm">
             <label for="vno">Voucher No:</label>
             <input type="text" name="vno" id="vno" size="10">
@@ -25,10 +30,10 @@
             <table id="vtable" class="table table-striped table-bordered table-condensed">
               <thead>
               <tr class="info">
-                <th>
+                <th width="9%">
                   Cr/Dr
                 </th>
-                <th>
+                <th width="40%">
                   Account Name
                 </th>
                 <th>
@@ -48,17 +53,17 @@
                   </select>
                 </td>
                 <td>
-                  <select class="form-control input-sm accs" name="type">
+                  <select class="form-control input-sm accs" name="account">
                     {% for acc in accounts %}
                     <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
                     {% endfor %}
                   </select>
                 </td>
                 <td>
-                  <input class="form-control input-sm dramt" type="text" name="dr" value="0.00">
+                  <input class="form-control input-sm dramt rightJustified" type="text" name="dr" value="0.00">
                 </td>
                 <td>
-                  <input class="form-control input-sm cramt" type="text" name="cr" value="" disabled>
+                  <input class="form-control input-sm cramt rightJustified" type="text" name="cr" value="" disabled>
                 </td>
               </tr>
               <tr>
@@ -69,17 +74,17 @@
                   </select>
                 </td>
                 <td>
-                  <select class="form-control input-sm accs" name="type">
+                  <select class="form-control input-sm accs" name="account">
                     {% for acc in accounts %}
                     <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
                     {% endfor %}
                   </select>
                 </td>
                 <td>
-                  <input class="form-control input-sm dramt" type="text" name="dr" value="" disabled>
+                  <input class="form-control input-sm dramt rightJustified" type="text" name="dr" value="" disabled>
                 </td>
                 <td>
-                  <input class="form-control input-sm cramt" type="text" name="cr" value="0.00">
+                  <input class="form-control input-sm cramt rightJustified" type="text" name="cr" value="0.00">
                 </td>
               </tr>
               </tbody>
@@ -89,10 +94,10 @@
                     Total
                   </td>
                   <td>
-                    <input class="form-control input-sm" type="text" name="dr" value="0.00" disabled>
+                    <input class="form-control input-sm rightJustified" type="text" name="dr" value="0.00" disabled>
                   </td>
                   <td>
-                    <input class="form-control input-sm" type="text" name="cr" value="0.00" disabled>
+                    <input class="form-control input-sm rightJustified" type="text" name="cr" value="0.00" disabled>
                   </td>
                 </tr>
               </tfoot>
@@ -113,10 +118,11 @@
             <textarea class="form-control" name="narration" id="narration" rows="2" cols="60"></textarea>
           </div>
           <input type="hidden" id="vtype" name="vtype" value="{{vtype}}">
-        </form>
+
       </div>
+      </form>
       <div class="panel-footer">
-          <button type="button" class="btn btn-success">
+          <button type="button" id="save" name="submit" class="btn btn-success">
             Save
           </button>
           <button type="button" class="btn btn-warning">
