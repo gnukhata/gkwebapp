@@ -21,8 +21,9 @@
               <input type="text" name="vyear" class="vdate" value="" size="4" maxlength="4">
             </div>
           </div>
-          <div class="well well-sm">
+          <div class="panel panel-default">
             <table id="vtable" class="table table-striped table-bordered table-condensed">
+              <thead>
               <tr class="info">
                 <th>
                   Cr/Dr
@@ -37,6 +38,8 @@
                   Cr Amount
                 </th>
               </tr>
+              </thead>
+              <tbody>
               <tr>
                 <td>
                   <select class="form-control input-sm crdr" name="type" disabled>
@@ -79,6 +82,20 @@
                   <input class="form-control input-sm cramt" type="text" name="cr" value="0.00">
                 </td>
               </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="2">
+                    Total
+                  </td>
+                  <td>
+                    <input class="form-control input-sm" type="text" name="dr" value="0.00" disabled>
+                  </td>
+                  <td>
+                    <input class="form-control input-sm" type="text" name="cr" value="0.00" disabled>
+                  </td>
+                </tr>
+              </tfoot>
             </table>
           </div>
           <div class="col-xs-1">

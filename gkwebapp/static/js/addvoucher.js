@@ -14,6 +14,7 @@ var diff = 0;
    drsum=0;
     $(".dramt").each(function(){
         drsum += +$(this).val();
+        $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
     });
 });
 
@@ -21,6 +22,7 @@ $(document).on("change", ".cramt", function() {
   crsum=0;
   $(".cramt").each(function(){
       crsum += +$(this).val();
+      $('tfoot tr:last td:eq(2) input').val(crsum.toFixed(2));
   });
 });
 
@@ -30,20 +32,27 @@ $(document).on("keyup",".dramt",function(event)
 	if(event.which==13)
 	{
 		var curindex = $(this).closest('tr').index();
-
-		var lastindex = $('#vtable tr:last').index();
+    if($('tbody tr:eq('+curindex+') td:eq(2) input:enabled').val()=="" || $('tbody tr:eq('+curindex+') td:eq(2) input:enabled').val()==0){
+      return false;
+    }
+		var lastindex = $('#vtable tbody tr:last').index();
 		if(drsum > crsum)
 		{
 			diff=drsum-crsum;
 			if(curindex<lastindex)
 			{
 				 var nxtindex = curindex+1
-				if($('tr:eq('+nxtindex+') td:eq(3) input').val()=="" || $('tr:eq('+nxtindex+') td:eq(3) input').val()=="0.00"){
-          $('tr:eq('+nxtindex+') td:eq(3) input').val(diff);
-          $('tr:eq('+nxtindex+') td:eq(1) select').focus();
+				if($('tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0){
+          $('tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(diff.toFixed(2));
+          crsum=0;
+          $(".cramt").each(function(){
+              crsum += +$(this).val();
+              $('tfoot tr:last td:eq(2) input').val(crsum.toFixed(2));
+          });
+          $('tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
         }
         else{
-          $('tr:eq('+nxtindex+') td:eq(3) input').focus();
+          $('tbody tr:eq('+nxtindex+') input:enabled').focus();
         }
 			}
       else {
@@ -77,9 +86,15 @@ $(document).on("keyup",".dramt",function(event)
               '</td>'+
             '</tr>');
             for (i in accs ) {
-              $('tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
+              $('tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
             }
-            $('tr:last td:eq(1) select').focus();
+            $('tbody tr:last td:eq(1) select').focus();
+            $('tbody tr:last td:eq(3) input:enabled').val(diff.toFixed(2));
+            crsum=0;
+            $(".cramt").each(function(){
+                crsum += +$(this).val();
+                $('tfoot tr:last td:eq(2) input').val(crsum.toFixed(2));
+            });
           }
         });
 
@@ -92,12 +107,17 @@ $(document).on("keyup",".dramt",function(event)
 			if(curindex<lastindex)
 			{
 				 var nxtindex = curindex+1
-				if($('tr:eq('+nxtindex+') td:eq(2) input').val()=="" || $('tr:eq('+nxtindex+') td:eq(2) input').val()=="0.00"){
-          $('tr:eq('+nxtindex+') td:eq(2) input').val(diff);
-          $('tr:eq('+nxtindex+') td:eq(1) select').focus();
+				if($('tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()=="" || $('tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()==0){
+          $('tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val(diff.toFixed(2));
+          drsum=0;
+          $(".dramt").each(function(){
+              drsum += +$(this).val();
+              $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+          });
+          $('tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
         }
         else{
-          $('tr:eq('+nxtindex+') td:eq(2) input').focus();
+          $('tbody tr:eq('+nxtindex+') input:enabled').focus();
         }
 			}
       else {
@@ -131,9 +151,15 @@ $(document).on("keyup",".dramt",function(event)
               '</td>'+
             '</tr>');
             for (i in accs ) {
-              $('tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
+              $('tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
             }
-            $('tr:last td:eq(1) select').focus();
+            $('tbody tr:last td:eq(1) select').focus();
+            $('tbody tr:last td:eq(2) input:enabled').val(diff.toFixed(2));
+            drsum=0;
+             $(".dramt").each(function(){
+                 drsum += +$(this).val();
+                 $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+             });
           }
         });
 
@@ -149,20 +175,27 @@ $(document).on("keyup",".cramt",function(event)
 	if(event.which==13)
 	{
 		var curindex = $(this).closest('tr').index();
-
-		var lastindex = $('#vtable tr:last').index();
+    if($('tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()=="" || $('tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()==0){
+      return false;
+    }
+		var lastindex = $('#vtable tbody tr:last').index();
 		if(drsum > crsum)
 		{
 			diff=drsum-crsum;
 			if(curindex<lastindex)
 			{
 				 var nxtindex = curindex+1
-				if($('tr:eq('+nxtindex+') td:eq(3) input').val()=="" || $('tr:eq('+nxtindex+') td:eq(3) input').val()=="0.00"){
-          $('tr:eq('+nxtindex+') td:eq(3) input').val(diff);
-          $('tr:eq('+nxtindex+') td:eq(1) select').focus();
+				if($('tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0){
+          $('tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(diff.toFixed(2));
+          crsum=0;
+          $(".cramt").each(function(){
+              crsum += +$(this).val();
+              $('tfoot tr:last td:eq(2) input').val(crsum.toFixed(2));
+          });
+          $('tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
         }
         else{
-          $('tr:eq('+nxtindex+') td:eq(3) input').focus();
+          $('tbody tr:eq('+nxtindex+') input:enabled').focus();
         }
 			}
       else {
@@ -196,9 +229,15 @@ $(document).on("keyup",".cramt",function(event)
               '</td>'+
             '</tr>');
             for (i in accs ) {
-              $('tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
+              $('tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
             }
-            $('tr:last td:eq(1) select').focus();
+            $('tbody tr:last td:eq(1) select').focus();
+            $('tbody tr:last td:eq(3) input:enabled').val(diff.toFixed(2));
+            crsum=0;
+            $(".cramt").each(function(){
+                crsum += +$(this).val();
+                $('tfoot tr:last td:eq(2) input').val(crsum.toFixed(2));
+            });
           }
         });
 
@@ -211,12 +250,17 @@ $(document).on("keyup",".cramt",function(event)
 			if(curindex<lastindex)
 			{
 				 var nxtindex = curindex+1
-				if($('tr:eq('+nxtindex+') td:eq(2) input').val()=="" || $('tr:eq('+nxtindex+') td:eq(2) input').val()=="0.00"){
-          $('tr:eq('+nxtindex+') td:eq(2) input').val(diff);
-          $('tr:eq('+nxtindex+') td:eq(1) select').focus();
+         if($('tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()=="" || $('tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()==0){
+          $('tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val(diff.toFixed(2));
+          drsum=0;
+          $(".dramt").each(function(){
+              drsum += +$(this).val();
+              $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+          });
+          $('tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
         }
         else{
-          $('tr:eq('+nxtindex+') td:eq(2) input').focus();
+          $('tbody tr:eq('+nxtindex+') input:enabled').focus();
         }
 			}
       else {
@@ -250,9 +294,15 @@ $(document).on("keyup",".cramt",function(event)
               '</td>'+
             '</tr>');
             for (i in accs ) {
-              $('tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
+              $('tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
             }
-            $('tr:last td:eq(1) select').focus();
+            $('tbody tr:last td:eq(1) select').focus();
+            $('tbody tr:last td:eq(2) input:enabled').val(diff.toFixed(2));
+            drsum=0;
+             $(".dramt").each(function(){
+                 drsum += +$(this).val();
+                 $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+             });
           }
         });
 
