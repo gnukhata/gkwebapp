@@ -54,7 +54,7 @@
                 </td>
                 <td>
                   <select class="form-control input-sm accs">
-                    {% for acc in accounts %}
+                    {% for acc in draccounts %}
                     <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
                     {% endfor %}
                   </select>
@@ -75,7 +75,7 @@
                 </td>
                 <td>
                   <select class="form-control input-sm accs">
-                    {% for acc in accounts %}
+                    {% for acc in craccounts %}
                     <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
                     {% endfor %}
                   </select>

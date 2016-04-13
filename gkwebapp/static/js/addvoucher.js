@@ -84,7 +84,7 @@ $(document).off("keyup",".dramt").on("keyup",".dramt",function(event)
           url: '/getcjaccounts',
           type: 'POST',
           dataType: 'json',
-          data: {type: $('#vtype').val()},
+          data: {"type": $('#vtype').val(),"side":"Cr"},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -149,7 +149,7 @@ $(document).off("keyup",".dramt").on("keyup",".dramt",function(event)
           url: '/getcjaccounts',
           type: 'POST',
           dataType: 'json',
-          data: {type: $('#vtype').val()},
+          data: {"type": $('#vtype').val(),"side":"Dr"},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -228,7 +228,7 @@ $(document).off("keyup",".cramt").on("keyup",".cramt",function(event)
           url: '/getcjaccounts',
           type: 'POST',
           dataType: 'json',
-          data: {type: $('#vtype').val()},
+          data: {"type": $('#vtype').val(),"side":"Cr"},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -293,7 +293,7 @@ $(document).off("keyup",".cramt").on("keyup",".cramt",function(event)
           url: '/getcjaccounts',
           type: 'POST',
           dataType: 'json',
-          data: {type: $('#vtype').val()},
+          data: {"type": $('#vtype').val(),"side":"Dr"},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
