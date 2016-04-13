@@ -28,6 +28,7 @@ def main(global_config, **settings):
     config.add_route('showmainshell', '/showmainshell')
     config.add_route('showaccount', '/showaccount')
     config.add_route('showvoucher', '/showvoucher')
+    config.add_route('addvoucher', '/addvoucher')
     config.add_route('showeditaccount', '/showeditaccount')
     config.add_route('getaccdetails', '/getaccdetails')
     config.add_route('getcjaccounts', '/getcjaccounts')
