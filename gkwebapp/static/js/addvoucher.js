@@ -1,16 +1,12 @@
 $(document).ready(function() {
   $("#vno").focus();
   $('.vdate').autotab('number');
-$('.crs').keypress(function(event) {
-  if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57) && (event.which < 36 || event.which > 41) && event.which==8 && event.which==46 && event.which==46 ) {
-    event.preventDefault();
-  }
-});
+
 var drsum = 0;
 var crsum = 0;
 var diff = 0;
 
- $(document).on("change", ".dramt", function() {
+ $(document).off("change",".dramt").on("change", ".dramt", function() {
    drsum=0;
     $(".dramt").each(function(){
         drsum += +$(this).val();
@@ -18,7 +14,7 @@ var diff = 0;
     });
 });
 
-$(document).on("change", ".cramt", function() {
+$(document).off("change",".cramt").on("change", ".cramt", function() {
   crsum=0;
   $(".cramt").each(function(){
       crsum += +$(this).val();
@@ -26,17 +22,17 @@ $(document).on("change", ".cramt", function() {
   });
 });
 
-$(document).on("focusout",".dramt",function(event)
+$(document).off("focusout",".dramt").on("focusout",".dramt",function(event)
 {
   $(this).val((parseFloat($(this).val()).toFixed(2)));
 });
 
-$(document).on("focusout",".cramt",function(event)
+$(document).off("focusout",".cramt").on("focusout",".cramt",function(event)
 {
   $(this).val((parseFloat($(this).val()).toFixed(2)));
 });
 
-$(document).on("change",".crdr",function(event)
+$(document).off("change",".crdr").on("change",".crdr",function(event)
 {
   var curindex = $(this).closest('tr').index();
   $('tbody tr:eq('+curindex+') input:disabled').val("0.00");
@@ -55,7 +51,7 @@ $(document).on("change",".crdr",function(event)
 });
 
 
-$(document).on("keyup",".dramt",function(event)
+$(document).off("keyup",".dramt").on("keyup",".dramt",function(event)
 {
 	if(event.which==13)
 	{
@@ -97,20 +93,20 @@ $(document).on("keyup",".dramt",function(event)
             var accs = jsonObj["accounts"];
             $('.table').append('<tr>'+
               '<td>'+
-                '<select class="form-control input-sm crdr" name="type">'+
+                '<select class="form-control input-sm crdr">'+
                   '<option value="Cr" selected>Cr</option>'+
                   '<option value="Dr">Dr</option>'+
                 '</select>'+
               '</td>'+
               '<td>'+
-                '<select class="form-control input-sm accs" name="type">'+
+                '<select class="form-control input-sm accs">'+
                 '</select>'+
               '</td>'+
               '<td>'+
-                '<input class="form-control input-sm dramt rightJustified" type="text" name="dr" value="" disabled>'+
+                '<input class="form-control input-sm dramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
               '<td>'+
-                '<input class="form-control input-sm cramt rightJustified" type="text" name="cr" value="0.00">'+
+                '<input class="form-control input-sm cramt rightJustified" type="text" value="0.00">'+
               '</td>'+
             '</tr>');
             for (i in accs ) {
@@ -162,20 +158,20 @@ $(document).on("keyup",".dramt",function(event)
             var accs = jsonObj["accounts"];
             $('.table').append('<tr>'+
               '<td>'+
-                '<select class="form-control input-sm crdr" name="type">'+
+                '<select class="form-control input-sm crdr">'+
                   '<option value="Cr">Cr</option>'+
                   '<option value="Dr" selected>Dr</option>'+
                 '</select>'+
               '</td>'+
               '<td>'+
-                '<select class="form-control input-sm accs" name="type">'+
+                '<select class="form-control input-sm accs">'+
                 '</select>'+
               '</td>'+
               '<td>'+
-                '<input class="form-control input-sm dramt rightJustified" type="text" name="dr" value="0.00">'+
+                '<input class="form-control input-sm dramt rightJustified" type="text" value="0.00">'+
               '</td>'+
               '<td>'+
-                '<input class="form-control input-sm cramt rightJustified" type="text" name="cr" value="" disabled>'+
+                '<input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
             '</tr>');
             for (i in accs ) {
@@ -194,11 +190,12 @@ $(document).on("keyup",".dramt",function(event)
       }
 
 		}
-
+    curindex=null;
+    lastindex=null;
 	}
 });
 
-$(document).on("keyup",".cramt",function(event)
+$(document).off("keyup",".cramt").on("keyup",".cramt",function(event)
 {
 	if(event.which==13)
 	{
@@ -240,20 +237,20 @@ $(document).on("keyup",".cramt",function(event)
             var accs = jsonObj["accounts"];
             $('.table').append('<tr>'+
               '<td>'+
-                '<select class="form-control input-sm crdr" name="type">'+
+                '<select class="form-control input-sm crdr">'+
                   '<option value="Cr" selected>Cr</option>'+
                   '<option value="Dr">Dr</option>'+
                 '</select>'+
               '</td>'+
               '<td>'+
-                '<select class="form-control input-sm accs" name="account">'+
+                '<select class="form-control input-sm accs">'+
                 '</select>'+
               '</td>'+
               '<td>'+
-                '<input class="form-control input-sm dramt rightJustified" type="text" name="dr" value="" disabled>'+
+                '<input class="form-control input-sm dramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
               '<td>'+
-                '<input class="form-control input-sm cramt rightJustified" type="text" name="cr" value="0.00">'+
+                '<input class="form-control input-sm cramt rightJustified" type="text" value="0.00">'+
               '</td>'+
             '</tr>');
             for (i in accs ) {
@@ -305,20 +302,20 @@ $(document).on("keyup",".cramt",function(event)
             var accs = jsonObj["accounts"];
             $('.table').append('<tr>'+
               '<td>'+
-                '<select class="form-control input-sm crdr" name="type">'+
+                '<select class="form-control input-sm crdr">'+
                   '<option value="Cr">Cr</option>'+
                   '<option value="Dr" selected>Dr</option>'+
                 '</select>'+
               '</td>'+
               '<td>'+
-                '<select class="form-control input-sm accs" name="account">'+
+                '<select class="form-control input-sm accs">'+
                 '</select>'+
               '</td>'+
               '<td>'+
-                '<input class="form-control input-sm dramt rightJustified" type="text" name="dr" value="0.00">'+
+                '<input class="form-control input-sm dramt rightJustified" type="text" value="0.00">'+
               '</td>'+
               '<td>'+
-                '<input class="form-control input-sm cramt rightJustified" type="text" name="cr" value="" disabled>'+
+                '<input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
             '</tr>');
             for (i in accs ) {
@@ -333,23 +330,66 @@ $(document).on("keyup",".cramt",function(event)
              });
           }
         });
-
+        return false;
       }
 
 		}
-
 	}
 });
 $('#save').click(function(event) {
+  var allow = true;
+  $("tbody tr").each(function() {
+      var accountcode = $(".accs", this).val();
+      var count=0;
+      $("tbody tr").each(function() {
+            if(accountcode==$(".accs", this).val()){
+              count =count +1;
+            }
+      });
+      if (count>1) {
+        allow= false;
+        return false;
+      }
+  });
+  if ($('#drtotal').val()!=$('#crtotal').val()) {
+    alert("Voucher is not balanced");
+    return false;
+  }
+  if(!allow){
+    alert("one account is selected more than once");
+    return false;
+  }
+
   var output = [];
     $("tbody tr").each(function() {
         var obj = {};
+        obj.side=$('.crdr',this).val();
         obj.accountcode = $(".accs", this).val();
-        obj.cramount = $(":input[name=cr]", this).val();
-        obj.dramount = $(":input[name=dr]", this).val();
+        obj.cramount = $(".cramt", this).val();
+        obj.dramount = $(".dramt", this).val();
         output.push(obj);
     });
-    alert(JSON.stringify(output));
-    return false;
+  var details = {}
+    details.vno=$('#vno').val();
+    details.vdate=$('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+    details.projectcode=$('#project').val();
+    details.narration=$('#narration').val();
+    details.vtype=$('#vtype').val();
+    $.ajax({
+        type: "POST",
+        url: "/addvoucher",
+        global: false,
+        async: false,
+        datatype: "json",
+        data: {"vdetails":JSON.stringify(details),"transactions":JSON.stringify(output)},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          alert(resp.gkstatus)
+        }
+      });
 });
 });

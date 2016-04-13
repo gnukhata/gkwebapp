@@ -23,3 +23,22 @@ def cjaccounts(request):
         return {"accounts":result.json()["gkresult"]}
     else:
         return {"accounts":False}
+
+@view_config(route_name="addvoucher", renderer="json")
+def addvoucher(request):
+    vdetails = json.loads(request.params["vdetails"])
+    rowdetails= json.loads(request.params["transactions"])
+    crs={}
+    drs={}
+    for row in rowdetails:
+        if row["side"]=="Cr":
+            crs[row["accountcode"]]=row["cramount"]
+        if row["side"]=="Dr":
+            drs[row["accountcode"]]=row["dramount"]
+    header={"gktoken":request.headers["gktoken"]}
+    gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails["projectcode"])}
+    result = requests.post("http://127.0.0.1:6543/transaction",data=json.dumps(gkdata) , headers=header)
+    if result.json()["gkstatus"]==0:
+        return {"gkstatus":True}
+    else:
+        return {"gkstatus":False}

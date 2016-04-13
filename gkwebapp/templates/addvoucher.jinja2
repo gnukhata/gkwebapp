@@ -21,9 +21,9 @@
             <input type="text" name="vno" id="vno" size="10">
             <div class="pull-right">
               <label for="vdate">Date:</label>
-              <input type="text" name="vday" class="vdate" id="vdate" value="" size="2" maxlength="2">
-              <input type="text" name="vmonth" class="vdate" value="" size="2" maxlength="2">
-              <input type="text" name="vyear" class="vdate" value="" size="4" maxlength="4">
+              <input type="text" class="vdate" id="vdate" value="" size="2" maxlength="2">
+              <input type="text" id="vmonth" class="vdate" value="" size="2" maxlength="2">
+              <input type="text" id="vyear" class="vdate" value="" size="4" maxlength="4">
             </div>
           </div>
           <div class="panel panel-default">
@@ -47,44 +47,44 @@
               <tbody>
               <tr>
                 <td>
-                  <select class="form-control input-sm crdr" name="type" disabled>
-                    <option value="Dr">Dr</option>
+                  <select class="form-control input-sm crdr" disabled>
+                    <option value="Dr" selected>Dr</option>
                     <option value="Cr">Cr</option>
                   </select>
                 </td>
                 <td>
-                  <select class="form-control input-sm accs" name="account">
+                  <select class="form-control input-sm accs">
                     {% for acc in accounts %}
                     <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
                     {% endfor %}
                   </select>
                 </td>
                 <td>
-                  <input class="form-control input-sm dramt rightJustified" type="text" name="dr" value="0.00">
+                  <input class="form-control input-sm dramt rightJustified" type="text" value="0.00">
                 </td>
                 <td>
-                  <input class="form-control input-sm cramt rightJustified" type="text" name="cr" value="" disabled>
+                  <input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <select class="form-control input-sm crdr" name="type" disabled>
-                    <option value="Cr">Cr</option>
+                  <select class="form-control input-sm crdr" disabled>
+                    <option value="Cr" selected>Cr</option>
                     <option value="Dr">Dr</option>
                   </select>
                 </td>
                 <td>
-                  <select class="form-control input-sm accs" name="account">
+                  <select class="form-control input-sm accs">
                     {% for acc in accounts %}
                     <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
                     {% endfor %}
                   </select>
                 </td>
                 <td>
-                  <input class="form-control input-sm dramt rightJustified" type="text" name="dr" value="" disabled>
+                  <input class="form-control input-sm dramt rightJustified" type="text" value="" disabled>
                 </td>
                 <td>
-                  <input class="form-control input-sm cramt rightJustified" type="text" name="cr" value="0.00">
+                  <input class="form-control input-sm cramt rightJustified" type="text" value="0.00">
                 </td>
               </tr>
               </tbody>
@@ -94,10 +94,10 @@
                     Total
                   </td>
                   <td>
-                    <input class="form-control input-sm rightJustified" type="text" name="dr" value="0.00" disabled>
+                    <input id="drtotal" class="form-control input-sm rightJustified" type="text" value="0.00" disabled>
                   </td>
                   <td>
-                    <input class="form-control input-sm rightJustified" type="text" name="cr" value="0.00" disabled>
+                    <input id="crtotal" class="form-control input-sm rightJustified" type="text" value="0.00" disabled>
                   </td>
                 </tr>
               </tfoot>
@@ -107,8 +107,8 @@
             <label for="project">Project:</label>
           </div>
           <div class="col-xs-3">
-            <select class="form-control input-sm" name="project">
-              <option value="option">GNUKhata</option>
+            <select class="form-control input-sm" id="project">
+              <option value="1">GNUKhata</option>
             </select>
           </div>
           <div class="col-xs-1 col-xs-offset-1">
