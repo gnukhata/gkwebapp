@@ -1,45 +1,32 @@
 $(document).ready(function()
 {
-  $("#username").focus();
-  $("#adminform").validate({
-    rules: {
-      userpassword: "required",
-      confirmpassword: {
-        equalTo: "#password"
-      }
-    }
 
-  });
-  $("#adminform").submit(function(e)
-  {
-    var isvalidate=$("#adminform").valid();
-    if(isvalidate)
+$("#loginform").submit(function(e)
+{
+
+    $.ajax(
     {
-      $.ajax(
-        {
-          type: "POST",
-          url: "/createorglogin",
-          global: false,
-          async: false,
-          datatype: "json",
-          data: $("#adminform").serialize(),
-          success: function(resp)
-          {
-            var gt = resp['gktoken'];
+    //alert("starting ajax");
+    type: "POST",
+    url: "/createorglogin",
+    global: false,
+    async: false,
+    datatype: "json",
+    data: $("#loginform").serialize(),
+    success: function(resp)
+    {
+    var gt = resp['gktoken'];
 
-            sessionStorage.gktoken = gt;
+    sessionStorage.gktoken = gt;
 
-            window.location= "/showmainshell";
-          }
-
-        }
-      );
-
-      e.preventDefault();
+    window.location= "/showmainshell";
     }
-    e.preventDefault();
-  }
 
+    }
+    );
+
+    e.preventDefault();
+}
 );
 }
 );
