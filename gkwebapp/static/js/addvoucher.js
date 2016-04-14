@@ -32,12 +32,75 @@ $(document).off("focusout",".cramt").on("focusout",".cramt",function(event)
   $(this).val((parseFloat($(this).val()).toFixed(2)));
 });
 
+$('#vno').keyup(function(event) {
+  if(event.which==13){
+    $('#vdate').select().focus();
+  }
+});
+
+$('#vyear').keyup(function(event) {
+  if(event.which==13){
+    $('tbody tr:first td:eq(1) select').focus();
+  }
+});
+
+$('#project').keyup(function(event) {
+  if(event.which==13){
+    $('#narration').select().focus();
+  }
+});
+
+$('#narration').keydown(function(event) {
+  if(event.which==13){
+    $('#save').click();
+    event.preventDefault();
+  }
+});
+
 $(document).off("change",".crdr").on("change",".crdr",function(event)
 {
   var curindex = $(this).closest('tr').index();
   $('tbody tr:eq('+curindex+') input:disabled').val("0.00");
   $('tbody tr:eq('+curindex+') input:enabled').val("");
   $('tbody tr:eq('+curindex+') input').prop('disabled', function(i, v) { return !v; });
+  if($(this).val()=="Cr"){
+    $.ajax({
+      url: '/getcjaccounts',
+      type: 'POST',
+      dataType: 'json',
+      data: {"type": $('#vtype').val(),"side":"Cr"},
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+      success: function(jsonObj) {
+        var accs = jsonObj["accounts"];
+        $('tbody tr:eq('+curindex+') td:eq(1) select').empty();
+        for (i in accs ) {
+          $('tbody tr:eq('+curindex+') td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
+        }
+      }
+    });
+  }
+  if($(this).val()=="Dr"){
+    $.ajax({
+      url: '/getcjaccounts',
+      type: 'POST',
+      dataType: 'json',
+      data: {"type": $('#vtype').val(),"side":"Dr"},
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+      success: function(jsonObj) {
+        var accs = jsonObj["accounts"];
+        $('tbody tr:eq('+curindex+') td:eq(1) select').empty();
+        for (i in accs ) {
+          $('tbody tr:eq('+curindex+') td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
+        }
+      }
+    });
+  }
   drsum=0;
    $(".dramt").each(function(){
        drsum += +$(this).val();
@@ -49,7 +112,13 @@ $(document).off("change",".crdr").on("change",".crdr",function(event)
        $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
    });
 });
-
+$(document).off("keyup",".accs").on("keyup",".accs",function(event){
+  if(event.which==13)
+	{
+    var curindex = $(this).closest('tr').index();
+    $('tbody tr:eq('+curindex+') input:enabled').select().focus();
+  }
+});
 
 $(document).off("keyup",".dramt").on("keyup",".dramt",function(event)
 {
@@ -60,7 +129,7 @@ $(document).off("keyup",".dramt").on("keyup",".dramt",function(event)
       return false;
     }
 		var lastindex = $('#vtable tbody tr:last').index();
-		if(drsum > crsum)
+		if(parseFloat(drsum).toFixed(2) > parseFloat(crsum).toFixed(2))
 		{
 			diff=drsum-crsum;
 			if(curindex<lastindex)
@@ -76,7 +145,7 @@ $(document).off("keyup",".dramt").on("keyup",".dramt",function(event)
           $('tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
         }
         else{
-          $('tbody tr:eq('+nxtindex+') input:enabled').focus();
+          $('tbody tr:eq('+nxtindex+') input:enabled').select().focus();
         }
 			}
       else {
@@ -125,7 +194,7 @@ $(document).off("keyup",".dramt").on("keyup",".dramt",function(event)
       }
 
 		}
-    else if(crsum > drsum)
+    else if(parseFloat(drsum).toFixed(2) < parseFloat(crsum).toFixed(2))
 		{
 			diff=crsum-drsum;
 			if(curindex<lastindex)
@@ -141,7 +210,7 @@ $(document).off("keyup",".dramt").on("keyup",".dramt",function(event)
           $('tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
         }
         else{
-          $('tbody tr:eq('+nxtindex+') input:enabled').focus();
+          $('tbody tr:eq('+nxtindex+') input:enabled').select().focus();
         }
 			}
       else {
@@ -190,6 +259,9 @@ $(document).off("keyup",".dramt").on("keyup",".dramt",function(event)
       }
 
 		}
+    else {
+      $("#project").focus();
+    }
     curindex=null;
     lastindex=null;
 	}
@@ -204,7 +276,7 @@ $(document).off("keyup",".cramt").on("keyup",".cramt",function(event)
       return false;
     }
 		var lastindex = $('#vtable tbody tr:last').index();
-		if(drsum > crsum)
+		if(parseFloat(drsum).toFixed(2) > parseFloat(crsum).toFixed(2))
 		{
 			diff=drsum-crsum;
 			if(curindex<lastindex)
@@ -220,7 +292,7 @@ $(document).off("keyup",".cramt").on("keyup",".cramt",function(event)
           $('tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
         }
         else{
-          $('tbody tr:eq('+nxtindex+') input:enabled').focus();
+          $('tbody tr:eq('+nxtindex+') input:enabled').select().focus();
         }
 			}
       else {
@@ -269,7 +341,7 @@ $(document).off("keyup",".cramt").on("keyup",".cramt",function(event)
       }
 
 		}
-    else if(crsum > drsum)
+    else if(parseFloat(drsum).toFixed(2) < parseFloat(crsum).toFixed(2))
 		{
 			diff=crsum-drsum;
 			if(curindex<lastindex)
@@ -285,7 +357,7 @@ $(document).off("keyup",".cramt").on("keyup",".cramt",function(event)
           $('tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
         }
         else{
-          $('tbody tr:eq('+nxtindex+') input:enabled').focus();
+          $('tbody tr:eq('+nxtindex+') input:enabled').select().focus();
         }
 			}
       else {
@@ -330,10 +402,12 @@ $(document).off("keyup",".cramt").on("keyup",".cramt",function(event)
              });
           }
         });
-        return false;
       }
 
 		}
+    else {
+      $("#project").focus();
+    }
 	}
 });
 $('#save').click(function(event) {
@@ -388,8 +462,26 @@ $('#save').click(function(event) {
         },
         success: function(resp)
         {
-          alert(resp.gkstatus)
+          if(resp.gkstatus){
+            $('#voucher')[0].reset();
+            $("#success-alert").alert();
+            $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+              $("#success-alert").alert('close');
+            });
+          }
+          else {
+            $("#failure-alert").alert();
+            $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
+              $("#failure-alert").alert('close');
+            });
+          }
+          $('#vno').focus();
         }
       });
+});
+
+$('#reset').click(function(event) {
+  $('#voucher')[0].reset();
+  $('#vno').focus();
 });
 });
