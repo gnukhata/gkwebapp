@@ -33,13 +33,13 @@ $(document).off("focusout",".cramt").on("focusout",".cramt",function(event)
 });
 
 $('#vno').keyup(function(event) {
-  if(event.which==13){
+  if(event.which==13 && $('#vno').val()!=""){
     $('#vdate').select().focus();
   }
 });
 
 $('#vyear').keyup(function(event) {
-  if(event.which==13){
+  if(event.which==13 && $('#vyear').val()!=""){
     $('tbody tr:first td:eq(1) select').focus();
   }
 });
@@ -411,7 +411,39 @@ $(document).off("keyup",".cramt").on("keyup",".cramt",function(event)
 	}
 });
 $('#save').click(function(event) {
-  var allow = true;
+    var allow = true;
+    if ($('#vno').val()=="") {
+      $("#vno-alert").alert();
+      $("#vno-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#vno-alert").alert('close');
+      });
+      $('#vno').focus();
+      return false;
+    }
+    if ($('#vdate').val()=="" || $('#vmonth').val()=="" || $('#vyear').val()=="") {
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#date-alert").alert('close');
+      });
+      $('#vdate').focus();
+      return false;
+    }
+    if ($('#drtotal').val()!=$('#crtotal').val()) {
+      $("#balance-alert").alert();
+      $("#balance-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#balance-alert").alert('close');
+      });
+      $('tbody tr:last td:eq(1) select').focus()
+      return false;
+    }
+    if ($('#drtotal').val()==0) {
+      $("#zero-alert").alert();
+      $("#zero-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#zero-alert").alert('close');
+      });
+      return false;
+    }
+
   $("tbody tr").each(function() {
       var accountcode = $(".accs", this).val();
       var count=0;
@@ -425,12 +457,12 @@ $('#save').click(function(event) {
         return false;
       }
   });
-  if ($('#drtotal').val()!=$('#crtotal').val()) {
-    alert("Voucher is not balanced");
-    return false;
-  }
+
   if(!allow){
-    alert("one account is selected more than once");
+    $("#accs-alert").alert();
+    $("#accs-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#accs-alert").alert('close');
+    });
     return false;
   }
 

@@ -23,6 +23,26 @@
       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
       <strong>Failed!</strong> {{vtype}} voucher could not be saved.
     </div>
+    <div class="alert alert-danger" id="balance-alert" hidden>
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      Voucher is not balanced!
+    </div>
+    <div class="alert alert-danger" id="zero-alert" hidden>
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      Voucher must have some amount!
+    </div>
+    <div class="alert alert-danger" id="accs-alert" hidden>
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      An account can be selected only once!
+    </div>
+    <div class="alert alert-danger" id="vno-alert" hidden>
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      Please enter voucher number!
+    </div>
+    <div class="alert alert-danger" id="date-alert" hidden>
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      Please enter voucher date in proper format!
+    </div>
     <div class="panel panel-info">
       <div class="panel-body">
           <form id="voucher" name="voucher" class="" action="" method="get">
@@ -31,9 +51,9 @@
             <input type="text" name="vno" id="vno" size="10">
             <div class="pull-right">
               <label for="vdate">Date:</label>
-              <input type="text" class="vdate" id="vdate" value="" size="2" maxlength="2">
-              <input type="text" id="vmonth" class="vdate" value="" size="2" maxlength="2">
-              <input type="text" id="vyear" class="vdate" value="" size="4" maxlength="4">
+              <input type="text" class="vdate" id="vdate" value="" size="2" maxlength="2" placeholder="DD">
+              <input type="text" id="vmonth" class="vdate" value="" size="2" maxlength="2" placeholder="MM">
+              <input type="text" id="vyear" class="vdate" value="" size="4" maxlength="4" placeholder="YYYY">
             </div>
           </div>
           <div class="panel panel-info flow">
