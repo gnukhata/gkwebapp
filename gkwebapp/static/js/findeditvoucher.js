@@ -61,12 +61,25 @@ $("#searchby").bind("change keyup",function(event) {
 
 });
 
-$("#submit").click(function(event) {
+$("#findvoucher").submit(function(event) {
+$(".table").empty();
+$(".table").append('<thead>'+
+  '<tr class="info">'+
+    '<th>Voucher No.</th>'+
+    '<th>Date</th>'+
+    '<th>Dr Accounts</th>'+
+    '<th>Cr Accounts</th>'+
+    '<th>Dr Amounts</th>'+
+    '<th>Cr Amounts</th>'+
+    '<th>Narration</th>'+
+    '</tr>'+
+    '</thead>')
 var search = $("#searchby option:selected").val();
+
 $.ajax({
         type: "POST",
         url: "/getvouchers",
-        data: {"accountcode":acccode},
+        data: $("#findvoucher").serialize(),
         global: false,
         async: false,
         dataType: "json",
@@ -76,10 +89,69 @@ $.ajax({
         },
         success: function(jsonObj)
         {
-          accdetails=jsonObj["gkresult"];
+          var vdetails=jsonObj["vouchers"];
 
+            for(vc in vdetails)
+            {
+              var DRS = vdetails[vc].drs;
+              var CRS = vdetails[vc].crs;
+              var draccs={};
+              var craccs={};
+              var tdr=0.00;
+              var tcr=0.00;
+              var i =0;
+              var j =0;
+              for(var key in DRS)
+              {
+                var tdr = tdr+DRS[key];
+                draccs[i]=key;
+                i=i+1;
+
+              }
+              for(var key in CRS)
+              {
+                var tcr = tcr+CRS[key];
+                craccs[j]=key;
+                j=j+1;
+
+              }
+              if(draccs.length>1)
+              {
+                alert("great");
+              }
+
+              $(".table").append(
+                '<tr>'+
+                '<td>'+
+                vdetails[vc].vouchernumber+
+                '</td>'+
+                '<td>'+
+                vdetails[vc].voucherdate+
+                '</td>'+
+                '<td>'+
+                draccs[0]+
+                '</td>'+
+                '<td>'+
+                craccs[0]+
+                '</td>'+
+                '<td>'+
+                tdr+
+                '</td>'+
+                '<td>'+
+                tcr+
+                '</td>'+
+                '<td>'+
+                vdetails[vc].narration+
+                '</td>'+
+                '</tr>'
+              );
+
+            };
+
+            $('tr:first').focus();
         }
       });
+      event.preventDefault();
 });
 
 
