@@ -41,16 +41,16 @@
           <li class="dropdown">
             <a href="" id="transaction" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>T</u>ransaction</a>
             <ul class="dropdown-menu">
-              <li><a href="#">Contra</a></li>
-              <li><a href="#">Payment</a></li>
-              <li><a href="#">Receipt</a></li>
-              <li><a href="#">Journal</a></li>
-              <li><a href="#">Sales</a></li>
-              <li><a href="#">Purchase</a></li>
-              <li><a href="#">Credit Note</</a></li>
-              <li><a href="#">Debit Note</a></li>
-              <li><a href="#">Sales Return</a></li>
-              <li><a href="#">Purchase Return</a></li>
+              <li><a data-toggle="tab" id="showcontra" href="#">Contra</a></li>
+              <li><a data-toggle="tab" id="showpayment" href="#">Payment</a></li>
+              <li><a data-toggle="tab" id="showreceipt" href="#">Receipt</a></li>
+              <li><a data-toggle="tab" id="showjournal" href="#">Journal</a></li>
+              <li><a data-toggle="tab" id="showsales" href="#">Sales</a></li>
+              <li><a data-toggle="tab" id="showpurchase" href="#">Purchase</a></li>
+              <li><a data-toggle="tab" id="showcreditnote" href="#">Credit Note</</a></li>
+              <li><a data-toggle="tab" id="showdebitnote" href="#">Debit Note</a></li>
+              <li><a data-toggle="tab" id="showsalesreturn" href="#">Sales Return</a></li>
+              <li><a data-toggle="tab" id="showpurchasereturn" href="#">Purchase Return</a></li>
             </ul>
           </li>
           <li class="dropdown">
@@ -131,5 +131,6 @@
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/shortcut.js')}}"></script>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/mainshell.js')}}"></script>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/showuser.js')}}"></script>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/showvoucher.js')}}"></script>
 </body>
 </html>
