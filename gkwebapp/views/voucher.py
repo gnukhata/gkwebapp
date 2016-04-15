@@ -46,13 +46,17 @@ def addvoucher(request):
     rowdetails= json.loads(request.params["transactions"])
     crs={}
     drs={}
+    if vdetails["projectcode"] !="":
+        gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails[projectcode])}
+    else:
+        gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"]}
     for row in rowdetails:
         if row["side"]=="Cr":
             crs[row["accountcode"]]=row["cramount"]
         if row["side"]=="Dr":
             drs[row["accountcode"]]=row["dramount"]
     header={"gktoken":request.headers["gktoken"]}
-    gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails["projectcode"])}
+
     result = requests.post("http://127.0.0.1:6543/transaction",data=json.dumps(gkdata) , headers=header)
     if result.json()["gkstatus"]==0:
         return {"gkstatus":True}
