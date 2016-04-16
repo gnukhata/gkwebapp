@@ -6,6 +6,7 @@ $(".vno").hide();
 $(".amt").hide();
 $(".vdate").hide();
 $(".nar").hide();
+$(".vtab").hide();
 
 $("#searchby").bind("change keyup",function(event) {
 
@@ -61,12 +62,21 @@ $("#searchby").bind("change keyup",function(event) {
 
 });
 
+$(".table").on('click','tr',function(e){
+    e.preventDefault();
+    var id = $(this).attr('value');
+    alert(id);
+});
+
 $("#findvoucher").submit(function(event) {
+$(".vtab").show();
 $(".table").empty();
 $(".table").append('<thead>'+
   '<tr class="info">'+
     '<th>Voucher No.</th>'+
+    '<th>Status</th>'+
     '<th>Date</th>'+
+    '<th>Type</th>'+
     '<th>Dr Accounts</th>'+
     '<th>Cr Accounts</th>'+
     '<th>Dr Amounts</th>'+
@@ -121,7 +131,9 @@ $.ajax({
               }
 
               $(".table").append(
-                '<tr>'+
+                '<tr value ="'+
+                 vdetails[vc].vouchercode+
+                 '">'+
                 '<td>'+
                 vdetails[vc].vouchernumber+
                 '</td>'+

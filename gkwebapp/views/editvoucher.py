@@ -12,9 +12,10 @@ def showfindvoucher(request):
 def getvouchers(request):
 	header={"gktoken":request.headers["gktoken"]}
 	searchby=request.params["searchby"]
-	if searchby== "vtype":
+	if searchby== "type":
 		vtype = request.params["vtype"]
 		result = requests.get("http://127.0.0.1:6543/transaction?searchby=%s&vouchertype=%s"%(searchby,vtype), headers=header)
+		print "this issss itttt: ",result.json()["gkstatus"]
 
 	if searchby== "vnum":
 		vnum = request.params["vnum"]
