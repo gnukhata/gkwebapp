@@ -65,8 +65,47 @@ $("#searchby").bind("change keyup",function(event) {
 $(".table").on('click','tr',function(e){
     e.preventDefault();
     var id = $(this).attr('value');
-    alert(id);
+    var currindex = $(this).closest('tr').index();
+    $('#vtable tr').removeClass('selected');
+    $(this).toggleClass('selected');
+    $('tr:eq('+currindex+') a').focus();
+
 });
+
+$(".table").on('dblclick','tr:not(:first)',function(e){
+    e.preventDefault();
+    var id = $(this).attr('value');
+    alert(id);
+
+
+});
+$(document).on('focus' ,'.vno',function() {
+          $('#vtable tr').removeClass('selected');
+        $(this).closest('tr').addClass('selected');
+    });
+
+$(document).on('blur' ,'.vno',function() {
+          $('#vtable tr').removeClass('selected');
+
+    });
+
+$(document).on('keyup' ,'.vno',function(event) {
+    var curindex = $(this).closest('tr').index();
+    var nextindex = curindex+1;
+    var previndex = curindex-1;
+    if (event.which==40)
+    {
+
+    $('tr:eq('+nextindex+') a').focus();
+    }
+    else if (event.which==38)
+    {
+
+    $('tr:eq('+previndex+') a').focus();
+    }
+
+    });
+
 
 $("#findvoucher").submit(function(event) {
 $(".vtab").show();
@@ -135,10 +174,18 @@ $.ajax({
                  vdetails[vc].vouchercode+
                  '">'+
                 '<td>'+
+                '<a class="vno" href="">'+
                 vdetails[vc].vouchernumber+
+                '</a>'+
+                '</td>'+
+                '<td>'+
+                ""+
                 '</td>'+
                 '<td>'+
                 vdetails[vc].voucherdate+
+                '</td>'+
+                '<td>'+
+                vdetails[vc].vouchertype+
                 '</td>'+
                 '<td>'+
                 draccs[0]+
@@ -159,8 +206,11 @@ $.ajax({
               );
 
             };
+            var links = $('table a');
+            links.eq(links.index(this)-1).focus();
+            $('#vtable tr:first-child').addClass('selected');
 
-            $('tr:first').focus();
+
         }
       });
       event.preventDefault();
