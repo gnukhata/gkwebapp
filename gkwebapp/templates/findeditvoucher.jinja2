@@ -12,6 +12,32 @@
 
   <div class="container-fluid" id="inner">
     <div  class="mainbox col-md-12">
+      <div class="alert alert-danger" id="vtype-alert" hidden>
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        Please enter a voucher number!
+      </div>
+
+      <div class="alert alert-danger" id="vno-alert" hidden>
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        Please enter voucher type!
+      </div>
+
+      <div class="alert alert-danger" id="vamt-alert" hidden>
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        Please enter amount!
+      </div>
+
+      <div class="alert alert-danger" id="vdt-alert" hidden>
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        Please enter a proper date!
+      </div>
+
+
+      <div class="alert alert-danger" id="vnar-alert" hidden>
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        Please enter narration!
+      </div>
+
       <div class="panel panel-info" >
         <div class="panel-heading">
           <div class="panel-title">Find Voucher</div>
@@ -36,7 +62,7 @@
                 <input type="text" class="form-control" name="vtype" id="vtype" placeholder="Voucher Type">
               </div>
             </div>
-            <div class=" col-md-6 vno">
+            <div class=" col-md-6 vn">
               <div class=" col-md-6">
                 <input type="text" class="form-control" name="vnum" id="vnum" placeholder="Voucher Number">
               </div>
@@ -48,20 +74,20 @@
             </div>
             <div class=" col-md-6 vdate">
 
-                  <input type="text" name="fday"  value="" class="vdate" size="2" maxlength="2" placeholder="dd">
+                  <input type="text" name="fday" id="fday" value="" class="vcdate" size="2" maxlength="2" placeholder="dd">
                   <label>-</label>
-                  <input type="text" name="fmonth" value="" class="vdate" size="2" maxlength="2" placeholder="mm">
+                  <input type="text" name="fmonth" id="fmonth" value="" class="vcdate" size="2" maxlength="2" placeholder="mm">
                   <label>-</label>
-                  <input type="text" name="fyear" value="" class="vdate" size="4" maxlength="4" placeholder="yyyy">
+                  <input type="text" name="fyear" id="fyear" value="" class="vcdate" size="4" maxlength="4" placeholder="yyyy">
                   <label>to</label>
-                  <input type="text" name="tday"  value="" class="vdate" size="2" maxlength="2" placeholder="dd">
+                  <input type="text" name="tday" id="tday"  value="" class="vcdate" size="2" maxlength="2" placeholder="dd">
                   <label>-</label>
-                  <input type="text" name="tmonth" value="" class="vdate" size="2" maxlength="2" placeholder="mm">
+                  <input type="text" name="tmonth" id="tmonth" value="" class="vcdate" size="2" maxlength="2" placeholder="mm">
                   <label>-</label>
-                  <input type="text" name="tyear" value="" class="vdate" size="4" maxlength="4" placeholder="yyyy">
+                  <input type="text" name="tyear" id="tyear" value="" class="vcdate" size="4" maxlength="4" placeholder="yyyy">
             </div>
             <div class=" col-md-6 nar">
-                <input type="text" class="form-control" name="narration" id="amount" placeholder="Narration">
+              <textarea class="form-control" name="narration" id="narration" rows="2" cols="60" placeholder="Narration"></textarea>
             </div>
             <div class="pull-right col-md-3">
               <button type="submit" class="btn btn-primary" id="submit" name="submit">Submit</button>
@@ -79,6 +105,7 @@
     </div>
     </div>
   </div>
+
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.autotab.min.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/findeditvoucher.js')}}"></script>
 </body>
