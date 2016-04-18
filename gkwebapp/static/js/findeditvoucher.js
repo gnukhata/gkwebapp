@@ -10,10 +10,13 @@ $(".vtab").hide();
 
 $("#searchby").bind("change keyup",function(event) {
 
+  
   var search = $("#searchby option:selected").val();
+
   if (search=="type")
   {
     $(".vtp").show();
+
     $(".vn").hide();
     $(".amt").hide();
     $(".vdate").hide();
@@ -28,6 +31,7 @@ $("#searchby").bind("change keyup",function(event) {
   else if (search=="vnum")
   {
     $(".vn").show();
+
     $(".vtp").hide();
     $(".amt").hide();
     $(".vdate").hide();
@@ -44,6 +48,7 @@ $("#searchby").bind("change keyup",function(event) {
     $(".vn").hide();
     $(".vtp").hide();
     $(".amt").show();
+
     $(".vdate").hide();
     $(".nar").hide();
 
@@ -59,6 +64,7 @@ $("#searchby").bind("change keyup",function(event) {
     $(".vtp").hide();
     $(".amt").hide();
     $(".vdate").show();
+
     $(".nar").hide();
 
     if (event.which==13)
@@ -76,15 +82,25 @@ $("#searchby").bind("change keyup",function(event) {
     $(".vdate").hide();
     $(".nar").show();
 
+
     if (event.which==13)
     {
       $("#narration").focus();
+
     }
 
   }
 
 
 
+});
+
+$("#narration").keydown(function(event) {
+  if (event.which==13)
+  {
+    event.preventDefault();
+    $("#submit").click();
+  }
 });
 
 $(".table").on('click','tr',function(e){
@@ -247,9 +263,6 @@ else if (search=="narration")
 
 }
 
-
-
-
 $(".vtab").show();
 $(".table").empty();
 $(".table").append('<thead>'+
@@ -283,7 +296,37 @@ $.ajax({
           var vdetails=jsonObj["vouchers"];
           if (vdetails=="")
           {
-          alert("No Transactions Found with the Specified "+ $("#searchby option:selected").text());
+            $("#notran-alert").alert();
+            $("#notran-alert").fadeTo(2000, 500).slideUp(500, function(){
+              $("#notran-alert").alert('close');
+            });
+            var search = $("#searchby option:selected").val();
+            if (search=="type")
+            {
+              $("#nt").append('with the specified <strong>Type</strong>');
+              $('#vtype').focus();
+            }
+            else if (search=="vnum")
+            {
+              $("#nt").append('with the specified <strong>Number</strong>');
+              $('#vnum').focus();
+            }
+            else if (search=="amount")
+            {
+              $("#nt").append('with the specified <strong>Amount</strong>');
+              $('#amount').focus();
+            }
+            else if (search=="date")
+            {
+              $("#nt").append('within the specified <strong>Date</strong>');
+              $('#fday').focus();
+            }
+
+            else if (search=="narration")
+            {
+              $("#nt").append('containing the specified <strong>Text as Narration</strong>');
+              $('#narration').focus();
+            }
           }
           else
           {
@@ -354,12 +397,8 @@ $.ajax({
 
             };
           }
-
-            var links = $('table a');
-            links.eq(links.index(this)-1).focus();
-            $('#vtable tr:first-child').addClass('selected');
-
-
+          $('#vtable tr:eq(1) td:eq(0) a').focus();
+          $('#vtable tr:first-child').addClass('selected');
         }
       });
       event.preventDefault();
