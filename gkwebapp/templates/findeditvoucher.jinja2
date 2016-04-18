@@ -1,0 +1,123 @@
+<!DOCTYPE HTML >
+<html>
+<head>
+<style type="text/css">
+
+.selected {
+    background-color: Aquamarine;
+}
+</style>
+</head>
+<body>
+
+  <div class="container-fluid" id="inner">
+    <div  class="mainbox col-md-12">
+      <div class="alert alert-danger" id="vtype-alert" hidden>
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <label class="sr-only sr-only-focusable" id="novt">Please enter a voucher type!<label>
+        Please enter a voucher type!
+      </div>
+
+      <div class="alert alert-danger" id="vno-alert" hidden>
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <label class="sr-only sr-only-focusable" id="novn">Please enter voucher number!</label>
+          Please enter voucher number!
+      </div>
+
+      <div class="alert alert-danger" id="vamt-alert" hidden>
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <label class="sr-only sr-only-focusable" id="noamt">Please enter an amount!</label>
+        Please enter an amount!
+      </div>
+
+      <div class="alert alert-danger" id="vnar-alert" hidden>
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <label class="sr-only sr-only-focusable" id="nonar">Please enter a narration!</label>
+        Please enter a narration!
+      </div>
+
+      <div class="alert alert-danger" id="vdt-alert" hidden>
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <label class="sr-only sr-only-focusable" id="nodt">Please enter a proper date!</label>
+        Please enter a proper date!
+      </div>
+
+      <div class="alert alert-danger" id="notran-alert" hidden>
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <label class="sr-only sr-only-focusable" id="notr">No transactions found </label>
+        <p id="nt">No transactions found </p>
+      </div>
+
+      <div class="panel panel-info" >
+        <div class="panel-heading">
+          <div class="panel-title">Find Voucher</div>
+        </div>
+        <div class="panel-body" >
+          <form id="findvoucher" class="form-horizontal" role="form">
+
+              <label for="searchby" id="sby">Search Voucher By :</label><br/>
+
+            <div class="form-group col-md-3">
+              <select class = "form-control" id="searchby"  name = "searchby">
+                <option value="" disabled selected hidden>Select Criteria</option>
+                <option value="vnum" >Voucher Number</option>
+                <option value="type" >Type</option>
+                <option value="amount" >Amount</option>
+                <option value="date" >Date</option>
+                <option value="narration" >Narration</option>
+              </select>
+            </div>
+            <div class=" col-md-6 vtp">
+              <div class=" col-md-6">
+                <input type="text" class="form-control" name="vtype" id="vtype" placeholder="Voucher Type">
+              </div>
+            </div>
+            <div class=" col-md-6 vn">
+              <div class=" col-md-6">
+                <input type="text" class="form-control" name="vnum" id="vnum" placeholder="Voucher Number">
+              </div>
+            </div>
+            <div class=" col-md-6 amt">
+              <div class=" col-md-6">
+                <input type="text" class="form-control" name="amount" id="amount" placeholder="Amount">
+              </div>
+            </div>
+            <div class=" col-md-6 vdate">
+
+                  <input type="text" name="fday" id="fday" value="" class="vcdate" size="2" maxlength="2" placeholder="dd">
+                  <label>-</label>
+                  <input type="text" name="fmonth" id="fmonth" value="" class="vcdate" size="2" maxlength="2" placeholder="mm">
+                  <label>-</label>
+                  <input type="text" name="fyear" id="fyear" value="" class="vcdate" size="4" maxlength="4" placeholder="yyyy">
+                  <label>to</label>
+                  <input type="text" name="tday" id="tday"  value="" class="vcdate" size="2" maxlength="2" placeholder="dd">
+                  <label>-</label>
+                  <input type="text" name="tmonth" id="tmonth" value="" class="vcdate" size="2" maxlength="2" placeholder="mm">
+                  <label>-</label>
+                  <input type="text" name="tyear" id="tyear" value="" class="vcdate" size="4" maxlength="4" placeholder="yyyy">
+            </div>
+            <div class=" col-md-6 nar">
+              <textarea class="form-control" name="narration" id="narration" rows="2" cols="60" placeholder="Narration"></textarea>
+            </div>
+            <div class="pull-right col-md-3">
+              <button type="submit" class="btn btn-primary" id="submit" name="submit">Submit</button>
+              <button id="reset" class="btn btn-danger">Reset</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="vtab panel panel-info">
+      <div class="table-responsive">
+        <table id="vtable" class="table table-striped table-bordered table-condensed">
+
+        </table>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.autotab.min.js')}}"></script>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/findeditvoucher.js')}}"></script>
+</body>
+
+</html>
