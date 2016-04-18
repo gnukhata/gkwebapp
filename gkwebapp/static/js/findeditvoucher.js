@@ -10,7 +10,7 @@ $(".vtab").hide();
 
 $("#searchby").bind("change keyup",function(event) {
 
-  
+
   var search = $("#searchby option:selected").val();
 
   if (search=="type")
@@ -164,6 +164,7 @@ if (search=="type")
 {
   if ($('#vtype').val()=="") {
     $("#vtype-alert").alert();
+    $("#novt").focus();
     $("#vtype-alert").fadeTo(2000, 500).slideUp(500, function(){
       $("#vtype-alert").alert('close');
     });
@@ -175,6 +176,7 @@ else if (search=="vnum")
 {
   if ($('#vnum').val()=="") {
     $("#vno-alert").alert();
+    $("#novn").focus();
     $("#vno-alert").fadeTo(2000, 500).slideUp(500, function(){
       $("#vno-alert").alert('close');
     });
@@ -186,6 +188,7 @@ else if (search=="amount")
 {
   if ($('#amount').val()=="") {
     $("#vamt-alert").alert();
+    $("#noamt").focus();
     $("#vamt-alert").fadeTo(2000, 500).slideUp(500, function(){
       $("#vamt-alert").alert('close');
     });
@@ -197,6 +200,7 @@ else if (search=="date")
 {
   if ($('#fday').val()=="") {
     $("#vdt-alert").alert();
+    $("#nodt").focus();
     $("#vdt-alert").fadeTo(2000, 500).slideUp(500, function(){
       $("#vdt-alert").alert('close');
     });
@@ -206,6 +210,7 @@ else if (search=="date")
 
   if ($('#fmonth').val()=="") {
     $("#vdt-alert").alert();
+    $("#nodt").focus();
     $("#vdt-alert").fadeTo(2000, 500).slideUp(500, function(){
       $("#vdt-alert").alert('close');
     });
@@ -215,6 +220,7 @@ else if (search=="date")
 
   if ($('#fyear').val()=="") {
     $("#vdt-alert").alert();
+    $("#nodt").focus();
     $("#vdt-alert").fadeTo(2000, 500).slideUp(500, function(){
       $("#vdt-alert").alert('close');
     });
@@ -224,6 +230,7 @@ else if (search=="date")
 
   if ($('#tday').val()=="") {
     $("#vdt-alert").alert();
+    $("#nodt").focus();
     $("#vdt-alert").fadeTo(2000, 500).slideUp(500, function(){
       $("#vdt-alert").alert('close');
     });
@@ -233,6 +240,7 @@ else if (search=="date")
 
   if ($('#tmonth').val()=="") {
     $("#vdt-alert").alert();
+    $("#nodt").focus();
     $("#vdt-alert").fadeTo(2000, 500).slideUp(500, function(){
       $("#vdt-alert").alert('close');
     });
@@ -241,6 +249,7 @@ else if (search=="date")
   }
   if ($('#tyear').val()=="") {
     $("#vdt-alert").alert();
+    $("#nodt").focus();
     $("#vdt-alert").fadeTo(2000, 500).slideUp(500, function(){
       $("#vdt-alert").alert('close');
     });
@@ -254,6 +263,7 @@ else if (search=="narration")
 {
   if ($('#narration').val()=="") {
     $("#vnar-alert").alert();
+    $("#nonar").focus();
     $("#vnar-alert").fadeTo(2000, 500).slideUp(500, function(){
       $("#vnar-alert").alert('close');
     });
