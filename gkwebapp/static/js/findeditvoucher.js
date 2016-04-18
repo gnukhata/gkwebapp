@@ -138,9 +138,7 @@ $(".table").on('keyup','tr',function(e){
 $(".table").on('dblclick','tr:not(:first)',function(e){
     e.preventDefault();
     var id = $(this).attr('value');
-    alert(id);
-
-
+  
 });
 $(document).on('focus' ,'.vno',function() {
           $('#vtable tr').removeClass('selected');
@@ -369,8 +367,8 @@ $.ajax({
               var vs = vdetails[vc].status;
               var draccs={};
               var craccs={};
-              var tdr=0.00;
-              var tcr=0.00;
+              var tdr=0;
+              var tcr=0;
               var i =0;
               var j =0;
               if (vs)
@@ -383,14 +381,14 @@ $.ajax({
               }
               for(var key in DRS)
               {
-                var tdr = tdr+DRS[key];
+                tdr = tdr+DRS[key];
                 draccs[i]=key;
                 i=i+1;
 
               }
               for(var key in CRS)
               {
-                var tcr = tcr+CRS[key];
+                tcr = tcr+CRS[key];
                 craccs[j]=key;
                 j=j+1;
 
@@ -421,10 +419,10 @@ $.ajax({
                 craccs[0]+
                 '</td>'+
                 '<td>'+
-                tdr+
+                parseFloat(tdr).toFixed(2)+
                 '</td>'+
                 '<td>'+
-                tcr+
+                parseFloat(tdr).toFixed(2)+
                 '</td>'+
                 '<td>'+
                 vdetails[vc].narration+
