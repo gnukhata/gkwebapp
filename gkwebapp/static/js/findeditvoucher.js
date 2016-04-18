@@ -113,6 +113,28 @@ $(".table").on('click','tr',function(e){
 
 });
 
+$(".table").on('keyup','tr',function(e){
+  if(e.which==13)
+  {
+    $.ajax({
+            type: "POST",
+            url: "/getuserid",
+            global: false,
+            async: false,
+            dataType: "json",
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            },
+            success: function(jsonObj)
+            {
+
+            }
+          });
+  }
+});
+
+
 $(".table").on('dblclick','tr:not(:first)',function(e){
     e.preventDefault();
     var id = $(this).attr('value');
@@ -344,12 +366,21 @@ $.ajax({
             {
               var DRS = vdetails[vc].drs;
               var CRS = vdetails[vc].crs;
+              var vs = vdetails[vc].status;
               var draccs={};
               var craccs={};
               var tdr=0.00;
               var tcr=0.00;
               var i =0;
               var j =0;
+              if (vs)
+              {
+              vs ="*";
+              }
+              else
+              {
+                vs ="";
+              }
               for(var key in DRS)
               {
                 var tdr = tdr+DRS[key];
@@ -364,10 +395,6 @@ $.ajax({
                 j=j+1;
 
               }
-              if(draccs.length>1)
-              {
-                alert("great");
-              }
 
               $(".table").append(
                 '<tr value ="'+
@@ -379,7 +406,7 @@ $.ajax({
                 '</a>'+
                 '</td>'+
                 '<td>'+
-                ""+
+                vs+
                 '</td>'+
                 '<td>'+
                 vdetails[vc].voucherdate+
