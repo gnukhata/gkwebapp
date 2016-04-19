@@ -12,10 +12,11 @@
 
   <div class="container-fluid" id="inner">
     <div  class="mainbox col-md-12">
-      <div class="alert alert-danger" id="vtype-alert" hidden>
+
+      <div class="alert alert-danger" id="ua-alert" hidden>
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <label class="sr-only sr-only-focusable" id="novt">Please enter a voucher type!<label>
-        Please enter a voucher type!
+        <label class="sr-only sr-only-focusable" id="ua">Please enter voucher number!</label>
+          <strong>Unauthorized to Lock/Unlock Transactions!</strong>
       </div>
 
       <div class="alert alert-danger" id="vno-alert" hidden>
@@ -69,7 +70,18 @@
             </div>
             <div class=" col-md-6 vtp">
               <div class=" col-md-6">
-                <input type="text" class="form-control" name="vtype" id="vtype" placeholder="Voucher Type">
+                <select class = "form-control" name="vtype" id="vtype">
+                  <option value="contra" >Contra</option>
+                  <option value="payment" >Payment</option>
+                  <option value="receipt" >Receipt</option>
+                  <option value="journal" >Journal</option>
+                  <option value="sales" >Sales</option>
+                  <option value="purchase" >Purchase</option>
+                  <option value="credit note" >Credit Note</option>
+                  <option value="debit note" >Debit Note</option>
+                  <option value="sales return" >Sales Return</option>
+                  <option value="purchase return" >Purchase Return</option>
+                </select>
               </div>
             </div>
             <div class=" col-md-6 vn">
