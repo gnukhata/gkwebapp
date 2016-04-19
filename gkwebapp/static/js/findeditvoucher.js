@@ -8,6 +8,17 @@ $(".vdate").hide();
 $(".nar").hide();
 $(".vtab").hide();
 
+var urole;
+$("#vtype").keyup(function(event)
+{
+  if (event.which==13)
+  {
+    $("#submit").click();
+  }
+});
+
+
+
 $("#searchby").bind("change keyup",function(event) {
 
 
@@ -116,21 +127,7 @@ $(".table").on('click','tr',function(e){
 $(".table").on('keyup','tr',function(e){
   if(e.which==13)
   {
-    $.ajax({
-            type: "POST",
-            url: "/getuserid",
-            global: false,
-            async: false,
-            dataType: "json",
-            beforeSend: function(xhr)
-            {
-              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-            },
-            success: function(jsonObj)
-            {
 
-            }
-          });
   }
 });
 
@@ -138,8 +135,72 @@ $(".table").on('keyup','tr',function(e){
 $(".table").on('dblclick','tr:not(:first)',function(e){
     e.preventDefault();
     var id = $(this).attr('value');
-  
+
 });
+
+$(".table").on('keyup','tr:not(:first)',function(e){
+    e.preventDefault();
+    var id = $(this).attr('value');
+    var rindex = $(this).index();
+    if(e.which==32)
+    {
+      if(urole =="-1")
+      {
+        var stat = $(this).find('td:eq(1)').html();
+
+        if(stat=="")
+        {
+          vstatus = "True";
+
+        }
+        else
+        {
+          vstatus = "False";
+        }
+        $.ajax({
+          type: "POST",
+          url: "/lockvoucher",
+          data: {"id":id,"vstatus":vstatus},
+          global: false,
+          async: false,
+          dataType: "json",
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+          success: function(jsonObj)
+          {
+            gkstatus=jsonObj["gkstatus"]
+            if(gkstatus)
+            {
+              if(stat=="")
+              {
+                $('tr:eq('+rindex+') td:eq(1)').html("*");
+
+              }
+              else
+              {
+                $('tr:eq('+rindex+') td:eq(1)').html("");
+              }
+            }
+          }
+        });
+      }
+      else
+      {
+        $("#ua-alert").alert();
+        $("#ua").focus();
+        $("#ua-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#ua-alert").alert('close');
+        });
+        
+        return false;
+
+      }
+    }
+});
+
+
 $(document).on('focus' ,'.vno',function() {
           $('#vtable tr').removeClass('selected');
         $(this).closest('tr').addClass('selected');
@@ -180,19 +241,7 @@ $("#findvoucher").submit(function(event) {
 
 
 var search = $("#searchby option:selected").val();
-if (search=="type")
-{
-  if ($('#vtype').val()=="") {
-    $("#vtype-alert").alert();
-    $("#novt").focus();
-    $("#vtype-alert").fadeTo(2000, 500).slideUp(500, function(){
-      $("#vtype-alert").alert('close');
-    });
-    $('#vtype').focus();
-    return false;
-  }
-}
-else if (search=="vnum")
+if (search=="vnum")
 {
   if ($('#vnum').val()=="") {
     $("#vno-alert").alert();
@@ -324,6 +373,8 @@ $.ajax({
         success: function(jsonObj)
         {
           var vdetails=jsonObj["vouchers"];
+          urole = jsonObj["userrole"]
+
           if (vdetails=="")
           {
             $("#notran-alert").alert();
@@ -360,6 +411,7 @@ $.ajax({
           }
           else
           {
+
             for(vc in vdetails)
             {
               var DRS = vdetails[vc].drs;
