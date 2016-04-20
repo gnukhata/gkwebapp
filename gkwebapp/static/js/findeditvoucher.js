@@ -124,10 +124,10 @@ $(".table").on('click','tr',function(e){
 
 });
 
-$(".table").on('keyup','tr',function(e){
+$(".table").on('keydown','tr',function(e){
   if(e.which==13)
   {
-
+    $(this).closest('tr').dblclick();
   }
 });
 
@@ -135,6 +135,34 @@ $(".table").on('keyup','tr',function(e){
 $(".table").on('dblclick','tr:not(:first)',function(e){
     e.preventDefault();
     var id = $(this).attr('value');
+    $.ajax(
+    {
+
+      type: "POST",
+      url: "/viewvoucher",
+      global: false,
+      async: false,
+      datatype: "text/html",
+      data : {"id":id},
+      beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      success: function(resp)
+      {
+        $("#viewvc").html(resp);
+        $('#myModal').modal('show');
+        $('#myModal').on('hide.bs.modal', function (e)
+        {
+          setTimeout( function() { $("#submit").click(); }, 10 );
+        });
+
+
+      }
+    }
+    );
+
+
 
 });
 
@@ -193,7 +221,7 @@ $(".table").on('keyup','tr:not(:first)',function(e){
         $("#ua-alert").fadeTo(2000, 500).slideUp(500, function(){
           $("#ua-alert").alert('close');
         });
-        
+
         return false;
 
       }

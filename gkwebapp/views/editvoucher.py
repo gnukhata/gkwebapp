@@ -54,9 +54,22 @@ def lockvoucher(request):
 	gkdata = {"vouchercode":request.params["id"],"lockflag":request.params["vstatus"]}
 	print"gkdataaaaa: ",gkdata
 	result = requests.put("http://127.0.0.1:6543/transaction", data =json.dumps(gkdata),headers=header)
-	print"statttttuuuuusssss:",result.json()["gkstatus"]
 
 	if result.json()["gkstatus"]==0:
 		return {"gkstatus":True}
 	else:
 		return {"gkstatus":False}
+
+@view_config(route_name="viewvoucher", renderer="gkwebapp:templates/viewvoucher.jinja2")
+def viewvoucher(request):
+	header={"gktoken":request.headers["gktoken"]}
+	vcode =request.params["id"]
+	gkdata = {"code":int(vcode)}
+	print"gkdataaaaa: ",type(gkdata["code"])
+	result = requests.get("http://127.0.0.1:6543/transaction?code=%d"%(int(request.params["id"])),headers=header)
+	print"statttttuuuuusssss:",result.json()["gkstatus"]
+
+	if result.json()["gkstatus"]==0:
+		return {"voucher":result.json()["gkresult"],"userrole":result.json()["userrole"]}
+	else:
+		return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)
