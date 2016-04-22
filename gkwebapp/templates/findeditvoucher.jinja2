@@ -10,13 +10,13 @@
       <div class="alert alert-danger" id="ua-alert" hidden>
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <label class="sr-only sr-only-focusable" id="ua">Please enter voucher number!</label>
-          <strong>Unauthorized to Lock/Unlock Transactions!</strong>
+        <strong>Unauthorized to Lock/Unlock Transactions!</strong>
       </div>
 
       <div class="alert alert-danger" id="vno-alert" hidden>
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <label class="sr-only sr-only-focusable" id="novn">Please enter voucher number!</label>
-          Please enter voucher number!
+        Please enter voucher number!
       </div>
 
       <div class="alert alert-danger" id="vamt-alert" hidden>
@@ -50,7 +50,7 @@
         <div class="panel-body" >
           <form id="findvoucher" class="form-horizontal" role="form">
 
-              <label for="searchby" id="sby">Search Voucher By :</label><br/>
+            <label for="searchby" id="sby">Search Voucher By :</label><br/>
 
             <div class="form-group col-md-3">
               <select class = "form-control" id="searchby"  name = "searchby">
@@ -90,17 +90,17 @@
             </div>
             <div class=" col-md-6 vdate">
 
-                  <input type="text" name="fday" id="fday" value="" class="vcdate" size="2" maxlength="2" placeholder="dd">
-                  <label>-</label>
-                  <input type="text" name="fmonth" id="fmonth" value="" class="vcdate" size="2" maxlength="2" placeholder="mm">
-                  <label>-</label>
-                  <input type="text" name="fyear" id="fyear" value="" class="vcdate" size="4" maxlength="4" placeholder="yyyy">
-                  <label>to</label>
-                  <input type="text" name="tday" id="tday"  value="" class="vcdate" size="2" maxlength="2" placeholder="dd">
-                  <label>-</label>
-                  <input type="text" name="tmonth" id="tmonth" value="" class="vcdate" size="2" maxlength="2" placeholder="mm">
-                  <label>-</label>
-                  <input type="text" name="tyear" id="tyear" value="" class="vcdate" size="4" maxlength="4" placeholder="yyyy">
+              <input type="text" name="fday" id="fday" value="" class="vcdate" size="2" maxlength="2" placeholder="dd">
+              <label>-</label>
+              <input type="text" name="fmonth" id="fmonth" value="" class="vcdate" size="2" maxlength="2" placeholder="mm">
+              <label>-</label>
+              <input type="text" name="fyear" id="fyear" value="" class="vcdate" size="4" maxlength="4" placeholder="yyyy">
+              <label>to</label>
+              <input type="text" name="tday" id="tday"  value="" class="vcdate" size="2" maxlength="2" placeholder="dd">
+              <label>-</label>
+              <input type="text" name="tmonth" id="tmonth" value="" class="vcdate" size="2" maxlength="2" placeholder="mm">
+              <label>-</label>
+              <input type="text" name="tyear" id="tyear" value="" class="vcdate" size="4" maxlength="4" placeholder="yyyy">
             </div>
             <div class=" col-md-6 nar">
               <textarea class="form-control" name="narration" id="narration" rows="2" cols="60" placeholder="Narration"></textarea>
@@ -113,15 +113,15 @@
         </div>
       </div>
 
-    <div id="vct">
 
-  </div>
 
     </div>
   </div>
+  <div id="vct"  class="vtab panel panel-info">
 
+  </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.autotab.min.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/findeditvoucher.js')}}"></script>
-  </body>
+</body>
 
 </html>

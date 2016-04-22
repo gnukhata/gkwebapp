@@ -6,7 +6,7 @@ $(".vn").hide();
 $(".amt").hide();
 $(".vdate").hide();
 $(".nar").hide();
-$(".vtab").hide();
+$("#vct").hide();
 
 
 $("#vtype").keyup(function(event)
@@ -228,7 +228,7 @@ else if (search=="narration")
 
 }
 
-$(".vtab").show();
+$("#vct").show();
 $(".table").empty();
 
 var search = $("#searchby option:selected").val();
