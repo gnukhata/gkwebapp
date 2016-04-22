@@ -6,9 +6,9 @@ $(".vn").hide();
 $(".amt").hide();
 $(".vdate").hide();
 $(".nar").hide();
-$(".vtab").hide();
+$("#vct").hide();
 
-var urole;
+
 $("#vtype").keyup(function(event)
 {
   if (event.which==13)
@@ -113,120 +113,6 @@ $("#narration").keydown(function(event) {
     $("#submit").click();
   }
 });
-
-$(".table").on('click','tr',function(e){
-    e.preventDefault();
-    var id = $(this).attr('value');
-    var currindex = $(this).closest('tr').index();
-    $('#vtable tr').removeClass('selected');
-    $(this).toggleClass('selected');
-    $('tr:eq('+currindex+') a').focus();
-
-});
-
-$(".table").on('keyup','tr',function(e){
-  if(e.which==13)
-  {
-
-  }
-});
-
-
-$(".table").on('dblclick','tr:not(:first)',function(e){
-    e.preventDefault();
-    var id = $(this).attr('value');
-
-});
-
-$(".table").on('keyup','tr:not(:first)',function(e){
-    e.preventDefault();
-    var id = $(this).attr('value');
-    var rindex = $(this).index();
-    if(e.which==32)
-    {
-      if(urole =="-1")
-      {
-        var stat = $(this).find('td:eq(1)').html();
-
-        if(stat=="")
-        {
-          vstatus = "True";
-
-        }
-        else
-        {
-          vstatus = "False";
-        }
-        $.ajax({
-          type: "POST",
-          url: "/lockvoucher",
-          data: {"id":id,"vstatus":vstatus},
-          global: false,
-          async: false,
-          dataType: "json",
-          beforeSend: function(xhr)
-          {
-            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-          },
-          success: function(jsonObj)
-          {
-            gkstatus=jsonObj["gkstatus"]
-            if(gkstatus)
-            {
-              if(stat=="")
-              {
-                $('tr:eq('+rindex+') td:eq(1)').html("*");
-
-              }
-              else
-              {
-                $('tr:eq('+rindex+') td:eq(1)').html("");
-              }
-            }
-          }
-        });
-      }
-      else
-      {
-        $("#ua-alert").alert();
-        $("#ua").focus();
-        $("#ua-alert").fadeTo(2000, 500).slideUp(500, function(){
-          $("#ua-alert").alert('close');
-        });
-        
-        return false;
-
-      }
-    }
-});
-
-
-$(document).on('focus' ,'.vno',function() {
-          $('#vtable tr').removeClass('selected');
-        $(this).closest('tr').addClass('selected');
-    });
-
-$(document).on('blur' ,'.vno',function() {
-          $('#vtable tr').removeClass('selected');
-
-    });
-
-$(document).on('keyup' ,'.vno',function(event) {
-    var curindex = $(this).closest('tr').index();
-    var nextindex = curindex+1;
-    var previndex = curindex-1;
-    if (event.which==40)
-    {
-
-    $('tr:eq('+nextindex+') a').focus();
-    }
-    else if (event.which==38)
-    {
-
-    $('tr:eq('+previndex+') a').focus();
-    }
-
-    });
 
 
 $("#reset").click(function()
@@ -342,21 +228,9 @@ else if (search=="narration")
 
 }
 
-$(".vtab").show();
+$("#vct").show();
 $(".table").empty();
-$(".table").append('<thead>'+
-  '<tr class="info">'+
-    '<th>Voucher No.</th>'+
-    '<th>Status</th>'+
-    '<th>Date</th>'+
-    '<th>Type</th>'+
-    '<th>Dr Accounts</th>'+
-    '<th>Cr Accounts</th>'+
-    '<th>Dr Amounts</th>'+
-    '<th>Cr Amounts</th>'+
-    '<th>Narration</th>'+
-    '</tr>'+
-    '</thead>')
+
 var search = $("#searchby option:selected").val();
 
 $.ajax({
@@ -365,127 +239,17 @@ $.ajax({
         data: $("#findvoucher").serialize(),
         global: false,
         async: false,
-        dataType: "json",
+        datatype: "text/html",
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
         },
-        success: function(jsonObj)
+        success: function(resp)
         {
-          var vdetails=jsonObj["vouchers"];
-          urole = jsonObj["userrole"]
+          $("#vct").html(resp);
 
-          if (vdetails=="")
-          {
-            $("#notran-alert").alert();
-            $("#notran-alert").fadeTo(2000, 500).slideUp(500, function(){
-              $("#notran-alert").alert('close');
-            });
-            var search = $("#searchby option:selected").val();
-            if (search=="type")
-            {
-              $("#nt").append('with the specified <strong>Type</strong>');
-              $('#vtype').focus();
-            }
-            else if (search=="vnum")
-            {
-              $("#nt").append('with the specified <strong>Number</strong>');
-              $('#vnum').focus();
-            }
-            else if (search=="amount")
-            {
-              $("#nt").append('with the specified <strong>Amount</strong>');
-              $('#amount').focus();
-            }
-            else if (search=="date")
-            {
-              $("#nt").append('within the specified <strong>Date</strong>');
-              $('#fday').focus();
-            }
 
-            else if (search=="narration")
-            {
-              $("#nt").append('containing the specified <strong>Text as Narration</strong>');
-              $('#narration').focus();
-            }
-          }
-          else
-          {
 
-            for(vc in vdetails)
-            {
-              var DRS = vdetails[vc].drs;
-              var CRS = vdetails[vc].crs;
-              var vs = vdetails[vc].status;
-              var draccs={};
-              var craccs={};
-              var tdr=0;
-              var tcr=0;
-              var i =0;
-              var j =0;
-              if (vs)
-              {
-              vs ="*";
-              }
-              else
-              {
-                vs ="";
-              }
-              for(var key in DRS)
-              {
-                tdr = tdr+DRS[key];
-                draccs[i]=key;
-                i=i+1;
-
-              }
-              for(var key in CRS)
-              {
-                tcr = tcr+CRS[key];
-                craccs[j]=key;
-                j=j+1;
-
-              }
-
-              $(".table").append(
-                '<tr value ="'+
-                 vdetails[vc].vouchercode+
-                 '">'+
-                '<td>'+
-                '<a class="vno" href="">'+
-                vdetails[vc].vouchernumber+
-                '</a>'+
-                '</td>'+
-                '<td>'+
-                vs+
-                '</td>'+
-                '<td>'+
-                vdetails[vc].voucherdate+
-                '</td>'+
-                '<td>'+
-                vdetails[vc].vouchertype+
-                '</td>'+
-                '<td>'+
-                draccs[0]+
-                '</td>'+
-                '<td>'+
-                craccs[0]+
-                '</td>'+
-                '<td>'+
-                parseFloat(tdr).toFixed(2)+
-                '</td>'+
-                '<td>'+
-                parseFloat(tdr).toFixed(2)+
-                '</td>'+
-                '<td>'+
-                vdetails[vc].narration+
-                '</td>'+
-                '</tr>'
-              );
-
-            };
-          }
-          $('#vtable tr:eq(1) td:eq(0) a').focus();
-          $('#vtable tr:first-child').addClass('selected');
         }
       });
       event.preventDefault();

@@ -8,14 +8,15 @@ def showfindvoucher(request):
 
 	return {"gkresult":True}
 
-@view_config(route_name="getvouchers", renderer="json")
+@view_config(route_name="getvouchers", renderer="gkwebapp:templates/findvouchertable.jinja2")
 def getvouchers(request):
 	header={"gktoken":request.headers["gktoken"]}
 	searchby=request.params["searchby"]
 	if searchby== "type":
 		vtype = request.params["vtype"]
+
 		result = requests.get("http://127.0.0.1:6543/transaction?searchby=%s&vouchertype=%s"%(searchby,vtype), headers=header)
-		print "this issss itttt: ",result.json()["gkstatus"]
+
 
 	if searchby== "vnum":
 		vnum = request.params["vnum"]
@@ -27,10 +28,6 @@ def getvouchers(request):
 		vfrom = datetime.strptime(fromdate,"%Y-%m-%d")
 		vto = datetime.strptime(todate,"%Y-%m-%d")
 		result = requests.get("http://127.0.0.1:6543/transaction?searchby=%s&from=%s&to=%s"%(searchby,vfrom,vto), headers=header)
-		'''for vc in range(len(result.json()["gkresult"])):
-			a=datetime.strftime(datetime.strptime(result.json()["gkresult"][vc]["voucherdate"],"%Y-%m-%d %H:%M:%S"),"%d-%m-%Y")
-			print "daaaattteee: ",a
-			result.json()["gkresult"][vc]["voucherdate"] = a'''
 
 	if searchby== "amount":
 		amt = request.params["amount"]
@@ -41,8 +38,7 @@ def getvouchers(request):
 		result = requests.get("http://127.0.0.1:6543/transaction?searchby=%s&nartext=%s"%(searchby,nar), headers=header)
 
 	if result.json()["gkstatus"]==0:
-		print result.json()["gkresult"]
-		print "uuuuuuuussssssssseeeeeeeeerrrrrrr: ",result.json()["userrole"]
+
 		return {"vouchers":result.json()["gkresult"],"userrole":result.json()["userrole"]}
 	else:
 		return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)
@@ -52,11 +48,43 @@ def getvouchers(request):
 def lockvoucher(request):
 	header={"gktoken":request.headers["gktoken"]}
 	gkdata = {"vouchercode":request.params["id"],"lockflag":request.params["vstatus"]}
-	print"gkdataaaaa: ",gkdata
+
 	result = requests.put("http://127.0.0.1:6543/transaction", data =json.dumps(gkdata),headers=header)
-	print"statttttuuuuusssss:",result.json()["gkstatus"]
 
 	if result.json()["gkstatus"]==0:
 		return {"gkstatus":True}
 	else:
 		return {"gkstatus":False}
+
+@view_config(route_name="viewvoucher", renderer="gkwebapp:templates/viewvoucher.jinja2")
+def viewvoucher(request):
+	header={"gktoken":request.headers["gktoken"]}
+	vcode =request.params["id"]
+	gkdata = {"code":int(vcode)}
+
+	result = requests.get("http://127.0.0.1:6543/transaction?code=%d"%(int(request.params["id"])),headers=header)
+	vc=result.json()["gkresult"]
+
+	type = vc["vouchertype"]
+	if type=="contra" or type=="journal":
+		result1 = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s"%(type), headers=header)
+		if result1.json()["gkstatus"]==0:
+			draccounts=result1.json()["gkresult"]
+			craccounts=result1.json()["gkresult"]
+		else:
+			return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)
+	else:
+		drresult = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s&side=Dr"%(type), headers=header)
+		crresult = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s&side=Cr"%(type), headers=header)
+		if drresult.json()["gkstatus"]==0 and crresult.json()["gkstatus"]==0:
+			draccounts=drresult.json()["gkresult"]
+			craccounts=crresult.json()["gkresult"]
+		else:
+			return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)
+
+	print"statttttuuuuusssss:",result.json()["gkstatus"]
+
+	if result.json()["gkstatus"]==0:
+		return {"voucher":vc,"userrole":result.json()["userrole"],"draccounts":draccounts,"craccounts":craccounts}
+	else:
+		return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)

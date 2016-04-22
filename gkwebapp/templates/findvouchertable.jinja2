@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style type="text/css">
+
+.selected
+{
+  background-color: Aquamarine;
+}
+
+</style>
+</head>
+<body>
+  <input type="hidden" id="urole" name="urole" value="{{userrole}}"></input>
+  <div class="table-responsive">
+    <table id="vtable" class="table table-bordered table-condensed">
+        <thead>
+          <tr class="info ">
+          <th>Voucher No.</th>
+          <th>Status</th>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Dr Accounts</th>
+          <th>Cr Accounts</th>
+          <th>Dr Amounts</th>
+          <th>Cr Amounts</th>
+          <th>Narration</th>
+          </tr>
+        </thead>
+      <tbody>
+        {% for vc in vouchers %}
+        <tr  value="{{vc['vouchercode']}}">
+          <td >
+            <a class="vno" href="asd">{{vc['vouchernumber']}}</a>
+          </td>
+          {% if (vc['status']) %}
+          <td>*</td>
+          {% else %}
+          <td> </td>
+          {% endif %}
+          <td>
+            {{vc['voucherdate']}}
+          </td>
+          <td>
+            {{vc['vouchertype']}}
+          </td>
+          <td>
+            {{vc["drs"].keys()[0]}}
+          </td>
+          <td>
+            {{vc["crs"].keys()[0]}}
+          </td>
+          <td>
+            {{vc["drs"][vc["drs"].keys()[0]]}}
+          </td>
+          <td>
+            {{vc["crs"][vc["crs"].keys()[0]]}}
+          </td>
+          <td>
+            {{vc['narration']}}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div id="viewvc">
+  </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/findvouchertable.js')}}"></script>
+</body>
+</html>
