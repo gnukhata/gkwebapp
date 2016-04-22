@@ -1,29 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
+<head>
+<style type="text/css">
 
-    <title></title>
+.selected
+{
+  background-color: Aquamarine;
+}
 
-  </head>
-  <body>
-    <!-- Modal -->
-<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">{{voucher["vouchercode"]}}</h4>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+</style>
+</head>
+<body>
+  <!-- Modal -->
+  <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+
+          <div class="alert alert-success" id="success-alert" hidden>
+            <button type="button" class="close" data-dismiss="alert">x</button>
+            <strong>Success! </strong>
+            {{vtype}} voucher saved.
+          </div>
+          <div class="alert alert-danger" id="failure-alert" hidden>
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Failed!</strong> {{vtype}} voucher could not be saved.
+          </div>
+          <div class="alert alert-danger" id="balance-alert" hidden>
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            Voucher is not balanced!
+          </div>
+          <div class="alert alert-danger" id="zero-alert" hidden>
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            Voucher must have some amount!
+          </div>
+          <div class="alert alert-danger" id="accs-alert" hidden>
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            An account can be selected only once!
+          </div>
+          <div class="alert alert-danger" id="vno-alert" hidden>
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            Please enter voucher number!
+          </div>
+          <div class="alert alert-danger" id="date-alert" hidden>
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            Please enter voucher date in proper format!
+          </div>
+          <div class="panel panel-info">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div class="panel-body">
+              <form id="viewvoucher" name="voucher" class="" action="" method="get">
+                <div class="well well-sm">
+                  <label for="vno">Voucher No:</label>
+                  <input type="text" name="vno" id="vno" size="10" value="{{voucher["vouchernumber"]}}">
+                  <div class="pull-right">
+                    <label for="vdate">Date:</label>
+                    <input type="text" class="vdate" id="vdate" value="{{voucher['voucherdate'][:2]}}" size="2" maxlength="2" placeholder="DD" >
+                    <input type="text" id="vmonth" class="vdate" value="{{voucher['voucherdate'][3:5]}}" size="2" maxlength="2" placeholder="MM">
+                    <input type="text" id="vyear" class="vdate" value="{{voucher['voucherdate'][6:]}}" size="4" maxlength="4" placeholder="YYYY">
+                  </div>
+                </div>
+                <div class="panel panel-info flow">
+                  <div class="table-responsive">
+                    <table id="vctable" class="table table-condensed">
+                      <thead>
+                        <tr class="info">
+                          <th width="55px">
+                            Cr/Dr
+                          </th>
+                          <th width="40%">
+                            Account Name
+                          </th>
+                          <th>
+                            Dr Amount
+                          </th>
+                          <th>
+                            Cr Amount
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for dr in voucher["drs"] %}
+                        <tr>
+                          <td>
+                            <select class="form-control input-sm crdr" disabled>
+                              <option value="Dr" selected>Dr</option>
+                              <option value="Cr">Cr</option>
+                            </select>
+                          </td>
+                          <td>
+                            <select class="form-control input-sm accs">
+                              {% for acc in draccounts %}
+                              {% if dr==acc['accountname'] %}
+                              <option value="{{acc['accountcode']}}" selected>{{acc['accountname']}}</option>
+                              {% else %}
+                              <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
+                              {% endif %}
+                              {% endfor %}
+                            </select>
+                          </td>
+                          <td>
+                            <input class="form-control input-sm dramt rightJustified" type="text" value="{{voucher["drs"][dr]}}">
+                          </td>
+                          <td>
+                            <input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>
+                          </td>
+                        </tr>
+
+                        {% endfor %}
+
+                        {% for cr in voucher["crs"] %}
+                        <tr>
+                          <td>
+                            <select class="form-control input-sm crdr" disabled>
+                              <option value="Cr" selected>Cr</option>
+                              <option value="Dr">Dr</option>
+                            </select>
+                          </td>
+                          <td>
+                            <select class="form-control input-sm accs">
+                              {% for acc in craccounts %}
+                              {% if cr==acc['accountname'] %}
+                              <option value="{{acc['accountcode']}}" selected>{{acc['accountname']}}</option>
+                              {% else %}
+                              <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
+                              {% endif %}
+
+                              {% endfor %}
+                            </select>
+                          </td>
+                          <td>
+                            <input class="form-control input-sm dramt rightJustified" type="text" value="" disabled>
+                          </td>
+                          <td>
+                            <input class="form-control input-sm cramt rightJustified" type="text" value="{{voucher["crs"][cr]}}">
+                          </td>
+                        </tr>
+
+                        {% endfor %}
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <td colspan="2">
+                            <input type="text" class="form-control input-sm" value="Total" disabled>
+                          </td>
+                          <td>
+                            <input id="drtotal" class="form-control input-sm rightJustified" type="text" value="0.00" disabled>
+                          </td>
+                          <td>
+                            <input id="crtotal" class="form-control input-sm rightJustified" type="text" value="0.00" disabled>
+                          </td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-xs-1">
+                  <label for="project">Project:</label>
+                </div>
+                <div class="col-xs-3">
+                  <select class="form-control input-sm" id="project">
+                    <option value="">None</option>
+                  </select>
+                </div>
+                <div class="col-xs-1">
+                  <label for="narration">Narration:</label>
+                </div>
+                <div class="pull-right">
+                  <textarea class="form-control" name="narration" id="narration" rows="2" cols="50" >{{voucher["narration"]}}</textarea>
+                </div>
+                <input type="hidden" id="vtype" name="vtype" value="{{vtype}}">
+
+              </div>
+            </form>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Edit</button>
+          <button type="button" class="btn btn-primary">Clone</button>
+          <button type="submit" id="save" class="btn btn-primary">Save</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-  </body>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editclone.js')}}"></script>
+</body>
 </html>
