@@ -62,3 +62,13 @@ def addvoucher(request):
         return {"gkstatus":True}
     else:
         return {"gkstatus":False}
+
+@view_config(route_name="accountpopup", renderer="gkwebapp:templates/createaccountpopup.jinja2")
+def accountpopup(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/groupsubgroups", headers=header)
+	grpdata=[]
+	for record in result.json()["gkresult"]:
+		gdata= {"groupname":str(record["groupname"]),"groupcode":str(record["groupcode"])}
+		grpdata.append(gdata)
+	return {"gkresult":grpdata,"baltbl":result.json()["baltbl"]}

@@ -526,7 +526,35 @@ $('.close').click(function() {
    $(this).parent().hide();
 
 })
+$('#popup').click(function (e) {
+  $.ajax(
+  {
+  type: "POST",
+  url: "/accountpopup",
+  global: false,
+  async: false,
+  datatype: "text/html",
+  beforeSend: function(xhr)
+    {
+      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    },
+  success: function(resp)
+  {
+    $("#viewacc").html(resp);
+    $('#accmodal').modal('show');
+    $('#accmodal').on('shown.bs.modal', function (e)
+    {
+      $('#groupname').focus();
+    });
+    $('#accmodal').on('hide.bs.modal', function (e)
+    {
+      $(this).callvoucher($('#vtype').val());
 
+    });
+  }
+  }
+);
+});
 
 $('#reset').click(function(event) {
   $('#voucher')[0].reset();
