@@ -129,7 +129,7 @@ $(document).off("keyup",".dramt").on("keyup",".dramt",function(event)
       return false;
     }
 		var lastindex = $('#vtable tbody tr:last').index();
-		if(parseFloat(drsum).toFixed(2) > parseFloat(crsum).toFixed(2))
+		if(drsum > crsum)
 		{
 			diff=drsum-crsum;
 			if(curindex<lastindex)
@@ -194,7 +194,7 @@ $(document).off("keyup",".dramt").on("keyup",".dramt",function(event)
       }
 
 		}
-    else if(parseFloat(drsum).toFixed(2) < parseFloat(crsum).toFixed(2))
+    else if(drsum < crsum)
 		{
 			diff=crsum-drsum;
 			if(curindex<lastindex)
@@ -276,7 +276,7 @@ $(document).off("keyup",".cramt").on("keyup",".cramt",function(event)
       return false;
     }
 		var lastindex = $('#vtable tbody tr:last').index();
-		if(parseFloat(drsum).toFixed(2) > parseFloat(crsum).toFixed(2))
+		if(drsum > crsum)
 		{
 			diff=drsum-crsum;
 			if(curindex<lastindex)
@@ -335,13 +335,18 @@ $(document).off("keyup",".cramt").on("keyup",".cramt",function(event)
                 crsum += +$(this).val();
                 $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
             });
+            drsum=0;
+            $(".dramt").each(function(){
+                drsum += +$(this).val();
+                $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+            });
           }
         });
 
       }
 
 		}
-    else if(parseFloat(drsum).toFixed(2) < parseFloat(crsum).toFixed(2))
+    else if(drsum < crsum)
 		{
 			diff=crsum-drsum;
 			if(curindex<lastindex)
