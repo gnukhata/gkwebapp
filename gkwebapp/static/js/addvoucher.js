@@ -420,7 +420,7 @@ $('#save').click(function(event) {
     if ($('#vno').val()=="") {
       $("#vno-alert").alert();
       $("#vno-alert").fadeTo(2000, 500).slideUp(500, function(){
-        $("#vno-alert").alert('close');
+        $("#vno-alert").hide();
       });
       $('#vno').focus();
       return false;
@@ -428,7 +428,7 @@ $('#save').click(function(event) {
     if ($('#vdate').val()=="" || $('#vmonth').val()=="" || $('#vyear').val()=="") {
       $("#date-alert").alert();
       $("#date-alert").fadeTo(2000, 500).slideUp(500, function(){
-        $("#date-alert").alert('close');
+        $("#date-alert").hide();
       });
       $('#vdate').focus();
       return false;
@@ -436,7 +436,7 @@ $('#save').click(function(event) {
     if ($('#drtotal').val()!=$('#crtotal').val()) {
       $("#balance-alert").alert();
       $("#balance-alert").fadeTo(2000, 500).slideUp(500, function(){
-        $("#balance-alert").alert('close');
+        $("#balance-alert").hide();
       });
       $('tbody tr:last td:eq(1) select').focus()
       return false;
@@ -444,7 +444,7 @@ $('#save').click(function(event) {
     if ($('#drtotal').val()==0) {
       $("#zero-alert").alert();
       $("#zero-alert").fadeTo(2000, 500).slideUp(500, function(){
-        $("#zero-alert").alert('close');
+        $("#zero-alert").hide();
       });
       return false;
     }
@@ -466,7 +466,7 @@ $('#save').click(function(event) {
   if(!allow){
     $("#accs-alert").alert();
     $("#accs-alert").fadeTo(2000, 500).slideUp(500, function(){
-      $("#accs-alert").alert('close');
+      $("#accs-alert").hide();
     });
     return false;
   }
@@ -501,15 +501,19 @@ $('#save').click(function(event) {
         {
           if(resp.gkstatus){
             $('#voucher')[0].reset();
+            drsum = 0;
+            crsum = 0;
+            diff = 0;
+            $("tbody").find("tr:gt(1)").remove();
             $("#success-alert").alert();
             $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
-              $("#success-alert").alert('close');
+              $("#success-alert").hide();
             });
           }
           else {
             $("#failure-alert").alert();
             $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
-              $("#failure-alert").alert('close');
+              $("#failure-alert").hide();
             });
           }
           $('#vno').focus();
@@ -517,8 +521,19 @@ $('#save').click(function(event) {
       });
 });
 
+$('.close').click(function() {
+
+   $(this).parent().hide();
+
+})
+
+
 $('#reset').click(function(event) {
   $('#voucher')[0].reset();
+  drsum = 0;
+  crsum = 0;
+  diff = 0;
+  $("tbody").find("tr:gt(1)").remove();
   $('#vno').focus();
 });
 });
