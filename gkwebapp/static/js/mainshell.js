@@ -103,4 +103,7 @@ $(document).ready(function(){
   $('#addaccounttb').click(function(){
     $('#addaccount').click();
   });
+  $('#findvouchertb').click(function(){
+    $('#fevoucher').click();
+  });
 });

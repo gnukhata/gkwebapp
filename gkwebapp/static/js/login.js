@@ -1,5 +1,32 @@
 $(document).ready(function()
 {
+  $("#username").focus(function(){
+    $('input').bind("keydown", function(e) {
+      if (e.which == 13)
+      {
+        $("#userpassword").focus();
+
+        }
+      });
+  });
+  $("#userpassword").focus(function(){
+    $('input').bind("keydown", function(e) {
+      if (e.which == 38)
+      {
+        $("#username").focus();
+
+        }
+      });
+  });
+  $("#userpassword").focus(function(){
+    $('input').bind("keydown", function(e) {
+      if (e.which == 13)
+      {
+        $("#login").click();
+
+        }
+      });
+  });
   $("#username").focus();
   $("#back").click(function(event){
     event.preventDefault();
