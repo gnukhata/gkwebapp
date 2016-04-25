@@ -548,8 +548,12 @@ $('#popup').click(function (e) {
     });
     $('#accmodal').on('hide.bs.modal', function (e)
     {
-      $(this).callvoucher($('#vtype').val());
-
+      $(".accs").each(function(){
+        var curindex = $(this).closest('tr').index();
+        var tmp = $("tbody tr:eq("+curindex+") td:eq(0) select").val();
+        $("tbody tr:eq("+curindex+") td:eq(0) select").trigger('change');
+        
+    });
     });
   }
   }
