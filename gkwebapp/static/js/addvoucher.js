@@ -550,9 +550,56 @@ $('#popup').click(function (e) {
     {
       $(".accs").each(function(){
         var curindex = $(this).closest('tr').index();
-        var tmp = $("tbody tr:eq("+curindex+") td:eq(0) select").val();
-        $("tbody tr:eq("+curindex+") td:eq(0) select").trigger('change');
-        
+        var tmp = $("tbody tr:eq("+curindex+") td:eq(1) select").val();
+        if($("tbody tr:eq("+curindex+") td:eq(0) select").val()==="Cr"){
+          $.ajax({
+            url: '/getcjaccounts',
+            type: 'POST',
+            dataType: 'json',
+            data: {"type": $('#vtype').val(),"side":"Cr"},
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            },
+            success: function(jsonObj) {
+              var accs = jsonObj["accounts"];
+              $('tbody tr:eq('+curindex+') td:eq(1) select').empty();
+              for (i in accs ) {
+                if(accs[i].accountcode==tmp){
+                  $('tbody tr:eq('+curindex+') td:eq(1) select').append('<option value="' + accs[i].accountcode + '" selected>' +accs[i].accountname+ '</option>');
+                }
+                else {
+                  $('tbody tr:eq('+curindex+') td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
+                }
+              }
+            }
+          });
+        }
+        if($("tbody tr:eq("+curindex+") td:eq(0) select").val()==="Dr"){
+          $.ajax({
+            url: '/getcjaccounts',
+            type: 'POST',
+            dataType: 'json',
+            data: {"type": $('#vtype').val(),"side":"Dr"},
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            },
+            success: function(jsonObj) {
+              var accs = jsonObj["accounts"];
+              $('tbody tr:eq('+curindex+') td:eq(1) select').empty();
+              for (i in accs ) {
+                if(accs[i].accountcode==tmp){
+                  $('tbody tr:eq('+curindex+') td:eq(1) select').append('<option value="' + accs[i].accountcode + '" selected>' +accs[i].accountname+ '</option>');
+                }
+                else {
+                  $('tbody tr:eq('+curindex+') td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
+                }
+              }
+            }
+          });
+        }
+
     });
     });
   }
