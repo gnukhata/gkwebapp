@@ -1,5 +1,6 @@
 $(document).ready(function()
 {
+  $("#baltbl").hide();
   $("#groupname").focus();
   $("#accountform").validate();
   $("#groupname").bind("change keyup", function(){
