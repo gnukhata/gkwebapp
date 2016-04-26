@@ -1,25 +1,28 @@
 $(document).ready(function()
 {
-  $("#groupname").focus();
-  $("#accountform").validate();
-  $("#groupname").bind("change keyup", function(){
-    var gname = $("#groupname option:selected").text();
+  $("#m_obal").hide();
+  $("#m_openbal").hide();
+  $("#m_baltbl").hide();
+  $("#m_groupname").focus();
+  $("#m_accountform").validate();
+  $("#m_groupname").bind("change keyup", function(){
+    var gname = $("#m_groupname option:selected").text();
 
     if (gname=="Select Group" || gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income")
     {
-      $("#obal").hide();
-      $("#openbal").hide();
-      $("#baltbl").hide();
+      $("#m_obal").hide();
+      $("#m_openbal").hide();
+      $("#m_baltbl").hide();
 
     }
     else
     {
-      $("#baltbl").show();
-      $("#obal").show();
-      $("#openbal").show();
+      $("#m_baltbl").show();
+      $("#m_obal").show();
+      $("#m_openbal").show();
     }
 
-    var groups = $("#groupname option:selected").val();
+    var groups = $("#m_groupname option:selected").val();
     $.ajax({
       type: "POST",
       url: "/getsubgroup",
@@ -33,55 +36,55 @@ $(document).ready(function()
       },
       success: function(jsonObj) {
         subgroups = jsonObj["gkresult"],
-        $('#subgroupname').empty();
+        $('#m_subgroupname').empty();
         for (i in subgroups ) {
-          $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</option>');
+          $('#m_subgroupname').append('<option value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</option>');
         }
-        var grpnam=$("#groupname option:selected").text();
+        var grpnam=$("#m_groupname option:selected").text();
         if (grpnam=="Direct Expense" || grpnam=="Indirect Expense" || grpnam=="Direct Income" || grpnam=="Indirect Income" || grpnam=="Loans(Asset)" || grpnam=="Reserves" || grpnam=="Capital" || grpnam=="Miscellaneous Expenses(Asset)" || grpnam=="Corpus")
         {
-            $('#subgroupname').prepend('<option value="None">None</option>');
+            $('#m_subgroupname').prepend('<option value="None">None</option>');
         }
-        $('#subgroupname').append('<option value="New">New Sub-Group</option>');
+        $('#m_subgroupname').append('<option value="New">New Sub-Group</option>');
       }
 
     });
   });
 
-$("#nsgp").hide();
+$("#m_nsgp").hide();
 
 $(".gsselect").bind("change keyup", function(){
-var sgroups = $("#subgroupname option:selected").val();
+var sgroups = $("#m_subgroupname option:selected").val();
 if (sgroups=="New")
 {
-  $("#nsgp").show();
+  $("#m_nsgp").show();
 
 }
 else
 {
-  $("#nsgp").hide();
+  $("#m_nsgp").hide();
 }
 
 
 });
 
-$("#reset").click(function()
+$("#m_reset").click(function()
 {
-  $('#addaccount').click();
+  $('#m_addaccount').click();
 }
 );
 
 
 
-  $("#accountform").submit(function(e)
+  $("#m_accountform").submit(function(e)
   {
-var isvalidate=$("#accountform").valid();
+var isvalidate=$("#m_accountform").valid();
 if(isvalidate)
 {
-    var ob = $('#openbal').val();
+    var ob = $('#m_openbal').val();
     if(ob=="")
     {
-      $('#openbal').val("0.00");
+      $('#m_openbal').val("0.00");
     }
 
 
@@ -96,7 +99,7 @@ if(isvalidate)
           global: false,
           async: false,
           datatype: "json",
-          data: $("#accountform").serialize(),
+          data: $("#m_accountform").serialize(),
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -106,7 +109,7 @@ if(isvalidate)
             if(resp["gkstatus"])
             {
             alert("Account Created Successfully");
-            $('#accmodal').modal('hide')
+            $('#m_accmodal').modal('hide')
             }
             else
             {
