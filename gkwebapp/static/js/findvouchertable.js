@@ -150,10 +150,15 @@ $(document).ready(function() {
         {
           $("#viewvc").html(resp);
           $('#myModal').modal('show');
-          $('#myModal').on('hide.bs.modal', function (e)
+          $('#myModal').on('shown.bs.modal', function (e)
+          {
+            $("#edit").focus();
+
+          });
+          $('#myModal').on('hidden.bs.modal', function (e)
           {
             $("#submit").click();
-            
+
           });
 
 

@@ -12,7 +12,7 @@
 </head>
 <body>
   <!-- Modal -->
-  <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-body">
@@ -173,12 +173,18 @@
 
               </div>
             </form>
+            <input type="hidden" id="vcode" name="vcode" value="{{voucher['vouchercode']}}"></input>
           </div>
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Edit</button>
-          <button type="button" class="btn btn-primary">Clone</button>
+          {% if voucher['status'] %}
+          <button type="button" class="btn btn-warning" id="lock">Unlock</button>
+          {% else %}
+          <button type="button" class="btn btn-warning" id="lock">Lock</button>
+          {% endif %}
+          <button type="button" class="btn btn-primary" id="edit">Edit</button>
+          <button type="button" class="btn btn-primary" id="clone">Clone</button>
           <button type="submit" id="save" class="btn btn-primary">Save</button>
         </div>
       </div>
