@@ -1,8 +1,8 @@
 $(document).ready(function() {
   $("#vno").focus();
   $('.vdate').autotab('number');
-  $('.dramt').numeric();
-  $('.cramt').numeric();
+  $('.dramt').numeric({ negative: false });
+  $('.cramt').numeric({ negative: false });
   var drsum = 0;
   var crsum = 0;
   var diff = 0;
@@ -23,14 +23,42 @@ $(document).ready(function() {
     });
   });
 
+  $(document).off("click",".del").on("click", ".del", function() {
+    $(this).closest('tr').fadeOut(200, function(){
+            $(this).closest('tr').remove();
+            drsum=0;
+            crsum=0;
+            $(".dramt").each(function(){
+              drsum += +$(this).val();
+              $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+            });
+            $(".cramt").each(function(){
+              crsum += +$(this).val();
+              $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+            });
+            $('tbody tr:last input:enabled').focus();
+        });
+  });
+
+
   $(document).off("focusout",".dramt").on("focusout",".dramt",function(event)
   {
-    $(this).val((parseFloat($(this).val()).toFixed(2)));
+    if ($.trim($(this).val())=="" || $.trim($(this).val())==".") {
+      $(this).val("0.00");
+    }
+    else{
+      $(this).val((parseFloat($(this).val()).toFixed(2)));
+    }
   });
 
   $(document).off("focusout",".cramt").on("focusout",".cramt",function(event)
   {
-    $(this).val((parseFloat($(this).val()).toFixed(2)));
+    if ($(this).val()=="" || $.trim($(this).val())==".") {
+      $(this).val("0.00");
+    }
+    else{
+      $(this).val((parseFloat($(this).val()).toFixed(2)));
+    }
   });
 
   $('#vno').keyup(function(event) {
@@ -178,6 +206,7 @@ $(document).ready(function() {
               '<td>'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="0.00">'+
               '</td>'+
+              '<td><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
               '</tr>');
               for (i in accs ) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
@@ -243,6 +272,7 @@ $(document).ready(function() {
               '<td>'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
+              '<td><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
               '</tr>');
               for (i in accs ) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
@@ -325,6 +355,7 @@ $(document).ready(function() {
               '<td>'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="0.00">'+
               '</td>'+
+              '<td><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
               '</tr>');
               for (i in accs ) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
@@ -395,6 +426,7 @@ $(document).ready(function() {
               '<td>'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
+              '<td><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
               '</tr>');
               for (i in accs ) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
@@ -439,7 +471,7 @@ $(document).ready(function() {
       $("#balance-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#balance-alert").hide();
       });
-      $('#vtable tbody tr:last td:eq(1) select').focus()
+      $('#vtable tbody tr:last input:enabled').focus()
       return false;
     }
     if ($('#drtotal').val()==0) {
@@ -447,6 +479,7 @@ $(document).ready(function() {
       $("#zero-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#zero-alert").hide();
       });
+      $("#vtable tbody tr:first input:enabled").focus();
       return false;
     }
 
@@ -469,11 +502,16 @@ $(document).ready(function() {
       $("#accs-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#accs-alert").hide();
       });
+      $("#vtable tbody tr:first td:eq(1) select").focus();
       return false;
     }
 
     var output = [];
     $("#vtable tbody tr").each(function() {
+      if ($(".cramt", this).val()==0 && $(".dramt", this).val()=="" || $(".cramt", this).val()=="" && $(".dramt", this).val()==0 ) {
+        allow= false;
+        return false;
+      }
       var obj = {};
       obj.side=$('.crdr',this).val();
       obj.accountcode = $(".accs", this).val();
@@ -481,6 +519,15 @@ $(document).ready(function() {
       obj.dramount = $(".dramt", this).val();
       output.push(obj);
     });
+    if(!allow){
+      output.length = 0;
+      $("#vtable tbody tr:first input:enabled").focus();
+      $("#zerorow-alert").alert();
+      $("#zerorow-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#zerorow-alert").hide();
+      });
+      return false;
+    }
     var details = {}
     details.vno=$('#vno').val();
     details.vdate=$('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
