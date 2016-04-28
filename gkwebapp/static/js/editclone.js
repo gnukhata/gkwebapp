@@ -17,17 +17,20 @@ $(document).ready(function()
   }
 
 
+  var demodrsum = 0;
+  var democrsum = 0;
   var drsum = 0;
   var crsum = 0;
+
   $(".demodramt").each(function()
   {
-    drsum += +$(this).val();
-    $('#demovctable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+    demodrsum += +$(this).val();
+    $('#demovctable tfoot tr:last td:eq(1) input').val(parseFloat(demodrsum).toFixed(2));
   });
 
   $(".democramt").each(function(){
-    crsum += +$(this).val();
-    $('#demovctable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+    democrsum += +$(this).val();
+    $('#demovctable tfoot tr:last td:eq(2) input').val(parseFloat(democrsum).toFixed(2));
   });
 
 
