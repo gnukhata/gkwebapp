@@ -28,6 +28,7 @@ def main(global_config, **settings):
     config.add_route('login', '/login')
     config.add_route('showmainshell', '/showmainshell')
     config.add_route('showaccount', '/showaccount')
+    config.add_route('accountpopup', '/accountpopup')
     config.add_route('showvoucher', '/showvoucher')
     config.add_route('lockvoucher', '/lockvoucher')
     config.add_route('viewvoucher', '/viewvoucher')
