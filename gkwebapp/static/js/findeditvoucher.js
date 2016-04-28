@@ -248,8 +248,6 @@ $.ajax({
         {
           $("#vct").html(resp);
 
-
-
         }
       });
       event.preventDefault();

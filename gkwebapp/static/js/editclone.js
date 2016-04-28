@@ -273,6 +273,15 @@ var ecflag;
     }
   });
 
+  $(document).off("keyup",".crdr").on("keyup",".crdr",function(event)
+  {
+    if(event.which==13)
+    {
+      var curindex = $(this).closest('tr').index();
+      $('#vctable tbody tr:eq('+curindex+') td:eq(1) select').focus();
+    }
+  });
+
   $(document).off("keyup",".dramt").on("keyup",".dramt",function(event)
   {
     if(event.which==13)
@@ -701,6 +710,7 @@ var ecflag;
           }
           else {
             $("#failure-alert").alert();
+            $("#nt").append('Cloned')
             $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
               $("#failure-alert").hide();
             });
@@ -732,7 +742,9 @@ var ecflag;
         }
         else {
           $("#failure-alert").alert();
+          $("#nt").append('Edited')
           $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
+
             $("#failure-alert").hide();
           });
         }
