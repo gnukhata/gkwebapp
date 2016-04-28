@@ -157,7 +157,9 @@ $(document).ready(function() {
           });
           $('#myModal').on('hidden.bs.modal', function (e)
           {
+            $("#viewvc").html("");
             $("#submit").click();
+
 
           });
 
