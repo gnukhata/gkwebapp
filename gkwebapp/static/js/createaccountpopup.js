@@ -68,9 +68,14 @@ else
 
 });
 
-$("#m_reset").click(function()
+$("#m_reset").click(function(e)
 {
-  $('#m_addaccount').click();
+  $('#m_accountform')[0].reset();
+  $("#m_nsgp").hide();
+  $("#m_obal").hide();
+  $("#m_openbal").hide();
+  $("#m_baltbl").hide();
+  e.preventDefault();
 }
 );
 
