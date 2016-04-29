@@ -37,12 +37,12 @@ $(document).ready(function()
   $(".dramt").each(function()
   {
     drsum += +$(this).val();
-    $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+    $('#vctable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
   });
 
   $(".cramt").each(function(){
     crsum += +$(this).val();
-    $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+    $('#vctable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
   });
 
 
@@ -141,7 +141,7 @@ var ecflag;
     drsum=0;
     $(".dramt").each(function(){
       drsum += +$(this).val();
-      $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+      $('#vctable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
     });
   });
 
@@ -149,7 +149,7 @@ var ecflag;
     crsum=0;
     $(".cramt").each(function(){
       crsum += +$(this).val();
-      $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+      $('#vctable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
     });
   });
 
@@ -160,13 +160,13 @@ var ecflag;
       crsum=0;
       $(".dramt").each(function(){
         drsum += +$(this).val();
-        $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+        $('#vctable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
       });
       $(".cramt").each(function(){
         crsum += +$(this).val();
-        $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+        $('#vctable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
       });
-      $('tbody tr:last input:enabled').focus();
+      $('#vctable tbody tr:last input:enabled').focus();
     });
   });
 
@@ -263,12 +263,12 @@ var ecflag;
     drsum=0;
     $(".dramt").each(function(){
       drsum += +$(this).val();
-      $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+      $('#vctable tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
     });
     crsum=0;
     $(".cramt").each(function(){
       crsum += +$(this).val();
-      $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+      $('#vctable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
     });
   });
   $(document).off("keyup",".accs").on("keyup",".accs",function(event){
@@ -303,18 +303,16 @@ var ecflag;
         if(curindex<lastindex)
         {
           var nxtindex = curindex+1
-          if($('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
+
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
             crsum=0;
             $(".cramt").each(function(){
               crsum += +$(this).val();
-              $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+              $('#vctable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
             });
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
-          }
-          else{
-            $('#vctable tbody tr:eq('+nxtindex+') input:enabled').select().focus();
-          }
+
+
         }
         else {
           $.ajax({
@@ -328,7 +326,7 @@ var ecflag;
             },
             success: function(jsonObj) {
               var accs = jsonObj["accounts"];
-              $('.table').append('<tr>'+
+              $('#vctable').append('<tr>'+
               '<td>'+
               '<select class="form-control input-sm crdr">'+
               '<option value="Cr" selected>Cr</option>'+
@@ -355,7 +353,7 @@ var ecflag;
               crsum=0;
               $(".cramt").each(function(){
                 crsum += +$(this).val();
-                $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+                $('#vctable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
               });
             }
           });
@@ -369,18 +367,14 @@ var ecflag;
         if(curindex<lastindex)
         {
           var nxtindex = curindex+1
-          if($('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
+
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val(parseFloat(diff).toFixed(2));
             drsum=0;
             $(".dramt").each(function(){
               drsum += +$(this).val();
-              $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+              $('#vctable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
             });
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
-          }
-          else{
-            $('#vctable tbody tr:eq('+nxtindex+') input:enabled').select().focus();
-          }
         }
         else {
           $.ajax({
@@ -394,7 +388,7 @@ var ecflag;
             },
             success: function(jsonObj) {
               var accs = jsonObj["accounts"];
-              $('.table').append('<tr>'+
+              $('#vctable').append('<tr>'+
               '<td>'+
               '<select class="form-control input-sm crdr">'+
               '<option value="Cr">Cr</option>'+
@@ -421,7 +415,7 @@ var ecflag;
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
-                $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+                $('#vctable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
               });
             }
           });
@@ -460,18 +454,17 @@ var ecflag;
         if(curindex<lastindex)
         {
           var nxtindex = curindex+1
-          if($('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0){
+
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
             crsum=0;
             $(".cramt").each(function(){
               crsum += +$(this).val();
-              $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+              $('#vctable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
             });
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
-          }
-          else{
-            $('#vctable tbody tr:eq('+nxtindex+') input:enabled').select().focus();
-          }
+
+
+
         }
         else {
           $.ajax({
@@ -485,7 +478,7 @@ var ecflag;
             },
             success: function(jsonObj) {
               var accs = jsonObj["accounts"];
-              $('.table').append('<tr>'+
+              $('#vctable').append('<tr>'+
               '<td>'+
               '<select class="form-control input-sm crdr">'+
               '<option value="Cr" selected>Cr</option>'+
@@ -512,12 +505,12 @@ var ecflag;
               crsum=0;
               $(".cramt").each(function(){
                 crsum += +$(this).val();
-                $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+                $('#vctable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
               });
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
-                $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+                $('#vctable tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
               });
             }
           });
@@ -531,18 +524,15 @@ var ecflag;
         if(curindex<lastindex)
         {
           var nxtindex = curindex+1
-          if($('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
+
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val(diff.toFixed(2));
             drsum=0;
             $(".dramt").each(function(){
               drsum += +$(this).val();
-              $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+              $('#vctable tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
             });
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
-          }
-          else{
-            $('#vctable tbody tr:eq('+nxtindex+') input:enabled').select().focus();
-          }
+
         }
         else {
           $.ajax({
@@ -556,7 +546,7 @@ var ecflag;
             },
             success: function(jsonObj) {
               var accs = jsonObj["accounts"];
-              $('.table').append('<tr>'+
+              $('#vctable').append('<tr>'+
               '<td>'+
               '<select class="form-control input-sm crdr">'+
               '<option value="Cr">Cr</option>'+
@@ -583,7 +573,7 @@ var ecflag;
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
-                $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+                $('#vctable tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
               });
             }
           });
