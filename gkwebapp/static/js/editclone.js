@@ -133,8 +133,7 @@ var ecflag;
   $('.vdate').autotab('number');
   $('.dramt').numeric({ negative: false });
   $('.cramt').numeric({ negative: false });
-  var drsum = 0;
-  var crsum = 0;
+
   var diff = 0;
 
   $(document).off("change",".dramt").on("change", ".dramt", function() {
@@ -303,16 +302,18 @@ var ecflag;
         if(curindex<lastindex)
         {
           var nxtindex = curindex+1
-
+          if($('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
             crsum=0;
             $(".cramt").each(function(){
               crsum += +$(this).val();
-              $('#vctable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+              $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
             });
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
-
-
+          }
+          else{
+            $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
+          }
         }
         else {
           $.ajax({
@@ -353,7 +354,7 @@ var ecflag;
               crsum=0;
               $(".cramt").each(function(){
                 crsum += +$(this).val();
-                $('#vctable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+                $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
               });
             }
           });
@@ -367,14 +368,18 @@ var ecflag;
         if(curindex<lastindex)
         {
           var nxtindex = curindex+1
-
+          if($('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val(parseFloat(diff).toFixed(2));
             drsum=0;
             $(".dramt").each(function(){
               drsum += +$(this).val();
-              $('#vctable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+              $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
             });
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
+          }
+          else{
+            $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
+          }
         }
         else {
           $.ajax({
@@ -415,7 +420,7 @@ var ecflag;
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
-                $('#vctable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+                $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
               });
             }
           });
@@ -454,17 +459,18 @@ var ecflag;
         if(curindex<lastindex)
         {
           var nxtindex = curindex+1
-
+          if($('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0){
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
             crsum=0;
             $(".cramt").each(function(){
               crsum += +$(this).val();
-              $('#vctable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+              $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
             });
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
-
-
-
+          }
+          else{
+            $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
+          }
         }
         else {
           $.ajax({
@@ -505,12 +511,12 @@ var ecflag;
               crsum=0;
               $(".cramt").each(function(){
                 crsum += +$(this).val();
-                $('#vctable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+                $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
               });
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
-                $('#vctable tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+                $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
               });
             }
           });
@@ -524,15 +530,18 @@ var ecflag;
         if(curindex<lastindex)
         {
           var nxtindex = curindex+1
-
+          if($('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val(diff.toFixed(2));
             drsum=0;
             $(".dramt").each(function(){
               drsum += +$(this).val();
-              $('#vctable tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+              $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
             });
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
-
+          }
+          else{
+            $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
+          }
         }
         else {
           $.ajax({
@@ -573,7 +582,7 @@ var ecflag;
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
-                $('#vctable tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+                $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
               });
             }
           });
@@ -583,7 +592,6 @@ var ecflag;
       else {
         if (curindex<lastindex)
         {
-
           var nxtindex = curindex+1;
           $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
         }
@@ -594,6 +602,7 @@ var ecflag;
       }
     }
   });
+
   $('#save').click(function(event) {
     var allow = true;
     if ($('#vno').val()=="") {
