@@ -45,6 +45,8 @@ $(document).ready(function()
     $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
   });
 
+
+
   $("#demovctable").find("input,select,textarea,button").prop("disabled",true);
   $("#vno").prop('disabled', true);
   $(".vdate").prop('disabled', true);
@@ -129,7 +131,8 @@ var ecflag;
 
 
   $('.vdate').autotab('number');
-
+  $('.dramt').numeric({ negative: false });
+  $('.cramt').numeric({ negative: false });
   var drsum = 0;
   var crsum = 0;
   var diff = 0;
