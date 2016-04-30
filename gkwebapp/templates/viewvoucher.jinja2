@@ -12,45 +12,45 @@
 </head>
 <body>
   <!-- Modal -->
-  <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-body">
-
-          <div class="alert alert-success" id="success-alert" hidden>
-            <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong>Success! </strong>
-            {{vtype}} voucher saved.
-          </div>
-          <div class="alert alert-danger" id="failure-alert" hidden>
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Failed!</strong> {{vtype}} voucher could not be saved.
+          <div class="alert failure-alert" id="notran-alert" hidden>
+            <a href="#" class="close"  aria-label="close">&times;</a>
+            <label class="sr-only sr-only-focusable" id="notr">No transactions found </label>
+            <p id="nt">Voucher couldnot be </p>
           </div>
           <div class="alert alert-danger" id="balance-alert" hidden>
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            Voucher is not balanced!
+            <a href="#" class="close" aria-label="close">&times;</a>
+            Totals misbalance!
           </div>
           <div class="alert alert-danger" id="zero-alert" hidden>
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            Voucher must have some amount!
+            <a href="#" class="close" aria-label="close">&times;</a>
+            Voucher amount cannot be zero!
+          </div>
+          <div class="alert alert-danger" id="zerorow-alert" hidden>
+            <a href="#" class="close" aria-label="close">&times;</a>
+            Voucher with zero amount row cannot be saved!
           </div>
           <div class="alert alert-danger" id="accs-alert" hidden>
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <a href="#" class="close" aria-label="close">&times;</a>
             An account can be selected only once!
           </div>
           <div class="alert alert-danger" id="vno-alert" hidden>
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <a href="#" class="close" aria-label="close">&times;</a>
             Please enter voucher number!
           </div>
           <div class="alert alert-danger" id="date-alert" hidden>
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <a href="#" class="close" aria-label="close">&times;</a>
             Please enter voucher date in proper format!
           </div>
+
           <div class="panel panel-info">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <div class="panel-body">
+            <div class="panel-body" id="vvc">
               <form id="viewvoucher" name="voucher" class="" action="" method="get">
-                <div class="well well-sm">
+                <div class="well well-sm" >
                   <label for="vno">Voucher No:</label>
                   <input type="text" name="vno" id="vno" size="10" value="{{voucher["vouchernumber"]}}">
                   <div class="pull-right">
@@ -61,6 +61,101 @@
                   </div>
                 </div>
                 <div class="panel panel-info flow">
+                  <div class="table-responsive" id="demovctable">
+                    <table class="table table-condensed">
+                      <thead>
+                        <tr class="info">
+                          <th width="55px">
+                            Cr/Dr
+                          </th>
+                          <th width="40%">
+                            Account Name
+                          </th>
+                          <th>
+                            Dr Amount
+                          </th>
+                          <th>
+                            Cr Amount
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for dr in voucher["drs"] %}
+                        <tr>
+                          <td>
+                            <select class="form-control input-sm democrdr" >
+                              <option value="Dr" selected>Dr</option>
+                              <option value="Cr">Cr</option>
+                            </select>
+                          </td>
+                          <td>
+                            <select class="form-control input-sm demoaccs">
+                              {% for acc in draccounts %}
+                              {% if dr==acc['accountname'] %}
+                              <option value="{{acc['accountcode']}}" selected>{{acc['accountname']}}</option>
+                              {% else %}
+                              <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
+                              {% endif %}
+                              {% endfor %}
+                            </select>
+                          </td>
+                          <td>
+                            <input class="form-control input-sm demodramt rightJustified" type="text" value="{{voucher["drs"][dr]}}">
+                          </td>
+                          <td>
+                            <input class="form-control input-sm democramt rightJustified" type="text" value="" disabled>
+                          </td>
+                        </tr>
+
+                        {% endfor %}
+
+                        {% for cr in voucher["crs"] %}
+                        <tr>
+                          <td>
+                            <select class="form-control input-sm democrdr" >
+                              <option value="Cr" selected>Cr</option>
+                              <option value="Dr">Dr</option>
+                            </select>
+                          </td>
+                          <td>
+                            <select class="form-control input-sm demoaccs">
+                              {% for acc in craccounts %}
+                              {% if cr==acc['accountname'] %}
+                              <option value="{{acc['accountcode']}}" selected>{{acc['accountname']}}</option>
+                              {% else %}
+                              <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
+                              {% endif %}
+
+                              {% endfor %}
+                            </select>
+                          </td>
+                          <td>
+                            <input class="form-control input-sm demodramt rightJustified" type="text" value="" disabled>
+                          </td>
+                          <td>
+                            <input class="form-control input-sm democramt rightJustified" type="text" value="{{voucher["crs"][cr]}}">
+                          </td>
+                        </tr>
+
+                        {% endfor %}
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <td colspan="2">
+                            <input type="text" class="form-control input-sm demottl" value="Total" disabled>
+                          </td>
+                          <td>
+                            <input class="form-control input-sm demottl rightJustified" type="text" value="0.00" disabled>
+                          </td>
+                          <td>
+                            <input class="form-control input-sm demottl rightJustified" type="text" value="0.00" disabled>
+                          </td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+
+
                   <div class="table-responsive">
                     <table id="vctable" class="table table-condensed">
                       <thead>
@@ -83,7 +178,7 @@
                         {% for dr in voucher["drs"] %}
                         <tr>
                           <td>
-                            <select class="form-control input-sm crdr" disabled>
+                            <select class="form-control input-sm crdr" >
                               <option value="Dr" selected>Dr</option>
                               <option value="Cr">Cr</option>
                             </select>
@@ -105,6 +200,9 @@
                           <td>
                             <input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>
                           </td>
+                          <td>
+                            <a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                          </td>
                         </tr>
 
                         {% endfor %}
@@ -112,7 +210,7 @@
                         {% for cr in voucher["crs"] %}
                         <tr>
                           <td>
-                            <select class="form-control input-sm crdr" disabled>
+                            <select class="form-control input-sm crdr" >
                               <option value="Cr" selected>Cr</option>
                               <option value="Dr">Dr</option>
                             </select>
@@ -135,6 +233,9 @@
                           <td>
                             <input class="form-control input-sm cramt rightJustified" type="text" value="{{voucher["crs"][cr]}}">
                           </td>
+                          <td>
+                            <a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                          </td>
                         </tr>
 
                         {% endfor %}
@@ -142,13 +243,13 @@
                       <tfoot>
                         <tr>
                           <td colspan="2">
-                            <input type="text" class="form-control input-sm" value="Total" disabled>
+                            <input type="text" class="form-control input-sm ttl" value="Total" disabled>
                           </td>
                           <td>
-                            <input id="drtotal" class="form-control input-sm rightJustified" type="text" value="0.00" disabled>
+                            <input id="drtotal" class="form-control input-sm ttl rightJustified" type="text" value="0.00" disabled>
                           </td>
                           <td>
-                            <input id="crtotal" class="form-control input-sm rightJustified" type="text" value="0.00" disabled>
+                            <input id="crtotal" class="form-control input-sm ttl rightJustified" type="text" value="0.00" disabled>
                           </td>
                         </tr>
                       </tfoot>
@@ -167,23 +268,30 @@
                   <label for="narration">Narration:</label>
                 </div>
                 <div class="pull-right">
-                  <textarea class="form-control" name="narration" id="narration" rows="2" cols="50" >{{voucher["narration"]}}</textarea>
+                  <textarea class="form-control" name="narration" id="narr" rows="2" cols="50" >{{voucher["narration"]}}</textarea>
                 </div>
                 <input type="hidden" id="vtype" name="vtype" value="{{vtype}}">
 
               </div>
             </form>
+            <input type="hidden" id="vcode" name="vcode" value="{{voucher['vouchercode']}}"></input>
           </div>
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Edit</button>
-          <button type="button" class="btn btn-primary">Clone</button>
+          {% if voucher['status'] %}
+          <button type="button" class="btn btn-warning" id="lock">Unlock</button>
+          {% else %}
+          <button type="button" class="btn btn-warning" id="lock">Lock</button>
+          {% endif %}
+          <button type="button" class="btn btn-primary" id="edit">Edit</button>
+          <button type="button" class="btn btn-primary" id="clone">Clone</button>
           <button type="submit" id="save" class="btn btn-primary">Save</button>
         </div>
       </div>
     </div>
   </div>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.numeric.min.js')}}"></script>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editclone.js')}}"></script>
 </body>
 </html>

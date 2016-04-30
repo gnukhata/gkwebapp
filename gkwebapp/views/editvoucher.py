@@ -88,3 +88,26 @@ def viewvoucher(request):
 		return {"voucher":vc,"userrole":result.json()["userrole"],"draccounts":draccounts,"craccounts":craccounts}
 	else:
 		return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)
+
+@view_config(route_name="editvoucher", renderer="json")
+def editvoucher(request):
+	vdetails = json.loads(request.params["vdetails"])
+	rowdetails= json.loads(request.params["transactions"])
+	crs={}
+	drs={}
+	if vdetails["projectcode"] !="":
+		gkdata={"vouchercode":vdetails["vcode"],"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails[projectcode])}
+	else:
+		gkdata={"vouchercode":vdetails["vcode"],"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"]}
+	for row in rowdetails:
+		if row["side"]=="Cr":
+			crs[row["accountcode"]]=row["cramount"]
+		if row["side"]=="Dr":
+			drs[row["accountcode"]]=row["dramount"]
+	header={"gktoken":request.headers["gktoken"]}
+
+	result = requests.put("http://127.0.0.1:6543/transaction",data=json.dumps(gkdata) , headers=header)
+	if result.json()["gkstatus"]==0:
+		return {"gkstatus":True}
+	else:
+		return {"gkstatus":False}

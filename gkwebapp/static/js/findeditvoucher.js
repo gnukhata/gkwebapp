@@ -133,7 +133,7 @@ if (search=="vnum")
     $("#vno-alert").alert();
     $("#novn").focus();
     $("#vno-alert").fadeTo(2000, 500).slideUp(500, function(){
-      $("#vno-alert").alert('close');
+      $("#vno-alert").hide();
     });
     $('#vnum').focus();
     return false;
@@ -145,7 +145,7 @@ else if (search=="amount")
     $("#vamt-alert").alert();
     $("#noamt").focus();
     $("#vamt-alert").fadeTo(2000, 500).slideUp(500, function(){
-      $("#vamt-alert").alert('close');
+      $("#vamt-alert").hide();
     });
     $('#amount').focus();
     return false;
@@ -157,7 +157,7 @@ else if (search=="date")
     $("#vdt-alert").alert();
     $("#nodt").focus();
     $("#vdt-alert").fadeTo(2000, 500).slideUp(500, function(){
-      $("#vdt-alert").alert('close');
+      $("#vdt-alert").hide();
     });
     $('#fday').focus();
     return false;
@@ -167,7 +167,7 @@ else if (search=="date")
     $("#vdt-alert").alert();
     $("#nodt").focus();
     $("#vdt-alert").fadeTo(2000, 500).slideUp(500, function(){
-      $("#vdt-alert").alert('close');
+      $("#vdt-alert").hide();
     });
     $('#fmonth').focus();
     return false;
@@ -177,7 +177,7 @@ else if (search=="date")
     $("#vdt-alert").alert();
     $("#nodt").focus();
     $("#vdt-alert").fadeTo(2000, 500).slideUp(500, function(){
-      $("#vdt-alert").alert('close');
+      $("#vdt-alert").hide();
     });
     $('#fyear').focus();
     return false;
@@ -187,7 +187,7 @@ else if (search=="date")
     $("#vdt-alert").alert();
     $("#nodt").focus();
     $("#vdt-alert").fadeTo(2000, 500).slideUp(500, function(){
-      $("#vdt-alert").alert('close');
+      $("#vdt-alert").hide();
     });
     $('#tday').focus();
     return false;
@@ -197,7 +197,7 @@ else if (search=="date")
     $("#vdt-alert").alert();
     $("#nodt").focus();
     $("#vdt-alert").fadeTo(2000, 500).slideUp(500, function(){
-      $("#vdt-alert").alert('close');
+      $("#vdt-alert").hide();
     });
     $('#tmonth').focus();
     return false;
@@ -206,7 +206,7 @@ else if (search=="date")
     $("#vdt-alert").alert();
     $("#nodt").focus();
     $("#vdt-alert").fadeTo(2000, 500).slideUp(500, function(){
-      $("#vdt-alert").alert('close');
+      $("#vdt-alert").hide();
     });
     $('#tyear').focus();
     return false;
@@ -220,7 +220,7 @@ else if (search=="narration")
     $("#vnar-alert").alert();
     $("#nonar").focus();
     $("#vnar-alert").fadeTo(2000, 500).slideUp(500, function(){
-      $("#vnar-alert").alert('close');
+      $("#vnar-alert").hide();
     });
     $('#narration').focus();
     return false;
@@ -247,8 +247,6 @@ $.ajax({
         success: function(resp)
         {
           $("#vct").html(resp);
-
-
 
         }
       });
