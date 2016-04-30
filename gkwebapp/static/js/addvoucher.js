@@ -133,7 +133,7 @@ $(document).ready(function() {
     drsum=0;
     $(".dramt").each(function(){
       drsum += +$(this).val();
-      $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+      $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
     });
     crsum=0;
     $(".cramt").each(function(){
@@ -370,7 +370,7 @@ $(document).ready(function() {
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
-                $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+                $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
               });
             }
           });
@@ -389,7 +389,7 @@ $(document).ready(function() {
             drsum=0;
             $(".dramt").each(function(){
               drsum += +$(this).val();
-              $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+              $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
             });
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
           }
@@ -432,11 +432,11 @@ $(document).ready(function() {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
               $('#vtable tbody tr:last td:eq(1) select').focus();
-              $('#vtable tbody tr:last td:eq(2) input:enabled').val(diff.toFixed(2));
+              $('#vtable tbody tr:last td:eq(2) input:enabled').val(parseFloat(diff).toFixed(2));
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
-                $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+                $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
               });
             }
           });
