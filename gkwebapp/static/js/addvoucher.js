@@ -133,7 +133,7 @@ $(document).ready(function() {
     drsum=0;
     $(".dramt").each(function(){
       drsum += +$(this).val();
-      $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+      $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
     });
     crsum=0;
     $(".cramt").each(function(){
@@ -178,6 +178,10 @@ $(document).ready(function() {
           }
         }
         else {
+          if((diff).toFixed(2)==0){
+            $("#project").focus();
+            return false;
+          }
           $.ajax({
             url: '/getcjaccounts',
             type: 'POST',
@@ -190,22 +194,22 @@ $(document).ready(function() {
             success: function(jsonObj) {
               var accs = jsonObj["accounts"];
               $('.table').append('<tr>'+
-              '<td>'+
+              '<td class="col-xs-1">'+
               '<select class="form-control input-sm crdr">'+
               '<option value="Cr" selected>Cr</option>'+
               '<option value="Dr">Dr</option>'+
               '</select>'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-4">'+
               '<select class="form-control input-sm accs">'+
               '</select>'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-3">'+
               '<input class="form-control input-sm dramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-3">'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="0.00">'+
-              '</td>'+
+              '</td class="col-xs-1">'+
               '<td><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
               '</tr>');
               for (i in accs ) {
@@ -244,6 +248,10 @@ $(document).ready(function() {
           }
         }
         else {
+          if((diff).toFixed(2)==0){
+            $("#project").focus();
+            return false;
+          }
           $.ajax({
             url: '/getcjaccounts',
             type: 'POST',
@@ -256,23 +264,23 @@ $(document).ready(function() {
             success: function(jsonObj) {
               var accs = jsonObj["accounts"];
               $('.table').append('<tr>'+
-              '<td>'+
+              '<td class="col-xs-1">'+
               '<select class="form-control input-sm crdr">'+
               '<option value="Cr">Cr</option>'+
               '<option value="Dr" selected>Dr</option>'+
               '</select>'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-4">'+
               '<select class="form-control input-sm accs">'+
               '</select>'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-3">'+
               '<input class="form-control input-sm dramt rightJustified" type="text" value="0.00">'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-3">'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
-              '<td><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
+              '<td class="col-xs-1"><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
               '</tr>');
               for (i in accs ) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
@@ -327,6 +335,10 @@ $(document).ready(function() {
           }
         }
         else {
+          if((diff).toFixed(2)==0){
+            $("#project").focus();
+            return false;
+          }
           $.ajax({
             url: '/getcjaccounts',
             type: 'POST',
@@ -339,23 +351,23 @@ $(document).ready(function() {
             success: function(jsonObj) {
               var accs = jsonObj["accounts"];
               $('.table').append('<tr>'+
-              '<td>'+
+              '<td class="col-xs-1">'+
               '<select class="form-control input-sm crdr">'+
               '<option value="Cr" selected>Cr</option>'+
               '<option value="Dr">Dr</option>'+
               '</select>'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-4">'+
               '<select class="form-control input-sm accs">'+
               '</select>'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-3">'+
               '<input class="form-control input-sm dramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-3">'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="0.00">'+
               '</td>'+
-              '<td><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
+              '<td class="col-xs-1"><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
               '</tr>');
               for (i in accs ) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
@@ -370,7 +382,7 @@ $(document).ready(function() {
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
-                $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+                $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
               });
             }
           });
@@ -389,7 +401,7 @@ $(document).ready(function() {
             drsum=0;
             $(".dramt").each(function(){
               drsum += +$(this).val();
-              $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+              $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
             });
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
           }
@@ -398,6 +410,10 @@ $(document).ready(function() {
           }
         }
         else {
+          if((diff).toFixed(2)==0){
+            $("#project").focus();
+            return false;
+          }
           $.ajax({
             url: '/getcjaccounts',
             type: 'POST',
@@ -410,33 +426,33 @@ $(document).ready(function() {
             success: function(jsonObj) {
               var accs = jsonObj["accounts"];
               $('.table').append('<tr>'+
-              '<td>'+
+              '<td class="col-xs-1">'+
               '<select class="form-control input-sm crdr">'+
               '<option value="Cr">Cr</option>'+
               '<option value="Dr" selected>Dr</option>'+
               '</select>'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-4">'+
               '<select class="form-control input-sm accs">'+
               '</select>'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-3">'+
               '<input class="form-control input-sm dramt rightJustified" type="text" value="0.00">'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-3">'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
-              '<td><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
+              '<td class="col-xs-1"><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
               '</tr>');
               for (i in accs ) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
               $('#vtable tbody tr:last td:eq(1) select').focus();
-              $('#vtable tbody tr:last td:eq(2) input:enabled').val(diff.toFixed(2));
+              $('#vtable tbody tr:last td:eq(2) input:enabled').val(parseFloat(diff).toFixed(2));
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
-                $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+                $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
               });
             }
           });

@@ -9,7 +9,82 @@
   .rightJustified {
     text-align: right;
   }
+  /*
+Force table width to 100%
+*/
+ table.table-fixedheader {
+    width: 100%;
+}
+/*
+Set table elements to block mode.  (Normally they are inline).
+This allows a responsive table, such as one where columns can be stacked
+if the display is narrow.
+*/
+ table.table-fixedheader, table.table-fixedheader>thead, table.table-fixedheader>tbody, table.table-fixedheader>tfoot, table.table-fixedheader>thead>tr, table.table-fixedheader>tbody>tr, table.table-fixedheader>tfoot>tr, table.table-fixedheader>thead>tr>th, table.table-fixedheader>tbody>tr>td, table.table-fixedheader>tfoot>tr>td {
+    display: block;
+}
+table.table-fixedheader>thead>tr:after, table.table-fixedheader>tbody>tr:after, table.table-fixedheader>tfoot>tr:after  {
+    content:' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+/*
+When scrolling the table, actually it is only the tbody portion of the
+table that scrolls (not the entire table: we want the thead to remain
+fixed).  We must specify an explicit height for the tbody.  We include
+100px as a default, but it can be overridden elsewhere.
 
+Also, we force the scrollbar to always be displayed so that the usable
+width for the table contents doesn't change (such as becoming narrower
+when a scrollbar is visible and wider when it is not).
+*/
+ table.table-fixedheader>tbody {
+    overflow-y: scroll;
+    height: 40%;
+
+}
+/*
+We really don't want to scroll the thead contents, but we want to force
+a scrollbar to be displayed anyway so that the usable width of the thead
+will exactly match the tbody.
+*/
+ table.table-fixedheader>thead, table.table-fixedheader>tfoot {
+    overflow-y: scroll;
+    height: 39px;
+}
+table.table-fixedheader>tfoot {
+  width: 99.4%
+}
+/*
+For browsers that support it (webkit), we set the background color of
+the unneeded scrollbar in the thead to make it invisible.  (Setting
+visiblity: hidden defeats the purpose, as this alters the usable width
+of the thead.)
+*/
+ table.table-fixedheader>thead::-webkit-scrollbar {
+    background-color: inherit;
+}
+
+
+table.table-fixedheader>thead>tr>th:after, table.table-fixedheader>tbody>tr>td:after, table.table-fixedheader>tfoot>tr>td:after {
+    content:' ';
+    display: table-cell;
+    visibility: hidden;
+    clear: both;
+}
+
+/*
+We want to set <th> and <td> elements to float left.
+We also must explicitly set the width for each column (both for the <th>
+and the <td>).  We set to 20% here a default placeholder, but it can be
+overridden elsewhere.
+*/
+
+ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.table-fixedheader>tfoot tr td {
+    float: left;
+
+}
   </style>
 </head>
 <body>
@@ -61,88 +136,88 @@
           </div>
           <div class="panel panel-info flow">
             <div class="table-responsive">
-              <table id="vtable" class="table table-striped table-condensed">
+              <table id="vtable" class="table table-fixedheader">
                 <thead>
                   <tr class="info">
-                    <th width="55px">
+                    <th class="col-xs-1">
                       Cr/Dr
                     </th>
-                    <th width="40%">
+                    <th class="col-xs-4">
                       Account Name
                     </th>
-                    <th>
+                    <th class="col-xs-3">
                       Dr Amount
                     </th>
-                    <th>
+                    <th class="col-xs-3">
                       Cr Amount
                     </th>
-                    <th width="20px">
-                      
+                    <th class="col-xs-1">
+                      Remove
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>
+                    <td class="col-xs-1">
                       <select class="form-control input-sm crdr" disabled>
                         <option value="Dr" selected>Dr</option>
                         <option value="Cr">Cr</option>
                       </select>
                     </td>
-                    <td>
+                    <td class="col-xs-4">
                       <select class="form-control input-sm accs">
                         {% for acc in draccounts %}
                         <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
                         {% endfor %}
                       </select>
                     </td>
-                    <td>
+                    <td class="col-xs-3">
                       <input class="form-control input-sm dramt rightJustified" type="text" value="0.00">
                     </td>
-                    <td>
+                    <td class="col-xs-3">
                       <input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>
                     </td>
-                    <td>
+                    <td class="col-xs-1">
 
                     </td>
                   </tr>
                   <tr>
-                    <td>
+                    <td class="col-xs-1">
                       <select class="form-control input-sm crdr" disabled>
                         <option value="Cr" selected>Cr</option>
                         <option value="Dr">Dr</option>
                       </select>
                     </td>
-                    <td>
+                    <td class="col-xs-4">
                       <select class="form-control input-sm accs">
                         {% for acc in craccounts %}
                         <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
                         {% endfor %}
                       </select>
                     </td>
-                    <td>
+                    <td class="col-xs-3">
                       <input class="form-control input-sm dramt rightJustified" type="text" value="" disabled>
                     </td>
-                    <td>
+                    <td class="col-xs-3">
                       <input class="form-control input-sm cramt rightJustified" type="text" value="0.00">
                     </td>
-                    <td>
+                    <td class="col-xs-1">
 
                     </td>
                   </tr>
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colspan="2">
+                    <td class="col-xs-5" colspan="2">
                       <input type="text" class="form-control input-sm" value="Total" disabled>
                     </td>
-                    <td>
+                    <td class="col-xs-3">
                       <input id="drtotal" class="form-control input-sm rightJustified" type="text" value="0.00" disabled>
                     </td>
-                    <td>
+                    <td class="col-xs-3">
                       <input id="crtotal" class="form-control input-sm rightJustified" type="text" value="0.00" disabled>
                     </td>
-                    <td>
+                    <td class="col-xs-1">
 
                     </td>
                   </tr>
@@ -162,7 +237,7 @@
             <label for="narration">Narration:</label>
           </div>
           <div class="pull-right">
-            <textarea class="form-control" name="narration" id="narration" rows="2" cols="60"></textarea>
+            <textarea class="form-control" name="narration" id="narration" rows="1" cols="60"></textarea>
           </div>
           <input type="hidden" id="vtype" name="vtype" value="{{vtype}}">
 
