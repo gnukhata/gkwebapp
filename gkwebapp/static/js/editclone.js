@@ -131,8 +131,8 @@ var ecflag;
 
 
   $('.vdate').autotab('number');
-  $('.dramt').numeric({ negative: false });
-  $('.cramt').numeric({ negative: false });
+
+
 
   var diff = 0;
 
@@ -289,6 +289,7 @@ var ecflag;
 
   $(document).off("keyup",".dramt").on("keyup",".dramt",function(event)
   {
+    $('.dramt').numeric({ negative: false });
     if(event.which==13)
     {
       var curindex = $(this).closest('tr').index();
@@ -316,6 +317,10 @@ var ecflag;
           }
         }
         else {
+          if((diff).toFixed(2)==0){
+            $("#project").focus();
+            return false;
+          }
           $.ajax({
             url: '/getcjaccounts',
             type: 'POST',
@@ -446,6 +451,7 @@ var ecflag;
 
   $(document).off("keyup",".cramt").on("keyup",".cramt",function(event)
   {
+      $('.cramt').numeric({ negative: false });
     if(event.which==13)
     {
       var curindex = $(this).closest('tr').index();
@@ -473,6 +479,10 @@ var ecflag;
           }
         }
         else {
+          if((diff).toFixed(2)==0){
+            $("#project").focus();
+            return false;
+          }
           $.ajax({
             url: '/getcjaccounts',
             type: 'POST',
