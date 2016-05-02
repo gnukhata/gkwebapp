@@ -97,8 +97,10 @@ $(document).ready(function()
 
   });
 var ecflag;
+var navflag;
   $("#edit").click(function(event)
   {
+    navflag=true;
     ecflag="edit";
     $("#save").show();
     $("#lock").hide();
@@ -115,6 +117,7 @@ var ecflag;
 
   $("#clone").click(function(event)
   {
+    navflag=true;
     ecflag="clone";
     $("#lock").hide();
     $("#clone").hide();
@@ -190,9 +193,40 @@ var ecflag;
     }
   });
 
-  $('#vno').keydown(function(event) {
-    if(event.which==13 && $('#vno').val()!=""){
-      $('#vdate').select().focus();
+  $('#vno').keyup(function(event) {
+    if (navflag==true)
+    {
+      navflag=false;
+      event.preventDefault();
+    }
+    else
+    {
+      if(event.which==13 && $('#vno').val()!="")
+      {
+        $('#vdate').select().focus();
+      }
+    }
+  });
+
+
+  $('#vdate').keyup(function(event) {
+    if (navflag==true)
+    {
+      navflag=false;
+      event.preventDefault();
+    }
+    else
+    {
+      if(event.which==13 && $('#vyear').val()!="")
+      {
+        $('#vmonth').focus().select();
+      }
+    }
+  });
+
+  $('#vmonth').keyup(function(event) {
+    if(event.which==13 && $('#vyear').val()!=""){
+      $('#vyear').focus().select();
     }
   });
 

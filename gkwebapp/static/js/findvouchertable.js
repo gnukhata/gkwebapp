@@ -6,12 +6,12 @@ $(document).ready(function() {
   $('tbody tr:first-child td:first-child a').closest('tr').addClass('selected');
 
 
-  $(document).on('focus' ,'.vno',function() {
+  $(document).off('focus' ,'.vno').on('focus' ,'.vno',function() {
     $('#vtable tr').removeClass('selected');
     $(this).closest('tr').addClass('selected');
   });
 
-  $(document).on('blur' ,'.vno',function() {
+  $(document).off('blur' ,'.vno').on('blur' ,'.vno',function() {
     $('#vtable tr').removeClass('selected');
 
   });
@@ -20,7 +20,7 @@ $(document).ready(function() {
   var previndex;
 
 
-  $(document).on('keyup' ,'.vno',function(event) {
+  $(document).off('keyup' ,'.vno').on('keyup' ,'.vno',function(event) {
     curindex = $(this).closest('tr').index();
     nextindex = curindex+1;
     previndex = curindex-1;
@@ -41,7 +41,7 @@ $(document).ready(function() {
 
   var urole = $("#urole").val();
 
-  $("#vtable").on('keyup','tr',function(e){
+  $("#vtable").off('keyup','tr').on('keyup','tr',function(e){
     var id = $(this).attr('value');
     var rindex = $(this).index();
 
@@ -108,7 +108,7 @@ $(document).ready(function() {
   });
 
 
-  $(".table").on('click','tr',function(e){
+  $(".table").off('click','tr').on('click','tr',function(e){
     e.preventDefault();
     var id = $(this).attr('value');
     var currindex = $(this).index();
@@ -118,7 +118,7 @@ $(document).ready(function() {
 
   });
 
-  $("#vtable").on('keydown','tr',function(e){
+  $("#vtable").off('keydown','tr').on('keydown','tr',function(e){
     var id = $(this).attr('value');
     var rindex = $(this).index();
 
@@ -129,7 +129,7 @@ $(document).ready(function() {
     }
 });
 
-  $(".table").on('dblclick','tr:not(:first)',function(e){
+  $(".table").off('dblclick','tr:not(:first)').on('dblclick','tr:not(:first)',function(e){
     e.preventDefault();
     var id = $(this).attr('value');
 
