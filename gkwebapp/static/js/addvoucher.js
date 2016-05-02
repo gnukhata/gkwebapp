@@ -178,6 +178,10 @@ $(document).ready(function() {
           }
         }
         else {
+          if((diff).toFixed(2)==0){
+            $("#project").focus();
+            return false;
+          }
           $.ajax({
             url: '/getcjaccounts',
             type: 'POST',
@@ -244,6 +248,10 @@ $(document).ready(function() {
           }
         }
         else {
+          if((diff).toFixed(2)==0){
+            $("#project").focus();
+            return false;
+          }
           $.ajax({
             url: '/getcjaccounts',
             type: 'POST',
@@ -327,6 +335,10 @@ $(document).ready(function() {
           }
         }
         else {
+          if((diff).toFixed(2)==0){
+            $("#project").focus();
+            return false;
+          }
           $.ajax({
             url: '/getcjaccounts',
             type: 'POST',
@@ -398,6 +410,10 @@ $(document).ready(function() {
           }
         }
         else {
+          if((diff).toFixed(2)==0){
+            $("#project").focus();
+            return false;
+          }
           $.ajax({
             url: '/getcjaccounts',
             type: 'POST',
