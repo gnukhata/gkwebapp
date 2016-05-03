@@ -50,6 +50,8 @@ $(document).ready(function()
   $("#demovctable").find("input,select,textarea,button").prop("disabled",true);
   $("#vno").prop('disabled', true);
   $(".vdate").prop('disabled', true);
+  $("#narr").prop('disabled', true);
+  $("#project").prop('disabled', true);
   $("#lock").click(function(event)
   {
 
@@ -112,6 +114,8 @@ var navflag;
     $("#vdate").focus().select();
     $("#vctable").show();
     $("#demovctable").hide();
+    $("#narr").prop('disabled', false);
+    $("#project").prop('disabled', false);
 
   });
 
@@ -129,6 +133,8 @@ var navflag;
     $("#vctable").show();
     $("#demovctable").hide();
     $(".vdate").prop('disabled', false);
+    $("#narr").prop('disabled', false);
+    $("#project").prop('disabled', false);
   });
 
 
