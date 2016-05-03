@@ -1,5 +1,17 @@
 $(document).ready(function()
 {
+  var inselect=0;
+  $("#callLogin").hide();
+  $("#finalyears").focus(function(){
+    inselect = 1;
+    if($("#finalyears").val())
+    {
+      $("#callLogin").show();
+    }
+  });
+  $("#finalyears").blur(function(){
+    inselect = 0;
+  });
   $("#org-name").bind("change keyup", function(){
     var org = $("#org-name option:selected").val();
     var orgobj = eval('('+org+')');
@@ -20,6 +32,32 @@ $(document).ready(function()
 
     });
   });
+
+  $('input:text,select,button').bind("keydown", function(e) {
+    var n = $("input:text,select,button").length;
+    var f = $('input:text,select,button');
+    if (e.which == 13)
+    {
+      var nextIndex = f.index(this) + 1;
+      if(nextIndex < n){
+        e.preventDefault();
+        f[nextIndex].focus();}
+
+      }
+    });
+
+  $('input:text,select,button').bind("keydown", function(e) {
+    var n = $("input:text,select,button").length;
+    var f = $('input:text,select,button');
+    var s = $("#finalyears option:selected").index();
+    if ((e.which == 38 && inselect == 1 && s == 0) || (e.which == 38 && inselect == 0))
+    {
+      var prevIndex = f.index(this) - 1;
+      if(prevIndex < n){
+        e.preventDefault();
+        f[prevIndex].focus();}
+    }
+    });
 
   $("#callLogin").click(function(event){
     event.preventDefault();

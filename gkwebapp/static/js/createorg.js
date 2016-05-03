@@ -1,5 +1,19 @@
 $(document).ready(function()
 {
+var sel1 = 0;
+var sel2 = 0;
+$("#orgcase").focus(function(){
+  sel1 = 1;
+});
+$("#orgcase").blur(function(){
+  sel1 = 0;
+});
+$("#orgtype").focus(function(){
+  sel2 = 1;
+});
+$("#orgtype").blur(function(){
+  sel2 = 0;
+});
 var forname = "";
 $("#orgname").focusout(function(){
   forname = $("#orgname").val();
@@ -20,6 +34,21 @@ $('input:text,select').bind("keydown", function(e) {
     }
   });
 
+  $('input:text,select,button').bind("keydown", function(e) {
+    var n = $("input:text,select,button").length;
+    var f = $('input:text,select,button');
+    var s1 = $("#orgcase option:selected").index();
+    var s2 = $("#orgtype option:selected").index();
+    if ((e.which == 38 && sel1 == 1 && s1 == 0) || (e.which == 38 && sel2 == 1 && s2 == 0) || (e.which == 38 && (sel1 == 0 && sel2==0)))
+    {
+      var prevIndex = f.index(this) - 1;
+      if(prevIndex < n){
+        e.preventDefault();
+        f[prevIndex].focus();}
+    }
+    });
+
+
 $("#orgcase").bind("change keyup", function(e){
   var ocase = $("#orgcase option:selected").val();
   var oname = "";
@@ -37,6 +66,12 @@ $("#orgcase").bind("change keyup", function(e){
   if(ocase == "Lower Case")
   {
     oname = forname.toLowerCase();
+    $("#orgname").val(oname);
+    sessionStorage.setItem('orgn', oname);
+  }
+  if(ocase == "Title Case")
+  {
+    oname = (forname[0].toUpperCase())+(forname.substr(1).toLowerCase())
     $("#orgname").val(oname);
     sessionStorage.setItem('orgn', oname);
   }
