@@ -31,10 +31,10 @@
         {% for vc in vouchers %}
         <tr  value="{{vc['vouchercode']}}">
           <td >
-            <a class="vno" href="asd">{{vc['vouchernumber']}}</a>
+            <a class="vno" href="">{{vc['vouchernumber']}}</a>
           </td>
           {% if (vc['status']) %}
-          <td>*</td>
+          <td style="color:red; text-align:center">*</td>
           {% else %}
           <td> </td>
           {% endif %}
@@ -50,10 +50,10 @@
           <td>
             {{vc["crs"].keys()[0]}}
           </td>
-          <td>
+          <td style="text-align:right">
             {{vc["drs"][vc["drs"].keys()[0]]}}
           </td>
-          <td>
+          <td style="text-align:right">
             {{vc["crs"][vc["crs"].keys()[0]]}}
           </td>
           <td>

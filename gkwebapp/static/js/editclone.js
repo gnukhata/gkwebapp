@@ -10,8 +10,6 @@ $(document).ready(function()
     if ($("#lock").html()=="Unlock")
     {
       $("#edit").attr("disabled", "disabled");
-      $("#clone").attr("disabled", "disabled");
-
     }
 
   }
@@ -50,6 +48,8 @@ $(document).ready(function()
   $("#demovctable").find("input,select,textarea,button").prop("disabled",true);
   $("#vno").prop('disabled', true);
   $(".vdate").prop('disabled', true);
+  $("#narr").prop('disabled', true);
+  $("#project").prop('disabled', true);
   $("#lock").click(function(event)
   {
 
@@ -96,9 +96,11 @@ $(document).ready(function()
     });
 
   });
-var ecflag;
+  var ecflag;
+  var navflag;
   $("#edit").click(function(event)
   {
+    navflag=true;
     ecflag="edit";
     $("#save").show();
     $("#lock").hide();
@@ -110,11 +112,14 @@ var ecflag;
     $("#vdate").focus().select();
     $("#vctable").show();
     $("#demovctable").hide();
+    $("#narr").prop('disabled', false);
+    $("#project").prop('disabled', false);
 
   });
 
   $("#clone").click(function(event)
   {
+    navflag=true;
     ecflag="clone";
     $("#lock").hide();
     $("#clone").hide();
@@ -126,13 +131,15 @@ var ecflag;
     $("#vctable").show();
     $("#demovctable").hide();
     $(".vdate").prop('disabled', false);
+    $("#narr").prop('disabled', false);
+    $("#project").prop('disabled', false);
   });
 
 
 
   $('.vdate').autotab('number');
-  $('.dramt').numeric({ negative: false });
-  $('.cramt').numeric({ negative: false });
+
+
 
   var diff = 0;
 
@@ -190,9 +197,40 @@ var ecflag;
     }
   });
 
-  $('#vno').keydown(function(event) {
-    if(event.which==13 && $('#vno').val()!=""){
-      $('#vdate').select().focus();
+  $('#vno').keyup(function(event) {
+    if (navflag==true)
+    {
+      navflag=false;
+      event.preventDefault();
+    }
+    else
+    {
+      if(event.which==13 && $('#vno').val()!="")
+      {
+        $('#vdate').select().focus();
+      }
+    }
+  });
+
+
+  $('#vdate').keyup(function(event) {
+    if (navflag==true)
+    {
+      navflag=false;
+      event.preventDefault();
+    }
+    else
+    {
+      if(event.which==13 && $('#vyear').val()!="")
+      {
+        $('#vmonth').focus().select();
+      }
+    }
+  });
+
+  $('#vmonth').keyup(function(event) {
+    if(event.which==13 && $('#vyear').val()!=""){
+      $('#vyear').focus().select();
     }
   });
 
@@ -287,8 +325,20 @@ var ecflag;
     }
   });
 
+  $(document).off("keypress",".dramt").on("keypress",".dramt",function(event)
+  {
+    $('.dramt').numeric({ negative: false });
+  });
+
+  $(document).off("keypress",".cramt").on("keypress",".cramt",function(event)
+  {
+    $('.cramt').numeric({ negative: false });
+  });
+
+
   $(document).off("keyup",".dramt").on("keyup",".dramt",function(event)
   {
+
     if(event.which==13)
     {
       var curindex = $(this).closest('tr').index();
@@ -316,6 +366,10 @@ var ecflag;
           }
         }
         else {
+          if((diff).toFixed(2)==0){
+            $("#project").focus();
+            return false;
+          }
           $.ajax({
             url: '/getcjaccounts',
             type: 'POST',
@@ -328,23 +382,23 @@ var ecflag;
             success: function(jsonObj) {
               var accs = jsonObj["accounts"];
               $('#vctable').append('<tr>'+
-              '<td>'+
+              '<td class="col-xs-1">'+
               '<select class="form-control input-sm crdr">'+
               '<option value="Cr" selected>Cr</option>'+
               '<option value="Dr">Dr</option>'+
               '</select>'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-4">'+
               '<select class="form-control input-sm accs">'+
               '</select>'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-3">'+
               '<input class="form-control input-sm dramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-3">'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="0.00">'+
               '</td>'+
-              '<td><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
+              '<td class="col-xs-1"><a href="" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
               '</tr>');
               for (i in accs ) {
                 $('#vctable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
@@ -394,23 +448,23 @@ var ecflag;
             success: function(jsonObj) {
               var accs = jsonObj["accounts"];
               $('#vctable').append('<tr>'+
-              '<td>'+
+              '<td class="col-xs-1">'+
               '<select class="form-control input-sm crdr">'+
               '<option value="Cr">Cr</option>'+
               '<option value="Dr" selected>Dr</option>'+
               '</select>'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-4">'+
               '<select class="form-control input-sm accs">'+
               '</select>'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-3">'+
               '<input class="form-control input-sm dramt rightJustified" type="text" value="0.00">'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-3">'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
-              '<td><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
+              '<td class="col-xs-1"><a href="" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
               '</tr>');
               for (i in accs ) {
                 $('#vctable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
@@ -443,9 +497,9 @@ var ecflag;
       lastindex=null;
     }
   });
-
   $(document).off("keyup",".cramt").on("keyup",".cramt",function(event)
   {
+
     if(event.which==13)
     {
       var curindex = $(this).closest('tr').index();
@@ -473,6 +527,10 @@ var ecflag;
           }
         }
         else {
+          if((diff).toFixed(2)==0){
+            $("#project").focus();
+            return false;
+          }
           $.ajax({
             url: '/getcjaccounts',
             type: 'POST',
@@ -485,23 +543,23 @@ var ecflag;
             success: function(jsonObj) {
               var accs = jsonObj["accounts"];
               $('#vctable').append('<tr>'+
-              '<td>'+
+              '<td  class="col-xs-1">'+
               '<select class="form-control input-sm crdr">'+
               '<option value="Cr" selected>Cr</option>'+
               '<option value="Dr">Dr</option>'+
               '</select>'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-4">'+
               '<select class="form-control input-sm accs">'+
               '</select>'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-3">'+
               '<input class="form-control input-sm dramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-3">'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="0.00">'+
               '</td>'+
-              '<td><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
+              '<td class="col-xs-1"><a href="" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
               '</tr>');
               for (i in accs ) {
                 $('#vctable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
@@ -556,23 +614,23 @@ var ecflag;
             success: function(jsonObj) {
               var accs = jsonObj["accounts"];
               $('#vctable').append('<tr>'+
-              '<td>'+
+              '<td class="col-xs-1">'+
               '<select class="form-control input-sm crdr">'+
               '<option value="Cr">Cr</option>'+
               '<option value="Dr" selected>Dr</option>'+
               '</select>'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-4">'+
               '<select class="form-control input-sm accs">'+
               '</select>'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-3">'+
               '<input class="form-control input-sm dramt rightJustified" type="text" value="0.00">'+
               '</td>'+
-              '<td>'+
+              '<td class="col-xs-3">'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
-              '<td><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
+              '<td class="col-xs-1"><a href="" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
               '</tr>');
               for (i in accs ) {
                 $('#vctable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
@@ -697,66 +755,66 @@ var ecflag;
       {
 
         $.ajax({
-        type: "POST",
-        url: "/addvoucher",
-        global: false,
-        async: false,
-        datatype: "json",
-        data: {"vdetails":JSON.stringify(details),"transactions":JSON.stringify(output)},
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-        success: function(resp)
-        {
-          if(resp.gkstatus){
+          type: "POST",
+          url: "/addvoucher",
+          global: false,
+          async: false,
+          datatype: "json",
+          data: {"vdetails":JSON.stringify(details),"transactions":JSON.stringify(output)},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+          success: function(resp)
+          {
+            if(resp.gkstatus){
 
-            $('#myModal').modal('hide');
+              $('#myModal').modal('hide');
+            }
+            else {
+              $("#failure-alert").alert();
+              $("#nt").append('Cloned')
+              $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
+                $("#failure-alert").hide();
+              });
+            }
+
           }
-          else {
-            $("#failure-alert").alert();
-            $("#nt").append('Cloned')
-            $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
-              $("#failure-alert").hide();
-            });
-          }
-
-        }
-      });
-    }
-    else if (ecflag=="edit")
-    {
-
-      details.vcode=$('#vcode').val();
-      $.ajax({
-      type: "POST",
-      url: "/editvoucher",
-      global: false,
-      async: false,
-      datatype: "json",
-      data: {"vdetails":JSON.stringify(details),"transactions":JSON.stringify(output)},
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-      },
-      success: function(resp)
-      {
-        if(resp.gkstatus){
-
-          $('#myModal').modal('hide');
-        }
-        else {
-          $("#failure-alert").alert();
-          $("#nt").append('Edited')
-          $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
-
-            $("#failure-alert").hide();
-          });
-        }
-
+        });
       }
-    });
-    }
+      else if (ecflag=="edit")
+      {
+
+        details.vcode=$('#vcode').val();
+        $.ajax({
+          type: "POST",
+          url: "/editvoucher",
+          global: false,
+          async: false,
+          datatype: "json",
+          data: {"vdetails":JSON.stringify(details),"transactions":JSON.stringify(output)},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+          success: function(resp)
+          {
+            if(resp.gkstatus){
+
+              $('#myModal').modal('hide');
+            }
+            else {
+              $("#failure-alert").alert();
+              $("#nt").append('Edited')
+              $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
+
+                $("#failure-alert").hide();
+              });
+            }
+
+          }
+        });
+      }
     }
 
   });
