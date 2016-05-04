@@ -10,8 +10,6 @@ $(document).ready(function()
     if ($("#lock").html()=="Unlock")
     {
       $("#edit").attr("disabled", "disabled");
-      $("#clone").attr("disabled", "disabled");
-
     }
 
   }
@@ -98,8 +96,8 @@ $(document).ready(function()
     });
 
   });
-var ecflag;
-var navflag;
+  var ecflag;
+  var navflag;
   $("#edit").click(function(event)
   {
     navflag=true;
@@ -327,15 +325,15 @@ var navflag;
     }
   });
 
-$(document).off("keypress",".dramt").on("keypress",".dramt",function(event)
-{
-$('.dramt').numeric({ negative: false });
-});
+  $(document).off("keypress",".dramt").on("keypress",".dramt",function(event)
+  {
+    $('.dramt').numeric({ negative: false });
+  });
 
-$(document).off("keypress",".cramt").on("keypress",".cramt",function(event)
-{
-$('.cramt').numeric({ negative: false });
-});
+  $(document).off("keypress",".cramt").on("keypress",".cramt",function(event)
+  {
+    $('.cramt').numeric({ negative: false });
+  });
 
 
   $(document).off("keyup",".dramt").on("keyup",".dramt",function(event)
@@ -499,7 +497,7 @@ $('.cramt').numeric({ negative: false });
       lastindex=null;
     }
   });
-$(document).off("keyup",".cramt").on("keyup",".cramt",function(event)
+  $(document).off("keyup",".cramt").on("keyup",".cramt",function(event)
   {
 
     if(event.which==13)
@@ -757,66 +755,66 @@ $(document).off("keyup",".cramt").on("keyup",".cramt",function(event)
       {
 
         $.ajax({
-        type: "POST",
-        url: "/addvoucher",
-        global: false,
-        async: false,
-        datatype: "json",
-        data: {"vdetails":JSON.stringify(details),"transactions":JSON.stringify(output)},
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-        success: function(resp)
-        {
-          if(resp.gkstatus){
+          type: "POST",
+          url: "/addvoucher",
+          global: false,
+          async: false,
+          datatype: "json",
+          data: {"vdetails":JSON.stringify(details),"transactions":JSON.stringify(output)},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+          success: function(resp)
+          {
+            if(resp.gkstatus){
 
-            $('#myModal').modal('hide');
+              $('#myModal').modal('hide');
+            }
+            else {
+              $("#failure-alert").alert();
+              $("#nt").append('Cloned')
+              $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
+                $("#failure-alert").hide();
+              });
+            }
+
           }
-          else {
-            $("#failure-alert").alert();
-            $("#nt").append('Cloned')
-            $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
-              $("#failure-alert").hide();
-            });
-          }
-
-        }
-      });
-    }
-    else if (ecflag=="edit")
-    {
-
-      details.vcode=$('#vcode').val();
-      $.ajax({
-      type: "POST",
-      url: "/editvoucher",
-      global: false,
-      async: false,
-      datatype: "json",
-      data: {"vdetails":JSON.stringify(details),"transactions":JSON.stringify(output)},
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-      },
-      success: function(resp)
-      {
-        if(resp.gkstatus){
-
-          $('#myModal').modal('hide');
-        }
-        else {
-          $("#failure-alert").alert();
-          $("#nt").append('Edited')
-          $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
-
-            $("#failure-alert").hide();
-          });
-        }
-
+        });
       }
-    });
-    }
+      else if (ecflag=="edit")
+      {
+
+        details.vcode=$('#vcode').val();
+        $.ajax({
+          type: "POST",
+          url: "/editvoucher",
+          global: false,
+          async: false,
+          datatype: "json",
+          data: {"vdetails":JSON.stringify(details),"transactions":JSON.stringify(output)},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+          success: function(resp)
+          {
+            if(resp.gkstatus){
+
+              $('#myModal').modal('hide');
+            }
+            else {
+              $("#failure-alert").alert();
+              $("#nt").append('Edited')
+              $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
+
+                $("#failure-alert").hide();
+              });
+            }
+
+          }
+        });
+      }
     }
 
   });
