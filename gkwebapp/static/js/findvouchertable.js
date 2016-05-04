@@ -20,7 +20,7 @@ $(document).ready(function() {
   var previndex;
 
 
-  $(document).off('keyup' ,'.vno').on('keyup' ,'.vno',function(event) {
+  $(document).off('keydown' ,'.vno').on('keydown' ,'.vno',function(event) {
     curindex = $(this).closest('tr').index();
     nextindex = curindex+1;
     previndex = curindex-1;
@@ -152,7 +152,7 @@ $(document).ready(function() {
           $('#myModal').modal('show');
           $('#myModal').on('shown.bs.modal', function (e)
           {
-            $("#edit").focus();
+            $(".btnfocus:enabled:first").focus();
 
           });
           $('#myModal').on('hidden.bs.modal', function (e)
