@@ -231,6 +231,9 @@ overridden elsewhere.
           <div class="col-xs-3">
             <select class="form-control input-sm" id="project">
               <option value="">None</option>
+              {% for project in projects %}
+                  <option value="{{project['projectcode']}}">{{project['projectname']}}</option>
+              {% endfor %}}
             </select>
           </div>
           <div class="col-xs-1 col-xs-offset-1">
