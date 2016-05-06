@@ -10,15 +10,17 @@ def showvoucher(request):
     header={"gktoken":request.headers["gktoken"]}
     if type=="contra" or type=="journal":
         result = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s"%(type), headers=header)
+        projects = requests.get("http://127.0.0.1:6543/projects", headers=header)
         if result.json()["gkstatus"]==0:
-            return render_to_response("gkwebapp:templates/addvoucher.jinja2",{"draccounts":result.json()["gkresult"],"craccounts":result.json()["gkresult"],"vtype":type},request=request)
+            return render_to_response("gkwebapp:templates/addvoucher.jinja2",{"draccounts":result.json()["gkresult"],"craccounts":result.json()["gkresult"],"projects":projects.json()["gkresult"],"vtype":type},request=request)
         else:
             return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)
     else:
         drresult = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s&side=Dr"%(type), headers=header)
         crresult = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s&side=Cr"%(type), headers=header)
+        projects = requests.get("http://127.0.0.1:6543/projects", headers=header)
         if drresult.json()["gkstatus"]==0 and crresult.json()["gkstatus"]==0:
-            return render_to_response("gkwebapp:templates/addvoucher.jinja2",{"draccounts":drresult.json()["gkresult"],"craccounts":crresult.json()["gkresult"],"vtype":type},request=request)
+            return render_to_response("gkwebapp:templates/addvoucher.jinja2",{"draccounts":drresult.json()["gkresult"],"craccounts":crresult.json()["gkresult"],"projects":projects.json()["gkresult"],"vtype":type},request=request)
         else:
             return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)
 
@@ -47,7 +49,7 @@ def addvoucher(request):
     crs={}
     drs={}
     if vdetails["projectcode"] !="":
-        gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails[projectcode])}
+        gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails["projectcode"])}
     else:
         gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"]}
     for row in rowdetails:
