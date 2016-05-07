@@ -1,9 +1,17 @@
 $(document).ready(function()
 {
-$("#username").focus();
-$('input:not(:hidden),select,button').bind("keydown", function(e) {
-  var n = $("input:not(:hidden),select,button").length;
-  var f = $('input:not(:hidden),select,button');
+  $("#username").focus();
+  $("#loginform").validate({
+    rules: {
+  username: "required",
+  confirmpassword: {
+    equalTo: "#password"
+  }
+  }
+});
+$('input:not(:hidden),select').bind("keydown", function(e) {
+  var n = $("input:not(:hidden),select").length;
+  var f = $('input:not(:hidden),select');
   if (e.which == 13)
   {
     var nextIndex = f.index(this) + 1;
@@ -13,9 +21,9 @@ $('input:not(:hidden),select,button').bind("keydown", function(e) {
 
     }
   });
-  $('input:not(:hidden),select,button').bind("keydown", function(e) {
-    var n = $("input:not(:hidden),select,button").length;
-    var f = $('input:not(:hidden),select,button');
+  $('input:not(:hidden),select').bind("keydown", function(e) {
+    var n = $("input:not(:hidden),select").length;
+    var f = $('input:not(:hidden),select');
     if (e.which == 38)
     {
       var prevIndex = f.index(this) - 1;
@@ -25,9 +33,20 @@ $('input:not(:hidden),select,button').bind("keydown", function(e) {
 
       }
     });
+
+$("#securityanswer").focus(function(){
+  $('input').bind("keydown", function(e) {
+    if (e.which == 13)
+    {
+      $(".btn").click();
+    }
+    });
+});
 $("#loginform").submit(function(e)
 {
-
+  var isvalidate=$("#adduser").valid();
+  if(isvalidate)
+      {
     $.ajax(
     {
     //alert("starting ajax");
@@ -50,6 +69,8 @@ $("#loginform").submit(function(e)
     );
 
     e.preventDefault();
+}
+e.preventDefault();
 }
 );
 }

@@ -22,6 +22,39 @@ document.getElementById("help").click();
 shortcut.add("f2",function() {
 document.getElementById("addaccounttb").click();
 });
+shortcut.add("f4",function() {
+document.getElementById("contratb").click();
+});
+shortcut.add("f5",function() {
+document.getElementById("paymenttb").click();
+});
+shortcut.add("f6",function() {
+document.getElementById("receipttb").click();
+});
+shortcut.add("f7",function() {
+document.getElementById("journaltb").click();
+});
+shortcut.add("f8",function() {
+document.getElementById("salestb").click();
+});
+shortcut.add("f9",function() {
+document.getElementById("purchasetb").click();
+});
+shortcut.add("Ctrl+F2",function() {
+document.getElementById("creditnotetb").click();
+});
+shortcut.add("Ctrl+F3",function() {
+document.getElementById("debitnotetb").click();
+});
+shortcut.add("Ctrl+F4",function() {
+document.getElementById("salesreturntb").click();
+});
+shortcut.add("Ctrl+F5",function() {
+document.getElementById("purchasereturntb").click();
+});
+shortcut.add("Ctrl+F",function() {
+document.getElementById("findvouchertb").click();
+});
 $(document).ready(function(){
   $('#editaccount').click(function (e) {
 
@@ -105,5 +138,35 @@ $(document).ready(function(){
   });
   $('#findvouchertb').click(function(){
     $('#fevoucher').click();
+  });
+  $('#contratb').click(function(){
+    $('#showcontra').click();
+  });
+  $('#paymenttb').click(function(){
+    $('#showpayment').click();
+  });
+  $('#receipttb').click(function(){
+    $('#showreceipt').click();
+  });
+  $('#journaltb').click(function(){
+    $('#showjournal').click();
+  });
+  $('#salestb').click(function(){
+    $('#showsales').click();
+  });
+  $('#purchasetb').click(function(){
+    $('#showpurchase').click();
+  });
+  $('#creditnotetb').click(function(){
+    $('#showcreditnote').click();
+  });
+  $('#debitnotetb').click(function(){
+    $('#showdebitnote').click();
+  });
+  $('#salesreturntb').click(function(){
+    $('#showsalesreturn').click();
+  });
+  $('#purchasereturntb').click(function(){
+    $('#showpurchasereturn').click();
   });
 });
