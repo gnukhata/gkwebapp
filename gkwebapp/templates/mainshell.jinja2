@@ -47,7 +47,7 @@
               <li><a data-toggle="tab" id="showjournal" href="">Journal</a></li>
               <li><a data-toggle="tab" id="showsales" href="">Sales</a></li>
               <li><a data-toggle="tab" id="showpurchase" href="">Purchase</a></li>
-              <li><a data-toggle="tab" id="showcreditnote" href="">Credit Note</</a></li>
+              <li><a data-toggle="tab" id="showcreditnote" href="">Credit Note</a></li>
               <li><a data-toggle="tab" id="showdebitnote" href="">Debit Note</a></li>
               <li><a data-toggle="tab" id="showsalesreturn" href="">Sales Return</a></li>
               <li><a data-toggle="tab" id="showpurchasereturn" href="">Purchase Return</a></li>
@@ -120,13 +120,11 @@
       </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-<div class="container-fluid" style="margin-top: 52px;">
-  <nav class="navbar-xs navbar-default">
-    <div class="container-fluid" style="color: #444444; padding-top: 5px;">
-      <p style="float: left;" id="orgdata"></p>
-      <p style="float: right;" id="yeardata"></p>
-    </div>
-  </nav>
+<div class="container-fluid">
+  <ul class="shadow" style="list-style-type: none; margin-top: 52px; padding: 0; overflow: hidden; background-color: rgb(248,248,248); height: 20px;">
+    <li style="float: left;"><a style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration:, none;" id="orgdata" href=""></a></li>
+    <li style="float: right;"><a style="margin-right: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="yeardata" href=""></a></li>
+  <ul>
 </div>
 <div id="info" style="margin-top: 10px; margin-bottom: 10px;" class="container-fluid tab-pane fade in active"></div>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>

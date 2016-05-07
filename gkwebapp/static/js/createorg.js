@@ -19,7 +19,7 @@ $("#orgname").focusout(function(){
   forname = $("#orgname").val();
 });
 $('input:text:first,select').focus();
-
+$('.vdate').autotab('number');
 $('input:text,select').bind("keydown", function(e) {
   var n = $("input:text,select").length;
   var f = $('input:text,select');
@@ -34,9 +34,9 @@ $('input:text,select').bind("keydown", function(e) {
     }
   });
 
-  $('input:text,select,button').bind("keydown", function(e) {
-    var n = $("input:text,select,button").length;
-    var f = $('input:text,select,button');
+  $('input:text,select').bind("keydown", function(e) {
+    var n = $("input:text,select").length;
+    var f = $('input:text,select');
     var s1 = $("#orgcase option:selected").index();
     var s2 = $("#orgtype option:selected").index();
     if ((e.which == 38 && sel1 == 1 && s1 == 0) || (e.which == 38 && sel2 == 1 && s2 == 0) || (e.which == 38 && (sel1 == 0 && sel2==0)))
@@ -47,7 +47,15 @@ $('input:text,select').bind("keydown", function(e) {
         f[prevIndex].focus();}
     }
     });
+    $("#toyear").focus(function(){
+      $('input:text,select').bind("keydown", function(e) {
+        if (e.which == 13)
+        {
+          $("#btnsubmit").click();
+        }
+        });
 
+    });
 
 $("#orgcase").bind("change keyup", function(e){
   var ocase = $("#orgcase option:selected").val();
@@ -89,7 +97,6 @@ $("#fromyear").blur(function(){
     $("#today").val(endday);
     $("#tomonth").val(endmonth);
     $("#toyear").val(endyear);
-    $("#btnsubmit").focus();
     });
 
 $("#btnsubmit").click(function(event){

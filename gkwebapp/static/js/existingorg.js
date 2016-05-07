@@ -1,16 +1,24 @@
 $(document).ready(function()
 {
-  var inselect=0;
-  $("#callLogin").hide();
-  $("#finalyears").focus(function(){
-    inselect = 1;
-    if($("#finalyears").val())
+  $("#org-name").focus(function(){
+    $('input:text,select').bind("keydown", function(e) {
+    if (e.which == 13)
     {
-      $("#callLogin").show();
+      $("#finalyears").focus();
     }
   });
-  $("#finalyears").blur(function(){
-    inselect = 0;
+  });
+  $("#finalyears").focus(function(){
+    $('input:text,select').bind("keydown", function(e) {
+    if (e.which == 38)
+    {
+      $("#org-name").focus();
+    }
+    if (e.which == 13)
+    {
+      $("#callLogin").click();
+    }
+  });
   });
   $("#org-name").bind("change keyup", function(){
     var org = $("#org-name option:selected").val();
@@ -32,33 +40,6 @@ $(document).ready(function()
 
     });
   });
-
-  $('input:text,select,button').bind("keydown", function(e) {
-    var n = $("input:text,select,button").length;
-    var f = $('input:text,select,button');
-    if (e.which == 13)
-    {
-      var nextIndex = f.index(this) + 1;
-      if(nextIndex < n){
-        e.preventDefault();
-        f[nextIndex].focus();}
-
-      }
-    });
-
-  $('input:text,select,button').bind("keydown", function(e) {
-    var n = $("input:text,select,button").length;
-    var f = $('input:text,select,button');
-    var s = $("#finalyears option:selected").index();
-    if ((e.which == 38 && inselect == 1 && s == 0) || (e.which == 38 && inselect == 0))
-    {
-      var prevIndex = f.index(this) - 1;
-      if(prevIndex < n){
-        e.preventDefault();
-        f[prevIndex].focus();}
-    }
-    });
-
   $("#callLogin").click(function(event){
     event.preventDefault();
 

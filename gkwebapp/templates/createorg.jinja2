@@ -51,24 +51,24 @@
                 <div class="form-inline">
 
                   <label class="sr-only" for="fromday">Enter From Day</label>
-                  <input type="text" id="fromday" name="fromday" class="form-control" style="width:60px"  placeholder="DD" accesskey="f" >
+                  <input type="text" id="fromday" name="fromday" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" accesskey="f" >
 
                   <label class="sr-only" for="frommonth">Enter From Month</label>
-                  <input type="text" id="frommonth" name="frommonth" class="form-control" style="width:60px"  placeholder="MM" >
+                  <input type="text" id="frommonth" name="frommonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" >
 
                   <label class="sr-only" for="fromyear">Enter From Year</label>
-                  <input type="text" id="fromyear" name="fromyear" class="form-control" style="width:65px"  placeholder="YYYY"  >
+                  <input type="text" id="fromyear" name="fromyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
 
                   <label>--To--</label>
 
                   <label class="sr-only" for="today">Enter To Day</label>
-                  <input type="text" id="today" name="day" class="form-control" style="width:60px"  placeholder="DD" >
+                  <input type="text" id="today" name="day" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" >
 
                   <label class="sr-only" for="tomonth">Enter To Month</label>
-                  <input type="text" id="tomonth" name="tomonth" class="form-control" style="width:60px"  placeholder="MM"  >
+                  <input type="text" id="tomonth" name="tomonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM"  >
 
                   <label class="sr-only" for="toyear">Enter To Year</label>
-                  <input type="text" id="toyear" name="toyear" class="form-control" style="width:65px"  placeholder="YYYY"  >
+                  <input type="text" id="toyear" name="toyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
 
 
                 </div>
@@ -90,6 +90,7 @@
 
   <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
   <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.autotab.min.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/createorg.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/date.js')}}"></script>
 
