@@ -564,7 +564,7 @@ $(document).ready(function() {
       $("#vtable tbody tr:first input:enabled").focus();
       return false;
     }
-    // Check whether an account is repeated, and it it does then set the allow flag to false.
+    // Check whether an account is repeated, and if it does then set the allow flag to false.
     $("#vtable tbody tr").each(function() {
       var accountcode = $(".accs", this).val();
       var ccount=0;
