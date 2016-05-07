@@ -33,6 +33,9 @@ Here is a list of classes that we have used.
 4. vdate for the date input boxes.
 Events which have a selector which starts with a . are associated to a class, For eg. $(".crdr")
 Events which have a selector which starts with a # are associated to an id, For eg. $("#vno")
+
+Events are attached to dynamically created elements using document on method.
+Document off is used to remove an already attached event to an element, so as to make sure that an event is fired only once.
 */
 $(document).ready(function() {
   $("#vno").focus();
