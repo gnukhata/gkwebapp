@@ -52,7 +52,7 @@
       height: 39px;
   }
   table.table-fixedheader>thead {
-    width: 99.4%
+    width: 99%
   }
   /*
   For browsers that support it (webkit), we set the background color of
@@ -92,12 +92,14 @@
       </div>
       <table class="table col-xs-5 table-hover table-striped table-fixedheader">
         <thead>
-          <th class="col-xs-9">
+        <tr class="info">
+          <th class="col-xs-9 ">
             Project Name
           </th>
           <th class="col-xs-3 rightJustified">
             Sanctioned Amount
           </th>
+        </tr>
         </thead>
         <tbody>
           {% for prjs in projects %}
@@ -125,5 +127,6 @@
       <button type="submit" class="btn btn-success">Add</button>
     </form>
     </div>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/project.js')}}"></script>
   </body>
 </html>

@@ -1,29 +1,23 @@
 $(document).ready(function() {
+  $("#prjname").focus();
   $("#prjform").submit(function(e)
   {
     $.ajax(
       {
         type: "POST",
-        url: "/addaccount",
+        url: "/addproject",
         global: false,
         async: false,
         datatype: "json",
-        data: $("#accountform").serialize(),
+        data: $("#prjform").serialize(),
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
         },
         success: function(resp)
         {
-          if(resp["gkstatus"])
-          {
-          alert("Account Created Successfully");
-          $("#reset").click();
-          }
-          else
-          {
-            alert("Account Could Not Be Created");
-          }
+          alert(resp["gkstatus"]);
+          $("#project").click();
         }
 
       }

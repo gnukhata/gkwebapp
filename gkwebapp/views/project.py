@@ -12,3 +12,12 @@ def showproject(request):
         return render_to_response("gkwebapp:templates/project.jinja2",{"projects":projects.json()["gkresult"]},request=request)
     else:
         return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)
+
+
+@view_config(route_name="addproject", renderer="json")
+def addproject(request):
+    header={"gktoken":request.headers["gktoken"]}
+    gkdata = {"projectname":request.params["projectname"],"sanctionedamount":float(request.params["sanctionedamount"])}
+    print gkdata
+    result = requests.post("http://127.0.0.1:6543/projects",data=json.dumps(gkdata), headers=header)
+    return {"gkstatus":result.json()["gkstatus"]}
