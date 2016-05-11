@@ -33,6 +33,7 @@ def main(global_config, **settings):
     config.add_route('showvoucher', '/showvoucher')
     config.add_route('showproject', '/showproject')
     config.add_route('addproject', '/addproject')
+    config.add_route('delproject', '/delproject')
     config.add_route('lockvoucher', '/lockvoucher')
     config.add_route('viewvoucher', '/viewvoucher')
     config.add_route('addvoucher', '/addvoucher')

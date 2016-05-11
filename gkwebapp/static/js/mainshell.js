@@ -134,7 +134,7 @@ $(document).ready(function(){
   );
   });
 
-  $('#project').click(function (e) {
+  $('#showproject').click(function (e) {
     $.ajax(
     {
 

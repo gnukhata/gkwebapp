@@ -18,6 +18,13 @@ def showproject(request):
 def addproject(request):
     header={"gktoken":request.headers["gktoken"]}
     gkdata = {"projectname":request.params["projectname"],"sanctionedamount":float(request.params["sanctionedamount"])}
-    print gkdata
     result = requests.post("http://127.0.0.1:6543/projects",data=json.dumps(gkdata), headers=header)
+    return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="delproject", renderer="json")
+def delproject(request):
+    header={"gktoken":request.headers["gktoken"]}
+    gkdata = {"projectcode":request.params["projectcode"]}
+    print gkdata
+    result = requests.delete("http://127.0.0.1:6543/projects",data=json.dumps(gkdata), headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
