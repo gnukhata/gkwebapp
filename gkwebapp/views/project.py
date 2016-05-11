@@ -25,6 +25,19 @@ def addproject(request):
 def delproject(request):
     header={"gktoken":request.headers["gktoken"]}
     gkdata = {"projectcode":request.params["projectcode"]}
-    print gkdata
     result = requests.delete("http://127.0.0.1:6543/projects",data=json.dumps(gkdata), headers=header)
+    return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="viewproject", renderer="json")
+def viewproject(request):
+    header={"gktoken":request.headers["gktoken"]}
+    code = request.params["projectcode"]
+    result = requests.get("http://127.0.0.1:6543/project/%s"%(code), headers=header)
+    return {"gkstatus":result.json()["gkstatus"],"gkdata":result.json()["gkresult"]}
+
+@view_config(route_name="editproject", renderer="json")
+def editproject(request):
+    header={"gktoken":request.headers["gktoken"]}
+    gkdata = {"projectcode":request.params["projectcode"],"projectname":request.params["projectname"],"sanctionedamount":float(request.params["sanctionedamount"])}
+    result = requests.put("http://127.0.0.1:6543/projects",data=json.dumps(gkdata), headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
