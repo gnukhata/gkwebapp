@@ -44,7 +44,7 @@ $("#securityanswer").focus(function(){
 });
 $("#loginform").submit(function(e)
 {
-  var isvalidate=$("#adduser").valid();
+  var isvalidate=$("#loginform").valid();
   if(isvalidate)
       {
     $.ajax(
