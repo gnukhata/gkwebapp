@@ -1,15 +1,17 @@
 $(document).ready(function()
 {
-  $("#org-name").focus(function(){
-    $('input:text,select').bind("keydown", function(e) {
+  $('#org-name').focus();
+  $("#org-name").keyup(function(e) {
+    e.preventDefault();
     if (e.which == 13)
     {
       $("#finalyears").focus();
+
     }
   });
-  });
-  $("#finalyears").focus(function(){
-    $('input:text,select').bind("keydown", function(e) {
+
+  $("#finalyears").keyup( function(e) {
+    e.preventDefault();
     if (e.which == 38)
     {
       $("#org-name").focus();
@@ -19,7 +21,7 @@ $(document).ready(function()
       $("#callLogin").click();
     }
   });
-  });
+
   $("#org-name").bind("change keyup", function(){
     var org = $("#org-name option:selected").val();
     var orgobj = eval('('+org+')');

@@ -34,14 +34,7 @@ $('input:not(:hidden),select').bind("keydown", function(e) {
       }
     });
 
-$("#securityanswer").focus(function(){
-  $('input').bind("keydown", function(e) {
-    if (e.which == 13)
-    {
-      $(".btn").click();
-    }
-    });
-});
+
 $("#loginform").submit(function(e)
 {
   var isvalidate=$("#loginform").valid();
