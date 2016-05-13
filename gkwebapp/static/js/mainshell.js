@@ -133,6 +133,28 @@ $(document).ready(function(){
     }
   );
   });
+
+  $('#showproject').click(function (e) {
+    $.ajax(
+    {
+
+    type: "POST",
+    url: "/showproject",
+    global: false,
+    async: false,
+    datatype: "text/html",
+    beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+    success: function(resp)
+    {
+      $("#info").html(resp);
+    }
+    }
+  );
+  });
+
   $('#addaccounttb').click(function(){
     $('#addaccount').click();
   });

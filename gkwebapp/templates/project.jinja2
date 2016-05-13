@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>GNUKhata | Projects</title>
+    <style media="screen">
+    .rightJustified {
+      text-align: right;
+    }
+    /*
+  Force table width to 100%
+  */
+   table.table-fixedheader {
+      width: 100%;
+  }
+  /*
+  Set table elements to block mode.  (Normally they are inline).
+  This allows a responsive table, such as one where columns can be stacked
+  if the display is narrow.
+  */
+   table.table-fixedheader, table.table-fixedheader>thead, table.table-fixedheader>tbody, table.table-fixedheader>tfoot, table.table-fixedheader>thead>tr, table.table-fixedheader>tbody>tr, table.table-fixedheader>tfoot>tr, table.table-fixedheader>thead>tr>th, table.table-fixedheader>tbody>tr>td, table.table-fixedheader>tfoot>tr>td {
+      display: block;
+  }
+  table.table-fixedheader>thead>tr:after, table.table-fixedheader>tbody>tr:after, table.table-fixedheader>tfoot>tr:after  {
+      content:' ';
+      display: block;
+      visibility: hidden;
+      clear: both;
+  }
+  /*
+  When scrolling the table, actually it is only the tbody portion of the
+  table that scrolls (not the entire table: we want the thead to remain
+  fixed).  We must specify an explicit height for the tbody.  We include
+  100px as a default, but it can be overridden elsewhere.
+
+  Also, we force the scrollbar to always be displayed so that the usable
+  width for the table contents doesn't change (such as becoming narrower
+  when a scrollbar is visible and wider when it is not).
+  */
+   table.table-fixedheader>tbody {
+      overflow-y: scroll;
+      height: 50%;
+
+  }
+  /*
+  We really don't want to scroll the thead contents, but we want to force
+  a scrollbar to be displayed anyway so that the usable width of the thead
+  will exactly match the tbody.
+  */
+   table.table-fixedheader>thead, table.table-fixedheader>tfoot {
+      overflow-y: scroll;
+      height: 39px;
+  }
+  table.table-fixedheader>thead {
+    width: 98.8%
+  }
+  /*
+  For browsers that support it (webkit), we set the background color of
+  the unneeded scrollbar in the thead to make it invisible.  (Setting
+  visiblity: hidden defeats the purpose, as this alters the usable width
+  of the thead.)
+  */
+   table.table-fixedheader>thead::-webkit-scrollbar {
+      background-color: inherit;
+  }
+
+
+  table.table-fixedheader>thead>tr>th:after, table.table-fixedheader>tbody>tr>td:after, table.table-fixedheader>tfoot>tr>td:after {
+      content:' ';
+      display: table-cell;
+      visibility: hidden;
+      clear: both;
+  }
+
+  /*
+  We want to set <th> and <td> elements to float left.
+  We also must explicitly set the width for each column (both for the <th>
+  and the <td>).  We set to 20% here a default placeholder, but it can be
+  overridden elsewhere.
+  */
+
+   table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.table-fixedheader>tfoot tr td {
+      float: left;
+
+  }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="alert alert-success" id="success-alert" hidden>
+        <a href="#" class="close" aria-label="close">&times;</a>
+        Project saved.
+      </div>
+      <div class="alert alert-danger" id="failure-alert" hidden>
+        <a href="#" class="close" aria-label="close">&times;</a>
+        Project could not be saved.
+      </div>
+      <div class="alert alert-danger" id="blank-alert" hidden>
+        <a href="#" class="close" aria-label="close">&times;</a>
+        Please enter project name!
+      </div>
+      <div class="alert alert-danger" id="duplicate-alert" hidden>
+        <a href="#" class="close" aria-label="close">&times;</a>
+        Project already exists!
+      </div>
+      <div class="alert alert-danger" id="transaction-alert" hidden>
+        <a href="#" class="close" aria-label="close">&times;</a>
+        Project cannot be deleted!
+        Transactions might be remaining for this project.
+      </div>
+      <div class="col-md-4">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">Add Project</h3>
+          </div>
+          <div class="panel-body">
+            <form class="form-horizontal" id="prjform">
+              <label for="prjname">Project name: </label>
+              <input type="text" name="projectname" class="form-control" id="prjname">
+              <br>
+              <label for="prjamount">Sanctioned Amount: </label>
+              <input class="form-control rightJustified" id="prjamount" name="sanctionedamount" placeholder="0.00">
+              <br>
+            <button type="submit" class="btn btn-success">Add</button>
+          </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-7 col-md-offset-1">
+        <div id="prjlist" style="text-align:center" class="well well-sm">
+          <label>Project List</label>
+        </div>
+        <table id="prjtable" class="table col-xs-5 table-condensed table-fixedheader">
+          <thead>
+            <tr class="info">
+              <th class="col-xs-7 ">
+                Project Name
+              </th>
+              <th class="col-xs-3 rightJustified">
+                Sanctioned Amount
+              </th>
+              <th class="col-xs-1">
+                Remove
+              </th>
+              <th class="col-xs-1">
+                Edit
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for prjs in projects %}
+            <tr value="{{prjs['projectcode']}}">
+              <td class="col-xs-7">
+                {{prjs['projectname']}}
+              </td>
+              <td class="col-xs-3 rightJustified">
+                {{prjs['sanctionedamount']}}
+              </td>
+              <td class="col-xs-1">
+                <a href="#" class="delprj"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+              </td>
+              <td class="col-xs-1">
+                <a href="#" class="editprj"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+
+
+    </div>
+    <div id="m_confirmdel" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            
+            <h4 class="modal-title">Delete?</h4>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id ="m_cancel" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" id="prjdel" data-dismiss="modal" class="btn btn-primary">Delete</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div id="m_editprj" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+
+            <h4 class="modal-title">Edit Project</h4>
+          </div>
+          <form class="form-horizontal" id="m_editform">
+          <div class="modal-body">
+              <label for="m_prjname">Project name: </label>
+              <input type="text" class="form-control" id="m_prjname">
+              <br>
+              <label for="m_prjamount">Sanctioned Amount: </label>
+              <input class="form-control rightJustified" id="m_prjamount" placeholder="0.00">
+          </div>
+          <div class="modal-footer">
+            <button type="submit" id="m_edit" data-dismiss="modal" data-backdrop="false" class="btn btn-success">Save</button>
+          </div>
+        </form>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/project.js')}}"></script>
+  </body>
+</html>
