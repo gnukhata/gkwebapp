@@ -17,7 +17,7 @@ def showproject(request):
 @view_config(route_name="addproject", renderer="json")
 def addproject(request):
     header={"gktoken":request.headers["gktoken"]}
-    gkdata = {"projectname":request.params["projectname"],"sanctionedamount":float(request.params["sanctionedamount"])}
+    gkdata = {"projectname":request.params["projectname"].strip(),"sanctionedamount":float(request.params["sanctionedamount"])}
     result = requests.post("http://127.0.0.1:6543/projects",data=json.dumps(gkdata), headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
 
@@ -38,6 +38,6 @@ def viewproject(request):
 @view_config(route_name="editproject", renderer="json")
 def editproject(request):
     header={"gktoken":request.headers["gktoken"]}
-    gkdata = {"projectcode":request.params["projectcode"],"projectname":request.params["projectname"],"sanctionedamount":float(request.params["sanctionedamount"])}
+    gkdata = {"projectcode":request.params["projectcode"],"projectname":request.params["projectname"].strip(),"sanctionedamount":float(request.params["sanctionedamount"])}
     result = requests.put("http://127.0.0.1:6543/projects",data=json.dumps(gkdata), headers=header)
     return {"gkstatus":result.json()["gkstatus"]}

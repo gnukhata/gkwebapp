@@ -1,5 +1,7 @@
 $(document).ready(function() {
   $("#prjname").focus();
+  $("#prjamount").numeric({ negative: false });
+  $("#m_prjamount").numeric({ negative: false });
   if($("#prjtable tbody tr").length==0){
     $("#prjtable").hide();
     $("#prjlist").hide();
@@ -14,9 +16,21 @@ $(document).ready(function() {
 
   });
 
+  $("#prjname").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#prjamount").focus();
+    }
+  });
+  $("#m_prjname").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#m_prjamount").focus();
+    }
+  });
+
   $(document).off("click",".delprj").on("click", ".delprj", function() {
     var prjcode = $(this).closest('tr').attr('value');
-    var closesttr = $(this).closest('tr')
     $('#m_confirmdel').modal('show').one('click', '#prjdel', function (e) {
       $.ajax(
         {
@@ -33,9 +47,8 @@ $(document).ready(function() {
           success: function(resp)
           {
             if (resp["gkstatus"]==0) {
-              closesttr.fadeOut(200, function(){
-                closesttr.remove();   //closest method gives the closest element specified
-              });
+              $("#showproject").click();
+              $('.modal-backdrop').remove();
             }
             else if (resp["gkstatus"]==5) {
               $("#transaction-alert").alert();
@@ -123,6 +136,7 @@ $(document).ready(function() {
         $("#blank-alert").hide();
       });
       $("#prjname").focus();
+      return false;
     }
     if ($.trim($("#prjamount").val())=="") {
       $("#prjamount").val("0.00");
