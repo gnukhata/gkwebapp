@@ -41,7 +41,7 @@
   */
   table.table-fixedheader>tbody {
     overflow-y: scroll;
-    height: 40%;
+    height: 45%;
 
   }
   /*
@@ -54,7 +54,7 @@
     height: 39px;
   }
   table.table-fixedheader>tfoot {
-    width: 99.4%
+    width: 99%
   }
   /*
   For browsers that support it (webkit), we set the background color of
@@ -121,24 +121,24 @@
       <a href="#" class="close" aria-label="close">&times;</a>
       Please enter voucher date in proper format!
     </div>
-    <div class="panel panel-info">
-      <div class="panel-body">
+
+
         <form id="voucher" name="voucher">
-          <div class="form-inline">
-            <div class="well well-sm">
+          <div class="form-inline well well-sm" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+
               <div class="form-group">
                 <label for="vno">Voucher No:</label>
-                <input type="text" class="form-control" name="vno" id="vno" size="10">
+                <input type="text" class="form-control input-sm" name="vno" id="vno" size="10">
               </div>
               <div class="pull-right form-group">
                 <label for="vdate">Date:</label>
-                <input type="text" class="vdate form-control" id="vdate" value="" size="2" maxlength="2" placeholder="DD">
-                <input type="text" id="vmonth" class="vdate form-control" value="" size="2" maxlength="2" placeholder="MM">
-                <input type="text" id="vyear" class="vdate form-control" value="" size="4" maxlength="4" placeholder="YYYY">
+                <input type="text" class="vdate form-control input-sm" id="vdate" value="" size="2" maxlength="2" placeholder="DD">
+                <input type="text" id="vmonth" class="vdate form-control input-sm" value="" size="2" maxlength="2" placeholder="MM">
+                <input type="text" id="vyear" class="vdate form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY">
               </div>
-            </div>
+
           </div>
-          <div class="panel panel-info flow">
+          <div class="panel panel-info flow" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
             <div class="table-responsive">
               <table id="vtable" class="table table-condensed table-fixedheader">
                 <thead>
@@ -229,10 +229,10 @@
               </table>
             </div>
           </div>
-          <div class="col-xs-1">
+          <div class="form-inline">
+            <div class="form-group">
             <label for="project">Project:</label>
-          </div>
-          <div class="col-xs-3">
+
             <select class="form-control input-sm" id="project">
               <option value="">None</option>
               {% for project in projects %}
@@ -240,17 +240,16 @@
               {% endfor %}}
             </select>
           </div>
-          <div class="col-xs-1 col-xs-offset-1">
+          <div class="form-group pull-right">
             <label for="narration">Narration:</label>
-          </div>
-          <div class="pull-right">
             <textarea class="form-control" name="narration" id="narration" rows="1" cols="60"></textarea>
+          </div>
           </div>
           <input type="hidden" id="vtype" name="vtype" value="{{vtype}}">
 
-        </div>
+
       </form>
-      <div class="panel-footer">
+
         <button type="button" id="save" name="submit" class="btn btn-success">
           Save
         </button>
@@ -261,13 +260,13 @@
           Add Account
         </button>
 
-      </div>
-    </div>
+
+
   </div>
   <div id="viewacc">
 
   </div>
-  
+
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addvoucher.js')}}"></script>
 </body>
 </html>
