@@ -1,6 +1,5 @@
 $(document).ready(function()
 {
-  $('#org-name').focus();
   $("#org-name").keyup(function(e) {
     e.preventDefault();
     if (e.which == 13)
@@ -12,7 +11,8 @@ $(document).ready(function()
 
   $("#finalyears").keyup( function(e) {
     e.preventDefault();
-    if (e.which == 38)
+    var s1 = $("#finalyears option:selected").index();
+    if (e.which == 38 && s1 == 0)
     {
       $("#org-name").focus();
     }

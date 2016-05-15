@@ -22,7 +22,7 @@ $("input,select").keydown(function(e) {
       e.preventDefault();
       f[nextIndex].focus();}
   }
-  if (e.which == 38 && ((inselect == 1 && s1 == 0) || inselect == 0))
+  if (e.which == 38 && ((inselect == 1 && s1 == 1) || inselect == 0))
   {
     var prevIndex = f.index(this) - 1;
     if(prevIndex < n){
