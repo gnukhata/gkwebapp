@@ -9,7 +9,7 @@ $(document).ready(function()
     }
   });
 
-  $("#finalyears").keyup( function(e) {
+  $("#finalyears").keydown( function(e) {
     e.preventDefault();
     var s1 = $("#finalyears option:selected").index();
     if (e.which == 38 && s1 == 0)
