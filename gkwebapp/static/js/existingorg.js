@@ -46,7 +46,7 @@ $(document).ready(function()
     event.preventDefault();
 
     var orgcode = $("#finalyears option:selected").val();
-          $("#selectorg").load("/login?orgcode="+ orgcode );
+          $("#selectorg").load("/login?orgcode="+ orgcode, setTimeout( function() { $("#username").focus(); }, 500 ));
 
     var financialyears = $("#finalyears option:selected").html();
     var org = $("#org-name option:selected").val();
