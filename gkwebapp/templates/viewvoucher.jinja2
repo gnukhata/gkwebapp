@@ -129,21 +129,23 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
             Please enter voucher date in proper format!
           </div>
 
-          <div class="panel panel-info">
+
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <div class="panel-body" id="vvc">
+
               <form id="viewvoucher" name="voucher" class="" action="" method="get">
+                <div class="form-inline">
                 <div class="well well-sm" >
                   <label for="vno">Voucher No:</label>
-                  <input type="text" name="vno" id="vno" size="10" value="{{voucher["vouchernumber"]}}">
-                  <div class="pull-right">
+                  <input type="text" name="vno" class=" form-control input-sm" id="vno" size="10" value="{{voucher["vouchernumber"]}}">
+                  <div class="pull-right form-group">
                     <label for="vdate">Date:</label>
-                    <input type="text" class="vdate" id="vdate" value="{{voucher['voucherdate'][:2]}}" size="2" maxlength="2" placeholder="DD" >
-                    <input type="text" id="vmonth" class="vdate" value="{{voucher['voucherdate'][3:5]}}" size="2" maxlength="2" placeholder="MM">
-                    <input type="text" id="vyear" class="vdate" value="{{voucher['voucherdate'][6:]}}" size="4" maxlength="4" placeholder="YYYY">
+                    <input type="text" class="vdate form-control input-sm" id="vdate" value="" size="2" maxlength="2" placeholder="DD">
+                    <input type="text" id="vmonth" class="vdate form-control input-sm" value="" size="2" maxlength="2" placeholder="MM">
+                    <input type="text" id="vyear" class="vdate form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY">
                   </div>
                 </div>
-                <div class="panel panel-info flow">
+              </div>
+
                   <div class="table-responsive" id="demovctable">
                     <table class="table table-condensed">
                       <thead>
@@ -341,7 +343,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                       </tfoot>
                     </table>
                   </div>
-                </div>
+
                 <div class="col-xs-1">
                   <label for="project">Project:</label>
                 </div>
@@ -358,21 +360,23 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                 </div>
                 <input type="hidden" id="vtype" name="vtype" value="{{vtype}}">
 
-              </div>
+
             </form>
             <input type="hidden" id="vcode" name="vcode" value="{{voucher['vouchercode']}}"></input>
-          </div>
+
 
         </div>
+        <br>
+        <br>
         <div class="modal-footer">
           {% if voucher['status'] %}
-          <button type="button" class="btn btn-warning" id="lock">Unlock</button>
+          <button type="button" class="btn btn-warning btn-sm" id="lock">Unlock</button>
           {% else %}
-          <button type="button" class="btn btn-warning" id="lock">Lock</button>
+          <button type="button" class="btn btn-warning btn-sm" id="lock">Lock</button>
           {% endif %}
-          <button type="button" class="btn btn-primary btnfocus" id="edit">Edit</button>
-          <button type="button" class="btn btn-primary btnfocus" id="clone">Clone</button>
-          <button type="submit" id="save" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-primary btnfocus btn-sm" id="edit">Edit</button>
+          <button type="button" class="btn btn-primary btnfocus btn-sm" id="clone">Clone</button>
+          <button type="submit" id="save" class="btn btn-primary btn-sm">Save</button>
         </div>
       </div>
     </div>
