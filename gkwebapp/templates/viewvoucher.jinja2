@@ -139,9 +139,9 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                   <input type="text" name="vno" class=" form-control input-sm" id="vno" size="10" value="{{voucher["vouchernumber"]}}">
                   <div class="pull-right form-group">
                     <label for="vdate">Date:</label>
-                    <input type="text" class="vdate form-control input-sm" id="vdate" value="" size="2" maxlength="2" placeholder="DD">
-                    <input type="text" id="vmonth" class="vdate form-control input-sm" value="" size="2" maxlength="2" placeholder="MM">
-                    <input type="text" id="vyear" class="vdate form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY">
+                    <input type="text" class="vdate form-control input-sm" id="vdate" value="{{voucher['voucherdate'][:2]}}" size="2" maxlength="2" placeholder="DD">
+                    <input type="text" id="vmonth" class="vdate form-control input-sm" value="{{voucher['voucherdate'][3:5]}}" size="2" maxlength="2" placeholder="MM">
+                    <input type="text" id="vyear" class="vdate form-control input-sm" value="{{voucher['voucherdate'][6:]}}" size="4" maxlength="4" placeholder="YYYY">
                   </div>
                 </div>
               </div>
