@@ -114,12 +114,12 @@ $("#reset").click(function()
 
 
 
-
-$("#delete").click(function()
+$(document).off("click","#delete").on("click", "#delete", function(event)
 {
-  var answer = confirm('Are you sure?');
-  if (answer)
+  event.preventDefault();
+  $('#m_confirmdel').modal('show').one('click', '#accdel', function (e)
   {
+
       var code = $("#editaccountname option:selected").val();
       $.ajax(
       {
@@ -136,23 +136,30 @@ $("#delete").click(function()
             },
           success: function(resp)
           {
-            if(resp["gkstatus"])
-            {
-            alert("Account Deleted Successfully");
-            $("#reset").click();
+            if (resp["gkstatus"]==0) {
+              $("#reset").click();
+              $('.modal-backdrop').remove();
+              $("#delsuccess-alert").alert();
+              $("#delsuccess-alert").fadeTo(2000, 500).slideUp(500, function(){
+                $("#delsuccess-alert").hide();
+              });
             }
-            else
-            {
-              alert("Account Could Not Be Deleted");
+            else if (resp["gkstatus"]==5) {
+              $("#transaction-alert").alert();
+              $("#transaction-alert").fadeTo(2000, 500).slideUp(500, function(){
+                $("#transaction-alert").hide();
+              });
+              $("#editaccountname").focus();
             }
+
           }
       }
       );
-    }
-    else
-    {
-      $("#editaccountname").focus();
-    }
+
+    });
+    $('#m_confirmdel').on('shown.bs.modal', function(event) {
+      $("#m_cancel").focus();
+    });
 }
 );
 
