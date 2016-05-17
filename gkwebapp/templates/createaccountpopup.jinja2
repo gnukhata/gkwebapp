@@ -12,6 +12,18 @@
   width: auto;
   min-width: 50%;
 }
+
+.shadow {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+td {
+	font-size: 60%;
+}
+
+th {
+	font-size: 50%;
+}
+
 </style>
 </head>
 
@@ -21,7 +33,7 @@
       <div class="modal-content">
         <div class="container">
           <div style="padding-top:4px" class="mainbox col-md-6">
-            <div class="panel panel-info" >
+            <div class="panel panel-info shadow" >
               <div class="panel-heading">
                 <div class="panel-title">Create Account</div>
 
@@ -54,7 +66,7 @@
                     <input type="text" id="m_accountname" class="form-control input-sm" name="accountname" required data-msg="Please enter account name" accesskey="a"></input>
                     <br/>
                     <label for="openbal" id="m_obal"><u>O</u>pening Balance :</label>
-                    <input id="m_openbal" name="openbal" value="0.00" class="form-control input-sm" type="text" placeholder="0.00" accesskey="o"/>
+                    <input id="m_openbal" name="openbal" value="0.00" class="form-control input-sm" type="text" placeholder="0.00" style="text-align:right" accesskey="o"/>
                     <br/>
                     <button type="submit" class="btn btn-primary btn-sm" id="m_submit" name="submit" accesskey="s"><u>S</u>ubmit</button>
                     <button id="m_reset" class="btn btn-danger btn-sm" accesskey="r"><u>R</u>eset</button>
@@ -64,7 +76,7 @@
               </div>
             </div>
           </div>
-          <div style="padding-top:4px" class="col-md-6" id="m_baltbl">
+          <div style="padding-top:4px" class="col-md-6 shadow" id="m_baltbl">
             <table class="table table-hover table-condensed">
               <thead>
                 <tr class="success">
@@ -116,7 +128,7 @@
                   <td align="right"><b>{{baltbl[((baltbl|length)-2)]["Total"]}}</b></td>
                 </tr>
                 <tr class="info">
-                  <th>Difference in Total Balance</th>
+                  <th>Difference in Total</th>
                   <th></th>
                   <td align="right"><b>{{baltbl[((baltbl|length)-1)]["Difference in balance"]}}</b></td>
                 </tr>
