@@ -8,6 +8,7 @@ $(document).ready(function()
   $("#delete").hide();
   $("#editaccountname").bind("change keyup", function()
   {
+    $("#alertmsg").hide();
     var acccode = $("#editaccountname option:selected").val();
     var accname= $("#editaccountname option:selected").text();
     if(accname=="Closing Stock" || accname=="Stock at the Beginning" ||  accname=="Opening Stock" ||  accname=="Income & Expenditure" ||  accname=="Profit & Loss" )
