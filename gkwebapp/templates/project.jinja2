@@ -49,7 +49,7 @@
   */
   table.table-fixedheader>thead, table.table-fixedheader>tfoot {
     overflow-y: scroll;
-    height: 39px;
+    height: 32px;
   }
   table.table-fixedheader>thead {
     width: 98.8%
@@ -154,7 +154,7 @@
                 Sanctioned Amount
               </th>
               <th class="col-xs-2">
-                Remove
+                Delete
               </th>
               <th class="col-xs-1">
                 Edit
@@ -164,13 +164,13 @@
           <tbody>
             {% for prjs in projects %}
             <tr value="{{prjs['projectcode']}}">
-              <td class="col-xs-7">
+              <td class="col-xs-6">
                 {{prjs['projectname']}}
               </td>
               <td class="col-xs-3 rightJustified">
                 {{prjs['sanctionedamount']}}
               </td>
-              <td class="col-xs-1">
+              <td class="col-xs-2">
                 <a href="#" class="delprj"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
               </td>
               <td class="col-xs-1">
