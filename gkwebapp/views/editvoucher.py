@@ -37,11 +37,8 @@ def getvouchers(request):
 		nar = request.params["narration"]
 		result = requests.get("http://127.0.0.1:6543/transaction?searchby=%s&nartext=%s"%(searchby,nar), headers=header)
 
-	if result.json()["gkstatus"]==0:
+	return {"gkstatus":result.json()["gkstatus"],"vouchers":result.json()["gkresult"],"userrole":result.json()["userrole"]}
 
-		return {"vouchers":result.json()["gkresult"],"userrole":result.json()["userrole"]}
-	else:
-		return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)
 
 
 @view_config(route_name="lockvoucher", renderer="json")

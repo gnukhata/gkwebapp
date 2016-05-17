@@ -5,10 +5,12 @@ $(document).ready(function() {
   if($("#prjtable tbody tr").length==0){
     $("#prjtable").hide();
     $("#prjlist").hide();
+    $("#prjlistpanel").hide();
   }
   else{
     $("#prjtable").show();
     $("#prjlist").show();
+    $("#prjlistpanel").show();
   }
   $('.close').click(function() {
 

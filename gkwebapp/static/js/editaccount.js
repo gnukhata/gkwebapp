@@ -14,12 +14,14 @@ $(document).ready(function()
         {
             $("#alertmsg").show();
             $("#delete").hide();
+            $("#edit").hide();
 
         }
         else
         {
           $("#alertmsg").hide();
           $("#delete").show();
+          $("#edit").show();
         }
     $.ajax({
             type: "POST",
@@ -50,7 +52,21 @@ $(document).ready(function()
           });
   });
 
-  $("#editaccountname").keypress(function(e) {
+  $("#edit").click(function(event)
+  {
+    event.preventDefault();
+    $("#submit").show();
+    $("#alertmsg").hide();
+    //$("#editaccountname").hide();
+    $("#accname").hide();
+    $("#edit").hide();
+    $("#accountname").prop("disabled",false);
+    $("#openingbal").prop("disabled", false);
+    $("#accountname").focus().select();
+  }
+  );
+
+  $("#editaccountname").keyup(function(e) {
     if($("#editaccountform").is(':visible'))
     {
       if(e.which == 13)
@@ -60,24 +76,42 @@ $(document).ready(function()
           }
         else
          {
-           $("#submit").show();
-           $("#alertmsg").hide();
-           $("#editaccountname").hide();
-           $("#accname").hide();
-           $("#accountname").prop("disabled",false);
-           $("#openingbal").prop("disabled", false);
-           $("#accountname").focus().select();
+           $("#edit").click();
         }
      }
     }
 
   });
 
+  $("#accountname").keydown(function(event) {
+    /* Act on the event */
+
+    if (event.which==40)
+    {
+
+      $("#openingbal").select().focus();
+    }
+  });
+
+  $("#openingbal").keydown(function(event) {
+    /* Act on the event */
+
+    if (event.which==38)
+    {
+
+      $("#accountname").select();
+      $("#accountname").focus();
+    }
+  });
+
+
 $("#reset").click(function()
 {
   $('#editaccount').click();
 }
 );
+
+
 
 
 $("#delete").click(function()
@@ -125,9 +159,14 @@ $("#delete").click(function()
 
 $("#editaccountform").submit(function(e)
 {
-    var isvalidate=$("#editaccountform").valid();
-    if(isvalidate)
-    {
+  if ($.trim($("#accountname").val())=="") {
+    $("#blank-alert").alert();
+    $("#blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#blank-alert").hide();
+    });
+    $("#accountname").focus().select();
+    return false;
+  };
         var ob = $('#openingbal').val();
         if(ob=="")
         {
@@ -148,21 +187,38 @@ $("#editaccountform").submit(function(e)
             },
             success: function(resp)
             {
-              if(resp["gkstatus"])
-              {
-              alert("Account Edited Successfully");
-              $("#reset").click();
-              }
-              else
-              {
-                alert("Account Could Not Be Edited");
-              }
+
+
+                  if(resp["gkstatus"]==0)
+                  {
+                    $("#reset").click();
+                    $("#success-alert").alert();
+                    $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+                      $("#success-alert").hide();
+                    });
+                  }
+                  else if(resp["gkstatus"]==1)
+                  {
+                    $("#duplicate-alert").alert();
+                    $("#duplicate-alert").fadeTo(2000, 500).slideUp(500, function(){
+                      $("#duplicate-alert").hide();
+                    });
+                    $("#accountname").focus().select();
+                  }
+                  else
+                  {
+                    $("#failure-alert").alert();
+                    $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
+                      $("#failure-alert").hide();
+                    });
+                    $("#accountname").focus().select();
+                  }
 
             }
 
           }
         );
-    }
+
     e.preventDefault();
 });
 

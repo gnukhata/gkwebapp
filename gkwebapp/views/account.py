@@ -100,10 +100,7 @@ def addaccount(request):
 		gkdata["groupcode"] = request.params["subgroupname"]
 
 	result = requests.post("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
-	if result.json()["gkstatus"]==0:
-		return {"gkstatus":True}
-	else:
-		return {"gkstatus":False}
+	return {"gkstatus":result.json()["gkstatus"]}
 
 
 
@@ -112,7 +109,4 @@ def editaccount(request):
 	header={"gktoken":request.headers["gktoken"]}
 	gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openingbal"],"accountcode":request.params["accountcode"]}
 	result = requests.put("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
-	if result.json()["gkstatus"]==0:
-		return {"gkstatus":True}
-	else:
-		return {"gkstatus":False}
+	return {"gkstatus":result.json()["gkstatus"]}

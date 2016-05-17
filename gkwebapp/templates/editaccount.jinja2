@@ -3,14 +3,43 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Account Creation</title>
+<style media="screen">
+.shadow {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+td {
+	font-size: 80%;
+}
 
+th {
+	font-size: 70%;
+}
+
+</style>
 </head>
 <body >
 	<div class="container-fluid">
+		<div class="alert alert-success" id="success-alert" hidden>
+			<a href="" class="close" aria-label="close">&times;</a>
+			Account created successfully.
+		</div>
+		<div class="alert alert-danger" id="failure-alert" hidden>
+			<a href="" class="close" aria-label="close">&times;</a>
+			Account could not be edited.
+		</div>
+		<div class="alert alert-danger" id="blank-alert" hidden>
+			<a href="#" class="close" aria-label="close">&times;</a>
+			Please enter account name!
+		</div>
+
+		<div class="alert alert-danger" id="duplicate-alert" hidden>
+			<a href="#" class="close" aria-label="close">&times;</a>
+			Account already exists!
+		</div>
 
 
 		<div style="padding-top:15px" class="mainbox col-md-6">
-			<div class="panel panel-info" >
+			<div class="panel panel-info shadow" >
 				<div class="panel-heading">
 					<div class="panel-title">Edit Account</div>
 
@@ -19,37 +48,55 @@
 				<div style="padding-top:5px" class="panel-body" >
 
           <label for="editaccountname" id="accname">Account Name :</label>
-          <select class = "form-control" id="editaccountname"  name = "editaccountname" required data-msg="Please select an account">
+          <select class = "form-control input-sm" id="editaccountname"  name = "editaccountname" >
             <option value="" disabled selected hidden>Select Account</option>
             {% for accs in gkresult %}
             <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
             {% endfor %}
           </select>
-					<font color="red" id="alertmsg">A system generated account, cannot be edited/deleted.</font>
+					<label for="editaccountname" style="color:red;" id="alertmsg">A system generated account, cannot be edited/deleted.</label>
 					<form id="editaccountform" method="post"  action="editaccount" class="form-horizontal">
 
 						<div style="margin-bottom: 5px" class="col-xs-12 from-group">
 							<label for="groupname" id="gname">Group Name :</label>
-							<input type="text" id="groupname" name="groupname" class="form-control" value=""></input>
+							<input type="text" id="groupname" name="groupname" class="form-control input-sm" value=""></input>
 							<br/>
 							<label for="subgroupname" id="sname">Sub-Group Name :</label>
-							<input type="text" id="subgroupname" name="subgroupname" class="form-control" value=""></input>
+							<input type="text" id="subgroupname" name="subgroupname" class="form-control input-sm" value=""></input>
 							</br>
 							<label for="accountname" id="accname"><u>A</u>ccount Name :</label>
-							<input type="text" id="accountname" class="form-control" name="accountname" required data-msg="Please enter an account name" accesskey="a"></input>
+							<input type="text" id="accountname" class="form-control input-sm" name="accountname" accesskey="a"></input>
 							</br>
 							<label for="openingbal" id="openbal"><u>O</u>pening Balance :</label>
-							<input type="text" id="openingbal" class="form-control" name="openingbal" accesskey="o"></input>
+							<input type="text" id="openingbal" class="form-control input-sm" name="openingbal" accesskey="o"></input>
 							</br>
 							<input type="hidden" id="accountcode" class="form-control" name="accountcode" ></input>
 							<br/>
-							<button type="submit" class="btn btn-primary" id="submit" name="submit" accesskey="s"><u>S</u>ubmit</button>
-							<button id="reset" class="btn btn-warning" accesskey="r"><u>R</u>eset</button>
-							<button id="delete" class="btn btn-danger" accesskey="d"><u>D</u>elete</button>
-							<button id="edit" class="btn btn-danger" accesskey="e"><u>E</u>dit</button>
+							<button type="submit" class="btn btn-primary btn-sm" id="submit" name="submit" accesskey="s"><u>S</u>ubmit</button>
+							<button id="reset" class="btn btn-warning btn-sm" accesskey="r"><u>R</u>eset</button>
+							<button id="delete" class="btn btn-danger btn-sm" accesskey="d"><u>D</u>elete</button>
+							<button id="edit" class="btn btn-danger btn-sm" accesskey="e"><u>E</u>dit</button>
 
 						</div>
 					</form>
+					<div id="m_confirmdel" class="modal fade" tabindex="-1" role="dialog">
+						<div class="modal-dialog modal-sm">
+							<div class="modal-content">
+								<div class="modal-header">
+
+									<h4 class="modal-title">Delete?</h4>
+								</div>
+								<div class="modal-body">
+									<p>Are you sure?</p>
+								</div>
+								<div class="modal-footer">
+									<button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+									<button type="button" id="accdel" data-dismiss="modal" class="btn btn-danger">Delete</button>
+								</div>
+							</div><!-- /.modal-content -->
+						</div><!-- /.modal-dialog -->
+					</div><!-- /.modal -->
+
 				</div>
 			</div>
 		</div>

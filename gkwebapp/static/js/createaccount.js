@@ -76,9 +76,47 @@ $("#reset").click(function()
 
   $("#accountform").submit(function(e)
   {
-var isvalidate=$("#accountform").valid();
-if(isvalidate)
-{
+
+    if ($.trim($("#accountname").val())=="") {
+      $("#blank-alert").alert();
+      $("#blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#blank-alert").hide();
+      });
+      $("#accname").focus().select();
+      return false;
+    }
+
+    if ($.trim($("#groupname option:selected").val())=="") {
+      $("#grpblank-alert").alert();
+      $("#grpblank-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#grpblank-alert").hide();
+      });
+      $("#groupname").focus().select();
+      return false;
+    }
+
+    if ($.trim($("#subgroupname option:selected").val())=="") {
+      $("#sgrpblank-alert").alert();
+      $("#sgrpblank-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#sgrpblank-alert").hide();
+      });
+      $("#subgroupname").focus().select();
+      return false;
+    }
+
+if ($("#newsubgroup").is(':visible')) {
+
+  if ($.trim($("#newsubgroup").val())=="") {
+    $("#nsblank-alert").alert();
+    $("#nsblank-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#nsblank-alert").hide();
+    });
+    $("#newsubgroup").focus().select();
+    return false;
+  }
+
+}
+
     var ob = $('#openbal').val();
     if(ob=="")
     {
@@ -104,14 +142,30 @@ if(isvalidate)
           },
           success: function(resp)
           {
-            if(resp["gkstatus"])
+            if(resp["gkstatus"]==0)
             {
-            alert("Account Created Successfully");
-            $("#reset").click();
+              $("#reset").click();
+              $('.modal-backdrop').remove();
+              $("#success-alert").alert();
+              $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+                $("#success-alert").hide();
+              });
+            }
+            else if(resp["gkstatus"]==1)
+            {
+              $("#duplicate-alert").alert();
+              $("#duplicate-alert").fadeTo(2000, 500).slideUp(500, function(){
+                $("#duplicate-alert").hide();
+              });
+              $("#accname").focus().select();
             }
             else
             {
-              alert("Account Could Not Be Created");
+              $("#failure-alert").alert();
+              $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
+                $("#failure-alert").hide();
+              });
+              $("#accname").focus().select();
             }
           }
 
@@ -120,12 +174,71 @@ if(isvalidate)
 
 
 
-}
+
     e.preventDefault();
   }
 );
 
 
+  $('#maccounts').change(function() {
+    if ($.trim($("#groupname option:selected").val())=="") {
+      $("#grpblank-alert").alert();
+      $("#grpblank-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#grpblank-alert").hide();
+      });
+      $("#groupname").focus().select();
+      $('#maccounts').attr('checked', false);
+      return false;
+    }
+    else if($.trim($("#subgroupname option:selected").val())=="") {
+      $("#sgrpblank-alert").alert();
+      $("#sgrpblank-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#sgrpblank-alert").hide();
+      });
+      $("#subgroupname").focus().select();
+      $('#maccounts').attr('checked', false);
+      return false;
+    }
+    else if ($("#newsubgroup").is(':visible')) {
 
+        if ($.trim($("#newsubgroup").val())=="") {
+          $("#nsblank-alert").alert();
+          $("#nsblank-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#nsblank-alert").hide();
+          });
+          $("#newsubgroup").focus().select();
+          $('#maccounts').attr('checked', false);
+          return false;
+        }
+
+    }
+    else
+    {
+      $('#m_multiacc').modal('show');
+    }
+
+  });
+
+  $('#m_multiacc').on('show.bs.modal', function (e)
+  {
+    $('#m_gname').val($('#groupname option:selected').text());
+
+    if ($("#newsubgroup").is(':visible')) {
+      $('#m_sgname').val($.trim($("#newsubgroup").val()));
+    }
+    else {
+      $('#m_sgname').val($('#subgroupname option:selected').text());
+
+    }
+
+
+  });
+
+  $('#m_multiacc').on('hidden.bs.modal', function (e)
+  {
+    $('#maccounts').attr('checked', false);
+
+
+  });
 
 });
