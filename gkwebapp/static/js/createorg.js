@@ -1,6 +1,5 @@
 $(document).ready(function()
 {
-  $('#orgname').focus();
   var sel1 = 0;
   var sel2 = 0;
   $("#orgcase").focus(function(){

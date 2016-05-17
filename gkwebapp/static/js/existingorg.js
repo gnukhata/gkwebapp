@@ -1,6 +1,5 @@
 $(document).ready(function()
 {
-  $('#org-name').focus();
   $("#org-name").keyup(function(e) {
     e.preventDefault();
     if (e.which == 13)
@@ -10,9 +9,10 @@ $(document).ready(function()
     }
   });
 
-  $("#finalyears").keyup( function(e) {
+  $("#finalyears").keydown( function(e) {
     e.preventDefault();
-    if (e.which == 38)
+    var s1 = $("#finalyears option:selected").index();
+    if (e.which == 38 && s1 == 0)
     {
       $("#org-name").focus();
     }
@@ -46,7 +46,7 @@ $(document).ready(function()
     event.preventDefault();
 
     var orgcode = $("#finalyears option:selected").val();
-          $("#selectorg").load("/login?orgcode="+ orgcode );
+          $("#selectorg").load("/login?orgcode="+ orgcode, setTimeout( function() { $("#username").focus(); }, 500 ));
 
     var financialyears = $("#finalyears option:selected").html();
     var org = $("#org-name option:selected").val();
