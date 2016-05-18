@@ -107,7 +107,7 @@ $(document).ready(function(){
   var styear = sessionStorage.getItem('year1');
   var enyear = sessionStorage.getItem('year2');
   var orgdata = orname + " (" + ortype + ")";
-  var yeardata = "Financial Year : " + styear + "-" + enyear;
+  var yeardata = "Financial Year : " + styear + " to " + enyear;
   if(orgdata!=""||yeardata!="")
   {
   $("#orgdata").html(orgdata);
@@ -133,6 +133,28 @@ $(document).ready(function(){
     }
   );
   });
+
+  $('#showviewledger').click(function (e) {
+
+      $.ajax(
+      {
+
+      type: "POST",
+      url: "/showviewledger",
+      global: false,
+      async: false,
+      datatype: "text/html",
+      beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      success: function(resp)
+      {
+        $("#info").html(resp);
+      }
+      }
+    );
+    });
 
   $('#showproject').click(function (e) {
     $.ajax(
