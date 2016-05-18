@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <title>GNUKhata | Ledger</title>
 <style type="text/css">
 
 .selected
@@ -51,7 +52,12 @@ th {
             {{record['voucherdate']}}
           </td>
           <td>
-            {{record['particulars']}}
+            {% for pr in record['particulars'] %}
+              {{pr}} <br>
+            {% endfor %}
+            {% if record['narration']!="" and narrationflag==true %}
+              ({{record['narration']}})
+            {% endif %}
           </td>
           <td style="text-align:right">
             {{record["Dr"]}}
