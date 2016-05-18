@@ -1,5 +1,49 @@
 $(document).ready(function()
 {
+
+  var sel1 = 0;
+  var sel2 = 0;
+
+  $("#groupname").focus(function() {
+    sel1 = 1;
+  });
+  $("#groupname").blur(function(){
+    sel1 = 0;
+  });
+  $("#subgroupname").focus(function() {
+    sel2 = 1;
+  });
+  $("#subgroupname").blur(function(){
+    sel2 = 0;
+  });
+
+
+  $('input:text,select, input:checkbox').keydown( function(event) {
+    var n = $("input:text:visible,select, input:checkbox").length;
+    var f = $('input:text:visible,select, input:checkbox');
+
+    if (event.which == 13)
+    {
+
+
+      var nextIndex = f.index(this) + 1;
+      if(nextIndex < n){
+        event.preventDefault();
+        f[nextIndex].focus();}
+
+      }
+
+
+      var s2 = $("#subgroupname option:selected").index();
+      if ((event.which == 38 && sel2 == 1 && s2 == 0) || (event.which == 38 && (sel1 == 0 && sel2==0)))
+      {
+        var prevIndex = f.index(this) - 1;
+        if(prevIndex < n){
+          event.preventDefault();
+          f[prevIndex].focus();}
+        }
+      });
+
   $("#baltbl").hide();
   $("#groupname").focus();
   $("#accountform").validate();
