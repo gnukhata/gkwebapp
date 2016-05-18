@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>GNUKhata</title>
+  <style media="screen">
+  .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  label {
+		font-size: 90%;
+	}
+  </style>
+</head>
+<body>
+  <div style="padding-top:5px" class="container-fluid mainbox col-md-6 col-md-offset-3">
+    <div class="panel panel-info shadow">
+      <div class="panel-heading">
+        <h3 class="panel-title">View Ledger</h3>
+      </div>
+      <div class="panel-body" style="padding-top:5px">
+        <div style="margin-bottom: 5px" class="col-xs-12 from-group">
+          <label for="viewledger_accname">Account Name :</label>
+          <select class = "form-control input-sm" id="viewledger_accname"  name = "viewledger_accname" >
+            <option value="" disabled selected hidden>Select Account</option>
+            {% for accs in gkresult %}
+            <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
+            {% endfor %}
+          </select>
+          <br>
+          <label> <input type="checkbox" id="viewledger_monthly" >Monthly Ledger</label>
+          <br>
+
+          <label for="viewledger_fromdate">From Date:</label>
+          <div class="form-inline" >
+
+            <div class="form-group">
+
+              <input type="text" class="viewledger_date form-control input-sm" id="viewledger_fromdate" value="" size="2" maxlength="2" placeholder="DD">
+              <input type="text" id="viewledger_frommonth" class="viewledger_date form-control input-sm" value="" size="2" maxlength="2" placeholder="MM">
+              <input type="text" id="viewledger_fromyear" class="viewledger_date form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY">
+            </div>
+
+          </div>
+          <br>
+          <label for="viewledger_todate">To Date:</label>
+          <div class="form-inline" >
+
+            <div class="form-group">
+
+              <input type="text" class="viewledger_date form-control input-sm" id="viewledger_todate" value="" size="2" maxlength="2" placeholder="DD">
+              <input type="text" id="viewledger_tomonth" class="viewledger_date form-control input-sm" value="" size="2" maxlength="2" placeholder="MM">
+              <input type="text" id="viewledger_toyear" class="viewledger_date form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY">
+            </div>
+          </div>
+          <br>
+          <label> <input type="checkbox" id="viewledger_nar" >Narration</label>
+          <br>
+          <label for="viewledger_prjname">Project Name :</label>
+          <select class = "form-control input-sm" id="viewledger_prjname"  name = "viewledger_prjname" >
+            <option value="" selected>None</option>
+            {% for prj in projects %}
+            <option value="{{prj['projectcode']}}">{{prj["projectname"]}}</option>
+            {% endfor %}
+          </select>
+
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button class="btn btn-primary btn-sm" id="viewledger_submit" name="view" >View</button>
+        <button id="viewledger_reset" class="btn btn-danger btn-sm">Reset</button>
+
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewledger.js')}}"></script>
+</body>
+</html>

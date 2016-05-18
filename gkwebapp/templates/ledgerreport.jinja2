@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style type="text/css">
+
+.selected
+{
+  background-color: Aquamarine;
+}
+
+.shadow {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+td {
+  font-size: 70%;
+}
+
+th {
+  font-size: 75%;
+}
+
+</style>
+</head>
+<body>
+
+  <div class="table-responsive shadow">
+    <table id="ledgertable" class="table table-bordered table-condensed">
+      <thead>
+        <tr class="info ">
+          <th>Voucher No.</th>
+          <th>Status</th>
+          <th>Date</th>
+          <th>Particulars</th>
+          <th>Debit</th>
+          <th>Credit</th>
+          <th>Balance</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in records %}
+        <tr  value="{{record['vouchercode']}}">
+          <td >
+            <a class="vno" href="">{{record['vouchernumber']}}</a>
+          </td>
+          {% if (record['status']) %}
+          <td style="color:red; text-align:center">*</td>
+          {% else %}
+          <td> </td>
+          {% endif %}
+          <td>
+            {{record['voucherdate']}}
+          </td>
+          <td>
+            {{record['particulars']}}
+          </td>
+          <td style="text-align:right">
+            {{record["Dr"]}}
+          </td>
+          <td style="text-align:right">
+            {{record["Cr"]}}
+          </td>
+          <td style="text-align:right">
+            {{record["balance"]}}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div id="viewvc">
+  </div>
+</body>
+</html>
