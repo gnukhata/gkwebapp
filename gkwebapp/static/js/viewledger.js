@@ -75,6 +75,6 @@ $(document).ready(function() {
   });
 
   $("#viewledger_reset").click(function(event) {
-    alert($("#viewledger_nar").is(":checked"))
+    $("#showviewledger").click();
   });
   });
