@@ -264,7 +264,7 @@ $(document).ready(function()
         url: '/getcjaccounts',
         type: 'POST',
         dataType: 'json',
-        data: {"type": $('#vtype').val(),"side":"Cr"},
+        data: {"type": $('#m_vtype').val(),"side":"Cr"},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -283,7 +283,7 @@ $(document).ready(function()
         url: '/getcjaccounts',
         type: 'POST',
         dataType: 'json',
-        data: {"type": $('#vtype').val(),"side":"Dr"},
+        data: {"type": $('#m_vtype').val(),"side":"Dr"},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -374,7 +374,7 @@ $(document).ready(function()
             url: '/getcjaccounts',
             type: 'POST',
             dataType: 'json',
-            data: {"type": $('#vtype').val(),"side":"Cr"},
+            data: {"type": $('#m_vtype').val(),"side":"Cr"},
             beforeSend: function(xhr)
             {
               xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -440,7 +440,7 @@ $(document).ready(function()
             url: '/getcjaccounts',
             type: 'POST',
             dataType: 'json',
-            data: {"type": $('#vtype').val(),"side":"Dr"},
+            data: {"type": $('#m_vtype').val(),"side":"Dr"},
             beforeSend: function(xhr)
             {
               xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -535,7 +535,7 @@ $(document).ready(function()
             url: '/getcjaccounts',
             type: 'POST',
             dataType: 'json',
-            data: {"type": $('#vtype').val(),"side":"Cr"},
+            data: {"type": $('#m_vtype').val(),"side":"Cr"},
             beforeSend: function(xhr)
             {
               xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -606,7 +606,7 @@ $(document).ready(function()
             url: '/getcjaccounts',
             type: 'POST',
             dataType: 'json',
-            data: {"type": $('#vtype').val(),"side":"Dr"},
+            data: {"type": $('#m_vtype').val(),"side":"Dr"},
             beforeSend: function(xhr)
             {
               xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -746,7 +746,7 @@ $(document).ready(function()
     details.vdate=$('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
     details.projectcode=$('#project').val();
     details.narration=$('#narr').val();
-    details.vtype=$('#vtype').val();
+    details.vtype=$('#m_vtype').val();
     var answer = confirm('Are you sure?');
 
     if(answer)

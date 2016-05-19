@@ -23,34 +23,51 @@ th {
 </style>
 </head>
 <body>
-
-  <div class="table-responsive shadow">
-    <table id="ledgertable" class="table table-bordered table-condensed">
+  <div class="alert alert-danger" id="ua-alert" hidden>
+    <a href="#" class="close" aria-label="close">&times;</a>
+    <strong>Unauthorized to Lock/Unlock Transactions!</strong>
+  </div>
+  <input type="hidden" id="urole" name="urole" value="{{userrole}}"></input>
+  <input type="hidden" id="accountcode" name="accountcode" value="{{ledgerrefresh["accountcode"]}}"></input>
+  <input type="hidden" id="calculatefrom" name="calculatefrom" value="{{ledgerrefresh["calculatefrom"]}}"></input>
+  <input type="hidden" id="calculateto" name="calculateto" value="{{ledgerrefresh["calculateto"]}}"></input>
+  <input type="hidden" id="financialstart" name="financialstart" value="{{ledgerrefresh["financialstart"]}}"></input>
+  <input type="hidden" id="monthlyflag" name="monthlyflag" value="{{ledgerrefresh["monthlyflag"]}}"></input>
+  <input type="hidden" id="backflag" name="backflag" value="{{ledgerrefresh["backflag"]}}"></input>
+  <input type="hidden" id="projectcode" name="projectcode" value="{{ledgerrefresh["projectcode"]}}"></input>
+  <input type="hidden" id="narrationflag" name="narrationflag" value="{{ledgerrefresh["narrationflag"]}}"></input>
+  
+  <div class="table-responsive">
+    <table id="ledgertable" class=" shadow table table-bordered table-condensed">
       <thead>
         <tr class="info ">
-          <th>Voucher No.</th>
-          <th>Status</th>
-          <th>Date</th>
-          <th>Particulars</th>
-          <th>Debit</th>
-          <th>Credit</th>
-          <th>Balance</th>
+          <th class="col-xs-1">Date</th>
+          <th class="col-xs-1">V.No.</th>
+          <th style="text-align:center" class="col-xs-1">Status</th>
+          <th class="col-xs-3">Particulars</th>
+          <th style="text-align:right" class="col-xs-2">Debit</th>
+          <th style="text-align:right" class="col-xs-2">Credit</th>
+          <th style="text-align:right" class="col-xs-2">Balance</th>
         </tr>
       </thead>
       <tbody>
         {% for record in records %}
         <tr  value="{{record['vouchercode']}}">
           <td >
+            {{record['voucherdate']}}
+          </td>
+          <td>
             <a class="vno" href="">{{record['vouchernumber']}}</a>
           </td>
           {% if (record['status']) %}
           <td style="color:red; text-align:center">*</td>
           {% else %}
-          <td> </td>
+          {% if (record['status'])=="" %}
+          <td value="na"></td>
+          {%else%}
+          <td style="color:red; text-align:center"> </td>
           {% endif %}
-          <td>
-            {{record['voucherdate']}}
-          </td>
+          {% endif %}
           <td>
             {% for pr in record['particulars'] %}
               {{pr}} <br>

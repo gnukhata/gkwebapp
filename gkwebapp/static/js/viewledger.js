@@ -62,16 +62,17 @@ $(document).ready(function() {
         global: false,
         async: false,
         datatype: "text/html",
-        data: {"accountcode":$("#viewledger_accname").val(),"calculatefrom":$("#viewledger_fromyear").val()+"-"+$("#viewledger_frommonth").val()+"-"+$("#viewledger_fromdate").val(),"calculateto":$("#viewledger_toyear").val()+"-"+$("#viewledger_tomonth").val()+"-"+$("#viewledger_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#viewledger_prjname").val(),"monthlyflag":$("#viewledger_monthly").is(":checked"),"narrationflag":$("#viewledger_nar").is(":checked")},
+        data: {"backflag":0,"accountcode":$("#viewledger_accname").val(),"calculatefrom":$("#viewledger_fromyear").val()+"-"+$("#viewledger_frommonth").val()+"-"+$("#viewledger_fromdate").val(),"calculateto":$("#viewledger_toyear").val()+"-"+$("#viewledger_tomonth").val()+"-"+$("#viewledger_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#viewledger_prjname").val(),"monthlyflag":$("#viewledger_monthly").is(":checked"),"narrationflag":$("#viewledger_nar").is(":checked")},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
         },
-        success: function(resp)
+      })
+        .done(function(resp)
         {
           $("#info").html(resp);
         }
-      });
+      );
   });
 
   $("#viewledger_reset").click(function(event) {
