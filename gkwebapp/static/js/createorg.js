@@ -98,8 +98,10 @@ $(document).ready(function()
         var syear = financialyears[0]+financialyears[1]+financialyears[2]+financialyears[3];
         var eyear = financialyears[12]+financialyears[13];
         sessionStorage.setItem('orgt', otype);
-        sessionStorage.setItem('year1', syear);
-        sessionStorage.setItem('year2', eyear);
+        sessionStorage.setItem('year1', fdate);
+        sessionStorage.setItem('year2', tdate);
+        sessionStorage.setItem('yyyymmddyear1', fdate );
+        sessionStorage.setItem('yyyymmddyear2', tdate );
         //alert("orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate);
 
         $("#createorg").load("/createadmin?orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate );

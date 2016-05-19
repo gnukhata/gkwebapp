@@ -53,12 +53,16 @@ $(document).ready(function()
     var orgobj = eval('('+org+')');
     var oname = orgobj.orgname;
     var otype = orgobj.orgtype;
-    var syear = financialyears[6]+financialyears[7]+financialyears[8]+financialyears[9];
-    var eyear = financialyears[22]+financialyears[23];
+    var syear = financialyears[6]+financialyears[7]+financialyears[8]+financialyears[9]+"-"+financialyears[3]+financialyears[4]+"-"+financialyears[0]+financialyears[1];
+    var eyear = financialyears[20]+financialyears[21]+financialyears[22]+financialyears[23]+"-"+financialyears[17]+financialyears[18]+"-"+financialyears[14]+financialyears[15];
+    var yyddmmsyear = financialyears[0]+financialyears[1]+"-"+financialyears[3]+financialyears[4]+"-"+financialyears[6]+financialyears[7]+financialyears[8]+financialyears[9];
+    var yyddmmeyear = financialyears[14]+financialyears[15]+"-"+financialyears[17]+financialyears[18]+"-"+financialyears[20]+financialyears[21]+financialyears[22]+financialyears[23];
     sessionStorage.setItem('orgn', oname);
     sessionStorage.setItem('orgt', otype);
-    sessionStorage.setItem('year1', syear);
-    sessionStorage.setItem('year2', eyear);
+    sessionStorage.setItem('year1', yyddmmsyear);
+    sessionStorage.setItem('year2', yyddmmeyear);
+    sessionStorage.setItem('yyyymmddyear1', syear );
+    sessionStorage.setItem('yyyymmddyear2', eyear );
 
   });
 });

@@ -28,6 +28,8 @@ def main(global_config, **settings):
     config.add_route('yearcode', '/yearcode')
     config.add_route('login', '/login')
     config.add_route('showmainshell', '/showmainshell')
+    config.add_route('showviewledger', '/showviewledger')
+    config.add_route('showledgerreport', '/showledgerreport')
     config.add_route('showaccount', '/showaccount')
     config.add_route('accountpopup', '/accountpopup')
     config.add_route('showvoucher', '/showvoucher')
