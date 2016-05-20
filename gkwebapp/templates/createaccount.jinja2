@@ -13,6 +13,82 @@
 		min-width: 300px;
 	}
 
+	table.table-fixedheader {
+    width: 100%;
+  }
+  /*
+  Set table elements to block mode.  (Normally they are inline).
+  This allows a responsive table, such as one where columns can be stacked
+  if the display is narrow.
+  */
+  table.table-fixedheader, table.table-fixedheader>thead, table.table-fixedheader>tbody, table.table-fixedheader>tfoot, table.table-fixedheader>thead>tr, table.table-fixedheader>tbody>tr, table.table-fixedheader>tfoot>tr, table.table-fixedheader>thead>tr>th, table.table-fixedheader>tbody>tr>td, table.table-fixedheader>tfoot>tr>td {
+    display: block;
+  }
+  table.table-fixedheader>thead>tr:after, table.table-fixedheader>tbody>tr:after, table.table-fixedheader>tfoot>tr:after  {
+    content:' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+  }
+  /*
+  When scrolling the table, actually it is only the tbody portion of the
+  table that scrolls (not the entire table: we want the thead to remain
+  fixed).  We must specify an explicit height for the tbody.  We include
+  100px as a default, but it can be overridden elsewhere.
+
+  Also, we force the scrollbar to always be displayed so that the usable
+  width for the table contents doesn't change (such as becoming narrower
+  when a scrollbar is visible and wider when it is not).
+  */
+  table.table-fixedheader>tbody {
+    overflow-y: scroll;
+    height: 45%;
+
+  }
+  /*
+  We really don't want to scroll the thead contents, but we want to force
+  a scrollbar to be displayed anyway so that the usable width of the thead
+  will exactly match the tbody.
+  */
+  table.table-fixedheader>thead, table.table-fixedheader>tfoot {
+    overflow-y: scroll;
+    height: 39px;
+  }
+  table.table-fixedheader>tfoot {
+    width: 99%
+  }
+  /*
+  For browsers that support it (webkit), we set the background color of
+  the unneeded scrollbar in the thead to make it invisible.  (Setting
+  visiblity: hidden defeats the purpose, as this alters the usable width
+  of the thead.)
+  */
+  table.table-fixedheader>thead::-webkit-scrollbar {
+    background-color: inherit;
+  }
+
+
+  table.table-fixedheader>thead>tr>th:after, table.table-fixedheader>tbody>tr>td:after, table.table-fixedheader>tfoot>tr>td:after {
+    content:' ';
+    display: table-cell;
+    visibility: hidden;
+    clear: both;
+  }
+
+  /*
+  We want to set <th> and <td> elements to float left.
+  We also must explicitly set the width for each column (both for the <th>
+  and the <td>).  We set to 20% here a default placeholder, but it can be
+  overridden elsewhere.
+  */
+
+  table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.table-fixedheader>tfoot tr td {
+    float: left;
+
+  }
+
+
+
 	.shadow {
 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	}
@@ -185,9 +261,30 @@
 						</div>
 					</div>
 					<div class="modal-body">
+						<div class='table-responsive'>
+							<table id="m_acctable" class="table table-bordered table-condensed">
+								<thead>
+									<tr class="info">
+										<th class="col-md-6">Account Name</th>
+										<th class="col-md-6">Opening Balance</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="col-md-6">
+											<input type="text" class="form-control input-sm m_accname" placeholder="Account Name">
+										</td>
+										<td class="col-md-6">
+											<input type="text" class=" form-control input-sm m_openbal" placeholder="0.00">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 
 					</div>
 					<div class="modal-footer">
+
 						<button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">Cancel</button>
 						<button type="button" id="prjdel" data-dismiss="modal" class="btn btn-success">Save</button>
 					</div>

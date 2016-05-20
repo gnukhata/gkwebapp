@@ -263,7 +263,7 @@ if ($("#newsubgroup").is(':visible')) {
 
   });
 
-  $('#m_multiacc').on('show.bs.modal', function (e)
+  $('#m_multiacc').on('shown.bs.modal', function (e)
   {
     $('#m_gname').val($('#groupname option:selected').text());
 
@@ -275,7 +275,6 @@ if ($("#newsubgroup").is(':visible')) {
 
     }
 
-
   });
 
   $('#m_multiacc').on('hidden.bs.modal', function (e)
@@ -283,6 +282,16 @@ if ($("#newsubgroup").is(':visible')) {
     $('#maccounts').attr('checked', false);
 
 
+  });
+
+
+  $("#m_multiacc").off("keyup",".m_accname").on("keyup",".m_accname ",function(event)
+  {
+    event.preventDefault();
+    if (event.which == 13)
+    {
+      alert("gfdgfdg");
+    }
   });
 
 });
