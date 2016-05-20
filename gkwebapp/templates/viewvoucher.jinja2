@@ -349,7 +349,20 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                 </div>
                 <div class="col-xs-3">
                   <select class="form-control input-sm" id="project">
-                    <option value="">None</option>
+
+                    {% for project in projects %}
+                      {% if project['projectcode']==voucher["project"] %}
+
+                        <option value="{{project['projectcode']}}" selected>{{project['projectname']}}</option>
+                        <option value="">None</option>
+                      {% else %}
+                      <option value="{{project['projectcode']}}">{{project['projectname']}}</option>
+                      {% endif %}
+                    {% endfor %}}
+
+                    {% if voucher["project"]==None %}
+                        <option value="" selected>None</option>
+                    {% endif %}
                   </select>
                 </div>
                 <div class="col-xs-1">
@@ -358,7 +371,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                 <div class="pull-right">
                   <textarea class="form-control" name="narration" id="narr" rows="2" cols="50" >{{voucher["narration"]}}</textarea>
                 </div>
-                <input type="hidden" id="vtype" name="vtype" value="{{vtype}}">
+                <input type="hidden" id="m_vtype" name="m_vtype" value="{{vtype}}">
 
 
             </form>

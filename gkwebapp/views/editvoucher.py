@@ -63,6 +63,7 @@ def viewvoucher(request):
 	vc=result.json()["gkresult"]
 
 	type = vc["vouchertype"]
+	projects = requests.get("http://127.0.0.1:6543/projects", headers=header)
 	if type=="contra" or type=="journal":
 		result1 = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s"%(type), headers=header)
 		if result1.json()["gkstatus"]==0:
@@ -79,10 +80,10 @@ def viewvoucher(request):
 		else:
 			return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)
 
-	print"statttttuuuuusssss:",result.json()["gkstatus"]
+
 
 	if result.json()["gkstatus"]==0:
-		return {"voucher":vc,"userrole":result.json()["userrole"],"draccounts":draccounts,"craccounts":craccounts}
+		return {"projects":projects.json()["gkresult"],"vtype":type,"voucher":vc,"userrole":result.json()["userrole"],"draccounts":draccounts,"craccounts":craccounts}
 	else:
 		return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)
 
@@ -90,12 +91,15 @@ def viewvoucher(request):
 def editvoucher(request):
 	vdetails = json.loads(request.params["vdetails"])
 	rowdetails= json.loads(request.params["transactions"])
+
 	crs={}
 	drs={}
+
 	if vdetails["projectcode"] !="":
-		gkdata={"vouchercode":vdetails["vcode"],"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails[projectcode])}
+		gkdata={"vouchercode":vdetails["vcode"],"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails["projectcode"])}
 	else:
-		gkdata={"vouchercode":vdetails["vcode"],"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"]}
+		gkdata={"vouchercode":vdetails["vcode"],"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":None}
+
 	for row in rowdetails:
 		if row["side"]=="Cr":
 			crs[row["accountcode"]]=row["cramount"]
