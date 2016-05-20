@@ -351,16 +351,18 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                   <select class="form-control input-sm" id="project">
 
                     {% for project in projects %}
-                    {% if project==voucher["projectcode"] %}
-                      {% if project=="0" %}
-                      
+                      {% if project['projectcode']==voucher["project"] %}
+
+                        <option value="{{project['projectcode']}}" selected>{{project['projectname']}}</option>
+                        <option value="">None</option>
                       {% else %}
-                      <option value="{{project['projectcode']}}" selected>{{project['projectname']}}</option>
+                      <option value="{{project['projectcode']}}">{{project['projectname']}}</option>
                       {% endif %}
-                    {% else %}
-                    <option value="{{project['projectcode']}}">{{project['projectname']}}</option>
-                    {% endif %}
                     {% endfor %}}
+
+                    {% if voucher["project"]==None %}
+                        <option value="" selected>None</option>
+                    {% endif %}
                   </select>
                 </div>
                 <div class="col-xs-1">
