@@ -177,6 +177,10 @@ $(document).ready(function(){
   );
   });
 
+  $("#showtrialbalance").click(function(event){
+    $("#info").load("/showtrialbalance");
+  });
+
   $('#addaccounttb').click(function(){
     $('#addaccount').click();
   });
