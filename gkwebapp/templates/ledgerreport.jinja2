@@ -36,7 +36,7 @@ th {
   <input type="hidden" id="backflag" name="backflag" value="{{ledgerrefresh["backflag"]}}"></input>
   <input type="hidden" id="projectcode" name="projectcode" value="{{ledgerrefresh["projectcode"]}}"></input>
   <input type="hidden" id="narrationflag" name="narrationflag" value="{{ledgerrefresh["narrationflag"]}}"></input>
-  
+
   <div class="table-responsive">
     <table id="ledgertable" class=" shadow table table-bordered table-condensed">
       <thead>
@@ -89,6 +89,9 @@ th {
         {% endfor %}
       </tbody>
     </table>
+    {% if ledgerrefresh["backflag"]>0 %}
+      <button class="btn btn-sm btn-warning" type="button" id="back">Back</button>
+    {% endif %}
   </div>
 
   <div id="viewvc">

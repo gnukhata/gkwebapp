@@ -25,7 +25,7 @@ def showledgerreport(request):
 	else:
 		narrationflag = False
 	projectcode = request.params["projectcode"]
-	ledgerrefresh = {"accountcode":accountcode,"calculatefrom":calculatefrom,"calculateto":calculateto,"financialstart":financialstart,"monthlyflag":monthlyflag,"backflag":backflag,"projectcode":projectcode,"narrationflag":request.params["narrationflag"]}
+	ledgerrefresh = {"accountcode":accountcode,"calculatefrom":calculatefrom,"calculateto":calculateto,"financialstart":financialstart,"monthlyflag":monthlyflag,"backflag":int(backflag),"projectcode":projectcode,"narrationflag":request.params["narrationflag"]}
 	header={"gktoken":request.headers["gktoken"]}
 	if projectcode=="":
 		result = requests.get("http://127.0.0.1:6543/report?type=ledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode="%(accountcode,calculatefrom,calculateto,financialstart), headers=header)

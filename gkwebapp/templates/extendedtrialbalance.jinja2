@@ -14,6 +14,7 @@
 }
 td {
   font-size: 70%;
+  color: black;
 }
 
 th {
@@ -25,7 +26,7 @@ th {
 <body>
   <h5 style="text-align:center"><strong>Extended Trial Balance</strong> for the period from <a class="glyphicon glyphicon-calendar"></a> <strong>{{from}}</strong> to <a class="glyphicon glyphicon-calendar"></a> <strong>{{to}}</strong></h5>
   <div class="table-responsive">
-    <table id="gtbtable" class="shadow table table-bordered table-condensed">
+    <table id="gtbtable" class="shadow table table-bordered table-condensed trialbaltable">
       <thead>
         <tr class="info ">
           <th>Sr. No.</th>
@@ -42,10 +43,14 @@ th {
         {% for record in records %}
         <tr  value="{{record['accountcode']}}">
           <td >
-            <a class="sno" href="">{{record['srno']}}</a>
+            {{record['srno']}}
           </td>
           <td>
-            {{record['accountname']}}
+            {% if record['srno']!="" %}
+              <a class="accname" href="">{{record['accountname']}}</a>
+            {% else %}
+            <a class="accname" href="" style="text-decoration: none; color:black;">{{record['accountname']}}</a>
+            {% endif %}
           </td>
           <td style="text-align:right">
             {{record["openingbalance"]}}
@@ -71,8 +76,8 @@ th {
     </table>
   </div>
 
-  <div id="viewvc">
-  </div>
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/ledgerreport.js')}}"></script>
+  <input type="hidden" id="ledtodate" value="{{to}}">
+  <input type="hidden" id="trialbaltype" value="{{trialbalancetype}}">
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/trialbalancereport.js')}}"></script>
 </body>
 </html>
