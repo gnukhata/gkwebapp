@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>GNUKhata | Trial Balance</title>
+    <style media="screen">
+    .shadow {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    label {
+  		font-size: 90%;
+  	}
+    </style>
+  </head>
+  <body>
+    <div style="padding-top:5px" class="container-fluid mainbox col-md-4 col-md-offset-4">
+    <div class="panel panel-info shadow">
+      <div class="panel-heading">
+        <h3 class="panel-title">View Trial Balance</h3>
+      </div>
+      <div class="panel-body">
+        <label for="trialbal_fromdate">From:</label>
+        <div class="form-inline">
+          <div class="form-group">
+
+            <input type="text" class="form-control input-sm" id="trialbal_fromdate" value="" disabled size="2" maxlength="2" placeholder="DD">
+            <input type="text" class="form-control input-sm" id="trialbal_frommonth" value="" disabled size="2" maxlength="2" placeholder="MM">
+            <input type="text" class="form-control input-sm" id="trialbal_fromyear" value="" disabled size="4" maxlength="4" placeholder="YYYY">
+          </div>
+        </div>
+        <br>
+        <label for="trialbal_todate">To:</label>
+        <div class="form-inline">
+          <div class="form-group">
+
+          <input type="text" class="form-control input-sm trialbal_autotab" id="trialbal_todate" value=""  size="2" maxlength="2" placeholder="DD">
+          <input type="text" class="form-control input-sm trialbal_autotab" id="trialbal_tomonth" value="" size="2" maxlength="2" placeholder="MM">
+          <input type="text" class="form-control input-sm trialbal_autotab" id="trialbal_toyear" value="" size="4" maxlength="4" placeholder="YYYY">
+        </div>
+        </div>
+        <br>
+        <div class="form-group">
+          <label for="trialbal_type">Trial balance type:</label>
+          <select class="form-control input-sm" name="" id="trialbal_type">
+            <option value="1">Net Trial Balance</option>
+            <option value="2">Gross Trial Balance</option>
+            <option value="3">Extended Trial Balance</option>
+          </select>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button type="button" class="btn btn-sm btn-success" name="button" id="trialbal_view">View</button>
+        <button type="button" name="button" class="btn btn-sm btn-danger" id="trialbal_reset">Reset</button>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewtrialbalance.js')}}"></script>
+  </body>
+</html>

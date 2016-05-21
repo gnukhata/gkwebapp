@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>GNUKhata | Net Trial Balance</title>
+<style type="text/css">
+
+.selected
+{
+  background-color: Aquamarine;
+}
+
+.shadow {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+td {
+  font-size: 70%;
+}
+
+th {
+  font-size: 75%;
+}
+
+</style>
+</head>
+<body>
+  <h5 style="text-align:center"><strong>Net Trial Balance</strong> for the period from <a class="glyphicon glyphicon-calendar"></a> <strong>{{from}}</strong> to <a class="glyphicon glyphicon-calendar"></a> <strong>{{to}}</strong></h5>
+  <div class="table-responsive">
+    <table id="ntbtable" class="shadow table table-bordered table-condensed">
+      <thead>
+        <tr class="info ">
+          <th>Sr. No.</th>
+          <th>Account name</th>
+          <th style="text-align:right">Debit</th>
+          <th style="text-align:right">Credit</th>
+          <th>Group Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in records %}
+        <tr  value="{{record['accountcode']}}">
+          <td >
+            {{record['srno']}}
+          </td>
+          <td>
+            {% if record['srno']!="" %}
+              <a class="accname" href="">{{record['accountname']}}</a>
+            {% else %}
+            {{record['accountname']}}
+            {% endif %}
+          </td>
+          <td style="text-align:right">
+            {{record["Dr"]}}
+          </td>
+          <td style="text-align:right">
+            {{record["Cr"]}}
+          </td>
+          <td>
+            {{record["groupname"]}}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <input type="hidden" id="ledtodate" value="{{to}}">
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/nettrialbalance.js')}}"></script>
+</body>
+</html>
