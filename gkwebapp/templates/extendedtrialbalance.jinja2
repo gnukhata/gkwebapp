@@ -2,72 +2,145 @@
 <html lang="en">
 <head>
   <title>GNUKhata | Extended Trial Balance</title>
-<style type="text/css">
+  <style type="text/css">
 
-.selected
-{
-  background-color: Aquamarine;
-}
+  .selected
+  {
+    background-color: Aquamarine;
+  }
 
-.shadow {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-td {
-  font-size: 70%;
-  color: black;
-}
+  .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  td {
+    font-size: 70%;
+    color: black;
+  }
 
-th {
-  font-size: 75%;
-}
+  th {
+    font-size: 75%;
+  }
+  /*
+  Force table width to 100%
+  */
+  table.table-fixedheader {
+    width: 100%;
+  }
+  /*
+  Set table elements to block mode.  (Normally they are inline).
+  This allows a responsive table, such as one where columns can be stacked
+  if the display is narrow.
+  */
+  table.table-fixedheader, table.table-fixedheader>thead, table.table-fixedheader>tbody, table.table-fixedheader>tfoot, table.table-fixedheader>thead>tr, table.table-fixedheader>tbody>tr, table.table-fixedheader>tfoot>tr, table.table-fixedheader>thead>tr>th, table.table-fixedheader>tbody>tr>td, table.table-fixedheader>tfoot>tr>td {
+    display: block;
+  }
+  table.table-fixedheader>thead>tr:after, table.table-fixedheader>tbody>tr:after, table.table-fixedheader>tfoot>tr:after  {
+    content:' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+  }
+  /*
+  When scrolling the table, actually it is only the tbody portion of the
+  table that scrolls (not the entire table: we want the thead to remain
+  fixed).  We must specify an explicit height for the tbody.  We include
+  100px as a default, but it can be overridden elsewhere.
 
-</style>
+  Also, we force the scrollbar to always be displayed so that the usable
+  width for the table contents doesn't change (such as becoming narrower
+  when a scrollbar is visible and wider when it is not).
+  */
+  table.table-fixedheader>tbody {
+    overflow-y: scroll;
+    height: 75%;
+
+  }
+  /*
+  We really don't want to scroll the thead contents, but we want to force
+  a scrollbar to be displayed anyway so that the usable width of the thead
+  will exactly match the tbody.
+  */
+  table.table-fixedheader>thead, table.table-fixedheader>tfoot {
+    overflow-y: scroll;
+    height: 30px;
+    width: 99.3%;
+  }
+  /*
+  For browsers that support it (webkit), we set the background color of
+  the unneeded scrollbar in the thead to make it invisible.  (Setting
+  visiblity: hidden defeats the purpose, as this alters the usable width
+  of the thead.)
+  */
+  table.table-fixedheader>thead::-webkit-scrollbar {
+    background-color: inherit;
+  }
+
+
+  table.table-fixedheader>thead>tr>th:after, table.table-fixedheader>tbody>tr>td:after, table.table-fixedheader>tfoot>tr>td:after {
+    content:' ';
+    display: table-cell;
+    visibility: hidden;
+    clear: both;
+  }
+
+  /*
+  We want to set <th> and <td> elements to float left.
+  We also must explicitly set the width for each column (both for the <th>
+  and the <td>).  We set to 20% here a default placeholder, but it can be
+  overridden elsewhere.
+  */
+
+  table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.table-fixedheader>tfoot tr td {
+    float: left;
+
+  }
+  </style>
 </head>
 <body>
   <h5 style="text-align:center"><strong>Extended Trial Balance</strong> for the period from <a class="glyphicon glyphicon-calendar"></a> <strong>{{from}}</strong> to <a class="glyphicon glyphicon-calendar"></a> <strong>{{to}}</strong></h5>
   <div class="table-responsive">
-    <table id="gtbtable" class="shadow table table-bordered table-condensed trialbaltable">
+    <table id="gtbtable" class="shadow table table-fixedheader table-condensed trialbaltable">
       <thead>
         <tr class="info ">
-          <th>Sr. No.</th>
-          <th>Account name</th>
-          <th style="text-align:right">Opening balance</th>
-          <th style="text-align:right">Total Dr transactions</th>
-          <th style="text-align:right">Total Dr transactions</th>
-          <th style="text-align:right">Dr Balance</th>
-          <th style="text-align:right">Cr Balance</th>
-          <th>Group Name</th>
+          <th class="col-xs-1">Sr. No.</th>
+          <th class="col-xs-4">Account name</th>
+          <th class="col-xs-1" style="text-align:right">Opening balance</th>
+          <th class="col-xs-1" style="text-align:right">Total Dr transactions</th>
+          <th class="col-xs-1" style="text-align:right">Total Dr transactions</th>
+          <th class="col-xs-1" style="text-align:right">Dr Balance</th>
+          <th class="col-xs-1" style="text-align:right">Cr Balance</th>
+          <th class="col-xs-2">Group Name</th>
         </tr>
       </thead>
       <tbody>
         {% for record in records %}
         <tr  value="{{record['accountcode']}}">
-          <td >
+          <td class="col-xs-1">
             {{record['srno']}}
           </td>
-          <td>
+          <td class="col-xs-4">
             {% if record['srno']!="" %}
-              <a class="accname" href="">{{record['accountname']}}</a>
+            <a class="accname" href="">{{record['accountname']}}</a>
             {% else %}
             <a class="accname" href="" style="text-decoration: none; color:black;">{{record['accountname']}}</a>
             {% endif %}
           </td>
-          <td style="text-align:right">
+          <td class="col-xs-1" style="text-align:right">
             {{record["openingbalance"]}}
           </td>
-          <td style="text-align:right">
+          <td class="col-xs-1" style="text-align:right">
             {{record["totaldr"]}}
           </td>
-          <td style="text-align:right">
+          <td class="col-xs-1" style="text-align:right">
             {{record["totalcr"]}}
           </td>
-          <td style="text-align:right">
+          <td class="col-xs-1" style="text-align:right">
             {{record["curbaldr"]}}
           </td>
-          <td style="text-align:right">
+          <td class="col-xs-1" style="text-align:right">
             {{record["curbalcr"]}}
           </td>
-          <td>
+          <td class="col-xs-2">
             {{record["groupname"]}}
           </td>
         </tr>
@@ -75,7 +148,11 @@ th {
       </tbody>
     </table>
   </div>
-
+  <div class="col-xs-offset-5">
+    <button type="button" class="btn btn-sm btn-info" id="ntbview">Net Trial Balance</button>
+    <button type="button" class="btn btn-sm btn-primary" id="gtbview">Gross Trial Balance</button>
+    <button type="button" class="btn btn-sm btn-danger" id="tbback">Back</button>
+  </div>
   <input type="hidden" id="ledtodate" value="{{to}}">
   <input type="hidden" id="trialbaltype" value="{{trialbalancetype}}">
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/trialbalancereport.js')}}"></script>

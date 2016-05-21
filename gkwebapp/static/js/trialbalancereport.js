@@ -15,7 +15,8 @@ $(document).ready(function() {
   var curindex ;
   var nextindex;
   var previndex;
-
+  var date = $("#ledtodate").val().split("-");
+  var newtodate = date[2]+"-"+date[1]+"-"+date[0];
 
   $(document).off('keydown' ,'.accname').on('keydown' ,'.accname',function(event) {
     curindex = $(this).closest('tr').index();
@@ -92,8 +93,42 @@ $(document).ready(function() {
 
   });
 
+  function trialbalcall(tbbaltype) {
+    $.ajax(
+      {
+        type: "POST",
+        url: "/showtrialbalancereport",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data: {"financialstart":sessionStorage.yyyymmddyear1,"calculateto":newtodate,"trialbalancetype":tbbaltype},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        }
+      })
+      .done(function(resp) {
+        $("#info").html(resp);
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+  }
 
-
-
+  $("#ntbview").click(function(event) {
+    trialbalcall(1);
+  });
+  $("#gtbview").click(function(event) {
+    trialbalcall(2);
+  });
+  $("#extbview").click(function(event) {
+    trialbalcall(3);
+  });
+  $("#tbback").click(function(event) {
+    $("#showtrialbalance").click();
+  });
 
 });

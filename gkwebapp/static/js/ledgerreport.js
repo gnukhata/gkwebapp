@@ -219,6 +219,9 @@ $(document).ready(function() {
       });
   });
 
+  $("#anotherledger").click(function(event) {
+    $("#showviewledger").click();
+  });
 
 
 });
