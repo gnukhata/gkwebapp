@@ -24,7 +24,22 @@ $(document).ready(function()
 
   $("#loginform").submit(function(e)
   {
-
+    if ($.trim($("#username").val())=="") {
+      $("#username-blank-alert").alert();
+      $("#username-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#username-blank-alert").hide();
+      });
+      $("#username").focus();
+      return false;
+    }
+      if ($.trim($("#userpassword").val())=="") {
+        $("#password-blank-alert").alert();
+        $("#password-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#password-blank-alert").hide();
+        });
+        $("#userpassword").focus();
+        return false;
+    }
       $.ajax(
       {
       //alert("starting ajax");
@@ -36,11 +51,23 @@ $(document).ready(function()
       data: $("#loginform").serialize(),
       success: function(resp)
       {
-      var gt = resp['gktoken'];
+      if(resp["gkstatus"]==0)
+      {
+        var gt = resp['gktoken'];
 
-      sessionStorage.gktoken = gt;
+        sessionStorage.gktoken = gt;
 
-      window.location= "/showmainshell";
+        window.location= "/showmainshell";
+      }
+      else if(resp["gkstatus"]==2)
+      {
+        $("#login-blank-alert").alert();
+        $("#login-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#login-blank-alert").hide();
+        });
+        $("#username").focus();
+        return false;
+      }
       }
 
       }
