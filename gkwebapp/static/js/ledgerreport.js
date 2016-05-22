@@ -131,16 +131,16 @@ $(document).ready(function() {
     if(e.which==13)
     {
 
-    $('#ledgertable tbody tr:eq('+rindex+')').dblclick() ;
+      $('#ledgertable tbody tr:eq('+rindex+')').dblclick() ;
     }
-});
+  });
 
   $("#ledgertable tbody tr").off('dblclick').on('dblclick',function(e){
     e.preventDefault();
     var id = $(this).attr('value');
     if (id=="")
     {
-        return false;
+      return false;
     }
 
     $.ajax(
@@ -159,51 +159,69 @@ $(document).ready(function() {
       }
     )
     .done(function(resp)
+    {
+      $("#viewvc").html(resp);
+      $('#myModal').modal('show');
+      $('#myModal').on('shown.bs.modal', function (e)
+      {
+        $(".btnfocus:enabled:first").focus();
+
+      });
+      $('#myModal').on('hidden.bs.modal', function (e)
+      {
+        $("#viewvc").html("");
+
+        $.ajax(
+          {
+            type: "POST",
+            url: "/showledgerreport",
+            global: false,
+            async: false,
+            datatype: "text/html",
+            data: {"backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
+            beforeSend: function(xhr)
             {
-              $("#viewvc").html(resp);
-              $('#myModal').modal('show');
-              $('#myModal').on('shown.bs.modal', function (e)
-              {
-                $(".btnfocus:enabled:first").focus();
-
-              });
-              $('#myModal').on('hidden.bs.modal', function (e)
-              {
-                $("#viewvc").html("");
-
-
-
-                $.ajax(
-                  {
-                    type: "POST",
-                    url: "/showledgerreport",
-                    global: false,
-                    async: false,
-                    datatype: "text/html",
-                    data: {"backflag":0,"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
-                    beforeSend: function(xhr)
-                    {
-                      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-                    }
-                  })
-                    .done(function(resp)
-                    {
-                      $("#info").html("");
-                      $("#info").html(resp);
-                    }
-                  );
-
-              });
-
-
-            });
-
-
-
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            }
+          })
+          .done(function(resp)
+          {
+            $("#info").html("");
+            $("#info").html(resp);
+          }
+        );
+      });
+    });
   });
 
+  $("#back").click(function(event) {
+    $.ajax(
+      {
+        type: "POST",
+        url: "/showtrialbalancereport",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data: {"financialstart":sessionStorage.yyyymmddyear1,"calculateto":$("#calculateto").val(),"trialbalancetype":$("#backflag").val()},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        }
+      })
+      .done(function(resp) {
+        $("#info").html(resp);
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+  });
 
-
+  $("#anotherledger").click(function(event) {
+    $("#showviewledger").click();
+  });
 
 
 });

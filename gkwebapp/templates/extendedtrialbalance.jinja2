@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>GNUKhata | Ledger</title>
+  <title>GNUKhata | Extended Trial Balance</title>
   <style type="text/css">
 
   .selected
@@ -14,6 +14,7 @@
   }
   td {
     font-size: 70%;
+    color: black;
   }
 
   th {
@@ -96,82 +97,64 @@
   </style>
 </head>
 <body>
-  <div class="alert alert-danger" id="ua-alert" hidden>
-    <a href="#" class="close" aria-label="close">&times;</a>
-    <strong>Unauthorized to Lock/Unlock Transactions!</strong>
-  </div>
-  <input type="hidden" id="urole" name="urole" value="{{userrole}}"></input>
-  <input type="hidden" id="accountcode" name="accountcode" value="{{ledgerrefresh["accountcode"]}}"></input>
-  <input type="hidden" id="calculatefrom" name="calculatefrom" value="{{ledgerrefresh["calculatefrom"]}}"></input>
-  <input type="hidden" id="calculateto" name="calculateto" value="{{ledgerrefresh["calculateto"]}}"></input>
-  <input type="hidden" id="financialstart" name="financialstart" value="{{ledgerrefresh["financialstart"]}}"></input>
-  <input type="hidden" id="monthlyflag" name="monthlyflag" value="{{ledgerrefresh["monthlyflag"]}}"></input>
-  <input type="hidden" id="backflag" name="backflag" value="{{ledgerrefresh["backflag"]}}"></input>
-  <input type="hidden" id="projectcode" name="projectcode" value="{{ledgerrefresh["projectcode"]}}"></input>
-  <input type="hidden" id="narrationflag" name="narrationflag" value="{{ledgerrefresh["narrationflag"]}}"></input>
-
+  <h5 style="text-align:center"><strong>Extended Trial Balance</strong> for the period from <a class="glyphicon glyphicon-calendar"></a> <strong>{{from}}</strong> to <a class="glyphicon glyphicon-calendar"></a> <strong>{{to}}</strong></h5>
   <div class="table-responsive">
-    <table id="ledgertable" class=" shadow table table-fixedheader table-condensed">
+    <table id="gtbtable" class="shadow table table-fixedheader table-condensed trialbaltable">
       <thead>
         <tr class="info ">
-          <th class="col-xs-1">Date</th>
-          <th class="col-xs-1">V.No.</th>
-          <th style="text-align:center" class="col-xs-1">Status</th>
-          <th class="col-xs-3">Particulars</th>
-          <th style="text-align:right" class="col-xs-2">Debit</th>
-          <th style="text-align:right" class="col-xs-2">Credit</th>
-          <th style="text-align:right" class="col-xs-2">Balance</th>
+          <th class="col-xs-1">Sr. No.</th>
+          <th class="col-xs-4">Account name</th>
+          <th class="col-xs-1" style="text-align:right">Opening balance</th>
+          <th class="col-xs-1" style="text-align:right">Total Dr transactions</th>
+          <th class="col-xs-1" style="text-align:right">Total Dr transactions</th>
+          <th class="col-xs-1" style="text-align:right">Dr Balance</th>
+          <th class="col-xs-1" style="text-align:right">Cr Balance</th>
+          <th class="col-xs-2">Group Name</th>
         </tr>
       </thead>
       <tbody>
         {% for record in records %}
-        <tr  value="{{record['vouchercode']}}">
+        <tr  value="{{record['accountcode']}}">
           <td class="col-xs-1">
-            {{record['voucherdate']}}
+            {{record['srno']}}
           </td>
-          <td class="col-xs-1">
-            <a class="vno" href="">{{record['vouchernumber']}}</a>
-          </td>
-          {% if (record['status']) %}
-          <td class="col-xs-1" style="color:red; text-align:center">*</td>
-          {% else %}
-          {% if (record['status'])=="" %}
-          <td class="col-xs-1" value="na"></td>
-          {%else%}
-          <td class="col-xs-1"style="color:red; text-align:center"> </td>
-          {% endif %}
-          {% endif %}
-          <td class="col-xs-3">
-            {% for pr in record['particulars'] %}
-            {{pr}} <br>
-            {% endfor %}
-            {% if record['narration']!="" and narrationflag==true %}
-            ({{record['narration']}})
+          <td class="col-xs-4">
+            {% if record['srno']!="" %}
+            <a class="accname" href="">{{record['accountname']}}</a>
+            {% else %}
+            <a class="accname" href="" style="text-decoration: none; color:black;">{{record['accountname']}}</a>
             {% endif %}
           </td>
-          <td class="col-xs-2" style="text-align:right">
-            {{record["Dr"]}}
+          <td class="col-xs-1" style="text-align:right">
+            {{record["openingbalance"]}}
           </td>
-          <td class="col-xs-2" style="text-align:right">
-            {{record["Cr"]}}
+          <td class="col-xs-1" style="text-align:right">
+            {{record["totaldr"]}}
           </td>
-          <td class="col-xs-2" style="text-align:right">
-            {{record["balance"]}}
+          <td class="col-xs-1" style="text-align:right">
+            {{record["totalcr"]}}
+          </td>
+          <td class="col-xs-1" style="text-align:right">
+            {{record["curbaldr"]}}
+          </td>
+          <td class="col-xs-1" style="text-align:right">
+            {{record["curbalcr"]}}
+          </td>
+          <td class="col-xs-2">
+            {{record["groupname"]}}
           </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
-    <div class="col-xs-offset-5">
-      {% if ledgerrefresh["backflag"]>0 %}
-      <button class="btn btn-sm btn-danger" type="button" id="back">Back</button>
-      {% endif %}
-      <button class="btn btn-sm btn-primary" type="button" id="anotherledger">View another ledger</button>
-    </div>
   </div>
-
-  <div id="viewvc">
+  <div class="col-xs-offset-5">
+    <button type="button" class="btn btn-sm btn-info" id="ntbview">Net Trial Balance</button>
+    <button type="button" class="btn btn-sm btn-primary" id="gtbview">Gross Trial Balance</button>
+    <button type="button" class="btn btn-sm btn-danger" id="tbback">Back</button>
   </div>
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/ledgerreport.js')}}"></script>
+  <input type="hidden" id="ledtodate" value="{{to}}">
+  <input type="hidden" id="trialbaltype" value="{{trialbalancetype}}">
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/trialbalancereport.js')}}"></script>
 </body>
 </html>

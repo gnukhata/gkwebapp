@@ -30,6 +30,8 @@ def main(global_config, **settings):
     config.add_route('showmainshell', '/showmainshell')
     config.add_route('showviewledger', '/showviewledger')
     config.add_route('showledgerreport', '/showledgerreport')
+    config.add_route('showtrialbalance', '/showtrialbalance')
+    config.add_route('showtrialbalancereport', '/showtrialbalancereport')
     config.add_route('showaccount', '/showaccount')
     config.add_route('accountpopup', '/accountpopup')
     config.add_route('showvoucher', '/showvoucher')
