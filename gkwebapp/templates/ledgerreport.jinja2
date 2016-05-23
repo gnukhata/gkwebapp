@@ -51,7 +51,7 @@
   */
   table.table-fixedheader>tbody {
     overflow-y: scroll;
-    height: 75%;
+    height: 68vh;
 
   }
   /*
@@ -109,6 +109,11 @@
   <input type="hidden" id="backflag" name="backflag" value="{{ledgerrefresh["backflag"]}}"></input>
   <input type="hidden" id="projectcode" name="projectcode" value="{{ledgerrefresh["projectcode"]}}"></input>
   <input type="hidden" id="narrationflag" name="narrationflag" value="{{ledgerrefresh["narrationflag"]}}"></input>
+  {% if ledgerheader["projectname"]!="" %}
+  <i>Project</i> : {{ledgerheader["projectname"]}}
+  {% endif %}
+  <span class="pull-right"><i>Period</i> : {{ledgerheader["calculatefrom"]}} to {{ledgerheader["calculatefrom"]}}</span>
+  <span style="margin:auto; display:table;"><i>Account</i> : {{ledgerheader["accountname"]}}</span>
 
   <div class="table-responsive">
     <table id="ledgertable" class=" shadow table table-fixedheader table-condensed">
