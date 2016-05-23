@@ -21,3 +21,18 @@ def createuser(request):
         return {"gkstatus":"User already exists!"}
     elif result.json()["gkstatus"]==3:
         return {"gkstatus":"Connection Failed"}
+
+@view_config(route_name="removeuser", renderer="gkwebapp:templates/removeUser.jinja2")
+def removeuser(request):
+    headers={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/users", headers=headers)
+    return {"gkstatus": result.json()["gkstatus"], "Users": result.json()["gkresult"]}
+
+
+@view_config(route_name="deleteuser", renderer="json")
+def deleteuser(request):
+    headers={"gktoken":request.headers["gktoken"]}
+    gkdata={"userid":request.params["username"] }
+    result = requests.delete("http://127.0.0.1:6543/users", data=json.dumps(gkdata), headers=headers)
+    print result.json()
+    return {"gkstatus":result.json()["gkstatus"]}
