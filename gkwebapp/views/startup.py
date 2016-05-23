@@ -66,7 +66,10 @@ def selectorglogin(request):
 
 	gkdata = {"username":request.params["username"], "userpassword":request.params["userpassword"],"orgcode":request.params["orgcode"]}
 	result = s.post("http://127.0.0.1:6543/login", data =json.dumps(gkdata))
-	return  {"gktoken":result.json()["token"]}
+	if result.json()["gkstatus"]==0:
+		return  {"gktoken":result.json()["token"], "gkstatus":result.json()["gkstatus"]}
+	else:
+		return  {"gkstatus":result.json()["gkstatus"]}
 
 
 @view_config(route_name="showmainshell",renderer="gkwebapp:templates/mainshell.jinja2")
