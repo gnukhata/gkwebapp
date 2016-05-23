@@ -13,11 +13,11 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
   td {
-    font-size: 70%;
+    font-size: 65%;
   }
 
   th {
-    font-size: 75%;
+    font-size: 70%;
   }
   /*
   Force table width to 100%
@@ -51,7 +51,7 @@
   */
   table.table-fixedheader>tbody {
     overflow-y: scroll;
-    height: 75%;
+    height: 68vh;
 
   }
   /*
@@ -61,7 +61,7 @@
   */
   table.table-fixedheader>thead, table.table-fixedheader>tfoot {
     overflow-y: scroll;
-    height: 30px;
+    height: 26px;
     width: 99.3%;
   }
   /*
@@ -109,6 +109,11 @@
   <input type="hidden" id="backflag" name="backflag" value="{{ledgerrefresh["backflag"]}}"></input>
   <input type="hidden" id="projectcode" name="projectcode" value="{{ledgerrefresh["projectcode"]}}"></input>
   <input type="hidden" id="narrationflag" name="narrationflag" value="{{ledgerrefresh["narrationflag"]}}"></input>
+  {% if ledgerheader["projectname"]!="" %}
+  <i>Project</i> : {{ledgerheader["projectname"]}}
+  {% endif %}
+  <span class="pull-right"><i>Period</i> : {{ledgerheader["calculatefrom"]}} to {{ledgerheader["calculatefrom"]}}</span>
+  <span style="margin:auto; display:table;"><i>Account</i> : {{ledgerheader["accountname"]}}</span>
 
   <div class="table-responsive">
     <table id="ledgertable" class=" shadow table table-fixedheader table-condensed">
