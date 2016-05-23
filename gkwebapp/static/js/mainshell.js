@@ -56,6 +56,28 @@ shortcut.add("Ctrl+F",function() {
 document.getElementById("findvouchertb").click();
 });
 $(document).ready(function(){
+
+  $('#REMOVEuser').click(function (e) {
+      $.ajax(
+      {
+
+      type: "POST",
+      url: "/removeuser",
+      global: false,
+      async: false,
+      datatype: "text/html",
+      beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      success: function(resp)
+      {
+        $("#info").html(resp);
+      }
+      }
+    );
+    });
+
   $('#editaccount').click(function (e) {
 
       $.ajax(

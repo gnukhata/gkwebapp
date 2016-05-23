@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
   $("#username").focus();
-  var username = $("username option:selected").val();
+  var username = $("#username option:selected").val();
 
   $.ajax({
     type: "POST",
@@ -29,67 +29,62 @@ $(document).ready(function() {
 
   });
 
-  $("#remove").click(function(event){
-      alert("vjgjhdjdjf");
-      event.preventDefault();
-      var dialog = $('<p> Are you sure?').dialog({
-        buttons: {
-          "Yes": function(){
-            $.ajax({
-              type: "POST",
-              url: "/deleteuser",
-              global: false,
-              async: false,
-              datatype: "json",
-              data: {"userid":userid}
-              beforeSend: function(xhr)
-              {
-                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-              }
-              success: function(resp)
-              {
-                if (resp["gkstatus"]==0){
-                $("#removeuser").click();
-                $("#remsuccess-alert").alert();
-                $("#remsuccess-alert").fadeTo(2000, 500).slideUp(500, function(){
+  $(document).off("click","#remove").on("click", "#remove", function(event)
+  {
+    event.preventDefault();
+    $('#m_confirmdel').modal('show').one('click', '#m_yes', function (e)
+    {
+
+        var code = $("#username option:selected").val();
+        $.ajax({
+          type: "POST",
+          url: "/deleteuser",
+          global: false,
+          async: false,
+          datatype: "json",
+          data: {"username":code},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          },
+          success: function(resp)
+          {
+            if (resp["gkstatus"]==0){
+              $("#REMOVEuser").click();
+              $("#remsuccess-alert").alert();
+              $("#remsuccess-alert").fadeTo(2000, 500).slideUp(500, function(){
                 $("#remsuccess-alert").hide();
               });
-              }
-              else if (resp["gkstatus"]==4) {
-                $("#accessdenied-alert").alert();
-                $("#accessdenied-alert").fadeTo(2000, 500).slideUp(500, function(){
-                $("#accessdenied-alert").hide();
-                });
-                $("#username").focus();
-              }
-              else if (resp["gkstatus"]==5) {
-                $("#actiondisallowed-alert").alert();
-                $("#actiondisallowed-alert").fadeTo(2000, 500).slideUp(500, function(){
-                $("#actiondisallowed-alert").hide();
-                });
-                $("#username").focus();
-              }
-              else if (resp["gkstatus"]==3) {
-                $("#connectionfailed-alert").alert();
-                $("#connectionfailed-alert").fadeTo(2000, 500).slideUp(500, function(){
-                $("#connectionfailed-alert").hide();
-                });
-                $("#username").focus();
-              }
-
-              }
-            });
+              $('.modal-backdrop').remove();
           }
-          "No": function (){
-            dialog.dialog('close');
+          else if (resp["gkstatus"]==4) {
+            $("#accessdenied-alert").alert();
+            $("#accessdenied-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#accessdenied-alert").hide();
+            });
             $("#username").focus();
           }
-        }
-      })
+          else if (resp["gkstatus"]==5) {
+            $("#actiondisallowed-alert").alert();
+            $("#actiondisallowed-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#actiondisallowed-alert").hide();
+            });
+            $("#username").focus();
+          }
+          else if (resp["gkstatus"]==3) {
+            $("#connectionfailed-alert").alert();
+            $("#connectionfailed-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#connectionfailed-alert").hide();
+            });
+            $("#username").focus();
+          }
+          }
+        });
 
-
-
-    });
-
-
+      });
+      $('#m_confirmdel').on('shown.bs.modal', function(event) {
+        $("#m_no").focus();
+      });
+  }
+);
 });

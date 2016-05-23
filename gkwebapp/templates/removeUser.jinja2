@@ -6,12 +6,6 @@
 	<title>
 		GNUKhata
 	</title>
-
-	<style>
-
-
-	</style>
-
 </head>
 <body>
 	<div class="alert alert-success" id="remsuccess-alert" hidden>
@@ -31,13 +25,10 @@
 		Coonection Failed.
 	</div>
 <div class="container-fluid">
-
-
 		<div id="removeuser" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-4">
 			<div class="panel panel-info" class="col-md-offset-4" >
 				<div class="panel-heading">
 					<div class="panel-title" >Remove User</div>
-
 				</div>
 
 				<div style="padding-top:30px" class="panel-body" >
@@ -60,16 +51,33 @@
 
 						</div>
 					</form>
+					<div id="m_confirmdel" class="modal fade" tabindex="-1" role="dialog">
+						<div class="modal-dialog modal-sm">
+							<div class="modal-content">
+								<div class="modal-header">
+
+									<h4 class="modal-title">Remove</h4>
+								</div>
+								<div class="modal-body">
+									<p>Are you sure?</p>
+								</div>
+								<div class="modal-footer">
+									<button type="button" id ="m_yes" class="btn btn-warning" data-dismiss="modal">Yes</button>
+									<button type="button" id="m_no" data-dismiss="modal" class="btn btn-danger">No</button>
+								</div>
+							</div><!-- /.modal-content -->
+						</div><!-- /.modal-dialog -->
+					</div><!-- /.modal -->
+
 				</div>
 			</div>
 
 		</div>
 
 	</div>
-	<script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
-	<script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
-	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/removeuser.js')}}"></script>
+	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
+
 
 
 </body>
