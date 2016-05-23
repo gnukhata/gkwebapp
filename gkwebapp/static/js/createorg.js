@@ -89,6 +89,22 @@ $(document).ready(function()
 
       $("#btnsubmit").click(function(event){
         event.preventDefault();
+        if ($.trim($("#orgname").val())=="") {
+          $("#orgname-blank-alert").alert();
+          $("#orgname-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#orgname-blank-alert").hide();
+          });
+          $("#orgname").focus();
+          return false;
+        }
+          if ($.trim($("#fromday").val())==""||$.trim($("#frommonth").val())==""||$.trim($("#fromyear").val())==""||$.trim($("#today").val())==""||$.trim($("#tomonth").val())==""||$.trim($("#toyear").val())=="") {
+            $("#date-blank-alert").alert();
+            $("#date-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+              $("#date-blank-alert").hide();
+            });
+            $("#fromday").focus();
+            return false;
+        }
         var orgname = $("#orgname").val().replace(/\s/g, "+");
         var orgtype = $("#orgtype option:selected").val().replace(/\s/g, "+");
         var fdate = $("#fromyear").val()+"-"+$("#frommonth").val()+"-"+$("#fromday").val();
