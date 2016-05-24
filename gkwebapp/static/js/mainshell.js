@@ -203,6 +203,10 @@ $(document).ready(function(){
     $("#info").load("/showtrialbalance");
   });
 
+  $("#showclosebooks").click(function(event){
+    $("#info").load("/showclosebooks");
+  });
+
   $('#addaccounttb').click(function(){
     $('#addaccount').click();
   });
@@ -239,4 +243,5 @@ $(document).ready(function(){
   $('#purchasereturntb').click(function(){
     $('#showpurchasereturn').click();
   });
+
 });
