@@ -40,6 +40,10 @@
               <a href="#" class="close" aria-label="close">&times;</a>
               Please re-enter password!
             </div>
+            <div class="alert alert-danger" id="checkpassuser-blank-alert" hidden>
+              <a href="#" class="close" aria-label="close">&times;</a>
+              Password doesn't match!
+            </div>
             <div class="alert alert-danger" id="role-blank-alert" hidden>
               <a href="#" class="close" aria-label="close">&times;</a>
               Please select role!
@@ -66,19 +70,19 @@
             </div>
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
               <label for="name" id="usrname"><u>U</u>sername :</label>
-              <input id="name" type="text" class="form-control" name="username" required data-msg="Please enter username" accesskey="u"></input>
+              <input id="name" type="text" class="form-control" name="username" accesskey="u"></input>
             </div>
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
               <label for="password" id="usrpwd"><u>P</u>assword :</label>
-              <input name="userpassword" id="password" type="password" class="form-control" required data-msg="Please enter password"  accesskey="p"></input>
+              <input name="userpassword" id="password" type="password" class="form-control" accesskey="p"></input>
             </div>
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
               <label for="confirm_password" id="pwdconfirm"><u>C</u>onfirm Password :</label>
-              <input name="cnfpassword" type="password" id="confirm_password" class="form-control" required data-msg="Passwords do not match" accesskey="c"></input>
+              <input name="cnfpassword" type="password" id="confirm_password" class="form-control" accesskey="c"></input>
             </div>
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
               <label for="userrole" id="pwdconfirm">Select <u>R</u>ole :</label>
-              <select name="userrole" id="userrole" type="text" class="form-control" required data-msg="Please select a role" accesskey="r">
+              <select name="userrole" id="userrole" type="text" class="form-control" accesskey="r">
                 <option value="" disabled selected hidden>Select a role</option>
                 <option value="0">Manager</option>
                 <option value="1">Operator</option>
@@ -86,11 +90,11 @@
             </div>
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
               <label for="question" id="secquestion">Security <u>Q</u>uestion :</label>
-              <input name="userquestion" type="text" class="form-control" placeholder="Security Question" required data-msg="Please enter security question" id="question" accesskey="q"></input>
+              <input name="userquestion" type="text" class="form-control" placeholder="Security Question" id="question" accesskey="q"></input>
             </div>
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
               <label for="answer" id="secanswer">Security <u>A</u>nswer :</label>
-              <input name="useranswer" type="text" class="form-control" placeholder="Security Answer" required data-msg="Please enter security answer" id="answer" accesskey="a"></input>
+              <input name="useranswer" type="text" class="form-control" placeholder="Security Answer" id="answer" accesskey="a"></input>
             </div>
             <button type="submit" class="btn btn-success" accesskey="c"><u>C</u>reate</button>
           </form>
@@ -98,7 +102,6 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/createuser.js')}}"></script>
 
 </body>

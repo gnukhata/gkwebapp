@@ -27,26 +27,48 @@
 				</div>
 
 				<div style="padding-top:30px" class="panel-body" >
-
-
-					<form id="loginform" class="form-horizontal">
+					<form id="loginform" method="post" class="form-horizontal">
+	            <div class="alert alert-danger" id="usrname-blank-alert" hidden>
+	              <a href="#" class="close" aria-label="close">&times;</a>
+	              Please enter username!
+	            </div>
+	            <div class="alert alert-danger" id="pasword-blank-alert" hidden>
+	              <a href="#" class="close" aria-label="close">&times;</a>
+	              Please enter password!
+	            </div>
+	            <div class="alert alert-danger" id="confpass-blank-alert" hidden>
+	              <a href="#" class="close" aria-label="close">&times;</a>
+	              Please re-enter password!
+	            </div>
+							<div class="alert alert-danger" id="checkpass-blank-alert" hidden>
+	              <a href="#" class="close" aria-label="close">&times;</a>
+	              Password doesn't match!
+	            </div>
+	            <div class="alert alert-danger" id="secuque-blank-alert" hidden>
+	              <a href="#" class="close" aria-label="close">&times;</a>
+	              Please enter security question!
+	            </div>
+	            <div class="alert alert-danger" id="secuans-blank-alert" hidden>
+	              <a href="#" class="close" aria-label="close">&times;</a>
+	              Please enter the answer of security question!
+	            </div>
 
 						<div style="margin-bottom: 25px" class="col-xs-12 from-group">
 
 							<label for="username"><u>U</u>sername</label>
-							<input type="text" id="username" class="form-control" name="username" required data-msg="Please enter username" accesskey="u"></input>
+							<input type="text" id="username" class="form-control" name="username" accesskey="u"></input>
 							<br/>
 							<label for="password"><u>P</u>assword</label>
-							<input type="password" id="password" class="form-control" name="password" required data-msg="Please enter password" accesskey="p"></input>
+							<input type="password" id="password" class="form-control" name="password" accesskey="p"></input>
 							<br/>
 							<label for="confirmpassword"><u>C</u>onfirm Password</label>
-							<input type="password" name="confirmpassword" id="confirmpassword" class="form-control" value="" required data-msg="Passwords do not match" accesskey="c"></input>
+							<input type="password" name="confirmpassword" id="confirmpassword" class="form-control" value="" accesskey="c"></input>
 							<br/>
 							<label for="securityanswer">Security <u>Q</u>uestion</label>
-							<input type="text" class="form-control" value="" id="securityquestion" name="securityquestion" required data-msg="Please enter security question" accesskey="q"></input>
+							<input type="text" class="form-control" value="" id="securityquestion" name="securityquestion" accesskey="q"></input>
 							<br/>
 							<label for="securityanswer">Security <u>A</u>nswer</label>
-							<input type="text" class="form-control" value="" id="securityanswer" name="securityanswer" required data-msg="Please enter security question" accesskey="a"></input>
+							<input type="text" class="form-control" value="" id="securityanswer" name="securityanswer" accesskey="a"></input>
 							<input type="hidden" class="form-control" value="{{orgname}}" id="orgname" name="orgname"></input>
 							<input type="hidden" class="form-control" value="{{orgtype}}" id="orgtype" name="orgtype"></input>
 							<input type="hidden" class="form-control" value="{{fromdate}}" id="yearstart" name="yearstart"></input>
@@ -60,9 +82,6 @@
 			</div>
 		</div>
 	</div>
-	<script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
-	<script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
-	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/createadmin.js')}}"></script>
 
 
