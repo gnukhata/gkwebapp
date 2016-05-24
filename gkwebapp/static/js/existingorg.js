@@ -44,6 +44,14 @@ $(document).ready(function()
   });
   $("#callLogin").click(function(event){
     event.preventDefault();
+    if ($.trim($("#org-name").val())=="") {
+      $("#selorg-blank-alert").alert();
+      $("#selorg-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#selorg-blank-alert").hide();
+      });
+      $("#org-name").focus();
+      return false;
+    }
 
     var orgcode = $("#finalyears option:selected").val();
           $("#selectorg").load("/login?orgcode="+ orgcode, setTimeout( function() { $("#username").focus(); }, 500 ));
