@@ -22,6 +22,11 @@ $(document).ready(function()
 
   });
 
+  $("#forgotpwdlink").click(function(event){
+    var code = $("#orgcode").val();
+    $("#selectorg").load("/forgotpassword?orgcode="+ code);
+  });
+
   $("#loginform").submit(function(e)
   {
     if ($.trim($("#username").val())=="") {

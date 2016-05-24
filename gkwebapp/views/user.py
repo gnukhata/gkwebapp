@@ -29,3 +29,9 @@ def deleteuser(request):
     result = requests.delete("http://127.0.0.1:6543/users", data=json.dumps(gkdata), headers=headers)
     print result.json()
     return {"gkstatus":result.json()["gkstatus"]}
+
+
+@view_config(route_name="forgotpassword", renderer="gkwebapp:templates/forgotpassword.jinja2")
+def forgotpassword(request):
+    code = request.params["orgcode"]
+    return {"orgcode":code}
