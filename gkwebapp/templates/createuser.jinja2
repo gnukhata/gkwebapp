@@ -40,6 +40,10 @@
               <a href="#" class="close" aria-label="close">&times;</a>
               Please re-enter password!
             </div>
+            <div class="alert alert-danger" id="checkpassuser-blank-alert" hidden>
+              <a href="#" class="close" aria-label="close">&times;</a>
+              Password doesn't match!
+            </div>
             <div class="alert alert-danger" id="role-blank-alert" hidden>
               <a href="#" class="close" aria-label="close">&times;</a>
               Please select role!
@@ -98,7 +102,6 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/createuser.js')}}"></script>
 
 </body>

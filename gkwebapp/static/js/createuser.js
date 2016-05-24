@@ -1,12 +1,4 @@
 $(document).ready(function(){
-  $("#adduser").validate({
-    rules: {
-  uesrpassword: "required",
-  cnfpassword: {
-    equalTo: "#password"
-  }
-}
-});
 var inselect = 0;
 $("#userrole").focus(function(){
   inselect = 1;
@@ -30,6 +22,17 @@ $("input,select").keydown(function(e) {
       f[prevIndex].focus();}
   }
   });
+  $("#confirm_password").blur(function(event) {
+    if ($.trim($("#password").val())!=$.trim($("#confirm_password").val())) {
+      $("#checkpassuser-blank-alert").alert();
+      $("#checkpassuser-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#checkpassuser-blank-alert").hide();
+      });
+      $("#password").focus();
+      return false;
+    }
+  });
+
   $("#adduser").submit(function(e)
   {
     if ($.trim($("#name").val())=="") {
@@ -52,6 +55,14 @@ $("input,select").keydown(function(e) {
       $("#cnfpass-blank-alert").alert();
       $("#cnfpass-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#cnfpass-blank-alert").hide();
+      });
+      $("#confirm_password").focus();
+      return false;
+    }
+    if ($.trim($("#password").val())!=$.trim($("#confirm_password").val())) {
+      $("#checkpassuser-blank-alert").alert();
+      $("#checkpassuser-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#checkpassuser-blank-alert").hide();
       });
       $("#confirm_password").focus();
       return false;

@@ -25,6 +25,16 @@ $('input:not(:hidden),select').bind("keydown", function(e) {
 
       }
     });
+    $("#confirmpassword").blur(function(event) {
+      if ($.trim($("#password").val())!=$.trim($("#confirmpassword").val())) {
+        $("#checkpass-blank-alert").alert();
+        $("#checkpass-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#checkpass-blank-alert").hide();
+        });
+        $("#password").focus();
+        return false;
+      }
+    });
 
 
 $("#loginform").submit(function(e)
@@ -49,6 +59,14 @@ $("#loginform").submit(function(e)
     $("#confpass-blank-alert").alert();
     $("#confpass-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
       $("#confpass-blank-alert").hide();
+    });
+    $("#confirmpassword").focus();
+    return false;
+  }
+  if ($.trim($("#password").val())!=$.trim($("#confirmpassword").val())) {
+    $("#checkpass-blank-alert").alert();
+    $("#checkpass-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#checkpass-blank-alert").hide();
     });
     $("#confirmpassword").focus();
     return false;
