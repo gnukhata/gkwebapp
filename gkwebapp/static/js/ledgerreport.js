@@ -195,28 +195,55 @@ $(document).ready(function() {
   });
 
   $("#back").click(function(event) {
-    $.ajax(
-      {
-        type: "POST",
-        url: "/showtrialbalancereport",
-        global: false,
-        async: false,
-        datatype: "text/html",
-        data: {"financialstart":sessionStorage.yyyymmddyear1,"calculateto":$("#calculateto").val(),"trialbalancetype":$("#backflag").val()},
-        beforeSend: function(xhr)
+    if ($("#backflag").val()<=3) {
+      $.ajax(
         {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        }
-      })
-      .done(function(resp) {
-        $("#info").html(resp);
-      })
-      .fail(function() {
-        console.log("error");
-      })
-      .always(function() {
-        console.log("complete");
-      });
+          type: "POST",
+          url: "/showtrialbalancereport",
+          global: false,
+          async: false,
+          datatype: "text/html",
+          data: {"financialstart":sessionStorage.yyyymmddyear1,"calculateto":$("#calculateto").val(),"trialbalancetype":$("#backflag").val()},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          }
+        })
+        .done(function(resp) {
+          $("#info").html(resp);
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+    }
+    else if ($("#backflag").val()==4) {
+      $.ajax(
+        {
+          type: "POST",
+          url: "/showcashflowreport",
+          global: false,
+          async: false,
+          datatype: "text/html",
+          data: {"financialstart":sessionStorage.yyyymmddyear1,"orgtype":sessionStorage.orgt,"calculateto":$("#calculateto").val(),"calculatefrom":$("#calculatefrom").val()},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          }
+        })
+        .done(function(resp) {
+          $("#info").html(resp);
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+
+    }
   });
 
   $("#anotherledger").click(function(event) {

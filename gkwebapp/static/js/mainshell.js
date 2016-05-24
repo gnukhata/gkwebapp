@@ -203,6 +203,10 @@ $(document).ready(function(){
     $("#info").load("/showtrialbalance");
   });
 
+  $("#showcashflow").click(function(event){
+    $("#info").load("/showcashflow");
+  });
+
   $("#showclosebooks").click(function(event){
     $("#info").load("/showclosebooks");
   });

@@ -32,6 +32,8 @@ def main(global_config, **settings):
     config.add_route('showledgerreport', '/showledgerreport')
     config.add_route('showtrialbalance', '/showtrialbalance')
     config.add_route('showtrialbalancereport', '/showtrialbalancereport')
+    config.add_route('showcashflow', '/showcashflow')
+    config.add_route('showcashflowreport', '/showcashflowreport')
     config.add_route('showaccount', '/showaccount')
     config.add_route('accountpopup', '/accountpopup')
     config.add_route('showvoucher', '/showvoucher')
