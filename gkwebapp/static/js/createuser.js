@@ -80,9 +80,6 @@ $("input,select").keydown(function(e) {
       $("#answer").focus();
       return false;
     }
-    var isvalidate=$("#adduser").valid();
-    if(isvalidate)
-        {
           $.ajax(
             {
               type: "POST",
@@ -129,8 +126,6 @@ $("input,select").keydown(function(e) {
           );
 
           e.preventDefault();
-        }
-    e.preventDefault();
   }
 );
 });
