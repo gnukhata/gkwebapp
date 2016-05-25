@@ -32,6 +32,14 @@ $(document).ready(function() {
   $(document).off("click","#remove").on("click", "#remove", function(event)
   {
     event.preventDefault();
+    if ($.trim($("#username").val())=="") {
+      $("#remove-blank-alert").alert();
+      $("#remove-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#remove-blank-alert").hide();
+      });
+      $("#username").focus();
+      return false;
+    }
     $('#m_confirmdel').modal('show').one('click', '#m_yes', function (e)
     {
 
