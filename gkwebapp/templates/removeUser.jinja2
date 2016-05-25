@@ -2,28 +2,14 @@
 <html>
 <head>
 
-	<link rel="stylesheet" type="text/css" media="screen" href="{{request.static_url('gkwebapp:static/css/bootstrap.min.css')}}" />
+
 	<title>
 		GNUKhata
 	</title>
 </head>
 <body>
-	<div class="alert alert-success" id="remsuccess-alert" hidden>
-		<a href="" class="close" aria-label="close">&times;</a>
-		User removed successfully.
-	</div>
-	<div class="alert alert-success" id="accessdenied-alert" hidden>
-		<a href="" class="close" aria-label="close">&times;</a>
-		You are not allowed to remove this user.
-	</div>
-	<div class="alert alert-success" id="actiondisallowed-alert" hidden>
-		<a href="" class="close" aria-label="close">&times;</a>
-		The action is disallowed temporarily.
-	</div>
-	<div class="alert alert-success" id="connectionfailed-alert" hidden>
-		<a href="" class="close" aria-label="close">&times;</a>
-		Coonection Failed.
-	</div>
+
+
 <div class="container-fluid">
 		<div id="removeuser" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-4">
 			<div class="panel panel-info" class="col-md-offset-4" >
@@ -32,6 +18,27 @@
 				</div>
 
 				<div style="padding-top:30px" class="panel-body" >
+					<div class="alert alert-danger" id="remove-blank-alert" hidden>
+						<a href="#" class="close" aria-label="close">&times;</a>
+						Please select User!
+					</div>
+
+					<div class="alert alert-success" id="remsuccess-alert" hidden>
+						<a href="" class="close" aria-label="close">&times;</a>
+						User removed successfully.
+					</div>
+					<div class="alert alert-success" id="accessdenied-alert" hidden>
+						<a href="" class="close" aria-label="close">&times;</a>
+						You are not allowed to remove this user.
+					</div>
+					<div class="alert alert-success" id="actiondisallowed-alert" hidden>
+						<a href="" class="close" aria-label="close">&times;</a>
+						The action is disallowed temporarily.
+					</div>
+					<div class="alert alert-success" id="connectionfailed-alert" hidden>
+						<a href="" class="close" aria-label="close">&times;</a>
+						Coonection Failed.
+					</div>
 					<div id="connectionFailed" center hidden><h3> <center>Connection Failed.</h3></center></div>
 					<div id="unauthorizedaccess" center hidden><h3>You are not authorized to access this data</h3></div>
 			<form id="removeUserform" class="form-horizontal" method="delete" >
@@ -76,7 +83,7 @@
 
 	</div>
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/removeuser.js')}}"></script>
-	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
+	
 
 
 
