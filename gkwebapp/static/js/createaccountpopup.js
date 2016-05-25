@@ -1,7 +1,49 @@
 $(document).ready(function()
 {
-  $("#m_obal").hide();
-  $("#m_openbal").hide();
+
+  var sel1 = 0;
+  var sel2 = 0;
+
+  $("#m_groupname").focus(function() {
+    sel1 = 1;
+  });
+  $("#m_groupname").blur(function(){
+    sel1 = 0;
+  });
+  $("#m_subgroupname").focus(function() {
+    sel2 = 1;
+  });
+  $("#m_subgroupname").blur(function(){
+    sel2 = 0;
+  });
+
+
+  $('input:text,select, input:checkbox').keydown( function(event) {
+    var n = $("input:text:visible,select, input:checkbox").length;
+    var f = $('input:text:visible,select, input:checkbox');
+
+    if (event.which == 13)
+    {
+
+
+      var nextIndex = f.index(this) + 1;
+      if(nextIndex < n){
+        event.preventDefault();
+        f[nextIndex].focus();}
+
+      }
+
+
+      var s2 = $("#m_subgroupname option:selected").index();
+      if ((event.which == 38 && sel2 == 1 && s2 == 0) || (event.which == 38 && (sel1 == 0 && sel2==0)))
+      {
+        var prevIndex = f.index(this) - 1;
+        if(prevIndex < n){
+          event.preventDefault();
+          f[prevIndex].focus();}
+        }
+      });
+
   $("#m_baltbl").hide();
   $("#m_groupname").focus();
   $("#m_accountform").validate();
@@ -68,24 +110,53 @@ else
 
 });
 
-$("#m_reset").click(function(e)
-{
-  $('#m_accountform')[0].reset();
-  $("#m_nsgp").hide();
-  $("#m_obal").hide();
-  $("#m_openbal").hide();
-  $("#m_baltbl").hide();
-  e.preventDefault();
-}
-);
+
 
 
 
   $("#m_accountform").submit(function(e)
   {
-var isvalidate=$("#m_accountform").valid();
-if(isvalidate)
-{
+
+    if ($.trim($("#m_accountname").val())=="") {
+      $("#m_blank-alert").alert();
+      $("#m_blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#m_blank-alert").hide();
+      });
+      $("#m_accname").focus().select();
+      return false;
+    }
+
+    if ($.trim($("#m_groupname option:selected").val())=="") {
+      $("#m_grpblank-alert").alert();
+      $("#m_grpblank-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#m_grpblank-alert").hide();
+      });
+      $("#m_groupname").focus().select();
+      return false;
+    }
+
+    if ($.trim($("#m_subgroupname option:selected").val())=="") {
+      $("#m_sgrpblank-alert").alert();
+      $("#m_sgrpblank-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#m_sgrpblank-alert").hide();
+      });
+      $("#m_subgroupname").focus().select();
+      return false;
+    }
+
+if ($("#m_newsubgroup").is(':visible')) {
+
+  if ($.trim($("#m_newsubgroup").val())=="") {
+    $("#m_nsblank-alert").alert();
+    $("#m_nsblank-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#m_nsblank-alert").hide();
+    });
+    $("#m_newsubgroup").focus().select();
+    return false;
+  }
+
+}
+
     var ob = $('#m_openbal').val();
     if(ob=="")
     {
@@ -111,14 +182,31 @@ if(isvalidate)
           },
           success: function(resp)
           {
-            if(resp["gkstatus"])
+            if(resp["gkstatus"]==0)
             {
-            alert("Account Created Successfully");
-            $('#m_accmodal').modal('hide')
+
+              $("#m_success-alert").alert();
+              $("#m_success-alert").fadeTo(2000, 500).slideUp(500, function(){
+                $("#m_success-alert").hide();
+              });
+              $('#m_accmodal').modal('hide');
+              $('.modal-backdrop').remove();
+            }
+            else if(resp["gkstatus"]==1)
+            {
+              $("#m_duplicate-alert").alert();
+              $("#m_duplicate-alert").fadeTo(2000, 500).slideUp(500, function(){
+                $("#m_duplicate-alert").hide();
+              });
+              $("#m_accname").focus().select();
             }
             else
             {
-              alert("Account Could Not Be Created");
+              $("#m_failure-alert").alert();
+              $("#m_failure-alert").fadeTo(2000, 500).slideUp(500, function(){
+                $("#m_failure-alert").hide();
+              });
+              $("#m_accname").focus().select();
             }
           }
 
@@ -127,12 +215,8 @@ if(isvalidate)
 
 
 
-}
+
     e.preventDefault();
   }
 );
-
-
-
-
 });

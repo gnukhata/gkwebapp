@@ -70,4 +70,7 @@ $(document).ready(function() {
       });
 
   });
+  $("#cashfl_reset").click(function(event) {
+    $("#showcashflow").click();
+  });
 });
