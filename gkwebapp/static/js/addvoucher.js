@@ -45,6 +45,13 @@ $(document).ready(function() {
   var drsum = 0;    //drsum and crsum will have the total cr and dr amount
   var crsum = 0;
   var diff = 0;     //diff containns the difference of drsum and crsum
+  var percentwid = 100*(($("table").width()-12)/$("table").width());
+  $('.table-fixedheader thead').width(percentwid+"%");
+  $('.table-fixedheader tfoot').width(percentwid+"%");
+  var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
+  $("#vdate").val(fromdatearray[2])
+  $("#vmonth").val(fromdatearray[1])
+  $("#vyear").val(fromdatearray[0])
 
   //Calculates the total dr and cr amout when a change event is fired.
   $(document).off("change",".dramt").on("change", ".dramt", function() {
@@ -107,6 +114,18 @@ $(document).ready(function() {
   $('#vno').keyup(function(event) {
     if(event.which==13 && $('#vno').val()!=""){
       $('#vdate').select().focus();
+    }
+  });
+
+  $('#vdate').keyup(function(event) {
+    if(event.which==13 && $('#vdate').val()!=""){
+      $('#vmonth').select().focus();
+    }
+  });
+
+  $('#vmonth').keyup(function(event) {
+    if(event.which==13 && $('#vmonth').val()!=""){
+      $('#vyear').select().focus();
     }
   });
 
@@ -635,6 +654,10 @@ $(document).ready(function() {
           crsum = 0;
           diff = 0;
           $("#vtable tbody").find("tr:gt(1)").remove();
+          var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
+          $("#vdate").val(fromdatearray[2])
+          $("#vmonth").val(fromdatearray[1])
+          $("#vyear").val(fromdatearray[0])
           $("#success-alert").alert();
           $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
             $("#success-alert").hide();
@@ -753,6 +776,10 @@ $(document).ready(function() {
     crsum = 0;
     diff = 0;
     $("#vtable tbody").find("tr:gt(1)").remove();
+    var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
+    $("#vdate").val(fromdatearray[2])
+    $("#vmonth").val(fromdatearray[1])
+    $("#vyear").val(fromdatearray[0])
     $('#vno').focus();
   });
 });

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>GNUKhata | View Cash Flow</title>
+    <style media="screen">
+    .shadow {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    label {
+  		font-size: 90%;
+  	}
+    </style>
+  </head>
+  <body>
+    <div style="padding-top:5px" class="container-fluid mainbox col-md-4 col-md-offset-4">
+    <div class="panel panel-info shadow">
+      <div class="panel-heading">
+        <h3 class="panel-title">View Cash Flow</h3>
+      </div>
+      <div class="panel-body">
+        <label for="cashfl_fromdate">From:</label>
+        <div class="form-inline">
+          <div class="form-group">
+            <input type="text" class="form-control input-sm cashfl_autotab" id="cashfl_fromdate" value="" size="2" maxlength="2" placeholder="DD">
+            <input type="text" class="form-control input-sm cashfl_autotab" id="cashfl_frommonth" value="" size="2" maxlength="2" placeholder="MM">
+            <input type="text" class="form-control input-sm cashfl_autotab" id="cashfl_fromyear" value="" size="4" maxlength="4" placeholder="YYYY">
+          </div>
+        </div>
+        <br>
+        <label for="cashfl_todate">To:</label>
+        <div class="form-inline">
+          <div class="form-group">
+
+          <input type="text" class="form-control input-sm cashfl_autotab" id="cashfl_todate" value=""  size="2" maxlength="2" placeholder="DD">
+          <input type="text" class="form-control input-sm cashfl_autotab" id="cashfl_tomonth" value="" size="2" maxlength="2" placeholder="MM">
+          <input type="text" class="form-control input-sm cashfl_autotab" id="cashfl_toyear" value="" size="4" maxlength="4" placeholder="YYYY">
+        </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button type="button" class="btn btn-sm btn-success" name="button" id="cashfl_view">View</button>
+        <button type="button" name="button" class="btn btn-sm btn-danger" id="cashfl_reset">Reset</button>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewcashflow.js')}}"></script>
+  </body>
+</html>
