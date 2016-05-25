@@ -58,5 +58,6 @@ def main(global_config, **settings):
     config.add_route('createadmin', '/createadmin')
     config.add_route('removeuser', '/removeuser')
     config.add_route('deleteuser', '/deleteuser')
+    config.add_route('forgotpassword', '/forgotpassword')
     config.scan('gkwebapp')
     return config.make_wsgi_app()
