@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
-
+  var percentwid = 100*(($("table").width()-12)/$("table").width());
+  $('.table-fixedheader thead').width(percentwid+"%");
 
   $(' #ledgertable tbody tr:first-child td:eq(1) a').focus();
   $('#ledgertable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');

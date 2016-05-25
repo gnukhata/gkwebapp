@@ -1,5 +1,7 @@
 $(document).ready(function() {
   $("#prjname").focus();
+  var percentwid = 100*(($("table").width()-12)/$("table").width());
+  $('.table-fixedheader thead').width(percentwid+"%");
   $("#prjamount").numeric({ negative: false });
   $("#m_prjamount").numeric({ negative: false });
   if($("#prjtable tbody tr").length==0){

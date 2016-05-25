@@ -45,7 +45,9 @@ $(document).ready(function() {
   var drsum = 0;    //drsum and crsum will have the total cr and dr amount
   var crsum = 0;
   var diff = 0;     //diff containns the difference of drsum and crsum
-
+  var percentwid = 100*(($("table").width()-12)/$("table").width());
+  $('.table-fixedheader thead').width(percentwid+"%");
+  $('.table-fixedheader tfoot').width(percentwid+"%");
   var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
   $("#vdate").val(fromdatearray[2])
   $("#vmonth").val(fromdatearray[1])

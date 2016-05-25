@@ -3,7 +3,8 @@ $(document).ready(function() {
   $('#rctable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
   var rcindex = 0
   var pyindex = 0
-
+  var percentwid = 100*(($("table").width()-12)/$("table").width());
+  $('.table-fixedheader thead').width(percentwid+"%");
   $(document).off('focus' ,'.rcaccname').on('focus' ,'.rcaccname',function() {
     $('#rctable tr').removeClass('selected');
     $(this).closest('tr').addClass('selected');
