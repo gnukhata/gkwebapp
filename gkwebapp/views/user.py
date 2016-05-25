@@ -33,4 +33,5 @@ def deleteuser(request):
 
 @view_config(route_name="forgotpassword", renderer="gkwebapp:templates/forgotpassword.jinja2")
 def forgotpassword(request):
-    return {"a":1}
+    code = request.params["orgcode"]
+    return {"orgcode":code}

@@ -23,7 +23,8 @@ $(document).ready(function()
   });
 
   $("#forgotpwdlink").click(function(event){
-    $("#selectorg").load("/forgotpassword");
+    var code = $("#orgcode").val();
+    $("#selectorg").load("/forgotpassword?orgcode="+ code);
   });
 
   $("#loginform").submit(function(e)
