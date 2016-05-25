@@ -18,9 +18,9 @@ $(document).ready(function() {
   $("#viewledger_tomonth").val(todatearray[1])
   $("#viewledger_toyear").val(todatearray[0])
 
-  $('input:text,input:checkbox,select').keydown( function(e) {
-    var n = $("input:text,input:checkbox,select").length;
-    var f = $('input:text,input:checkbox,select');
+  $('input:text:enabled,input:checkbox:enabled,select:enabled').keydown( function(e) {
+    var n = $("input:text:enabled,input:checkbox:enabled,select:enabled").length;
+    var f = $('input:text:enabled,input:checkbox:enabled,select:enabled');
       if (e.which == 13)
       {
         var nextIndex = f.index(this) + 1;
@@ -47,12 +47,27 @@ $(document).ready(function() {
     }
   });
 
+  $("#viewledger_monthly").keydown(function(event) {
+    if (event.which==13) {
+      if ($("#viewledger_monthly").is(":checked")) {
+      $("#viewledger_submit").click();
+    }
+    }
+  });
 
+  $("#viewledger_monthly").change(function(event) {
+    if ($("#viewledger_monthly").is(":checked")) {
+      $('.dis').attr('disabled', true);
+    }
+    else {
+      $('.dis').attr('disabled', false);
+    }
+  });
   $("#viewledger_submit").click(function(event) {
     if ($("#viewledger_accname").val()==null) {
       return false;
     }
-    if ($("#viewledger_fromdate").val()=="" || $("#viewledger_frommonth").val()=="" || $("#viewledger_fromyear").val()=="" || $("#viewledger_todate").val()=="" || $("#viewledger_tomonth").val()=="" || $("#viewledger_toyear").val()=="") {
+    if (($("#viewledger_fromdate").val()=="" || $("#viewledger_frommonth").val()=="" || $("#viewledger_fromyear").val()=="" || $("#viewledger_todate").val()=="" || $("#viewledger_tomonth").val()=="" || $("#viewledger_toyear").val()=="") && $("#viewledger_monthly").is(":checked")==false) {
       return false;
     }
     $.ajax(

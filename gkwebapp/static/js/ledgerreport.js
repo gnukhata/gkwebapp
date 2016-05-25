@@ -245,6 +245,26 @@ $(document).ready(function() {
         });
 
     }
+    else if ($("#backflag").val()==5){
+      $.ajax(
+        {
+          type: "POST",
+          url: "/showledgerreport",
+          global: false,
+          async: false,
+          datatype: "text/html",
+          data: {"backflag":0,"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"monthlyflag":true,"narrationflag":false},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+        })
+          .done(function(resp)
+          {
+            $("#info").html(resp);
+          }
+        );
+    }
   });
 
   $("#anotherledger").click(function(event) {
