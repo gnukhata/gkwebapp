@@ -178,6 +178,28 @@ $(document).ready(function(){
     );
     });
 
+    $('#showprjstate').click(function (e) {
+
+        $.ajax(
+        {
+
+        type: "POST",
+        url: "/showviewprojectstatement",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+        }
+      );
+      });
+
   $('#showproject').click(function (e) {
     $.ajax(
     {
