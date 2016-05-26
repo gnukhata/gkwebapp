@@ -398,7 +398,7 @@ $(document).ready(function()
               '<td class="col-xs-3">'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="0.00">'+
               '</td>'+
-              '<td class="col-xs-1"><a href="" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
+              '<td class="col-xs-1"><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
               '</tr>');
               for (i in accs ) {
                 $('#vctable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
@@ -464,7 +464,7 @@ $(document).ready(function()
               '<td class="col-xs-3">'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
-              '<td class="col-xs-1"><a href="" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
+              '<td class="col-xs-1"><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
               '</tr>');
               for (i in accs ) {
                 $('#vctable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
@@ -559,7 +559,7 @@ $(document).ready(function()
               '<td class="col-xs-3">'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="0.00">'+
               '</td>'+
-              '<td class="col-xs-1"><a href="" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
+              '<td class="col-xs-1"><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
               '</tr>');
               for (i in accs ) {
                 $('#vctable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
@@ -630,7 +630,7 @@ $(document).ready(function()
               '<td class="col-xs-3">'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
-              '<td class="col-xs-1"><a href="" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
+              '<td class="col-xs-1"><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
               '</tr>');
               for (i in accs ) {
                 $('#vctable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');

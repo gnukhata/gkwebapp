@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>GNUKhata | Monthly Ledger</title>
+<style type="text/css">
+
+.selected
+{
+  background-color: Aquamarine;
+}
+
+.shadow {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h4 style="text-align:center">Monthly Ledger</h4>
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table id="mthltable" class="shadow table table-bordered table-condensed">
+            <thead>
+              <tr class="info ">
+                <th class="col-xs-6">Month</th>
+                <th style="text-align:right" class="col-xs-3">Debit</th>
+                <th style="text-align:right" class="col-xs-3">Credit</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for record in records %}
+              <tr  value="{{record['period']}}">
+                <td class="col-xs-6">
+                  <a class="monthname" href="">{{record['month']}}</a>
+                </td>
+                <td class="col-xs-3" style="text-align:right">
+                  {{record["Dr"]}}
+                </td>
+                <td class="col-xs-3" style="text-align:right">
+                  {{record["Cr"]}}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button type="button" class="btn btn-sm btn-danger" id="mthlback">Back</button>
+      </div>
+    </div>
+    <input type="hidden" id="accountcode" value="{{accountcode}}">
+  </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/monthledger.js')}}"></script>
+</body>
+</html>
