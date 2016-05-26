@@ -109,6 +109,7 @@
   <input type="hidden" id="backflag" name="backflag" value="{{ledgerrefresh["backflag"]}}"></input>
   <input type="hidden" id="projectcode" name="projectcode" value="{{ledgerrefresh["projectcode"]}}"></input>
   <input type="hidden" id="narrationflag" name="narrationflag" value="{{ledgerrefresh["narrationflag"]}}"></input>
+  <input type="hidden" id="projectname" name="projectname" value="{{ledgerrefresh["projectname"]}}"></input>
   {% if ledgerheader["projectname"]!="" %}
   <i>Project</i> : {{ledgerheader["projectname"]}}
   {% endif %}
@@ -167,12 +168,12 @@
         {% endfor %}
       </tbody>
     </table>
-    <div class="col-xs-offset-5">
+    <span style="margin:auto; display:table;">
       {% if ledgerrefresh["backflag"]>0 %}
       <button class="btn btn-sm btn-danger" type="button" id="back">Back</button>
       {% endif %}
       <button class="btn btn-sm btn-primary" type="button" id="anotherledger">View another ledger</button>
-    </div>
+    </span>
   </div>
 
   <div id="viewvc">

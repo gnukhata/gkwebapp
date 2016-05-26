@@ -100,7 +100,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
 </head>
 <body>
   {% if orgtype=="Profit Making" %}
-    <strong>Cash Flow Account</strong> for the period <a class="glyphicon glyphicon-calendar"></a> <strong>{{from}}</strong> to <a class="glyphicon glyphicon-calendar"></a> <strong>{{to}}</strong>
+    <span style="margin:auto; display:table;"><strong>Cash Flow Account</strong> for the period <a class="glyphicon glyphicon-calendar"></a> <strong>{{from}}</strong> to <a class="glyphicon glyphicon-calendar"></a> <strong>{{to}}</strong></span>
   {% else %}
     <strong>Reciept & Payment Account</strong> for the period <a class="glyphicon glyphicon-calendar"></a> <strong>{{from}}</strong> to <a class="glyphicon glyphicon-calendar"></a> <strong>{{to}}</strong>
   {% endif %}
@@ -167,9 +167,9 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
     </div>
 
   </div>
-  <div class="col-xs-offset-5">
+  <span style="margin:auto; display:table;">
     <button type="button" class="btn btn-sm btn-danger" id="cfback">Back</button>
-  </div>
+  </span>
   <input type="hidden" id="ledtodate" value="{{to}}">
   <input type="hidden" id="ledfromdate" value="{{from}}">
   <input type="hidden" id="backflag" value="{{backflag}}">

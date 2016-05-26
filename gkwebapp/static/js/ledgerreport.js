@@ -1,7 +1,9 @@
 $(document).ready(function() {
 
-  var percentwid = 100*(($("table").width()-12)/$("table").width());
+  var percentwid = 100*(($(".table-fixedheader").width()-12)/$(".table-fixedheader").width());
   $('.table-fixedheader thead').width(percentwid+"%");
+  var percentheigth = 100*(($("body").height()-$(".navbar").height()-148)/$("body").height());
+  $('.table-fixedheader tbody').height(percentheigth+"%");
 
   $(' #ledgertable tbody tr:first-child td:eq(1) a').focus();
   $('#ledgertable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
@@ -254,6 +256,26 @@ $(document).ready(function() {
           async: false,
           datatype: "text/html",
           data: {"backflag":0,"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"monthlyflag":true,"narrationflag":false},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+        })
+          .done(function(resp)
+          {
+            $("#info").html(resp);
+          }
+        );
+    }
+    else if ($("#backflag").val()==6) {
+      $.ajax(
+        {
+          type: "POST",
+          url: "/showprojectstatementreport",
+          global: false,
+          async: false,
+          datatype: "text/html",
+          data: {"calculateto":$("#calculateto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"projectname":$("#projectname").val()},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

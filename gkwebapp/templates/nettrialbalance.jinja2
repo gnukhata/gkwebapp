@@ -99,7 +99,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
 </style>
 </head>
 <body>
-  <strong>Net Trial Balance</strong> for the period from <a class="glyphicon glyphicon-calendar"></a> <strong>{{from}}</strong> to <a class="glyphicon glyphicon-calendar"></a> <strong>{{to}}</strong>
+  <span style="margin:auto; display:table;"><strong>Net Trial Balance</strong> for the period from <a class="glyphicon glyphicon-calendar"></a> <strong>{{from}}</strong> to <a class="glyphicon glyphicon-calendar"></a> <strong>{{to}}</strong></span>
   <div class="table-responsive">
     <table id="ntbtable" class="shadow table table-condensed table-fixedheader trialbaltable">
       <thead>
@@ -138,11 +138,11 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
       </tbody>
     </table>
   </div>
-  <div class="col-xs-offset-5">
+  <span style="margin:auto; display:table;">
     <button type="button" class="btn btn-sm btn-primary" id="gtbview">Gross Trial Balance</button>
     <button type="button" class="btn btn-sm btn-warning" id="extbview">Extended Trial Balance</button>
     <button type="button" class="btn btn-sm btn-danger" id="tbback">Back</button>
-  </div>
+  </span>
   <input type="hidden" id="ledtodate" value="{{to}}">
   <input type="hidden" id="trialbaltype" value="{{trialbalancetype}}">
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/trialbalancereport.js')}}"></script>
