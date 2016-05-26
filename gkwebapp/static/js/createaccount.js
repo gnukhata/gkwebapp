@@ -256,42 +256,44 @@ if ($("#newsubgroup").is(':visible')) {
         }
 
     }
-    else
-    {
-      $('#m_multiacc').modal('show');
-    }
+
+
+      $.ajax({
+        type: "POST",
+        url: "/showmultiacc",
+        data: {"groupcode":$("#groupname option:selected").val(),"groupname":$("#groupname option:selected").text(),"subgroupcode":$("#subgroupname option:selected").val(),"subgroupname":$("#subgroupname option:selected").text(),"newsubgroup":$("#newsubgroup").val()},
+        global: false,
+        async: false,
+        datatype: "text/html"
+
+      })
+      .done(function(resp) {
+
+        $("#multiaccount_modal").html(resp);
+        $("#m_multiacc").modal('show');
+        $('#m_multiacc').on('shown.bs.modal', function (e)
+        {
+          $(".btnfocus:enabled:first").focus();
+
+        });
+        $('#m_multiacc').on('hidden.bs.modal', function (e)
+        {
+          $('#maccounts').attr('checked', false);
+          $("#multiaccount_modal").html("");
+          $("#reset").click();
+
+
+        });
+
+      })
+      .fail(function() {
+        alert("failed");
+      });
+
+
+
 
   });
 
-  $('#m_multiacc').on('shown.bs.modal', function (e)
-  {
-    $('#m_gname').val($('#groupname option:selected').text());
-
-    if ($("#newsubgroup").is(':visible')) {
-      $('#m_sgname').val($.trim($("#newsubgroup").val()));
-    }
-    else {
-      $('#m_sgname').val($('#subgroupname option:selected').text());
-
-    }
-
-  });
-
-  $('#m_multiacc').on('hidden.bs.modal', function (e)
-  {
-    $('#maccounts').attr('checked', false);
-
-
-  });
-
-
-  $("#m_multiacc").off("keyup",".m_accname").on("keyup",".m_accname ",function(event)
-  {
-    event.preventDefault();
-    if (event.which == 13)
-    {
-      alert("gfdgfdg");
-    }
-  });
 
 });

@@ -15,6 +15,12 @@ def showaccount(request):
 		grpdata.append(gdata)
 	return {"gkresult":grpdata,"baltbl":result.json()["baltbl"]}
 
+@view_config(route_name="showmultiacc", renderer="gkwebapp:templates/multipleaccounts.jinja2")
+def showmultiacc(request):
+	print request.params
+	return {"gkresult":request.params}
+
+
 @view_config(route_name="showeditaccount", renderer="gkwebapp:templates/editaccount.jinja2")
 def showeditaccount(request):
 
