@@ -1,5 +1,8 @@
 $(document).ready(function()
 {
+  $("#obal").hide();
+  $("#openbal").hide();
+  $("#baltbl").hide();
 
   var sel1 = 0;
   var sel2 = 0;
@@ -273,7 +276,7 @@ if ($("#newsubgroup").is(':visible')) {
         $("#m_multiacc").modal('show');
         $('#m_multiacc').on('shown.bs.modal', function (e)
         {
-          $(".btnfocus:enabled:first").focus();
+          $(".m_accname:enabled:first").focus();
 
         });
         $('#m_multiacc').on('hidden.bs.modal', function (e)

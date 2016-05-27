@@ -11,15 +11,15 @@ $(document).ready(function() {
       if(m_grpnm=="Select Group" || m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
       {
 
-          if ($(this).closest('tr').is(":last-child"))
-          {
-            addRow(curindex);
-          }
-          else
-          {
-            $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').focus();
-            $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').select();
-          }
+        if ($(this).closest('tr').is(":last-child"))
+        {
+          addRow(curindex);
+        }
+        else
+        {
+          $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').focus();
+          $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').select();
+        }
       }
       else
       {
@@ -60,15 +60,16 @@ $(document).ready(function() {
       {
         $("#m_duplicate-alert").alert();
         $("#m_duplicate-alert").fadeTo(2000, 500).slideUp(500, function(){
-          $("#m_blank-alert").hide();
+          $("#m_duplicate-alert").hide();
         });
         $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').focus();
         $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').select();
       }
       if (jsonobj["gkstatus"]==0)
       {
-        if ($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').is(":disabled"))
+        if ($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').is(":disabled"))
         {
+
           $("#m_acctable").append('<tr>'+
           '<td class="col-xs-7"><input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name"></td>'+
           '<td class="col-xs-3">'+
@@ -107,6 +108,20 @@ $(document).off("keyup",".m_openbal").on("keyup",".m_openbal", function(event)
   if(event.which == 13)
   {
     var curindex = $(this).closest('tr').index();
+    var accnt = $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').val();
+
+    if(accnt=="")
+    {
+
+      $("#m_blank-alert").alert();
+      $("#m_blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#m_blank-alert").hide();
+      });
+      $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').focus();
+      return false;
+    }
+
+    var curindex = $(this).closest('tr').index();
     var nextindex = curindex+1;
     if ($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').val()==0 || $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').val()=="")
     {
@@ -129,17 +144,26 @@ $(document).off("keyup",".m_openbal").on("keyup",".m_openbal", function(event)
 
 $(document).off("click",".m_del").on("click", ".m_del", function() {
   $(this).closest('tr').fadeOut(200, function(){
-    $(this).closest('tr').remove();   //closest method gives the closest element specified
+    $(this).closest('tr').remove();	 //closest method gives the closest element specified
     $('#m_acctable tbody tr:last td:eq(0) input').focus();
   });
   $('#m_acctable tbody tr:last td:eq(0) input').select();
 });
+var allow = true;
+var blankindex = 0;
 $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
 
 
-  var output = [];  // This is an array which will contain dictionaries representing rows of the table.
+  var output = [];	// This is an array which will contain dictionaries representing rows of the table.
   $("#m_acctable tbody tr").each(function() { //loop for the rows of the table body
 
+    var accn = $(".m_accname", this).val();
+    if (accn=="")
+    {
+      allow = false;
+      blankindex = $(this).closest('tr').index();
+
+    }
     var obj = {};
 
     obj.accountname = $(".m_accname", this).val();
@@ -156,7 +180,16 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
     output.push(obj);
   });
 
+  if (!allow) {
 
+    $("#m_blank-alert").alert();
+    $("#m_blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#m_blank-alert").hide();
+    });
+    $('#m_acctable tbody tr:eq('+blankindex+') td:eq(0) input').focus();
+    allow = true;
+    return false;
+  };
 
 
   $.ajax({

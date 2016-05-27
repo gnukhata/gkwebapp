@@ -178,8 +178,8 @@
 							<label for="accountname" id="accname"><u>A</u>ccount Name :</label>
 							<input type="text" id="accountname" class="form-control input-sm" name="accountname" accesskey="a"></input>
 							<br/>
-							<label for="openbal" id="obal"><u>O</u>pening Balance :</label>
-							<input id="openbal" name="openbal" value="0.00" style="text-align:right" class=" form-control input-sm" type="text" placeholder="0.00" accesskey="o"/>
+							<label for="openbal" id="obal" hidden><u>O</u>pening Balance :</label>
+							<input id="openbal" name="openbal" value="0.00" style="text-align:right" class=" form-control input-sm" type="text" placeholder="0.00" accesskey="o" hidden/>
 							<br/>
 							<button type="submit" class="btn btn-primary btn-sm" id="submit" name="submit" accesskey="s"><u>S</u>ave</button>
 							<button id="reset" class="btn btn-danger btn-sm" accesskey="r"><u>R</u>eset</button>
@@ -189,7 +189,7 @@
 				</div>
 			</div>
 		</div>
-		<div style="padding-top:5px" class="col-md-6 shadow" id="baltbl">
+		<div style="padding-top:5px" class="col-md-6 shadow" id="baltbl" hidden>
 			<table class="table table-condensed">
 				<thead>
 					<tr class="success">
