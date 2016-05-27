@@ -31,7 +31,7 @@ $(document).ready(function() {
         }
       }
       var s1 = $("#viewprjstate_prjname option:selected").index();
-      if (e.which == 38 && sel1 == 1 && s1 == 0 || (e.which == 38 && sel1 == 0))
+      if ((e.which == 38 && sel1 == 1 && s1 == 0) ||(e.which == 38 && sel1 == 1 && s1 == 1) || (e.which == 38 && sel1 == 0))
       {
         var prevIndex = f.index(this) - 1;
         if(prevIndex < n){

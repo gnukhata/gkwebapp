@@ -15,6 +15,22 @@ def showaccount(request):
 		grpdata.append(gdata)
 	return {"gkresult":grpdata,"baltbl":result.json()["baltbl"]}
 
+
+@view_config(route_name="accountexists", renderer="json")
+def accountexists(request):
+
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/accounts?find=exists&accountname=%s"%(request.params["accountname"]), headers=header)
+
+	return {"gkstatus":result.json()["gkstatus"]}
+
+
+@view_config(route_name="showmultiacc", renderer="gkwebapp:templates/multipleaccounts.jinja2")
+def showmultiacc(request):
+	print request.params
+	return {"gkresult":request.params}
+
+
 @view_config(route_name="showeditaccount", renderer="gkwebapp:templates/editaccount.jinja2")
 def showeditaccount(request):
 
@@ -97,6 +113,37 @@ def addaccount(request):
 		gkdata["groupcode"] = request.params["subgroupname"]
 
 	result = requests.post("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
+	return {"gkstatus":result.json()["gkstatus"]}
+
+
+
+@view_config(route_name="multiacc", renderer="json")
+def addmultiaccount(request):
+	header={"gktoken":request.headers["gktoken"]}
+	accdetails = json.loads(request.params["accdetails"])
+	print "this is accdetails: ",json.loads(request.params["accdetails"])
+	gkdata = {}
+	if accdetails[0]["subgroupname"]=="New":
+		gkdata1={"groupname":accdetails[0]["newsubgroup"],"subgroupof":accdetails[0]["groupname"]}
+		result = requests.post("http://127.0.0.1:6543/groupsubgroups", data =json.dumps(gkdata1),headers=header)
+
+		if result.json()["gkstatus"]==0:
+			gkdata["groupcode"] = result.json()["gkresult"]
+
+		else:
+			return {"gkstatus":False}
+
+	elif accdetails[0]["subgroupname"]=="None":
+		gkdata["groupcode"] = accdetails[0]["groupname"]
+
+	else:
+		gkdata["groupcode"] = accdetails[0]["subgroupname"]
+
+	for acc in accdetails:
+		gkdata["accountname"]=acc["accountname"]
+		gkdata["openingbal"]=acc["openbal"]
+		print "thiiiiiiiiiiiiiiisssssssssss issssssssssssssssssss",gkdata
+		result = requests.post("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 
 

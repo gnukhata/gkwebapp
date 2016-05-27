@@ -1,5 +1,9 @@
 $(document).ready(function()
 {
+  $("#openbal").numeric();
+  $("#obal").hide();
+  $("#openbal").hide();
+  $("#baltbl").hide();
 
   var sel1 = 0;
   var sel2 = 0;
@@ -49,7 +53,6 @@ $(document).ready(function()
   $("#accountform").validate();
   $("#groupname").bind("change keyup", function(){
     var gname = $("#groupname option:selected").text();
-
     if (gname=="Select Group" || gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income")
     {
       $("#obal").hide();
@@ -256,33 +259,44 @@ if ($("#newsubgroup").is(':visible')) {
         }
 
     }
-    else
-    {
-      $('#m_multiacc').modal('show');
-    }
+
+
+      $.ajax({
+        type: "POST",
+        url: "/showmultiacc",
+        data: {"groupcode":$("#groupname option:selected").val(),"groupname":$("#groupname option:selected").text(),"subgroupcode":$("#subgroupname option:selected").val(),"subgroupname":$("#subgroupname option:selected").text(),"newsubgroup":$("#newsubgroup").val()},
+        global: false,
+        async: false,
+        datatype: "text/html"
+
+      })
+      .done(function(resp) {
+
+        $("#multiaccount_modal").html(resp);
+        $("#m_multiacc").modal('show');
+        $('#m_multiacc').on('shown.bs.modal', function (e)
+        {
+          $(".m_accname:enabled:first").focus();
+
+        });
+        $('#m_multiacc').on('hidden.bs.modal', function (e)
+        {
+          $('#maccounts').attr('checked', false);
+          $("#multiaccount_modal").html("");
+          $("#reset").click();
+
+
+        });
+
+      })
+      .fail(function() {
+        alert("failed");
+      });
+
+
+
 
   });
 
-  $('#m_multiacc').on('show.bs.modal', function (e)
-  {
-    $('#m_gname').val($('#groupname option:selected').text());
-
-    if ($("#newsubgroup").is(':visible')) {
-      $('#m_sgname').val($.trim($("#newsubgroup").val()));
-    }
-    else {
-      $('#m_sgname').val($('#subgroupname option:selected').text());
-
-    }
-
-
-  });
-
-  $('#m_multiacc').on('hidden.bs.modal', function (e)
-  {
-    $('#maccounts').attr('checked', false);
-
-
-  });
 
 });
