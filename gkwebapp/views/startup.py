@@ -21,6 +21,20 @@ def existingorg(request):
 		strData.append(sdata)
 	return {"gkresult":strData}
 
+@view_config(route_name="orgexists", renderer="json")
+def orgexists(request):
+	result = s.get("http://127.0.0.1:6543/organisations")
+	strData = []
+	for records in result.json()["gkdata"]:
+		sdata = {"orgname":str(records["orgname"]),"orgtype":str(records["orgtype"])}
+		strData.append(sdata)
+	
+	if len(strData) ==0:
+		return {"gkresult":0}
+	else:
+		return {"gkresult":1}
+
+
 @view_config(route_name="yearcode", renderer="json")
 def yearcode(request):
 	oname = request.params["orgname"]

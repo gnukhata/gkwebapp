@@ -1,12 +1,42 @@
 $(document).ready(function() {
+$(".m_openbal").numeric();
 
-
-  $(document).off("keyup",".m_accname").on("keyup",".m_accname",function(event)
+  $(document).off("keydown",".m_accname").on("keydown",".m_accname",function(event)
   {
+    $(".m_openbal").numeric();
+    var curindex = $(this).closest('tr').index();
+    var nextindex = curindex+1;
+    var previndex = curindex-1;
 
+    if (event.which==40)
+    {
+      if ($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').is("disabled"))
+      {
+        $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').focus();
+        $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').select();
+      }
+      else
+      {
+        $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').focus();
+        $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').select();
+      }
+    }
+    if (event.which==38)
+    {
+
+      if ($('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input').is("disabled"))
+      {
+        $('#m_acctable tbody tr:eq('+previndex+') td:eq(0) input:enabled').focus();
+        $('#m_acctable tbody tr:eq('+previndex+') td:eq(0) input:enabled').select();
+      }
+      else
+      {
+        $('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input:enabled').focus();
+        $('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input:enabled').select();
+      }
+    }
     if (event.which==13)
     {
-      var curindex = $(this).closest('tr').index();
       var m_grpnm = $("#m_gname").val();
       if(m_grpnm=="Select Group" || m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
       {
@@ -103,11 +133,31 @@ $(document).ready(function() {
 
 }
 
-$(document).off("keyup",".m_openbal").on("keyup",".m_openbal", function(event)
+$(document).off("keydown",".m_openbal").on("keydown",".m_openbal", function(event)
 {
+  $(".m_openbal").numeric();
+  var curindex = $(this).closest('tr').index();
+  var nextindex = curindex+1;
+  var previndex = curindex-1;
+
+  if (event.which==40)
+  {
+
+    $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').focus();
+    $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').select();
+
+  }
+  if (event.which==38)
+  {
+
+
+    $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input:enabled').focus();
+    $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input:enabled').select();
+
+  }
   if(event.which == 13)
   {
-    var curindex = $(this).closest('tr').index();
+
     var accnt = $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').val();
 
     if(accnt=="")
@@ -121,8 +171,7 @@ $(document).off("keyup",".m_openbal").on("keyup",".m_openbal", function(event)
       return false;
     }
 
-    var curindex = $(this).closest('tr').index();
-    var nextindex = curindex+1;
+
     if ($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').val()==0 || $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').val()=="")
     {
       $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').val("0.00");

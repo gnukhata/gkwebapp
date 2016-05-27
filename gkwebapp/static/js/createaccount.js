@@ -1,5 +1,6 @@
 $(document).ready(function()
 {
+  $("#openbal").numeric();
   $("#obal").hide();
   $("#openbal").hide();
   $("#baltbl").hide();
@@ -52,7 +53,6 @@ $(document).ready(function()
   $("#accountform").validate();
   $("#groupname").bind("change keyup", function(){
     var gname = $("#groupname option:selected").text();
-
     if (gname=="Select Group" || gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income")
     {
       $("#obal").hide();

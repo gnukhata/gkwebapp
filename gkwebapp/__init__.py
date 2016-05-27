@@ -22,6 +22,7 @@ def main(global_config, **settings):
     config.add_route('index', '/')
     config.add_route('about', '/about')
     config.add_route('existingorg', '/existingorg')
+    config.add_route('orgexists', '/orgexists')
     config.add_route('findeditvoucher', '/findeditvoucher')
     config.add_route('editvoucher', '/editvoucher')
     config.add_route('createorg', '/createorg')
