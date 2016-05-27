@@ -29,7 +29,9 @@ $(document).ready(function()
       var nextIndex = f.index(this) + 1;
       if(nextIndex < n){
         e.preventDefault();
-        f[nextIndex].focus();}
+        f[nextIndex].focus();
+        f[nextIndex].select();
+      }
 
       }
 
@@ -40,7 +42,9 @@ $(document).ready(function()
         var prevIndex = f.index(this) - 1;
         if(prevIndex < n){
           e.preventDefault();
-          f[prevIndex].focus();}
+          f[prevIndex].focus();
+          f[prevIndex].select();
+          }
         }
       });
 
@@ -70,6 +74,22 @@ $(document).ready(function()
           oname = (forname[0].toUpperCase())+(forname.substr(1).toLowerCase())
           $("#orgname").val(oname);
           sessionStorage.setItem('orgn', oname);
+        }
+      });
+
+      $("#today").focusin(function(event) {
+        var startday = $("#fromday").val();
+        var startmonth = $("#frommonth").val();
+        var startyear = $("#fromyear").val();
+        var startdate = $("#fromday").val()+$("#frommonth").val()+$("#fromyear").val();
+        if (!Date.parseExact(startdate, "ddMMyyyy")) {
+          $("#date-improper-alert").alert();
+          $("#date-improper-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#date-improper-alert").hide();
+          });
+          $("#fromday").focus();
+          $("#fromday").select();
+          return false;
         }
       });
 
@@ -111,14 +131,13 @@ $(document).ready(function()
         var tdate = $("#toyear").val()+"-"+$("#tomonth").val()+"-"+$("#today").val();
         var financialyears = fdate+tdate;
         var otype = $("#orgtype option:selected").val();
-        var syear = financialyears[0]+financialyears[1]+financialyears[2]+financialyears[3];
-        var eyear = financialyears[12]+financialyears[13];
+        var fadate = $("#fromday").val()+"-"+$("#frommonth").val()+"-"+$("#fromyear").val();
+        var tadate = $("#today").val()+"-"+$("#tomonth").val()+"-"+$("#toyear").val();
         sessionStorage.setItem('orgt', otype);
-        sessionStorage.setItem('year1', fdate);
-        sessionStorage.setItem('year2', tdate);
+        sessionStorage.setItem('year1', fadate);
+        sessionStorage.setItem('year2', tadate);
         sessionStorage.setItem('yyyymmddyear1', fdate );
         sessionStorage.setItem('yyyymmddyear2', tdate );
-        //alert("orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate);
 
         $("#createorg").load("/createadmin?orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate );
 

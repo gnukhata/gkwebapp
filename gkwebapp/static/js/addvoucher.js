@@ -45,6 +45,7 @@ $(document).ready(function() {
   var drsum = 0;    //drsum and crsum will have the total cr and dr amount
   var crsum = 0;
   var diff = 0;     //diff containns the difference of drsum and crsum
+  var outfocus = false;
   var percentwid = 100*(($("table").width()-12)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   $('.table-fixedheader tfoot').width(percentwid+"%");
@@ -208,10 +209,16 @@ $(document).ready(function() {
   });
 
   $(document).off("keyup",".accs").on("keyup",".accs",function(event){
-    if(event.which==13)
+    if(event.which==13 && !outfocus)
     {
+      if ($(this).val()==null) {
+        return false;
+      }
       var curindex = $(this).closest('tr').index();
       $('#vtable tbody tr:eq('+curindex+') input:enabled').select().focus(); // focus shifts to the enabled amount box when one hits enter on the accounts select box.
+    }
+    if (event.which==13 && outfocus) {
+      outfocus = false;
     }
   });
 
@@ -228,7 +235,7 @@ $(document).ready(function() {
   */
   $(document).off("keyup",".dramt").on("keyup",".dramt",function(event)
   {
-    if(event.which==13)
+    if(event.which==13 && !outfocus)
     {
       var curindex = $(this).closest('tr').index();
       if($('#vtable tbody tr:eq('+curindex+') td:eq(2) input:enabled').val()=="" || $('#vtable tbody tr:eq('+curindex+') td:eq(2) input:enabled').val()==0){
@@ -376,16 +383,35 @@ $(document).ready(function() {
 
       }
       else {
+        var index = 0;
+        var allow = true;
+        $(".accs").each(function() {
+          if ($(this).val()==null) {
+            allow = false;
+            index = $(this).closest('tr').index();
+          }
+        });
+        if (!allow) {
+          $("#vtable tbody tr:eq("+index+") td:eq(1) select").focus();
+          $("#account-blank-alert").alert();
+          $("#account-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#account-blank-alert").hide();
+          });
+          return false;
+        }
         $("#project").focus();
       }
       curindex=null;
       lastindex=null;
     }
+    if (event.which==13 && outfocus) {
+      outfocus=false;
+    }
   });
 
   $(document).off("keyup",".cramt").on("keyup",".cramt",function(event)
   {
-    if(event.which==13)
+    if(event.which==13 && !outfocus)
     {
       var curindex = $(this).closest('tr').index();
       if($('#vtable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()=="" || $('#vtable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()==0){
@@ -537,8 +563,27 @@ $(document).ready(function() {
 
       }
       else {
+        var index = 0;
+        var allow = true;
+        $(".accs").each(function() {
+          if ($(this).val()==null) {
+            allow = false;
+            index = $(this).closest('tr').index();
+          }
+        });
+        if (!allow) {
+          $("#vtable tbody tr:eq("+index+") td:eq(1) select").focus();
+          $("#account-blank-alert").alert();
+          $("#account-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#account-blank-alert").hide();
+          });
+          return false;
+        }
         $("#project").focus();
       }
+    }
+    if (event.which==13 && outfocus) {
+      outfocus=false;
     }
   });
   /*
@@ -547,6 +592,9 @@ $(document).ready(function() {
   */
   $('#save').click(function(event) {
     var allow = true;
+    var amountindex = 0;
+    var accallow = true;
+    var accountindex=0;
     // Check if voucher no. is blank and if it is then show an alert
     if ($('#vno').val()=="") {
       $("#vno-alert").alert();
@@ -565,13 +613,41 @@ $(document).ready(function() {
       $('#vdate').focus();
       return false;
     }
+    $("#vtable tbody tr").each(function() { //loop for the rows of the table body
+      if ($(".cramt", this).val()==0 && $(".dramt", this).val()=="" || $(".cramt", this).val()=="" && $(".dramt", this).val()==0 ) { //checking whether a row has no amount.
+        allow= false;
+        amountindex = $(this).closest('tr').index();
+      }
+      if ($(".accs", this).val()==null) {
+        accallow = false;
+        accountindex = $(this).closest('tr').index();
+      }
+    });
+    if (!accallow) {
+      $("#vtable tbody tr:eq("+accountindex+") td:eq(1) select").focus();
+      $("#account-blank-alert").alert();
+      $("#account-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#account-blank-alert").hide();
+      });
+      return false;
+    }
+    if(!allow){
+      $("#vtable tbody tr:eq("+amountindex+") input:enabled").focus();
+      $("#vtable tbody tr:eq("+amountindex+") input:enabled").select();
+      $("#zerorow-alert").alert();
+      $("#zerorow-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#zerorow-alert").hide();
+      });
+      return false;
+    }
     // Check if the total cr dr amounts tally, if it doesn't then show an alert.
     if ($('#drtotal').val()!=$('#crtotal').val()) {
       $("#balance-alert").alert();
       $("#balance-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#balance-alert").hide();
       });
-      $('#vtable tbody tr:last input:enabled').focus()
+      outfocus = true;
+      $('#vtable tbody tr:last input:enabled').focus();
       return false;
     }
     // Check if voucher amount is zero and if it is then show an alert.
@@ -590,6 +666,9 @@ $(document).ready(function() {
       $("#vtable tbody tr").each(function() {
         if(accountcode==$(".accs", this).val()){
           ccount =ccount +1;
+          if (ccount==2) {
+            accountindex = $(this).index();
+          }
         }
       });
       if (ccount>1) {
@@ -603,16 +682,13 @@ $(document).ready(function() {
       $("#accs-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#accs-alert").hide();
       });
-      $("#vtable tbody tr:first td:eq(1) select").focus();
+      outfocus= true;
+      $("#vtable tbody tr:eq("+accountindex+") td:eq(1) select").focus();
       return false;
     }
 
     var output = [];  // This is an array which will contain dictionaries representing rows of the table.
     $("#vtable tbody tr").each(function() { //loop for the rows of the table body
-      if ($(".cramt", this).val()==0 && $(".dramt", this).val()=="" || $(".cramt", this).val()=="" && $(".dramt", this).val()==0 ) { //checking whether a row has no amount.
-        allow= false;
-        return false;
-      }
       var obj = {};
       obj.side=$('.crdr',this).val();
       obj.accountcode = $(".accs", this).val();
@@ -620,15 +696,6 @@ $(document).ready(function() {
       obj.dramount = $(".dramt", this).val();
       output.push(obj);
     });
-    if(!allow){
-      output.length = 0;
-      $("#vtable tbody tr:first input:enabled").focus();
-      $("#zerorow-alert").alert();
-      $("#zerorow-alert").fadeTo(2000, 500).slideUp(500, function(){
-        $("#zerorow-alert").hide();
-      });
-      return false;
-    }
     var details = {} // dictionay containing details other than the table values.
     details.vno=$('#vno').val();
     details.vdate=$('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GNUKhata | {{vtype}}</title>
+  <title>GNUKhata | Voucher</title>
   <style media="screen">
   .rightJustified {
     text-align: right;
@@ -106,6 +106,10 @@
       <a href="#" class="close" aria-label="close">&times;</a>
       <label for="vno">Voucher saved.</label>
     </div>
+    <div class="alert alert-danger" id="account-blank-alert" hidden>
+      <a href="#" class="close" aria-label="close">&times;</a>
+      <label for="vno">Please select an account!</label>
+    </div>
     <div class="alert alert-danger" id="failure-alert" hidden>
       <a href="#" class="close" aria-label="close">&times;</a>
       Voucher could not be saved.
@@ -142,6 +146,29 @@
               <div class="form-group">
                 <label for="vno">Voucher No:</label>
                 <input type="text" class="form-control input-sm" name="vno" id="vno" size="10">
+              </div>
+              <div class="form-group col-xs-offset-4">
+                {% if vtype=="contra" %}
+                  <label><i>Contra</i></label>
+                {% elif vtype == "payment" %}
+                  <label><i>Payment</i></label>
+                {% elif vtype == "receipt" %}
+                  <label><i>Receipt</i></label>
+                {% elif vtype == "journal" %}
+                  <label><i>Journal</i></label>
+                {% elif vtype == "sales" %}
+                  <label><i>Sales</i></label>
+                {% elif vtype == "purchase" %}
+                  <label><i>Purchase</i></label>
+                {% elif vtype == "creditnote" %}
+                  <label><i>Credit Note</i></label>
+                {% elif vtype == "debitnote" %}
+                  <label><i>Debit Note</i></label>
+                {% elif vtype == "salesreturn" %}
+                  <label><i>Sales Return</i></label>
+                {% elif vtype == "purchasereturn" %}
+                  <label><i>Purchase Return</i></label>
+                {% endif %}
               </div>
               <div class="pull-right form-group">
                 <label for="vdate">Date:</label>
