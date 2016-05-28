@@ -53,7 +53,7 @@ $(".m_openbal").numeric();
       }
       else
       {
-        $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').focus();
+        $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').focus().select();
       }
 
     }
@@ -70,7 +70,7 @@ $(".m_openbal").numeric();
       $("#m_blank-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#m_blank-alert").hide();
       });
-      $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').focus();
+      $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').focus().select();
       return false;
     }
 
@@ -127,7 +127,7 @@ $(".m_openbal").numeric();
     }
 
 
-    $('#m_acctable tbody tr:last td:eq(0) input').focus();
+    $('#m_acctable tbody tr:last td:eq(0) input').focus().select();
   }
 });
 
@@ -167,7 +167,7 @@ $(document).off("keydown",".m_openbal").on("keydown",".m_openbal", function(even
       $("#m_blank-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#m_blank-alert").hide();
       });
-      $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').focus();
+      $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').focus().select();
       return false;
     }
 
@@ -194,7 +194,7 @@ $(document).off("keydown",".m_openbal").on("keydown",".m_openbal", function(even
 $(document).off("click",".m_del").on("click", ".m_del", function() {
   $(this).closest('tr').fadeOut(200, function(){
     $(this).closest('tr').remove();	 //closest method gives the closest element specified
-    $('#m_acctable tbody tr:last td:eq(0) input').focus();
+    $('#m_acctable tbody tr:last td:eq(0) input').focus().select();
   });
   $('#m_acctable tbody tr:last td:eq(0) input').select();
 });
@@ -235,7 +235,7 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
     $("#m_blank-alert").fadeTo(2000, 500).slideUp(500, function(){
       $("#m_blank-alert").hide();
     });
-    $('#m_acctable tbody tr:eq('+blankindex+') td:eq(0) input').focus();
+    $('#m_acctable tbody tr:eq('+blankindex+') td:eq(0) input').focus().select();
     allow = true;
     return false;
   };

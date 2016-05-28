@@ -149,7 +149,7 @@ $(document).off("click","#delete").on("click", "#delete", function(event)
               $("#transaction-alert").fadeTo(2000, 500).slideUp(500, function(){
                 $("#transaction-alert").hide();
               });
-              $("#editaccountname").focus();
+              $("#editaccountname").focus().select();
             }
 
           }
