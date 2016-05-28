@@ -23,13 +23,13 @@ $(document).ready(function() {
   $("#prjname").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#prjamount").focus();
+      $("#prjamount").focus().select();
     }
   });
   $("#m_prjname").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#m_prjamount").focus();
+      $("#m_prjamount").focus().selet();
     }
   });
 
@@ -60,7 +60,7 @@ $(document).ready(function() {
                 $("#transaction-alert").hide();
               });
             }
-            $("#prjname").focus();
+            $("#prjname").focus().select();
           }
         });
 
@@ -139,7 +139,7 @@ $(document).ready(function() {
       $("#blank-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#blank-alert").hide();
       });
-      $("#prjname").focus();
+      $("#prjname").focus().select();
       return false;
     }
     if ($.trim($("#prjamount").val())=="") {
@@ -172,14 +172,14 @@ $(document).ready(function() {
             $("#duplicate-alert").fadeTo(2000, 500).slideUp(500, function(){
               $("#duplicate-alert").hide();
             });
-            $("#prjname").focus();
+            $("#prjname").focus().select();
           }
           else {
             $("#failure-alert").alert();
             $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
               $("#failure-alert").hide();
             });
-            $("#prjname").focus();
+            $("#prjname").focus().selct();
           }
 
         }
