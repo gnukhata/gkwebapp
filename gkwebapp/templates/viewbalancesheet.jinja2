@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>GNUKhata | Project Statement</title>
+  <style media="screen">
+  .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  label {
+		font-size: 90%;
+	}
+  </style>
+</head>
+<body>
+  <div style="padding-top:5px" class="container-fluid mainbox col-md-6 col-md-offset-3">
+    <div class="panel panel-info shadow">
+      <div class="panel-heading">
+        <h3 class="panel-title">View</h3>
+      </div>
+      <div class="panel-body" style="padding-top:5px">
+        <div style="margin-bottom: 5px" class="col-xs-12 from-group">
+          <label for="viewbalsht_fromdate">From Date:</label>
+          <div class="form-inline" >
+
+            <div class="form-group">
+
+              <input type="text" class="viewbalsht_date form-control input-sm dis" id="viewbalsht_fromdate" disabled value="" size="2" maxlength="2" placeholder="DD">
+              <input type="text" id="viewbalsht_frommonth" class="viewbalsht_date dis form-control input-sm" disabled value="" size="2" maxlength="2" placeholder="MM">
+              <input type="text" id="viewbalsht_fromyear" class="viewbalsht_date dis form-control input-sm" disabled value="" size="4" maxlength="4" placeholder="YYYY">
+            </div>
+
+          </div>
+          <br>
+          <label for="viewbalsht_todate">To Date:</label>
+          <div class="form-inline" >
+
+            <div class="form-group">
+
+              <input type="text" class="viewbalsht_date form-control input-sm dis" id="viewbalsht_todate" value="" size="2" maxlength="2" placeholder="DD">
+              <input type="text" id="viewbalsht_tomonth" class="viewbalsht_date form-control input-sm dis" value="" size="2" maxlength="2" placeholder="MM">
+              <input type="text" id="viewbalsht_toyear" class="viewbalsht_date form-control input-sm dis" value="" size="4" maxlength="4" placeholder="YYYY">
+            </div>
+          </div>
+          <br>
+          <label for="viewbalsht_baltype" id="baltypelbl">Type :</label>
+          <div class="form-group cbl" hidden="hidden">
+            <select class = "form-control input-sm dis cblsel" id="viewbalsht_baltype"  name = "viewbalsht_baltype">
+              <option value="" disabled hidden selected>Select Balance Sheet Type</option>
+              <option value="conventionalbalancesheet">Conventional Balance Sheet</option>
+              <option value="verticalbalancesheet">Sources & Application of Funds</option>
+            </select>
+          </div>
+          <div class="form-group csa" hidden="hidden">
+            <select class = "form-control input-sm dis cblsel" id="viewbalsht_baltype"  name = "viewbalsht_baltype" >
+              <option value="" disabled hidden selected>Select Balance Sheet Type</option>
+              <option value="conventionalbalancesheet">Conventional Statement of Affairs</option>
+              <option value="verticalbalancesheet">Sources and Application of Funds</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button class="btn btn-primary btn-sm" id="viewbalsht_submit" name="view" >View</button>
+        <button id="viewbalsht_reset" class="btn btn-danger btn-sm">Reset</button>
+
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewbalancesheet.js')}}"></script>
+</body>
+</html>

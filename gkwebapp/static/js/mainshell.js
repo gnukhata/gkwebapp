@@ -229,6 +229,11 @@ $(document).ready(function(){
     $("#info").load("/showcashflow");
   });
 
+
+    $("#showbalancesheet").click(function(event){
+      $("#info").load("/showbalancesheet");
+    });
+
   $("#showclosebooks").click(function(event){
     $("#info").load("/showclosebooks");
   });
