@@ -228,7 +228,10 @@ $(document).ready(function(){
   $("#showcashflow").click(function(event){
     $("#info").load("/showcashflow");
   });
-
+  $("#showprofitloss").click(function(event){
+    var orgtype = sessionStorage.orgt.replace(/\s/g, "+");
+    $("#info").load("/showprofitloss?orgtype="+orgtype);
+  });
 
     $("#showbalancesheet").click(function(event){
       $("#info").load("/showbalancesheet");

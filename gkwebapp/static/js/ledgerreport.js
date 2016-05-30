@@ -287,6 +287,30 @@ $(document).ready(function() {
           }
         );
     }
+    else if ($("#backflag").val()==7) {
+      $.ajax(
+        {
+          type: "POST",
+          url: "/showprofitlossreport",
+          global: false,
+          async: false,
+          datatype: "text/html",
+          data: {"financialstart":sessionStorage.yyyymmddyear1,"orgtype":sessionStorage.orgt,"calculateto":$("#calculateto").val()},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          }
+        })
+        .done(function(resp) {
+          $("#info").html(resp);
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+    }
   });
 
   $("#anotherledger").click(function(event) {

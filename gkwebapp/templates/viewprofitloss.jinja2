@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    {% if orgtype=="Profit Making" %}
+      <title>GNUKhata |View Profit & Loss</title>
+    {% else %}
+      <title>GNUKhata |View Income & Expenditure</title>
+    {% endif %}
+    <style media="screen">
+    .shadow {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    label {
+  		font-size: 90%;
+  	}
+    </style>
+  </head>
+  <body>
+    <div style="padding-top:5px" class="container-fluid mainbox col-md-4 col-md-offset-4">
+    <div class="panel panel-info shadow">
+      <div class="panel-heading">
+        {% if orgtype=="Profit Making" %}
+          <h3 class="panel-title">View Profit & Loss</h3>
+        {% else %}
+          <h3 class="panel-title">View Income & Expenditure</h3>
+        {% endif %}
+
+      </div>
+      <div class="panel-body">
+        <label for="pnl_fromdate">From:</label>
+        <div class="form-inline">
+          <div class="form-group">
+            <input type="text" class="form-control input-sm pnl_autotab" id="pnl_fromdate" value="" size="2" maxlength="2" disabled placeholder="DD">
+            <input type="text" class="form-control input-sm pnl_autotab" id="pnl_frommonth" value="" size="2" maxlength="2" disabled placeholder="MM">
+            <input type="text" class="form-control input-sm pnl_autotab" id="pnl_fromyear" value="" size="4" maxlength="4" disabled placeholder="YYYY">
+          </div>
+        </div>
+        <br>
+        <label for="pnl_todate">To:</label>
+        <div class="form-inline">
+          <div class="form-group">
+
+          <input type="text" class="form-control input-sm pnl_autotab" id="pnl_todate" value=""  size="2" maxlength="2" placeholder="DD">
+          <input type="text" class="form-control input-sm pnl_autotab" id="pnl_tomonth" value="" size="2" maxlength="2" placeholder="MM">
+          <input type="text" class="form-control input-sm pnl_autotab" id="pnl_toyear" value="" size="4" maxlength="4" placeholder="YYYY">
+        </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button type="button" class="btn btn-sm btn-success" name="button" id="pnl_view">View</button>
+        <button type="button" name="button" class="btn btn-sm btn-danger" id="pnl_reset">Reset</button>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewprofitloss.js')}}"></script>
+  </body>
+</html>

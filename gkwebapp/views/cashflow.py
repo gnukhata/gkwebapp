@@ -5,11 +5,11 @@ from pyramid.renderers import render_to_response
 
 
 @view_config(route_name="showcashflow", renderer="gkwebapp:templates/viewcashflow.jinja2")
-def showtrialbalance(request):
+def showcashflow(request):
 	return {"gkstatus":0}
 
 @view_config(route_name="showcashflowreport")
-def showtrialbalancereport(request):
+def showcashflowreport(request):
 	calculateto = request.params["calculateto"]
 	financialstart = request.params["financialstart"]
 	calculatefrom = request.params["calculatefrom"]
