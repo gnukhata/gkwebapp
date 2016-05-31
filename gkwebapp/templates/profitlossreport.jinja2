@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>GNUKhata | Cash Flow</title>
+  {% if orgtype=="Profit Making" %}
+    <title>GNUKhata | Profit & Loss</title>
+  {% else %}
+    <title>GNUKhata | Income & Expenditure</title>
+  {% endif %}
+
 <style type="text/css">
 
 .selected
@@ -100,13 +105,13 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
 </head>
 <body>
   {% if orgtype=="Profit Making" %}
-    <span style="margin:auto; display:table;"><strong>Cash Flow Account</strong> for the period <a class="glyphicon glyphicon-calendar"></a> <strong>{{from}}</strong> to <a class="glyphicon glyphicon-calendar"></a> <strong>{{to}}</strong></span>
+    <span style="margin:auto; display:table;"><strong>Profit & Loss</strong> for the period <a class="glyphicon glyphicon-calendar"></a> <strong>{{from}}</strong> to <a class="glyphicon glyphicon-calendar"></a> <strong>{{to}}</strong></span>
   {% else %}
-    <span style="margin:auto; display:table;"><strong>Reciept & Payment Account</strong> for the period <a class="glyphicon glyphicon-calendar"></a> <strong>{{from}}</strong> to <a class="glyphicon glyphicon-calendar"></a> <strong>{{to}}</strong></span>
+    <span style="margin:auto; display:table;"><strong>Income & Expenditure Account</strong> for the period <a class="glyphicon glyphicon-calendar"></a> <strong>{{from}}</strong> to <a class="glyphicon glyphicon-calendar"></a> <strong>{{to}}</strong></span>
   {% endif %}
   <div class="row">
     <div class="table-responsive col-md-6" style="float:left; margin-right:0px">
-      <table id="rctable" class="shadow table table-condensed table-fixedheader cashflowtable">
+      <table id="expensetbl" class="shadow table table-condensed table-fixedheader cashflowtable">
         <thead>
           <tr class="info ">
             <th class="col-xs-1">To</th>
@@ -115,16 +120,16 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
           </tr>
         </thead>
         <tbody>
-          {% for rcrecord in rcrecords %}
+          {% for rcrecord in expense %}
           <tr  value="{{rcrecord['accountcode']}}">
             <td class="col-xs-1">
               {{rcrecord['toby']}}
             </td>
             <td class="col-xs-9">
               {% if rcrecord['accountcode']!="" %}
-              <a class="rcaccname" href="">{{rcrecord['particulars']}}</a>
+              <a class="rcaccname" href="">{{rcrecord['accountname']}}</a>
               {% else %}
-              <a class="rcaccname" href="" style="text-decoration: none; color:black;">{{rcrecord['particulars']}}</a>
+              <a class="rcaccname" href="" style="text-decoration: none; color:black;">{{rcrecord['accountname']}}</a>
               {% endif %}
             </td>
             <td class="col-xs-2" style="text-align:right">
@@ -136,7 +141,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
       </table>
     </div>
     <div class="table-responsive col-md-6" style="float:left; margin-left:0px">
-      <table id="pytable" class="shadow table table-condensed table-fixedheader cashflowtable">
+      <table id="incometbl" class="shadow table table-condensed table-fixedheader cashflowtable">
         <thead>
           <tr class="info ">
             <th class="col-xs-1">By</th>
@@ -145,16 +150,16 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
           </tr>
         </thead>
         <tbody>
-          {% for pyrecord in pyrecords %}
+          {% for pyrecord in income %}
           <tr  value="{{pyrecord['accountcode']}}">
             <td class="col-xs-1">
               {{pyrecord['toby']}}
             </td>
             <td class="col-xs-9">
               {% if pyrecord['accountcode']!="" %}
-              <a class="pyaccname" href="">{{pyrecord['particulars']}}</a>
+              <a class="pyaccname" href="">{{pyrecord['accountname']}}</a>
               {% else %}
-              <a class="pyaccname" href="" style="text-decoration: none; color:black;">{{pyrecord['particulars']}}</a>
+              <a class="pyaccname" href="" style="text-decoration: none; color:black;">{{pyrecord['accountname']}}</a>
               {% endif %}
             </td>
             <td class="col-xs-2" style="text-align:right">
@@ -168,11 +173,10 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
 
   </div>
   <span style="margin:auto; display:table;">
-    <button type="button" class="btn btn-sm btn-danger" id="cfback">Back</button>
+    <button type="button" class="btn btn-sm btn-danger" id="pnlback">Back</button>
   </span>
   <input type="hidden" id="ledtodate" value="{{to}}">
   <input type="hidden" id="ledfromdate" value="{{from}}">
-  <input type="hidden" id="backflag" value="{{backflag}}">
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/cashflowreport.js')}}"></script>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/profitlossreport.js')}}"></script>
 </body>
 </html>
