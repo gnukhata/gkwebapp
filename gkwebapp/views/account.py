@@ -16,6 +16,15 @@ def showaccount(request):
 	return {"gkresult":grpdata,"baltbl":result.json()["baltbl"]}
 
 
+@view_config(route_name="showlistofaccounts", renderer="gkwebapp:templates/listofaccounts.jinja2")
+def showaccount(request):
+
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/accounts", headers=header)
+
+	return {"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
+
+
 @view_config(route_name="accountexists", renderer="json")
 def accountexists(request):
 
@@ -27,7 +36,7 @@ def accountexists(request):
 
 @view_config(route_name="showmultiacc", renderer="gkwebapp:templates/multipleaccounts.jinja2")
 def showmultiacc(request):
-	print request.params
+
 	return {"gkresult":request.params}
 
 
@@ -56,26 +65,24 @@ def deleteaccount(request):
 
 @view_config(route_name="getaccdetails", renderer="json")
 def getaccdetails(request):
-	print "went inside ac details"
+
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/account/%s"%(request.params["accountcode"]), headers=header)
 
 	record = result.json()["gkresult"]
-	print "groupcode isssss: ",record["groupcode"]
+
 	result = requests.get("http://127.0.0.1:6543/groupsubgroup/%s"%(record["groupcode"]), headers=header)
-	print "this is gkkksssttt: ",str(result.json()["gkstatus"])
+
 	grprecord = result.json()["gkresult"]
-	print"this is grprec:",grprecord
+
 
 	if grprecord["groupcode"]==grprecord["subgroupcode"]:
 		grprecord["subgroupname"] = "None"
-		print "wennnnnnttttt"
 
-	print "asdasdasdasd"
+
+
 	accdetails={"accountcode":record["accountcode"],"accountname":record["accountname"],"openingbal":record["openingbal"],"groupname":grprecord["groupname"],"subgroupname":grprecord["subgroupname"]}
-	print "this is acccccddddeeee: ",accdetails
-	print "type acccode: ",type(record["accountcode"])
-	print "type opnbal: ",type(record["openingbal"])
+
 	return {"gkresult":accdetails}
 
 
@@ -121,7 +128,7 @@ def addaccount(request):
 def addmultiaccount(request):
 	header={"gktoken":request.headers["gktoken"]}
 	accdetails = json.loads(request.params["accdetails"])
-	print "this is accdetails: ",json.loads(request.params["accdetails"])
+
 	gkdata = {}
 	if accdetails[0]["subgroupname"]=="New":
 		gkdata1={"groupname":accdetails[0]["newsubgroup"],"subgroupof":accdetails[0]["groupname"]}
@@ -142,7 +149,7 @@ def addmultiaccount(request):
 	for acc in accdetails:
 		gkdata["accountname"]=acc["accountname"]
 		gkdata["openingbal"]=acc["openbal"]
-		print "thiiiiiiiiiiiiiiisssssssssss issssssssssssssssssss",gkdata
+
 		result = requests.post("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 
