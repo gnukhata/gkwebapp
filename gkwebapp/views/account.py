@@ -17,7 +17,7 @@ def showaccount(request):
 
 
 @view_config(route_name="showlistofaccounts", renderer="gkwebapp:templates/listofaccounts.jinja2")
-def showaccount(request):
+def showlistofaccount(request):
 
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/accounts", headers=header)
