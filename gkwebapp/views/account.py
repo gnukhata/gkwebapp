@@ -67,7 +67,7 @@ def getaccdetails(request):
 	grprecord = result.json()["gkresult"]
 	print"this is grprec:",grprecord
 
-	if grprecord["groupname"]==grprecord["subgroupname"]:
+	if grprecord["groupcode"]==grprecord["subgroupcode"]:
 		grprecord["subgroupname"] = "None"
 		print "wennnnnnttttt"
 

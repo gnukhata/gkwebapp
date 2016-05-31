@@ -65,8 +65,8 @@ th {
             <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
             {% endfor %}
           </select>
-					<label for="editaccountname" style="color:red;" id="alertmsg">A system generated account, cannot be edited/deleted.</label>
-					<form id="editaccountform" method="post"  action="editaccount" class="form-horizontal">
+					<label for="accountname" style="color:red;" id="alertmsg" hidden>A system generated account, cannot be edited/deleted.</label>
+					<form id="editaccountform" method="post"  action="editaccount" class="form-horizontal" hidden>
 
 						<div style="margin-bottom: 5px" class="col-xs-12 from-group">
 							<label for="groupname" id="gname">Group Name :</label>
