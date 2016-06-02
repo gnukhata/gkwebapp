@@ -38,6 +38,7 @@ Events are attached to dynamically created elements using document on method.
 Document off is used to remove an already attached event to an element, so as to make sure that an event is fired only once.
 */
 $(document).ready(function() {
+  $(".modal-backdrop").remove();
   $("#vno").focus();
   $('.vdate').autotab('number');    //autotab is a library for automatically switching the focus to next input when max allowed characters are filled.
   $('.dramt').numeric({ negative: false });   //numeric is a library used for restricting the user to input only numbers and decimal inside a text box
@@ -49,6 +50,8 @@ $(document).ready(function() {
   var percentwid = 100*(($("table").width()-12)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   $('.table-fixedheader tfoot').width(percentwid+"%");
+  var percentheigth = 100*(($("body").height()-$(".navbar").height()-277)/$("body").height());
+  $('.table-fixedheader tbody').height(percentheigth+"%");
   var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
   $("#vdate").val(fromdatearray[2])
   $("#vmonth").val(fromdatearray[1])

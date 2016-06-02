@@ -1,8 +1,7 @@
 $(document).ready(function() {
   $('#mthltable tbody tr:first-child td:eq(0) a').focus();
   $('#mthltable tbody tr:first-child td:eq(0) a').closest('tr').addClass('selected');
-  var percentwid = 100*(($("table").width()-12)/$("table").width());
-  $('.table-fixedheader thead').width(percentwid+"%");
+  
 
   $(document).off('focus' ,'.monthname').on('focus' ,'.monthname',function() {
     $('#mthltable tr').removeClass('selected');

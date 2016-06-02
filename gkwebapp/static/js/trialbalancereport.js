@@ -27,13 +27,14 @@ $(document).ready(function() {
     previndex = curindex-1;
     if (event.which==40)
     {
-
+      event.preventDefault();
       $('.trialbaltable tbody tr:eq('+nextindex+') td:eq(1) a').focus();
     }
     else if (event.which==38)
     {
       if(previndex>-1)
       {
+        event.preventDefault();
         $('.trialbaltable tbody tr:eq('+previndex+') td:eq(1) a').focus();
       }
     }

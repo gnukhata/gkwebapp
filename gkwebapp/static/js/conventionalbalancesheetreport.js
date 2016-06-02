@@ -29,13 +29,14 @@ $(document).ready(function() {
     previndex = curindex-1;
     if (event.which==40)
     {
-
+      event.preventDefault();
       $('#liabtable tbody tr:eq('+nextindex+') td:eq(0) a').focus();
     }
     else if (event.which==38)
     {
       if(previndex>-1)
       {
+        event.preventDefault();
         $('#liabtable tbody tr:eq('+previndex+') td:eq(0) a').focus();
       }
     }
@@ -82,13 +83,14 @@ $(document).ready(function() {
     previndex = curindex-1;
     if (event.which==40)
     {
-
+      event.preventDefault();
       $('#patable tbody tr:eq('+nextindex+') td:eq(0) a').focus();
     }
     else if (event.which==38)
     {
       if(previndex>-1)
       {
+        event.preventDefault();
         $('#patable tbody tr:eq('+previndex+') td:eq(0) a').focus();
       }
     }

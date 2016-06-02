@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+  $(".modal-backdrop").remove();
   var percentwid = 100*(($("table").width()-12)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   var percentheigth = 100*(($("body").height()-$(".navbar").height()-148)/$("body").height());
@@ -29,13 +29,14 @@ $(document).ready(function() {
     previndex = curindex-1;
     if (event.which==40)
     {
-
+      event.preventDefault();
       $('#latable tbody tr:eq('+nextindex+') td:eq(1) a').focus();
     }
     else if (event.which==38)
     {
       if(previndex>-1)
       {
+        event.preventDefault();
         $('#latable tbody tr:eq('+previndex+') td:eq(1) a').focus();
       }
     }
