@@ -1,7 +1,11 @@
 $(document).ready(function() {
+  $('.modal-backdrop').remove();
   $("#prjname").focus();
   var percentwid = 100*(($("table").width()-12)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
+  var percentheigth = 100*(($("body").height()-$(".navbar").height()-170)/$("body").height());
+  $('.table-fixedheader tbody').height(percentheigth+"%");
+
   $("#prjamount").numeric({ negative: false });
   $("#m_prjamount").numeric({ negative: false });
   if($("#prjtable tbody tr").length==0){

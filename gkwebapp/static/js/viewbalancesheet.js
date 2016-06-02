@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  $('.modal-backdrop').remove();
 
   if (sessionStorage.orgt=="Profit Making")
   {
@@ -58,7 +59,7 @@ $(document).ready(function() {
   });
   $(".cblsel").keydown(function(event) {
     if (event.which==13) {
-      
+
       $("#viewbalsht_submit").click();
     }
   });
