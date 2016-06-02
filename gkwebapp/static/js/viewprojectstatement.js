@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  $('.modal-backdrop').remove();
   $("#viewprjstate_todate").focus();
   $('.viewprjstate_date').autotab('number');
   var sel1 = 0;

@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  $('.modal-backdrop').remove();
   $("#viewledger_accname").focus();
   $('.viewledger_date').autotab('number');
   var sel1 = 0;

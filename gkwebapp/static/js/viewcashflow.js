@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  $('.modal-backdrop').remove();
   $("#cashfl_fromdate").focus();
   $('.cashfl_autotab').autotab('number');
 

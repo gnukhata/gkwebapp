@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  $('.modal-backdrop').remove();
 
   $("#username").focus();
   var username = $("#username option:selected").val();

@@ -137,6 +137,30 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                 <div class="well well-sm" >
                   <label for="vno">Voucher No:</label>
                   <input type="text" name="vno" class=" form-control input-sm" id="vno" size="10" value="{{voucher["vouchernumber"]}}">
+                  <div class="form-group col-xs-offset-2">
+                    {% if vtype=="contra" %}
+                      <label class="lblec"><i>Contra</i></label>
+                    {% elif vtype == "payment" %}
+                      <label class="lblec"><i>Payment</i></label>
+                    {% elif vtype == "receipt" %}
+                      <label class="lblec"><i>Receipt</i></label>
+                    {% elif vtype == "journal" %}
+                      <label class="lblec"><i>Journal</i></label>
+                    {% elif vtype == "sales" %}
+                      <label class="lblec"><i>Sales</i></label>
+                    {% elif vtype == "purchase" %}
+                      <label class="lblec"><i>Purchase</i></label>
+                    {% elif vtype == "creditnote" %}
+                      <label class="lblec"><i>Credit Note</i></label>
+                    {% elif vtype == "debitnote" %}
+                      <label class="lblec"><i>Debit Note</i></label>
+                    {% elif vtype == "salesreturn" %}
+                      <label class="lblec"><i>Sales Return</i></label>
+                    {% elif vtype == "purchasereturn" %}
+                      <label class="lblec"><i>Purchase Return</i></label>
+                    {% endif %}
+                  </div>
+
                   <div class="pull-right form-group">
                     <label for="vdate">Date:</label>
                     <input type="text" class="vdate form-control input-sm" id="vdate" value="{{voucher['voucherdate'][:2]}}" size="2" maxlength="2" placeholder="DD">

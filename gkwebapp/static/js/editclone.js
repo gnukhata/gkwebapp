@@ -98,10 +98,63 @@ $(document).ready(function()
   });
   var ecflag;
   var navflag;
+
+  $("#lock").keyup(function(event)
+  {
+
+    if (event.which==37)
+    {
+
+      $("#clone").focus();
+    }
+    if (event.which==39)
+    {
+      $("#edit").focus();
+    }
+      /* Act on the event */
+  });
+
+
+  $("#edit").keyup(function(event)
+  {
+    if (event.which==13)
+    {
+      navflag=true;
+
+    }
+    if (event.which==37)
+    {
+      $("#lock").focus();
+    }
+    if (event.which==39)
+    {
+      $("#clone").focus();
+    }
+      /* Act on the event */
+  });
+
+  $("#clone").keyup(function(event)
+  {
+    if (event.which==13)
+    {
+      navflag=true;
+
+    }
+    if (event.which==37)
+    {
+      $("#edit").focus();
+    }
+    if (event.which==39)
+    {
+      $("#lock").focus();
+    }
+  });
+
   $("#edit").click(function(event)
   {
-    navflag=true;
+
     ecflag="edit";
+    $(".lblec").prepend('<i>Edit </i>');
     $("#save").show();
     $("#lock").hide();
     $("#edit").hide();
@@ -117,10 +170,12 @@ $(document).ready(function()
 
   });
 
+
   $("#clone").click(function(event)
   {
-    navflag=true;
+
     ecflag="clone";
+    $(".lblec").prepend('<i>Clone </i>');
     $("#lock").hide();
     $("#clone").hide();
     $("#edit").hide();
@@ -133,6 +188,7 @@ $(document).ready(function()
     $(".vdate").prop('disabled', false);
     $("#narr").prop('disabled', false);
     $("#project").prop('disabled', false);
+
   });
 
 

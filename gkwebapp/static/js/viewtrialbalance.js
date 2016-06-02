@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  $('.modal-backdrop').remove();
   $("#trialbal_todate").focus();
   $('.trialbal_autotab').autotab('number');
   var sel1 = 0;
