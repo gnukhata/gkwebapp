@@ -47,6 +47,7 @@ $(document).ready(function() {
   var crsum = 0;
   var diff = 0;     //diff containns the difference of drsum and crsum
   var outfocus = false;
+  var accpopupindex = 0;
   var percentwid = 100*(($("table").width()-12)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   $('.table-fixedheader tfoot').width(percentwid+"%");
@@ -147,6 +148,30 @@ $(document).ready(function() {
 
   $('#narration').keydown(function(event) {
     if(event.which==13){
+      if ($('#drtotal').val()!=$('#crtotal').val()) {
+        outfocus = true;
+      }
+      var allow = true;
+      $("#vtable tbody tr").each(function() {
+        var accountcode = $(".accs", this).val();
+        var ccount=0;
+        $("#vtable tbody tr").each(function() {
+          if(accountcode==$(".accs", this).val()){
+            ccount =ccount +1;
+            if (ccount==2) {
+              accountindex = $(this).index();
+            }
+          }
+        });
+        if (ccount>1) {
+          allow= false;
+          return false;
+        }
+      });
+
+      if(!allow){
+        outfocus= true;
+      }
       $('#save').click();
       event.preventDefault();
     }
@@ -220,6 +245,10 @@ $(document).ready(function() {
       var curindex = $(this).closest('tr').index();
       $('#vtable tbody tr:eq('+curindex+') input:enabled').select().focus(); // focus shifts to the enabled amount box when one hits enter on the accounts select box.
     }
+    if (event.which==32) {
+      accpopupindex = $(this).closest('tr').index();
+      $("#popup").click();
+    }
     if (event.which==13 && outfocus) {
       outfocus = false;
     }
@@ -240,6 +269,16 @@ $(document).ready(function() {
   {
     if(event.which==13 && !outfocus)
     {
+      drsum=0;
+      $(".dramt").each(function(){
+        drsum += +$(this).val();
+        $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+      });
+      crsum=0;
+      $(".cramt").each(function(){
+        crsum += +$(this).val();
+        $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+      });
       var curindex = $(this).closest('tr').index();
       if($('#vtable tbody tr:eq('+curindex+') td:eq(2) input:enabled').val()=="" || $('#vtable tbody tr:eq('+curindex+') td:eq(2) input:enabled').val()==0){
         return false;
@@ -416,6 +455,16 @@ $(document).ready(function() {
   {
     if(event.which==13 && !outfocus)
     {
+      drsum=0;
+      $(".dramt").each(function(){
+        drsum += +$(this).val();
+        $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+      });
+      crsum=0;
+      $(".cramt").each(function(){
+        crsum += +$(this).val();
+        $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+      });
       var curindex = $(this).closest('tr').index();
       if($('#vtable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()=="" || $('#vtable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()==0){
         return false;
@@ -593,6 +642,34 @@ $(document).ready(function() {
   In this voucher form we are not using the form submit functionality since there is no need.
   When one clicks on the save button the validations are done and the voucher is saved.
   */
+  $("#save").keypress(function(event) {
+    if (event.which==13) {
+      if ($('#drtotal').val()!=$('#crtotal').val()) {
+        outfocus = true;
+      }
+      var allow = true;
+      $("#vtable tbody tr").each(function() {
+        var accountcode = $(".accs", this).val();
+        var ccount=0;
+        $("#vtable tbody tr").each(function() {
+          if(accountcode==$(".accs", this).val()){
+            ccount =ccount +1;
+            if (ccount==2) {
+              accountindex = $(this).index();
+            }
+          }
+        });
+        if (ccount>1) {
+          allow= false;
+          return false;
+        }
+      });
+
+      if(!allow){
+        outfocus= true;
+      }
+    }
+  });
   $('#save').click(function(event) {
     var allow = true;
     var amountindex = 0;
@@ -649,7 +726,6 @@ $(document).ready(function() {
       $("#balance-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#balance-alert").hide();
       });
-      outfocus = true;
       $('#vtable tbody tr:last input:enabled').focus();
       return false;
     }
@@ -685,7 +761,6 @@ $(document).ready(function() {
       $("#accs-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#accs-alert").hide();
       });
-      outfocus= true;
       $("#vtable tbody tr:eq("+accountindex+") td:eq(1) select").focus();
       return false;
     }
@@ -834,6 +909,7 @@ $(document).ready(function() {
               }
 
             });
+            $("#vtable tbody tr:eq("+accpopupindex+") td:eq(1) select").focus();
           });
         }
       }
