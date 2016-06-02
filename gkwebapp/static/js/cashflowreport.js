@@ -29,13 +29,14 @@ $(document).ready(function() {
     previndex = curindex-1;
     if (event.which==40)
     {
-
+      event.preventDefault();
       $('#rctable tbody tr:eq('+nextindex+') td:eq(1) a').focus();
     }
     else if (event.which==38)
     {
       if(previndex>-1)
       {
+        event.preventDefault();
         $('#rctable tbody tr:eq('+previndex+') td:eq(1) a').focus();
       }
     }
@@ -126,13 +127,14 @@ $(document).ready(function() {
     previndex = curindex-1;
     if (event.which==40)
     {
-
+      event.preventDefault();
       $('#pytable tbody tr:eq('+nextindex+') td:eq(1) a').focus();
     }
     else if (event.which==38)
     {
       if(previndex>-1)
       {
+        event.preventDefault();
         $('#pytable tbody tr:eq('+previndex+') td:eq(1) a').focus();
       }
     }
