@@ -122,6 +122,12 @@ $(document).ready(function() {
       $('#vdate').select().focus();
     }
   });
+  $('#vno').keydown(function(event) {
+    if (event.which==190 && event.ctrlKey) {
+        $("#vdate").focus().select();
+        event.preventDefault();
+    }
+  });
 
   $('#vdate').keyup(function(event) {
     if(event.which==13 && $('#vdate').val()!=""){
@@ -131,6 +137,16 @@ $(document).ready(function() {
       $("#vno").select().focus();
     }
   });
+  $('#vdate').keydown(function(event) {
+    if (event.which==188 && event.ctrlKey) {
+        $('#vno').focus().select();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#vmonth').focus().select();
+        event.preventDefault();
+    }
+  });
 
   $('#vmonth').keyup(function(event) {
     if(event.which==13 && $('#vmonth').val()!=""){
@@ -138,6 +154,16 @@ $(document).ready(function() {
     }
     if (event.which==38) {
       $("#vdate").select().focus();
+    }
+  });
+  $('#vmonth').keydown(function(event) {
+    if (event.which==188 && event.ctrlKey) {
+        $('#vdate').focus().select();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#vyear').focus().select();
+        event.preventDefault();
     }
   });
 
@@ -152,6 +178,16 @@ $(document).ready(function() {
       $("#vtable tbody tr:first select:enabled)").select().focus();
     }
   });
+  $('#vyear').keydown(function(event) {
+    if (event.which==188 && event.ctrlKey) {
+        $('#vmonth').focus().select();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#vtable tbody tr:first select:enabled').focus();
+        event.preventDefault();
+    }
+  });
 
   $('#project').keyup(function(event) {
     if(event.which==13){
@@ -161,6 +197,87 @@ $(document).ready(function() {
       $("#vtable tbody tr:last input:enabled").select().focus();
     }
   });
+  $('#project').keydown(function(event) {
+    if (event.which==188 && event.ctrlKey) {
+        $('#vtable tbody tr:last input:enabled').focus().select();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#narration').focus().select();
+        event.preventDefault();
+    }
+  });
+  $('#narration').keydown(function(event) {
+    if (event.which==188 && event.ctrlKey) {
+        $('#project').focus().select();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#save').focus();
+        event.preventDefault();
+    }
+  });
+  $('#save').keydown(function(event) {
+    if (event.which==188 && event.ctrlKey) {
+        $('#narration').focus().select();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#reset').focus();
+        event.preventDefault();
+    }
+  });
+  $('#reset').keydown(function(event) {
+    if (event.which==188 && event.ctrlKey) {
+        $('#save').focus().select();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#popup').focus();
+        event.preventDefault();
+    }
+  });
+  $('#popup').keydown(function(event) {
+    if (event.which==188 && event.ctrlKey) {
+        $('#reset').focus().select();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#vno').focus();
+        event.preventDefault();
+    }
+  });
+  $('#save').keyup(function(event) {
+    if (event.which==39 ) {
+        $('#reset').focus();
+        event.preventDefault();
+    }
+    if (event.which==37 || event.which==38) {
+        $('#narration').focus().select();
+        event.preventDefault();
+    }
+  });
+  $('#reset').keyup(function(event) {
+    if (event.which==39 ) {
+        $('#popup').focus();
+        event.preventDefault();
+    }
+    if (event.which==37 || event.which==38) {
+        $('#save').focus().select();
+        event.preventDefault();
+    }
+  });
+  $('#popup').keyup(function(event) {
+    if (event.which==39 ) {
+        $('#vno').focus().select();
+        event.preventDefault();
+    }
+    if (event.which==37 || event.which==38) {
+        $('#reset').focus();
+        event.preventDefault();
+    }
+  });
+
 
   $('#narration').keyup(function(event) {
     if(event.which==13){
