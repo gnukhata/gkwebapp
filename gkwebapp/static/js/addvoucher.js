@@ -26,7 +26,7 @@ Contributor:
 
 /*
 Events are mostly associated with the classes.
-Here is a list of classes that we have used.
+List of classes that we have used.
 1. dramt and cramt are for the dr and cr amount boxes respectively.
 2. accs is for the accounts select boxes.
 3. crdr for the cr dr select box, i.e for the first select box in the row
@@ -57,6 +57,8 @@ $(document).ready(function() {
   $("#vdate").val(fromdatearray[2])
   $("#vmonth").val(fromdatearray[1])
   $("#vyear").val(fromdatearray[0])
+  var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
+  var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
 
   //Calculates the total dr and cr amout when a change event is fired.
   $(document).off("change",".dramt").on("change", ".dramt", function() {
@@ -92,10 +94,22 @@ $(document).ready(function() {
               crsum += +$(this).val();
               $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
             });
-            $('tbody tr:last input:enabled').focus();
+            $('tbody tr:last input:enabled').focus().select();
         });
   });
-
+  function pad (str, max) { //to add leading zeros in date
+    str = str.toString();
+    return str.length < max ? pad("0" + str, max) : str;
+  }
+  function yearpad (str, max) {
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("200" + str, max) : str;
+    }
+    else if (str.length==2) {
+      return str.length < max ? pad("20" + str, max) : str;
+    }
+  }
   //Formats the number on focusout
   $(document).off("focusout",".dramt").on("focusout",".dramt",function(event)
   {
@@ -104,6 +118,33 @@ $(document).ready(function() {
     }
     else{
       $(this).val((parseFloat($(this).val()).toFixed(2)));
+    }
+  });
+  $("#vdate").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#vmonth").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+
+  $("#vyear").blur(function(event) {
+    $(this).val(yearpad($(this).val(),4));
+    if(!Date.parseExact($("#vdate").val()+$("#vmonth").val()+$("#vyear").val(), "ddMMyyyy")){
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#vdate').focus().select();
+      return false;
+    }
+    var curdate = Date.parseExact($("#vyear").val()+$("#vmonth").val()+$("#vdate").val(), "yyyyMMdd")
+    if (!curdate.between(financialstart,financialend)) {
+      $("#between-date-alert").alert();
+      $("#between-date-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#between-date-alert").hide();
+      });
+      $('#vdate').focus().select();
+      return false;
     }
   });
 
@@ -406,7 +447,7 @@ $(document).ready(function() {
       }
       if (curindex==0) {
         event.preventDefault();
-        $("#vyear").focus();
+        $("#vyear").focus().select();
       }
     }
     if (event.which==188 && event.ctrlKey) {
@@ -414,12 +455,12 @@ $(document).ready(function() {
         event.preventDefault();
         if (curindex==0) {
           event.preventDefault();
-          $("#vyear").focus();
+          $("#vyear").focus().select();
         }
         if(curindex==1)
         {
           event.preventDefault();
-          $('#vtable tbody tr:eq('+previndex+') input:enabled').focus();
+          $('#vtable tbody tr:eq('+previndex+') input:enabled').focus().select();
         }
     }
     if (event.which==190 && event.ctrlKey) {
@@ -939,7 +980,7 @@ $(document).ready(function() {
       $("#vno-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#vno-alert").hide();
       });
-      $('#vno').focus();
+      $('#vno').focus().select();
       return false;
     }
     // Check if date fields are blank and if it is then show an alert
@@ -948,7 +989,24 @@ $(document).ready(function() {
       $("#date-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#date-alert").hide();
       });
-      $('#vdate').focus();
+      $('#vdate').focus().select();
+      return false;
+    }
+    if(!Date.parseExact($("#vdate").val()+$("#vmonth").val()+$("#vyear").val(), "ddMMyyyy")){
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#vdate').focus().select();
+      return false;
+    }
+    var curdate = Date.parseExact($("#vyear").val()+$("#vmonth").val()+$("#vdate").val(), "yyyyMMdd")
+    if (!curdate.between(financialstart,financialend)) {
+      $("#between-date-alert").alert();
+      $("#between-date-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#between-date-alert").hide();
+      });
+      $('#vdate').focus().select();
       return false;
     }
     $("#vtable tbody tr").each(function() { //loop for the rows of the table body
@@ -970,7 +1028,7 @@ $(document).ready(function() {
       return false;
     }
     if(!allow){
-      $("#vtable tbody tr:eq("+amountindex+") input:enabled").focus();
+      $("#vtable tbody tr:eq("+amountindex+") input:enabled").focus().select();
       $("#vtable tbody tr:eq("+amountindex+") input:enabled").select();
       $("#zerorow-alert").alert();
       $("#zerorow-alert").fadeTo(2000, 500).slideUp(500, function(){
@@ -984,7 +1042,7 @@ $(document).ready(function() {
       $("#balance-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#balance-alert").hide();
       });
-      $('#vtable tbody tr:last input:enabled').focus();
+      $('#vtable tbody tr:last input:enabled').focus().select();
       return false;
     }
     // Check if voucher amount is zero and if it is then show an alert.
@@ -993,7 +1051,7 @@ $(document).ready(function() {
       $("#zero-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#zero-alert").hide();
       });
-      $("#vtable tbody tr:first input:enabled").focus();
+      $("#vtable tbody tr:first input:enabled").focus().select();
       return false;
     }
     // Check whether an account is repeated, and if it does then set the allow flag to false.
@@ -1072,7 +1130,7 @@ $(document).ready(function() {
             $("#failure-alert").hide();
           });
         }
-        $('#vno').focus();
+        $('#vno').focus().select();
       }
     });
   });

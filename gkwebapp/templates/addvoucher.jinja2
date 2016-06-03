@@ -138,6 +138,10 @@
       <a href="#" class="close" aria-label="close">&times;</a>
       Please enter voucher date in proper format!
     </div>
+    <div class="alert alert-danger" id="between-date-alert" hidden>
+      <a href="#" class="close" aria-label="close">&times;</a>
+      Please enter voucher date within the financial year!
+    </div>
 
 
         <form id="voucher" name="voucher">
@@ -307,7 +311,7 @@
   <div id="viewacc">
 
   </div>
-
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/date.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addvoucher.js')}}"></script>
 </body>
 </html>
