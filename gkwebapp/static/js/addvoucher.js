@@ -47,7 +47,8 @@ $(document).ready(function() {
   var crsum = 0;
   var diff = 0;     //diff containns the difference of drsum and crsum
   var outfocus = false;
-  var accpopupindex = 0;
+  var accpopupindex = -1;
+  var idfocus;
   var percentwid = 100*(($("table").width()-12)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   $('.table-fixedheader tfoot').width(percentwid+"%");
@@ -65,7 +66,7 @@ $(document).ready(function() {
     $(".dramt").each(function(){
       drsum += +$(this).val();
       // jquery enables us to select specific elements inside a table easily like below.
-      $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
+      $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
     });
   });
 
@@ -73,10 +74,13 @@ $(document).ready(function() {
     crsum=0;
     $(".cramt").each(function(){
       crsum += +$(this).val();
-      $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+      $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
     });
   });
 
+  function setId(id) {
+    cur_id = id;
+  }
   //Deletes a row from the table and recalculates the total cr and dr amount
   $(document).off("click",".del").on("click", ".del", function() {
     $(this).closest('tr').fadeOut(200, function(){
@@ -85,11 +89,11 @@ $(document).ready(function() {
             crsum=0;
             $(".dramt").each(function(){
               drsum += +$(this).val();
-              $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+              $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
             });
             $(".cramt").each(function(){
               crsum += +$(this).val();
-              $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+              $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
             });
             $('tbody tr:last input:enabled').focus();
         });
@@ -227,12 +231,12 @@ $(document).ready(function() {
     drsum=0;
     $(".dramt").each(function(){
       drsum += +$(this).val();
-      $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+      $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
     });
     crsum=0;
     $(".cramt").each(function(){
       crsum += +$(this).val();
-      $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+      $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
     });
   });
 
@@ -272,12 +276,12 @@ $(document).ready(function() {
       drsum=0;
       $(".dramt").each(function(){
         drsum += +$(this).val();
-        $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+        $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
       });
       crsum=0;
       $(".cramt").each(function(){
         crsum += +$(this).val();
-        $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+        $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
       });
       var curindex = $(this).closest('tr').index();
       if($('#vtable tbody tr:eq('+curindex+') td:eq(2) input:enabled').val()=="" || $('#vtable tbody tr:eq('+curindex+') td:eq(2) input:enabled').val()==0){
@@ -295,7 +299,7 @@ $(document).ready(function() {
             crsum=0;
             $(".cramt").each(function(){
               crsum += +$(this).val();
-              $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+              $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
             });
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
           }
@@ -346,7 +350,7 @@ $(document).ready(function() {
               crsum=0; // cr total is recalculated since a cr row is added.
               $(".cramt").each(function(){
                 crsum += +$(this).val();
-                $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+                $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
               });
             }
           });
@@ -365,7 +369,7 @@ $(document).ready(function() {
             drsum=0;
             $(".dramt").each(function(){
               drsum += +$(this).val();
-              $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+              $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
             });
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
           }
@@ -416,7 +420,7 @@ $(document).ready(function() {
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
-                $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+                $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
               });
             }
           });
@@ -458,12 +462,12 @@ $(document).ready(function() {
       drsum=0;
       $(".dramt").each(function(){
         drsum += +$(this).val();
-        $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+        $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
       });
       crsum=0;
       $(".cramt").each(function(){
         crsum += +$(this).val();
-        $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+        $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
       });
       var curindex = $(this).closest('tr').index();
       if($('#vtable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()=="" || $('#vtable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()==0){
@@ -481,7 +485,7 @@ $(document).ready(function() {
             crsum=0;
             $(".cramt").each(function(){
               crsum += +$(this).val();
-              $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+              $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
             });
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
           }
@@ -532,12 +536,12 @@ $(document).ready(function() {
               crsum=0;
               $(".cramt").each(function(){
                 crsum += +$(this).val();
-                $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+                $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
               });
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
-                $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+                $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
               });
             }
           });
@@ -556,7 +560,7 @@ $(document).ready(function() {
             drsum=0;
             $(".dramt").each(function(){
               drsum += +$(this).val();
-              $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+              $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
             });
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
           }
@@ -607,7 +611,7 @@ $(document).ready(function() {
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
-                $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+                $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
               });
             }
           });
@@ -863,6 +867,7 @@ $(document).ready(function() {
                 $.ajax({
                   url: '/getcjaccounts',
                   type: 'POST',
+                  async: false,
                   dataType: 'json',
                   data: {"type": $('#vtype').val(),"side":"Cr"},
                   beforeSend: function(xhr)
@@ -887,6 +892,7 @@ $(document).ready(function() {
                 $.ajax({
                   url: '/getcjaccounts',
                   type: 'POST',
+                  async: false,
                   dataType: 'json',
                   data: {"type": $('#vtype').val(),"side":"Dr"},
                   beforeSend: function(xhr)
@@ -909,7 +915,18 @@ $(document).ready(function() {
               }
 
             });
-            $("#vtable tbody tr:eq("+accpopupindex+") td:eq(1) select").focus();
+            if (accpopupindex!=-1) {
+              $("#vtable tbody tr:eq("+accpopupindex+") td:eq(1) select").focus();
+              var text1 = $("#selpopupaccount").val();
+              $("#vtable tbody tr:eq("+accpopupindex+") td:eq(1) select option").filter(function() {
+                return this.text == text1;
+              }).attr('selected', true);
+              $("#selpopupaccount").val("");
+            }
+            else {
+              $("#popup").focus();
+              accpopupindex = -1;
+            }
           });
         }
       }
