@@ -461,9 +461,6 @@ $(document).ready(function() {
     {
       event.preventDefault();
       $('#vtable tbody tr:eq('+nextindex+') input:enabled').focus().select();
-      if (curindex==lastindex) {
-        $("#project").focus();
-      }
     }
     else if (event.which==188 && event.shiftKey)
     {
@@ -509,6 +506,9 @@ $(document).ready(function() {
     if (event.which==190 && event.ctrlKey) {
         $('#vtable tbody tr:eq('+nextindex+') select:enabled').focus();
         event.preventDefault();
+        if (curindex==lastindex) {
+          $("#project").focus();
+        }
     }
   });
 
