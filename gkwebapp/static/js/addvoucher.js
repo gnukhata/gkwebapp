@@ -48,7 +48,6 @@ $(document).ready(function() {
   var diff = 0;     //diff containns the difference of drsum and crsum
   var outfocus = false;
   var accpopupindex = -1;
-  var idfocus;
   var percentwid = 100*(($("table").width()-12)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   $('.table-fixedheader tfoot').width(percentwid+"%");
@@ -78,9 +77,7 @@ $(document).ready(function() {
     });
   });
 
-  function setId(id) {
-    cur_id = id;
-  }
+
   //Deletes a row from the table and recalculates the total cr and dr amount
   $(document).off("click",".del").on("click", ".del", function() {
     $(this).closest('tr').fadeOut(200, function(){
@@ -130,11 +127,17 @@ $(document).ready(function() {
     if(event.which==13 && $('#vdate').val()!=""){
       $('#vmonth').select().focus();
     }
+    if (event.which==38) {
+      $("#vno").select().focus();
+    }
   });
 
   $('#vmonth').keyup(function(event) {
     if(event.which==13 && $('#vmonth').val()!=""){
       $('#vyear').select().focus();
+    }
+    if (event.which==38) {
+      $("#vdate").select().focus();
     }
   });
 
@@ -142,15 +145,24 @@ $(document).ready(function() {
     if(event.which==13 && $('#vyear').val()!=""){
       $('#vtable tbody tr:first td:eq(1) select').focus();
     }
+    if (event.which==38) {
+      $("#vmonth").select().focus();
+    }
+    if (event.which==40) {
+      $("#vtable tbody tr:first select:enabled)").select().focus();
+    }
   });
 
   $('#project').keyup(function(event) {
     if(event.which==13){
       $('#narration').select().focus();
     }
+    if (event.which==38) {
+      $("#vtable tbody tr:last input:enabled").select().focus();
+    }
   });
 
-  $('#narration').keydown(function(event) {
+  $('#narration').keyup(function(event) {
     if(event.which==13){
       if ($('#drtotal').val()!=$('#crtotal').val()) {
         outfocus = true;
@@ -178,6 +190,9 @@ $(document).ready(function() {
       }
       $('#save').click();
       event.preventDefault();
+    }
+    if (event.which==38) {
+      $("#project").select().focus();
     }
   });
   //This event fires when the crdr select box option is changed
@@ -255,6 +270,128 @@ $(document).ready(function() {
     }
     if (event.which==13 && outfocus) {
       outfocus = false;
+    }
+  });
+  $(document).off("keydown",".accs").on("keydown",".accs",function(event){
+    curindex = $(this).closest('tr').index();
+    nextindex = curindex+1;
+    previndex = curindex-1;
+    if(event.which==190 && event.shiftKey)
+    {
+      $('#vtable tbody tr:eq('+nextindex+') td:eq(1) select').focus();
+    }
+    else if (event.which==188 && event.shiftKey)
+    {
+      if(previndex>-1)
+      {
+        event.preventDefault();
+        $('#vtable tbody tr:eq('+previndex+') td:eq(1) select').focus();
+      }
+      if (curindex==0) {
+        event.preventDefault();
+        $("#vyear").focus();
+      }
+    }
+    if (event.which==188 && event.ctrlKey) {
+        $('#vtable tbody tr:eq('+curindex+') td:eq(0) select').focus();
+        event.preventDefault();
+        if (curindex==0) {
+          event.preventDefault();
+          $("#vyear").focus();
+        }
+        if(curindex==1)
+        {
+          event.preventDefault();
+          $('#vtable tbody tr:eq('+previndex+') input:enabled').focus();
+        }
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#vtable tbody tr:eq('+curindex+') input:enabled').focus().select();
+        event.preventDefault();
+    }
+  });
+  $(document).off("keydown",".crdr").on("keydown",".crdr",function(event){
+    curindex = $(this).closest('tr').index();
+    nextindex = curindex+1;
+    previndex = curindex-1;
+    if(event.which==190 && event.shiftKey)
+    {
+      $('#vtable tbody tr:eq('+nextindex+') td:eq(0) select').focus();
+    }
+    else if (event.which==188 && event.shiftKey)
+    {
+      if(previndex>-1)
+      {
+        event.preventDefault();
+        $('#vtable tbody tr:eq('+previndex+') td:eq(0) select').focus();
+      }
+    }
+    if (event.which==188 && event.ctrlKey) {
+        $('#vtable tbody tr:eq('+previndex+') input:enabled').focus().select();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#vtable tbody tr:eq('+curindex+') td:eq(1) select').focus();
+        event.preventDefault();
+    }
+  });
+  $(document).off("keydown",".cramt").on("keydown",".cramt",function(event){
+    curindex = $(this).closest('tr').index();
+    lastindex = $("#vtable tbody tr:last").index();
+    nextindex = curindex+1;
+    previndex = curindex-1;
+    if(event.which==190 && event.shiftKey)
+    {
+      event.preventDefault();
+      $('#vtable tbody tr:eq('+nextindex+') input:enabled').focus().select();
+      if (curindex==lastindex) {
+        $("#project").focus();
+      }
+    }
+    else if (event.which==188 && event.shiftKey)
+    {
+      if(previndex>-1)
+      {
+        event.preventDefault();
+        $('#vtable tbody tr:eq('+previndex+') input:enabled').focus().select();
+      }
+    }
+    if (event.which==188 && event.ctrlKey) {
+        $('#vtable tbody tr:eq('+curindex+') td:eq(1) select').focus();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#vtable tbody tr:eq('+nextindex+') select:enabled').focus();
+        event.preventDefault();
+        if (curindex==lastindex) {
+          $("#project").focus();
+        }
+    }
+  });
+  $(document).off("keydown",".dramt").on("keydown",".dramt",function(event){
+    curindex = $(this).closest('tr').index();
+    nextindex = curindex+1;
+    previndex = curindex-1;
+    if(event.which==190 && event.shiftKey)
+    {
+      event.preventDefault();
+      $('#vtable tbody tr:eq('+nextindex+') input:enabled').focus().select();
+    }
+    else if (event.which==188 && event.shiftKey)
+    {
+      if(previndex>-1)
+      {
+        event.preventDefault();
+        $('#vtable tbody tr:eq('+previndex+') input:enabled').focus().select();
+      }
+    }
+    if (event.which==188 && event.ctrlKey) {
+        $('#vtable tbody tr:eq('+curindex+') td:eq(1) select').focus();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#vtable tbody tr:eq('+nextindex+') select:enabled').focus();
+        event.preventDefault();
     }
   });
 
@@ -782,7 +919,7 @@ $(document).ready(function() {
     details.vno=$('#vno').val();
     details.vdate=$('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
     details.projectcode=$('#project').val();
-    details.narration=$('#narration').val();
+    details.narration=$.trim($('#narration').val());
     details.vtype=$('#vtype').val();
     $.ajax({
       type: "POST",
