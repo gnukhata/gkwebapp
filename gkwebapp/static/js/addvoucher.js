@@ -99,7 +99,12 @@ $(document).ready(function() {
   });
   function pad (str, max) { //to add leading zeros in date
     str = str.toString();
-    return str.length < max ? pad("0" + str, max) : str;
+    if (str.length==1) {
+      return str.length < max ? pad("0" + str, max) : str;
+    }
+    else{
+      return str
+    }
   }
   function yearpad (str, max) {
     str = str.toString();
@@ -108,6 +113,9 @@ $(document).ready(function() {
     }
     else if (str.length==2) {
       return str.length < max ? pad("20" + str, max) : str;
+    }
+    else{
+      return str
     }
   }
   //Formats the number on focusout
