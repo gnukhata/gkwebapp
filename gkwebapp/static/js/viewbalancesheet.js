@@ -1,29 +1,43 @@
 $(document).ready(function() {
   $('.modal-backdrop').remove();
 
+  var sel1 = 0;
+  var s1 ;
   if (sessionStorage.orgt=="Profit Making")
   {
     $(".panel-title").append(" Balance Sheet");
     $("#baltypelbl").prepend("Balance Sheet ");
     $(".cbl").show();
+    
+
+    $("#viewbalsht_baltype").focus(function(){
+      sel1 = 1;
+    });
+    $("#viewbalsht_baltype").blur(function(){
+      sel1 = 0;
+    });
   }
   if (sessionStorage.orgt=="Not For Profit")
   {
     $(".panel-title").append(" Statement of Affairs");
     $("#baltypelbl").prepend("Statement of Affairs ");
     $(".csa").show();
+
+
+    $("#viewsa_baltype").focus(function(){
+      sel1 = 1;
+    });
+    $("#viewsa_baltype").blur(function(){
+      sel1 = 0;
+    });
   }
 
 
   $("#viewbalsht_todate").focus();
   $('.viewbalsht_date').autotab('number');
-  var sel1 = 0;
-  $("#viewbalsht_baltype").focus(function(){
-    sel1 = 1;
-  });
-  $("#viewbalsht_baltype").blur(function(){
-    sel1 = 0;
-  });
+
+
+
 
   var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
   $("#viewbalsht_fromdate").val(fromdatearray[2])
@@ -46,8 +60,18 @@ $(document).ready(function() {
         f[nextIndex].select();
       }
     }
-    var s1 = $("#viewbalsht_baltype option:selected").index();
-    if ((e.which == 38 && sel1 == 1 && s1 == 0) ||(e.which == 38 && sel1 == 1 && s1 == 1) || (e.which == 38 && sel1 == 0))
+
+    if (sessionStorage.orgt=="Profit Making")
+    {
+      s1 = $("#viewbalsht_baltype option:selected").index();
+
+    }
+    if (sessionStorage.orgt=="Not For Profit")
+    {
+      s1 = $("#viewsa_baltype option:selected").index();
+
+    }
+    if ((e.which == 38 && sel1 == 1 && s1 == 0) ||(e.which == 38 && sel1 == 1 && s1 == 1 )|| (e.which == 38 && sel1 == 0))
     {
       var prevIndex = f.index(this) - 1;
       if(prevIndex < n){
@@ -65,9 +89,25 @@ $(document).ready(function() {
   });
 
   $("#viewbalsht_submit").click(function(event) {
-    if ($("#viewbalsht_baltype").val()==null) {
-      return false;
+    var btyp;
+    if (sessionStorage.orgt=="Profit Making")
+    {
+      if ($("#viewbalsht_baltype").val()==null) {
+        return false;
+      }
+      btyp = $("#viewbalsht_baltype").val();
     }
+    if (sessionStorage.orgt=="Not For Profit")
+    {
+
+      if ($("#viewsa_baltype").val()==null) {
+        return false;
+      }
+
+      btyp = $("#viewsa_baltype").val();
+    }
+
+
     if (($("#viewbalsht_fromdate").val()=="" || $("#viewbalsht_frommonth").val()=="" || $("#viewbalsht_fromyear").val()=="" || $("#viewbalsht_todate").val()=="" || $("#viewbalsht_tomonth").val()=="" || $("#viewbalsht_toyear").val()=="")) {
       return false;
     }
@@ -78,7 +118,7 @@ $(document).ready(function() {
         global: false,
         async: false,
         datatype: "text/html",
-        data: {"balancesheettype":$("#viewbalsht_baltype").val(),"calculateto":$("#viewbalsht_toyear").val()+"-"+$("#viewbalsht_tomonth").val()+"-"+$("#viewbalsht_todate").val(),"orgtype":sessionStorage.orgt},
+        data: {"balancesheettype":btyp,"calculateto":$("#viewbalsht_toyear").val()+"-"+$("#viewbalsht_tomonth").val()+"-"+$("#viewbalsht_todate").val(),"orgtype":sessionStorage.orgt},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
