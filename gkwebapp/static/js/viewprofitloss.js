@@ -2,6 +2,39 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#pnl_todate").focus();
   $('.pnl_autotab').autotab('number');
+  var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
+  var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
+  function pad (str, max) { //to add leading zeros in date
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("0" + str, max) : str;
+    }
+    else{
+      return str
+    }
+  }
+  function yearpad (str, max) {
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("200" + str, max) : str;
+    }
+    else if (str.length==2) {
+      return str.length < max ? pad("20" + str, max) : str;
+    }
+    else{
+      return str
+    }
+  }
+
+  $("#pnl_todate").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#pnl_tomonth").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#pnl_toyear").blur(function(event) {
+    $(this).val(yearpad($(this).val(),4));
+  });
 
   $('input:text:enabled').keydown( function(e) {
     var n = $("input:text:enabled").length;
@@ -39,12 +72,28 @@ $(document).ready(function() {
 
   $("#pnl_toyear").keydown(function(event) {
     if (event.which==13) {
+      $(this).val(yearpad($(this).val(),4));
       $("#pnl_view").click();
     }
   });
 
   $("#pnl_view").click(function(event) {
-    if ($("#pnl_todate").val()=="" || $("#pnl_tomonth").val()=="" || $("#pnl_toyear").val()==""||$("#pnl_fromdate").val()=="" || $("#pnl_frommonth").val()=="" || $("#pnl_fromyear").val()=="") {
+    var todate = $("#pnl_toyear").val()+$("#pnl_tomonth").val()+$("#pnl_todate").val();
+    if(!Date.parseExact(todate, "yyyyMMdd")){
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#pnl_todate').focus().select();
+      return false;
+    }
+
+    if (!Date.parseExact(todate,"yyyyMMdd").between(financialstart,financialend)) {
+      $("#between-date-alert").alert();
+      $("#between-date-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#between-date-alert").hide();
+      });
+      $('#pnl_todate').focus().select();
       return false;
     }
     $.ajax(

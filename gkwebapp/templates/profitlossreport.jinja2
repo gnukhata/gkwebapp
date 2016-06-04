@@ -100,6 +100,10 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
   float: left;
 
 }
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
 
 </style>
 </head>
@@ -110,7 +114,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
     <span style="margin:auto; display:table;"><strong>Income & Expenditure Account</strong> for the period <a class="glyphicon glyphicon-calendar"></a> <strong>{{from}}</strong> to <a class="glyphicon glyphicon-calendar"></a> <strong>{{to}}</strong></span>
   {% endif %}
   <div class="row">
-    <div class="table-responsive col-md-6" style="float:left; margin-right:0px">
+    <div class="table-responsive col-md-6 nopadding" style="float:left; margin-right:0px">
       <table id="expensetbl" class="shadow table table-condensed table-fixedheader cashflowtable">
         <thead>
           <tr class="info ">
@@ -140,7 +144,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
         </tbody>
       </table>
     </div>
-    <div class="table-responsive col-md-6" style="float:left; margin-left:0px">
+    <div class="table-responsive col-md-6 nopadding" style="float:left; margin-left:0px">
       <table id="incometbl" class="shadow table table-condensed table-fixedheader cashflowtable">
         <thead>
           <tr class="info ">

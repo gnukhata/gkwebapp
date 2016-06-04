@@ -2,12 +2,45 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#trialbal_todate").focus();
   $('.trialbal_autotab').autotab('number');
+  var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
+  var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   var sel1 = 0;
   $("#trialbal_type").focus(function(){
     sel1 = 1;
   });
   $("#trialbal_type").blur(function(){
     sel1 = 0;
+  });
+  function pad (str, max) { //to add leading zeros in date
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("0" + str, max) : str;
+    }
+    else{
+      return str
+    }
+  }
+  function yearpad (str, max) {
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("200" + str, max) : str;
+    }
+    else if (str.length==2) {
+      return str.length < max ? pad("20" + str, max) : str;
+    }
+    else{
+      return str
+    }
+  }
+
+  $("#trialbal_todate").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#trialbal_tomonth").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#trialbal_toyear").blur(function(event) {
+    $(this).val(yearpad($(this).val(),4));
   });
 
   $('input:text:enabled,select').keydown( function(e) {
@@ -51,7 +84,22 @@ $(document).ready(function() {
   });
 
   $("#trialbal_view").click(function(event) {
-    if ($("#trialbal_todate").val()=="" || $("#trialbal_tomonth").val()=="" || $("#trialbal_toyear").val()=="") {
+    var todate = $("#trialbal_toyear").val()+$("#trialbal_tomonth").val()+$("#trialbal_todate").val();
+    if(!Date.parseExact(todate, "yyyyMMdd")){
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#trialbal_todate').focus().select();
+      return false;
+    }
+
+    if (!Date.parseExact(todate,"yyyyMMdd").between(financialstart,financialend)) {
+      $("#between-date-alert").alert();
+      $("#between-date-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#between-date-alert").hide();
+      });
+      $('#trialbal_todate').focus().select();
       return false;
     }
     $.ajax(
