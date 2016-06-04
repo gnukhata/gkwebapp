@@ -104,7 +104,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
 </head>
 <body>
   {% if orgtype=="Profit Making" %}
-    <span style="margin:auto; display:table;"><strong>Cash Flow Account</strong> for the period <a class="glyphicon glyphicon-calendar"></a> <strong>{{from}}</strong> to <a class="glyphicon glyphicon-calendar"></a> <strong>{{to}}</strong></span>
+    <span style="margin:auto; display:table;"><strong>Cash Flow Account</strong> for the period <strong>{{from}}</strong> to <strong>{{to}}</strong></span>
   {% else %}
     <span style="margin:auto; display:table;"><strong>Reciept & Payment Account</strong> for the period <a class="glyphicon glyphicon-calendar"></a> <strong>{{from}}</strong> to <a class="glyphicon glyphicon-calendar"></a> <strong>{{to}}</strong></span>
   {% endif %}
@@ -131,9 +131,13 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
               <a class="rcaccname" href="" style="text-decoration: none; color:black;">{{rcrecord['particulars']}}</a>
               {% endif %}
             </td>
+            {% if rcrecord["amount"]=="." %}
+            <td class="col-xs-2" style="text-align:right">&nbsp</td>
+            {% else %}
             <td class="col-xs-2" style="text-align:right">
               {{rcrecord["amount"]}}
             </td>
+            {% endif %}
           </tr>
           {% endfor %}
         </tbody>
@@ -161,9 +165,13 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
               <a class="pyaccname" href="" style="text-decoration: none; color:black;">{{pyrecord['particulars']}}</a>
               {% endif %}
             </td>
-            <td class="col-xs-2" style="text-align:right">
-              {{pyrecord["amount"]}}
-            </td>
+              {% if pyrecord["amount"]=="." %}
+              <td class="col-xs-2" style="text-align:right">&nbsp</td>
+              {% else %}
+              <td class="col-xs-2" style="text-align:right">
+                {{pyrecord["amount"]}}
+              </td>
+              {% endif %}
           </tr>
           {% endfor %}
         </tbody>
