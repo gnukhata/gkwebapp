@@ -186,6 +186,55 @@ $(document).ready(function() {
 
 $("#findvoucher").submit(function(event) {
 
+  var todate = $("#tyear").val()+$("#tmonth").val()+$("#tday").val();
+  var fromdate = $("#fyear").val()+$("#fmonth").val()+$("#fday").val();
+  var fstart = Date.parseExact(sessionStorage.yyyymmddyear1,"yyyy-MM-dd");
+  var fend = Date.parseExact(sessionStorage.yyyymmddyear2,"yyyy-MM-dd");
+  if (!Date.parseExact(todate,"yyyyMMdd"))
+  {
+    $("#improperdate-alert").alert();
+    $("#improperdate-alert").fadeTo(2000, 400).slideUp(500, function(){
+      $("#improperdate-alert").hide();
+    });
+    $("#tday").focus();
+    $("#tday").select();
+    return false;
+  };
+  if (!Date.parseExact(fromdate,"yyyyMMdd"))
+  {
+    $("#improperdate-alert").alert();
+    $("#improperdate-alert").fadeTo(2000, 400).slideUp(500, function(){
+      $("#improperdate-alert").hide();
+    });
+    $("#fday").focus();
+    $("#fday").select();
+    return false;
+  };
+  if (!Date.parseExact(todate,"yyyyMMdd").between(fstart,fend))
+  {
+    $("#betweendate-alert").alert();
+    $("#betweendate-alert").fadeTo(2000, 400).slideUp(500, function(){
+      $("#betweendate-alert").hide();
+    });
+
+    $("#tday").focus();
+    $("#tday").select();
+    return false;
+
+  }
+
+  if (!Date.parseExact(fromdate,"yyyyMMdd").between(fstart,fend))
+  {
+    $("#betweendate-alert").alert();
+    $("#betweendate-alert").fadeTo(2000, 400).slideUp(500, function(){
+      $("#betweendate-alert").hide();
+    });
+
+    $("#fday").focus();
+    $("#fday").select();
+    return false;
+
+  }
 
 
   var search = $("#searchby option:selected").val();

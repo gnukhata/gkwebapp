@@ -116,6 +116,28 @@ $(document).ready(function() {
 
   });
 
+  $("#sabutn").click(function(event) {
+
+    $.ajax(
+      {
+        type: "POST",
+        url: "/showbalancesheetreport",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data: {"balancesheettype":$("#balancesheettype").val(),"calculateto":$("#cto").val(),"orgtype":sessionStorage.orgt},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      })
+      .done(function(resp)
+      {
+        $("#info").html(resp);
+      }
+    );
+  });
+
 
   $("#balback").click(function(event) {
     $("#showbalancesheet").click();

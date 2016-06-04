@@ -19,25 +19,36 @@
         <h3 class="panel-title">View</h3>
       </div>
       <div class="panel-body" style="padding-top:5px">
+        <div class="alert alert-danger" id="improperdate-alert" hidden>
+          <a href="" class="close" aria-label="close">&times;</a>
+          Please enter date in proper format!
+        </div>
+        <div class="panel-body" style="padding-top:5px">
+          <div class="alert alert-danger" id="betweendate-alert" hidden>
+            <a href="" class="close" aria-label="close">&times;</a>
+            Please enter date within the financial year!
+          </div>
+
+
         <div style="margin-bottom: 5px" class="col-xs-12 from-group">
-          <label for="viewbalsht_fromdate">From Date:</label>
+          <label for="viewbalsht_fromday">From Date:</label>
           <div class="form-inline" >
 
             <div class="form-group">
 
-              <input type="text" class="viewbalsht_date form-control input-sm dis" id="viewbalsht_fromdate" disabled value="" size="2" maxlength="2" placeholder="DD">
+              <input type="text" class="viewbalsht_date form-control input-sm dis" id="viewbalsht_fromday" disabled value="" size="2" maxlength="2" placeholder="DD">
               <input type="text" id="viewbalsht_frommonth" class="viewbalsht_date dis form-control input-sm" disabled value="" size="2" maxlength="2" placeholder="MM">
               <input type="text" id="viewbalsht_fromyear" class="viewbalsht_date dis form-control input-sm" disabled value="" size="4" maxlength="4" placeholder="YYYY">
             </div>
 
           </div>
           <br>
-          <label for="viewbalsht_todate">To Date:</label>
+          <label for="viewbalsht_today">To Date:</label>
           <div class="form-inline" >
 
             <div class="form-group">
 
-              <input type="text" class="viewbalsht_date form-control input-sm dis" id="viewbalsht_todate" value="" size="2" maxlength="2" placeholder="DD">
+              <input type="text" class="viewbalsht_date form-control input-sm dis" id="viewbalsht_today" value="" size="2" maxlength="2" placeholder="DD">
               <input type="text" id="viewbalsht_tomonth" class="viewbalsht_date form-control input-sm dis" value="" size="2" maxlength="2" placeholder="MM">
               <input type="text" id="viewbalsht_toyear" class="viewbalsht_date form-control input-sm dis" value="" size="4" maxlength="4" placeholder="YYYY">
             </div>
@@ -46,14 +57,14 @@
           <label for="viewbalsht_baltype" id="baltypelbl">Type :</label>
           <div class="form-group cbl" hidden="hidden">
             <select class = "form-control input-sm dis cblsel" id="viewbalsht_baltype"  name = "viewbalsht_baltype">
-              <option value="" disabled hidden selected>Select Balance Sheet Type</option>
+
               <option value="conventionalbalancesheet">Conventional Balance Sheet</option>
               <option value="verticalbalancesheet">Sources & Application of Funds</option>
             </select>
           </div>
           <div class="form-group csa" hidden="hidden">
             <select class = "form-control input-sm dis cblsel" id="viewsa_baltype"  name = "viewsa_baltype" >
-              <option value="" disabled hidden selected>Select Balance Sheet Type</option>
+
               <option value="conventionalbalancesheet">Conventional Statement of Affairs</option>
               <option value="verticalbalancesheet">Sources & Application of Funds</option>
             </select>

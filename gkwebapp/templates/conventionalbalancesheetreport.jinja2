@@ -21,6 +21,10 @@
     font-size: 70%;
   }
 
+.nopadding{
+  padding: 0 !important;
+  margin: 0 !important;
+}
   /*
   Force table width to 100%
   */
@@ -105,7 +109,7 @@
   <span style="margin:auto; display:table;"><strong>Conventional Statement of Affairs </strong>as on <a class="glyphicon glyphicon-calendar"></a> <strong>{{to}}</strong></span>
   {% endif %}
   <div class="row">
-    <div class="table-responsive col-md-6" style="float:left; margin-right:0px">
+    <div class="table-responsive col-md-6 nopadding" style="float:left; margin-right:0px">
       <table id="liabtable" class="shadow table table-condensed table-fixedheader cbalsheettable">
         <thead>
           <tr class="info ">
@@ -137,7 +141,7 @@
         </tbody>
       </table>
     </div>
-    <div class="table-responsive col-md-6" style="float:left; margin-left:0px">
+    <div class="table-responsive col-md-6 nopadding" style="float:left; margin-left:0px">
       <table id="patable" class="shadow table table-condensed table-fixedheader cbalsheettable">
         <thead>
           <tr class="info ">
@@ -163,11 +167,15 @@
           {% endfor %}
         </tbody>
       </table>
+      <input type="hidden" name="balancesheettype" id="balancesheettype" value="{{balancesheettype}}">
+      <input type="hidden" name="cto" id="cto" value="{{to}}">
+
     </div>
 
   </div>
   <span style="margin:auto; display:table;">
     <button type="button" class="btn btn-sm btn-danger" id="balback">Back</button>
+    <button type="button" class="btn btn-sm btn-primary" id="sabutn">Sources & Application of Funds</button>
   </span>
   <input type="hidden" id="ledtodate" value="{{to}}">
   <input type="hidden" id="ledfromdate" value="{{from}}">

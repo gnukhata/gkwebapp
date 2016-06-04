@@ -11,12 +11,15 @@ def showtrialbalance(request):
 @view_config(route_name="showbalancesheetreport")
 def showtrialbalancereport(request):
 	calculateto = request.params["calculateto"]
+	print"asdfyguygfdcwerv: ",calculateto
 	balancesheettype = request.params["balancesheettype"]
+	print"asdfyguygfdcwerv: ",balancesheettype
 	orgtype = request.params["orgtype"]
+	print"asdfyguygfdcwerv: ",orgtype
 	header={"gktoken":request.headers["gktoken"]}
 	if balancesheettype == "conventionalbalancesheet":
 		result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=1"%(calculateto), headers=header)
-		return render_to_response("gkwebapp:templates/conventionalbalancesheetreport.jinja2",{"records":result.json()["gkresult"],"balancesheettype":balancesheettype,"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y'),"orgtype":orgtype},request=request)
+		return render_to_response("gkwebapp:templates/conventionalbalancesheetreport.jinja2",{"records":result.json()["gkresult"],"balancesheettype":"verticalbalancesheet","to":calculateto,"orgtype":orgtype},request=request)
 	if balancesheettype == "verticalbalancesheet":
 		result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=2"%(calculateto), headers=header)
-		return render_to_response("gkwebapp:templates/sourcesandapplicationoffundsreport.jinja2",{"records":result.json()["gkresult"],"balancesheettype":balancesheettype,"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y'),"orgtype":orgtype},request=request)
+		return render_to_response("gkwebapp:templates/sourcesandapplicationoffundsreport.jinja2",{"records":result.json()["gkresult"],"balancesheettype":"conventionalbalancesheet","to":calculateto,"orgtype":orgtype},request=request)
