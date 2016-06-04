@@ -110,7 +110,7 @@ $("title").append(orname);
 
     $('#changeorg').click(function (e) {
       sessionStorage.clear();
-      $("body").load("/login?orgcode=2");
+      $("body").load("/");
 
       });
 
