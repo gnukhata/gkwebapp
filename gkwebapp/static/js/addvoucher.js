@@ -242,9 +242,6 @@ $(document).ready(function() {
     if(event.which==13){
       $('#narration').select().focus();
     }
-    if (event.which==38) {
-      $("#vtable tbody tr:last input:enabled").select().focus();
-    }
   });
   $('#project').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
@@ -436,6 +433,13 @@ $(document).ready(function() {
     }
     if (event.which==13 && outfocus) {
       outfocus = false;
+    }
+  });
+  $(document).off("keyup",".crdr").on("keyup",".crdr",function(event){
+    if(event.which==13)
+    {
+      var curindex = $(this).closest('tr').index();
+      $('#vtable tbody tr:eq('+curindex+') td:eq(1) select').focus(); // focus shifts to the enabled amount box when one hits enter on the accounts select box.
     }
   });
   $(document).off("keydown",".accs").on("keydown",".accs",function(event){
