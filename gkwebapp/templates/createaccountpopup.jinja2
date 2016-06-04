@@ -112,57 +112,57 @@ th {
       			<table class="table table-condensed">
       				<thead>
       					<tr class="success">
-      						<th>{{baltbl[0]}}</th>
+      						<th class="col-xs-6">{{baltbl[0]}}</th>
       					</tr>
       					<tr class="info">
-      						<th>Group Name</th>
-      						<th>No. of accounts</th>
-      						<th>Group Balance</th>
+      						<th class="col-xs-6">Group Name</th>
+      						<th class="col-xs-3">No. of accounts</th>
+      						<th class="col-xs-3">Group Balance</th>
       					</tr>
       				</thead>
       				<tbody>
       					{% for i in range(1,5) %}
       					<tr>
-      						<td>{{baltbl[i]["groupname"]}}</td>
-      						<td align="right">{{baltbl[i]["numberofaccounts"]}}</td>
-      						<td align="right">{{baltbl[i]["groupbalance"]}}</td>
+      						<td class="col-xs-6">{{baltbl[i]["groupname"]}}</td>
+      						<td class="col-xs-3" align="right">{{baltbl[i]["numberofaccounts"]}}</td>
+      						<td class="col-xs-3" align="right">{{baltbl[i]["groupbalance"]}}</td>
       					</tr>
       					{% endfor %}
       					<tr class="info">
-      						<th>Total</th>
-      						<th></th>
-      						<td align="right"><b>{{baltbl[5]["Total"]}}</b></td>
+      						<th class="col-xs-6">Total</th>
+      						<th class="col-xs-3"></th>
+      						<td class="col-xs-3" align="right"><b>{{baltbl[5]["Total"]}}</b></td>
       					</tr>
       				</tbody>
       			</table>
       			<table class="table table-condensed">
       				<thead>
       					<tr class="success">
-      						<th >{{baltbl[6]}}</th>
+      						<th class="col-xs-6">{{baltbl[6]}}</th>
       					</tr>
       					<tr class="info">
-      						<th>Group Name</th>
-      						<th>No. of accounts</th>
-      						<th>Group Balance</th>
+      						<th class="col-xs-6">Group Name</th>
+      						<th class="col-xs-3">No. of accounts</th>
+      						<th class="col-xs-3">Group Balance</th>
       					</tr>
       				</thead>
       				<tbody>
       					{% for i in range(7,((baltbl|length)-2)) %}
       					<tr>
-      						<td>{{baltbl[i]["groupname"]}}</td>
-      						<td align="right">{{baltbl[i]["numberofaccounts"]}}</td>
-      						<td align="right">{{baltbl[i]["groupbalance"]}}</td>
+      						<td class="col-xs-6">{{baltbl[i]["groupname"]}}</td>
+      						<td class="col-xs-3" align="right">{{baltbl[i]["numberofaccounts"]}}</td>
+      						<td class="col-xs-3" align="right">{{baltbl[i]["groupbalance"]}}</td>
       					</tr>
       					{% endfor %}
       					<tr class="info">
-      						<th>Total</th>
-      						<th></th>
-      						<td align="right"><b>{{baltbl[((baltbl|length)-2)]["Total"]}}</b></td>
+      						<th class="col-xs-6">Total</th>
+      						<th class="col-xs-3"></th>
+      						<td class="col-xs-3" align="right"><b>{{baltbl[((baltbl|length)-2)]["Total"]}}</b></td>
       					</tr>
       					<tr class="info">
-      						<th>Difference in Total</th>
-      						<th></th>
-      						<td align="right"><b>{{baltbl[((baltbl|length)-1)]["Difference in balance"]}}</b></td>
+      						<th class="col-xs-6">Difference in Total</th>
+      						<th class="col-xs-3"></th>
+      						<td class="col-xs-3" align="right"><b>{{baltbl[((baltbl|length)-1)]["Difference in balance"]}}</b></td>
       					</tr>
       				</tbody>
       			</table>
