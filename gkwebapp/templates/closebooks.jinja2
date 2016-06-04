@@ -8,105 +8,113 @@
 <body>
 
 	<div class="container">
+
     <div class="alert alert-danger" id="closebook-blank-alert" hidden>
       <a href="#" class="close" aria-label="close">&times;</a>
       Please enter Date!
     </div>
-		<div class="jumbotron" name="close">
-			<fieldset>
-			<legend><b>Close Books</b></legend>
-			<p>Current Financial Year:
-        <div class="form-inline">
-
-        <label class="sr-only" for="cbfromday">Enter From Day</label>
-        <input type="text" id="cbfromday" name="fromday" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" >
-
-        <label class="sr-only" for="cbfrommonth">Enter From Month</label>
-        <input type="text" id="cbfrommonth" name="frommonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" >
-
-        <label class="sr-only" for="cbfromyear">Enter From Year</label>
-        <input type="text" id="cbfromyear" name="fromyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
-
-        <label>--To--</label>
-
-        <label class="sr-only" for="cbtoday">Enter To Day</label>
-        <input type="text" id="cbtoday" name="day" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" >
-
-        <label class="sr-only" for="cbtomonth">Enter To Month</label>
-        <input type="text" id="cbtomonth" name="tomonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM"  >
-
-        <label class="sr-only" for="cbtoyear">Enter To Year</label>
-        <input type="text" id="cbtoyear" name="toyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
-      </div></p>
-
-      <button type="button" id="closebooks" class="btn btn-danger">Close Books</button>
-
-
-		</fieldset>
-		</div>
     <div class="alert alert-danger" id="roll-blank-alert" hidden>
       <a href="#" class="close" aria-label="close">&times;</a>
       Please enter Date!
     </div>
+  <div class="row">
+    <div style="padding-top:5px" class="col-sm-6">
+      <div class="panel panel-info shadow" >
+				<div class="panel-heading">
+					<div class="panel-title">Close Books</div>
+        </div>
+        <div style="padding-top:5px" class="panel-body" >
+			               <p>Current Financial Year:
+                       <div class="form-inline">
 
+                         <label class="sr-only" for="cbfromday">Enter From Day</label>
+                         <input type="text" id="cbfromday" name="fromday" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" >
 
+                         <label class="sr-only" for="cbfrommonth">Enter From Month</label>
+                         <input type="text" id="cbfrommonth" name="frommonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" >
 
-		<div class="jumbotron">
-			<fieldset>
-			<legend><b>Roll Over</b></legend>
-			<p><b>Roll Over for the Period</b></p>
-			<p>Current Financial Year From:<div class="form-inline">
+                         <label class="sr-only" for="cbfromyear">Enter From Year</label>
+                         <input type="text" id="cbfromyear" name="fromyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
 
-      <label class="sr-only" for="rbfromday">Enter From Day</label>
-      <input type="text" id="rbfromday" name="fromday" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" accesskey="f" >
+                         <label>--To--</label>
 
-      <label class="sr-only" for="rbfrommonth">Enter From Month</label>
-      <input type="text" id="rbfrommonth" name="frommonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" >
+                         <label class="sr-only" for="cbtoday">Enter To Day</label>
+                         <input type="text" id="cbtoday" name="day" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" >
 
-      <label class="sr-only" for="rbfromyear">Enter From Year</label>
-      <input type="text" id="rbfromyear" name="fromyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
+                         <label class="sr-only" for="cbtomonth">Enter To Month</label>
+                         <input type="text" id="cbtomonth" name="tomonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM"  >
 
-      <label>--To--</label>
+                         <label class="sr-only" for="cbtoyear">Enter To Year</label>
+                         <input type="text" id="cbtoyear" name="toyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
+                       </div></p>
 
-      <label class="sr-only" for="rbtoday">Enter To Day</label>
-      <input type="text" id="rbtoday" name="day" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" >
-
-      <label class="sr-only" for="rbtomonth">Enter To Month</label>
-      <input type="text" id="rbtomonth" name="tomonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM"  >
-
-      <label class="sr-only" for="rbtoyear">Enter To Year</label>
-      <input type="text" id="rbtoyear" name="toyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
-    </div></p>
-
-
-      <p>New Financial Year From: <div class="form-inline">
-
-      <label class="sr-only" for="rbfrom_day">Enter From Day</label>
-      <input type="text" id="rbfrom_day" name="fromday" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" accesskey="f" >
-
-      <label class="sr-only" for="rbfrom_month">Enter From Month</label>
-      <input type="text" id="rbfrom_month" name="frommonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" >
-
-      <label class="sr-only" for="rbfrom_year">Enter From Year</label>
-      <input type="text" id="rbfrom_year" name="fromyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
-
-      <label>--To--</label>
-
-      <label class="sr-only" for="rbto_day">Enter To Day</label>
-      <input type="text" id="rbto_day" name="day" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" >
-
-      <label class="sr-only" for="rbto_month">Enter To Month</label>
-      <input type="text" id="rbto_month" name="tomonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM"  >
-
-      <label class="sr-only" for="rbto_year">Enter To Year</label>
-      <input type="text" id="rbto_year" name="toyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
-      </div></p>
-			<button type="button" id="rollover" class="btn btn-primary">Roll Over</button>
+                       <button type="button" id="closebooks" class="btn btn-danger">Close Books</button>
+		    </div>
+		    </div>
+    </div>
 
 
 
 
+    <div style="padding-top:5px" class="col-sm-6">
+      <div class="panel panel-info shadow" >
+				<div class="panel-heading">
+					<div class="panel-title">Roll Over</div>
+        </div>
+        <div style="padding-top:5px" class="panel-body" >
+			              <p><b>Roll Over for the Period</b></p>
+			                 <p>Current Financial Year From:<div class="form-inline">
 
+                         <label class="sr-only" for="rbfromday">Enter From Day</label>
+                         <input type="text" id="rbfromday" name="fromday" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" accesskey="f" >
+
+                         <label class="sr-only" for="rbfrommonth">Enter From Month</label>
+                         <input type="text" id="rbfrommonth" name="frommonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" >
+
+                         <label class="sr-only" for="rbfromyear">Enter From Year</label>
+                         <input type="text" id="rbfromyear" name="fromyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
+
+                         <label>--To--</label>
+
+                         <label class="sr-only" for="rbtoday">Enter To Day</label>
+                         <input type="text" id="rbtoday" name="day" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" >
+
+                         <label class="sr-only" for="rbtomonth">Enter To Month</label>
+                         <input type="text" id="rbtomonth" name="tomonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM"  >
+
+                         <label class="sr-only" for="rbtoyear">Enter To Year</label>
+                         <input type="text" id="rbtoyear" name="toyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
+                       </div></p>
+
+                       <p>New Financial Year From: <div class="form-inline">
+
+                         <label class="sr-only" for="rbfrom_day">Enter From Day</label>
+                         <input type="text" id="rbfrom_day" name="fromday" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" accesskey="f" >
+
+                         <label class="sr-only" for="rbfrom_month">Enter From Month</label>
+                         <input type="text" id="rbfrom_month" name="frommonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" >
+
+                         <label class="sr-only" for="rbfrom_year">Enter From Year</label>
+                         <input type="text" id="rbfrom_year" name="fromyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
+
+                         <label>--To--</label>
+
+                         <label class="sr-only" for="rbto_day">Enter To Day</label>
+                         <input type="text" id="rbto_day" name="day" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" >
+
+                         <label class="sr-only" for="rbto_month">Enter To Month</label>
+                         <input type="text" id="rbto_month" name="tomonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM"  >
+
+                         <label class="sr-only" for="rbto_year">Enter To Year</label>
+                         <input type="text" id="rbto_year" name="toyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
+                       </div></p>
+
+                      <button type="button" id="rollover" class="btn btn-primary">Roll Over</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
         <!-- Trigger the modal with a button -->
 
         <!-- Modal -->
