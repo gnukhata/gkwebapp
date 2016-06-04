@@ -62,7 +62,7 @@ $(document).ready(function() {
       {
         var stat = $(this).find('td:eq(2)').html();
 
-        if(stat=="*")
+        if(stat=="***")
         {
 
           vstatus = "False";
@@ -89,7 +89,7 @@ $(document).ready(function() {
             gkstatus=jsonObj["gkstatus"]
             if(gkstatus)
             {
-              if(stat=="*")
+              if(stat=="***")
               {
 
                 $('#ledgertable tbody tr:eq('+rindex+') td:eq(2)').html(" ");
@@ -97,7 +97,7 @@ $(document).ready(function() {
               }
               else
               {
-                $('#ledgertable tbody tr:eq('+rindex+') td:eq(2)').html("*");
+                $('#ledgertable tbody tr:eq('+rindex+') td:eq(2)').html("***");
               }
             }
           }

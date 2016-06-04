@@ -803,10 +803,7 @@ $(document).ready(function()
     details.projectcode=$('#project').val();
     details.narration=$('#narr').val();
     details.vtype=$('#m_vtype').val();
-    var answer = confirm('Are you sure?');
 
-    if(answer)
-    {
       if(ecflag=="clone")
       {
 
@@ -871,7 +868,7 @@ $(document).ready(function()
           }
         });
       }
-    }
+
 
   });
 

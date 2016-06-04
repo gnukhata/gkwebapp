@@ -44,13 +44,13 @@ $(document).ready(function()
         }
       });
 
-  $("#m_baltbl").hide();
+  
   $("#m_groupname").focus();
   $("#m_accountform").validate();
   $("#m_groupname").bind("change keyup", function(){
     var gname = $("#m_groupname option:selected").text();
 
-    if (gname=="Select Group" || gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income")
+    if (gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income")
     {
       $("#m_obal").hide();
       $("#m_openbal").hide();

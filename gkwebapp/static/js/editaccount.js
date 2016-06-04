@@ -54,6 +54,15 @@ $(document).ready(function()
     });
   });
 
+$("#accountname").keydown(function(event) {
+  /* Act on the event */
+  if (event.which==13) {
+event.preventDefault();
+    $("#openingbal").focus();
+    $("#openingbal").select();
+  }
+});
+
   $("#edit").click(function(event)
   {
     event.preventDefault();

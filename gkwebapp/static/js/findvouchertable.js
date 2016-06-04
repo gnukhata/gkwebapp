@@ -57,7 +57,7 @@ $(document).ready(function() {
       {
         var stat = $(this).find('td:eq(1)').html();
 
-        if(stat=="*")
+        if(stat=="***")
         {
 
           vstatus = "False";
@@ -84,7 +84,7 @@ $(document).ready(function() {
             gkstatus=jsonObj["gkstatus"]
             if(gkstatus)
             {
-              if(stat=="*")
+              if(stat=="***")
               {
 
                 $('tbody tr:eq('+rindex+') td:eq(1)').html("&nbsp");
@@ -92,7 +92,7 @@ $(document).ready(function() {
               }
               else
               {
-                $('tbody tr:eq('+rindex+') td:eq(1)').html("*");
+                $('tbody tr:eq('+rindex+') td:eq(1)').html("***");
               }
             }
           }
