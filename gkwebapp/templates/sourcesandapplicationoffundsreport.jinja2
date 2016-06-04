@@ -100,7 +100,7 @@
 
   <span style="margin:auto; display:table;"><strong>Statement of Sources and Application of Funds </strong>as on <a class="glyphicon glyphicon-calendar"></a> <strong>{{to}}</strong></span>
 
-  <div class="table-responsive">
+  <div class="table-responsive container">
     <table id="satable" class="shadow table table-condensed table-fixedheader cbalsheettable">
 
       <tbody>
@@ -138,8 +138,16 @@
       </tbody>
     </table>
 
+    <input type="hidden" name="balancesheettype" id="balancesheettype" value="{{balancesheettype}}">
+    <input type="hidden" name="cto" id="cto" value="{{to}}">
+
     <span style="margin:auto; display:table;">
       <button class="btn btn-sm btn-danger" type="button" id="saback">Back</button>
+      {% if orgtype=="Profit Making" %}
+      <button class="btn btn-sm btn-primary " type="button" id="cbalbutn" hidden="hidden">Conventional Balance Sheet</button>
+      {% else %}
+      <button class="btn btn-sm btn-primary " type="button" id="cbalbutn" hidden="hidden">Conventional Statement of Affairs</button>
+      {% endif %}
     </span>
   </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/sourcesandapplicationoffundsreport.js')}}"></script>

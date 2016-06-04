@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+
   var percentwid = 100*(($("table").width()-12)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   var percentheigth = 100*(($("body").height()-$(".navbar").height()-148)/$("body").height());
@@ -59,6 +60,26 @@ $(document).ready(function() {
   });
 
 
+$("#cbalbutn").click(function(event) {
 
+  $.ajax(
+    {
+      type: "POST",
+      url: "/showbalancesheetreport",
+      global: false,
+      async: false,
+      datatype: "text/html",
+      data: {"balancesheettype":$("#balancesheettype").val(),"calculateto":$("#cto").val(),"orgtype":sessionStorage.orgt},
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+    })
+    .done(function(resp)
+    {
+      $("#info").html(resp);
+    }
+  );
+});
 
 });

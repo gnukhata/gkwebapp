@@ -6,13 +6,25 @@
   .shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
-
+  .nopadding{
+    padding: 0 !important;
+    margin: 0 !important;
+  }
   </style>
 </head>
 <body>
 
-  <div class="container-fluid" id="inner">
-    <div  class="mainbox col-md-12">
+
+
+        <div class="alert alert-danger" id="improperdate-alert" hidden>
+          <a href="" class="close" aria-label="close">&times;</a>
+          Please enter date in proper format!
+        </div>
+
+          <div class="alert alert-danger" id="betweendate-alert" hidden>
+            <a href="" class="close" aria-label="close">&times;</a>
+            Please enter date within the financial year!
+          </div>
 
       <div class="alert alert-danger" id="ua-alert" hidden>
         <a href="#" class="close" aria-label="close">&times;</a>
@@ -120,14 +132,7 @@
             </div>
           </form>
         </div>
-      </div>
-
-
-
-    </div>
-  </div>
-  <div id="vct"  class="vtab panel panel-info">
-
+      </div><div id="vct"  class="vtab panel panel-info nopadding">
   </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.autotab.min.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/findeditvoucher.js')}}"></script>

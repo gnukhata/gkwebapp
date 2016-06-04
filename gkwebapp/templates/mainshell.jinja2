@@ -1,5 +1,6 @@
 <html>
 <head>
+  <title>GNUKhata | </title>
   <link href="{{request.static_url('gkwebapp:static/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
   <link href="{{request.static_url('gkwebapp:static/css/mainshellstyle.css')}}" rel="stylesheet" type="text/css"/>
 </head>
@@ -23,9 +24,9 @@
           <li class="dropdown">
             <a href="" id="gnukhata" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>G</u>NUKhata</a>
             <ul class="dropdown-menu">
-              <li><a href="">Logout</a></li>
-              <li><a href="">Change Organisation</a></li>
-              <li><a href="">Quit</a></li>
+              <li><a data-toggle="tab" id="logout" href="">Logout</a></li>
+              <li><a data-toggle="tab" id="changeorg" href="">Change Organisation</a></li>
+              <li><a data-toggle="tab" id="quit" href="">Quit</a></li>
             </ul>
           </li>
           <li class="dropdown">
@@ -132,8 +133,8 @@
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.autotab.min.js')}}"></script>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.numeric.min.js')}}"></script>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/shortcut.js')}}"></script>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/date.js')}}"></script>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/mainshell.js')}}"></script>
-<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/showuser.js')}}"></script>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/showvoucher.js')}}"></script>
 </body>
 </html>

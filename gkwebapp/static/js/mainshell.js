@@ -57,6 +57,14 @@ document.getElementById("findvouchertb").click();
 });
 $(document).ready(function(){
 
+  var orname = sessionStorage.getItem('orgn');
+  var ortype = sessionStorage.getItem('orgt');
+  var styear = sessionStorage.getItem('year1');
+  var enyear = sessionStorage.getItem('year2');
+  var orgdata = orname + " (" + ortype + ")";
+  var yeardata = "Financial Year : " + styear + " to " + enyear;
+
+$("title").append(orname);
   $('#REMOVEuser').click(function (e) {
       $.ajax(
       {
@@ -99,6 +107,12 @@ $(document).ready(function(){
       }
     );
     });
+
+    $('#changeorg').click(function (e) {
+      sessionStorage.clear();
+      $("body").load("/");
+
+      });
 
     $('#listofaccounts').click(function (e) {
       $.ajax(
@@ -145,13 +159,6 @@ $(document).ready(function(){
     });
 
 
-
-  var orname = sessionStorage.getItem('orgn');
-  var ortype = sessionStorage.getItem('orgt');
-  var styear = sessionStorage.getItem('year1');
-  var enyear = sessionStorage.getItem('year2');
-  var orgdata = orname + " (" + ortype + ")";
-  var yeardata = "Financial Year : " + styear + " to " + enyear;
   if(orgdata!=""||yeardata!="")
   {
   $("#orgdata").html(orgdata);
@@ -177,6 +184,23 @@ $(document).ready(function(){
     }
   );
   });
+
+  $('#createuser').click(function (e) {
+
+    $.ajax({
+      url: '/showuser',
+      type: 'POST',
+      datatype: 'text/html',
+
+    })
+    .done(function(resp) {
+      $("#info").html(resp);
+    })
+
+    });
+
+
+
 
   $('#showviewledger').click(function (e) {
 
