@@ -163,10 +163,6 @@ if ($("#m_newsubgroup").is(':visible')) {
       $('#m_openbal').val("0.00");
     }
 
-
-
-
-
       $.ajax(
         {
 
@@ -184,7 +180,7 @@ if ($("#m_newsubgroup").is(':visible')) {
           {
             if(resp["gkstatus"]==0)
             {
-
+              $("#selpopupaccount").val($("#m_accountname").val());
               $("#m_success-alert").alert();
               $("#m_success-alert").fadeTo(2000, 500).slideUp(500, function(){
                 $("#m_success-alert").hide();

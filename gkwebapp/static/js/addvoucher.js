@@ -26,7 +26,7 @@ Contributor:
 
 /*
 Events are mostly associated with the classes.
-Here is a list of classes that we have used.
+List of classes that we have used.
 1. dramt and cramt are for the dr and cr amount boxes respectively.
 2. accs is for the accounts select boxes.
 3. crdr for the cr dr select box, i.e for the first select box in the row
@@ -47,6 +47,7 @@ $(document).ready(function() {
   var crsum = 0;
   var diff = 0;     //diff containns the difference of drsum and crsum
   var outfocus = false;
+  var accpopupindex = -1;
   var percentwid = 100*(($("table").width()-12)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   $('.table-fixedheader tfoot').width(percentwid+"%");
@@ -56,6 +57,8 @@ $(document).ready(function() {
   $("#vdate").val(fromdatearray[2])
   $("#vmonth").val(fromdatearray[1])
   $("#vyear").val(fromdatearray[0])
+  var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
+  var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
 
   //Calculates the total dr and cr amout when a change event is fired.
   $(document).off("change",".dramt").on("change", ".dramt", function() {
@@ -64,7 +67,7 @@ $(document).ready(function() {
     $(".dramt").each(function(){
       drsum += +$(this).val();
       // jquery enables us to select specific elements inside a table easily like below.
-      $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
+      $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
     });
   });
 
@@ -72,9 +75,10 @@ $(document).ready(function() {
     crsum=0;
     $(".cramt").each(function(){
       crsum += +$(this).val();
-      $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+      $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
     });
   });
+
 
   //Deletes a row from the table and recalculates the total cr and dr amount
   $(document).off("click",".del").on("click", ".del", function() {
@@ -84,16 +88,36 @@ $(document).ready(function() {
             crsum=0;
             $(".dramt").each(function(){
               drsum += +$(this).val();
-              $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+              $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
             });
             $(".cramt").each(function(){
               crsum += +$(this).val();
-              $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+              $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
             });
-            $('tbody tr:last input:enabled').focus();
+            $('tbody tr:last input:enabled').focus().select();
         });
   });
-
+  function pad (str, max) { //to add leading zeros in date
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("0" + str, max) : str;
+    }
+    else{
+      return str
+    }
+  }
+  function yearpad (str, max) {
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("200" + str, max) : str;
+    }
+    else if (str.length==2) {
+      return str.length < max ? pad("20" + str, max) : str;
+    }
+    else{
+      return str
+    }
+  }
   //Formats the number on focusout
   $(document).off("focusout",".dramt").on("focusout",".dramt",function(event)
   {
@@ -102,6 +126,33 @@ $(document).ready(function() {
     }
     else{
       $(this).val((parseFloat($(this).val()).toFixed(2)));
+    }
+  });
+  $("#vdate").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#vmonth").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+
+  $("#vyear").blur(function(event) {
+    $(this).val(yearpad($(this).val(),4));
+    if(!Date.parseExact($("#vdate").val()+$("#vmonth").val()+$("#vyear").val(), "ddMMyyyy")){
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#vdate').focus().select();
+      return false;
+    }
+    var curdate = Date.parseExact($("#vyear").val()+$("#vmonth").val()+$("#vdate").val(), "yyyyMMdd")
+    if (!curdate.between(financialstart,financialend)) {
+      $("#between-date-alert").alert();
+      $("#between-date-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#between-date-alert").hide();
+      });
+      $('#vdate').focus().select();
+      return false;
     }
   });
 
@@ -120,10 +171,29 @@ $(document).ready(function() {
       $('#vdate').select().focus();
     }
   });
+  $('#vno').keydown(function(event) {
+    if (event.which==190 && event.ctrlKey) {
+        $("#vdate").focus().select();
+        event.preventDefault();
+    }
+  });
 
   $('#vdate').keyup(function(event) {
     if(event.which==13 && $('#vdate').val()!=""){
       $('#vmonth').select().focus();
+    }
+    if (event.which==38) {
+      $("#vno").select().focus();
+    }
+  });
+  $('#vdate').keydown(function(event) {
+    if (event.which==188 && event.ctrlKey) {
+        $('#vno').focus().select();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#vmonth').focus().select();
+        event.preventDefault();
     }
   });
 
@@ -131,11 +201,40 @@ $(document).ready(function() {
     if(event.which==13 && $('#vmonth').val()!=""){
       $('#vyear').select().focus();
     }
+    if (event.which==38) {
+      $("#vdate").select().focus();
+    }
+  });
+  $('#vmonth').keydown(function(event) {
+    if (event.which==188 && event.ctrlKey) {
+        $('#vdate').focus().select();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#vyear').focus().select();
+        event.preventDefault();
+    }
   });
 
   $('#vyear').keyup(function(event) {
     if(event.which==13 && $('#vyear').val()!=""){
       $('#vtable tbody tr:first td:eq(1) select').focus();
+    }
+    if (event.which==38) {
+      $("#vmonth").select().focus();
+    }
+    if (event.which==40) {
+      $("#vtable tbody tr:first select:enabled)").select().focus();
+    }
+  });
+  $('#vyear').keydown(function(event) {
+    if (event.which==188 && event.ctrlKey) {
+        $('#vmonth').focus().select();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#vtable tbody tr:first select:enabled').focus();
+        event.preventDefault();
     }
   });
 
@@ -143,12 +242,123 @@ $(document).ready(function() {
     if(event.which==13){
       $('#narration').select().focus();
     }
+    if (event.which==38) {
+      $("#vtable tbody tr:last input:enabled").select().focus();
+    }
+  });
+  $('#project').keydown(function(event) {
+    if (event.which==188 && event.ctrlKey) {
+        $('#vtable tbody tr:last input:enabled').focus().select();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#narration').focus().select();
+        event.preventDefault();
+    }
+  });
+  $('#narration').keydown(function(event) {
+    if (event.which==188 && event.ctrlKey) {
+        $('#project').focus().select();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#save').focus();
+        event.preventDefault();
+    }
+  });
+  $('#save').keydown(function(event) {
+    if (event.which==188 && event.ctrlKey) {
+        $('#narration').focus().select();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#reset').focus();
+        event.preventDefault();
+    }
+  });
+  $('#reset').keydown(function(event) {
+    if (event.which==188 && event.ctrlKey) {
+        $('#save').focus().select();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#popup').focus();
+        event.preventDefault();
+    }
+  });
+  $('#popup').keydown(function(event) {
+    if (event.which==188 && event.ctrlKey) {
+        $('#reset').focus().select();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#vno').focus();
+        event.preventDefault();
+    }
+  });
+  $('#save').keyup(function(event) {
+    if (event.which==39 ) {
+        $('#reset').focus();
+        event.preventDefault();
+    }
+    if (event.which==37 || event.which==38) {
+        $('#narration').focus().select();
+        event.preventDefault();
+    }
+  });
+  $('#reset').keyup(function(event) {
+    if (event.which==39 ) {
+        $('#popup').focus();
+        event.preventDefault();
+    }
+    if (event.which==37 || event.which==38) {
+        $('#save').focus().select();
+        event.preventDefault();
+    }
+  });
+  $('#popup').keyup(function(event) {
+    if (event.which==39 ) {
+        $('#vno').focus().select();
+        event.preventDefault();
+    }
+    if (event.which==37 || event.which==38) {
+        $('#reset').focus();
+        event.preventDefault();
+    }
   });
 
-  $('#narration').keydown(function(event) {
+
+  $('#narration').keyup(function(event) {
     if(event.which==13){
+      if ($('#drtotal').val()!=$('#crtotal').val()) {
+        outfocus = true;
+      }
+      var allow = true;
+      $("#vtable tbody tr").each(function() {
+        var accountcode = $(".accs", this).val();
+        var ccount=0;
+        $("#vtable tbody tr").each(function() {
+          if(accountcode==$(".accs", this).val()){
+            ccount =ccount +1;
+            if (ccount==2) {
+              accountindex = $(this).index();
+            }
+          }
+        });
+        if (ccount>1) {
+          allow= false;
+          return false;
+        }
+      });
+
+      if(!allow){
+        outfocus= true;
+      }
       $('#save').click();
       event.preventDefault();
+    }
+    if (event.which==38) {
+      $("#project").select().focus();
     }
   });
   //This event fires when the crdr select box option is changed
@@ -202,12 +412,12 @@ $(document).ready(function() {
     drsum=0;
     $(".dramt").each(function(){
       drsum += +$(this).val();
-      $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+      $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
     });
     crsum=0;
     $(".cramt").each(function(){
       crsum += +$(this).val();
-      $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+      $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
     });
   });
 
@@ -220,8 +430,134 @@ $(document).ready(function() {
       var curindex = $(this).closest('tr').index();
       $('#vtable tbody tr:eq('+curindex+') input:enabled').select().focus(); // focus shifts to the enabled amount box when one hits enter on the accounts select box.
     }
+    if (event.which==32) {
+      accpopupindex = $(this).closest('tr').index();
+      $("#popup").click();
+    }
     if (event.which==13 && outfocus) {
       outfocus = false;
+    }
+  });
+  $(document).off("keydown",".accs").on("keydown",".accs",function(event){
+    curindex = $(this).closest('tr').index();
+    nextindex = curindex+1;
+    previndex = curindex-1;
+    if(event.which==190 && event.shiftKey)
+    {
+      $('#vtable tbody tr:eq('+nextindex+') td:eq(1) select').focus();
+    }
+    else if (event.which==188 && event.shiftKey)
+    {
+      if(previndex>-1)
+      {
+        event.preventDefault();
+        $('#vtable tbody tr:eq('+previndex+') td:eq(1) select').focus();
+      }
+      if (curindex==0) {
+        event.preventDefault();
+        $("#vyear").focus().select();
+      }
+    }
+    if (event.which==188 && event.ctrlKey) {
+        $('#vtable tbody tr:eq('+curindex+') td:eq(0) select').focus();
+        event.preventDefault();
+        if (curindex==0) {
+          event.preventDefault();
+          $("#vyear").focus().select();
+        }
+        if(curindex==1)
+        {
+          event.preventDefault();
+          $('#vtable tbody tr:eq('+previndex+') input:enabled').focus().select();
+        }
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#vtable tbody tr:eq('+curindex+') input:enabled').focus().select();
+        event.preventDefault();
+    }
+  });
+  $(document).off("keydown",".crdr").on("keydown",".crdr",function(event){
+    curindex = $(this).closest('tr').index();
+    nextindex = curindex+1;
+    previndex = curindex-1;
+    if(event.which==190 && event.shiftKey)
+    {
+      $('#vtable tbody tr:eq('+nextindex+') td:eq(0) select').focus();
+    }
+    else if (event.which==188 && event.shiftKey)
+    {
+      if(previndex>-1)
+      {
+        event.preventDefault();
+        $('#vtable tbody tr:eq('+previndex+') td:eq(0) select').focus();
+      }
+    }
+    if (event.which==188 && event.ctrlKey) {
+        $('#vtable tbody tr:eq('+previndex+') input:enabled').focus().select();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#vtable tbody tr:eq('+curindex+') td:eq(1) select').focus();
+        event.preventDefault();
+    }
+  });
+  $(document).off("keydown",".cramt").on("keydown",".cramt",function(event){
+    curindex = $(this).closest('tr').index();
+    lastindex = $("#vtable tbody tr:last").index();
+    nextindex = curindex+1;
+    previndex = curindex-1;
+    if(event.which==190 && event.shiftKey)
+    {
+      event.preventDefault();
+      $('#vtable tbody tr:eq('+nextindex+') input:enabled').focus().select();
+    }
+    else if (event.which==188 && event.shiftKey)
+    {
+      if(previndex>-1)
+      {
+        event.preventDefault();
+        $('#vtable tbody tr:eq('+previndex+') input:enabled').focus().select();
+      }
+    }
+    if (event.which==188 && event.ctrlKey) {
+        $('#vtable tbody tr:eq('+curindex+') td:eq(1) select').focus();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#vtable tbody tr:eq('+nextindex+') select:enabled').focus();
+        event.preventDefault();
+        if (curindex==lastindex) {
+          $("#project").focus();
+        }
+    }
+  });
+  $(document).off("keydown",".dramt").on("keydown",".dramt",function(event){
+    curindex = $(this).closest('tr').index();
+    nextindex = curindex+1;
+    previndex = curindex-1;
+    if(event.which==190 && event.shiftKey)
+    {
+      event.preventDefault();
+      $('#vtable tbody tr:eq('+nextindex+') input:enabled').focus().select();
+    }
+    else if (event.which==188 && event.shiftKey)
+    {
+      if(previndex>-1)
+      {
+        event.preventDefault();
+        $('#vtable tbody tr:eq('+previndex+') input:enabled').focus().select();
+      }
+    }
+    if (event.which==188 && event.ctrlKey) {
+        $('#vtable tbody tr:eq('+curindex+') td:eq(1) select').focus();
+        event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+        $('#vtable tbody tr:eq('+nextindex+') select:enabled').focus();
+        event.preventDefault();
+        if (curindex==lastindex) {
+          $("#project").focus();
+        }
     }
   });
 
@@ -240,6 +576,16 @@ $(document).ready(function() {
   {
     if(event.which==13 && !outfocus)
     {
+      drsum=0;
+      $(".dramt").each(function(){
+        drsum += +$(this).val();
+        $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+      });
+      crsum=0;
+      $(".cramt").each(function(){
+        crsum += +$(this).val();
+        $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+      });
       var curindex = $(this).closest('tr').index();
       if($('#vtable tbody tr:eq('+curindex+') td:eq(2) input:enabled').val()=="" || $('#vtable tbody tr:eq('+curindex+') td:eq(2) input:enabled').val()==0){
         return false;
@@ -256,7 +602,7 @@ $(document).ready(function() {
             crsum=0;
             $(".cramt").each(function(){
               crsum += +$(this).val();
-              $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+              $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
             });
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
           }
@@ -307,7 +653,7 @@ $(document).ready(function() {
               crsum=0; // cr total is recalculated since a cr row is added.
               $(".cramt").each(function(){
                 crsum += +$(this).val();
-                $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+                $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
               });
             }
           });
@@ -326,7 +672,7 @@ $(document).ready(function() {
             drsum=0;
             $(".dramt").each(function(){
               drsum += +$(this).val();
-              $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+              $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
             });
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
           }
@@ -377,7 +723,7 @@ $(document).ready(function() {
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
-                $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+                $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
               });
             }
           });
@@ -416,6 +762,16 @@ $(document).ready(function() {
   {
     if(event.which==13 && !outfocus)
     {
+      drsum=0;
+      $(".dramt").each(function(){
+        drsum += +$(this).val();
+        $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+      });
+      crsum=0;
+      $(".cramt").each(function(){
+        crsum += +$(this).val();
+        $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+      });
       var curindex = $(this).closest('tr').index();
       if($('#vtable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()=="" || $('#vtable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()==0){
         return false;
@@ -432,7 +788,7 @@ $(document).ready(function() {
             crsum=0;
             $(".cramt").each(function(){
               crsum += +$(this).val();
-              $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+              $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
             });
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
           }
@@ -483,12 +839,12 @@ $(document).ready(function() {
               crsum=0;
               $(".cramt").each(function(){
                 crsum += +$(this).val();
-                $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+                $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
               });
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
-                $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+                $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
               });
             }
           });
@@ -507,7 +863,7 @@ $(document).ready(function() {
             drsum=0;
             $(".dramt").each(function(){
               drsum += +$(this).val();
-              $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+              $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
             });
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
           }
@@ -558,7 +914,7 @@ $(document).ready(function() {
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
-                $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+                $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
               });
             }
           });
@@ -593,6 +949,34 @@ $(document).ready(function() {
   In this voucher form we are not using the form submit functionality since there is no need.
   When one clicks on the save button the validations are done and the voucher is saved.
   */
+  $("#save").keypress(function(event) {
+    if (event.which==13) {
+      if ($('#drtotal').val()!=$('#crtotal').val()) {
+        outfocus = true;
+      }
+      var allow = true;
+      $("#vtable tbody tr").each(function() {
+        var accountcode = $(".accs", this).val();
+        var ccount=0;
+        $("#vtable tbody tr").each(function() {
+          if(accountcode==$(".accs", this).val()){
+            ccount =ccount +1;
+            if (ccount==2) {
+              accountindex = $(this).index();
+            }
+          }
+        });
+        if (ccount>1) {
+          allow= false;
+          return false;
+        }
+      });
+
+      if(!allow){
+        outfocus= true;
+      }
+    }
+  });
   $('#save').click(function(event) {
     var allow = true;
     var amountindex = 0;
@@ -604,7 +988,7 @@ $(document).ready(function() {
       $("#vno-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#vno-alert").hide();
       });
-      $('#vno').focus();
+      $('#vno').focus().select();
       return false;
     }
     // Check if date fields are blank and if it is then show an alert
@@ -613,7 +997,24 @@ $(document).ready(function() {
       $("#date-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#date-alert").hide();
       });
-      $('#vdate').focus();
+      $('#vdate').focus().select();
+      return false;
+    }
+    if(!Date.parseExact($("#vdate").val()+$("#vmonth").val()+$("#vyear").val(), "ddMMyyyy")){
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#vdate').focus().select();
+      return false;
+    }
+    var curdate = Date.parseExact($("#vyear").val()+$("#vmonth").val()+$("#vdate").val(), "yyyyMMdd")
+    if (!curdate.between(financialstart,financialend)) {
+      $("#between-date-alert").alert();
+      $("#between-date-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#between-date-alert").hide();
+      });
+      $('#vdate').focus().select();
       return false;
     }
     $("#vtable tbody tr").each(function() { //loop for the rows of the table body
@@ -635,7 +1036,7 @@ $(document).ready(function() {
       return false;
     }
     if(!allow){
-      $("#vtable tbody tr:eq("+amountindex+") input:enabled").focus();
+      $("#vtable tbody tr:eq("+amountindex+") input:enabled").focus().select();
       $("#vtable tbody tr:eq("+amountindex+") input:enabled").select();
       $("#zerorow-alert").alert();
       $("#zerorow-alert").fadeTo(2000, 500).slideUp(500, function(){
@@ -649,8 +1050,7 @@ $(document).ready(function() {
       $("#balance-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#balance-alert").hide();
       });
-      outfocus = true;
-      $('#vtable tbody tr:last input:enabled').focus();
+      $('#vtable tbody tr:last input:enabled').focus().select();
       return false;
     }
     // Check if voucher amount is zero and if it is then show an alert.
@@ -659,7 +1059,7 @@ $(document).ready(function() {
       $("#zero-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#zero-alert").hide();
       });
-      $("#vtable tbody tr:first input:enabled").focus();
+      $("#vtable tbody tr:first input:enabled").focus().select();
       return false;
     }
     // Check whether an account is repeated, and if it does then set the allow flag to false.
@@ -685,7 +1085,6 @@ $(document).ready(function() {
       $("#accs-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#accs-alert").hide();
       });
-      outfocus= true;
       $("#vtable tbody tr:eq("+accountindex+") td:eq(1) select").focus();
       return false;
     }
@@ -703,7 +1102,7 @@ $(document).ready(function() {
     details.vno=$('#vno').val();
     details.vdate=$('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
     details.projectcode=$('#project').val();
-    details.narration=$('#narration').val();
+    details.narration=$.trim($('#narration').val());
     details.vtype=$('#vtype').val();
     $.ajax({
       type: "POST",
@@ -739,7 +1138,7 @@ $(document).ready(function() {
             $("#failure-alert").hide();
           });
         }
-        $('#vno').focus();
+        $('#vno').focus().select();
       }
     });
   });
@@ -788,6 +1187,7 @@ $(document).ready(function() {
                 $.ajax({
                   url: '/getcjaccounts',
                   type: 'POST',
+                  async: false,
                   dataType: 'json',
                   data: {"type": $('#vtype').val(),"side":"Cr"},
                   beforeSend: function(xhr)
@@ -812,6 +1212,7 @@ $(document).ready(function() {
                 $.ajax({
                   url: '/getcjaccounts',
                   type: 'POST',
+                  async: false,
                   dataType: 'json',
                   data: {"type": $('#vtype').val(),"side":"Dr"},
                   beforeSend: function(xhr)
@@ -834,6 +1235,18 @@ $(document).ready(function() {
               }
 
             });
+            if (accpopupindex!=-1) {
+              $("#vtable tbody tr:eq("+accpopupindex+") td:eq(1) select").focus();
+              var text1 = $("#selpopupaccount").val();
+              $("#vtable tbody tr:eq("+accpopupindex+") td:eq(1) select option").filter(function() {
+                return this.text == text1;
+              }).attr('selected', true);
+              $("#selpopupaccount").val("");
+            }
+            else {
+              $("#popup").focus();
+              accpopupindex = -1;
+            }
           });
         }
       }
