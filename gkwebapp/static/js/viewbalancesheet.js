@@ -1,6 +1,39 @@
 $(document).ready(function() {
   $('.modal-backdrop').remove();
 
+  function pad (str, max) { //to add leading zeros in date
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("0" + str, max) : str;
+    }
+    else{
+      return str
+    }
+  }
+  function yearpad (str, max) {
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("200" + str, max) : str;
+    }
+    else if (str.length==2) {
+      return str.length < max ? pad("20" + str, max) : str;
+    }
+    else{
+      return str
+    }
+  }
+
+  $("#viewbalsht_today").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#viewbalsht_tomonth").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+
+  $("#viewbalsht_toyear").blur(function(event) {
+    $(this).val(yearpad($(this).val(),4));
+  });
+
   var sel1 = 0;
   var s1 ;
   if (sessionStorage.orgt=="Profit Making")

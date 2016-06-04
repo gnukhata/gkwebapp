@@ -9,6 +9,54 @@ $(document).ready(function() {
   $(".nar").hide();
   $("#vct").hide();
 
+
+      function pad (str, max) { //to add leading zeros in date
+        str = str.toString();
+        if (str.length==1) {
+          return str.length < max ? pad("0" + str, max) : str;
+        }
+        else{
+          return str
+        }
+      }
+      function yearpad (str, max) {
+        str = str.toString();
+        if (str.length==1) {
+          return str.length < max ? pad("200" + str, max) : str;
+        }
+        else if (str.length==2) {
+          return str.length < max ? pad("20" + str, max) : str;
+        }
+        else{
+          return str
+        }
+      }
+
+
+        $("#fday").blur(function(event) {
+          $(this).val(pad($(this).val(),2));
+        });
+        $("#fmonth").blur(function(event) {
+          $(this).val(pad($(this).val(),2));
+        });
+
+        $("#fyear").blur(function(event) {
+          $(this).val(yearpad($(this).val(),4));
+        });
+
+      $("#tday").blur(function(event) {
+        $(this).val(pad($(this).val(),2));
+      });
+      $("#tmonth").blur(function(event) {
+        $(this).val(pad($(this).val(),2));
+      });
+
+      $("#tyear").blur(function(event) {
+        $(this).val(yearpad($(this).val(),4));
+      });
+
+
+
   var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
   $("#fday").val(fromdatearray[2])
   $("#fmonth").val(fromdatearray[1])

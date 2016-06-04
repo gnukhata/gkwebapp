@@ -92,11 +92,15 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
   float: left;
 
 }
+.nopadding{
+  padding: 0 !important;
+  margin: 0 !important;
+}
 </style>
 </head>
 <body>
   <input type="hidden" id="urole" name="urole" value="{{userrole}}"></input>
-  <div class="table-responsive shadow">
+  <div class="table-responsive nopadding shadow">
     <table id="vtable" class="table table-fixedheader table-bordered table-condensed">
       <thead>
         <tr class="info ">
