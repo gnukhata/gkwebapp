@@ -95,6 +95,10 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
   float: left;
 
 }
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
 
 </style>
 </head>
@@ -105,7 +109,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
     <span style="margin:auto; display:table;"><strong>Reciept & Payment Account</strong> for the period <a class="glyphicon glyphicon-calendar"></a> <strong>{{from}}</strong> to <a class="glyphicon glyphicon-calendar"></a> <strong>{{to}}</strong></span>
   {% endif %}
   <div class="row">
-    <div class="table-responsive col-md-6" style="float:left; margin-right:0px">
+    <div class="table-responsive col-md-6 nopadding">
       <table id="rctable" class="shadow table table-condensed table-fixedheader cashflowtable">
         <thead>
           <tr class="info ">
@@ -135,7 +139,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
         </tbody>
       </table>
     </div>
-    <div class="table-responsive col-md-6" style="float:left; margin-left:0px">
+    <div class="table-responsive col-md-6 nopadding">
       <table id="pytable" class="shadow table table-condensed table-fixedheader cashflowtable">
         <thead>
           <tr class="info ">

@@ -19,6 +19,22 @@
         <h3 class="panel-title">View Ledger</h3>
       </div>
       <div class="panel-body" style="padding-top:5px">
+        <div class="alert alert-danger" id="date-alert" hidden>
+          <a href="#" class="close" aria-label="close">&times;</a>
+          <label for="viewledger_fromdate">Please enter date in proper format!</label>
+        </div>
+        <div class="alert alert-danger" id="between-date-alert" hidden>
+          <a href="#" class="close" aria-label="close">&times;</a>
+          <label for="viewledger_fromdate">Please enter date within the financial year!</label>
+        </div>
+        <div class="alert alert-danger" id="compare-date-alert" hidden>
+          <a href="#" class="close" aria-label="close">&times;</a>
+          <label for="viewledger_todate">From date should be smaller or equal to to date !</label>
+        </div>
+        <div class="alert alert-danger" id="account-blank-alert" hidden>
+          <a href="#" class="close" aria-label="close">&times;</a>
+          <label for="viewledger_accname">Please select an account!</label>
+        </div>
         <div style="margin-bottom: 5px" class="col-xs-12 from-group">
           <label for="viewledger_accname">Account Name :</label>
           <select class = "form-control input-sm" id="viewledger_accname"  name = "viewledger_accname" >
