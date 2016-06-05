@@ -68,9 +68,7 @@ def getaccdetails(request):
 
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/account/%s"%(request.params["accountcode"]), headers=header)
-
 	record = result.json()["gkresult"]
-
 	result = requests.get("http://127.0.0.1:6543/groupsubgroup/%s"%(record["groupcode"]), headers=header)
 
 	grprecord = result.json()["gkresult"]

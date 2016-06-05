@@ -12,15 +12,23 @@ $(document).ready(function()
     $("#alertmsg").hide();
     var acccode = $("#editaccountname option:selected").val();
     var accname= $("#editaccountname option:selected").text();
-    if(accname=="Closing Stock" || accname=="Stock at the Beginning" ||  accname=="Opening Stock" ||  accname=="Income & Expenditure" ||  accname=="Profit & Loss" )
+    if(accname=="Income & Expenditure" ||  accname=="Profit & Loss" )
     {
+      $("#accnamenoedit").hide();
       $("#alertmsg").show();
       $("#delete").hide();
       $("#edit").hide();
 
     }
+    else if(accname=="Closing Stock" || accname=="Stock at the Beginning" || accname=="Opening Stock"){
+      $("#accnamenoedit").show();
+      $("#alertmsg").hide();
+      $("#delete").hide();
+      $("#edit").show();
+    }
     else
     {
+      $("#accnamenoedit").hide();
       $("#alertmsg").hide();
       $("#delete").show();
       $("#edit").show();
@@ -54,26 +62,37 @@ $(document).ready(function()
     });
   });
 
-$("#accountname").keydown(function(event) {
-  /* Act on the event */
-  if (event.which==13) {
-event.preventDefault();
-    $("#openingbal").focus();
-    $("#openingbal").select();
-  }
-});
-
   $("#edit").click(function(event)
   {
     event.preventDefault();
+    var grpname= $("#groupname").val();
+
     $("#submit").show();
     $("#alertmsg").hide();
-    //$("#editaccountname").hide();
     $("#accname").hide();
     $("#edit").hide();
-    $("#accountname").prop("disabled",false);
-    $("#openingbal").prop("disabled", false);
-    $("#accountname").focus().select();
+    var acccode = $("#editaccountname option:selected").val();
+    var accname= $("#editaccountname option:selected").text();
+    //$("#editaccountname").hide();
+    if (accname=="Closing Stock" || accname=="Stock at the Beginning" || accname=="Opening Stock"){
+      $("#accountname").prop("disabled", true);
+      $("#openingbal").prop("disabled", false);
+      $("#openingbal").focus().select();
+    }
+    else{
+      if (grpname=="Direct Expense"|| grpname=="Direct Income"||grpname=="Indirect Expense"|| grpname=="Indirect Income") {
+        $("#openingbal").prop("disabled", true);
+      }
+      else {
+        $("#openingbal").prop("disabled", false);
+
+      }
+      $("#accountname").prop("disabled",false);
+      $("#accountname").focus().select();
+
+    }
+
+
   }
 );
 
@@ -81,7 +100,7 @@ $("#editaccountname").keyup(function(e) {
   if($("#editaccountform").is(':visible'))
   {
     if(e.which == 13)
-    {  if($("#editaccountname option:selected").text()=="Closing Stock" || $("#editaccountname option:selected").text()=="Stock at the Beginning" ||  $("#editaccountname option:selected").text()=="Opening Stock" ||  $("#editaccountname option:selected").text()=="Income & Expenditure" ||  $("#editaccountname option:selected").text()=="Profit & Loss" )
+    {  if( $("#editaccountname option:selected").text()=="Income & Expenditure" ||  $("#editaccountname option:selected").text()=="Profit & Loss" )
     {
       $("#alertmsg").show();
     }
@@ -102,6 +121,14 @@ $("#accountname").keydown(function(event) {
 
     $("#openingbal").select().focus();
   }
+  if (event.which==13) {
+    if (!$("#openingbal").is(':disabled')) {
+
+      event.preventDefault();
+      $("#openingbal").focus();
+      $("#openingbal").select();
+    }
+  }
 });
 
 $("#openingbal").keydown(function(event) {
@@ -109,7 +136,6 @@ $("#openingbal").keydown(function(event) {
 
   if (event.which==38)
   {
-
     $("#accountname").select();
     $("#accountname").focus();
   }
@@ -177,6 +203,7 @@ $(document).off("click","#delete").on("click", "#delete", function(event)
 
 $("#editaccountform").submit(function(e)
 {
+
   if ($.trim($("#accountname").val())=="") {
     $("#blank-alert").alert();
     $("#blank-alert").fadeTo(2000, 500).slideUp(500, function(){
@@ -185,28 +212,38 @@ $("#editaccountform").submit(function(e)
     $("#accountname").focus().select();
     return false;
   };
+
   var ob = $('#openingbal').val();
   if(ob=="")
   {
     $('#openingbal').val("0.00");
   }
+  else {
+    openingbal=$("#openingbal").val();
+  }
+  var acccode = $("#editaccountname option:selected").val();
+  var accname= $("#editaccountname option:selected").text();
+  if(accname=="Closing Stock" || accname=="Stock at the Beginning"){
+    accountname=accname;
+  }
+  else{
+    accountname=$("#accountname").val();
+  }
+  accountcode = $("#accountcode").val();
   $.ajax(
     {
-
       type: "POST",
       url: "/editaccount",
       global: false,
       async: false,
       datatype: "json",
-      data: $("#editaccountform").serialize(),
+      data: {"accountname":accountname, "accountcode":accountcode, "openingbal":openingbal},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
       },
       success: function(resp)
       {
-
-
         if(resp["gkstatus"]==0)
         {
           $("#reset").click();
@@ -231,9 +268,7 @@ $("#editaccountform").submit(function(e)
           });
           $("#accountname").focus().select();
         }
-
       }
-
     }
   );
 
