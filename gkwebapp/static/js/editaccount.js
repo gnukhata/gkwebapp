@@ -12,15 +12,23 @@ $(document).ready(function()
     $("#alertmsg").hide();
     var acccode = $("#editaccountname option:selected").val();
     var accname= $("#editaccountname option:selected").text();
-    if(accname=="Closing Stock" || accname=="Stock at the Beginning" ||  accname=="Opening Stock" ||  accname=="Income & Expenditure" ||  accname=="Profit & Loss" )
+    if(accname=="Opening Stock" ||  accname=="Income & Expenditure" ||  accname=="Profit & Loss" )
     {
+      $("#accnamenoedit").hide();
       $("#alertmsg").show();
       $("#delete").hide();
       $("#edit").hide();
 
     }
+    else if(accname=="Closing Stock" || accname=="Stock at the Beginning"){
+      $("#accnamenoedit").show();
+      $("#alertmsg").hide();
+      $("#delete").hide();
+      $("#edit").show();
+    }
     else
     {
+      $("#accnamenoedit").hide();
       $("#alertmsg").hide();
       $("#delete").show();
       $("#edit").show();
@@ -57,7 +65,7 @@ $(document).ready(function()
 $("#accountname").keydown(function(event) {
   /* Act on the event */
   if (event.which==13) {
-event.preventDefault();
+    event.preventDefault();
     $("#openingbal").focus();
     $("#openingbal").select();
   }
@@ -68,12 +76,23 @@ event.preventDefault();
     event.preventDefault();
     $("#submit").show();
     $("#alertmsg").hide();
-    //$("#editaccountname").hide();
     $("#accname").hide();
     $("#edit").hide();
-    $("#accountname").prop("disabled",false);
-    $("#openingbal").prop("disabled", false);
-    $("#accountname").focus().select();
+    var acccode = $("#editaccountname option:selected").val();
+    var accname= $("#editaccountname option:selected").text();
+    //$("#editaccountname").hide();
+    if (accname=="Closing Stock" || accname=="Stock at the Beginning"){
+      $("#accountname").prop("disabled", true);
+      $("#openingbal").prop("disabled", false);
+      $("#openingbal").focus().select();
+    }
+    else{
+      $("#accountname").prop("disabled",false);
+      $("#openingbal").prop("disabled", false);
+      $("#accountname").focus().select();
+    }
+
+
   }
 );
 
@@ -81,7 +100,7 @@ $("#editaccountname").keyup(function(e) {
   if($("#editaccountform").is(':visible'))
   {
     if(e.which == 13)
-    {  if($("#editaccountname option:selected").text()=="Closing Stock" || $("#editaccountname option:selected").text()=="Stock at the Beginning" ||  $("#editaccountname option:selected").text()=="Opening Stock" ||  $("#editaccountname option:selected").text()=="Income & Expenditure" ||  $("#editaccountname option:selected").text()=="Profit & Loss" )
+    {  if($("#editaccountname option:selected").text()=="Opening Stock" ||  $("#editaccountname option:selected").text()=="Income & Expenditure" ||  $("#editaccountname option:selected").text()=="Profit & Loss" )
     {
       $("#alertmsg").show();
     }
@@ -109,7 +128,6 @@ $("#openingbal").keydown(function(event) {
 
   if (event.which==38)
   {
-
     $("#accountname").select();
     $("#accountname").focus();
   }
@@ -177,6 +195,7 @@ $(document).off("click","#delete").on("click", "#delete", function(event)
 
 $("#editaccountform").submit(function(e)
 {
+
   if ($.trim($("#accountname").val())=="") {
     $("#blank-alert").alert();
     $("#blank-alert").fadeTo(2000, 500).slideUp(500, function(){
@@ -185,14 +204,20 @@ $("#editaccountform").submit(function(e)
     $("#accountname").focus().select();
     return false;
   };
+  alert($("#editaccountform").serialize());
   var ob = $('#openingbal').val();
   if(ob=="")
   {
     $('#openingbal').val("0.00");
   }
+  var acccode = $("#editaccountname option:selected").val();
+  var accname= $("#editaccountname option:selected").text();
+  data=""
+  if(accname=="Closing Stock" || accname=="Stock at the Beginning"){
+    $("#accountname").val()=""
+  }
   $.ajax(
     {
-
       type: "POST",
       url: "/editaccount",
       global: false,
@@ -205,8 +230,6 @@ $("#editaccountform").submit(function(e)
       },
       success: function(resp)
       {
-
-
         if(resp["gkstatus"]==0)
         {
           $("#reset").click();
@@ -231,9 +254,7 @@ $("#editaccountform").submit(function(e)
           });
           $("#accountname").focus().select();
         }
-
       }
-
     }
   );
 

@@ -158,6 +158,7 @@ def addmultiaccount(request):
 @view_config(route_name="editaccount", renderer="json")
 def editaccount(request):
 	header={"gktoken":request.headers["gktoken"]}
+	print request.params["accountname"]
 	gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openingbal"],"accountcode":request.params["accountcode"]}
 	result = requests.put("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
