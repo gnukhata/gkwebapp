@@ -215,7 +215,6 @@ $("#editaccountform").submit(function(e)
   }
   var acccode = $("#editaccountname option:selected").val();
   var accname= $("#editaccountname option:selected").text();
-  data=""
   if(accname=="Closing Stock" || accname=="Stock at the Beginning"){
     accountname=accname;
   }
