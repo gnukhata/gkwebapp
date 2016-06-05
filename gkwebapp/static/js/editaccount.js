@@ -12,7 +12,7 @@ $(document).ready(function()
     $("#alertmsg").hide();
     var acccode = $("#editaccountname option:selected").val();
     var accname= $("#editaccountname option:selected").text();
-    if(accname=="Opening Stock" ||  accname=="Income & Expenditure" ||  accname=="Profit & Loss" )
+    if(accname=="Income & Expenditure" ||  accname=="Profit & Loss" )
     {
       $("#accnamenoedit").hide();
       $("#alertmsg").show();
@@ -20,7 +20,7 @@ $(document).ready(function()
       $("#edit").hide();
 
     }
-    else if(accname=="Closing Stock" || accname=="Stock at the Beginning"){
+    else if(accname=="Closing Stock" || accname=="Stock at the Beginning" || accname=="Opening Stock"){
       $("#accnamenoedit").show();
       $("#alertmsg").hide();
       $("#delete").hide();
@@ -74,7 +74,7 @@ $(document).ready(function()
     var acccode = $("#editaccountname option:selected").val();
     var accname= $("#editaccountname option:selected").text();
     //$("#editaccountname").hide();
-    if (accname=="Closing Stock" || accname=="Stock at the Beginning"){
+    if (accname=="Closing Stock" || accname=="Stock at the Beginning" || accname=="Opening Stock"){
       $("#accountname").prop("disabled", true);
       $("#openingbal").prop("disabled", false);
       $("#openingbal").focus().select();
@@ -100,7 +100,7 @@ $("#editaccountname").keyup(function(e) {
   if($("#editaccountform").is(':visible'))
   {
     if(e.which == 13)
-    {  if($("#editaccountname option:selected").text()=="Opening Stock" ||  $("#editaccountname option:selected").text()=="Income & Expenditure" ||  $("#editaccountname option:selected").text()=="Profit & Loss" )
+    {  if( $("#editaccountname option:selected").text()=="Income & Expenditure" ||  $("#editaccountname option:selected").text()=="Profit & Loss" )
     {
       $("#alertmsg").show();
     }
