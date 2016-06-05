@@ -204,18 +204,25 @@ $("#editaccountform").submit(function(e)
     $("#accountname").focus().select();
     return false;
   };
-  alert($("#editaccountform").serialize());
+
   var ob = $('#openingbal').val();
   if(ob=="")
   {
     $('#openingbal').val("0.00");
   }
+  else {
+    openingbal=$("#openingbal").val();
+  }
   var acccode = $("#editaccountname option:selected").val();
   var accname= $("#editaccountname option:selected").text();
   data=""
   if(accname=="Closing Stock" || accname=="Stock at the Beginning"){
-    $("#accountname").val()=""
+    accountname=accname;
   }
+  else{
+    accountname=$("#accountname").val();
+  }
+  accountcode = $("#accountcode").val();
   $.ajax(
     {
       type: "POST",
@@ -223,7 +230,7 @@ $("#editaccountform").submit(function(e)
       global: false,
       async: false,
       datatype: "json",
-      data: $("#editaccountform").serialize(),
+      data: {"accountname":accountname, "accountcode":accountcode, "openingbal":openingbal},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

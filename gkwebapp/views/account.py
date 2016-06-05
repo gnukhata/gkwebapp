@@ -68,9 +68,7 @@ def getaccdetails(request):
 
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/account/%s"%(request.params["accountcode"]), headers=header)
-
 	record = result.json()["gkresult"]
-
 	result = requests.get("http://127.0.0.1:6543/groupsubgroup/%s"%(record["groupcode"]), headers=header)
 
 	grprecord = result.json()["gkresult"]
@@ -157,8 +155,7 @@ def addmultiaccount(request):
 
 @view_config(route_name="editaccount", renderer="json")
 def editaccount(request):
-	header={"gktoken":request.headers["gktoken"]}
-	print request.params["accountname"]
+	header={"gktoken":request.headers["gktoken"]
 	gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openingbal"],"accountcode":request.params["accountcode"]}
 	result = requests.put("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
