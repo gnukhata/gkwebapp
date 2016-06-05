@@ -62,18 +62,11 @@ $(document).ready(function()
     });
   });
 
-$("#accountname").keydown(function(event) {
-  /* Act on the event */
-  if (event.which==13) {
-    event.preventDefault();
-    $("#openingbal").focus();
-    $("#openingbal").select();
-  }
-});
-
   $("#edit").click(function(event)
   {
     event.preventDefault();
+    var grpname= $("#groupname").val();
+
     $("#submit").show();
     $("#alertmsg").hide();
     $("#accname").hide();
@@ -87,9 +80,16 @@ $("#accountname").keydown(function(event) {
       $("#openingbal").focus().select();
     }
     else{
+      if (grpname=="Direct Expense"|| grpname=="Direct Income"||grpname=="Indirect Expense"|| grpname=="Indirect Income") {
+        $("#openingbal").prop("disabled", true);
+      }
+      else {
+        $("#openingbal").prop("disabled", false);
+
+      }
       $("#accountname").prop("disabled",false);
-      $("#openingbal").prop("disabled", false);
       $("#accountname").focus().select();
+
     }
 
 
@@ -120,6 +120,14 @@ $("#accountname").keydown(function(event) {
   {
 
     $("#openingbal").select().focus();
+  }
+  if (event.which==13) {
+    if (!$("#openingbal").is(':disabled')) {
+
+      event.preventDefault();
+      $("#openingbal").focus();
+      $("#openingbal").select();
+    }
   }
 });
 
