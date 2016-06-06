@@ -10,7 +10,7 @@ $(".m_openbal").numeric();
 
     if (event.which==40)
     {
-      if ($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').is("disabled"))
+      if ($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').is(":disabled"))
       {
         $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').focus();
         $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').select();
@@ -24,7 +24,7 @@ $(".m_openbal").numeric();
     if (event.which==38)
     {
 
-      if ($('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input').is("disabled"))
+      if ($('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input').is(":disabled"))
       {
         $('#m_acctable tbody tr:eq('+previndex+') td:eq(0) input:enabled').focus();
         $('#m_acctable tbody tr:eq('+previndex+') td:eq(0) input:enabled').select();
