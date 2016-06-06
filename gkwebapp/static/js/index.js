@@ -9,6 +9,10 @@ $(document).ready(function(){
     var orgs = jsonobj["gkresult"]
     if (orgs==0) {
       $("#selectnav").hide();
+      $("#createnav").click();
+    }
+    else {
+      $("#selectnav").click();
     }
   })
   .fail(function() {
@@ -18,10 +22,11 @@ $(document).ready(function(){
     console.log("complete");
   });
 
-  $("#about").load("/about");
+
   $("#selectnav").click(function(event){
   $("#selectorg").load("/existingorg",setTimeout( function() { $("#org-name").focus(); }, 500 ));
 });
+
 $("#createnav").click(function(event){
 $("#createorg").load("/createorg",setTimeout( function() { $("#orgname").focus(); }, 500 ));
 });

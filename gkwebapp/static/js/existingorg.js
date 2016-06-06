@@ -1,5 +1,6 @@
 $(document).ready(function()
 {
+  $("#org-name").focus();
   $("#org-name").keyup(function(e) {
     e.preventDefault();
     if (e.which == 13)

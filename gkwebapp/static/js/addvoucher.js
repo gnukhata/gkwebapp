@@ -48,6 +48,7 @@ $(document).ready(function() {
   var diff = 0;     //diff containns the difference of drsum and crsum
   var outfocus = false;
   var accpopupindex = -1;
+  var curselectlength = -1;
   var percentwid = 100*(($("table").width()-12)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   $('.table-fixedheader tfoot').width(percentwid+"%");
@@ -429,6 +430,7 @@ $(document).ready(function() {
     }
     if (event.which==32) {
       accpopupindex = $(this).closest('tr').index();
+      curselectlength = $(this).length
       $("#popup").click();
     }
     if (event.which==13 && outfocus) {
@@ -1240,12 +1242,19 @@ $(document).ready(function() {
 
             });
             if (accpopupindex!=-1) {
-              $("#vtable tbody tr:eq("+accpopupindex+") td:eq(1) select").focus();
               var text1 = $("#selpopupaccount").val();
+              if (text1!="" && curselectlength!=$("#vtable tbody tr:eq("+accpopupindex+") td:eq(1) select").length) {
+                $("#vtable tbody tr:eq("+accpopupindex+") td:eq(1) select option").filter(function() {
+                  return this.text != text1;
+                }).removeAttr('selected');
+              }
               $("#vtable tbody tr:eq("+accpopupindex+") td:eq(1) select option").filter(function() {
                 return this.text == text1;
               }).attr('selected', true);
               $("#selpopupaccount").val("");
+              $("#vtable tbody tr:eq("+accpopupindex+") td:eq(1) select").focus();
+              accpopupindex = -1;
+              curselectlength = -1;
             }
             else {
               $("#popup").focus();
