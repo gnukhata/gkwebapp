@@ -45,13 +45,13 @@ $(document).ready(function() {
 
   var urole = $("#urole").val();
 
-  $("#ledgertable").off('keyup','tr').on('keyup','tr',function(e){
+  $("#ledgertable").off('keydown','tr').on('keydown','tr',function(e){
     var id = $(this).attr('value');
     var rindex = $(this).index();
 
     if(e.which==32)
     {
-
+      e.preventDefault();
 
       if($(this).find('td:eq(2)').val()=="na")
       {

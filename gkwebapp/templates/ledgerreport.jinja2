@@ -141,9 +141,15 @@
           <td class="col-xs-1">
             {{record['voucherdate']}}
           </td>
+          {% if record['vouchernumber']=="" %}
+          <td class="col-xs-1">
+            <a class="vno" href="">&nbsp</a>
+          </td>
+          {% else %}
           <td class="col-xs-1">
             <a class="vno" href="">{{record['vouchernumber']}}</a>
           </td>
+          {% endif %}
           {% if (record['status']) %}
           <td class="col-xs-1" style="color:red; text-align:center">***</td>
           {% else %}

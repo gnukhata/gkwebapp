@@ -108,12 +108,13 @@
         {% for record in records["leftlist"] %}
         <tr	value="">
           <td class="col-xs-9">
-            {% if record["groupname"]=="Total" or record["groupname"]=="Difference" or record["groupname"]=="Sources:" %}
+            {% if record["groupname"]=="Total" or record["groupname"]=="Difference" or record["groupname"]=="Applications:" %}
             <a class="libgname" href="#" style="text-decoration: none; color:black;">{{record["groupname"]}}</a>
+            {% elif record["groupname"]=="" %}
+            <a class="libgname" href="#">&nbsp</a>
             {% else %}
             <a class="libgname" href="#">{{record["groupname"]}}</a>
             {% endif %}
-
           </td>
           <td class="col-xs-3" style="text-align:right">
             {{record["amount"]}}
@@ -125,6 +126,8 @@
           <td class="col-xs-9">
             {% if record["groupname"]=="Total" or record["groupname"]=="Difference" or record["groupname"]=="Applications:" %}
             <a class="libgname" href="#" style="text-decoration: none; color:black;">{{record["groupname"]}}</a>
+            {% elif record["groupname"]=="" %}
+            <a class="libgname" href="#">&nbsp</a>
             {% else %}
             <a class="libgname" href="#">{{record["groupname"]}}</a>
             {% endif %}
