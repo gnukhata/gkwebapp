@@ -46,7 +46,7 @@ $(document).ready(function() {
 
   var urole = $("#urole").val();
 
-  $("#vtable").off('keyup','tr').on('keyup','tr',function(e){
+  $("#vtable").off('keydown','tr').on('keydown','tr',function(e){
     var id = $(this).attr('value');
     var rindex = $(this).index();
 

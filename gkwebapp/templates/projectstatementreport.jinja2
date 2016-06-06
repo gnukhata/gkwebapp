@@ -119,9 +119,15 @@
           <td class="col-xs-1">
             {{record['srno']}}
           </td>
+          {% if record['accountname']=="" %}
+          <td class="col-xs-4">
+            <a class="prjstaccs" href="">&nbsp</a>
+          </td>
+          {% else %}
           <td class="col-xs-4">
             <a class="prjstaccs" href="">{{record['accountname']}}</a>
           </td>
+          {% endif %}
           <td class="col-xs-3">
             {{record["groupname"]}}
           </td>

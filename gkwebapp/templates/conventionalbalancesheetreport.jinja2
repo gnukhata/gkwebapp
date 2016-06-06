@@ -109,7 +109,7 @@
   <span style="margin:auto; display:table;"><strong>Conventional Statement of Affairs </strong>as on <strong>{{to}}</strong></span>
   {% endif %}
   <div class="row">
-    <div class="table-responsive col-md-6 nopadding" style="float:left; margin-right:0px">
+    <div class="table-responsive col-xs-6 nopadding" >
       <table id="liabtable" class="shadow table table-condensed table-fixedheader cbalsheettable">
         <thead>
           <tr class="info ">
@@ -126,22 +126,28 @@
           {% for record in records["leftlist"] %}
           <tr	value="">
             <td class="col-xs-9">
-              {% if record["groupname"]=="Total" or record["groupname"]=="Difference" or record["groupname"]=="Sources:" %}
+              {% if record["groupname"]=="Total" or record["groupname"]=="Difference" or record["groupname"]=="Applications:" %}
               <a class="libgname" href="#" style="text-decoration: none; color:black;">{{record["groupname"]}}</a>
+              {% elif record["groupname"]=="" %}
+              <a class="libgname" href="#">&nbsp</a>
               {% else %}
               <a class="libgname" href="#">{{record["groupname"]}}</a>
               {% endif %}
-
             </td>
+            {% if record["amount"]=="." %}
+            <td class="col-xs-3" style="text-align:right">&nbsp</td>
+            {% else %}
             <td class="col-xs-3" style="text-align:right">
               {{record["amount"]}}
             </td>
+            {% endif %}
+
           </tr>
           {% endfor %}
         </tbody>
       </table>
     </div>
-    <div class="table-responsive col-md-6 nopadding" style="float:left; margin-left:0px">
+    <div class="table-responsive col-xs-6 nopadding" >
       <table id="patable" class="shadow table table-condensed table-fixedheader cbalsheettable">
         <thead>
           <tr class="info ">
@@ -156,13 +162,20 @@
             <td class="col-xs-9">
               {% if record["groupname"]=="Total" or record["groupname"]=="Difference" or record["groupname"]=="Applications:" %}
               <a class="pagname" href="#" style="text-decoration: none; color:black;">{{record["groupname"]}}</a>
+              {% elif record["groupname"]=="" %}
+              <a class="pagname" href="#">&nbsp</a>
               {% else %}
               <a class="pagname" href="#">{{record["groupname"]}}</a>
               {% endif %}
             </td>
+            {% if record["amount"]=="." %}
+            <td class="col-xs-3" style="text-align:right">&nbsp</td>
+            {% else %}
             <td class="col-xs-3" style="text-align:right">
               {{record["amount"]}}
             </td>
+            {% endif %}
+
           </tr>
           {% endfor %}
         </tbody>
