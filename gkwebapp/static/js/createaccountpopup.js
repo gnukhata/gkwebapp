@@ -1,6 +1,6 @@
 $(document).ready(function()
 {
-
+  $("#m_openbal").numeric();
   var sel1 = 0;
   var sel2 = 0;
 
@@ -17,8 +17,14 @@ $(document).ready(function()
     sel2 = 0;
   });
 
+  $('#m_accountname').keydown( function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+    }
+  });
 
-  $('input:text,select, input:checkbox').keydown( function(event) {
+
+  $('input:text,select, input:checkbox').keyup( function(event) {
     var n = $("input:text:visible,select, input:checkbox").length;
     var f = $('input:text:visible,select, input:checkbox');
 
@@ -44,7 +50,7 @@ $(document).ready(function()
         }
       });
 
-  
+
   $("#m_groupname").focus();
   $("#m_accountform").validate();
   $("#m_groupname").bind("change keyup", function(){
