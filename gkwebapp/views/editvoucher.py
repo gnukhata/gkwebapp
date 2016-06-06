@@ -69,8 +69,12 @@ def viewvoucher(request):
 		if result1.json()["gkstatus"]==0:
 			draccounts=result1.json()["gkresult"]
 			craccounts=result1.json()["gkresult"]
-		else:
-			return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)
+	elif type=="creditnote" or type=="debitnote" or type=="salesreturn" or type=="purchasereturn":
+		result = requests.get("http://127.0.0.1:6543/accountsbyrule?type=journal", headers=header)
+		if result1.json()["gkstatus"]==0:
+			draccounts=result1.json()["gkresult"]
+			craccounts=result1.json()["gkresult"]
+
 	else:
 		drresult = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s&side=Dr"%(type), headers=header)
 		crresult = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s&side=Cr"%(type), headers=header)
