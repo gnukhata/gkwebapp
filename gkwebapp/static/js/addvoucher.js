@@ -253,6 +253,9 @@ $(document).ready(function() {
         $('#narration').focus().select();
         event.preventDefault();
     }
+    if (event.which==13) {
+      event.preventDefault();
+    }
   });
   $('#narration').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
@@ -448,6 +451,9 @@ $(document).ready(function() {
     curindex = $(this).closest('tr').index();
     nextindex = curindex+1;
     previndex = curindex-1;
+    if (event.which==32 || event.which==13) {
+      event.preventDefault();
+    }
     if(event.which==190 && event.shiftKey)
     {
       $('#vtable tbody tr:eq('+nextindex+') td:eq(1) select').focus();
@@ -497,6 +503,9 @@ $(document).ready(function() {
         event.preventDefault();
         $('#vtable tbody tr:eq('+previndex+') td:eq(0) select').focus();
       }
+    }
+    if (event.which==13) {
+      event.preventDefault();
     }
     if (event.which==188 && event.ctrlKey) {
         $('#vtable tbody tr:eq('+previndex+') input:enabled').focus().select();
