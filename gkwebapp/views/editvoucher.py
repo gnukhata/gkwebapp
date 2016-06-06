@@ -70,7 +70,7 @@ def viewvoucher(request):
 			draccounts=result1.json()["gkresult"]
 			craccounts=result1.json()["gkresult"]
 	elif type=="creditnote" or type=="debitnote" or type=="salesreturn" or type=="purchasereturn":
-		result = requests.get("http://127.0.0.1:6543/accountsbyrule?type=journal", headers=header)
+		result1 = requests.get("http://127.0.0.1:6543/accountsbyrule?type=journal", headers=header)
 		if result1.json()["gkstatus"]==0:
 			draccounts=result1.json()["gkresult"]
 			craccounts=result1.json()["gkresult"]
