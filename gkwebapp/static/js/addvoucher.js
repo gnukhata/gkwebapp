@@ -624,7 +624,7 @@ $(document).ready(function() {
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
           }
           else{
-            $('#vtable tbody tr:eq('+nxtindex+') input:enabled').select().focus();
+            $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
           }
         }
         else {
@@ -694,7 +694,7 @@ $(document).ready(function() {
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
           }
           else{
-            $('#vtable tbody tr:eq('+nxtindex+') input:enabled').select().focus();
+            $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
           }
         }
         else {
@@ -810,7 +810,7 @@ $(document).ready(function() {
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
           }
           else{
-            $('#vtable tbody tr:eq('+nxtindex+') input:enabled').select().focus();
+            $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
           }
         }
         else {
@@ -885,7 +885,7 @@ $(document).ready(function() {
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
           }
           else{
-            $('#vtable tbody tr:eq('+nxtindex+') input:enabled').select().focus();
+            $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
           }
         }
         else {
