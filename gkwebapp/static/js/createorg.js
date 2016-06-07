@@ -52,6 +52,10 @@ $(document).ready(function()
       $("#orgcase").bind("change keyup", function(e){
         var ocase = $("#orgcase option:selected").val();
         var oname = "";
+        String.prototype.toProperCase = function () {
+    return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+};
+
         if(ocase == "As-Is")
         {
           sessionStorage.setItem('orgn', forname);
@@ -71,7 +75,7 @@ $(document).ready(function()
         }
         if(ocase == "Title Case")
         {
-          oname = (forname[0].toUpperCase())+(forname.substr(1).toLowerCase())
+          oname = forname.toProperCase();
           $("#orgname").val(oname);
           sessionStorage.setItem('orgn', oname);
         }
