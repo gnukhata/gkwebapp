@@ -7,6 +7,21 @@ from pyramid.renderers import render_to_response
 def showuser(request):
     return {"gkresult":"0"}
 
+@view_config(route_name="showedituser", renderer="gkwebapp:templates/edituser.jinja2")
+def showedituser(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/user", headers=header)
+	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
+
+@view_config(route_name="edituser", renderer="json")
+def edituser(request):
+	header={"gktoken":request.headers["gktoken"]}
+	gkdata={"userid":request.params["userid"], "username":request.params["username"], "userpassword":request.params["userpassword"]}
+	result = requests.put("http://127.0.0.1:6543/users", headers=header, data=json.dumps(gkdata))
+	print result.json()["gkstatus"]
+	print "abc"
+	return {"gkstatus": result.json()["gkstatus"]}
+
 @view_config(route_name="createuser", renderer="json")
 def createuser(request):
     headers={"gktoken":request.headers["gktoken"]}

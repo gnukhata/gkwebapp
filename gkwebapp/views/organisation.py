@@ -18,3 +18,9 @@ def editOrganisation(request):
 	result = requests.put("http://127.0.0.1:6543/organisations", headers=header, data=json.dumps(gkdata))
 	print "pqr"
 	return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="getorgcode", renderer="json")
+def getOrgcode(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/organisations?orgcode", headers=header)
+	return {"gkdata":result.json()["gkdata"],"gkstatus":result.json()["gkstatus"]}
