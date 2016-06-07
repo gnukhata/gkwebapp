@@ -130,9 +130,47 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
             <td style=" width:5%">
               {{vc['voucherdate']}}
             </td>
+            {% if vc['vouchertype'] =="contra" %}
             <td style=" width:10%">
-              {{vc['vouchertype']}}
+              Contra
             </td>
+            {% elif vc['vouchertype'] == "payment" %}
+            <td style=" width:10%">
+              Payment
+            </td>
+            {% elif vc['vouchertype'] == "receipt" %}
+            <td style=" width:10%">
+              Receipt
+            </td>
+            {% elif vc['vouchertype'] == "journal" %}
+            <td style=" width:10%">
+              Journal
+            </td>
+            {% elif vc['vouchertype'] == "sales" %}
+            <td style=" width:10%">
+              Sales
+            </td>
+            {% elif vc['vouchertype'] == "purchase" %}
+            <td style=" width:10%">
+              Purchase
+            </td>
+            {% elif vc['vouchertype'] == "creditnote" %}
+            <td style=" width:10%">
+              Credit Note
+            </td>
+            {% elif vc['vouchertype'] == "debitnote" %}
+            <td style=" width:10%">
+              Debit Note
+            </td>
+            {% elif vc['vouchertype'] == "salesreturn" %}
+            <td style=" width:10%">
+              Sales Return
+            </td>
+            {% elif vc['vouchertype'] == "purchasereturn" %}
+            <td style=" width:10%">
+              Purchase Return
+            </td>
+            {% endif %}
             <td style=" width:20%">
               {{vc["drs"].keys()[0]}}
             </td>
