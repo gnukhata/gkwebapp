@@ -26,7 +26,6 @@
             <ul class="dropdown-menu">
               <li><a data-toggle="tab" id="logout" href="">Logout</a></li>
               <li><a data-toggle="tab" id="changeorg" href="">Change Organisation</a></li>
-              <li><a data-toggle="tab" id="quit" href="">Quit</a></li>
             </ul>
           </li>
           <li class="dropdown">
@@ -36,7 +35,7 @@
               <li><a data-toggle="tab" href="" id="editaccount">Edit Account</a></li>
               <li><a data-toggle="tab" href="" id="showeditorg">Edit Organisation</a></li>
               <li><a data-toggle="tab" id="showproject" href="">Project</a></li>
-              <li><a href="">Bank Reconciliation Statement</a></li>
+              <li><a data-toggle="tab" id="BRS" href="">Bank Reconciliation Statement</a></li>
             </ul>
           </li>
           <li class="dropdown">
@@ -63,8 +62,8 @@
               <li><a href="" data-toggle="tab" id="showcashflow">Cash Flow</a></li>
               <li><a href="" id="showbalancesheet" data-toggle="tab">Statement of Affairs</a></li>
               <li><a href="" data-toggle="tab" id="showprofitloss">Income and Expenditure Account</a></li>
-              <li><a href="" data-toggle="tab" id="listofaccounts">List of Accounts</a></li>
               <li><a href="" data-toggle="tab" id="fevoucher">Find and Edit Voucher</a></li>
+              <li><a href="" data-toggle="tab" id="listofaccounts">List of Accounts</a></li>
             </ul>
           </li>
           <li class="dropdown">
@@ -72,18 +71,18 @@
             <ul class="dropdown-menu">
               <li><a data-toggle="tab" id="createuser" href="">New User</a></li>
               <li><a data-toggle="tab" id="REMOVEuser" href="">Remove User</a></li>
-              <li><a href="">Change Password</a></li>
+              <li><a data-toggle="tab" id="changepassword" href="">Change Password</a></li>
               <li><a data-toggle="tab" id="showclosebooks" href="">Close Books/Roll Over</a></li>
-              <li><a href="">Delete Organisation</a></li>
+              <li><a data-toggle="tab" id="deleteorg" href="">Delete Organisation</a></li>
             </ul>
           </li>
           <li class="dropdown">
             <a href="" id="help" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>H</u>elp</a>
             <ul class="dropdown-menu">
-              <li><a href="">GNUKhata Manual</a></li>
-              <li><a href="">Authors</a></li>
-              <li><a href="">GNUKhata License</a></li>
-              <li><a href="">About GNUkhata</a></li>
+              <li><a data-toggle="tab" id="manual" href="">GNUKhata Manual</a></li>
+              <li><a data-toggle="tab" id="authors" href="">Authors</a></li>
+              <li><a data-toggle="tab" id="license" href="">GNUKhata License</a></li>
+              <li><a data-toggle="tab" id="about" href="">About GNUkhata</a></li>
             </ul>
           </li>
         </ul>
@@ -91,30 +90,33 @@
           <li class="dropdown">
             <a href="" id="toolbar" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Toolbar</a>
             <ul class="dropdown-menu scrollable">
-              <li><a data-toggle="tab" id="addaccounttb" href="">Create/Edit Account - F2</a></li>
-              <li><a data-toggle="tab" id="listofaccountstb" href="">List of Accounts - CTRL+L</a></li>
-              <li><a data-toggle="tab" id="ledgertb" href="">Ledger - F3</a></li>
-              <li><a data-toggle="tab" id="contratb" href="">Contra - F4</a></li>
-              <li><a data-toggle="tab" id="paymenttb" href="">Payment - F5</a></li>
-              <li><a data-toggle="tab" id="receipttb" href="">Receipt - F6</a></li>
-              <li><a data-toggle="tab" id="journaltb" href="">Journal - F7</a></li>
-              <li><a data-toggle="tab" id="salestb" href="">Sales - F8</a></li>
-              <li><a data-toggle="tab" id="purchasetb" href="">Purchase - F9</a></li>
-              <li><a data-toggle="tab" id="creditnotetb" href="">Credit Note - CTRL+F2</a></li>
-              <li><a data-toggle="tab" id="debitnotetb" href="">Debit Note - CTRL+F3</a></li>
-              <li><a data-toggle="tab" id="salesreturntb" href="">Sales Return - CTRL+F4</a></li>
-              <li><a data-toggle="tab" id="purchasereturntb" href="">Purchase Return - CTRL+F5</a></li>
-              <li><a data-toggle="tab" id="trialbalancetb" href="">Trial Balance - CTRL+F7</a</li>
-              <li><a data-toggle="tab" id="listofaccountstb" href="">Income & Expenditure - CTRL+F8</a></li>
-              <li><a data-toggle="tab" id="statementofaffairstb" href="">Statement of Affairs - CTRL+F9</a></li>
-              <li><a data-toggle="tab" id="cashflowtb" href="">Cash Flow - CTRL+F10</a></li>
-              <li><a data-toggle="tab" id="projectstatementtb" href="">Project Statement - CTRL+F11</a></li>
-              <li><a data-toggle="tab" id="brstb" href="">Bank Reconciliation Statement - CTRL+F12</a></li>
-              <li><a data-toggle="tab" id="projecttb" href="">Project - CTRL+E</a></li>
-              <li><a data-toggle="tab" id="findvouchertb" href="">Find Voucher - CTRL+F</a></li>
-              <li><a data-toggle="tab" id="logouttb" href="">Logout - CTRL+G</a></li>
-              <li><a data-toggle="tab" id="changeogtb" href="">Change Organisation - H</a></li>
-              <li><a data-toggle="tab" id="quittb" href="">Quit - CTRL+Q</a></li>
+              <li><a data-toggle="tab" id="addaccounttb" href="">Create Account - F2</a></li>
+              <li><a data-toggle="tab" id="editaccounttb" href="">Find & Edit Account - F3</a></li>
+
+              <li><a data-toggle="tab" id="projecttb" href="">Project - ALT+P</a></li>
+              <li><a data-toggle="tab" id="brstb" href="">Bank Reconciliation Statement - ALT+R</a></li>
+              <li><a data-toggle="tab" id="contratb" href="">Contra - CTRL+1</a></li>
+              <li><a data-toggle="tab" id="paymenttb" href="">Payment - CTRL+2</a></li>
+              <li><a data-toggle="tab" id="receipttb" href="">Receipt - CTRL+3</a></li>
+              <li><a data-toggle="tab" id="journaltb" href="">Journal - CTRL+4</a></li>
+              <li><a data-toggle="tab" id="salestb" href="">Sales - CTRL+5</a></li>
+              <li><a data-toggle="tab" id="purchasetb" href="">Purchase - CTRL+6</a></li>
+              <li><a data-toggle="tab" id="creditnotetb" href="">Credit Note - CTRL+7</a></li>
+              <li><a data-toggle="tab" id="debitnotetb" href="">Debit Note - CTRL+8</a></li>
+              <li><a data-toggle="tab" id="salesreturntb" href="">Sales Return - CTRL+9</a></li>
+              <li><a data-toggle="tab" id="purchasereturntb" href="">Purchase Return - CTRL+0</a></li>
+              <li><a data-toggle="tab" id="ledgertb" href="">Ledger - F4</a></li>
+              <li><a data-toggle="tab" id="trialbalancetb" href="">Trial Balance - F5</a</li>
+              <li><a data-toggle="tab" id="projectstatementtb" href="">Project Statement - F6</a></li>
+              <li><a data-toggle="tab" id="cashflowtb" href="">Cash Flow - F7</a></li>
+              <li><a data-toggle="tab" id="findvouchertb" href="">Find Voucher - F10</a></li>
+              <li><a data-toggle="tab" id="listofaccountstb" href="">List of Accounts - F11</a></li>
+              <li><a data-toggle="tab" id="createusertb" href="">New User - ALT+N</a></li>
+              <li><a data-toggle="tab" id="REMOVEusertb" href="">Remove User - ALT+U</a></li>
+              <li><a data-toggle="tab" id="changepasswordtb" href="">Change Password - ALT+C</a></li>
+              <li><a data-toggle="tab" id="manualtb" href="">GNUKhata Manual - ALT+M</a></li>
+              <li><a data-toggle="tab" id="logouttb" href="">Logout - CTRL+L</a></li>
+              <li><a data-toggle="tab" id="changeogtb" href="">Change Organisation - CTRL+O</a></li>
             </ul>
           </li>
         </ul>
@@ -129,10 +131,10 @@
 </div>
 <div id="info" style="margin-top: 10px; margin-bottom: 10px;" class="container-fluid tab-pane fade in active"></div>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/mousetrap.min.js')}}"></script>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.autotab.min.js')}}"></script>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.numeric.min.js')}}"></script>
-<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/shortcut.js')}}"></script>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/date.js')}}"></script>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/mainshell.js')}}"></script>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/showvoucher.js')}}"></script>

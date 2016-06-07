@@ -1,4 +1,4 @@
-shortcut.add("f1",function() {
+/*shortcut.add("f1",function() {
 document.getElementById("toolbar").click();
 });
 shortcut.add("Alt+G",function() {
@@ -54,8 +54,219 @@ document.getElementById("purchasereturntb").click();
 });
 shortcut.add("Ctrl+F",function() {
 document.getElementById("findvouchertb").click();
-});
+});*/
 $(document).ready(function(){
+
+  $(document).keydown(function(event) {
+        if(event.ctrlKey && event.keyCode == 71) {
+          $("#gnukhata").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.ctrlKey && event.keyCode == 77) {
+          $("#master").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.ctrlKey && event.keyCode == 84) {
+          $("#transaction").click();
+          /*console.log("Hey! Ctrl+T event captured!");*/
+          event.preventDefault();
+          }
+        if(event.ctrlKey && event.keyCode == 82) {
+          $("#report").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.ctrlKey && event.keyCode == 68) {
+          $("#administration").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.ctrlKey && event.keyCode == 72) {
+          $("#help").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.ctrlKey && event.keyCode == 76) {
+          $("#logout").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.ctrlKey && event.keyCode == 79) {
+          $("#changeorg").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.ctrlKey && event.keyCode == 81) {
+          $("#quit").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.altKey && event.keyCode == 79) {
+          $("#showeditorg").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.altKey && event.keyCode == 80) {
+          $("#showproject").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.altKey && event.keyCode == 82) {
+          $("#BRS").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.altKey && event.keyCode == 78) {
+          $("#createuser").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.altKey && event.keyCode == 85) {
+          $("#REMOVEuser").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.altKey && event.keyCode == 67) {
+          $("#changepassword").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.altKey && event.keyCode == 76) {
+          $("#showclosebooks").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.altKey && event.keyCode == 73) {
+          $("#deleteorg").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.altKey && event.keyCode == 77) {
+          $("#manual").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.altKey && event.keyCode == 65) {
+          $("#authors").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.altKey && event.keyCode == 71) {
+          $("#license").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.altKey && event.keyCode == 75) {
+          $("#about").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.keyCode == 112) {
+          $("#toolbar").click();
+          event.preventDefault();
+        }
+        if(event.keyCode == 113) {
+          $("#addaccounttb").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.keyCode == 114) {
+          $("#editaccount").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.keyCode == 115) {
+          $("#showviewledger").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.keyCode == 116) {
+          $("#showtrialbalance").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.keyCode == 117) {
+          $("#showprjstate").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.keyCode == 118) {
+          $("#showcashflow").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.keyCode == 119) {
+          $("#showbalancesheet").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.keyCode == 120) {
+          $("#showprofitloss").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.keyCode == 121) {
+          $("#fevoucher").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.keyCode == 122) {
+          $("#listofaccounts").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.ctrlKey && (event.keyCode == 49 || event.keyCode == 97)) {
+          $("#showcontra").click();
+          event.preventDefault();
+        }
+        if(event.ctrlKey && (event.keyCode == 50 || event.keyCode == 98)) {
+          $("#showpayment").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.ctrlKey && (event.keyCode == 51 || event.keyCode == 99)) {
+          $("#showreceipt").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.ctrlKey && (event.keyCode == 52 || event.keyCode == 100)) {
+          $("#showjournal").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.ctrlKey && (event.keyCode == 53 || event.keyCode == 101)) {
+          $("#showsales").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.ctrlKey && (event.keyCode == 54 || event.keyCode == 102)) {
+          $("#showpurchase").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.ctrlKey && (event.keyCode == 55 || event.keyCode == 103)) {
+          $("#showcreditnote").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.ctrlKey && (event.keyCode == 56 || event.keyCode == 104)) {
+          $("#showdebitnote").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.ctrlKey && (event.keyCode == 57 || event.keyCode == 105)) {
+          $("#showsalesreturn").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+        if(event.ctrlKey && (event.keyCode == 48 || event.keyCode == 96)) {
+          $("#showpurchasereturn").click();
+          /*console.log("Hey! Ctrl+S event captured!");*/
+          event.preventDefault();
+          }
+      });
 
   var orname = sessionStorage.getItem('orgn');
   var ortype = sessionStorage.getItem('orgt');
@@ -222,6 +433,11 @@ $("title").append(orname);
     });
 
 
+/*$(document).bind('keydown', 'alt+t', function(event) {
+
+
+$("#transaction").click();
+});*/
 
 
   $('#showviewledger').click(function (e) {
