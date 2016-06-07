@@ -433,7 +433,7 @@ $(document).ready(function()
   $(document).off("change",".crdr").on("change",".crdr",function(event)
   {
     var curindex = $(this).closest('tr').index();
-    $('#vctable tbody tr:eq('+curindex+') input:disabled').val("0.00");
+    $('#vctable tbody tr:eq('+curindex+') input:disabled').val($('#vctable tbody tr:eq('+curindex+') input:enabled').val());
     $('#vctable tbody tr:eq('+curindex+') input:enabled').val("");
     $('#vctable tbody tr:eq('+curindex+') input').prop('disabled', function(i, v) { return !v; });
     if($(this).val()=="Cr"){
