@@ -366,8 +366,10 @@ $(document).ready(function() {
   $(document).off("change",".crdr").on("change",".crdr",function(event)
   {
     var curindex = $(this).closest('tr').index(); // gets the current index of the row
-    $('#vtable tbody tr:eq('+curindex+') input:disabled').val("0.00"); // sets the text of the text box to 0.00 which is disabled in the current row.
+
+    var crdrchgamt = $('#vtable tbody tr:eq('+curindex+') input:enabled').val();
     $('#vtable tbody tr:eq('+curindex+') input:enabled').val(""); // blanks out the text box which is enabled in the current row.
+    $('#vtable tbody tr:eq('+curindex+') input:disabled').val(crdrchgamt); // sets the text of the text box to 0.00 which is disabled in the current row.
     $('#vtable tbody tr:eq('+curindex+') input').prop('disabled', function(i, v) { return !v; }); // toggles the property of the input boxes, i.e if the the box is enabled, it will be changed to disabled and vice versa.
 
     // the following lines will get the accounts depending on the type of the voucher and the current value of the crdr select box.
@@ -539,7 +541,7 @@ $(document).ready(function() {
         event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#vtable tbody tr:eq('+nextindex+') select:enabled').focus();
+        $('#vtable tbody tr:eq('+nextindex+') select:enabled:first').focus();
         event.preventDefault();
         if (curindex==lastindex) {
           $("#project").focus();
@@ -568,7 +570,7 @@ $(document).ready(function() {
         event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#vtable tbody tr:eq('+nextindex+') select:enabled').focus();
+        $('#vtable tbody tr:eq('+nextindex+') select:enabled:first').focus();
         event.preventDefault();
         if (curindex==lastindex) {
           $("#project").focus();
