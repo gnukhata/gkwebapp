@@ -1,5 +1,18 @@
 $(document).ready(function(){
 
+  $(document).keydown(function(event) {
+    if(event.ctrlKey && event.keyCode == 69) {
+      $("#selectnav").click();
+      /*console.log("Hey! Ctrl+S event captured!");*/
+      event.preventDefault();
+      }
+    if(event.ctrlKey && event.keyCode == 82) {
+      $("#createnav").click();
+      /*console.log("Hey! Ctrl+S event captured!");*/
+      event.preventDefault();
+      }
+    });
+
   $.ajax({
     url: '/orgexists',
     type: 'POST',
