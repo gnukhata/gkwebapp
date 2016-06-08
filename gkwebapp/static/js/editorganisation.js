@@ -40,17 +40,6 @@ $(document).ready(function(){
     $("#showeditorg").click();
   });
 
-  $("#orgemail").blur(function(event){
-    if ($.trim($("#new_password").val())!=$.trim($("#confirm_password").val())) {
-      $("#invalidemail-alert").alert();
-      $("#invalidemail-alert").fadeTo(2000, 500).slideUp(500, function(){
-      $("#invalidemail-alert").hide();
-      });
-      $("#orgemail").focus().select();
-      return false;
-    }
-  });
-
   $("#editorganisationform").submit(function(event){
 
     var regdate=""
@@ -60,7 +49,6 @@ $(document).ready(function(){
 
     if($("#orgtype").val()=="Not For Profit")
     {
-      alert($("#regday").val())
       regdate= $("#regyear").val() + "-" + $("#regmonth").val() + "-" + $("#regday").val();
       fcraregdate= $("#fcraregyear").val() + "-" + $("#fcraregmonth").val() + "-" + $("#fcraregday").val();
       regno = $("#orgregno").val();
