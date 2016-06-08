@@ -106,36 +106,62 @@
       <tbody>
 
         {% for record in records["leftlist"] %}
-        <tr	value="">
-          <td class="col-xs-9">
-            {% if record["groupname"]=="Total" or record["groupname"]=="Difference" or record["groupname"]=="Applications:" %}
+
+        <tr	value="{{record["groupcode"]}}">
+          <td class="col-xs-10"><b>
+            {% if record["groupname"]=="Total" or record["groupname"]=="Difference" or record["groupname"]=="Applications:" or record["groupname"]=="Sources:"%}
             <a class="libgname" href="#" style="text-decoration: none; color:black;">{{record["groupname"]}}</a>
             {% elif record["groupname"]=="" %}
             <a class="libgname" href="#">&nbsp</a>
             {% else %}
             <a class="libgname" href="#">{{record["groupname"]}}</a>
-            {% endif %}
+            {% endif %}</b>
           </td>
-          <td class="col-xs-3" style="text-align:right">
-            {{record["amount"]}}
+          <td class="col-xs-1" style="text-align:right"></td>
+          <td class="col-xs-1" style="text-align:right"><b>
+            {{record["amount"]}}</b>
           </td>
         </tr>
+
+        {%for account in record["accounts"]%}
+        <tr	value="{{account["accountcode"]}}" class=" {{record["groupcode"]}}" >
+          <td class="col-xs-10">
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="">{{account["accountname"]}}</a>
+          </td>
+          <td class="col-xs-1" style="text-align:right">
+            {{account["amount"]}}
+          </td>
+          <td class="col-xs-1" style="text-align:right"></td>
+        </tr>
+        {%endfor%}
         {% endfor %}
         {% for record in records["rightlist"] %}
-        <tr	value="">
-          <td class="col-xs-9">
+        <tr	value="{{record["groupcode"]}}">
+          <td class="col-xs-10"><b>
             {% if record["groupname"]=="Total" or record["groupname"]=="Difference" or record["groupname"]=="Applications:" %}
             <a class="libgname" href="#" style="text-decoration: none; color:black;">{{record["groupname"]}}</a>
             {% elif record["groupname"]=="" %}
             <a class="libgname" href="#">&nbsp</a>
             {% else %}
             <a class="libgname" href="#">{{record["groupname"]}}</a>
-            {% endif %}
+            {% endif %}</b>
           </td>
-          <td class="col-xs-3" style="text-align:right">
-            {{record["amount"]}}
+          <td class="col-xs-1" style="text-align:right"></td>
+          <td class="col-xs-1" style="text-align:right"><b>
+            {{record["amount"]}}</b>
           </td>
         </tr>
+        {%for account in record["accounts"]%}
+        <tr	value="{{account["accountcode"]}}" class="{{record["groupcode"]}}" >
+          <td class="col-xs-10">
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{account["accountname"]}}</a>
+          </td>
+          <td class="col-xs-1" style="text-align:right">
+            {{account["amount"]}}
+          </td>
+          <td class="col-xs-1" style="text-align:right"></td>
+        </tr>
+        {%endfor%}
         {% endfor %}
 
       </tbody>
