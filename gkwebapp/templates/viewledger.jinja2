@@ -44,7 +44,7 @@
             {% endfor %}
           </select>
           <br>
-          <label> <input type="checkbox" id="viewledger_monthly" >Monthly Ledger</label>
+          <label> <input type="checkbox" id="viewledger_monthly" checked>Monthly Ledger</label>
           <br>
 
           <label for="viewledger_fromdate">From Date:</label>
@@ -52,9 +52,9 @@
 
             <div class="form-group">
 
-              <input type="text" class="viewledger_date form-control input-sm dis" id="viewledger_fromdate" value="" size="2" maxlength="2" placeholder="DD">
-              <input type="text" id="viewledger_frommonth" class="viewledger_date dis form-control input-sm" value="" size="2" maxlength="2" placeholder="MM">
-              <input type="text" id="viewledger_fromyear" class="viewledger_date dis form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY">
+              <input type="text" class="viewledger_date form-control input-sm dis" id="viewledger_fromdate" value="" size="2" maxlength="2" placeholder="DD" accesskey="d"disabled>
+              <input type="text" id="viewledger_frommonth" class="viewledger_date dis form-control input-sm" value="" size="2" maxlength="2" placeholder="MM" disabled>
+              <input type="text" id="viewledger_fromyear" class="viewledger_date dis form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY" disabled>
             </div>
 
           </div>
@@ -64,16 +64,16 @@
 
             <div class="form-group">
 
-              <input type="text" class="viewledger_date form-control input-sm dis" id="viewledger_todate" value="" size="2" maxlength="2" placeholder="DD">
-              <input type="text" id="viewledger_tomonth" class="viewledger_date form-control input-sm dis" value="" size="2" maxlength="2" placeholder="MM">
-              <input type="text" id="viewledger_toyear" class="viewledger_date form-control input-sm dis" value="" size="4" maxlength="4" placeholder="YYYY">
+              <input type="text" class="viewledger_date form-control input-sm dis" id="viewledger_todate" value="" size="2" maxlength="2" placeholder="DD" disabled>
+              <input type="text" id="viewledger_tomonth" class="viewledger_date form-control input-sm dis" value="" size="2" maxlength="2" placeholder="MM" disabled>
+              <input type="text" id="viewledger_toyear" class="viewledger_date form-control input-sm dis" value="" size="4" maxlength="4" placeholder="YYYY" disabled>
             </div>
           </div>
           <br>
           <label> <input type="checkbox" class="dis" id="viewledger_nar" >Narration</label>
           <br>
           <label for="viewledger_prjname">Project Name :</label>
-          <select class = "form-control input-sm dis" id="viewledger_prjname"  name = "viewledger_prjname" >
+          <select class = "form-control input-sm dis" id="viewledger_prjname"  name = "viewledger_prjname" disabled>
             <option value="" selected>None</option>
             {% for prj in projects %}
             <option value="{{prj['projectcode']}}">{{prj["projectname"]}}</option>
@@ -83,8 +83,8 @@
         </div>
       </div>
       <div class="panel-footer">
-        <button class="btn btn-primary btn-sm" id="viewledger_submit" name="view" >View</button>
-        <button id="viewledger_reset" class="btn btn-danger btn-sm">Reset</button>
+        <button class="btn btn-primary btn-sm" id="viewledger_submit" name="view" accesskey="v">View</button>
+        <button id="viewledger_reset" class="btn btn-danger btn-sm" accesskey="r">Reset</button>
 
       </div>
     </div>
