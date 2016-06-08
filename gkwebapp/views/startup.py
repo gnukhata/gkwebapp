@@ -77,7 +77,7 @@ def yearcode(request):
 
 @view_config(route_name="login", renderer="gkwebapp:templates/login.jinja2")
 def login(request):
-	return {"code":request.params["orgcode"]}
+	return {"code":request.params["orgcode"], "flag": request.params["flag"]}
 
 
 @view_config(route_name="createorg", renderer="gkwebapp:templates/createorg.jinja2")
