@@ -60,18 +60,6 @@ $(document).ready(function() {
     $("#showbalancesheet").click();
   });
 
-  $(".cbalsheettable tbody tr").dblclick(function(event) {
-      event.preventDefault();
-      var grpcode = $(this).attr('value');
-      //alert("vanita");
-      if(grpcode==""){
-        return false;
-      }
-      else{
-        $("."+grpcode).slideToggle();
-      }
-  });
-
 $("#cbalbutn").click(function(event) {
 
   $.ajax(
