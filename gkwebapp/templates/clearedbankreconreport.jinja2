@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>GNUKhata | Bank Reconciliation| Cleared Transactions | {{ledgerheader["accountname"]}}</title>
+  <style type="text/css">
+
+  .rightJustified{
+    text-align:right;
+  }
+
+  .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  td {
+    font-size: 65%;
+  }
+
+  th {
+    font-size: 70%;
+  }
+  /*
+  Force table width to 100%
+  */
+  table.table-fixedheader {
+    width: 100%;
+  }
+  /*
+  Set table elements to block mode.  (Normally they are inline).
+  This allows a responsive table, such as one where columns can be stacked
+  if the display is narrow.
+  */
+  table.table-fixedheader, table.table-fixedheader>thead, table.table-fixedheader>tbody, table.table-fixedheader>tfoot, table.table-fixedheader>thead>tr, table.table-fixedheader>tbody>tr, table.table-fixedheader>tfoot>tr, table.table-fixedheader>thead>tr>th, table.table-fixedheader>tbody>tr>td, table.table-fixedheader>tfoot>tr>td {
+    display: block;
+  }
+  table.table-fixedheader>thead>tr:after, table.table-fixedheader>tbody>tr:after, table.table-fixedheader>tfoot>tr:after  {
+    content:' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+  }
+  /*
+  When scrolling the table, actually it is only the tbody portion of the
+  table that scrolls (not the entire table: we want the thead to remain
+  fixed).  We must specify an explicit height for the tbody.  We include
+  100px as a default, but it can be overridden elsewhere.
+
+  Also, we force the scrollbar to always be displayed so that the usable
+  width for the table contents doesn't change (such as becoming narrower
+  when a scrollbar is visible and wider when it is not).
+  */
+  table.table-fixedheader>tbody {
+    overflow-y: scroll;
+    height: 68vh;
+
+  }
+  /*
+  We really don't want to scroll the thead contents, but we want to force
+  a scrollbar to be displayed anyway so that the usable width of the thead
+  will exactly match the tbody.
+  */
+  table.table-fixedheader>thead, table.table-fixedheader>tfoot {
+    overflow-y: scroll;
+    height: 26px;
+    width: 99.3%;
+  }
+  /*
+  For browsers that support it (webkit), we set the background color of
+  the unneeded scrollbar in the thead to make it invisible.  (Setting
+  visiblity: hidden defeats the purpose, as this alters the usable width
+  of the thead.)
+  */
+  table.table-fixedheader>thead::-webkit-scrollbar {
+    background-color: inherit;
+  }
+
+
+  table.table-fixedheader>thead>tr>th:after, table.table-fixedheader>tbody>tr>td:after, table.table-fixedheader>tfoot>tr>td:after {
+    content:' ';
+    display: table-cell;
+    visibility: hidden;
+    clear: both;
+  }
+
+  /*
+  We want to set <th> and <td> elements to float left.
+  We also must explicitly set the width for each column (both for the <th>
+  and the <td>).  We set to 20% here a default placeholder, but it can be
+  overridden elsewhere.
+  */
+
+  table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.table-fixedheader>tfoot tr td {
+    float: left;
+
+  }
+  </style>
+</head>
+<body>
+  <div class="alert alert-danger" id="date-alert" hidden>
+    <a href="#" class="close" aria-label="close">&times;</a>
+    <label>Please enter date in proper format!</label>
+  </div>
+  <div class="alert alert-danger" id="between-date-alert" hidden>
+    <a href="#" class="close" aria-label="close">&times;</a>
+    <label>Clearance date cannot be before the voucher date or after the financial end!</label>
+  </div>
+  <span class="pull-right"><i>Period</i> : {{ledgerheader["calculatefrom"]}} to {{ledgerheader["calculateto"]}}</span>
+  <span style="margin:auto; display:table;"><i>Cleared Transactions of</i> : {{ledgerheader["accountname"]}}</span>
+  <input type="hidden" id="accountcode" name="accountcode" value="{{ledgerheader["accountcode"]}}"></input>
+  <input type="hidden" id="accountname" name="accountname" value="{{ledgerheader["accountname"]}}"></input>
+  <input type="hidden" id="calculatefrom" name="calculatefrom" value="{{ledgerheader["calculatefrom"]}}"></input>
+  <input type="hidden" id="calculateto" name="calculateto" value="{{ledgerheader["calculateto"]}}"></input>
+  <input type="hidden" id="narrationflag" name="narrationflag" value="{{ledgerheader["narrationflag"]}}"></input>
+  <div class="table-responsive">
+    <table id="clrbankrecontable" class=" shadow table table-fixedheader table-condensed">
+      <thead>
+        <tr class="info ">
+          <th class="col-xs-1">Date</th>
+          <th class="col-xs-1">V.No.</th>
+          <th class="col-xs-2">Particulars</th>
+          <th style="text-align:right" class="col-xs-2">Debit</th>
+          <th style="text-align:right" class="col-xs-2">Credit</th>
+          <th class="col-xs-1">Clearance Date</th>
+          <th class="col-xs-3">Memo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in recongrid %}
+        <tr  value="{{record['reconcode']}}">
+          <td class="col-xs-1">
+            {{record['date']}}
+          </td>
+          <td class="col-xs-1">
+            {{record['vno']}}
+          </td>
+          <td class="col-xs-2">
+            {{record['particulars']}}
+            {% if record['narration']!="" and narrationflag==true %}
+            <br>
+            ({{record['narration']}})
+            {% endif %}
+          </td>
+          <td class="col-xs-2" style="text-align:right">
+            {{record["dr"]}}
+          </td>
+          <td class="col-xs-2" style="text-align:right">
+            {{record["cr"]}}
+          </td>
+          <td class="col-xs-1">
+            <input class="form-control input-sm clrdate" type="text"  maxlength="10" value="{{record["clearancedate"]}}">
+          </td>
+          <td class="col-xs-3">
+            <input class="form-control input-sm memo " type="text" value="{{record["memo"]}}">
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div id = "recostmtdiv" class="container">
+    <div class="table-responsive col-xs-8 col-xs-offset-2">
+      <table id="stmttable" class=" shadow table table-striped table-condensed">
+        <tbody>
+          {% for record in reconstmt %}
+          <tr>
+            <td class="col-xs-8">
+              {{record["particulars"]}}
+            </td>
+            <td class="col-xs-4" style="text-align:right">
+              {{record["amount"]}}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+    <span style="margin:auto; display:table;">
+      <button class="btn btn-sm btn-danger" type="button" id="bankrecon_back">Reconciliation Menu</button>
+      <button class="btn btn-sm btn-primary" type="button" id="unclrditems">Uncleared Items</button>
+    </span>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/clearedbankreconreport.js')}}"></script>
+</body>
+</html>

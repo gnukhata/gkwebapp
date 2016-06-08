@@ -1,0 +1,16 @@
+<div class="table-responsive col-xs-8 col-xs-offset-2">
+  <table id="stmttable" class=" shadow table table-striped table-condensed">
+    <tbody>
+      {% for record in reconstmt %}
+      <tr>
+        <td class="col-xs-8">
+          {{record["particulars"]}}
+        </td>
+        <td class="col-xs-4" style="text-align:right">
+          {{record["amount"]}}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
