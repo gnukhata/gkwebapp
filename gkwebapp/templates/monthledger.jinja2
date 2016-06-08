@@ -23,6 +23,7 @@ td {
     <div class="panel panel-info">
       <div class="panel-heading">
         <span style="margin:auto; display:table;"><i>Account</i> : <strong>{{accountname}}</strong></span>
+        <input type="hidden" id="accname" name="projectname" value="{{accountname}}"></input>
       </div>
       <div class="panel-body">
         <div class="table-responsive">
@@ -54,6 +55,7 @@ td {
       </div>
       <div class="panel-footer">
         <button type="button" class="btn btn-sm btn-danger" id="mthlback">Back</button>
+        <button class="btn btn-sm btn-primary" type="button"  id="print">Print</button>
       </div>
     </div>
     <input type="hidden" id="accountcode" value="{{accountcode}}">

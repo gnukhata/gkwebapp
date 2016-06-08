@@ -137,8 +137,24 @@ $(document).ready(function() {
       }
     );
   });
-
-
+  $("#print").click(function(event) {
+    $.ajax(
+      {
+        type: "GET",
+        url: "/printconvbalsheetreport",
+        global: false,
+        async: false,
+        dataType : 'text',
+        data: {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "calculateto": $("#cto").val()},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp){
+          window.open('data:application/pdf;charset=utf-8,' + encodeURIComponent(resp));
+        }
+      });
+    });
   $("#balback").click(function(event) {
     $("#showbalancesheet").click();
   });

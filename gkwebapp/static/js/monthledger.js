@@ -1,7 +1,7 @@
 $(document).ready(function() {
   $('#mthltable tbody tr:first-child td:eq(0) a').focus();
   $('#mthltable tbody tr:first-child td:eq(0) a').closest('tr').addClass('selected');
-  
+
 
   $(document).off('focus' ,'.monthname').on('focus' ,'.monthname',function() {
     $('#mthltable tr').removeClass('selected');
@@ -86,6 +86,26 @@ $(document).ready(function() {
 
 
   });
+
+  $("#print").click(function(event) {
+    $.ajax(
+      {
+        type: "GET",
+        url: "/printmonthlyledgerreport",
+        global: false,
+        async: false,
+        dataType : 'text',
+        data: {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "accountcode":$("#accountcode").val(), "accname": $("#accname").val()},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp) {
+          window.open('data:application/pdf;charset=utf-8,' + encodeURIComponent(resp));
+        }
+      });
+
+    });
 
   $("#mthlback").click(function(event) {
     $("#showviewledger").click();
