@@ -145,11 +145,11 @@
     <input type="hidden" name="cto" id="cto" value="{{to}}">
 
     <span style="margin:auto; display:table;">
-      <button class="btn btn-sm btn-danger" type="button" id="saback">Back</button>
+      <button class="btn btn-sm btn-danger" type="button" id="saback" accesskey="b"><u>B</u>ack</button>
       {% if orgtype=="Profit Making" %}
-      <button class="btn btn-sm btn-primary " type="button" id="cbalbutn" hidden="hidden">Conventional Balance Sheet</button>
+      <button class="btn btn-sm btn-primary " type="button" id="cbalbutn" hidden="hidden" accesskey="">C<u>o</u>nventional Balance Sheet</button>
       {% else %}
-      <button class="btn btn-sm btn-primary " type="button" id="cbalbutn" hidden="hidden">Conventional Statement of Affairs</button>
+      <button class="btn btn-sm btn-primary " type="button" id="cbalbutn" hidden="hidden" accesskey="o">C<u>o</u>nventional Statement of Affairs</button>
       {% endif %}
     </span>
   </div>

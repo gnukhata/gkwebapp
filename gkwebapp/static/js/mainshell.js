@@ -70,10 +70,6 @@ $(document).ready(function(){
           $("#manual").click();
           event.preventDefault();
           }
-        if(event.altKey && event.keyCode == 75) {
-          $("#about").click();
-          event.preventDefault();
-          }
         if(event.keyCode == 112) {
           $("#toolbar").click();
           event.preventDefault();
