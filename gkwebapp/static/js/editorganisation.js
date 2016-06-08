@@ -1,5 +1,11 @@
 $(document).ready(function(){
 
+  $(".regdate").autotab('number');
+  $(".fcradate").autotab('number');
+
+  $(".regdate").numeric({negative: false});
+  $(".fcradate").numeric({negative: false});
+
   if ($("#orgtype").val()=="Not For Profit")
   {
     $("#orgregno").focus().select();
@@ -9,14 +15,11 @@ $(document).ready(function(){
     $("#orgaddr").focus().select();
   }
 
-  $('input:text, textarea').keydown(function(event){
-    var n =$('input:text,textarea').length;
-
-    var f= $('input:text, textarea');
-
+  $('input:visible, textarea').keydown(function(event){
+    var n =$('input:visible,textarea').length;
+    var f= $('input:visible, textarea');
     if (event.which == 13)
     {
-
       var nextIndex = f.index(this)+1;
       if(nextIndex < n){
         event.preventDefault();
@@ -37,6 +40,17 @@ $(document).ready(function(){
     $("#showeditorg").click();
   });
 
+  $("#orgemail").blur(function(event){
+    if ($.trim($("#new_password").val())!=$.trim($("#confirm_password").val())) {
+      $("#invalidemail-alert").alert();
+      $("#invalidemail-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#invalidemail-alert").hide();
+      });
+      $("#orgemail").focus().select();
+      return false;
+    }
+  });
+
   $("#editorganisationform").submit(function(event){
 
     var regdate=""
@@ -44,10 +58,11 @@ $(document).ready(function(){
     var regno=""
     var fcrano=""
 
-    if($("#orgtype").val()=="Not for Profit")
+    if($("#orgtype").val()=="Not For Profit")
     {
-      regdate= $("#regyear").val() + "-" + $("#regmonth").val() + "-" + $("#regday");
-      fcraregdate= $("#fcraregyear").val() + "-" + $("#fcraregmonth").val() + "-" + $("#fcraregday");
+      alert($("#regday").val())
+      regdate= $("#regyear").val() + "-" + $("#regmonth").val() + "-" + $("#regday").val();
+      fcraregdate= $("#fcraregyear").val() + "-" + $("#fcraregmonth").val() + "-" + $("#fcraregday").val();
       regno = $("#orgregno").val();
       fcrano = $("#orgfcrano").val();
     }
