@@ -35,7 +35,9 @@ $(document).ready(function()
       var nextIndex = f.index(this) + 1;
       if(nextIndex < n){
         event.preventDefault();
-        f[nextIndex].focus();}
+        f[nextIndex].focus();
+        f[nextIndex].select();
+      }
 
       }
 
@@ -46,7 +48,9 @@ $(document).ready(function()
         var prevIndex = f.index(this) - 1;
         if(prevIndex < n){
           event.preventDefault();
-          f[prevIndex].focus();}
+          f[prevIndex].focus();
+          f[prevIndex].select();
+        }
         }
       });
 
