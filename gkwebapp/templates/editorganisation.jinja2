@@ -11,14 +11,6 @@
 </head>
 <body >
 	<div class="container-fluid">
-		<div class="alert alert-success" id="success-alert" hidden>
-			<a href="" class="close" aria-label="close">&times;</a>
-			Organisation Details edited successfully.
-		</div>
-		<div class="alert alert-danger" id="connectionfailed" hidden>
-			<a href="" class="close" aria-label="close">&times;</a>
-			Connection Failed.
-		</div>
 
 		<div style="padding-top:15px" class="mainbox col-md-2"></div>
 		<div style="padding-top:15px" class="mainbox col-md-8">
@@ -31,6 +23,19 @@
 
 				<div style="padding-top:5px" class="panel-body" >
 				</br>
+				<div class="alert alert-danger" id="date-alert" hidden>
+					<a href="#" class="close" aria-label="close">&times;</a>
+					<label for="viewledger_fromdate">Please enter date in proper format!</label>
+				</div>
+				<div class="alert alert-success" id="success-alert" hidden>
+					<a href="" class="close" aria-label="close">&times;</a>
+					Organisation Details edited successfully.
+				</div>
+				<div class="alert alert-danger" id="connectionfailed" hidden>
+					<a href="" class="close" aria-label="close">&times;</a>
+					Connection Failed.
+				</div>
+
 					<form id="editorganisationform" method="post" class="form-horizontal">
 
 						<div style="margin-bottom: 5px" class="col-xs-5 from-group" >
@@ -38,10 +43,10 @@
 
 							{% if gkresult["orgtype"]=="Not For Profit" %}
 							<label for="registrationnumber" id="regno">Registration Number :</label>
-            	<input type="text" id="orgregno" class="form-control input-sm" name="registrationnumber" value="{{gkresult['orgregno']}}"></input>
+            	<input type="text" id="orgregno" class="form-control input-sm" name="registrationnumber" value="{{gkresult["orgregno"]}}"></input>
             	</br>
 							<label for="fcrano" id="fcranumber">FCRA Registration Number :</label>
-            <input type="text" id="orgfcrano" class="form-control input-sm" name="fcranumber" value="{{gkresult['orgfcrano']}}" ></input>
+            <input type="text" id="orgfcrano" class="form-control input-sm" name="fcranumber" value="{{gkresult["orgfcrano"]}}" ></input>
             </br>
 						{%endif%}
 
@@ -73,25 +78,25 @@
 							<label for="registrationdate">Date Of Registration :</label>
             	<div class="form-inline">
               	<label class="sr-only" for="regday">Enter Registrtion Day</label>
-              	<input type="text" id="regday" name="registrationday" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" value="{{gkresult["orgregdate"][8:]}}" </input>
+              	<input type="text"  id="regday" name="registrationday" class="form-control regdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" value="{{gkresult["orgregdate"][8:10]}}" </input>
 
               	<label class="sr-only" for="regmonth">Enter Registration Month</label>
-              	<input type="text" id="regmonth" name="registrationmonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" value="{{gkresult["orgregdate"][5:7]}}" ></input>
+              	<input type="text" id="regmonth" name="registrationmonth" class="form-control regdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" value="{{gkresult["orgregdate"][5:7]}}" ></input>
 
               	<label class="sr-only" for="regyear">Enter Registration Year</label>
-              	<input type="text" id="regyear" name="registrationyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  value="{{gkresult["orgregdate"][0:4]}}" ></input>
+              	<input type="text" id="regyear" name="registrationyear" class="form-control regdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  value="{{gkresult["orgregdate"][0:4]}}" ></input>
             	</div>
             </br>
 						<label for="registrationdate">Date Of FCRA Registration :</label>
             <div class="form-inline">
               <label class="sr-only" for="fcraregday">Enter FCRA Registrtion Day</label>
-              <input type="text" id="fcraregday" name="fcraregistrationday" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" value="{{gkresult["orgfcradate"][8:]}}"></input>
+              <input type="text" id="fcraregday" name="fcraregistrationday" class="form-control regdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" value="{{gkresult["orgfcradate"][8:10]}}"></input>
 
               <label class="sr-only" for="fcraregmonth">Enter FCRA Registration Month</label>
-              <input type="text" id="fcraregmonth" name="fcraregistrationmonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" value="{{gkresult["orgfcradate"][5:7]}}"></input>
+              <input type="text" id="fcraregmonth" name="fcraregistrationmonth" class="form-control regdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" value="{{gkresult["orgfcradate"][5:7]}}"></input>
 
               <label class="sr-only" for="fcraregyear">Enter FCRA Registration Year</label>
-              <input type="text" id="fcraregyear" name="fcraregistrationyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  value="{{gkresult["orgfcradate"][0:4]}}"></input>
+              <input type="text" id="fcraregyear" name="fcraregistrationyear" class="form-control regdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  value="{{gkresult["orgfcradate"][0:4]}}"></input>
             </div>
           </br>
 					{%endif%}

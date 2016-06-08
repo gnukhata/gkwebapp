@@ -1,5 +1,11 @@
 $(document).ready(function(){
 
+  $(".regdate").autotab('number');
+  $(".fcradate").autotab('number');
+
+  $(".regdate").numeric({negative: false});
+  $(".fcradate").numeric({negative: false});
+
   if ($("#orgtype").val()=="Not For Profit")
   {
     $("#orgregno").focus().select();
@@ -9,14 +15,11 @@ $(document).ready(function(){
     $("#orgaddr").focus().select();
   }
 
-  $('input:text, textarea').keydown(function(event){
-    var n =$('input:text,textarea').length;
-
-    var f= $('input:text, textarea');
-
+  $('input:visible, textarea').keydown(function(event){
+    var n =$('input:visible,textarea').length;
+    var f= $('input:visible, textarea');
     if (event.which == 13)
     {
-
       var nextIndex = f.index(this)+1;
       if(nextIndex < n){
         event.preventDefault();
@@ -44,13 +47,32 @@ $(document).ready(function(){
     var regno=""
     var fcrano=""
 
-    if($("#orgtype").val()=="Not for Profit")
+    if($("#orgtype").val()=="Not For Profit")
     {
-      regdate= $("#regyear").val() + "-" + $("#regmonth").val() + "-" + $("#regday");
-      fcraregdate= $("#fcraregyear").val() + "-" + $("#fcraregmonth").val() + "-" + $("#fcraregday");
+      regdate= $("#regyear").val() + "-" + $("#regmonth").val() + "-" + $("#regday").val();
+      fcraregdate= $("#fcraregyear").val() + "-" + $("#fcraregmonth").val() + "-" + $("#fcraregday").val();
       regno = $("#orgregno").val();
       fcrano = $("#orgfcrano").val();
+
+      if(!Date.parseExact(regdate,"yyyy-MM-dd")){
+        $("#date-alert").alert();
+        $("#date-alert").fadeTo(2000, 400).slideUp(500, function(){
+          $("#date-alert").hide();
+        });
+        $('#regday').focus().select();
+        return false;
+      }
+      if(!Date.parseExact(fcraregdate,"yyyy-MM-dd")){
+        $("#date-alert").alert();
+        $("#date-alert").fadeTo(2000, 400).slideUp(500, function(){
+          $("#date-alert").hide();
+        });
+        $('#fcraregday').focus().select();
+        return false;
+      }
     }
+
+
 
     $.ajax({
       type: 'POST',
