@@ -160,8 +160,8 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                   </div>
 
                   <div class="pull-right form-group">
-                    <label for="vdate">Date:</label>
-                    <input type="text" class="vdate form-control input-sm" id="vdate" value="{{voucher['voucherdate'][:2]}}" size="2" maxlength="2" placeholder="DD">
+                    <label for="vdate"><u>D</u>ate:</label>
+                    <input type="text" class="vdate form-control input-sm" id="vdate" value="{{voucher['voucherdate'][:2]}}" size="2" maxlength="2" placeholder="DD"accesskey="d">
                     <input type="text" id="vmonth" class="vdate form-control input-sm" value="{{voucher['voucherdate'][3:5]}}" size="2" maxlength="2" placeholder="MM">
                     <input type="text" id="vyear" class="vdate form-control input-sm" value="{{voucher['voucherdate'][6:]}}" size="4" maxlength="4" placeholder="YYYY">
                   </div>
@@ -367,10 +367,10 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                   </div>
 
                 <div class="col-xs-1">
-                  <label for="project">Project:</label>
+                  <label for="project">Pro<u>j</u>ect:</label>
                 </div>
                 <div class="col-xs-3">
-                  <select class="form-control input-sm" id="project">
+                  <select class="form-control input-sm" id="project" accesskey="j">
 
                     {% for project in projects %}
                       {% if project['projectcode']==voucher["project"] %}
@@ -388,10 +388,10 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                   </select>
                 </div>
                 <div class="col-xs-1">
-                  <label for="narration">Narration:</label>
+                  <label for="narration">N<u>a</u>rration:</label>
                 </div>
                 <div class="pull-right">
-                  <textarea class="form-control" name="narration" id="narr" rows="2" cols="50" >{{voucher["narration"]}}</textarea>
+                  <textarea class="form-control" name="narration" id="narr" rows="2" cols="50" accesskey="a">{{voucher["narration"]}}</textarea>
                 </div>
                 <input type="hidden" id="m_vtype" name="m_vtype" value="{{vtype}}">
 
@@ -405,13 +405,13 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
         <br>
         <div class="modal-footer">
           {% if voucher['status'] %}
-          <button type="button" class="btn btn-warning btn-sm" id="lock">Unlock</button>
+          <button type="button" class="btn btn-warning btn-sm" id="lock" accesskey="k">Unloc<u>k</u></button>
           {% else %}
-          <button type="button" class="btn btn-warning btn-sm" id="lock">Lock</button>
+          <button type="button" class="btn btn-warning btn-sm" id="lock" accesskey="k">Loc<u>k</u></button>
           {% endif %}
-          <button type="button" class="btn btn-primary btnfocus btn-sm" id="edit">Edit</button>
-          <button type="button" class="btn btn-primary btnfocus btn-sm" id="clone">Clone</button>
-          <button type="submit" id="save" class="btn btn-primary btn-sm">Save</button>
+          <button type="button" class="btn btn-primary btnfocus btn-sm" id="edit" accesskey="t">Edi<u>t</u></button>
+          <button type="button" class="btn btn-primary btnfocus btn-sm" id="clone" accesskey="o">Cl<u>o</u>ne</button>
+          <button type="submit" id="save" class="btn btn-primary btn-sm" accesskey="v">Sa<u>v</u>e</button>
         </div>
       </div>
     </div>
