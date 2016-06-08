@@ -11,18 +11,6 @@
 </head>
 <body >
 	<div class="container-fluid">
-		<div class="alert alert-success" id="success-alert" hidden>
-			<a href="" class="close" aria-label="close">&times;</a>
-			Organisation Details edited successfully.
-		</div>
-		<div class="alert alert-danger" id="connectionfailed" hidden>
-			<a href="" class="close" aria-label="close">&times;</a>
-			Connection Failed.
-		</div>
-		<div class="alert alert-danger" id="invalidemail-alert" hidden>
-			<a href="" class="close" aria-label="close">&times;</a>
-			Invalid Email!
-		</div>
 
 		<div style="padding-top:15px" class="mainbox col-md-2"></div>
 		<div style="padding-top:15px" class="mainbox col-md-8">
@@ -35,6 +23,19 @@
 
 				<div style="padding-top:5px" class="panel-body" >
 				</br>
+				<div class="alert alert-danger" id="date-alert" hidden>
+					<a href="#" class="close" aria-label="close">&times;</a>
+					<label for="viewledger_fromdate">Please enter date in proper format!</label>
+				</div>
+				<div class="alert alert-success" id="success-alert" hidden>
+					<a href="" class="close" aria-label="close">&times;</a>
+					Organisation Details edited successfully.
+				</div>
+				<div class="alert alert-danger" id="connectionfailed" hidden>
+					<a href="" class="close" aria-label="close">&times;</a>
+					Connection Failed.
+				</div>
+
 					<form id="editorganisationform" method="post" class="form-horizontal">
 
 						<div style="margin-bottom: 5px" class="col-xs-5 from-group" >

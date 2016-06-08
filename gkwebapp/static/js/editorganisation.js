@@ -53,7 +53,26 @@ $(document).ready(function(){
       fcraregdate= $("#fcraregyear").val() + "-" + $("#fcraregmonth").val() + "-" + $("#fcraregday").val();
       regno = $("#orgregno").val();
       fcrano = $("#orgfcrano").val();
+
+      if(!Date.parseExact(regdate,"yyyy-MM-dd")){
+        $("#date-alert").alert();
+        $("#date-alert").fadeTo(2000, 400).slideUp(500, function(){
+          $("#date-alert").hide();
+        });
+        $('#regday').focus().select();
+        return false;
+      }
+      if(!Date.parseExact(fcraregdate,"yyyy-MM-dd")){
+        $("#date-alert").alert();
+        $("#date-alert").fadeTo(2000, 400).slideUp(500, function(){
+          $("#date-alert").hide();
+        });
+        $('#fcraregday').focus().select();
+        return false;
+      }
     }
+
+
 
     $.ajax({
       type: 'POST',
