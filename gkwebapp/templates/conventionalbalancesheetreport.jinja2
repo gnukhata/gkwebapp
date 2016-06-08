@@ -119,32 +119,45 @@
             <th class="col-xs-5">Corpus and Liabilities</th>
             {% endif %}
             <th class="col-xs-5">&nbsp</th>
-            <th style="text-align:right" class="col-xs-1"></th>
+            <th style="text-align:right" class="col-xs-1">&nbsp</th>
             <th style="text-align:right" class="col-xs-1">Amount</th>
           </tr>
         </thead>
         <tbody>
 
           {% for record in records["leftlist"] %}
-          <tr	value="">
-            <td class="col-xs-9">
-              {% if record["groupname"]=="Total" or record["groupname"]=="Difference" or record["groupname"]=="Applications:" %}
+          <tr	value="{{record["groupcode"]}}">
+            <td class="col-xs-2"><b>
+              {% if record["groupname"]=="Total" or record["groupname"]=="Sources:" or record["groupname"]=="Difference" or record["groupname"]=="Applications:" %}
               <a class="libgname" href="#" style="text-decoration: none; color:black;">{{record["groupname"]}}</a>
               {% elif record["groupname"]=="" %}
               <a class="libgname" href="#">&nbsp</a>
               {% else %}
               <a class="libgname" href="#">{{record["groupname"]}}</a>
-              {% endif %}
+              {% endif %}</b>
             </td>
+            <td class="col-xs-6">&nbsp</td>
+            <td class="col-xs-2">&nbsp</td>
             {% if record["amount"]=="." %}
-            <td class="col-xs-3" style="text-align:right">&nbsp</td>
+            <td class="col-xs-2" style="text-align:right">&nbsp</td>
             {% else %}
-            <td class="col-xs-3" style="text-align:right">
-              {{record["amount"]}}
+            <td class="col-xs-2" style="text-align:right"><b>
+              {{record["amount"]}}</b>
             </td>
             {% endif %}
-
           </tr>
+          {%for account in record["accounts"]%}
+          <tr	value="{{account["accountcode"]}}" class=" {{record["groupcode"]}}" >
+              <td class="col-xs-2"><a class="libgname" href="#">&nbsp</a></td>
+            <td class="col-xs-6">
+              <a class="libgname" href="">{{account["accountname"]}}</a>
+            </td>
+            <td class="col-xs-2" style="text-align:right">
+              {{account["amount"]}}
+            </td>
+            <td class="col-xs-2" style="text-align:right">&nbsp</td>
+          </tr>
+          {%endfor%}
           {% endfor %}
         </tbody>
       </table>
@@ -161,24 +174,37 @@
 
           {% for record in records["rightlist"] %}
           <tr	value="">
-            <td class="col-xs-9">
+            <td class="col-xs-3"><b>
               {% if record["groupname"]=="Total" or record["groupname"]=="Difference" or record["groupname"]=="Applications:" %}
               <a class="pagname" href="#" style="text-decoration: none; color:black;">{{record["groupname"]}}</a>
               {% elif record["groupname"]=="" %}
               <a class="pagname" href="#">&nbsp</a>
               {% else %}
               <a class="pagname" href="#">{{record["groupname"]}}</a>
-              {% endif %}
+              {% endif %}</b>
             </td>
+            <td class="col-xs-6">&nbsp</td>
+            <td class="col-xs-1">&nbsp</td>
             {% if record["amount"]=="." %}
-            <td class="col-xs-3" style="text-align:right">&nbsp</td>
+            <td class="col-xs-2" style="text-align:right">&nbsp</td>
             {% else %}
-            <td class="col-xs-3" style="text-align:right">
-              {{record["amount"]}}
+            <td class="col-xs-2" style="text-align:right">
+              <b>{{record["amount"]}}</b>
             </td>
             {% endif %}
-
           </tr>
+          {%for account in record["accounts"]%}
+          <tr	value="{{account["accountcode"]}}" class=" {{record["groupcode"]}}" >
+            <td class="col-xs-3"><a class="pagname" href="#">&nbsp</a></td>
+            <td class="col-xs-6">
+              <a class="pagname" href="">{{account["accountname"]}}</a>
+            </td>
+            <td class="col-xs-1" style="text-align:right">
+              {{account["amount"]}}
+            </td>
+            <td class="col-xs-2" style="text-align:right">&nbsp</td>
+          </tr>
+          {%endfor%}
           {% endfor %}
         </tbody>
       </table>
