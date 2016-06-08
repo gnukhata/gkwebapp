@@ -277,6 +277,24 @@ $(document).ready(function(){
 
 $("title").append(orname);
 
+$("#showedituser").click(function(e){
+
+$.ajax({
+  url: '/showedituser',
+  type: 'POST',
+  global: false,
+  async: false,
+  datatype: 'text/html',
+  beforeSend: function(xhr)
+  {
+    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+  },
+  success: function(resp)
+  {
+    $('#info').html(resp);
+  }
+});
+});
 
   $("#showeditorg").click(function (e){
 

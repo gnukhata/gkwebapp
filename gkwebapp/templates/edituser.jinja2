@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GNUKhata | Edit User</title>
+  <style media="screen">
+  .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="alert alert-success" id="success-alert" hidden>
+      <a href="#" class="close" aria-label="close">&times;</a>
+      Your details are edited successfully.
+    </div>
+    <div class="alert alert-danger" id="curpass-blank-alert" hidden>
+      <a href="#" class="close" aria-label="close">&times;</a>
+      Please enter current password!
+    </div>
+    <div class="alert alert-danger" id="cnfpass-blank-alert" hidden>
+      <a href="#" class="close" aria-label="close">&times;</a>
+      Please re-enter password!
+    </div>
+    <div class="alert alert-danger" id="connectionfailed-alert" hidden>
+      <a href="#" class="close" aria-label="close">&times;</a>
+      Connection Failed.
+    </div>
+    <div class="alert alert-danger" id="badprivilege-alert" hidden>
+      <a href="#" class="close" aria-label="close">&times;</a>
+      Access denied!
+    </div>
+    <div class="alert alert-danger" id="checkpassuser-blank-alert" hidden>
+      <a href="#" class="close" aria-label="close">&times;</a>
+      Password doesn't match!
+    </div>
+    <div class="alert alert-danger" id="password-blank-alert" hidden>
+      <a href="#" class="close" aria-label="close">&times;</a>
+      Please enter the new password!
+    </div>
+
+    <div style="padding-top:15px" class="mainbox col-md-4"></div>
+    <div style="padding-top:15px" class="mainbox col-md-6">
+      <div class="panel panel-info shadow" >
+        <div class="panel-heading">
+          <div class="panel-title">Edit User Details</div>
+        </div>
+        <div style="padding-top:5px" class="panel-body" >
+        </br>
+        <form id="edituserform" class="form-horizontal">
+
+          <div style="margin-bottom: 5px" class="col-xs-5 from-group">
+            <input type="text" id="userid" name="userid" value="{{gkresult["userid"]}}" hidden></input>
+          <label for="orgusername" id="userName">Username :</label>
+          <input type="text" id="username" class="form-control input-sm" name="username" disabled="disabled" value="{{gkresult["username"]}}"></input>
+        </br>
+          <label for="currentpassword" id="currentPassword">Current Password :</label>
+          <input type="password" id="current_password" class="form-control input-sm" name="currentpassWord" ></input>
+        </br>
+          <label for="newpassword" id="newPassword">New Password :</label>
+          <input type="password" id="new_password" class="form-control input-sm" name="newpassWord" ></input>
+        </br>
+        <label for="confirmpassword" id="confirmPassword">Confirm Password :</label>
+        <input type="password" id="confirm_password" class="form-control input-sm" name="confirmpassWord"></input>
+      </br>
+
+          </div>
+          <div style="margin-bottom: 5px" class="col-xs-7 from-group" ></div>
+        </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+            <button type="submit" class="btn btn-primary btn-sm" id="submit" name="submit" accesskey="s"><u>S</u>ave</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div style="padding-top:15px" class="mainbox col-md-2"></div>
+  </div>
+
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/edituser.js')}}"></script>
+</body>
+</html>
