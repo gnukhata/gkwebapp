@@ -1,4 +1,5 @@
 $(document).ready(function(){
+  $("#name").focus();
   $('.modal-backdrop').remove();
   var inselect = 0;
   $("#userrole").focus(function(){

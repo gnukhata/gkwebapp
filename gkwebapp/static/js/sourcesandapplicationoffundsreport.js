@@ -30,11 +30,12 @@ $(document).ready(function() {
     previndex = curindex-1;
     if (event.which==40)
     {
-
+      event.preventDefault();
       $('#satable tbody tr:eq('+nextindex+') td:eq(0) a').focus();
     }
     else if (event.which==38)
     {
+      event.preventDefault();
       if(previndex>-1)
       {
         $('#satable tbody tr:eq('+previndex+') td:eq(0) a').focus();
@@ -58,7 +59,6 @@ $(document).ready(function() {
   $("#saback").click(function(event) {
     $("#showbalancesheet").click();
   });
-
 
 $("#cbalbutn").click(function(event) {
 
