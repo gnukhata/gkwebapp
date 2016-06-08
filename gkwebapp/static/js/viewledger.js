@@ -2,6 +2,9 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#viewledger_accname").focus();
   $('.viewledger_date').autotab('number');
+$("#viewledger_monthly").attr('checked', true);
+$(".dis").attr('disabled', true);
+
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   var sel1 = 0;
@@ -65,34 +68,44 @@ $(document).ready(function() {
   });
 
 
-  $('input:text:enabled,input:checkbox:enabled,select:enabled').keydown( function(e) {
-    var n = $("input:text:enabled,input:checkbox:enabled,select:enabled").length;
-    var f = $('input:text:enabled,input:checkbox:enabled,select:enabled');
-      if (e.which == 13)
-      {
-        var nextIndex = f.index(this) + 1;
-        if(nextIndex < n){
-          e.preventDefault();
-          f[nextIndex].focus();
-          f[nextIndex].select();
-        }
+    $("#viewledger_monthly").change(function(event) {
+      if ($("#viewledger_monthly").is(":checked")) {
+        $('.dis').attr('disabled', true);
       }
-      var s1 = $("#viewledger_prjname option:selected").index();
-      if (e.which == 38 && sel1 == 1 && s1 == 0 || (e.which == 38 && sel1 == 0))
-      {
-        var prevIndex = f.index(this) - 1;
-        if(prevIndex < n){
-          e.preventDefault();
-          f[prevIndex].focus();
-          f[prevIndex].select();
-        }
+      else {
+        $('.dis').attr('disabled', false);
       }
     });
-  $("#viewledger_prjname").keydown(function(event) {
-    if (event.which==13) {
-      $("#viewledger_submit").click();
-    }
-  });
+
+
+    $('input:text:enabled,input:checkbox:enabled,select:enabled').keydown( function(e) {
+      var n = $("input:text:enabled,input:checkbox:enabled,select:enabled").length;
+      var f = $('input:text:enabled,input:checkbox:enabled,select:enabled');
+        if (e.which == 13)
+        {
+          var nextIndex = f.index(this) + 1;
+          if(nextIndex < n){
+            e.preventDefault();
+            f[nextIndex].focus();
+            f[nextIndex].select();
+          }
+        }
+        var s1 = $("#viewledger_prjname option:selected").index();
+        if (e.which == 38 && sel1 == 1 && s1 == 0 || (e.which == 38 && sel1 == 0))
+        {
+          var prevIndex = f.index(this) - 1;
+          if(prevIndex < n){
+            e.preventDefault();
+            f[prevIndex].focus();
+            f[prevIndex].select();
+          }
+        }
+      });
+    $("#viewledger_prjname").keydown(function(event) {
+      if (event.which==13) {
+        $("#viewledger_submit").click();
+      }
+    });
 
   $("#viewledger_monthly").keydown(function(event) {
     if (event.which==13) {
@@ -102,14 +115,6 @@ $(document).ready(function() {
     }
   });
 
-  $("#viewledger_monthly").change(function(event) {
-    if ($("#viewledger_monthly").is(":checked")) {
-      $('.dis').attr('disabled', true);
-    }
-    else {
-      $('.dis').attr('disabled', false);
-    }
-  });
   $("#viewledger_submit").click(function(event) {
     if ($("#viewledger_accname").val()==null) {
       $("#account-blank-alert").alert();
