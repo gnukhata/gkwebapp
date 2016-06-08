@@ -198,6 +198,31 @@ $(document).ready(function() {
     });
   });
 
+$("#dualledger").click(function(event) {
+  /* Act on the event */
+  $.ajax({
+    url: '/viewdualledger',
+    type: 'POST',
+    datatype: 'text/html',
+    beforeSend: function(xhr)
+    {
+      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    },
+  })
+  .done(function(resp) {
+    $("#viewvc").html(resp);
+    $('#m_dualledger').modal('show');
+    $('#m_dualledger').on('shown.bs.modal', function (e)
+    {
+      $("#viewdualledger_accname").focus();
+
+    });
+
+  });
+
+
+});
+
   $("#back").click(function(event) {
     if ($("#backflag").val()<=3) {
       $.ajax(
