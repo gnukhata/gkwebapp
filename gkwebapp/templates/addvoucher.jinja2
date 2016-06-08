@@ -148,7 +148,7 @@
           <div class="form-inline well well-sm shadow" >
 
               <div class="form-group">
-                <label for="vno">Voucher No:</label>
+                <label for="vno"><u>V</u>oucher No:</label>
                 <input type="text" class="form-control input-sm" name="vno" id="vno" size="10" accesskey="v">
               </div>
               <div class="form-group col-xs-offset-4">
@@ -175,7 +175,7 @@
                 {% endif %}
               </div>
               <div class="pull-right form-group">
-                <label for="vdate">Date:</label>
+                <label for="vdate"><u>D</u>ate:</label>
                 <input type="text" class="vdate form-control input-sm" id="vdate" value="" size="2" maxlength="2" placeholder="DD" accesskey="d">
                 <input type="text" id="vmonth" class="vdate form-control input-sm" value="" size="2" maxlength="2" placeholder="MM">
                 <input type="text" id="vyear" class="vdate form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY">
@@ -275,9 +275,9 @@
           </div>
           <div class="form-inline">
             <div class="form-group">
-            <label for="project">Project:</label>
+            <label for="project">Pro<u>j</u>ect:</label>
 
-            <select class="form-control input-sm" id="project">
+            <select class="form-control input-sm" id="project" accesskey="j">
               <option value="">None</option>
               {% for project in projects %}
               <option value="{{project['projectcode']}}">{{project['projectname']}}</option>
@@ -285,8 +285,8 @@
             </select>
           </div>
           <div class="form-group pull-right">
-            <label for="narration">Narration:</label>
-            <textarea class="form-control" name="narration" id="narration" rows="1" cols="60" accesskey="n"></textarea>
+            <label for="narration">Narra<u>t</u>ion:</label>
+            <textarea class="form-control" name="narration" id="narration" rows="1" cols="60" accesskey="t"></textarea>
           </div>
           </div>
           <input type="hidden" id="vtype" name="vtype" value="{{vtype}}">
@@ -295,13 +295,13 @@
       </form>
 
         <button type="button" id="save" name="submit" class="btn btn-success" accesskey="s">
-          Save
+          <u>S</u>ave
         </button>
-        <button type="button" id="reset" class="btn btn-danger" accesskey="r">
-          Reset
+        <button type="button" id="reset" class="btn btn-danger" accesskey="e">
+          R<u>e</u>set
         </button>
-        <button type="button" id="popup" class="btn btn-primary" accesskey="a">
-          Add Account
+        <button type="button" id="popup" class="btn btn-primary" accesskey="o">
+          Add Acc<u>o</u>unt
         </button>
 
 
