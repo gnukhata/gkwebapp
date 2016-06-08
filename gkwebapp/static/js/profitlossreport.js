@@ -203,7 +203,28 @@ $(document).ready(function() {
 
 
   });
-
+  $("#print").click(function(event){
+      var todatearray = $("#ledtodate").val().split("-");
+      var fromdatearray = $("#ledfromdate").val().split("-");
+      var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
+      var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
+      $.ajax(
+        {
+          type: "GET",
+          url: "/printprofitandloss",
+          global: false,
+          async: false,
+          dataType : 'text',
+          data: {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "calculateto": newtodate, "calculatefrom": newfromdate},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+          success: function(resp) {
+            win = window.open('data:application/pdf;charset=utf-8,' + encodeURIComponent(resp));
+          }
+        });
+    });
   $("#pnlback").click(function(event) {
     $("#showprofitloss").click();
   });
