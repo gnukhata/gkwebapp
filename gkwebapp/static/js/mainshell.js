@@ -156,6 +156,32 @@ $(document).ready(function(){
           }
       });
 
+      $.ajax({
+        url: '/orgdata',
+        type: 'POST',
+        global: false,
+        async: false,
+        datatype: 'json',
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+      .done(function(resp){
+        if(resp["gkresult"]["userrole"]==1){
+          $(".hideoperator").remove();
+        }
+        if(resp["gkresult"]["userrole"]==0){
+          $(".hidemanager").remove();
+        }
+         if (resp["gkresult"]["booksclosedflag"]==1) {
+           $(".closebooks").remove();
+         }
+         if (resp["gkresult"]["roflag"]==1) {
+           $(".rollover").remove();
+         }
+      });
+
   var orname = sessionStorage.getItem('orgn');
   var ortype = sessionStorage.getItem('orgt');
   var styear = sessionStorage.getItem('year1');
