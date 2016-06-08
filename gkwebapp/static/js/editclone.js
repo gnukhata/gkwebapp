@@ -105,7 +105,7 @@ $(document).ready(function()
     if (event.which==37)
     {
 
-      $("#clone").focus();
+      $("#delete").focus();
     }
     if (event.which==39)
     {
@@ -146,9 +146,23 @@ $(document).ready(function()
     }
     if (event.which==39)
     {
+      $("#delete").focus();
+    }
+  });
+
+  $("#delete").keydown(function(event)
+  {
+
+    if (event.which==37)
+    {
+      $("#clone").focus();
+    }
+    if (event.which==39)
+    {
       $("#lock").focus();
     }
   });
+
 
   $("#edit").click(function(event)
   {
@@ -963,6 +977,35 @@ $(document).ready(function()
       }
     }
   });
+
+$("#delete").click(function(event) {
+  /* Act on the event */
+
+$.ajax({
+  url: '/deletevoucher',
+  type: 'POST',
+  datatype: 'json',
+  data: {vcode: $("#vcode").val()},
+  beforeSend: function(xhr)
+  {
+    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+  },
+})
+.done(function(jsonobj) {
+  if(jsonobj["gkstatus"]==0){
+    $('#myModal').modal('hide');
+
+  }
+  else {
+    $("#failure-alert").alert();
+    $("#nt").append('Deleted')
+    $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#failure-alert").hide();
+    });
+  }
+});
+
+});
 
   $('#save').click(function(event) {
     var allow = true;
