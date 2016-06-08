@@ -11,14 +11,16 @@ $(document).ready(function()
   });
 
   $("#finalyears").keydown( function(e) {
-    e.preventDefault();
+
     var s1 = $("#finalyears option:selected").index();
     if (e.which == 38 && s1 == 0)
     {
+      e.preventDefault();
       $("#org-name").focus();
     }
     if (e.which == 13)
     {
+      e.preventDefault();
       $("#callLogin").click();
     }
   });

@@ -19,6 +19,49 @@ $(document).ready(function()
     forname = $("#orgname").val();
   });
 
+  function pad (str, max) { //to add leading zeros in date
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("0" + str, max) : str;
+    }
+    else{
+      return str
+    }
+  }
+  function yearpad (str, max) {
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("200" + str, max) : str;
+    }
+    else if (str.length==2) {
+      return str.length < max ? pad("20" + str, max) : str;
+    }
+    else{
+      return str
+    }
+  }
+
+  $("#fromday").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#frommonth").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#today").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#tomonth").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+
+  $("#fromyear").blur(function(event) {
+    $(this).val(yearpad($(this).val(),4));
+  });
+
+  $("#toyear").blur(function(event) {
+    $(this).val(yearpad($(this).val(),4));
+  });
+
   $('.vdate').autotab('number');
   $('input:text,select').keydown( function(e) {
     var n = $("input:text,select").length;
@@ -110,9 +153,23 @@ $(document).ready(function()
         $("#tomonth").val(endmonth);
         $("#toyear").val(endyear);
       });
+      $("#toyear").keydown(function(event) {
+        if (event.which==13) {
+          $(this).val(yearpad($(this).val(),4));
+          $("#btnsubmit").click();
+        }
+      });
 
       $("#btnsubmit").click(function(event){
         event.preventDefault();
+        var startday = $("#fromday").val();
+        var startmonth = $("#frommonth").val();
+        var startyear = $("#fromyear").val();
+        var startdate = startday+startmonth+startyear;
+        var startday = $("#today").val();
+        var startmonth = $("#tomonth").val();
+        var startyear = $("#toyear").val();
+        var enddate = startday+startmonth+startyear;
         if ($.trim($("#orgname").val())=="") {
           $("#orgname-blank-alert").alert();
           $("#orgname-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
@@ -128,6 +185,24 @@ $(document).ready(function()
             });
             $("#fromday").focus();
             return false;
+        }
+        if (!Date.parseExact(startdate, "ddMMyyyy")) {
+          $("#date-improper-alert").alert();
+          $("#date-improper-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#date-improper-alert").hide();
+          });
+          $("#fromday").focus();
+          $("#fromday").select();
+          return false;
+        }
+        if (!Date.parseExact(enddate, "ddMMyyyy")) {
+          $("#date-improper-alert").alert();
+          $("#date-improper-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#date-improper-alert").hide();
+          });
+          $("#today").focus();
+          $("#today").select();
+          return false;
         }
         var orgname = $("#orgname").val().replace(/\s/g, "+");
         var orgtype = $("#orgtype option:selected").val().replace(/\s/g, "+");
