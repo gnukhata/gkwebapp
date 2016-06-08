@@ -368,6 +368,26 @@ $("#transaction").click();
     );
     });
 
+    $('#BRS').click(function (e) {
+
+        $.ajax(
+        {
+
+        type: "POST",
+        url: "/showviewbankrecon",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          }
+        })
+        .done(function(resp){
+            $("#info").html(resp);
+        });
+      });
+
     $('#showprjstate').click(function (e) {
 
         $.ajax(

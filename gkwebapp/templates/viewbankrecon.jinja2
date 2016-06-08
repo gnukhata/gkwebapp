@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>GNUKhata | Bank Reconciliation</title>
+  <style media="screen">
+  .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  label {
+		font-size: 90%;
+	}
+  </style>
+</head>
+<body>
+  <div style="padding-top:5px" class="container-fluid mainbox col-md-6 col-md-offset-3">
+    <div class="panel panel-info shadow">
+      <div class="panel-heading">
+        <h3 class="panel-title">View Bank Reconciliation</h3>
+      </div>
+      <div class="panel-body" style="padding-top:5px">
+        <div class="alert alert-danger" id="date-alert" hidden>
+          <a href="#" class="close" aria-label="close">&times;</a>
+          <label for="viewbankrecon_fromdate">Please enter date in proper format!</label>
+        </div>
+        <div class="alert alert-danger" id="between-date-alert" hidden>
+          <a href="#" class="close" aria-label="close">&times;</a>
+          <label for="viewbankrecon_fromdate">Please enter date within the financial year!</label>
+        </div>
+        <div class="alert alert-danger" id="compare-date-alert" hidden>
+          <a href="#" class="close" aria-label="close">&times;</a>
+          <label for="viewbankrecon_todate">From date should be smaller or equal to to date !</label>
+        </div>
+        <div class="alert alert-danger" id="account-blank-alert" hidden>
+          <a href="#" class="close" aria-label="close">&times;</a>
+          <label for="viewbankrecon_accname">Please select an account!</label>
+        </div>
+        <div style="margin-bottom: 5px" class="col-xs-12 from-group">
+          <label for="viewbankrecon_accname">Account Name :</label>
+          <select class = "form-control input-sm" id="viewbankrecon_accname"  name = "viewbankrecon_accname" >
+            <option value="" disabled selected hidden>Select Account</option>
+            {% for accs in gkresult %}
+            <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
+            {% endfor %}
+          </select>
+          <br>
+
+          <label for="viewbankrecon_fromdate">From Date:</label>
+          <div class="form-inline" >
+
+            <div class="form-group">
+
+              <input type="text" class="viewbankrecon_date form-control input-sm dis" id="viewbankrecon_fromdate" value="" size="2" maxlength="2" placeholder="DD" accesskey="d">
+              <input type="text" id="viewbankrecon_frommonth" class="viewbankrecon_date dis form-control input-sm" value="" size="2" maxlength="2" placeholder="MM" >
+              <input type="text" id="viewbankrecon_fromyear" class="viewbankrecon_date dis form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY" >
+            </div>
+
+          </div>
+          <br>
+          <label for="viewbankrecon_todate">To Date:</label>
+          <div class="form-inline" >
+
+            <div class="form-group">
+
+              <input type="text" class="viewbankrecon_date form-control input-sm dis" id="viewbankrecon_todate" value="" size="2" maxlength="2" placeholder="DD" >
+              <input type="text" id="viewbankrecon_tomonth" class="viewbankrecon_date form-control input-sm dis" value="" size="2" maxlength="2" placeholder="MM" >
+              <input type="text" id="viewbankrecon_toyear" class="viewbankrecon_date form-control input-sm dis" value="" size="4" maxlength="4" placeholder="YYYY" >
+            </div>
+          </div>
+          <br>
+          <label> <input type="checkbox" class="dis" id="viewbankrecon_nar" >Narration</label>
+
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button class="btn btn-primary btn-sm" id="viewbankrecon_submit" name="view" accesskey="v">View</button>
+        <button id="viewbankrecon_reset" class="btn btn-danger btn-sm" accesskey="r">Reset</button>
+
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewbankrecon.js')}}"></script>
+</body>
+</html>
