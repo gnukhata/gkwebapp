@@ -53,9 +53,23 @@ $(document).ready(function() {
     $('#latable tbody tr:eq('+currindex+') a').focus();
 
   });
-
-
-
-
+  $("#print").click(function(event) {
+      $.ajax(
+        {
+          type: "POST",
+          url: "/printlistofaccounts",
+          global: false,
+          async: false,
+          dataType : 'text',
+          data: {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2')},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+          success: function(resp){
+            window.open('data:application/pdf;charset=utf-8,' + encodeURIComponent(resp));
+          }
+        });
+  });
 
 });
