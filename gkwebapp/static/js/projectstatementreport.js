@@ -94,6 +94,26 @@ $(document).ready(function() {
       );
 
   });
+  $("#print").click(function(event) {
+    var date = $("#calculateto").val().split("-");
+    var newtodate = date[2]+"-"+date[1]+"-"+date[0];
+    $.ajax(
+      {
+        type: "GET",
+        url: "/printprojectstatementreport",
+        global: false,
+        async: false,
+        datatype : 'text',
+        data : {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('yyyymmddyear1'), "fyend": sessionStorage.getItem('yyyymmddyear2'), "calculateto": newtodate, "projectcode": $("#projectcode").val(), "projectname" : $("#projectname").val() },
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp){
+          window.open('data:application/pdf;charset=utf-8,' + encodeURIComponent(resp));
+        }
+      });
+});
 
   $("#prjstback").click(function(event) {
     $("#showprjstate").click();
