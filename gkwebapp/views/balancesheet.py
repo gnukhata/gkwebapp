@@ -77,7 +77,7 @@ def printconvbalsheetreport(request):
 		account = record["accounts"]
 		if(account):
 			for accountinfo in account:
-				data.append(["		 " + accountinfo["accountname"], accountinfo["amount"] + "		 "])
+				data.append(["       " + accountinfo["accountname"], accountinfo["amount"] + "       "])
 	i = 1
 	for record in  rightlist:
 		groupname = Paragraph(str(record["groupname"]), stylenormal)
@@ -95,11 +95,11 @@ def printconvbalsheetreport(request):
 		if(account):
 			for accountinfo in account:
 				try:
-					data[i].append("			 " + accountinfo["accountname"])
-					data[i].append(accountinfo["amount"] + "			 ")
+					data[i].append("       " + accountinfo["accountname"])
+					data[i].append(accountinfo["amount"] + "       ")
 					i += 1
 				except IndexError:
-					data.append(["","","		  " + accountinfo["accountname"], accountinfo["amount"] + "		  "])
+					data.append(["","","       " + accountinfo["accountname"], accountinfo["amount"] + "       "])
 					i += 1
 
 
