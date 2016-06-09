@@ -1,212 +1,259 @@
 $(document).ready(function() {
-  $('#rctable tbody tr:first-child td:eq(1) a').focus();
-  $('#rctable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
-  var rcindex = 0
-  var pyindex = 0
-  var percentwid = 100*(($(".table-fixedheader").width()-12)/$(".table-fixedheader").width());
-  $('.table-fixedheader thead').width(percentwid+"%");
-  var percentheigth = 100*(($("body").height()-$(".navbar").height()-148)/$("body").height());
-  $('.table-fixedheader tbody').height(percentheigth+"%");
-  $(document).off('focus' ,'.rcaccname').on('focus' ,'.rcaccname',function() {
-    $('#rctable tr').removeClass('selected');
-    $(this).closest('tr').addClass('selected');
-  });
+	$('#rctable tbody tr:first-child td:eq(1) a').focus();
+	$('#rctable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
+	var rcindex = 0
+	var pyindex = 0
+	var percentwid = 100*(($(".table-fixedheader").width()-12)/$(".table-fixedheader").width());
+	$('.table-fixedheader thead').width(percentwid+"%");
+	var percentheigth = 100*(($("body").height()-$(".navbar").height()-148)/$("body").height());
+	$('.table-fixedheader tbody').height(percentheigth+"%");
+	$(document).off('focus' ,'.rcaccname').on('focus' ,'.rcaccname',function() {
+		$('#rctable tr').removeClass('selected');
+		$(this).closest('tr').addClass('selected');
+	});
 
-  $(document).off('blur' ,'.rcaccname').on('blur' ,'.rcaccname',function() {
-    $('#rctable tr').removeClass('selected');
+	$(document).off('blur' ,'.rcaccname').on('blur' ,'.rcaccname',function() {
+		$('#rctable tr').removeClass('selected');
 
-  });
-  var curindex ;
-  var nextindex;
-  var previndex;
-  var date = $("#ledtodate").val().split("-");
-  var newtodate = date[2]+"-"+date[1]+"-"+date[0];
+	});
+	var curindex ;
+	var nextindex;
+	var previndex;
+	var date = $("#ledtodate").val().split("-");
+	var newtodate = date[2]+"-"+date[1]+"-"+date[0];
 
-  $(document).off('keydown' ,'.rcaccname').on('keydown' ,'.rcaccname',function(event) {
-    curindex = $(this).closest('tr').index();
-    rcindex = $(this).closest('tr').index();
-    nextindex = curindex+1;
-    previndex = curindex-1;
-    if (event.which==40)
-    {
-      event.preventDefault();
-      $('#rctable tbody tr:eq('+nextindex+') td:eq(1) a').focus();
-    }
-    else if (event.which==38)
-    {
-      if(previndex>-1)
-      {
-        event.preventDefault();
-        $('#rctable tbody tr:eq('+previndex+') td:eq(1) a').focus();
-      }
-    }
-    else if (event.which==39)
-    {
+	$(document).off('keydown' ,'.rcaccname').on('keydown' ,'.rcaccname',function(event) {
+		curindex = $(this).closest('tr').index();
+		rcindex = $(this).closest('tr').index();
+		nextindex = curindex+1;
+		previndex = curindex-1;
+		if (event.which==40)
+		{
+			event.preventDefault();
+			$('#rctable tbody tr:eq('+nextindex+') td:eq(1) a').focus();
+		}
+		else if (event.which==38)
+		{
+			if(previndex>-1)
+			{
+				event.preventDefault();
+				$('#rctable tbody tr:eq('+previndex+') td:eq(1) a').focus();
+			}
+		}
+		else if (event.which==39)
+		{
 
-      $('#pytable tbody tr:eq('+pyindex+') td:eq(1) a').focus();
-    }
-  });
+			$('#pytable tbody tr:eq('+pyindex+') td:eq(1) a').focus();
+		}
+	});
 
-  var urole = $("#urole").val();
+	var urole = $("#urole").val();
 
 
-  $("#rctable").off('click','tr').on('click','tr',function(e){
-    e.preventDefault();
-    var id = $(this).attr('value');
-    var currindex = $(this).index();
-    $('#rctable tr').removeClass('selected');
-    $(this).toggleClass('selected');
-    $('#rctable tbody tr:eq('+currindex+') a').focus();
+	$("#rctable").off('click','tr').on('click','tr',function(e){
+		e.preventDefault();
+		var id = $(this).attr('value');
+		var currindex = $(this).index();
+		$('#rctable tr').removeClass('selected');
+		$(this).toggleClass('selected');
+		$('#rctable tbody tr:eq('+currindex+') a').focus();
 
-  });
+	});
 
-  $("#rctable").off('keydown','tr').on('keydown','tr',function(e){
-    var id = $(this).attr('value');
-    var rindex = $(this).index();
+	$("#rctable").off('keydown','tr').on('keydown','tr',function(e){
+		var id = $(this).attr('value');
+		var rindex = $(this).index();
 
-    if(e.which==13)
-    {
+		if(e.which==13)
+		{
 
-    $('#rctable tbody tr:eq('+rindex+')').dblclick() ;
-    }
+		$('#rctable tbody tr:eq('+rindex+')').dblclick() ;
+		}
 });
 
-  $("#rctable tbody tr").off('dblclick').on('dblclick',function(e){
-    e.preventDefault();
-    var acccode = $(this).attr('value');
-    if (acccode=="")
-    {
-        return false;
-    }
-     var todatearray = $("#ledtodate").val().split("-");
-     var fromdatearray = $("#ledfromdate").val().split("-");
-     var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
-     var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
-    $.ajax(
-      {
-        type: "POST",
-        url: "/showledgerreport",
-        global: false,
-        async: false,
-        datatype: "text/html",
-        data: {"backflag":$("#backflag").val(),"accountcode":acccode,"calculatefrom":newfromdate,"calculateto":newtodate,"financialstart":sessionStorage.yyyymmddyear1,"projectcode":"","monthlyflag":false,"narrationflag":false},
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-      })
-        .done(function(resp)
-        {
-          $("#info").html(resp);
-        }
-      );
+	$("#rctable tbody tr").off('dblclick').on('dblclick',function(e){
+		e.preventDefault();
+		var acccode = $(this).attr('value');
+		if (acccode=="")
+		{
+				return false;
+		}
+		 var todatearray = $("#ledtodate").val().split("-");
+		 var fromdatearray = $("#ledfromdate").val().split("-");
+		 var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
+		 var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
+		$.ajax(
+			{
+				type: "POST",
+				url: "/showledgerreport",
+				global: false,
+				async: false,
+				datatype: "text/html",
+				data: {"backflag":$("#backflag").val(),"accountcode":acccode,"calculatefrom":newfromdate,"calculateto":newtodate,"financialstart":sessionStorage.yyyymmddyear1,"projectcode":"","monthlyflag":false,"narrationflag":false},
+				beforeSend: function(xhr)
+				{
+					xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+				},
+			})
+				.done(function(resp)
+				{
+					$("#info").html(resp);
+				}
+			);
 
 
 
-  });
+	});
 
-  $(document).off('focus' ,'.pyaccname').on('focus' ,'.pyaccname',function() {
-    $('#pytable tr').removeClass('selected');
-    $(this).closest('tr').addClass('selected');
-  });
+	$(document).off('focus' ,'.pyaccname').on('focus' ,'.pyaccname',function() {
+		$('#pytable tr').removeClass('selected');
+		$(this).closest('tr').addClass('selected');
+	});
 
-  $(document).off('blur' ,'.pyaccname').on('blur' ,'.pyaccname',function() {
-    $('#pytable tr').removeClass('selected');
+	$(document).off('blur' ,'.pyaccname').on('blur' ,'.pyaccname',function() {
+		$('#pytable tr').removeClass('selected');
 
-  });
-  var curindex ;
-  var nextindex;
-  var previndex;
-  var date = $("#ledtodate").val().split("-");
-  var newtodate = date[2]+"-"+date[1]+"-"+date[0];
+	});
+	var curindex ;
+	var nextindex;
+	var previndex;
+	var date = $("#ledtodate").val().split("-");
+	var newtodate = date[2]+"-"+date[1]+"-"+date[0];
 
-  $(document).off('keydown' ,'.pyaccname').on('keydown' ,'.pyaccname',function(event) {
-    curindex = $(this).closest('tr').index();
-    pyindex = $(this).closest('tr').index();
-    nextindex = curindex+1;
-    previndex = curindex-1;
-    if (event.which==40)
-    {
-      event.preventDefault();
-      $('#pytable tbody tr:eq('+nextindex+') td:eq(1) a').focus();
-    }
-    else if (event.which==38)
-    {
-      if(previndex>-1)
-      {
-        event.preventDefault();
-        $('#pytable tbody tr:eq('+previndex+') td:eq(1) a').focus();
-      }
-    }
-    else if (event.which==37)
-    {
+	$(document).off('keydown' ,'.pyaccname').on('keydown' ,'.pyaccname',function(event) {
+		curindex = $(this).closest('tr').index();
+		pyindex = $(this).closest('tr').index();
+		nextindex = curindex+1;
+		previndex = curindex-1;
+		if (event.which==40)
+		{
+			event.preventDefault();
+			$('#pytable tbody tr:eq('+nextindex+') td:eq(1) a').focus();
+		}
+		else if (event.which==38)
+		{
+			if(previndex>-1)
+			{
+				event.preventDefault();
+				$('#pytable tbody tr:eq('+previndex+') td:eq(1) a').focus();
+			}
+		}
+		else if (event.which==37)
+		{
 
-      $('#rctable tbody tr:eq('+rcindex+') td:eq(1) a').focus();
-    }
-
-
-  });
-
-  var urole = $("#urole").val();
+			$('#rctable tbody tr:eq('+rcindex+') td:eq(1) a').focus();
+		}
 
 
-  $("#pytable").off('click','tr').on('click','tr',function(e){
-    e.preventDefault();
-    var id = $(this).attr('value');
-    var currindex = $(this).index();
-    $('#pytable tr').removeClass('selected');
-    $(this).toggleClass('selected');
-    $('#pytable tbody tr:eq('+currindex+') a').focus();
+	});
 
-  });
+	var urole = $("#urole").val();
 
-  $("#pytable").off('keydown','tr').on('keydown','tr',function(e){
-    var id = $(this).attr('value');
-    var rindex = $(this).index();
 
-    if(e.which==13)
-    {
+	$("#pytable").off('click','tr').on('click','tr',function(e){
+		e.preventDefault();
+		var id = $(this).attr('value');
+		var currindex = $(this).index();
+		$('#pytable tr').removeClass('selected');
+		$(this).toggleClass('selected');
+		$('#pytable tbody tr:eq('+currindex+') a').focus();
 
-    $('#pytable tbody tr:eq('+rindex+')').dblclick() ;
-    }
+	});
+
+	$("#pytable").off('keydown','tr').on('keydown','tr',function(e){
+		var id = $(this).attr('value');
+		var rindex = $(this).index();
+
+		if(e.which==13)
+		{
+
+		$('#pytable tbody tr:eq('+rindex+')').dblclick() ;
+		}
 });
 
-  $("#pytable tbody tr").off('dblclick').on('dblclick',function(e){
-    e.preventDefault();
-    var acccode = $(this).attr('value');
-    if (acccode=="")
-    {
-        return false;
-    }
-    var todatearray = $("#ledtodate").val().split("-");
-    var fromdatearray = $("#ledfromdate").val().split("-");
-    var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
-    var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
-    $.ajax(
-      {
-        type: "POST",
-        url: "/showledgerreport",
-        global: false,
-        async: false,
-        datatype: "text/html",
-        data: {"backflag":$("#backflag").val(),"accountcode":acccode,"calculatefrom":newfromdate,"calculateto":newtodate,"financialstart":sessionStorage.yyyymmddyear1,"projectcode":"","monthlyflag":false,"narrationflag":false},
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-      })
-        .done(function(resp)
-        {
-          $("#info").html(resp);
-        }
-      );
+	$("#pytable tbody tr").off('dblclick').on('dblclick',function(e){
+		e.preventDefault();
+		var acccode = $(this).attr('value');
+		if (acccode=="")
+		{
+				return false;
+		}
+		var todatearray = $("#ledtodate").val().split("-");
+		var fromdatearray = $("#ledfromdate").val().split("-");
+		var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
+		var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
+		$.ajax(
+			{
+				type: "POST",
+				url: "/showledgerreport",
+				global: false,
+				async: false,
+				datatype: "text/html",
+				data: {"backflag":$("#backflag").val(),"accountcode":acccode,"calculatefrom":newfromdate,"calculateto":newtodate,"financialstart":sessionStorage.yyyymmddyear1,"projectcode":"","monthlyflag":false,"narrationflag":false},
+				beforeSend: function(xhr)
+				{
+					xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+				},
+			})
+				.done(function(resp)
+				{
+					$("#info").html(resp);
+				}
+			);
 
 
 
-  });
+	});
 
-  $("#cfback").click(function(event) {
-    $("#showcashflow").click();
-  });
+	function open_in_newtab(filename, text) {
+		var element = document.createElement('a');
+		element.setAttribute('href', 'data:application/pdf;charset=utf-8,' +	encodeURIComponent(text));
+		element.setAttribute('target', '_blank');
+		element.style.display = 'none';
+		document.body.appendChild(element);
+		element.click();
+		document.body.removeChild(element);
+	}
+
+	function printcashflowreport() {
+		var orgname = sessionStorage.getItem('orgn');
+		var startyear = sessionStorage.getItem('year1');
+		var endyear = sessionStorage.getItem('year2');
+		filename = "cashflowreport.pdf"
+		var date = $("#ledtodate").val().split("-");
+		var newtodate = date[2]+"-"+date[1]+"-"+date[0];
+		var date = $("#ledfromdate").val().split("-");
+		var newfromdate = date[2]+"-"+date[1]+"-"+date[0];
+		$.ajax(
+			{
+				type: "POST",
+				url: "/printcashflowreport",
+				global: false,
+				async: false,
+				datatype: "text",
+				data: {"financialstart":sessionStorage.yyyymmddyear1,"orgtype":sessionStorage.orgt,"calculateto":newtodate,"calculatefrom":newfromdate, "orgname": orgname, "startyear": startyear, "endyear": endyear},
+				beforeSend: function(xhr)
+				{
+					xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+				}
+			})
+			.done(function(resp) {
+				open_in_newtab(filename, resp);
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("complete");
+			});
+	}
+
+
+	$("#cfback").click(function(event) {
+		$("#showcashflow").click();
+	});
+	$("#printbutton").click(function(event) {
+		printcashflowreport();
+	});
 
 });
