@@ -107,7 +107,7 @@ def printLedgerReport(request):
 	orgname = str(request.params["orgname"])
 	orgname += " (FY: " + fy +")"
 	accname = ""
-	period = calculatefrom[8:10] + "-" + str(calendar.month_abbr[int(calculatefrom[6:7])]) + "-" + calculatefrom[0:4] + " to " + calculateto[8:10] + "-" +  str(calendar.month_abbr[int(calculateto[6:7])]) + "-" +  calculateto[0:4];
+	period = calculatefrom[8:10] + "-" + str(calendar.month_abbr[int(calculatefrom[5:7])]) + "-" + calculatefrom[0:4] + " to " + calculateto[8:10] + "-" +  str(calendar.month_abbr[int(calculateto[5:7])]) + "-" +  calculateto[0:4];
 	def myFirstPage(canvas, doc):
 		accname = result.json()["ledgerheader"]["accountname"]
 		projectname = result.json()["ledgerheader"]["projectname"]
