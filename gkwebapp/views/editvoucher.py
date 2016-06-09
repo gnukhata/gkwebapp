@@ -116,3 +116,11 @@ def editvoucher(request):
 		return {"gkstatus":True}
 	else:
 		return {"gkstatus":False}
+
+@view_config(route_name="deletevoucher", renderer="json")
+def deletevoucher(request):
+
+	header={"gktoken":request.headers["gktoken"]}
+	gkdata={"vouchercode":request.params["vcode"]}
+	result = requests.delete("http://127.0.0.1:6543/transaction",data =json.dumps(gkdata), headers=header)
+	return {"gkstatus":result.json()["gkstatus"]}
