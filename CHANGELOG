@@ -1,0 +1,235 @@
+[09-June-2016 Release 3.0RC]
+* Complete revamp of frontend.
+* Can be used as a web based application by default.
+* Usable as deskapp with different configurations.
+* Implemented user interface for monthly ledger.
+* Displayed per transaction balance inside ledger.
+* Much improved printing system with printable pdf's.
+* Drill down for all reports except balance sheet.
+* Displayed groupwise balances with account count while creating accounts.
+* Fundamentally new and much improved voucher interface.
+* Huge improvements in  look and feel.
+* Now vouchers can be searched by their voucher types also.
+* More enhancement of bank reconciliation and dual ledger.
+* minor changes and improvements.
+
+[27-Jan-2016 Release 1.7.0]
+* Enhanced Voucher interface showing ledger of account selected.
+* Enhanced functionality for connecting to various serves.
+* Improvements in all reports.
+* Made minor changes and bug fixes.
+
+[9-Dec-2015 Release 1.6.1]
+* Made minor changes and bug fixes.
+
+[4-Nov-2015 Release 1.6.0]
+* Included a new library org-apache-commons-lang
+* Added transaction security, now transactions can be locked by admin/manager and prevented
+  from further editing/deleting it.
+* Reports are now more spacious and visually appealing.
+* Type of organisation is now changed from "NGO" to "Not for Profit"
+* Now all the rows can be edited when editing a transaction.
+* Now the user can select the case of the organisation name while creating a new organisation.
+* Added the functionality for changing the user without changing the organisation.
+* Now the unnecessary tabs in voucher forms are removed hence making it more spacious.
+* Removed unwanted bank reconciliation forms.
+* Minor GUI changes and bug fixes.
+
+[28-Aug-2015 Release 1.5.0]
+* Added frontend functionality to provide advanced profit and loss calculations with closing stock.
+* Brought more stability to bank reconciliation module.
+* Multiple accounts in particulars of ledger are now displayed.
+* Now the names of auto generated accounts cannot be edited.
+* Corrected the alignment changes in balacesheet.
+* Now the default option for most of the messagebox is yes.
+* Minor GUI changes and bug fixes.
+
+[25-July-2015 Release 1.4.0]
+* Now GNUKhata will be using latest version of swt jar(i.e swt-4.4.2).
+* Changed the theme.
+* Perfected Connect to Server functionality .
+* Now two organizations with same name but different types can be created.
+* While selecting an organization its type can be seen along with.
+* Bug fixes and improvements in GUI.
+
+[06-June-2015 Release 1.3.03]
+* Once an organisation is rolled over it cannot be rolled over again for the same year.
+* Perfected addaccount popup .
+* Improvements in Organisation Particulars and Edit organsation forms.
+* Bug fixes and improvements in GUI.
+
+[22-May-2015 Release 1.3.02]
+* Perfected Profit and Loss statement.
+* Made improvements in Forgot Password facility.
+* Further refined date validations in some forms.
+* Made improvements in creating and editing organisation particulars.
+* Made improvements in find and edit account forms.
+* Made improvements in Balance sheet.
+* Bug fixes and improvements.
+
+[12-May-2015 Release 1.3.01]
+* Made improvements for Voucher creation and when editing Voucher.
+* Removed the Preferences Form.
+* Removed the Account creation form when creating new Organization.
+* Solved the issues related to Account Popup while creating and editing voucher.
+* Solved the issues related to CCombo while creating and editing voucher.
+* Bug fixes and improvements in the Organization Particulars form.
+* Bug fixes and improvements in the Edit Organization form.
+* GUI improvements.
+* Bug fixes.
+
+[01-April-2015 Release 1.3.0]
+* polished up the ui to fix all possible alignment and navigation issues
+* fixed the bug in account popup where newly added account did not appear in voucher
+* fixed the bug in voucher where navigation from date to display zone got stuck
+* perfected multiple accounts addition
+* Bank Reco now works perfectly
+* fixed issue where opening balance in account creation did not refresh
+* made title fonts consistant
+* date validations are now more consistant
+* fixed the double . issue where software crashed
+* dropdown in voucher looks and behaves more consistently
+* delete row in vouchers added
+* focus coloring is perfect on unity, works almost perfect on Gnome
+* overall unified response with all reports, built on gained performace
+
+
+[28-March-2015 Release 1.3.0b2]
+* Added the functionality to add multiple accounts by keeping the group and subgroupname constant.
+* Added the functionality to remove a user.
+* Added the functionality by which user will be able to reset his password in case of forgetting the password.
+* Now all the reports can be printed to spreadsheets.
+* Enhanced the user interface for more professional look and better performance and scalability.
+* More crash fixes and bug fixes.
+
+[21-March-2015 Release 1.3.0b1]
+* Made all reports consistence wit current look and feel for enhanced performance, speed and usability.
+* Except profit and loss all other reports can now be printed to spreadsheet.
+* More consistency in add and edit voucher ,they now work almost perfectly.
+* Added shortcuts wherever they were missing and wherever they are necessary.
+* More polishing work on all interfaces.
+* Altered the interface of add more projects to make it more user friendly.
+* More crash fixes.
+
+[2-March-2015 Release 1.2.0]
+* Replaced the old voucher interface with new one. This inerface has improved scalability and improved performance
+  and navigation and ease of access.
+* Find voucher interface is also more fast and very easy to use.
+* Edit and clone voucher functionality revamped to resemble the new add voucher screen.
+* Data display in important reports (ledger, trial balance etc.) is revamped for faster data accessibility and better navigation
+  and look and enhanced performance.
+* Solved the bug on delete account with updates to core_engine as well. Now user can delete as well as add account for as may times as
+  required.
+* Many screens have a new colored focus theme, implemented on a trial basis.
+* A list of created projects can also be seen while adding a new project.
+* Now a proper authors list can be seen in Authors page provided in the menu bar.
+* Now a the user can change own as well as other's password where a level of hierarchy is maintained while changing the password.
+* A project with duplicate name cannot be created.
+* An organization with duplicate name cannot be create.
+* More polishing to the overall user interface.
+* Many more crash fixes and Enhancements.
+
+[8-Nov-2014 Release 1.0.1]
+* Now Rollover And CloseBooks can be  done only once per financial year and also brought stability
+  to Rollover and Closebooks.
+* After closing the books vouchers cannot be created.
+* Now we can see the clearance date for the transactions which are reconciled beyond the period for
+  which reconciliation statement is viewed and also brought more stablity to Bank Reconciliation.
+* Made many GUI  enhancements.
+* Brought more stability to the initialsetup form.
+* Brought more stability to edit organization module.
+* Brought more stability to creation of user.
+* Made change in the Toolbar: removed the show and hide ToolItem.
+* Brought more stability to addition of new account.
+* Added the content for all the help menu items.
+* Made some more Bug fixes.
+
+[19-Oct-2014 Release 1.0]
+* GUI Changes
+* Solved broken functionality of Balancesheets.
+* Fixed crash bugs emerging when entering special characters in date field.
+* Duplication of accounts is not allowed.
+* Now editorg controller works efficiently.
+* Crash bug fixed for editvoucher after drilldown.
+* Fixed voucher inconsistency validations.
+* Bank Reconciliation cannot be seen if there is no bank account.
+* Solved bug where account creation was giving eror when account is selected that has a sub-group.
+* Solved validations in cashflow.
+* Brought stability to BalanceSheet.
+* All the accounts having no sub-group will have no sub-group selcted
+  by default at the time of account creation.
+* Uniformity in mainshell.
+* Many bug fixes and enhancements.
+
+[8-Oct-2014 Release 1.0b2]
+* Now toolbar now disappears (retracts) when any other button is clicked or
+  other form is opened.
+* Now Special characters cannot be entered in the date field of startup form.
+* Added required validations for create user form.
+* Added Bank Reconcilation Statement option in toolbar and also added
+  text message for date field in ledgerrecon and updatebankrecon form.
+* Added Validation changes in edid organization form.
+* Added scrollbar to FindandEditVoucher Composite.
+* Solved the issue of date validations in all reports.
+* Removed the ok message after adding account through addaccount popup.
+* Done date validations in startup form and added tooltip and solved the case problem of GNUKhata.
+* Solved the bug where account creation was leading to software crash or was misbehaving.
+* Fixed the opening balance bug for createaccountcomposite,createaccountform,find&editaccountcomposite.
+* Negative balance can be entered while opening an account.
+* Closing balance and grand total can now be seen in Bank reconciliation.
+* Added ledger and reconciliation statement in Bank Reconciliation.
+* Now the user cannot enter a blank URL in connect to url functionality.
+* Bug fixes and enhancements.
+
+
+
+[27-Sept-2014 Release 1.0b1]
+*Added Date Validations in Bank Reconciliation.
+*Major Fixes in search voucher.
+*while adding voucher the save button is not visible unless credit and debit amounts tally.
+*ToolBar will dynamically display "profit and loss" or "income and expenditure"
+ depending on the type of your organization.
+*Added edit organization form and it's validations.
+*Brought stability in the add new projects module of preferences form.
+*Solved the bug where account,after adding it from add account popup,
+ was not appearing in the drop down of add voucher.
+*Added validations and stability to initialsetup form.
+*Solved the bug where delete organization would look like a software crash.
+*Fixed a crash bug in SourcesOfFunds balance sheet.
+*Solved bugs where cleared transactions were not displayed in Bank Reconciliation.
+*Brought stability in change password module.
+*Added date validations in reports.
+*Fixed various bugs leading to software crash.
+*Some layout changes and bug fixes.
+
+[13-Sept-2014 Release 1.0a3]
+* Fixed the broken search voucher interface,now searching works fine with validations
+* Made layout changes in Bank reconciliation.
+* Made the view cleared and uncleared transaction more usable,
+  we just have the view buttion without checkbox for uncleared transactions.
+* Fixed the bug where to date was excepted lesser than from date for organization.
+* Mixed the search voucher validation for dates
+* Made some alignment changes in bank reconciliation
+* Many bug fixes(#73,#74,#75,#76,#77,#78,#79,#80,#81,#82,#42,#39,
+  #36,#47,#45,#43,#49,#67,#66,#60,#35,#23,#11)
+
+[5-Sept-2014 Release 1.0a2]
+* Stabilized Bank Recon functionality.
+* Updated the addnewVoucher functionality, User is not allowed to save the voucher unless and until the credit and debit amounts tally.
+* Bug fixes.
+
+[23-July-2014 Release 1.0a1]
+* Now deskapp jar file can be built outside eclipse using ant.
+* Thanks to Ark Arjun, we have an icon for gnukhata.
+* Generated Spreadsheets are now properly formatted.
+* Initial setup now displays a progressbar.
+* Added Close Books and Rollover functionality.
+* Delete Organization feature added.
+* View dual ledger functionality added.
+* Dynamic toolbar is visible when F1 is pressed.
+* New users can be created and passwords can be changed now.
+* List of accounts can now be viewed.
+* Lots of bug fixes and cosmetic changes.
+
+[10-April-2014 Release 0.9]
+* Initial release.
