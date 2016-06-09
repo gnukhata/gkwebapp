@@ -62,14 +62,7 @@ $(document).ready(function()
 
         sessionStorage.gktoken = gt;
 
-        $.ajax({
-          url: '/showmainshell',
-          type: 'POST',
-          dataType: 'html',
-          })
-        .done(function(resp) {
-          $("body").html(resp);
-        });
+        window.location="/showmainshell";
       }
       else if(resp["gkstatus"]==2)
       {
