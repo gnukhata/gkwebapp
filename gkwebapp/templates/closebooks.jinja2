@@ -19,7 +19,7 @@
     </div>
   <div class="row">
     <div style="padding-top:5px" class="col-xs-6">
-      <div class="panel panel-info shadow" >
+      <div class="panel panel-info shadow closebooks" hidden="hidden">
 				<div class="panel-heading">
 					<div class="panel-title">Close Books</div>
         </div>
@@ -39,13 +39,13 @@
                          <label>--To--</label>
 
                          <label class="sr-only" for="cbtoday">Enter To Day</label>
-                         <input type="text" id="cbtoday" name="today" class="form-control crdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" disabled>
+                         <input type="text" id="cbtoday" name="today" class="form-control crdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" >
 
                          <label class="sr-only" for="cbtomonth">Enter To Month</label>
-                         <input type="text" id="cbtomonth" name="tomonth" class="form-control crdate" size="2" maxlength="2" style="width:60px"  placeholder="MM"  disabled>
+                         <input type="text" id="cbtomonth" name="tomonth" class="form-control crdate" size="2" maxlength="2" style="width:60px"  placeholder="MM"  >
 
                          <label class="sr-only" for="cbtoyear">Enter To Year</label>
-                         <input type="text" id="cbtoyear" name="toyear" class="form-control crdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  disabled>
+                         <input type="text" id="cbtoyear" name="toyear" class="form-control crdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
                        </div></p>
 
                        <button type="button" id="closebooks" class="btn btn-danger closebooks" accesskey="s">Clo<u>s</u>e Books</button>
@@ -155,8 +155,8 @@
             </div>
             <div class="modal-footer">
 
-              <button id="remove" class="btn btn-warning">Yes</button>
-              <button id="cancel" class="btn btn-danger" data-dismiss="modal">No</button>
+              <button id="m_remove" class="btn btn-warning">Yes</button>
+              <button id="m_cancel" class="btn btn-danger" data-dismiss="modal">No</button>
 
 
             </div>
