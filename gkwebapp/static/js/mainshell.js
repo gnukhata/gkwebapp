@@ -520,5 +520,49 @@ $("#transaction").click();
   $('#purchasereturntb').click(function(){
     $('#showpurchasereturn').click();
   });
-
+  $('#editaccounttb').click(function(){
+    $('#editaccount').click();
+  });
+  $('#projecttb').click(function(){
+    $('#showproject').click();
+  });
+  $('#projecttb').click(function(){
+    $('#showproject').click();
+  });
+  $('#brstb').click(function(){
+    $('#BRS').click();
+  });
+  $('#ledgertb').click(function(){
+    $('#showviewledger').click();
+  });
+  $('#trialbalancetb').click(function(){
+    $('#showtrialbalance').click();
+  });
+  $('#projectstatementtb').click(function(){
+    $('#showprjstate').click();
+  });
+  $('#cashflowtb').click(function(){
+    $('#showcashflow').click();
+  });
+  $('#listofaccountstb').click(function(){
+    $('#listofaccounts').click();
+  });
+  $('#createusertb').click(function(){
+    $('#createuser').click();
+  });
+  $('#REMOVEusertb').click(function(){
+    $('#REMOVEuser').click();
+  });
+  $('#changepasswordtb').click(function(){
+    $('#showedituser').click();
+  });
+  $('#manualtb').click(function(){
+    $('#manual').click();
+  });
+  $('#logouttb').click(function(){
+    $('#logout').click();
+  });
+  $('#changeogtb').click(function(){
+    $('#changeorg').click();
+  });
 });
