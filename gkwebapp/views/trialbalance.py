@@ -14,6 +14,7 @@ from reportlab.lib.enums import TA_CENTER, TA_RIGHT, TA_LEFT
 from spreadsheettable import SpreadsheetTable
 from pyramid.response import Response
 import os
+import calendar
 from formula import TotalPagesColSum, PreviousPagesColSum
 
 @view_config(route_name="showtrialbalance", renderer="gkwebapp:templates/viewtrialbalance.jinja2")
@@ -58,12 +59,18 @@ def printtrialbalance(request):
 	endyear = request.params["endyear"]
 	orgdata = orgname + " (" + orgtype + ")"
 	yeardata = "Financial Year : " + startyear + " to " + endyear
+	period = financialstart[8:10] + "-" + str(calendar.month_abbr[int(financialstart[6:7])]) + "-" + financialstart[0:4] + " to " + calculateto[8:10] + "-" +  str(calendar.month_abbr[int(calculateto[6:7])]) + "-" +  calculateto[0:4]
 
 	header={"gktoken":request.headers["gktoken"]}
 
-	Net_Trial = "Net Trial Balance for the period from " + financialstart + " to " + calculateto
-	Gross_Trial = "Gross Trial Balance for the period from " + financialstart + " to " + calculateto
-	Extended_Trial = "Extended Trial Balance for the period from " + financialstart + " to " + calculateto
+	#Net_Trial = "Net Trial Balance for the period from " + financialstart + " to " + calculateto
+	#Gross_Trial = "Gross Trial Balance for the period from " + financialstart + " to " + calculateto
+	#Extended_Trial = "Extended Trial Balance for the period from " + financialstart + " to " + calculateto
+	Net_Trial = "Net Trial Balance for the period from " + period
+	Gross_Trial = "Gross Trial Balance for the period from " + period
+	Extended_Trial = "Extended Trial Balance for the period from " + period
+
+
 	pageinfo = "Trial Balance Report"
 
 	Filename_net = "NetBalanceReport.pdf"
@@ -85,6 +92,11 @@ def printtrialbalance(request):
 	def myLaterPages_Net(canvas, doc):
 			canvas.saveState()
 			#canvas.setPageSize(landscape(letter))
+			canvas.setFont('Times-Bold',12)
+			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-40, orgname + "  FY: (" + startyear + " to " + endyear + ")")
+			canvas.setFont('Times-Roman',11)
+			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-55, "Net Trial Balance")
+			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-70, period)
 			canvas.setFont('Times-Roman',9)
 			canvas.drawString(inch, 0.75 * inch, "Page %d %s" % (doc.page, pageinfo))
 			canvas.restoreState()
@@ -205,10 +217,10 @@ def printtrialbalance(request):
 
 		if(balancetype == "Net" or balancetype == "Gross"):
 			data.append([Paragraph("", simplestyle), Paragraph("CarriedForward:", simplestyle), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), Paragraph("", simplestyle)])
-			spreadsheet_table = SpreadsheetTable(data, repeatRows = 2, repeatRowsB = 1, colWidths = (2*cm, 5*cm, 4.5*cm, 4.5*cm, 3.5*cm))
+			spreadsheet_table = SpreadsheetTable(data, repeatRows = 2, repeatRowsB = 1, colWidths = (2*cm, 6*cm, 4*cm, 4*cm, 3.5*cm))
 		elif(balancetype == "Extended"):
 			data.append([Paragraph("", simplestyle), Paragraph("CarriedForward:", simplestyle), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), Paragraph("", simplestyle)])
-			spreadsheet_table = SpreadsheetTable(data, repeatRows = 2, repeatRowsB = 1, colWidths = (1*cm, 2.8*cm, 2.8*cm, 2.8*cm, 2.8*cm, 2.8*cm, 2.8*cm, 2*cm))
+			spreadsheet_table = SpreadsheetTable(data, repeatRows = 2, repeatRowsB = 1, colWidths = (1*cm, 3.5*cm, 2.6*cm, 2.6*cm, 2.6*cm, 2.6*cm, 2.6*cm, 2*cm))
 
 		spreadsheet_table.setStyle(table_style)
 
