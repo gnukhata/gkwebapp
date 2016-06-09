@@ -187,6 +187,8 @@ $(document).ready(function(){
          if (resp["gkresult"]["roflag"]==1) {
            $(".rollover").remove();
          }
+         sessionStorage.setItem('booksclosedflag', resp["gkresult"]["booksclosedflag"]);
+         sessionStorage.setItem('roflag', resp["gkresult"]["roflag"]);
       });
 
   var orname = sessionStorage.getItem('orgn');
