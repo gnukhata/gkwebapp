@@ -28,7 +28,7 @@ def printconvbalsheetreport(request):
 	fy = fy + "-" + (str(request.params["fyend"])[8:])
 	orgname = str(request.params["orgname"])
 	orgname += " (FY: " + fy +")"
-	period = " On " + calculateto[8:10] + "-" +  str(calendar.month_abbr[int(calculateto[6:7])]) + "-" +  calculateto[0:4];
+	period = " On " + calculateto[8:10] + "-" +  str(calendar.month_abbr[int(calculateto[5:7])]) + "-" +  calculateto[0:4];
 	def myFirstPage(canvas, doc):
 		canvas.saveState()
 		canvas.setFont('Times-Bold',18)
@@ -129,7 +129,7 @@ def printsourcesandappfundreport(request):
 	fy = fy + "-" + (str(request.params["fyend"])[8:])
 	orgname = str(request.params["orgname"])
 	orgname += " (FY: " + fy +")"
-	period =  calculateto[8:10] + "-" +  str(calendar.month_abbr[int(calculateto[6:7])]) + "-" +  calculateto[0:4];
+	period =  calculateto[8:10] + "-" +  str(calendar.month_abbr[int(calculateto[5:7])]) + "-" +  calculateto[0:4];
 	def myFirstPage(canvas, doc):
 		canvas.saveState()
 		canvas.setFont('Times-Bold',18)

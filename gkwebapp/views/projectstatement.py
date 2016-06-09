@@ -67,7 +67,7 @@ def printprojectstatementreport(request):
 	fy = fy + "-" + (str(request.params["fyend"])[2:4])
 	orgname = str(request.params["orgname"])
 	orgname += " (FY: " + fy +")"
-	period = financialstart[8:10] + "-" + str(calendar.month_abbr[int(financialstart[6:7])]) + "-" + financialstart[0:4] + " to " + calculateto[8:10] + "-" +  str(calendar.month_abbr[int(calculateto[6:7])]) + "-" +  calculateto[0:4];
+	period = financialstart[8:10] + "-" + str(calendar.month_abbr[int(financialstart[5:7])]) + "-" + financialstart[0:4] + " to " + calculateto[8:10] + "-" +  str(calendar.month_abbr[int(calculateto[5:7])]) + "-" +  calculateto[0:4];
 	def myFirstPage(canvas, doc):
 		canvas.saveState()
 		canvas.setFont('Times-Bold',18)
