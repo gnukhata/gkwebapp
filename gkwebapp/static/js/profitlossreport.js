@@ -215,7 +215,7 @@ $(document).ready(function() {
           global: false,
           async: false,
           dataType : 'text',
-          data: {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "calculateto": newtodate, "calculatefrom": newfromdate},
+          data: {"headingprofit":$("#headingprofit").val(),"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "calculateto": newtodate, "calculatefrom": newfromdate},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

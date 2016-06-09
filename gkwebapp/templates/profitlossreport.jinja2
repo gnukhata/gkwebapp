@@ -109,8 +109,10 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
 </head>
 <body>
   {% if orgtype=="Profit Making" %}
+    <input type="hidden" id="headingprofit" value="Profit & Loss">
     <span style="margin:auto; display:table;"><strong>Profit & Loss</strong> for the period <strong>{{from}}</strong> to <strong>{{to}}</strong></span>
   {% else %}
+      <input type="hidden" id="headingprofit" value="Income & Expenditure Account">
     <span style="margin:auto; display:table;"><strong>Income & Expenditure Account</strong> for the period <strong>{{from}}</strong> to <strong>{{to}}</strong></span>
   {% endif %}
   <div class="row">
