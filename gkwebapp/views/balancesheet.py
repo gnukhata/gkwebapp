@@ -77,14 +77,13 @@ def printconvbalsheetreport(request):
 		account = record["accounts"]
 		if(account):
 			for accountinfo in account:
-				data.append(["         " + accountinfo["accountname"], accountinfo["amount"] + "         "])
+				data.append(["		 " + accountinfo["accountname"], accountinfo["amount"] + "		 "])
 	i = 1
 	for record in  rightlist:
 		groupname = Paragraph(str(record["groupname"]), stylenormal)
 		if(record["amount"] == "."):
 			record["amount"] = ""
 		amount = Paragraph(str(record["amount"]), style)
-		account = record["accounts"]
 		try:
 			data[i].append(groupname);
 			data[i].append(amount);
@@ -92,14 +91,15 @@ def printconvbalsheetreport(request):
 		except IndexError:
 			data.append(["","",groupname,amount])
 			i += 1
+		account = record["accounts"]
 		if(account):
 			for accountinfo in account:
 				try:
-					data[i].append("             " + accountinfo["accountname"])
-					data[i].append(accountinfo["amount"] + "             ")
+					data[i].append("			 " + accountinfo["accountname"])
+					data[i].append(accountinfo["amount"] + "			 ")
 					i += 1
 				except IndexError:
-					data.append(["","","          " + accountinfo["accountname"], accountinfo["amount"] + "          "])
+					data.append(["","","		  " + accountinfo["accountname"], accountinfo["amount"] + "		  "])
 					i += 1
 
 
@@ -167,32 +167,33 @@ def printsourcesandappfundreport(request):
 	style.alignment = TA_RIGHT
 	stylenormal = styles["Normal"]
 	stylenormal.alignment = TA_LEFT
-	data= [[]]
-	i = 0
-	for record in  rightlist:
-		if(i == 0):
-			groupname = Paragraph("<b>" + str(record["groupname"]) + "</b>", stylenormal)
-			amount = Paragraph(str(record["amount"]), style)
-			data.append([groupname, amount]);
-			i += 1;
-			continue;
-		groupname = Paragraph(str(record["groupname"]), stylenormal)
-		amount = Paragraph(str(record["amount"]), style)
-		data.append([groupname, amount]);
-		i += 1;
-	i = 0;
+	leftlist.pop(0)
+	rightlist.pop(0)
+	groupname = Paragraph("<b>Sources</b>", stylenormal)
+	amount = Paragraph("<b>Amount</b>", style)
+	data = [[groupname, amount]];
 	for record in leftlist:
-		if(i == 0):
-			groupname = Paragraph("<b>" + str(record["groupname"]) + "</b>", stylenormal)
-			amount = Paragraph(str(record["amount"]), style)
-			data.append([groupname, amount]);
-			i += 1;
-			continue;
 		groupname = Paragraph(str(record["groupname"]), stylenormal)
 		amount = Paragraph(str(record["amount"]), style)
 		data.append([groupname, amount]);
-		i += 1;
-	table = Table(data, colWidths=[14.8 *cm,  4.6 * cm])
+		account = record["accounts"]
+		if(account):
+			for accountinfo in account:
+				data.append(["            " + accountinfo["accountname"], accountinfo["amount"] +"            "])
+	groupname = Paragraph("<b>Applications</b>", stylenormal)
+	amount = Paragraph("", style)
+	data.append([groupname, amount]);
+	for record in  rightlist:
+		groupname = Paragraph(str(record["groupname"]), stylenormal)
+		amount = Paragraph(str(record["amount"]), style)
+		data.append([groupname, amount]);
+		account = record["accounts"]
+		if(account):
+			for accountinfo in account:
+				data.append(["            " + str(accountinfo["accountname"]), accountinfo["amount"] + "            "])
+
+
+	table = Table(data, colWidths=[12.8 *cm,  6.6 * cm])
 	table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), '#a7a5a5'),
 				   ('INNERGRID', (0,0), (-1,-1), 0.25, colors.white),
 				   ('BOX', (0,0), (-1,-1), 0.25, colors.black),
