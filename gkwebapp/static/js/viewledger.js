@@ -66,8 +66,68 @@ $(".dis").attr('disabled', true);
   $("#viewledger_toyear").blur(function(event) {
     $(this).val(yearpad($(this).val(),4));
   });
-
-
+  $("#viewledger_fromdate").keydown(function(e){
+    if(e.which==13){
+      $("#viewledger_frommonth").focus();
+    }
+    if(e.which==38){
+      $("#viewledger_monthly").focus();
+    }
+  });
+  $("#viewledger_frommonth").keydown(function(e){
+    if(e.which==13){
+      $("#viewledger_fromyear").focus();
+    }
+    if(e.which==38){
+      $("#viewledger_fromdate").focus();
+    }
+  });
+  $("#viewledger_fromyear").keydown(function(e){
+    if(e.which==13){
+      $("#viewledger_todate").focus();
+    }
+    if(e.which==38){
+      $("#viewledger_frommonth").focus();
+    }
+  });
+  $("#viewledger_todate").keydown(function(e){
+    if(e.which==13){
+      $("#viewledger_tomonth").focus();
+    }
+    if(e.which==38){
+      $("#viewledger_fromyear").focus();
+    }
+  });
+  $("#viewledger_tomonth").keydown(function(e){
+    if(e.which==13){
+      $("#viewledger_toyear").focus();
+    }
+    if(e.which==38){
+      $("#viewledger_todate").focus();
+    }
+  });
+  $("#viewledger_toyear").keydown(function(e){
+    if(e.which==13){
+      $("#viewledger_nar").focus();
+    }
+    if(e.which==38){
+      $("#viewledger_tomonth").focus();
+    }
+  });
+  $("#viewledger_nar").keydown(function(e){
+    if(e.which==13){
+      $("#viewledger_prjname").focus();
+    }
+    if(e.which==38){
+      $("#viewledger_toyear").focus();
+    }
+  });
+  $("#viewledger_prjname").keydown(function(e){
+    var s1 = $("#viewledger_prjname option:selected").index();
+    if(e.which==38 && s1==0){
+      $("#viewledger_nar").focus();
+    }
+  });
     $("#viewledger_monthly").change(function(event) {
       if ($("#viewledger_monthly").is(":checked")) {
         $('.dis').attr('disabled', true);
