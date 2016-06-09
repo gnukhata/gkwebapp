@@ -22,6 +22,7 @@ from reportlab.rl_config import defaultPageSize
 def printprofitandloss(request):
 	calculatefrom = request.params["calculatefrom"]
 	calculateto = request.params["calculateto"]
+	headingprofit = request.params["headingprofit"]
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculateto=%s"%(calculateto), headers=header)
 	expense = result.json()["expense"]
@@ -48,7 +49,7 @@ def printprofitandloss(request):
 		canvas.setFont('Times-Bold',18)
 		canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-50, orgname)
 		canvas.setFont('Times-Bold',16)
-		canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-70, "Profit And Loss" )
+		canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-70, headingprofit )
 		canvas.setFont('Times-Bold',12)
 		canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-90, period)
 		canvas.setStrokeColorRGB(0, 0, 0)

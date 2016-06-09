@@ -23,7 +23,11 @@ def printconvbalsheetreport(request):
 	calculateto = request.params["calculateto"]
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=1"%(calculateto), headers=header)
-	orgname = "COEP"
+	fy = str(request.params["fystart"]);
+	fy = fy[6:]
+	fy = fy + "-" + (str(request.params["fyend"])[8:])
+	orgname = str(request.params["orgname"])
+	orgname += " (FY: " + fy +")"
 	period = " On " + calculateto[8:10] + "-" +  str(calendar.month_abbr[int(calculateto[6:7])]) + "-" +  calculateto[0:4];
 	def myFirstPage(canvas, doc):
 		canvas.saveState()
@@ -62,43 +66,44 @@ def printconvbalsheetreport(request):
 	style.alignment = TA_RIGHT
 	stylenormal = styles["Normal"]
 	stylenormal.alignment = TA_LEFT
-	data= [[]]
-	i = 0
+	groupname = Paragraph("<b>Capital and Liabilities</b>", stylenormal)
+	groupname1 = Paragraph("<b>Properties and Assets</b>", stylenormal)
+	amount = Paragraph("<b>Amount</b>", style)
+	data = [[groupname, amount, groupname1, amount]];
+	for record in leftlist:
+		groupname = Paragraph(str(record["groupname"]), stylenormal)
+		amount = Paragraph(str(record["amount"]), style)
+		data.append([groupname, amount]);
+		account = record["accounts"]
+		if(account):
+			for accountinfo in account:
+				data.append(["       " + accountinfo["accountname"], accountinfo["amount"] + "       "])
+	i = 1
 	for record in  rightlist:
-		if(i == 0):
-			groupname = Paragraph("<b>Capital and Liabilities</b>", stylenormal)
-			amount = Paragraph("<b>Amount</b>", style)
-			data.append([groupname, amount]);
-			groupname = Paragraph("<b>" + str(record["groupname"]) + "</b>", stylenormal)
-			amount = Paragraph(str(record["amount"]), style)
-			data.append([groupname, amount]);
-			i += 1;
-			continue;
 		groupname = Paragraph(str(record["groupname"]), stylenormal)
 		if(record["amount"] == "."):
 			record["amount"] = ""
 		amount = Paragraph(str(record["amount"]), style)
-		data.append([groupname, amount]);
-		i += 1;
-	i = 1;
-	for record in leftlist:
-		if(i == 1):
-			groupname = Paragraph("<b>Properties and Assets</b>", stylenormal)
-			amount = ""
+		try:
 			data[i].append(groupname);
-			data[i].append(amount)
-			groupname = Paragraph("<b>" + str(record["groupname"]) + "</b>", stylenormal)
-			amount = Paragraph(str(record["amount"]), style)
-			data[i+1].append(groupname);
-			data[i+1].append(amount);
-			i += 1;
-			continue;
-		groupname = Paragraph(str(record["groupname"]), stylenormal)
-		amount = Paragraph(str(record["amount"]), style)
-		data[i+1].append(groupname);
-		data[i+1].append(amount);
-		i += 1;
-	table = Table(data, colWidths=[7.4*cm, 2.3 *cm, 7.4*cm, 2.3*cm])
+			data[i].append(amount);
+			i += 1
+		except IndexError:
+			data.append(["","",groupname,amount])
+			i += 1
+		account = record["accounts"]
+		if(account):
+			for accountinfo in account:
+				try:
+					data[i].append("       " + accountinfo["accountname"])
+					data[i].append(accountinfo["amount"] + "       ")
+					i += 1
+				except IndexError:
+					data.append(["","","       " + accountinfo["accountname"], accountinfo["amount"] + "       "])
+					i += 1
+
+
+	table = Table(data, colWidths=[7.0*cm, 2.7 *cm, 7.0*cm, 2.7*cm])
 	table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), '#a7a5a5'),
 					('INNERGRID', (0,0), (-1,-1), 0.25, colors.white),
 				   ('BOX', (0,0), (-1,-1), 0.25, colors.black),
@@ -119,7 +124,11 @@ def printsourcesandappfundreport(request):
 	calculateto = request.params["calculateto"]
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=2"%(calculateto), headers=header)
-	orgname = "COEP"
+	fy = str(request.params["fystart"]);
+	fy = fy[6:]
+	fy = fy + "-" + (str(request.params["fyend"])[8:])
+	orgname = str(request.params["orgname"])
+	orgname += " (FY: " + fy +")"
 	period =  calculateto[8:10] + "-" +  str(calendar.month_abbr[int(calculateto[6:7])]) + "-" +  calculateto[0:4];
 	def myFirstPage(canvas, doc):
 		canvas.saveState()
@@ -158,32 +167,33 @@ def printsourcesandappfundreport(request):
 	style.alignment = TA_RIGHT
 	stylenormal = styles["Normal"]
 	stylenormal.alignment = TA_LEFT
-	data= [[]]
-	i = 0
-	for record in  rightlist:
-		if(i == 0):
-			groupname = Paragraph("<b>" + str(record["groupname"]) + "</b>", stylenormal)
-			amount = Paragraph(str(record["amount"]), style)
-			data.append([groupname, amount]);
-			i += 1;
-			continue;
-		groupname = Paragraph(str(record["groupname"]), stylenormal)
-		amount = Paragraph(str(record["amount"]), style)
-		data.append([groupname, amount]);
-		i += 1;
-	i = 0;
+	leftlist.pop(0)
+	rightlist.pop(0)
+	groupname = Paragraph("<b>Sources</b>", stylenormal)
+	amount = Paragraph("<b>Amount</b>", style)
+	data = [[groupname, amount]];
 	for record in leftlist:
-		if(i == 0):
-			groupname = Paragraph("<b>" + str(record["groupname"]) + "</b>", stylenormal)
-			amount = Paragraph(str(record["amount"]), style)
-			data.append([groupname, amount]);
-			i += 1;
-			continue;
 		groupname = Paragraph(str(record["groupname"]), stylenormal)
 		amount = Paragraph(str(record["amount"]), style)
 		data.append([groupname, amount]);
-		i += 1;
-	table = Table(data, colWidths=[14.8 *cm,  4.6 * cm])
+		account = record["accounts"]
+		if(account):
+			for accountinfo in account:
+				data.append(["            " + accountinfo["accountname"], accountinfo["amount"] +"            "])
+	groupname = Paragraph("<b>Applications</b>", stylenormal)
+	amount = Paragraph("", style)
+	data.append([groupname, amount]);
+	for record in  rightlist:
+		groupname = Paragraph(str(record["groupname"]), stylenormal)
+		amount = Paragraph(str(record["amount"]), style)
+		data.append([groupname, amount]);
+		account = record["accounts"]
+		if(account):
+			for accountinfo in account:
+				data.append(["            " + str(accountinfo["accountname"]), accountinfo["amount"] + "            "])
+
+
+	table = Table(data, colWidths=[12.8 *cm,  6.6 * cm])
 	table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), '#a7a5a5'),
 				   ('INNERGRID', (0,0), (-1,-1), 0.25, colors.white),
 				   ('BOX', (0,0), (-1,-1), 0.25, colors.black),
