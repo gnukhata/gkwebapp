@@ -156,6 +156,13 @@ $(document).ready(function(){
           }
       });
 
+      if (sessionStorage.orgt=="Not For Profit") {
+        $("#showprofitloss").text("Income & Expenditure");
+        $("#showbalancesheet").text("Statement of Affairs");
+        $("#showcashflow").text("Receipt & Payment");
+        $("#showproject").text("Project");
+      }
+
       $.ajax({
         url: '/orgdata',
         type: 'POST',
