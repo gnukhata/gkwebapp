@@ -5,6 +5,10 @@ $(document).ready(function() {
   $('.table-fixedheader thead').width(percentwid+"%");
   var percentheigth = 100*(($("body").height()-$(".navbar").height()-170)/$("body").height());
   $('.table-fixedheader tbody').height(percentheigth+"%");
+  if (sessionStorage.orgt=="Not For Profit") {
+    $("#addid").text("Add Project");
+    $("#listid").text("Project List");
+  }
 
   $("#prjamount").numeric({ negative: false });
   $("#m_prjamount").numeric({ negative: false });

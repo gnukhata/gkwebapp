@@ -14,6 +14,12 @@ $(document).ready(function()
 
   }
 
+if (sessionStorage.booksclosedflag==1) {
+  $("#lock").remove();
+  $("#edit").remove();
+  $("#clone").remove();
+  $("#delete").remove();
+}
 
   var demodrsum = 0;
   var democrsum = 0;

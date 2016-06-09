@@ -28,7 +28,7 @@ def orgexists(request):
 	for records in result.json()["gkdata"]:
 		sdata = {"orgname":str(records["orgname"]),"orgtype":str(records["orgtype"])}
 		strData.append(sdata)
-	
+
 	if len(strData) ==0:
 		return {"gkresult":0}
 	else:
@@ -84,6 +84,16 @@ def selectorglogin(request):
 		return  {"gktoken":result.json()["token"], "gkstatus":result.json()["gkstatus"]}
 	else:
 		return  {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="orgdata",renderer="json")
+def orgdata(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/login",headers=header)
+	if result.json()["gkstatus"]==0:
+		return  {"gkresult":result.json()["gkresult"], "gkstatus":result.json()["gkstatus"]}
+	else:
+		return  {"gkstatus":result.json()["gkstatus"]}
+
 
 
 @view_config(route_name="showmainshell",renderer="gkwebapp:templates/mainshell.jinja2")

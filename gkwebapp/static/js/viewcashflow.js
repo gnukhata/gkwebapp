@@ -4,7 +4,9 @@ $(document).ready(function() {
   $('.cashfl_autotab').autotab('number');
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
-
+  if (sessionStorage.orgt=="Not For Profit") {
+    $(".panel-title").text("View Receipt & Payment");
+  }
 
 
   var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)

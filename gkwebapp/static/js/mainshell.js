@@ -156,6 +156,41 @@ $(document).ready(function(){
           }
       });
 
+      if (sessionStorage.orgt=="Not For Profit") {
+        $("#showprofitloss").text("Income & Expenditure");
+        $("#showbalancesheet").text("Statement of Affairs");
+        $("#showcashflow").text("Receipt & Payment");
+        $("#showproject").text("Project");
+      }
+
+      $.ajax({
+        url: '/orgdata',
+        type: 'POST',
+        global: false,
+        async: false,
+        datatype: 'json',
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+      .done(function(resp){
+        if(resp["gkresult"]["userrole"]==1){
+          $(".hideoperator").remove();
+        }
+        if(resp["gkresult"]["userrole"]==0){
+          $(".hidemanager").remove();
+        }
+         if (resp["gkresult"]["booksclosedflag"]==1) {
+           $(".closebooks").remove();
+         }
+         if (resp["gkresult"]["roflag"]==1) {
+           $(".rollover").remove();
+         }
+         sessionStorage.setItem('booksclosedflag', resp["gkresult"]["booksclosedflag"]);
+         sessionStorage.setItem('roflag', resp["gkresult"]["roflag"]);
+      });
+
   var orname = sessionStorage.getItem('orgn');
   var ortype = sessionStorage.getItem('orgt');
   var styear = sessionStorage.getItem('year1');
@@ -487,5 +522,49 @@ $("#transaction").click();
   $('#purchasereturntb').click(function(){
     $('#showpurchasereturn').click();
   });
-
+  $('#editaccounttb').click(function(){
+    $('#editaccount').click();
+  });
+  $('#projecttb').click(function(){
+    $('#showproject').click();
+  });
+  $('#projecttb').click(function(){
+    $('#showproject').click();
+  });
+  $('#brstb').click(function(){
+    $('#BRS').click();
+  });
+  $('#ledgertb').click(function(){
+    $('#showviewledger').click();
+  });
+  $('#trialbalancetb').click(function(){
+    $('#showtrialbalance').click();
+  });
+  $('#projectstatementtb').click(function(){
+    $('#showprjstate').click();
+  });
+  $('#cashflowtb').click(function(){
+    $('#showcashflow').click();
+  });
+  $('#listofaccountstb').click(function(){
+    $('#listofaccounts').click();
+  });
+  $('#createusertb').click(function(){
+    $('#createuser').click();
+  });
+  $('#REMOVEusertb').click(function(){
+    $('#REMOVEuser').click();
+  });
+  $('#changepasswordtb').click(function(){
+    $('#showedituser').click();
+  });
+  $('#manualtb').click(function(){
+    $('#manual').click();
+  });
+  $('#logouttb').click(function(){
+    $('#logout').click();
+  });
+  $('#changeogtb').click(function(){
+    $('#changeorg').click();
+  });
 });
