@@ -102,7 +102,14 @@ $("#loginform").submit(function(e)
 
     sessionStorage.gktoken = gt;
 
-    window.location= "/showmainshell";
+    $.ajax({
+      url: '/showmainshell',
+      type: 'POST',
+      dataType: 'html',
+      })
+    .done(function(resp) {
+      $("body").html(resp);
+    });
     }
 
     }

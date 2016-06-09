@@ -87,6 +87,7 @@ def main(global_config, **settings):
 	config.add_route('deleteuser', '/deleteuser')
 	config.add_route('forgotpassword', '/forgotpassword')
 	config.add_route('showclosebooks', '/showclosebooks')
+	config.add_route('rollover', '/rollover')
 	config.add_route('printlistofaccounts', '/printlistofaccounts')
 	config.add_route('printsourcesandappfundreport', '/printsourcesandappfundreport')
 	config.add_route('printconvbalsheetreport', '/printconvbalsheetreport')
