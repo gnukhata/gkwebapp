@@ -284,7 +284,7 @@ $.ajax({
 
     $('#changeorg').click(function (e) {
       sessionStorage.clear();
-      $("body").load("/");
+      window.location.replace("/");
 
       });
 

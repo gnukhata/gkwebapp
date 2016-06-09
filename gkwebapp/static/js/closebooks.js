@@ -35,8 +35,59 @@ $(document).ready(function()
   $("#rbtomonth").val(todatearray[1])
   $("#rbtoyear").val(todatearray[0])
 
+  var nstartday = $("#rbtoday").val();
+  var nstartmonth = $("#rbtomonth").val();
+  var nstartyear = $("#rbtoyear").val();
+  var nstartdate = nstartday+nstartmonth+nstartyear;
+  var enddate = Date.parseExact(nstartdate, "ddMMyyyy").add({days: 1}).toString("ddMMyyyy");
+  var endday = enddate[0]+enddate[1];
+  var endmonth = enddate[2]+enddate[3];
+  var endyear = enddate[4]+enddate[5]+enddate[6]+enddate[7];
+  $("#rbfrom_day").val(endday);
+  $("#rbfrom_month").val(endmonth);
+  $("#rbfrom_year").val(endyear);
+var enddate2 = Date.parseExact(endday+endmonth+endyear, "ddMMyyyy").add({days: -1, years: 1}).toString("ddMMyyyy");
+var endday2 = enddate2[0]+enddate2[1];
+var endmonth2 = enddate2[2]+enddate2[3];
+var endyear2 = enddate2[4]+enddate2[5]+enddate2[6]+enddate2[7];
+$("#rbto_day").val(endday2);
+$("#rbto_month").val(endmonth2);
+$("#rbto_year").val(endyear2);
+
 
 $("input:enabled:first").focus();
+
+$('input:text,select, input:checkbox').keydown( function(event) {
+  var n = $("input:text:visible,select, input:checkbox").length;
+  var f = $('input:text:visible,select, input:checkbox');
+
+  if (event.which == 13)
+  {
+
+
+    var nextIndex = f.index(this) + 1;
+    if(nextIndex < n){
+      event.preventDefault();
+      f[nextIndex].focus();
+      f[nextIndex].select();
+    }
+
+  }
+
+
+
+});
+
+$("#cbtoyear").keydown(function(event) {
+  /* Act on the event */
+  $("#closebooks").click();
+});
+
+$("#rbto_year").keydown(function(event) {
+  /* Act on the event */
+  $("#rollover").click();
+});
+
 $(document).off("click","#closebooks").on("click", "#closebooks", function(event)
 {
 
@@ -100,11 +151,12 @@ $(document).off("click","#rollover").on("click", "#rollover", function(event)
   }
   $('#m_rollb').modal('show').one('click', '#m_remove', function (e)
   {
-
+    var financialend = $("#rbto_year").val()+"-"+$("#rbto_month").val()+"-"+$("#rbto_day").val()
   $.ajax({
     url: '/rollover',
     type: 'POST',
     datatype: 'json',
+    data:{"financialend":financialend},
     beforeSend: function(xhr)
     {
       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -113,10 +165,7 @@ $(document).off("click","#rollover").on("click", "#rollover", function(event)
   .done(function(jsonobj) {
     if (jsonobj["gkstatus"]==0) {
 
-      $(".closebooks").remove();
-      sessionStorage.booksclosedflag=1;
-      sessionStorage.roflag=1;
-      window.replace("/");
+      window.location.replace("/");
 
     }
     else {
@@ -131,6 +180,8 @@ $(document).off("click","#rollover").on("click", "#rollover", function(event)
 });
 
 });
+
+
 $('#m_rollb').on('shown.bs.modal', function(event) {
   $("#m_cancel").focus();
 });

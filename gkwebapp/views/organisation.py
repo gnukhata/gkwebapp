@@ -36,6 +36,6 @@ def closebooks(request):
 @view_config(route_name="rollover", renderer="json")
 def rollover(request):
 	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/rollclose?task=closebooks", headers=header)
+	result = requests.get("http://127.0.0.1:6543/rollclose?task=rollover&financialend=%s"%(request.params["financialend"]), headers=header)
 	print result.json()["gkstatus"]
 	return {"gkstatus":result.json()["gkstatus"]}
