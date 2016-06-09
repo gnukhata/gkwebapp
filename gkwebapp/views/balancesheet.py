@@ -71,22 +71,39 @@ def printconvbalsheetreport(request):
 	amount = Paragraph("<b>Amount</b>", style)
 	data = [[groupname, amount, groupname1, amount]];
 	for record in leftlist:
-		groupname = Paragraph("<b>" + str(record["groupname"]) + "</b>", stylenormal)
+		groupname = Paragraph(str(record["groupname"]), stylenormal)
 		amount = Paragraph(str(record["amount"]), style)
 		data.append([groupname, amount]);
-
+		account = record["accounts"]
+		if(account):
+			for accountinfo in account:
+				data.append(["         " + accountinfo["accountname"], accountinfo["amount"] + "         "])
 	i = 1
 	for record in  rightlist:
 		groupname = Paragraph(str(record["groupname"]), stylenormal)
 		if(record["amount"] == "."):
 			record["amount"] = ""
-		else:
-			amount = Paragraph(str(record["amount"]), style)
-		data[i].append(groupname);
-		data[i].append(amount);
-		i += 1
+		amount = Paragraph(str(record["amount"]), style)
+		account = record["accounts"]
+		try:
+			data[i].append(groupname);
+			data[i].append(amount);
+			i += 1
+		except IndexError:
+			data.append(["","",groupname,amount])
+			i += 1
+		if(account):
+			for accountinfo in account:
+				try:
+					data[i].append("             " + accountinfo["accountname"])
+					data[i].append(accountinfo["amount"] + "             ")
+					i += 1
+				except IndexError:
+					data.append(["","","          " + accountinfo["accountname"], accountinfo["amount"] + "          "])
+					i += 1
 
-	table = Table(data, colWidths=[7.4*cm, 2.3 *cm, 7.4*cm, 2.3*cm])
+
+	table = Table(data, colWidths=[7.0*cm, 2.7 *cm, 7.0*cm, 2.7*cm])
 	table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), '#a7a5a5'),
 					('INNERGRID', (0,0), (-1,-1), 0.25, colors.white),
 				   ('BOX', (0,0), (-1,-1), 0.25, colors.black),

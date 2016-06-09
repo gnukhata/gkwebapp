@@ -79,7 +79,7 @@ def printlistofaccount(request):
 				   ('BOX', (0,0), (-1,-1), 0.25, colors.black),
 				   ('BOX', (0,0), (-1,0), 0.25, colors.black),]
 	story = [Spacer(1,0.4*inch)]
-	spreadsheet_table = SpreadsheetTable(data, repeatRows = 1, colWidths = (1.5 * cm, 6.6 * cm,  5.4* cm, 5 * cm))
+	spreadsheet_table = SpreadsheetTable(data, repeatRows = 1, colWidths = (1.5 * cm, 7.1 * cm,  5.6* cm, 5 * cm))
 	spreadsheet_table.setStyle(table_style)
 	story.append(spreadsheet_table)
 	doc.multiBuild(story, onFirstPage=myFirstPage, onLaterPages=myLaterPages)
