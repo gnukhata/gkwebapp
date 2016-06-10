@@ -122,14 +122,15 @@
         <tr class="info ">
           <th class="col-xs-1">Date</th>
           <th class="col-xs-1">V.No.</th>
+          <th class="col-xs-1">Voucher Type</th>
           <th style="text-align:center" class="col-xs-1">Status</th>
           {% if ledgerheader["projectname"]=="" %}
-          <th class="col-xs-3">Particulars</th>
+          <th class="col-xs-2">Particulars</th>
           <th style="text-align:right" class="col-xs-2">Debit</th>
           <th style="text-align:right" class="col-xs-2">Credit</th>
           <th style="text-align:right" class="col-xs-2">Balance</th>
           {% else %}
-          <th class="col-xs-5">Particulars</th>
+          <th class="col-xs-4">Particulars</th>
           <th style="text-align:right" class="col-xs-2">Debit</th>
           <th style="text-align:right" class="col-xs-2">Credit</th>
           {% endif %}
@@ -150,6 +151,23 @@
             <a class="vno" href="">{{record['vouchernumber']}}</a>
           </td>
           {% endif %}
+          {% if record["vouchertype"]=="" %}
+          <td class="col-xs-1">
+            <a class="vtype" href="">&nbsp</a>
+          </td>
+          {% elif (record["vouchertype"]=="purchasereturn")%}
+          <td class="col-xs-1">Purchase Return</td>
+          {% elif (record["vouchertype"]=="salesreturn")%}
+          <td class="col-xs-1">Sales Return</td>
+          {% elif (record["vouchertype"]=="creditnote")%}
+          <td class="col-xs-1">Credit Note</td>
+          {% elif (record["vouchertype"]=="debitnote")%}
+          <td class="col-xs-1">Debit Note</td>
+          {% else %}
+          <td class="col-xs-1" style="text-align:left">
+            {{(record["vouchertype"]).title()}}
+          </td>
+          {% endif %}
           {% if (record['status']) %}
           <td class="col-xs-1" style="color:red; text-align:center">***</td>
           {% else %}
@@ -160,7 +178,7 @@
           {% endif %}
           {% endif %}
           {% if ledgerheader["projectname"]=="" %}
-          <td class="col-xs-3">
+          <td class="col-xs-2">
             {% for pr in record['particulars'] %}
             {{pr}} <br>
             {% endfor %}
@@ -178,7 +196,7 @@
             {{record["balance"]}}
           </td>
           {% else %}
-          <td class="col-xs-5">
+          <td class="col-xs-4">
             {% for pr in record['particulars'] %}
             {{pr}} <br>
             {% endfor %}
