@@ -79,13 +79,12 @@ $(document).ready(function()
     }
       $.ajax(
       {
-        
       type: "POST",
       url: "/userlogin",
       global: false,
       async: false,
       datatype: "json",
-      data: $("#loginform").serialize(),
+      data: {"orgcode":$("#orgcode").val(), "username":$("#username").val(), "userpassword":$("#userpassword").val()},
       success: function(resp)
       {
       if(resp["gkstatus"]==0)

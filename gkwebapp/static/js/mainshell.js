@@ -305,8 +305,7 @@ $.ajax({
       {
         $("#info").html(resp);
       }
-      }
-    );
+      });
     });
 
     $('#changeorg').click(function (e) {
@@ -316,7 +315,6 @@ $.ajax({
       });
 
       $("#logout").click(function(event) {
-        alert("logout");
         flag = 1;
         $.ajax({
           url: '/getorgcode',
@@ -328,8 +326,7 @@ $.ajax({
           },
           success: function(resp)
           {
-            alert("success");
-            sessionStorage.clear();
+            sessionStorage.gktoken="";
             code = resp["gkdata"]
             $("body").load("/login?orgcode="+code+"&flag="+flag, setTimeout( function() { $("#username").focus(); }, 500 ));
           }

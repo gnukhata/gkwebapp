@@ -52,16 +52,12 @@
             </div>
 
             <input id="orgcode"  name="orgcode" value="{{code}}" class="form-control" ></input>
-            <input id="flag"  name="logoutflag" value="{{flag}}" class="form-control" ></input>
+            <input id="flag"  name="flag" value="{{flag}}" class="form-control" ></input>
             <div style="margin-top:10px" class="form-group">
               <!-- Button -->
               <div class="col-sm-12 controls">
                 <button id="login" type="submit" class="btn btn-success " accesskey="l"><span class="glyphicon glyphicon-arrow-right"></span><u>L</u>ogin</button>
-                {% if flag==1 %}
                 <button id="changeorg" class="btn btn-warning">Change Organisation</button>
-                {% else %}
-                <button id="back" class="btn btn-warning" accesskey="b"><span class="glyphicon glyphicon-arrow-left"></span><u>B</u>ack</button>
-                {%endif%}
               </div>
             </div>
           </form>
