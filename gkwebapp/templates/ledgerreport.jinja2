@@ -152,9 +152,7 @@
           </td>
           {% endif %}
           {% if record["vouchertype"]=="" %}
-          <td class="col-xs-1">
-            <a class="vtype" href="">&nbsp</a>
-          </td>
+          <td class="col-xs-1">&nbsp</td>
           {% elif (record["vouchertype"]=="purchasereturn")%}
           <td class="col-xs-1">Purchase Return</td>
           {% elif (record["vouchertype"]=="salesreturn")%}
