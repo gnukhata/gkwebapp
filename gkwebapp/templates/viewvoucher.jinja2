@@ -114,7 +114,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
           </div>
           <div class="alert alert-danger" id="zerorow-alert" hidden>
             <a href="#" class="close" aria-label="close">&times;</a>
-            Voucher with zero amount row cannot be saved!
+            Voucher with zero amount cannot be saved!
           </div>
           <div class="alert alert-danger" id="accs-alert" hidden>
             <a href="#" class="close" aria-label="close">&times;</a>
@@ -405,14 +405,14 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
         <br>
         <div class="modal-footer">
           {% if voucher['status'] %}
-          <button type="button" class="btn btn-warning btn-sm" id="lock" accesskey="k">Unloc<u>k</u></button>
+          <button type="button" class="btn btn-warning btn-sm" id="lock" value="Unlock" accesskey="k">Unloc<u>k</u></button>
           {% else %}
-          <button type="button" class="btn btn-warning btn-sm" id="lock" accesskey="k">Loc<u>k</u></button>
+          <button type="button" class="btn btn-warning btn-sm" id="lock" value="Lock" accesskey="k">Loc<u>k</u></button>
           {% endif %}
           <button type="button" class="btn btn-primary btnfocus btn-sm" id="edit" accesskey="t">Edi<u>t</u></button>
           <button type="button" class="btn btn-primary btnfocus btn-sm" id="clone" accesskey="o">Cl<u>o</u>ne</button>
-          <button type="submit" id="save" class="btn btn-primary btn-sm" accesskey="v">Sa<u>v</u>e</button>
-          <button type="button" class="btn btn-primary btnfocus btn-sm" id="delete" accesskey="d"><u>D</u>elete</button>
+          <button type="submit" id="save" class="btn btn-success btn-sm" accesskey="v">Sa<u>v</u>e</button>
+          <button type="button" class="btn btn-danger btnfocus btn-sm" id="delete" accesskey="d"><u>D</u>elete</button>
         </div>
       </div>
     </div>

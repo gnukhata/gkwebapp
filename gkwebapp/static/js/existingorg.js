@@ -1,6 +1,7 @@
 $(document).ready(function()
 {
   $("#org-name").focus();
+  
   $("#org-name").keyup(function(e) {
     e.preventDefault();
     if (e.which == 13)
@@ -25,7 +26,7 @@ $(document).ready(function()
     }
   });
 
-  $("#org-name").bind("change keyup", function(){
+  $("#org-name").bind("change keyup focusin", function(){
     var org = $("#org-name option:selected").val();
     var orgobj = eval('('+org+')');
     $.ajax({

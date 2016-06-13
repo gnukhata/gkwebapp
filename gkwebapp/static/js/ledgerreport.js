@@ -49,6 +49,12 @@ $(document).ready(function() {
     var id = $(this).attr('value');
     var rindex = $(this).index();
 
+    if(e.which==13)
+    {
+
+      $('#ledgertable tbody tr:eq('+rindex+')').dblclick() ;
+    }
+
     if(e.which==32)
     {
       e.preventDefault();
@@ -126,17 +132,6 @@ $(document).ready(function() {
     $(this).toggleClass('selected');
     $('#ledgertable tbody tr:eq('+currindex+') a').focus();
 
-  });
-
-  $("#ledgertable").off('keydown','tr').on('keydown','tr',function(e){
-    var id = $(this).attr('value');
-    var rindex = $(this).index();
-
-    if(e.which==13)
-    {
-
-      $('#ledgertable tbody tr:eq('+rindex+')').dblclick() ;
-    }
   });
 
   $("#ledgertable tbody tr").off('dblclick').on('dblclick',function(e){

@@ -8,6 +8,7 @@ $(document).ready(function(){
       }
     if(event.ctrlKey && event.keyCode == 82) {
       $("#createnav").click();
+      $("#createorg").load("/createorg",setTimeout( function() { $("#orgname").focus(); }, 500 ));
       /*console.log("Hey! Ctrl+S event captured!");*/
       event.preventDefault();
       }
