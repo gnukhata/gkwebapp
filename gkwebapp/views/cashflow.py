@@ -68,9 +68,11 @@ def printcashflowreport(request):
 	simplestyle = styleSheet['BodyText']
 	simplestyle.alignment = TA_CENTER
 	simplestyle.fontSize = 9
+	
 	headingstyle = styleSheet['Heading4']
 	headingstyle.alignment = TA_CENTER
 	headingstyle.fontSize = 10
+	headingstyle.fontName = 'Times-Bold'
 
 	calculateto = request.params["calculateto"]
 	financialstart = request.params["financialstart"]
