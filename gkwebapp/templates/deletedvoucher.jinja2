@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>GNUKhata | Deleted Voucher</title>
+  <style type="text/css">
+
+  .selected
+  {
+    background-color: Aquamarine;
+  }
+
+  .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  td {
+    font-size: 65%;
+  }
+
+  th {
+    font-size: 70%;
+  }
+  /*
+  Force table width to 100%
+  */
+  table.table-fixedheader {
+    width: 100%;
+  }
+  /*
+  Set table elements to block mode.  (Normally they are inline).
+  This allows a responsive table, such as one where columns can be stacked
+  if the display is narrow.
+  */
+  table.table-fixedheader, table.table-fixedheader>thead, table.table-fixedheader>tbody, table.table-fixedheader>tfoot, table.table-fixedheader>thead>tr, table.table-fixedheader>tbody>tr, table.table-fixedheader>tfoot>tr, table.table-fixedheader>thead>tr>th, table.table-fixedheader>tbody>tr>td, table.table-fixedheader>tfoot>tr>td {
+    display: block;
+  }
+  table.table-fixedheader>thead>tr:after, table.table-fixedheader>tbody>tr:after, table.table-fixedheader>tfoot>tr:after  {
+    content:' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+  }
+  /*
+  When scrolling the table, actually it is only the tbody portion of the
+  table that scrolls (not the entire table: we want the thead to remain
+  fixed).  We must specify an explicit height for the tbody.  We include
+  100px as a default, but it can be overridden elsewhere.
+
+  Also, we force the scrollbar to always be displayed so that the usable
+  width for the table contents doesn't change (such as becoming narrower
+  when a scrollbar is visible and wider when it is not).
+  */
+  table.table-fixedheader>tbody {
+    overflow-y: scroll;
+    height: 68vh;
+
+  }
+  /*
+  We really don't want to scroll the thead contents, but we want to force
+  a scrollbar to be displayed anyway so that the usable width of the thead
+  will exactly match the tbody.
+  */
+  table.table-fixedheader>thead, table.table-fixedheader>tfoot {
+    overflow-y: scroll;
+    height: 26px;
+    width: 99.3%;
+  }
+  /*
+  For browsers that support it (webkit), we set the background color of
+  the unneeded scrollbar in the thead to make it invisible.  (Setting
+  visiblity: hidden defeats the purpose, as this alters the usable width
+  of the thead.)
+  */
+  table.table-fixedheader>thead::-webkit-scrollbar {
+    background-color: inherit;
+  }
+
+
+  table.table-fixedheader>thead>tr>th:after, table.table-fixedheader>tbody>tr>td:after, table.table-fixedheader>tfoot>tr>td:after {
+    content:' ';
+    display: table-cell;
+    visibility: hidden;
+    clear: both;
+  }
+
+  /*
+  We want to set <th> and <td> elements to float left.
+  We also must explicitly set the width for each column (both for the <th>
+  and the <td>).  We set to 20% here a default placeholder, but it can be
+  overridden elsewhere.
+  */
+
+  table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.table-fixedheader>tfoot tr td {
+    float: left;
+
+  }
+  </style>
+</head>
+<body>
+  <span style="margin:auto; display:table;"><b>Deleted Vouchers</b></span>
+  </br>
+  <div class="table-responsive">
+    <table id="deletedvouchertable" class=" shadow table table-fixedheader table-condensed">
+      <thead>
+        <tr class="info ">
+          <th class="col-xs-1">Date</th>
+          <th class="col-xs-1">V.No.</th>
+          <th class="col-xs-1">Voucher Type</th>
+          <th class="col-xs-5">Particulars</th>
+          <th style="text-align:right" class="col-xs-1">Amount</th>
+          <th style="text-align:right" class="col-xs-2">Amount</th>
+          <th class = "col-xs-1" style="text-align:center">Project</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for transaction in gkresult%}
+        <tr value="{{transaction["vouchercode"]}}">
+        <td class="col-xs-1">{{transaction["voucherdate"]}}</td>
+        {% if transaction['vouchernumber']=="" %}
+        <td class="col-xs-1">
+          <a class="vno" href="">&nbsp</a>
+        </td>
+        {% else %}
+        <td class="col-xs-1">
+          <a class="vno" href="">{{transaction['vouchernumber']}}</a>
+        </td>
+        {% endif %}
+          {% if transaction["vouchertype"]=="" %}
+          <td class="col-xs-1">&nbsp</td>
+          {% elif (transaction["vouchertype"]=="purchasereturn")%}
+          <td class="col-xs-1">Purchase Return</td>
+          {% elif (transaction["vouchertype"]=="salesreturn")%}
+          <td class="col-xs-1">Sales Return</td>
+          {% elif (transaction["vouchertype"]=="creditnote")%}
+          <td class="col-xs-1">Credit Note</td>
+          {% elif (transaction["vouchertype"]=="debitnote")%}
+          <td class="col-xs-1">Debit Note</td>
+          {% else %}
+          <td class="col-xs-1" style="text-align:left">
+            {{(transaction["vouchertype"]).title()}}
+          </td>
+          {% endif %}
+        <td class="col-xs-5">
+          {% for key in transaction["drs"].keys()%}
+          {{key}}
+          </br>
+          {% endfor %}
+        </br>
+          To,
+          {% for key in transaction["crs"].keys()%}
+          {{key}}
+          </br>
+          {% endfor %}
+          {% if transaction["narration"]!="" %}
+          ({{transaction["narration"]}})
+          {%endif%}
+        </td>
+        <td style="text-align:right" class="col-xs-1">
+          {% for key in transaction["drs"].keys()%}
+          {{transaction["drs"][key]}}
+          </br>
+          {% endfor %}
+        </td>
+        <td style="text-align:right" class="col-xs-2">
+          {% for key in transaction["drs"].keys()%}
+          </br>
+          {% endfor %}</br>
+          {% for key in transaction["crs"].keys()%}
+          {{transaction["crs"][key]}}
+          </br>
+          {% endfor %}
+        </td>
+
+        <td class = "col-xs-1" style="text-align:center">
+          {% if transaction["projectname"] != ""%}
+          {{transaction["projectname"]}}
+          {% else %}
+          &nbsp
+          {%endif%}
+        </td>
+      </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <span style="margin:auto; display:table;">
+    </span>
+  </div>
+
+  <div id="viewvc">
+  </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/deletedvoucher.js')}}"></script>
+</body>
+</html>

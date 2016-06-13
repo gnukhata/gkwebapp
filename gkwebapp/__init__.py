@@ -97,5 +97,6 @@ def main(global_config, **settings):
 	config.add_route('printledgerreport', '/printledgerreport')
 	config.add_route('printtrialbalance', '/printtrialbalance')
 	config.add_route('printcashflowreport', '/printcashflowreport')
+	config.add_route('showdeletedvoucher', '/showdeletedvoucher')
 	config.scan('gkwebapp')
 	return config.make_wsgi_app()
