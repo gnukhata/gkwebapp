@@ -1,5 +1,5 @@
 $(document).ready(function() {
-$(".m_openbal").numeric();
+  $(".m_openbal").numeric();
 
   $(document).off("keydown",".m_accname").on("keydown",".m_accname",function(event)
   {
@@ -7,37 +7,40 @@ $(".m_openbal").numeric();
     var curindex = $(this).closest('tr').index();
     var nextindex = curindex+1;
     var previndex = curindex-1;
+    var m_grpnm = $.trim($("#m_gname").val());
+
 
     if (event.which==40)
     {
-      if ($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').is(":disabled"))
+      if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
       {
-        $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').focus();
-        $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').select();
+        $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input').focus();
+        $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input').select();
+
       }
       else
       {
-        $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').focus();
-        $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').select();
+        $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').focus();
+        $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').select();
       }
     }
     if (event.which==38)
     {
 
-      if ($('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input').is(":disabled"))
+      if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
       {
-        $('#m_acctable tbody tr:eq('+previndex+') td:eq(0) input:enabled').focus();
-        $('#m_acctable tbody tr:eq('+previndex+') td:eq(0) input:enabled').select();
+        $('#m_acctable tbody tr:eq('+previndex+') td:eq(0) input').focus();
+        $('#m_acctable tbody tr:eq('+previndex+') td:eq(0) input').select();
+
       }
       else
       {
-        $('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input:enabled').focus();
-        $('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input:enabled').select();
+        $('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input').focus();
+        $('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input').select();
       }
     }
     if (event.which==13)
     {
-      var m_grpnm = $("#m_gname").val();
       if(m_grpnm=="Select Group" || m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
       {
 
@@ -97,14 +100,12 @@ $(".m_openbal").numeric();
       }
       if (jsonobj["gkstatus"]==0)
       {
-        if ($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').is(":disabled"))
+        var m_grpnm = $.trim($("#m_gname").val());
+        if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
         {
 
           $("#m_acctable").append('<tr>'+
-          '<td class="col-xs-7"><input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name"></td>'+
-          '<td class="col-xs-3">'+
-          '<input type="text" class=" form-control input-sm m_openbal rightJustified" placeholder="0.00" disabled>'+
-          '</td>'+
+          '<td class="col-xs-10"><input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name"></td>'+
           '<td class="col-xs-2">'+
           '<a href="#" class="m_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
           '</td>'+
@@ -204,6 +205,7 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
 
 
   var output = [];	// This is an array which will contain dictionaries representing rows of the table.
+  var m_grpnm = $.trim($("#m_gname").val());
   $("#m_acctable tbody tr").each(function() { //loop for the rows of the table body
 
     var accn = $(".m_accname", this).val();
@@ -216,12 +218,12 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
     var obj = {};
 
     obj.accountname = $(".m_accname", this).val();
-    if ($(".m_openbal", this).val()!="")
+    if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
     {
-      obj.openbal = $(".m_openbal", this).val();
+      obj.openbal = "0.00";
     }
     else {
-      obj.openbal = "0.00";
+      obj.openbal = $(".m_openbal", this).val();
     }
     obj.groupname = $("#m_gcode").val();
     obj.subgroupname = $("#m_sgcode").val();

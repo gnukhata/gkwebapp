@@ -50,21 +50,29 @@ $(document).ready(function() {
     var id = $(this).attr('value');
     var rindex = $(this).index();
 
+    if(e.which==13)
+    {
+
+      $('tbody tr:eq('+rindex+')').dblclick() ;
+    }
+
+
     if(e.which==32)
     {
       e.preventDefault();
+      var stat = $(this).find('td:eq(1)').html();
       if(urole =="-1")
       {
-        var stat = $(this).find('td:eq(1)').html();
+
 
         if(stat=="***")
         {
-
           vstatus = "False";
 
         }
         else
         {
+        
 
           vstatus = "True";
         }
@@ -123,16 +131,7 @@ $(document).ready(function() {
 
   });
 
-  $("#vtable").off('keydown','tr').on('keydown','tr',function(e){
-    var id = $(this).attr('value');
-    var rindex = $(this).index();
 
-    if(e.which==13)
-    {
-
-      $('tbody tr:eq('+rindex+')').dblclick() ;
-    }
-  });
 
   $(".table").off('dblclick','tr:not(:first)').on('dblclick','tr:not(:first)',function(e){
     e.preventDefault();

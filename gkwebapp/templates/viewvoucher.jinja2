@@ -405,9 +405,9 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
         <br>
         <div class="modal-footer">
           {% if voucher['status'] %}
-          <button type="button" class="btn btn-warning btn-sm" id="lock" accesskey="k">Unloc<u>k</u></button>
+          <button type="button" class="btn btn-warning btn-sm" id="lock" value="Unlock" accesskey="k">Unloc<u>k</u></button>
           {% else %}
-          <button type="button" class="btn btn-warning btn-sm" id="lock" accesskey="k">Loc<u>k</u></button>
+          <button type="button" class="btn btn-warning btn-sm" id="lock" value="Lock" accesskey="k">Loc<u>k</u></button>
           {% endif %}
           <button type="button" class="btn btn-primary btnfocus btn-sm" id="edit" accesskey="t">Edi<u>t</u></button>
           <button type="button" class="btn btn-primary btnfocus btn-sm" id="clone" accesskey="o">Cl<u>o</u>ne</button>

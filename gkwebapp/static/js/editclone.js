@@ -7,7 +7,7 @@ $(document).ready(function()
   {
     $("#lock").hide();
 
-    if ($("#lock").html()=="Unlock")
+    if ($("#lock").val()=="Unlock")
     {
       $("#edit").attr("disabled", "disabled");
     }
@@ -61,7 +61,7 @@ if (sessionStorage.booksclosedflag==1) {
 
     var id = $("#vcode").val();
 
-    if($("#lock").html()=="Unlock")
+    if($("#lock").val()=="Unlock")
     {
 
       var  vstatus = "False";
@@ -89,13 +89,15 @@ if (sessionStorage.booksclosedflag==1) {
         gkstatus=jsonObj["gkstatus"]
         if(gkstatus)
         {
-          if ($("#lock").html()=="Unlock")
+          if ($("#lock").val()=="Unlock")
           {
-            $("#lock").html("Lock");
+            $("#lock").html("Loc<u>k</u>");
+            $("#lock").val("Lock");
           }
           else
           {
-            $("#lock").html("Unlock");
+            $("#lock").html("Unloc<u>k</u>");
+            $("#lock").val("Unlock");
           }
         }
       }
