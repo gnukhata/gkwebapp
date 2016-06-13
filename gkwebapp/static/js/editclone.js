@@ -988,30 +988,37 @@ if (sessionStorage.booksclosedflag==1) {
 
 $("#delete").click(function(event) {
   /* Act on the event */
+  var cnf = comfirm("Are you sure?");
+  if (cnf) {
 
-$.ajax({
-  url: '/deletevoucher',
-  type: 'POST',
-  datatype: 'json',
-  data: {vcode: $("#vcode").val()},
-  beforeSend: function(xhr)
-  {
-    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-  },
-})
-.done(function(jsonobj) {
-  if(jsonobj["gkstatus"]==0){
-    $('#myModal').modal('hide');
+    $.ajax({
+      url: '/deletevoucher',
+      type: 'POST',
+      datatype: 'json',
+      data: {vcode: $("#vcode").val()},
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+    })
+    .done(function(jsonobj) {
+      if(jsonobj["gkstatus"]==0){
+        $('#myModal').modal('hide');
+
+      }
+      else {
+        $("#failure-alert").alert();
+        $("#nt").append('Deleted')
+        $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#failure-alert").hide();
+        });
+      }
+    });
 
   }
   else {
-    $("#failure-alert").alert();
-    $("#nt").append('Deleted')
-    $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
-      $("#failure-alert").hide();
-    });
+    $("#delete").focus();
   }
-});
 
 });
 
