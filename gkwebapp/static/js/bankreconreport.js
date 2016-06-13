@@ -90,7 +90,7 @@ $(document).ready(function() {
           $("#bankrecontable tbody tr:eq("+curindex+") td:eq(5) input").focus().select();
           return false;
         }
-        if (!Date.parseExact(curclrdate,"dd-MM-yyyy").between(curvdate,financialend)) {
+        if (Date.parseExact(curclrdate,"dd-MM-yyyy").compareTo(curvdate)==-1) {
           $("#between-date-alert").alert();
           $("#between-date-alert").fadeTo(2000, 400).slideUp(500, function(){
             $("#between-date-alert").hide();
@@ -114,7 +114,7 @@ $(document).ready(function() {
           })
             .done(function(resp)
             {
-              if (Date.parseExact(curclrdate,"dd-MM-yyyy").compareTo(datecalculateto)==-1) {
+              if (Date.parseExact(curclrdate,"dd-MM-yyyy").compareTo(datecalculateto)!=1) {
                 $("#bankrecontable tbody tr:eq("+curindex+")").fadeOut(200, function(){
                   $("#bankrecontable tbody tr:eq("+curindex+")").remove();
                 });

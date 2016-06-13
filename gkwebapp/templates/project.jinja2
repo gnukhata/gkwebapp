@@ -125,10 +125,10 @@
         </div>
         <div class="panel-body">
           <form class="form-horizontal" id="prjform">
-            <label for="prjname">Pro<u>j</u>ect name: </label>
+            <label id="prjlbl" for="prjname">Pro<u>j</u>ect name: </label>
             <input type="text" name="projectname" class="form-control" id="prjname" accesskey="j">
             <br>
-            <label for="prjamount">Sanc<u>t</u>ioned Amount: </label>
+            <label id="amtlbl" for="prjamount">Sanc<u>t</u>ioned Amount: </label>
             <input class="form-control rightJustified" id="prjamount" name="sanctionedamount" placeholder="0.00" accesskey="t">
             <br>
             <button type="submit" class="btn btn-success" accesskey="a"><u>A</u>dd</button>
@@ -147,10 +147,10 @@
         <table id="prjtable" class="table col-xs-5 table-condensed table-fixedheader">
           <thead>
             <tr class="info">
-              <th class="col-xs-6 ">
+              <th id="prjlbltbl" class="col-xs-6 ">
                 Project Name
               </th>
-              <th class="col-xs-3 rightJustified">
+              <th id="amtlbltbl" class="col-xs-3 rightJustified">
                 Sanctioned Amount
               </th>
               <th class="col-xs-2">

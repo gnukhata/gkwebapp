@@ -9,6 +9,11 @@ $(document).ready(function() {
   $("#viewprjstate_prjname").blur(function(){
     sel1 = 0;
   });
+  if (sessionStorage.orgt=="Profit Making") {
+    $("#prjhead").html("Cost Center");
+    $("#prjalert").html("Please select a cost center");
+    $("#prjnamelbl").html("Cost Center: ");
+  }
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   function pad (str, max) { //to add leading zeros in date
