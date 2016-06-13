@@ -122,8 +122,8 @@
         <tr class="info ">
           <th class="col-xs-1">Date</th>
           <th class="col-xs-1">V.No.</th>
-          <th class="col-xs-1">Voucher Type</th>
           <th style="text-align:center" class="col-xs-1">Status</th>
+          <th class="col-xs-1">Voucher Type</th>
           {% if ledgerheader["projectname"]=="" %}
           <th class="col-xs-2">Particulars</th>
           <th style="text-align:right" class="col-xs-2">Debit</th>
@@ -151,6 +151,15 @@
             <a class="vno" href="">{{record['vouchernumber']}}</a>
           </td>
           {% endif %}
+          {% if (record['status']) %}
+          <td class="col-xs-1" style="color:red; text-align:center">***</td>
+          {% else %}
+          {% if (record['status'])=="" %}
+          <td class="col-xs-1" value="na"></td>
+          {%else%}
+          <td class="col-xs-1"style="color:red; text-align:center"> </td>
+          {% endif %}
+          {% endif %}
           {% if record["vouchertype"]=="" %}
           <td class="col-xs-1">&nbsp</td>
           {% elif (record["vouchertype"]=="purchasereturn")%}
@@ -166,15 +175,7 @@
             {{(record["vouchertype"]).title()}}
           </td>
           {% endif %}
-          {% if (record['status']) %}
-          <td class="col-xs-1" style="color:red; text-align:center">***</td>
-          {% else %}
-          {% if (record['status'])=="" %}
-          <td class="col-xs-1" value="na"></td>
-          {%else%}
-          <td class="col-xs-1"style="color:red; text-align:center"> </td>
-          {% endif %}
-          {% endif %}
+
           {% if ledgerheader["projectname"]=="" %}
           <td class="col-xs-2">
             {% for pr in record['particulars'] %}
