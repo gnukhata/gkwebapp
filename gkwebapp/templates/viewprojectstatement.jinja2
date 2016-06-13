@@ -16,7 +16,7 @@
   <div style="padding-top:5px" class="container-fluid mainbox col-md-6 col-md-offset-3">
     <div class="panel panel-info shadow">
       <div class="panel-heading">
-        <h3 class="panel-title">View Project Statement</h3>
+        <h3 id = "prjhead" class="panel-title">View Project Statement</h3>
       </div>
       <div class="panel-body" style="padding-top:5px">
         <div class="alert alert-danger" id="date-alert" hidden>
@@ -29,7 +29,7 @@
         </div>
         <div class="alert alert-danger" id="account-blank-alert" hidden>
           <a href="#" class="close" aria-label="close">&times;</a>
-          <label for="viewprjstate_prjname">Please select a project!</label>
+          <label id="prjalert" for="viewprjstate_prjname">Please select a project!</label>
         </div>
         <div style="margin-bottom: 5px" class="col-xs-12 from-group">
           <label for="viewprjstate_fromdate">From Date:</label>
@@ -55,9 +55,9 @@
             </div>
           </div>
           <br>
-          <label for="viewprjstate_prjname">Pro<u>j</u>ect Name :</label>
+          <label id = "prjnamelbl" for="viewprjstate_prjname">Pro<u>j</u>ect Name :</label>
           <select class = "form-control input-sm dis" id="viewprjstate_prjname"  name = "viewprjstate_prjname" accesskey="j">
-            <option value="" disabled hidden selected>Select Project</option>
+            <option value="" disabled hidden selected>Please select</option>
             {% for prj in projects %}
             <option value="{{prj['projectcode']}}">{{prj["projectname"]}}</option>
             {% endfor %}

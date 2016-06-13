@@ -55,7 +55,7 @@ $(document).ready(function(){
           event.preventDefault();
           }
         if(event.altKey && event.keyCode == 67) {
-          $("#changepassword").click();
+          $("#showedituser").click();
           event.preventDefault();
           }
         if(event.altKey && event.keyCode == 76) {
@@ -161,6 +161,8 @@ $(document).ready(function(){
         $("#showbalancesheet").text("Statement of Affairs");
         $("#showcashflow").text("Receipt & Payment");
         $("#showproject").text("Project");
+        $("#projecttb").text("Project - ALT+P");
+        $("#showprjstate").text("Project Statement");
       }
 
       $.ajax({

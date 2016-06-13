@@ -93,7 +93,7 @@ $(document).ready(function() {
           $("#clrbankrecontable tbody tr:eq("+curindex+") td:eq(5) input").focus().select();
           return false;
         }
-        if (!Date.parseExact(curclrdate,"dd-MM-yyyy").between(curvdate,financialend)) {
+        if (Date.parseExact(curclrdate,"dd-MM-yyyy").compareTo(curvdate)==-1) {
           $("#between-date-alert").alert();
           $("#between-date-alert").fadeTo(2000, 400).slideUp(500, function(){
             $("#between-date-alert").hide();

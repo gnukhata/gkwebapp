@@ -9,6 +9,12 @@ $(document).ready(function() {
     $("#addid").text("Add Project");
     $("#listid").text("Project List");
   }
+  else {
+    $("#prjlbl").html("Cost Center: ");
+    $("#amtlbl").html("Budge<u>t</u>ed Amount: ");
+    $("#prjlbltbl").html("Cost Center");
+    $("#amtlbltbl").html("Budgeted Amount");
+  }
 
   $("#prjamount").numeric({ negative: false });
   $("#m_prjamount").numeric({ negative: false });
