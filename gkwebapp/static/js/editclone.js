@@ -988,7 +988,7 @@ if (sessionStorage.booksclosedflag==1) {
 
 $("#delete").click(function(event) {
   /* Act on the event */
-  var cnf = comfirm("Are you sure?");
+  var cnf = confirm("Are you sure?");
   if (cnf) {
 
     $.ajax({
