@@ -80,10 +80,10 @@
           <li class="dropdown">
             <a href="" id="help" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>H</u>elp</a>
             <ul class="dropdown-menu">
-              <li><a data-toggle="tab" id="manual" href="">GNUKhata Manual</a></li>
+              <li><a data-toggle="tab" id="manual" href="">Manual</a></li>
               <li><a data-toggle="tab" id="authors" href="">Authors</a></li>
-              <li><a data-toggle="tab" id="license" href="">GNUKhata License</a></li>
-              <li><a data-toggle="tab" id="about" href="">About GNUkhata</a></li>
+              <li><a data-toggle="modal" id="license" data-target="#gnukhatalicense">License</a></li>
+              <li><a data-toggle="tab" id="about" href="">About</a></li>
             </ul>
           </li>
         </ul>
@@ -143,6 +143,25 @@
         <p class="shortcut">If using older versions of Opera(prior to version 12.1) use "Shift + Esc + the underlined character".</p>
   			</li>
   		</ul>
+</div>
+<div id="gnukhatalicense" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div style="color: #115a84; background-color: #b8e0ef;" class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">License</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+          This software is licensed under version 3 of the <a href="http://www.gnu.org/licenses/agpl-3.0.html" target="_blank">GNU Affero General Public License(GNU AGPLv3)</a>.
+          You may use a newer version of the same license. The libraries used in this software are licensed under their respective <a href="http://www.gnu.org/licenses/license-list.html" target="_blank">free software licenses</a>.
+        </p>
+        <p style="margin-top: 30px;">
+            Copyright © Digital Freedom Foundation 2013,2014,2015,2016. Visit <a href="http://gnukhata.in" target="_blank">gnukhata.in</a> for more information.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
 <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
 <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
