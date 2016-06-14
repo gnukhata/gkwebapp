@@ -23,10 +23,10 @@ $(document).ready(function() {
   var newtodate = date[2]+"-"+date[1]+"-"+date[0];
 
   $(document).off('keydown' ,'.libgname').on('keydown' ,'.libgname',function(event) {
-    curindex = $(this).closest('tr').index();
+    curindex = $(this).closest('tr');
     rcindex = $(this).closest('tr').index();
-    nextindex = curindex+1;
-    previndex = curindex-1;
+    nextindex = $(curindex).nextAll("tr:visible:first").index();
+		previndex = $(curindex).prevAll("tr:visible:first").index();
     if (event.which==40)
     {
       event.preventDefault();
@@ -44,6 +44,13 @@ $(document).ready(function() {
     {
 
       $('#patable tbody tr:eq('+pyindex+') td:eq(0) a').focus();
+    }
+    if (event.which == 13)
+    {
+      event.preventDefault();
+      value = $(this).closest('tr').attr('value');
+      classs = "."+value;
+      $(classs).slideToggle(1);
     }
   });
 
@@ -77,10 +84,10 @@ $(document).ready(function() {
   var newtodate = date[2]+"-"+date[1]+"-"+date[0];
 
   $(document).off('keydown' ,'.pagname').on('keydown' ,'.pagname',function(event) {
-    curindex = $(this).closest('tr').index();
+    curindex = $(this).closest('tr');
     pyindex = $(this).closest('tr').index();
-    nextindex = curindex+1;
-    previndex = curindex-1;
+    nextindex = $(curindex).nextAll("tr:visible:first").index();
+		previndex = $(curindex).prevAll("tr:visible:first").index();
     if (event.which==40)
     {
       event.preventDefault();
@@ -99,8 +106,24 @@ $(document).ready(function() {
 
       $('#liabtable tbody tr:eq('+rcindex+') td:eq(0) a').focus();
     }
+    if (event.which == 13)
+    {
+      event.preventDefault();
+      value = $(this).closest('tr').attr('value');
+      classs = "."+value;
+      $(classs).slideToggle(1);
+    }
+  });
 
-
+  $(".cbalsheettable tbody tr").dblclick(function(event) {
+      event.preventDefault();
+      var grpcode = $(this).attr('value');
+      if(grpcode==""){
+        return false;
+      }
+      else{
+        $("."+grpcode).slideToggle(1);
+      }
   });
 
   var urole = $("#urole").val();

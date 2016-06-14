@@ -52,7 +52,6 @@ $(document).ready(function() {
   $(".cbalsheettable tbody tr").dblclick(function(event) {
       event.preventDefault();
       var grpcode = $(this).attr('value');
-      //alert("vanita");
       if(grpcode==""){
         return false;
       }
