@@ -107,7 +107,7 @@
 
         {% for record in records["leftlist"] %}
 
-        <tr	value="{{record["groupcode"]}}">
+        <tr	value="v{{record["groupcode"]}}">
           <td class="col-xs-10"><b>
             {% if record["groupname"]=="Total" or record["groupname"]=="Difference" or record["groupname"]=="Applications:" or record["groupname"]=="Sources:"%}
             <a class="libgname" href="#" style="text-decoration: none; color:black;">{{record["groupname"]}}</a>
@@ -124,7 +124,7 @@
         </tr>
 
         {%for account in record["accounts"]%}
-        <tr	value="{{account["accountcode"]}}" class=" {{record["groupcode"]}}" >
+        <tr	value="{{account["accountcode"]}}" class="v{{record["groupcode"]}}" style="display: none;" >
           <td class="col-xs-10">
             &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="">{{account["accountname"]}}</a>
           </td>
@@ -133,10 +133,10 @@
           </td>
           <td class="col-xs-1" style="text-align:right"></td>
         </tr>
-        {%endfor%}
+        {% endfor %}
         {% endfor %}
         {% for record in records["rightlist"] %}
-        <tr	value="{{record["groupcode"]}}">
+        <tr	value="v{{record["groupcode"]}}">
           <td class="col-xs-10"><b>
             {% if record["groupname"]=="Total" or record["groupname"]=="Difference" or record["groupname"]=="Applications:" %}
             <a class="libgname" href="#" style="text-decoration: none; color:black;">{{record["groupname"]}}</a>
@@ -152,7 +152,7 @@
           </td>
         </tr>
         {%for account in record["accounts"]%}
-        <tr	value="{{account["accountcode"]}}" class="{{record["groupcode"]}}" >
+        <tr	value="{{account["accountcode"]}}" class="v{{record["groupcode"]}}" style="display: none;" >
           <td class="col-xs-10">
             &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{account["accountname"]}}</a>
           </td>

@@ -26,7 +26,10 @@ $(document).ready(function() {
 
   $(document).off('keydown' ,'.libgname').on('keydown' ,'.libgname',function(event) {
     curindex = $(this).closest('tr').index();
-    nextindex = curindex+1;
+    value = $(this).closest('tr').attr('value');
+    classs = "."+value;
+    len = $(classs).length;
+    nextindex = curindex + len+1;
     previndex = curindex-1;
     if (event.which==40)
     {
@@ -40,6 +43,13 @@ $(document).ready(function() {
       {
         $('#satable tbody tr:eq('+previndex+') td:eq(0) a').focus();
       }
+    }
+    if (event.which == 13)
+    {
+      event.preventDefault();
+      value = $(this).closest('tr').attr('value');
+      classs = "."+value;
+      $(classs).slideToggle();
     }
 
   });
