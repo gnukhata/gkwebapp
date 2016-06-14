@@ -582,4 +582,10 @@ $.ajax({
   $('#changeogtb').click(function(){
     $('#changeorg').click();
   });
+  $('#orgdata').click(function(){
+    $('#showeditorg').click();
+  });
+  $('#yeardata').click(function(){
+    return false;
+  });
 });
