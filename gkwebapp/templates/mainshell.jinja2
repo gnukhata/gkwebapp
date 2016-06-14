@@ -81,7 +81,7 @@
             <a href="" id="help" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>H</u>elp</a>
             <ul class="dropdown-menu">
               <li><a data-toggle="tab" id="manual" href="">Manual</a></li>
-              <li><a data-toggle="tab" id="authors" href="">Authors</a></li>
+              <li><a data-toggle="modal" id="authors" data-target="#gnukhataauthors">Authors</a></li>
               <li><a data-toggle="modal" id="license" data-target="#gnukhatalicense">License</a></li>
               <li><a data-toggle="modal" id="about" data-target="#aboutgnukhata">About</a></li>
             </ul>
@@ -147,7 +147,7 @@
 <div id="gnukhatalicense" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div style="color: #115a84; background-color: #b8e0ef;" class="modal-header">
+      <div style="color: #115a84; background-color: #b8e0ef; border-radius: 5px;" class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">License</h4>
       </div>
@@ -169,13 +169,13 @@
 <div id="aboutgnukhata" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div style="color: #115a84; background-color: #b8e0ef;" class="modal-header">
+      <div style="color: #115a84; background-color: #b8e0ef; border-radius: 5px;" class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">About</h4>
       </div>
       <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
         <p>
-          <a href="http://gnukhata.in" target="_blank">GNUKhata</a> is a free and flexible software for accounting with upcoming support inventory management being developed at Digital Freedom Foundation .
+          <a href="http://gnukhata.in" target="_blank">GNUKhata</a> is a free and flexible software for accounting with upcoming support inventory management being developed at <a href="http://dff.org.in" target="_blank">Digital Freedom Foundation</a>.
           It is a Free and Open Source Software that supports a wide range of applications in every field of economic activity, including factory or farm-based production, point of sales accounting & inventory and work in the service sector.
         </p>
         <p>
@@ -194,7 +194,37 @@
     </div>
   </div>
 </div>
-
+<div id="gnukhataauthors" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div style="color: #115a84; background-color: #b8e0ef; border-radius: 5px;" class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Authors</h4>
+      </div>
+      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+        <p>
+          Krishnakant Mane(Founder & Project Leader) <a href="mailto:kk@dff.org.in">kk@dff.org.in</a><br />
+          Arun Kelkar (Domain Expert) <a href="mailto:arunkelkar@dff.org.in">arunkelkar@dff.org.in</a><br />
+          Ishan Masdekar (Project Manager) <a href="mailto:imasdekar@dff.org.in">imasdekar@dff.org.in</a><br />
+          Navin Karkera (Lead Developer) <a href="mailto:navin@dff.org.in">navin@dff.org.in</a><br />
+        </p>
+        <p>
+          Abhijith Balan <a href="mailto:abhijithb21@openmailbox.org">abhijithb21@openmailbox.org</a><br />
+          Abhishek Alai <a href="mailto:abbhishek971@gmail.com">abbhishek971@gmail.com</a><br />
+          Ashutosh Paralikar <a href="mailto:ashutosh@thefossblog.com">ashutosh@thefossblog.com</a><br />
+          Bhavesh Bawadhane <a href="mailto:bbhavesh07@gmail.com">bbhavesh07@gmail.com</a><br />
+          Dinesh Sutar <a href="mailto:dinesh.sutar@openmailbox.org">dinesh.sutar@openmailbox.org</a><br />
+          Vaibhav Kurhe <a href="mailto:vaibspidy@openmailbox.org">vaibspidy@openmailbox.org</a><br />
+          Vanita Rajpurohit <a href="mailto:vanita.rajpurohit9819@gmail.com">vanita.rajpurohit9819@gmail.com</a><br />
+          Vinayak Kusumkar <a href="mailto:vinayakkusumkar@openmailbox.org">vinayakkusumkar@openmailbox.org</a><br />
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
 <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.autotab.min.js')}}"></script>
