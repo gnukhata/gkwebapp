@@ -83,7 +83,7 @@
               <li><a data-toggle="tab" id="manual" href="">Manual</a></li>
               <li><a data-toggle="tab" id="authors" href="">Authors</a></li>
               <li><a data-toggle="modal" id="license" data-target="#gnukhatalicense">License</a></li>
-              <li><a data-toggle="tab" id="about" href="">About</a></li>
+              <li><a data-toggle="modal" id="about" data-target="#aboutgnukhata">About</a></li>
             </ul>
           </li>
         </ul>
@@ -151,7 +151,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">License</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
         <p>
           This software is licensed under version 3 of the <a href="http://www.gnu.org/licenses/agpl-3.0.html" target="_blank">GNU Affero General Public License(GNU AGPLv3)</a>.
           You may use a newer version of the same license. The libraries used in this software are licensed under their respective <a href="http://www.gnu.org/licenses/license-list.html" target="_blank">free software licenses</a>.
@@ -160,9 +160,41 @@
             Copyright © Digital Freedom Foundation 2013,2014,2015,2016. Visit <a href="http://gnukhata.in" target="_blank">gnukhata.in</a> for more information.
         </p>
       </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
 </div>
+<div id="aboutgnukhata" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div style="color: #115a84; background-color: #b8e0ef;" class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">About</h4>
+      </div>
+      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+        <p>
+          <a href="http://gnukhata.in" target="_blank">GNUKhata</a> is a free and flexible software for accounting with upcoming support inventory management being developed at Digital Freedom Foundation .
+          It is a Free and Open Source Software that supports a wide range of applications in every field of economic activity, including factory or farm-based production, point of sales accounting & inventory and work in the service sector.
+        </p>
+        <p>
+          While it serves such traditional accounting requirements, its special feature is that it can support emerging sectors of the economy who are being required to keep audited accounts, such as self-help groups, craft producers and micro-finance groups.
+          GNUKhata is highly customizable, given its open source nature.
+        </p>
+        <p>
+          It can be easily transformed into Indian languages, largely unreached by existing software solutions.
+          GNUKhata is soon to be extended to include a payroll section.
+          We hope to take it to a stage where it can become a tool for remote banking.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
 <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.autotab.min.js')}}"></script>
