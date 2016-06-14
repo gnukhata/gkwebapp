@@ -49,6 +49,17 @@ $(document).ready(function() {
     }
   });
 
+  $(".cbalsheettable tbody tr").dblclick(function(event) {
+      event.preventDefault();
+      var grpcode = $(this).attr('value');
+      //alert("vanita");
+      if(grpcode==""){
+        return false;
+      }
+      else{
+        $("."+grpcode).slideToggle(1);
+      }
+  });
 
   $("#satable").off('click','tr').on('click','tr',function(e){
     e.preventDefault();
