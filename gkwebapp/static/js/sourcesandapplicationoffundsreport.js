@@ -23,35 +23,30 @@ $(document).ready(function() {
   var nextindex;
   var previndex;
 
-
   $(document).off('keydown' ,'.libgname').on('keydown' ,'.libgname',function(event) {
-    curindex = $(this).closest('tr').index();
-    value = $(this).closest('tr').attr('value');
-    classs = "."+value;
-    len = $(classs).length;
-    nextindex = curindex + len+1;
-    previndex = curindex-1;
-    if (event.which==40)
-    {
-      event.preventDefault();
-      $('#satable tbody tr:eq('+nextindex+') td:eq(0) a').focus();
-    }
-    else if (event.which==38)
-    {
-      event.preventDefault();
-      if(previndex>-1)
-      {
-        $('#satable tbody tr:eq('+previndex+') td:eq(0) a').focus();
-      }
-    }
+    curindex = $(this).closest('tr');
+		nextindex = $(curindex).nextAll("tr:visible:first").index();
+		previndex = $(curindex).prevAll("tr:visible:first").index();;
+		if (event.which==40)
+		{
+			event.preventDefault();
+			$('#satable tbody tr:eq('+nextindex+') td:eq(0) a').focus();
+		}
+		else if (event.which==38)
+		{
+			if(previndex>-1)
+			{
+				event.preventDefault();
+				$('#satable tbody tr:eq('+previndex+') td:eq(0) a').focus();
+			}
+		}
     if (event.which == 13)
     {
       event.preventDefault();
       value = $(this).closest('tr').attr('value');
       classs = "."+value;
-      $(classs).slideToggle();
+      $(classs).slideToggle(1);
     }
-
   });
 
 
