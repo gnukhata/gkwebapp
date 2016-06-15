@@ -24,6 +24,7 @@ Contributors:
 "Arun Kelkar" <arunkelkar@dff.org.in>
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
+"Vaibhav Kurhe" <vaibspidy@openmailbox.org>
 """
 
 from pyramid.view import view_config
