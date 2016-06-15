@@ -305,14 +305,32 @@ $.ajax({
       {
         $("#info").html(resp);
       }
-      }
-    );
+      });
     });
 
     $('#changeorg').click(function (e) {
       sessionStorage.clear();
       window.location.replace("/");
 
+      });
+
+      $("#logout").click(function(event) {
+        flag = 1;
+        $.ajax({
+          url: '/getorgcode',
+          type: 'POST',
+          datatype: 'json',
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          },
+          success: function(resp)
+          {
+            sessionStorage.gktoken="";
+            code = resp["gkdata"]
+            $("body").load("/login?orgcode="+code+"&flag="+flag, setTimeout( function() { $("#username").focus(); }, 500 ));
+          }
+        });
       });
 
     $('#listofaccounts').click(function (e) {

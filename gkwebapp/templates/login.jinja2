@@ -51,12 +51,13 @@
               <input id="userpassword" type="password" class="form-control col-xs-12" name="userpassword" accesskey="p"></input>
             </div>
 
-            <input id="orgcode" type="hidden" name="orgcode" value="{{code}}" class="form-control" ></input>
+            <input id="orgcode"  name="orgcode" value="{{code}}" class="form-control" style="display: none;"></input>
+            <input id="flag"  name="flag" value="{{flag}}" class="form-control" style="display:none;"></input>
             <div style="margin-top:10px" class="form-group">
               <!-- Button -->
               <div class="col-sm-12 controls">
                 <button id="login" type="submit" class="btn btn-success " accesskey="l"><span class="glyphicon glyphicon-arrow-right"></span><u>L</u>ogin</button>
-                <button id="back" class="btn btn-warning" accesskey="b"><span class="glyphicon glyphicon-arrow-left"></span><u>B</u>ack</button>
+                <button id="changeorg" class="btn btn-warning">Change Organisation</button>
               </div>
             </div>
           </form>

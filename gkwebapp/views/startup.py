@@ -77,7 +77,7 @@ def yearcode(request):
 
 @view_config(route_name="login", renderer="gkwebapp:templates/login.jinja2")
 def login(request):
-	return {"code":request.params["orgcode"]}
+	return {"code":request.params["orgcode"], "flag": request.params["flag"]}
 
 
 @view_config(route_name="createorg", renderer="gkwebapp:templates/createorg.jinja2")
@@ -107,7 +107,9 @@ def orglogin(request):
 def selectorglogin(request):
 
 	gkdata = {"username":request.params["username"], "userpassword":request.params["userpassword"],"orgcode":request.params["orgcode"]}
+	print gkdata
 	result = s.post("http://127.0.0.1:6543/login", data =json.dumps(gkdata))
+	print result.json()
 	if result.json()["gkstatus"]==0:
 		return  {"gktoken":result.json()["token"], "gkstatus":result.json()["gkstatus"]}
 	else:

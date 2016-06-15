@@ -52,9 +52,15 @@ $(document).ready(function()
     var code = $("#orgcode").val();
     $("#selectorg").load("/forgotpassword?orgcode="+ code);
   });
+  $("#changeorg").click(function(event){
+    event.preventDefault();
+    $("#selectorg").load("/existingorg" );
+  });
+
 
   $("#loginform").submit(function(e)
   {
+    e.preventDefault();
     if ($.trim($("#username").val())=="") {
       $("#username-blank-alert").alert();
       $("#username-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
@@ -73,13 +79,12 @@ $(document).ready(function()
     }
       $.ajax(
       {
-      //alert("starting ajax");
       type: "POST",
       url: "/userlogin",
       global: false,
       async: false,
       datatype: "json",
-      data: $("#loginform").serialize(),
+      data: {"orgcode":$("#orgcode").val(), "username":$("#username").val(), "userpassword":$("#userpassword").val()},
       success: function(resp)
       {
       if(resp["gkstatus"]==0)
