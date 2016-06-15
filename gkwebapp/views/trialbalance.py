@@ -168,10 +168,11 @@ def printtrialbalance(request):
 		listoflist = []
 		listoflist.append(temp_list)
 
-		if(balancetype == "Net" or balancetype == "Gross"):
+		'''if(balancetype == "Net" or balancetype == "Gross"):
 			listoflist.append([Paragraph("", simplestyle), Paragraph("Brought Forward:", simplestyle), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2), Paragraph("", simplestyle)])
 		elif(balancetype == "Extended"):
 			listoflist.append([Paragraph("", simplestyle), Paragraph("Brought Forward:", simplestyle), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2), Paragraph("", simplestyle)])
+		'''
 
 		for entry in data_json:
 				accountcode = entry["accountcode"]
@@ -209,11 +210,12 @@ def printtrialbalance(request):
 		]
 
 		if(balancetype == "Net" or balancetype == "Gross"):
-			data.append([Paragraph("", simplestyle), Paragraph("Carried Forward:", simplestyle), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), Paragraph("", simplestyle)])
-			spreadsheet_table = SpreadsheetTable(data, repeatRows = 2, repeatRowsB = 1, colWidths = (2*cm, 6*cm, 4*cm, 4*cm, 3.5*cm))
+			#data.append([Paragraph("", simplestyle), Paragraph("Carried Forward:", simplestyle), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), Paragraph("", simplestyle)])
+			spreadsheet_table = SpreadsheetTable(data, repeatRows = 1, colWidths = (2*cm, 6*cm, 4*cm, 4*cm, 3.5*cm))
 		elif(balancetype == "Extended"):
-			data.append([Paragraph("", simplestyle), Paragraph("Carried Forward:", simplestyle), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), Paragraph("", simplestyle)])
-			spreadsheet_table = SpreadsheetTable(data, repeatRows = 2, repeatRowsB = 1, colWidths = (1.5*cm, 3.5*cm, 2.6*cm, 2.6*cm, 2.6*cm, 2.6*cm, 2.6*cm, 2*cm))
+			#data.append([Paragraph("", simplestyle), Paragraph("Carried Forward:", simplestyle), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), Paragraph("", simplestyle)])
+			spreadsheet_table = SpreadsheetTable(data, repeatRows = 1, colWidths = (1.5*cm, 3.5*cm, 2.6*cm, 2.6*cm, 2.6*cm, 2.6*cm, 2.6*cm, 2*cm))
+
 
 		spreadsheet_table.setStyle(table_style)
 
@@ -221,7 +223,7 @@ def printtrialbalance(request):
 		style = styleSheet["Normal"]
 		Story.append(Spacer(1,0.2*inch))
 		doc.build(Story, onFirstPage=myFirstPage, onLaterPages=myLaterPages)
-		
+
 	if trialbalancetype == 1:
 		result = requests.get("http://127.0.0.1:6543/report?type=nettrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
 		makepdf("Net", result)
