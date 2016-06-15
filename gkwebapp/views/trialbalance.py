@@ -71,14 +71,37 @@ def printtrialbalance(request):
 	PAGE_WIDTH=defaultPageSize[0]
 
 	styleSheet = getSampleStyleSheet()
+	styletwo = getSampleStyleSheet()
+	stylethree = getSampleStyleSheet()
+
 	simplestyle = styleSheet['BodyText']
 	simplestyle.alignment = TA_CENTER
 	simplestyle.fontSize = 9
+
+	'''simplestyleright = styletwo['BodyText']
+	simplestyleright.alignment = TA_RIGHT
+	simplestyleright.fontSize = 9
+	'''
+	simplestyleleft = stylethree['BodyText']
+	simplestyleleft.alignment = TA_LEFT
+	simplestyleleft.fontSize = 9
+
 
 	headingstyle = styleSheet['Heading4']
 	headingstyle.alignment = TA_CENTER
 	headingstyle.fontSize = 11
 	headingstyle.fontName = 'Times-Bold'
+
+	headingstyleright = styletwo['Heading4']
+	headingstyleright.alignment = TA_RIGHT
+	headingstyleright.fontSize = 11
+	headingstyleright.fontName = 'Times-Bold'
+
+	headingstyleleft = stylethree['Heading4']
+	headingstyleleft.alignment = TA_LEFT
+	headingstyleleft.fontSize = 11
+	headingstyleleft.fontName = 'Times-Bold'
+
 
 	calculateto = request.params["calculateto"]
 	financialstart = request.params["financialstart"]
@@ -93,7 +116,6 @@ def printtrialbalance(request):
 	period = financialstart[8:10] + "-" + str(calendar.month_abbr[int(financialstart[5:7])]) + "-" + financialstart[0:4] + " to " + calculateto[8:10] + "-" +  str(calendar.month_abbr[int(calculateto[5:7])]) + "-" +  calculateto[0:4]
 	year = startyear[0:2] + "-" + str(calendar.month_abbr[int(startyear[3:5])]) + "-" + startyear[6:10] + " to " + endyear[0:2] + "-" +  str(calendar.month_abbr[int(endyear[3:5])]) + "-" +  endyear[6:10]
 	yeardata = "Financial Year: " + year
-	#yeardata = "Financial Year : " + startyear + " to " + endyear
 
 	header={"gktoken":request.headers["gktoken"]}
 
@@ -107,67 +129,33 @@ def printtrialbalance(request):
 	Filename_gross = "GrossBalanceReport.pdf"
 	Filename_ext = "ExtendedBalanceReport.pdf"
 
-	def myFirstPage_Net(canvas, doc):
+	def myFirstPage(canvas, doc):
 			canvas.saveState()
 			canvas.setFont('Times-Bold',15)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-45, orgdata)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-70, yeardata)
+			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-35, orgdata)
+			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-55, yeardata)
 			canvas.setFont('Times-Bold',13)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-108, Net_Trial)
-			canvas.setFont('Times-Roman',9)
-			canvas.drawString(inch, 0.75 * inch, "First Page / %s" % pageinfo)
-			canvas.restoreState()
-
-	def myLaterPages_Net(canvas, doc):
-			canvas.saveState()
-			canvas.setFont('Times-Bold',12)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-40, orgname + "  FY: (" + year + ")")
-			canvas.setFont('Times-Roman',11)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-55, "Net Trial Balance")
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-70, period)
+			if(trialbalancetype == 1):
+				canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-80, Net_Trial)
+			elif(trialbalancetype == 2):
+				canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-80, Gross_Trial)
+			elif(trialbalancetype == 3):
+				canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-80, Extended_Trial)
 			canvas.setFont('Times-Roman',9)
 			canvas.drawString(inch, 0.75 * inch, "Page %d %s" % (doc.page, pageinfo))
 			canvas.restoreState()
 
-	def myFirstPage_Gross(canvas, doc):
-			canvas.saveState()
-			canvas.setFont('Times-Bold',15)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-45, orgdata)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-70, yeardata)
-			canvas.setFont('Times-Bold',13)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-108, Gross_Trial)
-			canvas.setFont('Times-Roman',9)
-			canvas.drawString(inch, 0.75 * inch, "First Page / %s" % pageinfo)
-			canvas.restoreState()
-
-	def myLaterPages_Gross(canvas, doc):
+	def myLaterPages(canvas, doc):
 			canvas.saveState()
 			canvas.setFont('Times-Bold',12)
 			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-40, orgname + "  FY: (" + year + ")")
 			canvas.setFont('Times-Roman',11)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-55, "Gross Trial Balance")
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-70, period)
-			canvas.setFont('Times-Roman',9)
-			canvas.drawString(inch, 0.75 * inch, "Page %d %s" % (doc.page, pageinfo))
-			canvas.restoreState()
-
-	def myFirstPage_Extended(canvas, doc):
-			canvas.saveState()
-			canvas.setFont('Times-Bold',15)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-45, orgdata)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-70, yeardata)
-			canvas.setFont('Times-Bold',13)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-108, Extended_Trial)
-			canvas.setFont('Times-Roman',9)
-			canvas.drawString(inch, 0.75 * inch, "First Page / %s" % pageinfo)
-			canvas.restoreState()
-
-	def myLaterPages_Extended(canvas, doc):
-			canvas.saveState()
-			canvas.setFont('Times-Bold',12)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-40, orgname + "  FY: (" + year + ")")
-			canvas.setFont('Times-Roman',11)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-55, "Extended Trial Balance")
+			if(trialbalancetype == 1):
+				canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-55, "Net Trial Balance")
+			elif(trialbalancetype == 2):
+				canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-55, "Gross Trial Balance")
+			elif(trialbalancetype == 3):
+				canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-55, "Extended Trial Balance")
 			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-70, period)
 			canvas.setFont('Times-Roman',9)
 			canvas.drawString(inch, 0.75 * inch, "Page %d %s" % (doc.page, pageinfo))
@@ -175,45 +163,46 @@ def printtrialbalance(request):
 
 	def makepdf(balancetype, result):
 		srnum = Paragraph("Sr.No", headingstyle)
-		accntname = Paragraph("Account Name", headingstyle)
+		accntname = Paragraph("Account Name", headingstyleleft)
 		grpname = Paragraph("Group Name", headingstyle)
 
 		if(balancetype == "Net"):
 			doc = SimpleDocTemplate(Filename_net, pagesize=A4)
-			deb = Paragraph("Debit", headingstyle)
-			cred = Paragraph("Credit", headingstyle)
+			deb = Paragraph("Debit", headingstyleright)
+			cred = Paragraph("Credit", headingstyleright)
 			temp_list = [srnum, accntname, deb, cred, grpname]
 		elif(balancetype == "Gross"):
 			doc = SimpleDocTemplate(Filename_gross, pagesize=A4)
-			deb = Paragraph("Debit", headingstyle)
-			cred = Paragraph("Credit", headingstyle)
+			deb = Paragraph("Debit", headingstyleright)
+			cred = Paragraph("Credit", headingstyleright)
 			temp_list = [srnum, accntname, deb, cred, grpname]
 		elif(balancetype == "Extended"):
 			doc = SimpleDocTemplate(Filename_ext, pagesize=A4)
-			openingg = Paragraph("Opening", headingstyle)
-			totaldeb = Paragraph("Total Drs", headingstyle)
-			totalcred = Paragraph("Total Crs", headingstyle)
-			dr_balance = Paragraph("Dr Balance", headingstyle)
-			cr_balance = Paragraph("Cr Balance", headingstyle)
+			openingg = Paragraph("Opening", headingstyleright)
+			totaldeb = Paragraph("Total Drs", headingstyleright)
+			totalcred = Paragraph("Total Crs", headingstyleright)
+			dr_balance = Paragraph("Dr Balance", headingstyleright)
+			cr_balance = Paragraph("Cr Balance", headingstyleright)
 			temp_list = [srnum, accntname, openingg, totaldeb, totalcred, dr_balance, cr_balance, grpname]
 
-		Story = [Spacer(1,1*inch)]
+		Story = [Spacer(1,0.2*inch)]
 
 		data_json = result.json()["gkresult"]
 		listoflist = []
 		listoflist.append(temp_list)
 
-		if(balancetype == "Net" or balancetype == "Gross"):
-			listoflist.append([Paragraph("", simplestyle), Paragraph("BroughtForward:", simplestyle), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2), Paragraph("", simplestyle)])
+		'''if(balancetype == "Net" or balancetype == "Gross"):
+			listoflist.append([Paragraph("", simplestyle), Paragraph("Brought Forward:", simplestyle), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2), Paragraph("", simplestyle)])
 		elif(balancetype == "Extended"):
-			listoflist.append([Paragraph("", simplestyle), Paragraph("BroughtForward:", simplestyle), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2), Paragraph("", simplestyle)])
+			listoflist.append([Paragraph("", simplestyle), Paragraph("Brought Forward:", simplestyle), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2), Paragraph("", simplestyle)])
+		'''
 
 		for entry in data_json:
 				accountcode = entry["accountcode"]
 				srno = entry["srno"]
 				srno = Paragraph(str(srno), simplestyle)
 				accountname = entry["accountname"]
-				accountname = Paragraph(accountname, simplestyle)
+				accountname = Paragraph(accountname, simplestyleleft)
 				groupname = entry["groupname"]
 				groupname = Paragraph(groupname, simplestyle)
 				if(balancetype == "Net"):
@@ -244,24 +233,19 @@ def printtrialbalance(request):
 		]
 
 		if(balancetype == "Net" or balancetype == "Gross"):
-			data.append([Paragraph("", simplestyle), Paragraph("CarriedForward:", simplestyle), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), Paragraph("", simplestyle)])
-			spreadsheet_table = SpreadsheetTable(data, repeatRows = 2, repeatRowsB = 1, colWidths = (2*cm, 6*cm, 4*cm, 4*cm, 3.5*cm))
+			#data.append([Paragraph("", simplestyle), Paragraph("Carried Forward:", simplestyle), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), Paragraph("", simplestyle)])
+			spreadsheet_table = SpreadsheetTable(data, repeatRows = 1, colWidths = (2*cm, 6*cm, 4*cm, 4*cm, 3.5*cm))
 		elif(balancetype == "Extended"):
-			data.append([Paragraph("", simplestyle), Paragraph("CarriedForward:", simplestyle), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), Paragraph("", simplestyle)])
-			spreadsheet_table = SpreadsheetTable(data, repeatRows = 2, repeatRowsB = 1, colWidths = (1.5*cm, 3.5*cm, 2.6*cm, 2.6*cm, 2.6*cm, 2.6*cm, 2.6*cm, 2*cm))
+			#data.append([Paragraph("", simplestyle), Paragraph("Carried Forward:", simplestyle), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), Paragraph("", simplestyle)])
+			spreadsheet_table = SpreadsheetTable(data, repeatRows = 1, colWidths = (1.5*cm, 3.5*cm, 2.6*cm, 2.6*cm, 2.6*cm, 2.6*cm, 2.6*cm, 2*cm))
+
 
 		spreadsheet_table.setStyle(table_style)
 
 		Story.append(spreadsheet_table)
 		style = styleSheet["Normal"]
 		Story.append(Spacer(1,0.2*inch))
-
-		if(balancetype == "Net"):
-			doc.build(Story, onFirstPage=myFirstPage_Net, onLaterPages=myLaterPages_Net)
-		elif(balancetype == "Gross"):
-			doc.build(Story, onFirstPage=myFirstPage_Gross, onLaterPages=myLaterPages_Gross)
-		elif(balancetype == "Extended"):
-			doc.build(Story, onFirstPage=myFirstPage_Extended, onLaterPages=myLaterPages_Extended)
+		doc.build(Story, onFirstPage=myFirstPage, onLaterPages=myLaterPages)
 
 	if trialbalancetype == 1:
 		result = requests.get("http://127.0.0.1:6543/report?type=nettrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)

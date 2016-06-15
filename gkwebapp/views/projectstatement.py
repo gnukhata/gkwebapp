@@ -127,10 +127,10 @@ def printprojectstatementreport(request):
 		canvas.setFont('Times-Roman',9)
 		canvas.drawString(inch, 0.5 * inch, "Page %d" % doc.page)
 		canvas.restoreState()
-	data.insert(1,["", "",  Paragraph("Brought Forward",style), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2)])
-	data.append(["", "",  Paragraph("Carried Forward",style), CurrentPageColSum(decimal_places = 2), CurrentPageColSum(decimal_places = 2)])
+	#data.insert(1,["", "",  Paragraph("Brought Forward",style), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2)])
+	#data.append(["", "",  Paragraph("Carried Forward",style), CurrentPageColSum(decimal_places = 2), CurrentPageColSum(decimal_places = 2)])
 	story = [Spacer(1,0.4*inch)]
-	spreadsheet_table = SpreadsheetTable(data, repeatRows = 2, repeatRowsB = 1, colWidths=(2.0 * cm, 3.8 * cm,  4.6 * cm, 4.5 * cm, 4.5 * cm))
+	spreadsheet_table = SpreadsheetTable(data, repeatRows = 1, colWidths=(2.0 * cm, 3.8 * cm,  4.6 * cm, 4.5 * cm, 4.5 * cm))
 	spreadsheet_table.setStyle(table_style)
 	story.append(spreadsheet_table)
 	doc.multiBuild(story, onFirstPage=myFirstPage, onLaterPages=myLaterPages)
