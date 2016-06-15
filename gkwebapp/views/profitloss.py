@@ -131,8 +131,8 @@ def printprofitandloss(request):
 		data[i].append(accountname)
 		data[i].append(amount)
 		i += 1
-	data.insert(1,["", Paragraph("Brought Forward", style1), PreviousPagesColSum(decimal_places = 2), "", Paragraph("Brought Forward",style1), PreviousPagesColSum(decimal_places = 2)])
-	data.append([ "", Paragraph("Carried Forward", style1), CurrentPageColSum(decimal_places = 2), "", Paragraph("Carried Forward",style1), CurrentPageColSum(decimal_places = 2)])
+	#data.insert(1,["", Paragraph("Brought Forward", style1), PreviousPagesColSum(decimal_places = 2), "", Paragraph("Brought Forward",style1), PreviousPagesColSum(decimal_places = 2)])
+	#data.append([ "", Paragraph("Carried Forward", style1), CurrentPageColSum(decimal_places = 2), "", Paragraph("Carried Forward",style1), CurrentPageColSum(decimal_places = 2)])
 	table_style = [('BACKGROUND', (0, 0), (-1, 0), '#a7a5a5'),
 					('ALIGN',(1,1),(-1,-1),'RIGHT'),
 				   ('INNERGRID', (0,0), (-1,-1), 0.25, colors.white),
@@ -140,7 +140,7 @@ def printprofitandloss(request):
 				   ('BOX', (0,0), (-1,0), 0.25, colors.black),
 				  ]
 	story = [Spacer(1,0.4*inch)]
-	spreadsheet_table = SpreadsheetTable(data, repeatRows = 2, repeatRowsB = 1, colWidths= (1.2* cm, 4.8* cm,  3.5 * cm,
+	spreadsheet_table = SpreadsheetTable(data, repeatRows = 1, colWidths= (1.2* cm, 4.8* cm,  3.5 * cm,
 						   1.2* cm, 4.7 * cm, 3.5 * cm))
 	spreadsheet_table.setStyle(table_style)
 	story.append(spreadsheet_table)
