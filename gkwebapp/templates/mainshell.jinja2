@@ -64,7 +64,7 @@
               <li class="hideoperator"><a href="" data-toggle="tab" id="showprofitloss">Profit & Loss</a></li>
               <li><a href="" data-toggle="tab" id="fevoucher">Find/Edit Voucher</a></li>
               <li><a href="" data-toggle="tab" id="listofaccounts">List of Accounts</a></li>
-              <li><a class="hideoperator hidemanager" href="" data-toggle="tab" id="showdeletedvoucher">Deleted Vouchers</a></li>
+              <li><a class="hideoperator hidemanager" href="" data-toggle="tab" id="showdeletedvoucher">List of Deleted Vouchers</a></li>
             </ul>
           </li>
           <li class="dropdown">
@@ -80,10 +80,11 @@
           <li class="dropdown">
             <a href="" id="help" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>H</u>elp</a>
             <ul class="dropdown-menu">
-              <li><a data-toggle="tab" id="manual" href="">GNUKhata Manual</a></li>
-              <li><a data-toggle="tab" id="authors" href="">Authors</a></li>
-              <li><a data-toggle="tab" id="license" href="">GNUKhata License</a></li>
-              <li><a data-toggle="tab" id="about" href="">About GNUkhata</a></li>
+              <li><a data-toggle="tab" id="manual" href="">Manual</a></li>
+              <li><a data-toggle="modal" id="shortcuts" data-target="#gnukhatashortcuts">Shortcuts</a></li>
+              <li><a data-toggle="modal" id="authors" data-target="#gnukhataauthors">Authors</a></li>
+              <li><a data-toggle="modal" id="license" data-target="#gnukhatalicense">License</a></li>
+              <li><a data-toggle="modal" id="about" data-target="#aboutgnukhata">About</a></li>
             </ul>
           </li>
         </ul>
@@ -126,7 +127,7 @@
 </nav>
 <div class="container-fluid">
   <ul class="shadow" style="list-style-type: none; margin-top: 52px; padding: 0; overflow: hidden; background-color: rgb(248,248,248); height: 20px;">
-    <li style="float: left;"><a style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration:, none;" id="orgdata" href=""></a></li>
+    <li style="float: left;"><a data-toggle="tab"; style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="orgdata" href=""></a></li>
     <li style="float: right;"><a style="margin-right: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="yeardata" href=""></a></li>
   <ul>
 </div>
@@ -134,15 +135,241 @@
   <ul class="info">
   			<li><h4 class="shadow" style="padding: 5px 5px 5px 5px; color: #fff; background-color: #1d88ba; margin-right: 15px;">Using Keyboard shortcuts</h4></li>
   			<li class="matter">
-        <p>To access submenus in the top menu press "Ctrl + underlined character".</p>
+        <p>To access submenus in the top menu press "Ctrl + Underlined Alphabet".</p>
   			<p>To access the toolbar press "F1".</p>
         <p>Shortcuts to access modules are mentioned in the toolbar.</p>
         <p> To access items in individual screens : </p>
         <p class="shortcut">If using Firefox, press "Alt + Shift + the underlined character".</p>
         <p class="shortcut">If using Google Chrome, Opera or Internet Explorer press "Alt + the underlined character".</p>
         <p class="shortcut">If using older versions of Opera(prior to version 12.1) use "Shift + Esc + the underlined character".</p>
+        <p>To know more about shortcuts see <a data-toggle="modal" id="shortcuts" data-target="#gnukhatashortcuts">Shortcuts</a> option in the Help Menu.</p>
   			</li>
   		</ul>
+</div>
+<div id="gnukhatashortcuts" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div style="color: #115a84; background-color: #b8e0ef; border-radius: 5px;" class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Shortcuts</h4>
+      </div>
+      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+        <p>
+          <b>Index Page</b>
+        </p>
+        <p>
+          Select Existing Organisation - CTRL+E
+        </p>
+        <p>
+          Create Organisation - CTRL+ R
+        </p>
+        <p>
+          <b>Menu</b>
+        </p>
+        <p>
+          GNUKhata -CTRL+G
+        </p>
+        <p>
+          Master - CTRL+ M
+        </p>
+        <p>
+          Transaction - CTRL + T
+        </p>
+        <p>
+          Report - CTRL + R
+        </p>
+        <p>
+          Administration - CTRL + D
+        </p>
+        <p>
+          Help - CTRL +H
+        </p>
+        <p>
+          Toolbar - F1
+        </p>
+        <p>
+          <b>Sub-Menu</b>
+        </p>
+        <p>
+          Logout - CTRL - L
+        </p>
+        <p>
+          Change Organisation - CTRL + O
+        </p>
+        <p>
+          Create Account - F2
+        </p>
+        <p>
+          Find & Edit Account - F3
+        </p>
+        <p>
+          Cost Center - ALT + P
+        </p>
+        <p>
+          Bank Reconciliation Statement - ALT + R
+        </p>
+        <p>
+          Contra - CTRL + 1
+        </p>
+        <p>
+          Payment - CTRL + 2
+        </p>
+        <p>
+          Receipt - CTRL + 3
+        </p>
+        <p>
+          Journal - CTRL + 4
+        </p>
+        <p>
+          Sales - CTRL + 5
+        </p>
+        <p>
+          Purchase - CTRL + 6
+        </p>
+        <p>
+          Credit Note - CTRL + 7
+        </p>
+        <p>
+          Debit Note - CTRL + 8
+        </p>
+        <p>
+          Sales Return - CTRL + 9
+        </p>
+        <p>
+          Purchase Return - CTRL + 0
+        </p>
+        <p>
+          Ledger - F4
+        </p>
+        <p>
+          Trial Balance - F5
+        </p>
+        <p>
+          Project Statement - F6
+        </p>
+        <p>
+          Cash Flow - F7
+        </p>
+        <p>
+          Balance Sheet - F8
+        </p>
+        <p>
+          Profit & Loss - F9
+        </p>
+        <p>
+          Find & Edit Voucher - F10
+        </p>
+        <p>
+          List of Accounts - F11
+        </p>
+        <p>
+          New User - ALT + N
+        </p>
+        <p>
+          Remove User - ALT + U
+        </p>
+        <p>
+          Change Password - ALT + C
+        </p>
+        <p>
+          Close Books/Roll Over - ALT + L
+        </p>
+        <p>
+          Delete Organisation - ALT + I
+        </p>
+        <p>
+          GNUKhata Manual - ALT + M
+        </p>
+        <p>
+          Individual Screen - ALT + SHIFT + (Underlined Alphabet)
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="gnukhatalicense" tabindex="-1" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div style="color: #115a84; background-color: #b8e0ef; border-radius: 5px;" class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">License</h4>
+      </div>
+      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+        <p>
+          This software is licensed under version 3 of the <a href="http://www.gnu.org/licenses/agpl-3.0.html" target="_blank">GNU Affero General Public License(GNU AGPLv3)</a>.
+          You may use a newer version of the same license. The libraries used in this software are licensed under their respective <a href="http://www.gnu.org/licenses/license-list.html" target="_blank">free software licenses</a>.
+        </p>
+        <p style="margin-top: 30px;">
+            Copyright © Digital Freedom Foundation 2013,2014,2015,2016. Visit <a href="http://gnukhata.in" target="_blank">gnukhata.in</a> for more information.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="aboutgnukhata" tabindex="-1" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div style="color: #115a84; background-color: #b8e0ef; border-radius: 5px;" class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">About</h4>
+      </div>
+      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+        <p>
+          <a href="http://gnukhata.in" target="_blank">GNUKhata</a> is a free and flexible software for accounting with upcoming support inventory management being developed at <a href="http://dff.org.in" target="_blank">Digital Freedom Foundation</a>.
+          It is a Free and Open Source Software that supports a wide range of applications in every field of economic activity, including factory or farm-based production, point of sales accounting & inventory and work in the service sector.
+        </p>
+        <p>
+          While it serves such traditional accounting requirements, its special feature is that it can support emerging sectors of the economy who are being required to keep audited accounts, such as self-help groups, craft producers and micro-finance groups.
+          GNUKhata is highly customizable, given its open source nature.
+        </p>
+        <p>
+          It can be easily transformed into Indian languages, largely unreached by existing software solutions.
+          GNUKhata is soon to be extended to include a payroll section.
+          We hope to take it to a stage where it can become a tool for remote banking.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="gnukhataauthors" tabindex="-1" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div style="color: #115a84; background-color: #b8e0ef; border-radius: 5px;" class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Authors</h4>
+      </div>
+      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+        <p>
+          Krishnakant Mane(Founder & Project Leader) <a href="mailto:kk@dff.org.in">kk@dff.org.in</a><br />
+          Arun Kelkar (Domain Expert) <a href="mailto:arunkelkar@dff.org.in">arunkelkar@dff.org.in</a><br />
+          Ishan Masdekar (Project Manager) <a href="mailto:imasdekar@dff.org.in">imasdekar@dff.org.in</a><br />
+          Navin Karkera (Lead Developer) <a href="mailto:navin@dff.org.in">navin@dff.org.in</a><br />
+        </p>
+        <p>
+          Abhijith Balan <a href="mailto:abhijithb21@openmailbox.org">abhijithb21@openmailbox.org</a><br />
+          Abhishek Alai <a href="mailto:abbhishek971@gmail.com">abbhishek971@gmail.com</a><br />
+          Ashutosh Paralikar <a href="mailto:ashutosh@thefossblog.com">ashutosh@thefossblog.com</a><br />
+          Bhavesh Bawadhane <a href="mailto:bbhavesh07@gmail.com">bbhavesh07@gmail.com</a><br />
+          Dinesh Sutar <a href="mailto:dinesh.sutar@openmailbox.org">dinesh.sutar@openmailbox.org</a><br />
+          Vaibhav Kurhe <a href="mailto:vaibspidy@openmailbox.org">vaibspidy@openmailbox.org</a><br />
+          Vanita Rajpurohit <a href="mailto:vanita.rajpurohit9819@gmail.com">vanita.rajpurohit9819@gmail.com</a><br />
+          Vinayak Kusumkar <a href="mailto:vinayakkusumkar@openmailbox.org">vinayakkusumkar@openmailbox.org</a><br />
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
 <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
