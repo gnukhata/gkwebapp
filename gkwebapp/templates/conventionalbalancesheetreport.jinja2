@@ -104,9 +104,9 @@
 </head>
 <body>
   {% if orgtype=="Profit Making" %}
-  <span style="margin:auto; display:table;"><strong>Conventional Balance Sheet </strong>as on <strong>{{to}}</strong></span>
+  <span style="margin:auto; display:table;"><strong>Conventional Balance Sheet </strong>as on <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
   {% else %}
-  <span style="margin:auto; display:table;"><strong>Conventional Statement of Affairs </strong>as on <strong>{{to}}</strong></span>
+  <span style="margin:auto; display:table;"><strong>Conventional Statement of Affairs </strong>as on <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
   {% endif %}
   <div class="row">
     <div class="table-responsive col-xs-6 nopadding" >
@@ -132,11 +132,22 @@
               <a class="libgname" href="#" style="text-decoration: none; color:black;">{{record["groupname"]}}</a>
               {% elif record["groupname"]=="" %}
               <a class="libgname" href="#">&nbsp</a>
+              {% elif record["groupname"]=="Loss for the Year:" or record["groupname"]=="Deficit for the Year:" or record["groupname"]=="Profit for the Year:" or record["groupname"]=="Surplus for the Year:" %}
+              <a class="libgname" href="#">&nbsp</a>
               {% else %}
-              <a class="libgname" href="#">{{record["groupname"]}}</a>
+              <a class="libname" href="#">{{record["groupname"]}}</a>
               {% endif %}</b>
             </td>
-            <td class="col-xs-6">&nbsp</td>
+            <td class="col-xs-6"><b>
+            {%if record["groupname"]=="Loss for the Year:" or record["groupname"]=="Deficit for the Year:" or record["groupname"]=="Profit for the Year:" or record["groupname"]=="Surplus for the Year:" %}
+            <a clss="libgname" href="#">{{record["groupname"]}}</a>
+            {%else%}&nbsp
+          {%endif%}</b></td>
+
+          {%if record["groupname"]=="Loss for the Year:" or record["groupname"]=="Deficit for the Year:" or record["groupname"]=="Profit for the Year:" or record["groupname"]=="Surplus for the Year:" %}
+          <td class="col-xs-2" style="text-align:right"><b>{{record["amount"]}}</b></td>
+          <td class="col-xs-2" style="text-align:right">&nbsp</td>
+          {%else%}
             <td class="col-xs-2">&nbsp</td>
             {% if record["amount"]=="." %}
             <td class="col-xs-2" style="text-align:right">&nbsp</td>
@@ -145,6 +156,7 @@
               {{record["amount"]}}</b>
             </td>
             {% endif %}
+            {%endif%}
           </tr>
           {%for account in record["accounts"]%}
           <tr	value="{{account["accountcode"]}}" class="v{{record["groupcode"]}}" style="display: none;" >
@@ -179,11 +191,16 @@
               <a class="pagname" href="#" style="text-decoration: none; color:black;">{{record["groupname"]}}</a>
               {% elif record["groupname"]=="" %}
               <a class="pagname" href="#">&nbsp</a>
+              {% elif record["groupname"]=="Loss for the Year:" or record["groupname"]=="Deficit for the Year:" or record["groupname"]=="Profit for the Year:" or record["groupname"]=="Surplus for the Year:" %}
+              <a class="pagname" href="#">&nbsp</a>
               {% else %}
               <a class="pagname" href="#">{{record["groupname"]}}</a>
               {% endif %}</b>
             </td>
-            <td class="col-xs-6">&nbsp</td>
+            <td class="col-xs-6"><b>
+            {%if record["groupname"]=="Loss for the Year:" or record["groupname"]=="Deficit for the Year:" or record["groupname"]=="Profit for the Year:" or record["groupname"]=="Surplus for the Year:" %}
+            <a class="pagname"href="#">{{record["groupname"]}}</a>{%else%}&nbsp
+          {%endif%}</b></td>
             <td class="col-xs-1">&nbsp</td>
             {% if record["amount"]=="." %}
             <td class="col-xs-2" style="text-align:right">&nbsp</td>

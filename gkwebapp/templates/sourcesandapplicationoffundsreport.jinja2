@@ -98,7 +98,7 @@
 <body>
   <input type="hidden" id="calculateto" name="calculateto" value="{{to}}"></input>
 
-  <span style="margin:auto; display:table;"><strong>Statement of Sources and Application of Funds </strong>as on <strong>{{to}}</strong></span>
+  <span style="margin:auto; display:table;"><strong>Statement of Sources and Application of Funds </strong>as on <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
 
   <div class="table-responsive container">
     <table id="satable" class="shadow table table-condensed table-fixedheader cbalsheettable">
@@ -113,14 +113,23 @@
             <a class="libgname" href="#" style="text-decoration: none; color:black;">{{record["groupname"]}}</a>
             {% elif record["groupname"]=="" %}
             <a class="libgname" href="#">&nbsp</a>
-            {% else %}
+            {% elif record["groupname"]=="Loss for the Year:" or record["groupname"]=="Deficit for the Year:" or record["groupname"]=="Profit for the Year:" or record["groupname"]=="Surplus for the Year:" %}
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupname"]}}</a>
+            {%else%}
             <a class="libgname" href="#">{{record["groupname"]}}</a>
             {% endif %}</b>
           </td>
+          {% if record["groupname"]=="Loss for the Year:" or record["groupname"]=="Deficit for the Year:" or record["groupname"]=="Profit for the Year:" or record["groupname"]=="Surplus for the Year:" %}
+          <td class="col-xs-1" style="text-align:right"><b>
+            {{record["amount"]}}</b></td>
+          <td class="col-xs-1" style="text-align:right">
+          </td>
+          {%else%}
           <td class="col-xs-1" style="text-align:right"></td>
           <td class="col-xs-1" style="text-align:right"><b>
             {{record["amount"]}}</b>
           </td>
+          {%endif%}
         </tr>
 
         {%for account in record["accounts"]%}
@@ -142,14 +151,23 @@
             <a class="libgname" href="#" style="text-decoration: none; color:black;">{{record["groupname"]}}</a>
             {% elif record["groupname"]=="" %}
             <a class="libgname" href="#">&nbsp</a>
-            {% else %}
+            {% elif record["groupname"]=="Loss for the Year:" or record["groupname"]=="Deficit for the Year:" or record["groupname"]=="Profit for the Year:" or record["groupname"]=="Surplus for the Year:" %}
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupname"]}}</a>
+            {%else%}
             <a class="libgname" href="#">{{record["groupname"]}}</a>
             {% endif %}</b>
           </td>
+          {% if record["groupname"]=="Loss for the Year:" or record["groupname"]=="Deficit for the Year:" or record["groupname"]=="Profit for the Year:" or record["groupname"]=="Surplus for the Year:" %}
+          <td class="col-xs-1" style="text-align:right"><b>
+            {{record["amount"]}}</b></td>
+          <td class="col-xs-1" style="text-align:right">
+          </td>
+          {%else%}
           <td class="col-xs-1" style="text-align:right"></td>
           <td class="col-xs-1" style="text-align:right"><b>
             {{record["amount"]}}</b>
           </td>
+          {%endif%}
         </tr>
         {%for account in record["accounts"]%}
         <tr	value="{{account["accountcode"]}}" class="v{{record["groupcode"]}}" style="display: none; " >
