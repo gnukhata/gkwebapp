@@ -54,7 +54,7 @@ $(document).ready(function()
   });
   $("#changeorg").click(function(event){
     event.preventDefault();
-    $("#selectorg").load("/existingorg" );
+  window.location.replace("/");
   });
 
 
