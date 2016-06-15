@@ -40,6 +40,16 @@ $(document).ready(function() {
     $(this).closest('tr').addClass('selected');
   });
 
+  $("#deletedvouchertable").off('click','tr').on('click','tr',function(e){
+    e.preventDefault();
+    var id = $(this).attr('value');
+    var currindex = $(this).index();
+    $('#deletedvouchertable tr').removeClass('selected');
+    $(this).toggleClass('selected');
+    $('#deletedvouchertable tbody tr:eq('+currindex+') a').focus();
+
+  });
+
   var curindex ;
   var nextindex;
   var previndex;
