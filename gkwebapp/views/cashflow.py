@@ -68,7 +68,7 @@ def printcashflowreport(request):
 	simplestyle = styleSheet['BodyText']
 	simplestyle.alignment = TA_CENTER
 	simplestyle.fontSize = 9
-	
+
 	headingstyle = styleSheet['Heading4']
 	headingstyle.alignment = TA_CENTER
 	headingstyle.fontSize = 10
@@ -137,7 +137,7 @@ def printcashflowreport(request):
 		data_json_right = result.json()["pygkresult"]
 		listoflist = []
 		listoflist.append(temp_list)
-		listoflist.append([Paragraph("", simplestyle), Paragraph("Brought Forward:", simplestyle), PreviousPagesColSum(decimal_places = 2), Paragraph("", simplestyle), Paragraph("Brought Forward:", simplestyle), PreviousPagesColSum(decimal_places = 2)])
+		#listoflist.append([Paragraph("", simplestyle), Paragraph("Brought Forward:", simplestyle), PreviousPagesColSum(decimal_places = 2), Paragraph("", simplestyle), Paragraph("Brought Forward:", simplestyle), PreviousPagesColSum(decimal_places = 2)])
 
 
 		for entry in data_json_left:
@@ -149,7 +149,7 @@ def printcashflowreport(request):
 				amtleft = entry["amount"]
 				listoflist.append([to, particularsleft, amtleft])
 
-		i=2
+		i=1
 		for entryy in data_json_right:
 				accountcode_right = entryy["accountcode"]
 				by = entryy["toby"]
@@ -171,8 +171,8 @@ def printcashflowreport(request):
 						('BOX', (0, 0), (-1, -1), 0.25, colors.black),
 						('BOX', (0, 0), (-1, 0), 0.25, colors.black),
 		]
-		data.append([Paragraph("", simplestyle), Paragraph("Carried Forward:", simplestyle), TotalPagesColSum(decimal_places = 2), Paragraph("", simplestyle), Paragraph("Carried Forward:", simplestyle), TotalPagesColSum(decimal_places = 2)])
-		spreadsheet_table = SpreadsheetTable(data, repeatRows = 2, repeatRowsB = 1, colWidths = (1*cm, 5.2*cm, 3.8*cm, 1*cm, 5.2*cm, 3.8*cm))
+		#data.append([Paragraph("", simplestyle), Paragraph("Carried Forward:", simplestyle), TotalPagesColSum(decimal_places = 2), Paragraph("", simplestyle), Paragraph("Carried Forward:", simplestyle), TotalPagesColSum(decimal_places = 2)])
+		spreadsheet_table = SpreadsheetTable(data, repeatRows = 1, colWidths = (1*cm, 5.2*cm, 3.8*cm, 1*cm, 5.2*cm, 3.8*cm))
 		spreadsheet_table.setStyle(table_style)
 
 		Story.append(spreadsheet_table)
