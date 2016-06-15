@@ -40,7 +40,7 @@ from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 
 from spreadsheettable import SpreadsheetTable
-from reportlab.lib.enums import TA_CENTER, TA_RIGHT
+from reportlab.lib.enums import TA_CENTER, TA_RIGHT, TA_LEFT
 from pyramid.response import Response
 import os
 import calendar
@@ -65,14 +65,31 @@ def showcashflowreport(request):
 def printcashflowreport(request):
 	PAGE_HEIGHT=defaultPageSize[1]; PAGE_WIDTH=defaultPageSize[0]
 	styleSheet = getSampleStyleSheet()
+	styletwo = getSampleStyleSheet()
+	stylethree = getSampleStyleSheet()
+
 	simplestyle = styleSheet['BodyText']
 	simplestyle.alignment = TA_CENTER
+	simplestyle.fontSize = 9
+
+	simplestyleleft = styletwo['BodyText']
+	simplestyle.alignment = TA_LEFT
 	simplestyle.fontSize = 9
 
 	headingstyle = styleSheet['Heading4']
 	headingstyle.alignment = TA_CENTER
 	headingstyle.fontSize = 10
 	headingstyle.fontName = 'Times-Bold'
+
+	headingstyleright = styletwo['Heading4']
+	headingstyleright.alignment = TA_RIGHT
+	headingstyleright.fontSize = 10
+	headingstyleright.fontName = 'Times-Bold'
+
+	headingstyleleft = stylethree['Heading4']
+	headingstyleleft.alignment = TA_LEFT
+	headingstyleleft.fontSize = 10
+	headingstyleleft.fontName = 'Times-Bold'
 
 	calculateto = request.params["calculateto"]
 	financialstart = request.params["financialstart"]
@@ -124,10 +141,10 @@ def printcashflowreport(request):
 	def makepdf(result):
 		To = Paragraph("To", headingstyle)
 		By = Paragraph("By", headingstyle)
-		Particularsleft = Paragraph("Particulars", headingstyle)
-		Particularsright = Paragraph("Particulars", headingstyle)
-		Amtleft = Paragraph("Amount", headingstyle)
-		Amtright = Paragraph("Amount", headingstyle)
+		Particularsleft = Paragraph("Particulars", headingstyleleft)
+		Particularsright = Paragraph("Particulars", headingstyleleft)
+		Amtleft = Paragraph("Amount", headingstyleright)
+		Amtright = Paragraph("Amount", headingstyleright)
 
 		doc = SimpleDocTemplate(filename, pagesize=A4)
 		temp_list = [To, Particularsleft, Amtleft, By, Particularsright, Amtright]
@@ -145,7 +162,7 @@ def printcashflowreport(request):
 				to = entry["toby"]
 				to = Paragraph(to, simplestyle)
 				particularsleft = entry["particulars"]
-				particularsleft = Paragraph(particularsleft, simplestyle)
+				particularsleft = Paragraph(particularsleft, simplestyleleft)
 				amtleft = entry["amount"]
 				listoflist.append([to, particularsleft, amtleft])
 
@@ -155,7 +172,7 @@ def printcashflowreport(request):
 				by = entryy["toby"]
 				by = Paragraph(by, simplestyle)
 				particularsright = entryy["particulars"]
-				particularsright = Paragraph(particularsright, simplestyle)
+				particularsright = Paragraph(particularsright, simplestyleleft)
 				amtright = entryy["amount"]
 				listoflist[i].append(by)
 				listoflist[i].append(particularsright)
