@@ -71,14 +71,37 @@ def printtrialbalance(request):
 	PAGE_WIDTH=defaultPageSize[0]
 
 	styleSheet = getSampleStyleSheet()
+	styletwo = getSampleStyleSheet()
+	stylethree = getSampleStyleSheet()
+
 	simplestyle = styleSheet['BodyText']
 	simplestyle.alignment = TA_CENTER
 	simplestyle.fontSize = 9
+
+	'''simplestyleright = styletwo['BodyText']
+	simplestyleright.alignment = TA_RIGHT
+	simplestyleright.fontSize = 9
+	'''
+	simplestyleleft = stylethree['BodyText']
+	simplestyleleft.alignment = TA_LEFT
+	simplestyleleft.fontSize = 9
+
 
 	headingstyle = styleSheet['Heading4']
 	headingstyle.alignment = TA_CENTER
 	headingstyle.fontSize = 11
 	headingstyle.fontName = 'Times-Bold'
+
+	headingstyleright = styletwo['Heading4']
+	headingstyleright.alignment = TA_RIGHT
+	headingstyleright.fontSize = 11
+	headingstyleright.fontName = 'Times-Bold'
+
+	headingstyleleft = stylethree['Heading4']
+	headingstyleleft.alignment = TA_LEFT
+	headingstyleleft.fontSize = 11
+	headingstyleleft.fontName = 'Times-Bold'
+
 
 	calculateto = request.params["calculateto"]
 	financialstart = request.params["financialstart"]
@@ -140,26 +163,26 @@ def printtrialbalance(request):
 
 	def makepdf(balancetype, result):
 		srnum = Paragraph("Sr.No", headingstyle)
-		accntname = Paragraph("Account Name", headingstyle)
+		accntname = Paragraph("Account Name", headingstyleleft)
 		grpname = Paragraph("Group Name", headingstyle)
 
 		if(balancetype == "Net"):
 			doc = SimpleDocTemplate(Filename_net, pagesize=A4)
-			deb = Paragraph("Debit", headingstyle)
-			cred = Paragraph("Credit", headingstyle)
+			deb = Paragraph("Debit", headingstyleright)
+			cred = Paragraph("Credit", headingstyleright)
 			temp_list = [srnum, accntname, deb, cred, grpname]
 		elif(balancetype == "Gross"):
 			doc = SimpleDocTemplate(Filename_gross, pagesize=A4)
-			deb = Paragraph("Debit", headingstyle)
-			cred = Paragraph("Credit", headingstyle)
+			deb = Paragraph("Debit", headingstyleright)
+			cred = Paragraph("Credit", headingstyleright)
 			temp_list = [srnum, accntname, deb, cred, grpname]
 		elif(balancetype == "Extended"):
 			doc = SimpleDocTemplate(Filename_ext, pagesize=A4)
-			openingg = Paragraph("Opening", headingstyle)
-			totaldeb = Paragraph("Total Drs", headingstyle)
-			totalcred = Paragraph("Total Crs", headingstyle)
-			dr_balance = Paragraph("Dr Balance", headingstyle)
-			cr_balance = Paragraph("Cr Balance", headingstyle)
+			openingg = Paragraph("Opening", headingstyleright)
+			totaldeb = Paragraph("Total Drs", headingstyleright)
+			totalcred = Paragraph("Total Crs", headingstyleright)
+			dr_balance = Paragraph("Dr Balance", headingstyleright)
+			cr_balance = Paragraph("Cr Balance", headingstyleright)
 			temp_list = [srnum, accntname, openingg, totaldeb, totalcred, dr_balance, cr_balance, grpname]
 
 		Story = [Spacer(1,0.2*inch)]
@@ -179,7 +202,7 @@ def printtrialbalance(request):
 				srno = entry["srno"]
 				srno = Paragraph(str(srno), simplestyle)
 				accountname = entry["accountname"]
-				accountname = Paragraph(accountname, simplestyle)
+				accountname = Paragraph(accountname, simplestyleleft)
 				groupname = entry["groupname"]
 				groupname = Paragraph(groupname, simplestyle)
 				if(balancetype == "Net"):
