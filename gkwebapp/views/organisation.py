@@ -66,3 +66,9 @@ def rollover(request):
 	result = requests.get("http://127.0.0.1:6543/rollclose?task=rollover&financialend=%s"%(request.params["financialend"]), headers=header)
 	print result.json()["gkstatus"]
 	return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="deleteorg", renderer="json")
+def deleteorg(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.delete("http://127.0.0.1:6543/organisations", headers=header)
+	return {"gkstatus":result.json()["gkstatus"]}
