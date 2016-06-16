@@ -44,8 +44,19 @@ $(document).ready(function()
   });
 
   $('#m_accountname').keydown( function(event) {
-    if (event.which==13) {
-      event.preventDefault();
+    if (event.which==13)
+     {
+       event.preventDefault();
+      if($("#m_openbal").is(':visible'))
+      {
+        $("#m_openbal").focus();
+        $("#m_openbal").select();
+      }
+      else
+      {
+        $("#m_submit").click();
+
+      }
     }
   });
 
