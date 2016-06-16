@@ -237,17 +237,14 @@ def printsourcesandappfundreport(request):
 	return response
 
 @view_config(route_name="showbalancesheet", renderer="gkwebapp:templates/viewbalancesheet.jinja2")
-def showtrialbalance(request):
+def showbalancesheet(request):
 	return {"gkstatus":0}
 
 @view_config(route_name="showbalancesheetreport")
-def showtrialbalancereport(request):
+def showbalancesheetreport(request):
 	calculateto = request.params["calculateto"]
-	print"asdfyguygfdcwerv: ",calculateto
 	balancesheettype = request.params["balancesheettype"]
-	print"asdfyguygfdcwerv: ",balancesheettype
 	orgtype = request.params["orgtype"]
-	print"asdfyguygfdcwerv: ",orgtype
 	header={"gktoken":request.headers["gktoken"]}
 	if balancesheettype == "conventionalbalancesheet":
 		result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=1"%(calculateto), headers=header)

@@ -66,14 +66,18 @@ $(document).ready(function() {
 				$('#satable tbody tr:eq('+previndex+') td:eq(0) a').focus();
 			}
 		}
+
+  });
+
+  $("#satable").off('keydown','tr').on('keydown','tr',function(event){
+    var rindex = $(this).index();
+
     if (event.which == 13)
     {
       event.preventDefault();
-      value = $(this).closest('tr').attr('value');
-      classs = "."+value;
-      $(classs).slideToggle(1);
+      $(".cbalsheettable tbody tr:eq("+rindex+")").dblclick();
     }
-  });
+});
 
   $(".cbalsheettable tbody tr").dblclick(function(event) {
       event.preventDefault();
@@ -81,8 +85,29 @@ $(document).ready(function() {
       if(grpcode==""){
         return false;
       }
-      else{
+      else if (grpcode.indexOf("v") != -1) {
         $("."+grpcode).slideToggle(1);
+      }
+      else {
+    		var newfromdate = sessionStorage.yyyymmddyear1;
+    		$.ajax(
+    			{
+    				type: "POST",
+    				url: "/showledgerreport",
+    				global: false,
+    				async: false,
+    				datatype: "text/html",
+    				data: {"backflag":8,"accountcode":grpcode,"calculatefrom":newfromdate,"calculateto":$("#cto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":"","monthlyflag":false,"narrationflag":false},
+    				beforeSend: function(xhr)
+    				{
+    					xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    				},
+    			})
+    				.done(function(resp)
+    				{
+    					$("#info").html(resp);
+    				}
+    			);
       }
   });
 
@@ -122,6 +147,8 @@ $("#cbalbutn").click(function(event) {
     }
   );
 });
+
+
 $("#print").click(function(event) {
     $.ajax(
       {

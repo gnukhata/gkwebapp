@@ -71,13 +71,6 @@ $(document).ready(function() {
 
       $('#patable tbody tr:eq('+pyindex+') td:eq(0) a').focus();
     }
-    if (event.which == 13)
-    {
-      event.preventDefault();
-      value = $(this).closest('tr').attr('value');
-      classs = "."+value;
-      $(classs).slideToggle(1);
-    }
   });
 
   var urole = $("#urole").val();
@@ -132,26 +125,89 @@ $(document).ready(function() {
 
       $('#liabtable tbody tr:eq('+rcindex+') td:eq(0) a').focus();
     }
+  });
+  $("#liabtable").off('keydown','tr').on('keydown','tr',function(event){
+    var rindex = $(this).index();
+
     if (event.which == 13)
     {
       event.preventDefault();
-      value = $(this).closest('tr').attr('value');
-      classs = "."+value;
-      $(classs).slideToggle(1);
+      $("#liabtable tbody tr:eq("+rindex+")").dblclick();
     }
-  });
+});
+$("#patable").off('keydown','tr').on('keydown','tr',function(event){
+  var rindex = $(this).index();
 
-  $(".cbalsheettable tbody tr").dblclick(function(event) {
+  if (event.which == 13)
+  {
+    event.preventDefault();
+    $("#patable tbody tr:eq("+rindex+")").dblclick();
+  }
+});
+
+  $("#patable tbody tr").dblclick(function(event) {
       event.preventDefault();
       var grpcode = $(this).attr('value');
       if(grpcode==""){
         return false;
       }
-      else{
+      else if (grpcode.indexOf("v") != -1) {
         $("."+grpcode).slideToggle(1);
+      }
+      else {
+    		var newfromdate = sessionStorage.yyyymmddyear1;
+    		$.ajax(
+    			{
+    				type: "POST",
+    				url: "/showledgerreport",
+    				global: false,
+    				async: false,
+    				datatype: "text/html",
+    				data: {"backflag":9,"accountcode":grpcode,"calculatefrom":newfromdate,"calculateto":$("#cto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":"","monthlyflag":false,"narrationflag":false},
+    				beforeSend: function(xhr)
+    				{
+    					xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    				},
+    			})
+    				.done(function(resp)
+    				{
+    					$("#info").html(resp);
+    				}
+    			);
       }
   });
 
+  $("#liabtable tbody tr").dblclick(function(event) {
+      event.preventDefault();
+      var grpcode = $(this).attr('value');
+      if(grpcode==""){
+        return false;
+      }
+      else if (grpcode.indexOf("v") != -1) {
+        $("."+grpcode).slideToggle(1);
+      }
+      else {
+    		var newfromdate = sessionStorage.yyyymmddyear1;
+    		$.ajax(
+    			{
+    				type: "POST",
+    				url: "/showledgerreport",
+    				global: false,
+    				async: false,
+    				datatype: "text/html",
+    				data: {"backflag":9,"accountcode":grpcode,"calculatefrom":newfromdate,"calculateto":$("#cto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":"","monthlyflag":false,"narrationflag":false},
+    				beforeSend: function(xhr)
+    				{
+    					xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    				},
+    			})
+    				.done(function(resp)
+    				{
+    					$("#info").html(resp);
+    				}
+    			);
+      }
+  });
   var urole = $("#urole").val();
 
 

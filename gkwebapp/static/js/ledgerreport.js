@@ -358,6 +358,46 @@ $("#dualledger").click(function(event) {
           console.log("complete");
         });
     }
+    else if ($("#backflag").val()==8) {
+      $.ajax(
+        {
+          type: "POST",
+          url: "/showbalancesheetreport",
+          global: false,
+          async: false,
+          datatype: "text/html",
+          data: {"balancesheettype":"verticalbalancesheet","calculateto":$("#calculateto").val(),"orgtype":sessionStorage.orgt},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+        })
+        .done(function(resp)
+        {
+          $("#info").html(resp);
+        }
+      );
+    }
+    else if ($("#backflag").val()==9) {
+      $.ajax(
+        {
+          type: "POST",
+          url: "/showbalancesheetreport",
+          global: false,
+          async: false,
+          datatype: "text/html",
+          data: {"balancesheettype":"conventionalbalancesheet","calculateto":$("#calculateto").val(),"orgtype":sessionStorage.orgt},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+        })
+        .done(function(resp)
+        {
+          $("#info").html(resp);
+        }
+      );
+    }
   });
   $("#print").click(function(event) {
     $.ajax(
