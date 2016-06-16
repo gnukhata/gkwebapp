@@ -133,7 +133,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
               <form id="viewvoucher" name="voucher" class="" action="" method="get">
                 <div class="form-inline">
                 <div class="well well-sm" >
-                  <label for="vno">Voucher No:</label>
+                  <label for="vno">Voucher No:</label><label for="vno" style="color:red;font-size: 120%;">*</label>
                   <input type="text" name="vno" class=" form-control input-sm" id="vno" size="10" value="{{voucher["vouchernumber"]}}">
                   <div class="form-group col-xs-offset-2">
                     {% if vtype=="contra" %}
