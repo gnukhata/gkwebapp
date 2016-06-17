@@ -116,19 +116,19 @@ $(document).ready(function(){
           $("#showtrialbalance").click();
           event.preventDefault();
           }
-        if(event.ctrlKey && (event.keyCode == 54)||(event.keyCode == 102)) {
+        if(event.ctrlKey && (event.keyCode == 54||event.keyCode == 102)) {
           $("#showprjstate").click();
           event.preventDefault();
           }
-        if(event.ctrlKey && (event.keyCode == 55)||(event.keyCode == 103)) {
+        if(event.ctrlKey && (event.keyCode == 55||event.keyCode == 103)) {
           $("#showcashflow").click();
           event.preventDefault();
           }
-        if(event.ctrlKey && (event.keyCode == 56)||(event.keyCode == 104)) {
+        if(event.ctrlKey && (event.keyCode == 56||event.keyCode == 104)) {
           $("#showbalancesheet").click();
           event.preventDefault();
           }
-        if(event.ctrlKey && (event.keyCode == 57)||(event.keyCode == 105)) {
+        if(event.ctrlKey && (event.keyCode == 57||event.keyCode == 105)) {
           $("#showprofitloss").click();
           event.preventDefault();
           }
@@ -136,7 +136,7 @@ $(document).ready(function(){
           $("#fevoucher").click();
           event.preventDefault();
           }
-        if(event.ctrlKey && (event.keyCode == 53)||(event.keyCode == 101)) {
+        if(event.ctrlKey && (event.keyCode == 53||event.keyCode == 101)) {
           $("#listofaccounts").click();
           event.preventDefault();
           }
