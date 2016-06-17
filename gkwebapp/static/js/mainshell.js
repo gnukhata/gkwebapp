@@ -22,6 +22,7 @@ Contributors:
 "Krishnakant Mane" <kk@gmail.com>
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
+"Dinesh Sutar" <dinesh.sutar@openmailbox.org>
 */
 
 $(document).ready(function(){
@@ -107,27 +108,27 @@ $(document).ready(function(){
           $("#editaccount").click();
           event.preventDefault();
           }
-        if(event.keyCode == 115) {
+        if(event.keyCode == 122) {
           $("#showviewledger").click();
           event.preventDefault();
           }
-        if(event.keyCode == 116) {
+        if(event.keyCode == 123) {
           $("#showtrialbalance").click();
           event.preventDefault();
           }
-        if(event.keyCode == 117) {
+        if(event.ctrlKey && (event.keyCode == 54)||(event.keyCode == 102)) {
           $("#showprjstate").click();
           event.preventDefault();
           }
-        if(event.keyCode == 118) {
+        if(event.ctrlKey && (event.keyCode == 55)||(event.keyCode == 103)) {
           $("#showcashflow").click();
           event.preventDefault();
           }
-        if(event.keyCode == 119) {
+        if(event.ctrlKey && (event.keyCode == 56)||(event.keyCode == 104)) {
           $("#showbalancesheet").click();
           event.preventDefault();
           }
-        if(event.keyCode == 120) {
+        if(event.ctrlKey && (event.keyCode == 57)||(event.keyCode == 105)) {
           $("#showprofitloss").click();
           event.preventDefault();
           }
@@ -135,47 +136,47 @@ $(document).ready(function(){
           $("#fevoucher").click();
           event.preventDefault();
           }
-        if(event.keyCode == 122) {
+        if(event.ctrlKey && (event.keyCode == 53)||(event.keyCode == 101)) {
           $("#listofaccounts").click();
           event.preventDefault();
           }
-        if(event.ctrlKey && (event.keyCode == 49 || event.keyCode == 97)) {
+        if(event.keyCode == 119) {
           $("#showcontra").click();
           event.preventDefault();
         }
-        if(event.ctrlKey && (event.keyCode == 50 || event.keyCode == 98)) {
+        if(event.keyCode == 116) {
           $("#showpayment").click();
           event.preventDefault();
           }
-        if(event.ctrlKey && (event.keyCode == 51 || event.keyCode == 99)) {
+        if(event.keyCode == 115) {
           $("#showreceipt").click();
           event.preventDefault();
           }
-        if(event.ctrlKey && (event.keyCode == 52 || event.keyCode == 100)) {
+        if(event.keyCode == 120) {
           $("#showjournal").click();
           event.preventDefault();
           }
-        if(event.ctrlKey && (event.keyCode == 53 || event.keyCode == 101)) {
+        if(event.keyCode == 117) {
           $("#showsales").click();
           event.preventDefault();
           }
-        if(event.ctrlKey && (event.keyCode == 54 || event.keyCode == 102)) {
+        if(event.keyCode == 118) {
           $("#showpurchase").click();
           event.preventDefault();
           }
-        if(event.ctrlKey && (event.keyCode == 55 || event.keyCode == 103)) {
+        if(event.ctrlKey && (event.keyCode == 51 || event.keyCode == 99)) {
           $("#showcreditnote").click();
           event.preventDefault();
           }
-        if(event.ctrlKey && (event.keyCode == 56 || event.keyCode == 104)) {
+        if(event.ctrlKey && (event.keyCode == 52 || event.keyCode == 100)) {
           $("#showdebitnote").click();
           event.preventDefault();
           }
-        if(event.ctrlKey && (event.keyCode == 57 || event.keyCode == 105)) {
+        if(event.ctrlKey && (event.keyCode == 49 || event.keyCode == 97)) {
           $("#showsalesreturn").click();
           event.preventDefault();
           }
-        if(event.ctrlKey && (event.keyCode == 48 || event.keyCode == 96)) {
+        if(event.ctrlKey && (event.keyCode == 50 || event.keyCode == 98)) {
           $("#showpurchasereturn").click();
           event.preventDefault();
           }

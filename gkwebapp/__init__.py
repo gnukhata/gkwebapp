@@ -24,6 +24,9 @@ Contributors:
 "Arun Kelkar" <arunkelkar@dff.org.in>
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
+"Vaibhav Kurhe" <vaibspidy@openmailbox.org>
+"Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
+"Bhavesh Bawadhane" <bbhavesh07@gmail.com>
 """
 
 from pyramid.config import Configurator

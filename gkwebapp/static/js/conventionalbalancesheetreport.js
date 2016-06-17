@@ -22,6 +22,8 @@ Contributors:
 "Krishnakant Mane" <kk@gmail.com>
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
+"Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
+"Bhavesh Bawadhane" <bbhavesh07@gmail.com>
 */
 
 $(document).ready(function() {
