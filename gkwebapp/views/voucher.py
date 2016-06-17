@@ -115,3 +115,8 @@ def showdeletedvoucher(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/report?type=deletedvoucher", headers=header)
 	return {"gkresult":result.json()["gkresult"]}
+
+@view_config(route_name="testimage", renderer="json")
+def testimage(request):
+	print request.params["img"]
+	return request.params["img"]

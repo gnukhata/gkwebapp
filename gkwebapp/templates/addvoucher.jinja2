@@ -92,11 +92,11 @@
   }
   td {
     font-size: 80%;
-      }
+  }
 
-      th {
-        font-size: 75%;
-          }
+  th {
+    font-size: 75%;
+  }
 
   </style>
 </head>
@@ -144,165 +144,173 @@
     </div>
 
 
-        <form id="voucher" name="voucher">
-          <div class="form-inline well well-sm shadow" >
+    <form id="voucher" name="voucher">
+      <div class="form-inline well well-sm shadow" >
 
-              <div class="form-group">
-                <label for="vno"><u>V</u>oucher No:</label><label for="vno" style="color:red;font-size: 120%;">*</label>
-                <input type="text" class="form-control input-sm" name="vno" id="vno" size="10" accesskey="v">
-              </div>
-              <div class="form-group col-xs-offset-4">
-                {% if vtype=="contra" %}
-                  <label><i>Contra</i></label>
-                {% elif vtype == "payment" %}
-                  <label><i>Payment</i></label>
-                {% elif vtype == "receipt" %}
-                  <label><i>Receipt</i></label>
-                {% elif vtype == "journal" %}
-                  <label><i>Journal</i></label>
-                {% elif vtype == "sales" %}
-                  <label><i>Sales</i></label>
-                {% elif vtype == "purchase" %}
-                  <label><i>Purchase</i></label>
-                {% elif vtype == "creditnote" %}
-                  <label><i>Credit Note</i></label>
-                {% elif vtype == "debitnote" %}
-                  <label><i>Debit Note</i></label>
-                {% elif vtype == "salesreturn" %}
-                  <label><i>Sales Return</i></label>
-                {% elif vtype == "purchasereturn" %}
-                  <label><i>Purchase Return</i></label>
-                {% endif %}
-              </div>
-              <div class="pull-right form-group">
-                <label for="vdate"><u>D</u>ate:</label>
-                <input type="text" class="vdate form-control input-sm" id="vdate" value="" size="2" maxlength="2" placeholder="DD" accesskey="d">
-                <input type="text" id="vmonth" class="vdate form-control input-sm" value="" size="2" maxlength="2" placeholder="MM">
-                <input type="text" id="vyear" class="vdate form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY">
-              </div>
+        <div class="form-group">
+          <label for="vno"><u>V</u>oucher No:</label><label for="vno" style="color:red;font-size: 120%;">*</label>
+          <input type="text" class="form-control input-sm" name="vno" id="vno" size="10" accesskey="v">
+        </div>
+        <div class="form-group col-xs-offset-4">
+          {% if vtype=="contra" %}
+          <label><i>Contra</i></label>
+          {% elif vtype == "payment" %}
+          <label><i>Payment</i></label>
+          {% elif vtype == "receipt" %}
+          <label><i>Receipt</i></label>
+          {% elif vtype == "journal" %}
+          <label><i>Journal</i></label>
+          {% elif vtype == "sales" %}
+          <label><i>Sales</i></label>
+          {% elif vtype == "purchase" %}
+          <label><i>Purchase</i></label>
+          {% elif vtype == "creditnote" %}
+          <label><i>Credit Note</i></label>
+          {% elif vtype == "debitnote" %}
+          <label><i>Debit Note</i></label>
+          {% elif vtype == "salesreturn" %}
+          <label><i>Sales Return</i></label>
+          {% elif vtype == "purchasereturn" %}
+          <label><i>Purchase Return</i></label>
+          {% endif %}
+        </div>
+        <div class="pull-right form-group">
+          <label for="vdate"><u>D</u>ate:</label>
+          <input type="text" class="vdate form-control input-sm" id="vdate" value="" size="2" maxlength="2" placeholder="DD" accesskey="d">
+          <input type="text" id="vmonth" class="vdate form-control input-sm" value="" size="2" maxlength="2" placeholder="MM">
+          <input type="text" id="vyear" class="vdate form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY">
+        </div>
 
-          </div>
-          <div class="panel panel-info flow shadow">
-            <div class="table-responsive">
-              <table id="vtable" class="table table-condensed table-fixedheader">
-                <thead>
-                  <tr class="info">
-                    <th class="col-xs-1">
-                      Cr/Dr
-                    </th>
-                    <th class="col-xs-4">
-                      Account Name
-                    </th>
-                    <th class="col-xs-3 rightJustified">
-                      Dr Amount
-                    </th>
-                    <th class="col-xs-3 rightJustified">
-                      Cr Amount
-                    </th>
-                    <th class="col-xs-1">
-                      Remove
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="col-xs-1">
-                      <select class="form-control input-sm crdr" disabled>
-                        <option value="Dr" selected>Dr</option>
-                        <option value="Cr">Cr</option>
-                      </select>
-                    </td>
-                    <td class="col-xs-4">
-                      <select class="form-control input-sm accs">
-                        {% for acc in draccounts %}
-                        <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
-                        {% endfor %}
-                      </select>
-                    </td>
-                    <td class="col-xs-3">
-                      <input class="form-control input-sm dramt rightJustified" type="text" value="0.00">
-                    </td>
-                    <td class="col-xs-3">
-                      <input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>
-                    </td>
-                    <td class="col-xs-1">
+      </div>
+      <div class="panel panel-info flow shadow">
+        <div class="table-responsive">
+          <table id="vtable" class="table table-condensed table-fixedheader">
+            <thead>
+              <tr class="info">
+                <th class="col-xs-1">
+                  Cr/Dr
+                </th>
+                <th class="col-xs-4">
+                  Account Name
+                </th>
+                <th class="col-xs-3 rightJustified">
+                  Dr Amount
+                </th>
+                <th class="col-xs-3 rightJustified">
+                  Cr Amount
+                </th>
+                <th class="col-xs-1">
+                  Remove
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="col-xs-1">
+                  <select class="form-control input-sm crdr" disabled>
+                    <option value="Dr" selected>Dr</option>
+                    <option value="Cr">Cr</option>
+                  </select>
+                </td>
+                <td class="col-xs-4">
+                  <select class="form-control input-sm accs">
+                    {% for acc in draccounts %}
+                    <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
+                    {% endfor %}
+                  </select>
+                </td>
+                <td class="col-xs-3">
+                  <input class="form-control input-sm dramt rightJustified" type="text" value="0.00">
+                </td>
+                <td class="col-xs-3">
+                  <input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>
+                </td>
+                <td class="col-xs-1">
 
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="col-xs-1">
-                      <select class="form-control input-sm crdr" disabled>
-                        <option value="Cr" selected>Cr</option>
-                        <option value="Dr">Dr</option>
-                      </select>
-                    </td>
-                    <td class="col-xs-4">
-                      <select class="form-control input-sm accs">
-                        {% for acc in craccounts %}
-                        <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
-                        {% endfor %}
-                      </select>
-                    </td>
-                    <td class="col-xs-3">
-                      <input class="form-control input-sm dramt rightJustified" type="text" value="" disabled>
-                    </td>
-                    <td class="col-xs-3">
-                      <input class="form-control input-sm cramt rightJustified" type="text" value="0.00">
-                    </td>
-                    <td class="col-xs-1">
+                </td>
+              </tr>
+              <tr>
+                <td class="col-xs-1">
+                  <select class="form-control input-sm crdr" disabled>
+                    <option value="Cr" selected>Cr</option>
+                    <option value="Dr">Dr</option>
+                  </select>
+                </td>
+                <td class="col-xs-4">
+                  <select class="form-control input-sm accs">
+                    {% for acc in craccounts %}
+                    <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
+                    {% endfor %}
+                  </select>
+                </td>
+                <td class="col-xs-3">
+                  <input class="form-control input-sm dramt rightJustified" type="text" value="" disabled>
+                </td>
+                <td class="col-xs-3">
+                  <input class="form-control input-sm cramt rightJustified" type="text" value="0.00">
+                </td>
+                <td class="col-xs-1">
 
-                    </td>
-                  </tr>
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <td class="col-xs-5" colspan="2">
-                      <input type="text" class="form-control input-sm" value="Total" disabled>
-                    </td>
-                    <td class="col-xs-3">
-                      <input id="drtotal" class="form-control input-sm rightJustified" type="text" value="0.00" disabled>
-                    </td>
-                    <td class="col-xs-3">
-                      <input id="crtotal" class="form-control input-sm rightJustified" type="text" value="0.00" disabled>
-                    </td>
-                    <td class="col-xs-1">
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td class="col-xs-5" colspan="2">
+                  <input type="text" class="form-control input-sm" value="Total" disabled>
+                </td>
+                <td class="col-xs-3">
+                  <input id="drtotal" class="form-control input-sm rightJustified" type="text" value="0.00" disabled>
+                </td>
+                <td class="col-xs-3">
+                  <input id="crtotal" class="form-control input-sm rightJustified" type="text" value="0.00" disabled>
+                </td>
+                <td class="col-xs-1">
 
-                    </td>
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
-          </div>
-          <div class="form-inline">
-            <div class="form-group">
-            <label for="project">Pro<u>j</u>ect:</label>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="form-inline">
+        <div class="form-group">
+          <label for="project">Pro<u>j</u>ect:</label>
 
-            <select class="form-control input-sm" id="project" accesskey="j">
-              <option value="">None</option>
-              {% for project in projects %}
-              <option value="{{project['projectcode']}}">{{project['projectname']}}</option>
-              {% endfor %}}
-            </select>
-          </div>
-          <div class="form-group pull-right">
-            <label for="narration">Narra<u>t</u>ion:</label>
-            <textarea class="form-control" name="narration" id="narration" rows="1" cols="60" accesskey="t"></textarea>
-          </div>
-          </div>
-          <input type="hidden" id="vtype" name="vtype" value="{{vtype}}">
+          <select class="form-control input-sm" id="project" accesskey="j">
+            <option value="">None</option>
+            {% for project in projects %}
+            <option value="{{project['projectcode']}}">{{project['projectname']}}</option>
+            {% endfor %}}
+          </select>
+        </div>
+        <div class="form-group pull-right">
+          <label for="narration">Narra<u>t</u>ion:</label>
+          <textarea class="form-control" name="narration" id="narration" rows="1" cols="60" accesskey="t"></textarea>
+        </div>
+      </div>
+      <input type="hidden" id="vtype" name="vtype" value="{{vtype}}">
 
 
-      </form>
+    </form>
 
-        <button type="button" id="save" name="submit" class="btn btn-success" accesskey="s">
-          <u>S</u>ave
-        </button>
-        <button type="button" id="reset" class="btn btn-danger" accesskey="e">
-          R<u>e</u>set
-        </button>
-        <button type="button" id="popup" class="btn btn-primary" accesskey="o">
-          Add Acc<u>o</u>unt
-        </button>
+    <button type="button" id="save" name="submit" class="btn btn-success" accesskey="s">
+      <u>S</u>ave
+    </button>
+    <button type="button" id="reset" class="btn btn-danger" accesskey="e">
+      R<u>e</u>set
+    </button>
+    <button type="button" id="popup" class="btn btn-primary" accesskey="o">
+      Add Acc<u>o</u>unt
+    </button>
+    <label class="btn btn-primary" for="my-file-selector">
+      <input id="my-file-selector" type="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
+      Uplaod Image
+    </label>
+    <span class='label label-info' id="upload-file-info"></span>
+    <button type="button" id="test" class="btn btn-primary">
+      test
+    </button>
 
 
 
@@ -311,6 +319,7 @@
   <div id="viewacc">
 
   </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jasny-bootstrap.min.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addvoucher.js')}}"></script>
 </body>
 </html>
