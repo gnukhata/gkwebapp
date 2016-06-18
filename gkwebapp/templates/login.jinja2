@@ -17,10 +17,8 @@
 
 </head>
 <body>
-
-
-  <div class="container-fluid">
-    <div id="loginbox" style="margin-top:60px;" class="mainbox col-md-6 pull-right">
+  <div class="container">
+    <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 pull-right">
       <div class="alert alert-danger" id="username-blank-alert" hidden>
         <a href="#" class="close" aria-label="close">&times;</a>
         Please enter username!
@@ -36,7 +34,7 @@
       <div class="panel panel-info" >
         <div class="panel-heading">
           <div class="panel-title">Sign In</div>
-          
+
         </div>
         <div style="padding-top:30px" class="panel-body" >
           <form id="loginform" action="userlogin" class="form-horizontal">
@@ -50,7 +48,9 @@
               <label for="userpassword"><u>P</u>assword :</label>
               <input id="userpassword" type="password" class="form-control col-xs-12" name="userpassword" accesskey="p"></input>
             </div>
-
+            <div style="margin-bottom: 5px" class="input-group col-xs-12">
+              <a id="forgotpwdlink" href="" aria-label="Forgot Password Link">Forgot Password?</a>
+            </div>
             <input id="orgcode"  name="orgcode" value="{{code}}" class="form-control" style="display: none;"></input>
             <input id="flag"  name="flag" value="{{flag}}" class="form-control" style="display:none;"></input>
             <div style="margin-top:10px" class="form-group">
@@ -61,10 +61,10 @@
               </div>
             </div>
           </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
   <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
   <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>

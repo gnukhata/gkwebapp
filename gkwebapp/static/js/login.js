@@ -49,6 +49,7 @@ $(document).ready(function()
   });
 
   $("#forgotpwdlink").click(function(event){
+    event.preventDefault();
     var code = $("#orgcode").val();
     $("#selectorg").load("/forgotpassword?orgcode="+ code);
   });

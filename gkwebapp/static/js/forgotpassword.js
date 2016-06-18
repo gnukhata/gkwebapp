@@ -26,6 +26,26 @@ Contributors:
 
 $(document).ready(function()
 {
+  $("#username").focus();
+  $('input:visible, textarea').keydown(function(event){
+    var n =$('input:visible,textarea').length;
+    var f= $('input:visible, textarea');
+    if (event.which == 13)
+    {
+      var nextIndex = f.index(this)+1;
+      if(nextIndex < n){
+        event.preventDefault();
+        f[nextIndex].focus().select();
+      }
+    }
+    if(event.which == 38){
+      var prevIndex = f.index(this)-1;
+      if(prevIndex < n){
+        event.preventDefault();
+        f[prevIndex].focus().select();
+      }
+    }
+  });
   $("#btnsubmit").click(function(event){
     event.preventDefault();
     if ($.trim($("#username").val())=="") {
