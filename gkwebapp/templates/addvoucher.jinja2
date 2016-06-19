@@ -303,14 +303,22 @@
     <button type="button" id="popup" class="btn btn-primary" accesskey="o">
       Add Acc<u>o</u>unt
     </button>
-    <label class="btn btn-primary" for="my-file-selector">
-      <input id="my-file-selector" type="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
-      Uplaod Image
-    </label>
-    <span class='label label-info' id="upload-file-info"></span>
-    <button type="button" id="test" class="btn btn-primary">
-      test
-    </button>
+
+
+    <form id="upload-file" method="post" enctype="multipart/form-data">
+    <fieldset>
+      <label class="btn btn-primary" for="my-file-selector">
+        <input name="img" id="my-file-selector" type="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
+        Uplaod Image
+      </label>
+      <span class='label label-info' id="upload-file-info"></span>
+    </fieldset>
+    <fieldset>
+      <button type="button" id="test" class="btn btn-primary">
+        test
+      </button>
+    </fieldset>
+    </form>
 
 
 

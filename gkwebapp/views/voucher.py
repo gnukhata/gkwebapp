@@ -30,7 +30,7 @@ from pyramid.view import view_config
 import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
-
+from PIL import Image
 
 @view_config(route_name="showvoucher")
 def showvoucher(request):
@@ -118,5 +118,7 @@ def showdeletedvoucher(request):
 
 @view_config(route_name="testimage", renderer="json")
 def testimage(request):
-	print request.params["img"]
-	return request.params["img"]
+	img = request.POST["img"].file
+	image = Image.open(img)
+	image.show()
+	return {"img":True}
