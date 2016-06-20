@@ -71,6 +71,25 @@ $(document).ready(function() {
 
   });
 
+
+  $("#satable").off('slideToggle','tr').on('slideToggle','tr',function(event){
+
+    event.preventDefault();
+    alert("abc")
+    var grpcode = $(this).attr('value');
+
+    if ($("."+grpcode).is(":hidden"))
+    {
+      var code = $(this).attr('value');
+      if(code==""){return false;}
+      else if (code.indexOf("g") != -1){
+        $("."+code).hide();
+      }
+    }
+
+
+  });
+
   $("#satable").off('keydown','tr').on('keydown','tr',function(event){
     var rindex = $(this).index();
 
@@ -87,7 +106,7 @@ $(document).ready(function() {
       if(grpcode==""){
         return false;
       }
-      else if (grpcode.indexOf("v") != -1) {
+      else if (grpcode.indexOf("g") != -1) {
         $("."+grpcode).slideToggle(1);
       }
       else {
