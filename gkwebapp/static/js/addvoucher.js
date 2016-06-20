@@ -52,7 +52,7 @@ $(document).ready(function() {
   var percentwid = 100*(($("table").width()-12)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   $('.table-fixedheader tfoot').width(percentwid+"%");
-  var percentheigth = 100*(($("body").height()-$(".navbar").height()-277)/$("body").height());
+  var percentheigth = 100*(($("body").height()-$(".navbar").height()-300)/$("body").height());
   $('.table-fixedheader tbody').height(percentheigth+"%");
   var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
   $("#vdate").val(fromdatearray[2])
@@ -1121,13 +1121,19 @@ $(document).ready(function() {
     details.projectcode=$('#project').val();
     details.narration=$.trim($('#narration').val());
     details.vtype=$('#vtype').val();
+    var form_data = new FormData($('#upload-file')[0]);
+    form_data.append("vdetails",JSON.stringify(details));
+    form_data.append("transactions",JSON.stringify(output));
     $.ajax({
       type: "POST",
       url: "/addvoucher",
       global: false,
+      contentType: false,
+      cache: false,
+      processData: false,
       async: false,
       datatype: "json",
-      data: {"vdetails":JSON.stringify(details),"transactions":JSON.stringify(output)},
+      data: form_data,
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -1275,23 +1281,6 @@ $(document).ready(function() {
         }
       }
     );
-  });
-  $("#test").click(function(event) {
-    var form_data = new FormData($('#upload-file')[0]);
-        $.ajax({
-            type: 'POST',
-            url: '/testimage',
-            data: form_data,
-            contentType: false,
-            cache: false,
-            processData: false,
-            async: false,
-            success: function(data) {
-              alert(data["img"]);
-                console.log('Success!');
-            },
-        });
-
   });
 
   $('#reset').click(function(event) {

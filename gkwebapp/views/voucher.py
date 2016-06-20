@@ -31,6 +31,9 @@ import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
 from PIL import Image
+import base64
+import cStringIO
+
 
 @view_config(route_name="showvoucher")
 def showvoucher(request):
@@ -87,6 +90,16 @@ def addvoucher(request):
 		gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails["projectcode"])}
 	else:
 		gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"]}
+	try:
+		img = request.POST["img"].file
+		image = Image.open(img)
+		imgbuffer = cStringIO.StringIO()
+		image.save(imgbuffer, format="JPEG")
+		img_str = base64.b64encode(imgbuffer.getvalue())
+		image.close()
+		gkdata["attachment"] = img_str
+	except:
+		print "no attachment found"
 	for row in rowdetails:
 		if row["side"]=="Cr":
 			crs[row["accountcode"]]=row["cramount"]
@@ -118,7 +131,11 @@ def showdeletedvoucher(request):
 
 @view_config(route_name="testimage", renderer="json")
 def testimage(request):
+	print request.params.keys()
+	print request.params["payload"]
 	img = request.POST["img"].file
 	image = Image.open(img)
-	image.show()
-	return {"img":True}
+	imgbuffer = cStringIO.StringIO()
+	image.save(imgbuffer, format="PNG")
+	img_str = base64.b64encode(imgbuffer.getvalue())
+	return {"img":img_str}

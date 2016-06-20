@@ -286,39 +286,42 @@
         </div>
         <div class="form-group pull-right">
           <label for="narration">Narra<u>t</u>ion:</label>
-          <textarea class="form-control" name="narration" id="narration" rows="1" cols="60" accesskey="t"></textarea>
+          <textarea class="form-control" name="narration" id="narration" rows="3" cols="70" accesskey="t"></textarea>
         </div>
       </div>
       <input type="hidden" id="vtype" name="vtype" value="{{vtype}}">
 
 
     </form>
+    <div class="form-inline">
+      <div class="form-group">
+        <button type="button" id="save" name="submit" class="btn btn-success" accesskey="s">
+          <u>S</u>ave
+        </button>
+      </div>
+      <div class="form-group">
+        <button type="button" id="reset" class="btn btn-danger" accesskey="e">
+          R<u>e</u>set
+        </button>
+      </div>
+      <div class="form-group">
+        <button type="button" id="popup" class="btn btn-primary" accesskey="o">
+          Add Acc<u>o</u>unt
+        </button>
+      </div>
+      <div class="form-group" style="padding-top:15px">
+        <form id="upload-file" method="post" enctype="multipart/form-data">
+          <fieldset>
+            <label class="btn btn-primary" for="my-file-selector">
+              <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
+              Attac<u>h</u>
+            </label>
+            <span class='label label-info' id="upload-file-info"></span>
+          </fieldset>
+        </form>
+      </div>
+    </div>
 
-    <button type="button" id="save" name="submit" class="btn btn-success" accesskey="s">
-      <u>S</u>ave
-    </button>
-    <button type="button" id="reset" class="btn btn-danger" accesskey="e">
-      R<u>e</u>set
-    </button>
-    <button type="button" id="popup" class="btn btn-primary" accesskey="o">
-      Add Acc<u>o</u>unt
-    </button>
-
-
-    <form id="upload-file" method="post" enctype="multipart/form-data">
-    <fieldset>
-      <label class="btn btn-primary" for="my-file-selector">
-        <input name="img" id="my-file-selector" type="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
-        Uplaod Image
-      </label>
-      <span class='label label-info' id="upload-file-info"></span>
-    </fieldset>
-    <fieldset>
-      <button type="button" id="test" class="btn btn-primary">
-        test
-      </button>
-    </fieldset>
-    </form>
 
 
 
