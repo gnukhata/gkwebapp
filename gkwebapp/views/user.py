@@ -87,3 +87,8 @@ def securityquestion(request):
     userdata.append(result.json()["gkresult"])
     print userdata
     return {"gkresult":userdata}
+
+@view_config(route_name="userdetails", renderer="json")
+def updatepassword(request):
+    gkdata={"userid":request.params["userid"], "userpassword":request.params["userpassword"]}
+    print gkdata

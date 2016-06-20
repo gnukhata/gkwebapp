@@ -39,6 +39,7 @@ $(document).ready(function()
         success: function(jsonObj) {
           userdata = jsonObj["gkresult"],
           $("#securityquestion").val(userdata[0].userquestion);
+          $("#userid").val(userdata[0].userid);
         }
       });
     }
@@ -107,6 +108,20 @@ $(document).ready(function()
       });
       $("#confirmpassword").focus();
       return false;
+    }
+
+    if ($.trim($("#newpassword").val())==$.trim($("#confirmpassword").val())) {
+      $.ajax({
+        type: "POST",
+        url: "/userdetails",
+        data: {"userid":$("#userid").val(), "userpassword":$("#confirmpassword").val()},
+        global: false,
+        async: false,
+        datatype: "json",
+        success: function(jsonObj) {
+
+        }
+      });
     }
   })
 
