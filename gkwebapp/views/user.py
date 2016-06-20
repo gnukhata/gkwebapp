@@ -79,3 +79,11 @@ def deleteuser(request):
 def forgotpassword(request):
     code = request.params["orgcode"]
     return {"orgcode":code}
+
+@view_config(route_name="securityquestion", renderer="json")
+def securityquestion(request):
+    result = requests.get("http://127.0.0.1:6543/forgotpassword?orgcode=%s&username=%s" % ((request.params["orgcode"]),(request.params["username"])))
+    userdata=[]
+    userdata.append(result.json()["gkresult"])
+    print userdata
+    return {"gkresult":userdata}

@@ -27,6 +27,22 @@ Contributors:
 $(document).ready(function()
 {
   $("#username").focus();
+  $("#username").keydown(function(e){
+    if (e.which == 13) {
+      $.ajax({
+        type: "POST",
+        url: "/securityquestion",
+        data: {"orgcode":$("#orgcode").val(), "username":$("#username").val()},
+        global: false,
+        async: false,
+        datatype: "json",
+        success: function(jsonObj) {
+          userdata = jsonObj["gkresult"],
+          $("#securityquestion").val(userdata[0].userquestion);
+        }
+      });
+    }
+  });
   $('input:visible, textarea').keydown(function(event){
     var n =$('input:visible,textarea').length;
     var f= $('input:visible, textarea');
