@@ -27,6 +27,7 @@ Contributors:
 */
 
 $(document).ready(function() {
+  $("#grpbtn").hide();
   $('#liabtable tbody tr:first-child td:eq(0) a').focus();
   $('#liabtable tbody tr:first-child td:eq(0) a').closest('tr').addClass('selected');
   var rcindex = 0
@@ -88,6 +89,46 @@ $(document).ready(function() {
 
   });
 
+  var accflag=0
+  var sbgrpflag=0
+
+$("#grpbtn").click(function(event){
+  event.preventDefault();
+  $(".subgroupacc").css("display", "none");
+  $(".groupacc").css("display", "none");
+  $(this).hide();
+  visiblesubgroup = $(".groupacc:visible").length;
+  visibleaccount = $(".subgroupacc:visible").length;
+  if(sbgrpflag==1 || visibleaccount==0)
+  {
+    $("#accbtn").show();
+  }
+  if(accflag==1 || visiblesubgroup==0)
+  {$("#sbgbtn").show();}
+  $('#liabtable tbody tr:first-child td:eq(0) a').focus();
+});
+
+  $("#sbgbtn").click(function(event){
+    event.preventDefault();
+      $(".groupacc").css("display", "block");
+      $(".subgroupacc").css("display", "none");
+      $(this).hide();
+      $("#grpbtn").show();
+      $("#accbtn").show();
+      sbgrpflag=1
+      $('#liabtable tbody tr:first-child td:eq(0) a').focus();
+  });
+
+  $("#accbtn").click(function(event){
+    event.preventDefault();
+      $(".groupacc").css("display", "block");
+      $(".subgroupacc").css("display", "block");
+      $(this).hide();
+      $("#grpbtn").show();
+      $("#sbgbtn").show();
+      accflag=1;
+      $('#liabtable tbody tr:first-child td:eq(0) a').focus();
+  });
 
   $(document).off('focus' ,'.pagname').on('focus' ,'.pagname',function() {
     $('#patable tr').removeClass('selected');
@@ -153,8 +194,15 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
       if(grpcode==""){
         return false;
       }
-      else if (grpcode.indexOf("v") != -1) {
+      else if (grpcode.indexOf("g") != -1) {
         $("."+grpcode).slideToggle(1);
+        $("."+grpcode).each(function(index) {
+          code = $(this).attr('value')
+          if ($("."+code).is(":visible")){
+            $("."+code).slideToggle(1);
+          }
+
+        });
       }
       else {
     		var newfromdate = sessionStorage.yyyymmddyear1;
@@ -185,8 +233,15 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
       if(grpcode==""){
         return false;
       }
-      else if (grpcode.indexOf("v") != -1) {
+      else if (grpcode.indexOf("g") != -1) {
         $("."+grpcode).slideToggle(1);
+        $("."+grpcode).each(function(index) {
+          code = $(this).attr('value')
+          if ($("."+code).is(":visible")){
+            $("."+code).slideToggle(1);
+          }
+
+        });
       }
       else {
     		var newfromdate = sessionStorage.yyyymmddyear1;
