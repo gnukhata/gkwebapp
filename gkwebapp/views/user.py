@@ -83,12 +83,15 @@ def forgotpassword(request):
 @view_config(route_name="securityquestion", renderer="json")
 def securityquestion(request):
     result = requests.get("http://127.0.0.1:6543/forgotpassword?orgcode=%s&username=%s" % ((request.params["orgcode"]),(request.params["username"])))
-    userdata=[]
-    userdata.append(result.json()["gkresult"])
-    print userdata
-    return {"gkresult":userdata}
+    if result.json()["gkstatus"] == 0:
+        userdata=[]
+        userdata.append(result.json()["gkresult"])
+        return {"gkresult":userdata, "gkstatus":result.json()["gkstatus"]}
+    else:
+        return {"gkstatus":result.json()["gkstatus"]}
 
-@view_config(route_name="userdetails", renderer="json")
-def updatepassword(request):
-    gkdata={"userid":request.params["userid"], "userpassword":request.params["userpassword"]}
-    print gkdata
+@view_config(route_name="securityanswer", renderer="json")
+def securityanswer(request):
+    result = requests.get("http://127.0.0.1:6543/forgotpassword?type=securityanswer&userid=%s&useranswer=%s" % ((request.params["userid"]),(request.params["useranswer"])))
+    print result.json()["gkstatus"]
+    return {"gkstatus":result.json()["gkstatus"]}

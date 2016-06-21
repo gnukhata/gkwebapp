@@ -220,7 +220,7 @@ def main(global_config, **settings):
     config.add_route('printcashflowreport', '/printcashflowreport')
     config.add_route('showdeletedvoucher', '/showdeletedvoucher')
     config.add_route('deleteorg', '/deleteorg')
-    config.add_route('userdetails', '/userdetails')
+    config.add_route('securityanswer', '/securityanswer')
     config.add_route('securityquestion', '/securityquestion')
     config.scan('gkwebapp')
     return config.make_wsgi_app()
