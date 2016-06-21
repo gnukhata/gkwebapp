@@ -222,6 +222,7 @@ def main(global_config, **settings):
     config.add_route('deleteorg', '/deleteorg')
     config.add_route('securityanswer', '/securityanswer')
     config.add_route('securityquestion', '/securityquestion')
+    config.add_route('newpassword', '/newpassword')
     config.scan('gkwebapp')
     return config.make_wsgi_app()
 >>>>>>> Displayed security question in forgotpassword page

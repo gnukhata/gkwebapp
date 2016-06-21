@@ -28,6 +28,7 @@ $(document).ready(function()
 {
   var answercheck = 0;
   var userstatus = 0;
+  var passwordchanged =0;
   $("#username").focus();
   $("#username").keydown(function(event){
     if (event.which == 13 || event.which == 9) {
@@ -149,7 +150,17 @@ $(document).ready(function()
     }
 
     if ($.trim($("#newpassword").val())==$.trim($("#confirmpassword").val())) {
-      alert("good");
+      $.ajax({
+        type: "POST",
+        url: "/newpassword",
+        data: {"userid":$("#userid").val(), "userpassword":$("#confirmpassword").val()},
+        global: false,
+        async: false,
+        datatype: "json",
+        success: function(resp) {
+          passwordchanged = resp["gkstatus"]
+          }
+      });
     }
   })
 
