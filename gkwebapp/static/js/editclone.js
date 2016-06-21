@@ -267,10 +267,18 @@ if (sessionStorage.booksclosedflag==1) {
       data: {"vouchercode": vcode},
     })
     .done(function(resp) {
-      var newWin =window.open("data:image/jpg;base64," + resp["attachment"])
-      newWin.addEventListener("load", function() {
-            newWin.document.title = $(".lblec").text() +",V.No:"+$("#vno").val();
+      if (resp["attachment"]!=null) {
+        var newWin =window.open("data:image/jpg;base64," + resp["attachment"])
+        newWin.addEventListener("load", function() {
+          newWin.document.title = $(".lblec").text() +",V.No:"+$("#vno").val();
         });
+      }
+      else {
+        $("#attachment-alert").alert();
+        $("#attachment-alert").fadeTo(4000, 1000).slideUp(500, function(){
+          $("#attachment-alert").hide();
+        });
+      }
       console.log("success");
     })
     .fail(function() {
