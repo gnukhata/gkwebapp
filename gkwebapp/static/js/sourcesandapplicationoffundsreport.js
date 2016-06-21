@@ -28,7 +28,6 @@ Contributors:
 
 $(document).ready(function() {
 
-
   var percentwid = 100*(($("table").width()-12)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   var percentheigth = 100*(($("body").height()-$(".navbar").height()-148)/$("body").height());
@@ -50,6 +49,51 @@ $(document).ready(function() {
   var curindex ;
   var nextindex;
   var previndex;
+
+  $("#sbgbtn").click(function(event){
+    event.preventDefault();
+    var visiblesubgroup = $(".groupacc:visible").length;
+    var visibleaccount = $(".subgroupacc:visible").length;
+    var account = $(".subgroupacc").length;
+    var subgroup = $(".groupacc").length;
+
+    if ((visibleaccount==0 && visiblesubgroup==0) || (visiblesubgroup==subgroup && visibleaccount==0)){
+      $(".groupacc").slideToggle(1);
+      $('#satable tbody tr:first-child td:eq(0) a').focus();
+    }
+    if(visibleaccount==account)
+    {
+      $(".subgroupacc").slideToggle(1);
+      $('#satable tbody tr:first-child td:eq(0) a').focus();
+    }
+    if((visibleaccount<account && visiblesubgroup<subgroup) || (visiblesubgroup==subgroup && visibleaccount<account))
+    {
+      $(".groupacc").css("display", "block");
+      $(".subgroupacc").css("display", "none");
+      $('#satable tbody tr:first-child td:eq(0) a').focus();
+    }
+  });
+
+  $("#accbtn").click(function(event){
+    event.preventDefault();
+    var visiblesubgroup = $(".groupacc:visible").length;
+    var visibleaccount = $(".subgroupacc:visible").length;
+    var account = $(".subgroupacc").length;
+    var subgroup = $(".groupacc").length;
+
+    if ((visibleaccount==account && visiblesubgroup==subgroup) || (visibleaccount==0 && visiblesubgroup==0))
+    {
+      $(".groupacc").slideToggle(1);
+      $(".subgroupacc").slideToggle(1);
+      $('#satable tbody tr:first-child td:eq(0) a').focus();
+    }
+    if ((visibleaccount<account && visiblesubgroup==subgroup) || (visiblesubgroup<subgroup && visibleaccount<account) || (visibleaccount==0 && visiblesubgroup<subgroup))
+    {
+      $(".groupacc").css("display", "block");
+      $(".subgroupacc").css("display", "block");
+      $('#satable tbody tr:first-child td:eq(0) a').focus();
+    }
+  });
 
   $(document).off('keydown' ,'.libgname').on('keydown' ,'.libgname',function(event) {
     curindex = $(this).closest('tr');
