@@ -129,13 +129,8 @@ def showdeletedvoucher(request):
 	result = requests.get("http://127.0.0.1:6543/report?type=deletedvoucher", headers=header)
 	return {"gkresult":result.json()["gkresult"]}
 
-@view_config(route_name="testimage", renderer="json")
-def testimage(request):
-	print request.params.keys()
-	print request.params["payload"]
-	img = request.POST["img"].file
-	image = Image.open(img)
-	imgbuffer = cStringIO.StringIO()
-	image.save(imgbuffer, format="PNG")
-	img_str = base64.b64encode(imgbuffer.getvalue())
-	return {"img":img_str}
+@view_config(route_name="getattachment", renderer="json")
+def getattachment(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/transaction?attach=image&vouchercode=%d"%(int(request.params["vouchercode"])), headers=header)
+	return {"attachment":result.json()["gkresult"]}
