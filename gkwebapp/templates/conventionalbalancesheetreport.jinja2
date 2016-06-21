@@ -126,6 +126,7 @@
         <tbody>
 
           {% for record in records["leftlist"] %}
+          {%if record["groupAccname"]!="Sources:"%}
           {%if (record["groupAccname"]=="Loss for the Year:" or record["groupAccname"]=="Deficit for the Year:" or record["groupAccname"]=="Surplus for the Year:" or record["groupAccname"]=="Profit for the Year:")%}
             <tr value="{{record["groupAcccode"]}}">
           {%elif record["groupAccflag"] == 2%}
@@ -146,7 +147,7 @@
               {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
               &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"].upper()}}</a>
               {%elif record["groupAccflag"]==1 %}
-              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"]}}</a>
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"]}}</a>
               {%elif record["groupAccflag"]==2%}
               &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname acc " href="#">{{record["groupAccname"]}}</a>
               {%else%}
@@ -154,13 +155,13 @@
               {%endif%}
             </td>
 
-            {%if record["groupAccflag"]==2%}
+            {%if record["groupAccflag"]==2 or record["groupAccflag"]==1%}
             <td class="col-xs-2" style="text-align:right">{{record["amount"]}}</td>
             <td class="col-xs-2" style="text-align:right">
             </td>
             <td class="col-xs-2" style="text-align:right">
             </td>
-            {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="") or record["groupAccflag"]==1%}
+            {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
             <td class="col-xs-2" style="text-align:right">
             </td>
             <td class="col-xs-2" style="text-align:right"><b>{{record["amount"]}}</b></td>
@@ -174,6 +175,7 @@
             <td class="col-xs-2" style="text-align:right"><b>{{record["amount"]}}</b></td>
             {%endif%}
           </tr>
+          {%endif%}
           {% endfor %}
         </tbody>
       </table>
@@ -190,6 +192,7 @@
         </thead>
         <tbody>
           {% for record in records["rightlist"] %}
+          {%if record["groupAccname"]!="Applications:"%}
           {%if (record["groupAccname"]=="Loss for the Year:" or record["groupAccname"]=="Deficit for the Year:" or record["groupAccname"]=="Surplus for the Year:" or record["groupAccname"]=="Profit for the Year:")%}
             <tr value="{{record["groupAcccode"]}}">
           {%elif record["groupAccflag"] == 2%}
@@ -210,7 +213,7 @@
               {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
               &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="pagname " href="#">{{record["groupAccname"].upper()}}</a>
               {%elif record["groupAccflag"]==1 %}
-              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="pagname " href="#">{{record["groupAccname"]}}</a>
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="pagname " href="#">{{record["groupAccname"]}}</a>
               {%elif record["groupAccflag"]==2%}
               &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="pagname acc " href="#">{{record["groupAccname"]}}</a>
               {%else%}
@@ -218,13 +221,13 @@
               {%endif%}
             </td>
 
-            {%if record["groupAccflag"]==2%}
+            {%if record["groupAccflag"]==2 or record["groupAccflag"]==1%}
             <td class="col-xs-2" style="text-align:right">{{record["amount"]}}</td>
             <td class="col-xs-2" style="text-align:right">
             </td>
             <td class="col-xs-2" style="text-align:right">
             </td>
-            {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="") or record["groupAccflag"]==1%}
+            {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
             <td class="col-xs-2" style="text-align:right">
             </td>
             <td class="col-xs-2" style="text-align:right"><b>{{record["amount"]}}</b></td>
@@ -238,6 +241,7 @@
             <td class="col-xs-2" style="text-align:right"><b>{{record["amount"]}}</b></td>
             {%endif%}
           </tr>
+          {%endif%}
           {% endfor %}
         </tbody>
       </table>
@@ -248,9 +252,10 @@
   </div>
   <span style="margin:auto; display:table;">
     <button type="button" class="btn btn-sm btn-danger" id="balback" accesskey="b"><u>B</u>ack</button>
-    <button type="button" class="btn btn-sm btn-primary" id="sabutn" accesskey="s"><u>S</u>ources & Application of Funds</button>
     <button type="button" class="btn btn-sm btn-primary" id="sbgbtn" accesskey="g">Show Sub<u>g</u>roups</button>
+    <button type="button" class="btn btn-sm btn-primary" id="grpbtn" accesskey="w">Sho<u>w</u> Groups</button>
     <button type="button" class="btn btn-sm btn-primary" id="accbtn" accesskey="a">Show All <u>A</u>ccounts</button>
+    <button type="button" class="btn btn-sm btn-primary" id="sabutn" accesskey="s"><u>S</u>ources & Application of Funds</button>
      <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="t">Prin<u>t</u></button>
   </span>
   <input type="hidden" id="ledtodate" value="{{to}}">

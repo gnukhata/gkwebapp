@@ -28,6 +28,8 @@ Contributors:
 
 $(document).ready(function() {
 
+  $("#grpbtn").hide();
+
   var percentwid = 100*(($("table").width()-12)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   var percentheigth = 100*(($("body").height()-$(".navbar").height()-148)/$("body").height());
@@ -50,49 +52,49 @@ $(document).ready(function() {
   var nextindex;
   var previndex;
 
+  var visiblesubgroup = $(".groupacc:visible").length;
+  var visibleaccount = $(".subgroupacc:visible").length;
+  var account = $(".subgroupacc").length;
+  var subgroup = $(".groupacc").length;
+  var accflag=0
+  var sbgrpflag=0
+
+$("#grpbtn").click(function(event){
+  event.preventDefault();
+  $(".subgroupacc").css("display", "none");
+  $(".groupacc").css("display", "none");
+  $(this).hide();
+  visiblesubgroup = $(".groupacc:visible").length;
+  visibleaccount = $(".subgroupacc:visible").length;
+  if(sbgrpflag==1 || visibleaccount==0)
+  {
+    $("#accbtn").show();
+  }
+  if(accflag==1 || visiblesubgroup==0)
+  {$("#sbgbtn").show();}
+
+});
+
   $("#sbgbtn").click(function(event){
     event.preventDefault();
-    var visiblesubgroup = $(".groupacc:visible").length;
-    var visibleaccount = $(".subgroupacc:visible").length;
-    var account = $(".subgroupacc").length;
-    var subgroup = $(".groupacc").length;
-
-    if ((visibleaccount==0 && visiblesubgroup==0) || (visiblesubgroup==subgroup && visibleaccount==0)){
-      $(".groupacc").slideToggle(1);
-      $('#satable tbody tr:first-child td:eq(0) a').focus();
-    }
-    if(visibleaccount==account)
-    {
-      $(".subgroupacc").slideToggle(1);
-      $('#satable tbody tr:first-child td:eq(0) a').focus();
-    }
-    if((visibleaccount<account && visiblesubgroup<subgroup) || (visiblesubgroup==subgroup && visibleaccount<account))
-    {
       $(".groupacc").css("display", "block");
       $(".subgroupacc").css("display", "none");
+      $(this).hide();
+      $("#grpbtn").show();
+      $("#accbtn").show();
+      sbgrpflag=1
       $('#satable tbody tr:first-child td:eq(0) a').focus();
-    }
   });
 
   $("#accbtn").click(function(event){
     event.preventDefault();
-    var visiblesubgroup = $(".groupacc:visible").length;
-    var visibleaccount = $(".subgroupacc:visible").length;
-    var account = $(".subgroupacc").length;
-    var subgroup = $(".groupacc").length;
-
-    if ((visibleaccount==account && visiblesubgroup==subgroup) || (visibleaccount==0 && visiblesubgroup==0))
-    {
-      $(".groupacc").slideToggle(1);
-      $(".subgroupacc").slideToggle(1);
-      $('#satable tbody tr:first-child td:eq(0) a').focus();
-    }
-    if ((visibleaccount<account && visiblesubgroup==subgroup) || (visiblesubgroup<subgroup && visibleaccount<account) || (visibleaccount==0 && visiblesubgroup<subgroup))
-    {
       $(".groupacc").css("display", "block");
       $(".subgroupacc").css("display", "block");
+      $(this).hide();
+      $("#grpbtn").show();
+      $("#sbgbtn").show();
+      accflag=1;
       $('#satable tbody tr:first-child td:eq(0) a').focus();
-    }
   });
 
   $(document).off('keydown' ,'.libgname').on('keydown' ,'.libgname',function(event) {

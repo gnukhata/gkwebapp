@@ -123,7 +123,7 @@
             {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
             &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"].upper()}}</a>
             {%elif record["groupAccflag"]==1 %}
-            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"]}}</a>
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"]}}</a>
             {%elif record["groupAccflag"]==2%}
             &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"]}}</a>
             {%else%}
@@ -131,13 +131,13 @@
             {%endif%}
           </td>
 
-          {%if record["groupAccflag"]==2%}
+          {%if record["groupAccflag"]==2 or record["groupAccflag"]==1%}
           <td class="col-xs-1" style="text-align:right">{{record["amount"]}}</td>
           <td class="col-xs-1" style="text-align:right">
           </td>
           <td class="col-xs-1" style="text-align:right">
           </td>
-          {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="") or record["groupAccflag"]==1%}
+          {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
           <td class="col-xs-1" style="text-align:right">
           </td>
           <td class="col-xs-1" style="text-align:right"><b>{{record["amount"]}}</b></td>
@@ -172,7 +172,7 @@
             {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
             &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"].upper()}}</a>
             {%elif record["groupAccflag"]==1 %}
-            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"]}}</a>
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"]}}</a>
             {%elif record["groupAccflag"]==2%}
             &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"]}}</a>
             {%else%}
@@ -180,13 +180,13 @@
             {%endif%}
           </td>
 
-          {%if record["groupAccflag"]==2%}
+          {%if record["groupAccflag"]==2 or record["groupAccflag"]==1%}
           <td class="col-xs-1" style="text-align:right">{{record["amount"]}}</td>
           <td class="col-xs-1" style="text-align:right">
           </td>
           <td class="col-xs-1" style="text-align:right">
           </td>
-          {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="") or record["groupAccflag"]==1%}
+          {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="") %}
           <td class="col-xs-1" style="text-align:right">
           </td>
           <td class="col-xs-1" style="text-align:right"><b>{{record["amount"]}}</b></td>
@@ -210,13 +210,14 @@
 
     <span style="margin:auto; display:table;">
       <button class="btn btn-sm btn-danger" type="button" id="saback" accesskey="b"><u>B</u>ack</button>
+      <button type="button" class="btn btn-sm btn-primary" id="sbgbtn" accesskey="g">Show Sub<u>g</u>roups</button>
+      <button type="button" class="btn btn-sm btn-primary" id="grpbtn" accesskey="w">Sho<u>w</u> Groups</button>
+      <button type="button" class="btn btn-sm btn-primary" id="accbtn" accesskey="a">Show All <u>A</u>ccounts</button>
       {% if orgtype=="Profit Making" %}
       <button class="btn btn-sm btn-primary " type="button" id="cbalbutn" hidden="hidden" accesskey="">C<u>o</u>nventional Balance Sheet</button>
       {% else %}
       <button class="btn btn-sm btn-primary " type="button" id="cbalbutn" hidden="hidden" accesskey="o">C<u>o</u>nventional Statement of Affairs</button>
       {% endif %}
-      <button type="button" class="btn btn-sm btn-primary" id="sbgbtn" accesskey="g">Show Sub<u>g</u>roups</button>
-      <button type="button" class="btn btn-sm btn-primary" id="accbtn" accesskey="a">Show All <u>A</u>ccounts</button>
        <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="t">Prin<u>t</u></button>
     </span>
   </div>
