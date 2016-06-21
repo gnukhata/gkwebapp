@@ -139,7 +139,7 @@ if (sessionStorage.booksclosedflag==1) {
     if (event.which==37)
     {
 
-      $("#delete").focus();
+      $("#viewattach").focus();
     }
     if (event.which==39)
     {
@@ -193,6 +193,17 @@ if (sessionStorage.booksclosedflag==1) {
     }
     if (event.which==39)
     {
+      $("#viewattach").focus();
+    }
+  });
+  $("#viewattach").keydown(function(event)
+  {
+    if (event.which==37)
+    {
+      $("#delete").focus();
+    }
+    if (event.which==39)
+    {
       $("#lock").focus();
     }
   });
@@ -207,6 +218,7 @@ if (sessionStorage.booksclosedflag==1) {
     $("#lock").hide();
     $("#edit").hide();
     $("#clone").hide();
+    $("#delete").hide();
     $("#vno").prop('disabled', true);
     $(".ttl").prop('disabled', true);
     $(".vdate").prop('disabled', false);
@@ -227,6 +239,7 @@ if (sessionStorage.booksclosedflag==1) {
     $("#lock").hide();
     $("#clone").hide();
     $("#edit").hide();
+    $("#delete").hide();
     $(".ttl").prop('disabled', true);
     $("#save").show();
     $("#vno").prop('disabled', false);
@@ -236,6 +249,44 @@ if (sessionStorage.booksclosedflag==1) {
     $(".vdate").prop('disabled', false);
     $("#narr").prop('disabled', false);
     $("#project").prop('disabled', false);
+    $("#viewattach").hide();
+
+  });
+
+  $("#viewattach").click(function(event)
+  {
+    var vcode = $("#vcode").val();
+    $.ajax({
+      url: '/getattachment',
+      type: 'POST',
+      datatype: 'json',
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+      data: {"vouchercode": vcode},
+    })
+    .done(function(resp) {
+      if (resp["attachment"]!=null) {
+        var newWin =window.open("data:image/jpg;base64," + resp["attachment"])
+        newWin.addEventListener("load", function() {
+          newWin.document.title = $(".lblec").text() +",V.No:"+$("#vno").val();
+        });
+      }
+      else {
+        $("#attachment-alert").alert();
+        $("#attachment-alert").fadeTo(4000, 1000).slideUp(500, function(){
+          $("#attachment-alert").hide();
+        });
+      }
+      console.log("success");
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
 
   });
 

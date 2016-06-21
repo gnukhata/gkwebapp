@@ -130,5 +130,6 @@ def main(global_config, **settings):
 	config.add_route('printcashflowreport', '/printcashflowreport')
 	config.add_route('showdeletedvoucher', '/showdeletedvoucher')
 	config.add_route('deleteorg', '/deleteorg')
+	config.add_route('getattachment', '/getattachment')
 	config.scan('gkwebapp')
 	return config.make_wsgi_app()

@@ -1,21 +1,21 @@
 /*
 Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-  This file is part of GNUKhata:A modular,robust and Free Accounting System.
+This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
-  GNUKhata is Free Software; you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as
-  published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+GNUKhata is Free Software; you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation; either version 3 of
+the License, or (at your option) any later version.and old.stockflag = 's'
 
-  GNUKhata is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU Affero General Public License for more details.
+GNUKhata is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-  You should have received a copy of the GNU Affero General Public
-  License along with GNUKhata (COPYING); if not, write to the
-  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-  Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+You should have received a copy of the GNU Affero General Public
+License along with GNUKhata (COPYING); if not, write to the
+Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
 
 
 Contributors:
@@ -52,7 +52,7 @@ $(document).ready(function() {
   var percentwid = 100*(($("table").width()-12)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   $('.table-fixedheader tfoot').width(percentwid+"%");
-  var percentheigth = 100*(($("body").height()-$(".navbar").height()-277)/$("body").height());
+  var percentheigth = 100*(($("body").height()-$(".navbar").height()-300)/$("body").height());
   $('.table-fixedheader tbody').height(percentheigth+"%");
   var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
   $("#vdate").val(fromdatearray[2])
@@ -84,19 +84,19 @@ $(document).ready(function() {
   //Deletes a row from the table and recalculates the total cr and dr amount
   $(document).off("click",".del").on("click", ".del", function() {
     $(this).closest('tr').fadeOut(200, function(){
-            $(this).closest('tr').remove();   //closest method gives the closest element specified
-            drsum=0;
-            crsum=0;
-            $(".dramt").each(function(){
-              drsum += +$(this).val();
-              $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
-            });
-            $(".cramt").each(function(){
-              crsum += +$(this).val();
-              $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
-            });
-            $('tbody tr:last input:enabled').focus().select();
-        });
+      $(this).closest('tr').remove();   //closest method gives the closest element specified
+      drsum=0;
+      crsum=0;
+      $(".dramt").each(function(){
+        drsum += +$(this).val();
+        $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+      });
+      $(".cramt").each(function(){
+        crsum += +$(this).val();
+        $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+      });
+      $('tbody tr:last input:enabled').focus().select();
+    });
   });
   function pad (str, max) { //to add leading zeros in date
     str = str.toString();
@@ -174,8 +174,8 @@ $(document).ready(function() {
   });
   $('#vno').keydown(function(event) {
     if (event.which==190 && event.ctrlKey) {
-        $("#vdate").focus().select();
-        event.preventDefault();
+      $("#vdate").focus().select();
+      event.preventDefault();
     }
   });
 
@@ -189,12 +189,12 @@ $(document).ready(function() {
   });
   $('#vdate').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-        $('#vno').focus().select();
-        event.preventDefault();
+      $('#vno').focus().select();
+      event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#vmonth').focus().select();
-        event.preventDefault();
+      $('#vmonth').focus().select();
+      event.preventDefault();
     }
   });
 
@@ -208,12 +208,12 @@ $(document).ready(function() {
   });
   $('#vmonth').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-        $('#vdate').focus().select();
-        event.preventDefault();
+      $('#vdate').focus().select();
+      event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#vyear').focus().select();
-        event.preventDefault();
+      $('#vyear').focus().select();
+      event.preventDefault();
     }
   });
 
@@ -230,12 +230,12 @@ $(document).ready(function() {
   });
   $('#vyear').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-        $('#vmonth').focus().select();
-        event.preventDefault();
+      $('#vmonth').focus().select();
+      event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#vtable tbody tr:first select:enabled').focus();
-        event.preventDefault();
+      $('#vtable tbody tr:first select:enabled').focus();
+      event.preventDefault();
     }
   });
 
@@ -246,12 +246,12 @@ $(document).ready(function() {
   });
   $('#project').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-        $('#vtable tbody tr:last input:enabled').focus().select();
-        event.preventDefault();
+      $('#vtable tbody tr:last input:enabled').focus().select();
+      event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#narration').focus().select();
-        event.preventDefault();
+      $('#narration').focus().select();
+      event.preventDefault();
     }
     if (event.which==13) {
       event.preventDefault();
@@ -259,72 +259,72 @@ $(document).ready(function() {
   });
   $('#narration').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-        $('#project').focus().select();
-        event.preventDefault();
+      $('#project').focus().select();
+      event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#save').focus();
-        event.preventDefault();
+      $('#save').focus();
+      event.preventDefault();
     }
   });
   $('#save').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-        $('#narration').focus().select();
-        event.preventDefault();
+      $('#narration').focus().select();
+      event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#reset').focus();
-        event.preventDefault();
+      $('#reset').focus();
+      event.preventDefault();
     }
   });
   $('#reset').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-        $('#save').focus().select();
-        event.preventDefault();
+      $('#save').focus().select();
+      event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#popup').focus();
-        event.preventDefault();
+      $('#popup').focus();
+      event.preventDefault();
     }
   });
   $('#popup').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-        $('#reset').focus().select();
-        event.preventDefault();
+      $('#reset').focus().select();
+      event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#vno').focus();
-        event.preventDefault();
+      $('#vno').focus();
+      event.preventDefault();
     }
   });
   $('#save').keyup(function(event) {
     if (event.which==39 ) {
-        $('#reset').focus();
-        event.preventDefault();
+      $('#reset').focus();
+      event.preventDefault();
     }
     if (event.which==37 || event.which==38) {
-        $('#narration').focus().select();
-        event.preventDefault();
+      $('#narration').focus().select();
+      event.preventDefault();
     }
   });
   $('#reset').keyup(function(event) {
     if (event.which==39 ) {
-        $('#popup').focus();
-        event.preventDefault();
+      $('#popup').focus();
+      event.preventDefault();
     }
     if (event.which==37 || event.which==38) {
-        $('#save').focus().select();
-        event.preventDefault();
+      $('#save').focus().select();
+      event.preventDefault();
     }
   });
   $('#popup').keyup(function(event) {
     if (event.which==39 ) {
-        $('#vno').focus().select();
-        event.preventDefault();
+      $('#vno').focus().select();
+      event.preventDefault();
     }
     if (event.which==37 || event.which==38) {
-        $('#reset').focus();
-        event.preventDefault();
+      $('#reset').focus();
+      event.preventDefault();
     }
   });
 
@@ -473,21 +473,21 @@ $(document).ready(function() {
       }
     }
     if (event.which==188 && event.ctrlKey) {
-        $('#vtable tbody tr:eq('+curindex+') td:eq(0) select').focus();
+      $('#vtable tbody tr:eq('+curindex+') td:eq(0) select').focus();
+      event.preventDefault();
+      if (curindex==0) {
         event.preventDefault();
-        if (curindex==0) {
-          event.preventDefault();
-          $("#vyear").focus().select();
-        }
-        if(curindex==1)
-        {
-          event.preventDefault();
-          $('#vtable tbody tr:eq('+previndex+') input:enabled').focus().select();
-        }
+        $("#vyear").focus().select();
+      }
+      if(curindex==1)
+      {
+        event.preventDefault();
+        $('#vtable tbody tr:eq('+previndex+') input:enabled').focus().select();
+      }
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#vtable tbody tr:eq('+curindex+') input:enabled').focus().select();
-        event.preventDefault();
+      $('#vtable tbody tr:eq('+curindex+') input:enabled').focus().select();
+      event.preventDefault();
     }
   });
   $(document).off("keydown",".crdr").on("keydown",".crdr",function(event){
@@ -510,12 +510,12 @@ $(document).ready(function() {
       event.preventDefault();
     }
     if (event.which==188 && event.ctrlKey) {
-        $('#vtable tbody tr:eq('+previndex+') input:enabled').focus().select();
-        event.preventDefault();
+      $('#vtable tbody tr:eq('+previndex+') input:enabled').focus().select();
+      event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#vtable tbody tr:eq('+curindex+') td:eq(1) select').focus();
-        event.preventDefault();
+      $('#vtable tbody tr:eq('+curindex+') td:eq(1) select').focus();
+      event.preventDefault();
     }
   });
   $(document).off("keydown",".cramt").on("keydown",".cramt",function(event){
@@ -537,15 +537,15 @@ $(document).ready(function() {
       }
     }
     if (event.which==188 && event.ctrlKey) {
-        $('#vtable tbody tr:eq('+curindex+') td:eq(1) select').focus();
-        event.preventDefault();
+      $('#vtable tbody tr:eq('+curindex+') td:eq(1) select').focus();
+      event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#vtable tbody tr:eq('+nextindex+') select:enabled:first').focus();
-        event.preventDefault();
-        if (curindex==lastindex) {
-          $("#project").focus();
-        }
+      $('#vtable tbody tr:eq('+nextindex+') select:enabled:first').focus();
+      event.preventDefault();
+      if (curindex==lastindex) {
+        $("#project").focus();
+      }
     }
   });
   $(document).off("keydown",".dramt").on("keydown",".dramt",function(event){
@@ -566,15 +566,15 @@ $(document).ready(function() {
       }
     }
     if (event.which==188 && event.ctrlKey) {
-        $('#vtable tbody tr:eq('+curindex+') td:eq(1) select').focus();
-        event.preventDefault();
+      $('#vtable tbody tr:eq('+curindex+') td:eq(1) select').focus();
+      event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#vtable tbody tr:eq('+nextindex+') select:enabled:first').focus();
-        event.preventDefault();
-        if (curindex==lastindex) {
-          $("#project").focus();
-        }
+      $('#vtable tbody tr:eq('+nextindex+') select:enabled:first').focus();
+      event.preventDefault();
+      if (curindex==lastindex) {
+        $("#project").focus();
+      }
     }
   });
 
@@ -1121,13 +1121,19 @@ $(document).ready(function() {
     details.projectcode=$('#project').val();
     details.narration=$.trim($('#narration').val());
     details.vtype=$('#vtype').val();
+    var form_data = new FormData($('#upload-file')[0]);
+    form_data.append("vdetails",JSON.stringify(details));
+    form_data.append("transactions",JSON.stringify(output));
     $.ajax({
       type: "POST",
       url: "/addvoucher",
       global: false,
+      contentType: false,
+      cache: false,
+      processData: false,
       async: false,
       datatype: "json",
-      data: {"vdetails":JSON.stringify(details),"transactions":JSON.stringify(output)},
+      data: form_data,
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

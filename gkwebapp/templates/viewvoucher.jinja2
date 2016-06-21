@@ -99,34 +99,38 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-body">
-          <div class="alert failure-alert" id="notran-alert" hidden>
+          <div class="alert failure-alert" id="notran-alert" aria-live="rude" role="alert" hidden>
             <a href="#" class="close"  aria-label="close">&times;</a>
-            <label class="sr-only sr-only-focusable" id="notr">No transactions found </label>
+            No transactions found
             <p id="nt">Voucher couldnot be </p>
           </div>
-          <div class="alert alert-danger" id="balance-alert" hidden>
+          <div class="alert alert-danger" id="balance-alert" aria-live="rude" role="alert" hidden>
             <a href="#" class="close" aria-label="close">&times;</a>
             Totals misbalance!
           </div>
-          <div class="alert alert-danger" id="zero-alert" hidden>
+          <div class="alert alert-danger" id="zero-alert" aria-live="rude" role="alert" hidden>
             <a href="#" class="close" aria-label="close">&times;</a>
             Voucher amount cannot be zero!
           </div>
-          <div class="alert alert-danger" id="zerorow-alert" hidden>
+          <div class="alert alert-danger" id="zerorow-alert" aria-live="rude" role="alert" hidden>
             <a href="#" class="close" aria-label="close">&times;</a>
             Voucher with zero amount cannot be saved!
           </div>
-          <div class="alert alert-danger" id="accs-alert" hidden>
+          <div class="alert alert-danger" id="accs-alert" aria-live="rude" role="alert" hidden>
             <a href="#" class="close" aria-label="close">&times;</a>
             An account can be selected only once!
           </div>
-          <div class="alert alert-danger" id="vno-alert" hidden>
+          <div class="alert alert-danger" id="vno-alert" aria-live="rude" role="alert" hidden>
             <a href="#" class="close" aria-label="close">&times;</a>
             Please enter voucher number!
           </div>
-          <div class="alert alert-danger" id="date-alert" hidden>
+          <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
             <a href="#" class="close" aria-label="close">&times;</a>
             Please enter voucher date in proper format!
+          </div>
+          <div class="alert alert-warning" id="attachment-alert" aria-live="rude" role="alert" hidden>
+            <a href="#" class="close" aria-label="close">&times;</a>
+            No attachment found!
           </div>
 
 
@@ -401,6 +405,9 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
 
 
         </div>
+        <div id="img_preview">
+
+        </div>
         <br>
         <br>
         <div class="modal-footer">
@@ -413,6 +420,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
           <button type="button" class="btn btn-primary btnfocus btn-sm" id="clone" accesskey="o">Cl<u>o</u>ne</button>
           <button type="submit" id="save" class="btn btn-success btn-sm" accesskey="v">Sa<u>v</u>e</button>
           <button type="button" class="btn btn-danger btnfocus btn-sm" id="delete" accesskey="d"><u>D</u>elete</button>
+          <button type="button" class="btn btn-primary btnfocus btn-sm" id="viewattach" accesskey="h">View Attac<u>h</u>ment</button>
         </div>
       </div>
     </div>

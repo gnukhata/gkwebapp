@@ -30,6 +30,9 @@ from pyramid.view import view_config
 import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
+from PIL import Image
+import base64
+import cStringIO
 
 
 @view_config(route_name="showvoucher")
@@ -87,6 +90,16 @@ def addvoucher(request):
 		gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails["projectcode"])}
 	else:
 		gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"]}
+	try:
+		img = request.POST["img"].file
+		image = Image.open(img)
+		imgbuffer = cStringIO.StringIO()
+		image.save(imgbuffer, format="JPEG")
+		img_str = base64.b64encode(imgbuffer.getvalue())
+		image.close()
+		gkdata["attachment"] = img_str
+	except:
+		print "no attachment found"
 	for row in rowdetails:
 		if row["side"]=="Cr":
 			crs[row["accountcode"]]=row["cramount"]
@@ -115,3 +128,9 @@ def showdeletedvoucher(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/report?type=deletedvoucher", headers=header)
 	return {"gkresult":result.json()["gkresult"]}
+
+@view_config(route_name="getattachment", renderer="json")
+def getattachment(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/transaction?attach=image&vouchercode=%d"%(int(request.params["vouchercode"])), headers=header)
+	return {"attachment":result.json()["gkresult"]}
