@@ -139,7 +139,7 @@ if (sessionStorage.booksclosedflag==1) {
     if (event.which==37)
     {
 
-      $("#delete").focus();
+      $("#viewattach").focus();
     }
     if (event.which==39)
     {
@@ -193,6 +193,17 @@ if (sessionStorage.booksclosedflag==1) {
     }
     if (event.which==39)
     {
+      $("#viewattach").focus();
+    }
+  });
+  $("#viewattach").keydown(function(event)
+  {
+    if (event.which==37)
+    {
+      $("#delete").focus();
+    }
+    if (event.which==39)
+    {
       $("#lock").focus();
     }
   });
@@ -238,6 +249,7 @@ if (sessionStorage.booksclosedflag==1) {
     $(".vdate").prop('disabled', false);
     $("#narr").prop('disabled', false);
     $("#project").prop('disabled', false);
+    $("#viewattach").hide();
 
   });
 
