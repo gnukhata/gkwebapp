@@ -72,7 +72,7 @@ $("#grpbtn").click(function(event){
   }
   if(accflag==1 || visiblesubgroup==0)
   {$("#sbgbtn").show();}
-
+  $('#satable tbody tr:first-child td:eq(0) a').focus();
 });
 
   $("#sbgbtn").click(function(event){

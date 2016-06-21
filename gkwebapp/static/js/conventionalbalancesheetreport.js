@@ -89,25 +89,8 @@ $(document).ready(function() {
 
   });
 
-
   var accflag=0
   var sbgrpflag=0
-
-$("#grpbtn").click(function(event){
-  event.preventDefault();
-  var visiblesubgroup = $(".groupacc:visible").length;
-  var visibleaccount = $(".subgroupacc:visible").length;
-  $(".subgroupacc").css("display", "none");
-  $(".groupacc").css("display", "none");
-  $(this).hide();
-  if(sbgrpflag==1)
-  {
-    $("#accbtn").show();
-  }
-  if(accflag==1)
-  {$("#sbgbtn").show();}
-
-});
 
 $("#grpbtn").click(function(event){
   event.preventDefault();
@@ -122,8 +105,19 @@ $("#grpbtn").click(function(event){
   }
   if(accflag==1 || visiblesubgroup==0)
   {$("#sbgbtn").show();}
-
+  $('#liabtable tbody tr:first-child td:eq(0) a').focus();
 });
+
+  $("#sbgbtn").click(function(event){
+    event.preventDefault();
+      $(".groupacc").css("display", "block");
+      $(".subgroupacc").css("display", "none");
+      $(this).hide();
+      $("#grpbtn").show();
+      $("#accbtn").show();
+      sbgrpflag=1
+      $('#liabtable tbody tr:first-child td:eq(0) a').focus();
+  });
 
   $("#accbtn").click(function(event){
     event.preventDefault();
@@ -133,7 +127,7 @@ $("#grpbtn").click(function(event){
       $("#grpbtn").show();
       $("#sbgbtn").show();
       accflag=1;
-      $('#satable tbody tr:first-child td:eq(0) a').focus();
+      $('#liabtable tbody tr:first-child td:eq(0) a').focus();
   });
 
   $(document).off('focus' ,'.pagname').on('focus' ,'.pagname',function() {
