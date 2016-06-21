@@ -161,7 +161,16 @@ $(document).ready(function()
           passwordchanged = resp["gkstatus"]
           }
       });
+      if (passwordchanged == 0) {
       $("#selectorg").load("/login?orgcode="+ $("#orgcode").val() +"&flag=0", setTimeout( function() { $("#username").focus(); }, 500 ));
+      }
+      if (passwordchanged == 3) {
+        $("#securityanswer-connectionfailed-alert").alert();
+        $("#securityanswer-connectionfailed-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#securityanswer-connectionfailed-alert").hide();
+        });
+        return false;
+      }
     }
   })
 
