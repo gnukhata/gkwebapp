@@ -71,25 +71,6 @@ $(document).ready(function() {
 
   });
 
-
-  $("#satable").off('slideToggle','tr').on('slideToggle','tr',function(event){
-
-    event.preventDefault();
-    alert("abc")
-    var grpcode = $(this).attr('value');
-
-    if ($("."+grpcode).is(":hidden"))
-    {
-      var code = $(this).attr('value');
-      if(code==""){return false;}
-      else if (code.indexOf("g") != -1){
-        $("."+code).hide();
-      }
-    }
-
-
-  });
-
   $("#satable").off('keydown','tr').on('keydown','tr',function(event){
     var rindex = $(this).index();
 
@@ -98,7 +79,7 @@ $(document).ready(function() {
       event.preventDefault();
       $(".cbalsheettable tbody tr:eq("+rindex+")").dblclick();
     }
-});
+  });
 
   $(".cbalsheettable tbody tr").dblclick(function(event) {
       event.preventDefault();
@@ -108,6 +89,13 @@ $(document).ready(function() {
       }
       else if (grpcode.indexOf("g") != -1) {
         $("."+grpcode).slideToggle(1);
+        $("."+grpcode).each(function(index) {
+          code = $(this).attr('value')
+          if ($("."+code).is(":visible")){
+            $("."+code).slideToggle(1);
+          }
+
+        });
       }
       else {
     		var newfromdate = sessionStorage.yyyymmddyear1;
