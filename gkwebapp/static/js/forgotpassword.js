@@ -161,6 +161,7 @@ $(document).ready(function()
           passwordchanged = resp["gkstatus"]
           }
       });
+      $("#selectorg").load("/login?orgcode="+ $("#orgcode").val() +"&flag=0", setTimeout( function() { $("#username").focus(); }, 500 ));
     }
   })
 
