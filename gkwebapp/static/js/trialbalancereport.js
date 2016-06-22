@@ -176,7 +176,7 @@ $(document).ready(function() {
 					url: "/printtrialbalance",
 					global: false,
 					async: false,
-					datatype: "text",
+					datatype: "json",
 					data: {"financialstart":sessionStorage.yyyymmddyear1, "calculateto":newtodate, "trialbalancetype": trialbalancetype, "orgname": orgname, "orgtype": orgtype, "startyear":startyear, "endyear":endyear},
 					beforeSend: function(xhr)
 					{
