@@ -26,47 +26,46 @@ Contributors:
 
 $(document).ready(function()
 {
-  var answercheck = 0;
-  var userstatus = 0;
-  var passwordchanged =0;
+  var answercheck = 9;
+  var userstatus = 9;
+  var passwordchanged = 9;
   $("#username").focus();
   $("#username").keydown(function(event){
     if (event.which == 13 || event.which == 9) {
       event.preventDefault();
-      $.ajax({
-        type: "POST",
-        url: "/securityquestion",
-        data: {"orgcode":$("#orgcode").val(), "username":$("#username").val()},
-        global: false,
-        async: false,
-        datatype: "json",
-        success: function(jsonObj) {
-          userstatus = jsonObj["gkstatus"],
-          userdata = jsonObj["gkresult"],
-          $("#securityquestion").val(userdata[0].userquestion);
-          $("#userid").val(userdata[0].userid);
-          }
-      });
-      if (userstatus == 0) {
-        event.preventDefault();
-        $("#securityanswer").focus();
-      }
       if ($.trim($("#username").val())=="") {
         $("#username-blank-alert").alert();
-        $("#username-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#username-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
           $("#username-blank-alert").hide();
         });
         $("#securityquestion").val("")
       }
+      if ($.trim($("#username").val())!="") {
+        $("#securityanswer").focus();
+        $.ajax({
+          type: "POST",
+          url: "/securityquestion",
+          data: {"orgcode":$("#orgcode").val(), "username":$("#username").val()},
+          global: false,
+          async: false,
+          datatype: "json",
+          success: function(jsonObj) {
+            userstatus = jsonObj["gkstatus"],
+            userdata = jsonObj["gkresult"],
+            $("#securityquestion").val(userdata[0].userquestion);
+            $("#userid").val(userdata[0].userid);
+            }
+        });
+      }
       if (userstatus == 3) {
         $("#securityanswer-connectionfailed-alert").alert();
-        $("#securityanswer-connectionfailed-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#securityanswer-connectionfailed-alert").fadeTo(3000, 500).slideUp(500, function(){
           $("#securityanswer-connectionfailed-alert").hide();
         });
       }
       if (userstatus == 4 && $.trim($("#username").val())!="") {
         $("#forgotpassword-nosuchuser-alert").alert();
-        $("#forgotpassword-nosuchuser-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#forgotpassword-nosuchuser-alert").fadeTo(3000, 500).slideUp(500, function(){
           $("#forgotpassword-nosuchuser-alert").hide();
         });
         $("#securityquestion").val("")
@@ -76,36 +75,35 @@ $(document).ready(function()
   $("#securityanswer").keydown(function(event){
     if (event.which == 13 || event.which == 9) {
       event.preventDefault();
-      $.ajax({
-        type: "POST",
-        url: "/securityanswer",
-        data: {"userid":$("#userid").val(), "useranswer":$("#securityanswer").val()},
-        global: false,
-        async: false,
-        datatype: "json",
-        success: function(resp) {
-          answercheck = resp["gkstatus"];
-        }
-      });
-      if (answercheck == 0) {
-        event.preventDefault();
-        alert("Good");
+      if ($.trim($("#securityanswer").val())=="") {
+        $("#securityanswer-blank-alert").alert();
+        $("#securityanswer-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
+          $("#securityanswer-blank-alert").hide();
+        });
+      }
+      if ($.trim($("#securityanswer").val())!="") {
+        $("#newpassword").focus();
+        $.ajax({
+          type: "POST",
+          url: "/securityanswer",
+          data: {"userid":$("#userid").val(), "useranswer":$("#securityanswer").val()},
+          global: false,
+          async: false,
+          datatype: "json",
+          success: function(resp) {
+            answercheck = resp["gkstatus"];
+          }
+        });
       }
       if (answercheck == 3) {
         $("#securityanswer-connectionfailed-alert").alert();
-        $("#securityanswer-connectionfailed-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#securityanswer-connectionfailed-alert").fadeTo(3000, 500).slideUp(500, function(){
           $("#securityanswer-connectionfailed-alert").hide();
-        });
-      }
-      if ($.trim($("#securityanswer").val())=="") {
-        $("#securityanswer-blank-alert").alert();
-        $("#securityanswer-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
-          $("#securityanswer-blank-alert").hide();
         });
       }
       if (answercheck == 4 && $.trim($("#securityanswer").val())!="") {
         $("#securityanswer-incorrect-alert").alert();
-        $("#securityanswer-incorrect-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#securityanswer-incorrect-alert").fadeTo(3000, 500).slideUp(500, function(){
           $("#securityanswer-incorrect-alert").hide();
         });
       }
@@ -122,11 +120,25 @@ $(document).ready(function()
       }
     }
   });
+  $("#newpassword").keydown(function(event){
+    if (event.which == 13) {
+      event.preventDefault();
+      if ($.trim($("#newpassword").val())=="") {
+        $("#newpassword-blank-alert").alert();
+        $("#newpassword-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
+          $("#newpassword-blank-alert").hide();
+        });
+      }
+      else {
+      $("#confirmpassword").focus();
+      }
+    }
+  });
   $("#btnsubmit").click(function(event){
     event.preventDefault();
     if ($.trim($("#username").val())=="") {
       $("#username-blank-alert").alert();
-      $("#username-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#username-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
         $("#username-blank-alert").hide();
       });
       $("#securityquestion").val("")
@@ -134,28 +146,28 @@ $(document).ready(function()
 
     if ($.trim($("#securityquestion").val())=="") {
       $("#securityquestion-blank-alert").alert();
-      $("#securityquestion-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#securityquestion-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
         $("#securityquestion-blank-alert").hide();
       });
     }
 
     if ($.trim($("#securityanswer").val())=="") {
       $("#securityanswer-blank-alert").alert();
-      $("#securityanswer-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#securityanswer-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
         $("#securityanswer-blank-alert").hide();
       });
     }
 
     if ($.trim($("#newpassword").val())=="") {
       $("#newpassword-blank-alert").alert();
-      $("#newpassword-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#newpassword-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
         $("#newpassword-blank-alert").hide();
       });
     }
 
     if ( ($.trim($("#confirmpassword").val())=="") || ( $.trim($("#newpassword").val())!==$.trim($("#confirmpassword").val()) ) ) {
       $("#passwords-dont-match-alert").alert();
-      $("#passwords-dont-match-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#passwords-dont-match-alert").fadeTo(3000, 500).slideUp(500, function(){
         $("#passwords-dont-match-alert").hide();
       });
     }
@@ -173,11 +185,11 @@ $(document).ready(function()
           }
       });
       if (passwordchanged == 0) {
-      $("#selectorg").load("/login?orgcode="+ $("#orgcode").val() +"&flag=0", setTimeout( function() { $("#username").focus(); }, 500 ));
+      alert(passwordchanged);
       }
       if (passwordchanged == 3) {
         $("#securityanswer-connectionfailed-alert").alert();
-        $("#securityanswer-connectionfailed-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#securityanswer-connectionfailed-alert").fadeTo(3000, 500).slideUp(500, function(){
           $("#securityanswer-connectionfailed-alert").hide();
         });
       }
