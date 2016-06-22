@@ -109,7 +109,7 @@ $(document).ready(function() {
         var newcurclrdate = curclrdate2[2]+"-"+curclrdate2[1]+"-"+curclrdate2[0]
         if(!Date.parseExact(curclrdate,"dd-MM-yyyy")){
           $("#date-alert").alert();
-          $("#date-alert").fadeTo(2000, 400).slideUp(500, function(){
+          $("#date-alert").fadeTo(2000, 500).slideUp(500, function(){
             $("#date-alert").hide();
           });
           $("#bankrecontable tbody tr:eq("+curindex+") td:eq(5) input").focus().select();
@@ -117,7 +117,7 @@ $(document).ready(function() {
         }
         if (Date.parseExact(curclrdate,"dd-MM-yyyy").compareTo(curvdate)==-1) {
           $("#between-date-alert").alert();
-          $("#between-date-alert").fadeTo(2000, 400).slideUp(500, function(){
+          $("#between-date-alert").fadeTo(2000, 500).slideUp(500, function(){
             $("#between-date-alert").hide();
           });
           $("#bankrecontable tbody tr:eq("+curindex+") td:eq(5) input").focus().select();
