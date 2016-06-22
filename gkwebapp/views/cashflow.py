@@ -32,13 +32,6 @@ import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
 
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.rl_config import defaultPageSize
-from reportlab.lib.units import inch, cm
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import A4
-
 from spreadsheettable import SpreadsheetTable
 from reportlab.lib.enums import TA_CENTER, TA_RIGHT, TA_LEFT
 from pyramid.response import Response
@@ -63,34 +56,6 @@ def showcashflowreport(request):
 
 @view_config(route_name="printcashflowreport")
 def printcashflowreport(request):
-	PAGE_HEIGHT=defaultPageSize[1]; PAGE_WIDTH=defaultPageSize[0]
-	styleSheet = getSampleStyleSheet()
-	styletwo = getSampleStyleSheet()
-	stylethree = getSampleStyleSheet()
-
-	simplestyle = styleSheet['BodyText']
-	simplestyle.alignment = TA_CENTER
-	simplestyle.fontSize = 9
-
-	simplestyleleft = styletwo['BodyText']
-	simplestyle.alignment = TA_LEFT
-	simplestyle.fontSize = 9
-
-	headingstyle = styleSheet['Heading4']
-	headingstyle.alignment = TA_CENTER
-	headingstyle.fontSize = 10
-	headingstyle.fontName = 'Times-Bold'
-
-	headingstyleright = styletwo['Heading4']
-	headingstyleright.alignment = TA_RIGHT
-	headingstyleright.fontSize = 10
-	headingstyleright.fontName = 'Times-Bold'
-
-	headingstyleleft = stylethree['Heading4']
-	headingstyleleft.alignment = TA_LEFT
-	headingstyleleft.fontSize = 10
-	headingstyleleft.fontName = 'Times-Bold'
-
 	calculateto = request.params["calculateto"]
 	financialstart = request.params["financialstart"]
 	calculatefrom = request.params["calculatefrom"]
@@ -110,96 +75,4 @@ def printcashflowreport(request):
 		CashFlow = "Cash Flow Account for the period " + period
 	elif(orgtype == "Not For Profit"):
 		CashFlow = "Receipt & Payment Account for the period " + period
-	pageinfo = "Cash Flow Report"
-	filename = "CashFlowReport.pdf"
-
-	def myFirstPage(canvas, doc):
-			canvas.saveState()
-			canvas.setFont('Times-Bold',15)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-35, orgdata)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-55, yeardata)
-			canvas.setFont('Times-Bold',13)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-80, CashFlow)
-			canvas.setFont('Times-Roman',9)
-			canvas.drawString(inch, 0.75 * inch, "Page %d %s" % (doc.page, pageinfo))
-			canvas.restoreState()
-
-	def myLaterPages(canvas, doc):
-			canvas.saveState()
-			canvas.setFont('Times-Bold',12)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-40, orgname + "  FY: (" + year + ")")
-			canvas.setFont('Times-Roman',11)
-			if(orgtype == "Profit Making"):
-				canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-55, "Cash Flow")
-			elif(orgtype == "Not For Profit"):
-				canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-55, "Receipt & Payment")
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-70, period)
-			canvas.setFont('Times-Roman',9)
-			canvas.drawString(inch, 0.75 * inch, "Page %d %s" % (doc.page, pageinfo))
-			canvas.restoreState()
-
-	def makepdf(result):
-		To = Paragraph("To", headingstyle)
-		By = Paragraph("By", headingstyle)
-		Particularsleft = Paragraph("Particulars", headingstyleleft)
-		Particularsright = Paragraph("Particulars", headingstyleleft)
-		Amtleft = Paragraph("Amount", headingstyleright)
-		Amtright = Paragraph("Amount", headingstyleright)
-
-		doc = SimpleDocTemplate(filename, pagesize=A4)
-		temp_list = [To, Particularsleft, Amtleft, By, Particularsright, Amtright]
-
-		Story = [Spacer(1,0.2*inch)]
-		data_json_left = result.json()["rcgkresult"]
-		data_json_right = result.json()["pygkresult"]
-		listoflist = []
-		listoflist.append(temp_list)
-		#listoflist.append([Paragraph("", simplestyle), Paragraph("Brought Forward:", simplestyle), PreviousPagesColSum(decimal_places = 2), Paragraph("", simplestyle), Paragraph("Brought Forward:", simplestyle), PreviousPagesColSum(decimal_places = 2)])
-
-
-		for entry in data_json_left:
-				accountcode_left = entry["accountcode"]
-				to = entry["toby"]
-				to = Paragraph(to, simplestyle)
-				particularsleft = entry["particulars"]
-				particularsleft = Paragraph(particularsleft, simplestyleleft)
-				amtleft = entry["amount"]
-				listoflist.append([to, particularsleft, amtleft])
-
-		i=1
-		for entryy in data_json_right:
-				accountcode_right = entryy["accountcode"]
-				by = entryy["toby"]
-				by = Paragraph(by, simplestyle)
-				particularsright = entryy["particulars"]
-				particularsright = Paragraph(particularsright, simplestyleleft)
-				amtright = entryy["amount"]
-				listoflist[i].append(by)
-				listoflist[i].append(particularsright)
-				listoflist[i].append(amtright)
-				i+=1
-		data = listoflist
-		table_style = [
-						('BACKGROUND', (0, 0), (-1, 0), '#a7a5a5'),
-						('ALIGN', (0, 0), (-1, -1), 'RIGHT'),
-						('GRID', (0, 0), (-1, 0), 1, colors.white),
-						('BOX', (0, 0), (-1, -1), 1, colors.grey),
-						('BOX', (0, 0), (-1, 0), 1, colors.grey),
-						('BOX', (0, 0), (-1, -1), 0.25, colors.black),
-						('BOX', (0, 0), (-1, 0), 0.25, colors.black),
-		]
-		#data.append([Paragraph("", simplestyle), Paragraph("Carried Forward:", simplestyle), TotalPagesColSum(decimal_places = 2), Paragraph("", simplestyle), Paragraph("Carried Forward:", simplestyle), TotalPagesColSum(decimal_places = 2)])
-		spreadsheet_table = SpreadsheetTable(data, repeatRows = 1, colWidths = (1*cm, 5.2*cm, 3.8*cm, 1*cm, 5.2*cm, 3.8*cm))
-		spreadsheet_table.setStyle(table_style)
-
-		Story.append(spreadsheet_table)
-		Story.append(Spacer(1,0.2*inch))
-		doc.build(Story, onFirstPage=myFirstPage, onLaterPages=myLaterPages)
-	result = requests.get("http://127.0.0.1:6543/report?type=cashflow&calculateto=%s&financialstart=%s&calculatefrom=%s"%(calculateto,financialstart,calculatefrom), headers=header)
-	makepdf(result)
-	fileobj = open(filename, 'rb')
-	filecontent = fileobj.read()
-	fileobj.close()
-	response = Response(content_type='application/pdf', content_disposition='attachment; filename=Filename_net', body=filecontent)
-	os.remove(filename)
 	return response
