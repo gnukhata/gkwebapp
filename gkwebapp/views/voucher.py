@@ -97,7 +97,8 @@ def addvoucher(request):
 		image.save(imgbuffer, format="JPEG")
 		img_str = base64.b64encode(imgbuffer.getvalue())
 		image.close()
-		gkdata["attachment"] = img_str
+		gkdata["attachment"] = {1:img_str}
+		gkdata["attachmentcount"] = len(gkdata["attachment"])
 	except:
 		print "no attachment found"
 	for row in rowdetails:

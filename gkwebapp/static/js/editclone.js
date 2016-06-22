@@ -28,6 +28,8 @@ $(document).ready(function()
 {
   $("#vctable").hide();
   $("#save").hide();
+  $("#replaceattach").hide();
+  $("#removediv").hide();
 
   if ($("#urole").val()!="-1")
   {
@@ -215,6 +217,8 @@ if (sessionStorage.booksclosedflag==1) {
     ecflag="edit";
     $(".lblec").prepend('<i>Edit </i>');
     $("#save").show();
+    $("#replaceattach").show();
+    $("#removediv").show();
     $("#lock").hide();
     $("#edit").hide();
     $("#clone").hide();
@@ -252,6 +256,10 @@ if (sessionStorage.booksclosedflag==1) {
     $("#viewattach").hide();
 
   });
+  $("#replaceattach").click(function(event)
+  {
+    alert("aaaaa");
+  });
 
   $("#viewattach").click(function(event)
   {
@@ -268,7 +276,7 @@ if (sessionStorage.booksclosedflag==1) {
     })
     .done(function(resp) {
       if (resp["attachment"]!=null) {
-        var newWin =window.open("data:image/jpg;base64," + resp["attachment"])
+        var newWin =window.open("data:image/jpg;base64," + resp["attachment"][1])
         newWin.addEventListener("load", function() {
           newWin.document.title = $(".lblec").text() +",V.No:"+$("#vno").val();
         });
