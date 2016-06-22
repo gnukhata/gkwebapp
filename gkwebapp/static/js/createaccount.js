@@ -158,7 +158,7 @@ $("#accountform").submit(function(e)
 
   if ($.trim($("#accountname").val())=="") {
     $("#blank-alert").alert();
-    $("#blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+    $("#blank-alert").fadeTo(2000, 200).slideUp(500, function(){
       $("#blank-alert").hide();
     });
     $("#accname").focus().select();

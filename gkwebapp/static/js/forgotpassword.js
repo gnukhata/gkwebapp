@@ -32,6 +32,7 @@ $(document).ready(function()
   $("#username").focus();
   $("#username").keydown(function(event){
     if (event.which == 13 || event.which == 9) {
+      event.preventDefault();
       $.ajax({
         type: "POST",
         url: "/securityquestion",
@@ -46,16 +47,35 @@ $(document).ready(function()
           $("#userid").val(userdata[0].userid);
           }
       });
-      if (userstatus == 4) {
+      if (userstatus == 0) {
+        event.preventDefault();
+        $("#securityanswer").focus();
+      }
+      if ($.trim($("#username").val())=="") {
+        $("#username-blank-alert").alert();
+        $("#username-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#username-blank-alert").hide();
+        });
+        $("#securityquestion").val("")
+      }
+      if (userstatus == 3) {
+        $("#securityanswer-connectionfailed-alert").alert();
+        $("#securityanswer-connectionfailed-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#securityanswer-connectionfailed-alert").hide();
+        });
+      }
+      if (userstatus == 4 && $.trim($("#username").val())!="") {
         $("#forgotpassword-nosuchuser-alert").alert();
         $("#forgotpassword-nosuchuser-alert").fadeTo(2000, 500).slideUp(500, function(){
           $("#forgotpassword-nosuchuser-alert").hide();
         });
+        $("#securityquestion").val("")
       }
     }
   });
   $("#securityanswer").keydown(function(event){
     if (event.which == 13 || event.which == 9) {
+      event.preventDefault();
       $.ajax({
         type: "POST",
         url: "/securityanswer",
@@ -67,33 +87,33 @@ $(document).ready(function()
           answercheck = resp["gkstatus"];
         }
       });
+      if (answercheck == 0) {
+        event.preventDefault();
+        alert("Good");
+      }
       if (answercheck == 3) {
         $("#securityanswer-connectionfailed-alert").alert();
         $("#securityanswer-connectionfailed-alert").fadeTo(2000, 500).slideUp(500, function(){
           $("#securityanswer-connectionfailed-alert").hide();
         });
-        return false;
       }
-      if (answercheck == 4) {
+      if ($.trim($("#securityanswer").val())=="") {
+        $("#securityanswer-blank-alert").alert();
+        $("#securityanswer-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#securityanswer-blank-alert").hide();
+        });
+      }
+      if (answercheck == 4 && $.trim($("#securityanswer").val())!="") {
         $("#securityanswer-incorrect-alert").alert();
         $("#securityanswer-incorrect-alert").fadeTo(2000, 500).slideUp(500, function(){
           $("#securityanswer-incorrect-alert").hide();
         });
-        return false;
       }
     }
   });
   $('input:visible, textarea').keydown(function(event){
     var n =$('input:visible,textarea').length;
     var f= $('input:visible, textarea');
-    if (event.which == 13)
-    {
-      var nextIndex = f.index(this)+1;
-      if(nextIndex < n){
-        event.preventDefault();
-        f[nextIndex].focus().select();
-      }
-    }
     if(event.which == 38){
       var prevIndex = f.index(this)-1;
       if(prevIndex < n){
@@ -109,8 +129,7 @@ $(document).ready(function()
       $("#username-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#username-blank-alert").hide();
       });
-      $("#username").focus();
-      return false;
+      $("#securityquestion").val("")
     }
 
     if ($.trim($("#securityquestion").val())=="") {
@@ -118,8 +137,6 @@ $(document).ready(function()
       $("#securityquestion-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#securityquestion-blank-alert").hide();
       });
-      $("#securityquestion").focus();
-      return false;
     }
 
     if ($.trim($("#securityanswer").val())=="") {
@@ -127,8 +144,6 @@ $(document).ready(function()
       $("#securityanswer-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#securityanswer-blank-alert").hide();
       });
-      $("#securityanswer").focus();
-      return false;
     }
 
     if ($.trim($("#newpassword").val())=="") {
@@ -136,8 +151,6 @@ $(document).ready(function()
       $("#newpassword-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#newpassword-blank-alert").hide();
       });
-      $("#newpassword").focus();
-      return false;
     }
 
     if ( ($.trim($("#confirmpassword").val())=="") || ( $.trim($("#newpassword").val())!==$.trim($("#confirmpassword").val()) ) ) {
@@ -145,8 +158,6 @@ $(document).ready(function()
       $("#passwords-dont-match-alert").fadeTo(2000, 500).slideUp(500, function(){
         $("#passwords-dont-match-alert").hide();
       });
-      $("#confirmpassword").focus();
-      return false;
     }
 
     if ($.trim($("#newpassword").val())==$.trim($("#confirmpassword").val())) {
@@ -169,7 +180,6 @@ $(document).ready(function()
         $("#securityanswer-connectionfailed-alert").fadeTo(2000, 500).slideUp(500, function(){
           $("#securityanswer-connectionfailed-alert").hide();
         });
-        return false;
       }
     }
   })

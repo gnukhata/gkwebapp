@@ -140,7 +140,7 @@ $(document).ready(function() {
     $(this).val(yearpad($(this).val(),4));
     if(!Date.parseExact($("#vdate").val()+$("#vmonth").val()+$("#vyear").val(), "ddMMyyyy")){
       $("#date-alert").alert();
-      $("#date-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#date-alert").fadeTo(3000, 500).slideUp(500, function(){
         $("#date-alert").hide();
       });
       $('#vdate').focus().select();
@@ -149,7 +149,7 @@ $(document).ready(function() {
     var curdate = Date.parseExact($("#vyear").val()+$("#vmonth").val()+$("#vdate").val(), "yyyyMMdd")
     if (!curdate.between(financialstart,financialend)) {
       $("#between-date-alert").alert();
-      $("#between-date-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#between-date-alert").fadeTo(3000, 500).slideUp(500, function(){
         $("#between-date-alert").hide();
       });
       $('#vdate').focus().select();
@@ -760,7 +760,7 @@ $(document).ready(function() {
         if (!allow) {
           $("#vtable tbody tr:eq("+index+") td:eq(1) select").focus();
           $("#account-blank-alert").alert();
-          $("#account-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#account-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
             $("#account-blank-alert").hide();
           });
           return false;
@@ -950,7 +950,7 @@ $(document).ready(function() {
         if (!allow) {
           $("#vtable tbody tr:eq("+index+") td:eq(1) select").focus();
           $("#account-blank-alert").alert();
-          $("#account-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#account-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
             $("#account-blank-alert").hide();
           });
           return false;
@@ -1002,7 +1002,7 @@ $(document).ready(function() {
     // Check if voucher no. is blank and if it is then show an alert
     if ($('#vno').val()=="") {
       $("#vno-alert").alert();
-      $("#vno-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#vno-alert").fadeTo(3000, 500).slideUp(500, function(){
         $("#vno-alert").hide();
       });
       $('#vno').focus().select();
@@ -1011,7 +1011,7 @@ $(document).ready(function() {
     // Check if date fields are blank and if it is then show an alert
     if ($('#vdate').val()=="" || $('#vmonth').val()=="" || $('#vyear').val()=="") {
       $("#date-alert").alert();
-      $("#date-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#date-alert").fadeTo(3000, 500).slideUp(500, function(){
         $("#date-alert").hide();
       });
       $('#vdate').focus().select();
@@ -1019,7 +1019,7 @@ $(document).ready(function() {
     }
     if(!Date.parseExact($("#vdate").val()+$("#vmonth").val()+$("#vyear").val(), "ddMMyyyy")){
       $("#date-alert").alert();
-      $("#date-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#date-alert").fadeTo(3000, 500).slideUp(500, function(){
         $("#date-alert").hide();
       });
       $('#vdate').focus().select();
@@ -1028,7 +1028,7 @@ $(document).ready(function() {
     var curdate = Date.parseExact($("#vyear").val()+$("#vmonth").val()+$("#vdate").val(), "yyyyMMdd")
     if (!curdate.between(financialstart,financialend)) {
       $("#between-date-alert").alert();
-      $("#between-date-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#between-date-alert").fadeTo(3000, 500).slideUp(500, function(){
         $("#between-date-alert").hide();
       });
       $('#vdate').focus().select();
@@ -1047,7 +1047,7 @@ $(document).ready(function() {
     if (!accallow) {
       $("#vtable tbody tr:eq("+accountindex+") td:eq(1) select").focus();
       $("#account-blank-alert").alert();
-      $("#account-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#account-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
         $("#account-blank-alert").hide();
       });
       return false;
@@ -1056,7 +1056,7 @@ $(document).ready(function() {
       $("#vtable tbody tr:eq("+amountindex+") input:enabled").focus().select();
       $("#vtable tbody tr:eq("+amountindex+") input:enabled").select();
       $("#zerorow-alert").alert();
-      $("#zerorow-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#zerorow-alert").fadeTo(3000, 500).slideUp(500, function(){
         $("#zerorow-alert").hide();
       });
       return false;
@@ -1064,7 +1064,7 @@ $(document).ready(function() {
     // Check if the total cr dr amounts tally, if it doesn't then show an alert.
     if ($('#drtotal').val()!=$('#crtotal').val()) {
       $("#balance-alert").alert();
-      $("#balance-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#balance-alert").fadeTo(3000, 500).slideUp(500, function(){
         $("#balance-alert").hide();
       });
       $('#vtable tbody tr:last input:enabled').focus().select();
@@ -1073,7 +1073,7 @@ $(document).ready(function() {
     // Check if voucher amount is zero and if it is then show an alert.
     if ($('#drtotal').val()==0) {
       $("#zero-alert").alert();
-      $("#zero-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#zero-alert").fadeTo(3000, 500).slideUp(500, function(){
         $("#zero-alert").hide();
       });
       $("#vtable tbody tr:first input:enabled").focus().select();
@@ -1099,7 +1099,7 @@ $(document).ready(function() {
 
     if(!allow){
       $("#accs-alert").alert();
-      $("#accs-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#accs-alert").fadeTo(3000, 500).slideUp(500, function(){
         $("#accs-alert").hide();
       });
       $("#vtable tbody tr:eq("+accountindex+") td:eq(1) select").focus();
@@ -1158,13 +1158,13 @@ $(document).ready(function() {
           $("#vmonth").val(fromdatearray[1])
           $("#vyear").val(fromdatearray[0])
           $("#success-alert").alert();
-          $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#success-alert").fadeTo(3000, 500).slideUp(500, function(){
             $("#success-alert").hide();
           });
         }
         else {
           $("#failure-alert").alert();
-          $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#failure-alert").fadeTo(3000, 500).slideUp(500, function(){
             $("#failure-alert").hide();
           });
         }

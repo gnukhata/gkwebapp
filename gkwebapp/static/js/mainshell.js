@@ -28,7 +28,7 @@ Contributors:
 $(document).ready(function(){
 
   $(document).keydown(function(event) {
-        if(event.ctrlKey && event.keyCode == 71) {
+        if(event.ctrlKey && event.keyCode == 83) {
           $("#gnukhata").click();
           event.preventDefault();
           }
@@ -116,11 +116,11 @@ $(document).ready(function(){
           $("#showtrialbalance").click();
           event.preventDefault();
           }
-        if(event.ctrlKey && (event.keyCode == 54||event.keyCode == 102)) {
+        if(event.ctrlKey && (event.keyCode == 53||event.keyCode == 101)) {
           $("#showprjstate").click();
           event.preventDefault();
           }
-        if(event.ctrlKey && (event.keyCode == 55||event.keyCode == 103)) {
+        if(event.ctrlKey && (event.keyCode == 54||event.keyCode == 102)) {
           $("#showcashflow").click();
           event.preventDefault();
           }
@@ -136,7 +136,7 @@ $(document).ready(function(){
           $("#fevoucher").click();
           event.preventDefault();
           }
-        if(event.ctrlKey && (event.keyCode == 53||event.keyCode == 101)) {
+        if(event.ctrlKey && (event.keyCode == 55||event.keyCode == 103)) {
           $("#listofaccounts").click();
           event.preventDefault();
           }
