@@ -280,21 +280,13 @@ if (sessionStorage.booksclosedflag==1) {
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
       },
-      data: {"vouchercode": vcode},
+      data: {"vouchercode": vcode,"vtype":$(".lblec").text(),"vno":$("#vno").val()},
     })
     .done(function(resp) {
-      if (resp["attachment"]!=null) {
-        var newWin =window.open("data:image/jpg;base64," + resp["attachment"][1])
-        newWin.addEventListener("load", function() {
-          newWin.document.title = $(".lblec").text() +",V.No:"+$("#vno").val();
-        });
-      }
-      else {
-        $("#attachment-alert").alert();
-        $("#attachment-alert").fadeTo(4000, 1000).slideUp(500, function(){
-          $("#attachment-alert").hide();
-        });
-      }
+      var x=window.open();
+      x.document.open();
+      x.document.write(resp);
+      x.document.close();
       console.log("success");
     })
     .fail(function() {

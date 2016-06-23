@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="{{request.static_url('gkwebapp:static/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
+    <title>{{vtype}} , V.No:{{vno}}</title>
+  <style media="screen">
+  .well {
+    background: rgb(77, 153, 0);
+  }
+  </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      {% for key, value in attachment.items() %}\
+      <div class="col-xs-10 col-xs-offset-1">
+      <div class="well well-sm ">
+        <h4>Image No. :{{key}}</h4>
+      </div>
+        <img src="data:image/jpg;base64,{{value}}" alt="{{key}}" class="img-responsive" style="border:1px solid black;"/>
+        <hr>
+      </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>

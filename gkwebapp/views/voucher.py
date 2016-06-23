@@ -91,14 +91,24 @@ def addvoucher(request):
 	else:
 		gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"]}
 	try:
-		img = request.POST["img"].file
-		image = Image.open(img)
-		imgbuffer = cStringIO.StringIO()
-		image.save(imgbuffer, format="JPEG")
-		img_str = base64.b64encode(imgbuffer.getvalue())
-		image.close()
-		gkdata["attachment"] = {1:img_str}
-		gkdata["attachmentcount"] = len(gkdata["attachment"])
+		files = {}
+		count = 0
+		for i in request.POST.keys():
+			if "file" not in i:
+				continue
+			else:
+				img = request.POST[i].file
+				image = Image.open(img)
+				imgbuffer = cStringIO.StringIO()
+				image.save(imgbuffer, format="JPEG")
+				img_str = base64.b64encode(imgbuffer.getvalue())
+				image.close()
+				files[count] = img_str
+				count += 1
+		print files
+		if len(files)>0:
+			gkdata["attachment"] = files
+			gkdata["attachmentcount"] = len(gkdata["attachment"])
 	except:
 		print "no attachment found"
 	for row in rowdetails:
@@ -130,8 +140,8 @@ def showdeletedvoucher(request):
 	result = requests.get("http://127.0.0.1:6543/report?type=deletedvoucher", headers=header)
 	return {"gkresult":result.json()["gkresult"]}
 
-@view_config(route_name="getattachment", renderer="json")
+@view_config(route_name="getattachment", renderer="gkwebapp:templates/viewimages.jinja2")
 def getattachment(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/transaction?attach=image&vouchercode=%d"%(int(request.params["vouchercode"])), headers=header)
-	return {"attachment":result.json()["gkresult"]}
+	return {"attachment":result.json()["gkresult"],"vno":request.params["vno"],"vtype":request.params["vtype"]}

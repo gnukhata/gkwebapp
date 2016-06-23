@@ -1121,7 +1121,12 @@ $(document).ready(function() {
     details.projectcode=$('#project').val();
     details.narration=$.trim($('#narration').val());
     details.vtype=$('#vtype').val();
-    var form_data = new FormData($('#upload-file')[0]);
+    var form_data = new FormData();
+    var files = $("#my-file-selector")[0].files
+    var filelist = [];
+    for (var i = 0; i < files.length; i++) {
+      form_data.append("file"+i,files[i])
+    }
     form_data.append("vdetails",JSON.stringify(details));
     form_data.append("transactions",JSON.stringify(output));
     $.ajax({
@@ -1297,6 +1302,6 @@ $(document).ready(function() {
     $("#vdate").val(fromdatearray[2])
     $("#vmonth").val(fromdatearray[1])
     $("#vyear").val(fromdatearray[0])
-    $('#vno').focus();
+    $('#vno').focus().select();
   });
 });
