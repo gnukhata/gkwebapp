@@ -181,11 +181,17 @@ $(document).ready(function()
         async: false,
         datatype: "json",
         success: function(resp) {
-          passwordchanged = resp["gkstatus"]
+          passwordchanged = resp["gkstatus"];
           }
       });
       if (passwordchanged == 0) {
       $("#selectorg").load("/login?orgcode="+$.trim($("#orgcode").val())+"&flag=0", setTimeout( function() { $("#username").focus(); }, 500 ));
+      }
+      if (passwordchanged == 4) {
+        $("#forgotpassword-incorrectdetails-alert").alert();
+        $("#forgotpassword-incorrectdetails-alert").fadeTo(3000, 500).slideUp(500, function(){
+          $("#forgotpassword-incorrectdetails-alert").hide();
+        });
       }
       if (passwordchanged == 3) {
         $("#securityanswer-connectionfailed-alert").alert();
