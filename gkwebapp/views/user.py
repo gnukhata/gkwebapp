@@ -96,7 +96,8 @@ def securityanswer(request):
     return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="newpassword", renderer="json")
-def securityanswer(request):
-    gkdata = {"userid":request.params["userid"],"userpassword":request.params["userpassword"]}
+def verifypassword(request):
+    gkdata = {"userid":request.params["userid"],"userpassword":request.params["userpassword"],"useranswer":request.params["useranswer"]}
+    print gkdata
     result = requests.put("http://127.0.0.1:6543/forgotpassword", data =json.dumps(gkdata))
     return {"gkstatus":result.json()["gkstatus"]}

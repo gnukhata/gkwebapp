@@ -45,7 +45,7 @@ $(document).ready(function()
         $.ajax({
           type: "POST",
           url: "/securityquestion",
-          data: {"orgcode":$("#orgcode").val(), "username":$("#username").val()},
+          data: {"orgcode":$.trim($("#orgcode").val()), "username":$.trim($("#username").val())},
           global: false,
           async: false,
           datatype: "json",
@@ -86,7 +86,7 @@ $(document).ready(function()
         $.ajax({
           type: "POST",
           url: "/securityanswer",
-          data: {"userid":$("#userid").val(), "useranswer":$("#securityanswer").val()},
+          data: {"userid":$.trim($("#userid").val()), "useranswer":$.trim($("#securityanswer").val())},
           global: false,
           async: false,
           datatype: "json",
@@ -176,7 +176,7 @@ $(document).ready(function()
       $.ajax({
         type: "POST",
         url: "/newpassword",
-        data: {"userid":$("#userid").val(), "userpassword":$("#confirmpassword").val()},
+        data: {"userid":$.trim($("#userid").val()), "userpassword":$.trim($("#confirmpassword").val()), "useranswer":$.trim($("#securityanswer").val())},
         global: false,
         async: false,
         datatype: "json",
@@ -185,7 +185,7 @@ $(document).ready(function()
           }
       });
       if (passwordchanged == 0) {
-      alert(passwordchanged);
+      $("#selectorg").load("/login?orgcode="+$.trim($("#orgcode").val())+"&flag=0", setTimeout( function() { $("#username").focus(); }, 500 ));
       }
       if (passwordchanged == 3) {
         $("#securityanswer-connectionfailed-alert").alert();
