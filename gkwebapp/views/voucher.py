@@ -144,4 +144,11 @@ def showdeletedvoucher(request):
 def getattachment(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/transaction?attach=image&vouchercode=%d"%(int(request.params["vouchercode"])), headers=header)
-	return {"attachment":result.json()["gkresult"],"vno":request.params["vno"],"vtype":request.params["vtype"]}
+	return {"attachment":result.json()["gkresult"],"vno":request.params["vno"],"vtype":request.params["vtype"],"vouchercode":request.params["vouchercode"]}
+
+@view_config(route_name="updateattachment", renderer="json")
+def updateattachment(request):
+	header={"gktoken":request.headers["gktoken"]}
+	print request.params.keys()
+	print request.params["deletedids"]
+    result = requests.get("http://127.0.0.1:6543/transaction?attach=image&vouchercode=%d"%(int(request.params["vouchercode"])), headers=header)
