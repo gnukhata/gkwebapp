@@ -96,7 +96,7 @@ $(document).ready(function() {
     {
 
       $("#m_blank-alert").alert();
-      $("#m_blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#m_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#m_blank-alert").hide();
       });
       $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').focus().select();
@@ -118,7 +118,7 @@ $(document).ready(function() {
       if (jsonobj["gkstatus"]==1)
       {
         $("#m_duplicate-alert").alert();
-        $("#m_duplicate-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#m_duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#m_duplicate-alert").hide();
         });
         $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').focus();
@@ -191,7 +191,7 @@ $(document).off("keydown",".m_openbal").on("keydown",".m_openbal", function(even
     {
 
       $("#m_blank-alert").alert();
-      $("#m_blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#m_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#m_blank-alert").hide();
       });
       $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').focus().select();
@@ -260,7 +260,7 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
   if (!allow) {
 
     $("#m_blank-alert").alert();
-    $("#m_blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+    $("#m_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#m_blank-alert").hide();
     });
     $('#m_acctable tbody tr:eq('+blankindex+') td:eq(0) input').focus().select();
@@ -287,7 +287,7 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
       $("#reset").click();
       $('.modal-backdrop').remove();
       $("#success-alert").alert();
-      $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#success-alert").hide();
       });
 
@@ -296,7 +296,7 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
     {
       $("#m_multiacc").modal('hide');
       $("#duplicate-alert").alert();
-      $("#duplicate-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#duplicate-alert").hide();
       });
       $("#accname").focus().select();
@@ -305,7 +305,7 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
     {
       $("#m_multiacc").modal('hide');
       $("#failure-alert").alert();
-      $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#failure-alert").hide();
       });
       $("#accname").focus().select();

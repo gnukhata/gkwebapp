@@ -398,7 +398,7 @@ if (sessionStorage.booksclosedflag==1) {
     $(this).val(yearpad($(this).val(),4));
     if(!Date.parseExact($("#vdate").val()+$("#vmonth").val()+$("#vyear").val(), "ddMMyyyy")){
       $("#date-alert").alert();
-      $("#date-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#date-alert").hide();
       });
       $('#vdate').focus().select();
@@ -407,7 +407,7 @@ if (sessionStorage.booksclosedflag==1) {
     var curdate = Date.parseExact($("#vyear").val()+$("#vmonth").val()+$("#vdate").val(), "yyyyMMdd")
     if (!curdate.between(financialstart,financialend)) {
       $("#between-date-alert").alert();
-      $("#between-date-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#between-date-alert").hide();
       });
       $('#vdate').focus().select();
@@ -1102,7 +1102,7 @@ $("#delete").click(function(event) {
       else {
         $("#failure-alert").alert();
         $("#nt").append('Deleted')
-        $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#failure-alert").hide();
         });
       }
@@ -1119,7 +1119,7 @@ $("#delete").click(function(event) {
     var allow = true;
     if ($('#vno').val()=="") {
       $("#vno-alert").alert();
-      $("#vno-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#vno-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#vno-alert").hide();
       });
       $('#vno').focus();
@@ -1127,7 +1127,7 @@ $("#delete").click(function(event) {
     }
     if ($('#vdate').val()=="" || $('#vmonth').val()=="" || $('#vyear').val()=="") {
       $("#date-alert").alert();
-      $("#date-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#date-alert").hide();
       });
       $('#vdate').focus();
@@ -1135,7 +1135,7 @@ $("#delete").click(function(event) {
     }
     if ($('#drtotal').val()!=$('#crtotal').val()) {
       $("#balance-alert").alert();
-      $("#balance-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#balance-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#balance-alert").hide();
       });
       $('#vctable tbody tr:last input:enabled').focus()
@@ -1143,7 +1143,7 @@ $("#delete").click(function(event) {
     }
     if ($('#drtotal').val()==0) {
       $("#zero-alert").alert();
-      $("#zero-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#zero-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#zero-alert").hide();
       });
       $("#vctable tbody tr:first input:enabled").focus();
@@ -1166,7 +1166,7 @@ $("#delete").click(function(event) {
 
     if(!allow){
       $("#accs-alert").alert();
-      $("#accs-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#accs-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#accs-alert").hide();
       });
       $("#vctable tbody tr:first td:eq(1) select").focus();
@@ -1190,7 +1190,7 @@ $("#delete").click(function(event) {
       output.length = 0;
       $("#vctable tbody tr:first input:enabled").focus();
       $("#zerorow-alert").alert();
-      $("#zerorow-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#zerorow-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#zerorow-alert").hide();
       });
       return false;
@@ -1234,7 +1234,7 @@ $("#delete").click(function(event) {
             else {
               $("#failure-alert").alert();
               $("#nt").append('Cloned')
-              $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
+              $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#failure-alert").hide();
               });
             }
@@ -1276,7 +1276,7 @@ $("#delete").click(function(event) {
             else {
               $("#failure-alert").alert();
               $("#nt").append('Edited')
-              $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
+              $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
 
                 $("#failure-alert").hide();
               });

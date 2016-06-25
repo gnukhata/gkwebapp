@@ -156,7 +156,7 @@ $(document).ready(function() {
     if (!Date.parseExact(todate,"yyyyMMdd"))
     {
       $("#improperdate-alert").alert();
-      $("#improperdate-alert").fadeTo(2000, 400).slideUp(500, function(){
+      $("#improperdate-alert").fadeTo(2250, 400).slideUp(500, function(){
         $("#improperdate-alert").hide();
       });
       $("#viewbalsht_today").focus();
@@ -166,7 +166,7 @@ $(document).ready(function() {
     if (!Date.parseExact(todate,"yyyyMMdd").between(fstart,fend))
     {
       $("#betweendate-alert").alert();
-      $("#betweendate-alert").fadeTo(2000, 400).slideUp(500, function(){
+      $("#betweendate-alert").fadeTo(2250, 400).slideUp(500, function(){
         $("#betweendate-alert").hide();
       });
 

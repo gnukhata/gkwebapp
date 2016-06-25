@@ -76,7 +76,7 @@ $(document).ready(function()
     event.preventDefault();
     if ($.trim($("#org-name").val())=="") {
       $("#selorg-blank-alert").alert();
-      $("#selorg-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#selorg-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#selorg-blank-alert").hide();
       });
       $("#org-name").focus();

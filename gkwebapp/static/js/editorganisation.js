@@ -83,7 +83,7 @@ $(document).ready(function(){
           regno = $("#orgregno").val();
           if(!Date.parseExact(regdate,"yyyy-MM-dd")){
             $("#date-alert").alert();
-            $("#date-alert").fadeTo(2000, 400).slideUp(500, function(){
+            $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
               $("#date-alert").hide();
             });
             $('#regday').focus().select();
@@ -97,7 +97,7 @@ $(document).ready(function(){
         fcrano = $("#orgfcrano").val();
         if(!Date.parseExact(fcraregdate,"yyyy-MM-dd")){
           $("#date-alert").alert();
-          $("#date-alert").fadeTo(2000, 400).slideUp(500, function(){
+          $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
             $("#date-alert").hide();
           });
           $('#fcraregday').focus().select();
@@ -123,14 +123,14 @@ $(document).ready(function(){
         {
           $("#reset").click();
           $("#success-alert").alert();
-          $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#success-alert").hide();
           });
         }
         else
         {
           $("#connectionfailed").alert();
-          $("#connectionfailed").fadeTo(2000, 500).slideUp(500, function(){
+          $("#connectionfailed").fadeTo(2250, 500).slideUp(500, function(){
             $("#connectionfailed").hide();
           });
         }

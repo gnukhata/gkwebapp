@@ -52,7 +52,7 @@ $(document).ready(function() {
   $("#confirm_password").blur(function(event) {
     if ($.trim($("#new_password").val())!=$.trim($("#confirm_password").val())) {
       $("#checkpassuser-blank-alert").alert();
-      $("#checkpassuser-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
+      $("#checkpassuser-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#checkpassuser-blank-alert").hide();
       });
       $("#new_password").focus().select();
@@ -64,7 +64,7 @@ $(document).ready(function() {
     e.preventDefault();
     if ($.trim($("#current_password").val())=="") {
       $("#curpass-blank-alert").alert();
-      $("#curpass-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
+      $("#curpass-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#curpass-blank-alert").hide();
       });
       $("#current_password").focus().select();
@@ -72,7 +72,7 @@ $(document).ready(function() {
     }
     if ($.trim($("#new_password").val())=="") {
       $("#password-blank-alert").alert();
-      $("#password-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
+      $("#password-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#password-blank-alert").hide();
       });
       $("#new_password").focus().select();
@@ -80,7 +80,7 @@ $(document).ready(function() {
     }
     if ($.trim($("#confirm_password").val())=="") {
       $("#cnfpass-blank-alert").alert();
-      $("#cnfpass-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
+      $("#cnfpass-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#cnfpass-blank-alert").hide();
       });
       $("#confirm_password").focus().select();
@@ -89,7 +89,7 @@ $(document).ready(function() {
 
     if ($.trim($("#new_password").val())!=$.trim($("#confirm_password").val())) {
       $("#checkpassuser-blank-alert").alert();
-      $("#checkpassuser-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
+      $("#checkpassuser-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#checkpassuser-blank-alert").hide();
       });
       $("#new_password").focus().select();
@@ -119,7 +119,7 @@ $(document).ready(function() {
           if (resp["gkstatus"]==2 || resp["gkstatus"]==4 || resp["gkstatus"]==3)
           {
             $("#badprivilege-alert").alert();
-            $("#badprivilege-alert").fadeTo(3000, 500).slideUp(500, function(){
+            $("#badprivilege-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#badprivilege-alert").hide();
             });
             return false;
@@ -149,7 +149,7 @@ $(document).ready(function() {
               if (resp["gkstatus"]==3)
               {
                 $("#connectionfailed-alert").alert();
-                $("#connectionfailed-alert").fadeTo(3000, 500).slideUp(500, function(){
+                $("#connectionfailed-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#connectionfailed-alert").hide();
                 });
                 return false;
@@ -157,7 +157,7 @@ $(document).ready(function() {
               if (resp["gkstatus"]==2 || resp["gkstatus"]==4)
               {
                 $("#badprivilege-alert").alert();
-                $("#badprivilege-alert").fadeTo(3000, 500).slideUp(500, function(){
+                $("#badprivilege-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#badprivilege-alert").hide();
                 });
                 return false;
@@ -184,14 +184,14 @@ $(document).ready(function() {
               {
                 $("#showedituser").click();
                 $("#success-alert").alert();
-                $("#success-alert").fadeTo(3000, 500).slideUp(500, function(){
+                $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#success-alert").hide();
                 });
               }
               if (resp["gkstatus"]==3)
               {
                 $("#connectionfailed-alert").alert();
-                $("#connectionfailed-alert").fadeTo(3000, 500).slideUp(500, function(){
+                $("#connectionfailed-alert").fadeTo(`2250`, 500).slideUp(500, function(){
                 $("#connectionfailed-alert").hide();
                 });
                 return false;
@@ -199,7 +199,7 @@ $(document).ready(function() {
               if (resp["gkstatus"]==2 || resp["gkstatus"]==4)
               {
                 $("#badprivilege-alert").alert();
-                $("#badprivilege-alert").fadeTo(3000, 500).slideUp(500, function(){
+                $("#badprivilege-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#badprivilege-alert").hide();
                 });
                 return false;

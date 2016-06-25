@@ -267,7 +267,7 @@ $("#findvoucher").submit(function(event) {
   if (!Date.parseExact(todate,"yyyyMMdd"))
   {
     $("#improperdate-alert").alert();
-    $("#improperdate-alert").fadeTo(2000, 400).slideUp(500, function(){
+    $("#improperdate-alert").fadeTo(2250, 400).slideUp(500, function(){
       $("#improperdate-alert").hide();
     });
     $("#tday").focus();
@@ -277,7 +277,7 @@ $("#findvoucher").submit(function(event) {
   if (!Date.parseExact(fromdate,"yyyyMMdd"))
   {
     $("#improperdate-alert").alert();
-    $("#improperdate-alert").fadeTo(2000, 400).slideUp(500, function(){
+    $("#improperdate-alert").fadeTo(2250, 400).slideUp(500, function(){
       $("#improperdate-alert").hide();
     });
     $("#fday").focus();
@@ -287,7 +287,7 @@ $("#findvoucher").submit(function(event) {
   if (!Date.parseExact(todate,"yyyyMMdd").between(fstart,fend))
   {
     $("#betweendate-alert").alert();
-    $("#betweendate-alert").fadeTo(2000, 400).slideUp(500, function(){
+    $("#betweendate-alert").fadeTo(2250, 400).slideUp(500, function(){
       $("#betweendate-alert").hide();
     });
 
@@ -300,7 +300,7 @@ $("#findvoucher").submit(function(event) {
   if (!Date.parseExact(fromdate,"yyyyMMdd").between(fstart,fend))
   {
     $("#betweendate-alert").alert();
-    $("#betweendate-alert").fadeTo(2000, 400).slideUp(500, function(){
+    $("#betweendate-alert").fadeTo(2250, 400).slideUp(500, function(){
       $("#betweendate-alert").hide();
     });
 
@@ -317,7 +317,7 @@ $("#findvoucher").submit(function(event) {
     if ($('#vnum').val()=="") {
       $("#vno-alert").alert();
       $("#novn").focus();
-      $("#vno-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#vno-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#vno-alert").hide();
       });
       $('#vnum').focus();
@@ -329,7 +329,7 @@ $("#findvoucher").submit(function(event) {
     if ($('#amount').val()=="") {
       $("#vamt-alert").alert();
       $("#noamt").focus();
-      $("#vamt-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#vamt-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#vamt-alert").hide();
       });
       $('#amount').focus();
@@ -341,7 +341,7 @@ $("#findvoucher").submit(function(event) {
     if ($('#fday').val()=="") {
       $("#vdt-alert").alert();
       $("#nodt").focus();
-      $("#vdt-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#vdt-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#vdt-alert").hide();
       });
       $('#fday').focus();
@@ -351,7 +351,7 @@ $("#findvoucher").submit(function(event) {
     if ($('#fmonth').val()=="") {
       $("#vdt-alert").alert();
       $("#nodt").focus();
-      $("#vdt-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#vdt-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#vdt-alert").hide();
       });
       $('#fmonth').focus();
@@ -361,7 +361,7 @@ $("#findvoucher").submit(function(event) {
     if ($('#fyear').val()=="") {
       $("#vdt-alert").alert();
       $("#nodt").focus();
-      $("#vdt-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#vdt-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#vdt-alert").hide();
       });
       $('#fyear').focus();
@@ -371,7 +371,7 @@ $("#findvoucher").submit(function(event) {
     if ($('#tday').val()=="") {
       $("#vdt-alert").alert();
       $("#nodt").focus();
-      $("#vdt-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#vdt-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#vdt-alert").hide();
       });
       $('#tday').focus();
@@ -381,7 +381,7 @@ $("#findvoucher").submit(function(event) {
     if ($('#tmonth').val()=="") {
       $("#vdt-alert").alert();
       $("#nodt").focus();
-      $("#vdt-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#vdt-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#vdt-alert").hide();
       });
       $('#tmonth').focus();
@@ -390,7 +390,7 @@ $("#findvoucher").submit(function(event) {
     if ($('#tyear').val()=="") {
       $("#vdt-alert").alert();
       $("#nodt").focus();
-      $("#vdt-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#vdt-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#vdt-alert").hide();
       });
       $('#tyear').focus();
@@ -404,7 +404,7 @@ $("#findvoucher").submit(function(event) {
     if ($('#narration').val()=="") {
       $("#vnar-alert").alert();
       $("#nonar").focus();
-      $("#vnar-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#vnar-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#vnar-alert").hide();
       });
       $('#narration').focus();

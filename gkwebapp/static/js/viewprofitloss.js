@@ -107,7 +107,7 @@ $(document).ready(function() {
     var todate = $("#pnl_toyear").val()+$("#pnl_tomonth").val()+$("#pnl_todate").val();
     if(!Date.parseExact(todate, "yyyyMMdd")){
       $("#date-alert").alert();
-      $("#date-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#date-alert").hide();
       });
       $('#pnl_todate').focus().select();
@@ -116,7 +116,7 @@ $(document).ready(function() {
 
     if (!Date.parseExact(todate,"yyyyMMdd").between(financialstart,financialend)) {
       $("#between-date-alert").alert();
-      $("#between-date-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#between-date-alert").hide();
       });
       $('#pnl_todate').focus().select();

@@ -115,7 +115,7 @@ $(document).ready(function() {
   $("#viewbankrecon_submit").click(function(event) {
     if ($("#viewbankrecon_accname").val()==null) {
       $("#account-blank-alert").alert();
-      $("#account-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#account-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#account-blank-alert").hide();
       });
       $('#viewbankrecon_accname').focus()
@@ -125,7 +125,7 @@ $(document).ready(function() {
     var fromdate = $("#viewbankrecon_fromyear").val()+$("#viewbankrecon_frommonth").val()+$("#viewbankrecon_fromdate").val();
     if(!Date.parseExact(fromdate,"yyyyMMdd")){
       $("#date-alert").alert();
-      $("#date-alert").fadeTo(2000, 400).slideUp(500, function(){
+      $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
         $("#date-alert").hide();
       });
       $('#viewbankrecon_fromdate').focus().select();
@@ -133,7 +133,7 @@ $(document).ready(function() {
     }
     if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,financialend)) {
       $("#between-date-alert").alert();
-      $("#between-date-alert").fadeTo(2000, 400).slideUp(500, function(){
+      $("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
         $("#between-date-alert").hide();
       });
       $('#viewbankrecon_fromdate').focus().select();
@@ -141,7 +141,7 @@ $(document).ready(function() {
     }
     if(!Date.parseExact(todate, "yyyyMMdd")){
       $("#date-alert").alert();
-      $("#date-alert").fadeTo(2000, 400).slideUp(500, function(){
+      $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
         $("#date-alert").hide();
       });
       $('#viewbankrecon_todate').focus().select();
@@ -149,7 +149,7 @@ $(document).ready(function() {
     }
     if (!Date.parseExact(todate,"yyyyMMdd").between(financialstart,financialend)) {
       $("#between-date-alert").alert();
-      $("#between-date-alert").fadeTo(2000, 400).slideUp(500, function(){
+      $("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
         $("#between-date-alert").hide();
       });
       $('#viewbankrecon_todate').focus().select();
@@ -157,7 +157,7 @@ $(document).ready(function() {
     }
     if (Date.parseExact(fromdate,"yyyyMMdd").compareTo(Date.parseExact(todate,"yyyyMMdd"))==1) {
       $("#compare-date-alert").alert();
-      $("#compare-date-alert").fadeTo(2000, 400).slideUp(500, function(){
+      $("#compare-date-alert").fadeTo(2250, 400).slideUp(500, function(){
         $("#compare-date-alert").hide();
       });
       $('#viewbankrecon_todate').focus().select();

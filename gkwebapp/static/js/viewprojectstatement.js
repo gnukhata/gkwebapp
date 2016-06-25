@@ -115,7 +115,7 @@ $(document).ready(function() {
   $("#viewprjstate_submit").click(function(event) {
     if ($("#viewprjstate_prjname").val()==null) {
       $("#account-blank-alert").alert();
-      $("#account-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#account-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#account-blank-alert").hide();
       });
       $('#viewprjstate_prjname').focus()
@@ -124,7 +124,7 @@ $(document).ready(function() {
     var todate = $("#viewprjstate_toyear").val()+$("#viewprjstate_tomonth").val()+$("#viewprjstate_todate").val();
     if(!Date.parseExact(todate, "yyyyMMdd")){
       $("#date-alert").alert();
-      $("#date-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#date-alert").hide();
       });
       $('#viewprjstate_todate').focus().select();
@@ -133,7 +133,7 @@ $(document).ready(function() {
 
     if (!Date.parseExact(todate,"yyyyMMdd").between(financialstart,financialend)) {
       $("#between-date-alert").alert();
-      $("#between-date-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#between-date-alert").hide();
       });
       $('#viewprjstate_todate').focus().select();

@@ -158,7 +158,7 @@ $(document).ready(function()
         var startdate = $("#fromday").val()+$("#frommonth").val()+$("#fromyear").val();
         if (!Date.parseExact(startdate, "ddMMyyyy")) {
           $("#date-improper-alert").alert();
-          $("#date-improper-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#date-improper-alert").hide();
           });
           $("#fromday").focus();
@@ -199,7 +199,7 @@ $(document).ready(function()
         var enddate = startday+startmonth+startyear;
         if ($.trim($("#orgname").val())=="") {
           $("#orgname-blank-alert").alert();
-          $("#orgname-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#orgname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#orgname-blank-alert").hide();
           });
           $("#orgname").focus();
@@ -207,7 +207,7 @@ $(document).ready(function()
         }
           if ($.trim($("#fromday").val())==""||$.trim($("#frommonth").val())==""||$.trim($("#fromyear").val())==""||$.trim($("#today").val())==""||$.trim($("#tomonth").val())==""||$.trim($("#toyear").val())=="") {
             $("#date-blank-alert").alert();
-            $("#date-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#date-blank-alert").hide();
             });
             $("#fromday").focus();
@@ -215,7 +215,7 @@ $(document).ready(function()
         }
         if (!Date.parseExact(startdate, "ddMMyyyy")) {
           $("#date-improper-alert").alert();
-          $("#date-improper-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#date-improper-alert").hide();
           });
           $("#fromday").focus();
@@ -224,7 +224,7 @@ $(document).ready(function()
         }
         if (!Date.parseExact(enddate, "ddMMyyyy")) {
           $("#date-improper-alert").alert();
-          $("#date-improper-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#date-improper-alert").hide();
           });
           $("#today").focus();

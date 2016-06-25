@@ -35,7 +35,7 @@ $(document).ready(function()
       event.preventDefault();
       if ($.trim($("#username").val())=="") {
         $("#username-blank-alert").alert();
-        $("#username-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
+        $("#username-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#username-blank-alert").hide();
         });
         $("#securityquestion").val("")
@@ -59,13 +59,13 @@ $(document).ready(function()
       }
       if (userstatus == 3) {
         $("#securityanswer-connectionfailed-alert").alert();
-        $("#securityanswer-connectionfailed-alert").fadeTo(3000, 500).slideUp(500, function(){
+        $("#securityanswer-connectionfailed-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#securityanswer-connectionfailed-alert").hide();
         });
       }
       if (userstatus == 4 && $.trim($("#username").val())!="") {
         $("#forgotpassword-nosuchuser-alert").alert();
-        $("#forgotpassword-nosuchuser-alert").fadeTo(3000, 500).slideUp(500, function(){
+        $("#forgotpassword-nosuchuser-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#forgotpassword-nosuchuser-alert").hide();
         });
         $("#securityquestion").val("")
@@ -77,7 +77,7 @@ $(document).ready(function()
       event.preventDefault();
       if ($.trim($("#securityanswer").val())=="") {
         $("#securityanswer-blank-alert").alert();
-        $("#securityanswer-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
+        $("#securityanswer-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#securityanswer-blank-alert").hide();
         });
       }
@@ -97,13 +97,13 @@ $(document).ready(function()
       }
       if (answercheck == 3) {
         $("#securityanswer-connectionfailed-alert").alert();
-        $("#securityanswer-connectionfailed-alert").fadeTo(3000, 500).slideUp(500, function(){
+        $("#securityanswer-connectionfailed-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#securityanswer-connectionfailed-alert").hide();
         });
       }
       if (answercheck == 4 && $.trim($("#securityanswer").val())!="") {
         $("#securityanswer-incorrect-alert").alert();
-        $("#securityanswer-incorrect-alert").fadeTo(3000, 500).slideUp(500, function(){
+        $("#securityanswer-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#securityanswer-incorrect-alert").hide();
         });
       }
@@ -125,7 +125,7 @@ $(document).ready(function()
       event.preventDefault();
       if ($.trim($("#newpassword").val())=="") {
         $("#newpassword-blank-alert").alert();
-        $("#newpassword-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
+        $("#newpassword-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#newpassword-blank-alert").hide();
         });
       }
@@ -138,7 +138,7 @@ $(document).ready(function()
     event.preventDefault();
     if ($.trim($("#username").val())=="") {
       $("#username-blank-alert").alert();
-      $("#username-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
+      $("#username-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#username-blank-alert").hide();
       });
       $("#securityquestion").val("")
@@ -146,28 +146,28 @@ $(document).ready(function()
 
     if ($.trim($("#securityquestion").val())=="") {
       $("#securityquestion-blank-alert").alert();
-      $("#securityquestion-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
+      $("#securityquestion-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#securityquestion-blank-alert").hide();
       });
     }
 
     if ($.trim($("#securityanswer").val())=="") {
       $("#securityanswer-blank-alert").alert();
-      $("#securityanswer-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
+      $("#securityanswer-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#securityanswer-blank-alert").hide();
       });
     }
 
     if ($.trim($("#newpassword").val())=="") {
       $("#newpassword-blank-alert").alert();
-      $("#newpassword-blank-alert").fadeTo(3000, 500).slideUp(500, function(){
+      $("#newpassword-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#newpassword-blank-alert").hide();
       });
     }
 
     if ( ($.trim($("#confirmpassword").val())=="") || ( $.trim($("#newpassword").val())!==$.trim($("#confirmpassword").val()) ) ) {
       $("#passwords-dont-match-alert").alert();
-      $("#passwords-dont-match-alert").fadeTo(3000, 500).slideUp(500, function(){
+      $("#passwords-dont-match-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#passwords-dont-match-alert").hide();
       });
     }
@@ -189,13 +189,13 @@ $(document).ready(function()
       }
       if (passwordchanged == 4) {
         $("#forgotpassword-incorrectdetails-alert").alert();
-        $("#forgotpassword-incorrectdetails-alert").fadeTo(3000, 500).slideUp(500, function(){
+        $("#forgotpassword-incorrectdetails-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#forgotpassword-incorrectdetails-alert").hide();
         });
       }
       if (passwordchanged == 3) {
         $("#securityanswer-connectionfailed-alert").alert();
-        $("#securityanswer-connectionfailed-alert").fadeTo(3000, 500).slideUp(500, function(){
+        $("#securityanswer-connectionfailed-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#securityanswer-connectionfailed-alert").hide();
         });
       }
