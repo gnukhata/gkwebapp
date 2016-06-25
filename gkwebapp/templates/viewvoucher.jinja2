@@ -58,6 +58,10 @@ table.table-fixedheader>thead, table.table-fixedheader>tfoot {
   overflow-y: scroll;
   height: 39px;
 }
+table.table-fixedheader>thead{
+  overflow-y: scroll;
+  height: 26px;
+}
 table.table-fixedheader>tfoot {
 width: 98.9%
 }
@@ -405,22 +409,58 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
 
 
         </div>
-        <div id="img_preview">
-
-        </div>
         <br>
         <br>
         <div class="modal-footer">
-          {% if voucher['status'] %}
-          <button type="button" class="btn btn-warning btn-sm" id="lock" value="Unlock" accesskey="k">Unloc<u>k</u></button>
-          {% else %}
-          <button type="button" class="btn btn-warning btn-sm" id="lock" value="Lock" accesskey="k">Loc<u>k</u></button>
+          {% if voucher["attachmentcount"]>0 %}
+          <div class="has-error">
+            <div class="checkbox pull-left" id="removediv">
+              <label>
+                <input type="checkbox" id="removeattach" accesskey="o"> Rem<u>o</u>ve Attachment
+              </label>
+            </div>
+          </div>
           {% endif %}
-          <button type="button" class="btn btn-primary btnfocus btn-sm" id="edit" accesskey="t">Edi<u>t</u></button>
-          <button type="button" class="btn btn-primary btnfocus btn-sm" id="clone" accesskey="o">Cl<u>o</u>ne</button>
-          <button type="submit" id="save" class="btn btn-success btn-sm" accesskey="v">Sa<u>v</u>e</button>
-          <button type="button" class="btn btn-danger btnfocus btn-sm" id="delete" accesskey="d"><u>D</u>elete</button>
-          <button type="button" class="btn btn-primary btnfocus btn-sm" id="viewattach" accesskey="h">View Attac<u>h</u>ment</button>
+          <div class="form-inline">
+            <div class="form-group">
+              {% if voucher['status'] %}
+              <button type="button" class="btn btn-warning btn-sm" id="lock" value="Unlock" accesskey="k">Unloc<u>k</u></button>
+              {% else %}
+              <button type="button" class="btn btn-warning btn-sm" id="lock" value="Lock" accesskey="k">Loc<u>k</u></button>
+              {% endif %}
+              <button type="button" class="btn btn-primary btnfocus btn-sm" id="edit" accesskey="e"><u>E</u>dit</button>
+              <button type="button" class="btn btn-primary btnfocus btn-sm" id="clone" accesskey="o">Cl<u>o</u>ne</button>
+              <button type="submit" id="save" class="btn btn-success btn-sm" accesskey="s"><u>S</u>ave</button>
+              <button type="button" class="btn btn-danger btnfocus btn-sm" id="delete" accesskey="d"><u>D</u>elete</button>
+              {% if voucher["attachmentcount"]>0 %}
+              <button type="button" class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">View Attac<u>h</u>ment</button>
+            </div>
+
+            <div class="form-group" id="replaceattach" style="padding-top:13px">
+              <form id="edit-upload-file" method="post" enctype="multipart/form-data">
+                <fieldset>
+                  <label class="btn btn-info btn-sm" id="attachlbl" for="my-edit-file-selector">
+                    <input name="img" accesskey="e" class="input-sm" id="my-edit-file-selector" type="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
+                    <b id="attachtext">R<u>e</u>place Attachment</b>
+                  </label>
+                  <span class='label label-info' id="upload-file-info"></span>
+                </fieldset>
+              </form>
+            </div>
+            {% else %}
+            <div class="form-group" id="replaceattach" style="padding-top:13px">
+              <form id="edit-upload-file" method="post" enctype="multipart/form-data">
+                <fieldset>
+                  <label class="btn btn-info btn-sm" id="attachlbl" for="my-edit-file-selector">
+                    <input name="img" accesskey="e" class="input-sm" id="my-edit-file-selector" type="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
+                    <b id="attachtext">Add Attachm<u>e</u>nt</b>
+                  </label>
+                  <span class='label label-info' id="upload-file-info"></span>
+                </fieldset>
+              </form>
+            </div>
+            {% endif %}
+          </div>
         </div>
       </div>
     </div>

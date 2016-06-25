@@ -30,6 +30,9 @@ from pyramid.view import view_config
 import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
+from PIL import Image
+import base64
+import cStringIO
 
 @view_config(route_name="findeditvoucher", renderer="gkwebapp:templates/findeditvoucher.jinja2")
 def showfindvoucher(request):
@@ -131,7 +134,21 @@ def editvoucher(request):
 		gkdata={"vouchercode":vdetails["vcode"],"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails["projectcode"])}
 	else:
 		gkdata={"vouchercode":vdetails["vcode"],"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":None}
-
+	if vdetails["delattach"]:
+		gkdata["attachment"]=None
+		gkdata["attachmentcount"]=0
+	else:
+		try:
+			img = request.POST["img"].file
+			image = Image.open(img)
+			imgbuffer = cStringIO.StringIO()
+			image.save(imgbuffer, format="JPEG")
+			img_str = base64.b64encode(imgbuffer.getvalue())
+			image.close()
+			gkdata["attachment"] = {1:img_str}
+			gkdata["attachmentcount"] = len(gkdata["attachment"])
+		except:
+			print "no attachment found"
 	for row in rowdetails:
 		if row["side"]=="Cr":
 			crs[row["accountcode"]]=row["cramount"]

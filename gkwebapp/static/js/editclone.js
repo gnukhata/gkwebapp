@@ -28,6 +28,8 @@ $(document).ready(function()
 {
   $("#vctable").hide();
   $("#save").hide();
+  $("#replaceattach").hide();
+  $("#removediv").hide();
 
   if ($("#urole").val()!="-1")
   {
@@ -207,7 +209,17 @@ if (sessionStorage.booksclosedflag==1) {
       $("#lock").focus();
     }
   });
-
+  $("#removeattach").change(function(event)
+  {
+    if ($("#removeattach").is(":checked")) {
+      $("#replaceattach").hide();
+      $("#viewattach").hide();
+    }
+    else {
+      $("#replaceattach").show();
+      $("#viewattach").show();
+    }
+  });
 
   $("#edit").click(function(event)
   {
@@ -215,6 +227,8 @@ if (sessionStorage.booksclosedflag==1) {
     ecflag="edit";
     $(".lblec").prepend('<i>Edit </i>');
     $("#save").show();
+    $("#replaceattach").show();
+    $("#removediv").show();
     $("#lock").hide();
     $("#edit").hide();
     $("#clone").hide();
@@ -238,6 +252,8 @@ if (sessionStorage.booksclosedflag==1) {
     $(".lblec").prepend('<i>Clone </i>');
     $("#lock").hide();
     $("#clone").hide();
+    $("#attachtext").html("Add Attachm<u>e</u>nt")
+    $("#replaceattach").show();
     $("#edit").hide();
     $("#delete").hide();
     $(".ttl").prop('disabled', true);
@@ -268,7 +284,7 @@ if (sessionStorage.booksclosedflag==1) {
     })
     .done(function(resp) {
       if (resp["attachment"]!=null) {
-        var newWin =window.open("data:image/jpg;base64," + resp["attachment"])
+        var newWin =window.open("data:image/jpg;base64," + resp["attachment"][1])
         newWin.addEventListener("load", function() {
           newWin.document.title = $(".lblec").text() +",V.No:"+$("#vno").val();
         });
@@ -1185,17 +1201,21 @@ $("#delete").click(function(event) {
     details.projectcode=$('#project').val();
     details.narration=$('#narr').val();
     details.vtype=$('#m_vtype').val();
-
+    var form_data = new FormData($('#edit-upload-file')[0]);
       if(ecflag=="clone")
       {
-
+        form_data.append("vdetails",JSON.stringify(details));
+        form_data.append("transactions",JSON.stringify(output));
         $.ajax({
           type: "POST",
           url: "/addvoucher",
           global: false,
+          contentType: false,
+          cache: false,
+          processData: false,
           async: false,
           datatype: "json",
-          data: {"vdetails":JSON.stringify(details),"transactions":JSON.stringify(output)},
+          data: form_data,
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -1219,15 +1239,25 @@ $("#delete").click(function(event) {
       }
       else if (ecflag=="edit")
       {
-
+        if ($("#removeattach").is(":checked")) {
+            details.delattach = true
+        }
+        else {
+          details.delattach = false
+        }
         details.vcode=$('#vcode').val();
+        form_data.append("vdetails",JSON.stringify(details));
+        form_data.append("transactions",JSON.stringify(output));
         $.ajax({
           type: "POST",
           url: "/editvoucher",
           global: false,
+          contentType: false,
+          cache: false,
+          processData: false,
           async: false,
           datatype: "json",
-          data: {"vdetails":JSON.stringify(details),"transactions":JSON.stringify(output)},
+          data: form_data,
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

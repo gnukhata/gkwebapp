@@ -1142,6 +1142,8 @@ $(document).ready(function() {
       {
         if(resp.gkstatus){ // if the voucher is saved show an alert and then reset the voucher form and clear all variables.
           $('#voucher')[0].reset();
+          $('#upload-file')[0].reset();
+          $("#upload-file-info").html("");
           drsum = 0;
           crsum = 0;
           diff = 0;
@@ -1285,6 +1287,8 @@ $(document).ready(function() {
 
   $('#reset').click(function(event) {
     $('#voucher')[0].reset();
+    $('#upload-file')[0].reset();
+    $("#upload-file-info").html("");
     drsum = 0;
     crsum = 0;
     diff = 0;

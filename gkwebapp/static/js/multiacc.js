@@ -244,7 +244,7 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
     var obj = {};
 
     obj.accountname = $(".m_accname", this).val();
-    if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
+    if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income" || $(".m_openbal", this).val()=="")
     {
       obj.openbal = "0.00";
     }
