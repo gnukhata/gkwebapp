@@ -28,10 +28,9 @@ $(document).ready(function()
 {
   $("#vctable").hide();
   $("#save").hide();
+  $("#clonereplaceattach").hide();
   $("#replaceattach").hide();
-  $("#removediv").hide();
-
-  if ($("#urole").val()!="-1")
+  if ($("#urole").val()=="1")
   {
     $("#lock").hide();
 
@@ -53,7 +52,7 @@ if (sessionStorage.booksclosedflag==1) {
   var democrsum = 0;
   var drsum = 0;
   var crsum = 0;
-
+  var clone_attach_element = $("#clonereplaceattach").clone();
   $(".demodramt").each(function()
   {
     demodrsum += +$(this).val();
@@ -226,8 +225,11 @@ if (sessionStorage.booksclosedflag==1) {
 
     ecflag="edit";
     $(".lblec").prepend('<i>Edit </i>');
+    if ($("#replaceattach").length) {
+      $("#replaceattach").show();
+      $("#clonereplaceattach").remove();
+    }
     $("#save").show();
-    $("#replaceattach").show();
     $("#removediv").show();
     $("#lock").hide();
     $("#edit").hide();
@@ -247,13 +249,19 @@ if (sessionStorage.booksclosedflag==1) {
 
   $("#clone").click(function(event)
   {
-
+    if ($("#replaceattach").length) {
+      $("#replaceattach").show();
+    }
+    else if ($("#clonereplaceattach").length) {
+      $("#clonereplaceattach").show();
+    }
+    else {
+      $("#butform").append(clone_attach_element);
+    }
     ecflag="clone";
     $(".lblec").prepend('<i>Clone </i>');
     $("#lock").hide();
     $("#clone").hide();
-    $("#attachtext").html("Add Attachm<u>e</u>nt")
-    $("#replaceattach").show();
     $("#edit").hide();
     $("#delete").hide();
     $(".ttl").prop('disabled', true);
@@ -280,21 +288,13 @@ if (sessionStorage.booksclosedflag==1) {
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
       },
-      data: {"vouchercode": vcode},
+      data: {"vouchercode": vcode,"vtype":$(".lblec").text(),"vno":$("#vno").val()},
     })
     .done(function(resp) {
-      if (resp["attachment"]!=null) {
-        var newWin =window.open("data:image/jpg;base64," + resp["attachment"][1])
-        newWin.addEventListener("load", function() {
-          newWin.document.title = $(".lblec").text() +",V.No:"+$("#vno").val();
-        });
-      }
-      else {
-        $("#attachment-alert").alert();
-        $("#attachment-alert").fadeTo(4000, 1000).slideUp(500, function(){
-          $("#attachment-alert").hide();
-        });
-      }
+      var x=window.open();
+      x.document.open();
+      x.document.write(resp);
+      x.document.close();
       console.log("success");
     })
     .fail(function() {
@@ -1201,7 +1201,12 @@ $("#delete").click(function(event) {
     details.projectcode=$('#project').val();
     details.narration=$('#narr').val();
     details.vtype=$('#m_vtype').val();
-    var form_data = new FormData($('#edit-upload-file')[0]);
+    var form_data = new FormData();
+    var files = $("#my-edit-file-selector")[0].files
+    var filelist = [];
+    for (var i = 0; i < files.length; i++) {
+      form_data.append("file"+i,files[i])
+    }
       if(ecflag=="clone")
       {
         form_data.append("vdetails",JSON.stringify(details));

@@ -101,6 +101,7 @@ def main(global_config, **settings):
 	config.add_route('lockvoucher', '/lockvoucher')
 	config.add_route('viewvoucher', '/viewvoucher')
 	config.add_route('addvoucher', '/addvoucher')
+	config.add_route('updateattachment', '/updateattachment')
 	config.add_route('showeditaccount', '/showeditaccount')
 	config.add_route('getaccdetails', '/getaccdetails')
 	config.add_route('getvouchers', '/getvouchers')

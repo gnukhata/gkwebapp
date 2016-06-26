@@ -84,7 +84,7 @@ $(document).ready(function() {
     {
       e.preventDefault();
       var stat = $(this).find('td:eq(1)').html();
-      if(urole =="-1")
+      if(urole =="-1" || urole=="0")
       {
 
 

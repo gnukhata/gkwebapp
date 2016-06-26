@@ -139,14 +139,23 @@ def editvoucher(request):
 		gkdata["attachmentcount"]=0
 	else:
 		try:
-			img = request.POST["img"].file
-			image = Image.open(img)
-			imgbuffer = cStringIO.StringIO()
-			image.save(imgbuffer, format="JPEG")
-			img_str = base64.b64encode(imgbuffer.getvalue())
-			image.close()
-			gkdata["attachment"] = {1:img_str}
-			gkdata["attachmentcount"] = len(gkdata["attachment"])
+			files = {}
+			count = 0
+			for i in request.POST.keys():
+				if "file" not in i:
+					continue
+				else:
+					img = request.POST[i].file
+					image = Image.open(img)
+					imgbuffer = cStringIO.StringIO()
+					image.save(imgbuffer, format="JPEG")
+					img_str = base64.b64encode(imgbuffer.getvalue())
+					image.close()
+					files[count] = img_str
+					count += 1
+			if len(files)>0:
+				gkdata["attachment"] = files
+				gkdata["attachmentcount"] = len(gkdata["attachment"])
 		except:
 			print "no attachment found"
 	for row in rowdetails:
