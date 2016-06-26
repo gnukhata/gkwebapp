@@ -155,7 +155,10 @@ def updateattachment(request):
 	if len(deletedids)>0:
 		for val in a:
 			docs.pop(val)
-	count = int(max(docs, key=int))+1
+	if len(docs)>0:
+		count = int(max(docs, key=int))+1
+	else:
+		count = 0
 	try:
 		for i in request.POST.keys():
 			if "file" not in i:
@@ -171,6 +174,9 @@ def updateattachment(request):
 				count += 1
 	except:
 		print "No attachment found"
-	gkdata = {"attachment":docs,"attachmentcount":len(docs),"vouchercode":request.params["vouchercode"]}
+	if len(docs)>0:
+		gkdata = {"attachment":docs,"attachmentcount":len(docs),"vouchercode":request.params["vouchercode"]}
+	else:
+		gkdata = {"attachment":None,"attachmentcount":0,"vouchercode":request.params["vouchercode"]}
 	result1 = requests.put("http://127.0.0.1:6543/transaction",data=json.dumps(gkdata) , headers=header)
 	return {"attachment":docs,"vouchercode":request.params["vouchercode"],"vno":request.params["vno"],"lockflag":result.json()["lockflag"],"vtype":request.params["vtype"],"userrole":result.json()["userrole"]}

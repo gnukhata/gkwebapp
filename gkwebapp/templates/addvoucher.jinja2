@@ -313,7 +313,7 @@
         <form id="upload-file" method="post" enctype="multipart/form-data">
           <fieldset>
             <label class="btn btn-primary" for="my-file-selector">
-              <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
+              <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
               Attac<u>h</u>
             </label>
             <span class='label label-info' id="upload-file-info"></span>

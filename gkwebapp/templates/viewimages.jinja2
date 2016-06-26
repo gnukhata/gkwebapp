@@ -40,7 +40,7 @@
         <hr>
       </div>
       {% endfor %}
-      <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
+      <div class="alert alert-success" id="image-success-alert"  aria-live="rude" role="alert" hidden>
         <a href="#" class="close" aria-label="close">&times;</a>
         Changes saved.
       </div>
@@ -49,7 +49,7 @@
           <div class="form-inline">
             <div class="form-group">
               <label class="btn btn-primary" for="addimg">
-                <input name="img" accesskey="a" class="input-sm" id="addimg" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
+                <input name="img" accesskey="a" class="input-sm" id="addimg" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
                 <u>A</u>dd
               </label>
               <span class='label label-info' id="upload-file-info"></span>

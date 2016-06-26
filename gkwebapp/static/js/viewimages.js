@@ -44,7 +44,11 @@ $(document).ready(function() {
       }
     })
     .done(function(resp) {
-      $("html").html(resp);
+      $("body").html(resp);
+      $("#image-success-alert").alert();
+      $("#image-success-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#image-success-alert").hide();
+      });
       console.log("success");
     })
     .fail(function() {
