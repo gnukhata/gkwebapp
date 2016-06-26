@@ -412,16 +412,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
         <br>
         <br>
         <div class="modal-footer">
-          {% if voucher["attachmentcount"]>0 %}
-          <div class="has-error">
-            <div class="checkbox pull-left" id="removediv">
-              <label>
-                <input type="checkbox" id="removeattach" accesskey="o"> Rem<u>o</u>ve Attachment
-              </label>
-            </div>
-          </div>
-          {% endif %}
-          <div class="form-inline">
+          <div id="butform" class="form-inline">
             <div class="form-group">
               {% if voucher['status'] %}
               <button type="button" class="btn btn-warning btn-sm" id="lock" value="Unlock" accesskey="k">Unloc<u>k</u></button>
@@ -435,31 +426,22 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
               {% if voucher["attachmentcount"]>0 %}
               <button type="button" class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">View Attac<u>h</u>ment</button>
             </div>
-
-            <div class="form-group" id="replaceattach" style="padding-top:13px">
-              <form id="edit-upload-file" method="post" enctype="multipart/form-data">
-                <fieldset>
-                  <label class="btn btn-info btn-sm" id="attachlbl" for="my-edit-file-selector">
-                    <input name="img" accesskey="e" class="input-sm" id="my-edit-file-selector" type="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
-                    <b id="attachtext">R<u>e</u>place Attachment</b>
-                  </label>
-                  <span class='label label-info' id="upload-file-info"></span>
-                </fieldset>
-              </form>
-            </div>
             {% else %}
-            <div class="form-group" id="replaceattach" style="padding-top:13px">
-              <form id="edit-upload-file" method="post" enctype="multipart/form-data">
-                <fieldset>
-                  <label class="btn btn-info btn-sm" id="attachlbl" for="my-edit-file-selector">
-                    <input name="img" accesskey="e" class="input-sm" id="my-edit-file-selector" type="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
-                    <b id="attachtext">Add Attachm<u>e</u>nt</b>
-                  </label>
-                  <span class='label label-info' id="upload-file-info"></span>
-                </fieldset>
-              </form>
+            <div class="form-group" id="replaceattach">
+              <label class="btn btn-info btn-sm" id="attachlbl" for="my-edit-file-selector">
+                <input name="img" accesskey="e" class="input-sm" multiple accept="image/*" id="my-edit-file-selector" type="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
+                <b id="attachtext">Add Attachm<u>e</u>nt</b>
+              </label>
+              <span class='label label-info' id="upload-file-info"></span>
             </div>
             {% endif %}
+            <div class="form-group" id="clonereplaceattach">
+              <label class="btn btn-info btn-sm" id="attachlbl" for="my-edit-file-selector">
+                <input name="img" accesskey="e" class="input-sm" multiple accept="image/*" id="my-edit-file-selector" type="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
+                <b id="attachtext">Add Attachm<u>e</u>nt</b>
+              </label>
+              <span class='label label-info' id="upload-file-info"></span>
+            </div>
           </div>
         </div>
       </div>

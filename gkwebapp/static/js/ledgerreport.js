@@ -91,7 +91,7 @@ $(document).ready(function() {
         return false;
       };
 
-      if(urole =="-1")
+      if(urole =="-1" || urole=="0")
       {
         var stat = $(this).find('td:eq(2)').html();
 

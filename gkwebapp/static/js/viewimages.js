@@ -1,5 +1,13 @@
 $(document).ready(function() {
   var deletedids = []
+  if ($("#userrole").val()=="1")
+  {
+    if ($("#lockflag").val()=="True")
+    {
+      $(".imgremove").remove();
+    }
+
+  }
   $(document).off("click",".delimg").on("click", ".delimg", function(e) {
     deletedids.push($(this).attr('value'));
     $(this).parent().parent().fadeOut(200, function(){
@@ -16,12 +24,14 @@ $(document).ready(function() {
     for (var i = 0; i < files.length; i++) {
       form_data.append("file"+i,files[i])
     }
-    form_data.append("deletedids",JSON.stringify(deletedids));
-    form_data.append("vouchercode",JSON.stringify($("#vouchercode").val()));
+    form_data.append("deletedids",deletedids);
+    form_data.append("vouchercode",$("#vouchercode").val());
+    form_data.append("vno",$("#vno").val());
+    form_data.append("vtype",$("#vtype").val());
     $.ajax({
       url: '/updateattachment',
       type: 'POST',
-      dataType: 'json',
+      dataType: 'html',
       global: false,
       contentType: false,
       cache: false,
@@ -33,7 +43,8 @@ $(document).ready(function() {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
       }
     })
-    .done(function() {
+    .done(function(resp) {
+      $("html").html(resp);
       console.log("success");
     })
     .fail(function() {

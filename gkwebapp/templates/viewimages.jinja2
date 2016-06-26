@@ -19,15 +19,19 @@
   <body>
     <div class="container-fluid">
       <input type="hidden" id="vouchercode" value="{{vouchercode}}">
+      <input type="hidden" id="vtype" value="{{vtype}}">
+      <input type="hidden" id="vno" value="{{vno}}">
+      <input type="hidden" id="lockflag" value="{{lockflag}}">
+      <input type="hidden" id="userrole" value="{{userrole}}">
       <div class="col-xs-10 col-xs-offset-1">
       {% for key, value in attachment.items() %}
       <div class="image">
       <div class="well well-sm shadow">
         <div class="form-inline">
           <div class="form-group">
-            <h4>Image Id : {{key}}</h4>
+            <h4>Image No : {{ loop.index }}</h4>
           </div>
-          <div class="form-group pull-right">
+          <div class="form-group pull-right imgremove">
             <button id="removeimg" value="{{key}}" class="delimg btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Remove image</button>
           </div>
         </div>
@@ -36,7 +40,11 @@
         <hr>
       </div>
       {% endfor %}
-      <div class="well well-sm">
+      <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
+        <a href="#" class="close" aria-label="close">&times;</a>
+        Changes saved.
+      </div>
+      <div class="well well-sm shadow imgremove">
         <span style="margin:auto; display:table;">
           <div class="form-inline">
             <div class="form-group">

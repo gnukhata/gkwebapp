@@ -105,7 +105,6 @@ def addvoucher(request):
 				image.close()
 				files[count] = img_str
 				count += 1
-		print files
 		if len(files)>0:
 			gkdata["attachment"] = files
 			gkdata["attachmentcount"] = len(gkdata["attachment"])
@@ -144,11 +143,34 @@ def showdeletedvoucher(request):
 def getattachment(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/transaction?attach=image&vouchercode=%d"%(int(request.params["vouchercode"])), headers=header)
-	return {"attachment":result.json()["gkresult"],"vno":request.params["vno"],"vtype":request.params["vtype"],"vouchercode":request.params["vouchercode"]}
+	return {"attachment":result.json()["gkresult"],"vno":request.params["vno"],"vtype":request.params["vtype"],"lockflag":result.json()["lockflag"],"userrole":result.json()["userrole"],"vouchercode":request.params["vouchercode"]}
 
-@view_config(route_name="updateattachment", renderer="json")
+@view_config(route_name="updateattachment", renderer="gkwebapp:templates/viewimages.jinja2")
 def updateattachment(request):
 	header={"gktoken":request.headers["gktoken"]}
-	print request.params.keys()
-	print request.params["deletedids"]
-    result = requests.get("http://127.0.0.1:6543/transaction?attach=image&vouchercode=%d"%(int(request.params["vouchercode"])), headers=header)
+	deletedids = request.params["deletedids"]
+	result = requests.get("http://127.0.0.1:6543/transaction?attach=image&vouchercode=%d"%(int(request.params["vouchercode"])), headers=header)
+	docs = result.json()["gkresult"]
+	a = [i.encode('UTF8') for i in deletedids.split(',')]
+	if len(deletedids)>0:
+		for val in a:
+			docs.pop(val)
+	count = int(max(docs, key=int))+1
+	try:
+		for i in request.POST.keys():
+			if "file" not in i:
+				continue
+			else:
+				img = request.POST[i].file
+				image = Image.open(img)
+				imgbuffer = cStringIO.StringIO()
+				image.save(imgbuffer, format="JPEG")
+				img_str = base64.b64encode(imgbuffer.getvalue())
+				image.close()
+				docs[count] = img_str
+				count += 1
+	except:
+		print "No attachment found"
+	gkdata = {"attachment":docs,"attachmentcount":len(docs),"vouchercode":request.params["vouchercode"]}
+	result1 = requests.put("http://127.0.0.1:6543/transaction",data=json.dumps(gkdata) , headers=header)
+	return {"attachment":docs,"vouchercode":request.params["vouchercode"],"vno":request.params["vno"],"lockflag":result.json()["lockflag"],"vtype":request.params["vtype"],"userrole":result.json()["userrole"]}
