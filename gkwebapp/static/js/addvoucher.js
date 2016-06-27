@@ -55,9 +55,6 @@ $(document).ready(function() {
   var percentheigth = 100*(($("body").height()-$(".navbar").height()-300)/$("body").height());
   $('.table-fixedheader tbody').height(percentheigth+"%");
   var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
-  $("#vdate").val(fromdatearray[2])
-  $("#vmonth").val(fromdatearray[1])
-  $("#vyear").val(fromdatearray[0])
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
 
@@ -1146,17 +1143,7 @@ $(document).ready(function() {
       success: function(resp)
       {
         if(resp.gkstatus){ // if the voucher is saved show an alert and then reset the voucher form and clear all variables.
-          $('#voucher')[0].reset();
-          $('#upload-file')[0].reset();
-          $("#upload-file-info").html("");
-          drsum = 0;
-          crsum = 0;
-          diff = 0;
-          $("#vtable tbody").find("tr:gt(1)").remove();
-          var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
-          $("#vdate").val(fromdatearray[2])
-          $("#vmonth").val(fromdatearray[1])
-          $("#vyear").val(fromdatearray[0])
+          $("#reset").click();
           $("#success-alert").alert();
           $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#success-alert").hide();
@@ -1291,17 +1278,6 @@ $(document).ready(function() {
   });
 
   $('#reset').click(function(event) {
-    $('#voucher')[0].reset();
-    $('#upload-file')[0].reset();
-    $("#upload-file-info").html("");
-    drsum = 0;
-    crsum = 0;
-    diff = 0;
-    $("#vtable tbody").find("tr:gt(1)").remove();
-    var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
-    $("#vdate").val(fromdatearray[2])
-    $("#vmonth").val(fromdatearray[1])
-    $("#vyear").val(fromdatearray[0])
-    $('#vno').focus().select();
+$("#show"+$("#vtype").val()).click();
   });
 });
