@@ -133,5 +133,6 @@ def main(global_config, **settings):
 	config.add_route('securityquestion', '/securityquestion')
 	config.add_route('securityanswer', '/securityanswer')
 	config.add_route('newpassword', '/newpassword')
+	config.add_route('updateattachment', '/updateattachment')
 	config.scan('gkwebapp')
 	return config.make_wsgi_app()
