@@ -330,7 +330,9 @@ $.ajax({
           {
             sessionStorage.gktoken="";
             code = resp["gkdata"]
-            $("body").load("/login?orgcode="+code+"&flag="+flag, setTimeout( function() { $("#username").focus(); }, 500 ));
+            $("body").load("/login?orgcode="+code+"&flag="+flag, setTimeout( function() {
+              $("#username").focus();
+            }, 500 ));
           }
         });
       });
