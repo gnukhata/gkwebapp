@@ -186,6 +186,7 @@ $(document).ready(function(){
         $("#showprofitloss").text("Income & Expenditure");
         $("#showbalancesheet").text("Statement of Affairs");
         $("#showcashflow").text("Receipt & Payment");
+        $("#cashflowtb").text("Receipt & Payment - CTRL+6");
         $("#showproject").text("Project");
         $("#projecttb").text("Project - ALT+P");
         $("#showprjstate").text("Project Statement");
