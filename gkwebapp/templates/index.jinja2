@@ -8,12 +8,21 @@
   <style>
   .content{ margin-top:4%
   }
+  .shadow {
+  	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  div.nav {
+   background-color: #00111e;
+ }
+  #ticker {
+    display: none;
+  }
   </style>
 
 
 
 </head>
-<body>
+<body background="{{request.static_url('gkwebapp:static/images/old_mathematics.png')}}">
 
   <div class="nav navbar-default navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
@@ -39,6 +48,12 @@
     </div>
   </div>
   <br />
+  <div class="container-fluid" id="ticker">
+    <ul class="shadow" style="list-style-type: none; margin-top: 30px; margin-bottom: -30px; padding: 0; overflow: hidden; background-color: rgb(248,248,248); height: 20px; border-radius: 5px;">
+      <li style="float: left;"><a data-toggle="tab"; style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="orgdata" href=""></a></li>
+      <li style="float: right;"><a style="margin-right: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="yeardata" href=""></a></li>
+      <ul>
+      </div>
   <div class="col-md-6 pull-left container-fluid" style="margin-top:50px;">
     <div style="padding: 5px 5px 5px 5px; color: #115a84; background-color: #b8e0ef; margin-right: 15px;">
      <h3 style="margin-top:2px;">Welcome To GNUKhata </h3>
@@ -68,7 +83,6 @@
     </div>
 
   </div>
-
 
   <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
   <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
