@@ -49,6 +49,7 @@ def showtrialbalancereport(request):
 	calculateto = request.params["calculateto"]
 	financialstart = request.params["financialstart"]
 	trialbalancetype = int(request.params["trialbalancetype"])
+	print calculateto
 	header={"gktoken":request.headers["gktoken"]}
 	if trialbalancetype == 1:
 		result = requests.get("http://127.0.0.1:6543/report?type=nettrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
@@ -157,8 +158,11 @@ def printtrialbalance(request):
 				row+=1
 
 	ods.save("response.ods")
-	response = {"abc":"a"}
-	return response
+	repFile = open("response.ods")
+	rep = repFile.read()
+	repFile.close()
+	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	return Response(rep, headerlist=headerList.items())
 
 	#else:
 		#return {"gkstatus":1}
