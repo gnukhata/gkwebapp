@@ -168,7 +168,7 @@ $(document).ready(function() {
     {
       return false;
     }
-
+    $("#modalindex").val($(this).index());
     $.ajax(
       {
 

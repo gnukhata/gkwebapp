@@ -30,6 +30,7 @@ $(document).ready(function()
   $("#save").hide();
   $("#clonereplaceattach").hide();
   $("#replaceattach").hide();
+  $("#vouchercancel").hide();
   if ($("#urole").val()=="1")
   {
     $("#lock").hide();
@@ -40,6 +41,8 @@ $(document).ready(function()
     }
 
   }
+  var percentwid = 100*(($("#vctable").width()-1)/$("#vctable").width());
+  $('#vctable thead').width(percentwid+"%");
 
 if (sessionStorage.booksclosedflag==1) {
   $("#lock").remove();
@@ -52,7 +55,6 @@ if (sessionStorage.booksclosedflag==1) {
   var democrsum = 0;
   var drsum = 0;
   var crsum = 0;
-  var clone_attach_element = $("#clonereplaceattach").clone();
   $(".demodramt").each(function()
   {
     demodrsum += +$(this).val();
@@ -229,6 +231,7 @@ if (sessionStorage.booksclosedflag==1) {
       $("#replaceattach").show();
       $("#clonereplaceattach").remove();
     }
+    $("#vouchercancel").show();
     $("#save").show();
     $("#removediv").show();
     $("#lock").hide();
@@ -252,13 +255,11 @@ if (sessionStorage.booksclosedflag==1) {
     if ($("#replaceattach").length) {
       $("#replaceattach").show();
     }
-    else if ($("#clonereplaceattach").length) {
+    else {
       $("#clonereplaceattach").show();
     }
-    else {
-      $("#butform").append(clone_attach_element);
-    }
     ecflag="clone";
+    $("#vouchercancel").show();
     $(".lblec").prepend('<i>Clone </i>');
     $("#lock").hide();
     $("#clone").hide();
@@ -276,6 +277,12 @@ if (sessionStorage.booksclosedflag==1) {
     $("#viewattach").hide();
 
   });
+  $("#vouchercancel").click(function(event)
+  {
+    $("#myModal").modal('hide');
+    $('.modal-backdrop').remove();
+    $("#ledgertable tbody tr:eq("+$("#modalindex").val()+")").dblclick();
+  });
 
   $("#viewattach").click(function(event)
   {
@@ -292,9 +299,18 @@ if (sessionStorage.booksclosedflag==1) {
     })
     .done(function(resp) {
       var x=window.open();
-      x.document.open();
-      x.document.write(resp);
-      x.document.close();
+      if (x) {
+        //Browser has allowed it to be opened
+        x.focus();
+        x.document.open();
+        x.document.write(resp);
+        x.document.close();
+      } else {
+        //Browser has blocked it
+        alert('Please allow popups and retry');
+        x.close();
+      }
+
       console.log("success");
     })
     .fail(function() {
