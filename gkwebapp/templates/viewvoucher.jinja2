@@ -54,16 +54,13 @@ We really don't want to scroll the thead contents, but we want to force
 a scrollbar to be displayed anyway so that the usable width of the thead
 will exactly match the tbody.
 */
-table.table-fixedheader>thead, table.table-fixedheader>tfoot {
-  overflow-y: scroll;
+table.table-fixedheader>tfoot {
   height: 39px;
+  width: 100%;
 }
 table.table-fixedheader>thead{
   overflow-y: scroll;
   height: 26px;
-}
-table.table-fixedheader>tfoot {
-width: 98.9%
 }
 /*
 For browsers that support it (webkit), we set the background color of
@@ -186,10 +183,10 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                           <th width="40%">
                             Account Name
                           </th>
-                          <th>
+                          <th class="rightJustified">
                             Dr Amount
                           </th>
-                          <th>
+                          <th class="rightJustified">
                             Cr Amount
                           </th>
                         </tr>
@@ -281,10 +278,10 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                           <th class="col-xs-4">
                             Account Name
                           </th>
-                          <th class="col-xs-3">
+                          <th class="col-xs-3 rightJustified">
                             Dr Amount
                           </th>
-                          <th class="col-xs-3">
+                          <th class="col-xs-3 rightJustified">
                             Cr Amount
                           </th>
                           <th class="col-xs-1">
@@ -441,6 +438,9 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                 <b id="attachtext">Add Attachm<u>e</u>nt</b>
               </label>
               <span class='label label-info' id="upload-file-info"></span>
+            </div>
+            <div class="form-group">
+              <button type="button" class="btn btn-danger btn-sm" id="vouchercancel" accesskey="k" name="button">Bac<u>k</u></button>
             </div>
           </div>
         </div>
