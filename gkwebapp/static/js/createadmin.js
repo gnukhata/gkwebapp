@@ -27,6 +27,18 @@ Contributors:
 $(document).ready(function()
 {
   $("#username").focus();
+  var orname = sessionStorage.getItem('orgn');
+  var ortype = sessionStorage.getItem('orgt');
+  var styear = sessionStorage.getItem('year1');
+  var enyear = sessionStorage.getItem('year2');
+  var orgdata = orname + " (" + ortype + ")";
+  var yeardata = "Financial Year : " + styear + " to " + enyear;
+  if(orgdata!=""||yeardata!="")
+  {
+  $("#ticker").show();
+  $("#orgdata").html(orgdata);
+  $("#yeardata").html(yeardata);
+  }
 $('input:not(:hidden),select').bind("keydown", function(e) {
   var n = $("input:not(:hidden),select").length;
   var f = $('input:not(:hidden),select');

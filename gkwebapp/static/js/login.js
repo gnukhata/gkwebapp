@@ -26,12 +26,23 @@ Contributors:
 
 $(document).ready(function()
 {
+  var orname = sessionStorage.getItem('orgn');
+  var ortype = sessionStorage.getItem('orgt');
+  var styear = sessionStorage.getItem('year1');
+  var enyear = sessionStorage.getItem('year2');
+  var orgdata = orname + " (" + ortype + ")";
+  var yeardata = "Financial Year : " + styear + " to " + enyear;
+  if(orgdata!=""||yeardata!="")
+  {
+  $("#ticker").show();
+  $("#orgdata").html(orgdata);
+  $("#yeardata").html(yeardata);
+  }
   $('#username').keydown(function(e){
       if (e.which == 13)
       {
         e.preventDefault();
         $("#userpassword").focus();
-
         }
       });
   $("#userpassword").keydown(function(e) {
