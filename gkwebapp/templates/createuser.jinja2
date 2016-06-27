@@ -28,61 +28,61 @@
 
         <div style="padding-top:15px" class="panel-body" >
           <form id="adduser" method="post" action="createuser" class="form-horizontal">
-            <div class="alert alert-danger" id="username-blank-alert" hidden>
+            <div class="alert alert-danger" id="username-blank-alert"  aria-live="rude" role="alert" hidden>
               <a href="#" class="close" aria-label="close">&times;</a>
               Please enter username!
             </div>
-            <div class="alert alert-danger" id="password-blank-alert" hidden>
+            <div class="alert alert-danger" id="password-blank-alert"  aria-live="rude" role="alert" hidden>
               <a href="#" class="close" aria-label="close">&times;</a>
               Please enter password!
             </div>
-            <div class="alert alert-danger" id="cnfpass-blank-alert" hidden>
+            <div class="alert alert-danger" id="cnfpass-blank-alert"  aria-live="rude" role="alert" hidden>
               <a href="#" class="close" aria-label="close">&times;</a>
               Please re-enter password!
             </div>
-            <div class="alert alert-danger" id="checkpassuser-blank-alert" hidden>
+            <div class="alert alert-danger" id="checkpassuser-blank-alert"  aria-live="rude" role="alert" hidden>
               <a href="#" class="close" aria-label="close">&times;</a>
               Password doesn't match!
             </div>
-            <div class="alert alert-danger" id="role-blank-alert" hidden>
+            <div class="alert alert-danger" id="role-blank-alert"  aria-live="rude" role="alert" hidden>
               <a href="#" class="close" aria-label="close">&times;</a>
               Please select role!
             </div>
-            <div class="alert alert-danger" id="secque-blank-alert" hidden>
+            <div class="alert alert-danger" id="secque-blank-alert"  aria-live="rude" role="alert" hidden>
               <a href="#" class="close" aria-label="close">&times;</a>
               Please enter security question!
             </div>
-            <div class="alert alert-danger" id="secans-blank-alert" hidden>
+            <div class="alert alert-danger" id="secans-blank-alert"  aria-live="rude" role="alert" hidden>
               <a href="#" class="close" aria-label="close">&times;</a>
               Please enter the answer of security question!
             </div>
-            <div class="alert alert-success" id="success-blank-alert" hidden>
+            <div class="alert alert-success" id="success-blank-alert"  aria-live="rude" role="alert" hidden>
               <a href="#" class="close" aria-label="close">&times;</a>
               User successfully added!
             </div>
-            <div class="alert alert-danger" id="DuplicateEntry-blank-alert" hidden>
+            <div class="alert alert-danger" id="DuplicateEntry-blank-alert"  aria-live="rude" role="alert" hidden>
               <a href="#" class="close" aria-label="close">&times;</a>
               User already exists!
             </div>
-            <div class="alert alert-danger" id="BadPrivilege-blank-alert" hidden>
+            <div class="alert alert-danger" id="BadPrivilege-blank-alert"  aria-live="rude" role="alert" hidden>
               <a href="#" class="close" aria-label="close">&times;</a>
               You don't have authentication to add new user!
             </div>
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
               <label for="name" id="usrname">Us<u>e</u>rname :</label>
-              <input id="name" type="text" class="form-control" name="username" accesskey="e"></input>
+              <input style="border-radius: 4px" id="name" type="text" class="form-control" name="username" accesskey="e"></input>
             </div>
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
               <label for="password" id="usrpwd">Pass<u>w</u>ord :</label>
-              <input name="userpassword" id="password" type="password" class="form-control" accesskey="w"></input>
+              <input style="border-radius: 4px" name="userpassword" id="password" type="password" class="form-control" accesskey="w"></input>
             </div>
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
               <label for="confirm_password" id="pwdconfirm">C<u>o</u>nfirm Password :</label>
-              <input name="cnfpassword" type="password" id="confirm_password" class="form-control" accesskey="o"></input>
+              <input name="cnfpassword" style="border-radius: 4px" type="password" id="confirm_password" class="form-control" accesskey="o"></input>
             </div>
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
               <label for="userrole" id="pwdconfirm">Selec<u>t</u> Role :</label>
-              <select name="userrole" id="userrole" type="text" class="form-control" accesskey="t">
+              <select name="userrole" style="border-radius: 4px" id="userrole" type="text" class="form-control" accesskey="t">
                 <option value="" disabled selected hidden>Select a role</option>
                 <option value="0">Manager</option>
                 <option value="1">Operator</option>
@@ -90,11 +90,11 @@
             </div>
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
               <label for="question" id="secquestion">Security <u>Q</u>uestion :</label>
-              <input name="userquestion" type="text" class="form-control" placeholder="Security Question" id="question" accesskey="q"></input>
+              <input name="userquestion" style="border-radius: 4px" type="text" class="form-control" placeholder="Security Question" id="question" accesskey="q"></input>
             </div>
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
               <label for="answer" id="secanswer"><u>S</u>ecurity Answer :</label>
-              <input name="useranswer" type="text" class="form-control" placeholder="Security Answer" id="answer" accesskey="s"></input>
+              <input name="useranswer" style="border-radius: 4px" type="text" class="form-control" placeholder="Security Answer" id="answer" accesskey="s"></input>
             </div>
             <button type="submit" class="btn btn-success" accesskey="a">Cre<u>a</u>te</button>
           </form>

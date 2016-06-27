@@ -96,7 +96,7 @@ $(document).ready(function() {
             }
             else if (resp["gkstatus"]==5) {
               $("#transaction-alert").alert();
-              $("#transaction-alert").fadeTo(2000, 500).slideUp(500, function(){
+              $("#transaction-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#transaction-alert").hide();
               });
             }
@@ -138,7 +138,7 @@ $(document).ready(function() {
               $("#showproject").click();
               $('.modal-backdrop').remove();
               $("#success-alert").alert();
-              $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+              $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#success-alert").hide();
               });
             }
@@ -176,7 +176,7 @@ $(document).ready(function() {
   {
     if ($.trim($("#prjname").val())=="") {
       $("#blank-alert").alert();
-      $("#blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#blank-alert").hide();
       });
       $("#prjname").focus().select();
@@ -203,20 +203,20 @@ $(document).ready(function() {
           if(resp["gkstatus"]==0){
             $("#showproject").click();
             $("#success-alert").alert();
-            $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#success-alert").hide();
             });
           }
           else if(resp["gkstatus"]==1) {
             $("#duplicate-alert").alert();
-            $("#duplicate-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#duplicate-alert").hide();
             });
             $("#prjname").focus().select();
           }
           else {
             $("#failure-alert").alert();
-            $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#failure-alert").hide();
             });
             $("#prjname").focus().selct();

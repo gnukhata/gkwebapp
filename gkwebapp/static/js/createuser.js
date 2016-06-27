@@ -53,7 +53,7 @@ $(document).ready(function(){
       $("#confirm_password").blur(function(event) {
         if ($.trim($("#password").val())!=$.trim($("#confirm_password").val())) {
           $("#checkpassuser-blank-alert").alert();
-          $("#checkpassuser-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#checkpassuser-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#checkpassuser-blank-alert").hide();
           });
           $("#password").focus();
@@ -65,7 +65,7 @@ $(document).ready(function(){
       {
         if ($.trim($("#name").val())=="") {
           $("#username-blank-alert").alert();
-          $("#username-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#username-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#username-blank-alert").hide();
           });
           $("#name").focus();
@@ -73,7 +73,7 @@ $(document).ready(function(){
         }
         if ($.trim($("#password").val())=="") {
           $("#password-blank-alert").alert();
-          $("#password-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#password-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#password-blank-alert").hide();
           });
           $("#password").focus();
@@ -81,7 +81,7 @@ $(document).ready(function(){
         }
         if ($.trim($("#confirm_password").val())=="") {
           $("#cnfpass-blank-alert").alert();
-          $("#cnfpass-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#cnfpass-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#cnfpass-blank-alert").hide();
           });
           $("#confirm_password").focus();
@@ -89,7 +89,7 @@ $(document).ready(function(){
         }
         if ($.trim($("#password").val())!=$.trim($("#confirm_password").val())) {
           $("#checkpassuser-blank-alert").alert();
-          $("#checkpassuser-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#checkpassuser-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#checkpassuser-blank-alert").hide();
           });
           $("#confirm_password").focus();
@@ -97,7 +97,7 @@ $(document).ready(function(){
         }
         if ($.trim($("#userrole").val())=="") {
           $("#role-blank-alert").alert();
-          $("#role-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#role-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#role-blank-alert").hide();
           });
           $("#userrole").focus();
@@ -105,7 +105,7 @@ $(document).ready(function(){
         }
         if ($.trim($("#question").val())=="") {
           $("#secque-blank-alert").alert();
-          $("#secque-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#secque-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#secque-blank-alert").hide();
           });
           $("#question").focus();
@@ -113,7 +113,7 @@ $(document).ready(function(){
         }
         if ($.trim($("#answer").val())=="") {
           $("#secans-blank-alert").alert();
-          $("#secans-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#secans-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#secans-blank-alert").hide();
           });
           $("#answer").focus();
@@ -138,7 +138,7 @@ $(document).ready(function(){
                 $('#adduser')[0].reset();
                 $("#name").focus();
                 $("#success-blank-alert").alert();
-                $("#success-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+                $("#success-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
                   $("#success-blank-alert").hide();
                 });
               }
@@ -146,7 +146,7 @@ $(document).ready(function(){
               {
                 $("#name").focus();
                 $("#DuplicateEntry-blank-alert").alert();
-                $("#DuplicateEntry-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+                $("#DuplicateEntry-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
                   $("#DuplicateEntry-blank-alert").hide();
                 });
               }
@@ -155,7 +155,7 @@ $(document).ready(function(){
                 $('#adduser')[0].reset();
                 $("#name").focus();
                 $("#BadPrivilege-blank-alert").alert();
-                $("#BadPrivilege-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+                $("#BadPrivilege-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
                   $("#BadPrivilege-blank-alert").hide();
                 });
               }

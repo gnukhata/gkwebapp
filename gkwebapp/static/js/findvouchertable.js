@@ -133,7 +133,7 @@ $(document).ready(function() {
       {
         $("#ua-alert").alert();
         $("#ua").focus();
-        $("#ua-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#ua-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#ua-alert").alert('close');
         });
 

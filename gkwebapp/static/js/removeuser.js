@@ -62,7 +62,7 @@ $(document).ready(function() {
     event.preventDefault();
     if ($.trim($("#username").val())=="") {
       $("#remove-blank-alert").alert();
-      $("#remove-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#remove-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#remove-blank-alert").hide();
       });
       $("#username").focus();
@@ -88,28 +88,28 @@ $(document).ready(function() {
             if (resp["gkstatus"]==0){
               $("#REMOVEuser").click();
               $("#remsuccess-alert").alert();
-              $("#remsuccess-alert").fadeTo(2000, 500).slideUp(500, function(){
+              $("#remsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#remsuccess-alert").hide();
               });
               $('.modal-backdrop').remove();
           }
           else if (resp["gkstatus"]==4) {
             $("#accessdenied-alert").alert();
-            $("#accessdenied-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#accessdenied-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#accessdenied-alert").hide();
             });
             $("#username").focus();
           }
           else if (resp["gkstatus"]==5) {
             $("#actiondisallowed-alert").alert();
-            $("#actiondisallowed-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#actiondisallowed-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#actiondisallowed-alert").hide();
             });
             $("#username").focus();
           }
           else if (resp["gkstatus"]==3) {
             $("#connectionfailed-alert").alert();
-            $("#connectionfailed-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#connectionfailed-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#connectionfailed-alert").hide();
             });
             $("#username").focus();

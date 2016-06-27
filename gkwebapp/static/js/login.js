@@ -49,6 +49,7 @@ $(document).ready(function()
   });
 
   $("#forgotpwdlink").click(function(event){
+    event.preventDefault();
     var code = $("#orgcode").val();
     $("#selectorg").load("/forgotpassword?orgcode="+ code);
   });
@@ -63,7 +64,7 @@ $(document).ready(function()
     e.preventDefault();
     if ($.trim($("#username").val())=="") {
       $("#username-blank-alert").alert();
-      $("#username-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#username-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#username-blank-alert").hide();
       });
       $("#username").focus();
@@ -71,7 +72,7 @@ $(document).ready(function()
     }
       if ($.trim($("#userpassword").val())=="") {
         $("#password-blank-alert").alert();
-        $("#password-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#password-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#password-blank-alert").hide();
         });
         $("#userpassword").focus();
@@ -98,7 +99,7 @@ $(document).ready(function()
       else if(resp["gkstatus"]==2)
       {
         $("#login-blank-alert").alert();
-        $("#login-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#login-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#login-blank-alert").hide();
         });
         $("#username").focus();

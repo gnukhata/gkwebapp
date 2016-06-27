@@ -54,7 +54,7 @@ $('input:not(:hidden),select').bind("keydown", function(e) {
     $("#confirmpassword").blur(function(event) {
       if ($.trim($("#password").val())!=$.trim($("#confirmpassword").val())) {
         $("#checkpass-blank-alert").alert();
-        $("#checkpass-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#checkpass-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#checkpass-blank-alert").hide();
         });
         $("#password").focus();
@@ -67,7 +67,7 @@ $("#loginform").submit(function(e)
 {
   if ($.trim($("#username").val())=="") {
     $("#usrname-blank-alert").alert();
-    $("#usrname-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+    $("#usrname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#usrname-blank-alert").hide();
     });
     $("#username").focus();
@@ -75,7 +75,7 @@ $("#loginform").submit(function(e)
   }
   if ($.trim($("#password").val())=="") {
     $("#pasword-blank-alert").alert();
-    $("#pasword-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+    $("#pasword-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#pasword-blank-alert").hide();
     });
     $("#password").focus();
@@ -83,7 +83,7 @@ $("#loginform").submit(function(e)
   }
   if ($.trim($("#confirmpassword").val())=="") {
     $("#confpass-blank-alert").alert();
-    $("#confpass-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+    $("#confpass-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#confpass-blank-alert").hide();
     });
     $("#confirmpassword").focus();
@@ -91,7 +91,7 @@ $("#loginform").submit(function(e)
   }
   if ($.trim($("#password").val())!=$.trim($("#confirmpassword").val())) {
     $("#checkpass-blank-alert").alert();
-    $("#checkpass-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+    $("#checkpass-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#checkpass-blank-alert").hide();
     });
     $("#confirmpassword").focus();
@@ -99,7 +99,7 @@ $("#loginform").submit(function(e)
   }
   if ($.trim($("#securityquestion").val())=="") {
     $("#secuque-blank-alert").alert();
-    $("#secuque-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+    $("#secuque-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#secuque-blank-alert").hide();
     });
     $("#securityquestion").focus();
@@ -107,7 +107,7 @@ $("#loginform").submit(function(e)
   }
   if ($.trim($("#securityanswer").val())=="") {
     $("#secuans-blank-alert").alert();
-    $("#secuans-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+    $("#secuans-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#secuans-blank-alert").hide();
     });
     $("#securityanswer").focus();

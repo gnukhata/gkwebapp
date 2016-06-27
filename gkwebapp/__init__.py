@@ -1,22 +1,22 @@
 
 """
 Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-  This file is part of GNUKhata:A modular,robust and Free Accounting System.
+This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
-  GNUKhata is Free Software; you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as
-  published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+GNUKhata is Free Software; you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation; either version 3 of
+the License, or (at your option) any later version.and old.stockflag = 's'
 
-  GNUKhata is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU Affero General Public License for more details.
+GNUKhata is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-  You should have received a copy of the GNU Affero General Public
-  License along with GNUKhata (COPYING); if not, write to the
-  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-  Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+You should have received a copy of the GNU Affero General Public
+License along with GNUKhata (COPYING); if not, write to the
+Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
 
 
 Contributors:
@@ -45,7 +45,6 @@ def main(global_config, **settings):
 	config = Configurator(root_factory=get_root, settings=settings)
 	config.add_translation_dirs('locale/')
 	config.include('pyramid_jinja2')
-
 	config.add_static_view('static', 'static')
 	config.add_view('gkwebapp.views.views.my_view',
 					context='gkwebapp.resources.MyResource',
@@ -101,7 +100,6 @@ def main(global_config, **settings):
 	config.add_route('lockvoucher', '/lockvoucher')
 	config.add_route('viewvoucher', '/viewvoucher')
 	config.add_route('addvoucher', '/addvoucher')
-	config.add_route('updateattachment', '/updateattachment')
 	config.add_route('showeditaccount', '/showeditaccount')
 	config.add_route('getaccdetails', '/getaccdetails')
 	config.add_route('getvouchers', '/getvouchers')
@@ -132,5 +130,9 @@ def main(global_config, **settings):
 	config.add_route('showdeletedvoucher', '/showdeletedvoucher')
 	config.add_route('deleteorg', '/deleteorg')
 	config.add_route('getattachment', '/getattachment')
+	config.add_route('securityquestion', '/securityquestion')
+	config.add_route('securityanswer', '/securityanswer')
+	config.add_route('newpassword', '/newpassword')
+	config.add_route('updateattachment', '/updateattachment')
 	config.scan('gkwebapp')
 	return config.make_wsgi_app()

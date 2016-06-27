@@ -79,3 +79,24 @@ def deleteuser(request):
 def forgotpassword(request):
     code = request.params["orgcode"]
     return {"orgcode":code}
+
+@view_config(route_name="securityquestion", renderer="json")
+def securityquestion(request):
+    result = requests.get("http://127.0.0.1:6543/forgotpassword?orgcode=%s&username=%s" % ((request.params["orgcode"]),(request.params["username"])))
+    if result.json()["gkstatus"] == 0:
+        userdata=[]
+        userdata.append(result.json()["gkresult"])
+        return {"gkresult":userdata, "gkstatus":result.json()["gkstatus"]}
+    else:
+        return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="securityanswer", renderer="json")
+def securityanswer(request):
+    result = requests.get("http://127.0.0.1:6543/forgotpassword?type=securityanswer&userid=%s&useranswer=%s" % ((request.params["userid"]),(request.params["useranswer"])))
+    return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="newpassword", renderer="json")
+def verifypassword(request):
+    gkdata = {"userid":request.params["userid"],"userpassword":request.params["userpassword"],"useranswer":request.params["useranswer"]}
+    result = requests.put("http://127.0.0.1:6543/forgotpassword", data =json.dumps(gkdata))
+    return {"gkstatus":result.json()["gkstatus"]}

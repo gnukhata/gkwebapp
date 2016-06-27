@@ -123,7 +123,7 @@ $(document).off("click","#closebooks").on("click", "#closebooks", function(event
   if ($.trim($("#cbfromday").val())==""||$.trim($("#cbfrommonth").val())==""||$.trim($("#cbfromyear").val())==""||$.trim($("#cbtoday").val())==""||$.trim($("#cbtomonth").val())==""||$.trim($("#cbtoyear").val())=="")
   {
     $("#closebook-blank-alert").alert();
-    $("#closebook-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+    $("#closebook-blank-alert").fadeTo(, 500).slideUp(500, function(){
       $("#closebook-blank-alert").hide();
     });
     $("#cbtoday").focus();
@@ -154,7 +154,7 @@ $(document).off("click","#closebooks").on("click", "#closebooks", function(event
     }
     else {
       $("#booksnot-alert").alert();
-      $("#booksnot-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#booksnot-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#booksnot-alert").hide();
       });
 
@@ -170,7 +170,7 @@ $(document).off("click","#rollover").on("click", "#rollover", function(event)
   if ($.trim($("#rbfrom_day").val())==""||$.trim($("#rbfrom_month").val())==""||$.trim($("#rbfrom_year").val())==""||$.trim($("#rbto_day").val())==""||$.trim($("#rbto_month").val())==""||$.trim($("#rbto_year").val())=="")
   {
     $("#closebook-blank-alert").alert();
-    $("#closebook-blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+    $("#closebook-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#closebook-blank-alert").hide();
     });
 
@@ -197,7 +197,7 @@ $(document).off("click","#rollover").on("click", "#rollover", function(event)
     }
     else {
       $("#booksnot-alert").alert();
-      $("#booksnot-alert").fadeTo(2000, 500).slideUp(500, function(){
+      $("#booksnot-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#booksnot-alert").hide();
       });
 

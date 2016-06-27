@@ -22,11 +22,7 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <li class="dropdown">
-            <a href="" id="gnukhata" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>G</u>NUKhata</a>
-            <ul class="dropdown-menu">
-              <li><a data-toggle="tab" id="logout" href="">Logout</a></li>
-              <li><a data-toggle="tab" id="changeorg" href="">Change Organisation</a></li>
-            </ul>
+            <a href="" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="false" aria-expanded="false">GNUKhata</a>
           </li>
           <li class="dropdown closebooks">
             <a href="" id="master" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>M</u>aster</a>
@@ -107,10 +103,10 @@
               <li><a data-toggle="tab" id="findvouchertb" href="">Find/Edit Voucher - F10</a></li>
               <li><a data-toggle="tab" id="ledgertb" href="">Ledger - F11</a></li>
               <li><a data-toggle="tab" id="trialbalancetb" href="">Trial Balance - F12</a></li>
-              <li><a data-toggle="tab" id="projectstatementtb" href="">Project Statement - CTRL+6</a></li>
-              <li><a data-toggle="tab" id="cashflowtb" href="">Cash Flow - CTRL+7</a></li>
-              <li><a data-toggle="tab" id="listofaccountstb" href="">List of Accounts - CTRL+5</a></li>
-              <li class="closebooks"><a data-toggle="tab" id="projecttb" href="">Cost Center - ALT+P</a></li>
+              <li><a data-toggle="tab" id="projectstatementtb" href="">Project Statement - CTRL+5</a></li>
+              <li><a data-toggle="tab" id="cashflowtb" href="">Cash Flow - CTRL+6</a></li>
+              <li><a data-toggle="tab" id="listofaccountstb" href="">List of Accounts - CTRL+7</a></li>
+              <li class="closebooks"><a data-toggle="tab" id="projecttb" href="">Create & Edit Cost Center - ALT+P</a></li>
               <li class="closebooks"><a data-toggle="tab" id="brstb" href="">Bank Reconciliation Statement - ALT+R</a></li>
               <li class="hideoperator closebooks"><a data-toggle="tab" id="createusertb" href="">New User - ALT+N</a></li>
               <li class="hideoperator hidemanager"><a data-toggle="tab" id="REMOVEusertb" href="">Remove User - ALT+U</a></li>
@@ -118,6 +114,13 @@
               <li><a data-toggle="tab" id="manualtb" href="">GNUKhata Manual - ALT+M</a></li>
               <li><a data-toggle="tab" id="logouttb" href="">Logout - CTRL+L</a></li>
               <li><a data-toggle="tab" id="changeogtb" href="">Change Organisation - CTRL+O</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="" id="gnukhata" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>S</u>ign Out</a>
+            <ul class="dropdown-menu">
+              <li><a data-toggle="tab" id="logout" href="">Logout</a></li>
+              <li><a data-toggle="tab" id="changeorg" href="">Change Organisation</a></li>
             </ul>
           </li>
         </ul>
@@ -132,16 +135,15 @@
 </div>
 <div id="info" style="margin-top: 10px; margin-bottom: 10px;" class="container-fluid tab-pane fade in active">
   <ul class="info">
-  			<li><h4 class="shadow" style="padding: 5px 5px 5px 5px; color: #fff; background-color: #1d88ba; margin-right: 15px;">Using Keyboard shortcuts</h4></li>
+  			<li><h4 class="shadow" style="padding: 5px 5px 5px 5px; color: #fff; background-color: #1d88ba; margin-right: 15px;">About Keyboard shortcuts</h4></li>
   			<li class="matter">
-        <p>To access submenus in the top menu press "Ctrl + Underlined Character".</p>
-  			<p>To access the toolbar press "F1".</p>
-        <p>Shortcuts to access modules are mentioned in the toolbar.</p>
-        <p> To access items in individual screens : </p>
+        <p>To access submenus in the Menu Bar press "Ctrl + Underlined Character".</p>
+  			<p>To view ToolBar press "F1".</p>
+        <p> To use screen specific shortcuts : </p>
         <p class="shortcut">If using Firefox, press "Alt + Shift + the underlined character".</p>
         <p class="shortcut">If using Google Chrome, Opera or Internet Explorer press "Alt + the underlined character".</p>
         <p class="shortcut">If using older versions of Opera(prior to version 12.1) use "Shift + Esc + the underlined character".</p>
-        <p>To know more about shortcuts see <a data-toggle="modal" id="shortcuts" data-target="#gnukhatashortcuts">Shortcuts</a> option in the Help Menu.</p>
+        <p>Shortcuts are given in the Tool Bar and the <a data-toggle="modal" id="shortcuts" data-target="#gnukhatashortcuts">Help Tab</a> of the Menu Bar.</p>
   			</li>
   		</ul>
 </div>
@@ -166,9 +168,6 @@
           <b>Menu</b>
         </p>
         <p>
-          GNUKhata -CTRL+G
-        </p>
-        <p>
           Master - CTRL+ M
         </p>
         <p>
@@ -184,6 +183,9 @@
           Help - CTRL +H
         </p>
         <p>
+          Sign Out -CTRL+S
+        </p>
+        <p>
           Toolbar - F1
         </p>
         <p>
@@ -196,7 +198,7 @@
           Change Organisation - CTRL + O
         </p>
         <p>
-          Cost Center - ALT + P
+          Create & Edit Cost Center/Project - ALT + P
         </p>
         <p>
           Bank Reconciliation Statement - ALT + R
@@ -247,19 +249,19 @@
           Trial Balance - F12
         </p>
         <p>
-          Project Statement - CTRL+6
+          Project Statement - CTRL+5
         </p>
         <p>
-          Cash Flow - CTRL+7
+          Cash Flow/Receipt & Payment Account - CTRL+6
+        </p>
+        <p>
+          List of Accounts - CTRL+7
         </p>
         <p>
           Balance Sheet - CTRL+8
         </p>
         <p>
           Profit & Loss - CTRL+9
-        </p>
-        <p>
-          List of Accounts - CTRL+5
         </p>
         <p>
           New User - ALT + N

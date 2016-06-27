@@ -203,13 +203,13 @@ $(document).off("click","#delete").on("click", "#delete", function(event)
             $("#reset").click();
             $('.modal-backdrop').remove();
             $("#delsuccess-alert").alert();
-            $("#delsuccess-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#delsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#delsuccess-alert").hide();
             });
           }
           else if (resp["gkstatus"]==5) {
             $("#transaction-alert").alert();
-            $("#transaction-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#transaction-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#transaction-alert").hide();
             });
             $("#editaccountname").focus().select();
@@ -233,7 +233,7 @@ $("#editaccountform").submit(function(e)
 
   if ($.trim($("#accountname").val())=="") {
     $("#blank-alert").alert();
-    $("#blank-alert").fadeTo(2000, 500).slideUp(500, function(){
+    $("#blank-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#blank-alert").hide();
     });
     $("#accountname").focus().select();
@@ -275,14 +275,14 @@ $("#editaccountform").submit(function(e)
         {
           $("#reset").click();
           $("#success-alert").alert();
-          $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#success-alert").hide();
           });
         }
         else if(resp["gkstatus"]==1)
         {
           $("#duplicate-alert").alert();
-          $("#duplicate-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#duplicate-alert").hide();
           });
           $("#accountname").focus().select();
@@ -290,7 +290,7 @@ $("#editaccountform").submit(function(e)
         else
         {
           $("#failure-alert").alert();
-          $("#failure-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#failure-alert").hide();
           });
           $("#accountname").focus().select();
