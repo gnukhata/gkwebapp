@@ -336,32 +336,42 @@ $.ajax({
           }
         });
       });
+      $(document).off("click","#deleteorg").on("click", "#deleteorg", function(event)
+      {
+        event.preventDefault();
+        $('#m_confirmdelorg').modal('show').one('click', '#orgdel', function (e)
+        {
+          $.ajax({
+          url: '/deleteorg',
+          type: 'POST',
+          datatype: 'json',
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          },
+        })
+        .done(function(resp) {
+          if (resp["gkstatus"]==0) {
+            sessionStorage.clear();
+            window.location.replace("/");
+          }
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
 
-$("#deleteorg").click(function(event)
-{
-  $.ajax({
-  url: '/deleteorg',
-  type: 'POST',
-  datatype: 'json',
-  beforeSend: function(xhr)
-  {
-    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-  },
-})
-.done(function(resp) {
-  if (resp["gkstatus"]==0) {
-    sessionStorage.clear();
-    window.location.replace("/");
-  }
-})
-.fail(function() {
-  console.log("error");
-})
-.always(function() {
-  console.log("complete");
-});
+        });
+        $('#m_confirmdelorg').on('shown.bs.modal', function(event) {
+          $("#m_cancel").focus();
+        });
+      }
+      );
 
-});
+
+
 
     $('#listofaccounts').click(function (e) {
       $.ajax(
