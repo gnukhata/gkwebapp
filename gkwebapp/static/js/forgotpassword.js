@@ -217,6 +217,7 @@ $(document).ready(function()
 
   $("#back").click(function(event){
     var code = $("#orgcode").val();
-    $("#selectorg").load("/login?orgcode="+code);
-  })
+    $("#selectorg").load("/login?orgcode="+code+"&flag=0");
+    $("#forgotpassworddiv").load("/login?orgcode="+code+"&flag=1");
+  });
 });
