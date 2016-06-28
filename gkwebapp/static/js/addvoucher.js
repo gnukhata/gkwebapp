@@ -152,6 +152,16 @@ $(document).ready(function() {
       $('#vdate').focus().select();
       return false;
     }
+    if (Date.today().compareTo(curdate)==-1) {
+
+      $("#postdate-alert").alert();
+      $("#postdate-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#postdate-alert").hide();
+      });
+
+    }
+
+
   });
 
   $(document).off("focusout",".cramt").on("focusout",".cramt",function(event)
