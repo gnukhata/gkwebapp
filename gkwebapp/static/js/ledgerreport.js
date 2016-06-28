@@ -196,26 +196,70 @@ $(document).ready(function() {
       $('#myModal').on('hidden.bs.modal', function (e)
       {
         $("#viewvc").html("");
-
-        $.ajax(
-          {
-            type: "POST",
-            url: "/showledgerreport",
-            global: false,
-            async: false,
-            datatype: "text/html",
-            data: {"backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
-            beforeSend: function(xhr)
+        if ($("#side").val()=="dr") {
+          $.ajax(
             {
-              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+              type: "POST",
+              url: "/showledgerreport",
+              global: false,
+              async: false,
+              datatype: "text/html",
+              data: {"backflag":$("#backflag").val(),"side":"dr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
+              beforeSend: function(xhr)
+              {
+                xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+              }
+            })
+            .done(function(resp)
+            {
+              $("#info").html("");
+              $("#info").html(resp);
             }
-          })
-          .done(function(resp)
-          {
-            $("#info").html("");
-            $("#info").html(resp);
-          }
-        );
+          );
+        }
+        else if ($("#side").val()=="cr") {
+          $.ajax(
+            {
+              type: "POST",
+              url: "/showledgerreport",
+              global: false,
+              async: false,
+              datatype: "text/html",
+              data: {"backflag":$("#backflag").val(),"side":"cr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
+              beforeSend: function(xhr)
+              {
+                xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+              }
+            })
+            .done(function(resp)
+            {
+              $("#info").html("");
+              $("#info").html(resp);
+            }
+          );
+        }
+        else {
+          $.ajax(
+            {
+              type: "POST",
+              url: "/showledgerreport",
+              global: false,
+              async: false,
+              datatype: "text/html",
+              data: {"backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
+              beforeSend: function(xhr)
+              {
+                xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+              }
+            })
+            .done(function(resp)
+            {
+              $("#info").html("");
+              $("#info").html(resp);
+            }
+          );
+        }
+
       });
     });
   });
@@ -245,8 +289,74 @@ $("#dualledger").click(function(event) {
 
 });
 
+  $("#drsonly").click(function(event) {
+    $.ajax(
+      {
+        type: "POST",
+        url: "/showledgerreport",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data: {"backflag":$("#backflag").val(),"side":"dr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        }
+      })
+      .done(function(resp)
+      {
+        $("#info").html("");
+        $("#info").html(resp);
+      }
+    );
+  });
+
+  $("#crsonly").click(function(event) {
+    $.ajax(
+      {
+        type: "POST",
+        url: "/showledgerreport",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data: {"backflag":$("#backflag").val(),"side":"cr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        }
+      })
+      .done(function(resp)
+      {
+        $("#info").html("");
+        $("#info").html(resp);
+      }
+    );
+  });
+
   $("#back").click(function(event) {
-    if ($("#backflag").val()<=3) {
+    if ($("#side").val()!="") {
+      $.ajax(
+        {
+          type: "POST",
+          url: "/showledgerreport",
+          global: false,
+          async: false,
+          datatype: "text/html",
+          data: {"backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          }
+        })
+        .done(function(resp)
+        {
+          $("#info").html("");
+          $("#info").html(resp);
+        }
+      );
+    }
+    else{
+      if ($("#backflag").val()<=3) {
       $.ajax(
         {
           type: "POST",
@@ -398,7 +508,7 @@ $("#dualledger").click(function(event) {
           $("#info").html(resp);
         }
       );
-    }
+    }}
   });
   $("#print").click(function(event) {
     $.ajax(
