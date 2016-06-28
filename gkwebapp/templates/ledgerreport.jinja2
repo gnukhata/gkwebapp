@@ -110,6 +110,7 @@
   <input type="hidden" id="projectcode" name="projectcode" value="{{ledgerrefresh["projectcode"]}}"></input>
   <input type="hidden" id="narrationflag" name="narrationflag" value="{{ledgerrefresh["narrationflag"]}}"></input>
   <input type="hidden" id="projectname" name="projectname" value="{{ledgerrefresh["projectname"]}}"></input>
+  <input type="hidden" id="side" name="side" value="{{ledgerrefresh["side"]}}"></input>
   <input type="hidden" id="modalindex" value=""></input>
   {% if ledgerheader["projectname"]!="" %}
   <i>Project</i> : {{ledgerheader["projectname"]}}
@@ -216,11 +217,13 @@
       </tbody>
     </table>
     <span style="margin:auto; display:table;">
-      {% if ledgerrefresh["backflag"]>0 %}
+      {% if ledgerrefresh["backflag"]>0 or ledgerrefresh.side %}
       <button class="btn btn-sm btn-danger" type="button" id="back" accesskey="b"><u>B</u>ack</button>
       {% endif %}
       <button class="btn btn-sm btn-primary" type="button" id="anotherledger" accesskey="v"><u>V</u>iew Another Ledger</button>
       <button class="btn btn-sm btn-primary" type="button" id="dualledger" accesskey="d"><u>D</u>ual Ledger</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="drsonly" accesskey="s">Only Dr<u>s</u></button>
+      <button class="btn btn-sm btn-primary" type="button"  id="crsonly" accesskey="o"><u>O</u>nly Crs</button>
       <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="t">Prin<u>t</u></button>
     </span>
   </div>
