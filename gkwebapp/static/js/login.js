@@ -63,6 +63,7 @@ $(document).ready(function()
     event.preventDefault();
     var code = $("#orgcode").val();
     $("#selectorg").load("/forgotpassword?orgcode="+ code);
+    $("#forgotpassworddiv").load("/forgotpassword?orgcode="+ code);
   });
   $("#changeorg").click(function(event){
     event.preventDefault();
