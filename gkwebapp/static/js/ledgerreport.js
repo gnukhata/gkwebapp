@@ -511,7 +511,7 @@ $("#dualledger").click(function(event) {
     }}
   });
   $("#print").click(function(event) {
-    $.ajax(
+  /*  $.ajax(
       {
         type: "GET",
         url: "/printledgerreport",
@@ -526,7 +526,27 @@ $("#dualledger").click(function(event) {
         success: function(resp) {
           window.open('data:application/pdf;charset=utf-8,' + encodeURIComponent(resp));
         }
-      });
+      });*/
+
+      event.preventDefault();
+  		var orgname = sessionStorage.getItem('orgn');
+  		var orgtype = sessionStorage.getItem('orgt');
+  		var xhr = new XMLHttpRequest();
+
+  		xhr.open('GET', '/printledgerreport?orgname='+ orgname+'&fystart='+sessionStorage.yyyymmddyear1+'&fyend='+sessionStorage.getItem('year2')+'&accountcode='+$("#accountcode").val()+'&calculatefrom='+$("#calculatefrom").val()+'&calculateto='+$("#calculateto").val()+'&projectcode='+$("#projectcode").val(), true);
+  		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+  		xhr.responseType = 'blob';
+
+  		xhr.onload = function(e) {
+    	if (this.status == 200) {
+      // get binary data as a response
+      	var blob = this.response;
+  	 		var url = window.URL.createObjectURL(blob);
+  			window.location.assign(url)
+    	}
+  	};
+
+  	xhr.send();
 
   });
 

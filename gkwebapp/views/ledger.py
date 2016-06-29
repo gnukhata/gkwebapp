@@ -33,6 +33,7 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import os
+from odslib import ODS
 import calendar
 from formula import CurrentPageColSum, PreviousPagesColSum,RowNumber
 from spreadsheettable import SpreadsheetTable
@@ -53,28 +54,75 @@ def printmonthlyledgerreport(request):
 
 @view_config(route_name="printledgerreport", renderer="")
 def printLedgerReport(request):
-	result = request
 	accountcode = int(request.params["accountcode"])
 	calculatefrom = request.params["calculatefrom"]
 	calculateto = request.params["calculateto"]
-	financialstart = request.params["financialstart"]
-	backflag = request.params["backflag"]
-	monthlyflag = request.params["monthlyflag"]
-	fy = str(request.params["fystart"]);
-	fy = fy[6:]
-	fy = fy + "-" + (str(request.params["fyend"])[8:])
+	fystart = request.params["fystart"]
+	fyend = request.params["fyend"]
 	orgname = str(request.params["orgname"])
-	orgname += " (FY: " + fy +")"
-	accname = ""
-	period = calculatefrom[8:10] + "-" + str(calendar.month_abbr[int(calculatefrom[5:7])]) + "-" + calculatefrom[0:4] + " to " + calculateto[8:10] + "-" +  str(calendar.month_abbr[int(calculateto[5:7])]) + "-" +  calculateto[0:4];
 	projectcode = request.params["projectcode"]
 	header={"gktoken":request.headers["gktoken"]}
 	if projectcode=="":
-		result = requests.get("http://127.0.0.1:6543/report?type=ledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode="%(accountcode,calculatefrom,calculateto,financialstart), headers=header)
+		result = requests.get("http://127.0.0.1:6543/report?type=ledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode="%(accountcode,calculatefrom,calculateto,fystart), headers=header)
 	else:
-		result = requests.get("http://127.0.0.1:6543/report?type=ledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode=%d"%(accountcode,calculatefrom,calculateto,financialstart, int(projectcode)), headers=header)
-	gkresult = result.json()["gkresult"]
-	return response
+		result = requests.get("http://127.0.0.1:6543/report?type=ledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode=%d"%(accountcode,calculatefrom,calculateto,fystart, int(projectcode)), headers=header)
+	headerrow = result.json()["ledgerheader"]
+	result = result.json()["gkresult"]
+
+	calculateto = calculateto[8:10]+calculateto[4:8]+calculateto[0:4]
+	calculatefrom = calculatefrom[8:10]+calculatefrom[4:8]+calculatefrom[0:4]
+	fystart = fystart[8:10]+fystart[4:8]+fystart[0:4]
+
+	ods = ODS()
+	sheet = ods.content.getSheet(0)
+	sheet.getRow(0).setHeight("23pt")
+	sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("18pt")
+	ods.content.mergeCells(0,0,8,1)
+	sheet.getRow(1).setHeight("18pt")
+	sheet.getCell(0,1).stringValue("Account: "+headerrow["accountname"] +"(Period: "+calculatefrom+" to "+calculateto+")").setBold(True).setAlignHorizontal("center").setFontSize("14pt")
+	ods.content.mergeCells(0,1,8,1)
+	row = 2
+	if headerrow["projectname"]!="":
+		sheet.getCell(0,row).stringValue("Project: "+headerrow["projectname"]).setBold(True).setAlignHorizontal("center")
+		ods.content.mergeCells(0,row,8,1)
+		row += 1
+	sheet.getColumn(0).setWidth("3cm")
+	sheet.getColumn(1).setWidth("1cm")
+	sheet.getColumn(2).setWidth("2cm")
+	sheet.getColumn(3).setWidth("3cm")
+	sheet.getColumn(4).setWidth("8cm")
+	sheet.getColumn(5).setWidth("3cm")
+	sheet.getColumn(6).setWidth("3cm")
+	sheet.getColumn(7).setWidth("3cm")
+	sheet.getCell(0,row).stringValue("Date").setBold(True)
+	sheet.getCell(1,row).stringValue("V.No.").setBold(True)
+	sheet.getCell(2,row).stringValue("Status").setBold(True)
+	sheet.getCell(3,row).stringValue("Voucher Type").setBold(True)
+	sheet.getCell(4,row).stringValue("Particulars").setBold(True)
+	sheet.getCell(5,row).stringValue("Debit").setBold(True).setAlignHorizontal("right")
+	sheet.getCell(6,row).stringValue("Credit").setBold(True).setAlignHorizontal("right")
+	sheet.getCell(7,row).stringValue("Balance").setBold(True).setAlignHorizontal("right")
+	for transaction in result:
+		row += 1
+		sheet.getCell(0,row).stringValue(transaction["voucherdate"])
+		sheet.getCell(1,row).stringValue(transaction["vouchernumber"])
+		sheet.getCell(2,row).stringValue(transaction["status"])
+		sheet.getCell(3,row).stringValue(transaction["vouchertype"])
+		narration = str(transaction["narration"])
+		particulars = str(transaction["particulars"])
+		sheet.getCell(4,row).stringValue(particulars+" ("+narration+")")
+		sheet.getCell(5,row).stringValue(transaction["Dr"]).setAlignHorizontal("right")
+		sheet.getCell(6,row).stringValue(transaction["Cr"]).setAlignHorizontal("right")
+		sheet.getCell(7,row).stringValue(transaction["balance"]).setAlignHorizontal("right")
+
+
+	ods.save("response.ods")
+	repFile = open("response.ods")
+	rep = repFile.read()
+	repFile.close()
+	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	return Response(rep, headerlist=headerList.items())
+
 
 @view_config(route_name="showviewledger", renderer="gkwebapp:templates/viewledger.jinja2")
 def showviewledger(request):
@@ -125,7 +173,6 @@ def showledgerreport(request):
 				result = requests.get("http://127.0.0.1:6543/report?type=ledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode=%d"%(accountcode,calculatefrom,calculateto,financialstart,int(projectcode)), headers=header)
 				ledgerrefresh["projectname"] = result.json()["ledgerheader"]["projectname"]
 		return render_to_response("gkwebapp:templates/ledgerreport.jinja2",{"records":result.json()["gkresult"],"narrationflag":narrationflag,"userrole":result.json()["userrole"],"ledgerrefresh":ledgerrefresh,"ledgerheader":result.json()["ledgerheader"] },request=request)
-
 
 
 @view_config(route_name="showdualledgerreport")
