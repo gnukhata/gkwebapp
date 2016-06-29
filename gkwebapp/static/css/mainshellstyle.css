@@ -21,24 +21,28 @@ p.shortcut {
 .gknav .navbar-nav > li > a:hover, .gknav .navbar-nav > li > a:focus {
     background-color: black;
 		color: white;
+		border-radius: 2px;
 }
 ul.dropdown-menu > li > a:hover, ul.dropdown-menu > li > a:focus{
-background-color: rgb(217,224,231);
+background-color: #bfbfbf;
 border-style: solid;
 border-color: #2a1278;
 border-width: 2px;
+border-radius: 2px;
 }
 .gknav .navbar-nav > .open > a,
 .gknav .navbar-nav > .open > a:hover,
 .gknav .navbar-nav > .open > a:focus {
-    background-color: rgb(217,224,231);
+    background-color: #bfbfbf;
 		color: black;
+		border-radius: 2px;
 }
 .gknav .navbar-nav > .active > a,
 .gknav .navbar-nav > .active > a:hover,
 .gknav .navbar-nav > .active > a:focus {
     color: black;
-    background-color: rgb(217,224,231);
+    background-color: #bfbfbf;
+		border-radius: 2px;
 }
 .gknav .navbar-nav > li > a:hover,
 .gknav .navbar-nav > li > a:focus {
