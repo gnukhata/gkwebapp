@@ -147,13 +147,13 @@
         <table id="prjtable" class="table col-xs-5 table-condensed table-fixedheader">
           <thead>
             <tr>
-              <th id="prjlbltbl" class="col-xs-6 ">
+              <th id="prjlbltbl" class="col-xs-7 ">
                 Project Name
               </th>
               <th id="amtlbltbl" class="col-xs-3 rightJustified">
                 Sanctioned Amount
               </th>
-              <th class="col-xs-2">
+              <th class="col-xs-1">
                 Delete
               </th>
               <th class="col-xs-1">
@@ -164,16 +164,16 @@
           <tbody>
             {% for prjs in projects %}
             <tr value="{{prjs['projectcode']}}">
-              <td class="col-xs-6">
+              <td class="col-xs-7">
                 {{prjs['projectname']}}
               </td>
               <td class="col-xs-3 rightJustified">
                 {{prjs['sanctionedamount']}}
               </td>
-              <td class="col-xs-2">
+              <td class="col-xs-1" style="text-align:center;">
                 <a href="#" class="delprj"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
               </td>
-              <td class="col-xs-1">
+              <td class="col-xs-1" style="text-align:center;">
                 <a href="#" class="editprj"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
               </td>
             </tr>
