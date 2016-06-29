@@ -33,6 +33,7 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import os
+from odslib import ODS
 import calendar
 from formula import CurrentPageColSum, PreviousPagesColSum, RowNumber
 from spreadsheettable import SpreadsheetTable
@@ -45,15 +46,50 @@ def printprojectstatementreport(request):
 	projectname = request.params["projectname"]
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/report?type=projectstatement&calculateto=%s&financialstart=%s&projectcode=%d"%(calculateto,financialstart,projectcode), headers=header)
-	gkresult = result.json()["gkresult"]
-	fy = str(request.params["fystart"]);
-	fy = fy[0:4]
-	fy = fy + "-" + (str(request.params["fyend"])[2:4])
+	result = result.json()["gkresult"]
+	fystart = str(request.params["fystart"]);
+	fyend = str(request.params["fyend"]);
+	fystart = fystart[8:10]+fystart[4:8]+fystart[0:4]
+	fyend = fyend[8:10]+fyend[4:8]+fyend[0:4]
+	calculateto = str(request.params["calculateto"])
+	calculateto = calculateto[8:10]+calculateto[4:8]+calculateto[0:4]
 	orgname = str(request.params["orgname"])
-	orgname += " (FY: " + fy +")"
-	period = financialstart[8:10] + "-" + str(calendar.month_abbr[int(financialstart[5:7])]) + "-" + financialstart[0:4] + " to " + calculateto[8:10] + "-" +  str(calendar.month_abbr[int(calculateto[5:7])]) + "-" +  calculateto[0:4];
-	return response
-    
+	ods = ODS()
+	sheet = ods.content.getSheet(0)
+	sheet.setSheetName("Project Statement ("+projectname+")")
+	sheet.getRow(0).setHeight("23pt")
+
+	sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("18pt")
+	ods.content.mergeCells(0,0,5,1)
+	sheet.getRow(1).setHeight("18pt")
+	sheet.getCell(0,1).stringValue("Statement for: "+projectname+ " ("+fystart+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+	ods.content.mergeCells(0,1,5,1)
+	sheet.getColumn(1).setWidth("8cm")
+	sheet.getColumn(2).setWidth("4cm")
+	sheet.getColumn(3).setWidth("3cm")
+	sheet.getColumn(4).setWidth("3cm")
+	sheet.getCell(0,2).stringValue("Sr. No.").setBold(True)
+	sheet.getCell(1,2).stringValue("Account Name").setBold(True)
+	sheet.getCell(2,2).stringValue("Group Name").setBold(True)
+	sheet.getCell(3,2).stringValue("Total Outgoing").setBold(True)
+	sheet.getCell(4,2).stringValue("Total Incoming").setBold(True)
+	row = 3;
+	for transaction in result:
+		sheet.getCell(0, row).stringValue(transaction["srno"])
+		sheet.getCell(1, row).stringValue(transaction["accountname"])
+		sheet.getCell(2, row).stringValue(transaction["groupname"])
+		sheet.getCell(3, row).stringValue(transaction["totalout"]).setAlignHorizontal("right")
+		sheet.getCell(4, row).stringValue(transaction["totalin"]).setAlignHorizontal("right")
+		row += 1
+
+	ods.save("response.ods")
+	repFile = open("response.ods")
+	rep = repFile.read()
+	repFile.close()
+	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	return Response(rep, headerlist=headerList.items())
+
+
 @view_config(route_name="showviewprojectstatement", renderer="gkwebapp:templates/viewprojectstatement.jinja2")
 def showviewprojectstatement(request):
 	header={"gktoken":request.headers["gktoken"]}

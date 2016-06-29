@@ -124,22 +124,27 @@ $(document).ready(function() {
   $("#print").click(function(event) {
     var date = $("#calculateto").val().split("-");
     var newtodate = date[2]+"-"+date[1]+"-"+date[0];
-    $.ajax(
-      {
-        type: "GET",
-        url: "/printprojectstatementreport",
-        global: false,
-        async: false,
-        datatype : 'text',
-        data : {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('yyyymmddyear1'), "fyend": sessionStorage.getItem('yyyymmddyear2'), "calculateto": newtodate, "projectcode": $("#projectcode").val(), "projectname" : $("#projectname").val() },
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-        success: function(resp){
-          window.open('data:application/pdf;charset=utf-8,' + encodeURIComponent(resp));
-        }
-      });
+      event.preventDefault();
+  		var orgname = sessionStorage.getItem('orgn');
+  		var orgtype = sessionStorage.getItem('orgt');
+  		var xhr = new XMLHttpRequest();
+  		trialbalancetype = $("#trialbaltype").val();
+
+  		xhr.open('GET', '/printprojectstatementreport?orgname=' +sessionStorage.getItem('orgn')+'&fystart='+sessionStorage.getItem('yyyymmddyear1')+'&fyend='+sessionStorage.getItem('yyyymmddyear2')+'&calculateto='+ newtodate+'&projectcode='+$("#projectcode").val()+'&projectname='+$("#projectname").val() , true);
+  		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+  		xhr.responseType = 'blob';
+
+  		xhr.onload = function(e) {
+    	if (this.status == 200) {
+      // get binary data as a response
+      	var blob = this.response;
+  	 		var url = window.URL.createObjectURL(blob);
+  			window.location.assign(url)
+    	}
+  	};
+
+  	xhr.send();
+
 });
 
   $("#prjstback").click(function(event) {
