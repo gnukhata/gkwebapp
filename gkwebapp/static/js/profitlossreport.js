@@ -238,7 +238,6 @@ $(document).ready(function() {
     		var orgname = sessionStorage.getItem('orgn');
     		var orgtype = sessionStorage.getItem('orgt');
     		var xhr = new XMLHttpRequest();
-    		trialbalancetype = $("#trialbaltype").val();
 
     		xhr.open('GET', '/printprofitandloss?fyend='+sessionStorage.getItem('year2')+'&fystart='+sessionStorage.getItem('year1')+'&orgname='+orgname+'&calculateto='+newtodate+'&orgtype='+orgtype, true);
     		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

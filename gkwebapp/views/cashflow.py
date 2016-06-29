@@ -31,7 +31,7 @@ from pyramid.view import view_config
 import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
-
+from odslib import ODS
 from spreadsheettable import SpreadsheetTable
 from reportlab.lib.enums import TA_CENTER, TA_RIGHT, TA_LEFT
 from pyramid.response import Response
@@ -52,27 +52,82 @@ def showcashflowreport(request):
 	orgtype = request.params["orgtype"]
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/report?type=cashflow&calculateto=%s&financialstart=%s&calculatefrom=%s"%(calculateto,financialstart,calculatefrom), headers=header)
+
 	return render_to_response("gkwebapp:templates/cashflowreport.jinja2",{"rcrecords":result.json()["rcgkresult"],"pyrecords":result.json()["pygkresult"],"orgtype":orgtype,"backflag":4,"from":datetime.strftime(datetime.strptime(str(calculatefrom),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
 
 @view_config(route_name="printcashflowreport")
 def printcashflowreport(request):
 	calculateto = request.params["calculateto"]
-	financialstart = request.params["financialstart"]
+	financialstart = request.params["fystart"]
 	calculatefrom = request.params["calculatefrom"]
-
 	orgname = request.params["orgname"]
 	orgtype = request.params["orgtype"]
-	startyear = request.params["startyear"]
-	endyear = request.params["endyear"]
-	orgdata = orgname + " (" + orgtype + ")"
-	period = calculatefrom[8:10] + "-" + str(calendar.month_abbr[int(calculatefrom[5:7])]) + "-" + calculatefrom[0:4] + " to " + calculateto[8:10] + "-" +  str(calendar.month_abbr[int(calculateto[5:7])]) + "-" +  calculateto[0:4]
-	year = startyear[0:2] + "-" + str(calendar.month_abbr[int(startyear[3:5])]) + "-" + startyear[6:10] + " to " + endyear[0:2] + "-" +  str(calendar.month_abbr[int(endyear[3:5])]) + "-" +  endyear[6:10]
-	yeardata = "Financial Year: " + year
-
+	fyend = str(request.params["fyend"])
 	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/report?type=cashflow&calculateto=%s&financialstart=%s&calculatefrom=%s"%(calculateto,financialstart,calculatefrom), headers=header)
+	receipt = result.json()["rcgkresult"]
+	payment = result.json()["pygkresult"]
+	fystart = str(request.params["fystart"]);
+	orgname = str(request.params["orgname"])
+	calculateto = calculateto[8:10]+calculateto[4:8]+calculateto[0:4]
+	calculatefrom = calculatefrom[8:10]+calculatefrom[4:8]+calculatefrom[0:4]
 
-	if(orgtype == "Profit Making"):
-		CashFlow = "Cash Flow Account for the period " + period
-	elif(orgtype == "Not For Profit"):
-		CashFlow = "Receipt & Payment Account for the period " + period
-	return response
+	ods = ODS()
+	sheet = ods.content.getSheet(0)
+	sheet.getRow(0).setHeight("23pt")
+	sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("18pt")
+	ods.content.mergeCells(0,0,8,1)
+	sheet.getRow(1).setHeight("18pt")
+	if orgtype=="Profit Making":
+		sheet.setSheetName("Cash Flow Statement")
+		sheet.getCell(0,1).stringValue("Cash Flow Statement ("+calculatefrom+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+	if orgtype=="Not For Profit":
+		sheet.setSheetName("Receipt & Payment Account")
+		sheet.getCell(0,1).stringValue("Receipt & Payment Account ("+calculatefrom+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+	ods.content.mergeCells(0,1,8,1)
+	sheet.getColumn(0).setWidth("1cm")
+	sheet.getColumn(1).setWidth("8cm")
+	sheet.getColumn(2).setWidth("3cm")
+	sheet.getColumn(3).setWidth("3cm")
+	sheet.getColumn(4).setWidth("1cm")
+	sheet.getColumn(5).setWidth("8cm")
+	sheet.getColumn(6).setWidth("3cm")
+	sheet.getColumn(7).setWidth("3cm")
+	sheet.getCell(1,2).stringValue("Particulars").setBold(True)
+	sheet.getCell(2,2).stringValue("Amount").setBold(True).setAlignHorizontal("right")
+	sheet.getCell(3,2).stringValue("Amount").setBold(True).setAlignHorizontal("right")
+	sheet.getCell(5,2).stringValue("Particulars").setBold(True)
+	sheet.getCell(6,2).stringValue("Amount").setBold(True).setAlignHorizontal("right")
+	sheet.getCell(7,2).stringValue("Amount").setBold(True).setAlignHorizontal("right")
+	row = 3
+	for account in receipt:
+		sheet.getCell(0, row).stringValue(account["toby"])
+		if account["toby"]!="" and account["particulars"]!="Opening balance":
+			sheet.getCell(1, row).stringValue("	        "+account["particulars"])
+			sheet.getCell(2, row).stringValue(account["amount"]).setAlignHorizontal("right")
+			sheet.getCell(3, row).stringValue("").setAlignHorizontal("right")
+		else:
+			sheet.getCell(1, row).stringValue(account["particulars"])
+			sheet.getCell(2, row).stringValue("").setAlignHorizontal("right")
+			sheet.getCell(3, row).stringValue(account["amount"]).setAlignHorizontal("right")
+		row += 1
+
+	row = 3
+	for account in payment:
+		sheet.getCell(4, row).stringValue(account["toby"])
+		if account["toby"]!="" and account["particulars"]!="Closing balance":
+			sheet.getCell(5, row).stringValue("	        "+account["particulars"])
+			sheet.getCell(6, row).stringValue(account["amount"]).setAlignHorizontal("right")
+			sheet.getCell(7, row).stringValue("").setAlignHorizontal("right")
+		else:
+			sheet.getCell(5, row).stringValue(account["particulars"])
+			sheet.getCell(6, row).stringValue("").setAlignHorizontal("right")
+			sheet.getCell(7, row).stringValue(account["amount"]).setAlignHorizontal("right")
+		row += 1
+
+	ods.save("response.ods")
+	repFile = open("response.ods")
+	rep = repFile.read()
+	repFile.close()
+	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	return Response(rep, headerlist=headerList.items())

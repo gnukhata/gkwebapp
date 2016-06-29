@@ -281,7 +281,28 @@ $(document).ready(function() {
 		$("#showcashflow").click();
 	});
 	$("#printbutton").click(function(event) {
-		printcashflowreport();
+		var orgname = sessionStorage.getItem('orgn');
+		var date = $("#ledtodate").val().split("-");
+		var newtodate = date[2]+"-"+date[1]+"-"+date[0];
+		var date = $("#ledfromdate").val().split("-");
+		var newfromdate = date[2]+"-"+date[1]+"-"+date[0];
+		var orgtype = sessionStorage.getItem('orgt');
+		event.preventDefault();
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', '/printcashflowreport?fyend='+sessionStorage.getItem('year2')+'&fystart='+sessionStorage.yyyymmddyear1+'&orgname='+orgname+'&calculateto='+newtodate+'&orgtype='+orgtype+'&calculatefrom='+newfromdate, true);
+		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+		xhr.responseType = 'blob';
+
+			xhr.onload = function(e) {
+			if (this.status == 200) {
+			// get binary data as a response
+				var blob = this.response;
+				var url = window.URL.createObjectURL(blob);
+				window.location.assign(url)
+			}
+		};
+
+		xhr.send();
 	});
 
 });
