@@ -194,10 +194,10 @@
 		<div style="padding-top:5px" class="col-md-6 shadow" id="baltbl" >
 			<table class="table table-condensed">
 				<thead>
-					<tr class="success">
+					<tr>
 						<th class="col-xs-6">{{baltbl[0]}}</th>
 					</tr>
-					<tr class="info">
+					<tr class="thead">
 						<th class="col-xs-6">Group Name</th>
 						<th class="rightJustified col-xs-3">No. of accounts</th>
 						<th class="rightJustified col-xs-3">Group Balance</th>
@@ -211,7 +211,7 @@
 						<td class="col-xs-3" align="right">{{baltbl[i]["groupbalance"]}}</td>
 					</tr>
 					{% endfor %}
-					<tr class="info">
+					<tr>
 						<th class="col-xs-6">Total</th>
 						<th class="col-xs-3"></th>
 						<td class="col-xs-3" align="right"><b>{{baltbl[5]["Total"]}}</b></td>
@@ -220,10 +220,10 @@
 			</table>
 			<table class="table table-condensed">
 				<thead>
-					<tr class="success">
+					<tr>
 						<th class="col-xs-6">{{baltbl[6]}}</th>
 					</tr>
-					<tr class="info">
+					<tr class="thead">
 						<th class="col-xs-6">Group Name</th>
 						<th class="rightJustified col-xs-3">No. of accounts</th>
 						<th class="rightJustified col-xs-3">Group Balance</th>
@@ -237,12 +237,12 @@
 						<td class="col-xs-3" align="right">{{baltbl[i]["groupbalance"]}}</td>
 					</tr>
 					{% endfor %}
-					<tr class="info">
+					<tr>
 						<th class="col-xs-6">Total</th>
 						<th class="col-xs-3" ></th>
 						<td class="col-xs-3" align="right"><b>{{baltbl[((baltbl|length)-2)]["Total"]}}</b></td>
 					</tr>
-					<tr class="info">
+					<tr>
 						<th class="col-xs-6">Difference in Total</th>
 						<th class="col-xs-3"></th>
 						<td class="col-xs-3" align="right"><b>{{baltbl[((baltbl|length)-1)]["Difference in balance"]}}</b></td>

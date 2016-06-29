@@ -56,5 +56,9 @@ border-radius: 2px;
 	color: white;
 }
 .thead {
-	background-color: #a3a3a3;
+	background-color: #767c87;
+}
+thead > tr {
+	background-color: rgb(87,93,99);
+	color: white;
 }
