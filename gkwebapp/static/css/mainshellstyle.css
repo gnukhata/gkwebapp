@@ -49,7 +49,7 @@ border-radius: 2px;
     color: #black;
 }
 .panel{
-	border-color:#ccc;
+	border-color: rgb(87,93,99);
 }
 .panel-heading, .panel-title {
 	background-color: rgb(87,93,99);

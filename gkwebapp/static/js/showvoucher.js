@@ -25,6 +25,7 @@ Contributors:
 */
 
 $(document).ready(function(){
+  $('.modal-backdrop').remove();
   (function($){
     $.fn.callvoucher = function(vtype){
         return this.each(function(){
