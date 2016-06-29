@@ -10,7 +10,10 @@ p.shortcut {
 	padding: 0px 0 0px 40px;
 }
 .gknav{
-	background-color: #003333;
+	background-color: rgb(26,34,41);
+}
+.gknav .navbar-brand {
+    color: white;
 }
 .gknav .navbar-nav > li > a {
     color: white;
@@ -20,26 +23,34 @@ p.shortcut {
 		color: white;
 }
 ul.dropdown-menu > li > a:hover, ul.dropdown-menu > li > a:focus{
-background-color: #d6d6c2;
+background-color: rgb(217,224,231);
 border-style: solid;
 border-color: #2a1278;
-}
-p.shortcut {
-	padding: 0px 0 0px 40px;
+border-width: 2px;
 }
 .gknav .navbar-nav > .open > a,
 .gknav .navbar-nav > .open > a:hover,
 .gknav .navbar-nav > .open > a:focus {
-    background-color: #d6d6c2;
+    background-color: rgb(217,224,231);
 		color: black;
 }
 .gknav .navbar-nav > .active > a,
 .gknav .navbar-nav > .active > a:hover,
 .gknav .navbar-nav > .active > a:focus {
     color: black;
-    background-color: #d6d6c2;
+    background-color: rgb(217,224,231);
 }
 .gknav .navbar-nav > li > a:hover,
 .gknav .navbar-nav > li > a:focus {
     color: #black;
+}
+.panel{
+	border-color:#ccc;
+}
+.panel-heading, .panel-title {
+	background-color: rgb(87,93,99);
+	color: white;
+}
+.thead {
+	background-color: #a3a3a3;
 }
