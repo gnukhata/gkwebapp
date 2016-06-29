@@ -90,7 +90,13 @@
 
   table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.table-fixedheader>tfoot tr td {
     float: left;
-
+  }
+  #bankrecontable, #stmttable {
+    background-color: white;
+  }
+  #stmttablebody > tr:first-child {
+    background-color: rgb(87,93,99);
+  	color: white;
   }
   </style>
 </head>
@@ -113,7 +119,7 @@
   <div class="table-responsive">
     <table id="bankrecontable" class=" shadow table table-fixedheader table-condensed">
       <thead>
-        <tr class="info ">
+        <tr>
           <th class="col-xs-1">Date</th>
           <th class="col-xs-1">V.No.</th>
           <th class="col-xs-2">Particulars</th>
@@ -159,7 +165,7 @@
   <div id = "recostmtdiv" class="container">
     <div class="table-responsive col-xs-8 col-xs-offset-2">
       <table id="stmttable" class=" shadow table table-striped table-condensed">
-        <tbody>
+        <tbody id="stmttablebody">
           {% for record in reconstmt %}
           <tr>
             <td class="col-xs-8">

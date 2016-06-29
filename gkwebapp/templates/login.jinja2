@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-  <link rel="stylesheet" type="text/css" media="screen" href="{{request.static_url('gkwebapp:static/css/bootstrap.min.css')}}" />
-
   <title>
     GNUKhata
   </title>
@@ -26,7 +23,7 @@
       <li style="float: right;"><a style="margin-right: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="yeardata" href=""></a></li>
       <ul>
       </div>
-  <div class="container">
+  <div class="container" id="forgotpassworddiv">
     <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 pull-right">
       <div class="alert alert-danger" id="username-blank-alert" aria-live="rude" role="alert" hidden>
         <a href="#" class="close" aria-label="close">&times;</a>
@@ -40,7 +37,7 @@
         <a href="#" class="close" aria-label="close">&times;</a>
         Username or Password is incorrect!
       </div>
-      <div class="panel panel-info" >
+      <div class="panel" >
         <div class="panel-heading">
           <div class="panel-title">Sign In</div>
 
@@ -65,8 +62,8 @@
             <div style="margin-top:10px" class="form-group">
               <!-- Button -->
               <div class="col-sm-12 controls">
-                <button id="login" type="submit" class="btn btn-success " accesskey="l"><span class="glyphicon glyphicon-arrow-right"></span><u>L</u>ogin</button>
-                <button id="changeorg" class="btn btn-warning">Change Organisation</button>
+                <button id="login" type="submit" class="btn btn-success " accesskey="l"><span class="glyphicon glyphicon-arrow-right" style="margin-right: 5px;"></span><u>L</u>ogin</button>
+                <button id="changeorg" class="btn btn-warning"><span class="glyphicon glyphicon-refresh" style="margin-right: 5px;"></span>Change Organisation</button>
               </div>
             </div>
           </form>
@@ -75,8 +72,7 @@
       </div>
     </div>
 
-  <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
-  <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
+
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/login.js')}}"></script>
 </body>
 

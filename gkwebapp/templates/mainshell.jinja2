@@ -5,7 +5,7 @@
   <link href="{{request.static_url('gkwebapp:static/css/mainshellstyle.css')}}" rel="stylesheet" type="text/css"/>
 </head>
 <body background="{{request.static_url('gkwebapp:static/images/old_mathematics.png')}}">
-  <nav class="navbar navbar-inverse navbar-fixed-top">
+  <nav class="navbar gknav navbar-fixed-top">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
@@ -77,10 +77,10 @@
             <a href="" id="help" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>H</u>elp</a>
             <ul class="dropdown-menu">
               <li><a data-toggle="tab" id="manual" href="">Manual</a></li>
-              <li><a data-toggle="modal" id="shortcuts" data-target="#gnukhatashortcuts">Shortcuts</a></li>
-              <li><a data-toggle="modal" id="authors" data-target="#gnukhataauthors">Authors</a></li>
-              <li><a data-toggle="modal" id="license" data-target="#gnukhatalicense">License</a></li>
-              <li><a data-toggle="modal" id="about" data-target="#aboutgnukhata">About</a></li>
+              <li><a data-toggle="modal" id="shortcuts" href="" data-target="#gnukhatashortcuts">Shortcuts</a></li>
+              <li><a data-toggle="modal" id="authors" href="" data-target="#gnukhataauthors">Authors</a></li>
+              <li><a data-toggle="modal" id="license" href="" data-target="#gnukhatalicense">License</a></li>
+              <li><a data-toggle="modal" id="about" href="" data-target="#aboutgnukhata">About</a></li>
             </ul>
           </li>
         </ul>
@@ -134,8 +134,12 @@
   <ul>
 </div>
 <div id="info" style="margin-top: 10px; margin-bottom: 10px;" class="container-fluid tab-pane fade in active">
-  <div class="container-fluid shadow" style="background-color: white; border-radius: 5px;">
-    <h4 class="shadow" style="padding: 5px 5px 5px 5px; color: #fff; background-color: #1d88ba; margin-right: 15px;">About Keyboard shortcuts</h4></li>
+  <div class="panel shadow" >
+    <div class="panel-heading">
+      <div class="panel-title">About Keyboard Shortcuts</div>
+
+    </div>
+    <div style="padding-top:20px" class="panel-body" >
           <p>To access submenus in the Menu Bar press "Ctrl + Underlined Character".</p>
           <p>To view ToolBar press "F1".</p>
           <p> To use screen specific shortcuts : </p>
@@ -143,12 +147,13 @@
           <p class="shortcut">If using Google Chrome, Opera or Internet Explorer press "Alt + the underlined character".</p>
           <p class="shortcut">If using older versions of Opera(prior to version 12.1) use "Shift + Esc + the underlined character".</p>
           <p>Shortcuts are given in the Tool Bar and the <a data-toggle="modal" id="shortcuts" data-target="#gnukhatashortcuts">Help Tab</a> of the Menu Bar.</p>
-  </div>
+      </div>
+    </div>
 </div>
 <div id="gnukhatashortcuts" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div style="color: #115a84; background-color: #b8e0ef; border-radius: 5px;" class="modal-header">
+      <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Shortcuts</h4>
       </div>
@@ -292,7 +297,7 @@
 <div id="gnukhatalicense" tabindex="-1" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div style="color: #115a84; background-color: #b8e0ef; border-radius: 5px;" class="modal-header">
+      <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">License</h4>
       </div>
@@ -314,7 +319,7 @@
 <div id="aboutgnukhata" tabindex="-1" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div style="color: #115a84; background-color: #b8e0ef; border-radius: 5px;" class="modal-header">
+      <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">About</h4>
       </div>
@@ -342,7 +347,7 @@
 <div id="gnukhataauthors" tabindex="-1" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div style="color: #115a84; background-color: #b8e0ef; border-radius: 5px;" class="modal-header">
+      <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Authors</h4>
       </div>

@@ -100,6 +100,10 @@
 
   }
 
+  #liabtable, #patable {
+    background-color: white;
+  }
+
   </style>
 </head>
 <body>
@@ -112,7 +116,7 @@
     <div class="table-responsive col-xs-6 nopadding" >
       <table id="liabtable" class="shadow table table-condensed table-fixedheader cbalsheettable">
         <thead>
-          <tr class="info ">
+          <tr>
             {% if orgtype=="Profit Making" %}
             <th class="col-xs-6">Capital and Liabilities</th>
             {% else %}
@@ -183,7 +187,7 @@
     <div class="table-responsive col-xs-6 nopadding" >
       <table id="patable" class="shadow table table-condensed table-fixedheader cbalsheettable">
         <thead>
-          <tr class="info ">
+          <tr>
             <th class="col-xs-6">Property and Assets</th>
             <th style="text-align:right" class="col-xs-2">&nbsp</th>
             <th style="text-align:right" class="col-xs-2">&nbsp</th>

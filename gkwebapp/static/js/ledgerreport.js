@@ -26,7 +26,7 @@ Contributors:
 */
 
 $(document).ready(function() {
-
+  $('.modal-backdrop').remove();
   var percentwid = 100*(($(".table-fixedheader").width()-12)/$(".table-fixedheader").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   var percentheigth = 100*(($("body").height()-$(".navbar").height()-148)/$("body").height());

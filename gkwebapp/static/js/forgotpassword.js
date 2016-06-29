@@ -41,7 +41,6 @@ $(document).ready(function()
         $("#securityquestion").val("")
       }
       if ($.trim($("#username").val())!="") {
-        $("#securityanswer").focus();
         $.ajax({
           type: "POST",
           url: "/securityquestion",
@@ -56,6 +55,9 @@ $(document).ready(function()
             $("#userid").val(userdata[0].userid);
             }
         });
+      }
+      if(userstatus == 0){
+        $("#securityanswer").focus();
       }
       if (userstatus == 3) {
         $("#securityanswer-connectionfailed-alert").alert();
@@ -81,8 +83,14 @@ $(document).ready(function()
           $("#securityanswer-blank-alert").hide();
         });
       }
+      if ($.trim($("#username").val())=="") {
+        $("#username-blank-alert").alert();
+        $("#username-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#username-blank-alert").hide();
+        });
+        $("#securityquestion").val("")
+      }
       if ($.trim($("#securityanswer").val())!="") {
-        $("#newpassword").focus();
         $.ajax({
           type: "POST",
           url: "/securityanswer",
@@ -93,6 +101,14 @@ $(document).ready(function()
           success: function(resp) {
             answercheck = resp["gkstatus"];
           }
+        });
+      }
+      if (answercheck == 0) {
+        $(".passwordfields").show();
+        $("#newpassword").focus();
+        $("#securityanswer-correct-alert").alert();
+        $("#securityanswer-correct-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#securityanswer-correct-alert").hide();
         });
       }
       if (answercheck == 3) {
@@ -108,20 +124,13 @@ $(document).ready(function()
         });
       }
     }
-  });
-  $('input:visible, textarea').keydown(function(event){
-    var n =$('input:visible,textarea').length;
-    var f= $('input:visible, textarea');
-    if(event.which == 38){
-      var prevIndex = f.index(this)-1;
-      if(prevIndex < n){
-        event.preventDefault();
-        f[prevIndex].focus().select();
-      }
+    if (event.which == 38) {
+      event.preventDefault();
+      $("#username").focus();
     }
   });
   $("#newpassword").keydown(function(event){
-    if (event.which == 13) {
+    if (event.which == 13 || event.which == 9) {
       event.preventDefault();
       if ($.trim($("#newpassword").val())=="") {
         $("#newpassword-blank-alert").alert();
@@ -133,6 +142,10 @@ $(document).ready(function()
       $("#confirmpassword").focus();
       }
     }
+    if (event.which == 38) {
+      event.preventDefault();
+      $("#securityanswer").focus();
+      }
   });
   $("#btnsubmit").click(function(event){
     event.preventDefault();
@@ -184,8 +197,9 @@ $(document).ready(function()
           passwordchanged = resp["gkstatus"];
           }
       });
-      if (passwordchanged == 0) {
+      if (passwordchanged == 0 && $.trim($("#confirmpassword").val())!="") {
       $("#selectorg").load("/login?orgcode="+$.trim($("#orgcode").val())+"&flag=0", setTimeout( function() { $("#username").focus(); }, 500 ));
+      $("#forgotpassworddiv").load("/login?orgcode="+$.trim($("#orgcode").val())+"&flag=1", setTimeout( function() { $("#username").focus(); }, 500 ));
       }
       if (passwordchanged == 4) {
         $("#forgotpassword-incorrectdetails-alert").alert();
@@ -204,6 +218,7 @@ $(document).ready(function()
 
   $("#back").click(function(event){
     var code = $("#orgcode").val();
-    $("#selectorg").load("/login?orgcode="+code);
-  })
+    $("#selectorg").load("/login?orgcode="+code+"&flag=0");
+    $("#forgotpassworddiv").load("/login?orgcode="+code+"&flag=1", setTimeout( function() { $("#username").focus(); }, 500 ));
+  });
 });

@@ -26,6 +26,7 @@ Contributors:
 */
 
 $(document).ready(function(){
+  $('.modal-backdrop').remove();
 
   $(document).keydown(function(event) {
         if(event.ctrlKey && event.keyCode == 83) {
