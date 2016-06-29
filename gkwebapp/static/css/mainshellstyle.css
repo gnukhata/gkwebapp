@@ -6,9 +6,40 @@ ul.scrollable {
 .shadow {
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
- nav > div {
-	background-color: #00111e;
+p.shortcut {
+	padding: 0px 0 0px 40px;
+}
+.gknav{
+	background-color: #003333;
+}
+.gknav .navbar-nav > li > a {
+    color: white;
+}
+.gknav .navbar-nav > li > a:hover, .gknav .navbar-nav > li > a:focus {
+    background-color: black;
+		color: white;
+}
+ul.dropdown-menu > li > a:hover, ul.dropdown-menu > li > a:focus{
+background-color: #d6d6c2;
+border-style: solid;
+border-color: #2a1278;
 }
 p.shortcut {
 	padding: 0px 0 0px 40px;
+}
+.gknav .navbar-nav > .open > a,
+.gknav .navbar-nav > .open > a:hover,
+.gknav .navbar-nav > .open > a:focus {
+    background-color: #d6d6c2;
+		color: black;
+}
+.gknav .navbar-nav > .active > a,
+.gknav .navbar-nav > .active > a:hover,
+.gknav .navbar-nav > .active > a:focus {
+    color: black;
+    background-color: #d6d6c2;
+}
+.gknav .navbar-nav > li > a:hover,
+.gknav .navbar-nav > li > a:focus {
+    color: #black;
 }
