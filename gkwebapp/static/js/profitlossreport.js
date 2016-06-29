@@ -232,25 +232,28 @@ $(document).ready(function() {
   });
   $("#print").click(function(event){
       var todatearray = $("#ledtodate").val().split("-");
-      var fromdatearray = $("#ledfromdate").val().split("-");
+      var orgtype = sessionStorage.getItem('orgt');
       var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
-      var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
-      $.ajax(
-        {
-          type: "GET",
-          url: "/printprofitandloss",
-          global: false,
-          async: false,
-          dataType : 'text',
-          data: {"headingprofit":$("#headingprofit").val(),"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "calculateto": newtodate, "calculatefrom": newfromdate},
-          beforeSend: function(xhr)
-          {
-            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-          },
-          success: function(resp) {
-            win = window.open('data:application/pdf;charset=utf-8,' + encodeURIComponent(resp));
-          }
-        });
+        event.preventDefault();
+    		var orgname = sessionStorage.getItem('orgn');
+    		var orgtype = sessionStorage.getItem('orgt');
+    		var xhr = new XMLHttpRequest();
+    		trialbalancetype = $("#trialbaltype").val();
+
+    		xhr.open('GET', '/printprofitandloss?fyend='+sessionStorage.getItem('year2')+'&fystart='+sessionStorage.getItem('year1')+'&orgname='+orgname+'&calculateto='+newtodate+'&orgtype='+orgtype, true);
+    		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    		xhr.responseType = 'blob';
+
+    		xhr.onload = function(e) {
+      	if (this.status == 200) {
+        // get binary data as a response
+        	var blob = this.response;
+    	 		var url = window.URL.createObjectURL(blob);
+    			window.location.assign(url)
+      	}
+    	};
+
+    	xhr.send();
     });
   $("#pnlback").click(function(event) {
     $("#showprofitloss").click();
