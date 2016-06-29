@@ -94,7 +94,6 @@ def printtrialbalance(request):
 		sheet.getCell(1, 2).stringValue("Account Name").setBold(True)
 		sheet.getCell(2, 2).stringValue("Debit").setBold(True).setAlignHorizontal("right")
 		sheet.getCell(3, 2).stringValue("Credit").setBold(True).setAlignHorizontal("right")
-
 		sheet.getCell(4, 2).stringValue("Group Name").setBold(True).setAlignHorizontal("center")
 		row = 3
 		for record in records:
