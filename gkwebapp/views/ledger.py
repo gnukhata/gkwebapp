@@ -86,7 +86,7 @@ def printLedgerReport(request):
 		sheet.getCell(0,row).stringValue("Project: "+headerrow["projectname"]).setBold(True).setAlignHorizontal("center")
 		ods.content.mergeCells(0,row,8,1)
 		row += 1
-	sheet.getColumn(0).setWidth("3cm")
+	sheet.getColumn(0).setWidth("2cm")
 	sheet.getColumn(1).setWidth("1cm")
 	sheet.getColumn(2).setWidth("2cm")
 	sheet.getColumn(3).setWidth("3cm")
@@ -106,11 +106,34 @@ def printLedgerReport(request):
 		row += 1
 		sheet.getCell(0,row).stringValue(transaction["voucherdate"])
 		sheet.getCell(1,row).stringValue(transaction["vouchernumber"])
-		sheet.getCell(2,row).stringValue(transaction["status"])
-		sheet.getCell(3,row).stringValue(transaction["vouchertype"])
-		narration = str(transaction["narration"])
-		particulars = str(transaction["particulars"])
-		sheet.getCell(4,row).stringValue(particulars+" ("+narration+")")
+		if transaction["status"]:
+			sheet.getCell(2,row).stringValue("Locked")
+		else:
+			sheet.getCell(2,row).stringValue("")
+		if transaction["vouchertype"]=="contra" or transaction["vouchertype"]=="purchase" or transaction["vouchertype"]=="sales" or transaction["vouchertype"]=="receipt" or transaction["vouchertype"]=="payment" or transaction["vouchertype"]=="journal":
+			sheet.getCell(3,row).stringValue(transaction["vouchertype"].title())
+		elif transaction["vouchertype"]=="debitnote":
+			sheet.getCell(3,row).stringValue("Debit Note")
+		elif transaction["vouchertype"]=="creditnote":
+			sheet.getCell(3,row).stringValue("Credit Note")
+		elif transaction["vouchertype"]=="salesreturn":
+			sheet.getCell(3,row).stringValue("Sales Return")
+		elif transaction["vouchertype"]=="purchasereturn":
+			sheet.getCell(3,row).stringValue("Purchase Return")
+		else:
+			sheet.getCell(3,row).stringValue(transaction["vouchertype"])
+		particulars=""
+		length = len(transaction["particulars"])
+		for i in range(0,length):
+			particulars = particulars+ transaction["particulars"][i]
+			if(i<length-1):
+				particulars += ", "
+
+		narration = transaction["narration"]
+		if narration!="":
+			sheet.getCell(4,row).stringValue(particulars+" ("+narration+")")
+		elif narration=="":
+			sheet.getCell(4,row).stringValue(particulars)
 		sheet.getCell(5,row).stringValue(transaction["Dr"]).setAlignHorizontal("right")
 		sheet.getCell(6,row).stringValue(transaction["Cr"]).setAlignHorizontal("right")
 		sheet.getCell(7,row).stringValue(transaction["balance"]).setAlignHorizontal("right")
