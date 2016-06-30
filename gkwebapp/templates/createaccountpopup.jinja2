@@ -114,7 +114,7 @@ th {
       					<tr>
       						<th class="col-xs-6">{{baltbl[0]}}</th>
       					</tr>
-      					<tr class="thead">
+      					<tr>
       						<th class="col-xs-6">Group Name</th>
       						<th class="col-xs-3">No. of accounts</th>
       						<th class="col-xs-3">Group Balance</th>
@@ -128,7 +128,7 @@ th {
       						<td class="col-xs-3" align="right">{{baltbl[i]["groupbalance"]}}</td>
       					</tr>
       					{% endfor %}
-      					<tr class="thead">
+      					<tr>
       						<th class="col-xs-6">Total</th>
       						<th class="col-xs-3"></th>
       						<td class="col-xs-3" align="right"><b>{{baltbl[5]["Total"]}}</b></td>
@@ -154,12 +154,12 @@ th {
       						<td class="col-xs-3" align="right">{{baltbl[i]["groupbalance"]}}</td>
       					</tr>
       					{% endfor %}
-      					<tr class="thead">
+      					<tr>
       						<th class="col-xs-6">Total</th>
       						<th class="col-xs-3"></th>
       						<td class="col-xs-3" align="right"><b>{{baltbl[((baltbl|length)-2)]["Total"]}}</b></td>
       					</tr>
-      					<tr class="thead">
+      					<tr>
       						<th class="col-xs-6">Difference in Total</th>
       						<th class="col-xs-3"></th>
       						<td class="col-xs-3" align="right"><b>{{baltbl[((baltbl|length)-1)]["Difference in balance"]}}</b></td>

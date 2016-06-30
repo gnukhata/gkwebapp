@@ -1203,6 +1203,9 @@ $(document).ready(function() {
         },
         success: function(resp)
         {
+          $("#viewacc").html("");
+          $('.modal-backdrop').remove();
+          $('.modal').modal('hide');
           $("#viewacc").html(resp);
           $('#m_accmodal').modal('show');
           $('#m_accmodal').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened

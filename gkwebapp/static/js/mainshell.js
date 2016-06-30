@@ -340,6 +340,8 @@ $.ajax({
       $(document).off("click","#deleteorg").on("click", "#deleteorg", function(event)
       {
         event.preventDefault();
+        $('.modal-backdrop').remove();
+        $('.modal').modal('hide');
         $('#m_confirmdelorg').modal('show').one('click', '#orgdel', function (e)
         {
           $.ajax({

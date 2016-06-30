@@ -303,7 +303,9 @@ $('#maccounts').change(function() {
 
   })
   .done(function(resp) {
-
+    $("#multiaccount_modal").html("");
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
     $("#multiaccount_modal").html(resp);
     $("#m_multiacc").modal('show');
     $('#m_multiacc').on('shown.bs.modal', function (e)

@@ -60,6 +60,7 @@ border-radius: 2px;
 }
 .thead {
 	background-color: #767c87;
+	color: white;
 }
 thead > tr {
 	background-color: rgb(87,93,99);

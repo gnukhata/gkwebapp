@@ -68,6 +68,8 @@ $(document).ready(function() {
       $("#username").focus();
       return false;
     }
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
     $('#m_confirmdel').modal('show').one('click', '#m_yes', function (e)
     {
 
