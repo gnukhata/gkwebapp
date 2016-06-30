@@ -28,10 +28,10 @@ $(document).ready(function()
 {
   $("#org-name").focus();
 
-  $("#org-name").keyup(function(e) {
-    e.preventDefault();
+  $("#org-name").keydown(function(e) {
     if (e.which == 13)
     {
+      e.preventDefault();
       $("#finalyears").focus();
 
     }
