@@ -109,9 +109,6 @@ $(document).ready(function() {
           $("#info").html(resp);
         }
       );
-
-
-
   });
 
   $("#print").click(function(event) {
