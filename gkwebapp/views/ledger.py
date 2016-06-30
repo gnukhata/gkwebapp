@@ -88,56 +88,47 @@ def printLedgerReport(request):
 		row += 1
 	sheet.getColumn(0).setWidth("2cm")
 	sheet.getColumn(1).setWidth("1cm")
-	sheet.getColumn(2).setWidth("2cm")
-	sheet.getColumn(3).setWidth("3cm")
-	sheet.getColumn(4).setWidth("8cm")
+	sheet.getColumn(2).setWidth("3cm")
+	sheet.getColumn(3).setWidth("8cm")
+	sheet.getColumn(4).setWidth("3cm")
 	sheet.getColumn(5).setWidth("3cm")
 	sheet.getColumn(6).setWidth("3cm")
-	sheet.getColumn(7).setWidth("3cm")
 	sheet.getCell(0,row).stringValue("Date").setBold(True)
 	sheet.getCell(1,row).stringValue("V.No.").setBold(True)
-	sheet.getCell(2,row).stringValue("Status").setBold(True)
-	sheet.getCell(3,row).stringValue("Voucher Type").setBold(True)
-	sheet.getCell(4,row).stringValue("Particulars").setBold(True)
-	sheet.getCell(5,row).stringValue("Debit").setBold(True).setAlignHorizontal("right")
-	sheet.getCell(6,row).stringValue("Credit").setBold(True).setAlignHorizontal("right")
-	sheet.getCell(7,row).stringValue("Balance").setBold(True).setAlignHorizontal("right")
+	sheet.getCell(2,row).stringValue("Voucher Type").setBold(True)
+	sheet.getCell(3,row).stringValue("Particulars").setBold(True)
+	sheet.getCell(4,row).stringValue("Debit").setBold(True).setAlignHorizontal("right")
+	sheet.getCell(5,row).stringValue("Credit").setBold(True).setAlignHorizontal("right")
+	sheet.getCell(6,row).stringValue("Balance").setBold(True).setAlignHorizontal("right")
 	for transaction in result:
 		row += 1
 		sheet.getCell(0,row).stringValue(transaction["voucherdate"])
 		sheet.getCell(1,row).stringValue(transaction["vouchernumber"])
-		if transaction["status"]:
-			sheet.getCell(2,row).stringValue("Locked")
-		else:
-			sheet.getCell(2,row).stringValue("")
+		sheet.getCell(4,row).stringValue(transaction["Dr"]).setAlignHorizontal("right")
+		sheet.getCell(5,row).stringValue(transaction["Cr"]).setAlignHorizontal("right")
+		sheet.getCell(6,row).stringValue(transaction["balance"]).setAlignHorizontal("right")
 		if transaction["vouchertype"]=="contra" or transaction["vouchertype"]=="purchase" or transaction["vouchertype"]=="sales" or transaction["vouchertype"]=="receipt" or transaction["vouchertype"]=="payment" or transaction["vouchertype"]=="journal":
-			sheet.getCell(3,row).stringValue(transaction["vouchertype"].title())
+			sheet.getCell(2,row).stringValue(transaction["vouchertype"].title())
 		elif transaction["vouchertype"]=="debitnote":
-			sheet.getCell(3,row).stringValue("Debit Note")
+			sheet.getCell(2,row).stringValue("Debit Note")
 		elif transaction["vouchertype"]=="creditnote":
-			sheet.getCell(3,row).stringValue("Credit Note")
+			sheet.getCell(2,row).stringValue("Credit Note")
 		elif transaction["vouchertype"]=="salesreturn":
-			sheet.getCell(3,row).stringValue("Sales Return")
+			sheet.getCell(2,row).stringValue("Sales Return")
 		elif transaction["vouchertype"]=="purchasereturn":
-			sheet.getCell(3,row).stringValue("Purchase Return")
+			sheet.getCell(2,row).stringValue("Purchase Return")
 		else:
-			sheet.getCell(3,row).stringValue(transaction["vouchertype"])
+			sheet.getCell(2,row).stringValue(transaction["vouchertype"])
 		particulars=""
 		length = len(transaction["particulars"])
 		for i in range(0,length):
-			particulars = particulars+ transaction["particulars"][i]
+			sheet.getCell(3,row).stringValue(transaction["particulars"][i])
 			if(i<length-1):
-				particulars += ", "
-
+				row += 1
 		narration = transaction["narration"]
 		if narration!="":
-			sheet.getCell(4,row).stringValue(particulars+" ("+narration+")")
-		elif narration=="":
-			sheet.getCell(4,row).stringValue(particulars)
-		sheet.getCell(5,row).stringValue(transaction["Dr"]).setAlignHorizontal("right")
-		sheet.getCell(6,row).stringValue(transaction["Cr"]).setAlignHorizontal("right")
-		sheet.getCell(7,row).stringValue(transaction["balance"]).setAlignHorizontal("right")
-
+			row += 1
+			sheet.getCell(3,row).stringValue("("+narration+")").setItalic(True).setFontSize("8.5pt").setAlignVertical("center")
 
 	ods.save("response.ods")
 	repFile = open("response.ods")
