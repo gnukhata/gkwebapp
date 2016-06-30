@@ -3,21 +3,22 @@
 <head>
 	<meta charset="UTF-8">
 	<title>GNUKhata | Edit Organisation</title>
-<style media="screen">
-.shadow {
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-</style>
+	<style media="screen">
+	.shadow {
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	}
+	table td {
+		border-top: none !important;
+	}
+	</style>
 </head>
 <body >
 	<div class="container-fluid">
-
-		<div style="padding-top:15px" class="mainbox col-md-2"></div>
-		<div style="padding-top:15px" class="mainbox col-md-8">
+		<div class="mainbox">
 
 			<div class="panel shadow" >
 				<div class="panel-heading">
-					<div class="panel-title">Edit Organisation</div>
+					<div class="panel-title" style="text-align:center;">Edit Organisation</div>
 
 				</div>
 
@@ -36,103 +37,180 @@
 					Connection Failed.
 				</div>
 
-					<form id="editorganisationform" method="post" class="form-horizontal">
+				<form id="editorganisationform" method="post" class="form-inline">
+					<div class="col-xs-6 from-group" >
+						<input type="text" id="orgtype" hidden value="{{gkresult["orgtype"]}}" style="width: 100%"></input>
+						<table class="table">
+							<tbody>
 
-						<div style="margin-bottom: 5px" class="col-xs-5 from-group" >
-							<input type="text" id="orgtype" hidden value="{{gkresult["orgtype"]}}"></input>
+								<tr>
+									{% if gkresult["orgtype"]=="Not For Profit" %}
+									<td>
+										<label for="registrationnumber" id="regno">Registration Number :</label>
+									</td>
+									<td>
+										<input type="text" id="orgregno" class="form-control input-sm" name="registrationnumber" value="{{gkresult["orgregno"]}}" style="width: 100%"></input>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="fcrano" id="fcranumber">FCRA Registration Number :</label>
+									</td>
+									<td>
+										<input type="text" id="orgfcrano" class="form-control input-sm" name="fcranumber" value="{{gkresult["orgfcrano"]}}" style="width: 100%"></input>
+									</td>
+								</tr>
+								{%endif%}
+								<tr>
+									<td>
+										<label for="organisationaddress" id="orgaddress">Address :</label>
+									</td>
+									<td>
+										<input type="text" id="orgaddr" class="form-control input-sm" name="organisationaddress" value="{{gkresult["orgaddr"]}}" style="width: 100%"></input>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="organisationcountry" id="orgCountry">Country :</label>
+									</td>
+									<td>
+										<input type="text" id="orgcountry" class="form-control input-sm" name="organisationcountry" value="{{gkresult["orgcountry"]}}" style="width: 100%"></input>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="organisationstate" id="orgState">State :</label>
+									</td>
+									<td>
+										<input type="text" id="orgstate" class="form-control input-sm" name="organisationstate" value="{{gkresult["orgstate"]}}" style="width: 100%"></input>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="organisationcity" id="orgCity">City :</label>
+									</td>
+									<td>
+										<input type="text" id="orgcity" class="form-control input-sm" name="organisationcity" value="{{gkresult["orgcity"]}}" style="width: 100%"></input>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="organisationstaxnumber" id="orgstaxnumber">Service Tax Number :</label>
+									</td>
+									<td>
+										<input type="text" id="orgstax" class="form-control input-sm" name="organisationstaxnumber" value="{{gkresult["orgstax"]}}" style="width: 100%"></input>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="organisationpannumber" id="orgpanno">Permanent Account Number :</label>
+									</td>
+									<td>
+										<input type="text" id="orgpan" class="form-control input-sm" name="organisationpannumber" value="{{gkresult["orgpan"]}}" style="width: 100%"></input>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-xs-6 from-group">
+						<table class="table">
+							<tbody>
+								{% if gkresult["orgtype"]=="Not For Profit" %}
+								<tr>
+									<td>
+										<label for="registrationdate">Date Of Registration :</label>
+									</td>
+									<td>
+										<label class="sr-only" for="regday">Enter Registrtion Day</label>
+										<input type="text"  id="regday" name="registrationday" class="form-control regdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" value="{{gkresult["orgregdate"][8:10]}}"  style="width: 100%"> </input>
 
-							{% if gkresult["orgtype"]=="Not For Profit" %}
-							<label for="registrationnumber" id="regno">Registration Number :</label>
-            	<input type="text" id="orgregno" class="form-control input-sm" name="registrationnumber" value="{{gkresult["orgregno"]}}"></input>
-            	</br>
-							<label for="fcrano" id="fcranumber">FCRA Registration Number :</label>
-            <input type="text" id="orgfcrano" class="form-control input-sm" name="fcranumber" value="{{gkresult["orgfcrano"]}}" ></input>
-            </br>
-						{%endif%}
+										<label class="sr-only" for="regmonth">Enter Registration Month</label>
+										<input type="text" id="regmonth" name="registrationmonth" class="form-control regdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" value="{{gkresult["orgregdate"][5:7]}}" style="width: 100%"></input>
 
-            <label for="organisationaddress" id="orgaddress">Address :</label>
-            <textarea id="orgaddr" class="form-control input-sm" row=5 name="organisationaddress">{{gkresult["orgaddr"]}}</textarea>
-            </br>
+										<label class="sr-only" for="regyear">Enter Registration Year</label>
+										<input type="text" id="regyear" name="registrationyear" class="form-control regdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  value="{{gkresult["orgregdate"][0:4]}}" style="width: 100%"></input>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="registrationdate">Date Of FCRA Registration :</label>
+									</td>
+									<td>
+										<label class="sr-only" for="fcraregday">Enter FCRA Registrtion Day</label>
+										<input type="text" id="fcraregday" name="fcraregistrationday" class="form-control regdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" value="{{gkresult["orgfcradate"][8:10]}}" style="width: 100%"></input>
 
-            <label for="organisationcountry" id="orgCountry">Country :</label>
-            <input type="text" id="orgcountry" class="form-control input-sm" name="organisationcountry" value="{{gkresult["orgcountry"]}}" ></input>
-            </br>
-            <label for="organisationstate" id="orgState">State :</label>
-            <input type="text" id="orgstate" class="form-control input-sm" name="organisationstate" value="{{gkresult["orgstate"]}}"></input>
-            </br>
-            <label for="organisationcity" id="orgCity">City :</label>
-            <input type="text" id="orgcity" class="form-control input-sm" name="organisationcity" value="{{gkresult["orgcity"]}}" ></input>
-            </br>
-            <label for="organisationstaxnumber" id="orgstaxnumber">Service Tax Number :</label>
-            <input type="text" id="orgstax" class="form-control input-sm" name="organisationstaxnumber" value="{{gkresult["orgstax"]}}"></input>
-            </br>
-						<label for="organisationpannumber" id="orgpanno">Permanent Account Number :</label>
-						<input type="text" id="orgpan" class="form-control input-sm" name="organisationpannumber" value="{{gkresult["orgpan"]}}" ></input>
-						</br>
+										<label class="sr-only" for="fcraregmonth">Enter FCRA Registration Month</label>
+										<input type="text" id="fcraregmonth" name="fcraregistrationmonth" class="form-control regdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" value="{{gkresult["orgfcradate"][5:7]}}" style="width: 100%"></input>
+
+										<label class="sr-only" for="fcraregyear">Enter FCRA Registration Year</label>
+										<input type="text" id="fcraregyear" name="fcraregistrationyear" class="form-control regdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  value="{{gkresult["orgfcradate"][0:4]}}" style="width: 100%"></input>
+										{%endif%}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="organisationemail" id="orgEmail">Email :</label>
+									</td>
+									<td>
+										<input type="text" id="orgemail" class="form-control input-sm" name="organisationemail" value="{{gkresult["orgemail"]}}" style="width: 100%"></input>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="telephonenumber" id="telno">Telephone Number :</label>
+									</td>
+									<td>
+										<input type="text" id="orgtelno" class="form-control input-sm" size="11" maxlength="11" name="telephonenumber" value="{{gkresult["orgtelno"]}}" style="width: 100%"></input>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="organisationwebsite" id="orgWebsite">Website :</label>
+									</td>
+									<td>
+										<input type="text" id="orgwebsite" class="form-control input-sm" name="organisationwebsite" value="{{gkresult["orgwebsite"]}}" style="width: 100%"></input>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="organisationpincode" id="orgpostalcode">Postal Code :</label>
+									</td>
+									<td>
+										<input type="text" id="orgpincode" class="form-control input-sm" name="organisationpincode" value="{{gkresult["orgpincode"]}}" style="width: 100%"></input>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="organisationfax" id="orgfaxno">Fax Number :</label>
+									</td>
+									<td>
+										<input type="text" id="orgfax" class="form-control input-sm" name="organisationfaxnumber" value="{{gkresult["orgfax"]}}" style="width: 100%"></input>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="organisationmvat" id="orgvatno">VAT Number :</label>
+									</td>
+									<td>
+										<input type="text" id="orgmvat" class="form-control input-sm" name="organisationmvat" value="{{gkresult["orgmvat"]}}" style="width: 100%"></input>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="container-fluid">
+						<div class="col-xs-2 col-xs-offset-5">
+							<button type="submit" class="btn btn-primary btn-sm" id="submit" name="submit" accesskey="s"><u>S</u>ave</button>
+							<button id="reset" class="btn btn-warning btn-sm" accesskey="r"><u>R</u>eset</button>
 						</div>
-						<div style="margin-bottom: 5px" class="col-xs-1 from-group"></div>
-						<div style="margin-bottom: 5px" class="col-xs-6 from-group">
-						</br>
-
-						{% if gkresult["orgtype"]=="Not For Profit" %}
-							<label for="registrationdate">Date Of Registration :</label>
-            	<div class="form-inline">
-              	<label class="sr-only" for="regday">Enter Registrtion Day</label>
-              	<input type="text"  id="regday" name="registrationday" class="form-control regdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" value="{{gkresult["orgregdate"][8:10]}}" </input>
-
-              	<label class="sr-only" for="regmonth">Enter Registration Month</label>
-              	<input type="text" id="regmonth" name="registrationmonth" class="form-control regdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" value="{{gkresult["orgregdate"][5:7]}}" ></input>
-
-              	<label class="sr-only" for="regyear">Enter Registration Year</label>
-              	<input type="text" id="regyear" name="registrationyear" class="form-control regdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  value="{{gkresult["orgregdate"][0:4]}}" ></input>
-            	</div>
-            </br>
-						<label for="registrationdate">Date Of FCRA Registration :</label>
-            <div class="form-inline">
-              <label class="sr-only" for="fcraregday">Enter FCRA Registrtion Day</label>
-              <input type="text" id="fcraregday" name="fcraregistrationday" class="form-control regdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" value="{{gkresult["orgfcradate"][8:10]}}"></input>
-
-              <label class="sr-only" for="fcraregmonth">Enter FCRA Registration Month</label>
-              <input type="text" id="fcraregmonth" name="fcraregistrationmonth" class="form-control regdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" value="{{gkresult["orgfcradate"][5:7]}}"></input>
-
-              <label class="sr-only" for="fcraregyear">Enter FCRA Registration Year</label>
-              <input type="text" id="fcraregyear" name="fcraregistrationyear" class="form-control regdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  value="{{gkresult["orgfcradate"][0:4]}}"></input>
-            </div>
-          </br>
-					{%endif%}
-
-					<label for="organisationemail" id="orgEmail">Email :</label>
-					<input type="text" id="orgemail" class="form-control input-sm" name="organisationemail" value="{{gkresult["orgemail"]}}" ></input>
-					</br>
-					<label for="telephonenumber" id="telno">Telephone Number :</label>
-					<input type="text" id="orgtelno" class="form-control input-sm" size="11" maxlength="11" name="telephonenumber" value="{{gkresult["orgtelno"]}}"</input>
-					</br>
-					<label for="organisationwebsite" id="orgWebsite">Website :</label>
-					<input type="text" id="orgwebsite" class="form-control input-sm" name="organisationwebsite" value="{{gkresult["orgwebsite"]}}"></input>
-					</br>
-					<label for="organisationpincode" id="orgpostalcode">Postal Code :</label>
-					<input type="text" id="orgpincode" class="form-control input-sm" name="organisationpincode" value="{{gkresult["orgpincode"]}}"></input>
-					</br>
-					<label for="organisationfax" id="orgfaxno">Fax Number :</label>
-					<input type="text" id="orgfax" class="form-control input-sm" name="organisationfaxnumber" value="{{gkresult["orgfax"]}}" ></input>
-				</br>
-					<label for="organisationmvat" id="orgvatno">VAT Number :</label>
-					<input type="text" id="orgmvat" class="form-control input-sm" name="organisationmvat" value="{{gkresult["orgmvat"]}}"></input>
-					</br>
-
-				</br></br></br>
-			</div></br></br><center>
-						<button type="submit" class="btn btn-primary btn-sm" id="submit" name="submit" accesskey="s"><u>S</u>ave</button>
-						<button id="reset" class="btn btn-warning btn-sm" accesskey="r"><u>R</u>eset</button>
-</center>
-					</form>
-
-				</div>
+					</div>
+				</form>
 			</div>
 		</div>
-		<div style="padding-top:15px" class="mainbox col-md-2"></div>
 	</div>
-	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
-	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editorganisation.js')}}"></script>
+	<div style="padding-top:15px" class="mainbox col-md-2"></div>
+</div>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editorganisation.js')}}"></script>
 </body>
 </html>
