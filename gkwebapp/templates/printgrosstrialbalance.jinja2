@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>GNUKhata | Gross Trial Balance</title>
+  <style type="text/css">
+
+  td {
+  	font-size: 65%;
+  	color: black;
+  }
+
+  th {
+  	font-size: 70%;
+  }
+
+  @page {
+    size : 21cm 29.7cm;
+    margin : 10mm 10mm 20mm 10mm
+  }
+  thead{
+    display: table-header-group;
+  }
+  tfoot{
+    display: table-footer-group;
+  }
+
+  </style>
+</head>
+<body>
+	<span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>Gross Trial Balance</strong> for the period from <strong>{{from}}</strong> to <strong>{{to}}</strong></span>
+	<div class="table-responsive printorgdetails">
+		<table class="table table-condensed table-striped">
+			<thead>
+        <tr class="visible-print">
+          <th colspan="5" style="text-align:center; font-size:80%;">
+            Gross Trial Balance for the period from {{from}} to {{to}}
+          </th>
+        </tr>
+				<tr>
+					<th class="col-xs-1">Sr. No.</th>
+					<th class="col-xs-5">Account Name</th>
+					<th class="col-xs-2" style="text-align:right">Debit</th>
+					<th class="col-xs-2" style="text-align:right">Credit</th>
+					<th class="col-xs-2">Group Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for record in records %}
+				<tr	value="{{record['accountcode']}}">
+					<td class="col-xs-1">
+						{{record['srno']}}
+					</td>
+					<td class="col-xs-5">
+            {{record['accountname']}}<br>
+            {% if record.ttlRunDr %}
+            &nbsp&nbsp&nbsp&nbsp Running Total:
+						{% endif %}
+					</td>
+					<td class="col-xs-2" style="text-align:right">
+						{{record["Dr balance"]}}<br>
+            <u><i>{{record["ttlRunDr"]}}</i></u>
+					</td>
+					<td class="col-xs-2" style="text-align:right">
+						{{record["Cr balance"]}}<br>
+            <u><i>{{record["ttlRunCr"]}}</i></u>
+					</td>
+					<td class="col-xs-2">
+						{{record["groupname"]}}
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+  <span style="margin:auto; display:table;">
+		<button type="button" class="btn btn-sm btn-danger hidden-print" id="tbback" accesskey="b"><u>B</u>ack</button>
+		<button type="button" class="btn btn-sm btn-info hidden-print" id="grosstbprint" accesskey="t">Prin<u>t</u></button>
+	</span>
+	<input type="hidden" id="ledtodate" value="{{to}}">
+	<input type="hidden" id="trialbaltype" value="{{trialbalancetype}}">
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("title").html("GNUKhata")
+    $("#grosstbprint").click(function(event) {
+      window.print();
+    });
+    $("#tbback").click(function(event) {
+      var date = $("#ledtodate").val().split("-");
+ 		 var newtodate = date[2]+"-"+date[1]+"-"+date[0];
+      $.ajax(
+        {
+          type: "POST",
+          url: "/showtrialbalancereport",
+          global: false,
+          async: false,
+          datatype: "text/html",
+          data: {"financialstart":sessionStorage.yyyymmddyear1,"calculateto":newtodate,"trialbalancetype":$("#trialbaltype").val()},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          }
+        })
+        .done(function(resp) {
+          $("#info").html(resp);
+        });
+
+    });
+  });
+</script>
+</body>
+</html>
