@@ -106,10 +106,6 @@ $(document).ready(function()
       if (answercheck == 0) {
         $(".passwordfields").show();
         $("#newpassword").focus();
-        $("#securityanswer-correct-alert").alert();
-        $("#securityanswer-correct-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#securityanswer-correct-alert").hide();
-        });
       }
       if (answercheck == 3) {
         $("#securityanswer-connectionfailed-alert").alert();
