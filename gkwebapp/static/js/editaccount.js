@@ -180,8 +180,6 @@ $("#reset").click(function()
 $(document).off("click","#delete").on("click", "#delete", function(event)
 {
   event.preventDefault();
-  $('.modal-backdrop').remove();
-  $('.modal').modal('hide');
   $('#m_confirmdel').modal('show').one('click', '#accdel', function (e)
   {
 
