@@ -123,12 +123,12 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
 					</td>
 					<td class="col-xs-5">
 						{% if record['srno']!="" %}
-							<a class="accname" href="">{{record['accountname']}}</a>
+							<a class="accname" href="">{{record['accountname']}}</a>  {%if record["advflag"] == 1%}<span class="glyphicon glyphicon-warning-sign" style="color:red"></span>{%endif%}
 						{% else %}
 						{% if record['accountname']=="" %}
 						<a class="accname" href="">&nbsp</a>
 						{% else %}
-						<a class="accname" href="" style="text-decoration: none; color:black;">{{record['accountname']}}</a>
+						<a class="accname" href="" style="text-decoration: none; color:black;">{{record['accountname']}}</a>  {%if record["advflag"] == 1%}<span class="glyphicon glyphicon-warning-sign" style="color:red"></span>{%endif%}
 						{% endif %}
 						{% endif %}
 					</td>
