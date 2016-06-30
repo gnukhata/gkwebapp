@@ -32,6 +32,7 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import os
+from odslib import ODS
 import calendar
 
 @view_config(route_name="printconvbalsheetreport")
@@ -51,14 +52,75 @@ def printconvbalsheetreport(request):
 def printsourcesandappfundreport(request):
 	calculateto = request.params["calculateto"]
 	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=2"%(calculateto), headers=header)
-	fy = str(request.params["fystart"]);
-	fy = fy[6:]
-	fy = fy + "-" + (str(request.params["fyend"])[8:])
+	fystart = str(request.params["fystart"]);
 	orgname = str(request.params["orgname"])
-	orgname += " (FY: " + fy +")"
-	period =  calculateto[8:10] + "-" +  str(calendar.month_abbr[int(calculateto[5:7])]) + "-" +  calculateto[0:4];
-	return response
+	fyend = str(request.params["fyend"]);
+	result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=2"%(calculateto), headers=header)
+	calculateto = calculateto[8:10]+calculateto[4:8]+calculateto[0:4]
+	sources = result.json()["gkresult"]["leftlist"]
+	applications = result.json()["gkresult"]["rightlist"]
+
+	ods = ODS()
+	sheet = ods.content.getSheet(0)
+	sheet.getRow(0).setHeight("23pt")
+	sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("16pt")
+	ods.content.mergeCells(0,0,4,1)
+	sheet.getRow(1).setHeight("18pt")
+	sheet.getCell(0,1).stringValue("Statement of Sources and Applications of Funds as on "+calculateto).setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+	ods.content.mergeCells(0,1,4,1)
+	sheet.getColumn(0).setWidth("8cm")
+	sheet.getColumn(1).setWidth("3cm")
+	sheet.getColumn(2).setWidth("3cm")
+	sheet.getColumn(3).setWidth("3cm")
+	row = 2
+	for record in sources:
+		if record["groupAccname"]=="Total" or record["groupAccname"]=="Sources:" or record["groupAccname"]=="Difference" :
+			sheet.getCell(0,row).stringValue(record["groupAccname"].upper()).setBold(True)
+		elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
+			sheet.getCell(0,row).stringValue("			   "+record["groupAccname"])
+		elif record["groupAccflag"]==1 :
+			sheet.getCell(0,row).stringValue("			   			   "+record["groupAccname"])
+		elif record["groupAccflag"]==2:
+			sheet.getCell(0,row).stringValue("			   			   "+record["groupAccname"])
+		else:
+			sheet.getCell(0,row).stringValue(record["groupAccname"].upper())
+
+		if record["groupAccflag"]==2 or record["groupAccflag"]==1:
+			sheet.getCell(1,row).stringValue(record["amount"]).setAlignHorizontal("right")
+		elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
+			sheet.getCell(2,row).stringValue(record["amount"]).setAlignHorizontal("right")
+		else:
+			sheet.getCell(3,row).stringValue(record["amount"]).setAlignHorizontal("right").setBold(True)
+		row += 1
+
+	for record in applications:
+		if record["groupAccname"]=="Total" or record["groupAccname"]=="Sources:" or record["groupAccname"]=="Difference" :
+			sheet.getCell(0,row).stringValue(record["groupAccname"].upper()).setBold(True)
+		elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
+			sheet.getCell(0,row).stringValue("			   "+record["groupAccname"])
+		elif record["groupAccflag"]==1 :
+			sheet.getCell(0,row).stringValue("			   			   "+record["groupAccname"])
+		elif record["groupAccflag"]==2:
+			sheet.getCell(0,row).stringValue("			   			   "+record["groupAccname"])
+		else:
+			sheet.getCell(0,row).stringValue(record["groupAccname"].upper())
+
+		if record["groupAccflag"]==2 or record["groupAccflag"]==1:
+			sheet.getCell(1,row).stringValue(record["amount"]).setAlignHorizontal("right")
+		elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
+			sheet.getCell(2,row).stringValue(record["amount"]).setAlignHorizontal("right")
+		else:
+			sheet.getCell(3,row).stringValue(record["amount"]).setAlignHorizontal("right").setBold(True)
+		row += 1
+
+
+	ods.save("response.ods")
+	repFile = open("response.ods")
+	rep = repFile.read()
+	repFile.close()
+	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	return Response(rep, headerlist=headerList.items())
+
 
 @view_config(route_name="showbalancesheet", renderer="gkwebapp:templates/viewbalancesheet.jinja2")
 def showbalancesheet(request):
