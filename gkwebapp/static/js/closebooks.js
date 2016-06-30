@@ -123,7 +123,7 @@ $(document).off("click","#closebooks").on("click", "#closebooks", function(event
   if ($.trim($("#cbfromday").val())==""||$.trim($("#cbfrommonth").val())==""||$.trim($("#cbfromyear").val())==""||$.trim($("#cbtoday").val())==""||$.trim($("#cbtomonth").val())==""||$.trim($("#cbtoyear").val())=="")
   {
     $("#closebook-blank-alert").alert();
-    $("#closebook-blank-alert").fadeTo(, 500).slideUp(500, function(){
+    $("#closebook-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#closebook-blank-alert").hide();
     });
     $("#cbtoday").focus();
