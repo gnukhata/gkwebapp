@@ -1,13 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GNUKhata</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GNUKhata</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+  .vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+    pointer-events:none; /* This makes sure that we can still click outside of the modal to close it */
+  }
+  .vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events:none;
+  }
+  .modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width:inherit;
+    height:inherit;
+    /* To center horizontally */
+    margin: 0 auto;
+    pointer-events: all;
+  }
+  </style>
 </head>
 <body>
 
-	<div class="container">
+  <div class="container">
 
     <div class="alert alert-danger" id="closebook-blank-alert"  aria-live="rude" role="alert" hidden>
       <a href="#" class="close" aria-label="close">&times;</a>
@@ -17,128 +39,129 @@
       <a href="#" class="close" aria-label="close">&times;</a>
       Books cannot be closed!
     </div>
-  <div class="row">
-    <div class="col-xs-6 pull-left"  style="padding-top:6px">
-      <div class="panel shadow">
-        <div class="panel-heading">
-          <div class="panel-title">Close Books and Rollover</div>
+    <div class="row">
+      <div class="col-xs-6 pull-left"  style="padding-top:6px">
+        <div class="panel shadow">
+          <div class="panel-heading">
+            <div class="panel-title">Close Books and Rollover</div>
 
+          </div>
+          <div style="padding-top:20px; background-color: #f9f9f9;" class="panel-body" >
+            <p style="margin-top: 5px;"></p>
+            <p> Closebooks info and rollover info</p>
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+          </div>
         </div>
-        <div style="padding-top:20px; background-color: #f9f9f9;" class="panel-body" >
-          <p style="margin-top: 5px;"></p>
-          <p> Closebooks info and rollover info</p>
-          <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        </div>
-        </div>
-
-    </div>
-    <div style="padding-top:5px" class="col-xs-6 pull-right">
-      <div class="panel shadow closebooks" hidden="hidden">
-				<div class="panel-heading">
-					<div class="panel-title">Close Books</div>
-        </div>
-        <div style="padding-top:5px" class="panel-body" >
-			               <p>Current Financial Year:
-                       <div class="form-inline">
-
-                         <label class="sr-only" for="cbfromday">Enter From Day</label>
-                         <input type="text" id="cbfromday" name="fromday" class="form-control crdate " size="2" maxlength="2" style="width:60px"  placeholder="DD" accesskey="d" disabled>
-
-                         <label class="sr-only" for="cbfrommonth">Enter From Month</label>
-                         <input type="text" id="cbfrommonth" name="frommonth" class="form-control crdate " size="2" maxlength="2" style="width:60px"  placeholder="MM" disabled>
-
-                         <label class="sr-only" for="cbfromyear">Enter From Year</label>
-                         <input type="text" id="cbfromyear" name="fromyear" class="form-control crdate " size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  disabled>
-
-                         <label>--To--</label>
-
-                         <label class="sr-only" for="cbtoday">Enter To Day</label>
-                         <input type="text" id="cbtoday" name="today" class="form-control crdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" >
-
-                         <label class="sr-only" for="cbtomonth">Enter To Month</label>
-                         <input type="text" id="cbtomonth" name="tomonth" class="form-control crdate" size="2" maxlength="2" style="width:60px"  placeholder="MM"  >
-
-                         <label class="sr-only" for="cbtoyear">Enter To Year</label>
-                         <input type="text" id="cbtoyear" name="toyear" class="form-control crdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
-                       </div></p>
-
-                       <button type="button" id="closebooks" class="btn btn-danger closebooks" accesskey="s">Clo<u>s</u>e Books</button>
-		    </div>
-		    </div>
-    </div>
-
-
-
-
-    <div style="padding-top:5px" class="col-xs-6 pull-right">
-      <div class="panel shadow" >
-				<div class="panel-heading">
-					<div class="panel-title">Roll Over</div>
-        </div>
-        <div style="padding-top:5px" class="panel-body" >
-			              <p><b>Roll Over for the Period</b></p>
-			                 <p>Current Financial Year From:<div class="form-inline">
-
-                         <label class="sr-only" for="rbfromday">Enter From Day</label>
-                         <input type="text" id="rbfromday" name="fromday" class="form-control crdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" disabled>
-
-                         <label class="sr-only" for="rbfrommonth">Enter From Month</label>
-                         <input type="text" id="rbfrommonth" name="frommonth" class="form-control crdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" disabled>
-
-                         <label class="sr-only" for="rbfromyear">Enter From Year</label>
-                         <input type="text" id="rbfromyear" name="fromyear" class="form-control crdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  disabled>
-
-                         <label>--To--</label>
-
-                         <label class="sr-only" for="rbtoday">Enter To Day</label>
-                         <input type="text" id="rbtoday" name="day" class="form-control crdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" disabled>
-
-                         <label class="sr-only" for="rbtomonth">Enter To Month</label>
-                         <input type="text" id="rbtomonth" name="tomonth" class="form-control crdate" size="2" maxlength="2" style="width:60px"  placeholder="MM"  disabled>
-
-                         <label class="sr-only" for="rbtoyear">Enter To Year</label>
-                         <input type="text" id="rbtoyear" name="toyear" class="form-control crdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  disabled>
-                       </div></p>
-
-                       <p>New Financial Year From: <div class="form-inline">
-
-                         <label class="sr-only" for="rbfrom_day">Enter From Day</label>
-                         <input type="text" id="rbfrom_day" name="fromday" class="form-control crdate dis" size="2" maxlength="2" style="width:60px"  placeholder="DD">
-
-                         <label class="sr-only" for="rbfrom_month">Enter From Month</label>
-                         <input type="text" id="rbfrom_month" name="frommonth" class="form-control crdate dis" size="2" maxlength="2" style="width:60px"  placeholder="MM" >
-
-                         <label class="sr-only" for="rbfrom_year">Enter From Year</label>
-                         <input type="text" id="rbfrom_year" name="fromyear" class="form-control crdate dis" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
-
-                         <label>--To--</label>
-
-                         <label class="sr-only" for="rbto_day">Enter To Day</label>
-                         <input type="text" id="rbto_day" name="day" class="form-control crdate dis" size="2" maxlength="2" style="width:60px"  placeholder="DD" >
-
-                         <label class="sr-only" for="rbto_month">Enter To Month</label>
-                         <input type="text" id="rbto_month" name="tomonth" class="form-control crdate dis" size="2" maxlength="2" style="width:60px"  placeholder="MM"  >
-
-                         <label class="sr-only" for="rbto_year">Enter To Year</label>
-                         <input type="text" id="rbto_year" name="toyear" class="form-control crdate dis" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
-                       </div></p>
-
-                      <button type="button" id="rollover" class="btn btn-primary dis" accesskey="v">Roll O<u>v</u>er</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-        <!-- Trigger the modal with a button -->
-
 
       </div>
+      <div style="padding-top:5px" class="col-xs-6 pull-right">
+        <div class="panel shadow closebooks" hidden="hidden">
+          <div class="panel-heading">
+            <div class="panel-title">Close Books</div>
+          </div>
+          <div style="padding-top:5px" class="panel-body" >
+            <p>Current Financial Year:
+              <div class="form-inline">
 
+                <label class="sr-only" for="cbfromday">Enter From Day</label>
+                <input type="text" id="cbfromday" name="fromday" class="form-control crdate " size="2" maxlength="2" style="width:60px"  placeholder="DD" accesskey="d" disabled>
+
+                <label class="sr-only" for="cbfrommonth">Enter From Month</label>
+                <input type="text" id="cbfrommonth" name="frommonth" class="form-control crdate " size="2" maxlength="2" style="width:60px"  placeholder="MM" disabled>
+
+                <label class="sr-only" for="cbfromyear">Enter From Year</label>
+                <input type="text" id="cbfromyear" name="fromyear" class="form-control crdate " size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  disabled>
+
+                <label>--To--</label>
+
+                <label class="sr-only" for="cbtoday">Enter To Day</label>
+                <input type="text" id="cbtoday" name="today" class="form-control crdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" >
+
+                <label class="sr-only" for="cbtomonth">Enter To Month</label>
+                <input type="text" id="cbtomonth" name="tomonth" class="form-control crdate" size="2" maxlength="2" style="width:60px"  placeholder="MM"  >
+
+                <label class="sr-only" for="cbtoyear">Enter To Year</label>
+                <input type="text" id="cbtoyear" name="toyear" class="form-control crdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
+              </div></p>
+
+              <button type="button" id="closebooks" class="btn btn-danger closebooks" accesskey="s">Clo<u>s</u>e Books</button>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <div style="padding-top:5px" class="col-xs-6 pull-right">
+          <div class="panel shadow" >
+            <div class="panel-heading">
+              <div class="panel-title">Roll Over</div>
+            </div>
+            <div style="padding-top:5px" class="panel-body" >
+              <p><b>Roll Over for the Period</b></p>
+              <p>Current Financial Year From:<div class="form-inline">
+
+                <label class="sr-only" for="rbfromday">Enter From Day</label>
+                <input type="text" id="rbfromday" name="fromday" class="form-control crdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" disabled>
+
+                <label class="sr-only" for="rbfrommonth">Enter From Month</label>
+                <input type="text" id="rbfrommonth" name="frommonth" class="form-control crdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" disabled>
+
+                <label class="sr-only" for="rbfromyear">Enter From Year</label>
+                <input type="text" id="rbfromyear" name="fromyear" class="form-control crdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  disabled>
+
+                <label>--To--</label>
+
+                <label class="sr-only" for="rbtoday">Enter To Day</label>
+                <input type="text" id="rbtoday" name="day" class="form-control crdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" disabled>
+
+                <label class="sr-only" for="rbtomonth">Enter To Month</label>
+                <input type="text" id="rbtomonth" name="tomonth" class="form-control crdate" size="2" maxlength="2" style="width:60px"  placeholder="MM"  disabled>
+
+                <label class="sr-only" for="rbtoyear">Enter To Year</label>
+                <input type="text" id="rbtoyear" name="toyear" class="form-control crdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  disabled>
+              </div></p>
+
+              <p>New Financial Year From: <div class="form-inline">
+
+                <label class="sr-only" for="rbfrom_day">Enter From Day</label>
+                <input type="text" id="rbfrom_day" name="fromday" class="form-control crdate dis" size="2" maxlength="2" style="width:60px"  placeholder="DD">
+
+                <label class="sr-only" for="rbfrom_month">Enter From Month</label>
+                <input type="text" id="rbfrom_month" name="frommonth" class="form-control crdate dis" size="2" maxlength="2" style="width:60px"  placeholder="MM" >
+
+                <label class="sr-only" for="rbfrom_year">Enter From Year</label>
+                <input type="text" id="rbfrom_year" name="fromyear" class="form-control crdate dis" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
+
+                <label>--To--</label>
+
+                <label class="sr-only" for="rbto_day">Enter To Day</label>
+                <input type="text" id="rbto_day" name="day" class="form-control crdate dis" size="2" maxlength="2" style="width:60px"  placeholder="DD" >
+
+                <label class="sr-only" for="rbto_month">Enter To Month</label>
+                <input type="text" id="rbto_month" name="tomonth" class="form-control crdate dis" size="2" maxlength="2" style="width:60px"  placeholder="MM"  >
+
+                <label class="sr-only" for="rbto_year">Enter To Year</label>
+                <input type="text" id="rbto_year" name="toyear" class="form-control crdate dis" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
+              </div></p>
+
+              <button type="button" id="rollover" class="btn btn-primary dis" accesskey="v">Roll O<u>v</u>er</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
       <!-- Trigger the modal with a button -->
 
-      <!-- Modal -->
-      <div class="modal fade" id="m_rollb" role="dialog">
-        <div class="modal-dialog modal-sm">
+
+    </div>
+
+    <!-- Trigger the modal with a button -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="m_rollb" role="dialog">
+      <div class="vertical-alignment-helper">
+        <div class="modal-dialog modal-sm vertical-align-center">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -158,6 +181,7 @@
         </div>
       </div>
     </div>
-    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/closebooks.js')}}"></script>
+  </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/closebooks.js')}}"></script>
 </body>
 </html>
