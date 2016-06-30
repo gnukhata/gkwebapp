@@ -159,7 +159,7 @@ $(document).ready(function() {
   $(".table").off('dblclick','tr:not(:first)').on('dblclick','tr:not(:first)',function(e){
     e.preventDefault();
     var id = $(this).attr('value');
-
+    $("#modalindex").val($(this).index());
     $.ajax(
       {
 
