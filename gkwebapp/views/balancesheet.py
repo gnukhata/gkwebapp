@@ -54,10 +54,6 @@ def printconvbalsheetreport(request):
 	sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("16pt")
 	ods.content.mergeCells(0,0,8,1)
 	sheet.getRow(1).setHeight("18pt")
-	if orgtype == "Profit Making":
-		sheet.getCell(0,1).stringValue("Conventional Balance Sheet as on "+calculateto).setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-	if orgtype == "Not For Profit":
-		sheet.getCell(0,1).stringValue("Conventional Statement of Affairs as on "+calculateto).setBold(True).setFontSize("14pt").setAlignHorizontal("center")
 	ods.content.mergeCells(0,1,8,1)
 	sheet.getColumn(0).setWidth("8cm")
 	sheet.getColumn(1).setWidth("2.5cm")
@@ -67,7 +63,12 @@ def printconvbalsheetreport(request):
 	sheet.getColumn(5).setWidth("2.5cm")
 	sheet.getColumn(6).setWidth("2.5cm")
 	sheet.getColumn(7).setWidth("2.5cm")
-	sheet.getCell(0,2).stringValue("Capital and Liabilities").setBold(True)
+	if orgtype == "Profit Making":
+		sheet.getCell(0,1).stringValue("Conventional Balance Sheet as on "+calculateto).setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+		sheet.getCell(0,2).stringValue("Capital and Liabilities").setBold(True)
+	if orgtype == "Not For Profit":
+		sheet.getCell(0,1).stringValue("Conventional Statement of Affairs as on "+calculateto).setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+		sheet.getCell(0,2).stringValue("Corpus and Liabilities").setBold(True)
 	sheet.getCell(3,2).stringValue("Amount").setBold(True)
 	sheet.getCell(4,2).stringValue("Property and Assets").setBold(True)
 	sheet.getCell(7,2).stringValue("Amount").setBold(True)
