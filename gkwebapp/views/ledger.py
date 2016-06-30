@@ -266,3 +266,41 @@ def showdualledgerreport(request):
 			result2 = requests.get("http://127.0.0.1:6543/report?type=ledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode=%d"%(accountcode2,calculatefrom2,calculateto2,financialstart,int(projectcode2)), headers=header)
 			ledgerrefresh2["projectname"] = result2.json()["ledgerheader"]["projectname"]
 		return render_to_response("gkwebapp:templates/dualledgerreport.jinja2",{"records1":result1.json()["gkresult"],"records2":result2.json()["gkresult"],"narrationflag1":narrationflag1,"narrationflag2":narrationflag2,"userrole":result1.json()["userrole"],"ledgerrefresh1":ledgerrefresh1,"ledgerrefresh2":ledgerrefresh2,"ledgerheader1":result1.json()["ledgerheader"],"ledgerheader2":result2.json()["ledgerheader"] },request=request)
+
+@view_config(route_name="printledger")
+def printledger(request):
+	orgname=request.params["orgname"]
+	printstart = request.params["fystart"]
+	printend = request.params["fyend"]
+	fyear = printstart + " to "+printend
+	accountcode = int(request.params["accountcode"])
+	calculatefrom = request.params["calculatefrom"]
+	calculateto = request.params["calculateto"]
+	financialstart = request.params["financialstart"]
+	backflag = request.params["backflag"]
+	monthlyflag = request.params["monthlyflag"]
+	if request.params["narrationflag"]=="true":
+		narrationflag = True
+	else:
+		narrationflag = False
+	projectcode = request.params["projectcode"]
+	ledgerrefresh = {"orgname":orgname,"fyear":fyear,"accountcode":accountcode,"calculatefrom":calculatefrom,"calculateto":calculateto,"financialstart":financialstart,"monthlyflag":monthlyflag,"backflag":int(backflag),"projectcode":projectcode,"narrationflag":request.params["narrationflag"]}
+	header={"gktoken":request.headers["gktoken"]}
+	if monthlyflag=="true":
+		result = requests.get("http://127.0.0.1:6543/report?type=monthlyledger&accountcode=%d"%(accountcode), headers=header)
+		return render_to_response("gkwebapp:templates/monthledger.jinja2",{"records":result.json()["gkresult"],"accountcode":result.json()["accountcode"],"accountname":result.json()["accountname"] },request=request)
+	else:
+		if request.params.has_key("side"):
+			if projectcode=="":
+				result = requests.get("http://127.0.0.1:6543/report?type=crdrledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode=&side=%s"%(accountcode,calculatefrom,calculateto,financialstart,request.params["side"]), headers=header)
+			else:
+				result = requests.get("http://127.0.0.1:6543/report?type=crdrledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode=%d&side=%s"%(accountcode,calculatefrom,calculateto,financialstart,int(projectcode),request.params["side"]), headers=header)
+				ledgerrefresh["projectname"] = result.json()["ledgerheader"]["projectname"]
+			ledgerrefresh["side"]=request.params["side"]
+		else:
+			if projectcode=="":
+				result = requests.get("http://127.0.0.1:6543/report?type=ledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode="%(accountcode,calculatefrom,calculateto,financialstart), headers=header)
+			else:
+				result = requests.get("http://127.0.0.1:6543/report?type=ledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode=%d"%(accountcode,calculatefrom,calculateto,financialstart,int(projectcode)), headers=header)
+				ledgerrefresh["projectname"] = result.json()["ledgerheader"]["projectname"]
+		return render_to_response("gkwebapp:templates/printledger.jinja2",{"records":result.json()["gkresult"],"narrationflag":narrationflag,"userrole":result.json()["userrole"],"ledgerrefresh":ledgerrefresh,"ledgerheader":result.json()["ledgerheader"] },request=request)

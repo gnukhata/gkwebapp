@@ -12,6 +12,9 @@ p.shortcut {
 .gknav{
 	background-color: rgb(26,34,41);
 }
+.printorgdetails{
+	font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
+}
 .gknav .navbar-brand {
     color: white;
 }

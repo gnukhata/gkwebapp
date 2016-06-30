@@ -288,6 +288,33 @@ $("#dualledger").click(function(event) {
 
 
 });
+$("#printledger").click(function(event) {
+  var printdata = {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"monthlyflag":false,"narrationflag":$("#narrationflag").val()}
+  if ($("#side").val()!="") {
+    printdata.side=$("#side").val();
+  }
+  $.ajax({
+    url: '/printledger',
+    type: 'POST',
+    dataType: 'html',
+    data: printdata,
+    beforeSend: function(xhr)
+    {
+      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    },
+  })
+  .done(function(resp) {
+    $("#info").html(resp);
+    console.log("success");
+  })
+  .fail(function() {
+    console.log("error");
+  })
+  .always(function() {
+    console.log("complete");
+  });
+
+});
 
   $("#drsonly").click(function(event) {
     $.ajax(
