@@ -124,15 +124,15 @@
 
           <td class="col-xs-9">
             {% if record["groupAccname"]=="Total" or record["groupAccname"]=="Sources:" or record["groupAccname"]=="Difference" %}
-            <a class="libgname" href="#" style="text-decoration: none; color:black;"><b>{{record["groupAccname"].upper()}}</b></a>
+            <a class="libgname" href="#" style="text-decoration: none; color:black;"><b>{{record["groupAccname"].upper()}}</b></a>  {%if record["advflag"] == 1%}<span class="glyphicon glyphicon-warning-sign" style="color:red"></span>{%endif%}
             {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
-            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"].upper()}}</a>
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"].upper()}}</a>  {%if record["advflag"] == 1%}<span class="glyphicon glyphicon-warning-sign" style="color:red"></span>{%endif%}
             {%elif record["groupAccflag"]==1 %}
-            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"]}}</a>
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"]}}</a>  {%if record["advflag"] == 1%}<span class="glyphicon glyphicon-warning-sign" style="color:red"></span>{%endif%}
             {%elif record["groupAccflag"]==2%}
-            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"]}}</a>
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"]}}</a>  {%if record["advflag"] == 1%}<span class="glyphicon glyphicon-warning-sign" style="color:red"></span>{%endif%}
             {%else%}
-            <a href="#" class="libgname">{{record["groupAccname"].upper()}}</a>
+            <a href="#" class="libgname">{{record["groupAccname"].upper()}}</a>  {%if record["advflag"] == 1%}<span class="glyphicon glyphicon-warning-sign" style="color:red"></span>{%endif%}
             {%endif%}
           </td>
 
@@ -173,15 +173,15 @@
 
           <td class="col-xs-9">
             {% if record["groupAccname"]=="Total" or record["groupAccname"]=="Difference" or record["groupAccname"]=="Applications:" %}
-            <a class="libgname" href="#" style="text-decoration: none; color:black;"><b>{{record["groupAccname"].upper()}}</b></a>
+            <a class="libgname" href="#" style="text-decoration: none; color:black;"><b>{{record["groupAccname"].upper()}}</b></a>  {%if record["advflag"] == 1%}<span class="glyphicon glyphicon-warning-sign" style="color:red"></span>{%endif%}
             {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
-            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"].upper()}}</a>
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"].upper()}}</a>  {%if record["advflag"] == 1%}<span class="glyphicon glyphicon-warning-sign" style="color:red"></span>{%endif%}
             {%elif record["groupAccflag"]==1 %}
-            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"]}}</a>
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"]}}</a>  {%if record["advflag"] == 1%}<span class="glyphicon glyphicon-warning-sign" style="color:red"></span>{%endif%}
             {%elif record["groupAccflag"]==2%}
-            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"]}}</a>
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"]}}</a>  {%if record["advflag"] == 1%}<span class="glyphicon glyphicon-warning-sign" style="color:red"></span>{%endif%}
             {%else%}
-            <a href="#" class="libgname groupname">{{record["groupAccname"].upper()}}</a>
+            <a href="#" class="libgname groupname">{{record["groupAccname"].upper()}}</a>  {%if record["advflag"] == 1%}<span class="glyphicon glyphicon-warning-sign" style="color:red"></span>{%endif%}
             {%endif%}
           </td>
 
