@@ -31,21 +31,25 @@ td {
             <thead>
               <tr>
                 <th class="col-xs-6">Month</th>
-                <th style="text-align:right" class="col-xs-3">Debit</th>
-                <th style="text-align:right" class="col-xs-3">Credit</th>
+                <th style="text-align:right" class="col-xs-2">Debit</th>
+                <th style="text-align:right" class="col-xs-2">Credit</th>
+                <th style="text-align:center" class="col-xs-2">No. of Vouchers</th>
               </tr>
             </thead>
             <tbody>
               {% for record in records %}
               <tr  value="{{record['period']}}">
-                <td class="col-xs-6">
+                <td class="col-xs-5">
                   <a class="monthname" href="">{{record['month']}}</a>
                 </td>
-                <td class="col-xs-3" style="text-align:right">
+                <td class="col-xs-2" style="text-align:right">
                   {{record["Dr"]}}
                 </td>
-                <td class="col-xs-3" style="text-align:right">
+                <td class="col-xs-2" style="text-align:right">
                   {{record["Cr"]}}
+                </td>
+                <td class="col-xs-2" style="text-align:center">
+                  {{record["vcount"]}}
                 </td>
               </tr>
               {% endfor %}
