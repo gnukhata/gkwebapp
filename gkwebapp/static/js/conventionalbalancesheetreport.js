@@ -300,22 +300,26 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
     );
   });
   $("#print").click(function(event) {
-    $.ajax(
-      {
-        type: "GET",
-        url: "/printconvbalsheetreport",
-        global: false,
-        async: false,
-        dataType : 'text',
-        data: {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "calculateto": $("#cto").val()},
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-        success: function(resp){
-          window.open('data:application/pdf;charset=utf-8,' + encodeURIComponent(resp));
-        }
-      });
+
+      event.preventDefault();
+      var orgname = sessionStorage.getItem('orgn');
+      var orgtype = sessionStorage.getItem('orgt');
+      var xhr = new XMLHttpRequest();
+
+      xhr.open('GET', '/printconvbalsheetreport?orgname='+ orgname+'&orgtype='+orgtype+'&fystart='+sessionStorage.getItem('year1')+'&fyend='+sessionStorage.getItem('year2')+'&calculateto='+$("#cto").val(), true);
+      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      xhr.responseType = 'blob';
+
+      xhr.onload = function(e) {
+      if (this.status == 200) {
+      // get binary data as a response
+        var blob = this.response;
+        var url = window.URL.createObjectURL(blob);
+        window.location.assign(url)
+      }
+    };
+
+    xhr.send();
     });
   $("#balback").click(function(event) {
     $("#showbalancesheet").click();

@@ -30,94 +30,55 @@ Contributors:
 from pyramid.view import view_config
 import requests, json
 from datetime import datetime
+from odslib import ODS
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import os
-from reportlab.lib.pagesizes import A4
-from reportlab.platypus import SimpleDocTemplate
-from reportlab.lib.units import mm, cm, inch
-from reportlab.platypus.flowables import PageBreak, Spacer
-from reportlab.platypus.paragraph import Paragraph
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.lib import colors
 from formula import CurrentPageColSum, PreviousPagesColSum, RowNumber
 from spreadsheettable import SpreadsheetTable
-from reportlab.pdfgen import canvas
-from reportlab.lib.enums import  TA_LEFT, TA_CENTER
-from reportlab.rl_config import defaultPageSize
 
 @view_config(route_name="printlistofaccounts", renderer="")
 def printlistofaccount(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/accounts", headers=header)
-	gkresult = result.json()["gkresult"]
-	PAGE_HEIGHT=defaultPageSize[1]; PAGE_WIDTH=defaultPageSize[0]
-	styles = getSampleStyleSheet()
-	doc = SimpleDocTemplate("listOfAccounts.pdf", pagesize=A4)
-	style = styles["BodyText"]
-	style.alignment = TA_CENTER
-	stylenormal = styles["Normal"]
-	stylenormal.alignment = TA_CENTER
-	fy = str(request.params["fystart"]);
-	fy = fy[6:]
-	fy = fy + "-" + (str(request.params["fyend"])[8:])
+	result = result.json()["gkresult"]
+	fystart = str(request.params["fystart"]);
+	fyend = str(request.params["fyend"]);
 	orgname = str(request.params["orgname"])
-	orgname += " (FY: " + fy +")"
-	def myFirstPage(canvas, doc):
-		canvas.saveState()
-		canvas.setFont('Times-Bold',18)
-		canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-50, orgname)
-		canvas.setFont('Times-Bold',16)
-		canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-70, "List of Accounts" )
-		canvas.setFont('Times-Bold',12)
-		canvas.setLineWidth(0.5)
-		canvas.line(1 * cm, PAGE_HEIGHT-100, PAGE_WIDTH - 10, PAGE_HEIGHT-100)
-		canvas.setStrokeColorRGB(0, 0, 0)
-		canvas.setLineWidth(0.5)
-		canvas.line(1 * cm, 50, PAGE_WIDTH - 10, 50)
-		canvas.setFont('Times-Roman',9)
-		canvas.drawString(inch, 0.55 * inch, "Page1")
-		canvas.restoreState()
-	def myLaterPages(canvas, doc):
-		canvas.saveState()
-		canvas.setFont('Times-Bold',12)
-		canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-40, orgname)
-		canvas.setFont('Times-Roman',10)
-		canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-60, "List of Accounts")
-		canvas.setStrokeColorRGB(0, 0, 0)
-		canvas.setLineWidth(0.5)
-		canvas.line(1 * cm, PAGE_HEIGHT-70, PAGE_WIDTH - 10, PAGE_HEIGHT-70)
-		canvas.line(1 * cm, 50, PAGE_WIDTH - 10, 50)
-		canvas.setFont('Times-Roman',9)
-		canvas.drawString(inch, 0.5 * inch, "Page %d" % doc.page)
-		canvas.restoreState()
-	# Headers
-	srno = Paragraph('''<b>Sr.No.</b>''', stylenormal)
-	accname = Paragraph('''<b>Account Name</b>''', stylenormal)
-	grpname = Paragraph('''<b>Group Name</b>''', stylenormal)
-	subgrpname = Paragraph('''<b>Sub-Group Name</b>''', stylenormal)
-	data= [[srno, accname, grpname, subgrpname]]
-	for record in  gkresult:
-		srno = Paragraph(str(record["srno"]), style)
-		accountname = Paragraph(str(record["accountname"]), style)
-		groupname = Paragraph(str(record["groupname"]), style)
-		subgroupname = Paragraph(str(record["subgroupname"]), style)
-		data.append([srno, accountname, groupname, subgroupname] );
-	table_style = [('BACKGROUND', (0, 0), (-1, 0), '#a7a5a5'),
-				('INNERGRID', (0,0), (-1,-1), 0.25, colors.white),
-				   ('BOX', (0,0), (-1,-1), 0.25, colors.black),
-				   ('BOX', (0,0), (-1,0), 0.25, colors.black),]
-	story = [Spacer(1,0.4*inch)]
-	spreadsheet_table = SpreadsheetTable(data, repeatRows = 1, colWidths = (1.5 * cm, 7.1 * cm,  5.6* cm, 5 * cm))
-	spreadsheet_table.setStyle(table_style)
-	story.append(spreadsheet_table)
-	doc.multiBuild(story, onFirstPage=myFirstPage, onLaterPages=myLaterPages)
-	f = open("listOfAccounts.pdf", 'rb');
-	body = f.read();
-	f.close()
-	response = Response(content_type='application/pdf',content_disposition='attachment; filename=listOfAccounts.pdf', body=body)
-	os.remove("listOfAccounts.pdf")
-	return response
+	orgname += " (FY: " + fystart+" to "+fyend +")"
+	ods = ODS()
+	sheet = ods.content.getSheet(0)
+	sheet.setSheetName("List of Acounts")
+	sheet.getRow(0).setHeight("23pt")
+
+	sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("18pt")
+	ods.content.mergeCells(0,0,4,1)
+	sheet.getRow(1).setHeight("18pt")
+	sheet.getCell(0,1).stringValue("List Of Accounts").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+	ods.content.mergeCells(0,1,4,1)
+	sheet.getColumn(1).setWidth("8cm")
+	sheet.getColumn(2).setWidth("4cm")
+	sheet.getColumn(3).setWidth("4cm")
+	sheet.getCell(0,2).stringValue("Sr. No.").setBold(True)
+	sheet.getCell(1,2).stringValue("Account Name").setBold(True)
+	sheet.getCell(2,2).stringValue("Group Name").setBold(True)
+	sheet.getCell(3,2).stringValue("Sub-Group Name").setBold(True)
+	row = 3
+	for account in result:
+		sheet.getCell(0, row).stringValue(account["srno"])
+		sheet.getCell(1, row).stringValue(account["accountname"])
+		sheet.getCell(2, row).stringValue(account["groupname"])
+		sheet.getCell(3, row).stringValue(account["subgroupname"])
+		row += 1
+
+	print "to file save"
+	ods.save("response.ods")
+	repFile = open("response.ods")
+	rep = repFile.read()
+	repFile.close()
+	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	return Response(rep, headerlist=headerList.items())
+
 
 @view_config(route_name="showaccount", renderer="gkwebapp:templates/createaccount.jinja2")
 def showaccount(request):

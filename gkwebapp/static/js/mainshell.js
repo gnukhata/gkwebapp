@@ -227,9 +227,9 @@ $(document).ready(function(){
   var enyear = sessionStorage.getItem('year2');
   var orgdata = orname + " (" + ortype + ")";
   var yeardata = "Financial Year : " + styear + " to " + enyear;
-
 $("title").append(orname);
-
+$("#printorgname").append(orname);
+$("#printyears").append(styear + " to " + enyear);
 $("#showedituser").click(function(e){
 
 $.ajax({

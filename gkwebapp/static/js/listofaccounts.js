@@ -81,22 +81,25 @@ $(document).ready(function() {
 
   });
   $("#print").click(function(event) {
-      $.ajax(
-        {
-          type: "POST",
-          url: "/printlistofaccounts",
-          global: false,
-          async: false,
-          dataType : 'text',
-          data: {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2')},
-          beforeSend: function(xhr)
-          {
-            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-          },
-          success: function(resp){
-            window.open('data:application/pdf;charset=utf-8,' + encodeURIComponent(resp));
-          }
-        });
+        event.preventDefault();
+        var xhr = new XMLHttpRequest();
+
+        xhr.open('GET', '/printlistofaccounts?fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2'), true);
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        xhr.responseType = 'blob';
+
+        xhr.onload = function(e) {
+        if (this.status == 200) {
+        // get binary data as a response
+          var blob = this.response;
+          var url = window.URL.createObjectURL(blob);
+          window.location.assign(url)
+        }
+      };
+
+      xhr.send();
+
+
   });
 
 });

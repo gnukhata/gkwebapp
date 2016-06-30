@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>GNUKhata | Ledger | {{ledgerheader["accountname"]}}</title>
+    <style>
+    @page {
+      size: 21cm 29.7cm;
+      margin: 10mm 10mm 20mm 10mm; /* change the margins as you want them to be. */
+    }
+		table { page-break-inside:auto }
+   	tr    { page-break-inside:avoid; page-break-after:auto }
+    td {
+      font-size: 71%;
+    }
+
+    th {
+      font-size: 75%;
+    }
+    thead { display: table-header-group; }
+    tfoot { display: table-footer-group; }
+    </style>
+	</head>
+	<body>
+		<input type="hidden" id="accountcode" name="accountcode" value="{{ledgerrefresh["accountcode"]}}"></input>
+	  <input type="hidden" id="calculatefrom" name="calculatefrom" value="{{ledgerrefresh["calculatefrom"]}}"></input>
+	  <input type="hidden" id="calculateto" name="calculateto" value="{{ledgerrefresh["calculateto"]}}"></input>
+	  <input type="hidden" id="financialstart" name="financialstart" value="{{ledgerrefresh["financialstart"]}}"></input>
+	  <input type="hidden" id="monthlyflag" name="monthlyflag" value="{{ledgerrefresh["monthlyflag"]}}"></input>
+	  <input type="hidden" id="backflag" name="backflag" value="{{ledgerrefresh["backflag"]}}"></input>
+	  <input type="hidden" id="projectcode" name="projectcode" value="{{ledgerrefresh["projectcode"]}}"></input>
+	  <input type="hidden" id="narrationflag" name="narrationflag" value="{{ledgerrefresh["narrationflag"]}}"></input>
+	  <input type="hidden" id="projectname" name="projectname" value="{{ledgerrefresh["projectname"]}}"></input>
+	  <input type="hidden" id="side" name="side" value="{{ledgerrefresh["side"]}}"></input>
+		<div class="printorgdetails hidden-print" style="text-align:center;"><i>Ledger Account</i> : <b>{{ledgerheader["accountname"]}}</b>{% if ledgerheader["projectname"]!="" %}
+		<br><i>Project</i> : {{ledgerheader["projectname"]}}
+		{% endif %}<br><i>Period</i> : {{ledgerheader["calculatefrom"]}} to {{ledgerheader["calculateto"]}}</div>
+    <br>
+		<div class="table-responsive printorgdetails">
+			<table id="ledgertable" class="table table-striped table-condensed">
+				<thead>
+					<tr class="visible-print">
+						<th colspan="6" style="text-align:center; font-size:80%">
+							<i>Ledger Account : </i>{{ledgerheader["accountname"]}}<br>
+							<i>Period : </i>{{ledgerheader["calculatefrom"]}} to {{ledgerheader["calculateto"]}}
+						</th>
+					</tr>
+					<tr>
+						<th class="col-xs-1">Date</th>
+						<th class="col-xs-1">V.No.</th>
+						<th class="col-xs-1">Type</th>
+						<th class="col-xs-4">Particulars</th>
+						<th style="text-align:right" class="col-xs-2">Debit</th>
+						<th style="text-align:right" class="col-xs-2">Credit</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for record in records %}
+					<tr	value="{{record['vouchercode']}}">
+						<td class="col-xs-1">
+							{{record['voucherdate']}}
+						</td>
+						{% if record['vouchernumber']=="" %}
+						<td class="col-xs-1">
+						</td>
+						{% else %}
+						<td class="col-xs-1">
+							{{record['vouchernumber']}}
+						</td>
+						{% endif %}
+						{% if record["vouchertype"]=="" %}
+						<td class="col-xs-1"></td>
+						{% elif (record["vouchertype"]=="purchasereturn")%}
+						<td class="col-xs-1">Purchase Return</td>
+						{% elif (record["vouchertype"]=="salesreturn")%}
+						<td class="col-xs-1">Sales Return</td>
+						{% elif (record["vouchertype"]=="creditnote")%}
+						<td class="col-xs-1">Credit Note</td>
+						{% elif (record["vouchertype"]=="debitnote")%}
+						<td class="col-xs-1">Debit Note</td>
+						{% else %}
+						<td class="col-xs-1" style="text-align:left">
+							{{(record["vouchertype"]).title()}}
+						</td>
+						{% endif %}
+
+						<td class="col-xs-4">
+							{% for pr in record['particulars'] %}
+							{{pr}} <br>
+							{% endfor %}
+							{% if record.ttlRunDr %}
+								&nbsp&nbsp&nbsp&nbsp <i>Running Total:</i><br>
+							{% endif %}
+							{% if record['narration']!="" and narrationflag==true %}
+							({{record['narration']}})
+							{% endif %}
+						</td>
+						<td class="col-xs-2" style="text-align:right">
+							{{record["Dr"]}}{% for pr in record['particulars'] %}
+								<br>
+							{% endfor %}<i><u>{{record["ttlRunDr"]}}</u></i>
+						</td>
+						<td class="col-xs-2" style="text-align:right">
+							{{record["Cr"]}}{% for pr in record['particulars'] %}
+								<br>
+							{% endfor %}<i><u>{{record["ttlRunCr"]}}</u></i>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<span style="margin:auto; display:table;">
+				<button class="btn btn-sm btn-primary hidden-print" type="button" id="printback" accesskey="b"><u>B</u>ack</button>
+				<button class="btn btn-sm btn-primary hidden-print" type="button"	id="realprint" accesskey="t">Prin<u>t</u></button>
+			</span>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("title").html("GNUKhata");
+				$("#printback").click(function(event) {
+					var backdata = {"backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()};
+					if ($("#side").val()!="") {
+						backdata.side=$("#side").val();
+					}
+					$.ajax(
+						{
+							type: "POST",
+							url: "/showledgerreport",
+							global: false,
+							async: false,
+							datatype: "text/html",
+							data: backdata,
+							beforeSend: function(xhr)
+							{
+								xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+							}
+						})
+						.done(function(resp)
+						{
+							$("#info").html("");
+							$("#info").html(resp);
+						}
+					);
+				});
+				$("#realprint").click(function(event) {
+					window.print();
+				});
+			});
+		</script>
+	</body>
+</html>

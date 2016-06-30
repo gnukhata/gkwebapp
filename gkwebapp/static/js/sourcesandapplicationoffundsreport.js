@@ -205,6 +205,27 @@ $("#cbalbutn").click(function(event) {
 
 
 $("#print").click(function(event) {
+
+  event.preventDefault();
+  var orgname = sessionStorage.getItem('orgn');
+  var orgtype = sessionStorage.getItem('orgt');
+  var xhr = new XMLHttpRequest();
+
+  xhr.open('GET', '/printsourcesandappfundreport?orgname='+ orgname+'&fystart='+sessionStorage.getItem('year1')+'&fyend='+sessionStorage.getItem('year2')+'&calculateto='+$("#cto").val(), true);
+  xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+  xhr.responseType = 'blob';
+
+  xhr.onload = function(e) {
+  if (this.status == 200) {
+  // get binary data as a response
+    var blob = this.response;
+    var url = window.URL.createObjectURL(blob);
+    window.location.assign(url)
+  }
+};
+
+xhr.send();
+/*
     $.ajax(
       {
         type: "GET",
@@ -220,7 +241,7 @@ $("#print").click(function(event) {
         success: function(resp){
           window.open('data:application/pdf;charset=utf-8,' + encodeURIComponent(resp));
         }
-      });
+      });*/
 });
 
 });

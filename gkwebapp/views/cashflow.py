@@ -31,14 +31,7 @@ from pyramid.view import view_config
 import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
-
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.rl_config import defaultPageSize
-from reportlab.lib.units import inch, cm
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import A4
-
+from odslib import ODS
 from spreadsheettable import SpreadsheetTable
 from reportlab.lib.enums import TA_CENTER, TA_RIGHT, TA_LEFT
 from pyramid.response import Response
@@ -59,147 +52,82 @@ def showcashflowreport(request):
 	orgtype = request.params["orgtype"]
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/report?type=cashflow&calculateto=%s&financialstart=%s&calculatefrom=%s"%(calculateto,financialstart,calculatefrom), headers=header)
+
 	return render_to_response("gkwebapp:templates/cashflowreport.jinja2",{"rcrecords":result.json()["rcgkresult"],"pyrecords":result.json()["pygkresult"],"orgtype":orgtype,"backflag":4,"from":datetime.strftime(datetime.strptime(str(calculatefrom),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
 
 @view_config(route_name="printcashflowreport")
 def printcashflowreport(request):
-	PAGE_HEIGHT=defaultPageSize[1]; PAGE_WIDTH=defaultPageSize[0]
-	styleSheet = getSampleStyleSheet()
-	styletwo = getSampleStyleSheet()
-	stylethree = getSampleStyleSheet()
-
-	simplestyle = styleSheet['BodyText']
-	simplestyle.alignment = TA_CENTER
-	simplestyle.fontSize = 9
-
-	simplestyleleft = styletwo['BodyText']
-	simplestyle.alignment = TA_LEFT
-	simplestyle.fontSize = 9
-
-	headingstyle = styleSheet['Heading4']
-	headingstyle.alignment = TA_CENTER
-	headingstyle.fontSize = 10
-	headingstyle.fontName = 'Times-Bold'
-
-	headingstyleright = styletwo['Heading4']
-	headingstyleright.alignment = TA_RIGHT
-	headingstyleright.fontSize = 10
-	headingstyleright.fontName = 'Times-Bold'
-
-	headingstyleleft = stylethree['Heading4']
-	headingstyleleft.alignment = TA_LEFT
-	headingstyleleft.fontSize = 10
-	headingstyleleft.fontName = 'Times-Bold'
-
 	calculateto = request.params["calculateto"]
-	financialstart = request.params["financialstart"]
+	financialstart = request.params["fystart"]
 	calculatefrom = request.params["calculatefrom"]
-
 	orgname = request.params["orgname"]
 	orgtype = request.params["orgtype"]
-	startyear = request.params["startyear"]
-	endyear = request.params["endyear"]
-	orgdata = orgname + " (" + orgtype + ")"
-	period = calculatefrom[8:10] + "-" + str(calendar.month_abbr[int(calculatefrom[5:7])]) + "-" + calculatefrom[0:4] + " to " + calculateto[8:10] + "-" +  str(calendar.month_abbr[int(calculateto[5:7])]) + "-" +  calculateto[0:4]
-	year = startyear[0:2] + "-" + str(calendar.month_abbr[int(startyear[3:5])]) + "-" + startyear[6:10] + " to " + endyear[0:2] + "-" +  str(calendar.month_abbr[int(endyear[3:5])]) + "-" +  endyear[6:10]
-	yeardata = "Financial Year: " + year
-
+	fyend = str(request.params["fyend"])
 	header={"gktoken":request.headers["gktoken"]}
-
-	if(orgtype == "Profit Making"):
-		CashFlow = "Cash Flow Account for the period " + period
-	elif(orgtype == "Not For Profit"):
-		CashFlow = "Receipt & Payment Account for the period " + period
-	pageinfo = "Cash Flow Report"
-	filename = "CashFlowReport.pdf"
-
-	def myFirstPage(canvas, doc):
-			canvas.saveState()
-			canvas.setFont('Times-Bold',15)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-35, orgdata)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-55, yeardata)
-			canvas.setFont('Times-Bold',13)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-80, CashFlow)
-			canvas.setFont('Times-Roman',9)
-			canvas.drawString(inch, 0.75 * inch, "Page %d %s" % (doc.page, pageinfo))
-			canvas.restoreState()
-
-	def myLaterPages(canvas, doc):
-			canvas.saveState()
-			canvas.setFont('Times-Bold',12)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-40, orgname + "  FY: (" + year + ")")
-			canvas.setFont('Times-Roman',11)
-			if(orgtype == "Profit Making"):
-				canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-55, "Cash Flow")
-			elif(orgtype == "Not For Profit"):
-				canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-55, "Receipt & Payment")
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-70, period)
-			canvas.setFont('Times-Roman',9)
-			canvas.drawString(inch, 0.75 * inch, "Page %d %s" % (doc.page, pageinfo))
-			canvas.restoreState()
-
-	def makepdf(result):
-		To = Paragraph("To", headingstyle)
-		By = Paragraph("By", headingstyle)
-		Particularsleft = Paragraph("Particulars", headingstyleleft)
-		Particularsright = Paragraph("Particulars", headingstyleleft)
-		Amtleft = Paragraph("Amount", headingstyleright)
-		Amtright = Paragraph("Amount", headingstyleright)
-
-		doc = SimpleDocTemplate(filename, pagesize=A4)
-		temp_list = [To, Particularsleft, Amtleft, By, Particularsright, Amtright]
-
-		Story = [Spacer(1,0.2*inch)]
-		data_json_left = result.json()["rcgkresult"]
-		data_json_right = result.json()["pygkresult"]
-		listoflist = []
-		listoflist.append(temp_list)
-		#listoflist.append([Paragraph("", simplestyle), Paragraph("Brought Forward:", simplestyle), PreviousPagesColSum(decimal_places = 2), Paragraph("", simplestyle), Paragraph("Brought Forward:", simplestyle), PreviousPagesColSum(decimal_places = 2)])
-
-
-		for entry in data_json_left:
-				accountcode_left = entry["accountcode"]
-				to = entry["toby"]
-				to = Paragraph(to, simplestyle)
-				particularsleft = entry["particulars"]
-				particularsleft = Paragraph(particularsleft, simplestyleleft)
-				amtleft = entry["amount"]
-				listoflist.append([to, particularsleft, amtleft])
-
-		i=1
-		for entryy in data_json_right:
-				accountcode_right = entryy["accountcode"]
-				by = entryy["toby"]
-				by = Paragraph(by, simplestyle)
-				particularsright = entryy["particulars"]
-				particularsright = Paragraph(particularsright, simplestyleleft)
-				amtright = entryy["amount"]
-				listoflist[i].append(by)
-				listoflist[i].append(particularsright)
-				listoflist[i].append(amtright)
-				i+=1
-		data = listoflist
-		table_style = [
-						('BACKGROUND', (0, 0), (-1, 0), '#a7a5a5'),
-						('ALIGN', (0, 0), (-1, -1), 'RIGHT'),
-						('GRID', (0, 0), (-1, 0), 1, colors.white),
-						('BOX', (0, 0), (-1, -1), 1, colors.grey),
-						('BOX', (0, 0), (-1, 0), 1, colors.grey),
-						('BOX', (0, 0), (-1, -1), 0.25, colors.black),
-						('BOX', (0, 0), (-1, 0), 0.25, colors.black),
-		]
-		#data.append([Paragraph("", simplestyle), Paragraph("Carried Forward:", simplestyle), TotalPagesColSum(decimal_places = 2), Paragraph("", simplestyle), Paragraph("Carried Forward:", simplestyle), TotalPagesColSum(decimal_places = 2)])
-		spreadsheet_table = SpreadsheetTable(data, repeatRows = 1, colWidths = (1*cm, 5.2*cm, 3.8*cm, 1*cm, 5.2*cm, 3.8*cm))
-		spreadsheet_table.setStyle(table_style)
-
-		Story.append(spreadsheet_table)
-		Story.append(Spacer(1,0.2*inch))
-		doc.build(Story, onFirstPage=myFirstPage, onLaterPages=myLaterPages)
 	result = requests.get("http://127.0.0.1:6543/report?type=cashflow&calculateto=%s&financialstart=%s&calculatefrom=%s"%(calculateto,financialstart,calculatefrom), headers=header)
-	makepdf(result)
-	fileobj = open(filename, 'rb')
-	filecontent = fileobj.read()
-	fileobj.close()
-	response = Response(content_type='application/pdf', content_disposition='attachment; filename=Filename_net', body=filecontent)
-	os.remove(filename)
-	return response
+	receipt = result.json()["rcgkresult"]
+	payment = result.json()["pygkresult"]
+	fystart = str(request.params["fystart"]);
+	orgname = str(request.params["orgname"])
+	calculateto = calculateto[8:10]+calculateto[4:8]+calculateto[0:4]
+	calculatefrom = calculatefrom[8:10]+calculatefrom[4:8]+calculatefrom[0:4]
+
+	ods = ODS()
+	sheet = ods.content.getSheet(0)
+	sheet.getRow(0).setHeight("23pt")
+	sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("18pt")
+	ods.content.mergeCells(0,0,8,1)
+	sheet.getRow(1).setHeight("18pt")
+	if orgtype=="Profit Making":
+		sheet.setSheetName("Cash Flow Statement")
+		sheet.getCell(0,1).stringValue("Cash Flow Statement ("+calculatefrom+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+	if orgtype=="Not For Profit":
+		sheet.setSheetName("Receipt & Payment Account")
+		sheet.getCell(0,1).stringValue("Receipt & Payment Account ("+calculatefrom+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+	ods.content.mergeCells(0,1,8,1)
+	sheet.getColumn(0).setWidth("1cm")
+	sheet.getColumn(1).setWidth("8cm")
+	sheet.getColumn(2).setWidth("3cm")
+	sheet.getColumn(3).setWidth("3cm")
+	sheet.getColumn(4).setWidth("1cm")
+	sheet.getColumn(5).setWidth("8cm")
+	sheet.getColumn(6).setWidth("3cm")
+	sheet.getColumn(7).setWidth("3cm")
+	sheet.getCell(1,2).stringValue("Particulars").setBold(True)
+	sheet.getCell(2,2).stringValue("Amount").setBold(True).setAlignHorizontal("right")
+	sheet.getCell(3,2).stringValue("Amount").setBold(True).setAlignHorizontal("right")
+	sheet.getCell(5,2).stringValue("Particulars").setBold(True)
+	sheet.getCell(6,2).stringValue("Amount").setBold(True).setAlignHorizontal("right")
+	sheet.getCell(7,2).stringValue("Amount").setBold(True).setAlignHorizontal("right")
+	row = 3
+	for account in receipt:
+		sheet.getCell(0, row).stringValue(account["toby"])
+		if account["toby"]!="" and account["particulars"]!="Opening balance":
+			sheet.getCell(1, row).stringValue("	        "+account["particulars"])
+			sheet.getCell(2, row).stringValue(account["amount"]).setAlignHorizontal("right")
+			sheet.getCell(3, row).stringValue("").setAlignHorizontal("right")
+		else:
+			sheet.getCell(1, row).stringValue(account["particulars"])
+			sheet.getCell(2, row).stringValue("").setAlignHorizontal("right")
+			sheet.getCell(3, row).stringValue(account["amount"]).setAlignHorizontal("right")
+		row += 1
+
+	row = 3
+	for account in payment:
+		sheet.getCell(4, row).stringValue(account["toby"])
+		if account["toby"]!="" and account["particulars"]!="Closing balance":
+			sheet.getCell(5, row).stringValue("	        "+account["particulars"])
+			sheet.getCell(6, row).stringValue(account["amount"]).setAlignHorizontal("right")
+			sheet.getCell(7, row).stringValue("").setAlignHorizontal("right")
+		else:
+			sheet.getCell(5, row).stringValue(account["particulars"])
+			sheet.getCell(6, row).stringValue("").setAlignHorizontal("right")
+			sheet.getCell(7, row).stringValue(account["amount"]).setAlignHorizontal("right")
+		row += 1
+
+	ods.save("response.ods")
+	repFile = open("response.ods")
+	rep = repFile.read()
+	repFile.close()
+	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	return Response(rep, headerlist=headerList.items())

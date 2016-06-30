@@ -33,124 +33,68 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import os
+from odslib import ODS
 import calendar
-from reportlab.lib.pagesizes import A4
-from reportlab.platypus import SimpleDocTemplate
-from reportlab.lib.units import mm, cm, inch
-from reportlab.platypus.flowables import PageBreak, Spacer
-from reportlab.platypus.paragraph import Paragraph
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.lib import colors
 from formula import CurrentPageColSum, PreviousPagesColSum,RowNumber
 from spreadsheettable import SpreadsheetTable
-from reportlab.pdfgen import canvas
-from reportlab.lib.enums import  TA_LEFT, TA_CENTER,TA_RIGHT
-from reportlab.rl_config import defaultPageSize
 
 @view_config(route_name = "printprofitandloss", renderer = "")
 def printprofitandloss(request):
-	calculatefrom = request.params["calculatefrom"]
 	calculateto = request.params["calculateto"]
-	headingprofit = request.params["headingprofit"]
+	orgtype = request.params["orgtype"]
 	header={"gktoken":request.headers["gktoken"]}
+	fyend = str(request.params["fyend"])
 	result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculateto=%s"%(calculateto), headers=header)
 	expense = result.json()["expense"]
 	income = result.json()["income"]
-	PAGE_HEIGHT=defaultPageSize[1]; PAGE_WIDTH=defaultPageSize[0]
-	styles = getSampleStyleSheet()
-	doc = SimpleDocTemplate("ProfitLoss.pdf", pagesize=A4)
-	style = styles["BodyText"]
-	style.alignment = TA_CENTER
-	stylenormal = styles["Normal"]
-	stylenormal.alignment = TA_CENTER
-	style1 = styles["BodyText"]
-	style1.alignment = TA_LEFT
-	styleright = styles["BodyText"]
-	styleright.alignment = TA_RIGHT
-	fy = str(request.params["fystart"]);
-	fy = fy[6:]
-	fy = fy + "-" + (str(request.params["fyend"])[8:])
+	fystart = str(request.params["fystart"]);
 	orgname = str(request.params["orgname"])
-	orgname += " (FY: " + fy +")"
-	period = calculatefrom[8:10] + "-" + str(calendar.month_abbr[int(calculatefrom[5:7])]) + "-" + calculatefrom[0:4] + " to " + calculateto[8:10] + "-" +  str(calendar.month_abbr[int(calculateto[5:7])]) + "-" +  calculateto[0:4];
-	def myFirstPage(canvas, doc):
-		canvas.saveState()
-		canvas.setFont('Times-Bold',18)
-		canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-50, orgname)
-		canvas.setFont('Times-Bold',16)
-		canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-70, headingprofit )
-		canvas.setFont('Times-Bold',12)
-		canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-90, period)
-		canvas.setStrokeColorRGB(0, 0, 0)
-		canvas.setLineWidth(0.5)
-		canvas.line(1 * cm, PAGE_HEIGHT-100, PAGE_WIDTH - 10, PAGE_HEIGHT-100)
-		canvas.setStrokeColorRGB(0, 0, 0)
-		canvas.setLineWidth(0.5)
-		canvas.line(1 * cm, 50, PAGE_WIDTH - 10, 50)
-		canvas.setFont('Times-Roman',9)
-		canvas.drawString(inch, 0.55 * inch, "Page1")
-		canvas.restoreState()
-	def myLaterPages(canvas, doc):
-		canvas.saveState()
-		canvas.setFont('Times-Bold',12)
-		canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-40, orgname)
-		canvas.setFont('Times-Roman',10)
-		canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-60, "Profit and Loss : " + period )
-		canvas.setStrokeColorRGB(0, 0, 0)
-		canvas.setLineWidth(0.5)
-		canvas.line(1 * cm, PAGE_HEIGHT-70, PAGE_WIDTH - 10, PAGE_HEIGHT-70)
-		canvas.line(1 * cm, 50, PAGE_WIDTH - 10, 50)
-		canvas.setFont('Times-Roman',9)
-		canvas.drawString(inch, 0.5 * inch, "Page %d" % doc.page)
-		canvas.restoreState()
-	to = Paragraph('''<b>To</b>''', stylenormal)
-	particulars = Paragraph('''<b>Particulars</b>''', stylenormal)
-	amount = Paragraph('''<b>Amount</b>''', styleright)
-	by = Paragraph('''<b>By</b>''', stylenormal)
-	data= [[to, particulars, amount, by, particulars, amount]]
-	for record in  expense:
-		amount = "0.00"
-		if(record["amount"] <> "" or record["amount"] <> "." or record["amount"] <> "\n"):
+	calculateto = calculateto[8:10]+calculateto[4:8]+calculateto[0:4]
 
-			amount = str((record["amount"]))
-		else:
-			amount = "0.00"
-		accountname = Paragraph(str(record["accountname"]), style)
-		toby = Paragraph(str(record["toby"]), style)
-		data.append([toby, accountname, amount] );
-	i = 1
-	for record in income:
-		amount = "0.00"
-		if(record["amount"] <> "" or record["amount"] <> "."):
-			amount = str((record["amount"]))
-		else:
-			amount = "0.00"
-		accountname = Paragraph(str(record["accountname"]), style)
-		toby = Paragraph(str(record["toby"]), style)
-		data[i].append(toby)
-		data[i].append(accountname)
-		data[i].append(amount)
-		i += 1
-	#data.insert(1,["", Paragraph("Brought Forward", style1), PreviousPagesColSum(decimal_places = 2), "", Paragraph("Brought Forward",style1), PreviousPagesColSum(decimal_places = 2)])
-	#data.append([ "", Paragraph("Carried Forward", style1), CurrentPageColSum(decimal_places = 2), "", Paragraph("Carried Forward",style1), CurrentPageColSum(decimal_places = 2)])
-	table_style = [('BACKGROUND', (0, 0), (-1, 0), '#a7a5a5'),
-					('ALIGN',(1,1),(-1,-1),'RIGHT'),
-				   ('INNERGRID', (0,0), (-1,-1), 0.25, colors.white),
-				   ('BOX', (0,0), (-1,-1), 0.25, colors.black),
-				   ('BOX', (0,0), (-1,0), 0.25, colors.black),
-				  ]
-	story = [Spacer(1,0.4*inch)]
-	spreadsheet_table = SpreadsheetTable(data, repeatRows = 1, colWidths= (1.2* cm, 4.8* cm,  3.5 * cm,
-						   1.2* cm, 4.7 * cm, 3.5 * cm))
-	spreadsheet_table.setStyle(table_style)
-	story.append(spreadsheet_table)
-	doc.multiBuild(story, onFirstPage=myFirstPage, onLaterPages=myLaterPages)
-	f = open("ProfitLoss.pdf", 'rb');
-	body = f.read();
-	f.close()
-	response = Response(content_type='application/pdf',content_disposition='attachment; filename=ProfitLoss.pdf', body=body)
-	os.remove("ProfitLoss.pdf")
-	return response
+	ods = ODS()
+	sheet = ods.content.getSheet(0)
+	sheet.getRow(0).setHeight("23pt")
+	sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("18pt")
+	ods.content.mergeCells(0,0,6,1)
+	sheet.getRow(1).setHeight("18pt")
+	if orgtype=="Profit Making":
+		sheet.setSheetName("Profit & Loss")
+		sheet.getCell(0,1).stringValue("Profit & Loss ("+fystart+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+	if orgtype=="Not For Profit":
+		sheet.setSheetName("Income & Expenditure")
+		sheet.getCell(0,1).stringValue("Income & Expenditure ("+fystart+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+	ods.content.mergeCells(0,1,6,1)
+	sheet.getColumn(0).setWidth("1cm")
+	sheet.getColumn(1).setWidth("8cm")
+	sheet.getColumn(2).setWidth("3cm")
+	sheet.getColumn(3).setWidth("1cm")
+	sheet.getColumn(4).setWidth("8cm")
+	sheet.getColumn(5).setWidth("3cm")
+	sheet.getCell(1,2).stringValue("Particulars").setBold(True)
+	sheet.getCell(2,2).stringValue("Amount").setBold(True).setAlignHorizontal("right")
+	sheet.getCell(4,2).stringValue("Particulars").setBold(True)
+	sheet.getCell(5,2).stringValue("Amount").setBold(True).setAlignHorizontal("right")
+	row = 3
+	for account in expense:
+		sheet.getCell(0, row).stringValue(account["toby"])
+		sheet.getCell(1, row).stringValue(account["accountname"])
+		sheet.getCell(2, row).stringValue(account["amount"]).setAlignHorizontal("right")
+		row += 1
+
+	row = 3
+	for account in income:
+		sheet.getCell(3, row).stringValue(account["toby"])
+		sheet.getCell(4, row).stringValue(account["accountname"])
+		sheet.getCell(5, row).stringValue(account["amount"]).setAlignHorizontal("right")
+		row += 1
+
+	ods.save("response.ods")
+	repFile = open("response.ods")
+	rep = repFile.read()
+	repFile.close()
+	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	return Response(rep, headerlist=headerList.items())
+
 
 @view_config(route_name="showprofitloss", renderer="gkwebapp:templates/viewprofitloss.jinja2")
 def showprofitloss(request):

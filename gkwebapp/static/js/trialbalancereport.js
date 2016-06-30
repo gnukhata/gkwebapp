@@ -158,11 +158,11 @@ $(document).ready(function() {
 		element.click();
 		document.body.removeChild(element);
  }
-
+/*
 	function printtrialbalance() {
-			Filename_net = "NetBalanceReport.pdf"
-			Filename_gross = "GrossBalanceReport.pdf"
-			Filename_ext = "ExtendedBalanceReport.pdf"
+			Filename_net = "NetBalanceReport.ods"
+			Filename_gross = "GrossBalanceReport.ods"
+			Filename_ext = "ExtendedBalanceReport.ods"
 
 			var orgname = sessionStorage.getItem('orgn');
 			var orgtype = sessionStorage.getItem('orgt');
@@ -176,33 +176,16 @@ $(document).ready(function() {
 					url: "/printtrialbalance",
 					global: false,
 					async: false,
-					datatype: "text",
 					data: {"financialstart":sessionStorage.yyyymmddyear1, "calculateto":newtodate, "trialbalancetype": trialbalancetype, "orgname": orgname, "orgtype": orgtype, "startyear":startyear, "endyear":endyear},
 					beforeSend: function(xhr)
 					{
 						xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-					}
-				})
-				.done(function(resp) {
-					if(trialbalancetype == 1) {
-						open_in_newtab(Filename_net, resp);
-					}
-					else if(trialbalancetype == 2) {
-						open_in_newtab(Filename_gross, resp);
-					}
-					else if(trialbalancetype == 3) {
-						open_in_newtab(Filename_ext, resp);
-					}
-					console.log("done");
-				})
-				.fail(function() {
-					console.log("error");
-				})
-				.always(function() {
-					console.log("complete");
+					},
+					success:
 				});
-	}
 
+	}
+*/
 
 	$("#ntbview").click(function(event) {
 		trialbalcall(1);
@@ -217,7 +200,26 @@ $(document).ready(function() {
 		$("#showtrialbalance").click();
 	});
 	$("#printbutton").click(function(event) {
-		printtrialbalance();
+		event.preventDefault();
+		var orgname = sessionStorage.getItem('orgn');
+		var orgtype = sessionStorage.getItem('orgt');
+		var xhr = new XMLHttpRequest();
+		trialbalancetype = $("#trialbaltype").val();
+
+		xhr.open('GET', '/printtrialbalance?financialstart='+sessionStorage.yyyymmddyear1+'&orgname='+orgname+'&calculateto='+newtodate+'&orgtype='+orgtype+'&trialbalancetype='+trialbalancetype, true);
+		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+		xhr.responseType = 'blob';
+
+		xhr.onload = function(e) {
+  	if (this.status == 200) {
+    // get binary data as a response
+    	var blob = this.response;
+	 		var url = window.URL.createObjectURL(blob);
+			window.location.assign(url)
+  	}
+	};
+
+	xhr.send();
 	});
 
 });

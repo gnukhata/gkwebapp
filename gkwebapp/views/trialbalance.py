@@ -31,14 +31,9 @@ from pyramid.view import view_config
 import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
-
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.rl_config import defaultPageSize
-from reportlab.lib.units import inch, cm
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import A4, landscape, letter
-from reportlab.lib.enums import TA_CENTER, TA_RIGHT, TA_LEFT
+from odslib import ODS
+#from odslib import sheetTable
+#from odslib import sheetCell
 from spreadsheettable import SpreadsheetTable
 from pyramid.response import Response
 import os
@@ -54,6 +49,7 @@ def showtrialbalancereport(request):
 	calculateto = request.params["calculateto"]
 	financialstart = request.params["financialstart"]
 	trialbalancetype = int(request.params["trialbalancetype"])
+	print calculateto
 	header={"gktoken":request.headers["gktoken"]}
 	if trialbalancetype == 1:
 		result = requests.get("http://127.0.0.1:6543/report?type=nettrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
@@ -65,214 +61,107 @@ def showtrialbalancereport(request):
 		result = requests.get("http://127.0.0.1:6543/report?type=extendedtrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
 		return render_to_response("gkwebapp:templates/extendedtrialbalance.jinja2",{"records":result.json()["gkresult"],"trialbalancetype":3,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
 
-@view_config(route_name="printtrialbalance")
+@view_config(route_name="printtrialbalance", renderer ="json")
 def printtrialbalance(request):
-	PAGE_HEIGHT=defaultPageSize[1]
-	PAGE_WIDTH=defaultPageSize[0]
-
-	styleSheet = getSampleStyleSheet()
-	styletwo = getSampleStyleSheet()
-	stylethree = getSampleStyleSheet()
-
-	simplestyle = styleSheet['BodyText']
-	simplestyle.alignment = TA_CENTER
-	simplestyle.fontSize = 9
-
-	'''simplestyleright = styletwo['BodyText']
-	simplestyleright.alignment = TA_RIGHT
-	simplestyleright.fontSize = 9
-	'''
-	simplestyleleft = stylethree['BodyText']
-	simplestyleleft.alignment = TA_LEFT
-	simplestyleleft.fontSize = 9
-
-
-	headingstyle = styleSheet['Heading4']
-	headingstyle.alignment = TA_CENTER
-	headingstyle.fontSize = 11
-	headingstyle.fontName = 'Times-Bold'
-
-	headingstyleright = styletwo['Heading4']
-	headingstyleright.alignment = TA_RIGHT
-	headingstyleright.fontSize = 11
-	headingstyleright.fontName = 'Times-Bold'
-
-	headingstyleleft = stylethree['Heading4']
-	headingstyleleft.alignment = TA_LEFT
-	headingstyleleft.fontSize = 11
-	headingstyleleft.fontName = 'Times-Bold'
-
-
-	calculateto = request.params["calculateto"]
-	financialstart = request.params["financialstart"]
-	trialbalancetype = int(request.params["trialbalancetype"])
-
 	orgname = request.params["orgname"]
-	orgtype = request.params["orgtype"]
-	startyear = request.params["startyear"]
-	endyear = request.params["endyear"]
-	orgdata = orgname + " (" + orgtype + ")"
-
-	period = financialstart[8:10] + "-" + str(calendar.month_abbr[int(financialstart[5:7])]) + "-" + financialstart[0:4] + " to " + calculateto[8:10] + "-" +  str(calendar.month_abbr[int(calculateto[5:7])]) + "-" +  calculateto[0:4]
-	year = startyear[0:2] + "-" + str(calendar.month_abbr[int(startyear[3:5])]) + "-" + startyear[6:10] + " to " + endyear[0:2] + "-" +  str(calendar.month_abbr[int(endyear[3:5])]) + "-" +  endyear[6:10]
-	yeardata = "Financial Year: " + year
-
-	header={"gktoken":request.headers["gktoken"]}
-
-	Net_Trial = "Net Trial Balance for the period from " + period
-	Gross_Trial = "Gross Trial Balance for the period from " + period
-	Extended_Trial = "Extended Trial Balance for the period from " + period
-
-	pageinfo = "Trial Balance Report"
-
-	Filename_net = "NetBalanceReport.pdf"
-	Filename_gross = "GrossBalanceReport.pdf"
-	Filename_ext = "ExtendedBalanceReport.pdf"
-
-	def myFirstPage(canvas, doc):
-			canvas.saveState()
-			canvas.setFont('Times-Bold',15)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-35, orgdata)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-55, yeardata)
-			canvas.setFont('Times-Bold',13)
-			if(trialbalancetype == 1):
-				canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-80, Net_Trial)
-			elif(trialbalancetype == 2):
-				canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-80, Gross_Trial)
-			elif(trialbalancetype == 3):
-				canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-80, Extended_Trial)
-			canvas.setFont('Times-Roman',9)
-			canvas.drawString(inch, 0.75 * inch, "Page %d %s" % (doc.page, pageinfo))
-			canvas.restoreState()
-
-	def myLaterPages(canvas, doc):
-			canvas.saveState()
-			canvas.setFont('Times-Bold',12)
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-40, orgname + "  FY: (" + year + ")")
-			canvas.setFont('Times-Roman',11)
-			if(trialbalancetype == 1):
-				canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-55, "Net Trial Balance")
-			elif(trialbalancetype == 2):
-				canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-55, "Gross Trial Balance")
-			elif(trialbalancetype == 3):
-				canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-55, "Extended Trial Balance")
-			canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-70, period)
-			canvas.setFont('Times-Roman',9)
-			canvas.drawString(inch, 0.75 * inch, "Page %d %s" % (doc.page, pageinfo))
-			canvas.restoreState()
-
-	def makepdf(balancetype, result):
-		srnum = Paragraph("Sr.No", headingstyle)
-		accntname = Paragraph("Account Name", headingstyleleft)
-		grpname = Paragraph("Group Name", headingstyle)
-
-		if(balancetype == "Net"):
-			doc = SimpleDocTemplate(Filename_net, pagesize=A4)
-			deb = Paragraph("Debit", headingstyleright)
-			cred = Paragraph("Credit", headingstyleright)
-			temp_list = [srnum, accntname, deb, cred, grpname]
-		elif(balancetype == "Gross"):
-			doc = SimpleDocTemplate(Filename_gross, pagesize=A4)
-			deb = Paragraph("Debit", headingstyleright)
-			cred = Paragraph("Credit", headingstyleright)
-			temp_list = [srnum, accntname, deb, cred, grpname]
-		elif(balancetype == "Extended"):
-			doc = SimpleDocTemplate(Filename_ext, pagesize=A4)
-			openingg = Paragraph("Opening", headingstyleright)
-			totaldeb = Paragraph("Total Drs", headingstyleright)
-			totalcred = Paragraph("Total Crs", headingstyleright)
-			dr_balance = Paragraph("Dr Balance", headingstyleright)
-			cr_balance = Paragraph("Cr Balance", headingstyleright)
-			temp_list = [srnum, accntname, openingg, totaldeb, totalcred, dr_balance, cr_balance, grpname]
-
-		Story = [Spacer(1,0.2*inch)]
-
-		data_json = result.json()["gkresult"]
-		listoflist = []
-		listoflist.append(temp_list)
-
-		'''if(balancetype == "Net" or balancetype == "Gross"):
-			listoflist.append([Paragraph("", simplestyle), Paragraph("Brought Forward:", simplestyle), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2), Paragraph("", simplestyle)])
-		elif(balancetype == "Extended"):
-			listoflist.append([Paragraph("", simplestyle), Paragraph("Brought Forward:", simplestyle), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2), PreviousPagesColSum(decimal_places = 2), Paragraph("", simplestyle)])
-		'''
-
-		for entry in data_json:
-				accountcode = entry["accountcode"]
-				srno = entry["srno"]
-				srno = Paragraph(str(srno), simplestyle)
-				accountname = entry["accountname"]
-				accountname = Paragraph(accountname, simplestyleleft)
-				groupname = entry["groupname"]
-				groupname = Paragraph(groupname, simplestyle)
-				if(balancetype == "Net"):
-					Cr = entry["Cr"]
-					Dr = entry["Dr"]
-					row = [srno, accountname, Dr, Cr, groupname]
-				elif(balancetype == "Gross"):
-					Cr = entry["Cr balance"]
-					Dr = entry["Dr balance"]
-					row = [srno, accountname, Dr, Cr, groupname]
-				elif(balancetype == "Extended"):
-					openingbalance = entry["openingbalance"]
-					curbalcr = entry["curbalcr"]
-					curbaldr = entry["curbaldr"]
-					totaldr = entry["totaldr"]
-					totalcr = entry["totalcr"]
-					row = [srno, accountname, openingbalance, totaldr, totalcr, curbaldr, curbalcr, groupname]
-				listoflist.append(row)
-		data = listoflist
-		table_style = [
-						('BACKGROUND', (0, 0), (-1, 0), '#a7a5a5'),
-						('ALIGN', (0, 0), (-1, -1), 'RIGHT'),
-						('GRID', (0, 0), (-1, 0), 1, colors.white),
-						('BOX', (0, 0), (-1, -1), 1, colors.grey),
-						('BOX', (0, 0), (-1, 0), 1, colors.grey),
-						('BOX', (0, 0), (-1, -1), 0.25, colors.black),
-						('BOX', (0, 0), (-1, 0), 0.25, colors.black),
-		]
-
-		if(balancetype == "Net" or balancetype == "Gross"):
-			#data.append([Paragraph("", simplestyle), Paragraph("Carried Forward:", simplestyle), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), Paragraph("", simplestyle)])
-			spreadsheet_table = SpreadsheetTable(data, repeatRows = 1, colWidths = (2*cm, 6*cm, 4*cm, 4*cm, 3.5*cm))
-		elif(balancetype == "Extended"):
-			#data.append([Paragraph("", simplestyle), Paragraph("Carried Forward:", simplestyle), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), TotalPagesColSum(decimal_places = 2), Paragraph("", simplestyle)])
-			spreadsheet_table = SpreadsheetTable(data, repeatRows = 1, colWidths = (1.5*cm, 3.5*cm, 2.6*cm, 2.6*cm, 2.6*cm, 2.6*cm, 2.6*cm, 2*cm))
-
-
-		spreadsheet_table.setStyle(table_style)
-
-		Story.append(spreadsheet_table)
-		style = styleSheet["Normal"]
-		Story.append(Spacer(1,0.2*inch))
-		doc.build(Story, onFirstPage=myFirstPage, onLaterPages=myLaterPages)
-
+	financialstart = request.params["financialstart"]
+	calculateto = request.params["calculateto"]
+	trialbalancetype = int(request.params["trialbalancetype"])
+	header = {"gktoken": request.headers["gktoken"]}
 	if trialbalancetype == 1:
 		result = requests.get("http://127.0.0.1:6543/report?type=nettrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
-		makepdf("Net", result)
-		fileobj = open(Filename_net, 'rb')
-		filecontent = fileobj.read()
-		fileobj.close()
-		response = Response(content_type='application/pdf', content_disposition='attachment; filename=Filename_net', body=filecontent)
-		os.remove(Filename_net)
-		return response
 	elif trialbalancetype == 2:
 		result = requests.get("http://127.0.0.1:6543/report?type=grosstrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
-		makepdf("Gross", result)
-		fileobj = open(Filename_gross, 'rb')
-		filecontent = fileobj.read()
-		fileobj.close()
-		response = Response(content_type='application/pdf', content_disposition='attachment; filename=Filename_gross', body=filecontent)
-		os.remove(Filename_gross)
-		return response
 	elif trialbalancetype == 3:
 		result = requests.get("http://127.0.0.1:6543/report?type=extendedtrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
-		makepdf("Extended", result)
-		fileobj = open(Filename_ext, 'rb')
-		filecontent = fileobj.read()
-		fileobj.close()
-		response = Response(content_type='application/pdf', content_disposition='attachment; filename=Filename_ext', body=filecontent)
-		os.remove(Filename_ext)
-		return response
-	else:
-		return {"gkstatus":1}
+
+	records = result.json()["gkresult"]
+
+	ods = ODS()
+	sheet = ods.content.getSheet(0)
+	sheet.setSheetName("Trial Balance of "+orgname)
+	sheet.getRow(0).setHeight("23pt")
+
+	sheet.getCell(0,0).stringValue(orgname).setBold(True).setFontSize("18pt").setAlignHorizontal("center")
+	if trialbalancetype == 1:
+		ods.content.mergeCells(0,0,5,1)
+		sheet.getRow(1).setHeight("18pt")
+		sheet.getCell(0,1).stringValue("Net Trial Balance for the period from "+financialstart[8:10]+financialstart[4:8]+financialstart[0:4]+" to "+calculateto[8:10]+calculateto[4:8]+calculateto[0:4]).setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+		ods.content.mergeCells(0,1,5,1)
+		sheet.getColumn(4).setWidth("4cm")
+		sheet.getColumn(1).setWidth("8cm")
+		sheet.getCell(0,2).stringValue("Sr. No.").setBold(True).setAlignHorizontal("center")
+		sheet.getCell(1, 2).stringValue("Account Name").setBold(True)
+		sheet.getCell(2, 2).stringValue("Debit").setBold(True).setAlignHorizontal("right")
+		sheet.getCell(3, 2).stringValue("Credit").setBold(True).setAlignHorizontal("right")
+		sheet.getCell(4, 2).stringValue("Group Name").setBold(True).setAlignHorizontal("center")
+		row = 3
+		for record in records:
+				sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
+				sheet.getCell(1, row).stringValue(record["accountname"])
+				sheet.getCell(2, row).stringValue(record["Dr"]).setAlignHorizontal("right")
+				sheet.getCell(3, row).stringValue(record["Cr"]).setAlignHorizontal("right")
+				sheet.getCell(4, row).stringValue(record["groupname"]).setAlignHorizontal("center")
+				row+=1
+
+	elif trialbalancetype == 2:
+		ods.content.mergeCells(0,0,5,1)
+		sheet.getRow(1).setHeight("18pt")
+		sheet.getCell(0,1).stringValue("Gross Trial Balance for the period from "+financialstart[8:10]+financialstart[4:8]+financialstart[0:4]+" to "+calculateto[8:10]+calculateto[4:8]+calculateto[0:4]).setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+		ods.content.mergeCells(0,1,5,1)
+		sheet.getColumn(4).setWidth("4cm")
+		sheet.getColumn(1).setWidth("8cm")
+		sheet.getCell(0,2).stringValue("Sr. No.").setBold(True).setAlignHorizontal("center")
+		sheet.getCell(1, 2).stringValue("Account Name").setBold(True)
+		sheet.getCell(2, 2).stringValue("Debit").setBold(True).setAlignHorizontal("right")
+		sheet.getCell(3, 2).stringValue("Credit").setBold(True).setAlignHorizontal("right")
+
+		sheet.getCell(4, 2).stringValue("Group Name").setBold(True).setAlignHorizontal("center")
+		row = 3
+		for record in records:
+				sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
+				sheet.getCell(1, row).stringValue(record["accountname"])
+				sheet.getCell(2, row).stringValue(record["Dr balance"]).setAlignHorizontal("right")
+				sheet.getCell(3, row).stringValue(record["Cr balance"]).setAlignHorizontal("right")
+				sheet.getCell(4, row).stringValue(record["groupname"]).setAlignHorizontal("center")
+				row+=1
+
+	elif trialbalancetype == 3:
+		ods.content.mergeCells(0,0,8,1)
+		sheet.getRow(1).setHeight("18pt")
+		sheet.getCell(0,1).stringValue("Extended Trial Balance for the period from "+financialstart[8:10]+financialstart[4:8]+financialstart[0:4]+" to "+calculateto[8:10]+calculateto[4:8]+calculateto[0:4]).setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+		ods.content.mergeCells(0,1,8,1)
+		sheet.getColumn(1).setWidth("8cm")
+		sheet.getColumn(2).setWidth("3cm")
+		sheet.getColumn(5).setWidth("3cm")
+		sheet.getColumn(6).setWidth("3cm")
+		sheet.getColumn(7).setWidth("4cm")
+		sheet.getCell(0,2).stringValue("Sr. No.").setAlignHorizontal("center").setBold(True)
+		sheet.getCell(1, 2).stringValue("Account Name").setBold(True)
+		sheet.getCell(2, 2).stringValue("Opening Balance").setAlignHorizontal("right").setBold(True)
+		sheet.getCell(3, 2).stringValue("Total Debit").setAlignHorizontal("right").setBold(True)
+		sheet.getCell(4, 2).stringValue("Total Credit").setAlignHorizontal("right").setBold(True)
+		sheet.getCell(5, 2).stringValue("Debit Balance").setAlignHorizontal("right").setBold(True)
+		sheet.getCell(6, 2).stringValue("Credit Balance").setAlignHorizontal("right").setBold(True)
+		sheet.getCell(7, 2).stringValue("Group Name").setAlignHorizontal("center").setBold(True)
+		row = 3
+		for record in records:
+				sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
+				sheet.getCell(1, row).stringValue(record["accountname"])
+				sheet.getCell(2, row).stringValue(record["openingbalance"]).setAlignHorizontal("right")
+				sheet.getCell(3, row).stringValue(record["totaldr"]).setAlignHorizontal("right")
+				sheet.getCell(4, row).stringValue(record["totalcr"]).setAlignHorizontal("right")
+				sheet.getCell(5, row).stringValue(record["curbaldr"]).setAlignHorizontal("right")
+				sheet.getCell(6, row).stringValue(record["curbalcr"]).setAlignHorizontal("right")
+				sheet.getCell(7, row).stringValue(record["groupname"]).setAlignHorizontal("center")
+				row+=1
+
+	ods.save("response.ods")
+	repFile = open("response.ods")
+	rep = repFile.read()
+	repFile.close()
+	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	return Response(rep, headerlist=headerList.items())
+
+	#else:
+		#return {"gkstatus":1}

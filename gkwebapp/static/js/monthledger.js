@@ -109,30 +109,30 @@ $(document).ready(function() {
           $("#info").html(resp);
         }
       );
-
-
-
   });
 
   $("#print").click(function(event) {
-    $.ajax(
-      {
-        type: "GET",
-        url: "/printmonthlyledgerreport",
-        global: false,
-        async: false,
-        dataType : 'text',
-        data: {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "accountcode":$("#accountcode").val(), "accname": $("#accname").val()},
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-        success: function(resp) {
-          window.open('data:application/pdf;charset=utf-8,' + encodeURIComponent(resp));
-        }
-      });
 
-    });
+    event.preventDefault();
+    var orgname = sessionStorage.getItem('orgn');
+    var orgtype = sessionStorage.getItem('orgt');
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('GET', '/printmonthlyledgerreport?orgname='+ orgname+'&fystart='+sessionStorage.yyyymmddyear1+'&fyend='+sessionStorage.getItem('year2')+'&accountcode='+$("#accountcode").val()+'&accname='+$("#accname").val(), true);
+    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    xhr.responseType = 'blob';
+
+    xhr.onload = function(e) {
+    if (this.status == 200) {
+    // get binary data as a response
+      var blob = this.response;
+      var url = window.URL.createObjectURL(blob);
+      window.location.assign(url)
+    }
+    };
+
+    xhr.send();
+  });
 
   $("#mthlback").click(function(event) {
     $("#showviewledger").click();
