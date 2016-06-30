@@ -39,14 +39,92 @@ import calendar
 def printconvbalsheetreport(request):
 	calculateto = request.params["calculateto"]
 	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=1"%(calculateto), headers=header)
-	fy = str(request.params["fystart"]);
-	fy = fy[6:]
-	fy = fy + "-" + (str(request.params["fyend"])[8:])
+	fystart = str(request.params["fystart"]);
 	orgname = str(request.params["orgname"])
-	orgname += " (FY: " + fy +")"
-	period = " On " + calculateto[8:10] + "-" +  str(calendar.month_abbr[int(calculateto[5:7])]) + "-" +  calculateto[0:4];
-	return response
+	fyend = str(request.params["fyend"]);
+	orgtype = str(request.params["orgtype"])
+	result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=1"%(calculateto), headers=header)
+	calculateto = calculateto[8:10]+calculateto[4:8]+calculateto[0:4]
+	sources = result.json()["gkresult"]["leftlist"]
+	applications = result.json()["gkresult"]["rightlist"]
+
+	ods = ODS()
+	sheet = ods.content.getSheet(0)
+	sheet.getRow(0).setHeight("23pt")
+	sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("16pt")
+	ods.content.mergeCells(0,0,8,1)
+	sheet.getRow(1).setHeight("18pt")
+	if orgtype == "Profit Making":
+		sheet.getCell(0,1).stringValue("Conventional Balance Sheet as on "+calculateto).setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+	if orgtype == "Not For Profit":
+		sheet.getCell(0,1).stringValue("Conventional Statement of Affairs as on "+calculateto).setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+	ods.content.mergeCells(0,1,8,1)
+	sheet.getColumn(0).setWidth("8cm")
+	sheet.getColumn(1).setWidth("2.5cm")
+	sheet.getColumn(2).setWidth("2.5cm")
+	sheet.getColumn(3).setWidth("2.5cm")
+	sheet.getColumn(4).setWidth("8cm")
+	sheet.getColumn(5).setWidth("2.5cm")
+	sheet.getColumn(6).setWidth("2.5cm")
+	sheet.getColumn(7).setWidth("2.5cm")
+	sheet.getCell(0,2).stringValue("Capital and Liabilities").setBold(True)
+	sheet.getCell(3,2).stringValue("Amount").setBold(True)
+	sheet.getCell(4,2).stringValue("Property and Assets").setBold(True)
+	sheet.getCell(7,2).stringValue("Amount").setBold(True)
+	row = 2
+	for record in sources:
+		if record["groupAccname"]!="":
+			if record["groupAccname"]!="Sources:":
+				if record["groupAccname"]=="Total" or record["groupAccname"]=="Sources:" or record["groupAccname"]=="Difference" :
+					sheet.getCell(0,row).stringValue(record["groupAccname"].upper()).setBold(True)
+				elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
+					sheet.getCell(0,row).stringValue("			   "+record["groupAccname"])
+				elif record["groupAccflag"]==1 :
+					sheet.getCell(0,row).stringValue("			   			   "+record["groupAccname"])
+				elif record["groupAccflag"]==2:
+					sheet.getCell(0,row).stringValue("			   			   "+record["groupAccname"])
+				else:
+					sheet.getCell(0,row).stringValue(record["groupAccname"].upper())
+
+			if record["groupAccflag"]==2 or record["groupAccflag"]==1:
+				sheet.getCell(1,row).stringValue(record["amount"]).setAlignHorizontal("right")
+			elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
+				sheet.getCell(2,row).stringValue(record["amount"]).setAlignHorizontal("right")
+			else:
+				sheet.getCell(3,row).stringValue(record["amount"]).setAlignHorizontal("right").setBold(True)
+			row += 1
+
+	row = 2
+	for record in applications:
+		if record["groupAccname"]!="":
+			if record["groupAccname"]!="Applications:":
+				if record["groupAccname"]=="Total" or record["groupAccname"]=="Sources:" or record["groupAccname"]=="Difference" :
+					sheet.getCell(4,row).stringValue(record["groupAccname"].upper()).setBold(True)
+				elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
+					sheet.getCell(4,row).stringValue("			   "+record["groupAccname"])
+				elif record["groupAccflag"]==1 :
+					sheet.getCell(4,row).stringValue("			   			   "+record["groupAccname"])
+				elif record["groupAccflag"]==2:
+					sheet.getCell(4,row).stringValue("			   			   "+record["groupAccname"])
+				else:
+					sheet.getCell(4,row).stringValue(record["groupAccname"].upper())
+
+			if record["groupAccflag"]==2 or record["groupAccflag"]==1:
+				sheet.getCell(5,row).stringValue(record["amount"]).setAlignHorizontal("right")
+			elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
+				sheet.getCell(6,row).stringValue(record["amount"]).setAlignHorizontal("right")
+			else:
+				sheet.getCell(7,row).stringValue(record["amount"]).setAlignHorizontal("right").setBold(True)
+			row += 1
+
+
+	ods.save("response.ods")
+	repFile = open("response.ods")
+	rep = repFile.read()
+	repFile.close()
+	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	return Response(rep, headerlist=headerList.items())
+
 
 @view_config(route_name="printsourcesandappfundreport")
 def printsourcesandappfundreport(request):
