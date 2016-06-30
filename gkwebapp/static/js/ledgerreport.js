@@ -511,23 +511,6 @@ $("#dualledger").click(function(event) {
     }}
   });
   $("#print").click(function(event) {
-  /*  $.ajax(
-      {
-        type: "GET",
-        url: "/printledgerreport",
-        global: false,
-        async: false,
-        dataType : 'text',
-        data: {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "backflag":0,"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"monthlyflag":false,"narrationflag":false},
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-        success: function(resp) {
-          window.open('data:application/pdf;charset=utf-8,' + encodeURIComponent(resp));
-        }
-      });*/
-
       event.preventDefault();
   		var orgname = sessionStorage.getItem('orgn');
   		var orgtype = sessionStorage.getItem('orgt');

@@ -40,17 +40,47 @@ from spreadsheettable import SpreadsheetTable
 
 @view_config(route_name="printmonthlyledgerreport", renderer="")
 def printmonthlyledgerreport(request):
-	result = request
 	accountcode = int(request.params["accountcode"])
-	fy = str(request.params["fystart"]);
-	fy = fy[6:]
-	fy = fy + "-" + (str(request.params["fyend"])[8:])
+	fystart = str(request.params["fystart"]);
+	accountname = str(request.params["accname"]);
+	fyend = request.params["fyend"]
 	orgname = str(request.params["orgname"])
-	orgname += " (FY: " + fy +")"
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/report?type=monthlyledger&accountcode=%d"%(accountcode), headers=header)
-	gkresult = result.json()["gkresult"]
-	return response
+	result = result.json()["gkresult"]
+
+	fystart = fystart[8:10]+fystart[4:8]+fystart[0:4]
+	ods = ODS()
+	sheet = ods.content.getSheet(0)
+	sheet.getRow(0).setHeight("23pt")
+	sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("18pt")
+	ods.content.mergeCells(0,0,4,1)
+	sheet.getRow(1).setHeight("18pt")
+	sheet.getCell(0,1).stringValue("Account: "+accountname).setBold(True).setAlignHorizontal("center").setFontSize("14pt")
+	ods.content.mergeCells(0,1,4,1)
+	row = 2
+	sheet.getColumn(0).setWidth("7cm")
+	sheet.getColumn(1).setWidth("2.5cm")
+	sheet.getColumn(2).setWidth("2.5cm")
+	sheet.getColumn(3).setWidth("3cm")
+	sheet.getCell(0,row).stringValue("Month").setBold(True)
+	sheet.getCell(1,row).stringValue("Debit").setBold(True).setAlignHorizontal("right")
+	sheet.getCell(2,row).stringValue("Credit").setBold(True).setAlignHorizontal("right")
+	sheet.getCell(3,row).stringValue("No. of Vouchers").setBold(True).setAlignHorizontal("center")
+	for eachmonth in result:
+		row += 1
+		sheet.getCell(0,row).stringValue(eachmonth["month"])
+		sheet.getCell(1,row).stringValue(eachmonth["Dr"]).setAlignHorizontal("right")
+		sheet.getCell(2,row).stringValue(eachmonth["Cr"]).setAlignHorizontal("right")
+		sheet.getCell(3,row).stringValue(eachmonth["vcount"]).setAlignHorizontal("center")
+		#row += 1
+
+	ods.save("response.ods")
+	repFile = open("response.ods")
+	rep = repFile.read()
+	repFile.close()
+	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	return Response(rep, headerlist=headerList.items())
 
 @view_config(route_name="printledgerreport", renderer="")
 def printLedgerReport(request):
@@ -79,7 +109,7 @@ def printLedgerReport(request):
 	sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("18pt")
 	ods.content.mergeCells(0,0,8,1)
 	sheet.getRow(1).setHeight("18pt")
-	sheet.getCell(0,1).stringValue("Account: "+headerrow["accountname"] +"(Period: "+calculatefrom+" to "+calculateto+")").setBold(True).setAlignHorizontal("center").setFontSize("14pt")
+	sheet.getCell(0,1).stringValue("Account: "+headerrow["accountname"] +" (Period: "+calculatefrom+" to "+calculateto+")").setBold(True).setAlignHorizontal("center").setFontSize("14pt")
 	ods.content.mergeCells(0,1,8,1)
 	row = 2
 	if headerrow["projectname"]!="":
