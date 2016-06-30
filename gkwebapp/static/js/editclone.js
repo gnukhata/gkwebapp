@@ -26,6 +26,7 @@ Contributors:
 
 $(document).ready(function()
 {
+  
   $("#vctable").hide();
   $("#save").hide();
   $("#clonereplaceattach").hide();
@@ -281,7 +282,7 @@ if (sessionStorage.booksclosedflag==1) {
   {
     $("#myModal").modal('hide');
     $('.modal-backdrop').remove();
-    $("#ledgertable tbody tr:eq("+$("#modalindex").val()+")").dblclick();
+    $("tbody tr:eq("+$("#modalindex").val()+")").dblclick();
   });
 
   $("#viewattach").click(function(event)
