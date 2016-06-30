@@ -184,7 +184,7 @@
           {% if ledgerheader["projectname"]=="" %}
           <td class="col-xs-2">
             {% for pr in record['particulars'] %}
-            {{pr}} <br>
+            {{pr}}  {%if record["advflag"] == 1%}<span class="glyphicon glyphicon-warning-sign" style="color:red"></span>{%endif%} <br>
             {% endfor %}
             {% if record['narration']!="" and narrationflag==true %}
             ({{record['narration']}})
