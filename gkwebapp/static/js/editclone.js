@@ -26,7 +26,7 @@ Contributors:
 
 $(document).ready(function()
 {
-  
+
   $("#vctable").hide();
   $("#save").hide();
   $("#clonereplaceattach").hide();
@@ -1246,7 +1246,9 @@ $("#delete").click(function(event) {
           {
             if(resp.gkstatus){
 
-              $('#myModal').modal('hide');
+              $("#myModal").modal('hide');
+              $('.modal-backdrop').remove();
+              $("tbody tr:eq("+$("#modalindex").val()+")").dblclick();
             }
             else {
               $("#failure-alert").alert();
@@ -1288,7 +1290,9 @@ $("#delete").click(function(event) {
           {
             if(resp.gkstatus){
 
-              $('#myModal').modal('hide');
+              $("#myModal").modal('hide');
+              $('.modal-backdrop').remove();
+              $("tbody tr:eq("+$("#modalindex").val()+")").dblclick();
             }
             else {
               $("#failure-alert").alert();

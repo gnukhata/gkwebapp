@@ -173,9 +173,11 @@ $(document).ready(function() {
       $(this).val((parseFloat($(this).val()).toFixed(2)));
     }
   });
+  var navflag;
 
-  $('#vno').keyup(function(event) {
+  $('#vno').keydown(function(event) {
     if(event.which==13 && $('#vno').val()!=""){
+      navflag =1;
       $('#vdate').select().focus();
     }
   });
@@ -187,9 +189,16 @@ $(document).ready(function() {
   });
 
   $('#vdate').keyup(function(event) {
+    if (navflag==1) {
+      navflag=0;
+      return false;
+
+    }
+    else{
     if(event.which==13 && $('#vdate').val()!=""){
       $('#vmonth').select().focus();
     }
+  }
     if (event.which==38) {
       $("#vno").select().focus();
     }
