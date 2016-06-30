@@ -41,6 +41,7 @@ td {
               <tr  value="{{record['period']}}">
                 <td class="col-xs-5">
                   <a class="monthname" href="">{{record['month']}}</a>
+                  {%if record["advflag"] == 1%}<span class="glyphicon glyphicon-warning-sign" style="color:red"></span>{%endif%}
                 </td>
                 <td class="col-xs-2" style="text-align:right">
                   {{record["Dr"]}}
@@ -58,7 +59,7 @@ td {
         </div>
       </div>
       <div class="panel-footer">
-        <button type="button" class="btn btn-sm btn-danger" id="mthlback" accesskey="b"><u>B</b>ack</button>
+        <button type="button" class="btn btn-sm btn-danger" id="mthlback" accesskey="b"><u>B</u>ack</button>
         <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="t">Prin<u>t</u></button>
       </div>
     </div>
