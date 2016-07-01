@@ -55,7 +55,6 @@ def edituser(request):
 def createuser(request):
     headers={"gktoken":request.headers["gktoken"]}
     gkdata = {"username":request.params["username"],"userpassword":request.params["userpassword"],"userrole":int(request.params["userrole"]),"userquestion":request.params["userquestion"],"useranswer":request.params["useranswer"]}
-    print gkdata
     result = requests.post("http://127.0.0.1:6543/users", data =json.dumps(gkdata), headers=headers)
     return {"gkstatus":result.json()["gkstatus"]}
 

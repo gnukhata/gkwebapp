@@ -49,7 +49,9 @@
               <select class = "form-control input-sm" id="username"  name = "username" accesskey="e">
                 <option value="" disabled selected hidden>--Select User--</option>
                 {% for user in  Users%}
+								{%if user["userrole"]!= -1%}
                 <option value="{{user['userid']}}">{{user["username"]}}</option>
+								{%endif%}
                 {% endfor %}
               </select>
 						  <br/><br>
