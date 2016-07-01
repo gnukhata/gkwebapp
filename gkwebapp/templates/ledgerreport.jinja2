@@ -184,18 +184,27 @@
           {% if ledgerheader["projectname"]=="" %}
           <td class="col-xs-2">
             {% for pr in record['particulars'] %}
-            {{pr}}  {%if record["advflag"] == 1%}<span class="glyphicon glyphicon-warning-sign" style="color:red"></span>{%endif%} <br>
+            {{pr}} <br>
             {% endfor %}
             {% if record['narration']!="" and narrationflag==true %}
             ({{record['narration']}})
             {% endif %}
           </td>
+          {%if record["advflag"]==1%}
+          <td class="col-xs-2" style="text-align:right; color:red;">
+            <b>{{record["Dr"]}}</b>
+          </td>
+          <td class="col-xs-2" style="text-align:right; color:red;">
+            <b>{{record["Cr"]}}</b>
+          </td>
+          {%else%}
           <td class="col-xs-2" style="text-align:right">
             {{record["Dr"]}}
           </td>
           <td class="col-xs-2" style="text-align:right">
             {{record["Cr"]}}
           </td>
+          {%endif%}
           <td class="col-xs-2" style="text-align:right">
             {{record["balance"]}}
           </td>
