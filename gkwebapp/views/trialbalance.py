@@ -115,7 +115,6 @@ def printtrialbalance(request):
 		sheet.getCell(4, 2).stringValue("Group Name").setBold(True).setAlignHorizontal("center")
 		row = 3
 		for record in records:
-			print record
 			sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
 			sheet.getCell(1, row).stringValue(record["accountname"])
 			if record["advflag"]==1:
@@ -142,12 +141,15 @@ def printtrialbalance(request):
 		sheet.getCell(4, 2).stringValue("Group Name").setBold(True).setAlignHorizontal("center")
 		row = 3
 		for record in records:
-			print record
 			sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
 			sheet.getCell(1, row).stringValue(record["accountname"])
 			if record["advflag"]==1:
-				sheet.getCell(2, row).stringValue(record["Dr balance"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
-				sheet.getCell(3, row).stringValue(record["Cr balance"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+				if record["Dr balance"] > record["Cr balance"]:
+					sheet.getCell(2, row).stringValue(record["Dr balance"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+					sheet.getCell(3, row).stringValue(record["Cr balance"]).setAlignHorizontal("right")
+				elif record["Dr balance"] < record["Cr balance"]:
+					sheet.getCell(2, row).stringValue(record["Dr balance"]).setAlignHorizontal("right")
+					sheet.getCell(3, row).stringValue(record["Cr balance"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
 			else:
 				sheet.getCell(2, row).stringValue(record["Dr balance"]).setAlignHorizontal("right")
 				sheet.getCell(3, row).stringValue(record["Cr balance"]).setAlignHorizontal("right")
@@ -174,7 +176,6 @@ def printtrialbalance(request):
 		sheet.getCell(7, 2).stringValue("Group Name").setAlignHorizontal("center").setBold(True)
 		row = 3
 		for record in records:
-			print record
 			sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
 			sheet.getCell(1, row).stringValue(record["accountname"])
 			sheet.getCell(2, row).stringValue(record["openingbalance"]).setAlignHorizontal("right")
