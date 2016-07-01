@@ -191,7 +191,7 @@ $(document).ready(function(){
         $("#showproject").text("Project");
         $("#projecttb").text("Create & Edit Project - ALT+P");
         $("#showprjstate").text("Project Statement");
-        $("#projectstatementtb").text("Project Statement");
+        $("#projectstatementtb").text("Project Statement - CTRL+5");
       }
 
       $.ajax({
