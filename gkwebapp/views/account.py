@@ -71,12 +71,12 @@ def printlistofaccount(request):
 		sheet.getCell(3, row).stringValue(account["subgroupname"])
 		row += 1
 
-	print "to file save"
 	ods.save("response.ods")
 	repFile = open("response.ods")
 	rep = repFile.read()
 	repFile.close()
 	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	os.remove("response.ods")
 	return Response(rep, headerlist=headerList.items())
 
 

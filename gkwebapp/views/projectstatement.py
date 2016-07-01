@@ -87,6 +87,7 @@ def printprojectstatementreport(request):
 	rep = repFile.read()
 	repFile.close()
 	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	os.remove("response.ods")
 	return Response(rep, headerlist=headerList.items())
 
 

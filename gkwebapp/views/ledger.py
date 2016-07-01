@@ -84,6 +84,7 @@ def printmonthlyledgerreport(request):
 	rep = repFile.read()
 	repFile.close()
 	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	os.remove("response.ods")
 	return Response(rep, headerlist=headerList.items())
 
 @view_config(route_name="printledgerreport", renderer="")
@@ -174,8 +175,8 @@ def printLedgerReport(request):
 	repFile = open("response.ods")
 	rep = repFile.read()
 	repFile.close()
-	repFile.remove()
 	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	os.remove("response.ods")
 	return Response(rep, headerlist=headerList.items())
 
 

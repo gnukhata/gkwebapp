@@ -103,7 +103,7 @@ def printcashflowreport(request):
 	for account in receipt:
 		sheet.getCell(0, row).stringValue(account["toby"])
 		if account["toby"]!="" and account["particulars"]!="Opening balance":
-			sheet.getCell(1, row).stringValue("	        "+account["particulars"])
+			sheet.getCell(1, row).stringValue("			"+account["particulars"])
 			sheet.getCell(2, row).stringValue(account["amount"]).setAlignHorizontal("right")
 			sheet.getCell(3, row).stringValue("").setAlignHorizontal("right")
 		else:
@@ -116,7 +116,7 @@ def printcashflowreport(request):
 	for account in payment:
 		sheet.getCell(4, row).stringValue(account["toby"])
 		if account["toby"]!="" and account["particulars"]!="Closing balance":
-			sheet.getCell(5, row).stringValue("	        "+account["particulars"])
+			sheet.getCell(5, row).stringValue("			"+account["particulars"])
 			sheet.getCell(6, row).stringValue(account["amount"]).setAlignHorizontal("right")
 			sheet.getCell(7, row).stringValue("").setAlignHorizontal("right")
 		else:
@@ -130,4 +130,5 @@ def printcashflowreport(request):
 	rep = repFile.read()
 	repFile.close()
 	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	os.remove("response.ods")
 	return Response(rep, headerlist=headerList.items())
