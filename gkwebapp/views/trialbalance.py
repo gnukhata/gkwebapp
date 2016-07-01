@@ -115,16 +115,17 @@ def printtrialbalance(request):
 		sheet.getCell(4, 2).stringValue("Group Name").setBold(True).setAlignHorizontal("center")
 		row = 3
 		for record in records:
-				sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
-				sheet.getCell(1, row).stringValue(record["accountname"])
-                if record["advflag"]==1:
-    				sheet.getCell(2, row).stringValue(record["Dr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
-    				sheet.getCell(3, row).stringValue(record["Cr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
-                else:
-                    sheet.getCell(2, row).stringValue(record["Dr"]).setAlignHorizontal("right")
-    				sheet.getCell(3, row).stringValue(record["Cr"]).setAlignHorizontal("right")
-				sheet.getCell(4, row).stringValue(record["groupname"]).setAlignHorizontal("center")
-				row+=1
+			print record
+			sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
+			sheet.getCell(1, row).stringValue(record["accountname"])
+			if record["advflag"]==1:
+				sheet.getCell(2, row).stringValue(record["Dr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+				sheet.getCell(3, row).stringValue(record["Cr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+			else:
+				sheet.getCell(2, row).stringValue(record["Dr"]).setAlignHorizontal("right")
+				sheet.getCell(3, row).stringValue(record["Cr"]).setAlignHorizontal("right")
+			sheet.getCell(4, row).stringValue(record["groupname"]).setAlignHorizontal("center")
+			row+=1
 
 	elif trialbalancetype == 2:
 		ods.content.mergeCells(0,0,5,1)
@@ -141,12 +142,17 @@ def printtrialbalance(request):
 		sheet.getCell(4, 2).stringValue("Group Name").setBold(True).setAlignHorizontal("center")
 		row = 3
 		for record in records:
-				sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
-				sheet.getCell(1, row).stringValue(record["accountname"])
+			print record
+			sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
+			sheet.getCell(1, row).stringValue(record["accountname"])
+			if record["advflag"]==1:
+				sheet.getCell(2, row).stringValue(record["Dr balance"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+				sheet.getCell(3, row).stringValue(record["Cr balance"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+			else:
 				sheet.getCell(2, row).stringValue(record["Dr balance"]).setAlignHorizontal("right")
 				sheet.getCell(3, row).stringValue(record["Cr balance"]).setAlignHorizontal("right")
-				sheet.getCell(4, row).stringValue(record["groupname"]).setAlignHorizontal("center")
-				row+=1
+			sheet.getCell(4, row).stringValue(record["groupname"]).setAlignHorizontal("center")
+			row+=1
 
 	elif trialbalancetype == 3:
 		ods.content.mergeCells(0,0,8,1)
@@ -168,15 +174,20 @@ def printtrialbalance(request):
 		sheet.getCell(7, 2).stringValue("Group Name").setAlignHorizontal("center").setBold(True)
 		row = 3
 		for record in records:
-				sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
-				sheet.getCell(1, row).stringValue(record["accountname"])
-				sheet.getCell(2, row).stringValue(record["openingbalance"]).setAlignHorizontal("right")
-				sheet.getCell(3, row).stringValue(record["totaldr"]).setAlignHorizontal("right")
-				sheet.getCell(4, row).stringValue(record["totalcr"]).setAlignHorizontal("right")
+			print record
+			sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
+			sheet.getCell(1, row).stringValue(record["accountname"])
+			sheet.getCell(2, row).stringValue(record["openingbalance"]).setAlignHorizontal("right")
+			sheet.getCell(3, row).stringValue(record["totaldr"]).setAlignHorizontal("right")
+			sheet.getCell(4, row).stringValue(record["totalcr"]).setAlignHorizontal("right")
+			if record["advflag"]==1:
+				sheet.getCell(5, row).stringValue(record["curbaldr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+				sheet.getCell(6, row).stringValue(record["curbalcr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+			else:
 				sheet.getCell(5, row).stringValue(record["curbaldr"]).setAlignHorizontal("right")
 				sheet.getCell(6, row).stringValue(record["curbalcr"]).setAlignHorizontal("right")
-				sheet.getCell(7, row).stringValue(record["groupname"]).setAlignHorizontal("center")
-				row+=1
+			sheet.getCell(7, row).stringValue(record["groupname"]).setAlignHorizontal("center")
+			row+=1
 
 	ods.save("response.ods")
 	repFile = open("response.ods")
