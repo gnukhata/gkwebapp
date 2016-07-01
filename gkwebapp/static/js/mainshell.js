@@ -189,8 +189,9 @@ $(document).ready(function(){
         $("#showcashflow").text("Receipt & Payment");
         $("#cashflowtb").text("Receipt & Payment - CTRL+6");
         $("#showproject").text("Project");
-        $("#projecttb").text("Project - ALT+P");
+        $("#projecttb").text("Create & Edit Project - ALT+P");
         $("#showprjstate").text("Project Statement");
+        $("#projectstatementtb").text("Project Statement");
       }
 
       $.ajax({
