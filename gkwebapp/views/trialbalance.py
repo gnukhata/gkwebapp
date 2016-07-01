@@ -67,7 +67,7 @@ def showtrialbalancereport(request):
 	calculateto = request.params["calculateto"]
 	financialstart = request.params["financialstart"]
 	trialbalancetype = int(request.params["trialbalancetype"])
-	
+
 	header={"gktoken":request.headers["gktoken"]}
 	if trialbalancetype == 1:
 		result = requests.get("http://127.0.0.1:6543/report?type=nettrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
@@ -117,8 +117,12 @@ def printtrialbalance(request):
 		for record in records:
 				sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
 				sheet.getCell(1, row).stringValue(record["accountname"])
-				sheet.getCell(2, row).stringValue(record["Dr"]).setAlignHorizontal("right")
-				sheet.getCell(3, row).stringValue(record["Cr"]).setAlignHorizontal("right")
+                if record["advflag"]==1:
+    				sheet.getCell(2, row).stringValue(record["Dr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+    				sheet.getCell(3, row).stringValue(record["Cr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+                else:
+                    sheet.getCell(2, row).stringValue(record["Dr"]).setAlignHorizontal("right")
+    				sheet.getCell(3, row).stringValue(record["Cr"]).setAlignHorizontal("right")
 				sheet.getCell(4, row).stringValue(record["groupname"]).setAlignHorizontal("center")
 				row+=1
 

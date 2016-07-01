@@ -88,11 +88,20 @@ def printconvbalsheetreport(request):
 					sheet.getCell(0,row).stringValue(record["groupAccname"].upper())
 
 			if record["groupAccflag"]==2 or record["groupAccflag"]==1:
-				sheet.getCell(1,row).stringValue(record["amount"]).setAlignHorizontal("right")
+				if record["advflag"]==1:
+					sheet.getCell(1,row).stringValue(record["amount"]).setAlignHorizontal("right").setFontColor("#ff0000").setBold(True)
+				else:
+					sheet.getCell(1,row).stringValue(record["amount"]).setAlignHorizontal("right")
 			elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
-				sheet.getCell(2,row).stringValue(record["amount"]).setAlignHorizontal("right")
+				if record["advflag"]==1:
+					sheet.getCell(2,row).stringValue(record["amount"]).setAlignHorizontal("right").setFontColor("#ff0000").setBold(True)
+				else:
+					sheet.getCell(2,row).stringValue(record["amount"]).setAlignHorizontal("right")
 			else:
-				sheet.getCell(3,row).stringValue(record["amount"]).setAlignHorizontal("right").setBold(True)
+				if record["advflag"]==1:
+					sheet.getCell(3,row).stringValue(record["amount"]).setAlignHorizontal("right").setFontColor("#ff0000").setBold(True)
+				else:
+					sheet.getCell(3,row).stringValue(record["amount"]).setAlignHorizontal("right").setBold(True)
 			row += 1
 
 	row = 2
@@ -111,11 +120,20 @@ def printconvbalsheetreport(request):
 					sheet.getCell(4,row).stringValue(record["groupAccname"].upper())
 
 			if record["groupAccflag"]==2 or record["groupAccflag"]==1:
-				sheet.getCell(5,row).stringValue(record["amount"]).setAlignHorizontal("right")
+				if record["advflag"]==1:
+					sheet.getCell(5,row).stringValue(record["amount"]).setAlignHorizontal("right").setFontColor("#ff0000").setBold(True)
+				else:
+					sheet.getCell(5,row).stringValue(record["amount"]).setAlignHorizontal("right")
 			elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
-				sheet.getCell(6,row).stringValue(record["amount"]).setAlignHorizontal("right")
+				if record["advflag"]==1:
+					sheet.getCell(6,row).stringValue(record["amount"]).setAlignHorizontal("right").setFontColor("#ff0000").setBold(True)
+				else:
+					sheet.getCell(6,row).stringValue(record["amount"]).setAlignHorizontal("right")
 			else:
-				sheet.getCell(7,row).stringValue(record["amount"]).setAlignHorizontal("right").setBold(True)
+				if record["advflag"]==1:
+					sheet.getCell(7,row).stringValue(record["amount"]).setAlignHorizontal("right").setFontColor("#ff0000").setBold(True)
+				else:
+					sheet.getCell(7,row).stringValue(record["amount"]).setAlignHorizontal("right").setBold(True)
 			row += 1
 
 
@@ -165,11 +183,20 @@ def printsourcesandappfundreport(request):
 			sheet.getCell(0,row).stringValue(record["groupAccname"].upper())
 
 		if record["groupAccflag"]==2 or record["groupAccflag"]==1:
-			sheet.getCell(1,row).stringValue(record["amount"]).setAlignHorizontal("right")
+			if record["advflag"]==1:
+				sheet.getCell(1,row).stringValue(record["amount"]).setAlignHorizontal("right").setFontColor("#ff0000").setBold(True)
+			else:
+				sheet.getCell(1,row).stringValue(record["amount"]).setAlignHorizontal("right")
 		elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
-			sheet.getCell(2,row).stringValue(record["amount"]).setAlignHorizontal("right")
+			if record["advflag"]==1:
+				sheet.getCell(2,row).stringValue(record["amount"]).setAlignHorizontal("right").setFontColor("#ff0000").setBold(True)
+			else:
+				sheet.getCell(2,row).stringValue(record["amount"]).setAlignHorizontal("right")
 		else:
-			sheet.getCell(3,row).stringValue(record["amount"]).setAlignHorizontal("right").setBold(True)
+			if record["advflag"]==1:
+				sheet.getCell(3,row).stringValue(record["amount"]).setAlignHorizontal("right").setFontColor("#ff0000").setBold(True)
+			else:
+				sheet.getCell(3,row).stringValue(record["amount"]).setAlignHorizontal("right").setBold(True)
 		row += 1
 
 	for record in applications:
@@ -185,11 +212,20 @@ def printsourcesandappfundreport(request):
 			sheet.getCell(0,row).stringValue(record["groupAccname"].upper())
 
 		if record["groupAccflag"]==2 or record["groupAccflag"]==1:
-			sheet.getCell(1,row).stringValue(record["amount"]).setAlignHorizontal("right")
+			if record["advflag"]==1:
+				sheet.getCell(1,row).stringValue(record["amount"]).setAlignHorizontal("right").setFontColor("#ff0000").setBold(True)
+			else:
+				sheet.getCell(1,row).stringValue(record["amount"]).setAlignHorizontal("right")
 		elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
-			sheet.getCell(2,row).stringValue(record["amount"]).setAlignHorizontal("right")
+			if record["advflag"]==1:
+				sheet.getCell(2,row).stringValue(record["amount"]).setAlignHorizontal("right").setFontColor("#ff0000").setBold(True)
+			else:
+				sheet.getCell(2,row).stringValue(record["amount"]).setAlignHorizontal("right")
 		else:
-			sheet.getCell(3,row).stringValue(record["amount"]).setAlignHorizontal("right").setBold(True)
+			if record["advflag"]==1:
+				sheet.getCell(3,row).stringValue(record["amount"]).setAlignHorizontal("right").setFontColor("#ff0000").setBold(True)
+			else:
+				sheet.getCell(3,row).stringValue(record["amount"]).setAlignHorizontal("right").setBold(True)
 		row += 1
 
 

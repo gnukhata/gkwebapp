@@ -70,8 +70,12 @@ def printmonthlyledgerreport(request):
 	for eachmonth in result:
 		row += 1
 		sheet.getCell(0,row).stringValue(eachmonth["month"])
-		sheet.getCell(1,row).stringValue(eachmonth["Dr"]).setAlignHorizontal("right")
-		sheet.getCell(2,row).stringValue(eachmonth["Cr"]).setAlignHorizontal("right")
+		if(eachmonth["advflag"]==1):
+			sheet.getCell(1,row).stringValue(eachmonth["Dr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+			sheet.getCell(2,row).stringValue(eachmonth["Cr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+		else:
+			sheet.getCell(1,row).stringValue(eachmonth["Dr"]).setAlignHorizontal("right")
+			sheet.getCell(2,row).stringValue(eachmonth["Cr"]).setAlignHorizontal("right")
 		sheet.getCell(3,row).stringValue(eachmonth["vcount"]).setAlignHorizontal("center")
 		#row += 1
 
@@ -134,8 +138,12 @@ def printLedgerReport(request):
 		row += 1
 		sheet.getCell(0,row).stringValue(transaction["voucherdate"])
 		sheet.getCell(1,row).stringValue(transaction["vouchernumber"])
-		sheet.getCell(4,row).stringValue(transaction["Dr"]).setAlignHorizontal("right")
-		sheet.getCell(5,row).stringValue(transaction["Cr"]).setAlignHorizontal("right")
+		if transaction["advflag"]==1:
+			sheet.getCell(4,row).stringValue(transaction["Dr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+			sheet.getCell(5,row).stringValue(transaction["Cr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+		else:
+			sheet.getCell(4,row).stringValue(transaction["Dr"]).setAlignHorizontal("right").setBold(True)
+			sheet.getCell(5,row).stringValue(transaction["Cr"]).setAlignHorizontal("right").setBold(True)
 		sheet.getCell(6,row).stringValue(transaction["balance"]).setAlignHorizontal("right")
 		if transaction["vouchertype"]=="contra" or transaction["vouchertype"]=="purchase" or transaction["vouchertype"]=="sales" or transaction["vouchertype"]=="receipt" or transaction["vouchertype"]=="payment" or transaction["vouchertype"]=="journal":
 			sheet.getCell(2,row).stringValue(transaction["vouchertype"].title())
