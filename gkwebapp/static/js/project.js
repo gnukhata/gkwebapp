@@ -75,6 +75,8 @@ $(document).ready(function() {
 
   $(document).off("click",".delprj").on("click", ".delprj", function() {
     var prjcode = $(this).closest('tr').attr('value');
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
     $('#m_confirmdel').modal('show').one('click', '#prjdel', function (e) {
       $.ajax(
         {
@@ -113,6 +115,8 @@ $(document).ready(function() {
   $(document).off("click",".editprj").on("click", ".editprj", function() {
     var prjcode = $(this).closest('tr').attr('value');
     var closesttr = $(this).closest('tr')
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
     $('#m_editprj').modal('show').one('click',"#m_edit", function(event) {
       if ($.trim($("#m_prjname").val())=="") {
         return false;

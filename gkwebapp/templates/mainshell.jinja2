@@ -16,14 +16,12 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href=""><img src="{{request.static_url('gkwebapp:static/images/icon.svg')}}" alt="GNUKhata Icon" style="width:42px;height:42px;margin-top: -11px" /></a>
+        <a class="navbar-brand" style="pointer-events: none;">GNUKhata</a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="dropdown">
-            <a href="" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="false" aria-expanded="false">GNUKhata</a>
-          </li>
           <li class="dropdown closebooks">
             <a href="" id="master" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>M</u>aster</a>
             <ul class="dropdown-menu">
@@ -54,7 +52,7 @@
             <ul class="dropdown-menu">
               <li><a href="" data-toggle="tab" id="showviewledger">Ledger</a></li>
               <li><a href="" data-toggle="tab" id="showtrialbalance">Trial Balance</a></li>
-              <li><a href="" data-toggle="tab" id="showprjstate">Cost Center</a></li>
+              <li><a href="" data-toggle="tab" id="showprjstate">Cost Center Statement</a></li>
               <li><a href="" data-toggle="tab" id="showcashflow">Cash Flow</a></li>
               <li class="hideoperator"><a href="" id="showbalancesheet" data-toggle="tab">Balance Sheet</a></li>
               <li class="hideoperator"><a href="" data-toggle="tab" id="showprofitloss">Profit & Loss</a></li>
@@ -109,7 +107,7 @@
               <li><a data-toggle="tab" id="findvouchertb" href="">Find/Edit Voucher - F10</a></li>
               <li><a data-toggle="tab" id="ledgertb" href="">Ledger - F11</a></li>
               <li><a data-toggle="tab" id="trialbalancetb" href="">Trial Balance - F12</a></li>
-              <li><a data-toggle="tab" id="projectstatementtb" href="">Project Statement - CTRL+5</a></li>
+              <li><a data-toggle="tab" id="projectstatementtb" href="">Cost Center - CTRL+5</a></li>
               <li><a data-toggle="tab" id="cashflowtb" href="">Cash Flow - CTRL+6</a></li>
               <li><a data-toggle="tab" id="listofaccountstb" href="">List of Accounts - CTRL+7</a></li>
               <li class="closebooks"><a data-toggle="tab" id="projecttb" href="">Create & Edit Cost Center - ALT+P</a></li>
@@ -117,7 +115,7 @@
               <li class="hideoperator closebooks"><a data-toggle="tab" id="createusertb" href="">New User - ALT+N</a></li>
               <li class="hideoperator hidemanager"><a data-toggle="tab" id="REMOVEusertb" href="">Remove User - ALT+U</a></li>
               <li><a data-toggle="tab" id="changepasswordtb" href="">Change Password - ALT+C</a></li>
-              <li><a data-toggle="tab" id="manualtb" href="">GNUKhata Manual - ALT+M</a></li>
+              <li><a data-toggle="tab" id="manualtb" href="">Manual - ALT+M</a></li>
               <li><a data-toggle="tab" id="logouttb" href="">Logout - CTRL+L</a></li>
               <li><a data-toggle="tab" id="changeogtb" href="">Change Organisation - CTRL+O</a></li>
             </ul>
@@ -129,7 +127,7 @@
 </nav>
 <div class="container-fluid hidden-print">
   <ul class="shadow" style="list-style-type: none; margin-top: 52px; padding: 0; overflow: hidden; background-color: rgb(248,248,248); height: 20px; border-radius: 5px;">
-    <li style="float: left;"><a data-toggle="tab"; style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="orgdata" href=""></a></li>
+    <li style="float: left;"><a data-toggle="tab" style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="orgdata" href=""></a></li>
     <li style="float: right;"><a style="margin-right: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="yeardata" href=""></a></li>
   <ul>
 </div>
@@ -283,7 +281,7 @@
           Delete Organisation - ALT + I
         </p>
         <p>
-          GNUKhata Manual - ALT + M
+          Manual - ALT + M
         </p>
         <p>
           Individual Screen - ALT + SHIFT + (Underlined Character)
@@ -377,21 +375,23 @@
   </div>
 </div>
 <div id="m_confirmdelorg" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-header">
+  <div class="vertical-alignment-helper">
+    <div class="modal-dialog modal-sm vertical-align-center">
+      <div class="modal-content">
+        <div class="modal-header">
 
-        <h4 class="modal-title">Delete Organisation?</h4>
-      </div>
-      <div class="modal-body">
-        <p>Are you sure?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-        <button type="button" id="orgdel" data-dismiss="modal" class="btn btn-danger">Delete</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
+          <h4 class="modal-title">Delete Organisation?</h4>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+          <button type="button" id="orgdel" data-dismiss="modal" class="btn btn-danger">Delete</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div>
 </div><!-- /.modal -->
 
 <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>

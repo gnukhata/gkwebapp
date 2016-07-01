@@ -175,6 +175,9 @@ $(document).ready(function() {
         },
         success: function(resp)
         {
+          $("#viewvc").html("");
+          $('.modal-backdrop').remove();
+          $('.modal').modal('hide');
           $("#viewvc").html(resp);
           $('#myModal').modal('show');
           $('#myModal').on('shown.bs.modal', function (e)

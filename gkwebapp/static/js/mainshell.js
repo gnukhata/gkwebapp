@@ -189,8 +189,9 @@ $(document).ready(function(){
         $("#showcashflow").text("Receipt & Payment");
         $("#cashflowtb").text("Receipt & Payment - CTRL+6");
         $("#showproject").text("Project");
-        $("#projecttb").text("Project - ALT+P");
+        $("#projecttb").text("Create & Edit Project - ALT+P");
         $("#showprjstate").text("Project Statement");
+        $("#projectstatementtb").text("Project Statement - CTRL+5");
       }
 
       $.ajax({
@@ -340,6 +341,8 @@ $.ajax({
       $(document).off("click","#deleteorg").on("click", "#deleteorg", function(event)
       {
         event.preventDefault();
+        $('.modal-backdrop').remove();
+        $('.modal').modal('hide');
         $('#m_confirmdelorg').modal('show').one('click', '#orgdel', function (e)
         {
           $.ajax({

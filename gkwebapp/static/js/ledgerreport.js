@@ -186,6 +186,9 @@ $(document).ready(function() {
     )
     .done(function(resp)
     {
+      $("#viewvc").html("");
+      $('.modal-backdrop').remove();
+      $('.modal').modal('hide');
       $("#viewvc").html(resp);
       $('#myModal').modal('show');
       $('#myModal').on('shown.bs.modal', function (e)
@@ -276,6 +279,9 @@ $("#dualledger").click(function(event) {
     },
   })
   .done(function(resp) {
+    $("#viewvc").html("");
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
     $("#viewvc").html(resp);
     $('#m_dualledger').modal('show');
     $('#m_dualledger').on('shown.bs.modal', function (e)
