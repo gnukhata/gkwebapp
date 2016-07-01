@@ -51,7 +51,7 @@ def printlistofaccount(request):
 	sheet.setSheetName("List of Acounts")
 	sheet.getRow(0).setHeight("23pt")
 
-	sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("18pt")
+	sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("16pt")
 	ods.content.mergeCells(0,0,4,1)
 	sheet.getRow(1).setHeight("18pt")
 	sheet.getCell(0,1).stringValue("List Of Accounts").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
@@ -71,12 +71,12 @@ def printlistofaccount(request):
 		sheet.getCell(3, row).stringValue(account["subgroupname"])
 		row += 1
 
-	print "to file save"
 	ods.save("response.ods")
 	repFile = open("response.ods")
 	rep = repFile.read()
 	repFile.close()
 	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	os.remove("response.ods")
 	return Response(rep, headerlist=headerList.items())
 
 

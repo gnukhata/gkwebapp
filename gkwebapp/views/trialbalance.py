@@ -67,7 +67,7 @@ def showtrialbalancereport(request):
 	calculateto = request.params["calculateto"]
 	financialstart = request.params["financialstart"]
 	trialbalancetype = int(request.params["trialbalancetype"])
-	
+
 	header={"gktoken":request.headers["gktoken"]}
 	if trialbalancetype == 1:
 		result = requests.get("http://127.0.0.1:6543/report?type=nettrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
@@ -84,6 +84,7 @@ def printtrialbalance(request):
 	orgname = request.params["orgname"]
 	financialstart = request.params["financialstart"]
 	calculateto = request.params["calculateto"]
+	fyend = request.params["fyend"]
 	trialbalancetype = int(request.params["trialbalancetype"])
 	header = {"gktoken": request.headers["gktoken"]}
 	if trialbalancetype == 1:
@@ -100,7 +101,7 @@ def printtrialbalance(request):
 	sheet.setSheetName("Trial Balance of "+orgname)
 	sheet.getRow(0).setHeight("23pt")
 
-	sheet.getCell(0,0).stringValue(orgname).setBold(True).setFontSize("18pt").setAlignHorizontal("center")
+	sheet.getCell(0,0).stringValue(orgname+" (FY: "+financialstart[8:10]+financialstart[4:8]+financialstart[0:4]+" to "+fyend+")").setBold(True).setFontSize("16pt").setAlignHorizontal("center")
 	if trialbalancetype == 1:
 		ods.content.mergeCells(0,0,5,1)
 		sheet.getRow(1).setHeight("18pt")
@@ -115,12 +116,16 @@ def printtrialbalance(request):
 		sheet.getCell(4, 2).stringValue("Group Name").setBold(True).setAlignHorizontal("center")
 		row = 3
 		for record in records:
-				sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
-				sheet.getCell(1, row).stringValue(record["accountname"])
+			sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
+			sheet.getCell(1, row).stringValue(record["accountname"])
+			if record["advflag"]==1:
+				sheet.getCell(2, row).stringValue(record["Dr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+				sheet.getCell(3, row).stringValue(record["Cr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+			else:
 				sheet.getCell(2, row).stringValue(record["Dr"]).setAlignHorizontal("right")
 				sheet.getCell(3, row).stringValue(record["Cr"]).setAlignHorizontal("right")
-				sheet.getCell(4, row).stringValue(record["groupname"]).setAlignHorizontal("center")
-				row+=1
+			sheet.getCell(4, row).stringValue(record["groupname"]).setAlignHorizontal("center")
+			row+=1
 
 	elif trialbalancetype == 2:
 		ods.content.mergeCells(0,0,5,1)
@@ -137,12 +142,20 @@ def printtrialbalance(request):
 		sheet.getCell(4, 2).stringValue("Group Name").setBold(True).setAlignHorizontal("center")
 		row = 3
 		for record in records:
-				sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
-				sheet.getCell(1, row).stringValue(record["accountname"])
+			sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
+			sheet.getCell(1, row).stringValue(record["accountname"])
+			if record["advflag"]==1:
+				if record["Dr balance"] > record["Cr balance"]:
+					sheet.getCell(2, row).stringValue(record["Dr balance"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+					sheet.getCell(3, row).stringValue(record["Cr balance"]).setAlignHorizontal("right")
+				elif record["Dr balance"] < record["Cr balance"]:
+					sheet.getCell(2, row).stringValue(record["Dr balance"]).setAlignHorizontal("right")
+					sheet.getCell(3, row).stringValue(record["Cr balance"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+			else:
 				sheet.getCell(2, row).stringValue(record["Dr balance"]).setAlignHorizontal("right")
 				sheet.getCell(3, row).stringValue(record["Cr balance"]).setAlignHorizontal("right")
-				sheet.getCell(4, row).stringValue(record["groupname"]).setAlignHorizontal("center")
-				row+=1
+			sheet.getCell(4, row).stringValue(record["groupname"]).setAlignHorizontal("center")
+			row+=1
 
 	elif trialbalancetype == 3:
 		ods.content.mergeCells(0,0,8,1)
@@ -164,22 +177,24 @@ def printtrialbalance(request):
 		sheet.getCell(7, 2).stringValue("Group Name").setAlignHorizontal("center").setBold(True)
 		row = 3
 		for record in records:
-				sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
-				sheet.getCell(1, row).stringValue(record["accountname"])
-				sheet.getCell(2, row).stringValue(record["openingbalance"]).setAlignHorizontal("right")
-				sheet.getCell(3, row).stringValue(record["totaldr"]).setAlignHorizontal("right")
-				sheet.getCell(4, row).stringValue(record["totalcr"]).setAlignHorizontal("right")
+			sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
+			sheet.getCell(1, row).stringValue(record["accountname"])
+			sheet.getCell(2, row).stringValue(record["openingbalance"]).setAlignHorizontal("right")
+			sheet.getCell(3, row).stringValue(record["totaldr"]).setAlignHorizontal("right")
+			sheet.getCell(4, row).stringValue(record["totalcr"]).setAlignHorizontal("right")
+			if record["advflag"]==1:
+				sheet.getCell(5, row).stringValue(record["curbaldr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+				sheet.getCell(6, row).stringValue(record["curbalcr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+			else:
 				sheet.getCell(5, row).stringValue(record["curbaldr"]).setAlignHorizontal("right")
 				sheet.getCell(6, row).stringValue(record["curbalcr"]).setAlignHorizontal("right")
-				sheet.getCell(7, row).stringValue(record["groupname"]).setAlignHorizontal("center")
-				row+=1
+			sheet.getCell(7, row).stringValue(record["groupname"]).setAlignHorizontal("center")
+			row+=1
 
 	ods.save("response.ods")
 	repFile = open("response.ods")
 	rep = repFile.read()
 	repFile.close()
 	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	os.remove("response.ods")
 	return Response(rep, headerlist=headerList.items())
-
-	#else:
-		#return {"gkstatus":1}

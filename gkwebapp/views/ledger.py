@@ -70,8 +70,12 @@ def printmonthlyledgerreport(request):
 	for eachmonth in result:
 		row += 1
 		sheet.getCell(0,row).stringValue(eachmonth["month"])
-		sheet.getCell(1,row).stringValue(eachmonth["Dr"]).setAlignHorizontal("right")
-		sheet.getCell(2,row).stringValue(eachmonth["Cr"]).setAlignHorizontal("right")
+		if(eachmonth["advflag"]==1):
+			sheet.getCell(1,row).stringValue(eachmonth["Dr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+			sheet.getCell(2,row).stringValue(eachmonth["Cr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+		else:
+			sheet.getCell(1,row).stringValue(eachmonth["Dr"]).setAlignHorizontal("right")
+			sheet.getCell(2,row).stringValue(eachmonth["Cr"]).setAlignHorizontal("right")
 		sheet.getCell(3,row).stringValue(eachmonth["vcount"]).setAlignHorizontal("center")
 		#row += 1
 
@@ -80,6 +84,7 @@ def printmonthlyledgerreport(request):
 	rep = repFile.read()
 	repFile.close()
 	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	os.remove("response.ods")
 	return Response(rep, headerlist=headerList.items())
 
 @view_config(route_name="printledgerreport", renderer="")
@@ -106,7 +111,7 @@ def printLedgerReport(request):
 	ods = ODS()
 	sheet = ods.content.getSheet(0)
 	sheet.getRow(0).setHeight("23pt")
-	sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("18pt")
+	sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("16pt")
 	ods.content.mergeCells(0,0,8,1)
 	sheet.getRow(1).setHeight("18pt")
 	sheet.getCell(0,1).stringValue("Account: "+headerrow["accountname"] +" (Period: "+calculatefrom+" to "+calculateto+")").setBold(True).setAlignHorizontal("center").setFontSize("14pt")
@@ -134,9 +139,15 @@ def printLedgerReport(request):
 		row += 1
 		sheet.getCell(0,row).stringValue(transaction["voucherdate"])
 		sheet.getCell(1,row).stringValue(transaction["vouchernumber"])
-		sheet.getCell(4,row).stringValue(transaction["Dr"]).setAlignHorizontal("right")
-		sheet.getCell(5,row).stringValue(transaction["Cr"]).setAlignHorizontal("right")
+		if transaction["advflag"]==1:
+			sheet.getCell(4,row).stringValue(transaction["Dr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+			sheet.getCell(5,row).stringValue(transaction["Cr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+		else:
+			sheet.getCell(4,row).stringValue(transaction["Dr"]).setAlignHorizontal("right")
+			sheet.getCell(5,row).stringValue(transaction["Cr"]).setAlignHorizontal("right")
+
 		sheet.getCell(6,row).stringValue(transaction["balance"]).setAlignHorizontal("right")
+
 		if transaction["vouchertype"]=="contra" or transaction["vouchertype"]=="purchase" or transaction["vouchertype"]=="sales" or transaction["vouchertype"]=="receipt" or transaction["vouchertype"]=="payment" or transaction["vouchertype"]=="journal":
 			sheet.getCell(2,row).stringValue(transaction["vouchertype"].title())
 		elif transaction["vouchertype"]=="debitnote":
@@ -165,6 +176,7 @@ def printLedgerReport(request):
 	rep = repFile.read()
 	repFile.close()
 	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	os.remove("response.ods")
 	return Response(rep, headerlist=headerList.items())
 
 
