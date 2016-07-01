@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>GNUKhata</title>
+    <style>
+    @page {
+      size: 21cm 29.7cm;
+      margin: 10mm 10mm 20mm 10mm; /* change the margins as you want them to be. */
+    }
+		table { page-break-inside:auto }
+   	tr    { page-break-inside:avoid; page-break-after:auto }
+    td {
+      font-size: 71%;
+    }
+
+    th {
+      font-size: 75%;
+    }
+    thead { display: table-header-group; }
+    tfoot { display: table-footer-group; }
+    </style>
+	</head>
+	<body>
+    <input type="hidden" id="calculateto" name="calculateto" value="{{to}}"></input>
+    <input type="hidden" id="projectcode" name="projectcode" value="{{projectcode}}"></input>
+    <input type="hidden" id="projectname" name="projectname" value="{{projectname}}"></input>
+
+    <div class="table-responsive printorgdetails">
+      <table id="prjsttable" class=" shadow table table-striped table-condensed">
+        <thead>
+          <tr style="color:black; background-color:white;">
+						<th colspan="5" style="text-align:center; font-size:80%">
+							<i>Statement for : </i>{{projectname}}<br>
+							<i>Period : </i>{{from}} to {{to}}
+						</th>
+					</tr>
+          <tr>
+            <th class="col-xs-1">Sr.no.</th>
+            <th class="col-xs-4">Account</th>
+            <th class="col-xs-3">Group</th>
+            <th style="text-align:right" class="col-xs-2">Total Outgoing</th>
+            <th style="text-align:right" class="col-xs-2">Total Incoming</th>
+          </tr>
+        </thead>
+        <tbody style="background-color:white;">
+          {% for record in records %}
+          <tr  value="{{record['accountcode']}}">
+            <td class="col-xs-1">
+              {{record['srno']}}
+            </td>
+            {% if record['accountname']=="" %}
+            <td class="col-xs-4">
+            </td>
+            {% else %}
+            <td class="col-xs-4">
+              {{record['accountname']}}
+            </td>
+            {% endif %}
+            <td class="col-xs-3">
+              {{record["groupname"]}}<br>
+              {% if record.ttlRunDr %}
+								&nbsp&nbsp<i>Running Total:</i><br>
+							{% endif %}
+            </td>
+            <td class="col-xs-2" style="text-align:right">
+              {{record["totalout"]}}<br><i><u>{{record["ttlRunDr"]}}</u></i>
+            </td>
+            <td class="col-xs-2" style="text-align:right">
+              {{record["totalin"]}}<br><i><u>{{record["ttlRunCr"]}}</u></i>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+			<span style="margin:auto; display:table;">
+				<button class="btn btn-sm btn-primary hidden-print" type="button" id="printback" accesskey="b"><u>B</u>ack</button>
+				<button class="btn btn-sm btn-primary hidden-print" type="button"	id="realprint" accesskey="t">Prin<u>t</u></button>
+			</span>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("title").html("GNUKhata");
+				$("#printback").click(function(event) {
+					var backdata = {"backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()};
+					if ($("#side").val()!="") {
+						backdata.side=$("#side").val();
+					}
+					$.ajax(
+						{
+							type: "POST",
+							url: "/showledgerreport",
+							global: false,
+							async: false,
+							datatype: "text/html",
+							data: backdata,
+							beforeSend: function(xhr)
+							{
+								xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+							}
+						})
+						.done(function(resp)
+						{
+							$("#info").html("");
+							$("#info").html(resp);
+						}
+					);
+				});
+				$("#realprint").click(function(event) {
+					window.print();
+				});
+			});
+		</script>
+	</body>
+</html>
