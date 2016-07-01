@@ -50,6 +50,31 @@ $(document).ready(function() {
   var previndex;
 
 
+  $('#viewprintableversion').click(function (e) {
+
+$.ajax({
+      type: "POST",
+      url: "/listofaccountsprint",
+      global: false,
+      async: false,
+      datatype: "text/html",
+      beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+})
+.done(function(resp) {
+      $("#info").html(resp);
+})
+.fail(function() {
+  console.log("error");
+})
+.always(function() {
+  console.log("complete");
+});
+});
+
+
   $(document).off('keydown' ,'.libgname').on('keydown' ,'.libgname',function(event) {
     curindex = $(this).closest('tr').index();
     nextindex = curindex+1;

@@ -92,6 +92,16 @@ def showaccount(request):
 	return {"gkresult":grpdata,"baltbl":result.json()["baltbl"]}
 
 
+@view_config(route_name="listofaccountsprint", renderer="gkwebapp:templates/printlistofaccounts.jinja2")
+def listofaccountprint(request):
+
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/accounts", headers=header)
+
+	return {"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
+
+
+
 @view_config(route_name="showlistofaccounts", renderer="gkwebapp:templates/listofaccounts.jinja2")
 def showlistofaccount(request):
 
