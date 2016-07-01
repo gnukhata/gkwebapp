@@ -118,7 +118,8 @@ def printLedgerReport(request):
 	ods.content.mergeCells(0,1,8,1)
 	row = 2
 	if headerrow["projectname"]!="":
-		sheet.getCell(0,row).stringValue("Project: "+headerrow["projectname"]).setBold(True).setAlignHorizontal("center")
+		sheet.getRow(row).setHeight("16pt")
+		sheet.getCell(0,row).stringValue("Project: "+headerrow["projectname"]).setBold(True).setAlignHorizontal("center").setFontSize("12pt")
 		ods.content.mergeCells(0,row,8,1)
 		row += 1
 	sheet.getColumn(0).setWidth("2cm")
