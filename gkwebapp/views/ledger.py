@@ -143,8 +143,8 @@ def printLedgerReport(request):
 			sheet.getCell(4,row).stringValue(transaction["Dr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
 			sheet.getCell(5,row).stringValue(transaction["Cr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
 		else:
-			sheet.getCell(4,row).stringValue(transaction["Dr"]).setAlignHorizontal("right").setBold(True)
-			sheet.getCell(5,row).stringValue(transaction["Cr"]).setAlignHorizontal("right").setBold(True)
+			sheet.getCell(4,row).stringValue(transaction["Dr"]).setAlignHorizontal("right")
+			sheet.getCell(5,row).stringValue(transaction["Cr"]).setAlignHorizontal("right")
 
 		sheet.getCell(6,row).stringValue(transaction["balance"]).setAlignHorizontal("right")
 
