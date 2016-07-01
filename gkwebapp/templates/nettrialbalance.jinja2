@@ -132,12 +132,22 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
 						{% endif %}
 						{% endif %}
 					</td>
+
+					{%if record["advflag"]==1%}
+					<td class="col-xs-2" style="text-align:right; color:red;">
+						<b>{{record["Dr"]}}</b>
+					</td>
+					<td class="col-xs-2" style="text-align:right; color:red;">
+						<b>{{record["Cr"]}}</b>
+					</td>
+					{%else%}
 					<td class="col-xs-2" style="text-align:right">
 						{{record["Dr"]}}
 					</td>
 					<td class="col-xs-2" style="text-align:right">
 						{{record["Cr"]}}
 					</td>
+					{%endif%}
 					<td class="col-xs-2">
 						{{record["groupname"]}}
 					</td>

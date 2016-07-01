@@ -143,12 +143,22 @@
 					<td class="col-xs-1" style="text-align:right">
 						{{record["totalcr"]}}
 					</td>
+
+					{%if record["advflag"]==1%}
+					<td class="col-xs-1" style="text-align:right; color:red;">
+						<b>{{record["curbaldr"]}}</b>
+					</td>
+					<td class="col-xs-1" style="text-align:right; color:red;">
+						<b>{{record["curbalcr"]}}</b>
+					</td>
+					{%else%}
 					<td class="col-xs-1" style="text-align:right">
 						{{record["curbaldr"]}}
 					</td>
 					<td class="col-xs-1" style="text-align:right">
 						{{record["curbalcr"]}}
 					</td>
+					{%endif%}
 					<td class="col-xs-2">
 						{{record["groupname"]}}
 					</td>

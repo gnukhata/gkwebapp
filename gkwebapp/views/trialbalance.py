@@ -144,16 +144,8 @@ def printtrialbalance(request):
 		for record in records:
 			sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
 			sheet.getCell(1, row).stringValue(record["accountname"])
-			if record["advflag"]==1:
-				if record["Dr balance"] > record["Cr balance"]:
-					sheet.getCell(2, row).stringValue(record["Dr balance"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
-					sheet.getCell(3, row).stringValue(record["Cr balance"]).setAlignHorizontal("right")
-				elif record["Dr balance"] < record["Cr balance"]:
-					sheet.getCell(2, row).stringValue(record["Dr balance"]).setAlignHorizontal("right")
-					sheet.getCell(3, row).stringValue(record["Cr balance"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
-			else:
-				sheet.getCell(2, row).stringValue(record["Dr balance"]).setAlignHorizontal("right")
-				sheet.getCell(3, row).stringValue(record["Cr balance"]).setAlignHorizontal("right")
+			sheet.getCell(2, row).stringValue(record["Dr balance"]).setAlignHorizontal("right")
+			sheet.getCell(3, row).stringValue(record["Cr balance"]).setAlignHorizontal("right")
 			sheet.getCell(4, row).stringValue(record["groupname"]).setAlignHorizontal("center")
 			row+=1
 

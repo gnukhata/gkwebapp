@@ -159,25 +159,47 @@
               {%endif%}
             </td>
 
-            {%if record["groupAccflag"]==2 or record["groupAccflag"]==1%}
-            <td class="col-xs-2" style="text-align:right">{{record["amount"]}}</td>
-            <td class="col-xs-2" style="text-align:right">
-            </td>
-            <td class="col-xs-2" style="text-align:right">
-            </td>
-            {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
-            <td class="col-xs-2" style="text-align:right">
-            </td>
-            <td class="col-xs-2" style="text-align:right"><b>{{record["amount"]}}</b></td>
-            <td class="col-xs-2" style="text-align:right">
-            </td>
+            {%if record["advflag"]==1%}
+              {%if record["groupAccflag"]==2 or record["groupAccflag"]==1%}
+              <td class="col-xs-2" style="text-align:right; color:red;"><b>{{record["amount"]}}</b></td>
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              <td class="col-xs-2" style="text-align:right; color:red;"><b>{{record["amount"]}}</b></td>
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              {%else%}
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              <td class="col-xs-2" style="text-align:right; color:red;"><b>{{record["amount"]}}</b></td>
+              {%endif%}
             {%else%}
-            <td class="col-xs-2" style="text-align:right">
-            </td>
-            <td class="col-xs-2" style="text-align:right">
-            </td>
-            <td class="col-xs-2" style="text-align:right"><b>{{record["amount"]}}</b></td>
-            {%endif%}
+              {%if record["groupAccflag"]==2 or record["groupAccflag"]==1%}
+              <td class="col-xs-2" style="text-align:right">{{record["amount"]}}</td>
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              <td class="col-xs-2" style="text-align:right"><b>{{record["amount"]}}</b></td>
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              {%else%}
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              <td class="col-xs-2" style="text-align:right"><b>{{record["amount"]}}</b></td>
+              {%endif%}
+              {%endif%}
           </tr>
           {%endif%}
           {% endfor %}
@@ -225,24 +247,46 @@
               {%endif%}
             </td>
 
-            {%if record["groupAccflag"]==2 or record["groupAccflag"]==1%}
-            <td class="col-xs-2" style="text-align:right">{{record["amount"]}}</td>
-            <td class="col-xs-2" style="text-align:right">
-            </td>
-            <td class="col-xs-2" style="text-align:right">
-            </td>
-            {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
-            <td class="col-xs-2" style="text-align:right">
-            </td>
-            <td class="col-xs-2" style="text-align:right"><b>{{record["amount"]}}</b></td>
-            <td class="col-xs-2" style="text-align:right">
-            </td>
+            {%if record["advflag"]==1%}
+              {%if record["groupAccflag"]==2 or record["groupAccflag"]==1%}
+              <td class="col-xs-2" style="text-align:right; color:red;"><b>{{record["amount"]}}</b></td>
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              <td class="col-xs-2" style="text-align:right; color:red;"><b>{{record["amount"]}}</b></td>
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              {%else%}
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              <td class="col-xs-2" style="text-align:right; color:red;"><b>{{record["amount"]}}</b></td>
+              {%endif%}
             {%else%}
-            <td class="col-xs-2" style="text-align:right">
-            </td>
-            <td class="col-xs-2" style="text-align:right">
-            </td>
-            <td class="col-xs-2" style="text-align:right"><b>{{record["amount"]}}</b></td>
+              {%if record["groupAccflag"]==2 or record["groupAccflag"]==1%}
+              <td class="col-xs-2" style="text-align:right">{{record["amount"]}}</td>
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              <td class="col-xs-2" style="text-align:right"><b>{{record["amount"]}}</b></td>
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              {%else%}
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              <td class="col-xs-2" style="text-align:right">
+              </td>
+              <td class="col-xs-2" style="text-align:right"><b>{{record["amount"]}}</b></td>
+              {%endif%}
             {%endif%}
           </tr>
           {%endif%}
