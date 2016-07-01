@@ -84,6 +84,7 @@ def printtrialbalance(request):
 	orgname = request.params["orgname"]
 	financialstart = request.params["financialstart"]
 	calculateto = request.params["calculateto"]
+	fyend = request.params["fyend"]
 	trialbalancetype = int(request.params["trialbalancetype"])
 	header = {"gktoken": request.headers["gktoken"]}
 	if trialbalancetype == 1:
@@ -100,7 +101,7 @@ def printtrialbalance(request):
 	sheet.setSheetName("Trial Balance of "+orgname)
 	sheet.getRow(0).setHeight("23pt")
 
-	sheet.getCell(0,0).stringValue(orgname).setBold(True).setFontSize("18pt").setAlignHorizontal("center")
+	sheet.getCell(0,0).stringValue(orgname+" (FY: "+financialstart[8:10]+financialstart[4:8]+financialstart[0:4]+" to "+fyend+")").setBold(True).setFontSize("16pt").setAlignHorizontal("center")
 	if trialbalancetype == 1:
 		ods.content.mergeCells(0,0,5,1)
 		sheet.getRow(1).setHeight("18pt")

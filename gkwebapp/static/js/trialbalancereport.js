@@ -201,7 +201,7 @@ $(document).ready(function() {
 	$("#tbback").click(function(event) {
 		$("#showtrialbalance").click();
 	});
-	
+
 		$("#printbutton").click(function(event) {
 		event.preventDefault();
 		var orgname = sessionStorage.getItem('orgn');
@@ -209,7 +209,7 @@ $(document).ready(function() {
 		var xhr = new XMLHttpRequest();
 		trialbalancetype = $("#trialbaltype").val();
 
-		xhr.open('GET', '/printtrialbalance?financialstart='+sessionStorage.yyyymmddyear1+'&orgname='+orgname+'&calculateto='+newtodate+'&orgtype='+orgtype+'&trialbalancetype='+trialbalancetype, true);
+		xhr.open('GET', '/printtrialbalance?financialstart='+sessionStorage.yyyymmddyear1+'&orgname='+orgname+'&calculateto='+newtodate+'&orgtype='+orgtype+'&trialbalancetype='+trialbalancetype+'&fyend='+sessionStorage.getItem('year2'), true);
 		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
 		xhr.responseType = 'blob';
 

@@ -54,7 +54,7 @@ def printprofitandloss(request):
 	ods = ODS()
 	sheet = ods.content.getSheet(0)
 	sheet.getRow(0).setHeight("23pt")
-	sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("18pt")
+	sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("16pt")
 	ods.content.mergeCells(0,0,6,1)
 	sheet.getRow(1).setHeight("18pt")
 	if orgtype=="Profit Making":

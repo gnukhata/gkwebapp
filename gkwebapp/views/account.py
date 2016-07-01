@@ -51,7 +51,7 @@ def printlistofaccount(request):
 	sheet.setSheetName("List of Acounts")
 	sheet.getRow(0).setHeight("23pt")
 
-	sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("18pt")
+	sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("16pt")
 	ods.content.mergeCells(0,0,4,1)
 	sheet.getRow(1).setHeight("18pt")
 	sheet.getCell(0,1).stringValue("List Of Accounts").setBold(True).setFontSize("14pt").setAlignHorizontal("center")

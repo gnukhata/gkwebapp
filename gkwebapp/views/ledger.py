@@ -110,7 +110,7 @@ def printLedgerReport(request):
 	ods = ODS()
 	sheet = ods.content.getSheet(0)
 	sheet.getRow(0).setHeight("23pt")
-	sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("18pt")
+	sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("16pt")
 	ods.content.mergeCells(0,0,8,1)
 	sheet.getRow(1).setHeight("18pt")
 	sheet.getCell(0,1).stringValue("Account: "+headerrow["accountname"] +" (Period: "+calculatefrom+" to "+calculateto+")").setBold(True).setAlignHorizontal("center").setFontSize("14pt")
@@ -144,7 +144,9 @@ def printLedgerReport(request):
 		else:
 			sheet.getCell(4,row).stringValue(transaction["Dr"]).setAlignHorizontal("right").setBold(True)
 			sheet.getCell(5,row).stringValue(transaction["Cr"]).setAlignHorizontal("right").setBold(True)
+
 		sheet.getCell(6,row).stringValue(transaction["balance"]).setAlignHorizontal("right")
+
 		if transaction["vouchertype"]=="contra" or transaction["vouchertype"]=="purchase" or transaction["vouchertype"]=="sales" or transaction["vouchertype"]=="receipt" or transaction["vouchertype"]=="payment" or transaction["vouchertype"]=="journal":
 			sheet.getCell(2,row).stringValue(transaction["vouchertype"].title())
 		elif transaction["vouchertype"]=="debitnote":
@@ -172,6 +174,7 @@ def printLedgerReport(request):
 	repFile = open("response.ods")
 	rep = repFile.read()
 	repFile.close()
+	repFile.remove()
 	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
 	return Response(rep, headerlist=headerList.items())
 

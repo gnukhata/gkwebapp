@@ -59,7 +59,7 @@ def printprojectstatementreport(request):
 	sheet.setSheetName("Project Statement ("+projectname+")")
 	sheet.getRow(0).setHeight("23pt")
 
-	sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("18pt")
+	sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("16pt")
 	ods.content.mergeCells(0,0,5,1)
 	sheet.getRow(1).setHeight("18pt")
 	sheet.getCell(0,1).stringValue("Statement for: "+projectname+ " ("+fystart+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
