@@ -182,7 +182,7 @@ $(document).ready(function(){
           event.preventDefault();
           }
       });
-      $("#master").keydown(function(event){
+      $(".mastermenu").keydown(function(event){
         if(event.which == 39){
           $("#transaction").click();
         }
@@ -190,7 +190,7 @@ $(document).ready(function(){
           $("#toolbar").click();
         }
       });
-      $("#transaction").keydown(function(event){
+      $(".transactionmenu").keydown(function(event){
         if(event.which == 39){
           $("#report").click();
         }
@@ -198,7 +198,7 @@ $(document).ready(function(){
           $("#master").click();
         }
       });
-      $("#report").keydown(function(event){
+      $(".reportmenu").keydown(function(event){
         if(event.which == 39){
           $("#administration").click();
         }
@@ -206,7 +206,7 @@ $(document).ready(function(){
           $("#transaction").click();
         }
       });
-      $("#administration").keydown(function(event){
+      $(".administrationmenu").keydown(function(event){
         if(event.which == 39){
           $("#help").click();
         }
@@ -214,7 +214,7 @@ $(document).ready(function(){
           $("#report").click();
         }
       });
-      $("#help").keydown(function(event){
+      $(".helpmenu").keydown(function(event){
         if(event.which == 39){
           $("#signout").click();
         }
@@ -222,7 +222,7 @@ $(document).ready(function(){
           $("#administration").click();
         }
       });
-      $("#signout").keydown(function(event){
+      $(".signoutmenu").keydown(function(event){
         if(event.which == 39){
           $("#toolbar").click();
         }
@@ -230,7 +230,7 @@ $(document).ready(function(){
           $("#help").click();
         }
       });
-      $("#toolbar").keydown(function(event){
+      $(".toolbarmenu").keydown(function(event){
         if(event.which == 39){
           $("#master").click();
         }
