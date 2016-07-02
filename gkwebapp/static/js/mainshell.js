@@ -182,7 +182,62 @@ $(document).ready(function(){
           event.preventDefault();
           }
       });
-
+      $("#master").keydown(function(event){
+        if(event.which == 39){
+          $("#transaction").click();
+        }
+        if(event.which == 37){
+          $("#toolbar").click();
+        }
+      });
+      $("#transaction").keydown(function(event){
+        if(event.which == 39){
+          $("#report").click();
+        }
+        if(event.which == 37){
+          $("#master").click();
+        }
+      });
+      $("#report").keydown(function(event){
+        if(event.which == 39){
+          $("#administration").click();
+        }
+        if(event.which == 37){
+          $("#transaction").click();
+        }
+      });
+      $("#administration").keydown(function(event){
+        if(event.which == 39){
+          $("#help").click();
+        }
+        if(event.which == 37){
+          $("#report").click();
+        }
+      });
+      $("#help").keydown(function(event){
+        if(event.which == 39){
+          $("#signout").click();
+        }
+        if(event.which == 37){
+          $("#administration").click();
+        }
+      });
+      $("#signout").keydown(function(event){
+        if(event.which == 39){
+          $("#toolbar").click();
+        }
+        if(event.which == 37){
+          $("#help").click();
+        }
+      });
+      $("#toolbar").keydown(function(event){
+        if(event.which == 39){
+          $("#master").click();
+        }
+        if(event.which == 37){
+          $("#signout").click();
+        }
+      });
       if (sessionStorage.orgt=="Not For Profit") {
         $("#showprofitloss").text("Income & Expenditure");
         $("#showbalancesheet").text("Statement of Affairs");
