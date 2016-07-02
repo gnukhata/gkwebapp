@@ -8,12 +8,15 @@
   {
     background-color: Aquamarine;
   }
-
+  @page {
+    size: 29.7cm 21cm ;
+    margin: 10mm 10mm 20mm 10mm; /* change the margins as you want them to be. */
+  }
   .shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
   td {
-    font-size: 65%;
+    font-size: 60%;
     color: black;
   }
 
@@ -100,9 +103,14 @@
 
   }
 
+  table.table-keep>thead tr th, table.table-keep>tbody tr td, table.table-keep>tfoot tr td {
+    float: left;
+
+  }
   #liabtable, #patable {
     background-color: white;
   }
+
 
   </style>
 </head>
@@ -203,6 +211,7 @@
           </tr>
           {%endif%}
           {% endfor %}
+
         </tbody>
       </table>
     </div>
@@ -304,7 +313,9 @@
     <button type="button" class="btn btn-sm btn-primary" id="grpbtn" accesskey="w">Sho<u>w</u> Groups</button>
     <button type="button" class="btn btn-sm btn-primary" id="accbtn" accesskey="a">Show All <u>A</u>ccounts</button>
     <button type="button" class="btn btn-sm btn-primary" id="sabutn" accesskey="s"><u>S</u>ources & Application of Funds</button>
-     <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="t">Prin<u>t</u></button>
+     <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">E<u>x</u>port to Spreadsheet</button>
+     <button class="btn btn-sm btn-primary" type="button"  id="printconvbalance" accesskey="t">View Prin<u>t</u>able Version</button>
+     <button class="btn btn-sm btn-primary" type="button"  id="realprintbalance" accesskey="t">Prin<u>t</u></button>
   </span>
   <input type="hidden" id="ledtodate" value="{{to}}">
   <input type="hidden" id="ledfromdate" value="{{from}}">

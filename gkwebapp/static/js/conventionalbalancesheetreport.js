@@ -110,7 +110,7 @@ $("#grpbtn").click(function(event){
 
   $("#sbgbtn").click(function(event){
     event.preventDefault();
-      $(".groupacc").css("display", "block");
+      $(".groupacc").removeAttr('style');
       $(".subgroupacc").css("display", "none");
       $(this).hide();
       $("#grpbtn").show();
@@ -121,8 +121,8 @@ $("#grpbtn").click(function(event){
 
   $("#accbtn").click(function(event){
     event.preventDefault();
-      $(".groupacc").css("display", "block");
-      $(".subgroupacc").css("display", "block");
+      $(".groupacc").removeAttr('style');
+      $(".subgroupacc").removeAttr('style');
       $(this).hide();
       $("#grpbtn").show();
       $("#sbgbtn").show();
@@ -196,6 +196,7 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
       }
       else if (grpcode.indexOf("g") != -1) {
         $("."+grpcode).slideToggle(1);
+        $("."+grpcode).removeAttr('style');
         $("."+grpcode).each(function(index) {
           code = $(this).attr('value')
           if ($("."+code).is(":visible")){
@@ -323,6 +324,33 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
     });
   $("#balback").click(function(event) {
     $("#showbalancesheet").click();
+  });
+  $("#printconvbalance").click(function(event) {
+    $("#liabtable tbody tr").unbind('dblclick');
+    $("#patable tbody tr").unbind('dblclick');
+    var tb;
+    var tl;
+    var lastrow;
+    if ($("#liabtable tr:visible").length<$("#patable tr:visible").length) {
+      tb = "patable";
+      tl = "liabtable";
+      lastrow = $("#liabtable tr:last").clone();
+      $("#liabtable tr:last").remove();
+    }
+    else if ($("#liabtable tr:visible").length>$("#patable tr:visible").length) {
+      tl = "patable";
+      tb = "liabtable";
+      lastrow = $("#patable tr:last").clone();
+      $("#patable tr:last").remove();
+    }
+    for (var i = $("#"+tl+" tr:visible").length; i < $("#"+tb+" tr:visible").length-1; i++) {
+      $("#"+tl+" tbody").append('<tr><td class="col-xs-6">&nbsp</td><td class="col-xs-2">&nbsp</td><td class="col-xs-2">&nbsp</td><td class="col-xs-2">&nbsp</td></tr>')
+    }
+    $("#"+tl+" tbody").append(lastrow);
+    $('table a').contents().unwrap();
+    $("table").removeClass('table-fixedheader').addClass('table-keep').addClass('table-striped');
+    $("#printconvbalance").hide();
+    $("#realprintbalance").show();
   });
 
 });
