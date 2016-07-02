@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>GNUKhata | {{projectname}} Statement</title>
+  <style type="text/css">
+
+  td {
+  	font-size: 65%;
+  	color: black;
+  }
+
+  th {
+  	font-size: 70%;
+  }
+
+  @page {
+    size : 21cm 29.7cm;
+    margin : 10mm 10mm 20mm 10mm
+  }
+  thead{
+    display: table-header-group;
+  }
+  tfoot{
+    display: table-footer-group;
+  }
+
+  </style>
+</head>
+<body>
+
+	<div class="table-responsive printorgdetails">
+    <table id="vtable" class="table table-fixedheader  table-condensed">
+      <thead>
+        <tr class="visible-print">
+          <th colspan="8" style="text-align:center; font-size:80%;">
+            List of Transactions
+          </th>
+        </tr>
+				<tr>
+            <th style="width:10%">V.No.</th>
+            <th style="width:5%">Date</th>
+            <th style="width:10%">Type</th>
+            <th style="width:20%">Dr Accounts</th>
+            <th style="width:20%">Cr Accounts</th>
+            <th style="text-align:right; width:10%">Dr Amounts</th>
+            <th style="text-align:right; width:10%">Cr Amounts</th>
+            <th style="width:15%">Narration</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        {% for vc in vouchers %}
+        <tr  value="{{vc['vouchercode']}}">
+            <td style="width:5%">
+              {{vc['vouchernumber']}}
+            </td>
+            <td style=" width:5%">
+              {{vc['voucherdate']}}
+            </td>
+            {% if vc['vouchertype'] =="contra" %}
+            <td style=" width:10%">
+              Contra
+            </td>
+            {% elif vc['vouchertype'] == "payment" %}
+            <td style=" width:10%">
+              Payment
+            </td>
+            {% elif vc['vouchertype'] == "receipt" %}
+            <td style=" width:10%">
+              Receipt
+            </td>
+            {% elif vc['vouchertype'] == "journal" %}
+            <td style=" width:10%">
+              Journal
+            </td>
+            {% elif vc['vouchertype'] == "sales" %}
+            <td style=" width:10%">
+              Sales
+            </td>
+            {% elif vc['vouchertype'] == "purchase" %}
+            <td style=" width:10%">
+              Purchase
+            </td>
+            {% elif vc['vouchertype'] == "creditnote" %}
+            <td style=" width:10%">
+              Credit Note
+            </td>
+            {% elif vc['vouchertype'] == "debitnote" %}
+            <td style=" width:10%">
+              Debit Note
+            </td>
+            {% elif vc['vouchertype'] == "salesreturn" %}
+            <td style=" width:10%">
+              Sales Return
+            </td>
+            {% elif vc['vouchertype'] == "purchasereturn" %}
+            <td style=" width:10%">
+              Purchase Return
+            </td>
+            {% endif %}
+            <td style=" width:20%">
+              {{vc["drs"].keys()[0]}}
+            </td>
+            <td style=" width:20%">
+              {{vc["crs"].keys()[0]}}
+            </td>
+            <td style="text-align:right; width:10%">
+              {{vc["drs"][vc["drs"].keys()[0]]}}
+            </td>
+            <td style="text-align:right;width:10%">
+              {{vc["crs"][vc["crs"].keys()[0]]}}
+            </td>
+            <td style="width:15%">{{vc['narration']}}</td>
+
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div id="viewvc">
+  </div>
+  <hr>
+  <br>
+  <div>
+    <span class="hidden-print" style="margin:auto; display:table;">
+      <button type="button" class="btn btn-sm btn-danger hidden-print" id="lotback" accesskey="b"><u>B</u>ack</button>
+      <button type="button" class="btn btn-sm btn-info" id="lotprint" accesskey="t">Prin<u>t</u></button>
+    </span>
+  </div>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("title").html("GNUKhata")
+      $("#lotprint").click(function(event) {
+        window.print();
+      });
+      $("#lotback").click(function(event) {
+        $("#submit").click();
+      });
+    });
+  </script>
+
+</body>
+</html>

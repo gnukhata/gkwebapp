@@ -71,6 +71,7 @@ def main(global_config, **settings):
 	config.add_route('showviewledger', '/showviewledger')
 	config.add_route('printtrialbalancereport', '/printtrialbalancereport')
 	config.add_route('listofaccountsprint', '/listofaccountsprint')
+	config.add_route('printvouchers', '/printvouchers')
 	config.add_route('showviewbankrecon', '/showviewbankrecon')
 	config.add_route('showunclearedbankrecon', '/showunclearedbankrecon')
 	config.add_route('viewdualledger', '/viewdualledger')

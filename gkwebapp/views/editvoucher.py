@@ -39,6 +39,39 @@ def showfindvoucher(request):
 
 	return {"gkresult":True}
 
+@view_config(route_name="printvouchers", renderer="gkwebapp:templates/printtransactions.jinja2")
+def printvouchers(request):
+	header={"gktoken":request.headers["gktoken"]}
+	searchby=request.params["searchby"]
+	if searchby== "type":
+		vtype = request.params["vtype"]
+
+		result = requests.get("http://127.0.0.1:6543/transaction?searchby=%s&vouchertype=%s"%(searchby,vtype), headers=header)
+
+
+	if searchby== "vnum":
+		vnum = request.params["vnum"]
+		result = requests.get("http://127.0.0.1:6543/transaction?searchby=%s&voucherno=%s"%(searchby,vnum), headers=header)
+
+	if searchby== "date":
+		fromdate = request.params["fyear"]+"-"+request.params["fmonth"]+"-"+request.params["fday"]
+		todate = request.params["tyear"]+"-"+request.params["tmonth"]+"-"+request.params["tday"]
+		vfrom = datetime.strptime(fromdate,"%Y-%m-%d")
+		vto = datetime.strptime(todate,"%Y-%m-%d")
+		result = requests.get("http://127.0.0.1:6543/transaction?searchby=%s&from=%s&to=%s"%(searchby,vfrom,vto), headers=header)
+
+	if searchby== "amount":
+		amt = request.params["amount"]
+		result = requests.get("http://127.0.0.1:6543/transaction?searchby=%s&total=%s"%(searchby,amt), headers=header)
+
+	if searchby== "narration":
+		nar = request.params["narration"]
+		result = requests.get("http://127.0.0.1:6543/transaction?searchby=%s&nartext=%s"%(searchby,nar), headers=header)
+
+	return {"gkstatus":result.json()["gkstatus"],"vouchers":result.json()["gkresult"],"backdata":request.params}
+
+
+
 @view_config(route_name="getvouchers", renderer="gkwebapp:templates/findvouchertable.jinja2")
 def getvouchers(request):
 	header={"gktoken":request.headers["gktoken"]}
