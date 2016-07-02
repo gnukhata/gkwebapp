@@ -29,7 +29,7 @@ Contributors:
 $(document).ready(function() {
 
   $("#grpbtn").hide();
-
+  $("#realprintbalance").hide();
   var percentwid = 100*(($("table").width()-12)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   var percentheigth = 100*(($("body").height()-$(".navbar").height()-148)/$("body").height());
@@ -225,23 +225,17 @@ $("#print").click(function(event) {
 };
 
 xhr.send();
-/*
-    $.ajax(
-      {
-        type: "GET",
-        url: "/printsourcesandappfundreport",
-        global: false,
-        async: false,
-        dataType : 'text',
-        data: {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "calculateto":$("#cto").val()},
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-        success: function(resp){
-          window.open('data:application/pdf;charset=utf-8,' + encodeURIComponent(resp));
-        }
-      });*/
+
+});
+
+$("#printbalance").click(function(event) {
+  $("table").removeClass('table-fixedheader').addClass('table-keep');
+  $("#printbalance").hide();
+  $("#realprintbalance").show();
+});
+
+$("#realprintbalance").click(function(event) {
+  window.print();
 });
 
 });
