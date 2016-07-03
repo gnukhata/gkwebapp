@@ -12,11 +12,23 @@ p.shortcut {
 .gknav{
 	background-color: rgb(26,34,41);
 }
+a:focus,
+.focus a {
+	outline: none !important;
+}
 .printorgdetails{
 	font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
 }
 .table{
 	font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
+	background-color: white;
+}
+td {
+	font-size: 71%;
+}
+
+th {
+	font-size: 75%;
 }
 .gknav .navbar-brand {
     color: white;
