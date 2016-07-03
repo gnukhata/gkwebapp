@@ -30,7 +30,7 @@ $(document).ready(function(){
 
   $(document).keydown(function(event) {
         if(event.ctrlKey && event.keyCode == 83) {
-          $("#gnukhata").click();
+          $("#signout").click();
           event.preventDefault();
           }
         if(event.ctrlKey && event.keyCode == 77) {
