@@ -136,11 +136,18 @@ $("#loginform").submit(function(e)
     data: $("#loginform").serialize(),
     success: function(resp)
     {
-    var gt = resp['gktoken'];
+      if (resp['gkstatus']==0) {
 
-    sessionStorage.gktoken = gt;
+        var gt = resp['gktoken'];
 
-    window.location="/showmainshell";
+        sessionStorage.gktoken = gt;
+
+        window.location="/showmainshell";
+      }
+      else {
+        
+
+      }
     }
 
     }

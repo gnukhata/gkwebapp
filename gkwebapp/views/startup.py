@@ -101,7 +101,10 @@ def orglogin(request):
 
 	gkdata = {"orgdetails":{"orgname":request.params["orgname"], "orgtype":request.params["orgtype"], "yearstart":request.params["yearstart"], "yearend":request.params["yearend"]}, "userdetails":{"username":request.params["username"], "userpassword":request.params["password"],"userquestion":request.params["securityquestion"], "useranswer":request.params["securityanswer"]}}
 	result = s.post("http://127.0.0.1:6543/organisations", data =json.dumps(gkdata))
-	return  {"gktoken":result.json()["token"]}
+	if result.json()["gkstatus"]==0:
+		return  {"gktoken":result.json()["token"],"gkstatus":result.json()["gkstatus"]}
+	else:
+		return  {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="userlogin",renderer="json")
 def selectorglogin(request):
