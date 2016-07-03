@@ -84,29 +84,26 @@
 			$(document).ready(function() {
 				$("title").html("GNUKhata");
 				$("#printback").click(function(event) {
-					var backdata = {"backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()};
-					if ($("#side").val()!="") {
-						backdata.side=$("#side").val();
-					}
+					var date = $("#calculateto").val().split("-");
+			    var newtodate = date[2]+"-"+date[1]+"-"+date[0];
 					$.ajax(
-						{
-							type: "POST",
-							url: "/showledgerreport",
-							global: false,
-							async: false,
-							datatype: "text/html",
-							data: backdata,
-							beforeSend: function(xhr)
-							{
-								xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-							}
-						})
-						.done(function(resp)
-						{
-							$("#info").html("");
-							$("#info").html(resp);
-						}
-					);
+		        {
+		          type: "POST",
+		          url: "/showprojectstatementreport",
+		          global: false,
+		          async: false,
+		          datatype: "text/html",
+		          data: {"calculateto":newtodate,"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"projectname":$("#projectname").val()},
+		          beforeSend: function(xhr)
+		          {
+		            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+		          },
+		        })
+		          .done(function(resp)
+		          {
+		            $("#info").html(resp);
+		          }
+		        );
 				});
 				$("#realprint").click(function(event) {
 					window.print();

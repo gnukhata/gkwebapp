@@ -28,6 +28,7 @@ Contributors:
 
 $(document).ready(function() {
   $("#grpbtn").hide();
+  $("#realprintbalance").hide();
   $('#liabtable tbody tr:first-child td:eq(0) a').focus();
   $('#liabtable tbody tr:first-child td:eq(0) a').closest('tr').addClass('selected');
   var rcindex = 0
@@ -323,11 +324,36 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
     xhr.send();
     });
   $("#balback").click(function(event) {
-    $("#showbalancesheet").click();
+    if ($("#realprintbalance").is(":visible")) {
+      $.ajax(
+        {
+          type: "POST",
+          url: "/showbalancesheetreport",
+          global: false,
+          async: false,
+          datatype: "text/html",
+          data: {"balancesheettype":"conventionalbalancesheet","calculateto":$("#cto").val(),"orgtype":sessionStorage.orgt},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+        })
+        .done(function(resp)
+        {
+          $("#info").html(resp);
+        }
+      );
+    }
+    else {
+      $("#showbalancesheet").click();
+    }
   });
   $("#printconvbalance").click(function(event) {
     $("#liabtable tbody tr").unbind('dblclick');
     $("#patable tbody tr").unbind('dblclick');
+    $("#sbgbtn").remove();
+    $("#accbtn").remove();
+    $("#grpbtn").remove();
     var tb;
     var tl;
     var lastrow;
@@ -351,6 +377,9 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
     $("table").removeClass('table-fixedheader').addClass('table-keep').addClass('table-striped');
     $("#printconvbalance").hide();
     $("#realprintbalance").show();
+  });
+  $("#realprintbalance").click(function(event) {
+    window.print();
   });
 
 });
