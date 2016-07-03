@@ -39,8 +39,10 @@
 				<tr>
 					<th class="col-xs-1">Sr. No.</th>
 					<th class="col-xs-5">Account Name</th>
-					<th class="col-xs-2" style="text-align:right">Debit</th>
-					<th class="col-xs-2" style="text-align:right">Credit</th>
+					<th class="col-xs-1" style="text-align:right">Debit</th>
+					<th class="col-xs-1" style="text-align:right">Credit</th>
+					<th class="col-xs-1" style="text-align:right">Debit</th>
+					<th class="col-xs-1" style="text-align:right">Credit</th>
 					<th class="col-xs-2">Group Name</th>
 				</tr>
 			</thead>
@@ -56,12 +58,26 @@
             &nbsp&nbsp&nbsp&nbsp Running Total:
 						{% endif %}
 					</td>
-					<td class="col-xs-2" style="text-align:right">
-						{{record["Dr balance"]}}<br>
+					<td class="col-xs-1" style="text-align:right">
+						{{record["totaldr"]}}
+					</td>
+					<td class="col-xs-1" style="text-align:right">
+						{{record["totalcr"]}}
+					</td>
+					<td class="col-xs-1" style="text-align:right">
+						{% if record["advflag"]==1 and record.curbaldr %}
+							<b>({{record["curbaldr"]}})</b>
+						{% else %}
+							{{record["curbaldr"]}}
+						{% endif %}<br>
             <u><i>{{record["ttlRunDr"]}}</i></u>
 					</td>
-					<td class="col-xs-2" style="text-align:right">
-						{{record["Cr balance"]}}<br>
+					<td class="col-xs-1" style="text-align:right">
+						{% if record["advflag"]==1 and record.curbalcr %}
+							<b>({{record["curbalcr"]}})</b>
+						{% else %}
+							{{record["curbalcr"]}}
+						{% endif %}<br><br>
             <u><i>{{record["ttlRunCr"]}}</i></u>
 					</td>
 					<td class="col-xs-2">

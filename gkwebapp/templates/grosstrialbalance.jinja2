@@ -109,8 +109,10 @@
 				<tr>
 					<th class="col-xs-1">Sr. No.</th>
 					<th class="col-xs-5">Account Name</th>
-					<th class="col-xs-2" style="text-align:right">Debit</th>
-					<th class="col-xs-2" style="text-align:right">Credit</th>
+					<th class="col-xs-1" style="text-align:right">Debit</th>
+					<th class="col-xs-1" style="text-align:right">Credit</th>
+					<th class="col-xs-1" style="text-align:right">Dr Balance</th>
+					<th class="col-xs-1" style="text-align:right">Cr Balance</th>
 					<th class="col-xs-2">Group Name</th>
 				</tr>
 			</thead>
@@ -131,12 +133,28 @@
 						{% endif %}
 						{% endif %}
 					</td>
-					<td class="col-xs-2" style="text-align:right">
-						{{record["Dr balance"]}}
+					<td class="col-xs-1" style="text-align:right">
+						{{record["totaldr"]}}
 					</td>
-					<td class="col-xs-2" style="text-align:right">
-						{{record["Cr balance"]}}
+					<td class="col-xs-1" style="text-align:right">
+						{{record["totalcr"]}}
 					</td>
+
+					{%if record["advflag"]==1%}
+					<td class="col-xs-1" style="text-align:right; color:red;">
+						<b>{{record["curbaldr"]}}</b>
+					</td>
+					<td class="col-xs-1" style="text-align:right; color:red;">
+						<b>{{record["curbalcr"]}}</b>
+					</td>
+					{%else%}
+					<td class="col-xs-1" style="text-align:right">
+						{{record["curbaldr"]}}
+					</td>
+					<td class="col-xs-1" style="text-align:right">
+						{{record["curbalcr"]}}
+					</td>
+					{%endif%}
 					<td class="col-xs-2">
 						{{record["groupname"]}}
 					</td>
