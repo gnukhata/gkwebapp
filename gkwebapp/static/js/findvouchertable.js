@@ -165,13 +165,18 @@ $("#viewprintableversion").click(function(event) {
     beforeSend: function(xhr)
     {
       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-    },
-    success: function(resp)
-    {
-      $("#vct").html(resp);
-
     }
+  })
+  .done(function(resp) {
+      $("#vct").html(resp);
+  })
+  .fail(function() {
+    console.log("error");
+  })
+  .always(function() {
+    console.log("complete");
   });
+
 
 });
 

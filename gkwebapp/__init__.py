@@ -70,6 +70,7 @@ def main(global_config, **settings):
 	config.add_route('showmainshell', '/showmainshell')
 	config.add_route('showviewledger', '/showviewledger')
 	config.add_route('printtrialbalancereport', '/printtrialbalancereport')
+	config.add_route('cashflowreportprint', '/cashflowreportprint')
 	config.add_route('listofaccountsprint', '/listofaccountsprint')
 	config.add_route('printvouchers', '/printvouchers')
 	config.add_route('showviewbankrecon', '/showviewbankrecon')

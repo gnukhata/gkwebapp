@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>GNUKhata | Cash Flow</title>
+	<title>GNUKhata | {{projectname}} Statement</title>
+	<style type="text/css">
+	.nopadding {
+		padding: 0 !important;
+		margin: 0 !important;
+	}
+
+
+	td {
+		font-size: 65%;
+		color: black;
+	}
+
+	th {
+		font-size: 70%;
+	}
+
+	@page {
+		size : 21cm 29.7cm;
+		margin : 10mm 10mm 20mm 10mm
+	}
+	thead{
+		display: table-header-group;
+	}
+	tfoot{
+		display: table-footer-group;
+	}
+
+	</style>
+</head>
+<body>
+	{% if orgtype=="Profit Making" %}
+	<span class="printorgdetails hidden-print"  style="margin:auto; display:table;"><strong>Cash Flow Account</strong> for the period <strong>{{from}}</strong> to <strong>{{to}}</strong></span>
+	{% else %}
+	<span class="printorgdetails hidden-print"  style="margin:auto; display:table;"><strong>Receipt & Payment Account</strong> for the period <strong>{{from}}</strong> to <strong>{{to}}</strong></span>
+	{% endif %}
+	<div class="row">
+		<div class="table-responsive printorgdetails col-xs-6 nopadding">
+			<table class="table table-condensed table-striped">
+
+				<thead>
+					<tr class="visible-print">
+						<th colspan="4" style="text-align:left; font-size:80%;">
+							{% if orgtype=="Profit Making" %}
+							Cash Flow Account
+							{% else %}
+							Receipt & Payment Account
+							{% endif %}
+						</th>
+					</tr>
+					<tr>
+						<th class="col-xs-1">&nbsp</th>
+						<th class="col-xs-7">Particulars</th>
+						<th style="text-align:right" class="col-xs-2">Amount</th>
+						<th style="text-align:right" class="col-xs-2">Amount</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for rcrecord in rcrecords %}
+					<tr	value="{{rcrecord['accountcode']}}">
+						<td class="col-xs-1">
+							{{rcrecord['toby']}}
+						</td>
+						<td class="col-xs-7">
+							{%if rcrecord["toby"]!="" and rcrecord["particulars"]!="Opening balance"%}
+							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+							{%endif%}
+							{% if rcrecord['accountcode']!="" %}
+							{{rcrecord['particulars']}}<br>
+							{% if rcrecord.ttlRunDr %}
+							&nbsp&nbsp&nbsp&nbsp Running Total:
+							{% else %}
+							<br>
+							{% endif %}
+							{% else %}
+							{{rcrecord['particulars']}}<br>&nbsp
+							{% endif %}
+						</td>
+						{%if rcrecord["toby"]!="" and rcrecord["particulars"]!="Opening balance"%}
+						{% if rcrecord["amount"]=="." %}
+						<td class="col-xs-2" style="text-align:right">&nbsp</td>
+						{% else %}
+						<td class="col-xs-2" style="text-align:right">
+							{{rcrecord["amount"]}}<br>
+							<u><i>{{rcrecord["ttlRunDr"]}}</i></u>
+						</td>
+						{% endif %}
+						<td class="col-xs-2" style="text-align:right"></td>
+						{%else%}
+						<td class="col-xs-2" style="text-align:right"></td>
+						{% if rcrecord["amount"]=="." %}
+						<td class="col-xs-2" style="text-align:right">&nbsp</td>
+						{% else %}
+						<td class="col-xs-2" style="text-align:right">
+							{{rcrecord["amount"]}}
+						</td>
+						{% endif %}
+						{%endif%}
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<div class="table-responsive printorgdetails col-xs-6 nopadding">
+			<table class="table table-condensed table-striped">
+
+				<thead>
+					<tr class="visible-print">
+						<th colspan="4" style="text-align:right; font-size:80%;">
+							Period: {{from}} to {{to}}
+						</th>
+					</tr>
+					<tr>
+						<th class="col-xs-1">&nbsp</th>
+						<th class="col-xs-7">Particulars</th>
+						<th style="text-align:right" class="col-xs-2">Amount</th>
+						<th style="text-align:right" class="col-xs-2">Amount</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for pyrecord in pyrecords %}
+					<tr	value="{{pyrecord['accountcode']}}">
+						<td class="col-xs-1">
+							{{pyrecord['toby']}}
+						</td>
+						<td class="col-xs-7">
+							{%if pyrecord["toby"]!="" and pyrecord["particulars"]!="Closing balance"%}
+							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+							{%endif%}
+							{% if pyrecord['accountcode']!="" %}
+							{{pyrecord['particulars']}}<br>
+							{% if pyrecord.ttlRunCr %}
+							&nbsp&nbsp&nbsp&nbsp Running Total:
+							{% else %}
+							<br>
+							{% endif %}
+							{% else %}
+							{{pyrecord['particulars']}}<br>&nbsp
+							{% endif %}
+						</td>
+						{%if pyrecord["toby"]!="" and pyrecord["particulars"]!="Closing balance"%}
+						{% if pyrecord["amount"]=="." %}
+						<td class="col-xs-2" style="text-align:right">&nbsp</td>
+						{% else %}
+						<td class="col-xs-2" style="text-align:right">
+							{{pyrecord["amount"]}}<br>
+							<u><i>{{pyrecord["ttlRunCr"]}}</i></u>
+						</td>
+						{% endif %}
+						<td class="col-xs-2" style="text-align:right"></td>
+						{%else%}
+						<td class="col-xs-2" style="text-align:right"></td>
+						{% if pyrecord["amount"]=="." %}
+						<td class="col-xs-2" style="text-align:right">&nbsp</td>
+						{% else %}
+						<td class="col-xs-2" style="text-align:right">
+							{{pyrecord["amount"]}}
+						</td>
+						{% endif %}
+						{%endif%}
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+
+		<input type="hidden" id="ledtodate" value="{{to}}">
+		<input type="hidden" id="ledfromdate" value="{{from}}">
+		<input type="hidden" id="backflag" value="{{backflag}}">
+		<span style="margin:auto; display:table;">
+			<button type="button" class="btn btn-sm btn-danger hidden-print" id="cfback" accesskey="b"><u>B</u>ack</button>
+			<button type="button" class="btn btn-sm btn-info hidden-print" id="cfprint" accesskey="t">Prin<u>t</u></button>
+		</span>
+	</div>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		var todatearray = $("#ledtodate").val().split("-");
+		var fromdatearray = $("#ledfromdate").val().split("-");
+		var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
+		var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
+		$("title").html("GNUKhata")
+		$("#cfprint").click(function(event) {
+			window.print();
+		});
+		$("#cfback").click(function(event) {
+			$.ajax(
+				{
+					type: "POST",
+					url: "/showcashflowreport",
+					global: false,
+					async: false,
+					datatype: "text/html",
+					data: {"financialstart":sessionStorage.yyyymmddyear1,"orgtype":sessionStorage.orgt,"calculateto":newtodate,"calculatefrom":newfromdate},
+					beforeSend: function(xhr)
+					{
+						xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+					}
+				})
+				.done(function(resp) {
+					$("#info").html(resp);
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+			});
+		});
+		</script>
+
+	</body>
+	</html>

@@ -44,6 +44,10 @@ $(document).ready(function() {
 		$('#rctable tr').removeClass('selected');
 
 	});
+	var todatearray = $("#ledtodate").val().split("-");
+	var fromdatearray = $("#ledfromdate").val().split("-");
+	var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
+	var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
 	var curindex ;
 	var nextindex;
 	var previndex;
@@ -106,10 +110,7 @@ $(document).ready(function() {
 		{
 				return false;
 		}
-		 var todatearray = $("#ledtodate").val().split("-");
-		 var fromdatearray = $("#ledfromdate").val().split("-");
-		 var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
-		 var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
+
 		$.ajax(
 			{
 				type: "POST",
@@ -137,6 +138,32 @@ $(document).ready(function() {
 		$('#pytable tr').removeClass('selected');
 		$(this).closest('tr').addClass('selected');
 	});
+
+$("#viewprintableversion").click(function(event) {
+	
+	$.ajax(
+		{
+			type: "POST",
+			url: "/cashflowreportprint",
+			global: false,
+			async: false,
+			datatype: "text/html",
+			data: {"financialstart":sessionStorage.yyyymmddyear1,"orgtype":sessionStorage.orgt,"calculateto":newtodate,"calculatefrom":newfromdate},
+			beforeSend: function(xhr)
+			{
+				xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+			}
+		})
+		.done(function(resp) {
+			$("#info").html(resp);
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("complete");
+		});
+});
 
 	$(document).off('blur' ,'.pyaccname').on('blur' ,'.pyaccname',function() {
 		$('#pytable tr').removeClass('selected');
