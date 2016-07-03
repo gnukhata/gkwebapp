@@ -19,7 +19,7 @@ td {
 </style>
 </head>
 <body>
-  <div class="container">
+  <div id="monthdiv" class="container-fluid">
     <div class="panel">
       <div class="panel-heading">
         <span style="margin:auto; display:table;"><i>Ledger Account</i> : <strong>{{accountname}}</strong></span>
@@ -30,34 +30,44 @@ td {
           <table id="mthltable" class="shadow table table-bordered table-condensed">
             <thead>
               <tr>
-                <th class="col-xs-6">Month</th>
-                <th style="text-align:right" class="col-xs-2">Debit</th>
-                <th style="text-align:right" class="col-xs-2">Credit</th>
-                <th style="text-align:center" class="col-xs-2">No. of Vouchers</th>
+                <th class="col-xs-3">Month</th>
+                <th style="text-align:right" class="col-xs-3">Debit</th>
+                <th style="text-align:right" class="col-xs-3">Credit</th>
+                <th style="text-align:center" class="col-xs-3">No. of Vouchers</th>
               </tr>
             </thead>
             <tbody>
               {% for record in records %}
               <tr  value="{{record['period']}}">
-                <td class="col-xs-5">
-                  <a class="monthname" href="">{{record['month']}}</a>
+                <td class="col-xs-3">
+                  <a class="monthname" href="#">{{record['month']}}</a>
                 </td>
                 {%if record["advflag"]==1%}
-                <td class="col-xs-2" style="text-align:right; color:red;">
+                <td class="col-xs-3 hidden-print" style="text-align:right; color:red;">
                   <b>{{record["Dr"]}}</b>
                 </td>
-                <td class="col-xs-2" style="text-align:right; color:red;">
+                <td class="col-xs-3 hidden-print" style="text-align:right; color:red;">
                   <b>{{record["Cr"]}}</b>
                 </td>
+                <td class="col-xs-3 visible-print" style="text-align:right; color:red;">
+                  {% if record.Dr %}
+                    <b>({{record["Dr"]}})</b>
+                  {% endif %}
+                </td>
+                <td class="col-xs-3 visible-print" style="text-align:right; color:red;">
+                  {% if record.Cr %}
+                    <b>({{record["Cr"]}})</b>
+                  {% endif %}
+                </td>
                 {%else%}
-                <td class="col-xs-2" style="text-align:right">
+                <td class="col-xs-3" style="text-align:right">
                   {{record["Dr"]}}
                 </td>
-                <td class="col-xs-2" style="text-align:right">
+                <td class="col-xs-3" style="text-align:right">
                   {{record["Cr"]}}
                 </td>
                 {%endif%}
-                <td class="col-xs-2" style="text-align:center">
+                <td class="col-xs-3" style="text-align:center">
                   {{record["vcount"]}}
                 </td>
               </tr>
@@ -66,9 +76,12 @@ td {
           </table>
         </div>
       </div>
-      <div class="panel-footer">
+      <div class="panel-footer hidden-print">
+        <span style="margin:auto; display:table;">
         <button type="button" class="btn btn-sm btn-danger" id="mthlback" accesskey="b"><u>B</u>ack</button>
-        <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="t">Prin<u>t</u></button>
+        <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">E<u>x</u>port to Spreadsheet</button>
+        <button class="btn btn-sm btn-primary" type="button"  id="realprintmonth" accesskey="t">Prin<u>t</u></button>
+      </span>
       </div>
     </div>
     <input type="hidden" id="accountcode" value="{{accountcode}}">

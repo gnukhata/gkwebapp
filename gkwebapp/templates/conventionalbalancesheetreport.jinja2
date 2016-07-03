@@ -19,11 +19,14 @@
     font-size: 60%;
     color: black;
   }
-
+body{overflow-y:scroll;}
   th {
     font-size: 70%;
   }
-
+  table { page-break-inside:auto }
+  tr    { page-break-inside:avoid; page-break-after:auto }
+  thead { display: table-header-group; }
+  tfoot { display: table-footer-group; }
 .nopadding{
   padding: 0 !important;
   margin: 0 !important;

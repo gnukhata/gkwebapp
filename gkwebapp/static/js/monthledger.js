@@ -134,6 +134,10 @@ $(document).ready(function() {
     xhr.send();
   });
 
+  $("#realprintmonth").click(function(event) {
+    window.print();
+  });
+
   $("#mthlback").click(function(event) {
     $("#showviewledger").click();
   });
