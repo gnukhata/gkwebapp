@@ -36,6 +36,7 @@ $(document).ready(function()
   $("#delete").hide();
   $("#editaccountname").bind("change keyup", function()
   {
+
     $("#alertmsg").hide();
     var acccode = $("#editaccountname option:selected").val();
     var accname= $("#editaccountname option:selected").text();
@@ -225,6 +226,11 @@ $(document).off("click","#delete").on("click", "#delete", function(event)
   $('#m_confirmdel').on('shown.bs.modal', function(event) {
     $("#m_cancel").focus();
   });
+  $('#m_confirmdel').on('hidden.bs.modal', function(event) {
+    $("#editaccountname").focus();
+  });
+
+
 }
 );
 

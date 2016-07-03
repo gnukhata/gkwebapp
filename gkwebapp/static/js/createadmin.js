@@ -44,6 +44,7 @@ $('input:not(:hidden),select').bind("keydown", function(e) {
   var f = $('input:not(:hidden),select');
   if (e.which == 13)
   {
+    e.preventDefault();
     var nextIndex = f.index(this) + 1;
     if(nextIndex < n){
       e.preventDefault();
@@ -74,6 +75,12 @@ $('input:not(:hidden),select').bind("keydown", function(e) {
       }
     });
 
+$("#securityanswer").keydown(function(event) {
+  if (event.which==13) {
+    event.preventDefault();
+$("#loginform").submit();
+  }
+});
 
 $("#loginform").submit(function(e)
 {
@@ -136,11 +143,24 @@ $("#loginform").submit(function(e)
     data: $("#loginform").serialize(),
     success: function(resp)
     {
-    var gt = resp['gktoken'];
+      if (resp['gkstatus']==0) {
 
-    sessionStorage.gktoken = gt;
+        var gt = resp['gktoken'];
 
-    window.location="/showmainshell";
+        sessionStorage.gktoken = gt;
+
+        window.location="/showmainshell";
+      }
+      else if(resp['gkstatus']==3) {
+
+        $("#createnav").click();
+        $("#createorg").load("/createorg",setTimeout( function() { $("#orgname").focus(); }, 500 ));
+        $("#duplicate-org-alert").alert();
+        $("#duplicate-org-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#duplicate-org-alert").hide();
+        });
+
+      }
     }
 
     }

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>GNUKhata | {{projectname}} Statement</title>
+  <style type="text/css">
+
+  td {
+  	font-size: 65%;
+  	color: black;
+  }
+
+  th {
+  	font-size: 70%;
+  }
+
+  @page {
+    size : 21cm 29.7cm;
+    margin : 10mm 10mm 20mm 10mm
+  }
+  thead{
+    display: table-header-group;
+  }
+  tfoot{
+    display: table-footer-group;
+  }
+
+  </style>
+</head>
+<body>
+  <span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>List of Accounts</strong></span>
+
+  <div class="table-responsive printorgdetails">
+    <table class="table table-condensed table-striped">
+      <thead>
+        <tr class="visible-print">
+          <th colspan="4" style="text-align:center; font-size:80%;">
+            List of Accounts
+          </th>
+        </tr>
+        <tr>
+          <th class="col-xs-1">
+            Sr. No.
+          </th>
+          <th class="col-xs-5">
+            Account Name
+          </th>
+          <th class="col-xs-3">
+            Group Name
+          </th>
+          <th class="col-xs-3">
+            Sub-Group Name
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for record in gkresult %}
+        <tr	value="{{record["accountcode"]}}">
+          <td class="col-xs-1" >
+            {{record["srno"]}}
+          </td>
+          <td class="col-xs-5">
+            {{record["accountname"]}}
+          </td>
+          <td class="col-xs-3" >
+            {{record["groupname"]}}
+          </td>
+          <td class="col-xs-3">
+            {{record["subgroupname"]}}
+          </td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+    <span style="margin:auto; display:table;">
+  		<button type="button" class="btn btn-sm btn-danger hidden-print" id="loaback" accesskey="b"><u>B</u>ack</button>
+  		<button type="button" class="btn btn-sm btn-info hidden-print" id="loaprint" accesskey="t">Prin<u>t</u></button>
+  	</span>
+  </div>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("title").html("GNUKhata")
+      $("#loaprint").click(function(event) {
+        window.print();
+      });
+      $("#loaback").click(function(event) {
+        $("#listofaccounts").click();
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -44,6 +44,17 @@ from formula import TotalPagesColSum, PreviousPagesColSum
 def showcashflow(request):
 	return {"gkstatus":0}
 
+@view_config(route_name="cashflowreportprint")
+def cashflowreportprint(request):
+	calculateto = request.params["calculateto"]
+	financialstart = request.params["financialstart"]
+	calculatefrom = request.params["calculatefrom"]
+	orgtype = request.params["orgtype"]
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/report?type=cashflow&calculateto=%s&financialstart=%s&calculatefrom=%s"%(calculateto,financialstart,calculatefrom), headers=header)
+
+	return render_to_response("gkwebapp:templates/printcashflowreport.jinja2",{"rcrecords":result.json()["rcgkresult"],"pyrecords":result.json()["pygkresult"],"orgtype":orgtype,"backflag":4,"from":datetime.strftime(datetime.strptime(str(calculatefrom),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
+
 @view_config(route_name="showcashflowreport")
 def showcashflowreport(request):
 	calculateto = request.params["calculateto"]

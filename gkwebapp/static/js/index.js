@@ -30,6 +30,7 @@ $(document).ready(function(){
   $(document).keydown(function(event) {
     if(event.ctrlKey && event.keyCode == 69) {
       $("#selectnav").click();
+      $("#selectorg").load("/existingorg",setTimeout( function() { $("#org-name").focus(); }, 500 ));
       /*console.log("Hey! Ctrl+S event captured!");*/
       event.preventDefault();
       }

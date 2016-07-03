@@ -62,24 +62,16 @@ $(document).ready(function()
   $("#rbtomonth").val(todatearray[1])
   $("#rbtoyear").val(todatearray[0])
 
-  var nstartday = $("#rbtoday").val();
-  var nstartmonth = $("#rbtomonth").val();
-  var nstartyear = $("#rbtoyear").val();
-  var nstartdate = nstartday+nstartmonth+nstartyear;
-  var enddate = Date.parseExact(nstartdate, "ddMMyyyy").add({days: 1}).toString("ddMMyyyy");
-  var endday = enddate[0]+enddate[1];
-  var endmonth = enddate[2]+enddate[3];
-  var endyear = enddate[4]+enddate[5]+enddate[6]+enddate[7];
-  $("#rbfrom_day").val(endday);
-  $("#rbfrom_month").val(endmonth);
-  $("#rbfrom_year").val(endyear);
-var enddate2 = Date.parseExact(endday+endmonth+endyear, "ddMMyyyy").add({days: -1, years: 1}).toString("ddMMyyyy");
-var endday2 = enddate2[0]+enddate2[1];
-var endmonth2 = enddate2[2]+enddate2[3];
-var endyear2 = enddate2[4]+enddate2[5]+enddate2[6]+enddate2[7];
-$("#rbto_day").val(endday2);
-$("#rbto_month").val(endmonth2);
-$("#rbto_year").val(endyear2);
+
+
+
+  $("#rbfrom_day").val(sessionStorage.newfstartday);
+  $("#rbfrom_month").val(sessionStorage.newfstartmonth);
+  $("#rbfrom_year").val(sessionStorage.newfstartyear);
+
+$("#rbto_day").val(sessionStorage.newfendday);
+$("#rbto_month").val(sessionStorage.newfendmonth);
+$("#rbto_year").val(sessionStorage.newfendyear);
 
 
 $("input:enabled:first").focus();
@@ -108,17 +100,44 @@ $('input:text,select, input:checkbox').keydown( function(event) {
 
 $("#cbtoyear").keydown(function(event) {
   /* Act on the event */
-  $("#closebooks").click();
+  if (event.which==13) {
+
+    $("#closebooks").click();
+  }
 });
 
 $("#rbto_year").keydown(function(event) {
   /* Act on the event */
-  $("#rollover").click();
+  if (event.which==13) {
+
+    $("#rollover").click();
+  }
 });
 
 $(document).off("click","#closebooks").on("click", "#closebooks", function(event)
 {
-
+  var clsdate = $("#cbtoday").val()+$("#cbtomonth").val()+$("#cbtoyear").val();
+  var enddate = Date.parseExact(clsdate, "ddMMyyyy").add({days: 1}).toString("ddMMyyyy");
+  var endday = enddate[0]+enddate[1];
+  var endmonth = enddate[2]+enddate[3];
+  var endyear = enddate[4]+enddate[5]+enddate[6]+enddate[7];
+  alert(endday+endmonth+endyear);
+  $("#rbfrom_day").val(endday);
+  $("#rbfrom_month").val(endmonth);
+  $("#rbfrom_year").val(endyear);
+  sessionStorage.newfstartday =endday;
+  sessionStorage.newfstartmonth = endmonth;
+  sessionStorage.newfstartyear= endyear;
+  var enddate2 = Date.parseExact(endday+endmonth+endyear, "ddMMyyyy").add({days: -1, years: 1}).toString("ddMMyyyy");
+  var endday2 = enddate2[0]+enddate2[1];
+  var endmonth2 = enddate2[2]+enddate2[3];
+  var endyear2 = enddate2[4]+enddate2[5]+enddate2[6]+enddate2[7];
+  $("#rbto_day").val(endday2);
+  $("#rbto_month").val(endmonth2);
+  $("#rbto_year").val(endyear2);
+  sessionStorage.newfendday =endday2;
+  sessionStorage.newfendmonth = endmonth2;
+  sessionStorage.newfendyear= endyear2;
   event.preventDefault();
   $(".closebooks").attr("disabled",true)
   if ($.trim($("#cbfromday").val())==""||$.trim($("#cbfrommonth").val())==""||$.trim($("#cbfromyear").val())==""||$.trim($("#cbtoday").val())==""||$.trim($("#cbtomonth").val())==""||$.trim($("#cbtoyear").val())=="")
@@ -151,7 +170,8 @@ $(document).off("click","#closebooks").on("click", "#closebooks", function(event
       sessionStorage.booksclosedflag=1;
       sessionStorage.roflag=0;
       $(".dis").attr("disabled", false);
-      $("#showclosebooks").click();
+      $('.modal-backdrop').remove();
+      $('.modal').modal('hide');
 
     }
     else {

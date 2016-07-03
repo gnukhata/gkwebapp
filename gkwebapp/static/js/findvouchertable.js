@@ -154,6 +154,32 @@ $(document).ready(function() {
 
   });
 
+$("#viewprintableversion").click(function(event) {
+  $.ajax({
+    type: "POST",
+    url: "/printvouchers",
+    data: $("#findvoucher").serialize(),
+    global: false,
+    async: false,
+    datatype: "text/html",
+    beforeSend: function(xhr)
+    {
+      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    }
+  })
+  .done(function(resp) {
+      $("#vct").html(resp);
+  })
+  .fail(function() {
+    console.log("error");
+  })
+  .always(function() {
+    console.log("complete");
+  });
+
+
+});
+
 
 
   $(".table").off('dblclick','tr:not(:first)').on('dblclick','tr:not(:first)',function(e){
