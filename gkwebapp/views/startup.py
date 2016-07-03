@@ -42,7 +42,7 @@ def about(request):
 
 @view_config(route_name="existingorg", renderer="gkwebapp:templates/existingorg.jinja2")
 def existingorg(request):
-	result = s.get("http://127.0.0.1:6543/organisations")
+	result = requests.get("http://127.0.0.1:6543/organisations")
 	strData = []
 	for records in result.json()["gkdata"]:
 		sdata = {"orgname":str(records["orgname"]),"orgtype":str(records["orgtype"])}
@@ -67,7 +67,7 @@ def orgexists(request):
 def yearcode(request):
 	oname = request.params["orgname"]
 	otype = request.params["orgtype"]
-	result = s.get("http://127.0.0.1:6543/orgyears/%s/%s"%(oname,otype))
+	result = requests.get("http://127.0.0.1:6543/orgyears/%s/%s"%(oname,otype))
 	strData = []
 
 	for records in result.json()["gkdata"]:
@@ -100,7 +100,7 @@ def createadmin(request):
 def orglogin(request):
 
 	gkdata = {"orgdetails":{"orgname":request.params["orgname"], "orgtype":request.params["orgtype"], "yearstart":request.params["yearstart"], "yearend":request.params["yearend"]}, "userdetails":{"username":request.params["username"], "userpassword":request.params["password"],"userquestion":request.params["securityquestion"], "useranswer":request.params["securityanswer"]}}
-	result = s.post("http://127.0.0.1:6543/organisations", data =json.dumps(gkdata))
+	result = requests.post("http://127.0.0.1:6543/organisations", data =json.dumps(gkdata))
 	if result.json()["gkstatus"]==0:
 		return  {"gktoken":result.json()["token"],"gkstatus":result.json()["gkstatus"]}
 	else:
@@ -111,7 +111,7 @@ def selectorglogin(request):
 
 	gkdata = {"username":request.params["username"], "userpassword":request.params["userpassword"],"orgcode":request.params["orgcode"]}
 	print gkdata
-	result = s.post("http://127.0.0.1:6543/login", data =json.dumps(gkdata))
+	result = requests.post("http://127.0.0.1:6543/login", data =json.dumps(gkdata))
 	print result.json()
 	if result.json()["gkstatus"]==0:
 		return  {"gktoken":result.json()["token"], "gkstatus":result.json()["gkstatus"]}
