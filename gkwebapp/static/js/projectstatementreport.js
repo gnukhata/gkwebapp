@@ -147,6 +147,28 @@ $(document).ready(function() {
 
 });
 
+  $("#printprjstatement").click(function(event) {
+    var date = $("#calculateto").val().split("-");
+    var newtodate = date[2]+"-"+date[1]+"-"+date[0];
+    $.ajax(
+      {
+        type: "POST",
+        url: "/printprojectstatement",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data: {"calculateto":newtodate,"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"projectname":$("#projectname").val()},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      })
+        .done(function(resp)
+        {
+          $("#info").html(resp);
+        }
+      );
+  });
   $("#prjstback").click(function(event) {
     $("#showprjstate").click();
   });

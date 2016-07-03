@@ -29,7 +29,7 @@ Contributors:
 $(document).ready(function() {
 
   $("#grpbtn").hide();
-
+  $("#realprintbalance").hide();
   var percentwid = 100*(($("table").width()-12)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   var percentheigth = 100*(($("body").height()-$(".navbar").height()-148)/$("body").height());
@@ -77,7 +77,7 @@ $("#grpbtn").click(function(event){
 
   $("#sbgbtn").click(function(event){
     event.preventDefault();
-      $(".groupacc").css("display", "block");
+      $(".groupacc").removeAttr('style');
       $(".subgroupacc").css("display", "none");
       $(this).hide();
       $("#grpbtn").show();
@@ -88,8 +88,8 @@ $("#grpbtn").click(function(event){
 
   $("#accbtn").click(function(event){
     event.preventDefault();
-      $(".groupacc").css("display", "block");
-      $(".subgroupacc").css("display", "block");
+      $(".groupacc").removeAttr('style');
+      $(".subgroupacc").removeAttr('style');
       $(this).hide();
       $("#grpbtn").show();
       $("#sbgbtn").show();
@@ -135,6 +135,7 @@ $("#grpbtn").click(function(event){
       }
       else if (grpcode.indexOf("g") != -1) {
         $("."+grpcode).slideToggle(1);
+        $("."+grpcode).removeAttr('style');
         $("."+grpcode).each(function(index) {
           code = $(this).attr('value')
           if ($("."+code).is(":visible")){
@@ -178,7 +179,29 @@ $("#grpbtn").click(function(event){
 
 
   $("#saback").click(function(event) {
-    $("#showbalancesheet").click();
+    if ($("#realprintbalance").is(":visible")) {
+      $.ajax(
+        {
+          type: "POST",
+          url: "/showbalancesheetreport",
+          global: false,
+          async: false,
+          datatype: "text/html",
+          data: {"balancesheettype":"verticalbalancesheet","calculateto":$("#cto").val(),"orgtype":sessionStorage.orgt},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+        })
+        .done(function(resp)
+        {
+          $("#info").html(resp);
+        }
+      );
+    }
+    else {
+      $("#showbalancesheet").click();
+    }
   });
 
 $("#cbalbutn").click(function(event) {
@@ -225,23 +248,22 @@ $("#print").click(function(event) {
 };
 
 xhr.send();
-/*
-    $.ajax(
-      {
-        type: "GET",
-        url: "/printsourcesandappfundreport",
-        global: false,
-        async: false,
-        dataType : 'text',
-        data: {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "calculateto":$("#cto").val()},
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-        success: function(resp){
-          window.open('data:application/pdf;charset=utf-8,' + encodeURIComponent(resp));
-        }
-      });*/
+
+});
+
+$("#printbalance").click(function(event) {
+  $(".cbalsheettable").removeClass('table-fixedheader').addClass('table-keep').addClass('table-striped');;
+  $(".cbalsheettable tbody tr").unbind('dblclick');
+  $('.cbalsheettable tbody a').contents().unwrap();
+  $("#sbgbtn").remove();
+  $("#accbtn").remove();
+  $("#grpbtn").remove();
+  $("#printbalance").hide();
+  $("#realprintbalance").show();
+});
+
+$("#realprintbalance").click(function(event) {
+  window.print();
 });
 
 });

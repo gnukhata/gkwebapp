@@ -29,7 +29,7 @@
 <body>
 	<span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>Extended Trial Balance</strong> for the period from <strong>{{from}}</strong> to <strong>{{to}}</strong></span>
 	<div class="table-responsive printorgdetails">
-		<table class="table table-condensed table-striped">
+		<table class="table table-condensed table-striped shadow">
 			<thead>
         <tr class="visible-print">
           <th colspan="8" style="text-align:center; font-size:80%;">
@@ -69,11 +69,19 @@
 						{{record["totalcr"]}}
 					</td>
 					<td class="col-xs-1" style="text-align:right">
-						{{record["curbaldr"]}}<br>
+						{% if record["advflag"]==1 and record.curbaldr %}
+							<b>({{record["curbaldr"]}})</b>
+						{% else %}
+							{{record["curbaldr"]}}
+						{% endif %}<br>
             <u><i>{{record["ttlRunDr"]}}</i></u>
 					</td>
 					<td class="col-xs-1" style="text-align:right">
-						{{record["curbalcr"]}}<br>
+						{% if record["advflag"]==1 and record.curbalcr %}
+							<b>({{record["curbalcr"]}})</b>
+						{% else %}
+							{{record["curbalcr"]}}
+						{% endif %}<br><br>
             <u><i>{{record["ttlRunCr"]}}</i></u>
 					</td>
 					<td class="col-xs-2">

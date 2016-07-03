@@ -26,6 +26,7 @@ Contributors:
 */
 
 $(document).ready(function() {
+  $("#realprintpnl").hide();
   $('#expensetbl tbody tr:first-child td:eq(1) a').focus();
   $('#expensetbl tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
   var rcindex = 0
@@ -254,8 +255,48 @@ $(document).ready(function() {
 
     	xhr.send();
     });
+    $("#printpnl").click(function(event) {
+      $("#incometbl tbody tr").unbind('dblclick');
+      $("#expensetbl tbody tr").unbind('dblclick');
+      $('table a').contents().unwrap();
+      $("table").removeClass('table-fixedheader').addClass('table-keep').addClass('table-striped');
+      $("#printpnl").hide();
+      $("#realprintpnl").show();
+    });
+    $("#realprintpnl").click(function(event) {
+      window.print();
+    });
+
   $("#pnlback").click(function(event) {
+    if ($("#realprintpnl").is(":visible")) {
+      var todatearray = $("#ledtodate").val().split("-");
+      var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
+      $.ajax(
+        {
+          type: "POST",
+          url: "/showprofitlossreport",
+          global: false,
+          async: false,
+          datatype: "text/html",
+          data: {"financialstart":sessionStorage.yyyymmddyear1,"orgtype":sessionStorage.orgt,"calculateto":newtodate},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          }
+        })
+        .done(function(resp) {
+          $("#info").html(resp);
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+    }
+    else {
     $("#showprofitloss").click();
+  }
   });
 
 });

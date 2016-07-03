@@ -138,6 +138,7 @@ def main(global_config, **settings):
 	config.add_route('securityanswer', '/securityanswer')
 	config.add_route('newpassword', '/newpassword')
 	config.add_route('updateattachment', '/updateattachment')
+	config.add_route('printprojectstatement', '/printprojectstatement')
 	config.add_route('printledger', '/printledger')
 	config.scan('gkwebapp')
 	return config.make_wsgi_app()

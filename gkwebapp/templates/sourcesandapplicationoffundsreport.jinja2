@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>GNUKhata | {{projectname}} Statement</title>
   <style type="text/css">
 
+  @page {
+    size: 21cm 29.7cm;
+    margin: 10mm 10mm 20mm 10mm; /* change the margins as you want them to be. */
+  }
   .selected
   {
     background-color: Aquamarine;
   }
-
+  table { page-break-inside:auto }
+  tr    { page-break-inside:avoid; page-break-after:auto }
   .shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
@@ -17,8 +25,13 @@
   }
 
   th {
-    font-size: 70%;
+    font-size: 75%;
   }
+  table { page-break-inside:auto }
+  tr    { page-break-inside:avoid; page-break-after:auto }
+  thead { display: table-header-group; }
+  tfoot { display: table-footer-group; }
+body{overflow-y:scroll;}
   /*
   Force table width to 100%
   */
@@ -93,6 +106,10 @@
     float: left;
 
   }
+  table.table-keep>thead tr th, table.table-keep>tbody tr td, table.table-keep>tfoot tr td {
+    float: left;
+
+  }
 
   #satable{
     background-color: white;
@@ -102,12 +119,15 @@
 </head>
 <body>
   <input type="hidden" id="calculateto" name="calculateto" value="{{to}}"></input>
-
-  <span style="margin:auto; display:table;"><strong>Statement of Sources and Application of Funds </strong>as on <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
-
-  <div class="table-responsive container">
+  <div class="table-responsive container-fluid">
     <table id="satable" class="shadow table table-condensed table-fixedheader cbalsheettable">
-
+      <thead>
+        <tr>
+          <th colspan="4" class="text-center col-xs-12" >
+            Statement of Sources and Application of Funds </strong>as on <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
+          </th>
+        </tr>
+      </thead>
       <tbody>
         {% for record in records["leftlist"] %}
         {%if (record["groupAccname"]=="Loss for the Year:" or record["groupAccname"]=="Deficit for the Year:" or record["groupAccname"]=="Surplus for the Year:" or record["groupAccname"]=="Profit for the Year:")%}
@@ -256,7 +276,7 @@
     <input type="hidden" name="balancesheettype" id="balancesheettype" value="{{balancesheettype}}">
     <input type="hidden" name="cto" id="cto" value="{{to}}">
 
-    <span style="margin:auto; display:table;">
+    <span class="hidden-print" style="margin:auto; display:table;">
       <button class="btn btn-sm btn-danger" type="button" id="saback" accesskey="b"><u>B</u>ack</button>
       <button type="button" class="btn btn-sm btn-primary" id="sbgbtn" accesskey="g">Show Sub<u>g</u>roups</button>
       <button type="button" class="btn btn-sm btn-primary" id="grpbtn" accesskey="w">Sho<u>w</u> Groups</button>
@@ -266,7 +286,9 @@
       {% else %}
       <button class="btn btn-sm btn-primary " type="button" id="cbalbutn" hidden="hidden" accesskey="o">C<u>o</u>nventional Statement of Affairs</button>
       {% endif %}
-       <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="t">Prin<u>t</u></button>
+       <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">E<u>x</u>port to Spreadsheet</button>
+       <button class="btn btn-sm btn-primary" type="button"  id="printbalance" accesskey="t">View Prin<u>t</u>able Version</button>
+       <button class="btn btn-sm btn-primary" type="button"  id="realprintbalance" accesskey="t">Prin<u>t</u></button>
     </span>
   </div>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/sourcesandapplicationoffundsreport.js')}}"></script>

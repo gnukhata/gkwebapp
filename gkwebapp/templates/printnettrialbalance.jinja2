@@ -29,7 +29,7 @@ tfoot{
 <body>
 	<span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>Net Trial Balance</strong> for the period from <strong>{{from}}</strong> to <strong>{{to}}</strong></span>
 	<div class="table-responsive printorgdetails">
-		<table class="table table-condensed table-striped">
+		<table class="table table-condensed table-striped shadow">
 			<thead>
         <tr class="visible-print">
           <th colspan="5" style="text-align:center; font-size:80%;">
@@ -57,11 +57,19 @@ tfoot{
 						{% endif %}
 					</td>
 					<td class="col-xs-2" style="text-align:right">
-						{{record["Dr"]}}<br>
+						{% if record["advflag"]==1 and record.Dr %}
+							<b>({{record["Dr"]}})</b>
+						{% else %}
+							{{record["Dr"]}}
+						{% endif %}<br>
             <u><i>{{record["ttlRunDr"]}}</i></u>
 					</td>
 					<td class="col-xs-2" style="text-align:right">
-						{{record["Cr"]}}<br>
+						{% if record["advflag"]==1 and record.Cr %}
+							<b>({{record["Cr"]}})</b>
+						{% else %}
+							{{record["Cr"]}}
+						{% endif %}<br><br>
             <u><i>{{record["ttlRunCr"]}}</i></u>
 					</td>
 					<td class="col-xs-2">
