@@ -29,10 +29,10 @@
 <body>
 
 	<div class="table-responsive printorgdetails">
-    <table id="vtable" class="table table-fixedheader  table-condensed">
+    <table  class="table table-fixedheader  table-condensed">
       <thead>
         <tr class="visible-print">
-          <th colspan="8" style="text-align:center; font-size:80%;">
+          <th id="printheader" colspan="8" style="text-align:center; font-size:80%;">
             List of Transactions
           </th>
         </tr>
@@ -117,9 +117,6 @@
       </tbody>
     </table>
   </div>
-
-  <div id="viewvc">
-  </div>
   <hr>
   <br>
   <div>
@@ -131,6 +128,42 @@
   <script type="text/javascript">
     $(document).ready(function() {
       $("title").html("GNUKhata")
+      var search = $("#searchby option:selected").val();
+      var heading;
+      if (search=="type")
+      {
+        heading = " for Type: "+$("#vtype option:selected").text();
+
+      }
+      else if (search=="vnum")
+      {
+        heading = " for V.No. "+$("#vnum").val();
+
+      }
+      else if (search=="amount")
+      {
+        heading = " for Amount "+$("#amount").val();
+
+
+      }
+      else if (search=="date")
+      {
+
+        heading = " for Period: "+$("#fday").val()+"-"+$("#fmonth").val()+"-"+$("#fyear").val()+" to "+$("#tday").val()+"-"+$("#tmonth").val()+"-"+$("#tyear").val();
+
+
+
+      }
+
+      else if (search=="narration")
+      {
+
+        heading = " containing Narration: "+$("#narration").val();
+
+      }
+
+
+      $("#printheader").append(heading);
       $("#lotprint").click(function(event) {
         window.print();
       });
