@@ -23,13 +23,6 @@ a:focus,
 	font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
 	background-color: white;
 }
-td {
-	font-size: 71%;
-}
-
-th {
-	font-size: 75%;
-}
 .gknav .navbar-brand {
     color: white;
 }
