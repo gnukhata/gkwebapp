@@ -120,7 +120,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
       <tbody>
         {% for vc in vouchers %}
         <tr  value="{{vc['vouchercode']}}">
-            <td style="width:5%">
+            <td style="width:5%; word-wrap:break-word;">
               <a class="vno" href="">{{vc['vouchernumber']}}</a>
             </td>
             {% if (vc['status']) %}

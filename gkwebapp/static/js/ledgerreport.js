@@ -289,6 +289,10 @@ $("#dualledger").click(function(event) {
       $("#viewdualledger_accname").focus();
 
     });
+    $('#m_dualledger').on('hidden.bs.modal', function (e)
+    {
+      $("table tbody tr:first a").focus();
+    });
 
   });
 

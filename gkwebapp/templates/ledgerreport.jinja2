@@ -100,7 +100,7 @@
 </head>
 <body>
   <div class="alert alert-danger" id="ua-alert" hidden>
-    
+
     <strong>Unauthorized to Lock/Unlock Transactions!</strong>
   </div>
   <input type="hidden" id="urole" name="urole" value="{{userrole}}"></input>
@@ -148,11 +148,11 @@
             {{record['voucherdate']}}
           </td>
           {% if record['vouchernumber']=="" %}
-          <td class="col-xs-1">
+          <td class="col-xs-1" >
             <a class="vno" href="">&nbsp</a>
           </td>
           {% else %}
-          <td class="col-xs-1">
+          <td class="col-xs-1" style="width:100px; word-wrap:break-word;">
             <a class="vno" href="">{{record['vouchernumber']}}</a>
           </td>
           {% endif %}
@@ -233,9 +233,9 @@
       <button class="btn btn-sm btn-danger" type="button" id="back" accesskey="b"><u>B</u>ack</button>
       {% endif %}
       <button class="btn btn-sm btn-primary" type="button" id="anotherledger" accesskey="v"><u>V</u>iew Another Ledger</button>
-      <button class="btn btn-sm btn-primary" type="button" id="dualledger" accesskey="d"><u>D</u>ual Ledger</button>
-      <button class="btn btn-sm btn-primary" type="button"  id="drsonly" accesskey="y">Onl<u>y</u> Drs</button>
-      <button class="btn btn-sm btn-primary" type="button"  id="crsonly" accesskey="o"><u>O</u>nly Crs</button>
+      <button class="btn btn-sm btn-primary" type="button" id="dualledger" accesskey="g">Dual Led<u>g</u>er</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="drsonly" accesskey="d">Only <u>D</u>rs</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="crsonly" accesskey="y">Onl<u>y</u> Crs</button>
       <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">E<u>x</u>port to Spreadsheet</u></button>
       <button class="btn btn-sm btn-primary" type="button"  id="printledger" accesskey="t">View Prin<u>t</u>able Version</button>
     </span>
