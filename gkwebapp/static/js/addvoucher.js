@@ -39,7 +39,7 @@ Document off is used to remove an already attached event to an element, so as to
 */
 $(document).ready(function() {
   $(".modal-backdrop").remove();
-  $("#vno").focus();
+  $("#vno").focus().select();
   $('.vdate').autotab('number');    //autotab is a library for automatically switching the focus to next input when max allowed characters are filled.
   $('.dramt').numeric({ negative: false });   //numeric is a library used for restricting the user to input only numbers and decimal inside a text box
   $('.cramt').numeric({ negative: false });
