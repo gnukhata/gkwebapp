@@ -63,15 +63,44 @@ $(document).ready(function()
   $("#rbtoyear").val(todatearray[0])
 
 
-
-
+if(sessionStorage.newfstartday)
+{
   $("#rbfrom_day").val(sessionStorage.newfstartday);
   $("#rbfrom_month").val(sessionStorage.newfstartmonth);
   $("#rbfrom_year").val(sessionStorage.newfstartyear);
 
-$("#rbto_day").val(sessionStorage.newfendday);
-$("#rbto_month").val(sessionStorage.newfendmonth);
-$("#rbto_year").val(sessionStorage.newfendyear);
+  $("#rbto_day").val(sessionStorage.newfendday);
+  $("#rbto_month").val(sessionStorage.newfendmonth);
+  $("#rbto_year").val(sessionStorage.newfendyear);
+
+}
+else
+{
+  var clsdate = $("#rbtoday").val()+$("#rbtomonth").val()+$("#rbtoyear").val();
+  var enddate = Date.parseExact(clsdate, "ddMMyyyy").add({days: 1}).toString("ddMMyyyy");
+  var endday = enddate[0]+enddate[1];
+  var endmonth = enddate[2]+enddate[3];
+  var endyear = enddate[4]+enddate[5]+enddate[6]+enddate[7];
+
+  $("#rbfrom_day").val(endday);
+  $("#rbfrom_month").val(endmonth);
+  $("#rbfrom_year").val(endyear);
+  sessionStorage.newfstartday =endday;
+  sessionStorage.newfstartmonth = endmonth;
+  sessionStorage.newfstartyear= endyear;
+  var enddate2 = Date.parseExact(endday+endmonth+endyear, "ddMMyyyy").add({days: -1, years: 1}).toString("ddMMyyyy");
+  var endday2 = enddate2[0]+enddate2[1];
+  var endmonth2 = enddate2[2]+enddate2[3];
+  var endyear2 = enddate2[4]+enddate2[5]+enddate2[6]+enddate2[7];
+  $("#rbto_day").val(endday2);
+  $("#rbto_month").val(endmonth2);
+  $("#rbto_year").val(endyear2);
+  sessionStorage.newfendday =endday2;
+  sessionStorage.newfendmonth = endmonth2;
+  sessionStorage.newfendyear= endyear2;
+
+}
+
 
 
 if ($(".closebooks").length) {
@@ -206,7 +235,10 @@ $(document).off("click","#closebooks").on("click", "#closebooks", function(event
   })
   .done(function(jsonobj) {
     if (jsonobj["gkstatus"]==0) {
-
+      $("#success-alert").alert();
+      $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#success-alert").hide();
+      });
       $(".closebooks").remove();
       sessionStorage.booksclosedflag=1;
       sessionStorage.roflag=0;
