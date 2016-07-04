@@ -1,3 +1,19 @@
+[04-July-2016 Release 3.0]
+* Now documents can be attached to transactions.
+* Applied a new theme.
+* Now reports can be exported to spreadsheets.
+* Perfected Gross Trial Balance report.
+* Reports can and also be printed in a much better way or can be exported to pdf.
+* Now only drs and crs of ledger accounts can be viewed.
+* Improved user interface for balancesheets.
+* Added functionality for changing password.
+* Now the last voucher number and date of the same type of transaction is seen while creating transactions.
+* Added alert when a postdated transacton is being created.
+* Added drilldown for all reports.
+* Made shortcuts more consistence and comfortable.
+* Software is now immensly accessible(WCAG compliant).
+* Minor improvements and bug fixes.
+
 [18-June-2016 Release 3.0RC2]
 * Added functionality for deleting orgainsation.
 * Made more improvements in look and feel.
