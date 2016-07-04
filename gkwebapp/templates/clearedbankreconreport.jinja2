@@ -92,40 +92,65 @@
     float: left;
 
   }
-
+  body{overflow-y:scroll;}
+  th {
+    font-size: 70%;
+  }
+  table { page-break-inside:auto }
+  tr    { page-break-inside:avoid; page-break-after:auto }
+  thead { display: table-header-group; }
+  tfoot { display: table-footer-group; }
+  table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.table-fixedheader>tfoot tr td {
+    float: left;
+  }
+  @page {
+    size: 21cm 29.7cm;
+    margin: 10mm 10mm 20mm 10mm; /* change the margins as you want them to be. */
+  }
   #clrbankrecontable, #stmttable {
     background-color: white;
+  }
+  #stmttablebody > tr:first-child {
+    background-color: rgb(87,93,99);
+  	color: white;
   }
 
   </style>
 </head>
 <body>
   <div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
-    
+
     <label>Please enter date in proper format!</label>
   </div>
   <div class="alert alert-danger" id="between-date-alert"  aria-live="rude" role="alert" hidden>
 
     <label>Clearance date cannot be before the voucher date or after the financial end!</label>
   </div>
-  <span class="pull-right"><i>Period</i> : {{ledgerheader["calculatefrom"]}} to {{ledgerheader["calculateto"]}}</span>
-  <span style="margin:auto; display:table;"><i>Cleared Transactions of</i> : {{ledgerheader["accountname"]}}</span>
   <input type="hidden" id="accountcode" name="accountcode" value="{{ledgerheader["accountcode"]}}"></input>
   <input type="hidden" id="accountname" name="accountname" value="{{ledgerheader["accountname"]}}"></input>
   <input type="hidden" id="calculatefrom" name="calculatefrom" value="{{ledgerheader["calculatefrom"]}}"></input>
   <input type="hidden" id="calculateto" name="calculateto" value="{{ledgerheader["calculateto"]}}"></input>
   <input type="hidden" id="narrationflag" name="narrationflag" value="{{ledgerheader["narrationflag"]}}"></input>
-  <div class="table-responsive">
+  <div id="clrtrans" class="table-responsive">
+    <span class="pull-right hidden-print header"><i>Period</i> : {{ledgerheader["calculatefrom"]}} to {{ledgerheader["calculateto"]}}</span>
+    <span style="margin:auto; display:table;" class="hidden-print header"><i>Cleared Transactions of</i> : {{ledgerheader["accountname"]}}</span>
     <table id="clrbankrecontable" class=" shadow table table-fixedheader table-condensed">
       <thead>
         <tr>
+          <th class="text-center visible-print" style="font-size:80%" colspan="6">
+            <i>Cleared Transactions of</i> : {{ledgerheader["accountname"]}}<br>
+            <i>Period</i> : {{ledgerheader["calculatefrom"]}} to {{ledgerheader["calculateto"]}}
+          </th>
+        </tr>
+        <tr>
           <th class="col-xs-1">Date</th>
           <th class="col-xs-1">V.No.</th>
-          <th class="col-xs-2">Particulars</th>
+          <th class="col-xs-2 hidden-print">Particulars</th>
+          <th class="col-xs-4 visible-print">Particulars</th>
           <th style="text-align:right" class="col-xs-2">Debit</th>
           <th style="text-align:right" class="col-xs-2">Credit</th>
-          <th class="col-xs-1">Clearance Date</th>
-          <th class="col-xs-3">Memo</th>
+          <th class="col-xs-2 ">Clearance Date</th>
+          <th class="col-xs-2 hidden-print">Memo</th>
         </tr>
       </thead>
       <tbody>
@@ -137,7 +162,14 @@
           <td class="col-xs-1">
             {{record['vno']}}
           </td>
-          <td class="col-xs-2">
+          <td class="col-xs-2 hidden-print">
+            {{record['particulars']}}
+            {% if record['narration']!="" and narrationflag==true %}
+            <br>
+            ({{record['narration']}})
+            {% endif %}
+          </td>
+          <td class="col-xs-4 visible-print">
             {{record['particulars']}}
             {% if record['narration']!="" and narrationflag==true %}
             <br>
@@ -150,11 +182,14 @@
           <td class="col-xs-2" style="text-align:right">
             {{record["cr"]}}
           </td>
-          <td class="col-xs-1">
+          <td class="col-xs-1 hidden-print">
             <input class="form-control input-sm clrdate" type="text"  maxlength="10" value="{{record["clearancedate"]}}">
           </td>
-          <td class="col-xs-3">
+          <td class="col-xs-3 hidden-print">
             <input class="form-control input-sm memo " type="text" value="{{record["memo"]}}">
+          </td>
+          <td class="col-xs-2 visible-print">
+            {{record["clearancedate"]}}
           </td>
         </tr>
         {% endfor %}
@@ -164,7 +199,7 @@
   <div id = "recostmtdiv" class="container">
     <div class="table-responsive col-xs-8 col-xs-offset-2">
       <table id="stmttable" class=" shadow table table-striped table-condensed">
-        <tbody>
+        <tbody id="stmttablebody">
           {% for record in reconstmt %}
           <tr>
             <td class="col-xs-8">
@@ -179,9 +214,13 @@
       </table>
     </div>
   </div>
-    <span style="margin:auto; display:table;">
+    <span class="hidden-print" style="margin:auto; display:table;">
       <button class="btn btn-sm btn-danger" type="button" id="bankrecon_back" accesskey="e">R<u>e</u>conciliation Menu</button>
       <button class="btn btn-sm btn-primary" type="button" id="unclrditems" accesskey="a">Uncle<u>a</u>red Items</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="printstatement" accesskey="s"><u>S</u>tatement's Printable Version</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="printtransactions" accesskey="t"><u>T</u>ransaction's Printable Version</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="realprintbank" accesskey="t">Prin<u>t</u></button>
+      <button class="btn btn-sm btn-primary" type="button"  id="back" accesskey="b"><u>B</u>ack</button>
     </span>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/clearedbankreconreport.js')}}"></script>
 </body>

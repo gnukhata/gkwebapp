@@ -24,7 +24,8 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 */
 $(document).ready(function() {
-
+  $("#realprintbank").hide();
+  $("#back").hide();
   var percentwid = 100*(($(".table-fixedheader").width()-12)/$(".table-fixedheader").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   var percentheigth = 100*(($("body").height()-$(".navbar").height()-420)/$("body").height());
@@ -188,5 +189,52 @@ $(document).ready(function() {
       );
   });
 
+  $("#back").click(function(event) {
+    var calculatefromdata = $("#calculatefrom").val().split("-");
+    var calculatefrom = calculatefromdata[2]+"-"+calculatefromdata[1]+"-"+calculatefromdata[0]
+    var calculatetodata = $("#calculateto").val().split("-");
+    var calculateto = calculatetodata[2]+"-"+calculatetodata[1]+"-"+calculatetodata[0]
+    $.ajax(
+      {
+        type: "POST",
+        url: "/showunclearedbankrecon",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data: {"accountcode":$("#accountcode").val(),"accountname":$("#accountname").val(),"calculatefrom":calculatefrom,"calculateto":calculateto,"narrationflag":$("#narrationflag").val()},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      })
+        .done(function(resp)
+        {
+          $("#info").html(resp);
+        }
+      );
+  });
 
+  $("#printstatement").click(function(event) {
+    $("#printstatement").hide();
+    $("#printtransactions").hide();
+    $("#realprintbank").show();
+    $("#unclrdtrs").hide();
+    $("#back").show();
+    $("#recostmtdiv").removeClass('container');
+    $(".table-responsive").removeClass('col-xs-8 col-xs-offset-2');
+  });
+  $("#printtransactions").click(function(event) {
+    $("#printstatement").hide();
+    $("table .hidden-print").hide();
+    $(".header").hide();
+    $("#back").show();
+    $("table .visible-print").removeClass('visible-print');
+    $("#printtransactions").hide();
+    $("#realprintbank").show();
+    $("#recostmtdiv").hide();
+    $("#bankrecontable").removeClass('table-fixedheader');
+  });
+  $("#realprintbank").click(function(event) {
+    window.print();
+  });
 });
