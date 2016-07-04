@@ -74,14 +74,23 @@ $("#rbto_month").val(sessionStorage.newfendmonth);
 $("#rbto_year").val(sessionStorage.newfendyear);
 
 
-$("input:enabled:first").focus();
-$("input:enabled:first").select();
+if ($(".closebooks").length) {
+
+  $("input:enabled:first").focus();
+  $("input:enabled:first").select();
+
+}
+else {
+  $("#rbto_day").focus();
+  $("#rbto_day").select();
+}
+
 
 $('input:text,select, input:checkbox').keydown( function(event) {
   var n = $("input:text:visible,select, input:checkbox").length;
   var f = $('input:text:visible,select, input:checkbox');
 
-  if (event.which == 13)
+  if (event.which == 13 || event.which == 38)
   {
 
 
@@ -92,10 +101,32 @@ $('input:text,select, input:checkbox').keydown( function(event) {
       f[nextIndex].select();
     }
 
+
+  }
+  if (event.which == 40)
+  {
+
+
+    var prevIndex = f.index(this) - 1;
+
+      event.preventDefault();
+      f[prevIndex].focus();
+      f[prevIndex].select();
+
+
+
   }
 
 
-
+});
+$("#rbfrom_year").blur(function(event) {
+  var enddate2 = Date.parseExact($("#rbfrom_day").val()+$("#rbfrom_month").val()+$("#rbfrom_year").val(), "ddMMyyyy").add({days: -1, years: 1}).toString("ddMMyyyy");
+  var endday2 = enddate2[0]+enddate2[1];
+  var endmonth2 = enddate2[2]+enddate2[3];
+  var endyear2 = enddate2[4]+enddate2[5]+enddate2[6]+enddate2[7];
+  $("#rbto_day").val(endday2);
+  $("#rbto_month").val(endmonth2);
+  $("#rbto_year").val(endyear2);
 });
 
 $("#cbtoyear").keydown(function(event) {
@@ -116,12 +147,31 @@ $("#rbto_year").keydown(function(event) {
 
 $(document).off("click","#closebooks").on("click", "#closebooks", function(event)
 {
+  if ($.trim($("#cbfromday").val())==""||$.trim($("#cbfrommonth").val())==""||$.trim($("#cbfromyear").val())==""||$.trim($("#cbtoday").val())==""||$.trim($("#cbtomonth").val())==""||$.trim($("#cbtoyear").val())=="")
+  {
+    $("#closebook-blank-alert").alert();
+    $("#closebook-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#closebook-blank-alert").hide();
+    });
+    $("#cbtoday").focus();
+    $("#cbtoday").select();
+    return false;
+  }
+  if (!Date.parseExact($("#cbtoday").val()+$("#cbtomonth").val()+$("#cbtoyear").val(), "ddMMyyyy")) {
+    $("#date-improper-alert").alert();
+    $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#date-improper-alert").hide();
+    });
+    $("#cbtoday").focus();
+    $("#cbtoday").select();
+    return false;
+  }
   var clsdate = $("#cbtoday").val()+$("#cbtomonth").val()+$("#cbtoyear").val();
   var enddate = Date.parseExact(clsdate, "ddMMyyyy").add({days: 1}).toString("ddMMyyyy");
   var endday = enddate[0]+enddate[1];
   var endmonth = enddate[2]+enddate[3];
   var endyear = enddate[4]+enddate[5]+enddate[6]+enddate[7];
-  alert(endday+endmonth+endyear);
+
   $("#rbfrom_day").val(endday);
   $("#rbfrom_month").val(endmonth);
   $("#rbfrom_year").val(endyear);
@@ -140,15 +190,6 @@ $(document).off("click","#closebooks").on("click", "#closebooks", function(event
   sessionStorage.newfendyear= endyear2;
   event.preventDefault();
   $(".closebooks").attr("disabled",true)
-  if ($.trim($("#cbfromday").val())==""||$.trim($("#cbfrommonth").val())==""||$.trim($("#cbfromyear").val())==""||$.trim($("#cbtoday").val())==""||$.trim($("#cbtomonth").val())==""||$.trim($("#cbtoyear").val())=="")
-  {
-    $("#closebook-blank-alert").alert();
-    $("#closebook-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-      $("#closebook-blank-alert").hide();
-    });
-    $("#cbtoday").focus();
-    return false;
-  }
   $('.modal-backdrop').remove();
   $('.modal').modal('hide');
   $('#m_rollb').modal('show').one('click', '#m_remove', function (e)
@@ -187,9 +228,16 @@ $(document).off("click","#closebooks").on("click", "#closebooks", function(event
 $('#m_rollb').on('hidden.bs.modal', function (e)
 {
   $('.modal-backdrop').remove();
-  $(".closebooks").attr("disabled",false);
-  $("input:enabled:first").focus();
-  $("input:enabled:first").select();
+  if ($(".closebooks").length) {
+    $(".closebooks").attr("disabled",false);
+    $("input:enabled:first").focus();
+    $("input:enabled:first").select();
+
+  }
+  else {
+    $("#rbto_day").focus();
+    $("#rbto_day").select();
+  }
 
 
 });
@@ -206,6 +254,25 @@ $(document).off("click","#rollover").on("click", "#rollover", function(event)
 
     return false;
   }
+  if (!Date.parseExact($("#rbfrom_day").val()+$("#rbfrom_month").val()+$("#rbfrom_year").val(), "ddMMyyyy")) {
+    $("#date-improper-alert").alert();
+    $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#date-improper-alert").hide();
+    });
+    $("#rbfrom_day").focus();
+    $("#rbfrom_day").select();
+    return false;
+  }
+  if (!Date.parseExact($("#rbto_day").val()+$("#rbto_month").val()+$("#rbto_year").val(), "ddMMyyyy")) {
+    $("#date-improper-alert").alert();
+    $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#date-improper-alert").hide();
+    });
+    $("#rbto_day").focus();
+    $("#rbto_day").select();
+    return false;
+  }
+
   $('.modal-backdrop').remove();
   $('.modal').modal('hide');
   $('#m_rollb').modal('show').one('click', '#m_remove', function (e)
