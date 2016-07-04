@@ -55,7 +55,7 @@ def printtrialbalancereport(request):
 		result = requests.get("http://127.0.0.1:6543/report?type=nettrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
 		return render_to_response("gkwebapp:templates/printnettrialbalance.jinja2",{"records":result.json()["gkresult"],"trialbalancetype":1,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
 	elif trialbalancetype == 2:
-		result = requests.get("http://127.0.0.1:6543/report?type=grosstrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
+		result = requests.get("http://127.0.0.1:6543/report?type=extendedtrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
 		return render_to_response("gkwebapp:templates/printgrosstrialbalance.jinja2",{"records":result.json()["gkresult"],"trialbalancetype":2,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
 	elif trialbalancetype == 3:
 		result = requests.get("http://127.0.0.1:6543/report?type=extendedtrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
@@ -73,7 +73,7 @@ def showtrialbalancereport(request):
 		result = requests.get("http://127.0.0.1:6543/report?type=nettrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
 		return render_to_response("gkwebapp:templates/nettrialbalance.jinja2",{"records":result.json()["gkresult"],"trialbalancetype":1,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
 	elif trialbalancetype == 2:
-		result = requests.get("http://127.0.0.1:6543/report?type=grosstrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
+		result = requests.get("http://127.0.0.1:6543/report?type=extendedtrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
 		return render_to_response("gkwebapp:templates/grosstrialbalance.jinja2",{"records":result.json()["gkresult"],"trialbalancetype":2,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
 	elif trialbalancetype == 3:
 		result = requests.get("http://127.0.0.1:6543/report?type=extendedtrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
@@ -90,7 +90,7 @@ def printtrialbalance(request):
 	if trialbalancetype == 1:
 		result = requests.get("http://127.0.0.1:6543/report?type=nettrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
 	elif trialbalancetype == 2:
-		result = requests.get("http://127.0.0.1:6543/report?type=grosstrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
+		result = requests.get("http://127.0.0.1:6543/report?type=extendedtrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
 	elif trialbalancetype == 3:
 		result = requests.get("http://127.0.0.1:6543/report?type=extendedtrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
 
@@ -128,25 +128,32 @@ def printtrialbalance(request):
 			row+=1
 
 	elif trialbalancetype == 2:
-		ods.content.mergeCells(0,0,5,1)
+		ods.content.mergeCells(0,0,7,1)
 		sheet.getRow(1).setHeight("18pt")
 		sheet.getCell(0,1).stringValue("Gross Trial Balance for the period from "+financialstart[8:10]+financialstart[4:8]+financialstart[0:4]+" to "+calculateto[8:10]+calculateto[4:8]+calculateto[0:4]).setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-		ods.content.mergeCells(0,1,5,1)
-		sheet.getColumn(4).setWidth("4cm")
+		ods.content.mergeCells(0,1,7,1)
+		sheet.getColumn(6).setWidth("4cm")
 		sheet.getColumn(1).setWidth("8cm")
 		sheet.getCell(0,2).stringValue("Sr. No.").setBold(True).setAlignHorizontal("center")
 		sheet.getCell(1, 2).stringValue("Account Name").setBold(True)
 		sheet.getCell(2, 2).stringValue("Debit").setBold(True).setAlignHorizontal("right")
 		sheet.getCell(3, 2).stringValue("Credit").setBold(True).setAlignHorizontal("right")
-
-		sheet.getCell(4, 2).stringValue("Group Name").setBold(True).setAlignHorizontal("center")
+		sheet.getCell(4, 2).stringValue("Dr Balance").setBold(True).setAlignHorizontal("right")
+		sheet.getCell(5, 2).stringValue("Cr Balance").setBold(True).setAlignHorizontal("right")
+		sheet.getCell(6, 2).stringValue("Group Name").setBold(True).setAlignHorizontal("center")
 		row = 3
 		for record in records:
 			sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
 			sheet.getCell(1, row).stringValue(record["accountname"])
-			sheet.getCell(2, row).stringValue(record["Dr balance"]).setAlignHorizontal("right")
-			sheet.getCell(3, row).stringValue(record["Cr balance"]).setAlignHorizontal("right")
-			sheet.getCell(4, row).stringValue(record["groupname"]).setAlignHorizontal("center")
+			sheet.getCell(2, row).stringValue(record["totaldr"]).setAlignHorizontal("right")
+			sheet.getCell(3, row).stringValue(record["totalcr"]).setAlignHorizontal("right")
+			if record["advflag"]==1:
+				sheet.getCell(4, row).stringValue(record["curbaldr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+				sheet.getCell(5, row).stringValue(record["curbalcr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+			else:
+				sheet.getCell(4, row).stringValue(record["curbaldr"]).setAlignHorizontal("right")
+				sheet.getCell(5, row).stringValue(record["curbalcr"]).setAlignHorizontal("right")
+			sheet.getCell(6, row).stringValue(record["groupname"]).setAlignHorizontal("center")
 			row+=1
 
 	elif trialbalancetype == 3:

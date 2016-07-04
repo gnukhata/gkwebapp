@@ -38,8 +38,8 @@
         </tr>
 				<tr>
 					<th class="col-xs-1">Sr. No.</th>
-					<th class="col-xs-4">Account Name</th>
-					<th class="col-xs-1" style="text-align:right">Opening balance</th>
+					<th class="col-xs-3">Account Name</th>
+					<th class="col-xs-2" style="text-align:right">Opening Balance</th>
 					<th class="col-xs-1" style="text-align:right">Total Drs</th>
 					<th class="col-xs-1" style="text-align:right">Total Crs</th>
 					<th class="col-xs-1" style="text-align:right">Dr Balance</th>
@@ -53,13 +53,13 @@
 					<td class="col-xs-1">
 						{{record['srno']}}
 					</td>
-					<td class="col-xs-4">
+					<td class="col-xs-3">
             {{record['accountname']}}<br>
             {% if record.ttlRunDr %}
             &nbsp&nbsp&nbsp&nbsp Running Total:
 						{% endif %}
 					</td>
-					<td class="col-xs-1" style="text-align:right">
+					<td class="col-xs-2" style="text-align:right">
 						{{record["openingbalance"]}}
 					</td>
 					<td class="col-xs-1" style="text-align:right">

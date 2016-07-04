@@ -32,15 +32,17 @@
 		<table class="table table-condensed table-striped shadow">
 			<thead>
         <tr class="visible-print">
-          <th colspan="5" style="text-align:center; font-size:80%;">
-            Gross Trial Balance for the period from {{from}} to {{to}}
+          <th colspan="8" style="text-align:center; font-size:80%;"><center>
+            Gross Trial Balance for the period from {{from}} to {{to}}</center>
           </th>
         </tr>
 				<tr>
 					<th class="col-xs-1">Sr. No.</th>
 					<th class="col-xs-5">Account Name</th>
-					<th class="col-xs-2" style="text-align:right">Debit</th>
-					<th class="col-xs-2" style="text-align:right">Credit</th>
+					<th class="col-xs-1" style="text-align:right">Debit</th>
+					<th class="col-xs-1" style="text-align:right">Credit</th>
+					<th class="col-xs-1" style="text-align:right">Dr Balance</th>
+					<th class="col-xs-1" style="text-align:right">Cr Balance</th>
 					<th class="col-xs-2">Group Name</th>
 				</tr>
 			</thead>
@@ -56,12 +58,26 @@
             &nbsp&nbsp&nbsp&nbsp Running Total:
 						{% endif %}
 					</td>
-					<td class="col-xs-2" style="text-align:right">
-						{{record["Dr balance"]}}<br>
+					<td class="col-xs-1" style="text-align:right">
+						{{record["totaldr"]}}
+					</td>
+					<td class="col-xs-1" style="text-align:right">
+						{{record["totalcr"]}}
+					</td>
+					<td class="col-xs-1" style="text-align:right">
+						{% if record["advflag"]==1 and record.curbaldr %}
+							<b>({{record["curbaldr"]}})</b>
+						{% else %}
+							{{record["curbaldr"]}}
+						{% endif %}<br>
             <u><i>{{record["ttlRunDr"]}}</i></u>
 					</td>
-					<td class="col-xs-2" style="text-align:right">
-						{{record["Cr balance"]}}<br>
+					<td class="col-xs-1" style="text-align:right">
+						{% if record["advflag"]==1 and record.curbalcr %}
+							<b>({{record["curbalcr"]}})</b>
+						{% else %}
+							{{record["curbalcr"]}}
+						{% endif %}<br><br>
             <u><i>{{record["ttlRunCr"]}}</i></u>
 					</td>
 					<td class="col-xs-2">
