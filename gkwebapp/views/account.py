@@ -34,8 +34,6 @@ from odslib import ODS
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import os
-from formula import CurrentPageColSum, PreviousPagesColSum, RowNumber
-from spreadsheettable import SpreadsheetTable
 
 @view_config(route_name="printlistofaccounts", renderer="")
 def printlistofaccount(request):

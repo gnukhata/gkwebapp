@@ -32,13 +32,9 @@ import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
 from odslib import ODS
-from spreadsheettable import SpreadsheetTable
-from reportlab.lib.enums import TA_CENTER, TA_RIGHT, TA_LEFT
 from pyramid.response import Response
 import os
 import calendar
-from formula import TotalPagesColSum, PreviousPagesColSum
-
 
 @view_config(route_name="showcashflow", renderer="gkwebapp:templates/viewcashflow.jinja2")
 def showcashflow(request):
