@@ -32,13 +32,9 @@ import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
 from odslib import ODS
-#from odslib import sheetTable
-#from odslib import sheetCell
-from spreadsheettable import SpreadsheetTable
 from pyramid.response import Response
 import os
 import calendar
-from formula import TotalPagesColSum, PreviousPagesColSum
 
 @view_config(route_name="showtrialbalance", renderer="gkwebapp:templates/viewtrialbalance.jinja2")
 def showtrialbalance(request):

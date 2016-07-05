@@ -35,8 +35,6 @@ from pyramid.response import Response
 import os
 from odslib import ODS
 import calendar
-from formula import CurrentPageColSum, PreviousPagesColSum, RowNumber
-from spreadsheettable import SpreadsheetTable
 
 @view_config(route_name="printprojectstatementreport", renderer = "")
 def printprojectstatementreport(request):
