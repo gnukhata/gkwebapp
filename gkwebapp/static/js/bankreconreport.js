@@ -31,7 +31,7 @@ $(document).ready(function() {
   var percentheigth = 100*(($("body").height()-$(".navbar").height()-420)/$("body").height());
   $('.table-fixedheader tbody').height(percentheigth+"%");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
-  $(' #bankrecontable tbody tr:first-child td:eq(5) input').focus().select();
+  $(' #bankrecontable tbody tr:first-child td:eq(6) input').focus().select();
 
   $("input[type=text].clrdate").keyup(function (e) {
         var textSoFar = $(this).val();
@@ -64,26 +64,26 @@ $(document).ready(function() {
   $("input[type=text].clrdate").keydown(function (event) {
     if (event.which==13) {
       curindex = $(this).closest('tr').index();
-      $("#bankrecontable tbody tr:eq("+curindex+") td:eq(6) input").focus().select();
+      $("#bankrecontable tbody tr:eq("+curindex+") td:eq(7) input").focus().select();
     }
     if (event.which==38) {
       curindex = $(this).closest('tr').index();
       previndex = curindex-1
-      $("#bankrecontable tbody tr:eq("+previndex+") td:eq(6) input").focus().select();
+      $("#bankrecontable tbody tr:eq("+previndex+") td:eq(7) input").focus().select();
     }
   });
 
   $("input[type=text].memo").keydown(function (event) {
     if (event.which==13) {
       curindex = $(this).closest('tr').index();
-      var curclrdate = $("#bankrecontable tbody tr:eq("+curindex+") td:eq(5) input").val()
+      var curclrdate = $("#bankrecontable tbody tr:eq("+curindex+") td:eq(6) input").val()
       var calculatefromdata = $("#calculatefrom").val().split("-");
       var calculatefrom = calculatefromdata[2]+"-"+calculatefromdata[1]+"-"+calculatefromdata[0]
       var calculatetodata = $("#calculateto").val().split("-");
       var calculateto = calculatetodata[2]+"-"+calculatetodata[1]+"-"+calculatetodata[0]
       var datecalculateto = Date.parseExact(calculateto,"yyyy-MM-dd")
       var curvdate = Date.parseExact($.trim($("#bankrecontable tbody tr:eq("+curindex+") td:eq(0)").html()),"dd-MM-yyyy");
-      var memo = $("#bankrecontable tbody tr:eq("+curindex+") td:eq(6) input").val();
+      var memo = $("#bankrecontable tbody tr:eq("+curindex+") td:eq(7) input").val();
       if (curclrdate=="") {
         var curid = $(this).closest('tr').attr('value');
         $.ajax(
@@ -106,14 +106,14 @@ $(document).ready(function() {
           );
       }
       else {
-        var curclrdate2 = $("#bankrecontable tbody tr:eq("+curindex+") td:eq(5) input").val().split("-");
+        var curclrdate2 = $("#bankrecontable tbody tr:eq("+curindex+") td:eq(6) input").val().split("-");
         var newcurclrdate = curclrdate2[2]+"-"+curclrdate2[1]+"-"+curclrdate2[0]
         if(!Date.parseExact(curclrdate,"dd-MM-yyyy")){
           $("#date-alert").alert();
           $("#date-alert").fadeTo(2000, 500).slideUp(500, function(){
             $("#date-alert").hide();
           });
-          $("#bankrecontable tbody tr:eq("+curindex+") td:eq(5) input").focus().select();
+          $("#bankrecontable tbody tr:eq("+curindex+") td:eq(6) input").focus().select();
           return false;
         }
         if (Date.parseExact(curclrdate,"dd-MM-yyyy").compareTo(curvdate)==-1) {
@@ -121,7 +121,7 @@ $(document).ready(function() {
           $("#between-date-alert").fadeTo(2000, 500).slideUp(500, function(){
             $("#between-date-alert").hide();
           });
-          $("#bankrecontable tbody tr:eq("+curindex+") td:eq(5) input").focus().select();
+          $("#bankrecontable tbody tr:eq("+curindex+") td:eq(6) input").focus().select();
           return false;
         }
         var curid = $(this).closest('tr').attr('value');
@@ -151,11 +151,11 @@ $(document).ready(function() {
           );
       }
       nextindex = curindex+1
-      $("#bankrecontable tbody tr:eq("+nextindex+") td:eq(5) input").focus().select();
+      $("#bankrecontable tbody tr:eq("+nextindex+") td:eq(6) input").focus().select();
     }
     if (event.which==38) {
       curindex = $(this).closest('tr').index();
-      $("#bankrecontable tbody tr:eq("+curindex+") td:eq(5) input").focus().select();
+      $("#bankrecontable tbody tr:eq("+curindex+") td:eq(6) input").focus().select();
     }
   });
 
