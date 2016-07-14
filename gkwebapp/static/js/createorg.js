@@ -231,6 +231,16 @@ $(document).ready(function()
           $("#today").select();
           return false;
         }
+
+        if (Date.parseExact(startdate,"ddMMyyyy").compareTo(Date.parseExact(enddate,"ddMMyyyy"))==1) {
+          $("#compare-date-alert").alert();
+          $("#compare-date-alert").fadeTo(2250, 400).slideUp(500, function(){
+            $("#compare-date-alert").hide();
+          });
+          $('#today').focus().select();
+          return false;
+        }
+        
         var orgname = $("#orgname").val().replace(/\s/g, "+");
         var orgtype = $("#orgtype option:selected").val().replace(/\s/g, "+");
         var fdate = $("#fromyear").val()+"-"+$("#frommonth").val()+"-"+$("#fromday").val();
