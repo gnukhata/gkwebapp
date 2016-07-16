@@ -261,7 +261,7 @@ if (sessionStorage.booksclosedflag==1) {
     }
     ecflag="clone";
     $("#vouchercancel").show();
-    $(".lblec").prepend('<i>Clone </i>');
+    $(".lblec").prepend('<i>Cloning </i>');
     $("#lock").hide();
     $("#clone").hide();
     $("#edit").hide();

@@ -118,7 +118,7 @@
   {% if ledgerheader["projectname"]!="" %}
   <i>Project</i> : {{ledgerheader["projectname"]}}
   {% endif %}
-  <span class="pull-right"><i>Period</i> : {{ledgerheader["calculatefrom"]}} to {{ledgerheader["calculateto"]}}</span>
+  <span class="pull-right" style="padding-right:15px"><i>Period</i> : {{ledgerheader["calculatefrom"]}} to {{ledgerheader["calculateto"]}}</span>
   <span style="margin:auto; display:table;"><i>Ledger Account</i> : {{ledgerheader["accountname"]}}</span>
 
   <div class="table-responsive">
@@ -126,7 +126,7 @@
       <thead>
         <tr>
           <th class="col-xs-1">Date</th>
-          <th class="col-xs-1">V.No.</th>
+          <th class="col-xs-1">V. No.</th>
           <th style="text-align:center" class="col-xs-1">Status</th>
           <th class="col-xs-1">Voucher Type</th>
           {% if ledgerheader["projectname"]=="" %}
