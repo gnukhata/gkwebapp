@@ -60,6 +60,11 @@ border-radius: 2px;
 .gknav .navbar-nav > li > a:focus {
     color: #black;
 }
+@media (max-width: 767px) {
+	.collapsing, .in {background-color: rgb(26,34,41); color: white;}
+	.collapsing ul li a, .in ul li a {color: white;}
+	.collapsing ul li a:hover, .in ul li a:hover {background-color: #bfbfbf; color: black;}
+}
 .panel{
 	border-color: rgb(87,93,99);
 }
@@ -100,4 +105,9 @@ thead > tr {
 	/* To center horizontally */
 	margin: 0 auto;
 	pointer-events: all;
+}
+.icon-bar {
+  color: white;
+  border-color: black;
+  background-color: white;
 }

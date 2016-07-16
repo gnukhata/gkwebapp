@@ -238,6 +238,14 @@ $(document).ready(function(){
           $("#signout").click();
         }
       });
+      $("#toolbar").click(function(){
+        var windowheight = window.innerHeight;
+        var scrollerheight = windowheight - 40;
+        $(".scrollable").css("max-height", scrollerheight);
+        if (!window.screenTop && !window.screenY) {
+          $(".scrollable").css("max-height", windowheight);
+        }
+      });
       if (sessionStorage.orgt=="Not For Profit") {
         $("#showprofitloss").text("Income & Expenditure");
         $("#showbalancesheet").text("Statement of Affairs");
