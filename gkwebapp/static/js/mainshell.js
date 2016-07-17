@@ -714,7 +714,7 @@ $.ajax({
   $('#listofaccountstb').click(function(){
     $('#listofaccounts').click();
   });
-  $('#createusertb').click(function(){
+/*  $('#createusertb').click(function(){
     $('#createuser').click();
   });
   $('#REMOVEusertb').click(function(){
@@ -722,16 +722,16 @@ $.ajax({
   });
   $('#changepasswordtb').click(function(){
     $('#showedituser').click();
-  });
+  });*/
   $('#manualtb').click(function(){
     $('#manual').click();
   });
-  $('#logouttb').click(function(){
+/*  $('#logouttb').click(function(){
     $('#logout').click();
   });
   $('#changeogtb').click(function(){
     $('#changeorg').click();
-  });
+  });*/
   $('#orgdata').click(function(){
     $('#showeditorg').click();
   });
