@@ -54,8 +54,7 @@
 					</tr>
 					<tr>
 						<th class="col-xs-1">&nbsp</th>
-						<th class="col-xs-7">Particulars</th>
-						<th style="text-align:right" class="col-xs-2">Amount</th>
+						<th class="col-xs-9">Particulars</th>
 						<th style="text-align:right" class="col-xs-2">Amount</th>
 					</tr>
 				</thead>
@@ -65,10 +64,7 @@
 						<td class="col-xs-1">
 							{{rcrecord['toby']}}
 						</td>
-						<td class="col-xs-7">
-							{%if rcrecord["toby"]!="" and rcrecord["particulars"]!="Opening balance"%}
-							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-							{%endif%}
+						<td class="col-xs-9">
 							{% if rcrecord['accountcode']!="" %}
 							{{rcrecord['particulars']}}<br>
 							{% if rcrecord.ttlRunDr %}
@@ -89,9 +85,7 @@
 							<u><i>{{rcrecord["ttlRunDr"]}}</i></u>
 						</td>
 						{% endif %}
-						<td class="col-xs-2" style="text-align:right"></td>
 						{%else%}
-						<td class="col-xs-2" style="text-align:right"></td>
 						{% if rcrecord["amount"]=="." %}
 						<td class="col-xs-2" style="text-align:right">&nbsp</td>
 						{% else %}
@@ -116,8 +110,7 @@
 					</tr>
 					<tr>
 						<th class="col-xs-1">&nbsp</th>
-						<th class="col-xs-7">Particulars</th>
-						<th style="text-align:right" class="col-xs-2">Amount</th>
+						<th class="col-xs-9">Particulars</th>
 						<th style="text-align:right" class="col-xs-2">Amount</th>
 					</tr>
 				</thead>
@@ -127,10 +120,7 @@
 						<td class="col-xs-1">
 							{{pyrecord['toby']}}
 						</td>
-						<td class="col-xs-7">
-							{%if pyrecord["toby"]!="" and pyrecord["particulars"]!="Closing balance"%}
-							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-							{%endif%}
+						<td class="col-xs-9">
 							{% if pyrecord['accountcode']!="" %}
 							{{pyrecord['particulars']}}<br>
 							{% if pyrecord.ttlRunCr %}
@@ -151,9 +141,7 @@
 							<u><i>{{pyrecord["ttlRunCr"]}}</i></u>
 						</td>
 						{% endif %}
-						<td class="col-xs-2" style="text-align:right"></td>
 						{%else%}
-						<td class="col-xs-2" style="text-align:right"></td>
 						{% if pyrecord["amount"]=="." %}
 						<td class="col-xs-2" style="text-align:right">&nbsp</td>
 						{% else %}
