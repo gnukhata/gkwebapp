@@ -238,6 +238,14 @@ $(document).ready(function(){
           $("#signout").click();
         }
       });
+      $("#toolbar").click(function(){
+        var windowheight = window.innerHeight;
+        var scrollerheight = windowheight - 40;
+        $(".scrollable").css("max-height", scrollerheight);
+        if (!window.screenTop && !window.screenY) {
+          $(".scrollable").css("max-height", windowheight);
+        }
+      });
       if (sessionStorage.orgt=="Not For Profit") {
         $("#showprofitloss").text("Income & Expenditure");
         $("#showbalancesheet").text("Statement of Affairs");
@@ -706,7 +714,7 @@ $.ajax({
   $('#listofaccountstb').click(function(){
     $('#listofaccounts').click();
   });
-  $('#createusertb').click(function(){
+/*  $('#createusertb').click(function(){
     $('#createuser').click();
   });
   $('#REMOVEusertb').click(function(){
@@ -714,16 +722,16 @@ $.ajax({
   });
   $('#changepasswordtb').click(function(){
     $('#showedituser').click();
-  });
+  });*/
   $('#manualtb').click(function(){
     $('#manual').click();
   });
-  $('#logouttb').click(function(){
+/*  $('#logouttb').click(function(){
     $('#logout').click();
   });
   $('#changeogtb').click(function(){
     $('#changeorg').click();
-  });
+  });*/
   $('#orgdata').click(function(){
     $('#showeditorg').click();
   });
