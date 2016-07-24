@@ -30,6 +30,7 @@ $(document).ready(function()
   var userstatus = 9;
   var passwordchanged = 9;
   $("#username").focus();
+  $("#btnsubmit").attr("disabled", true);
   $("#username").keydown(function(event){
     if (event.which == 13 || event.which == 9) {
       event.preventDefault();
@@ -128,6 +129,7 @@ $(document).ready(function()
   $("#newpassword").keydown(function(event){
     if (event.which == 13 || event.which == 9) {
       event.preventDefault();
+      $("#btnsubmit").attr("disabled", false);
       if ($.trim($("#newpassword").val())=="") {
         $("#newpassword-blank-alert").alert();
         $("#newpassword-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
