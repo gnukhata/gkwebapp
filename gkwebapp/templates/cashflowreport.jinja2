@@ -118,8 +118,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
 				<thead>
 					<tr>
 						<th class="col-xs-1">&nbsp</th>
-						<th class="col-xs-7">Particulars</th>
-						<th style="text-align:right" class="col-xs-2">Amount</th>
+						<th class="col-xs-9">Particulars</th>
 						<th style="text-align:right" class="col-xs-2">Amount</th>
 					</tr>
 				</thead>
@@ -129,17 +128,13 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
 						<td class="col-xs-1">
 							{{rcrecord['toby']}}
 						</td>
-						<td class="col-xs-7">
-							{%if rcrecord["toby"]!="" and rcrecord["particulars"]!="Opening balance"%}
-							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-							{%endif%}
+						<td class="col-xs-9">
 							{% if rcrecord['accountcode']!="" %}
 							<a class="rcaccname" href="">{{rcrecord['particulars']}}</a>
 							{% else %}
 							<a class="rcaccname" href="" style="text-decoration: none; color:black;">{{rcrecord['particulars']}}</a>
 							{% endif %}
 						</td>
-						{%if rcrecord["toby"]!="" and rcrecord["particulars"]!="Opening balance"%}
 							{% if rcrecord["amount"]=="." %}
 								<td class="col-xs-2" style="text-align:right">&nbsp</td>
 							{% else %}
@@ -147,17 +142,6 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
 									{{rcrecord["amount"]}}
 								</td>
 							{% endif %}
-							<td class="col-xs-2" style="text-align:right"></td>
-						{%else%}
-						<td class="col-xs-2" style="text-align:right"></td>
-							{% if rcrecord["amount"]=="." %}
-								<td class="col-xs-2" style="text-align:right">&nbsp</td>
-							{% else %}
-								<td class="col-xs-2" style="text-align:right">
-									{{rcrecord["amount"]}}
-								</td>
-							{% endif %}
-						{%endif%}
 					</tr>
 					{% endfor %}
 				</tbody>
@@ -168,8 +152,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
 				<thead>
 					<tr>
 						<th class="col-xs-1">&nbsp</th>
-						<th class="col-xs-7">Particulars</th>
-						<th style="text-align:right" class="col-xs-2">Amount</th>
+						<th class="col-xs-9">Particulars</th>
 						<th style="text-align:right" class="col-xs-2">Amount</th>
 					</tr>
 				</thead>
@@ -179,17 +162,13 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
 						<td class="col-xs-1">
 							{{pyrecord['toby']}}
 						</td>
-						<td class="col-xs-7">
-							{%if pyrecord["toby"]!="" and pyrecord["particulars"]!="Closing balance"%}
-							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-							{%endif%}
+						<td class="col-xs-9">
 							{% if pyrecord['accountcode']!="" %}
 							<a class="pyaccname" href="">{{pyrecord['particulars']}}</a>
 							{% else %}
 							<a class="pyaccname" href="" style="text-decoration: none; color:black;">{{pyrecord['particulars']}}</a>
 							{% endif %}
 						</td>
-						{%if pyrecord["toby"]!="" and pyrecord["particulars"]!="Closing balance"%}
 							{% if pyrecord["amount"]=="." %}
 								<td class="col-xs-2" style="text-align:right">&nbsp</td>
 							{% else %}
@@ -197,17 +176,6 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
 									{{pyrecord["amount"]}}
 								</td>
 							{% endif %}
-							<td class="col-xs-2" style="text-align:right"></td>
-						{%else%}
-						<td class="col-xs-2" style="text-align:right"></td>
-							{% if pyrecord["amount"]=="." %}
-								<td class="col-xs-2" style="text-align:right">&nbsp</td>
-							{% else %}
-								<td class="col-xs-2" style="text-align:right">
-									{{pyrecord["amount"]}}
-								</td>
-							{% endif %}
-						{%endif%}
 					</tr>
 					{% endfor %}
 				</tbody>
