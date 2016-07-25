@@ -32,6 +32,7 @@ $(document).ready(function()
   $("#editaccountform").validate();
   $("#editaccountform").hide();
   $("#alertmsg").hide();
+  $('#openingbal').numeric();   //numeric is a library used for restricting the user to input only numbers and decimal inside a text box
   $("#submit").hide();
   $("#delete").hide();
   $("#editaccountname").bind("change keyup", function()
