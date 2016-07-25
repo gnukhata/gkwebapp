@@ -160,6 +160,6 @@ $(document).ready(function() {
   });
 
   $("#viewprjstate_reset").click(function(event) {
-    $("#showviewprjstate").click();
+    $("#showprjstate").click();
   });
   });

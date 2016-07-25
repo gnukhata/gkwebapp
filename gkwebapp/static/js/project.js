@@ -27,7 +27,7 @@ Contributors:
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#prjname").focus();
-  var percentwid = 100*(($("table").width()-12)/$("table").width());
+  var percentwid = 100*(($("table").width()-9)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   var percentheigth = 100*(($("body").height()-$(".navbar").height()-170)/$("body").height());
   $('.table-fixedheader tbody').height(percentheigth+"%");
@@ -36,6 +36,11 @@ $(document).ready(function() {
     $("#listid").text("Project List");
   }
   else {
+    $("#success-alert").html("Cost Center Saved!");
+    $("#failure-alert").html("Cost Center could not be saved!");
+    $("#blank-alert").html("Please enter Cost Center name!");
+    $("#duplicate-alert").html("Cost Center already exists!");
+    $("#transaction-alert").html("Cost Center cannot be deleted!<br>Transactions might be remaining for this Cost Center.");
     $("#prjlbl").html("Cost Center: ");
     $("#amtlbl").html("Budge<u>t</u>ed Amount: ");
     $("#prjlbltbl").html("Cost Center");

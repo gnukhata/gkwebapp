@@ -184,6 +184,6 @@ $(document).ready(function() {
   });
 
   $("#viewbankrecon_reset").click(function(event) {
-    $("#showviewledger").click();
+    $("#BRS").click();
   });
   });
