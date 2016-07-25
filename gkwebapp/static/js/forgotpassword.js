@@ -145,6 +145,7 @@ $(document).ready(function()
     $("#btnsubmit").click(function(event){
       event.preventDefault();
       $(".passwordfields").show();
+      $("#newpassword").focus();
     });
   });
   $("#newpassword").keydown(function(event){
