@@ -141,6 +141,12 @@ $(document).ready(function()
       $("#username").focus();
     }
   });
+  $("#securityanswer").focusout(function(){
+    $("#btnsubmit").click(function(event){
+      event.preventDefault();
+      $(".passwordfields").show();
+    });
+  });
   $("#newpassword").keydown(function(event){
     if (event.which == 13 || event.which == 9) {
       event.preventDefault();
