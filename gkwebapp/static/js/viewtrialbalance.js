@@ -152,4 +152,7 @@ $(document).ready(function() {
       });
 
   });
+  $("#trialbal_reset").click(function(event) {
+    $("#showtrialbalance").click();
+  });
 });
