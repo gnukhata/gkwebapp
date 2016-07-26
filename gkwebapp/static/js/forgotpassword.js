@@ -135,7 +135,6 @@ $(document).ready(function()
         $("#securityanswer-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#securityanswer-blank-alert").hide();
         });
-        $("#securityquestion").val("");
         return false;
       }
       if ($.trim($("#securityanswer").val())!="") {
