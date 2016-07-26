@@ -88,9 +88,9 @@ $(document).ready(function() {
     }
 
     if ($.trim($("#new_password").val())!=$.trim($("#confirm_password").val())) {
-      $("#checkpassuser-blank-alert").alert();
-      $("#checkpassuser-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-      $("#checkpassuser-blank-alert").hide();
+      $("#checkpassuser-mismatch-alert").alert();
+      $("#checkpassuser-mismatch-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#checkpassuser-mismatch-alert").hide();
       });
       $("#new_password").focus().select();
       return false;
