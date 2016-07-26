@@ -58,6 +58,7 @@ def main(global_config, **settings):
 	config.add_route('edituser','/edituser')
 	config.add_route('editorganisation', '/editorganisation')
 	config.add_route('orgexists', '/orgexists')
+	config.add_route('oexists', '/oexists')
 	config.add_route('findeditvoucher', '/findeditvoucher')
 	config.add_route('editvoucher', '/editvoucher')
 	config.add_route('createorg', '/createorg')

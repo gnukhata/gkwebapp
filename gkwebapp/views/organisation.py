@@ -38,6 +38,11 @@ def showeditOrg(request):
 	result = requests.get("http://127.0.0.1:6543/organisation", headers=header)
 	return {"gkresult":result.json()["gkdata"],"gkstatus":result.json()["gkstatus"]}
 
+@view_config(route_name="oexists", renderer="json")
+def oexists(request):
+	result = requests.get("http://127.0.0.1:6543/organisations?type=exists&orgname=%s&orgtype=%s&finstart=%s&finend=%s"%(request.params["orgname"],request.params["orgtype"],request.params["finstart"],request.params["finend"]))
+	print "jhfieufiehifu: ",result.json()["gkstatus"]
+	return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="editorganisation", renderer="json")
 def editOrganisation(request):

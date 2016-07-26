@@ -240,7 +240,7 @@ $(document).ready(function()
           $('#today').focus().select();
           return false;
         }
-        
+
         var orgname = $("#orgname").val().replace(/\s/g, "+");
         var orgtype = $("#orgtype option:selected").val().replace(/\s/g, "+");
         var fdate = $("#fromyear").val()+"-"+$("#frommonth").val()+"-"+$("#fromday").val();
@@ -254,8 +254,38 @@ $(document).ready(function()
         sessionStorage.setItem('year2', tadate);
         sessionStorage.setItem('yyyymmddyear1', fdate );
         sessionStorage.setItem('yyyymmddyear2', tdate );
+        $.ajax({
+          url: '/oexists',
+          type: 'POST',
+          datatype: 'json',
+          data: {orgname:$("#orgname").val(),orgtype:orgtype,finstart:fdate,finend:tdate }
+        })
+        .done(function(resp) {
+          if(resp["gkstatus"]==1)
+          {
 
-        $("#createorg").load("/createadmin?orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate );
+              $("#orgname-duplicate-alert").alert();
+              $("#orgname-duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#orgname-duplicate-alert").hide();
+              });
+              $("#orgname").focus();
+              return false;
+
+          }
+          else
+          {
+          $("#createorg").load("/createadmin?orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate );
+          }
+          console.log("success");
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+
+
 
       });
     });
