@@ -1142,7 +1142,7 @@ $("#delete").click(function(event) {
       $('#vno').focus();
       return false;
     }
-    if ($('#vdate').val()=="" || $('#vmonth').val()=="" || $('#vyear').val()=="") {
+    if ($('#vdate').val()=="" || $('#vmonth').val()=="" || $('#vyear').val()==""||$('#vdate').val()==0 || $('#vmonth').val()==0 || $('#vyear').val()==0) {
       $("#date-alert").alert();
       $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#date-alert").hide();

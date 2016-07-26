@@ -120,7 +120,22 @@ $(document).ready(function() {
     });
 
   $("#cashfl_view").click(function(event) {
-
+    if ($("#cashfl_fromyear").val()==0 ||$("#cashfl_frommonth").val()==0 ||$("#cashfl_fromdate").val()==0 ) {
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#cashfl_fromdate').focus().select();
+      return false;
+    }
+    if ($("#cashfl_toyear").val() ==0||$("#cashfl_tomonth").val()==0||$("#cashfl_todate").val()==0) {
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#cashfl_todate').focus().select();
+      return false;
+    }
     var todate = $("#cashfl_toyear").val()+$("#cashfl_tomonth").val()+$("#cashfl_todate").val();
     var fromdate = $("#cashfl_fromyear").val()+$("#cashfl_frommonth").val()+$("#cashfl_fromdate").val();
     if(!Date.parseExact(fromdate,"yyyyMMdd")){

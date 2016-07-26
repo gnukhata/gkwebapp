@@ -110,6 +110,14 @@ $(document).ready(function() {
   });
 
   $("#trialbal_view").click(function(event) {
+    if ($("#trialbal_toyear").val() ==0||$("#trialbal_tomonth").val()==0||$("#trialbal_todate").val()==0) {
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#trialbal_todate').focus().select();
+      return false;
+    }
     var todate = $("#trialbal_toyear").val()+$("#trialbal_tomonth").val()+$("#trialbal_todate").val();
     if(!Date.parseExact(todate, "yyyyMMdd")){
       $("#date-alert").alert();

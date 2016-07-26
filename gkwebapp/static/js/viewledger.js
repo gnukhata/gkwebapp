@@ -210,6 +210,22 @@ $(".dis").attr('disabled', true);
       $('#viewledger_accname').focus()
       return false;
     }
+    if ($("#viewledger_fromyear").val()==0 ||$("#viewledger_frommonth").val()==0 ||$("#viewledger_fromdate").val()==0 ) {
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#viewledger_fromdate').focus().select();
+      return false;
+    }
+    if ($("#viewledger_toyear").val() ==0||$("#viewledger_tomonth").val()==0||$("#viewledger_todate").val()==0) {
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#viewledger_todate').focus().select();
+      return false;
+    }
     var todate = $("#viewledger_toyear").val()+$("#viewledger_tomonth").val()+$("#viewledger_todate").val();
     var fromdate = $("#viewledger_fromyear").val()+$("#viewledger_frommonth").val()+$("#viewledger_fromdate").val();
     if(!Date.parseExact(fromdate,"yyyyMMdd")){
