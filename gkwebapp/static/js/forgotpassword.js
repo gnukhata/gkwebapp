@@ -38,7 +38,8 @@ $(document).ready(function()
         $("#username-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#username-blank-alert").hide();
         });
-        $("#securityquestion").val("")
+        $("#securityquestion").val("");
+        return false;
       }
       if ($.trim($("#username").val())!="") {
         $.ajax({
@@ -64,15 +65,67 @@ $(document).ready(function()
         $("#securityanswer-connectionfailed-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#securityanswer-connectionfailed-alert").hide();
         });
+        return false;
       }
       if (userstatus == 4 && $.trim($("#username").val())!="") {
         $("#forgotpassword-nosuchuser-alert").alert();
         $("#forgotpassword-nosuchuser-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#forgotpassword-nosuchuser-alert").hide();
         });
-        $("#securityquestion").val("")
+        $("#securityquestion").val("");
+        return false;
       }
     }
+  });
+  $("#username").focusout(function(){
+    $("#btnsubmit").click(function(event){
+      event.preventDefault();
+      if ($.trim($("#username").val())=="") {
+        $("#username-blank-alert").alert();
+        $("#username-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#username-blank-alert").hide();
+        });
+        $("#securityquestion").val("");
+        $("#username").focus();
+        return false;
+      }
+      if ($.trim($("#username").val())!="") {
+        $.ajax({
+          type: "POST",
+          url: "/securityquestion",
+          data: {"orgcode":$.trim($("#orgcode").val()), "username":$.trim($("#username").val())},
+          global: false,
+          async: false,
+          datatype: "json",
+          success: function(jsonObj) {
+            userstatus = jsonObj["gkstatus"],
+            userdata = jsonObj["gkresult"],
+            $("#securityquestion").val(userdata[0].userquestion);
+            $("#userid").val(userdata[0].userid);
+            }
+        });
+        if(userstatus == 0){
+          $("#securityanswer").focus();
+        }
+        if (userstatus == 3) {
+          $("#securityanswer-connectionfailed-alert").alert();
+          $("#securityanswer-connectionfailed-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#securityanswer-connectionfailed-alert").hide();
+          });
+          $("#username").focus();
+          return false;
+        }
+        if (userstatus == 4 && $.trim($("#username").val())!="") {
+          $("#forgotpassword-nosuchuser-alert").alert();
+          $("#forgotpassword-nosuchuser-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#forgotpassword-nosuchuser-alert").hide();
+          });
+          $("#securityquestion").val("");
+          $("#username").focus();
+          return false;
+        }
+      }
+    });
   });
   $("#securityanswer").keydown(function(event){
     if (event.which == 13 || event.which == 9) {
@@ -82,13 +135,7 @@ $(document).ready(function()
         $("#securityanswer-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#securityanswer-blank-alert").hide();
         });
-      }
-      if ($.trim($("#username").val())=="") {
-        $("#username-blank-alert").alert();
-        $("#username-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#username-blank-alert").hide();
-        });
-        $("#securityquestion").val("")
+        return false;
       }
       if ($.trim($("#securityanswer").val())!="") {
         $.ajax({
@@ -112,18 +159,64 @@ $(document).ready(function()
         $("#securityanswer-connectionfailed-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#securityanswer-connectionfailed-alert").hide();
         });
+        return false;
       }
       if (answercheck == 4 && $.trim($("#securityanswer").val())!="") {
         $("#securityanswer-incorrect-alert").alert();
         $("#securityanswer-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#securityanswer-incorrect-alert").hide();
         });
+        return false;
       }
     }
     if (event.which == 38) {
       event.preventDefault();
       $("#username").focus();
     }
+  });
+  $("#securityanswer").focusout(function(){
+    $("#btnsubmit").click(function(event){
+      event.preventDefault();
+      if ($.trim($("#securityanswer").val())=="" && $.trim($("#securityquestion").val())!="" && $.trim($("#username").val())!="") {
+        $("#securityanswer-blank-alert").alert();
+        $("#securityanswer-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#securityanswer-blank-alert").hide();
+        });
+        $("#securityanswer").focus();
+        return false;
+      }
+      if ($.trim($("#securityanswer").val())!="") {
+        $.ajax({
+          type: "POST",
+          url: "/securityanswer",
+          data: {"userid":$.trim($("#userid").val()), "useranswer":$.trim($("#securityanswer").val())},
+          global: false,
+          async: false,
+          datatype: "json",
+          success: function(resp) {
+            answercheck = resp["gkstatus"];
+          }
+        });
+      }
+      if (answercheck == 0) {
+        $(".passwordfields").show();
+        $("#newpassword").focus();
+      }
+      if (answercheck == 3) {
+        $("#securityanswer-connectionfailed-alert").alert();
+        $("#securityanswer-connectionfailed-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#securityanswer-connectionfailed-alert").hide();
+        });
+        return false;
+      }
+      if (answercheck == 4 && $.trim($("#securityanswer").val())!="") {
+        $("#securityanswer-incorrect-alert").alert();
+        $("#securityanswer-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#securityanswer-incorrect-alert").hide();
+        });
+        return false;
+      }
+    });
   });
   $("#newpassword").keydown(function(event){
     if (event.which == 13 || event.which == 9) {
@@ -133,6 +226,7 @@ $(document).ready(function()
         $("#newpassword-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#newpassword-blank-alert").hide();
         });
+        return false;
       }
       else {
       $("#confirmpassword").focus();
@@ -143,76 +237,129 @@ $(document).ready(function()
       $("#securityanswer").focus();
       }
   });
-  $("#btnsubmit").click(function(event){
-    event.preventDefault();
-    if ($.trim($("#username").val())=="") {
-      $("#username-blank-alert").alert();
-      $("#username-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#username-blank-alert").hide();
-      });
-      $("#securityquestion").val("")
-    }
-
-    if ($.trim($("#securityquestion").val())=="") {
-      $("#securityquestion-blank-alert").alert();
-      $("#securityquestion-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#securityquestion-blank-alert").hide();
-      });
-    }
-
-    if ($.trim($("#securityanswer").val())=="") {
-      $("#securityanswer-blank-alert").alert();
-      $("#securityanswer-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#securityanswer-blank-alert").hide();
-      });
-    }
-
-    if ($.trim($("#newpassword").val())=="") {
-      $("#newpassword-blank-alert").alert();
-      $("#newpassword-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#newpassword-blank-alert").hide();
-      });
-    }
-
-    if ( ($.trim($("#confirmpassword").val())=="") || ( $.trim($("#newpassword").val())!==$.trim($("#confirmpassword").val()) ) ) {
-      $("#passwords-dont-match-alert").alert();
-      $("#passwords-dont-match-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#passwords-dont-match-alert").hide();
-      });
-    }
-
-    if ($.trim($("#newpassword").val())==$.trim($("#confirmpassword").val())) {
-      $.ajax({
-        type: "POST",
-        url: "/newpassword",
-        data: {"userid":$.trim($("#userid").val()), "userpassword":$.trim($("#confirmpassword").val()), "useranswer":$.trim($("#securityanswer").val())},
-        global: false,
-        async: false,
-        datatype: "json",
-        success: function(resp) {
-          passwordchanged = resp["gkstatus"];
-          }
-      });
-      if (passwordchanged == 0 && $.trim($("#confirmpassword").val())!="") {
-      $("#selectorg").load("/login?orgcode="+$.trim($("#orgcode").val())+"&flag=0", setTimeout( function() { $("#username").focus(); }, 500 ));
-      $("#forgotpassworddiv").load("/login?orgcode="+$.trim($("#orgcode").val())+"&flag=1", setTimeout( function() { $("#username").focus(); }, 500 ));
-      }
-      if (passwordchanged == 4) {
-        $("#forgotpassword-incorrectdetails-alert").alert();
-        $("#forgotpassword-incorrectdetails-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#forgotpassword-incorrectdetails-alert").hide();
+  $("#newpassword").focusout(function(){
+    $("#btnsubmit").click(function(event){
+      event.preventDefault();
+      if ($.trim($("#newpassword").val())=="" && $.trim($("#securityanswer").val())!="" && $.trim($("#securityquestion").val())!="" && $.trim($("#username").val())!="") {
+        $("#newpassword-blank-alert").alert();
+        $("#newpassword-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#newpassword-blank-alert").hide();
         });
+        $("#newpassword").focus();
+        return false;
       }
-      if (passwordchanged == 3) {
-        $("#securityanswer-connectionfailed-alert").alert();
-        $("#securityanswer-connectionfailed-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#securityanswer-connectionfailed-alert").hide();
+      if ($.trim($("#newpassword").val())!="") {
+        $("#confirmpassword").focus();
+      }
+    });
+  });
+  $("#confirmpassword").keydown(function(event){
+    if (event.which == 38) {
+      event.preventDefault();
+      $("#newpassword").focus();
+      }
+    if (event.which == 13) {
+      event.preventDefault();
+      if ($.trim($("#confirmpassword").val())=="") {
+        $("#confirmpassword-blank-alert").alert();
+        $("#confirmpassword-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#confirmpassword-blank-alert").hide();
         });
+        $("#confirmpassword").focus();
+        return false;
+      }
+      if ( ( $.trim($("#newpassword").val())!==$.trim($("#confirmpassword").val()) ) ) {
+        $("#passwords-dont-match-alert").alert();
+        $("#passwords-dont-match-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#passwords-dont-match-alert").hide();
+        });
+        return false;
+      }
+      if ($.trim($("#newpassword").val())==$.trim($("#confirmpassword").val())) {
+        $.ajax({
+          type: "POST",
+          url: "/newpassword",
+          data: {"userid":$.trim($("#userid").val()), "userpassword":$.trim($("#confirmpassword").val()), "useranswer":$.trim($("#securityanswer").val())},
+          global: false,
+          async: false,
+          datatype: "json",
+          success: function(resp) {
+            passwordchanged = resp["gkstatus"];
+            }
+        });
+        if (passwordchanged == 0 && $.trim($("#confirmpassword").val())!="") {
+        $("#selectorg").load("/login?orgcode="+$.trim($("#orgcode").val())+"&flag=0", setTimeout( function() { $("#username").focus(); }, 500 ));
+        $("#forgotpassworddiv").load("/login?orgcode="+$.trim($("#orgcode").val())+"&flag=1", setTimeout( function() { $("#username").focus(); }, 500 ));
+        }
+        if (passwordchanged == 4) {
+          $("#forgotpassword-incorrectdetails-alert").alert();
+          $("#forgotpassword-incorrectdetails-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#forgotpassword-incorrectdetails-alert").hide();
+          });
+          return false;
+        }
+        if (passwordchanged == 3) {
+          $("#securityanswer-connectionfailed-alert").alert();
+          $("#securityanswer-connectionfailed-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#securityanswer-connectionfailed-alert").hide();
+          });
+          return false;
+        }
       }
     }
-  })
-
-  $("#back").click(function(event){
+  });
+  $("#confirmpassword").focusout(function(){
+    $("#btnsubmit").click(function(event){
+      event.preventDefault();
+      if ($.trim($("#confirmpassword").val())=="" && $.trim($("#newpassword").val())!="" && $.trim($("#securityanswer").val())!="" && $.trim($("#securityquestion").val())!="" && $.trim($("#username").val())!="") {
+        $("#confirmpassword-blank-alert").alert();
+        $("#confirmpassword-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#confirmpassword-blank-alert").hide();
+        });
+        $("#confirmpassword").focus();
+        return false;
+      }
+      if ( ( $.trim($("#newpassword").val())!==$.trim($("#confirmpassword").val()) ) ) {
+        $("#passwords-dont-match-alert").alert();
+        $("#passwords-dont-match-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#passwords-dont-match-alert").hide();
+        });
+        return false;
+      }
+      if ($.trim($("#newpassword").val())==$.trim($("#confirmpassword").val())) {
+        $.ajax({
+          type: "POST",
+          url: "/newpassword",
+          data: {"userid":$.trim($("#userid").val()), "userpassword":$.trim($("#confirmpassword").val()), "useranswer":$.trim($("#securityanswer").val())},
+          global: false,
+          async: false,
+          datatype: "json",
+          success: function(resp) {
+            passwordchanged = resp["gkstatus"];
+            }
+        });
+        if (passwordchanged == 0 && $.trim($("#confirmpassword").val())!="") {
+        $("#selectorg").load("/login?orgcode="+$.trim($("#orgcode").val())+"&flag=0", setTimeout( function() { $("#username").focus(); }, 500 ));
+        $("#forgotpassworddiv").load("/login?orgcode="+$.trim($("#orgcode").val())+"&flag=1", setTimeout( function() { $("#username").focus(); }, 500 ));
+        }
+        if (passwordchanged == 4) {
+          $("#forgotpassword-incorrectdetails-alert").alert();
+          $("#forgotpassword-incorrectdetails-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#forgotpassword-incorrectdetails-alert").hide();
+          });
+          return false;
+        }
+        if (passwordchanged == 3) {
+          $("#securityanswer-connectionfailed-alert").alert();
+          $("#securityanswer-connectionfailed-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#securityanswer-connectionfailed-alert").hide();
+          });
+          return false;
+        }
+      }
+    });
+  });
+    $("#back").click(function(event){
     var code = $("#orgcode").val();
     $("#selectorg").load("/login?orgcode="+code+"&flag=0");
     $("#forgotpassworddiv").load("/login?orgcode="+code+"&flag=1", setTimeout( function() { $("#username").focus(); }, 500 ));
