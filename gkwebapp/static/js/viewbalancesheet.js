@@ -149,7 +149,14 @@ $(document).ready(function() {
 
 
   $("#viewbalsht_submit").click(function(event) {
-
+    if ($("#viewbalsht_toyear").val() ==0||$("#viewbalsht_tomonth").val()==0||$("#viewbalsht_today").val()==0) {
+      $("#improperdate-alert").alert();
+      $("#improperdate-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#improperdate-alert").hide();
+      });
+      $('#viewbalsht_today').focus().select();
+      return false;
+    }
     var todate = $("#viewbalsht_toyear").val()+$("#viewbalsht_tomonth").val()+$("#viewbalsht_today").val();
     var fstart = Date.parseExact(sessionStorage.yyyymmddyear1,"yyyy-MM-dd");
     var fend = Date.parseExact(sessionStorage.yyyymmddyear2,"yyyy-MM-dd");

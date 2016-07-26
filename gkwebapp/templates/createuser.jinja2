@@ -26,10 +26,10 @@
           <div class="panel-title">Create New User</div>
         </div>
 
+        <form id="adduser" method="post" action="createuser" class="form-horizontal">
         <div style="padding-top:15px" class="panel-body" >
-          <form id="adduser" method="post" action="createuser" class="form-horizontal">
             <div class="alert alert-danger" id="username-blank-alert"  aria-live="rude" role="alert" hidden>
-              
+
               Please enter username!
             </div>
             <div class="alert alert-danger" id="password-blank-alert"  aria-live="rude" role="alert" hidden>
@@ -96,9 +96,12 @@
               <label for="answer" id="secanswer"><u>S</u>ecurity Answer :</label>
               <input name="useranswer" style="border-radius: 4px" type="text" class="form-control" placeholder="Security Answer" id="answer" accesskey="s"></input>
             </div>
-            <button type="submit" class="btn btn-success" accesskey="a">Cre<u>a</u>te</button>
-          </form>
+
         </div>
+        <div class="panel-footer">
+          <button type="submit" class="btn btn-success" accesskey="a">Cre<u>a</u>te</button>
+        </div>
+      </form>
       </div>
     </div>
   </div>

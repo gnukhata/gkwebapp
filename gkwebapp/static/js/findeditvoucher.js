@@ -287,8 +287,25 @@ $("#findvoucher").submit(function(event) {
   }
   else if (search=="date")
   {
+    if ($("#fyear").val()==0||$("#fmonth").val()==0||$("#fday").val()==0) {
+      $("#improperdate-alert").alert();
+      $("#improperdate-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#improperdate-alert").hide();
+      });
+      $("#fday").focus();
+      $("#fday").select();
+      return false;
+    }
 
-
+    if ($("#tyear").val()==0||$("#tmonth").val()==0||$("#tday").val()==0) {
+      $("#improperdate-alert").alert();
+      $("#improperdate-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#improperdate-alert").hide();
+      });
+      $("#tday").focus();
+      $("#tday").select();
+      return false;
+    }
     var todate = $("#tyear").val()+$("#tmonth").val()+$("#tday").val();
     var fromdate = $("#fyear").val()+$("#fmonth").val()+$("#fday").val();
     var fstart = Date.parseExact(sessionStorage.yyyymmddyear1,"yyyy-MM-dd");

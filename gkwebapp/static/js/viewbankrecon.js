@@ -121,6 +121,22 @@ $(document).ready(function() {
       $('#viewbankrecon_accname').focus()
       return false;
     }
+    if ($("#viewbankrecon_fromyear").val()==0 ||$("#viewbankrecon_frommonth").val()==0 ||$("#viewbankrecon_fromdate").val()==0 ) {
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#viewbankrecon_fromdate').focus().select();
+      return false;
+    }
+    if ($("#viewbankrecon_toyear").val() ==0||$("#viewbankrecon_tomonth").val()==0||$("#viewbankrecon_todate").val()==0) {
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#viewbankrecon_todate').focus().select();
+      return false;
+    }
     var todate = $("#viewbankrecon_toyear").val()+$("#viewbankrecon_tomonth").val()+$("#viewbankrecon_todate").val();
     var fromdate = $("#viewbankrecon_fromyear").val()+$("#viewbankrecon_frommonth").val()+$("#viewbankrecon_fromdate").val();
     if(!Date.parseExact(fromdate,"yyyyMMdd")){

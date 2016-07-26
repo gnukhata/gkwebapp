@@ -121,6 +121,15 @@ $(document).ready(function() {
       $('#viewprjstate_prjname').focus()
       return false;
     }
+
+    if ($("#viewprjstate_toyear").val() ==0||$("#viewprjstate_tomonth").val()==0||$("#viewprjstate_todate").val()==0) {
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#viewprjstate_todate').focus().select();
+      return false;
+    }
     var todate = $("#viewprjstate_toyear").val()+$("#viewprjstate_tomonth").val()+$("#viewprjstate_todate").val();
     if(!Date.parseExact(todate, "yyyyMMdd")){
       $("#date-alert").alert();

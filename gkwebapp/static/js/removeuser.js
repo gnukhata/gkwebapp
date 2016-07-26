@@ -27,36 +27,21 @@ Contributors:
 
 $(document).ready(function() {
   $('.modal-backdrop').remove();
-
+  if($("#username option").size()==1){
+    $("#removeUserform").hide();
+    $("#remove").hide();
+    $("#nousers").show();
+  }
   $("#username").focus();
-  var username = $("#username option:selected").val();
 
-  $.ajax({
-    type: "POST",
-    url: "/removeuser",
-    data: {"user":username},
-    global: false,
-    async: false,
-    dataType: "json",
-    beforeSend: function(xhr)
-    {
-      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-    },
-    success: function(jsonObj)
-    {
-      if (jsonObj["gkstatus"]==2)
-      {
-        $("#removeUserform").hide();
-        $("#unauthorizedaccess").show();
-      }
-      else if(jsonObj["gkstatus"]==3){
-        $("#removeUserform").hide();
-        $("#connectionFailed").show();
-      }
+  $("#username").keydown(function(event) {
+    if (event.which==13) {
+      $("#remove").click();
     }
-
   });
-
+  $("#newuser").click(function(event) {
+    $("#createuser").click();
+  });
   $(document).off("click","#remove").on("click", "#remove", function(event)
   {
     event.preventDefault();
@@ -94,6 +79,7 @@ $(document).ready(function() {
                 $("#remsuccess-alert").hide();
               });
               $('.modal-backdrop').remove();
+              return false;
           }
           else if (resp["gkstatus"]==4) {
             $("#accessdenied-alert").alert();
@@ -101,6 +87,7 @@ $(document).ready(function() {
             $("#accessdenied-alert").hide();
             });
             $("#username").focus();
+            return false;
           }
           else if (resp["gkstatus"]==5) {
             $("#actiondisallowed-alert").alert();
@@ -108,6 +95,7 @@ $(document).ready(function() {
             $("#actiondisallowed-alert").hide();
             });
             $("#username").focus();
+            return false;
           }
           else if (resp["gkstatus"]==3) {
             $("#connectionfailed-alert").alert();
@@ -115,6 +103,7 @@ $(document).ready(function() {
             $("#connectionfailed-alert").hide();
             });
             $("#username").focus();
+            return false;
           }
           }
         });
@@ -122,6 +111,9 @@ $(document).ready(function() {
       });
       $('#m_confirmdel').on('shown.bs.modal', function(event) {
         $("#m_no").focus();
+      });
+      $('#m_confirmdel').on('hidden.bs.modal', function(event) {
+        $("#username").focus();
       });
   }
 );

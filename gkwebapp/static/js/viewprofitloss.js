@@ -104,6 +104,14 @@ $(document).ready(function() {
   });
 
   $("#pnl_view").click(function(event) {
+    if ($("#pnl_toyear").val() ==0||$("#pnl_tomonth").val()==0||$("#pnl_todate").val()==0) {
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#pnl_todate').focus().select();
+      return false;
+    }
     var todate = $("#pnl_toyear").val()+$("#pnl_tomonth").val()+$("#pnl_todate").val();
     if(!Date.parseExact(todate, "yyyyMMdd")){
       $("#date-alert").alert();
