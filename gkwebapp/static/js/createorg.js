@@ -128,26 +128,26 @@ $(document).ready(function()
 
         if(ocase == "As-Is")
         {
-          sessionStorage.setItem('orgn', forname);
+
           $("#orgname").val(forname);
         }
         if(ocase == "Upper Case")
         {
           oname = forname.toUpperCase();
           $("#orgname").val(oname);
-          sessionStorage.setItem('orgn', oname);
+
         }
         if(ocase == "Lower Case")
         {
           oname = forname.toLowerCase();
           $("#orgname").val(oname);
-          sessionStorage.setItem('orgn', oname);
+
         }
         if(ocase == "Title Case")
         {
           oname = forname.toProperCase();
           $("#orgname").val(oname);
-          sessionStorage.setItem('orgn', oname);
+
         }
       });
 
@@ -249,6 +249,7 @@ $(document).ready(function()
         var otype = $("#orgtype option:selected").val();
         var fadate = $("#fromday").val()+"-"+$("#frommonth").val()+"-"+$("#fromyear").val();
         var tadate = $("#today").val()+"-"+$("#tomonth").val()+"-"+$("#toyear").val();
+        sessionStorage.setItem('orgn', $("#orgname").val());
         sessionStorage.setItem('orgt', otype);
         sessionStorage.setItem('year1', fadate);
         sessionStorage.setItem('year2', tadate);
