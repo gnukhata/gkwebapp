@@ -12,6 +12,9 @@
 
       Improper Date!
     </div>
+    <div class="alert alert-danger" id="transactions-alert" aria-live="rude" role="alert" hidden>
+    There are transactions beyond the closure date. Books cannot be closed.
+    </div>
     <div class="alert alert-success" id="success-alert" aria-live="rude" role="alert" hidden>
 
 Books have been closed for the current Financial Year.
@@ -23,6 +26,10 @@ Books have been closed for the current Financial Year.
     <div class="alert alert-danger" id="booksnot-alert"  aria-live="rude" role="alert" hidden>
 
       Books cannot be closed!
+    </div>
+    <div class="alert alert-danger" id="compare-date-alert" aria-live="rude" role="alert" hidden>
+
+      Financial year end should be greater or equal to start date!
     </div>
     <div class="row">
       <div class="col-xs-6 pull-left"  style="padding-top:6px">

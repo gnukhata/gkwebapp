@@ -39,8 +39,48 @@ $(document).ready(function()
     $('.dis').attr('disabled', true);
   }
 
+  function pad (str, max) { //to add leading zeros in date
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("0" + str, max) : str;
+    }
+    else{
+      return str
+    }
+  }
+  function yearpad (str, max) {
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("200" + str, max) : str;
+    }
+    else if (str.length==2) {
+      return str.length < max ? pad("20" + str, max) : str;
+    }
+    else{
+      return str
+    }
+  }
 
+  $("#cbtoday").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#cbtomonth").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#rbto_day").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#rbto_month").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
 
+  $("#cbtoyear").blur(function(event) {
+    $(this).val(yearpad($(this).val(),4));
+  });
+
+  $("#rbto_year").blur(function(event) {
+    $(this).val(yearpad($(this).val(),4));
+  });
 
   $('.modal-backdrop').remove();
   $('.crdate').autotab('number');
@@ -176,6 +216,18 @@ $("#rbto_year").keydown(function(event) {
 
 $(document).off("click","#closebooks").on("click", "#closebooks", function(event)
 {
+  $("#cbtoyear").val(yearpad($("#cbtoyear").val(),4));
+  var closebooksend = Date.parseExact($("#cbtoyear").val()+$("#cbtomonth").val()+$("#cbtoday").val(),"yyyyMMdd");
+  var closebooksstart = Date.parseExact($("#cbfromyear").val()+$("#cbfrommonth").val()+$("#cbfromday").val(),"yyyyMMdd");
+
+  if (closebooksstart.compareTo(closebooksend)==1) {
+    $("#compare-date-alert").alert();
+    $("#compare-date-alert").fadeTo(2250, 400).slideUp(500, function(){
+      $("#compare-date-alert").hide();
+    });
+    $('#cbtoday').focus().select();
+    return false;
+  }
   if ($.trim($("#cbfromday").val())==""||$.trim($("#cbfrommonth").val())==""||$.trim($("#cbfromyear").val())==""||$.trim($("#cbtoday").val())==""||$.trim($("#cbtomonth").val())==""||$.trim($("#cbtoyear").val())=="")
   {
     $("#closebook-blank-alert").alert();
@@ -228,6 +280,7 @@ $(document).off("click","#closebooks").on("click", "#closebooks", function(event
     url: '/closebooks',
     type: 'POST',
     datatype: 'json',
+    data:{"financialend": closebooksend},
     beforeSend: function(xhr)
     {
       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -247,12 +300,20 @@ $(document).off("click","#closebooks").on("click", "#closebooks", function(event
       $('.modal').modal('hide');
 
     }
+    else if (jsonobj["gkstatus"]==5)
+    {
+      $("#transactions-alert").alert();
+      $("#transactions-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#transactions-alert").hide();
+      });
+      $('.modal').modal('hide');
+    }
     else {
       $("#booksnot-alert").alert();
       $("#booksnot-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#booksnot-alert").hide();
       });
-
+      $('.modal').modal('hide');
     }
   });
 
@@ -277,6 +338,18 @@ $('#m_rollb').on('hidden.bs.modal', function (e)
 });
 $(document).off("click","#rollover").on("click", "#rollover", function(event)
 {
+  $("#rbto_year").val(yearpad($("#rbto_year").val(),4));
+  var financialend = $("#rbto_year").val()+"-"+$("#rbto_month").val()+"-"+$("#rbto_day").val();
+  var financialstart = $("#rbfrom_year").val()+"-"+$("#rbfrom_month").val()+"-"+$("#rbfrom_day").val();
+
+  if (Date.parseExact(financialstart, "yyyy-MM-dd").compareTo(Date.parseExact(financialend, "yyyy-MM-dd"))==1) {
+    $("#compare-date-alert").alert();
+    $("#compare-date-alert").fadeTo(2250, 400).slideUp(500, function(){
+      $("#compare-date-alert").hide();
+    });
+    $('#rbto_day').focus().select();
+    return false;
+  }
   if ($.trim($("#rbfrom_day").val())==""||$.trim($("#rbfrom_month").val())==""||$.trim($("#rbfrom_year").val())==""||$.trim($("#rbto_day").val())==""||$.trim($("#rbto_month").val())==""||$.trim($("#rbto_year").val())=="")
   {
     $("#closebook-blank-alert").alert();
@@ -309,12 +382,11 @@ $(document).off("click","#rollover").on("click", "#rollover", function(event)
   $('.modal').modal('hide');
   $('#m_rollb').modal('show').one('click', '#m_remove', function (e)
   {
-    var financialend = $("#rbto_year").val()+"-"+$("#rbto_month").val()+"-"+$("#rbto_day").val()
   $.ajax({
     url: '/rollover',
     type: 'POST',
     datatype: 'json',
-    data:{"financialend":financialend},
+    data:{"financialend":financialend,"financialstart":financialstart},
     beforeSend: function(xhr)
     {
       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -331,7 +403,7 @@ $(document).off("click","#rollover").on("click", "#rollover", function(event)
       $("#booksnot-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#booksnot-alert").hide();
       });
-
+      $('.modal').modal('hide');
     }
   });
 

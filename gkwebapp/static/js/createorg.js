@@ -176,6 +176,37 @@ $(document).ready(function()
         var endday = enddate[0]+enddate[1];
         var endmonth = enddate[2]+enddate[3];
         var endyear = enddate[4]+enddate[5]+enddate[6]+enddate[7];
+        if (startday==0)
+        {
+          $("#date-improper-alert").alert();
+          $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#date-improper-alert").hide();
+          });
+          $("#fromday").focus();
+          $("#fromday").select();
+          return false;
+        }
+        if (startmonth==0)
+        {
+          $("#date-improper-alert").alert();
+          $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#date-improper-alert").hide();
+          });
+          $("#frommonth").focus();
+          $("#frommonth").select();
+          return false;
+        }
+        if (startyear==0)
+        {
+          $("#date-improper-alert").alert();
+          $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#date-improper-alert").hide();
+          });
+          $("#fromyear").focus();
+          $("#fromyear").select();
+          return false;
+        }
+
         $("#today").val(endday);
         $("#tomonth").val(endmonth);
         $("#toyear").val(endyear);
@@ -193,10 +224,10 @@ $(document).ready(function()
         var startmonth = $("#frommonth").val();
         var startyear = $("#fromyear").val();
         var startdate = startday+startmonth+startyear;
-        var startday = $("#today").val();
-        var startmonth = $("#tomonth").val();
-        var startyear = $("#toyear").val();
-        var enddate = startday+startmonth+startyear;
+        var endday = $("#today").val();
+        var endmonth = $("#tomonth").val();
+        var endyear = $("#toyear").val();
+        var enddate = endday+endmonth+endyear;
         if ($.trim($("#orgname").val())=="") {
           $("#orgname-blank-alert").alert();
           $("#orgname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -205,6 +236,68 @@ $(document).ready(function()
           $("#orgname").focus();
           return false;
         }
+
+        if (startday==0)
+        {
+          $("#date-improper-alert").alert();
+          $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#date-improper-alert").hide();
+          });
+          $("#fromday").focus();
+          $("#fromday").select();
+          return false;
+        }
+        if (startmonth==0)
+        {
+          $("#date-improper-alert").alert();
+          $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#date-improper-alert").hide();
+          });
+          $("#frommonth").focus();
+          $("#frommonth").select();
+          return false;
+        }
+        if (startyear==0)
+        {
+          $("#date-improper-alert").alert();
+          $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#date-improper-alert").hide();
+          });
+          $("#fromyear").focus();
+          $("#fromyear").select();
+          return false;
+        }
+        if (endday==0)
+        {
+          $("#date-improper-alert").alert();
+          $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#date-improper-alert").hide();
+          });
+          $("#today").focus();
+          $("#today").select();
+          return false;
+        }
+        if (endmonth==0)
+        {
+          $("#date-improper-alert").alert();
+          $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#date-improper-alert").hide();
+          });
+          $("#tomonth").focus();
+          $("#tomonth").select();
+          return false;
+        }
+        if (endyear==0)
+        {
+          $("#date-improper-alert").alert();
+          $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#date-improper-alert").hide();
+          });
+          $("#toyear").focus();
+          $("#toyear").select();
+          return false;
+        }
+
           if ($.trim($("#fromday").val())==""||$.trim($("#frommonth").val())==""||$.trim($("#fromyear").val())==""||$.trim($("#today").val())==""||$.trim($("#tomonth").val())==""||$.trim($("#toyear").val())=="") {
             $("#date-blank-alert").alert();
             $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
