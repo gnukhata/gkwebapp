@@ -214,20 +214,13 @@ $("#rbto_year").keydown(function(event) {
   }
 });
 
-$(document).off("click","#closebooks").on("click", "#closebooks", function(event)
+$("#closebooks").click(function(event)
 {
   $("#cbtoyear").val(yearpad($("#cbtoyear").val(),4));
-  var closebooksend = Date.parseExact($("#cbtoyear").val()+$("#cbtomonth").val()+$("#cbtoday").val(),"yyyyMMdd");
-  var closebooksstart = Date.parseExact($("#cbfromyear").val()+$("#cbfrommonth").val()+$("#cbfromday").val(),"yyyyMMdd");
+  var closebooksend = $("#cbtoyear").val()+"-"+$("#cbtomonth").val()+"-"+$("#cbtoday").val();
+  var closebooksstart = $("#cbfromyear").val()+"-"+$("#cbfrommonth").val()+"-"+$("#cbfromday").val();
 
-  if (closebooksstart.compareTo(closebooksend)==1) {
-    $("#compare-date-alert").alert();
-    $("#compare-date-alert").fadeTo(2250, 400).slideUp(500, function(){
-      $("#compare-date-alert").hide();
-    });
-    $('#cbtoday').focus().select();
-    return false;
-  }
+
   if ($.trim($("#cbfromday").val())==""||$.trim($("#cbfrommonth").val())==""||$.trim($("#cbfromyear").val())==""||$.trim($("#cbtoday").val())==""||$.trim($("#cbtomonth").val())==""||$.trim($("#cbtoyear").val())=="")
   {
     $("#closebook-blank-alert").alert();
@@ -245,6 +238,16 @@ $(document).off("click","#closebooks").on("click", "#closebooks", function(event
     });
     $("#cbtoday").focus();
     $("#cbtoday").select();
+    return false;
+  }
+  var comparestartdate = Date.parseExact(closebooksstart,"yyyy-MM-dd");
+  var compareenddate = Date.parseExact(closebooksend,"yyyy-MM-dd");
+  if (comparestartdate.compareTo(compareenddate)==1) {
+    $("#compare-date-alert").alert();
+    $("#compare-date-alert").fadeTo(2250, 400).slideUp(500, function(){
+      $("#compare-date-alert").hide();
+    });
+    $('#cbtoday').focus().select();
     return false;
   }
   var clsdate = $("#cbtoday").val()+$("#cbtomonth").val()+$("#cbtoyear").val();
@@ -307,6 +310,7 @@ $(document).off("click","#closebooks").on("click", "#closebooks", function(event
         $("#transactions-alert").hide();
       });
       $('.modal').modal('hide');
+      return false;
     }
     else {
       $("#booksnot-alert").alert();
@@ -314,6 +318,7 @@ $(document).off("click","#closebooks").on("click", "#closebooks", function(event
         $("#booksnot-alert").hide();
       });
       $('.modal').modal('hide');
+      return false;
     }
   });
 
@@ -336,13 +341,14 @@ $('#m_rollb').on('hidden.bs.modal', function (e)
 });
 
 });
-$(document).off("click","#rollover").on("click", "#rollover", function(event)
+$("#rollover").click(function(event)
 {
   $("#rbto_year").val(yearpad($("#rbto_year").val(),4));
   var financialend = $("#rbto_year").val()+"-"+$("#rbto_month").val()+"-"+$("#rbto_day").val();
   var financialstart = $("#rbfrom_year").val()+"-"+$("#rbfrom_month").val()+"-"+$("#rbfrom_day").val();
-
-  if (Date.parseExact(financialstart, "yyyy-MM-dd").compareTo(Date.parseExact(financialend, "yyyy-MM-dd"))==1) {
+  var rollcomparestart = Date.parseExact(financialstart, "yyyy-MM-dd");
+  var rollcompareend = Date.parseExact(financialend, "yyyy-MM-dd");
+  if (rollcomparestart.compareTo(compareenddate)==1) {
     $("#compare-date-alert").alert();
     $("#compare-date-alert").fadeTo(2250, 400).slideUp(500, function(){
       $("#compare-date-alert").hide();
@@ -404,6 +410,7 @@ $(document).off("click","#rollover").on("click", "#rollover", function(event)
         $("#booksnot-alert").hide();
       });
       $('.modal').modal('hide');
+      return false;
     }
   });
 
