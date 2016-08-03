@@ -26,6 +26,7 @@ Contributors:
 
 $(document).ready(function()
 {
+  $("#login_username").focus();
   var orname = sessionStorage.getItem('orgn');
   var ortype = sessionStorage.getItem('orgt');
   var styear = sessionStorage.getItem('year1');
@@ -38,7 +39,7 @@ $(document).ready(function()
   $("#orgdata").html(orgdata);
   $("#yeardata").html(yeardata);
   }
-  $('#username').keydown(function(e){
+  $('#login_username').keydown(function(e){
       if (e.which == 13)
       {
         e.preventDefault();
@@ -49,7 +50,7 @@ $(document).ready(function()
       if (e.which == 38)
       {
         e.preventDefault();
-        $("#username").focus();
+        $("#login_username").focus();
 
         }
   });
@@ -74,12 +75,12 @@ $(document).ready(function()
   $("#loginform").submit(function(e)
   {
     e.preventDefault();
-    if ($.trim($("#username").val())=="") {
-      $("#username-blank-alert").alert();
-      $("#username-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#username-blank-alert").hide();
+    if ($.trim($("#login_username").val())=="") {
+      $("#login_username-blank-alert").alert();
+      $("#login_username-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#login_username-blank-alert").hide();
       });
-      $("#username").focus();
+      $("#login_username").focus();
       return false;
     }
       if ($.trim($("#userpassword").val())=="") {
@@ -97,7 +98,7 @@ $(document).ready(function()
       global: false,
       async: false,
       datatype: "json",
-      data: {"orgcode":$("#orgcode").val(), "username":$("#username").val(), "userpassword":$("#userpassword").val()},
+      data: {"orgcode":$("#orgcode").val(), "username":$("#login_username").val(), "userpassword":$("#userpassword").val()},
       success: function(resp)
       {
       if(resp["gkstatus"]==0)
@@ -114,7 +115,7 @@ $(document).ready(function()
         $("#login-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#login-blank-alert").hide();
         });
-        $("#username").focus();
+        $("#login_username").focus();
         return false;
       }
       }

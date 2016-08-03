@@ -26,17 +26,18 @@ Contributors:
 */
 
 $(document).ready(function(){
-
+$("#selectorg").load("/existingorg");
+$("#createorg").load("/createorg");
   $(document).keydown(function(event) {
     if(event.ctrlKey && event.keyCode == 69) {
       $("#selectnav").click();
-      $("#selectorg").load("/existingorg",setTimeout( function() { $("#org-name").focus(); }, 500 ));
+      setTimeout( function() { $("select:first, input:first").focus(); }, 500 );
       /*console.log("Hey! Ctrl+S event captured!");*/
       event.preventDefault();
       }
     if(event.ctrlKey && event.keyCode == 82) {
       $("#createnav").click();
-      $("#createorg").load("/createorg",setTimeout( function() { $("#orgname").focus(); }, 500 ));
+      setTimeout( function() { $("#orgname").focus(); }, 500 );
       /*console.log("Hey! Ctrl+S event captured!");*/
       event.preventDefault();
       }
@@ -66,11 +67,11 @@ $(document).ready(function(){
 
 
   $("#selectnav").click(function(event){
-  $("#selectorg").load("/existingorg",setTimeout( function() { $("#org-name").focus(); }, 500 ));
+  setTimeout( function() { $("select:first, input:first").focus(); }, 500 );
 });
 
 $("#createnav").click(function(event){
-$("#createorg").load("/createorg",setTimeout( function() { $("#orgname").focus(); }, 500 ));
+setTimeout( function() { $("#orgname").focus(); }, 500 );
 });
 
 

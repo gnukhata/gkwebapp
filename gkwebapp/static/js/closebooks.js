@@ -39,8 +39,48 @@ $(document).ready(function()
     $('.dis').attr('disabled', true);
   }
 
+  function pad (str, max) { //to add leading zeros in date
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("0" + str, max) : str;
+    }
+    else{
+      return str
+    }
+  }
+  function yearpad (str, max) {
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("200" + str, max) : str;
+    }
+    else if (str.length==2) {
+      return str.length < max ? pad("20" + str, max) : str;
+    }
+    else{
+      return str
+    }
+  }
 
+  $("#cbtoday").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#cbtomonth").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#rbto_day").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#rbto_month").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
 
+  $("#cbtoyear").blur(function(event) {
+    $(this).val(yearpad($(this).val(),4));
+  });
+
+  $("#rbto_year").blur(function(event) {
+    $(this).val(yearpad($(this).val(),4));
+  });
 
   $('.modal-backdrop').remove();
   $('.crdate').autotab('number');
@@ -174,8 +214,13 @@ $("#rbto_year").keydown(function(event) {
   }
 });
 
-$(document).off("click","#closebooks").on("click", "#closebooks", function(event)
+$("#closebooks").click(function(event)
 {
+  $("#cbtoyear").val(yearpad($("#cbtoyear").val(),4));
+  var closebooksend = $("#cbtoyear").val()+"-"+$("#cbtomonth").val()+"-"+$("#cbtoday").val();
+  var closebooksstart = $("#cbfromyear").val()+"-"+$("#cbfrommonth").val()+"-"+$("#cbfromday").val();
+
+
   if ($.trim($("#cbfromday").val())==""||$.trim($("#cbfrommonth").val())==""||$.trim($("#cbfromyear").val())==""||$.trim($("#cbtoday").val())==""||$.trim($("#cbtomonth").val())==""||$.trim($("#cbtoyear").val())=="")
   {
     $("#closebook-blank-alert").alert();
@@ -186,6 +231,38 @@ $(document).off("click","#closebooks").on("click", "#closebooks", function(event
     $("#cbtoday").select();
     return false;
   }
+
+  if ($("#cbtoyear").val()==0)
+  {
+    $("#date-improper-alert").alert();
+    $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#date-improper-alert").hide();
+    });
+    $("#cbtoyear").focus();
+    $("#cbtoyear").select();
+    return false;
+  }
+  if ($("#cbtomonth").val()==0)
+  {
+    $("#date-improper-alert").alert();
+    $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#date-improper-alert").hide();
+    });
+    $("#cbtomonth").focus();
+    $("#cbtomonth").select();
+    return false;
+  }
+  if ($("#cbtoday").val()==0)
+  {
+    $("#date-improper-alert").alert();
+    $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#date-improper-alert").hide();
+    });
+    $("#cbtoday").focus();
+    $("#cbtoday").select();
+    return false;
+  }
+
   if (!Date.parseExact($("#cbtoday").val()+$("#cbtomonth").val()+$("#cbtoyear").val(), "ddMMyyyy")) {
     $("#date-improper-alert").alert();
     $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -193,6 +270,16 @@ $(document).off("click","#closebooks").on("click", "#closebooks", function(event
     });
     $("#cbtoday").focus();
     $("#cbtoday").select();
+    return false;
+  }
+  var comparestartdate = Date.parseExact(closebooksstart,"yyyy-MM-dd");
+  var compareenddate = Date.parseExact(closebooksend,"yyyy-MM-dd");
+  if (comparestartdate.compareTo(compareenddate)==1) {
+    $("#compare-date-alert").alert();
+    $("#compare-date-alert").fadeTo(2250, 400).slideUp(500, function(){
+      $("#compare-date-alert").hide();
+    });
+    $('#cbtoday').focus().select();
     return false;
   }
   var clsdate = $("#cbtoday").val()+$("#cbtomonth").val()+$("#cbtoyear").val();
@@ -228,6 +315,7 @@ $(document).off("click","#closebooks").on("click", "#closebooks", function(event
     url: '/closebooks',
     type: 'POST',
     datatype: 'json',
+    data:{"financialend": closebooksend},
     beforeSend: function(xhr)
     {
       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -247,12 +335,22 @@ $(document).off("click","#closebooks").on("click", "#closebooks", function(event
       $('.modal').modal('hide');
 
     }
+    else if (jsonobj["gkstatus"]==5)
+    {
+      $("#transactions-alert").alert();
+      $("#transactions-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#transactions-alert").hide();
+      });
+      $('.modal').modal('hide');
+      return false;
+    }
     else {
       $("#booksnot-alert").alert();
       $("#booksnot-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#booksnot-alert").hide();
       });
-
+      $('.modal').modal('hide');
+      return false;
     }
   });
 
@@ -262,21 +360,51 @@ $('#m_rollb').on('hidden.bs.modal', function (e)
   $('.modal-backdrop').remove();
   if ($(".closebooks").length) {
     $(".closebooks").attr("disabled",false);
-    $("input:enabled:first").focus();
-    $("input:enabled:first").select();
 
   }
-  else {
-    $("#rbto_day").focus();
-    $("#rbto_day").select();
-  }
+  $("input:enabled:first").focus();
+  $("input:enabled:first").select();
+
 
 
 });
 
 });
-$(document).off("click","#rollover").on("click", "#rollover", function(event)
+$("#rollover").click(function(event)
 {
+  $("#rbto_year").val(yearpad($("#rbto_year").val(),4));
+  var financialend = $("#rbto_year").val()+"-"+$("#rbto_month").val()+"-"+$("#rbto_day").val();
+  var financialstart = $("#rbfrom_year").val()+"-"+$("#rbfrom_month").val()+"-"+$("#rbfrom_day").val();
+
+
+    if (!Date.parseExact($("#rbfrom_day").val()+$("#rbfrom_month").val()+$("#rbfrom_year").val(), "ddMMyyyy")) {
+      $("#date-improper-alert").alert();
+      $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#date-improper-alert").hide();
+      });
+      $("#rbfrom_day").focus();
+      $("#rbfrom_day").select();
+      return false;
+    }
+    if (!Date.parseExact($("#rbto_day").val()+$("#rbto_month").val()+$("#rbto_year").val(), "ddMMyyyy")) {
+      $("#date-improper-alert").alert();
+      $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#date-improper-alert").hide();
+      });
+      $("#rbto_day").focus();
+      $("#rbto_day").select();
+      return false;
+    }
+  var rollcomparestart = Date.parseExact(financialstart, "yyyy-MM-dd");
+  var rollcompareend = Date.parseExact(financialend, "yyyy-MM-dd");
+  if (rollcomparestart.compareTo(rollcompareend)==1) {
+    $("#compare-date-alert").alert();
+    $("#compare-date-alert").fadeTo(2250, 400).slideUp(500, function(){
+      $("#compare-date-alert").hide();
+    });
+    $('#rbto_day').focus().select();
+    return false;
+  }
   if ($.trim($("#rbfrom_day").val())==""||$.trim($("#rbfrom_month").val())==""||$.trim($("#rbfrom_year").val())==""||$.trim($("#rbto_day").val())==""||$.trim($("#rbto_month").val())==""||$.trim($("#rbto_year").val())=="")
   {
     $("#closebook-blank-alert").alert();
@@ -286,16 +414,29 @@ $(document).off("click","#rollover").on("click", "#rollover", function(event)
 
     return false;
   }
-  if (!Date.parseExact($("#rbfrom_day").val()+$("#rbfrom_month").val()+$("#rbfrom_year").val(), "ddMMyyyy")) {
+
+  if ($("#rbto_year").val()==0)
+  {
     $("#date-improper-alert").alert();
     $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#date-improper-alert").hide();
     });
-    $("#rbfrom_day").focus();
-    $("#rbfrom_day").select();
+    $("#rbto_year").focus();
+    $("#rbto_year").select();
     return false;
   }
-  if (!Date.parseExact($("#rbto_day").val()+$("#rbto_month").val()+$("#rbto_year").val(), "ddMMyyyy")) {
+  if ($("#rbto_month").val()==0)
+  {
+    $("#date-improper-alert").alert();
+    $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#date-improper-alert").hide();
+    });
+    $("#rbto_month").focus();
+    $("#rbto_month").select();
+    return false;
+  }
+  if ($("#rbto_day").val()==0)
+  {
     $("#date-improper-alert").alert();
     $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#date-improper-alert").hide();
@@ -305,16 +446,16 @@ $(document).off("click","#rollover").on("click", "#rollover", function(event)
     return false;
   }
 
+
   $('.modal-backdrop').remove();
   $('.modal').modal('hide');
   $('#m_rollb').modal('show').one('click', '#m_remove', function (e)
   {
-    var financialend = $("#rbto_year").val()+"-"+$("#rbto_month").val()+"-"+$("#rbto_day").val()
   $.ajax({
     url: '/rollover',
     type: 'POST',
     datatype: 'json',
-    data:{"financialend":financialend},
+    data:{"financialend":financialend,"financialstart":financialstart},
     beforeSend: function(xhr)
     {
       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -324,14 +465,15 @@ $(document).off("click","#rollover").on("click", "#rollover", function(event)
     if (jsonobj["gkstatus"]==0) {
 
       window.location.replace("/");
-
+      return false;
     }
     else {
-      $("#booksnot-alert").alert();
-      $("#booksnot-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#booksnot-alert").hide();
+      $("#rollnot-alert").alert();
+      $("#rollnot-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#rollnot-alert").hide();
       });
-
+      $('.modal').modal('hide');
+      return false;
     }
   });
 

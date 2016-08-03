@@ -26,7 +26,8 @@ Contributors:
 
 $(document).ready(function()
 {
-
+  var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
+  var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   $("#vctable").hide();
   $("#save").hide();
   $("#clonereplaceattach").hide();
@@ -1148,6 +1149,15 @@ $("#delete").click(function(event) {
         $("#date-alert").hide();
       });
       $('#vdate').focus();
+      return false;
+    }
+    var curdate = Date.parseExact($("#vyear").val()+$("#vmonth").val()+$("#vdate").val(), "yyyyMMdd")
+    if (!curdate.between(financialstart,financialend)) {
+      $("#between-date-alert").alert();
+      $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#between-date-alert").hide();
+      });
+      $('#vdate').focus().select();
       return false;
     }
     if ($('#drtotal').val()!=$('#crtotal').val()) {
