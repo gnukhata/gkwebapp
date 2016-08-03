@@ -231,6 +231,38 @@ $("#closebooks").click(function(event)
     $("#cbtoday").select();
     return false;
   }
+
+  if ($("#cbtoyear").val()==0)
+  {
+    $("#date-improper-alert").alert();
+    $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#date-improper-alert").hide();
+    });
+    $("#cbtoyear").focus();
+    $("#cbtoyear").select();
+    return false;
+  }
+  if ($("#cbtomonth").val()==0)
+  {
+    $("#date-improper-alert").alert();
+    $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#date-improper-alert").hide();
+    });
+    $("#cbtomonth").focus();
+    $("#cbtomonth").select();
+    return false;
+  }
+  if ($("#cbtoday").val()==0)
+  {
+    $("#date-improper-alert").alert();
+    $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#date-improper-alert").hide();
+    });
+    $("#cbtoday").focus();
+    $("#cbtoday").select();
+    return false;
+  }
+
   if (!Date.parseExact($("#cbtoday").val()+$("#cbtomonth").val()+$("#cbtoyear").val(), "ddMMyyyy")) {
     $("#date-improper-alert").alert();
     $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -348,7 +380,7 @@ $("#rollover").click(function(event)
   var financialstart = $("#rbfrom_year").val()+"-"+$("#rbfrom_month").val()+"-"+$("#rbfrom_day").val();
   var rollcomparestart = Date.parseExact(financialstart, "yyyy-MM-dd");
   var rollcompareend = Date.parseExact(financialend, "yyyy-MM-dd");
-  if (rollcomparestart.compareTo(compareenddate)==1) {
+  if (rollcomparestart.compareTo(rollcompareend)==1) {
     $("#compare-date-alert").alert();
     $("#compare-date-alert").fadeTo(2250, 400).slideUp(500, function(){
       $("#compare-date-alert").hide();
@@ -365,6 +397,38 @@ $("#rollover").click(function(event)
 
     return false;
   }
+
+  if ($("#rbto_year").val()==0)
+  {
+    $("#date-improper-alert").alert();
+    $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#date-improper-alert").hide();
+    });
+    $("#rbto_year").focus();
+    $("#rbto_year").select();
+    return false;
+  }
+  if ($("#rbto_month").val()==0)
+  {
+    $("#date-improper-alert").alert();
+    $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#date-improper-alert").hide();
+    });
+    $("#rbto_month").focus();
+    $("#rbto_month").select();
+    return false;
+  }
+  if ($("#rbto_day").val()==0)
+  {
+    $("#date-improper-alert").alert();
+    $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#date-improper-alert").hide();
+    });
+    $("#rbto_day").focus();
+    $("#rbto_day").select();
+    return false;
+  }
+
   if (!Date.parseExact($("#rbfrom_day").val()+$("#rbfrom_month").val()+$("#rbfrom_year").val(), "ddMMyyyy")) {
     $("#date-improper-alert").alert();
     $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
