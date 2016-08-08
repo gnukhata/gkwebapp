@@ -154,7 +154,7 @@ def printLedgerReport(request):
 		elif transaction["vouchertype"]=="creditnote":
 			sheet.getCell(2,row).stringValue("Credit Note")
 		elif transaction["vouchertype"]=="salesreturn":
-			sheet.getCell(2,row).stringValue("Sales Return")
+			sheet.getCell(2,row).stringValue("Sale Return")
 		elif transaction["vouchertype"]=="purchasereturn":
 			sheet.getCell(2,row).stringValue("Purchase Return")
 		else:
