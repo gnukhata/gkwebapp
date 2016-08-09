@@ -15,6 +15,10 @@ th {
 	font-size: 70%;
 }
 
+.nopadding {
+	 padding: 0 !important;
+	 margin: 0 !important;
+}
 </style>
 </head>
 <body >
@@ -34,7 +38,7 @@ th {
 			Account could not be edited.
 		</div>
 		<div class="alert alert-danger" id="blank-alert"  aria-live="rude" role="alert" hidden>
-			
+
 			Please enter account name!
 		</div>
 
@@ -65,9 +69,13 @@ th {
             <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
             {% endfor %}
           </select>
-					<label for="accountname" style="color:red;" id="alertmsg" hidden>This is a system generated account, cannot be edited/deleted.</label>
-					<label for="accountname" style="color:red;" id="accnamenoedit" hidden>Name of this system generated account cannot be edited.</label>
-				</br>
+					<div class="alert alert-warning nopadding" id="alertmsg"  aria-live="rude" role="alert" hidden>
+						<strong>This is a system generated account, cannot be edited/deleted.</strong>
+					</div>
+					<div class="alert alert-warning nopadding" id="accnamenoedit"  aria-live="rude" role="alert" hidden>
+						<strong>Name of this system generated account cannot be edited.</strong>
+					</div>
+					<br>
 					<form id="editaccountform" method="post"  action="editaccount" class="form-horizontal" hidden>
 
 						<div style="margin-bottom: 5px" class="col-xs-12 from-group">
@@ -84,7 +92,7 @@ th {
 							<input type="text" id="openingbal" class="form-control input-sm" name="openingbal" style="text-align:right" accesskey="o"></input>
 							</br>
 							<input type="hidden" id="accountcode" class="form-control" name="accountcode" ></input>
-							<br/>
+
 							<button type="submit" class="btn btn-primary btn-sm" id="submit" name="submit" accesskey="s"><u>S</u>ave</button>
 							<button id="reset" class="btn btn-warning btn-sm" accesskey="e">R<u>e</u>set</button>
 							<button id="delete" class="btn btn-danger btn-sm" accesskey="d"><u>D</u>elete</button>
