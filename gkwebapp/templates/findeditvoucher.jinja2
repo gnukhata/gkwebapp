@@ -7,9 +7,13 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
   .nopadding{
-    padding: 0 !important;
+    padding: 1 !important;
     margin: 0 !important;
   }
+  #vct{
+    border: none;
+    box-shadow: none;
+}
   </style>
 </head>
 <body>
@@ -66,11 +70,11 @@
         <p id="nt">No transactions found </p>
       </div>
 
-      <div class="panel shadow hidden-print" >
+      <div class="panel shadow hidden-print nopadding" >
         <div class="panel-heading">
           <div class="panel-title">Find Voucher</div>
         </div>
-        <div class="panel-body" >
+        <div class="panel-body nopadding" >
           <form id="findvoucher" class="form-horizontal" role="form">
 
             <label for="searchby" id="sby">Search Voucher B<u>y</u> :</label><br/>

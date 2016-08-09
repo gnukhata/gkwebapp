@@ -44,13 +44,19 @@ $(document).ready(function()
     if(accname=="Income & Expenditure" ||  accname=="Profit & Loss" )
     {
       $("#accnamenoedit").hide();
+
+      $("#alertmsg").alert();
       $("#alertmsg").show();
+
       $("#delete").hide();
       $("#edit").hide();
 
     }
     else if(accname=="Closing Stock" || accname=="Stock at the Beginning" || accname=="Opening Stock"){
+
+      $("#accnamenoedit").alert();
       $("#accnamenoedit").show();
+
       $("#alertmsg").hide();
       $("#delete").hide();
       $("#edit").show();
@@ -131,7 +137,9 @@ $("#editaccountname").keyup(function(e) {
     if(e.which == 13)
     {  if( $("#editaccountname option:selected").text()=="Income & Expenditure" ||  $("#editaccountname option:selected").text()=="Profit & Loss" )
     {
+      $("#alertmsg").alert();
       $("#alertmsg").show();
+      
     }
     else
     {
