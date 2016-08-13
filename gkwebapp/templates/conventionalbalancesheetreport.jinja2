@@ -158,7 +158,7 @@
               {% if record["groupAccname"]=="Total" or record["groupAccname"]=="Sources:" or record["groupAccname"]=="Difference" %}
               <a class="libgname" href="#" style="text-decoration: none; color:black;"><b>{{record["groupAccname"].upper()}}</b></a>
               {%elif record["groupAccname"]==""%}
-              <a class="pagname" href="#">&nbsp
+              <a class="libgname" href="#">&nbsp</a>
               {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
               &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"].upper()}}</a>
               {%elif record["groupAccflag"]==1 %}
