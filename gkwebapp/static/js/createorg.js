@@ -29,6 +29,7 @@ $(document).ready(function()
   $("#orgname").focus();
   var sel1 = 0;
   var sel2 = 0;
+  var sel3 = 0;
   $("#orgcase").focus(function(){
     sel1 = 1;
   });
@@ -40,6 +41,12 @@ $(document).ready(function()
   });
   $("#orgtype").blur(function(){
     sel2 = 0;
+  });
+  $("#finalyears").focus(function(){
+    sel3 = 1;
+  });
+  $("#finalyears").blur(function(){
+    sel3 = 0;
   });
   var forname = "";
   $("#orgname").focusout(function(){
@@ -107,7 +114,8 @@ $(document).ready(function()
 
       var s1 = $("#orgcase option:selected").index();
       var s2 = $("#orgtype option:selected").index();
-      if ((e.which == 38 && sel1 == 1 && s1 == 0) || (e.which == 38 && sel2 == 1 && s2 == 0) || (e.which == 38 && (sel1 == 0 && sel2==0)))
+      var s3 = $("#finalyears option:selected").index();
+      if ((e.which == 38 && sel1 == 1 && s1 == 0) || (e.which == 38 && sel2 == 1 && s2 == 0) ||(e.which == 38 && sel3 == 1 && s3 == 0) || (e.which == 38 && (sel1 == 0 && sel2==0 && sel3==0)))
       {
         var prevIndex = f.index(this) - 1;
         if(prevIndex < n){

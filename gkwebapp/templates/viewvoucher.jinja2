@@ -91,6 +91,10 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
   float: left;
 
 }
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
 </style>
 
 </head>
@@ -136,6 +140,9 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
           <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
 
             Please enter voucher date within the financial year!
+          </div>
+          <div class="alert alert-warning nopadding" id="postdate-alert" aria-live="rude" role="alert" hidden>
+            <strong>You are entering a post-dated transaction!</strong>
           </div>
 
               <form id="viewvoucher" name="voucher" class="" action="" method="get">

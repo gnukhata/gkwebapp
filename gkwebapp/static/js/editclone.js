@@ -419,6 +419,7 @@ if (sessionStorage.booksclosedflag==1) {
       $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#date-alert").hide();
       });
+      $("#postdate-alert").hide();
       $('#vdate').focus().select();
       return false;
     }
@@ -428,8 +429,17 @@ if (sessionStorage.booksclosedflag==1) {
       $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#between-date-alert").hide();
       });
+      $("#postdate-alert").hide();
       $('#vdate').focus().select();
       return false;
+    }
+    if (Date.today().compareTo(curdate)==-1) {
+
+      $("#postdate-alert").alert();
+      $("#postdate-alert").show();
+    }
+    else {
+      $("#postdate-alert").hide();
     }
   });
 

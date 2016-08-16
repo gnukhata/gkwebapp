@@ -97,7 +97,10 @@
   th {
     font-size: 75%;
   }
-
+  .nopadding {
+  	 padding: 0 !important;
+  	 margin: 0 !important;
+  }
   </style>
 </head>
 <body>
@@ -138,8 +141,8 @@
 
       Please enter voucher date in proper format!
     </div>
-    <div class="alert alert-warning" id="postdate-alert" aria-live="rude" role="alert" hidden>
-      You are entering a post-dated transaction!
+    <div class="alert alert-warning nopadding" id="postdate-alert" aria-live="rude" role="alert" hidden>
+      <strong>You are entering a post-dated transaction!</strong>
     </div>
     <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
 
