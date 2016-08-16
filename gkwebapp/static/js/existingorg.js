@@ -28,23 +28,8 @@ $(document).ready(function()
 {
   $("#org-name").focus();
 
-  $("#org-name").keydown(function(e) {
-    if (e.which == 13)
-    {
-      e.preventDefault();
-      $("#finalyears").focus();
-
-    }
-  });
-
   $("#finalyears").keydown( function(e) {
 
-    var s1 = $("#finalyears option:selected").index();
-    if (e.which == 38 && s1 == 0)
-    {
-      e.preventDefault();
-      $("#org-name").focus();
-    }
     if (e.which == 13)
     {
       e.preventDefault();
