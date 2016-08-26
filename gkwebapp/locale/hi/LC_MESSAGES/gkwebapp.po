@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-08-26 16:57+0530\n"
+"POT-Creation-Date: 2016-08-26 17:18+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -69,7 +69,7 @@ msgid "It is based on double entry system of accounting."
 msgstr ""
 
 #: gkwebapp/templates/index.jinja2:126
-msgid "GNUKhata is developed by "
+msgid "GNUKhata is developed by"
 msgstr ""
 
 #: gkwebapp/templates/index.jinja2:126
@@ -85,7 +85,7 @@ msgid "International Centre for Free and Open Source Software(ICFOSS)."
 msgstr ""
 
 #: gkwebapp/templates/index.jinja2:130
-msgid "Copyright © Digital Freedom Foundation 2013,2014,2015,2016. Visit "
+msgid "Copyright © Digital Freedom Foundation 2013,2014,2015,2016. Visit"
 msgstr ""
 
 #: gkwebapp/templates/index.jinja2:130
@@ -101,4 +101,10 @@ msgid ""
 "This software is licensed under GNU AGPLv3. You may use a newer version "
 "of the same license."
 msgstr ""
+
+#~ msgid "GNUKhata is developed by "
+#~ msgstr ""
+
+#~ msgid "Copyright © Digital Freedom Foundation 2013,2014,2015,2016. Visit "
+#~ msgstr ""
 
