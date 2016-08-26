@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>GNUKhata</title>
+  <title>{% trans %}GNUKhata{% endtrans %}</title>
   <link rel="stylesheet" type="text/css" media="screen" href="{{request.static_url('gkwebapp:static/css/bootstrap.min.css')}}">
 
 
@@ -77,20 +77,20 @@
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
+          <span class="sr-only">{% trans %}Toggle navigation{% endtrans %}</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href=""><img src="{{request.static_url('gkwebapp:static/images/icon.svg')}}" alt="GNUKhata Icon" style="width:42px;height:42px;margin-top: -11px" /></a>
-        <a class="navbar-brand" >GNUKhata</a>
+        <a class="navbar-brand" >{% trans %}GNUKhata{% endtrans %}</a>
 
       </div>
 
       <div class="collapse navbar-collapse" id="navbar-ex-collapse">
         <ul class="nav navbar-nav pull-right">
-          <li class="active"><a data-toggle="tab" id="selectnav" href="#selectorg"> <span class="sr-only">Select Existing Organisation</span>Select <u>E</u>xisting Organisation</a></li>
-          <li><a data-toggle="tab" id="createnav" href="#createorg">C<u>r</u>eate Organisation</a></li>
+          <li class="active"><a data-toggle="tab" id="selectnav" href="#selectorg"> <span class="sr-only">{% trans %}Select Existing Organisation{% endtrans %}</span>{% trans %}Select <u>E</u>xisting Organisation{% endtrans %}</a></li>
+          <li><a data-toggle="tab" id="createnav" href="#createorg">{% trans %}C<u>r</u>eate Organisation{% endtrans %}</a></li>
 
         </ul>
       </div>
@@ -107,28 +107,28 @@
 
   <div class="col-md-6 pull-left container-fluid" style="margin-top:50px;">
     <div class="alert alert-danger" aria-live="rude" role="alert" id="duplicate-org-alert" hidden>
-      Duplicate Organisation!
+      {% trans %}Duplicate Organisation!{% endtrans %}
     </div>
 
     <div class="panel shadow" >
       <div class="panel-heading">
         <div class="panel-title">
-          Welcome To GNUKhata <br /> <h4>A Free and Open Source Accounting Software</h4></div>
+          {% trans %}Welcome To GNUKhata{% endtrans %}<br /> <h4>{% trans %}A Free and Open Source Accounting Software{% endtrans %}</h4></div>
 
       </div>
       <div style="padding-top:20px; background-color: #f9f9f9;" class="panel-body" >
-        <p style="margin-top: 5px;">It is Lightweight.</p>
-        <p> It can scale upto a cloud based deployment or down to a standalone installation.</p>
-        <p> It is fast and robust.</p>
-        <p> It is based on double entry system of accounting.</p>
+        <p style="margin-top: 5px;">{% trans %}It is Lightweight.{% endtrans %}</p>
+        <p> {% trans %}It can scale upto a cloud based deployment or down to a standalone installation.{% endtrans %}</p>
+        <p> {% trans %}It is fast and robust.{% endtrans %}</p>
+        <p> {% trans %}It is based on double entry system of accounting.{% endtrans %}</p>
       </div>
       <div class="panel-footer" style="background-color: rgb(87,93,99); color: white;">
-        <p>GNUKhata is developed by <b>Digital Freedom Foundation(DFF)</b> and is currently funded by <b>International Centre for Free and Open Source Software(ICFOSS).</b></p>
+        <p>{% trans %}GNUKhata is developed by {% endtrans %}<b>{% trans %}Digital Freedom Foundation(DFF){% endtrans %}</b> {% trans %}and is currently funded by{% endtrans %} <b>{% trans %}International Centre for Free and Open Source Software(ICFOSS).{% endtrans %}</b></p>
       </div>
       </div>
    <div class="shadow" style="background-color: rgb(87,93,99); color: white; margin-top: -10px; border-radius: 4px;">
-     <p style="text-align: center; font-size: 0.9em;">Copyright © Digital Freedom Foundation 2013,2014,2015,2016. Visit <a href="http://gnukhata.in" style="color: white;"><strong>gnukhata.in</strong></a> for more information.</p>
-     <p style="text-align: center; font-size: 0.9em; margin-top: -10px; margin-bottom: 0px">This software is licensed under GNU AGPLv3. You may use a newer version of the same license.</p>
+     <p style="text-align: center; font-size: 0.9em;">{% trans %}Copyright © Digital Freedom Foundation 2013,2014,2015,2016. Visit {% endtrans %}<a href="http://gnukhata.in" style="color: white;"><strong>{% trans %}gnukhata.in{% endtrans %}</strong></a> {% trans %}for more information.{% endtrans %}</p>
+     <p style="text-align: center; font-size: 0.9em; margin-top: -10px; margin-bottom: 0px">{% trans %}This software is licensed under GNU AGPLv3. You may use a newer version of the same license.{% endtrans %}</p>
    </div>
   </div>
   <div class="tab-content">
