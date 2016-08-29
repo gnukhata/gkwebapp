@@ -114,3 +114,11 @@ thead > tr {
   border-color: black;
   background-color: white;
 }
+.close {
+    color: white;
+    opacity: 0.8;
+}
+.close:hover {
+    color: white;
+    opacity: 2;
+}

@@ -37,7 +37,7 @@
             <div style="margin-bottom: 25px" class="input-group col-xs-12">
               <label for="org-name" id="orname"><u>O</u>rganisation Name:</label><br/>
               <select style="border-radius: 4px" class = "form-control col-xs-12" id="org-name"  name = "orgname" accesskey="o">
-
+                <option value="" disabled selected hidden>Select Organisation</option>
                 {% for orgs in gkresult %}
                 <option value="{{orgs}}">{{orgs["orgname"]}} , {{orgs["orgtype"]}}</option>
                 {% endfor %}
