@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>GNUKhata | {{projectname}} Statement</title>
+  <title>{% trans %}GNUKhata{% endtrans %} | {{projectname}} {% trans %}Statement{% endtrans %}</title>
   <style type="text/css">
 
   td {
@@ -33,18 +33,18 @@
       <thead>
         <tr class="visible-print">
           <th id="printheader" colspan="8" style="text-align:center; font-size:80%;">
-            List of Transactions
+            {% trans %}List of Transactions{% endtrans %}
           </th>
         </tr>
 				<tr>
-            <th style="width:10%">V.No.</th>
-            <th style="width:5%">Date</th>
-            <th style="width:10%">Type</th>
-            <th style="width:20%">Dr Accounts</th>
-            <th style="width:20%">Cr Accounts</th>
-            <th style="text-align:right; width:10%">Dr Amounts</th>
-            <th style="text-align:right; width:10%">Cr Amounts</th>
-            <th style="width:15%">Narration</th>
+            <th style="width:10%">{% trans %}V.No.{% endtrans %}</th>
+            <th style="width:5%">{% trans %}Date{% endtrans %}</th>
+            <th style="width:10%">{% trans %}Type{% endtrans %}</th>
+            <th style="width:20%">{% trans %}Dr Accounts{% endtrans %}</th>
+            <th style="width:20%">{% trans %}Cr Accounts{% endtrans %}</th>
+            <th style="text-align:right; width:10%">{% trans %}Dr Amounts{% endtrans %}</th>
+            <th style="text-align:right; width:10%">{% trans %}Cr Amounts{% endtrans %}</th>
+            <th style="width:15%">{% trans %}Narration{% endtrans %}</th>
 
         </tr>
       </thead>
@@ -59,43 +59,43 @@
             </td>
             {% if vc['vouchertype'] =="contra" %}
             <td style=" width:10%">
-              Contra
+              {% trans %}Contra{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "payment" %}
             <td style=" width:10%">
-              Payment
+              {% trans %}Payment{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "receipt" %}
             <td style=" width:10%">
-              Receipt
+              {% trans %}Receipt{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "journal" %}
             <td style=" width:10%">
-              Journal
+              {% trans %}Journal{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "sales" %}
             <td style=" width:10%">
-              Sales
+              {% trans %}Sales{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "purchase" %}
             <td style=" width:10%">
-              Purchase
+              {% trans %}Purchase{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "creditnote" %}
             <td style=" width:10%">
-              Credit Note
+              {% trans %}Credit Note{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "debitnote" %}
             <td style=" width:10%">
-              Debit Note
+              {% trans %}Debit Note{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "salesreturn" %}
             <td style=" width:10%">
-              Sale Return
+              {% trans %}Sale Return{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "purchasereturn" %}
             <td style=" width:10%">
-              Purchase Return
+              {% trans %}Purchase Return{% endtrans %}
             </td>
             {% endif %}
             <td style=" width:20%">
@@ -121,8 +121,8 @@
   <br>
   <div>
     <span class="hidden-print" style="margin:auto; display:table;">
-      <button type="button" class="btn btn-sm btn-danger hidden-print" id="lotback" accesskey="b"><u>B</u>ack</button>
-      <button type="button" class="btn btn-sm btn-info" id="lotprint" accesskey="t">Prin<u>t</u></button>
+      <button type="button" class="btn btn-sm btn-danger hidden-print" id="lotback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+      <button type="button" class="btn btn-sm btn-info" id="lotprint" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
     </span>
   </div>
   <script type="text/javascript">
