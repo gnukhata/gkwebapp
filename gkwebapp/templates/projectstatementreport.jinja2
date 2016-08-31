@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>GNUKhata | {{projectname}} Statement</title>
+  <title>{% trans %}GNUKhata{% endtrans %} | {{projectname}} {% trans %}Statement{% endtrans %}</title>
   <style type="text/css">
 
   .selected
@@ -104,18 +104,18 @@
   <input type="hidden" id="calculateto" name="calculateto" value="{{to}}"></input>
   <input type="hidden" id="projectcode" name="projectcode" value="{{projectcode}}"></input>
   <input type="hidden" id="projectname" name="projectname" value="{{projectname}}"></input>
-  <span class="pull-right" style="padding-right:15px"><i>Period</i> : {{from}} to {{to}}</span>
-  <span style="margin:auto; display:table;"><i>Statement for</i> : {{projectname}}</span>
+  <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : {{from}} {% trans %}to{% endtrans %} {{to}}</span>
+  <span style="margin:auto; display:table;"><i>{% trans %}Statement for{% endtrans %}</i> : {{projectname}}</span>
 
   <div class="table-responsive">
     <table id="prjsttable" class=" shadow table table-fixedheader table-condensed">
       <thead>
         <tr>
-          <th class="col-xs-1">Sr. No.</th>
-          <th class="col-xs-4">Account</th>
-          <th class="col-xs-3">Group</th>
-          <th style="text-align:right" class="col-xs-2">Outgoings</th>
-          <th style="text-align:right" class="col-xs-2">Incomings</th>
+          <th class="col-xs-1">{% trans %}Sr. No.{% endtrans %}</th>
+          <th class="col-xs-4">{% trans %}Account{% endtrans %}</th>
+          <th class="col-xs-3">{% trans %}Group{% endtrans %}</th>
+          <th style="text-align:right" class="col-xs-2">{% trans %}Outgoings{% endtrans %}</th>
+          <th style="text-align:right" class="col-xs-2">{% trans %}Incomings{% endtrans %}</th>
         </tr>
       </thead>
       <tbody>
@@ -147,9 +147,9 @@
       </tbody>
     </table>
     <span style="margin:auto; display:table;">
-      <button class="btn btn-sm btn-danger" type="button" id="prjstback" accesskey="b"><u>B</u>ack</button>
-      <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">E<u>x</u>port to Spreadsheet</u></button>
-      <button class="btn btn-sm btn-primary" type="button"  id="printprjstatement" accesskey="t">View Prin<u>t</u>able Version</button>
+      <button class="btn btn-sm btn-danger" type="button" id="prjstback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">{% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</u></button>
+      <button class="btn btn-sm btn-primary" type="button"  id="printprjstatement" accesskey="t">{% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
     </span>
   </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/projectstatementreport.js')}}"></script>
