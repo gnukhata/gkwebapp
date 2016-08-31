@@ -4,7 +4,7 @@
 
 
 	<title>
-		GNUKhata | Remove User
+		{% trans %}GNUKhata{% endtrans %} | {% trans %}Remove User{% endtrans %}
 	</title>
 </head>
 <body>
@@ -14,35 +14,35 @@
 		<div id="removeuser" style="margin-top:50px;" class="mainbox col-xs-4 col-xs-offset-4">
 			<div class="panel shadow" class="col-md-offset-4" >
 				<div class="panel-heading">
-					<div class="panel-title" >Remove User</div>
+					<div class="panel-title" >{% trans %}Remove User{% endtrans %}</div>
 				</div>
 
 				<div style="padding-top:30px" class="panel-body" >
 					<div class="alert alert-danger" id="remove-blank-alert" hidden>
 
-						Please select an user!
+						{% trans %}Please select an user!{% endtrans %}
 					</div>
 
 					<div class="alert alert-success" id="remsuccess-alert" hidden>
 
-						User removed successfully.
+						{% trans %}User removed successfully.{% endtrans %}
 					</div>
 					<div class="alert alert-success" id="accessdenied-alert" hidden>
 
-						You are not allowed to remove this user.
+						{% trans %}You are not allowed to remove this user.{% endtrans %}
 					</div>
 					<div class="alert alert-success" id="actiondisallowed-alert" hidden>
 
-						The action is disallowed temporarily.
+						{% trans %}The action is disallowed temporarily.{% endtrans %}
 					</div>
 					<div class="alert alert-success" id="connectionfailed-alert" hidden>
 
-						Connection Failed.
+						{% trans %}Connection Failed.{% endtrans %}
 					</div>
 			<form id="removeUserform" class="form-horizontal" method="delete" >
-							<label for="Username">Us<u>e</u>rname:</label>
+							<label for="Username">{% trans %}Us<u>e</u>rname:{% endtrans %}</label>
               <select class = "form-control input-sm" id="username"  name = "username" accesskey="e">
-                <option value="" disabled selected hidden>--Select User--</option>
+                <option value="" disabled selected hidden>--{% trans %}Select User{% endtrans %}--</option>
                 {% for user in  Users%}
 								{%if user["userrole"]!= -1%}
                 <option value="{{user['userid']}}">{{user["username"]}}</option>
@@ -52,11 +52,11 @@
 							<br><br>
 						</form>
 						<div id="nousers" hidden class="well well-sm">
-						<h4>No users found! <br><small>You can create <a id="newuser" href="#">new users</a>.</small></h4>
+						<h4>{% trans %}No users found!{% endtrans %} <br><small>{% trans %}You can create{% endtrans %} <a id="newuser" href="#">{% trans %}new users{% endtrans %}</a>.</small></h4>
 					</div>
 						</div>
 							<div class="panel-footer">
-							<button id="remove" class="btn btn-danger btn-sm" accesskey="v">Remo<u>v</u>e</button>
+							<button id="remove" class="btn btn-danger btn-sm" accesskey="v">{% trans %}Remo<u>v</u>e{% endtrans %}</button>
 
 						</div>
 					<div id="m_confirmdel" class="modal fade" tabindex="-1" role="dialog">
@@ -65,14 +65,14 @@
 								<div class="modal-content">
 									<div class="modal-header">
 
-										<h4 class="modal-title">Remove</h4>
+										<h4 class="modal-title">{% trans %}Remove{% endtrans %}</h4>
 									</div>
 									<div class="modal-body">
-										<p>Are you sure?</p>
+										<p>{% trans %}Are you sure?{% endtrans %}</p>
 									</div>
 									<div class="modal-footer">
-										<button type="button" id ="m_yes" class="btn btn-warning" data-dismiss="modal">Yes</button>
-										<button type="button" id="m_no" data-dismiss="modal" class="btn btn-danger">No</button>
+										<button type="button" id ="m_yes" class="btn btn-warning" data-dismiss="modal">{% trans %}Yes{% endtrans %}</button>
+										<button type="button" id="m_no" data-dismiss="modal" class="btn btn-danger">{% trans %}No{% endtrans %}</button>
 									</div>
 								</div><!-- /.modal-content -->
 							</div><!-- /.modal-dialog -->
