@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GNUKhata | Projects</title>
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Projects{% endtrans %}</title>
   <style media="screen">
   .rightJustified {
     text-align: right;
@@ -96,39 +96,39 @@
   <div class="container-fluid">
     <div class="alert alert-success" id="success-alert" aria-live="rude" role="alert" hidden>
 
-      Project saved.
+      {% trans %}Project saved.{% endtrans %}
     </div>
     <div class="alert alert-danger" id="failure-alert" aria-live="rude" role="alert" hidden>
 
-      Project could not be saved.
+      {% trans %}Project could not be saved.{% endtrans %}
     </div>
     <div class="alert alert-danger" id="blank-alert" aria-live="rude" role="alert" hidden>
 
-      Please enter project name!
+      {% trans %}Please enter project name!{% endtrans %}
     </div>
     <div class="alert alert-danger" id="duplicate-alert" aria-live="rude" role="alert" hidden>
 
-      Project already exists!
+      {% trans %}Project already exists!{% endtrans %}
     </div>
     <div class="alert alert-danger" id="transaction-alert" aria-live="rude" role="alert" hidden>
 
-      Project cannot be deleted!
-      Transactions might be remaining for this project.
+      {% trans %}Project cannot be deleted!{% endtrans %}
+      {% trans %}Transactions might be remaining for this project.{% endtrans %}
     </div>
     <div class="col-md-4">
       <div class="panel shadow">
         <div class="panel-heading">
-          <h3 id = "addid" class="panel-title">Add Cost Center</h3>
+          <h3 id = "addid" class="panel-title">{% trans %}Add Cost Center{% endtrans %}</h3>
         </div>
         <div class="panel-body">
           <form class="form-horizontal" id="prjform">
-            <label id="prjlbl" for="prjname">Pro<u>j</u>ect Name: </label>
+            <label id="prjlbl" for="prjname">{% trans %}Pro<u>j</u>ect Name:{% endtrans %} </label>
             <input type="text" name="projectname" class="form-control" id="prjname" accesskey="j">
             <br>
-            <label id="amtlbl" for="prjamount">Sanc<u>t</u>ioned Amount: </label>
+            <label id="amtlbl" for="prjamount">{% trans %}Sanc<u>t</u>ioned Amount:{% endtrans %} </label>
             <input class="form-control rightJustified" id="prjamount" name="sanctionedamount" placeholder="0.00" accesskey="t">
             <br>
-            <button type="submit" class="btn btn-success" accesskey="a"><u>A</u>dd</button>
+            <button type="submit" class="btn btn-success" accesskey="a">{% trans %}<u>A</u>dd{% endtrans %}</button>
           </form>
         </div>
       </div>
@@ -138,23 +138,23 @@
       <div class=" panel shadow">
 
       <div class="panel-heading">
-        <h3 id="listid" class="panel-title">Cost Center List</h3>
+        <h3 id="listid" class="panel-title">{% trans %}Cost Center List{% endtrans %}</h3>
       </div>
       <div class="panel-body">
         <table id="prjtable" class="table col-xs-5 table-condensed table-fixedheader">
           <thead>
             <tr>
               <th id="prjlbltbl" class="col-xs-7">
-                Project Name
+                {% trans %}Project Name{% endtrans %}
               </th>
               <th id="amtlbltbl" class="col-xs-3 rightJustified">
-                Sanctioned Amount
+                {% trans %}Sanctioned Amount{% endtrans %}
               </th>
               <th class="col-xs-1" style="text-align:center;">
-                Delete
+                {% trans %}Delete{% endtrans %}
               </th>
               <th class="col-xs-1" style="text-align:center;">
-                Edit
+                {% trans %}Edit{% endtrans %}
               </th>
             </tr>
           </thead>
@@ -191,14 +191,14 @@
         <div class="modal-content">
           <div class="modal-header">
 
-            <h4 class="modal-title">Delete?</h4>
+            <h4 class="modal-title">{% trans %}Delete?{% endtrans %}</h4>
           </div>
           <div class="modal-body">
-            <p>Are you sure?</p>
+            <p>{% trans %}Are you sure?{% endtrans %}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-            <button type="button" id="prjdel" data-dismiss="modal" class="btn btn-danger">Delete</button>
+            <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+            <button type="button" id="prjdel" data-dismiss="modal" class="btn btn-danger">{% trans %}Delete{% endtrans %}</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -210,18 +210,18 @@
       <div class="modal-content">
         <div class="modal-header">
 
-          <h4 class="modal-title">Edit Project</h4>
+          <h4 class="modal-title">{% trans %}Edit Project{% endtrans %}</h4>
         </div>
         <form class="form-horizontal" id="m_editform">
           <div class="modal-body">
-            <label for="m_prjname">Project name: </label>
+            <label for="m_prjname">{% trans %}Project name:{% endtrans %} </label>
             <input type="text" class="form-control" id="m_prjname">
             <br>
-            <label for="m_prjamount">Sanctioned Amount: </label>
+            <label for="m_prjamount">{% trans %}Sanctioned Amount:{% endtrans %} </label>
             <input class="form-control rightJustified" id="m_prjamount" placeholder="0.00">
           </div>
           <div class="modal-footer">
-            <button type="submit" id="m_edit" data-dismiss="modal" data-backdrop="false" class="btn btn-success" accesskey="s"><u>S</u>ave</button>
+            <button type="submit" id="m_edit" data-dismiss="modal" data-backdrop="false" class="btn btn-success" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
           </div>
         </form>
       </div><!-- /.modal-content -->
