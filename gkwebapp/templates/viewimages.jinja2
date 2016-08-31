@@ -29,10 +29,10 @@
       <div class="well well-sm shadow">
         <div class="form-inline">
           <div class="form-group">
-            <h4>Image No : {{ loop.index }}</h4>
+            <h4>{% trans %}Image No :{% endtrans %} {{ loop.index }}</h4>
           </div>
           <div class="form-group pull-right imgremove">
-            <button id="removeimg" value="{{key}}" class="delimg btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Remove image</button>
+            <button id="removeimg" value="{{key}}" class="delimg btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>{% trans %}Remove image{% endtrans %}</button>
           </div>
         </div>
       </div>
@@ -41,8 +41,8 @@
       </div>
       {% endfor %}
       <div class="alert alert-success" id="image-success-alert"  aria-live="rude" role="alert" hidden>
-        
-        Changes saved.
+
+        {% trans %}Changes saved.{% endtrans %}
       </div>
       <div class="well well-sm shadow imgremove">
         <span style="margin:auto; display:table;">
@@ -50,10 +50,10 @@
             <div class="form-group">
               <label class="btn btn-primary" for="addimg">
                 <input name="img" accesskey="a" class="input-sm" id="addimg" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
-                <u>A</u>dd
+                {% trans %}<u>A</u>dd{% endtrans %}
               </label>
               <span class='label label-info' id="upload-file-info"></span>
-              <button type="button" id="saveimg" class="btn btn-success" accesskey="s" name="button"><u>S</u>ave Changes</button>
+              <button type="button" id="saveimg" class="btn btn-success" accesskey="s" name="button">{% trans %}<u>S</u>ave Changes{% endtrans %}</button>
             </div>
           </div>
         </span>
