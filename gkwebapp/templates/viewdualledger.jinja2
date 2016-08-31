@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GNUKhata | Dual Ledgers</title>
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Dual Ledgers{% endtrans %}</title>
   <style media="screen">s
   .shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -18,29 +18,29 @@
       <div class="modal-content">
     <div class="panel shadow">
       <div class="panel-heading">
-        <h3 class="panel-title">View Dual Ledgers</h3>
+        <h3 class="panel-title">{% trans %}View Dual Ledgers{% endtrans %}</h3>
       </div>
       <div class="panel-body" style="padding-top:5px">
         <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
 
-          <label for="viewdualledger_fromdate">Please enter date in proper format!</label>
+          <label for="viewdualledger_fromdate">{% trans %}Please enter date in proper format!{% endtrans %}</label>
         </div>
         <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
 
-          <label for="viewdualledger_fromdate">Please enter date within the financial year!</label>
+          <label for="viewdualledger_fromdate">{% trans %}Please enter date within the financial year!{% endtrans %}</label>
         </div>
         <div class="alert alert-danger" id="compare-date-alert" aria-live="rude" role="alert" hidden>
 
-          <label for="viewdualledger_todate">From date should be smaller or equal to to date !</label>
+          <label for="viewdualledger_todate">{% trans %}From date should be smaller or equal to to date !{% endtrans %}</label>
         </div>
         <div class="alert alert-danger" id="account-blank-alert" aria-live="rude" role="alert" hidden>
 
-          <label for="viewdualledger_accname">Please select an account!</label>
+          <label for="viewdualledger_accname">{% trans %}Please select an account!{% endtrans %}</label>
         </div>
         <div style="margin-bottom: 5px" class="col-xs-12 from-group">
-          <label for="viewdualledger_accname">Account Name :</label>
+          <label for="viewdualledger_accname">{% trans %}Account Name :{% endtrans %}</label>
           <select class = "form-control input-sm" id="viewdualledger_accname"  name = "viewdualledger_accname" >
-            <option value="" disabled selected hidden>Select Account</option>
+            <option value="" disabled selected hidden>{% trans %}Select Account{% endtrans %}</option>
             {% for accs in gkresult %}
             <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
             {% endfor %}
@@ -48,7 +48,7 @@
           <br>
 
 
-          <label for="viewdualledger_fromdate">From Date:</label>
+          <label for="viewdualledger_fromdate">{% trans %}From Date:{% endtrans %}</label>
           <div class="form-inline" >
 
             <div class="form-group">
@@ -60,7 +60,7 @@
 
           </div>
           <br>
-          <label for="viewdualledger_todate">To Date:</label>
+          <label for="viewdualledger_todate">{% trans %}To Date:{% endtrans %}</label>
           <div class="form-inline" >
 
             <div class="form-group">
@@ -71,11 +71,11 @@
             </div>
           </div>
           <br>
-          <label> <input type="checkbox" class="dis" id="viewdualledger_nar" >Narration</label>
+          <label> <input type="checkbox" class="dis" id="viewdualledger_nar" >{% trans %}Narration{% endtrans %}</label>
           <br>
-          <label for="viewdualledger_prjname">Project Name :</label>
+          <label for="viewdualledger_prjname">{% trans %}Project Name :{% endtrans %}</label>
           <select class = "form-control input-sm dis" id="viewdualledger_prjname"  name = "viewdualledger_prjname">
-            <option value="" selected>None</option>
+            <option value="" selected>{% trans %}None{% endtrans %}</option>
             {% for prj in projects %}
             <option value="{{prj['projectcode']}}">{{prj["projectname"]}}</option>
             {% endfor %}
@@ -84,8 +84,8 @@
         </div>
       </div>
       <div class="panel-footer">
-        <button class="btn btn-primary btn-sm" id="viewdualledger_submit" name="view" accesskey="w">Vie<u>w</u></button>
-        <button id="viewdualledger_reset" class="btn btn-danger btn-sm" accesskey="e">R<u>e</u>set</button>
+        <button class="btn btn-primary btn-sm" id="viewdualledger_submit" name="view" accesskey="w">{% trans %}Vie<u>w</u>{% endtrans %}</button>
+        <button id="viewdualledger_reset" class="btn btn-danger btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
 
       </div>
     </div>
