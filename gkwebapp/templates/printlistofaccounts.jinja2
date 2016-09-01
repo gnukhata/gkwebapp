@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>GNUKhata | {{projectname}} Statement</title>
+  <title>{% trans %}GNUKhata{% endtrans %} | {{projectname}} {% trans %}Statement{% endtrans %}</title>
   <style type="text/css">
 
   td {
@@ -27,28 +27,28 @@
   </style>
 </head>
 <body>
-  <span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>List of Accounts</strong></span>
+  <span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>{% trans %}List of Accounts{% endtrans %}</strong></span>
 
   <div class="table-responsive printorgdetails">
     <table class="table table-condensed table-striped shadow">
       <thead>
         <tr class="visible-print">
           <th colspan="4" style="text-align:center; font-size:80%;">
-            List of Accounts
+            {% trans %}List of Accounts{% endtrans %}
           </th>
         </tr>
         <tr>
           <th class="col-xs-1">
-            Sr. No.
+            {% trans %}Sr. No.{% endtrans %}
           </th>
           <th class="col-xs-5">
-            Account Name
+            {% trans %}Account Name{% endtrans %}
           </th>
           <th class="col-xs-3">
-            Group Name
+            {% trans %}Group Name{% endtrans %}
           </th>
           <th class="col-xs-3">
-            Sub-Group Name
+            {% trans %}Sub-Group Name{% endtrans %}
           </th>
         </tr>
       </thead>
@@ -74,8 +74,8 @@
       </tbody>
     </table>
     <span style="margin:auto; display:table;">
-  		<button type="button" class="btn btn-sm btn-danger hidden-print" id="loaback" accesskey="b"><u>B</u>ack</button>
-  		<button type="button" class="btn btn-sm btn-info hidden-print" id="loaprint" accesskey="t">Prin<u>t</u></button>
+  		<button type="button" class="btn btn-sm btn-danger hidden-print" id="loaback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+  		<button type="button" class="btn btn-sm btn-info hidden-print" id="loaprint" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
   	</span>
   </div>
   <script type="text/javascript">
