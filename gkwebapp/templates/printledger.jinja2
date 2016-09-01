@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>GNUKhata | Ledger | {{ledgerheader["accountname"]}}</title>
+		<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Ledger{% endtrans %} | {{ledgerheader["accountname"]}}</title>
     <style>
     @page {
       size: 21cm 29.7cm;
@@ -34,26 +34,26 @@
 	  <input type="hidden" id="narrationflag" name="narrationflag" value="{{ledgerrefresh["narrationflag"]}}"></input>
 	  <input type="hidden" id="projectname" name="projectname" value="{{ledgerrefresh["projectname"]}}"></input>
 	  <input type="hidden" id="side" name="side" value="{{ledgerrefresh["side"]}}"></input>
-		<div class="printorgdetails hidden-print" style="text-align:center;"><i>Ledger Account</i> : <b>{{ledgerheader["accountname"]}}</b>{% if ledgerheader["projectname"]!="" %}
-		<br><i>Project</i> : {{ledgerheader["projectname"]}}
-		{% endif %}<br><i>Period</i> : {{ledgerheader["calculatefrom"]}} to {{ledgerheader["calculateto"]}}</div>
+		<div class="printorgdetails hidden-print" style="text-align:center;"><i>{% trans %}Ledger Account{% endtrans %}</i> : <b>{{ledgerheader["accountname"]}}</b>{% if ledgerheader["projectname"]!="" %}
+		<br><i>{% trans %}Project{% endtrans %}</i> : {{ledgerheader["projectname"]}}
+		{% endif %}<br><i>{% trans %}Period{% endtrans %}</i> : {{ledgerheader["calculatefrom"]}} {% trans %}to{% endtrans %} {{ledgerheader["calculateto"]}}</div>
     <br>
 		<div class="table-responsive printorgdetails">
 			<table id="ledgertable" class="table shadow table-striped table-condensed">
 				<thead>
 					<tr class="visible-print">
 						<th colspan="6" style="text-align:center; font-size:80%">
-							<i>Ledger Account : </i>{{ledgerheader["accountname"]}}<br>
-							<i>Period : </i>{{ledgerheader["calculatefrom"]}} to {{ledgerheader["calculateto"]}}
+							<i>{% trans %}Ledger Account :{% endtrans %} </i>{{ledgerheader["accountname"]}}<br>
+							<i>{% trans %}Period :{% endtrans %} </i>{{ledgerheader["calculatefrom"]}} {% trans %}to{% endtrans %} {{ledgerheader["calculateto"]}}
 						</th>
 					</tr>
 					<tr>
-						<th class="col-xs-1">Date</th>
-						<th class="col-xs-1">V.No.</th>
-						<th class="col-xs-1">Type</th>
-						<th class="col-xs-4">Particulars</th>
-						<th style="text-align:right" class="col-xs-2">Debit</th>
-						<th style="text-align:right" class="col-xs-2">Credit</th>
+						<th class="col-xs-1">{% trans %}Date{% endtrans %}</th>
+						<th class="col-xs-1">{% trans %}V.No.{% endtrans %}</th>
+						<th class="col-xs-1">{% trans %}Type{% endtrans %}</th>
+						<th class="col-xs-4">{% trans %}Particulars{% endtrans %}</th>
+						<th style="text-align:right" class="col-xs-2">{% trans %}Debit{% endtrans %}</th>
+						<th style="text-align:right" class="col-xs-2">{% trans %}Credit{% endtrans %}</th>
 					</tr>
 				</thead>
 				<tbody style="background-color:white;">
@@ -73,13 +73,13 @@
 						{% if record["vouchertype"]=="" %}
 						<td class="col-xs-1"></td>
 						{% elif (record["vouchertype"]=="purchasereturn")%}
-						<td class="col-xs-1">Purchase Return</td>
+						<td class="col-xs-1">{% trans %}Purchase Return{% endtrans %}</td>
 						{% elif (record["vouchertype"]=="salesreturn")%}
-						<td class="col-xs-1">Sale Return</td>
+						<td class="col-xs-1">{% trans %}Sale Return{% endtrans %}</td>
 						{% elif (record["vouchertype"]=="creditnote")%}
-						<td class="col-xs-1">Credit Note</td>
+						<td class="col-xs-1">{% trans %}Credit Note{% endtrans %}</td>
 						{% elif (record["vouchertype"]=="debitnote")%}
-						<td class="col-xs-1">Debit Note</td>
+						<td class="col-xs-1">{% trans %}Debit Note{% endtrans %}</td>
 						{% else %}
 						<td class="col-xs-1" style="text-align:left">
 							{{(record["vouchertype"]).title()}}
@@ -91,7 +91,7 @@
 							{{pr}} <br>
 							{% endfor %}
 							{% if record.ttlRunDr %}
-								&nbsp&nbsp&nbsp&nbsp <i>Running Total:</i><br>
+								&nbsp&nbsp&nbsp&nbsp <i>{% trans %}Running Total:{% endtrans %}</i><br>
 							{% endif %}
 							{% if record['narration']!="" and narrationflag==true %}
 							({{record['narration']}})
@@ -125,8 +125,8 @@
 				</tbody>
 			</table>
 			<span style="margin:auto; display:table;">
-				<button class="btn btn-sm btn-primary hidden-print" type="button" id="printback" accesskey="b"><u>B</u>ack</button>
-				<button class="btn btn-sm btn-primary hidden-print" type="button"	id="realprint" accesskey="t">Prin<u>t</u></button>
+				<button class="btn btn-sm btn-primary hidden-print" type="button" id="printback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+				<button class="btn btn-sm btn-primary hidden-print" type="button"	id="realprint" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
 			</span>
 		</div>
 		<script type="text/javascript">
