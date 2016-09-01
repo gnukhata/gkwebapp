@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>GNUKhata | Cash Flow</title>
-	<title>GNUKhata | {{projectname}} Statement</title>
+	<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Cash Flow{% endtrans %}</title>
+	<title>{% trans %}GNUKhata{% endtrans %} | {{projectname}} {% trans %}Statement{% endtrans %}</title>
 	<style type="text/css">
 	.nopadding {
 		padding: 0 !important;
@@ -34,9 +34,9 @@
 </head>
 <body>
 	{% if orgtype=="Profit Making" %}
-	<span class="printorgdetails hidden-print"  style="margin:auto; display:table;"><strong>Cash Flow Account</strong> for the period <strong>{{from}}</strong> to <strong>{{to}}</strong></span>
+	<span class="printorgdetails hidden-print"  style="margin:auto; display:table;"><strong>{% trans %}Cash Flow Account{% endtrans %}</strong>{% trans %}for the period{% endtrans %} <strong>{{from}}</strong>{% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
 	{% else %}
-	<span class="printorgdetails hidden-print"  style="margin:auto; display:table;"><strong>Receipt & Payment Account</strong> for the period <strong>{{from}}</strong> to <strong>{{to}}</strong></span>
+	<span class="printorgdetails hidden-print"  style="margin:auto; display:table;"><strong>{% trans %}Receipt & Payment Account{% endtrans %}</strong>{% trans %}for the period{% endtrans %} <strong>{{from}}</strong>{% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
 	{% endif %}
 	<div class="row">
 		<div class="table-responsive printorgdetails col-xs-6 nopadding">
@@ -46,16 +46,16 @@
 					<tr class="visible-print">
 						<th colspan="4" style="text-align:left; font-size:80%;">
 							{% if orgtype=="Profit Making" %}
-							Cash Flow Account
+							{% trans %}Cash Flow Account{% endtrans %}
 							{% else %}
-							Receipt & Payment Account
+							{% trans %}Receipt & Payment Account{% endtrans %}
 							{% endif %}
 						</th>
 					</tr>
 					<tr>
 						<th class="col-xs-1">&nbsp</th>
-						<th class="col-xs-9">Particulars</th>
-						<th style="text-align:right" class="col-xs-2">Amount</th>
+						<th class="col-xs-9">{% trans %}Particulars{% endtrans %}</th>
+						<th style="text-align:right" class="col-xs-2">{% trans %}Amount{% endtrans %}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -68,7 +68,7 @@
 							{% if rcrecord['accountcode']!="" %}
 							{{rcrecord['particulars']}}<br>
 							{% if rcrecord.ttlRunDr %}
-							&nbsp&nbsp&nbsp&nbsp Running Total:
+							&nbsp&nbsp&nbsp&nbsp {% trans %}Running Total:{% endtrans %}
 							{% else %}
 							<br>
 							{% endif %}
@@ -105,13 +105,13 @@
 				<thead>
 					<tr class="visible-print">
 						<th colspan="4" style="text-align:right; font-size:80%;">
-							Period: {{from}} to {{to}}
+							{% trans %}Period:{% endtrans %} {{from}} to {{to}}
 						</th>
 					</tr>
 					<tr>
 						<th class="col-xs-1">&nbsp</th>
-						<th class="col-xs-9">Particulars</th>
-						<th style="text-align:right" class="col-xs-2">Amount</th>
+						<th class="col-xs-9">{% trans %}Particulars{% endtrans %}</th>
+						<th style="text-align:right" class="col-xs-2">{% trans %}Amount{% endtrans %}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -124,7 +124,7 @@
 							{% if pyrecord['accountcode']!="" %}
 							{{pyrecord['particulars']}}<br>
 							{% if pyrecord.ttlRunCr %}
-							&nbsp&nbsp&nbsp&nbsp Running Total:
+							&nbsp&nbsp&nbsp&nbsp {% trans %}Running Total:{% endtrans %}
 							{% else %}
 							<br>
 							{% endif %}
@@ -161,8 +161,8 @@
 		<input type="hidden" id="ledfromdate" value="{{from}}">
 		<input type="hidden" id="backflag" value="{{backflag}}">
 		<span style="margin:auto; display:table;">
-			<button type="button" class="btn btn-sm btn-danger hidden-print" id="cfback" accesskey="b"><u>B</u>ack</button>
-			<button type="button" class="btn btn-sm btn-info hidden-print" id="cfprint" accesskey="t">Prin<u>t</u></button>
+			<button type="button" class="btn btn-sm btn-danger hidden-print" id="cfback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+			<button type="button" class="btn btn-sm btn-info hidden-print" id="cfprint" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
 		</span>
 	</div>
 	<script type="text/javascript">
