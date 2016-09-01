@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>GNUKhata | Monthly Ledger</title>
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Monthly Ledger{% endtrans %}</title>
 <style type="text/css">
 
 .selected
@@ -21,7 +21,7 @@ td {
   <div id="monthdiv" class="container-fluid">
     <div class="panel">
       <div class="panel-heading">
-        <span style="margin:auto; display:table;"><i>Ledger Account</i> : <strong>{{accountname}}</strong></span>
+        <span style="margin:auto; display:table;"><i>{% trans %}Ledger Account{% endtrans %}</i> : <strong>{{accountname}}</strong></span>
         <input type="hidden" id="accname" name="projectname" value="{{accountname}}"></input>
       </div>
       <div class="panel-body">
@@ -29,10 +29,10 @@ td {
           <table id="mthltable" class="shadow table table-bordered table-condensed">
             <thead>
               <tr>
-                <th class="col-xs-3">Month</th>
-                <th style="text-align:right" class="col-xs-3">Debit</th>
-                <th style="text-align:right" class="col-xs-3">Credit</th>
-                <th style="text-align:center" class="col-xs-3">No. of Vouchers</th>
+                <th class="col-xs-3">{% trans %}Month{% endtrans %}</th>
+                <th style="text-align:right" class="col-xs-3">{% trans %}Debit{% endtrans %}</th>
+                <th style="text-align:right" class="col-xs-3">{% trans %}Credit{% endtrans %}</th>
+                <th style="text-align:center" class="col-xs-3">{% trans %}No. of Vouchers{% endtrans %}</th>
               </tr>
             </thead>
             <tbody>
@@ -77,9 +77,9 @@ td {
       </div>
       <div class="panel-footer hidden-print">
         <span style="margin:auto; display:table;">
-        <button type="button" class="btn btn-sm btn-danger" id="mthlback" accesskey="b"><u>B</u>ack</button>
-        <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">E<u>x</u>port to Spreadsheet</button>
-        <button class="btn btn-sm btn-primary" type="button"  id="realprintmonth" accesskey="t">Prin<u>t</u></button>
+        <button type="button" class="btn btn-sm btn-danger" id="mthlback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+        <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">{% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
+        <button class="btn btn-sm btn-primary" type="button"  id="realprintmonth" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
       </span>
       </div>
     </div>
