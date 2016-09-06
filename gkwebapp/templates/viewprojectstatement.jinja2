@@ -32,7 +32,7 @@
           <label id="prjalert" for="viewprjstate_prjname">{% trans %}Please select a project!{% endtrans %}</label>
         </div>
         <div style="margin-bottom: 5px" class="col-xs-12 from-group">
-          <label for="viewprjstate_fromdate">{% trans %}From Date:{% endtrans %}</label>
+          <label for="viewprjstate_fromdate">{% trans %}From Date{% endtrans %}:</label>
           <div class="form-inline" >
 
             <div class="form-group">
@@ -44,7 +44,7 @@
 
           </div>
           <br>
-          <label for="viewprjstate_todate">{% trans %}To <u>D</u>ate:{% endtrans %}</label>
+          <label for="viewprjstate_todate">{% trans %}To <u>D</u>ate{% endtrans %}:</label>
           <div class="form-inline" >
 
             <div class="form-group">
@@ -55,7 +55,7 @@
             </div>
           </div>
           <br>
-          <label id = "prjnamelbl" for="viewprjstate_prjname">{% trans %}Pro<u>j</u>ect Name :{% endtrans %}</label>
+          <label id = "prjnamelbl" for="viewprjstate_prjname">{% trans %}Pro<u>j</u>ect Name{% endtrans %}:</label>
           <select class = "form-control input-sm dis" id="viewprjstate_prjname"  name = "viewprjstate_prjname" accesskey="j">
             <option value="" disabled hidden selected>{% trans %}Please select{% endtrans %}</option>
             {% for prj in projects %}
