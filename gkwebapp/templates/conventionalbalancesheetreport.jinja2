@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>GNUKhata</title>
+  <title>{% trans %}GNUKhata{% endtrans %}</title>
   <style type="text/css">
 
   .selected
@@ -119,9 +119,9 @@
 </head>
 <body>
   {% if orgtype=="Profit Making" %}
-  <span style="margin:auto; display:table;"><strong>Conventional Balance Sheet </strong>as on <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
+  <span style="margin:auto; display:table;"><strong>{% trans %}Conventional Balance Sheet{% endtrans %} </strong>{% trans %}as on{% endtrans %} <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
   {% else %}
-  <span style="margin:auto; display:table;"><strong>Conventional Statement of Affairs </strong>as on <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
+  <span style="margin:auto; display:table;"><strong>{% trans %}Conventional Statement of Affairs{% endtrans %} </strong>{% trans %}as on{% endtrans %} <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
   {% endif %}
   <div class="row">
     <div class="table-responsive col-xs-6 nopadding" >
@@ -129,13 +129,13 @@
         <thead>
           <tr>
             {% if orgtype=="Profit Making" %}
-            <th class="col-xs-6">Capital and Liabilities</th>
+            <th class="col-xs-6">{% trans %}Capital and Liabilities{% endtrans %}</th>
             {% else %}
-            <th class="col-xs-6">Corpus and Liabilities</th>
+            <th class="col-xs-6">{% trans %}Corpus and Liabilities{% endtrans %}</th>
             {% endif %}
             <th style="text-align:right" class="col-xs-2">&nbsp</th>
             <th style="text-align:right" class="col-xs-2">&nbsp</th>
-            <th style="text-align:right" class="col-xs-2">Amount</th>
+            <th style="text-align:right" class="col-xs-2">{% trans %}Amount{% endtrans %}</th>
           </tr>
         </thead>
         <tbody>
@@ -222,10 +222,10 @@
       <table id="patable" class="shadow table table-condensed table-fixedheader cbalsheettable">
         <thead>
           <tr>
-            <th class="col-xs-6">Property and Assets</th>
+            <th class="col-xs-6">{% trans %}Property and Assets{% endtrans %}</th>
             <th style="text-align:right" class="col-xs-2">&nbsp</th>
             <th style="text-align:right" class="col-xs-2">&nbsp</th>
-            <th style="text-align:right" class="col-xs-2">Amount</th>
+            <th style="text-align:right" class="col-xs-2">{% trans %}Amount{% endtrans %}</th>
           </tr>
         </thead>
         <tbody>
@@ -311,14 +311,14 @@
     </div>
   </div>
   <span class="hidden-print" style="margin:auto; display:table;">
-    <button type="button" class="btn btn-sm btn-danger" id="balback" accesskey="b"><u>B</u>ack</button>
-    <button type="button" class="btn btn-sm btn-primary" id="sbgbtn" accesskey="g">Show Sub<u>g</u>roups</button>
-    <button type="button" class="btn btn-sm btn-primary" id="grpbtn" accesskey="w">Sho<u>w</u> Groups</button>
-    <button type="button" class="btn btn-sm btn-primary" id="accbtn" accesskey="a">Show All <u>A</u>ccounts</button>
-    <button type="button" class="btn btn-sm btn-primary" id="sabutn" accesskey="s"><u>S</u>ources & Applications of Funds</button>
-     <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">E<u>x</u>port to Spreadsheet</button>
-     <button class="btn btn-sm btn-primary" type="button"  id="printconvbalance" accesskey="t">View Prin<u>t</u>able Version</button>
-     <button class="btn btn-sm btn-primary" type="button"  id="realprintbalance" accesskey="t">Prin<u>t</u></button>
+    <button type="button" class="btn btn-sm btn-danger" id="balback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+    <button type="button" class="btn btn-sm btn-primary" id="sbgbtn" accesskey="g">{% trans %}Show Sub<u>g</u>roups{% endtrans %}</button>
+    <button type="button" class="btn btn-sm btn-primary" id="grpbtn" accesskey="w">{% trans %}Sho<u>w</u> Groups{% endtrans %}</button>
+    <button type="button" class="btn btn-sm btn-primary" id="accbtn" accesskey="a">{% trans %}Show All <u>A</u>ccounts{% endtrans %}</button>
+    <button type="button" class="btn btn-sm btn-primary" id="sabutn" accesskey="s">{% trans %}<u>S</u>ources & Applications of Funds{% endtrans %}</button>
+     <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">{% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
+     <button class="btn btn-sm btn-primary" type="button"  id="printconvbalance" accesskey="t">{% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
+     <button class="btn btn-sm btn-primary" type="button"  id="realprintbalance" accesskey="t">{% trans %}Prin<u>t{% endtrans %}</u></button>
   </span>
   <input type="hidden" id="ledtodate" value="{{to}}">
   <input type="hidden" id="ledfromdate" value="{{from}}">
