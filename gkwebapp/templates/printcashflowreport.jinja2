@@ -68,7 +68,7 @@
 							{% if rcrecord['accountcode']!="" %}
 							{{rcrecord['particulars']}}<br>
 							{% if rcrecord.ttlRunDr %}
-							&nbsp&nbsp&nbsp&nbsp {% trans %}Running Total:{% endtrans %}
+							&nbsp&nbsp&nbsp&nbsp {% trans %}Running Total{% endtrans %}:
 							{% else %}
 							<br>
 							{% endif %}
@@ -105,7 +105,7 @@
 				<thead>
 					<tr class="visible-print">
 						<th colspan="4" style="text-align:right; font-size:80%;">
-							{% trans %}Period:{% endtrans %} {{from}} to {{to}}
+							{% trans %}Period{% endtrans %}: {{from}} {% trans %}to{% endtrans %} {{to}}
 						</th>
 					</tr>
 					<tr>
@@ -124,7 +124,7 @@
 							{% if pyrecord['accountcode']!="" %}
 							{{pyrecord['particulars']}}<br>
 							{% if pyrecord.ttlRunCr %}
-							&nbsp&nbsp&nbsp&nbsp {% trans %}Running Total:{% endtrans %}
+							&nbsp&nbsp&nbsp&nbsp {% trans %}Running Total{% endtrans %}:
 							{% else %}
 							<br>
 							{% endif %}
