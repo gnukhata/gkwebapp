@@ -35,7 +35,7 @@
           <label for="viewledger_accname">{% trans %}Please select an account!{% endtrans %}</label>
         </div>
         <div style="margin-bottom: 5px" class="col-xs-12 from-group">
-          <label for="viewledger_accname">{% trans %}Account Name :{% endtrans %}</label>
+          <label for="viewledger_accname">{% trans %}Account Name{% endtrans %}:</label>
           <select class = "form-control input-sm" id="viewledger_accname"  name = "viewledger_accname" >
             <option value="" disabled selected hidden>{% trans %}Select Account{% endtrans %}</option>
             {% for accs in gkresult %}
@@ -46,7 +46,7 @@
           <label> <input type="checkbox" id="viewledger_monthly">{% trans %}Monthly Ledger{% endtrans %}</label>
           <br>
 
-          <label for="viewledger_fromdate">{% trans %}From Date:{% endtrans %}</label>
+          <label for="viewledger_fromdate">{% trans %}From Date{% endtrans %}:</label>
           <div class="form-inline" >
 
             <div class="form-group">
@@ -58,7 +58,7 @@
 
           </div>
           <br>
-          <label for="viewledger_todate">{% trans %}To Date:{% endtrans %}</label>
+          <label for="viewledger_todate">{% trans %}To Date{% endtrans %}:</label>
           <div class="form-inline" >
 
             <div class="form-group">
@@ -71,7 +71,7 @@
           <br>
           <label> <input type="checkbox" class="dis" id="viewledger_nar" >{% trans %}Narration{% endtrans %}</label>
           <br>
-          <label for="viewledger_prjname">{% trans %}Project Name :{% endtrans %}</label>
+          <label for="viewledger_prjname">{% trans %}Project Name{% endtrans %}:</label>
           <select class = "form-control input-sm dis" id="viewledger_prjname"  name = "viewledger_prjname" >
             <option value="" selected>{% trans %}None{% endtrans %}</option>
             {% for prj in projects %}
