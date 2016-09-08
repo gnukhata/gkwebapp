@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>GNUKhata | Deleted Voucher</title>
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Deleted Voucher{% endtrans %}</title>
   <style type="text/css">
 
   .selected
@@ -101,19 +101,19 @@
   </style>
 </head>
 <body>
-  <span style="margin:auto; display:table;"><b>List of Deleted Vouchers</b></span>
+  <span style="margin:auto; display:table;"><b>{% trans %}List of Deleted Vouchers{% endtrans %}</b></span>
   </br>
   <div class="table-responsive">
     <table id="deletedvouchertable" class=" shadow table table-fixedheader table-condensed">
       <thead>
         <tr>
-          <th class="col-xs-1">Date</th>
-          <th class="col-xs-1">V.No.</th>
-          <th class="col-xs-1">Voucher Type</th>
-          <th class="col-xs-5">Particulars</th>
-          <th style="text-align:right" class="col-xs-1">Amount</th>
-          <th style="text-align:right" class="col-xs-2">Amount</th>
-          <th class = "col-xs-1" style="text-align:center">Project</th>
+          <th class="col-xs-1">{% trans %}Date{% endtrans %}</th>
+          <th class="col-xs-1">{% trans %}V.No.{% endtrans %}</th>
+          <th class="col-xs-1">{% trans %}Voucher Type{% endtrans %}</th>
+          <th class="col-xs-5">{% trans %}Particulars{% endtrans %}</th>
+          <th style="text-align:right" class="col-xs-1">{% trans %}Amount{% endtrans %}</th>
+          <th style="text-align:right" class="col-xs-2">{% trans %}Amount{% endtrans %}</th>
+          <th class = "col-xs-1" style="text-align:center">{% trans %}Project{% endtrans %}</th>
         </tr>
       </thead>
       <tbody>
@@ -133,13 +133,13 @@
           {% if transaction["vouchertype"]=="" %}
           <td class="col-xs-1">&nbsp</td>
           {% elif (transaction["vouchertype"]=="purchasereturn")%}
-          <td class="col-xs-1">Purchase Return</td>
+          <td class="col-xs-1">{% trans %}Purchase Return{% endtrans %}</td>
           {% elif (transaction["vouchertype"]=="salesreturn")%}
-          <td class="col-xs-1">Sale Return</td>
+          <td class="col-xs-1">{% trans %}Sale Return{% endtrans %}</td>
           {% elif (transaction["vouchertype"]=="creditnote")%}
-          <td class="col-xs-1">Credit Note</td>
+          <td class="col-xs-1">{% trans %}Credit Note{% endtrans %}</td>
           {% elif (transaction["vouchertype"]=="debitnote")%}
-          <td class="col-xs-1">Debit Note</td>
+          <td class="col-xs-1">{% trans %}Debit Note{% endtrans %}</td>
           {% else %}
           <td class="col-xs-1" style="text-align:left">
             {{(transaction["vouchertype"]).title()}}
