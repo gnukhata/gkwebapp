@@ -106,83 +106,83 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
         <div class="modal-body">
           <div class="alert failure-alert" id="notran-del-alert" aria-live="rude" role="alert" hidden>
 
-            Voucher could not be deleted.
+            {% trans %}Voucher could not be deleted.{% endtrans %}
           </div>
           <div class="alert failure-alert" id="notran-edit-alert" aria-live="rude" role="alert" hidden>
 
-            Voucher could not be edited.
+            {% trans %}Voucher could not be edited.{% endtrans %}
           </div>
           <div class="alert failure-alert" id="notran-clone-alert" aria-live="rude" role="alert" hidden>
 
-            Voucher could not be cloned.
+            {% trans %}Voucher could not be cloned.{% endtrans %}
           </div>
           <div class="alert alert-danger" id="balance-alert" aria-live="rude" role="alert" hidden>
 
-            Totals misbalance!
+            {% trans %}Totals misbalance!{% endtrans %}
           </div>
           <div class="alert alert-danger" id="zero-alert" aria-live="rude" role="alert" hidden>
 
-            Voucher amount cannot be zero!
+            {% trans %}Voucher amount cannot be zero!{% endtrans %}
           </div>
           <div class="alert alert-danger" id="zerorow-alert" aria-live="rude" role="alert" hidden>
 
-            Voucher with zero amount cannot be saved!
+            {% trans %}Voucher with zero amount cannot be saved!{% endtrans %}
           </div>
           <div class="alert alert-danger" id="accs-alert" aria-live="rude" role="alert" hidden>
 
-            An account can be selected only once!
+            {% trans %}An account can be selected only once!{% endtrans %}
           </div>
           <div class="alert alert-danger" id="vno-alert" aria-live="rude" role="alert" hidden>
 
-            Please enter voucher number!
+            {% trans %}Please enter voucher number!{% endtrans %}
           </div>
           <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
 
-            Please enter voucher date in proper format!
+            {% trans %}Please enter voucher date in proper format!{% endtrans %}
           </div>
           <div class="alert alert-warning" id="attachment-alert" aria-live="rude" role="alert" hidden>
 
-            No attachment found!
+            {% trans %}No attachment found!{% endtrans %}
           </div>
           <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
 
-            Please enter voucher date within the financial year!
+            {% trans %}Please enter voucher date within the financial year!{% endtrans %}
           </div>
           <div class="alert alert-warning nopadding" id="postdate-alert" aria-live="rude" role="alert" hidden>
-            <strong>You are entering a post-dated transaction!</strong>
+            <strong>{% trans %}You are entering a post-dated transaction!{% endtrans %}</strong>
           </div>
 
               <form id="viewvoucher" name="voucher" class="" action="" method="get">
                 <div class="form-inline">
                 <div class="well well-sm" >
-                  <label for="vno">Voucher No:</label><label for="vno" style="color:red;font-size: 120%;">*</label>
+                  <label for="vno">{% trans %}Voucher No{% endtrans %}:</label><label for="vno" style="color:red;font-size: 120%;">*</label>
                   <input type="text" name="vno" class=" form-control input-sm" id="vno" size="10" value="{{voucher["vouchernumber"]}}">
                   <div class="form-group col-xs-offset-2">
                     {% if vtype=="contra" %}
-                      <label class="lblec"><i>Contra</i></label>
+                      <label class="lblec"><i>{% trans %}Contra{% endtrans %}</i></label>
                     {% elif vtype == "payment" %}
-                      <label class="lblec"><i>Payment</i></label>
+                      <label class="lblec"><i>{% trans %}Payment{% endtrans %}</i></label>
                     {% elif vtype == "receipt" %}
-                      <label class="lblec"><i>Receipt</i></label>
+                      <label class="lblec"><i>{% trans %}Receipt{% endtrans %}</i></label>
                     {% elif vtype == "journal" %}
-                      <label class="lblec"><i>Journal</i></label>
+                      <label class="lblec"><i>{% trans %}Journal{% endtrans %}</i></label>
                     {% elif vtype == "sales" %}
-                      <label class="lblec"><i>Sales</i></label>
+                      <label class="lblec"><i>{% trans %}Sales{% endtrans %}</i></label>
                     {% elif vtype == "purchase" %}
-                      <label class="lblec"><i>Purchase</i></label>
+                      <label class="lblec"><i>{% trans %}Purchase{% endtrans %}</i></label>
                     {% elif vtype == "creditnote" %}
-                      <label class="lblec"><i>Credit Note</i></label>
+                      <label class="lblec"><i>{% trans %}Credit Note{% endtrans %}</i></label>
                     {% elif vtype == "debitnote" %}
-                      <label class="lblec"><i>Debit Note</i></label>
+                      <label class="lblec"><i>{% trans %}Debit Note{% endtrans %}</i></label>
                     {% elif vtype == "salesreturn" %}
-                      <label class="lblec"><i>Sale Return</i></label>
+                      <label class="lblec"><i>{% trans %}Sale Return{% endtrans %}</i></label>
                     {% elif vtype == "purchasereturn" %}
-                      <label class="lblec"><i>Purchase Return</i></label>
+                      <label class="lblec"><i>{% trans %}Purchase Return{% endtrans %}</i></label>
                     {% endif %}
                   </div>
 
                   <div class="pull-right form-group">
-                    <label for="vdate"><u>D</u>ate:</label>
+                    <label for="vdate">{% trans %}<u>D</u>ate{% endtrans %}:</label>
                     <input type="text" class="vdate form-control input-sm" id="vdate" value="{{voucher['voucherdate'][:2]}}" size="2" maxlength="2" placeholder="DD"accesskey="d">
                     <input type="text" id="vmonth" class="vdate form-control input-sm" value="{{voucher['voucherdate'][3:5]}}" size="2" maxlength="2" placeholder="MM">
                     <input type="text" id="vyear" class="vdate form-control input-sm" value="{{voucher['voucherdate'][6:]}}" size="4" maxlength="4" placeholder="YYYY">
@@ -195,16 +195,16 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                       <thead>
                         <tr>
                           <th width="55px">
-                            Cr/Dr
+                            {% trans %}Cr/Dr{% endtrans %}
                           </th>
                           <th width="40%">
-                            Account Name
+                            {% trans %}Account Name{% endtrans %}
                           </th>
                           <th class="rightJustified">
-                            Dr Amount
+                            {% trans %}Dr Amount{% endtrans %}
                           </th>
                           <th class="rightJustified">
-                            Cr Amount
+                            {% trans %}Cr Amount{% endtrans %}
                           </th>
                         </tr>
                       </thead>
@@ -213,8 +213,8 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                         <tr>
                           <td>
                             <select class="form-control input-sm democrdr" >
-                              <option value="Dr" selected>Dr</option>
-                              <option value="Cr">Cr</option>
+                              <option value="Dr" selected>{% trans %}Dr{% endtrans %}</option>
+                              <option value="Cr">{% trans %}Cr{% endtrans %}</option>
                             </select>
                           </td>
                           <td>
@@ -242,8 +242,8 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                         <tr>
                           <td>
                             <select class="form-control input-sm democrdr" >
-                              <option value="Cr" selected>Cr</option>
-                              <option value="Dr">Dr</option>
+                              <option value="Cr" selected>{% trans %}Cr{% endtrans %}</option>
+                              <option value="Dr">{% trans %}Dr{% endtrans %}</option>
                             </select>
                           </td>
                           <td>
@@ -290,19 +290,19 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                       <thead>
                         <tr>
                           <th class="col-xs-1">
-                            Cr/Dr
+                            {% trans %}Cr/Dr{% endtrans %}
                           </th>
                           <th class="col-xs-4">
-                            Account Name
+                            {% trans %}Account Name{% endtrans %}
                           </th>
                           <th class="col-xs-3 rightJustified">
-                            Dr Amount
+                            {% trans %}Dr Amount{% endtrans %}
                           </th>
                           <th class="col-xs-3 rightJustified">
-                            Cr Amount
+                            {% trans %}Cr Amount{% endtrans %}
                           </th>
                           <th class="col-xs-1">
-                            Remove
+                            {% trans %}Remove{% endtrans %}
                           </th>
                         </tr>
                       </thead>
@@ -311,8 +311,8 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                         <tr>
                           <td class="col-xs-1">
                             <select class="form-control input-sm crdr" >
-                              <option value="Dr" selected>Dr</option>
-                              <option value="Cr">Cr</option>
+                              <option value="Dr" selected>{% trans %}Dr{% endtrans %}</option>
+                              <option value="Cr">{% trans %}Cr{% endtrans %}</option>
                             </select>
                           </td>
                           <td class="col-xs-4">
@@ -343,8 +343,8 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                         <tr>
                           <td class="col-xs-1">
                             <select class="form-control input-sm crdr" >
-                              <option value="Cr" selected>Cr</option>
-                              <option value="Dr">Dr</option>
+                              <option value="Cr" selected>{% trans %}Cr{% endtrans %}</option>
+                              <option value="Dr">{% trans %}Dr{% endtrans %}</option>
                             </select>
                           </td>
                           <td class="col-xs-4">
@@ -389,7 +389,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                   </div>
 
                 <div class="col-xs-1">
-                  <label for="project">Pro<u>j</u>ect:</label>
+                  <label for="project">{% trans %}Pro<u>j</u>ect{% endtrans %}:</label>
                 </div>
                 <div class="col-xs-3">
                   <select class="form-control input-sm" id="project" accesskey="j">
@@ -398,19 +398,19 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                       {% if project['projectcode']==voucher["project"] %}
 
                         <option value="{{project['projectcode']}}" selected>{{project['projectname']}}</option>
-                        <option value="">None</option>
+                        <option value="">{% trans %}None{% endtrans %}</option>
                       {% else %}
                       <option value="{{project['projectcode']}}">{{project['projectname']}}</option>
                       {% endif %}
                     {% endfor %}}
 
                     {% if voucher["project"]==None %}
-                        <option value="" selected>None</option>
+                        <option value="" selected>{% trans %}None{% endtrans %}</option>
                     {% endif %}
                   </select>
                 </div>
                 <div class="col-xs-1">
-                  <label for="narration">N<u>a</u>rration:</label>
+                  <label for="narration">{% trans %}N<u>a</u>rration{% endtrans %}:</label>
                 </div>
                 <div class="pull-right">
                   <textarea class="form-control" name="narration" id="narr" rows="2" cols="50" accesskey="a">{{voucher["narration"]}}</textarea>
@@ -429,22 +429,22 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
           <div id="butform" class="form-inline">
             <div class="form-group">
               {% if voucher['status'] %}
-              <button type="button" class="btn btn-warning btn-sm" id="lock" value="Unlock" accesskey="k">Unloc<u>k</u></button>
+              <button type="button" class="btn btn-warning btn-sm" id="lock" value="Unlock" accesskey="k">{% trans %}Unloc<u>k</u>{% endtrans %}</button>
               {% else %}
-              <button type="button" class="btn btn-warning btn-sm" id="lock" value="Lock" accesskey="k">Loc<u>k</u></button>
+              <button type="button" class="btn btn-warning btn-sm" id="lock" value="Lock" accesskey="k">{% trans %}Loc<u>k</u>{% endtrans %}</button>
               {% endif %}
-              <button type="button" class="btn btn-primary btnfocus btn-sm" id="edit" accesskey="e"><u>E</u>dit</button>
-              <button type="button" class="btn btn-primary btnfocus btn-sm" id="clone" accesskey="o">Cl<u>o</u>ne</button>
-              <button type="submit" id="save" class="btn btn-success btn-sm" accesskey="s"><u>S</u>ave</button>
-              <button type="button" class="btn btn-danger btnfocus btn-sm" id="delete" accesskey="d"><u>D</u>elete</button>
+              <button type="button" class="btn btn-primary btnfocus btn-sm" id="edit" accesskey="e">{% trans %}<u>E</u>dit{% endtrans %}</button>
+              <button type="button" class="btn btn-primary btnfocus btn-sm" id="clone" accesskey="o">{% trans %}Cl<u>o</u>ne{% endtrans %}</button>
+              <button type="submit" id="save" class="btn btn-success btn-sm" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
+              <button type="button" class="btn btn-danger btnfocus btn-sm" id="delete" accesskey="d">{% trans %}<u>D</u>elete{% endtrans %}</button>
               {% if voucher["attachmentcount"]>0 %}
-              <button type="button" class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">View Attac<u>h</u>ment</button>
+              <button type="button" class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">{% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
             </div>
             {% else %}
             <div class="form-group" id="replaceattach">
               <label class="btn btn-info btn-sm" id="attachlbl" for="my-edit-file-selector">
                 <input name="img" accesskey="e" class="input-sm" multiple accept="image/*" id="my-edit-file-selector" type="file" style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
-                <b id="attachtext">Add Attachm<u>e</u>nt</b>
+                <b id="attachtext">{% trans %}Add Attachm<u>e</u>nt{% endtrans %}</b>
               </label>
               <span class='label label-info' id="upload-file-info"></span>
             </div>
@@ -452,12 +452,12 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
             <div class="form-group" id="clonereplaceattach">
               <label class="btn btn-info btn-sm" id="attachlbl" for="my-edit-file-selector">
                 <input name="img" accesskey="e" class="input-sm" multiple accept="image/*" id="my-edit-file-selector" type="file" style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
-                <b id="attachtext">Add Attachm<u>e</u>nt</b>
+                <b id="attachtext">{% trans %}Add Attachm<u>e</u>nt{% endtrans %}</b>
               </label>
               <span class='label label-info' id="upload-file-info"></span>
             </div>
             <div class="form-group">
-              <button type="button" class="btn btn-danger btn-sm" id="vouchercancel" accesskey="k" name="button">Bac<u>k</u></button>
+              <button type="button" class="btn btn-danger btn-sm" id="vouchercancel" accesskey="k" name="button">{% trans %}Bac<u>k</u>{% endtrans %}</button>
             </div>
           </div>
         </div>
