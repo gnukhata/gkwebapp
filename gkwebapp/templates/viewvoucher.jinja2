@@ -104,10 +104,17 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-body">
-          <div class="alert failure-alert" id="notran-alert" aria-live="rude" role="alert" hidden>
+          <div class="alert failure-alert" id="notran-del-alert" aria-live="rude" role="alert" hidden>
 
-            No transactions found
-            <p id="nt">Voucher couldnot be </p>
+            Voucher could not be deleted.
+          </div>
+          <div class="alert failure-alert" id="notran-edit-alert" aria-live="rude" role="alert" hidden>
+
+            Voucher could not be edited.
+          </div>
+          <div class="alert failure-alert" id="notran-clone-alert" aria-live="rude" role="alert" hidden>
+
+            Voucher could not be cloned.
           </div>
           <div class="alert alert-danger" id="balance-alert" aria-live="rude" role="alert" hidden>
 

@@ -1128,10 +1128,9 @@ $("#delete").click(function(event) {
 
       }
       else {
-        $("#failure-alert").alert();
-        $("#nt").append('Deleted')
-        $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#failure-alert").hide();
+        $("#notran-del-alert").alert();
+        $("#notran-del-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#notran-del-alert").hide();
         });
       }
     });
@@ -1271,10 +1270,9 @@ $("#delete").click(function(event) {
               $("tbody tr:eq("+$("#modalindex").val()+")").dblclick();
             }
             else {
-              $("#failure-alert").alert();
-              $("#nt").append('Cloned')
-              $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#failure-alert").hide();
+              $("#notran-clone-alert").alert();
+              $("#notran-clone-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#notran-clone-alert").hide();
               });
             }
 
@@ -1315,11 +1313,10 @@ $("#delete").click(function(event) {
               $("tbody tr:eq("+$("#modalindex").val()+")").dblclick();
             }
             else {
-              $("#failure-alert").alert();
-              $("#nt").append('Edited')
-              $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#notran-edit-alert").alert();
+              $("#notran-edit-alert").fadeTo(2250, 500).slideUp(500, function(){
 
-                $("#failure-alert").hide();
+                $("#notran-edit-alert").hide();
               });
             }
 
