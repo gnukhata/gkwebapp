@@ -111,11 +111,11 @@
     </div>
     <div class="alert alert-danger" id="account-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      <label for="vno">Please select an account!</label>
+      <label for="vno">{% trans %}Please select an account!{% endtrans %}</label>
     </div>
     <div class="alert alert-danger" id="failure-alert" aria-live="rude" role="alert" hidden>
 
-      {% trans %}Voucher could not be saved. {% trans %}
+      {% trans %}Voucher could not be saved. {% endtrans %}
     </div>
     <div class="alert alert-danger" id="balance-alert" aria-live="rude" role="alert" hidden>
 
@@ -181,7 +181,7 @@
           {% endif %}
         </div>
         <div class="pull-right form-group">
-          <label for="vdate"><u>{% trans %}D</u>ate{% endtrans %}:</label>
+          <label for="vdate">{% trans %}<u>D</u>ate{% endtrans %}:</label>
           <input type="text" class="vdate form-control input-sm" id="vdate" value="{{lastdetails['vdate'][0:2]}}" size="2" maxlength="2" placeholder="DD" accesskey="d">
           <input type="text" id="vmonth" class="vdate form-control input-sm" value="{{lastdetails['vdate'][3:5]}}" size="2" maxlength="2" placeholder="MM">
           <input type="text" id="vyear" class="vdate form-control input-sm" value="{{lastdetails['vdate'][6:]}}" size="4" maxlength="4" placeholder="YYYY">
