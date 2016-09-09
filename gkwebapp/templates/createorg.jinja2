@@ -18,82 +18,82 @@
       <div id="createtorg" style="margin-top:50px;" class="mainbox col-md-6 pull-right">
         <div class="alert alert-danger" id="orgname-blank-alert" aria-live="rude" role="alert" hidden>
 
-          Please enter organisation name!
+          {% trans %}Please enter organisation name!{% endtrans %}
         </div>
         <div class="alert alert-danger" id="orgname-duplicate-alert" aria-live="rude" role="alert" hidden>
 
-          Duplicate organisation!
+          {% trans %}Duplicate organisation!{% endtrans %}
         </div>
         <div class="alert alert-danger" id="compare-date-alert" aria-live="rude" role="alert" hidden>
 
-          <label for="viewledger_todate">Financial end date should be greater or equal to start date!</label>
+          <label for="viewledger_todate">{% trans %}Financial end date should be greater or equal to start date!{% endtrans %}</label>
         </div>
         <div class="alert alert-danger" id="date-blank-alert" aria-live="rude" role="alert" hidden>
 
-          Please enter Date!
+          {% trans %}Please enter Date!{% endtrans %}
         </div>
         <div class="alert alert-danger" id="date-improper-alert" aria-live="rude" role="alert" hidden>
 
-          Improper Date!
+          {% trans %}Improper Date!{% endtrans %}
         </div>
         <div class="panel" >
           <div class="panel-heading">
-            <div class="panel-title">Create Organisation</div>
+            <div class="panel-title">{% trans %}Create Organisation{% endtrans %}</div>
           </div>
           <div style="padding-top:30px" class="panel-body" >
 
             <form id="createorgform"  role="form">
               <div class="form-group">
-                <label for="orgname"><u>O</u>rganisation Name:</label>
+                <label for="orgname">{% trans %}<u>O</u>rganisation Name{% endtrans %}: </label>
                 <input name="orgname" class="form-control" placeholder="Enter Organisation Name" id="orgname" type="text" data-validation-required-message="Please Enter Organisation Name" accesskey="o"/>
                 <br/>
 
-                <label for="orgcase"><u>C</u>ase:</label>
+                <label for="orgcase">{% trans %}<u>C</u>ase{% endtrans %}: </label>
                 <select name="orgcase" class="form-control" id="orgcase" accesskey="c">
-                  <option value="As-Is">As-is</option>
-                  <option value="Upper Case">Upper Case</option>
-                  <option value="Lower Case">Lower Case</option>
-                  <option value="Title Case">Title Case</option>
+                  <option value="As-Is">{% trans %}As{% endtrans %}-{% trans %}is{% endtrans %}</option>
+                  <option value="Upper Case">{% trans %}Upper Case{% endtrans %}</option>
+                  <option value="Lower Case">{% trans %}Lower Case{% endtrans %}</option>
+                  <option value="Title Case">{% trans %}Title Case{% endtrans %}</option>
                 </select>
 
                 <br/>
 
-                <label for="orgtype">Organisation <u>T</u>ype:</label>
+                <label for="orgtype">{% trans %}Organisation <u>T</u>ype{% endtrans %}: </label>
                 <select name="orgtype" class="form-control" id="orgtype" data-validation-required-message="Please select Organisation Type" accesskey="t">
-                  <option value="Profit Making">Profit Making</option>
-                  <option value="Not For Profit">Not For Profit</option>
+                  <option value="Profit Making">{% trans %}Profit Making{% endtrans %}</option>
+                  <option value="Not For Profit">{% trans %}Not For Profit{% endtrans %}</option>
                 </select>
 
                 <br/>
 
-                <label for="financialdate"><u>F</u>inancial Year:</label>
+                <label for="financialdate">{% trans %}<u>F</u>inancial Year{% endtrans %}: </label>
 
                 <div class="form-inline">
 
-                  <label class="sr-only" for="fromday">Enter From Day</label>
+                  <label class="sr-only" for="fromday">{% trans %}Enter From Day{% endtrans %}</label>
                   <input type="text" id="fromday" name="fromday" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" accesskey="f" >
 
-                  <label class="sr-only" for="frommonth">Enter From Month</label>
+                  <label class="sr-only" for="frommonth">{% trans %}Enter From Month{% endtrans %}</label>
                   <input type="text" id="frommonth" name="frommonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" >
 
-                  <label class="sr-only" for="fromyear">Enter From Year</label>
+                  <label class="sr-only" for="fromyear">{% trans %}Enter From Year{% endtrans %}</label>
                   <input type="text" id="fromyear" name="fromyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
 
-                  <label>--To--</label>
+                  <label>--{% trans %}To{% endtrans %}--</label>
 
-                  <label class="sr-only" for="today">Enter To Day</label>
+                  <label class="sr-only" for="today">{% trans %}Enter To Day{% endtrans %}</label>
                   <input type="text" id="today" name="day" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" >
 
-                  <label class="sr-only" for="tomonth">Enter To Month</label>
+                  <label class="sr-only" for="tomonth">{% trans %}Enter To Month{% endtrans %}</label>
                   <input type="text" id="tomonth" name="tomonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM"  >
 
-                  <label class="sr-only" for="toyear">Enter To Year</label>
+                  <label class="sr-only" for="toyear">{% trans %}Enter To Year{% endtrans %}</label>
                   <input type="text" id="toyear" name="toyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
 
 
                 </div>
                 <br />
-                <button class="btn btn-success" id="btnsubmit" type="submit" accesskey="p"><span class="glyphicon glyphicon-arrow-right"></span><u>P</u>roceed</button>
+                <button class="btn btn-success" id="btnsubmit" type="submit" accesskey="p"><span class="glyphicon glyphicon-arrow-right"></span>{% trans %}<u>P</u>roceed{% endtrans %}</button>
               </div>
 
 

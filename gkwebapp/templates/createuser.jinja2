@@ -3,7 +3,7 @@
 <html>
 <head>
   <title>
-    GNUKhata | Create User
+    {% trans %}GNUKhata{% endtrans %} | {% trans %}Create User{% endtrans %}
   </title>
 
   <style>
@@ -23,83 +23,83 @@
       <div id="loginbox" style="margin-top:10px;" class="mainbox col-md-6 col-md-offset-3">
       <div class="panel" >
         <div class="panel-heading">
-          <div class="panel-title">Create New User</div>
+          <div class="panel-title">{% trans %}Create New User{% endtrans %}</div>
         </div>
 
         <form id="adduser" method="post" action="createuser" class="form-horizontal">
         <div style="padding-top:15px" class="panel-body" >
             <div class="alert alert-danger" id="username-blank-alert"  aria-live="rude" role="alert" hidden>
 
-              Please enter username!
+              {% trans %}Please enter username!{% endtrans %}
             </div>
             <div class="alert alert-danger" id="password-blank-alert"  aria-live="rude" role="alert" hidden>
 
-              Please enter password!
+              {% trans %}Please enter password!{% endtrans %}
             </div>
             <div class="alert alert-danger" id="cnfpass-blank-alert"  aria-live="rude" role="alert" hidden>
 
-              Please re-enter password!
+              {% trans %}Please re-enter password!{% endtrans %}
             </div>
             <div class="alert alert-danger" id="checkpassuser-blank-alert"  aria-live="rude" role="alert" hidden>
 
-              Password doesn't match!
+              {% trans %}Password doesn't match!{% endtrans %}
             </div>
             <div class="alert alert-danger" id="role-blank-alert"  aria-live="rude" role="alert" hidden>
 
-              Please select role!
+              {% trans %}Please select role!{% endtrans %}
             </div>
             <div class="alert alert-danger" id="secque-blank-alert"  aria-live="rude" role="alert" hidden>
 
-              Please enter security question!
+              {% trans %}Please enter security question!{% endtrans %}
             </div>
             <div class="alert alert-danger" id="secans-blank-alert"  aria-live="rude" role="alert" hidden>
 
-              Please enter the answer of security question!
+              {% trans %}Please enter the answer of security question!{% endtrans %}
             </div>
             <div class="alert alert-success" id="success-blank-alert"  aria-live="rude" role="alert" hidden>
 
-              User successfully added!
+              {% trans %}User successfully added!{% endtrans %}
             </div>
             <div class="alert alert-danger" id="DuplicateEntry-blank-alert"  aria-live="rude" role="alert" hidden>
 
-              User already exists!
+              {% trans %}User already exists!{% endtrans %}
             </div>
             <div class="alert alert-danger" id="BadPrivilege-blank-alert"  aria-live="rude" role="alert" hidden>
 
-              You don't have authentication to add new user!
+              {% trans %}You don't have authentication to add new user!{% endtrans %}
             </div>
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
-              <label for="name" id="usrname">Us<u>e</u>rname :</label>
+              <label for="name" id="usrname">{% trans %}Us<u>e</u>rname{% endtrans %} :</label>
               <input style="border-radius: 4px" id="name" type="text" class="form-control" name="username" accesskey="e"></input>
             </div>
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
-              <label for="password" id="usrpwd">Pass<u>w</u>ord :</label>
+              <label for="password" id="usrpwd">{% trans %}Pass<u>w</u>ord{% endtrans %} :</label>
               <input style="border-radius: 4px" name="userpassword" id="password" type="password" class="form-control" accesskey="w"></input>
             </div>
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
-              <label for="confirm_password" id="pwdconfirm">C<u>o</u>nfirm Password :</label>
+              <label for="confirm_password" id="pwdconfirm">{% trans %}C<u>o</u>nfirm Password{% endtrans %} :</label>
               <input name="cnfpassword" style="border-radius: 4px" type="password" id="confirm_password" class="form-control" accesskey="o"></input>
             </div>
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
-              <label for="userrole" id="pwdconfirm">Selec<u>t</u> Role :</label>
+              <label for="userrole" id="pwdconfirm">{% trans %}Selec<u>t</u> Role{% endtrans %} :</label>
               <select name="userrole" style="border-radius: 4px" id="userrole" type="text" class="form-control" accesskey="t">
-                <option value="" disabled selected hidden>Select a role</option>
-                <option value="0">Manager</option>
-                <option value="1">Operator</option>
+                <option value="" disabled selected hidden>{% trans %}Select a role{% endtrans %}</option>
+                <option value="0">{% trans %}Manager{% endtrans %}</option>
+                <option value="1">{% trans %}Operator{% endtrans %}</option>
               </select>
             </div>
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
-              <label for="question" id="secquestion">Security <u>Q</u>uestion :</label>
+              <label for="question" id="secquestion">{% trans %}Security <u>Q</u>uestion{% endtrans %} :</label>
               <input name="userquestion" style="border-radius: 4px" type="text" class="form-control" placeholder="Security Question" id="question" accesskey="q"></input>
             </div>
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
-              <label for="answer" id="secanswer"><u>S</u>ecurity Answer :</label>
+              <label for="answer" id="secanswer">{% trans %}<u>S</u>ecurity Answer{% endtrans %} :</label>
               <input name="useranswer" style="border-radius: 4px" type="text" class="form-control" placeholder="Security Answer" id="answer" accesskey="s"></input>
             </div>
 
         </div>
         <div class="panel-footer">
-          <button type="submit" class="btn btn-success" accesskey="a">Cre<u>a</u>te</button>
+          <button type="submit" class="btn btn-success" accesskey="a">{% trans %}Cre<u>a</u>te{% endtrans %}</button>
         </div>
       </form>
       </div>

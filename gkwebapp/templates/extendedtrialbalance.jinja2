@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>GNUKhata | Extended Trial Balance</title>
+	<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Extended Trial Balance{% endtrans %}</title>
 	<style type="text/css">
 
 	.selected
@@ -102,19 +102,19 @@
 	</style>
 </head>
 <body>
-	<span style="margin:auto; display:table;"><strong>Extended Trial Balance</strong> for the period from <strong>{{from}}</strong> to <strong>{{to}}</strong></span>
+	<span style="margin:auto; display:table;"><strong>{% trans %}Extended Trial Balance{% endtrans %}</strong> {% trans %}for the period from{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
 	<div class="table-responsive">
 		<table id="gtbtable" class="shadow table table-fixedheader table-condensed trialbaltable">
 			<thead>
 				<tr>
-					<th class="col-xs-1">Sr. No.</th>
-					<th class="col-xs-3">Account Name</th>
-					<th class="col-xs-2" style="text-align:right">Opening Balance</th>
-					<th class="col-xs-1" style="text-align:right">Total Drs</th>
-					<th class="col-xs-1" style="text-align:right">Total Crs</th>
-					<th class="col-xs-1" style="text-align:right">Dr Balance</th>
-					<th class="col-xs-1" style="text-align:right">Cr Balance</th>
-					<th class="col-xs-2" style="text-align:center">Group Name</th>
+					<th class="col-xs-1">{% trans %}Sr. No.{% endtrans %}</th>
+					<th class="col-xs-3">{% trans %}Account Name{% endtrans %}</th>
+					<th class="col-xs-2" style="text-align:right">{% trans %}Opening Balance{% endtrans %}</th>
+					<th class="col-xs-1" style="text-align:right">{% trans %}Total Drs{% endtrans %}</th>
+					<th class="col-xs-1" style="text-align:right">{% trans %}Total Crs{% endtrans %}</th>
+					<th class="col-xs-1" style="text-align:right">{% trans %}Dr Balance{% endtrans %}</th>
+					<th class="col-xs-1" style="text-align:right">{% trans %}Cr Balance{% endtrans %}</th>
+					<th class="col-xs-2" style="text-align:center">{% trans %}Group Name{% endtrans %}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -168,11 +168,11 @@
 		</table>
 	</div>
 	<span style="margin:auto; display:table;">
-		<button type="button" class="btn btn-sm btn-info" id="ntbview" accesskey="a">Net Tri<u>a</u>l Balance</button>
-		<button type="button" class="btn btn-sm btn-primary" id="gtbview" accesskey="g"><u>G</u>ross Trial Balance</button>
-		<button type="button" class="btn btn-sm btn-danger" id="tbback" accesskey="b"><u>B</u>ack</button>
-		<button type="button" class="btn btn-sm btn-info" id="printbutton" accesskey="x">E<u>x</u>port to Spreadsheet</button>
-		<button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="t">View Prin<u>t</u>able Version</button>
+		<button type="button" class="btn btn-sm btn-info" id="ntbview" accesskey="a">{% trans %}Net Tri<u>a</u>l Balance{% endtrans %}</button>
+		<button type="button" class="btn btn-sm btn-primary" id="gtbview" accesskey="g">{% trans %}<u>G</u>ross Trial Balance{% endtrans %}</button>
+		<button type="button" class="btn btn-sm btn-danger" id="tbback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+		<button type="button" class="btn btn-sm btn-info" id="printbutton" accesskey="x">{% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
+		<button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="t">{% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
 	</span>
 	<input type="hidden" id="ledtodate" value="{{to}}">
 	<input type="hidden" id="trialbaltype" value="{{trialbalancetype}}">

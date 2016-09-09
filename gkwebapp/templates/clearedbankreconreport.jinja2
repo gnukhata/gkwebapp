@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>GNUKhata | Bank Reconciliation| Cleared Transactions | {{ledgerheader["accountname"]}}</title>
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Bank Reconciliation{% endtrans %} | {% trans %}Cleared Transactions{% endtrans %} | {{ledgerheader["accountname"]}}</title>
   <style type="text/css">
 
   .rightJustified{
@@ -120,11 +120,11 @@
 <body>
   <div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
 
-    <label>Please enter date in proper format!</label>
+    <label>{% trans %}Please enter date in proper format!{% endtrans %}</label>
   </div>
   <div class="alert alert-danger" id="between-date-alert"  aria-live="rude" role="alert" hidden>
 
-    <label>Clearance date cannot be before the voucher date!</label>
+    <label>{% trans %}Clearance date cannot be before the voucher date!{% endtrans %}</label>
   </div>
   <input type="hidden" id="accountcode" name="accountcode" value="{{ledgerheader["accountcode"]}}"></input>
   <input type="hidden" id="accountname" name="accountname" value="{{ledgerheader["accountname"]}}"></input>
@@ -132,25 +132,25 @@
   <input type="hidden" id="calculateto" name="calculateto" value="{{ledgerheader["calculateto"]}}"></input>
   <input type="hidden" id="narrationflag" name="narrationflag" value="{{ledgerheader["narrationflag"]}}"></input>
   <div id="clrtrans" class="table-responsive">
-    <span class="pull-right hidden-print header"><i>Period</i> : {{ledgerheader["calculatefrom"]}} to {{ledgerheader["calculateto"]}}</span>
-    <span style="margin:auto; display:table;" class="hidden-print header"><i>Cleared Transactions of</i> : {{ledgerheader["accountname"]}}</span>
+    <span class="pull-right hidden-print header"><i>{% trans %}Period{% endtrans %}</i> : {{ledgerheader["calculatefrom"]}} {% trans %}to{% endtrans %} {{ledgerheader["calculateto"]}}</span>
+    <span style="margin:auto; display:table;" class="hidden-print header"><i>{% trans %}Cleared Transactions of{% endtrans %}</i> : {{ledgerheader["accountname"]}}</span>
     <table id="clrbankrecontable" class=" shadow table table-fixedheader table-condensed">
       <thead>
         <tr>
           <th class="text-center visible-print" style="font-size:80%" colspan="6">
-            <i>Cleared Transactions of</i> : {{ledgerheader["accountname"]}}<br>
-            <i>Period</i> : {{ledgerheader["calculatefrom"]}} to {{ledgerheader["calculateto"]}}
+            <i>{% trans %}Cleared Transactions of{% endtrans %}</i> : {{ledgerheader["accountname"]}}<br>
+            <i>{% trans %}Period{% endtrans %}</i> : {{ledgerheader["calculatefrom"]}} {% trans %}to{% endtrans %} {{ledgerheader["calculateto"]}}
           </th>
         </tr>
         <tr>
-          <th class="col-xs-1">Date</th>
-          <th class="col-xs-1">V. No.</th>
-          <th class="col-xs-2 hidden-print">Particulars</th>
-          <th class="col-xs-4 visible-print">Particulars</th>
-          <th style="text-align:right" class="col-xs-2">Debit</th>
-          <th style="text-align:right" class="col-xs-2">Credit</th>
-          <th class="col-xs-2 ">Clearance Date</th>
-          <th class="col-xs-2 hidden-print">Memo</th>
+          <th class="col-xs-1">{% trans %}Date{% endtrans %}</th>
+          <th class="col-xs-1">{% trans %}V. No.{% endtrans %}</th>
+          <th class="col-xs-2 hidden-print">{% trans %}Particulars{% endtrans %}</th>
+          <th class="col-xs-4 visible-print">{% trans %}Particulars{% endtrans %}</th>
+          <th style="text-align:right" class="col-xs-2">{% trans %}Debit{% endtrans %}</th>
+          <th style="text-align:right" class="col-xs-2">{% trans %}Credit{% endtrans %}</th>
+          <th class="col-xs-2 ">{% trans %}Clearance Date{% endtrans %}</th>
+          <th class="col-xs-2 hidden-print">{% trans %}Memo{% endtrans %}</th>
         </tr>
       </thead>
       <tbody>
@@ -215,12 +215,12 @@
     </div>
   </div>
     <span class="hidden-print" style="margin:auto; display:table;">
-      <button class="btn btn-sm btn-danger" type="button" id="bankrecon_back" accesskey="e">R<u>e</u>conciliation Menu</button>
-      <button class="btn btn-sm btn-primary" type="button" id="unclrditems" accesskey="a">Uncle<u>a</u>red Items</button>
-      <button class="btn btn-sm btn-primary" type="button"  id="printstatement" accesskey="s"><u>S</u>tatement's Printable Version</button>
-      <button class="btn btn-sm btn-primary" type="button"  id="printtransactions" accesskey="t"><u>T</u>ransaction's Printable Version</button>
-      <button class="btn btn-sm btn-primary" type="button"  id="realprintbank" accesskey="t">Prin<u>t</u></button>
-      <button class="btn btn-sm btn-primary" type="button"  id="back" accesskey="b"><u>B</u>ack</button>
+      <button class="btn btn-sm btn-danger" type="button" id="bankrecon_back" accesskey="e">{% trans %}R<u>e</u>conciliation Menu{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button" id="unclrditems" accesskey="a">{% trans %}Uncle<u>a</u>red Items{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="printstatement" accesskey="s"><u>{% trans %}S</u>tatement's Printable Version{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="printtransactions" accesskey="t"><u>{% trans %}T</u>ransaction's Printable Version{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="realprintbank" accesskey="t">{% trans %}Prin<u>t{% endtrans %}</u></button>
+      <button class="btn btn-sm btn-primary" type="button"  id="back" accesskey="b"><u>{% trans %}B</u>ack{% endtrans %}</button>
     </span>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/clearedbankreconreport.js')}}"></script>
 </body>

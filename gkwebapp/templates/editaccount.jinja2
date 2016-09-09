@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>GNUKhata | Edit Account</title>
+	<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Edit Account{% endtrans %}</title>
 <style media="screen">
 .shadow {
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -25,78 +25,78 @@ th {
 	<div class="container-fluid">
 		<div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
 			<a href="" class="close" aria-label="close">&times;</a>
-			Account edited successfully.
+			{% trans %}Account edited successfully.{% endtrans %}
 		</div>
 
 		<div class="alert alert-success" id="delsuccess-alert"  aria-live="rude" role="alert" hidden>
 			<a href="" class="close" aria-label="close">&times;</a>
-			Account deleted successfully.
+			{% trans %}Account deleted successfully.{% endtrans %}
 		</div>
 
 		<div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
 			<a href="" class="close" aria-label="close">&times;</a>
-			Account could not be edited.
+			{% trans %}Account could not be edited.{% endtrans %}
 		</div>
 		<div class="alert alert-danger" id="blank-alert"  aria-live="rude" role="alert" hidden>
 
-			Please enter account name!
+			{% trans %}Please enter account name!{% endtrans %}
 		</div>
 
 		<div class="alert alert-danger" id="duplicate-alert"  aria-live="rude" role="alert" hidden>
 
-			Account already exists!
+			{% trans %}Account already exists!{% endtrans %}
 		</div>
 
 		<div class="alert alert-danger" id="transaction-alert"  aria-live="rude" role="alert" hidden>
 
-			Account cannot be deleted!
-			Transactions might be remaining for this account.
+			{% trans %}Account cannot be deleted!{% endtrans %}
+			{% trans %}Transactions might be remaining for this account.{% endtrans %}
 		</div>
 
 		<div style="padding-top:15px" class="mainbox col-md-6">
 			<div class="panel shadow" >
 				<div class="panel-heading">
-					<div class="panel-title">Edit Account</div>
+					<div class="panel-title">{% trans %}Edit Account{% endtrans %}</div>
 
 				</div>
 
 				<div style="padding-top:5px" class="panel-body" >
 
-          <label for="editaccountname" id="accname">Account Name :</label>
+          <label for="editaccountname" id="accname">{% trans %}Account Name{% endtrans %} :</label>
           <select class = "form-control input-sm" id="editaccountname"  name = "editaccountname" >
-            <option value="" disabled selected hidden>Select Account</option>
+            <option value="" disabled selected hidden>{% trans %}Select Account{% endtrans %}</option>
             {% for accs in gkresult %}
             <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
             {% endfor %}
           </select>
 					<div class="alert alert-warning nopadding" id="alertmsg"  aria-live="rude" role="alert" hidden>
-						<strong>This is a system generated account, cannot be edited/deleted.</strong>
+						<strong>{% trans %}This is a system generated account, cannot be edited/deleted.{% endtrans %}</strong>
 					</div>
 					<div class="alert alert-warning nopadding" id="accnamenoedit"  aria-live="rude" role="alert" hidden>
-						<strong>Name of this system generated account cannot be edited.</strong>
+						<strong>{% trans %}Name of this system generated account cannot be edited.{% endtrans %}</strong>
 					</div>
 					<br>
 					<form id="editaccountform" method="post"  action="editaccount" class="form-horizontal" hidden>
 
 						<div style="margin-bottom: 5px" class="col-xs-12 from-group">
-							<label for="groupname" id="gname">Group Name :</label>
+							<label for="groupname" id="gname">{% trans %}Group Name{% endtrans %} :</label>
 							<input type="text" id="groupname" name="groupname" class="form-control input-sm" value=""></input>
 							<br/>
-							<label for="subgroupname" id="sname">Sub-Group Name :</label>
+							<label for="subgroupname" id="sname">{% trans %}Sub-Group Name{% endtrans %} :</label>
 							<input type="text" id="subgroupname" name="subgroupname" class="form-control input-sm" value=""></input>
 							</br>
-							<label for="accountname" id="accname"><u>A</u>ccount Name :</label>
+							<label for="accountname" id="accname">{% trans %}<u>A</u>ccount Name{% endtrans %} :</label>
 							<input type="text" id="accountname" class="form-control input-sm" name="accountname" accesskey="a"></input>
 							</br>
-							<label for="openingbal" id="openbal"><u>O</u>pening Balance :</label>
+							<label for="openingbal" id="openbal">{% trans %}<u>O</u>pening Balance{% endtrans %} :</label>
 							<input type="text" id="openingbal" class="form-control input-sm" name="openingbal" style="text-align:right" accesskey="o"></input>
 							</br>
 							<input type="hidden" id="accountcode" class="form-control" name="accountcode" ></input>
 
-							<button type="submit" class="btn btn-primary btn-sm" id="submit" name="submit" accesskey="s"><u>S</u>ave</button>
-							<button id="reset" class="btn btn-warning btn-sm" accesskey="e">R<u>e</u>set</button>
-							<button id="delete" class="btn btn-danger btn-sm" accesskey="d"><u>D</u>elete</button>
-							<button id="edit" class="btn btn-danger btn-sm" accesskey="t">Edi<u>t</u></button>
+							<button type="submit" class="btn btn-primary btn-sm" id="submit" name="submit" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
+							<button id="reset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+							<button id="delete" class="btn btn-danger btn-sm" accesskey="d">{% trans %}<u>D</u>elete{% endtrans %}</button>
+							<button id="edit" class="btn btn-danger btn-sm" accesskey="t">{% trans %}Edi<u>t</u>{% endtrans %}</button>
 
 						</div>
 					</form>
@@ -106,14 +106,14 @@ th {
 								<div class="modal-content">
 									<div class="modal-header">
 
-										<h4 class="modal-title">Delete?</h4>
+										<h4 class="modal-title">{% trans %}Delete?{% endtrans %}</h4>
 									</div>
 									<div class="modal-body">
-										<p>Are you sure?</p>
+										<p>{% trans %}Are you sure?{% endtrans %}</p>
 									</div>
 									<div class="modal-footer">
-										<button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-										<button type="button" id="accdel" data-dismiss="modal" class="btn btn-danger">Delete</button>
+										<button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+										<button type="button" id="accdel" data-dismiss="modal" class="btn btn-danger">{% trans %}Delete{% endtrans %}</button>
 									</div>
 								</div><!-- /.modal-content -->
 							</div><!-- /.modal-dialog -->

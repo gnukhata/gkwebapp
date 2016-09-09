@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>GNUKhata | Ledger</title>
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Ledger{% endtrans %}</title>
   <style type="text/css">
 
   .selected
@@ -101,7 +101,7 @@
 <body>
   <div class="alert alert-danger" id="ua-alert" hidden>
 
-    <strong>Unauthorized to Lock/Unlock Transactions!</strong>
+    <strong>{% trans %}Unauthorized to Lock/Unlock Transactions!{% endtrans %}</strong>
   </div>
   <input type="hidden" id="urole" name="urole" value="{{userrole}}"></input>
   <input type="hidden" id="accountcode" name="accountcode" value="{{ledgerrefresh["accountcode"]}}"></input>
@@ -116,28 +116,28 @@
   <input type="hidden" id="side" name="side" value="{{ledgerrefresh["side"]}}"></input>
   <input type="hidden" id="modalindex" value=""></input>
   {% if ledgerheader["projectname"]!="" %}
-  <i>Project</i> : {{ledgerheader["projectname"]}}
+  <i>{% trans %}Project{% endtrans %}</i> : {{ledgerheader["projectname"]}}
   {% endif %}
-  <span class="pull-right" style="padding-right:15px"><i>Period</i> : {{ledgerheader["calculatefrom"]}} to {{ledgerheader["calculateto"]}}</span>
-  <span style="margin:auto; display:table;"><i>Ledger Account</i> : {{ledgerheader["accountname"]}}</span>
+  <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : {{ledgerheader["calculatefrom"]}} {% trans %}to{% endtrans %} {{ledgerheader["calculateto"]}}</span>
+  <span style="margin:auto; display:table;"><i>{% trans %}Ledger Account{% endtrans %}</i> : {{ledgerheader["accountname"]}}</span>
 
   <div class="table-responsive">
     <table id="ledgertable" class=" shadow table table-fixedheader table-condensed">
       <thead>
         <tr>
-          <th class="col-xs-1">Date</th>
-          <th class="col-xs-1">V. No.</th>
-          <th style="text-align:center" class="col-xs-1">Status</th>
-          <th class="col-xs-1">Voucher Type</th>
+          <th class="col-xs-1">{% trans %}Date{% endtrans %}</th>
+          <th class="col-xs-1">{% trans %}V. No.{% endtrans %}</th>
+          <th style="text-align:center" class="col-xs-1">{% trans %}Status{% endtrans %}</th>
+          <th class="col-xs-1">{% trans %}Voucher Type{% endtrans %}</th>
           {% if ledgerheader["projectname"]=="" %}
-          <th class="col-xs-2">Particulars</th>
-          <th style="text-align:right" class="col-xs-2">Debit</th>
-          <th style="text-align:right" class="col-xs-2">Credit</th>
-          <th style="text-align:right" class="col-xs-2">Balance</th>
+          <th class="col-xs-2">{% trans %}Particulars{% endtrans %}</th>
+          <th style="text-align:right" class="col-xs-2">{% trans %}Debit{% endtrans %}</th>
+          <th style="text-align:right" class="col-xs-2">{% trans %}Credit{% endtrans %}</th>
+          <th style="text-align:right" class="col-xs-2">{% trans %}Balance{% endtrans %}</th>
           {% else %}
-          <th class="col-xs-4">Particulars</th>
-          <th style="text-align:right" class="col-xs-2">Debit</th>
-          <th style="text-align:right" class="col-xs-2">Credit</th>
+          <th class="col-xs-4">{% trans %}Particulars{% endtrans %}</th>
+          <th style="text-align:right" class="col-xs-2">{% trans %}Debit{% endtrans %}</th>
+          <th style="text-align:right" class="col-xs-2">{% trans %}Credit{% endtrans %}</th>
           {% endif %}
         </tr>
       </thead>
@@ -168,13 +168,13 @@
           {% if record["vouchertype"]=="" %}
           <td class="col-xs-1">&nbsp</td>
           {% elif (record["vouchertype"]=="purchasereturn")%}
-          <td class="col-xs-1">Purchase Return</td>
+          <td class="col-xs-1">{% trans %}Purchase Return{% endtrans %}</td>
           {% elif (record["vouchertype"]=="salesreturn")%}
-          <td class="col-xs-1">Sale Return</td>
+          <td class="col-xs-1">{% trans %}Sale Return{% endtrans %}</td>
           {% elif (record["vouchertype"]=="creditnote")%}
-          <td class="col-xs-1">Credit Note</td>
+          <td class="col-xs-1">{% trans %}Credit Note{% endtrans %}</td>
           {% elif (record["vouchertype"]=="debitnote")%}
-          <td class="col-xs-1">Debit Note</td>
+          <td class="col-xs-1">{% trans %}Debit Note{% endtrans %}</td>
           {% else %}
           <td class="col-xs-1" style="text-align:left">
             {{(record["vouchertype"]).title()}}
@@ -230,14 +230,14 @@
     </table>
     <span style="margin:auto; display:table;">
       {% if ledgerrefresh["backflag"]>0 or ledgerrefresh.side %}
-      <button class="btn btn-sm btn-danger" type="button" id="back" accesskey="b"><u>B</u>ack</button>
+      <button class="btn btn-sm btn-danger" type="button" id="back" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
       {% endif %}
-      <button class="btn btn-sm btn-primary" type="button" id="anotherledger" accesskey="v"><u>V</u>iew Another Ledger</button>
-      <button class="btn btn-sm btn-primary" type="button" id="dualledger" accesskey="g">Dual Led<u>g</u>ers</button>
-      <button class="btn btn-sm btn-primary" type="button"  id="drsonly" accesskey="d">Only <u>D</u>rs</button>
-      <button class="btn btn-sm btn-primary" type="button"  id="crsonly" accesskey="y">Onl<u>y</u> Crs</button>
-      <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">E<u>x</u>port to Spreadsheet</u></button>
-      <button class="btn btn-sm btn-primary" type="button"  id="printledger" accesskey="t">View Prin<u>t</u>able Version</button>
+      <button class="btn btn-sm btn-primary" type="button" id="anotherledger" accesskey="v">{% trans %}<u>V</u>iew Another Ledger{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button" id="dualledger" accesskey="g">{% trans %}Dual Led<u>g</u>ers{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="drsonly" accesskey="d">{% trans %}Only <u>D</u>rs{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="crsonly" accesskey="y">{% trans %}Onl<u>y</u> Crs{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">{% trans %}E<u>x</u>port to Spreadsheet</u>{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="printledger" accesskey="t">{% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
     </span>
   </div>
 
