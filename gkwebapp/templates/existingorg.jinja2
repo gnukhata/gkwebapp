@@ -20,11 +20,11 @@
     <div id="existingorg" style="margin-top:50px;" class="mainbox col-md-6 pull-right">
       <div class="alert alert-danger" id="selorg-blank-alert" hidden>
 
-        Please select organisation!
+        {% trans %}Please select organisation!{% endtrans %}
       </div>
       <div class="panel" >
         <div class="panel-heading">
-          <div class="panel-title">Select Organisation</div>
+          <div class="panel-title">{% trans %}Select Organisation{% endtrans %}</div>
 
         </div>
 
@@ -35,9 +35,9 @@
           <form id="orgform" class="form-horizontal" role="form">
 
             <div style="margin-bottom: 25px" class="input-group col-xs-12">
-              <label for="org-name" id="orname"><u>O</u>rganisation Name:</label><br/>
+              <label for="org-name" id="orname">{% trans %}<u>O</u>rganisation Name{% endtrans %}:</label><br/>
               <select style="border-radius: 4px" class = "form-control col-xs-12" id="org-name"  name = "orgname" accesskey="o">
-                <option value="" disabled selected hidden>Select Organisation</option>
+                <option value="" disabled selected hidden>{% trans %}Select Organisation{% endtrans %}</option>
                 {% for orgs in gkresult %}
                 <option value="{{orgs}}">{{orgs["orgname"]}} , {{orgs["orgtype"]}}</option>
                 {% endfor %}
@@ -45,9 +45,9 @@
             </div>
 
             <div style="margin-bottom: 25px" class="input-group col-xs-12">
-              <label for="finalyears" id="orname">Select <u>F</u>inancial Year :</label><br/>
+              <label for="finalyears" id="orname">{% trans %}Select <u>F</u>inancial Year{% endtrans %} :</label><br/>
               <select style="border-radius: 4px" class = "form-control col-xs-12" id="finalyears" name="orgcode" accesskey="f">
-                <option value="" disabled selected hidden>Select Financial Year</option>
+                <option value="" disabled selected hidden>{% trans %}Select Financial Year{% endtrans %}</option>
               </select>
             </div>
 
@@ -60,7 +60,7 @@
               <!-- Button -->
 
               <div class="col-sm-12 controls">
-                <button id="callLogin" class="btn btn-success " accesskey="n"><span class="glyphicon glyphicon-arrow-right" style="margin-right: 5px;"></span><u>N</u>ext</button>
+                <button id="callLogin" class="btn btn-success " accesskey="n"><span class="glyphicon glyphicon-arrow-right" style="margin-right: 5px;"></span>{% trans %}<u>N</u>ext{% endtrans %}</button>
 
               </div>
             </div>
