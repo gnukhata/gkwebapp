@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>GNUKhata | Edit Organisation</title>
+	<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Edit Organisation{% endtrans %}</title>
 	<style media="screen">
 	.shadow {
 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -18,7 +18,7 @@
 
 			<div class="panel shadow" >
 				<div class="panel-heading">
-					<div class="panel-title" style="text-align:center;">Edit Organisation</div>
+					<div class="panel-title" style="text-align:center;">{% trans %}Edit Organisation{% endtrans %}</div>
 
 				</div>
 
@@ -26,15 +26,15 @@
 				</br>
 				<div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
 
-					<label for="viewledger_fromdate">Please enter date in proper format!</label>
+					<label for="viewledger_fromdate">{% trans %}Please enter date in proper format!{% endtrans %}</label>
 				</div>
 				<div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
 
-					Organisation Details edited successfully.
+					{% trans %}Organisation Details edited successfully.{% endtrans %}
 				</div>
 				<div class="alert alert-danger" id="connectionfailed"  aria-live="rude" role="alert" hidden>
-					
-					Connection Failed.
+
+					{% trans %}Connection Failed.{% endtrans %}
 				</div>
 
 				<form id="editorganisationform" method="post" class="form-inline">
@@ -46,7 +46,7 @@
 								<tr>
 									{% if gkresult["orgtype"]=="Not For Profit" %}
 									<td>
-										<label for="registrationnumber" id="regno">Registration Number :</label>
+										<label for="registrationnumber" id="regno">{% trans %}Registration Number{% endtrans %} :</label>
 									</td>
 									<td>
 										<input type="text" id="orgregno" class="form-control input-sm" name="registrationnumber" value="{{gkresult["orgregno"]}}" style="width: 100%"></input>
@@ -54,7 +54,7 @@
 								</tr>
 								<tr>
 									<td>
-										<label for="fcrano" id="fcranumber">FCRA Registration Number :</label>
+										<label for="fcrano" id="fcranumber">{% trans %}FCRA Registration Number{% endtrans %} :</label>
 									</td>
 									<td>
 										<input type="text" id="orgfcrano" class="form-control input-sm" name="fcranumber" value="{{gkresult["orgfcrano"]}}" style="width: 100%"></input>
@@ -63,7 +63,7 @@
 								{%endif%}
 								<tr>
 									<td>
-										<label for="organisationaddress" id="orgaddress">Address :</label>
+										<label for="organisationaddress" id="orgaddress">{% trans %}Address{% endtrans %} :</label>
 									</td>
 									<td>
 										<input type="text" id="orgaddr" class="form-control input-sm" name="organisationaddress" value="{{gkresult["orgaddr"]}}" style="width: 100%"></input>
@@ -71,7 +71,7 @@
 								</tr>
 								<tr>
 									<td>
-										<label for="organisationcountry" id="orgCountry">Country :</label>
+										<label for="organisationcountry" id="orgCountry">{% trans %}Country{% endtrans %} :</label>
 									</td>
 									<td>
 										<input type="text" id="orgcountry" class="form-control input-sm" name="organisationcountry" value="{{gkresult["orgcountry"]}}" style="width: 100%"></input>
@@ -79,7 +79,7 @@
 								</tr>
 								<tr>
 									<td>
-										<label for="organisationstate" id="orgState">State :</label>
+										<label for="organisationstate" id="orgState">{% trans %}State{% endtrans %} :</label>
 									</td>
 									<td>
 										<input type="text" id="orgstate" class="form-control input-sm" name="organisationstate" value="{{gkresult["orgstate"]}}" style="width: 100%"></input>
@@ -87,7 +87,7 @@
 								</tr>
 								<tr>
 									<td>
-										<label for="organisationcity" id="orgCity">City :</label>
+										<label for="organisationcity" id="orgCity">{% trans %}City{% endtrans %} :</label>
 									</td>
 									<td>
 										<input type="text" id="orgcity" class="form-control input-sm" name="organisationcity" value="{{gkresult["orgcity"]}}" style="width: 100%"></input>
@@ -95,7 +95,7 @@
 								</tr>
 								<tr>
 									<td>
-										<label for="organisationstaxnumber" id="orgstaxnumber">Service Tax Number :</label>
+										<label for="organisationstaxnumber" id="orgstaxnumber">{% trans %}Service Tax Number{% endtrans %} :</label>
 									</td>
 									<td>
 										<input type="text" id="orgstax" class="form-control input-sm" name="organisationstaxnumber" value="{{gkresult["orgstax"]}}" style="width: 100%"></input>
@@ -103,7 +103,7 @@
 								</tr>
 								<tr>
 									<td>
-										<label for="organisationpannumber" id="orgpanno">Permanent Account Number :</label>
+										<label for="organisationpannumber" id="orgpanno">{% trans %}Permanent Account Number{% endtrans %} :</label>
 									</td>
 									<td>
 										<input type="text" id="orgpan" class="form-control input-sm" name="organisationpannumber" value="{{gkresult["orgpan"]}}" style="width: 100%"></input>
@@ -118,38 +118,38 @@
 								{% if gkresult["orgtype"]=="Not For Profit" %}
 								<tr>
 									<td>
-										<label for="registrationdate">Date Of Registration :</label>
+										<label for="registrationdate">{% trans %}Date Of Registration{% endtrans %} :</label>
 									</td>
 									<td>
-										<label class="sr-only" for="regday">Enter Registrtion Day</label>
+										<label class="sr-only" for="regday">{% trans %}Enter Registrtion Day{% endtrans %}</label>
 										<input type="text"  id="regday" name="registrationday" class="form-control regdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" value="{{gkresult["orgregdate"][8:10]}}"  style="width: 100%"> </input>
 
-										<label class="sr-only" for="regmonth">Enter Registration Month</label>
+										<label class="sr-only" for="regmonth">{% trans %}Enter Registration Month{% endtrans %}</label>
 										<input type="text" id="regmonth" name="registrationmonth" class="form-control regdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" value="{{gkresult["orgregdate"][5:7]}}" style="width: 100%"></input>
 
-										<label class="sr-only" for="regyear">Enter Registration Year</label>
+										<label class="sr-only" for="regyear">{% trans %}Enter Registration Year{% endtrans %}</label>
 										<input type="text" id="regyear" name="registrationyear" class="form-control regdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  value="{{gkresult["orgregdate"][0:4]}}" style="width: 100%"></input>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<label for="registrationdate">Date Of FCRA Registration :</label>
+										<label for="registrationdate">{% trans %}Date Of FCRA Registration{% endtrans %} :</label>
 									</td>
 									<td>
-										<label class="sr-only" for="fcraregday">Enter FCRA Registrtion Day</label>
+										<label class="sr-only" for="fcraregday">{% trans %}Enter FCRA Registrtion Day{% endtrans %}</label>
 										<input type="text" id="fcraregday" name="fcraregistrationday" class="form-control regdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" value="{{gkresult["orgfcradate"][8:10]}}" style="width: 100%"></input>
 
-										<label class="sr-only" for="fcraregmonth">Enter FCRA Registration Month</label>
+										<label class="sr-only" for="fcraregmonth">{% trans %}Enter FCRA Registration Month{% endtrans %}</label>
 										<input type="text" id="fcraregmonth" name="fcraregistrationmonth" class="form-control regdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" value="{{gkresult["orgfcradate"][5:7]}}" style="width: 100%"></input>
 
-										<label class="sr-only" for="fcraregyear">Enter FCRA Registration Year</label>
+										<label class="sr-only" for="fcraregyear">{% trans %}Enter FCRA Registration Year{% endtrans %}</label>
 										<input type="text" id="fcraregyear" name="fcraregistrationyear" class="form-control regdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  value="{{gkresult["orgfcradate"][0:4]}}" style="width: 100%"></input>
 										{%endif%}
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<label for="organisationemail" id="orgEmail">Email :</label>
+										<label for="organisationemail" id="orgEmail">{% trans %}Email{% endtrans %} :</label>
 									</td>
 									<td>
 										<input type="text" id="orgemail" class="form-control input-sm" name="organisationemail" value="{{gkresult["orgemail"]}}" style="width: 100%"></input>
@@ -157,7 +157,7 @@
 								</tr>
 								<tr>
 									<td>
-										<label for="telephonenumber" id="telno">Telephone Number :</label>
+										<label for="telephonenumber" id="telno">{% trans %}Telephone Number{% endtrans %} :</label>
 									</td>
 									<td>
 										<input type="text" id="orgtelno" class="form-control input-sm" size="11" maxlength="11" name="telephonenumber" value="{{gkresult["orgtelno"]}}" style="width: 100%"></input>
@@ -165,7 +165,7 @@
 								</tr>
 								<tr>
 									<td>
-										<label for="organisationwebsite" id="orgWebsite">Website :</label>
+										<label for="organisationwebsite" id="orgWebsite">{% trans %}Website{% endtrans %} :</label>
 									</td>
 									<td>
 										<input type="text" id="orgwebsite" class="form-control input-sm" name="organisationwebsite" value="{{gkresult["orgwebsite"]}}" style="width: 100%"></input>
@@ -173,7 +173,7 @@
 								</tr>
 								<tr>
 									<td>
-										<label for="organisationpincode" id="orgpostalcode">Postal Code :</label>
+										<label for="organisationpincode" id="orgpostalcode">{% trans %}Postal Code{% endtrans %} :</label>
 									</td>
 									<td>
 										<input type="text" id="orgpincode" class="form-control input-sm" name="organisationpincode" value="{{gkresult["orgpincode"]}}" style="width: 100%"></input>
@@ -181,7 +181,7 @@
 								</tr>
 								<tr>
 									<td>
-										<label for="organisationfax" id="orgfaxno">Fax Number :</label>
+										<label for="organisationfax" id="orgfaxno">{% trans %}Fax Number{% endtrans %} :</label>
 									</td>
 									<td>
 										<input type="text" id="orgfax" class="form-control input-sm" name="organisationfaxnumber" value="{{gkresult["orgfax"]}}" style="width: 100%"></input>
@@ -189,7 +189,7 @@
 								</tr>
 								<tr>
 									<td>
-										<label for="organisationmvat" id="orgvatno">VAT Number :</label>
+										<label for="organisationmvat" id="orgvatno">{% trans %}VAT Number{% endtrans %} :</label>
 									</td>
 									<td>
 										<input type="text" id="orgmvat" class="form-control input-sm" name="organisationmvat" value="{{gkresult["orgmvat"]}}" style="width: 100%"></input>
@@ -200,8 +200,8 @@
 					</div>
 					<div class="container-fluid">
 						<div class="col-xs-2 col-xs-offset-5">
-							<button type="submit" class="btn btn-primary btn-sm" id="submit" name="submit" accesskey="s"><u>S</u>ave</button>
-							<button id="reset" class="btn btn-warning btn-sm" accesskey="r"><u>R</u>eset</button>
+							<button type="submit" class="btn btn-primary btn-sm" id="submit" name="submit" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
+							<button id="reset" class="btn btn-warning btn-sm" accesskey="r">{% trans %}<u>R</u>eset{% endtrans %}</button>
 						</div>
 					</div>
 				</form>
