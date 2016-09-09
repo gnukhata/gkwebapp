@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>GNUKhata | Edit User</title>
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Edit User{% endtrans %}</title>
   <style media="screen">
   .shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -14,56 +14,56 @@
     <div style="padding-top:15px" class="mainbox col-xs-6 col-xs-offset-3">
       <div class="panel shadow" >
         <div class="panel-heading">
-          <div class="panel-title">Change Password</div>
+          <div class="panel-title">{% trans %}Change Password{% endtrans %}</div>
         </div>
         <form id="edituserform" class="form-horizontal">
         <div style="padding-top:5px" class="panel-body" >
           <div class="alert alert-success" id="success-alert" hidden>
 
-            Changes saved successfully.
+            {% trans %}Changes saved successfully.{% endtrans %}
           </div>
           <div class="alert alert-danger" id="curpass-blank-alert" aria-live="rude" role="alert" hidden>
 
-            Please enter current password!
+            {% trans %}Please enter current password!{% endtrans %}
           </div>
           <div class="alert alert-danger" id="cnfpass-blank-alert" aria-live="rude" role="alert" hidden>
 
-            Password not confirmed!
+            {% trans %}Password not confirmed!{% endtrans %}
           </div>
           <div class="alert alert-danger" id="connectionfailed-alert" aria-live="rude" role="alert" hidden>
 
-            Connection Failed.
+            {% trans %}Connection Failed.{% endtrans %}
           </div>
           <div class="alert alert-danger" id="badprivilege-alert" aria-live="rude" role="alert" hidden>
 
-            Access denied!
+            {% trans %}Access denied!{% endtrans %}
           </div>
           <div class="alert alert-danger" id="checkpassuser-mismatch-alert" aria-live="rude" role="alert" hidden>
 
-            Password doesn't match!
+            {% trans %}Password doesn't match!{% endtrans %}
           </div>
           <div class="alert alert-danger" id="password-blank-alert" aria-live="rude" role="alert" hidden>
 
-            Please enter the new password!
+            {% trans %}Please enter the new password!{% endtrans %}
           </div>
           <br>
             <input type="text" id="userid" name="userid" value="{{gkresult["userid"]}}" hidden></input>
-          <label for="orgusername" id="userName">Usern<u>a</u>me :</label>
+          <label for="orgusername" id="userName">{% trans %}Usern<u>a</u>me{% endtrans %} :</label>
           <input type="text" id="username" class="form-control input-sm" name="username" disabled="disabled" value="{{gkresult["username"]}}" accesskey="a"></input>
         </br>
-          <label for="currentpassword" id="currentPassword">Current Pass<u>w</u>ord :</label>
+          <label for="currentpassword" id="currentPassword">{% trans %}Current Pass<u>w</u>ord{% endtrans %} :</label>
           <input type="password" id="current_password" class="form-control input-sm" name="currentpassWord" accesskey="w"></input>
         </br>
-          <label for="newpassword" id="newPassword">N<u>e</u>w Password :</label>
+          <label for="newpassword" id="newPassword">{% trans %}N<u>e</u>w Password{% endtrans %} :</label>
           <input type="password" id="new_password" class="form-control input-sm" name="newpassWord" accesskey="e"></input>
         </br>
-        <label for="confirmpassword" id="confirmPassword">C<u>o</u>nfirm Password :</label>
+        <label for="confirmpassword" id="confirmPassword">{% trans %}C<u>o</u>nfirm Password{% endtrans %} :</label>
         <input type="password" id="confirm_password" class="form-control input-sm" name="confirmpassWord" accesskey="o"></input>
       </br>
 
       </div>
       <div class="panel-footer">
-        <button type="submit" class="btn btn-primary btn-sm" id="submit" name="submit" accesskey="s"><u>S</u>ave</button>
+        <button type="submit" class="btn btn-primary btn-sm" id="submit" name="submit" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
       </div>
     </form>
     </div>
