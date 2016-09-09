@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GNUKhata</title>
+  <title>{% trans %}GNUKhata{% endtrans %}</title>
   <style media="screen">
   .shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -16,22 +16,22 @@
   <div style="padding-top:5px" class="container-fluid mainbox col-md-6 col-md-offset-3">
     <div class="panel shadow">
       <div class="panel-heading">
-        <h3 class="panel-title">View</h3>
+        <h3 class="panel-title">{% trans %}View{% endtrans %}</h3>
       </div>
       <div class="panel-body" style="padding-top:5px">
         <div class="alert alert-danger" id="improperdate-alert" hidden>
 
-          Please enter date in proper format!
+          {% trans %}Please enter date in proper format!{% endtrans %}
         </div>
         <div class="panel-body" style="padding-top:5px">
           <div class="alert alert-danger" id="betweendate-alert" hidden>
 
-            Please enter date within the financial year!
+            {% trans %}Please enter date within the financial year!{% endtrans %}
           </div>
 
 
         <div style="margin-bottom: 5px" class="col-xs-12 from-group">
-          <label for="viewbalsht_fromday">From Date:</label>
+          <label for="viewbalsht_fromday">{% trans %}From Date{% endtrans %}:</label>
           <div class="form-inline" >
 
             <div class="form-group">
@@ -43,7 +43,7 @@
 
           </div>
           <br>
-          <label for="viewbalsht_today">To <u>D</u>ate:</label>
+          <label for="viewbalsht_today">{% trans %}To <u>D</u>ate{% endtrans %}:</label>
           <div class="form-inline" >
 
             <div class="form-group">
@@ -54,27 +54,27 @@
             </div>
           </div>
           <br>
-          <label for="viewbalsht_baltype" id="baltypelbl"><u>T</u>ype :</label>
+          <label for="viewbalsht_baltype" id="baltypelbl">{% trans %}<u>T</u>ype{% endtrans %}:</label>
           <div class="form-group cbl" hidden="hidden">
             <select class = "form-control input-sm dis cblsel" id="viewbalsht_baltype"  name = "viewbalsht_baltype" accesskey="t">
 
-              <option value="conventionalbalancesheet">Conventional Balance Sheet</option>
-              <option value="verticalbalancesheet">Sources & Applications of Funds</option>
+              <option value="conventionalbalancesheet">{% trans %}Conventional Balance Sheet{% endtrans %}</option>
+              <option value="verticalbalancesheet">{% trans %}Sources & Applications of Funds{% endtrans %}</option>
             </select>
           </div>
           <div class="form-group csa" hidden="hidden">
             <select class = "form-control input-sm dis cblsel" id="viewsa_baltype"  name = "viewsa_baltype" accesskey="t">
 
-              <option value="conventionalbalancesheet">Conventional Statement of Affairs</option>
-              <option value="verticalbalancesheet">Sources & Applications of Funds</option>
+              <option value="conventionalbalancesheet">{% trans %}Conventional Statement of Affairs{% endtrans %}</option>
+              <option value="verticalbalancesheet">{% trans %}Sources & Applications of Funds{% endtrans %}</option>
             </select>
           </div>
 
         </div>
       </div>
       <div class="panel-footer">
-        <button class="btn btn-primary btn-sm" id="viewbalsht_submit" name="view" accesskey="v"><u>V</u>iew</button>
-        <button id="viewbalsht_reset" class="btn btn-danger btn-sm" accesskey="e">R<u>e</u>set</button>
+        <button class="btn btn-primary btn-sm" id="viewbalsht_submit" name="view" accesskey="v">{% trans %}<u>V</u>iew{% endtrans %}</button>
+        <button id="viewbalsht_reset" class="btn btn-danger btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
 
       </div>
     </div>

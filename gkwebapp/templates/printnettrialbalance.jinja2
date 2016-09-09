@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>GNUKhata | Net Trial Balance</title>
+	<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Net Trial Balance{% endtrans %}</title>
 <style type="text/css">
 
 td {
@@ -27,21 +27,21 @@ tfoot{
 </style>
 </head>
 <body>
-	<span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>Net Trial Balance</strong> for the period from <strong>{{from}}</strong> to <strong>{{to}}</strong></span>
+	<span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>{% trans %}Net Trial Balance{% endtrans %}</strong> {% trans %}for the period from{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
 	<div class="table-responsive printorgdetails">
 		<table class="table table-condensed table-striped shadow">
 			<thead>
         <tr class="visible-print">
           <th colspan="5" style="text-align:center; font-size:80%;">
-            Net Trial Balance for the period from {{from}} to {{to}}
+            {% trans %}Net Trial Balance for the period from{% endtrans %} {{from}} {% trans %}to{% endtrans %} {{to}}
           </th>
         </tr>
 				<tr>
-					<th class="col-xs-1">Sr. No.</th>
-					<th class="col-xs-5">Account Name</th>
-					<th style="text-align:right" class="col-xs-2">Debit</th>
-					<th style="text-align:right" class="col-xs-2">Credit</th>
-					<th class="col-xs-2">Group Name</th>
+					<th class="col-xs-1">{% trans %}Sr. No.{% endtrans %}</th>
+					<th class="col-xs-5">{% trans %}Account Name{% endtrans %}</th>
+					<th style="text-align:right" class="col-xs-2">{% trans %}Debit{% endtrans %}</th>
+					<th style="text-align:right" class="col-xs-2">{% trans %}Credit{% endtrans %}</th>
+					<th class="col-xs-2">{% trans %}Group Name{% endtrans %}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -53,7 +53,7 @@ tfoot{
 					<td class="col-xs-5">
             {{record['accountname']}}<br>
 						{% if record.ttlRunDr %}
-            &nbsp&nbsp&nbsp&nbsp Running Total:
+            &nbsp&nbsp&nbsp&nbsp {% trans %}Running Total{% endtrans %}:
 						{% endif %}
 					</td>
 					<td class="col-xs-2" style="text-align:right">
@@ -81,8 +81,8 @@ tfoot{
 		</table>
 	</div>
 	<span style="margin:auto; display:table;">
-		<button type="button" class="btn btn-sm btn-danger hidden-print" id="tbback" accesskey="b"><u>B</u>ack</button>
-		<button type="button" class="btn btn-sm btn-info hidden-print" id="nettbprint" accesskey="t">Prin<u>t</u></button>
+		<button type="button" class="btn btn-sm btn-danger hidden-print" id="tbback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+		<button type="button" class="btn btn-sm btn-info hidden-print" id="nettbprint" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
 	</span>
 	<input type="hidden" id="ledtodate" value="{{to}}">
 	<input type="hidden" id="trialbaltype" value="{{trialbalancetype}}">

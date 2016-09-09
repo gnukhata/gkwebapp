@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>GNUKhata</title>
+		<title>{% trans %}GNUKhata{% endtrans %}</title>
     <style>
     @page {
       size: 21cm 29.7cm;
@@ -33,16 +33,16 @@
         <thead>
           <tr style="color:black; background-color:white;">
 						<th colspan="5" style="text-align:center; font-size:80%">
-							<i>Statement for : </i>{{projectname}}<br>
-							<i>Period : </i>{{from}} to {{to}}
+							<i>{% trans %}Statement for{% endtrans %}: </i>{{projectname}}<br>
+							<i>{% trans %}Period{% endtrans %}: </i>{{from}} {% trans %}to{% endtrans %} {{to}}
 						</th>
 					</tr>
           <tr>
-            <th class="col-xs-1">Sr. No.</th>
-            <th class="col-xs-4">Account</th>
-            <th class="col-xs-3">Group</th>
-            <th style="text-align:right" class="col-xs-2">Total Outgoing</th>
-            <th style="text-align:right" class="col-xs-2">Total Incoming</th>
+            <th class="col-xs-1">{% trans %}Sr. No.{% endtrans %}</th>
+            <th class="col-xs-4">{% trans %}Account{% endtrans %}</th>
+            <th class="col-xs-3">{% trans %}Group{% endtrans %}</th>
+            <th style="text-align:right" class="col-xs-2">{% trans %}Total Outgoing{% endtrans %}</th>
+            <th style="text-align:right" class="col-xs-2">{% trans %}Total Incoming{% endtrans %}</th>
           </tr>
         </thead>
         <tbody style="background-color:white;">
@@ -62,7 +62,7 @@
             <td class="col-xs-3">
               {{record["groupname"]}}<br>
               {% if record.ttlRunDr %}
-								&nbsp&nbsp<i>Running Total:</i><br>
+								&nbsp&nbsp<i>{% trans %}Running Total{% endtrans %}:</i><br>
 							{% endif %}
             </td>
             <td class="col-xs-2" style="text-align:right">
@@ -76,8 +76,8 @@
         </tbody>
       </table>
 			<span style="margin:auto; display:table;">
-				<button class="btn btn-sm btn-primary hidden-print" type="button" id="printback" accesskey="b"><u>B</u>ack</button>
-				<button class="btn btn-sm btn-primary hidden-print" type="button"	id="realprint" accesskey="t">Prin<u>t</u></button>
+				<button class="btn btn-sm btn-primary hidden-print" type="button" id="printback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+				<button class="btn btn-sm btn-primary hidden-print" type="button"	id="realprint" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
 			</span>
 		</div>
 		<script type="text/javascript">

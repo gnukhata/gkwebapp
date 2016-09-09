@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GNUKhata | {{projectname}} Statement</title>
+  <title>{% trans %}GNUKhata{% endtrans %} | {{projectname}} {% trans %}Statement{% endtrans %}</title>
   <style type="text/css">
 
   @page {
@@ -124,7 +124,7 @@
       <thead>
         <tr>
           <th colspan="4" class="text-center col-xs-12" >
-            Statement of Sources and Applications of Funds </strong>as on <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
+            {% trans %}Statement of Sources and Applications of Funds{% endtrans %} </strong>{% trans %}as on{% endtrans %} <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
           </th>
         </tr>
       </thead>
@@ -277,18 +277,18 @@
     <input type="hidden" name="cto" id="cto" value="{{to}}">
 
     <span class="hidden-print" style="margin:auto; display:table;">
-      <button class="btn btn-sm btn-danger" type="button" id="saback" accesskey="b"><u>B</u>ack</button>
-      <button type="button" class="btn btn-sm btn-primary" id="sbgbtn" accesskey="g">Show Sub<u>g</u>roups</button>
-      <button type="button" class="btn btn-sm btn-primary" id="grpbtn" accesskey="w">Sho<u>w</u> Groups</button>
-      <button type="button" class="btn btn-sm btn-primary" id="accbtn" accesskey="a">Show All <u>A</u>ccounts</button>
+      <button class="btn btn-sm btn-danger" type="button" id="saback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+      <button type="button" class="btn btn-sm btn-primary" id="sbgbtn" accesskey="g">{% trans %}Show Sub<u>g</u>roups{% endtrans %}</button>
+      <button type="button" class="btn btn-sm btn-primary" id="grpbtn" accesskey="w">{% trans %}Sho<u>w</u> Groups{% endtrans %}</button>
+      <button type="button" class="btn btn-sm btn-primary" id="accbtn" accesskey="a">{% trans %}Show All <u>A</u>ccounts{% endtrans %}</button>
       {% if orgtype=="Profit Making" %}
-      <button class="btn btn-sm btn-primary " type="button" id="cbalbutn" hidden="hidden" accesskey="">C<u>o</u>nventional Balance Sheet</button>
+      <button class="btn btn-sm btn-primary " type="button" id="cbalbutn" hidden="hidden" accesskey="">{% trans %}C<u>o</u>nventional Balance Sheet{% endtrans %}</button>
       {% else %}
-      <button class="btn btn-sm btn-primary " type="button" id="cbalbutn" hidden="hidden" accesskey="o">C<u>o</u>nventional Statement of Affairs</button>
+      <button class="btn btn-sm btn-primary " type="button" id="cbalbutn" hidden="hidden" accesskey="o">{% trans %}C<u>o</u>nventional Statement of Affairs{% endtrans %}</button>
       {% endif %}
-       <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">E<u>x</u>port to Spreadsheet</button>
-       <button class="btn btn-sm btn-primary" type="button"  id="printbalance" accesskey="t">View Prin<u>t</u>able Version</button>
-       <button class="btn btn-sm btn-primary" type="button"  id="realprintbalance" accesskey="t">Prin<u>t</u></button>
+       <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">{% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
+       <button class="btn btn-sm btn-primary" type="button"  id="printbalance" accesskey="t">{% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
+       <button class="btn btn-sm btn-primary" type="button"  id="realprintbalance" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
     </span>
   </div>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/sourcesandapplicationoffundsreport.js')}}"></script>

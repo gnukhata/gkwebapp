@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     {% if orgtype=="Profit Making" %}
-      <title>GNUKhata |View Profit & Loss</title>
+      <title>{% trans %}GNUKhata{% endtrans %} |{% trans %}View Profit & Loss{% endtrans %}</title>
     {% else %}
-      <title>GNUKhata |View Income & Expenditure</title>
+      <title>{% trans %}GNUKhata{% endtrans %} |{% trans %}View Income & Expenditure{% endtrans %}</title>
     {% endif %}
     <style media="screen">
     .shadow {
@@ -21,22 +21,22 @@
     <div class="panel shadow">
       <div class="panel-heading">
         {% if orgtype=="Profit Making" %}
-          <h3 class="panel-title">View Profit & Loss</h3>
+          <h3 class="panel-title">{% trans %}View Profit & Loss{% endtrans %}</h3>
         {% else %}
-          <h3 class="panel-title">View Income & Expenditure</h3>
+          <h3 class="panel-title">{% trans %}View Income & Expenditure{% endtrans %}</h3>
         {% endif %}
 
       </div>
       <div class="panel-body">
         <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
 
-          <label for="pnl_todate">Please enter date in proper format!</label>
+          <label for="pnl_todate">{% trans %}Please enter date in proper format!{% endtrans %}</label>
         </div>
         <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
 
-          <label for="pnl_todate">Please enter date within the financial year!</label>
+          <label for="pnl_todate">{% trans %}Please enter date within the financial year!{% endtrans %}</label>
         </div>
-        <label for="pnl_fromdate">From:</label>
+        <label for="pnl_fromdate">{% trans %}From{% endtrans %}:</label>
         <div class="form-inline">
           <div class="form-group">
             <input type="text" class="form-control input-sm pnl_autotab" id="pnl_fromdate" value="" size="2" maxlength="2" disabled placeholder="DD">
@@ -45,7 +45,7 @@
           </div>
         </div>
         <br>
-        <label for="pnl_todate">To:</label>
+        <label for="pnl_todate">{% trans %}To{% endtrans %}:</label>
         <div class="form-inline">
           <div class="form-group">
 
@@ -56,8 +56,8 @@
         </div>
       </div>
       <div class="panel-footer">
-        <button type="button" class="btn btn-sm btn-success" name="button" id="pnl_view" accesskey="v"><u>V</u>iew</button>
-        <button type="button" name="button" class="btn btn-sm btn-danger" id="pnl_reset" accesskey="e">R<u>e</u>set</button>
+        <button type="button" class="btn btn-sm btn-success" name="button" id="pnl_view" accesskey="v">{% trans %}<u>V</u>iew{% endtrans %}</button>
+        <button type="button" name="button" class="btn btn-sm btn-danger" id="pnl_reset" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
       </div>
     </div>
   </div>

@@ -123,15 +123,15 @@
         <div class="modal-header form-inline">
 
           <div class="alert alert-danger" id="m_blank-alert" aria-live="rude" role="alert" hidden>
-            
-            <label for="m_alt_accname">Please enter account name!</label>
+
+            <label for="m_alt_accname">{% trans %}Please enter account name!{% endtrans %}</label>
           </div>
 
           <div class="alert alert-danger" id="m_duplicate-alert" aria-live="rude" role="alert" hidden>
 
-            <label for="m_alt_accname">Account name already exists!</label>
+            <label for="m_alt_accname">{% trans %}Account name already exists!{% endtrans %}</label>
           </div>
-          <span style="margin:auto; display:table;"><strong>Multiple Accounts</strong></span>
+          <span style="margin:auto; display:table;"><strong>{% trans %}Multiple Accounts{% endtrans %}</strong></span>
 
 
         </div>
@@ -141,13 +141,13 @@
           <input type="hidden" name="m_sgcode" id="m_sgcode" value="{{gkresult['subgroupcode']}}" >
           <input type="hidden" name="m_nsgcode" id="m_nsgcode" value="{{gkresult['newsubgroup']}}">
           <div class="form-group">
-            <label for="m_gname">Group:</label>
+            <label for="m_gname">{% trans %}Group{% endtrans %}:</label>
             <input type="text" name="m_gname" class="form-control input-sm " size="30" id="m_gname" value="{{gkresult['groupname']}}" disabled>
 
           </div>
 <div class="form-group pull-right">
 
-  <label for="m_sgname" >Sub-Group:</label>
+  <label for="m_sgname" >{% trans %}Sub-Group{% endtrans %}:</label>
   {% if gkresult['subgroupcode']=="New" %}
   <input type="text" class="vdate form-control input-sm " id="m_sgname" value="{{gkresult['newsubgroup']}}" disabled>
   {% else %}
@@ -163,12 +163,12 @@
               <thead>
                 <tr>
                   {% if gkresult['groupname']!="Direct Expense" and gkresult['groupname']!="Direct Income" and gkresult['groupname']!="Indirect Expense" and gkresult['groupname']!="Indirect Income" %}
-                  <th class="col-xs-7">Account Name</th>
-                  <th class="col-xs-3">Opening Balance</th>
+                  <th class="col-xs-7">{% trans %}Account Name{% endtrans %}</th>
+                  <th class="col-xs-3">{% trans %}Opening Balance{% endtrans %}</th>
                   {% else %}
-                  <th class="col-xs-10">Account Name</th>
+                  <th class="col-xs-10">{% trans %}Account Name{% endtrans %}</th>
                   {% endif %}
-                  <th class="col-xs-2">Remove</th>
+                  <th class="col-xs-2">{% trans %}Remove{% endtrans %}</th>
                 </tr>
               </thead>
               <tbody>
@@ -195,8 +195,8 @@
         </div>
         <div class="modal-footer">
 
-          <button type="button" id ="m_cancel" class="btn btn-warning btnfocus" data-dismiss="modal">Cancel</button>
-          <button type="button" id="acc_add"  class="btn btn-success btnfocus" accesskey="v">Sa<u>v</u>e</button>
+          <button type="button" id ="m_cancel" class="btn btn-warning btnfocus" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+          <button type="button" id="acc_add"  class="btn btn-success btnfocus" accesskey="v">{% trans %}Sa<u>v</u>e{% endtrans %}</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

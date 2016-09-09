@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GNUKhata | Project Statement</title>
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Project Statement{% endtrans %}</title>
   <style media="screen">
   .shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -16,23 +16,23 @@
   <div style="padding-top:5px" class="container-fluid mainbox col-md-6 col-md-offset-3">
     <div class="panel shadow">
       <div class="panel-heading">
-        <h3 id = "prjhead" class="panel-title">View Project Statement</h3>
+        <h3 id = "prjhead" class="panel-title">{% trans %}View Project Statement{% endtrans %}</h3>
       </div>
       <div class="panel-body" style="padding-top:5px">
         <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
-          
-          <label for="viewprjstate_todate">Please enter date in proper format!</label>
+
+          <label for="viewprjstate_todate">{% trans %}Please enter date in proper format!{% endtrans %}</label>
         </div>
         <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
 
-          <label for="viewprjstate_todate">Please enter date within the financial year!</label>
+          <label for="viewprjstate_todate">{% trans %}Please enter date within the financial year!{% endtrans %}</label>
         </div>
         <div class="alert alert-danger" id="account-blank-alert" aria-live="rude" role="alert" hidden>
 
-          <label id="prjalert" for="viewprjstate_prjname">Please select a project!</label>
+          <label id="prjalert" for="viewprjstate_prjname">{% trans %}Please select a project!{% endtrans %}</label>
         </div>
         <div style="margin-bottom: 5px" class="col-xs-12 from-group">
-          <label for="viewprjstate_fromdate">From Date:</label>
+          <label for="viewprjstate_fromdate">{% trans %}From Date{% endtrans %}:</label>
           <div class="form-inline" >
 
             <div class="form-group">
@@ -44,7 +44,7 @@
 
           </div>
           <br>
-          <label for="viewprjstate_todate">To <u>D</u>ate:</label>
+          <label for="viewprjstate_todate">{% trans %}To <u>D</u>ate{% endtrans %}:</label>
           <div class="form-inline" >
 
             <div class="form-group">
@@ -55,9 +55,9 @@
             </div>
           </div>
           <br>
-          <label id = "prjnamelbl" for="viewprjstate_prjname">Pro<u>j</u>ect Name :</label>
+          <label id = "prjnamelbl" for="viewprjstate_prjname">{% trans %}Pro<u>j</u>ect Name{% endtrans %}:</label>
           <select class = "form-control input-sm dis" id="viewprjstate_prjname"  name = "viewprjstate_prjname" accesskey="j">
-            <option value="" disabled hidden selected>Please select</option>
+            <option value="" disabled hidden selected>{% trans %}Please select{% endtrans %}</option>
             {% for prj in projects %}
             <option value="{{prj['projectcode']}}">{{prj["projectname"]}}</option>
             {% endfor %}
@@ -66,8 +66,8 @@
         </div>
       </div>
       <div class="panel-footer">
-        <button class="btn btn-primary btn-sm" id="viewprjstate_submit" name="view" accesskey="v"><u>V</u>iew</button>
-        <button id="viewprjstate_reset" class="btn btn-danger btn-sm" accesskey="e">R<u>e</u>set</button>
+        <button class="btn btn-primary btn-sm" id="viewprjstate_submit" name="view" accesskey="v">{% trans %}<u>V</u>iew{% endtrans %}</button>
+        <button id="viewprjstate_reset" class="btn btn-danger btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
 
       </div>
     </div>
