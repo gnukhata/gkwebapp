@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>GNUKhata | Ledger</title>
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Ledger{% endtrans %}</title>
   <style type="text/css">
 span
 {
@@ -108,7 +108,7 @@ span
 <body>
   <div class="alert alert-danger" id="ua-alert" hidden>
 
-    <strong>Unauthorized to Lock/Unlock Transactions!</strong>
+    <strong>{% trans %}Unauthorized to Lock/Unlock Transactions!{% endtrans %}</strong>
   </div>
   <input type="hidden" id="urole" name="urole" value="{{userrole}}"></input>
   <input type="hidden" id="financialstart" name="financialstart" value="{{ledgerrefresh2["financialstart"]}}"></input>
@@ -133,25 +133,25 @@ span
   <div class="row">
     <div class="table-responsive col-md-6 ">
       {% if ledgerheader1["projectname"]!="" %}
-      <i style="font-size: 95%;">Project</i> : {{ledgerheader1["projectname"]}}
+      <i style="font-size: 95%;">{% trans %}Project{% endtrans %}</i> : {{ledgerheader1["projectname"]}}
       {% endif %}
-      <span class="pull-right" style="padding-right:15px"><i>Period</i> : {{ledgerheader1["calculatefrom"]}} to {{ledgerheader1["calculateto"]}}</span>
-      <span style="margin:auto; display:table;"><i>Account</i> : {{ledgerheader1["accountname"]}}</span>
+      <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : {{ledgerheader1["calculatefrom"]}} {% trans %}to{% endtrans %} {{ledgerheader1["calculateto"]}}</span>
+      <span style="margin:auto; display:table;"><i>{% trans %}Account{% endtrans %}</i> : {{ledgerheader1["accountname"]}}</span>
 
       <table id="ledgertable1" class=" shadow table table-fixedheader table-condensed">
         <thead>
           <tr>
-            <th class="col-xs-2">Date</th>
-            <th class="col-xs-1" style="word-wrap: break-word;">V. No.</th>
+            <th class="col-xs-2">{% trans %}Date{% endtrans %}</th>
+            <th class="col-xs-1" style="word-wrap: break-word;">{% trans %}V. No.{% endtrans %}</th>
             {% if ledgerheader1["projectname"]=="" %}
-            <th class="col-xs-3">Particulars</th>
-            <th style="text-align:right" class="col-xs-2">Debit</th>
-            <th style="text-align:right" class="col-xs-2">Credit</th>
-            <th style="text-align:right" class="col-xs-2">Balance</th>
+            <th class="col-xs-3">{% trans %}Particulars{% endtrans %}</th>
+            <th style="text-align:right" class="col-xs-2">{% trans %}Debit{% endtrans %}</th>
+            <th style="text-align:right" class="col-xs-2">{% trans %}Credit{% endtrans %}</th>
+            <th style="text-align:right" class="col-xs-2">{% trans %}Balance{% endtrans %}</th>
             {% else %}
-            <th class="col-xs-5">Particulars</th>
-            <th style="text-align:right" class="col-xs-2">Debit</th>
-            <th style="text-align:right" class="col-xs-2">Credit</th>
+            <th class="col-xs-5">{% trans %}Particulars{% endtrans %}</th>
+            <th style="text-align:right" class="col-xs-2">{% trans %}Debit{% endtrans %}</th>
+            <th style="text-align:right" class="col-xs-2">{% trans %}Credit{% endtrans %}</th>
             {% endif %}
           </tr>
         </thead>
@@ -212,25 +212,25 @@ span
     </div>
     <div  class="table-responsive col-md-6 ">
       {% if ledgerheader2["projectname"]!="" %}
-      <i style="font-size: 95%;">Project</i> : {{ledgerheader2["projectname"]}}
+      <i style="font-size: 95%;">{% trans %}Project{% endtrans %}</i> : {{ledgerheader2["projectname"]}}
       {% endif %}
-      <span class="pull-right" style="padding-right:15px"><i>Period</i> : {{ledgerheader2["calculatefrom"]}} to {{ledgerheader2["calculateto"]}}</span>
-      <span style="margin:auto; display:table;"><i>Account</i> : {{ledgerheader2["accountname"]}}</span>
+      <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : {{ledgerheader2["calculatefrom"]}} to {{ledgerheader2["calculateto"]}}</span>
+      <span style="margin:auto; display:table;"><i>{% trans %}Account{% endtrans %}</i> : {{ledgerheader2["accountname"]}}</span>
 
       <table id="ledgertable2" class=" shadow table table-fixedheader table-condensed">
         <thead>
           <tr>
-            <th class="col-xs-2">Date</th>
-            <th class="col-xs-1" style="word-wrap: break-word;">V. No.</th>
+            <th class="col-xs-2">{% trans %}Date{% endtrans %}</th>
+            <th class="col-xs-1" style="word-wrap: break-word;">{% trans %}V. No.{% endtrans %}</th>
             {% if ledgerheader2["projectname"]=="" %}
-            <th class="col-xs-3">Particulars</th>
-            <th style="text-align:right" class="col-xs-2">Debit</th>
-            <th style="text-align:right" class="col-xs-2">Credit</th>
-            <th style="text-align:right" class="col-xs-2">Balance</th>
+            <th class="col-xs-3">{% trans %}Particulars{% endtrans %}</th>
+            <th style="text-align:right" class="col-xs-2">{% trans %}Debit{% endtrans %}</th>
+            <th style="text-align:right" class="col-xs-2">{% trans %}Credit{% endtrans %}</th>
+            <th style="text-align:right" class="col-xs-2">{% trans %}Balance{% endtrans %}</th>
             {% else %}
-            <th class="col-xs-5">Particulars</th>
-            <th style="text-align:right" class="col-xs-2">Debit</th>
-            <th style="text-align:right" class="col-xs-2">Credit</th>
+            <th class="col-xs-5">{% trans %}Particulars{% endtrans %}</th>
+            <th style="text-align:right" class="col-xs-2">{% trans %}Debit{% endtrans %}</th>
+            <th style="text-align:right" class="col-xs-2">{% trans %}Credit{% endtrans %}</th>
             {% endif %}
           </tr>
         </thead>
@@ -292,7 +292,7 @@ span
 
   </div>
   <span style="margin:auto; display:table;">
-      <button class="btn btn-sm btn-danger" type="button" id="dlback" accesskey="b"><u>B</u>ack</button>
+      <button class="btn btn-sm btn-danger" type="button" id="dlback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
     </span>
 
   <div id="viewvc">
