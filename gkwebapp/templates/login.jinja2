@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>
-    GNUKhata
+    {% trans %}GNUKhata{% endtrans %}
   </title>
 
   <style>
@@ -27,43 +27,43 @@
     <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 pull-right">
       <div class="alert alert-danger" id="login_username-blank-alert" aria-live="rude" role="alert" hidden>
 
-        Please enter username!
+        {% trans %}Please enter username!{% endtrans %}
       </div>
       <div class="alert alert-danger" id="password-blank-alert" aria-live="rude" role="alert" hidden>
 
-        Please enter password!
+        {% trans %}Please enter password!{% endtrans %}
       </div>
       <div class="alert alert-danger" id="login-blank-alert" aria-live="rude" role="alert" hidden>
 
-        Username or Password is incorrect!
+        {% trans %}Username or Password is incorrect!{% endtrans %}
       </div>
       <div class="panel" >
         <div class="panel-heading">
-          <div class="panel-title">Sign In</div>
+          <div class="panel-title">{% trans %}Sign In{% endtrans %}</div>
 
         </div>
         <div style="padding-top:30px" class="panel-body" >
           <form id="loginform" action="userlogin" class="form-horizontal">
 
             <div style="margin-bottom: 25px" class="input-group col-xs-12">
-              <label for="login_username"><u>U</u>sername :</label>
+              <label for="login_username">{% trans %}<u>U</u>sername :{% endtrans %}</label>
               <input style="border-radius: 4px" id="login_username" type="text" class="form-control col-xs-12" name="username" value="" accesskey="u"></input>
             </div>
 
             <div style="margin-bottom: 25px" class="input-group col-xs-12">
-              <label for="userpassword"><u>P</u>assword :</label>
+              <label for="userpassword">{% trans %}<u>P</u>assword :{% endtrans %}</label>
               <input id="userpassword" style="border-radius: 4px" type="password" class="form-control col-xs-12" name="userpassword" accesskey="p"></input>
             </div>
             <div style="margin-bottom: 5px" class="input-group col-xs-12">
-              <a id="forgotpwdlink" href="" aria-label="Forgot Password Link" accesskey="f"><u>F</u>orgot Password?</a>
+              <a id="forgotpwdlink" href="" aria-label="Forgot Password Link" accesskey="f">{% trans %}<u>F</u>orgot Password?{% endtrans %}</a>
             </div>
             <input id="orgcode"  name="orgcode" value="{{code}}" class="form-control" style="display: none;"></input>
             <input id="flag"  name="flag" value="{{flag}}" class="form-control" style="display:none;"></input>
             <div style="margin-top:10px" class="form-group">
               <!-- Button -->
               <div class="col-sm-12 controls">
-                <button id="login" type="submit" class="btn btn-success " accesskey="l"><span class="glyphicon glyphicon-arrow-right" style="margin-right: 5px;"></span><u>L</u>ogin</button>
-                <button id="changeorg" class="btn btn-warning"><span class="glyphicon glyphicon-refresh" style="margin-right: 5px;" accesskey="c"></span><u>C</u>hange Organisation</button>
+                <button id="login" type="submit" class="btn btn-success " accesskey="l"><span class="glyphicon glyphicon-arrow-right" style="margin-right: 5px;"></span>{% trans %}<u>L</u>ogin{% endtrans %}</button>
+                <button id="changeorg" class="btn btn-warning"><span class="glyphicon glyphicon-refresh" style="margin-right: 5px;" accesskey="c"></span>{% trans %}<u>C</u>hange Organisation{% endtrans %}</button>
               </div>
             </div>
           </form>
