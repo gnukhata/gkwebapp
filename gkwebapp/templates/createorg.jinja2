@@ -5,6 +5,11 @@
   <style>
   .content{ margin-top:4%
   }
+  @media (max-width: 767px) {
+    .mainbox {
+      margin-top: 50px;
+    }
+  }
   </style>
 
 
@@ -15,7 +20,7 @@
     <div class="container-fluid">
 
     <div class="row clearfix">
-      <div id="createtorg" style="margin-top:50px;" class="mainbox col-md-6 pull-right">
+      <div id="createtorg" class="mainbox col-sm-6 col-md-12">
         <div class="alert alert-danger" id="orgname-blank-alert" aria-live="rude" role="alert" hidden>
 
           {% trans %}Please enter organisation name!{% endtrans %}
@@ -40,7 +45,7 @@
           <div class="panel-heading">
             <div class="panel-title">{% trans %}Create Organisation{% endtrans %}</div>
           </div>
-          <div style="padding-top:30px" class="panel-body" >
+          <div style="padding-top:20px" class="panel-body" >
 
             <form id="createorgform"  role="form">
               <div class="form-group">

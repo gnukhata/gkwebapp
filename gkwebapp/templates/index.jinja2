@@ -65,37 +65,64 @@
   .thead {
   	background-color: #a3a3a3;
   }
+  .footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding-top: 1rem;
+  background-color: #bfbfbf;
+  text-align: center;
+  }
+  .icon-bar {
+    color: white;
+    border-color: black;
+    background-color: white;
+  }
+  @media (max-width: 767px) {
+  	.footer {
+  	  position: relative;
+  	}
+    .collapsing, .in {background-color: rgb(26,34,41); color: white;}
+  	.collapsing ul li a, .in ul li a {color: white;}
+  	.collapsing ul li a:hover, .in ul li a:hover {background-color: #bfbfbf; color: black;}
+    #selectorg{
+      background-color: white;
+      color: black;
+    }
+    #createorg{
+      background-color: white;
+      color: black;
+    }
+  }
   </style>
 
 
 
 </head>
 <body style="background:url({{request.static_url('gkwebapp:static/images/old_mathematics.png')}})">
-
-  <nav class="navbar gknav navbar-fixed-top">
-    <div class="container-fluid">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">{% trans %}Toggle navigation{% endtrans %}</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href=""><img src="{{request.static_url('gkwebapp:static/images/icon.svg')}}" alt="GNUKhata Icon" style="width:42px;height:42px;margin-top: -11px" /></a>
-        <a class="navbar-brand" >{% trans %}GNUKhata{% endtrans %}</a>
-
-      </div>
-
-      <div class="collapse navbar-collapse" id="navbar-ex-collapse">
-        <ul class="nav navbar-nav pull-right">
-          <li class="active"><a data-toggle="tab" id="selectnav" href="#selectorg"> <span class="sr-only">{% trans %}Select Existing Organisation{% endtrans %}</span>{% trans %}Select <u>E</u>xisting Organisation{% endtrans %}</a></li>
-          <li><a data-toggle="tab" id="createnav" href="#createorg">{% trans %}C<u>r</u>eate Organisation{% endtrans %}</a></li>
-
-        </ul>
-      </div>
+<nav class="navbar gknav navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#gknavcollapse" aria-expanded="false">
+        <span class="sr-only">{% trans %}Toggle navigation{% endtrans %}</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href=""><img src="{{request.static_url('gkwebapp:static/images/icon.svg')}}" alt="GNUKhata Icon" style="width:42px;height:42px;margin-top: -11px" /></a>
+      <a class="navbar-brand">{% trans %}GNUKhata{% endtrans %}</a>
     </div>
-  </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="gknavcollapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a data-toggle="tab" id="selectnav" href="#selectorg"> <span class="sr-only">{% trans %}Select Existing Organisation{% endtrans %}</span>{% trans %}Select <u>E</u>xisting Organisation{% endtrans %}</a></li>
+        <li><a data-toggle="tab" id="createnav" href="#createorg">{% trans %}C<u>r</u>eate Organisation{% endtrans %}</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
 </nav>
   <br />
   <div class="container-fluid" id="ticker">
@@ -105,44 +132,47 @@
     </ul>
       </div>
 
-  <div class="col-md-6 pull-left container-fluid" style="margin-top:50px;">
+  <div class="container-fluid" style="margin-top:50px;">
+<div class="row">
+  <div class="col-sm-6" >
     <div class="alert alert-danger" aria-live="rude" role="alert" id="duplicate-org-alert" hidden>
       {% trans %}Duplicate Organisation!{% endtrans %}
-    </div>
-
-    <div class="panel shadow" >
-      <div class="panel-heading">
-        <div class="panel-title">
-          {% trans %}Welcome To GNUKhata{% endtrans %}<br /> <h4>{% trans %}A Free and Open Source Accounting Software{% endtrans %}</h4></div>
-
-      </div>
-      <div style="padding-top:20px; background-color: #f9f9f9;" class="panel-body" >
-        <p style="margin-top: 5px;">{% trans %}It is Lightweight.{% endtrans %}</p>
-        <p> {% trans %}It can scale upto a cloud based deployment or down to a standalone installation.{% endtrans %}</p>
-        <p> {% trans %}It is fast and robust.{% endtrans %}</p>
-        <p> {% trans %}It is based on double entry system of accounting.{% endtrans %}</p>
-      </div>
-      <div class="panel-footer" style="background-color: rgb(87,93,99); color: white;">
-        <p>{% trans %}GNUKhata is developed by{% endtrans %} <b>{% trans %}Digital Freedom Foundation(DFF){% endtrans %}</b> {% trans %}and is currently funded by{% endtrans %} <b>{% trans %}International Centre for Free and Open Source Software(ICFOSS).{% endtrans %}</b></p>
-      </div>
-      </div>
-   <div class="shadow" style="background-color: rgb(87,93,99); color: white; margin-top: -10px; border-radius: 4px;">
-     <p style="text-align: center; font-size: 0.9em;">{% trans %}Copyright © Digital Freedom Foundation 2013,2014,2015,2016. Visit{% endtrans %} <a href="http://gnukhata.in" style="color: white;"><strong>{% trans %}gnukhata.in{% endtrans %}</strong></a> {% trans %}for more information.{% endtrans %}</p>
-     <p style="text-align: center; font-size: 0.9em; margin-top: -10px; margin-bottom: 0px">{% trans %}This software is licensed under GNU AGPLv3. You may use a newer version of the same license.{% endtrans %}</p>
-   </div>
-  </div>
-  <div class="tab-content">
-
-    <div id="selectorg" class="tab-pane fade in active">
-
 
     </div>
-    <div id="createorg" class="tab-pane fade">
+
+    <div class="panel-heading">
+      <div class="panel-title">
+        {% trans %}Welcome To GNUKhata{% endtrans %}<br /> <h4>{% trans %}A Free and Open Source Accounting Software{% endtrans %}</h4>
+      </div>
 
     </div>
+    <div style="padding-top:20px; background-color: #f9f9f9;" class="panel-body" >
+      <p style="margin-top: 5px;">{% trans %}It is Lightweight.{% endtrans %}</p>
+      <p> {% trans %}It can scale upto a cloud based deployment or down to a standalone installation.{% endtrans %}</p>
+      <p> {% trans %}It is fast and robust.{% endtrans %}</p>
+      <p> {% trans %}It is based on double entry system of accounting.{% endtrans %}</p>
+    </div>
+    <div class="panel-footer" style="background-color: rgb(87,93,99); color: white;">
+      <p>{% trans %}GNUKhata is developed by{% endtrans %} <b>{% trans %}Digital Freedom Foundation(DFF){% endtrans %}</b> {% trans %}and is currently funded by{% endtrans %} <b>{% trans %}International Centre for Free and Open Source Software(ICFOSS).{% endtrans %}</b></p>
+    </div>
+</div>
+
+<div class="tab-content col-sm-6">
+
+  <div id="selectorg" class="tab-pane fade in active">
 
   </div>
+  <div id="createorg" class="tab-pane fade">
 
+  </div>
+</div>
+</div>
+<div class="row">
+  <div class="footer" style="background-color: rgb(87,93,99); color: white; margin-top: -10px; border-radius: 4px;">
+    <p style="text-align: center; font-size: 0.9em;">{% trans %}Copyright © Digital Freedom Foundation 2013,2014,2015,2016. Visit{% endtrans %} <a href="http://gnukhata.in" style="color: white;"><strong>{% trans %}gnukhata.in{% endtrans %}</strong></a> {% trans %}for more information.{% endtrans %}{% trans %}This software is licensed under GNU AGPLv3. You may use a newer version of the same license.{% endtrans %}</p>
+  </div>
+</div>
+</div>
   <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
   <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/index.js')}}"></script>

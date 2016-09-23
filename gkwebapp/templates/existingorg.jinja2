@@ -10,6 +10,11 @@
   .panel{
     border-color: rgb(87,93,99);
   }
+  @media (max-width: 767px) {
+    .mainbox {
+      margin-top: 50px;
+    }
+  }
   </style>
 
 
@@ -17,7 +22,7 @@
 <body>
 
   <div class="container-fluid" id="inner">
-    <div id="existingorg" style="margin-top:50px;" class="mainbox col-md-6 pull-right">
+    <div id="existingorg" class="mainbox">
       <div class="alert alert-danger" id="selorg-blank-alert" hidden>
 
         {% trans %}Please select organisation!{% endtrans %}
@@ -63,6 +68,7 @@
                 <button id="callLogin" class="btn btn-success " accesskey="n"><span class="glyphicon glyphicon-arrow-right" style="margin-right: 5px;"></span>{% trans %}<u>N</u>ext{% endtrans %}</button>
 
               </div>
+              <div style="margin-bottom: 18px" class="input-group col-xs-12"></div>
             </div>
 
           </form>
