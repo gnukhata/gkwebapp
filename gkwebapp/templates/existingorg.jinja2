@@ -10,14 +10,18 @@
   .panel{
     border-color: rgb(87,93,99);
   }
+  @media (max-width: 767px) {
+    .mainbox {
+      margin-top: 50px;
+    }
+  }
   </style>
 
 
 </head>
 <body>
 
-  <div class="container-fluid" id="inner">
-    <div id="existingorg" style="margin-top:50px;" class="mainbox col-md-6 pull-right">
+    <div id="existingorg" class="mainbox">
       <div class="alert alert-danger" id="selorg-blank-alert" hidden>
 
         {% trans %}Please select organisation!{% endtrans %}
@@ -44,7 +48,7 @@
               </select>
             </div>
 
-            <div style="margin-bottom: 25px" class="input-group col-xs-12">
+            <div style="margin-bottom: 45px" class="input-group col-xs-12">
               <label for="finalyears" id="orname">{% trans %}Select <u>F</u>inancial Year{% endtrans %} :</label><br/>
               <select style="border-radius: 4px" class = "form-control col-xs-12" id="finalyears" name="orgcode" accesskey="f">
                 <option value="" disabled selected hidden>{% trans %}Select Financial Year{% endtrans %}</option>
@@ -74,14 +78,7 @@
 
     </div>
 
-
-
-
-  </div>
   <hr />
-
-  <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
-  <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/existingorg.js')}}"></script>
 </body>
 

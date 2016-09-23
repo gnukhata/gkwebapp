@@ -5,6 +5,11 @@
   <style>
   .content{ margin-top:4%
   }
+  @media (max-width: 767px) {
+    .mainbox {
+      margin-top: 50px;
+    }
+  }
   </style>
 
 
@@ -12,10 +17,7 @@
 </head>
 <body>
 
-    <div class="container-fluid">
-
-    <div class="row clearfix">
-      <div id="createtorg" style="margin-top:50px;" class="mainbox col-md-6 pull-right">
+      <div id="createtorg" class="mainbox">
         <div class="alert alert-danger" id="orgname-blank-alert" aria-live="rude" role="alert" hidden>
 
           {% trans %}Please enter organisation name!{% endtrans %}
@@ -40,7 +42,7 @@
           <div class="panel-heading">
             <div class="panel-title">{% trans %}Create Organisation{% endtrans %}</div>
           </div>
-          <div style="padding-top:30px" class="panel-body" >
+          <div style="padding-top:20px" class="panel-body" >
 
             <form id="createorgform"  role="form">
               <div class="form-group">
@@ -103,13 +105,6 @@
         </div>
 
       </div>
-    </div>
-  </div>
-
-
-
-  <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
-  <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.autotab.min.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/createorg.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/date.js')}}"></script>
