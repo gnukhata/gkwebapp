@@ -32,6 +32,8 @@ a:focus,
 }
 .gknav .navbar-nav > li > a {
     color: white;
+		padding-left: 7px;
+		padding-right: 7px;
 }
 .gknav .navbar-nav > li > a:hover, .gknav .navbar-nav > li > a:focus {
     background-color: black;
