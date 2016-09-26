@@ -32,12 +32,16 @@ $(document).ready(function()
   var styear = sessionStorage.getItem('year1');
   var enyear = sessionStorage.getItem('year2');
   var orgdata = orname + " (" + ortype + ")";
+  var pathname = window.location.pathname;
   var yeardata = "Financial Year : " + styear + " to " + enyear;
   if(orgdata!=""||yeardata!="")
   {
   $("#ticker").show();
   $("#orgdata").html(orgdata);
   $("#yeardata").html(yeardata);
+  }
+  if (pathname=="/showmainshell") {
+    $("#forgotpassworddiv").addClass('col-md-6');
   }
   $('#login_username').keydown(function(e){
       if (e.which == 13)
