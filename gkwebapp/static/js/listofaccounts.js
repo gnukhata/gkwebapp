@@ -27,10 +27,8 @@ Contributors:
 
 $(document).ready(function() {
   $(".modal-backdrop").remove();
-  var percentwid = 100*(($("table").width()-12)/$("table").width());
-  $('.table-fixedheader thead').width(percentwid+"%");
-  var percentheigth = 100*(($("body").height()-$(".navbar").height()-148)/$("body").height());
-  $('.table-fixedheader tbody').height(percentheigth+"%");
+  $(".fixed-table-loading").remove();
+
 
   $('#latable tbody tr:first-child td:eq(1) a').focus();
   $('#latable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
