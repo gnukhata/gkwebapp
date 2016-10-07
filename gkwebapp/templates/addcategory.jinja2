@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% trans %}GNUKhata | Category{% endtrans %}</title>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-5">
+        <div class="panel shadow">
+          <div class="panel-heading">
+            <h3 class="panel-title">{% trans %}Create Category{% endtrans %}</h3>
+          </div>
+          <div class="panel-body">
+            <form>
+              <div class="form-group">
+                <label for="category_type">{% trans %}Name :{% endtrans %}</label>
+                <input class="form-control" id="category_type" placeholder="{% trans %}Enter category name{% endtrans %}">
+              </div>
+              <div class="form-group">
+                <label for="category_tax_vat">{% trans %}VAT :{% endtrans %}</label>
+                <div class="input-group">
+                  <input class="form-control" id="category_tax_vat" aria-describedby="vat_help" placeholder="VAT">
+                  <div class="input-group-addon">%</div>
+                </div>
+                <small id="vat_help" class="form-text text-muted">{% trans %}Enter VAT% if applicable.{% endtrans %}</small>
+              </div>
+              <div class="form-group">
+                <label for="category_under">{% trans %}Under :{% endtrans %}</label>
+                <select class="form-control" id="category_under">
+                  {% for categories in gkresult %}
+                  <option value="{{categories['categorycode']}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="panel-footer">
+            <button class="btn btn-primary">{% trans %}Add Specifications{% endtrans %}</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-7">
+        <div class="panel shadow">
+          <!-- Default panel contents -->
+          <div class="panel-heading text-center">Specifications</div>
+
+          <!-- Table -->
+          <table id="m_acctable" class="table table-condensed table-fixedheader">
+            <thead>
+              <tr>
+                <th class="col-xs-7">{% trans %}Name{% endtrans %}</th>
+                <th class="col-xs-3">{% trans %}Type{% endtrans %}</th>
+                <th class="col-xs-2">{% trans %}Remove{% endtrans %}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="col-xs-7">
+                  <input type="text" id="m_alt_accname"class="form-control input-sm m_accname" placeholder="Account Name">
+                </td>
+                <td class="col-xs-3">
+                  <input type="text" class=" form-control input-sm m_openbal rightJustified" placeholder="0.00" >
+                </td>
+                <td class="col-xs-2">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
