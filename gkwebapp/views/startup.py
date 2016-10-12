@@ -36,10 +36,6 @@ s = requests.session()
 def index(request):
 	return {"a":1}
 
-@view_config(route_name="about", renderer="gkwebapp:templates/about.jinja2")
-def about(request):
-	return {"a":1}
-
 @view_config(route_name="existingorg", renderer="gkwebapp:templates/existingorg.jinja2")
 def existingorg(request):
 	result = requests.get("http://127.0.0.1:6543/organisations")

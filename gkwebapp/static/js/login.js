@@ -37,11 +37,13 @@ $(document).ready(function()
   if(orgdata!=""||yeardata!="")
   {
   $("#ticker").show();
+  $("#welcome").hide();
   $("#orgdata").html(orgdata);
   $("#yeardata").html(yeardata);
   }
   if (pathname=="/showmainshell") {
     $("#forgotpassworddiv").addClass('col-md-6');
+    $("#welcome").show();
   }
   $('#login_username').keydown(function(e){
       if (e.which == 13)

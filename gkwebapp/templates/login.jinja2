@@ -32,6 +32,28 @@
       <li style="float: right;"><a style="margin-right: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="yeardata" href=""></a></li>
     </ul>
   </div>
+  <div class="col-md-6" id="welcome">
+    <div class="alert alert-danger" aria-live="rude" role="alert" id="duplicate-org-alert" hidden>
+      {% trans %}Duplicate Organisation!{% endtrans %}
+
+    </div>
+
+    <div class="panel-heading">
+      <div class="panel-title">
+        {% trans %}Welcome To GNUKhata{% endtrans %}<br /> <h4>{% trans %}A Free and Open Source Accounting Software{% endtrans %}</h4>
+      </div>
+
+    </div>
+    <div style="padding-top:20px; background-color: #f9f9f9;" class="panel-body" >
+      <p style="margin-top: 5px;">{% trans %}It is Lightweight.{% endtrans %}</p>
+      <p> {% trans %}It can scale upto a cloud based deployment or down to a standalone installation.{% endtrans %}</p>
+      <p> {% trans %}It is fast and robust.{% endtrans %}</p>
+      <p> {% trans %}It is based on double entry system of accounting.{% endtrans %}</p>
+    </div>
+    <div class="panel-footer" style="background-color: rgb(87,93,99); color: white;">
+      <p>{% trans %}GNUKhata is developed by{% endtrans %} <b>{% trans %}Digital Freedom Foundation(DFF){% endtrans %}</b> {% trans %}and is currently funded by{% endtrans %} <b>{% trans %}International Centre for Free and Open Source Software(ICFOSS).{% endtrans %}</b></p>
+    </div>
+  </div>
   <div id="forgotpassworddiv" class="mainbox">
     <div class="alert alert-danger" id="login_username-blank-alert" aria-live="rude" role="alert" hidden>
 
