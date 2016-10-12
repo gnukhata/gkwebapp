@@ -33,7 +33,13 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 
 @view_config(route_name="category",renderer="gkwebapp:templates/addcategory.jinja2")
-def showedituser(request):
+def showcategory(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/categories", headers=header)
+	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
+
+@view_config(route_name="category",request_param="action=getspecs",renderer="json")
+def getspecs(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/categoryspecs?categorycode=%d"%(int(request.params["categorycode"])), headers=header)
 	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}

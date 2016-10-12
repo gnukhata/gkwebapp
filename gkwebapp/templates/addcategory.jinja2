@@ -15,8 +15,8 @@
           <div class="panel-body">
             <form>
               <div class="form-group">
-                <label for="category_type">{% trans %}Name :{% endtrans %}</label>
-                <input class="form-control" id="category_type" placeholder="{% trans %}Enter category name{% endtrans %}">
+                <label for="category_name">{% trans %}Name :{% endtrans %}</label>
+                <input class="form-control" id="category_name" placeholder="{% trans %}Enter category name{% endtrans %}">
               </div>
               <div class="form-group">
                 <label for="category_tax_vat">{% trans %}VAT :{% endtrans %}</label>
@@ -37,17 +37,17 @@
             </form>
           </div>
           <div class="panel-footer">
-            <button class="btn btn-primary">{% trans %}Add Specifications{% endtrans %}</button>
+            <button class="btn btn-primary" id="category_addspecs">{% trans %}Add Specifications{% endtrans %}</button>
           </div>
         </div>
       </div>
-      <div class="col-md-7">
+      <div class="col-md-7" id="category_spec_div" hidden>
         <div class="panel shadow">
           <!-- Default panel contents -->
           <div class="panel-heading text-center">Specifications</div>
 
           <!-- Table -->
-          <table id="m_acctable" class="table table-condensed table-fixedheader">
+          <table id="category_spec_table" class="table table-condensed table-fixedheader">
             <thead>
               <tr>
                 <th class="col-xs-7">{% trans %}Name{% endtrans %}</th>
@@ -58,10 +58,15 @@
             <tbody>
               <tr>
                 <td class="col-xs-7">
-                  <input type="text" id="m_alt_accname"class="form-control input-sm m_accname" placeholder="Account Name">
+                  <input type="text" id="category_spec_name" class="form-control input-sm spec_name" placeholder="Account Name">
                 </td>
                 <td class="col-xs-3">
-                  <input type="text" class=" form-control input-sm m_openbal rightJustified" placeholder="0.00" >
+                  <select id="category_spec_type" class="form-control input-sm" name="">
+                    <option value="0">Text</option>
+                    <option value="1">Number</option>
+                    <option value="2">Date</option>
+                    <option value="3">Option</option>
+                  </select>
                 </td>
                 <td class="col-xs-2">
                 </td>
@@ -74,5 +79,6 @@
     </div>
   </div>
 </div>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addcategory.js')}}"></script>
 </body>
 </html>
