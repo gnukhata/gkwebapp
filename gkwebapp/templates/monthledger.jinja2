@@ -13,26 +13,57 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 td {
-  font-size: 80%;
+  font-size: 75%;
+  padding: 4 !important;
+  margin: 4 !important;
 }
+th {
+    font-size: 85%;
+  }
+
+.card-view .title {
+    font-weight: bold;
+    display: inline-block;
+    min-width: 30%;
+    text-align: left !important;
+}
+tbody {
+    display:block;
+    height: calc(100vh - 16em);
+    overflow-y:scroll;
+}
+thead,tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}
+thead {
+    width: calc( 100% - 0.75em )
+}
+.ralign{
+  text-align:right;
+
+}
+.cred{
+  color:red
+}
+.calign{
+  text-align:center;
+}
+
 </style>
 </head>
 <body>
-  <div id="monthdiv" class="container-fluid">
-    <div class="panel">
-      <div class="panel-heading">
-        <span style="margin:auto; display:table;"><i>{% trans %}Ledger Account{% endtrans %}</i> : <strong>{{accountname}}</strong></span>
+      <span style="margin:auto; display:table;"><i>{% trans %}Ledger Account{% endtrans %}</i> : <strong>{{accountname}}</strong></span>
         <input type="hidden" id="accname" name="projectname" value="{{accountname}}"></input>
-      </div>
-      <div class="panel-body">
-        <div class="table-responsive">
-          <table id="mthltable" class="shadow table table-bordered table-condensed">
+        <div class="row">
+          <table id="mthltable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
             <thead>
               <tr>
                 <th class="col-xs-3">{% trans %}Month{% endtrans %}</th>
-                <th style="text-align:right" class="col-xs-3">{% trans %}Debit{% endtrans %}</th>
-                <th style="text-align:right" class="col-xs-3">{% trans %}Credit{% endtrans %}</th>
-                <th style="text-align:center" class="col-xs-3">{% trans %}No. of Vouchers{% endtrans %}</th>
+                <th class="col-xs-3 ralign">{% trans %}Debit{% endtrans %}</th>
+                <th class="col-xs-3 ralign">{% trans %}Credit{% endtrans %}</th>
+                <th class="col-xs-3 calign">{% trans %}No. of Vouchers{% endtrans %}</th>
               </tr>
             </thead>
             <tbody>
@@ -42,31 +73,31 @@ td {
                   <a class="monthname" href="#">{{record['month']}}</a>
                 </td>
                 {%if record["advflag"]==1%}
-                <td class="col-xs-3 hidden-print" style="text-align:right; color:red;">
+                <td class="col-xs-3 hidden-print ralign cred">
                   <b>{{record["Dr"]}}</b>
                 </td>
-                <td class="col-xs-3 hidden-print" style="text-align:right; color:red;">
+                <td class="col-xs-3 hidden-print ralign cred">
                   <b>{{record["Cr"]}}</b>
                 </td>
-                <td class="col-xs-3 visible-print" style="text-align:right; color:red;">
+                <td class="col-xs-3 visible-print ralign cred">
                   {% if record.Dr %}
                     <b>({{record["Dr"]}})</b>
                   {% endif %}
                 </td>
-                <td class="col-xs-3 visible-print" style="text-align:right; color:red;">
+                <td class="col-xs-3 visible-print ralign cred">
                   {% if record.Cr %}
                     <b>({{record["Cr"]}})</b>
                   {% endif %}
                 </td>
                 {%else%}
-                <td class="col-xs-3" style="text-align:right">
+                <td class="col-xs-3 ralign">
                   {{record["Dr"]}}
                 </td>
-                <td class="col-xs-3" style="text-align:right">
+                <td class="col-xs-3 ralign">
                   {{record["Cr"]}}
                 </td>
                 {%endif%}
-                <td class="col-xs-3" style="text-align:center">
+                <td class="col-xs-3 calign">
                   {{record["vcount"]}}
                 </td>
               </tr>
@@ -74,17 +105,13 @@ td {
             </tbody>
           </table>
         </div>
-      </div>
-      <div class="panel-footer hidden-print">
         <span style="margin:auto; display:table;">
         <button type="button" class="btn btn-sm btn-danger" id="mthlback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
         <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">{% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
         <button class="btn btn-sm btn-primary" type="button"  id="realprintmonth" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
       </span>
-      </div>
-    </div>
     <input type="hidden" id="accountcode" value="{{accountcode}}">
-  </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/monthledger.js')}}"></script>
 </body>
 </html>
