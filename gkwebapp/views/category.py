@@ -43,3 +43,18 @@ def getspecs(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/categoryspecs?categorycode=%d"%(int(request.params["categorycode"])), headers=header)
 	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
+
+@view_config(route_name="category",request_param="action=save",renderer="json")
+def savespecs(request):
+	header={"gktoken":request.headers["gktoken"]}
+	print request.params["specs"]
+	categorydata={"categoryname":request.params["categoryname"],"subcategoryof":int(request.params["subcategoryof"])}
+	result = requests.post("http://127.0.0.1:6543/categories",data=json.dumps(categorydata) ,headers=header)
+	if result.json()["gkstatus"]==0:
+		specs = json.loads(request.params["specs"])
+		for spec in specs:
+			specdata= {"attrname":spec["attrname"],"attrtype":int(spec["attrtype"]),"categorycode":result.json()["gkresult"]}
+			specresult = requests.post("http://127.0.0.1:6543/categoryspecs",data=json.dumps(specdata) ,headers=header)
+		return {"gkstatus": specresult.json()["gkstatus"]}
+	else:
+		return {"gkstatus": result.json()["gkstatus"]}
