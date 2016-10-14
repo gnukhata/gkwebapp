@@ -15,6 +15,8 @@
   }
   #latable td {
     font-size: 75%;
+    padding: 4 !important;
+    margin: 4 !important;
   }
 
   #latable th {
@@ -39,7 +41,7 @@
       table-layout:fixed;
   }
   #latable thead {
-      width: calc( 100% - 0.6em )
+      width: calc( 100% - 0.75em );
   }
 
   </style>
@@ -50,7 +52,7 @@
   <span style="margin:auto; display:table; font-size:120%;"><strong>{% trans %}List of Accounts{% endtrans %}</strong></span>
 
   <div class="row">
-    <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true" data-card-visible="" data-show-columns="true" data-search-align="left" data-buttons-align="left" data-search="true" >
+    <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
       <thead>
         <tr>
           <th class="col-xs-1" >
@@ -71,7 +73,7 @@
 
         {% for record in gkresult %}
         <tr	value="{{record["accountcode"]}}">
-          <td class="col-xs-1" >
+          <td class="col-xs-1 " >
             {{record["srno"]}}
           </td>
           <td class="col-xs-5">
