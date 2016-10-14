@@ -27,14 +27,12 @@ Contributors:
 */
 
 $(document).ready(function() {
+	$(".fixed-table-loading").remove();
 	$('#rctable tbody tr:first-child td:eq(1) a').focus();
 	$('#rctable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 	var rcindex = 0
 	var pyindex = 0
-	var percentwid = 100*(($(".table-fixedheader").width()-12)/$(".table-fixedheader").width());
-	$('.table-fixedheader thead').width(percentwid+"%");
-	var percentheigth = 100*(($("body").height()-$(".navbar").height()-148)/$("body").height());
-	$('.table-fixedheader tbody').height(percentheigth+"%");
+
 	$(document).off('focus' ,'.rcaccname').on('focus' ,'.rcaccname',function() {
 		$('#rctable tr').removeClass('selected');
 		$(this).closest('tr').addClass('selected');
@@ -140,7 +138,7 @@ $(document).ready(function() {
 	});
 
 $("#viewprintableversion").click(function(event) {
-	
+
 	$.ajax(
 		{
 			type: "POST",
