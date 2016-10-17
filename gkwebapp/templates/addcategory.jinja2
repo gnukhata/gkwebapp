@@ -8,6 +8,15 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-5">
+        <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
+
+          {% trans %}Category saved.{% endtrans %}
+        </div>
+        <div class="alert alert-danger" id="category-blank-alert"  aria-live="rude" role="alert" hidden>
+
+          <label for="vno">{% trans %}Please enter category name!{% endtrans %}</label>
+        </div>
+
         <div class="panel shadow category_panel">
           <div class="panel-heading">
             <h3 class="panel-title">{% trans %}Create Category{% endtrans %}</h3>
@@ -29,6 +38,7 @@
               <div class="form-group">
                 <label for="category_under">{% trans %}Under :{% endtrans %}</label>
                 <select class="form-control" id="category_under">
+                  <option value="" selected>None</option>
                   {% for categories in gkresult %}
                   <option value="{{categories['categorycode']}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
                   {% endfor %}
@@ -50,17 +60,17 @@
           <table id="category_spec_table" class="table table-condensed table-fixedheader">
             <thead>
               <tr>
-                <th class="col-xs-7">{% trans %}Name{% endtrans %}</th>
-                <th class="col-xs-3">{% trans %}Type{% endtrans %}</th>
+                <th class="col-xs-8">{% trans %}Name{% endtrans %}</th>
+                <th class="col-xs-2">{% trans %}Type{% endtrans %}</th>
                 <th class="col-xs-2">{% trans %}Remove{% endtrans %}</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td class="col-xs-7">
+                <td class="col-xs-8">
                   <input type="text" id="category_spec_name" class="form-control input-sm spec_name" placeholder="Spec Name">
                 </td>
-                <td class="col-xs-3">
+                <td class="col-xs-2">
                   <select id="category_spec_type" class="form-control input-sm spec_type" name="">
                     <option value="0">Text</option>
                     <option value="1">Number</option>
@@ -69,6 +79,7 @@
                   </select>
                 </td>
                 <td class="col-xs-2">
+                  <a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                 </td>
               </tr>
             </tbody>

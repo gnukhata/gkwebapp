@@ -85,6 +85,7 @@ $(document).ready(function() {
             '</select>'+
           '</td>'+
           '<td class="col-xs-2">'+
+          '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
           '</td>'+
         '</tr>');
           $('#category_spec_table tbody tr:eq('+nextindex1+') td:eq(0) input').focus().select();
@@ -97,9 +98,22 @@ $(document).ready(function() {
     });
 
   $("#category_addspecs").click(function(event) {
+    if ($.trim($('#category_name').val())=="") {
+      $("#category-blank-alert").alert();
+      $("#category-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#category-blank-alert").hide();
+      });
+      $("#category_spec_div").hide();
+      $('#category_name').focus().select();
+      return false;
+    }
     var category_code = $("#category_under option:selected").val();
     $("#category_spec_table > tbody >tr:not(:last)").remove();
-    $.ajax({
+    if (category_code=='') {
+      $("#category_spec_div").show();
+      $("#category_spec_table tbody tr:last td:eq(0) input").focus();
+    }
+    else{$.ajax({
       url: '/category?action=getspecs',
       type: 'POST',
       dataType: 'json',
@@ -111,6 +125,24 @@ $(document).ready(function() {
     })
     .done(function(resp) {
       console.log("success");
+      if ($('#category_spec_table tbody tr').length==0) {
+        $('#category_spec_table tbody').append('<tr>'+
+          '<td class="col-xs-8">'+
+            '<input type="text" class="form-control input-sm spec_name" value="" placeholder="Spec Name">'+
+          '</td>'+
+          '<td class="col-xs-2">'+
+            '<select id="category_spec_type" class="form-control input-sm spec_type">'+
+            '<option value="0">Text</option>'+
+            '<option value="1">Number</option>'+
+            '<option value="2">Date</option>'+
+            '<option value="3">Option</option>'+
+            '</select>'+
+          '</td>'+
+          '<td class="col-xs-2">'+
+          '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+          '</td>'+
+        '</tr>');
+      }
       for (spec of resp["gkresult"]) {
         var trs;
         if (spec["attrtype"]==0) {
@@ -138,14 +170,15 @@ $(document).ready(function() {
           '<option value="3" selected>Option</option>'
         }
         $('#category_spec_table tbody').prepend('<tr>'+
-          '<td class="col-xs-7">'+
+          '<td class="col-xs-8">'+
             '<input type="text" class="form-control input-sm spec_name" value="'+spec["attrname"]+'" placeholder="Spec Name">'+
           '</td>'+
-          '<td class="col-xs-3">'+
+          '<td class="col-xs-2">'+
             '<select id="category_spec_type" class="form-control input-sm spec_type">'+trs+
             '</select>'+
           '</td>'+
           '<td class="col-xs-2">'+
+          '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
           '</td>'+
         '</tr>');
       }
@@ -158,9 +191,16 @@ $(document).ready(function() {
     .always(function() {
       console.log("complete");
     });
-
+  }
   });
 
+  $(document).off("click",".spec_del").on("click", ".spec_del", function() {
+    $(this).closest('tr').fadeOut(200, function(){
+      $(this).closest('tr').remove();	 //closest method gives the closest element specified
+      $('#category_spec_table tbody tr:last td:eq(0) input').focus().select();
+    });
+    $('#category_spec_table tbody tr:last td:eq(0) input').select();
+  });
   $("#category_savespecs").click(function(event) {
     var specs = [];
     for (var i = 0; i < $("#category_spec_table tbody tr").length; i++) {

@@ -47,8 +47,10 @@ def getspecs(request):
 @view_config(route_name="category",request_param="action=save",renderer="json")
 def savespecs(request):
 	header={"gktoken":request.headers["gktoken"]}
-	print request.params["specs"]
-	categorydata={"categoryname":request.params["categoryname"],"subcategoryof":int(request.params["subcategoryof"])}
+	if request.params["subcategoryof"]!='':
+		categorydata={"categoryname":request.params["categoryname"],"subcategoryof":int(request.params["subcategoryof"])}
+	else:
+		categorydata={"categoryname":request.params["categoryname"]}
 	result = requests.post("http://127.0.0.1:6543/categories",data=json.dumps(categorydata) ,headers=header)
 	if result.json()["gkstatus"]==0:
 		specs = json.loads(request.params["specs"])
