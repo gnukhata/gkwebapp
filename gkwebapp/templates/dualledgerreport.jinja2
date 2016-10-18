@@ -17,13 +17,13 @@ span
   .shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
-  td {
+  #ledgertable1 td,#ledgertable2 td {
       font-size: 75%;
       color: black;
       padding: 4 !important;
       margin: 4 !important;
     }
-  th {
+  #ledgertable1 th,#ledgertable2 th {
       font-size: 85%;
     }
 
@@ -33,18 +33,18 @@ span
       min-width: 30%;
       text-align: left !important;
   }
-  tbody {
+  #ledgertable1 tbody, #ledgertable2 tbody {
       display:block;
       height: calc(100vh - 16em);
       overflow-y:scroll;
   }
-  thead,tbody tr {
+  #ledgertable1 thead ,#ledgertable1 tbody tr,#ledgertable2 thead ,#ledgertable2 tbody tr {
       display:table;
       width:100%;
       table-layout:fixed;
   }
-  thead {
-      width: calc( 100% - 0.75em )
+  #ledgertable1 thead,#ledgertable2 thead {
+      width: calc( 100% - 0.65em )
   }
   .ralign{
 		text-align:right;
@@ -111,7 +111,7 @@ span
         </thead>
         <tbody>
           {% for record in records1 %}
-          <tr  value="{{record['vouchercode']}}">
+          <tr  data-value="{{record['vouchercode']}}">
             <td class="col-xs-2">
               {{record['voucherdate']}}
             </td>
@@ -190,7 +190,7 @@ span
         </thead>
         <tbody>
           {% for record in records2 %}
-          <tr  value="{{record['vouchercode']}}">
+          <tr  data-value="{{record['vouchercode']}}">
             <td class="col-xs-2">
               {{record['voucherdate']}}
             </td>

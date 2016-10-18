@@ -74,7 +74,7 @@ $(document).ready(function() {
 
   $("#ledgertable1").off('click','tr').on('click','tr',function(e){
     e.preventDefault();
-    var id = $(this).attr('value');
+    var id = $(this).attr('data-value');
     var currindex = $(this).index();
     $('#ledgertable1 tr').removeClass('selected');
     $(this).toggleClass('selected');
@@ -83,7 +83,7 @@ $(document).ready(function() {
   });
 
   $("#ledgertable1").off('keydown','tr').on('keydown','tr',function(e){
-    var id = $(this).attr('value');
+    var id = $(this).attr('data-value');
     var rindex = $(this).index();
 
     if(e.which==13)
@@ -94,9 +94,9 @@ $(document).ready(function() {
 });
 
 
-  $("#ledgertable1 tbody tr").off('dblclick').on('dblclick',function(e){
+  $("#ledgertable1").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
-    var id = $(this).attr('value');
+    var id = $(this).attr('data-value');
     if (id=="")
     {
       return false;
@@ -203,7 +203,7 @@ $(document).ready(function() {
 
   $("#ledgertable2").off('click','tr').on('click','tr',function(e){
     e.preventDefault();
-    var id = $(this).attr('value');
+    var id = $(this).attr('data-value');
     var currindex = $(this).index();
     $('#ledgertable2 tr').removeClass('selected');
     $(this).toggleClass('selected');
@@ -212,7 +212,7 @@ $(document).ready(function() {
   });
 
   $("#ledgertable2").off('keydown','tr').on('keydown','tr',function(e){
-    var id = $(this).attr('value');
+    var id = $(this).attr('data-value');
     var rindex = $(this).index();
 
     if(e.which==13)
@@ -223,9 +223,9 @@ $(document).ready(function() {
 });
 
 
-  $("#ledgertable2 tbody tr").off('dblclick').on('dblclick',function(e){
+  $("#ledgertable2").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
-    var id = $(this).attr('value');
+    var id = $(this).attr('data-value');
     if (id=="")
     {
       return false;
