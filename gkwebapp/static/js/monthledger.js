@@ -68,7 +68,7 @@ $(document).ready(function() {
 
   $("#mthltable").off('click','tr').on('click','tr',function(e){
     e.preventDefault();
-    var id = $(this).attr('value');
+    var id = $(this).attr('data-value');
     var currindex = $(this).index();
     $('#mthltable tr').removeClass('selected');
     $(this).toggleClass('selected');
@@ -77,7 +77,7 @@ $(document).ready(function() {
   });
 
   $("#mthltable").off('keydown','tr').on('keydown','tr',function(e){
-    var id = $(this).attr('value');
+    var id = $(this).attr('data-value');
     var rindex = $(this).index();
 
     if(e.which==13)
@@ -87,9 +87,9 @@ $(document).ready(function() {
     }
 });
 
-  $("#mthltable tbody tr").off('dblclick').on('dblclick',function(e){
+  $("#mthltable").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
-     var date = $(this).attr('value').split(":");
+     var date = $(this).attr('data-value').split(":");
      var newfromdate = date[0];
      var newtodate = date[1];
     $.ajax(

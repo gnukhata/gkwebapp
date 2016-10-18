@@ -12,12 +12,12 @@
 .shadow {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-td {
+#mthltable td {
   font-size: 75%;
   padding: 4 !important;
   margin: 4 !important;
 }
-th {
+#mthltable th {
     font-size: 85%;
   }
 
@@ -27,18 +27,18 @@ th {
     min-width: 30%;
     text-align: left !important;
 }
-tbody {
+#mthltable tbody {
     display:block;
     height: calc(100vh - 16em);
     overflow-y:scroll;
 }
-thead,tbody tr {
+#mthltable thead,#mthltable tbody tr {
     display:table;
     width:100%;
     table-layout:fixed;
 }
-thead {
-    width: calc( 100% - 0.75em )
+#mthltable thead {
+    width: calc( 100% - 0.65em )
 }
 .ralign{
   text-align:right;
@@ -68,7 +68,7 @@ thead {
             </thead>
             <tbody>
               {% for record in records %}
-              <tr  value="{{record['period']}}">
+              <tr  data-value="{{record['period']}}">
                 <td class="col-xs-3">
                   <a class="monthname" href="#">{{record['month']}}</a>
                 </td>
