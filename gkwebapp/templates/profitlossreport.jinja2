@@ -17,13 +17,13 @@
 .shadow {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-td {
+#expensetbl td,#incometbl td {
   font-size: 75%;
   color: black;
   padding: 4 !important;
   margin: 4 !important;
 }
-th {
+#expensetbl th,#incometbl th {
   font-size: 85%;
 }
 
@@ -33,18 +33,18 @@ th {
   min-width: 30%;
   text-align: left !important;
 }
-tbody {
+#expensetbl tbody,#incometbl tbody {
   display:block;
   height: calc(100vh - 16em);
   overflow-y:scroll;
 }
-thead,tbody tr {
+#expensetbl thead,#expensetbl tbody tr,#incometbl thead,#incometbl tbody tr {
   display:table;
   width:100%;
   table-layout:fixed;
 }
-thead {
-  width: calc( 100% - 0.75em )
+#expensetbl thead ,#incometbl thead{
+  width: calc( 100% - 0.65em )
 }
 .nopadding{
 	padidng:0 !important;
@@ -92,7 +92,7 @@ thead {
         </thead>
         <tbody>
           {% for rcrecord in expense %}
-          <tr  value="{{rcrecord['accountcode']}}">
+          <tr  data-value="{{rcrecord['accountcode']}}">
             <td class="col-xs-1">
               {{rcrecord['toby']}}
             </td>
@@ -131,7 +131,7 @@ thead {
         </thead>
         <tbody>
           {% for pyrecord in income %}
-          <tr  value="{{pyrecord['accountcode']}}">
+          <tr  data-value="{{pyrecord['accountcode']}}">
             <td class="col-xs-1">
               {{pyrecord['toby']}}
             </td>
