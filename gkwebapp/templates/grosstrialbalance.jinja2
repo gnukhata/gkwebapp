@@ -12,14 +12,14 @@
 	.shadow {
 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	}
-	td {
+	#gtbtable td {
 		font-size: 75%;
 		color: black;
 		padding: 4 !important;
     margin: 4 !important;
 	}
 
-	th {
+	#gtbtable th {
 		font-size: 85%;
 	}
 	.card-view .title {
@@ -29,18 +29,18 @@
 			text-align: left !important;
 	}
 
-	tbody {
+	#gtbtable tbody {
 			display:block;
 			height: calc(100vh - 16em);
 			overflow-y:scroll;
 	}
-	 thead,tbody tr {
+	 #gtbtable thead,#gtbtable tbody tr {
 			display:table;
 			width:100%;
 			table-layout:fixed;
 	}
-	 thead {
-			width: calc( 100% - 0.75em )
+	 #gtbtable thead {
+			width: calc( 100% - 0.65em )
 	}
 	.ralign{
 		text-align:right;
@@ -71,7 +71,7 @@
 			</thead>
 			<tbody>
 				{% for record in records %}
-				<tr	value="{{record['accountcode']}}">
+				<tr	data-value="{{record['accountcode']}}">
 					<td class="col-xs-1">
 						{{record['srno']}}
 					</td>

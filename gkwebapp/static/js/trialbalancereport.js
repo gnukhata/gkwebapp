@@ -115,12 +115,11 @@ $(document).ready(function() {
 
 		if(e.which==13)
 		{
-alert(rindex);
 		$('.trialbaltable tbody tr:eq('+rindex+')').dblclick() ;
 		}
 });
 
-	$(".trialbaltable tbody tr").off('dblclick').on('dblclick',function(e){
+	$(".trialbaltable").off('dblclick','tr').on('dblclick','tr',function(e){
 		e.preventDefault();
 		var acccode = $(this).attr('data-value');
 		if (acccode=="")
