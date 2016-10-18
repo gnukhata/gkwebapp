@@ -82,7 +82,7 @@ $(document).ready(function() {
 
 	$("#rctable").off('click','tr').on('click','tr',function(e){
 		e.preventDefault();
-		var id = $(this).attr('value');
+		var id = $(this).attr('data-value');
 		var currindex = $(this).index();
 		$('#rctable tr').removeClass('selected');
 		$(this).toggleClass('selected');
@@ -91,7 +91,7 @@ $(document).ready(function() {
 	});
 
 	$("#rctable").off('keydown','tr').on('keydown','tr',function(e){
-		var id = $(this).attr('value');
+		var id = $(this).attr('data-value');
 		var rindex = $(this).index();
 
 		if(e.which==13)
@@ -101,9 +101,9 @@ $(document).ready(function() {
 		}
 });
 
-	$("#rctable tbody tr").off('dblclick').on('dblclick',function(e){
+	$("#rctable").off('dblclick','tr').on('dblclick','tr',function(e){
 		e.preventDefault();
-		var acccode = $(this).attr('value');
+		var acccode = $(this).attr('data-value');
 		if (acccode=="")
 		{
 				return false;
@@ -205,7 +205,7 @@ $("#viewprintableversion").click(function(event) {
 
 	$("#pytable").off('click','tr').on('click','tr',function(e){
 		e.preventDefault();
-		var id = $(this).attr('value');
+		var id = $(this).attr('data-value');
 		var currindex = $(this).index();
 		$('#pytable tr').removeClass('selected');
 		$(this).toggleClass('selected');
@@ -214,7 +214,7 @@ $("#viewprintableversion").click(function(event) {
 	});
 
 	$("#pytable").off('keydown','tr').on('keydown','tr',function(e){
-		var id = $(this).attr('value');
+		var id = $(this).attr('data-value');
 		var rindex = $(this).index();
 
 		if(e.which==13)
@@ -224,9 +224,9 @@ $("#viewprintableversion").click(function(event) {
 		}
 });
 
-	$("#pytable tbody tr").off('dblclick').on('dblclick',function(e){
+	$("#pytable").off('dblclick','tr').on('dblclick','tr',function(e){
 		e.preventDefault();
-		var acccode = $(this).attr('value');
+		var acccode = $(this).attr('data-value');
 		if (acccode=="")
 		{
 				return false;

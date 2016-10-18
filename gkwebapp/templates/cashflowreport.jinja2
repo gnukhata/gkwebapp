@@ -12,7 +12,7 @@
 .shadow {
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-td {
+#rctable td ,#pytable td{
 	font-size: 75%;
 	color: black;
 	padding: 4 !important;
@@ -20,7 +20,7 @@ td {
 }
 
 
-th {
+#rctable th ,#pytable th {
 	font-size: 85%;
 }
 .card-view .title {
@@ -30,18 +30,18 @@ th {
 		text-align: left !important;
 }
 
-tbody {
+#rctable tbody ,#pytable tbody {
 		display:block;
 		height: calc(100vh - 16em);
 		overflow-y:scroll;
 }
- thead,tbody tr {
+ #rctable thead,#rctable tbody tr,#pytable thead,#pytable tbody tr {
 		display:table;
 		width:100%;
 		table-layout:fixed;
 }
- thead {
-		width: calc( 100% - 0.75em )
+ #rctable thead,#pytable thead {
+		width: calc( 100% - 0.60em )
 }
 .nopadding{
 	padidng:0 !important;
@@ -78,7 +78,7 @@ tbody {
 				</thead>
 				<tbody>
 					{% for rcrecord in rcrecords %}
-					<tr	value="{{rcrecord['accountcode']}}">
+					<tr	data-value="{{rcrecord['accountcode']}}">
 						<td class="col-xs-1">
 							{{rcrecord['toby']}}
 						</td>
@@ -112,7 +112,7 @@ tbody {
 				</thead>
 				<tbody>
 					{% for pyrecord in pyrecords %}
-					<tr	value="{{pyrecord['accountcode']}}">
+					<tr	data-value="{{pyrecord['accountcode']}}">
 						<td class="col-xs-1">
 							{{pyrecord['toby']}}
 						</td>
