@@ -41,6 +41,11 @@ $(document).ready(function() {
       }
     }
   });
+  $("#category_under").keydown(function(event) {
+    if (event.which==13) {
+      $("#category_addspecs").click();
+    }
+  });
 
   $(document).off("keydown",".spec_name").on("keydown",".spec_name",function(event)
   {
@@ -72,11 +77,19 @@ $(document).ready(function() {
         $('#category_spec_table tbody tr:eq('+nextindex1+') td:eq(0) input').focus().select();
       }
       else {
+        if ($('#category_spec_table tbody tr:eq('+curindex1+') td:eq(0) input').val()=="") {
+          $("#spec-blank-alert").alert();
+          $("#spec-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#spec-blank-alert").hide();
+          });
+          $('#category_spec_table tbody tr:eq('+curindex1+') td:eq(0) input').focus();
+          return false;
+        }
         $('#category_spec_table tbody').append('<tr>'+
-          '<td class="col-xs-7">'+
+          '<td class="col-xs-9">'+
             '<input type="text" class="form-control input-sm spec_name" placeholder="Spec Name">'+
           '</td>'+
-          '<td class="col-xs-3">'+
+          '<td class="col-xs-2">'+
             '<select id="category_spec_type" class="form-control input-sm spec_type">'+
             '<option value="0">Text</option>'+
             '<option value="1">Number</option>'+
@@ -84,7 +97,7 @@ $(document).ready(function() {
             '<option value="3">Option</option>'+
             '</select>'+
           '</td>'+
-          '<td class="col-xs-2">'+
+          '<td class="col-xs-1">'+
           '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
           '</td>'+
         '</tr>');
@@ -97,19 +110,48 @@ $(document).ready(function() {
       }
     });
 
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+      if(e.target.attributes.href.value=="#category_create"){
+        $("#category_name").focus();
+      }
+      else if(e.target.attributes.href.value=="#category_edit"){
+        alert("edit");
+      }
+    })
   $("#category_addspecs").click(function(event) {
     if ($.trim($('#category_name').val())=="") {
       $("#category-blank-alert").alert();
       $("#category-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#category-blank-alert").hide();
       });
+      $("#category_savespecs").attr("disabled",true);
       $("#category_spec_div").hide();
       $('#category_name').focus().select();
       return false;
     }
+    if ($('#category_spec_table tbody tr').length==0) {
+      $('#category_spec_table tbody').append('<tr>'+
+        '<td class="col-xs-9">'+
+          '<input type="text" class="form-control input-sm spec_name" value="" placeholder="Spec Name">'+
+        '</td>'+
+        '<td class="col-xs-2">'+
+          '<select id="category_spec_type" class="form-control input-sm spec_type">'+
+          '<option value="0">Text</option>'+
+          '<option value="1">Number</option>'+
+          '<option value="2">Date</option>'+
+          '<option value="3">Option</option>'+
+          '</select>'+
+        '</td>'+
+        '<td class="col-xs-1">'+
+        '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+        '</td>'+
+      '</tr>');
+    }
     var category_code = $("#category_under option:selected").val();
     $("#category_spec_table > tbody >tr:not(:last)").remove();
+    $("#category_spec_table tbody tr:last td:eq(0) input").val("");
     if (category_code=='') {
+      $("#category_savespecs").attr("disabled",false);
       $("#category_spec_div").show();
       $("#category_spec_table tbody tr:last td:eq(0) input").focus();
     }
@@ -125,24 +167,6 @@ $(document).ready(function() {
     })
     .done(function(resp) {
       console.log("success");
-      if ($('#category_spec_table tbody tr').length==0) {
-        $('#category_spec_table tbody').append('<tr>'+
-          '<td class="col-xs-8">'+
-            '<input type="text" class="form-control input-sm spec_name" value="" placeholder="Spec Name">'+
-          '</td>'+
-          '<td class="col-xs-2">'+
-            '<select id="category_spec_type" class="form-control input-sm spec_type">'+
-            '<option value="0">Text</option>'+
-            '<option value="1">Number</option>'+
-            '<option value="2">Date</option>'+
-            '<option value="3">Option</option>'+
-            '</select>'+
-          '</td>'+
-          '<td class="col-xs-2">'+
-          '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-          '</td>'+
-        '</tr>');
-      }
       for (spec of resp["gkresult"]) {
         var trs;
         if (spec["attrtype"]==0) {
@@ -170,18 +194,19 @@ $(document).ready(function() {
           '<option value="3" selected>Option</option>'
         }
         $('#category_spec_table tbody').prepend('<tr>'+
-          '<td class="col-xs-8">'+
+          '<td class="col-xs-9">'+
             '<input type="text" class="form-control input-sm spec_name" value="'+spec["attrname"]+'" placeholder="Spec Name">'+
           '</td>'+
           '<td class="col-xs-2">'+
             '<select id="category_spec_type" class="form-control input-sm spec_type">'+trs+
             '</select>'+
           '</td>'+
-          '<td class="col-xs-2">'+
+          '<td class="col-xs-1">'+
           '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
           '</td>'+
         '</tr>');
       }
+      $("#category_savespecs").attr("disabled",false);
       $("#category_spec_div").show();
       $("#category_spec_table tbody tr:last td:eq(0) input").focus();
     })
@@ -193,6 +218,10 @@ $(document).ready(function() {
     });
   }
   });
+  $("#category_under").change(function(event) {
+    $("#category_savespecs").attr("disabled",true);
+    $("#category_spec_div").hide();
+  });
 
   $(document).off("click",".spec_del").on("click", ".spec_del", function() {
     $(this).closest('tr').fadeOut(200, function(){
@@ -202,8 +231,24 @@ $(document).ready(function() {
     $('#category_spec_table tbody tr:last td:eq(0) input').select();
   });
   $("#category_savespecs").click(function(event) {
+    if ($.trim($('#category_name').val())=="") {
+      $("#category-blank-alert").alert();
+      $("#category-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#category-blank-alert").hide();
+      });
+      $('#category_name').focus().select();
+      return false;
+    }
     var specs = [];
     for (var i = 0; i < $("#category_spec_table tbody tr").length; i++) {
+      if ($.trim($("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").val())=="") {
+        $("#spec-blank-alert").alert();
+        $("#spec-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#spec-blank-alert").hide();
+        });
+        $("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").focus().select();
+        return false;
+      }
       var obj = {};
       obj.attrname = $("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").val();
       obj.attrtype = $("#category_spec_table tbody tr:eq("+i+") td:eq(1) select").val();
@@ -220,8 +265,20 @@ $(document).ready(function() {
       }
     })
     .done(function(resp) {
-      console.log("success");
-      console.log(resp["gkstatus"]);
+      if(resp["gkstatus"] == 0){
+        $("#addcategory").click();
+        $("#success-alert").alert();
+        $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#success-alert").hide();
+        });
+      }
+      else {
+        $("#category_name").focus();
+        $("#failure-alert").alert();
+        $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#failure-alert").hide();
+        });
+      }
     })
     .fail(function() {
       console.log("error");
