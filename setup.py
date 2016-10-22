@@ -32,8 +32,12 @@ with open(os.path.join(here, 'CHANGES.txt')) as f:
 requires = [
     'pyramid',
     'pyramid_jinja2',
-    'pyramid_debugtoolbar',
+    'WebOb',
     'waitress',
+    'wsgicors',
+    'requests',
+    'Pillow',
+    'supervisor',
 ]
 
 setup(name='gkwebapp',
