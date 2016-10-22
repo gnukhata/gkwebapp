@@ -13,9 +13,6 @@ p.shortcut {
 td, th{
 	word-wrap: break-word;
 }
-.gknav{
-	background-color: rgb(26,34,41);
-}
 a:focus,
 .focus a {
 	outline: none !important;
@@ -25,102 +22,4 @@ a:focus,
 }
 .table{
 	font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
-	background-color: white;
-}
-.gknav .navbar-brand {
-    color: white;
-}
-.gknav .navbar-nav > li > a {
-    color: white;
-		padding-left: 7px;
-		padding-right: 7px;
-}
-.gknav .navbar-nav > li > a:hover, .gknav .navbar-nav > li > a:focus {
-    background-color: black;
-		color: white;
-		border-radius: 2px;
-}
-ul.dropdown-menu > li > a:hover, ul.dropdown-menu > li > a:focus{
-background-color: #bfbfbf;
-border-style: solid;
-border-color: #2a1278;
-border-width: 2px;
-border-radius: 2px;
-}
-.gknav .navbar-nav > .open > a,
-.gknav .navbar-nav > .open > a:hover,
-.gknav .navbar-nav > .open > a:focus {
-    background-color: #bfbfbf;
-		color: black;
-		border-radius: 2px;
-}
-.gknav .navbar-nav > .active > a,
-.gknav .navbar-nav > .active > a:hover,
-.gknav .navbar-nav > .active > a:focus {
-    color: black;
-    background-color: #bfbfbf;
-		border-radius: 2px;
-}
-.gknav .navbar-nav > li > a:hover,
-.gknav .navbar-nav > li > a:focus {
-    color: #black;
-}
-@media (max-width: 767px) {
-	.collapsing, .in {background-color: rgb(26,34,41); color: white;}
-	.collapsing ul li a, .in ul li a {color: white;}
-	.collapsing ul li a:hover, .in ul li a:hover {background-color: #bfbfbf; color: black;}
-}
-.panel{
-	border-color: rgb(87,93,99);
-}
-.panel-heading, .panel-title {
-	background-color: rgb(87,93,99);
-	color: white;
-}
-.thead {
-	background-color: #767c87;
-	color: white;
-}
-thead > tr {
-	background-color: rgb(87,93,99);
-	color: white;
-}
-.modal-header {
-	 background-color: rgb(87,93,99);
-	 color: white;
-	 border-top-left-radius: 4px;
-	 border-top-right-radius: 4px;
-}
-.vertical-alignment-helper {
-	display:table;
-	height: 100%;
-	width: 100%;
-	pointer-events:none; /* This makes sure that we can still click outside of the modal to close it */
-}
-.vertical-align-center {
-	/* To center vertically */
-	display: table-cell;
-	vertical-align: middle;
-	pointer-events:none;
-}
-.modal-content {
-	/* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
-	width:inherit;
-	height:inherit;
-	/* To center horizontally */
-	margin: 0 auto;
-	pointer-events: all;
-}
-.icon-bar {
-  color: white;
-  border-color: black;
-  background-color: white;
-}
-.close {
-    color: white;
-    opacity: 0.8;
-}
-.close:hover {
-    color: white;
-    opacity: 2;
 }
