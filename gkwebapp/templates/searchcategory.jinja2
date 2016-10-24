@@ -1,0 +1,49 @@
+<div id="m_serachcat" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="panel shadow" >
+          <div class="panel-heading">
+            <div class="panel-title">Search Category</div>
+          </div>
+          <div style="padding-top:5px" class="panel-body" >
+            <table id="catsearchtab" class="table table-bordered table-condensed" data-toggle="table" data-show-toggle="true">
+              <thead>
+                <tr>
+                  <th>
+                    Category
+                  </th>
+                  <th>
+                    Show Sub-Category
+                  </th>
+                  <th>
+                    Show Products Under
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <select class = "form-control input-sm catsearch" id="catsearch"  name = "categoryname" >
+                      <option value="" disabled selected hidden>Select Category</option>
+                      {% for topcat in gkresult %}
+                      <option data-value="{{topcat['categorycode']}}">{{topcat["categoryname"]}}({{topcat["subcount"]}})</option>
+                      {% endfor %}
+                    </select>
+                  </td>
+                  <td>
+                    <button id="sub-cat" class="btn-primary btn-sm showcat">Show Category</button>
+                  </td>
+                  <td>
+                    <button id="catproduct" class="btn-primary btn-sm showprod">Show Product</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/searchcategory.js')}}"></script>
