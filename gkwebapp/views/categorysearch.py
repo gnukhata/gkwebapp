@@ -30,8 +30,14 @@ import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
 
-@view_config(route_name="catsearch", renderer="gkwebapp:templates/searchcategory.jinja2")
+@view_config(route_name="catsearch",request_param="type=topcat", renderer="gkwebapp:templates/searchcategory.jinja2")
 def showtopcategory(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/categories?type=topcategories", headers=header)
-	return{"gkresult":result.json()["gkresult"]}
+	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="catsearch",request_param="type=children", renderer="json")
+def getchildrencategory(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/categories?type=children&categorycode=%d"%(int(request.params["categorycode"])), headers=header)
+	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}

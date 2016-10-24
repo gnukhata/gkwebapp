@@ -23,18 +23,18 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>
-                    <select class = "form-control input-sm catsearch" id="catsearch"  name = "categoryname" >
+                  <td class = "cols-md-6">
+                    <select class = "form-control input-sm catsearch"  name = "categoryname" >
                       <option value="" disabled selected hidden>Select Category</option>
                       {% for topcat in gkresult %}
                       <option data-value="{{topcat['categorycode']}}">{{topcat["categoryname"]}}({{topcat["subcount"]}})</option>
                       {% endfor %}
                     </select>
                   </td>
-                  <td>
+                  <td class = "cols-md-3">
                     <button id="sub-cat" class="btn-primary btn-sm showcat">Show Category</button>
                   </td>
-                  <td>
+                  <td class = "cols-md-3">
                     <button id="catproduct" class="btn-primary btn-sm showprod">Show Product</button>
                   </td>
                 </tr>
