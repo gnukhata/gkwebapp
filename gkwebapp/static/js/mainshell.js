@@ -23,9 +23,13 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Dinesh Sutar" <dinesh.sutar@openmailbox.org>
+"Abhijith Balan" <abhijithb21@openmailbox.org>
 */
 
 $(document).ready(function(){
+  $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');
+  $("#mainshellticker").css("margin-top",$("#navhead").height()+25);
+
   $('.modal-backdrop').remove();
 
   $(document).keydown(function(event) {
@@ -224,10 +228,18 @@ $(document).ready(function(){
       });
       $(".signoutmenu").keydown(function(event){
         if(event.which == 39){
-          $("#toolbar").click();
+          $("#themes").click();
         }
         if(event.which == 37){
           $("#help").click();
+        }
+      });
+      $(".themesmenu").keydown(function(event){
+        if(event.which == 39){
+          $("#toolbar").click();
+        }
+        if(event.which == 37){
+          $("#signout").click();
         }
       });
       $(".toolbarmenu").keydown(function(event){
@@ -235,10 +247,18 @@ $(document).ready(function(){
           $("#master").click();
         }
         if(event.which == 37){
-          $("#signout").click();
+          $("#themes").click();
         }
       });
       $("#toolbar").click(function(){
+        var windowheight = window.innerHeight;
+        var scrollerheight = windowheight - 40;
+        $(".scrollable").css("max-height", scrollerheight);
+        if (!window.screenTop && !window.screenY) {
+          $(".scrollable").css("max-height", windowheight);
+        }
+      });
+      $("#themes").click(function(){
         var windowheight = window.innerHeight;
         var scrollerheight = windowheight - 40;
         $(".scrollable").css("max-height", scrollerheight);
@@ -737,5 +757,25 @@ $.ajax({
   });
   $('#yeardata').click(function(){
     return false;
+  });
+  $('.themesmenu').click(function(){
+    var selectedtheme= $(this).html();
+    $.ajax({
+      url: '/addtheme',
+      type: 'POST',
+      global: false,
+      async: false,
+      datatype: 'json',
+      data: {"themename":selectedtheme},
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+    })
+    .done(function(resp){
+      if(resp["status"]==0){
+        sessionStorage.gktheme = selectedtheme;
+      }
+    });
   });
 });
