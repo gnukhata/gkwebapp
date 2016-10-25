@@ -11,7 +11,7 @@
 .shadow {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-td {
+#vtable td {
 	font-size: 75%;
 	color: black;
 	padding: 4 !important;
@@ -19,7 +19,7 @@ td {
 }
 
 
-th {
+#vtable th {
 	font-size: 85%;
 }
 .card-view .title {
@@ -29,18 +29,18 @@ th {
 		text-align: left !important;
 }
 
-tbody {
+#vtable tbody {
 		display:block;
 		height: calc(100vh - 22em);
 		overflow-y:scroll;
 }
- thead,tbody tr {
+ #vtable thead,#vtable tbody tr {
 		display:table;
 		width:100%;
 		table-layout:fixed;
 }
- thead {
-		width: calc( 100% - 0.75em )
+ #vtable thead {
+		width: calc( 100% - 0.65em )
 }
 .nopadding{
 	padidng:0 !important;
@@ -55,6 +55,21 @@ tbody {
 .calign{
 	text-align:center;
 }
+.5width{
+  width: 5%;
+}
+.6width{
+  width: 6%;
+}
+.10width{
+  width: 10%;
+}
+.14width{
+  width: 14%;
+}
+.20width{
+  width: 20%;
+}
 
 </style>
 </head>
@@ -62,7 +77,7 @@ tbody {
   <input type="hidden" id="urole" name="urole" value="{{userrole}}"></input>
   <input type="hidden" id="modalindex" value=""></input>
  <div class="row">
-    <table id="vtable" class="table table-fixedheader   table-condensed table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
+    <table id="vtable" class="table table-condensed table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
       <thead>
         <tr>
             <th class="5width">{% trans %}V. No.{% endtrans %}</th>
@@ -79,75 +94,75 @@ tbody {
       </thead>
       <tbody>
         {% for vc in vouchers %}
-        <tr  value="{{vc['vouchercode']}}">
-            <td style="width:5%; word-wrap:break-word;">
+        <tr  data-value="{{vc['vouchercode']}}">
+            <td class="5width word-wrap:break-word;">
               <a class="vno" href="">{{vc['vouchernumber']}}</a>
             </td>
             {% if (vc['status']) %}
-            <td style="width:5%" class="cred calign">***</td>
+            <td class="cred calign 5width">***</td>
             {% else %}
-            <td style="width:5%" class="cred calign">&nbsp </td>
+            <td  class="cred calign 5width">&nbsp </td>
             {% endif %}
-            <td style=" width:6%">
+            <td class="6width">
               {{vc['voucherdate']}}
             </td>
             {% if vc['vouchertype'] =="contra" %}
-            <td style=" width:10%">
+            <td class="10width">
               {% trans %}Contra{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "payment" %}
-            <td style=" width:10%">
+            <td class="10width">
               {% trans %}Payment{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "receipt" %}
-            <td style=" width:10%">
+            <td class="10width">
               {% trans %}Receipt{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "journal" %}
-            <td style=" width:10%">
+            <td class="10width">
               {% trans %}Journal{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "sales" %}
-            <td style=" width:10%">
+            <td class="10width">
               {% trans %}Sales{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "purchase" %}
-            <td style=" width:10%">
+            <td class="10width">
               {% trans %}Purchase{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "creditnote" %}
-            <td style=" width:10%">
+            <td class="10width">
               {% trans %}Credit Note{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "debitnote" %}
-            <td style=" width:10%">
+            <td class="10width">
               {% trans %}Debit Note{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "salesreturn" %}
-            <td style=" width:10%">
+            <td class="10width">
               {% trans %}Sale Return{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "purchasereturn" %}
-            <td style=" width:10%">
+            <td class="10width">
               {% trans %}Purchase Return{% endtrans %}
             </td>
             {% endif %}
-            <td style=" width:20%">
+            <td class="20width">
               {{vc["drs"].keys()[0]}}
             </td>
-            <td style=" width:20%">
+            <td class="20width">
               {{vc["crs"].keys()[0]}}
             </td>
-            <td style="width:10%" class=" ralign">
+            <td class=" ralign 10width">
               {{vc["drs"][vc["drs"].keys()[0]]}}
             </td>
-            <td style="width:10%"class="ralign">
+            <td class="ralign 10width">
               {{vc["crs"][vc["crs"].keys()[0]]}}
             </td>
               {% if vc['narration']=="" %}
-              <td style="width:14%">&nbsp</td>
+              <td class="14width">&nbsp</td>
               {% else %}
-              <td style="width:14%">{{vc['narration']}}</td>
+              <td class="14width">{{vc['narration']}}</td>
               {% endif %}
         </tr>
         {% endfor %}

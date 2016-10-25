@@ -67,7 +67,7 @@ $(document).ready(function() {
   var urole = $("#urole").val();
 
   $("#vtable").off('keydown','tr').on('keydown','tr',function(e){
-    var id = $(this).attr('value');
+    var id = $(this).attr('data-value');
     var rindex = $(this).index();
 
     if(e.which==13)
@@ -143,7 +143,7 @@ $(document).ready(function() {
 
   $(".table").off('click','tr').on('click','tr',function(e){
     e.preventDefault();
-    var id = $(this).attr('value');
+    var id = $(this).attr('data-value');
     var currindex = $(this).index();
     $('#vtable tr').removeClass('selected');
     $(this).toggleClass('selected');
@@ -179,9 +179,9 @@ $("#viewprintableversion").click(function(event) {
 
 
 
-  $(".table").off('dblclick','tr:not(:first)').on('dblclick','tr:not(:first)',function(e){
+  $("#vtable").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
-    var id = $(this).attr('value');
+    var id = $(this).attr('data-value');
     $("#modalindex").val($(this).index());
     $.ajax(
       {
