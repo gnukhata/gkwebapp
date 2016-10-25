@@ -149,20 +149,6 @@ $(document).ready(function(){
                 $("#success-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
                   $("#success-blank-alert").hide();
                 });
-                $.ajax({
-                  url: '/theme',
-                  type: 'POST',
-                  global: false,
-                  async: false,
-                  datatype: 'json',
-                  beforeSend: function(xhr)
-                  {
-                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                  }
-                })
-                .done(function(resp){
-                  sessionStorage.gktheme = resp["theme"];
-                });
               }
               if(resp["gkstatus"]==1)
               {
