@@ -2,14 +2,13 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#category_tax_vat").numeric();
   $("#category_name").focus();
-  var sel1 = 0;
-  var sel2 = 0;
+  var createsel1 = 0;
 
   $("#category_under").focus(function() {
-    sel1 = 1;
+    createsel1 = 1;
   });
   $("#category_under").blur(function(){
-    sel1 = 0;
+    createsel1 = 0;
   });
 
   $('.category_panel input:text,select:visible').keydown( function(event) {
@@ -30,8 +29,9 @@ $(document).ready(function() {
     }
 
 
-    var s1 = $("#category_under option:selected").index();
-    if ((event.which == 38 && sel1 == 1 && s1 == 0) || (event.which == 38 && sel1 == 0))
+    var creates1 = $("#category_under option:selected").index();
+    alert(creates1);
+    if ((event.which == 38 && createsel1 == 1 && creates1 == 0) || (event.which == 38 && createsel1 == 0))
     {
       var prevIndex = f.index(this) - 1;
       if(prevIndex < n){
@@ -110,14 +110,7 @@ $(document).ready(function() {
       }
     });
 
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-      if(e.target.attributes.href.value=="#category_create"){
-        $("#category_name").focus();
-      }
-      else if(e.target.attributes.href.value=="#category_edit"){
-        alert("edit");
-      }
-    })
+
   $("#category_addspecs").click(function(event) {
     if ($.trim($('#category_name').val())=="") {
       $("#category-blank-alert").alert();
@@ -159,6 +152,7 @@ $(document).ready(function() {
       url: '/category?action=getspecs',
       type: 'POST',
       dataType: 'json',
+      async : false,
       data: {"categorycode": category_code},
       beforeSend: function(xhr)
       {
@@ -258,6 +252,7 @@ $(document).ready(function() {
       url: '/category?action=save',
       type: 'POST',
       dataType: 'json',
+      async : false,
       data: {"categoryname": $("#category_name").val(),"subcategoryof":$("#category_under").val(),"specs":JSON.stringify(specs)},
       beforeSend: function(xhr)
       {
@@ -266,7 +261,7 @@ $(document).ready(function() {
     })
     .done(function(resp) {
       if(resp["gkstatus"] == 0){
-        $("#addcategory").click();
+        $("a[href='#category_create']").click();
         $("#success-alert").alert();
         $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#success-alert").hide();

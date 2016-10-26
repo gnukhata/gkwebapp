@@ -659,24 +659,7 @@ $.ajax({
   );
   });
   $('#addcategory').click(function (e) {
-    $.ajax(
-    {
-
-    type: "POST",
-    url: "/category",
-    global: false,
-    async: false,
-    datatype: "text/html",
-    beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-      },
-    success: function(resp)
-    {
-      $("#info").html(resp);
-    }
-    }
-  );
+    $("#info").load("/category");
   });
 
   $("#showtrialbalance").click(function(event){

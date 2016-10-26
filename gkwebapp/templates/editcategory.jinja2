@@ -14,41 +14,49 @@
       <label for="vno">{% trans %}Please enter category name!{% endtrans %}</label>
     </div>
 
-    <div class="panel shadow category_panel">
+    <div class="panel shadow category_edit_panel">
       <div class="panel-heading">
-        <h3 class="panel-title">{% trans %}Create Category{% endtrans %}</h3>
+        <h3 class="panel-title">{% trans %}Edit Category{% endtrans %}</h3>
       </div>
       <div class="panel-body">
         <form>
           <div class="form-group">
-            <label for="category_name">{% trans %}N<u>a</u>me :{% endtrans %}</label>
-            <input class="form-control input-sm" id="category_name" placeholder="{% trans %}Enter category name{% endtrans %}" accesskey="a">
+            <label for="category_edit_list">{% trans %}Cate<u>g</u>ory :{% endtrans %}</label>
+            <select class="form-control input-sm" id="category_edit_list" accesskey="g">
+              <option value="" disabled selected hidden>{% trans %}Select Category{% endtrans %}</option>
+              {% for categories in gkresult %}
+              <option value="{{categories['categorycode']}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div id="category_edit_innerdiv" style="padding-left:10px;padding-right:10px;" hidden>
+          <div class="form-group">
+            <label for="category_edit_name">{% trans %}N<u>a</u>me :{% endtrans %}</label>
+            <input class="form-control input-sm" id="category_edit_name" placeholder="{% trans %}Enter category name{% endtrans %}" accesskey="a">
           </div>
           <div class="form-group">
-            <label for="category_tax_vat">{% trans %}<u>V</u>AT :{% endtrans %}</label>
+            <label for="category_edit_tax_vat">{% trans %}<u>V</u>AT :{% endtrans %}</label>
             <div class="input-group">
-              <input class="form-control input-sm" id="category_tax_vat" aria-describedby="vat_help" placeholder="VAT" accesskey="v">
+              <input class="form-control input-sm" id="category_edit_tax_vat" aria-describedby="vat_help" placeholder="VAT" accesskey="v">
               <div class="input-group-addon">%</div>
             </div>
             <small id="vat_help" class="form-text text-muted">{% trans %}Enter VAT% if applicable.{% endtrans %}</small>
           </div>
           <div class="form-group">
-            <label for="category_under">{% trans %}Un<u>d</u>er :{% endtrans %}</label>
-            <select class="form-control input-sm" id="category_under" accesskey="d">
+            <label for="category_edit_under">{% trans %}Un<u>d</u>er :{% endtrans %}</label>
+            <select class="form-control input-sm" id="category_edit_under" accesskey="d">
               <option value="" selected>None</option>
               {% for categories in gkresult %}
               <option value="{{categories['categorycode']}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
               {% endfor %}
             </select>
           </div>
+          </div>
         </form>
-      </div>
-      <div class="panel-footer">
-        <button class="btn btn-primary btn-sm" id="category_addspecs" accesskey="s">{% trans %}Add <u>S</u>pecifications{% endtrans %}</button>
       </div>
     </div>
   </div>
-  <div class="col-md-7" id="category_spec_div" hidden>
+  <div class="col-md-7" id="category_edit_spec_div" hidden>
     <div class="alert alert-danger" id="spec-blank-alert"  aria-live="rude" role="alert" hidden>
 
       <label for="vno">{% trans %}Please enter specification name!{% endtrans %}</label>
@@ -58,7 +66,7 @@
       <div class="panel-heading text-center">{% trans %}Specifications{% endtrans %}</div>
 
       <!-- Table -->
-      <table id="category_spec_table" class="table table-condensed table-fixedheader">
+      <table id="category_edit_spec_table" class="table table-condensed table-fixedheader">
         <thead>
           <tr>
             <th class="col-xs-9">{% trans %}Name{% endtrans %}</th>
@@ -67,30 +75,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="col-xs-9">
-              <input type="text" id="category_spec_name" class="form-control input-sm spec_name" placeholder="Spec Name">
-            </td>
-            <td class="col-xs-2">
-              <select id="category_spec_type" class="form-control input-sm spec_type" name="">
-                <option value="0">Text</option>
-                <option value="1">Number</option>
-                <option value="2">Date</option>
-                <option value="3">Option</option>
-              </select>
-            </td>
-            <td class="col-xs-1">
-              <a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-            </td>
-          </tr>
         </tbody>
       </table>
       <div class="panel-footer">
-        <button class="btn btn-primary btn-sm" id="category_savespecs" accesskey="e" disabled>{% trans %}Sav<u>e</u>{% endtrans %}</button>
+        <button class="btn btn-primary btn-sm" id="category_edit_savespecs" accesskey="e" disabled>{% trans %}Sav<u>e</u>{% endtrans %}</button>
       </div>
     </div>
 
   </div>
 </div>
-<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addcategory.js')}}"></script>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editcategory.js')}}"></script>
 </body>
