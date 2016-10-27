@@ -69,7 +69,7 @@ $(document).ready(function() {
 
   $("#prjsttable").off('click','tr').on('click','tr',function(e){
     e.preventDefault();
-    var id = $(this).attr('value');
+    var id = $(this).attr('data-value');
     var currindex = $(this).index();
     $('#prjsttable tr').removeClass('selected');
     $(this).toggleClass('selected');
@@ -78,7 +78,7 @@ $(document).ready(function() {
   });
 
   $("#prjsttable").off('keydown','tr').on('keydown','tr',function(e){
-    var id = $(this).attr('value');
+    var id = $(this).attr('data-value');
     var rindex = $(this).index();
 
     if(e.which==13)
@@ -88,9 +88,9 @@ $(document).ready(function() {
     }
   });
 
-  $("#prjsttable tbody tr").off('dblclick').on('dblclick',function(e){
+  $("#prjsttable").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
-    var acccode = $(this).attr('value');
+    var acccode = $(this).attr('data-value');
     if (acccode=="")
     {
         return false;

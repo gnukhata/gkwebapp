@@ -13,13 +13,13 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
   }
-  td {
+  #prjsttable td {
       font-size: 75%;
       color: black;
       padding: 4 !important;
       margin: 4 !important;
   }
-  th {
+  #prjsttable th {
       font-size: 85%;
   }
 
@@ -29,17 +29,17 @@
       min-width: 30%;
       text-align: left !important;
   }
-  tbody {
+  #prjsttable tbody {
       display:block;
       height: calc(100vh - 16em);
       overflow-y:scroll;
   }
-  thead,tbody tr {
+  #prjsttable thead,#prjsttable tbody tr {
       display:table;
       width:100%;
       table-layout:fixed;
   }
-    thead {
+  #prjsttable thead {
       width: calc( 100% - 0.75em )
   }
   .ralign{
@@ -60,8 +60,8 @@
   <input type="hidden" id="calculateto" name="calculateto" value="{{to}}"></input>
   <input type="hidden" id="projectcode" name="projectcode" value="{{projectcode}}"></input>
   <input type="hidden" id="projectname" name="projectname" value="{{projectname}}"></input>
-  <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : {{from}} {% trans %}to{% endtrans %} {{to}}</span>
-  <span style="margin:auto; display:table;"><i>{% trans %}Statement for{% endtrans %}</i> : {{projectname}}</span>
+  <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <b>{{from}}</b> {% trans %}to{% endtrans %} <b>{{to}}</b></span>
+  <span style="margin:auto; display:table;"><i>{% trans %}Statement for{% endtrans %}</i> : <b>{{projectname}}</b></span>
 
   <div class="row">
     <table id="prjsttable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
@@ -76,7 +76,7 @@
       </thead>
       <tbody>
         {% for record in records %}
-        <tr  value="{{record['accountcode']}}">
+        <tr data-value="{{record['accountcode']}}">
           <td class="col-xs-1">
             {{record['srno']}}
           </td>
