@@ -11,41 +11,30 @@ $(document).ready(function() {
     createsel1 = 0;
   });
 
-  $('.category_panel input:text,select:visible').keydown( function(event) {
-    var n = $(".category_panel input:text:visible,select:visible").length;
-    var f = $('.category_panel input:text:visible,select:visible');
-
-    if (event.which == 13)
-    {
-
-
-      var nextIndex = f.index(this) + 1;
-      if(nextIndex < n){
-        event.preventDefault();
-        f[nextIndex].focus();
-        f[nextIndex].select();
-      }
-
-    }
-
-
-    var creates1 = $("#category_under option:selected").index();
-    alert(creates1);
-    if ((event.which == 38 && createsel1 == 1 && creates1 == 0) || (event.which == 38 && createsel1 == 0))
-    {
-      var prevIndex = f.index(this) - 1;
-      if(prevIndex < n){
-        event.preventDefault();
-        f[prevIndex].focus();
-        f[prevIndex].select();
-      }
+  $("#category_name").keydown(function(event) {
+    if (event.which==13) {
+      $("#category_tax_vat").focus().select();
     }
   });
+
+  $("#category_tax_vat").keydown(function(event) {
+    if (event.which==13) {
+      $("#category_under").focus().select();
+    }
+    if (event.which==38) {
+      $("#category_name").focus().select();
+    }
+  });
+
   $("#category_under").keydown(function(event) {
     if (event.which==13) {
       $("#category_addspecs").click();
     }
+    if (event.which==38 && $("#category_under option:selected").index()==0) {
+      $("#category_tax_vat").focus().select();
+    }
   });
+
 
   $(document).off("keydown",".spec_name").on("keydown",".spec_name",function(event)
   {

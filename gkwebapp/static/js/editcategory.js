@@ -2,16 +2,7 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#category_edit_tax_vat").numeric();
   $("#category_edit_name").focus();
-  var sel1 = 0;
-  var sel2 = 0;
   var deletedspecs = [];
-
-  $("#category_edit_under").focus(function() {
-    sel1 = 1;
-  });
-  $("#category_edit_under").blur(function(){
-    sel1 = 0;
-  });
 
   $("#category_edit_list").change(function(event) {
     $("#category_edit_spec_table > tbody >tr").remove();
@@ -105,38 +96,36 @@ $(document).ready(function() {
 
   });
 
-  $('.category_edit_panel input:text,select:visible').keydown( function(event) {
-    var n = $(".category_edit_panel input:text:visible,select:visible").length;
-    var f = $('.category_edit_panel input:text:visible,select:visible');
-
-    if (event.which == 13)
-    {
-
-
-      var nextIndex = f.index(this) + 1;
-      if(nextIndex < n){
-        event.preventDefault();
-        f[nextIndex].focus();
-        f[nextIndex].select();
-      }
-
-    }
-
-
-    var s1 = $("#category_edit_under option:selected").index();
-    if ((event.which == 38 && sel1 == 1 && s1 == 0) || (event.which == 38 && sel1 == 0))
-    {
-      var prevIndex = f.index(this) - 1;
-      if(prevIndex < n){
-        event.preventDefault();
-        f[prevIndex].focus();
-        f[prevIndex].select();
-      }
+  $("#category_edit_list").keydown(function(event) {
+    if (event.which==13) {
+      $("#category_edit_name").focus().select();
     }
   });
+
+  $("#category_edit_name").keydown(function(event) {
+    if (event.which==13) {
+      $("#category_edit_tax_vat").focus().select();
+    }
+    if (event.which==38) {
+      $("#category_edit_list").focus().select();
+    }
+  });
+
+  $("#category_edit_tax_vat").keydown(function(event) {
+    if (event.which==13) {
+      $("#category_edit_under").focus().select();
+    }
+    if (event.which==38) {
+      $("#category_edit_name").focus().select();
+    }
+  });
+
   $("#category_edit_under").keydown(function(event) {
     if (event.which==13) {
-      $("#category_edit_addspecs").click();
+      $('#category_edit_spec_table tbody tr:eq(0) td:eq(0) input').focus().select();
+    }
+    if (event.which==38 && $("#category_edit_under option:selected").index()==0) {
+      $("#category_edit_tax_vat").focus().select();
     }
   });
 
