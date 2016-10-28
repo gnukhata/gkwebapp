@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  <style>
+  .nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  </style>
+
+  </head>
+  <body>
+
+    <div class="panel col-md-6 nopadding">
+      <div class="panel-heading">
+        <h3 class="panel-title text-center">{% trans %}Product{% endtrans %}</h3>
+      </div>
+      <div class="panel-body">
+        <ul class="nav nav-pills navbar-btn nav-tabs nopadding" role="tablist">
+          <li class="active nopadding" id="addproduct" role="presentation"><a data-toggle="pill" href="" >{% trans %}Add New Product{% endtrans %}</a></li>
+          <li class="nopadding" id="editproduct" role="presentation"><a data-toggle="pill" href="">{% trans %}Edit Product{% endtrans %}</a></li>
+        </ul>
+        <div class='tab-content '>
+          <div class="tab-pane fade in active shadow" role="tabpanel" id="productdiv">
+
+  /        </div>
+        </div>
+      </div>
+    </div>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/producttab.js')}}"></script>
+  </body>
+</html>

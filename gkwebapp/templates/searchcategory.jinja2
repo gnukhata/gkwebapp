@@ -4,20 +4,20 @@
       <div class="modal-body">
         <div class="panel shadow" >
           <div class="panel-heading">
-            <div class="panel-title">Search Category</div>
+            <div class="panel-title">{% trans %}Search Category{% endtrans %}</div>
           </div>
           <div style="padding-top:5px" class="panel-body" >
             <table id="catsearchtab" class="table table-bordered table-condensed" data-toggle="table" data-show-toggle="true">
               <thead>
                 <tr>
                   <th>
-                    Category
+                    {% trans %}Category{% endtrans %}
                   </th>
                   <th>
-                    Show Sub-Category
+                    {% trans %}Show Sub-Category{% endtrans %}
                   </th>
                   <th>
-                    Show Products Under
+                    {% trans %}Show Products Under{% endtrans %}
                   </th>
                 </tr>
               </thead>
@@ -25,17 +25,17 @@
                 <tr>
                   <td class = "cols-md-6">
                     <select class = "form-control input-sm catsearch"  name = "categoryname" >
-                      <option value="" disabled selected hidden>Select Category</option>
+                      <option value="" disabled selected hidden>{% trans %}Select Category{% endtrans %}</option>
                       {% for topcat in gkresult %}
                       <option data-value="{{topcat['categorycode']}}">{{topcat["categoryname"]}}({{topcat["subcount"]}})</option>
                       {% endfor %}
                     </select>
                   </td>
                   <td class = "cols-md-3">
-                    <button id="sub-cat" class="btn-primary btn-sm showcat">Show Category</button>
+                    <button id="sub-cat" class="btn-primary btn-sm showcat">{% trans %}Show Category{% endtrans %}</button>
                   </td>
                   <td class = "cols-md-3">
-                    <button id="catproduct" class="btn-primary btn-sm showprod">Show Product</button>
+                    <button id="catproduct" class="btn-primary btn-sm showprod">{% endtrans %}Show Product{% endtrans %}</button>
                   </td>
                 </tr>
               </tbody>

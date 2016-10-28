@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+  <div class='container-fluid '>
+    <form>
+      <div class="form-group">
+        <label for="catselect" class="input-sm ">Category:</label>
+        <select class="form-control input-sm " id="catselect">
+          <option value="" disabled selected hidden>{% trans %}Select Category{% endtrans %}</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="pwd" class="input-sm ">Password:</label>
+        <input type="password" class="form-control input-sm " id="pwd">
+      </div>
+      <div class="checkbox">
+        <label class="input-sm"><input type="checkbox"> Remember me</label>
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+    </form>
+
+
+  </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addproduct.js')}}"></script>
+</body>
+</html>
