@@ -31,6 +31,8 @@ $(document).ready(function() {
     $.ajax({
       url: '/product?type=edit',
       type: 'POST',
+      global: false,
+      async: false,
       datatype: 'text/html',
       beforeSend: function(xhr)
       {

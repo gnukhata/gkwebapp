@@ -5,26 +5,33 @@
 <body>
 
   <div class='container-fluid '>
-    <form>
+    <form id="addprodform">
       <div class="form-group">
-        <label for="catselect" class="input-sm ">Category:</label>
-        <select class="form-control input-sm " id="catselect">
+        <label for="catselect" class="input-sm ">Category :</label>
+        <select class = "form-control input-sm"  name = "catselect" id="catselect" >
           <option value="" disabled selected hidden>{% trans %}Select Category{% endtrans %}</option>
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+          {% for cat in gkresult["category"] %}
+          <option value="{{cat['categorycode']}}">{{cat["categoryname"]}}({{cat["subcount"]}})</option>
+          {% endfor %}
         </select>
       </div>
       <div class="form-group">
-        <label for="pwd" class="input-sm ">Password:</label>
-        <input type="password" class="form-control input-sm " id="pwd">
+        <label for="proddesc" class="input-sm ">{% trans %}Product Description{% endtrans %} :</label>
+        <input type="text" class="form-control input-sm" name="proddesc"  id="proddesc" placeholder="Alphanumeric">
       </div>
-      <div class="checkbox">
-        <label class="input-sm"><input type="checkbox"> Remember me</label>
+      <div class="form-group">
+        <label for="uom" class="input-sm ">Unit of Measurement :</label>
+        <select class = "form-control input-sm"  name = "uom" id="uom" >
+          <option value="" disabled selected hidden>{% trans %}Select Unit of Measurement{% endtrans %}</option>
+          {% for uom in gkresult["uom"] %}
+          <option value="{{uom['uomid']}}">{{uom["unitname"]}}</option>
+          {% endfor %}
+        </select>
       </div>
-      <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+      <div class="form-group" id="specifications">
+
+      </div>
+
     </form>
 
 

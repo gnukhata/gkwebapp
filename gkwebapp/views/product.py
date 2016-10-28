@@ -39,7 +39,36 @@ def showproducttab(request):
 @view_config(route_name="product",request_param="type=add", renderer="gkwebapp:templates/addproduct.jinja2")
 def addproduct(request):
 	header={"gktoken":request.headers["gktoken"]}
-	return{"gkresult":0}
+	result = requests.get("http://127.0.0.1:6543/categories", headers=header)
+	result1 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
+	return{"gkresult":{"category":result.json()["gkresult"],"uom":result1.json()["gkresult"]},"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="product",request_param="type=specs", renderer="gkwebapp:templates/productspecs.jinja2")
+def getcatspecs(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/categoryspecs?categorycode=%d"%(int(request.params["categorycode"])), headers=header)
+	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="product",request_param="type=save", renderer="json")
+def saveproduct(request):
+	header={"gktoken":request.headers["gktoken"]}
+	prdspecs = {}
+	proddetails={}
+	for prd in request.params:
+		if prd=="type":
+			continue
+		elif prd =="catselect":
+			proddetails["categorycode"] = request.params[prd]
+		elif prd == "proddesc":
+			proddetails["productdesc"] = request.params[prd]
+		elif prd == "uom":
+			proddetails["uomid"] = request.params[prd]
+		else:
+			prdspecs[prd]= request.params[prd]
+		proddetails["specs"] = prdspecs
+
+	result = requests.post("http://127.0.0.1:6543/products", data=json.dumps(proddetails),headers=header)
+	return{"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="product",request_param="type=edit", renderer="gkwebapp:templates/editproduct.jinja2")
 def editproduct(request):
