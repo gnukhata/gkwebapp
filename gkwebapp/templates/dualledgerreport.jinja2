@@ -86,12 +86,14 @@ span
 
   <div class="row">
     <div class="table-responsive col-md-6 ">
-      {% if ledgerheader1["projectname"]!="" %}
-      <i style="font-size: 95%;">{% trans %}Project{% endtrans %}</i> : {{ledgerheader1["projectname"]}}
-      {% endif %}
-      <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{ledgerheader1["calculatefrom"]}}</strong> <i>{% trans %}to{% endtrans %}</i> <strong>{{ledgerheader1["calculateto"]}}</strong></span>
-      <span style="margin:auto; display:table;"><i>{% trans %}Account{% endtrans %}</i> : <strong>{{ledgerheader1["accountname"]}}</strong></span>
 
+      <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{ledgerheader1["calculatefrom"]}}</strong> <i>{% trans %}to{% endtrans %}</i> <strong>{{ledgerheader1["calculateto"]}}</strong></span>
+      <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Account{% endtrans %}</i> : <strong>{{ledgerheader1["accountname"]}}</strong></span><br>
+      {% if ledgerheader1["projectname"]!="" %}
+      <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Project{% endtrans %}</i> : <strong>{{ledgerheader1["projectname"]}}</strong></span><br>
+      {% elif ledgerheader2["projectname"]!="" %}
+      <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Project{% endtrans %}</i> : <strong>None</strong></span><br>
+      {% endif %}
       <table id="ledgertable1" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
         <thead>
           <tr>
@@ -165,12 +167,14 @@ span
 
     </div>
     <div  class="table-responsive col-md-6 ">
-      {% if ledgerheader2["projectname"]!="" %}
-      <i style="font-size: 95%;">{% trans %}Project{% endtrans %}</i> : {{ledgerheader2["projectname"]}}
-      {% endif %}
-      <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{ledgerheader2["calculatefrom"]}}</strong><i>{% trans %}to{% endtrans %}</i> <strong>{{ledgerheader2["calculateto"]}}</strong></span>
-      <span style="margin:auto; display:table;"><i>{% trans %}Account{% endtrans %}</i> : <strong>{{ledgerheader2["accountname"]}}</strong></span>
 
+      <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{ledgerheader2["calculatefrom"]}}</strong> <i>{% trans %}to{% endtrans %}</i> <strong>{{ledgerheader2["calculateto"]}}</strong></span>
+      <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Account{% endtrans %}</i> : <strong>{{ledgerheader2["accountname"]}}</strong></span><br>
+      {% if ledgerheader2["projectname"]!="" %}
+      <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Project{% endtrans %}</i> : <strong>{{ledgerheader2["projectname"]}}</strong></span><br>
+      {% elif ledgerheader1["projectname"]!="" %}
+      <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Project{% endtrans %}</i> : <strong>None</strong></span><br>
+      {% endif %}
       <table id="ledgertable2" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
         <thead>
           <tr>
@@ -248,6 +252,7 @@ span
   <span style="margin:auto; display:table;">
       <button class="btn btn-sm btn-danger" type="button" id="dlback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
     </span>
+  </div>
 
   <div id="viewvc">
   </div>

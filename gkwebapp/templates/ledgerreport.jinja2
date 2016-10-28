@@ -71,7 +71,7 @@
   <input type="hidden" id="side" name="side" value="{{ledgerrefresh["side"]}}"></input>
   <input type="hidden" id="modalindex" value=""></input>
   {% if ledgerheader["projectname"]!="" %}
-  <i>{% trans %}Project{% endtrans %}</i> : {{ledgerheader["projectname"]}}
+  <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Project{% endtrans %}</i> : <strong>{{ledgerheader["projectname"]}}</strong></span>
   {% endif %}
   <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{ledgerheader["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{ledgerheader["calculateto"]}}</strong></span>
   <span style="margin:auto; display:table;"><i>{% trans %}Ledger Account{% endtrans %}</i> : <strong>{{ledgerheader["accountname"]}}</strong></span>
