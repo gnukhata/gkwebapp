@@ -38,6 +38,7 @@ requires = [
     'requests',
     'Pillow',
     'supervisor',
+    'Babel',
 ]
 
 setup(name='gkwebapp',
