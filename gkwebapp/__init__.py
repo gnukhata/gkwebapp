@@ -114,6 +114,7 @@ def main(global_config, **settings):
 	config.add_route('createuser', '/createuser')
 	config.add_route('addaccount', '/addaccount')
 	config.add_route('category', '/category')
+	config.add_route('deliverychallan', '/deliverychallan')
 	config.add_route('editaccount', '/editaccount')
 	config.add_route('deleteaccount', '/deleteaccount')
 	config.add_route('getsubgroup','/getsubgroup')

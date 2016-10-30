@@ -1,0 +1,103 @@
+<body>
+  <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
+    <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Category saved.{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Something went wrong!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="category-blank-alert"  aria-live="rude" role="alert" hidden>
+
+      <label for="vno">{% trans %}Please enter category name!{% endtrans %}</label>
+    </div>
+
+    <div class="panel shadow deliverychallan_panel">
+      <div class="panel-body">
+        <div class="col-md-5">
+          <form>
+            <div class="form-group">
+              <label for="deliverychallan_purchaseorder">{% trans %}Purchase Order:{% endtrans %}</label>
+              <select class="form-control input-sm" id="deliverychallan_purchaseorder" accesskey="">
+                <option value="" selected>None</option>
+                {% for purchaseorder in purchaseorders %}
+                <option value="{{purchaseorder['orderno']}}">{{purchaseorder["orderno"]}}, {{purchaseorder["podate"]}}, {{purchaseorder["custname"]}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="deliverychallan_customer">{% trans %}Customer:{% endtrans %}</label>
+              <select class="form-control input-sm" id="deliverychallan_customer" accesskey="">
+                <option value="" disabled hidden selected>Select Customer</option>
+                {% for customer in customers %}
+                <option value="{{customer['custid']}}">{{customer["custname"]}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="deliverychallan_date">{% trans %}Date:{% endtrans %}</label>
+              <div class="form-inline">
+                <form class="form-inline">
+                <div class="form-group">
+                  <input type="text" class="form-control input-sm" size="2" maxlength="2" placeholder="DD" id="deliverychallan_date" accesskey="v">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control input-sm" size="2" maxlength="2" placeholder="MM" id="deliverychallan_month" accesskey="v">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control input-sm" size="4" maxlength="2" placeholder="YYYY" id="deliverychallan_year" accesskey="v">
+                </div>
+              </form>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="deliverychallan_name">{% trans %}Challan No:{% endtrans %}</label>
+              <input class="form-control input-sm" id="deliverychallan_name" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a">
+            </div>
+          </div>
+          <div class="col-md-7" id="deliverychallan_spec_div">
+            <div class="alert alert-danger" id="spec-blank-alert"  aria-live="rude" role="alert" hidden>
+
+              <label for="vno">{% trans %}Please enter specification name!{% endtrans %}</label>
+            </div>
+            <table id="deliverychallan_spec_table" class="table table-condensed table-fixedheader">
+              <thead>
+                <tr>
+                  <th class="col-xs-9">{% trans %}Product{% endtrans %}</th>
+                  <th class="col-xs-2">{% trans %}Quantity{% endtrans %}</th>
+                  <th class="col-xs-1">{% trans %}Remove{% endtrans %}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="col-xs-9">
+                    <select class="form-control input-sm" id="deliverychallan_product" accesskey="">
+                      <option value="" disabled hidden selected>Select Product</option>
+                      {% for product in products %}
+                      <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
+                      {% endfor %}
+                    </select>
+                  </td>
+                  <td class="col-xs-2">
+                    <input type="text" class="deliverychallan_product_quantity form-control input-sm text-right" value="">
+                  </td>
+                  <td class="col-xs-1">
+                    <a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button class="btn btn-success btn-sm" id="deliverychallan_addspecs" accesskey="s">{% trans %}Save{% endtrans %}</button>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addcategory.js')}}"></script>
+</body>

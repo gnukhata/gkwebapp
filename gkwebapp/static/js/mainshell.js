@@ -661,6 +661,9 @@ $.ajax({
   $('#addcategory').click(function (e) {
     $("#info").load("/category");
   });
+  $('#deliverychallan').click(function (e) {
+    $("#info").load("/deliverychallan");
+  });
 
   $("#showtrialbalance").click(function(event){
     $("#info").load("/showtrialbalance");
