@@ -7,7 +7,7 @@
   <div class='container-fluid '>
     <form id="addprodform">
       <div class="form-group">
-        <label for="catselect" class="input-sm ">Category :</label>
+        <label for="catselect" class="">Category :</label>
         <select class = "form-control input-sm"  name = "catselect" id="catselect" >
           <option value="" disabled selected hidden>{% trans %}Select Category{% endtrans %}</option>
           {% for cat in gkresult["category"] %}
@@ -16,11 +16,11 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="proddesc" class="input-sm ">{% trans %}Product Description{% endtrans %} :</label>
+        <label for="proddesc" class="">{% trans %}Product Description{% endtrans %} :</label>
         <input type="text" class="form-control input-sm" name="proddesc"  id="proddesc" placeholder="Alphanumeric">
       </div>
       <div class="form-group">
-        <label for="uom" class="input-sm ">Unit of Measurement :</label>
+        <label for="uom" class="">Unit of Measurement :</label>
         <select class = "form-control input-sm"  name = "uom" id="uom" >
           <option value="" disabled selected hidden>{% trans %}Select Unit of Measurement{% endtrans %}</option>
           {% for uom in gkresult["uom"] %}

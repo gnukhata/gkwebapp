@@ -43,7 +43,7 @@ def addproduct(request):
 	result1 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
 	return{"gkresult":{"category":result.json()["gkresult"],"uom":result1.json()["gkresult"]},"gkstatus":result.json()["gkstatus"]}
 
-@view_config(route_name="product",request_param="type=specs", renderer="gkwebapp:templates/productspecs.jinja2")
+@view_config(route_name="product",request_param="type=specs", renderer="gkwebapp:templates/addproductspecs.jinja2")
 def getcatspecs(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/categoryspecs?categorycode=%d"%(int(request.params["categorycode"])), headers=header)
@@ -73,4 +73,13 @@ def saveproduct(request):
 @view_config(route_name="product",request_param="type=edit", renderer="gkwebapp:templates/editproduct.jinja2")
 def editproduct(request):
 	header={"gktoken":request.headers["gktoken"]}
-	return{"gkresult":0}
+	result = requests.get("http://127.0.0.1:6543/products",headers=header)
+	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="product",request_param="type=details", renderer="gkwebapp:templates/editproductspecs.jinja2")
+def productdetails(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/products?qty=single&productcode=%d"%(int(request.params['productcode'])),headers=header)
+	result1 = requests.get("http://127.0.0.1:6543/categoryspecs?categorycode=%d"%(int(result.json()["gkresult"]["categorycode"])), headers=header)
+	result2 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
+	return{"gkresult":{"proddesc":result.json()["gkresult"],"prodspecs":result1.json()["gkresult"],"uom":result2.json()["gkresult"]},"gkstatus":result.json()["gkstatus"]}

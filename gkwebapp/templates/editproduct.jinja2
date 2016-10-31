@@ -5,22 +5,16 @@
   <body>
 
     <div class='container-fluid '>
-      <form>
-        <div class="form-group">
-          <label for="email">Email address:</label>
-          <input type="email" class="form-control" id="email">
-        </div>
-        <div class="form-group">
-          <label for="pwd">Password:</label>
-          <input type="password" class="form-control" id="pwd">
-        </div>
-        <div class="checkbox">
-          <label><input type="checkbox"> Remember me</label>
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
+      <label for="prodselect" class="">Product :</label>
+      <select class = "form-control input-sm"  name = "prodselect" id="prodselect" >
+        <option value="" disabled selected hidden>{% trans %}Select Category{% endtrans %}</option>
+        {% for prod in gkresult %}
+        <option value="{{prod['productcode']}}">{{prod["productdesc"]}}</option>
+        {% endfor %}
+      </select>
+      <div class="container-fluid nopadding" id="proddetails">
 
-
+      </div>
     </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editproduct.js')}}"></script>
   </body>

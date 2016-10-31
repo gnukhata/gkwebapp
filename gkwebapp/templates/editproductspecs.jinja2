@@ -1,0 +1,16 @@
+<div class="form-group">
+  <label for="proddesc" class="">{% trans %}Product Description{% endtrans %} :</label>
+  <input type="text" class="form-control input-sm" name="proddesc"  value="{{gkresult['proddesc']['productdesc']}}" id="proddesc" placeholder="Alphanumeric">
+</div>
+<div class="form-group">
+  <label for="uom" class="">Unit of Measurement :</label>
+  <select class = "form-control input-sm"  name = "uom" id="uom" >
+    {% for uom in gkresult["uom"] %}
+    {% if uom["uomid"]== gkresult["proddesc"]["uom"] %}
+    <option value="{{uom['uomid']}}" selected>{{uom["unitname"]}}</option>
+    {% else %}
+    <option value="{{uom['uomid']}}">{{uom["unitname"]}}</option>
+    {% endif %}
+    {% endfor %}
+  </select>
+</div>

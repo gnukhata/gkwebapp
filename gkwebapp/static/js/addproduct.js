@@ -5,34 +5,39 @@ $(document).ready(function() {
     $(".numtype").numeric();
   });
   $("#catselect").focus();
-  $("#catselect").select();
+
   $("#catselect").change(function(event) {
     /* Act on the event */
     var catcode= $("#catselect option:selected").val();
-    $.ajax({
-      url: '/product?type=specs',
-      type: 'POST',
-      global: false,
-      async: false,
-      datatype: 'text/html',
-      data: {"categorycode": catcode},
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      }
-    })
-    .done(function(resp)
+    if (catcode!="")
     {
-      $("#specifications").html("");
-      $("#specifications").html(resp);
-      console.log("success");
-    })
-    .fail(function() {
-      console.log("error");
-    })
-    .always(function() {
-      console.log("complete");
-    });
+
+      $.ajax({
+        url: '/product?type=specs',
+        type: 'POST',
+        global: false,
+        async: false,
+        datatype: 'text/html',
+        data: {"categorycode": catcode},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+      .done(function(resp)
+      {
+        $("#specifications").html("");
+        $("#specifications").html(resp);
+        console.log("success");
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+
+    }
 
   });
 
