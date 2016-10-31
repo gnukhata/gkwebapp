@@ -31,24 +31,23 @@
     min-width: 30%;
     text-align: left !important;
   }
-  #liabtable tbody,#patable tbody {
+  .fixed-table tbody {
     display:block;
     height: calc(100vh - 16em);
     overflow-y:scroll;
   }
-  #liabtable thead,#liabtable tbody tr,#patable thead,#patable tbody tr {
+  .fixed-table thead,.fixed-table tbody tr {
     display:table;
     width:100%;
     table-layout:fixed;
   }
-  #liabtable thead ,#patable thead{
-    width: calc( 100% - 0.65em )
+  .fixed-table thead {
+    width: calc( 100% - 0.8em );
   }
   .nopadding{
   	padidng:0 !important;
   	padding:0 !important;
   }
-  
 
   </style>
 </head>
@@ -60,7 +59,7 @@
   {% endif %}
   <div class="row">
     <div class="table-responsive col-xs-6 nopadding" >
-      <table id="liabtable" class="shadow table table-condensed cbalsheettable">
+      <table id="liabtable" class="shadow table fixed-table table-condensed cbalsheettable">
         <thead>
           <tr>
             {% if orgtype=="Profit Making" %}
@@ -154,7 +153,7 @@
       </table>
     </div>
     <div class="table-responsive col-xs-6 nopadding" >
-      <table id="patable" class="shadow table table-condensed  cbalsheettable">
+      <table id="patable" class="shadow table table-condensed fixed-table cbalsheettable">
         <thead>
           <tr>
             <th class="col-xs-6">{% trans %}Property and Assets{% endtrans %}</th>

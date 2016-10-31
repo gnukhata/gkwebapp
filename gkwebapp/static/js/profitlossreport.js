@@ -252,11 +252,14 @@ $(document).ready(function() {
 
     	xhr.send();
     });
+
+
     $("#printpnl").click(function(event) {
-      $("#incometbl tbody tr").unbind('dblclick');
-      $("#expensetbl tbody tr").unbind('dblclick');
+      $("#incometbl").unbind('dblclick');
+      $("#expensetbl").unbind('dblclick');
       $('table a').contents().unwrap();
-      $("table").removeClass('table-fixedheader').addClass('table-keep').addClass('table-striped');
+      $("table").removeClass('fixed-table').addClass('table-striped');
+      $(".fixed-table-toolbar").remove();
       $("#printpnl").hide();
       $("#realprintpnl").show();
     });
