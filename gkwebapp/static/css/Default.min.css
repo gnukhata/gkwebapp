@@ -106,4 +106,8 @@ thead > tr {
     color: white;
     opacity: 2;
 }
+.selected
+{
+  background-color: Aquamarine;
+}
 /*# sourceMappingURL=bootstrap.min.css.map */
