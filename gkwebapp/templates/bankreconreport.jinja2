@@ -22,34 +22,33 @@
       padding: 4 !important;
       margin: 4 !important;
     }
-  #bankrecontable th,#stmttable th {
+  #bankrecontable th {
       font-size: 85%;
-      vertical-align: baseline;
   }
-#bankrecontable tbody, #stmttable tbody {
+  .fixed-table tbody {
       display:block;
-      height: calc(100vh - 16em);
+      height: calc(100vh - 60vh);
       overflow-y:scroll;
   }
-  #bankrecontable thead ,#bankrecontable tbody tr,#stmttable thead ,#stmttable tbody tr {
+
+  .fixed-table thead ,.fixed-table tbody tr {
       display:table;
       width:100%;
       table-layout:fixed;
   }
-  #bankrecontable thead,#stmttable thead {
-      width: calc( 100% - 0.65em )
+  .fixed-table thead {
+      width: calc( 100% - 0.7em )
   }
   .ralign{
-		text-align:right;
+    text-align:right;
 
-	}
-	.cred{
-		color:red;
-	}
-	.calign{
-		text-align:center;
-	}
-
+  }
+  .cred{
+    color:red;
+  }
+  .calign{
+    text-align:center;
+  }
   </style>
 </head>
 <body>
@@ -69,9 +68,9 @@
   <div id="unclrdtrs" class="table-responsive">
     <span class="pull-right hidden-print header"  style="padding-right:12px"><i>{% trans %}Period{% endtrans %}</i> : <b>{{ledgerheader["calculatefrom"]}}</b> {% trans %}to{% endtrans %} <b>{{ledgerheader["calculateto"]}}</b></span>
     <span style="margin:auto; display:table;" class="hidden-print header"><i>{% trans %}Uncleared Transactions of{% endtrans %}</i> : <b>{{ledgerheader["accountname"]}}</b></span>
-    <table id="bankrecontable" class="table shadow table-bordered" >
+    <table id="bankrecontable" class="table shadow table-bordered fixed-table" >
       <thead>
-        <tr>
+        <tr id="printhead" style="display:none">
           <th class="text-center visible-print" style="font-size:80%" colspan="6">
             <i>{% trans %}Uncleared Transactions of{% endtrans %}</i> : <b>{{ledgerheader["accountname"]}}</b><br>
             <i>{% trans %}Period{% endtrans %}</i> : <b>{{ledgerheader["calculatefrom"]}}</b> {% trans %}to{% endtrans %} <b>{{ledgerheader["calculateto"]}}</b>
@@ -118,10 +117,10 @@
           <td class="col-xs-2 ralign">
             {{record["cr"]}}
           </td>
-          <td class="col-xs-1 hidden-print">
+          <td class="col-xs-2 hidden-print">
             <input class="form-control input-sm clrdate" type="text"  maxlength="10" placeholder="DD-MM-YYYY" value="{{record["clearancedate"]}}">
           </td>
-          <td class="col-xs-3 hidden-print">
+          <td class="col-xs-2 hidden-print">
             <input class="form-control input-sm memo " type="text" value="{{record["memo"]}}">
           </td>
           <td class="col-xs-2 visible-print">
