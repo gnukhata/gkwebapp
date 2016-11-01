@@ -148,21 +148,7 @@ $("#loginform").submit(function(e)
         var gt = resp['gktoken'];
 
         sessionStorage.gktoken = gt;
-
-        $.ajax({
-          url: '/theme',
-          type: 'POST',
-          global: false,
-          async: false,
-          datatype: 'json',
-          beforeSend: function(xhr)
-          {
-            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-          }
-        })
-        .done(function(resp){
-          sessionStorage.gktheme = resp["theme"];
-        });
+        sessionStorage.gktheme = 'Default';
         window.location="/showmainshell";
       }
       else if(resp['gkstatus']==3) {
