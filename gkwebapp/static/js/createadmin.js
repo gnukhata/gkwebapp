@@ -44,7 +44,6 @@ $('input:not(:hidden),select').bind("keydown", function(e) {
   var f = $('input:not(:hidden),select');
   if (e.which == 13)
   {
-    e.preventDefault();
     var nextIndex = f.index(this) + 1;
     if(nextIndex < n){
       e.preventDefault();
@@ -75,15 +74,9 @@ $('input:not(:hidden),select').bind("keydown", function(e) {
       }
     });
 
-$("#securityanswer").keydown(function(event) {
-  if (event.which==13) {
-    event.preventDefault();
-$("#loginform").submit();
-  }
-});
-
 $("#loginform").submit(function(e)
 {
+  e.preventDefault();
   if ($.trim($("#username").val())=="") {
     $("#usrname-blank-alert").alert();
     $("#usrname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -165,9 +158,6 @@ $("#loginform").submit(function(e)
 
     }
     );
-
-    e.preventDefault();
-
 }
 );
 }
