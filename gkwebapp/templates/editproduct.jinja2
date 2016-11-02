@@ -7,7 +7,7 @@
     <div class='container-fluid '>
       <label for="prodselect" class="">{% trans %}Product{% endtrans %} :</label>
       <select class = "form-control input-sm"  name = "prodselect" id="prodselect" >
-        <option value="" disabled selected hidden>{% trans %}Select Category{% endtrans %}</option>
+        <option value="" disabled selected hidden>{% trans %}Select Product{% endtrans %}</option>
         {% for prod in gkresult %}
         <option value="{{prod['productcode']}}">{{prod["productdesc"]}}</option>
         {% endfor %}
