@@ -23,14 +23,12 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+"Sachin Patil" <sachpatil@openmailbox.org>
 */
 
 $(document).ready(function() {
   $('.modal-backdrop').remove();
-  var percentwid = 100*(($(".table-fixedheader").width()-12)/$(".table-fixedheader").width());
-  $('.table-fixedheader thead').width(percentwid+"%");
-  var percentheigth = 100*(($("body").height()-$(".navbar").height()-148)/$("body").height());
-  $('.table-fixedheader tbody').height(percentheigth+"%");
+  $(".fixed-table-loading").remove();
 
   $(' #ledgertable tbody tr:first-child td:eq(1) a').focus();
   $('#ledgertable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
@@ -73,7 +71,7 @@ $(document).ready(function() {
   var urole = $("#urole").val();
 
   $("#ledgertable").off('keydown','tr').on('keydown','tr',function(e){
-    var id = $(this).attr('value');
+    var id = $(this).attr('data-value');
     var rindex = $(this).index();
 
     if(e.which==13)
@@ -153,7 +151,7 @@ $(document).ready(function() {
 
   $("#ledgertable").off('click','tr').on('click','tr',function(e){
     e.preventDefault();
-    var id = $(this).attr('value');
+    var id = $(this).attr('data-value');
     var currindex = $(this).index();
     $('#ledgertable tr').removeClass('selected');
     $(this).toggleClass('selected');
@@ -161,9 +159,9 @@ $(document).ready(function() {
 
   });
 
-  $("#ledgertable tbody tr").off('dblclick').on('dblclick',function(e){
+  $("#ledgertable ").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
-    var id = $(this).attr('value');
+    var id = $(this).attr('data-value');
     if (id=="")
     {
       return false;

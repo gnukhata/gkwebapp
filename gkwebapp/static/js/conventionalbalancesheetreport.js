@@ -33,10 +33,6 @@ $(document).ready(function() {
   $('#liabtable tbody tr:first-child td:eq(0) a').closest('tr').addClass('selected');
   var rcindex = 0
   var pyindex = 0
-  var percentwid = 100*(($(".table-fixedheader").width()-12)/$(".table-fixedheader").width());
-  $('.table-fixedheader thead').width(percentwid+"%");
-  var percentheigth = 100*(($("body").height()-$(".navbar").height()-148)/$("body").height());
-  $('.table-fixedheader tbody').height(percentheigth+"%");
   $(document).off('focus' ,'.libgname').on('focus' ,'.libgname',function() {
     $('#liabtable tr').removeClass('selected');
     $(this).closest('tr').addClass('selected');
@@ -349,8 +345,8 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
     }
   });
   $("#printconvbalance").click(function(event) {
-    $("#liabtable tbody tr").unbind('dblclick');
-    $("#patable tbody tr").unbind('dblclick');
+    $("#liabtable").unbind('dblclick');
+    $("#patable").unbind('dblclick');
     $("#sbgbtn").remove();
     $("#accbtn").remove();
     $("#grpbtn").remove();
@@ -374,7 +370,7 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
     }
     $("#"+tl+" tbody").append(lastrow);
     $('table a').contents().unwrap();
-    $("table").removeClass('table-fixedheader').addClass('table-keep').addClass('table-striped');
+    $("table").removeClass('fixed-table').addClass('table-striped');
     $("#printconvbalance").hide();
     $("#realprintbalance").show();
   });

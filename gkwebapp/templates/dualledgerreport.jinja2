@@ -17,91 +17,45 @@ span
   .shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
-  td {
-    font-size: 65%;
-  }
+  #ledgertable1 td,#ledgertable2 td {
+      font-size: 75%;
+      color: black;
+      padding: 4 !important;
+      margin: 4 !important;
+    }
+  #ledgertable1 th,#ledgertable2 th {
+      font-size: 85%;
+    }
 
-  th {
-    font-size: 70%;
+  .card-view .title {
+      font-weight: bold;
+      display: inline-block;
+      min-width: 30%;
+      text-align: left !important;
   }
-  /*
-  Force table width to 100%
-  */
-  table.table-fixedheader {
-    width: 100%;
+  #ledgertable1 tbody, #ledgertable2 tbody {
+      display:block;
+      height: calc(100vh - 16em);
+      overflow-y:scroll;
   }
-  /*
-  Set table elements to block mode.  (Normally they are inline).
-  This allows a responsive table, such as one where columns can be stacked
-  if the display is narrow.
-  */
-  table.table-fixedheader, table.table-fixedheader>thead, table.table-fixedheader>tbody, table.table-fixedheader>tfoot, table.table-fixedheader>thead>tr, table.table-fixedheader>tbody>tr, table.table-fixedheader>tfoot>tr, table.table-fixedheader>thead>tr>th, table.table-fixedheader>tbody>tr>td, table.table-fixedheader>tfoot>tr>td {
-    display: block;
+  #ledgertable1 thead ,#ledgertable1 tbody tr,#ledgertable2 thead ,#ledgertable2 tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
   }
-  table.table-fixedheader>thead>tr:after, table.table-fixedheader>tbody>tr:after, table.table-fixedheader>tfoot>tr:after  {
-    content:' ';
-    display: block;
-    visibility: hidden;
-    clear: both;
+  #ledgertable1 thead,#ledgertable2 thead {
+      width: calc( 100% - 0.65em )
   }
-  /*
-  When scrolling the table, actually it is only the tbody portion of the
-  table that scrolls (not the entire table: we want the thead to remain
-  fixed).  We must specify an explicit height for the tbody.  We include
-  100px as a default, but it can be overridden elsewhere.
+  .ralign{
+		text-align:right;
 
-  Also, we force the scrollbar to always be displayed so that the usable
-  width for the table contents doesn't change (such as becoming narrower
-  when a scrollbar is visible and wider when it is not).
-  */
-  table.table-fixedheader>tbody {
-    overflow-y: scroll;
-    height: 68vh;
-
-  }
-  /*
-  We really don't want to scroll the thead contents, but we want to force
-  a scrollbar to be displayed anyway so that the usable width of the thead
-  will exactly match the tbody.
-  */
-  table.table-fixedheader>thead, table.table-fixedheader>tfoot {
-    overflow-y: scroll;
-    height: 26px;
-    width: 99.3%;
-  }
-  /*
-  For browsers that support it (webkit), we set the background color of
-  the unneeded scrollbar in the thead to make it invisible.  (Setting
-  visiblity: hidden defeats the purpose, as this alters the usable width
-  of the thead.)
-  */
-  table.table-fixedheader>thead::-webkit-scrollbar {
-    background-color: inherit;
-  }
-
-
-  table.table-fixedheader>thead>tr>th:after, table.table-fixedheader>tbody>tr>td:after, table.table-fixedheader>tfoot>tr>td:after {
-    content:' ';
-    display: table-cell;
-    visibility: hidden;
-    clear: both;
-  }
-
-  /*
-  We want to set <th> and <td> elements to float left.
-  We also must explicitly set the width for each column (both for the <th>
-  and the <td>).  We set to 20% here a default placeholder, but it can be
-  overridden elsewhere.
-  */
-
-  table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.table-fixedheader>tfoot tr td {
-    float: left;
-
-  }
-
-  #ledgertable1, #ledgertable2 {
-    background-color: white;
-  }
+	}
+	.cred{
+		color:red;
+	}
+	.calign{
+		text-align:center;
+	}
 
   </style>
 </head>
@@ -132,32 +86,34 @@ span
 
   <div class="row">
     <div class="table-responsive col-md-6 ">
-      {% if ledgerheader1["projectname"]!="" %}
-      <i style="font-size: 95%;">{% trans %}Project{% endtrans %}</i> : {{ledgerheader1["projectname"]}}
-      {% endif %}
-      <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : {{ledgerheader1["calculatefrom"]}} {% trans %}to{% endtrans %} {{ledgerheader1["calculateto"]}}</span>
-      <span style="margin:auto; display:table;"><i>{% trans %}Account{% endtrans %}</i> : {{ledgerheader1["accountname"]}}</span>
 
-      <table id="ledgertable1" class=" shadow table table-fixedheader table-condensed">
+      <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{ledgerheader1["calculatefrom"]}}</strong> <i>{% trans %}to{% endtrans %}</i> <strong>{{ledgerheader1["calculateto"]}}</strong></span>
+      <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Account{% endtrans %}</i> : <strong>{{ledgerheader1["accountname"]}}</strong></span><br>
+      {% if ledgerheader1["projectname"]!="" %}
+      <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Project{% endtrans %}</i> : <strong>{{ledgerheader1["projectname"]}}</strong></span><br>
+      {% elif ledgerheader2["projectname"]!="" %}
+      <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Project{% endtrans %}</i> : <strong>None</strong></span><br>
+      {% endif %}
+      <table id="ledgertable1" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
         <thead>
           <tr>
             <th class="col-xs-2">{% trans %}Date{% endtrans %}</th>
             <th class="col-xs-1" style="word-wrap: break-word;">{% trans %}V. No.{% endtrans %}</th>
             {% if ledgerheader1["projectname"]=="" %}
             <th class="col-xs-3">{% trans %}Particulars{% endtrans %}</th>
-            <th style="text-align:right" class="col-xs-2">{% trans %}Debit{% endtrans %}</th>
-            <th style="text-align:right" class="col-xs-2">{% trans %}Credit{% endtrans %}</th>
-            <th style="text-align:right" class="col-xs-2">{% trans %}Balance{% endtrans %}</th>
+            <th class="col-xs-2 ralign">{% trans %}Debit{% endtrans %}</th>
+            <th class="col-xs-2 ralign">{% trans %}Credit{% endtrans %}</th>
+            <th class="col-xs-2 ralign">{% trans %}Balance{% endtrans %}</th>
             {% else %}
             <th class="col-xs-5">{% trans %}Particulars{% endtrans %}</th>
-            <th style="text-align:right" class="col-xs-2">{% trans %}Debit{% endtrans %}</th>
-            <th style="text-align:right" class="col-xs-2">{% trans %}Credit{% endtrans %}</th>
+            <th class="col-xs-2 ralign">{% trans %}Debit{% endtrans %}</th>
+            <th class="col-xs-2 ralign">{% trans %}Credit{% endtrans %}</th>
             {% endif %}
           </tr>
         </thead>
         <tbody>
           {% for record in records1 %}
-          <tr  value="{{record['vouchercode']}}">
+          <tr  data-value="{{record['vouchercode']}}">
             <td class="col-xs-2">
               {{record['voucherdate']}}
             </td>
@@ -179,13 +135,13 @@ span
               ({{record['narration']}})
               {% endif %}
             </td>
-            <td class="col-xs-2" style="text-align:right">
+            <td class="col-xs-2 ralign">
               {{record["Dr"]}}
             </td>
-            <td class="col-xs-2" style="text-align:right">
+            <td class="col-xs-2 ralign">
               {{record["Cr"]}}
             </td>
-            <td class="col-xs-2" style="text-align:right">
+            <td class="col-xs-2 ralign">
               {{record["balance"]}}
             </td>
             {% else %}
@@ -197,10 +153,10 @@ span
               ({{record['narration']}})
               {% endif %}
             </td>
-            <td class="col-xs-2" style="text-align:right">
+            <td class="col-xs-2 ralign">
               {{record["Dr"]}}
             </td>
-            <td class="col-xs-2" style="text-align:right">
+            <td class="col-xs-2 ralign">
               {{record["Cr"]}}
             </td>
             {% endif %}
@@ -211,32 +167,34 @@ span
 
     </div>
     <div  class="table-responsive col-md-6 ">
-      {% if ledgerheader2["projectname"]!="" %}
-      <i style="font-size: 95%;">{% trans %}Project{% endtrans %}</i> : {{ledgerheader2["projectname"]}}
-      {% endif %}
-      <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : {{ledgerheader2["calculatefrom"]}} to {{ledgerheader2["calculateto"]}}</span>
-      <span style="margin:auto; display:table;"><i>{% trans %}Account{% endtrans %}</i> : {{ledgerheader2["accountname"]}}</span>
 
-      <table id="ledgertable2" class=" shadow table table-fixedheader table-condensed">
+      <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{ledgerheader2["calculatefrom"]}}</strong> <i>{% trans %}to{% endtrans %}</i> <strong>{{ledgerheader2["calculateto"]}}</strong></span>
+      <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Account{% endtrans %}</i> : <strong>{{ledgerheader2["accountname"]}}</strong></span><br>
+      {% if ledgerheader2["projectname"]!="" %}
+      <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Project{% endtrans %}</i> : <strong>{{ledgerheader2["projectname"]}}</strong></span><br>
+      {% elif ledgerheader1["projectname"]!="" %}
+      <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Project{% endtrans %}</i> : <strong>None</strong></span><br>
+      {% endif %}
+      <table id="ledgertable2" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
         <thead>
           <tr>
             <th class="col-xs-2">{% trans %}Date{% endtrans %}</th>
             <th class="col-xs-1" style="word-wrap: break-word;">{% trans %}V. No.{% endtrans %}</th>
             {% if ledgerheader2["projectname"]=="" %}
             <th class="col-xs-3">{% trans %}Particulars{% endtrans %}</th>
-            <th style="text-align:right" class="col-xs-2">{% trans %}Debit{% endtrans %}</th>
-            <th style="text-align:right" class="col-xs-2">{% trans %}Credit{% endtrans %}</th>
-            <th style="text-align:right" class="col-xs-2">{% trans %}Balance{% endtrans %}</th>
+            <th class="col-xs-2 ralign">{% trans %}Debit{% endtrans %}</th>
+            <th class="col-xs-2 ralign">{% trans %}Credit{% endtrans %}</th>
+            <th class="col-xs-2 ralign">{% trans %}Balance{% endtrans %}</th>
             {% else %}
             <th class="col-xs-5">{% trans %}Particulars{% endtrans %}</th>
-            <th style="text-align:right" class="col-xs-2">{% trans %}Debit{% endtrans %}</th>
-            <th style="text-align:right" class="col-xs-2">{% trans %}Credit{% endtrans %}</th>
+            <th class="col-xs-2 ralign">{% trans %}Debit{% endtrans %}</th>
+            <th class="col-xs-2 ralign">{% trans %}Credit{% endtrans %}</th>
             {% endif %}
           </tr>
         </thead>
         <tbody>
           {% for record in records2 %}
-          <tr  value="{{record['vouchercode']}}">
+          <tr  data-value="{{record['vouchercode']}}">
             <td class="col-xs-2">
               {{record['voucherdate']}}
             </td>
@@ -258,13 +216,13 @@ span
               ({{record['narration']}})
               {% endif %}
             </td>
-            <td class="col-xs-2" style="text-align:right">
+            <td class="col-xs-2 ralign">
               {{record["Dr"]}}
             </td>
-            <td class="col-xs-2" style="text-align:right">
+            <td class="col-xs-2 ralign">
               {{record["Cr"]}}
             </td>
-            <td class="col-xs-2" style="text-align:right">
+            <td class="col-xs-2 ralign">
               {{record["balance"]}}
             </td>
             {% else %}
@@ -276,10 +234,10 @@ span
               ({{record['narration']}})
               {% endif %}
             </td>
-            <td class="col-xs-2" style="text-align:right">
+            <td class="col-xs-2 ralign">
               {{record["Dr"]}}
             </td>
-            <td class="col-xs-2" style="text-align:right">
+            <td class="col-xs-2 ralign">
               {{record["Cr"]}}
             </td>
             {% endif %}
@@ -294,9 +252,11 @@ span
   <span style="margin:auto; display:table;">
       <button class="btn btn-sm btn-danger" type="button" id="dlback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
     </span>
+  </div>
 
   <div id="viewvc">
   </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/dualledgerreport.js')}}"></script>
 </body>
 </html>

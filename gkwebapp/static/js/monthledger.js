@@ -26,6 +26,7 @@ Contributors:
 */
 
 $(document).ready(function() {
+  $(".fixed-table-loading").remove();
   $('#mthltable tbody tr:first-child td:eq(0) a').focus();
   $('#mthltable tbody tr:first-child td:eq(0) a').closest('tr').addClass('selected');
 
@@ -86,7 +87,7 @@ $(document).ready(function() {
     }
 });
 
-  $("#mthltable tbody tr").off('dblclick').on('dblclick',function(e){
+  $("#mthltable").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
      var date = $(this).attr('value').split(":");
      var newfromdate = date[0];
