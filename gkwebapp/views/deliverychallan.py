@@ -42,7 +42,8 @@ def showadddeliverychallan(request):
 	podata = requests.get("http://127.0.0.1:6543/purchaseorder?po=all", headers=header)
 	customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
 	products = requests.get("http://127.0.0.1:6543/products", headers=header)
-	return {"gkstatus": podata.json()["gkstatus"], "customers": customers.json()["gkresult"],"products": products.json()["gkresult"],"purchaseorders":podata.json()["gkresult"]}
+	godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	return {"gkstatus": podata.json()["gkstatus"], "customers": customers.json()["gkresult"],"products": products.json()["gkresult"],"purchaseorders":podata.json()["gkresult"],"godowns":godowns.json()["gkresult"]}
 
 @view_config(route_name="deliverychallan",request_param="action=showedit",renderer="gkwebapp:templates/editdeliverychallan.jinja2")
 def showeditdeliverychallan(request):

@@ -52,16 +52,25 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="deliverychallan_name">{% trans %}Challan No:{% endtrans %}</label>
-              <input class="form-control input-sm" id="deliverychallan_name" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a">
+              <label for="deliverychallan_challanno">{% trans %}Challan No:{% endtrans %}</label>
+              <input class="form-control input-sm" id="deliverychallan_challanno" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a">
+            </div>
+            <div class="form-group">
+              <label for="deliverychallan_godown">{% trans %}Godown:{% endtrans %}</label>
+              <select class="form-control input-sm" id="deliverychallan_godown" accesskey="">
+                <option value=""  selected>{% trans %}None{% endtrans %}</option>
+                {% for godown in godowns %}
+                <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
+                {% endfor %}
+              </select>
             </div>
           </div>
-          <div class="col-md-7" id="deliverychallan_spec_div">
-            <div class="alert alert-danger" id="spec-blank-alert"  aria-live="rude" role="alert" hidden>
+          <div class="col-md-7" id="deliverychallan_product_div">
+            <div class="alert alert-danger" id="product-blank-alert"  aria-live="rude" role="alert" hidden>
 
               <label for="vno">{% trans %}Please enter specification name!{% endtrans %}</label>
             </div>
-            <table id="deliverychallan_spec_table" class="table table-condensed table-fixedheader">
+            <table id="deliverychallan_product_table" class="table table-condensed table-fixedheader">
               <thead>
                 <tr>
                   <th class="col-xs-9">{% trans %}Product{% endtrans %}</th>
@@ -72,7 +81,7 @@
               <tbody>
                 <tr>
                   <td class="col-xs-9">
-                    <select class="form-control input-sm" id="deliverychallan_product" accesskey="">
+                    <select class="form-control input-sm product_name" id="deliverychallan_product" accesskey="">
                       <option value="" disabled hidden selected>Select Product</option>
                       {% for product in products %}
                       <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
@@ -83,7 +92,7 @@
                     <input type="text" class="deliverychallan_product_quantity form-control input-sm text-right" value="">
                   </td>
                   <td class="col-xs-1">
-                    <a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                    
                   </td>
                 </tr>
               </tbody>
@@ -92,7 +101,7 @@
         </div>
       </div>
       <div class="panel-footer">
-        <button class="btn btn-success btn-sm" id="deliverychallan_addspecs" accesskey="s">{% trans %}Save{% endtrans %}</button>
+        <button class="btn btn-success btn-sm" id="deliverychallan_addproducts" accesskey="s">{% trans %}Save{% endtrans %}</button>
       </div>
     </div>
 

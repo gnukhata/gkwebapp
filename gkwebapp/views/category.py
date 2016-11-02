@@ -73,7 +73,7 @@ def savespecs(request):
 		for spec in specs:
 			specdata= {"attrname":spec["attrname"],"attrtype":int(spec["attrtype"]),"categorycode":result.json()["gkresult"]}
 			specresult = requests.post("http://127.0.0.1:6543/categoryspecs",data=json.dumps(specdata) ,headers=header)
-		return {"gkstatus": specresult.json()["gkstatus"]}
+		return {"gkstatus": result.json()["gkstatus"]}
 	else:
 		return {"gkstatus": result.json()["gkstatus"]}
 
