@@ -3,7 +3,7 @@
   <input type="text" class="form-control input-sm" name="proddesc"  value="{{gkresult['proddesc']['productdesc']}}" id="proddesc" placeholder="Alphanumeric">
 </div>
 <div class="form-group">
-  <label for="uom" class="">Unit of Measurement :</label>
+  <label for="uom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label>
   <select class = "form-control input-sm"  name = "uom" id="uom" >
     {% for uom in gkresult["uom"] %}
     {% if uom["uomid"]== gkresult["proddesc"]["uom"] %}
