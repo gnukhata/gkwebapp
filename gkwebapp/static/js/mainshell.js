@@ -28,7 +28,7 @@ Contributors:
 
 $(document).ready(function(){
   $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');
-  $("#mainshellticker").css("margin-top",$("#navhead").height()+25);
+  console.log($("#navhead").height());
 
   $('.modal-backdrop').remove();
 
