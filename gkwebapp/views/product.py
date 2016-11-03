@@ -82,4 +82,5 @@ def productdetails(request):
 	result = requests.get("http://127.0.0.1:6543/products?qty=single&productcode=%d"%(int(request.params['productcode'])),headers=header)
 	result1 = requests.get("http://127.0.0.1:6543/categoryspecs?categorycode=%d"%(int(result.json()["gkresult"]["categorycode"])), headers=header)
 	result2 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
-	return{"gkresult":{"proddesc":result.json()["gkresult"],"prodspecs":result1.json()["gkresult"],"uom":result2.json()["gkresult"]},"gkstatus":result.json()["gkstatus"]}
+	result3 = requests.get("http://127.0.0.1:6543/categories", headers=header)
+	return{"gkresult":{"proddesc":result.json()["gkresult"],"prodspecs":result1.json()["gkresult"],"uom":result2.json()["gkresult"],"category":result3.json()["gkresult"]},"gkstatus":result.json()["gkstatus"]}

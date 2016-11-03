@@ -6,6 +6,7 @@ $(document).ready(function() {
     var prodcode= $("#prodselect option:selected").val();
     if (prodcode!="")
     {
+
       $.ajax({
         url: '/product?type=details',
         type: 'POST',
