@@ -242,6 +242,14 @@ $(document).ready(function(){
           $("#signout").click();
         }
       });
+      $("#themes").keydown(function(event){
+        if(event.which == 39){
+          $("#toolbar").click();
+        }
+        if(event.which == 37){
+          $("#signout").click();
+        }
+      });
       $(".toolbarmenu").keydown(function(event){
         if(event.which == 39){
           $("#master").click();

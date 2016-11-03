@@ -10,9 +10,16 @@ body{overflow-y:auto;}
 p.shortcut {
 	padding: 0px 0 0px 40px;
 }
-td, th{
+td{
 	word-wrap: break-word;
+	font-weight: bold;
 }
+
+th{
+	word-wrap: break-word;
+	font-weight:bolder;
+}
+
 a:focus,
 .focus a {
 	outline: none !important;
