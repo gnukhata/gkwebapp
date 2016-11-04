@@ -3,7 +3,7 @@ $(document).ready(function() {
   {
     /* Act on the event */
     $.ajax({
-      url: '/product?type=add',
+      url: '/product?type=addtab',
       type: 'POST',
       datatype: 'text/html',
       beforeSend: function(xhr)
@@ -29,7 +29,7 @@ $(document).ready(function() {
   {
     /* Act on the event */
     $.ajax({
-      url: '/product?type=edit',
+      url: '/product?type=edittab',
       type: 'POST',
       global: false,
       async: false,

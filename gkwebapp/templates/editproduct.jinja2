@@ -4,9 +4,10 @@
   </head>
   <body>
 
-    <div class='container-fluid '>
+    <div class='container-fluid editpr'>
+      <form id="editprodform">
       <label for="prodselect" class="">{% trans %}Product{% endtrans %} :</label>
-      <select class = "form-control input-sm"  name = "prodselect" id="prodselect" >
+      <select class = "form-control input-sm"  name = "productcode" id="prodselect" >
         <option value="" disabled selected hidden>{% trans %}Select Product{% endtrans %}</option>
         {% for prod in gkresult %}
         <option value="{{prod['productcode']}}">{{prod["productdesc"]}}</option>
@@ -22,7 +23,7 @@
         <button id="epedit" class="btn btn-danger btn-sm" accesskey="t">{% trans %}Edi<u>t</u>{% endtrans %}</button>
 
       </div>
-
+      </form>
     </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editproduct.js')}}"></script>
   </body>

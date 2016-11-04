@@ -36,8 +36,8 @@ def showproducttab(request):
 	header={"gktoken":request.headers["gktoken"]}
 	return{"gkresult":0}
 
-@view_config(route_name="product",request_param="type=add", renderer="gkwebapp:templates/addproduct.jinja2")
-def addproduct(request):
+@view_config(route_name="product",request_param="type=addtab", renderer="gkwebapp:templates/addproduct.jinja2")
+def addproducttab(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/categories", headers=header)
 	result1 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
@@ -70,8 +70,32 @@ def saveproduct(request):
 	result = requests.post("http://127.0.0.1:6543/products", data=json.dumps(proddetails),headers=header)
 	return{"gkstatus":result.json()["gkstatus"]}
 
-@view_config(route_name="product",request_param="type=edit", renderer="gkwebapp:templates/editproduct.jinja2")
+@view_config(route_name="product",request_param="type=edit", renderer="json")
 def editproduct(request):
+	header={"gktoken":request.headers["gktoken"]}
+	prdspecs = {}
+	proddetails={}
+	for prd in request.params:
+		if prd=="type":
+			continue
+		elif prd =="productcode":
+			proddetails["productcode"] = request.params[prd]
+		elif prd =="catselect":
+			proddetails["categorycode"] = request.params[prd]
+		elif prd == "proddesc":
+			proddetails["productdesc"] = request.params[prd]
+		elif prd == "uom":
+			proddetails["uomid"] = request.params[prd]
+		else:
+			prdspecs[prd]= request.params[prd]
+		proddetails["specs"] = prdspecs
+
+	result = requests.put("http://127.0.0.1:6543/products", data=json.dumps(proddetails),headers=header)
+	return{"gkstatus":result.json()["gkstatus"]}
+
+
+@view_config(route_name="product",request_param="type=edittab", renderer="gkwebapp:templates/editproduct.jinja2")
+def editproducttab(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/products",headers=header)
 	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}

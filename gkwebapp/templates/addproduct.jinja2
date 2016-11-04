@@ -4,11 +4,11 @@
 </head>
 <body>
 
-  <div class='container-fluid '>
+  <div class='container-fluid addprod'>
     <form id="addprodform">
       <div class="form-group">
-        <label for="catselect" class="">{% trans %}Category{% endtrans %} :</label>
-        <select class = "form-control input-sm"  name = "catselect" id="catselect" >
+        <label for="addcatselect" class="">{% trans %}Category{% endtrans %} :</label>
+        <select class = "form-control input-sm"  name = "catselect" id="addcatselect" >
           <option value="" disabled selected hidden>{% trans %}Select Category{% endtrans %}</option>
           {% for cat in gkresult["category"] %}
           <option value="{{cat['categorycode']}}">{{cat["categoryname"]}}({{cat["subcount"]}})</option>
@@ -21,7 +21,7 @@
       </div>
       <div class="form-group pds" hidden>
         <label for="uom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label>
-        <select class = "form-control input-sm"  name = "uom" id="uom" >
+        <select class = "form-control input-sm sel"  name = "uom" id="adduom" >
           <option value="" disabled selected hidden>{% trans %}Select Unit of Measurement{% endtrans %}</option>
           {% for uom in gkresult["uom"] %}
           <option value="{{uom['uomid']}}">{{uom["unitname"]}}</option>

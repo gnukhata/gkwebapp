@@ -1,10 +1,54 @@
 $(document).ready(function() {
 
-  $("#catselect").focus();
+  $("#addcatselect").focus();
 
-  $("#catselect").change(function(event) {
+  $(document).on("keydown",'.addprod input:not(:hidden), .addprod select', function(e) {
+     var n = $(".addprod input:not(:hidden),.addprod select").length;
+     var f = $('.addprod input:not(:hidden),.addprod select');
+    if (e.which == 13)
+    {
+      e.preventDefault();
+      var nextIndex = f.index(this) + 1;
+      if(nextIndex < n){
+        e.preventDefault();
+        f[nextIndex].focus();}
+
+      }
+    });
+    $(document).on("keydown",'.addprod input:not(:hidden),.addprod select', function(e) {
+       var n = $(".addprod input:not(:hidden),.addprod select").length;
+       var f = $('.addprod input:not(:hidden),.addprod select');
+      if (e.which == 38)
+      {
+        var prevIndex = f.index(this) - 1;
+        var elementType = $(this).prop('nodeName');
+        if(prevIndex > -1)
+        {
+          if (elementType=="SELECT")
+          {
+            var sindex= $(".sel option:selected").index();
+            if (sindex <=1)
+            {
+              e.preventDefault();
+              f[prevIndex].focus();
+            }
+          }
+          else
+          {
+            e.preventDefault();
+            f[prevIndex].focus();
+
+          }
+        }
+
+        }
+      });
+
+  $("#addcatselect").bind("change keyup", function(event) {
     /* Act on the event */
-    var catcode= $("#catselect option:selected").val();
+
+    var catcode= $("#addcatselect option:selected").val();
+
     if (catcode!="")
     {
 
