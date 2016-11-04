@@ -18,7 +18,7 @@
   <label for="uom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label>
   <select class = "form-control input-sm"  name = "uom" id="uom" >
     {% for uom in gkresult["uom"] %}
-    {% if uom["uomid"]== gkresult["proddesc"]["uom"] %}
+    {% if uom["uomid"]== gkresult["proddesc"]["uomid"] %}
     <option value="{{uom['uomid']}}" selected>{{uom["unitname"]}}</option>
     {% else %}
     <option value="{{uom['uomid']}}">{{uom["unitname"]}}</option>
@@ -38,7 +38,7 @@
       {% elif spec["attrtype"]==2 %}
         <input type="text" class="form-control input-sm " name="{{spec['spcode']}}"  id="{{spec['spcode']}}" value="{{gkresult['proddesc']['specs'][pdesc]}}" placeholder="Date">
       {% elif spec["attrtype"]==3 %}
-        {% if gkresult['proddesc']['specs'][pdesc] ==1 %}
+        {% if gkresult['proddesc']['specs'][pdesc]|int ==1 %}
           <label class="radio-inline"><input value = "1" class="radtype" type="radio" name="{{spec['spcode']}}" checked>{% trans %}Yes{% endtrans %}</label>
           <label class="radio-inline"><input value = "0" class=" radtype" type="radio" name="{{spec['spcode']}}">{% trans %}No{% endtrans %}</label>
         {% else %}

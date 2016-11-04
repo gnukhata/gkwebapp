@@ -15,11 +15,11 @@
           {% endfor %}
         </select>
       </div>
-      <div class="form-group">
+      <div class="form-group pds" hidden>
         <label for="proddesc" class="">{% trans %}Product Description{% endtrans %} :</label>
         <input type="text" class="form-control input-sm" name="proddesc"  id="proddesc" placeholder="Alphanumeric">
       </div>
-      <div class="form-group">
+      <div class="form-group pds" hidden>
         <label for="uom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label>
         <select class = "form-control input-sm"  name = "uom" id="uom" >
           <option value="" disabled selected hidden>{% trans %}Select Unit of Measurement{% endtrans %}</option>
@@ -31,7 +31,11 @@
       <div class="form-group" id="specifications">
 
       </div>
+      <div class="btn-group-sm pbutn" hidden>
+        <button type="submit" class="btn btn-primary btn-sm" id="apsubmit" name="submit" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
+        <button id="apreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
 
+      </div>
     </form>
 
 

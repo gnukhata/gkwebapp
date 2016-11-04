@@ -12,9 +12,17 @@
         <option value="{{prod['productcode']}}">{{prod["productdesc"]}}</option>
         {% endfor %}
       </select>
-      <div class="container-fluid nopadding" id="proddetails">
+      <div class="container-fluid nopadding" id="proddetails" disabled>
 
       </div>
+      <div class="btn-group-sm pbutn" hidden>
+        <button type="submit" class="btn btn-primary btn-sm" id="epsubmit" name="submit" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
+        <button id="epreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+        <button id="epdelete" class="btn btn-danger btn-sm" accesskey="d">{% trans %}<u>D</u>elete{% endtrans %}</button>
+        <button id="epedit" class="btn btn-danger btn-sm" accesskey="t">{% trans %}Edi<u>t</u>{% endtrans %}</button>
+
+      </div>
+
     </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editproduct.js')}}"></script>
   </body>

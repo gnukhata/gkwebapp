@@ -23,6 +23,12 @@ $(document).ready(function() {
       {
         $("#proddetails").html("");
         $("#proddetails").html(resp);
+        $('#proddetails').find('input, textarea, button, select').prop('disabled','disabled');
+        $(".pbutn").show();
+        $("#epsubmit").hide();
+
+
+
         console.log("success");
       })
       .fail(function() {
@@ -34,5 +40,25 @@ $(document).ready(function() {
 
     }
 
+
+  });
+
+  $("#prodselect").keyup(function(event) {
+    /* Act on the event */
+    if (event.which == 13)
+    {
+        var prodcode= $("#prodselect option:selected").val();
+        if (prodcode!="")
+        {
+          $("#epedit").click();
+        }
+
+    }
+  });
+
+  $(document).on('click', '#epreset', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    $("#editproduct").click();
   });
 });

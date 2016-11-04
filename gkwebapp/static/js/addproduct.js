@@ -1,9 +1,5 @@
 $(document).ready(function() {
-  $(document).off('focus', '.numtype').on('focus', '.numtype', function(event)
-  {
-    /* Act on the event */
-    $(".numtype").numeric();
-  });
+
   $("#catselect").focus();
 
   $("#catselect").change(function(event) {
@@ -28,6 +24,8 @@ $(document).ready(function() {
       {
         $("#specifications").html("");
         $("#specifications").html(resp);
+        $(".pbutn").show();
+        $(".pds").show();
         console.log("success");
       })
       .fail(function() {
@@ -70,5 +68,11 @@ $(document).ready(function() {
       console.log("complete");
     });
 
+  });
+
+  $(document).on('click', '#apreset', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    $("#addproduct").click();
   });
 });
