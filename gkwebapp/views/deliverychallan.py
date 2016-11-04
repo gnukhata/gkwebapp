@@ -56,7 +56,6 @@ def getproducts(request):
 def getpurchaseorder(request):
 	header={"gktoken":request.headers["gktoken"]}
 	podata = requests.get("http://127.0.0.1:6543/purchaseorder?po=single&orderno=%s"%(request.params["orderno"]), headers=header)
-	print podata.json()["gkresult"]
 	return {"gkstatus": podata.json()["gkstatus"],"podata": podata.json()["gkresult"]}
 
 @view_config(route_name="deliverychallan",request_param="action=showedit",renderer="gkwebapp:templates/editdeliverychallan.jinja2")

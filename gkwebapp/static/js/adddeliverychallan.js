@@ -8,71 +8,127 @@ $(document).ready(function() {
   $('.deliverychallan_product_quantity').numeric({ negative: false});
   $("#deliverychallan_purchaseorder").keydown(function(event) {
     if (event.which==13) {
+      event.preventDefault();
       $("#deliverychallan_customer").focus().select();
     }
   });
 
   $("#deliverychallan_customer").keydown(function(event) {
     if (event.which==13) {
+      event.preventDefault();
       $("#deliverychallan_date").focus().select();
     }
-    if (event.which==38 && document.getElementById('deliverychallan_customer').selectedIndex==1) {
+    if (event.which==38 && (document.getElementById('deliverychallan_customer').selectedIndex==1||document.getElementById('deliverychallan_customer').selectedIndex==0)) {
+      event.preventDefault();
       $("#deliverychallan_purchaseorder").focus().select();
     }
   });
 
   $("#deliverychallan_date").keydown(function(event) {
     if (event.which==13) {
+      event.preventDefault();
       $("#deliverychallan_month").focus().select();
     }
     if (event.which==38) {
+      event.preventDefault();
       $("#deliverychallan_customer").focus().select();
     }
   });
   $("#deliverychallan_month").keydown(function(event) {
     if (event.which==13) {
+      event.preventDefault();
       $("#deliverychallan_year").focus().select();
     }
     if (event.which==38) {
+      event.preventDefault();
       $("#deliverychallan_date").focus().select();
     }
   });
 
   $("#deliverychallan_year").keydown(function(event) {
     if (event.which==13) {
+      event.preventDefault();
       $("#deliverychallan_challanno").focus().select();
     }
     if (event.which==38) {
+      event.preventDefault();
       $("#deliverychallan_month").focus().select();
     }
   });
 
   $("#deliverychallan_challanno").keydown(function(event) {
     if (event.which==13) {
+      event.preventDefault();
       $("#deliverychallan_inout").focus().select();
     }
     if (event.which==38) {
+      event.preventDefault();
       $("#deliverychallan_year").focus().select();
     }
   });
 
   $("#deliverychallan_inout").keydown(function(event) {
     if (event.which==13) {
+      event.preventDefault();
       $("#deliverychallan_godown").focus().select();
     }
     if (event.which==38 && $("#deliverychallan_inout option:selected").index()==0) {
+      event.preventDefault();
       $("#deliverychallan_challanno").focus().select();
     }
   });
 
   $("#deliverychallan_godown").keydown(function(event) {
     if (event.which==13) {
-      $('#deliverychallan_product_table tbody tr:eq(0) td:eq(0) select').focus().select();
+      event.preventDefault();
+      $('#deliverychallan_consignment').focus();
     }
     if (event.which==38 && $("#deliverychallan_godown option:selected").index()==0) {
+      event.preventDefault();
       $("#deliverychallan_inout").focus().select();
     }
   });
+
+  $("#deliverychallan_consignment").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $('#deliverychallan_schedule').focus().select();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#deliverychallan_godown").focus().select();
+    }
+  });
+
+  var delta = 500;
+  var lastKeypressTime = 0;
+  $("#deliverychallan_schedule").keydown(function(event) {
+    if (event.which==13)
+    {
+      var thisKeypressTime = new Date();
+      if ( thisKeypressTime - lastKeypressTime <= delta )
+      {
+        $('#deliverychallan_product_table tbody tr:first td:eq(0) select').focus();
+        // optional - if we'd rather not detect a triple-press
+        // as a second double-press, reset the timestamp
+        thisKeypressTime = 0;
+      }
+      lastKeypressTime = thisKeypressTime;
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#deliverychallan_consignment").focus();
+    }
+  });
+
+  $(document).keydown(function(event) {
+    if(event.which == 45) {
+      $("#deliverychallan_save").click();
+      event.preventDefault();
+      return false;
+    }
+  });
+
 
   $("#deliverychallan_purchaseorder").change(function(event) {
     if ($("#deliverychallan_purchaseorder option:selected").val()!='') {
@@ -153,9 +209,9 @@ $(document).ready(function() {
   $("#deliverychallan_customer").change(function(){
     var selected = $("option:selected", this);
     if(selected.parent()[0].id == "custgroup"){
-        $("#deliverychallan_inout").val("15");
+      $("#deliverychallan_inout").val("15");
     } else if(selected.parent()[0].id == "supgroup"){
-        $("#deliverychallan_inout").val("9");
+      $("#deliverychallan_inout").val("9");
     }
   });
 
@@ -181,14 +237,14 @@ $(document).ready(function() {
       }
       if (curindex==0) {
         event.preventDefault();
-        $("#deliverychallan_godown").focus().select();
+        $("#deliverychallan_schedule").focus().select();
       }
     }
     else if (event.which==188 && event.ctrlKey) {
       event.preventDefault();
       if (curindex==0) {
         event.preventDefault();
-        $("#deliverychallan_godown").focus().select();
+        $("#deliverychallan_schedule").focus().select();
       }
       else {
         $('#deliverychallan_product_table tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
@@ -273,7 +329,7 @@ $(document).ready(function() {
       }
       if (curindex1==0) {
         event.preventDefault();
-        $("#deliverychallan_godown").focus().select();
+        $("#deliverychallan_schedule").focus().select();
       }
     }
     else if (event.which==190 && event.ctrlKey) {
@@ -352,6 +408,14 @@ $(document).ready(function() {
           $("#product-blank-alert").hide();
         });
         $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(0) select").focus();
+        return false;
+      }
+      if ($("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(1) input").val()=="") {
+        $("#quantity-blank-alert").alert();
+        $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#quantity-blank-alert").hide();
+        });
+        $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(1) input").focus();
         return false;
       }
       var obj = {};

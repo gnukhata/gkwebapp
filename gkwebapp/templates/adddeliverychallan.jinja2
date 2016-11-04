@@ -90,11 +90,25 @@
                 {% endfor %}
               </select>
             </div>
+            <div class="form-group">
+              <label for="deliverychallan_consignment">Consignment:</label>
+                <input type="checkbox" id="deliverychallan_consignment" value="">
+              </label>
+            </div>
+            <div class="form-group">
+              <label for="deliverychallan_schedule">Schedule:</label>
+              <textarea class="form-control" rows="2" cols="40" id="deliverychallan_schedule" aria-describedby="textareahelp"></textarea>
+              <small id="textareahelp" class="form-text text-muted">Double press enter to shift focus to products</small>
+            </div>
           </div>
           <div class="col-md-7" id="deliverychallan_product_div">
             <div class="alert alert-danger" id="product-blank-alert"  aria-live="rude" role="alert" hidden>
 
               <label for="vno">{% trans %}Please select a product!{% endtrans %}</label>
+            </div>
+            <div class="alert alert-danger" id="quantity-blank-alert"  aria-live="rude" role="alert" hidden>
+
+              <label for="vno">{% trans %}Please enter quantity!{% endtrans %}</label>
             </div>
             <table id="deliverychallan_product_table" class="table table-condensed table-fixedheader">
               <thead>
@@ -127,7 +141,13 @@
         </div>
       </div>
       <div class="panel-footer">
-        <button class="btn btn-success btn-sm" id="deliverychallan_save" accesskey="s">{% trans %}Save{% endtrans %}</button>
+        <button class="btn btn-success btn-sm" id="deliverychallan_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save anywhere on the current screen">{% trans %}Save{% endtrans %}</button>
+        <label class="btn btn-primary btn-sm" for="my-file-selector">
+          <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');" aria-describedby="attachhelp">
+          {% trans %}Attac<u>h</u>{% endtrans %}
+        </label>
+        <small id="attachhelp" class="form-text text-muted">You can attach image files</small>
+        <span class='label label-info' id="upload-file-info"></span>
       </div>
     </div>
 
