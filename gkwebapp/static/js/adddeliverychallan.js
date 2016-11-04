@@ -1,10 +1,11 @@
 $(document).ready(function() {
   $('.modal-backdrop').remove();
+  $('.delchaldate').autotab('number');
+  $("#deliverychallan_purchaseorder").focus();
   $("#deliverychallan_date").numeric();
   $("#deliverychallan_month").numeric();
   $("#deliverychallan_year").numeric();
-  $("#deliverychallan_purchaseorder").focus();
-
+  $('.deliverychallan_product_quantity').numeric({ negative: false});
   $("#deliverychallan_purchaseorder").keydown(function(event) {
     if (event.which==13) {
       $("#deliverychallan_customer").focus().select();
@@ -15,7 +16,7 @@ $(document).ready(function() {
     if (event.which==13) {
       $("#deliverychallan_date").focus().select();
     }
-    if (event.which==38 && $("#deliverychallan_customer option:selected").index()==1) {
+    if (event.which==38 && document.getElementById('deliverychallan_customer').selectedIndex==1) {
       $("#deliverychallan_purchaseorder").focus().select();
     }
   });
@@ -48,10 +49,19 @@ $(document).ready(function() {
 
   $("#deliverychallan_challanno").keydown(function(event) {
     if (event.which==13) {
-      $("#deliverychallan_godown").focus().select();
+      $("#deliverychallan_inout").focus().select();
     }
     if (event.which==38) {
       $("#deliverychallan_year").focus().select();
+    }
+  });
+
+  $("#deliverychallan_inout").keydown(function(event) {
+    if (event.which==13) {
+      $("#deliverychallan_godown").focus().select();
+    }
+    if (event.which==38 && $("#deliverychallan_inout option:selected").index()==0) {
+      $("#deliverychallan_challanno").focus().select();
     }
   });
 
@@ -60,10 +70,94 @@ $(document).ready(function() {
       $('#deliverychallan_product_table tbody tr:eq(0) td:eq(0) select').focus().select();
     }
     if (event.which==38 && $("#deliverychallan_godown option:selected").index()==0) {
-      $("#deliverychallan_challanno").focus().select();
+      $("#deliverychallan_inout").focus().select();
     }
   });
 
+  $("#deliverychallan_purchaseorder").change(function(event) {
+    if ($("#deliverychallan_purchaseorder option:selected").val()!='') {
+      $.ajax({
+        url: '/deliverychallan?action=getpurchaseorder',
+        type: 'POST',
+        dataType: 'json',
+        async : false,
+        data : {"orderno":$("#deliverychallan_purchaseorder option:selected").val()},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+      .done(function(resp) {
+        if (resp["gkstatus"]==0) {
+          var podata = resp["podata"];
+          $("#deliverychallan_customer").val(podata.csid);
+          var deldatearray = podata.datedelivery.split(/\s*\-\s*/g);
+          $("#deliverychallan_date").val(deldatearray[0]);
+          $("#deliverychallan_month").val(deldatearray[1]);
+          $("#deliverychallan_year").val(deldatearray[2]);
+          if ($('#deliverychallan_product_table tbody tr').length==1) {
+            $('#deliverychallan_product_table tbody tr').remove();
+            $.each(podata["productdetails"], function(key, value) {
+              $.ajax({
+                url: '/deliverychallan?action=getproducts',
+                type: 'POST',
+                dataType: 'json',
+                async : false,
+                beforeSend: function(xhr)
+                {
+                  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+              })
+              .done(function(resp) {
+                console.log("success");
+                if (resp["gkstatus"]==0) {
+                  $('#deliverychallan_product_table tbody').append('<tr>'+
+                  '<td class="col-xs-9">'+
+                  '<select class="form-control input-sm product_name"></select>'+
+                  '</td>'+
+                  '<td class="col-xs-2">'+
+                  '<input type="text" class="deliverychallan_product_quantity form-control input-sm text-right" value="">'+
+                  '</td>'+
+                  '<td class="col-xs-1">'+
+                  '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+                  '</td>'+
+                  '</tr>');
+                  for (product of resp["products"]) {
+                    $('#deliverychallan_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
+                  }
+                  $('#deliverychallan_product_table tbody tr:last td:eq(0) select').val(key);
+                  $('#deliverychallan_product_table tbody tr:last td:eq(1) input').val(value);
+                }
+              })
+              .fail(function() {
+                console.log("error");
+              })
+              .always(function() {
+                console.log("complete");
+              });
+              $('.deliverychallan_product_quantity').numeric({ negative: false});
+            });
+          }
+        }
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+
+    }
+  });
+
+  $("#deliverychallan_customer").change(function(){
+    var selected = $("option:selected", this);
+    if(selected.parent()[0].id == "custgroup"){
+        $("#deliverychallan_inout").val("15");
+    } else if(selected.parent()[0].id == "supgroup"){
+        $("#deliverychallan_inout").val("9");
+    }
+  });
 
   $(document).off("keydown",".product_name").on("keydown",".product_name",function(event)
   {
@@ -74,6 +168,36 @@ $(document).ready(function() {
       event.preventDefault();
       $('#deliverychallan_product_table tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
     }
+    else if(event.which==190 && event.shiftKey)
+    {
+      $('#deliverychallan_product_table tbody tr:eq('+nextindex+') td:eq(0) select').focus();
+    }
+    else if (event.which==188 && event.shiftKey)
+    {
+      if(previndex>-1)
+      {
+        event.preventDefault();
+        $('#deliverychallan_product_table tbody tr:eq('+previndex+') td:eq(0) select').focus();
+      }
+      if (curindex==0) {
+        event.preventDefault();
+        $("#deliverychallan_godown").focus().select();
+      }
+    }
+    else if (event.which==188 && event.ctrlKey) {
+      event.preventDefault();
+      if (curindex==0) {
+        event.preventDefault();
+        $("#deliverychallan_godown").focus().select();
+      }
+      else {
+        $('#deliverychallan_product_table tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
+      }
+    }
+    else if (event.which==190 && event.ctrlKey) {
+      $('#deliverychallan_product_table tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
+      event.preventDefault();
+    }
   });
   $(document).off("keydown",".deliverychallan_product_quantity").on("keydown",".deliverychallan_product_quantity",function(event)
   {
@@ -83,186 +207,170 @@ $(document).ready(function() {
     if (event.which==13) {
       event.preventDefault();
       if (curindex1 != ($("#deliverychallan_product_table tbody tr").length-1)) {
-        $('#deliverychallan_product_table tbody tr:eq('+nextindex1+') td:eq(0) input').focus().select();
+        $('#deliverychallan_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
       }
       else {
-        if ($('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(0) input').val()=="") {
+        if ($('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="") {
           $("#product-blank-alert").alert();
           $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#product-blank-alert").hide();
           });
-          $('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(0) input').focus();
+          $('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
           return false;
         }
-        $('#deliverychallan_product_table tbody').append('<tr>'+
-          '<td class="col-xs-9">'+
-            '<input type="text" class="form-control input-sm product_name" placeholder="product Name">'+
-          '</td>'+
-          '<td class="col-xs-2">'+
-            '<select id="deliverychallan_product_type" class="form-control input-sm product_type">'+
-            '<option value="0">Text</option>'+
-            '<option value="1">Number</option>'+
-            '<option value="2">Date</option>'+
-            '<option value="3">Option</option>'+
-            '</select>'+
-          '</td>'+
-          '<td class="col-xs-1">'+
-          '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-          '</td>'+
-        '</tr>');
-          $('#deliverychallan_product_table tbody tr:eq('+nextindex1+') td:eq(0) input').focus().select();
-        }
-      }
-      else if (event.ctrlKey && event.which==188) {
-        $('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(0) input').focus().select();
-        event.preventDefault();
-      }
-    });
-
-
-  $("#deliverychallan_addproducts").click(function(event) {
-    if ($.trim($('#deliverychallan_name').val())=="") {
-      $("#category-blank-alert").alert();
-      $("#category-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#category-blank-alert").hide();
-      });
-      $("#deliverychallan_saveproducts").attr("disabled",true);
-      $("#deliverychallan_product_div").hide();
-      $('#deliverychallan_name').focus().select();
-      return false;
-    }
-    if ($('#deliverychallan_product_table tbody tr').length==0) {
-      $('#deliverychallan_product_table tbody').append('<tr>'+
-        '<td class="col-xs-9">'+
-          '<input type="text" class="form-control input-sm product_name" value="" placeholder="product Name">'+
-        '</td>'+
-        '<td class="col-xs-2">'+
-          '<select id="deliverychallan_product_type" class="form-control input-sm product_type">'+
-          '<option value="0">Text</option>'+
-          '<option value="1">Number</option>'+
-          '<option value="2">Date</option>'+
-          '<option value="3">Option</option>'+
-          '</select>'+
-        '</td>'+
-        '<td class="col-xs-1">'+
-        '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-        '</td>'+
-      '</tr>');
-    }
-    var deliverychallan_code = $("#deliverychallan_under option:selected").val();
-    $("#deliverychallan_product_table > tbody >tr:not(:last)").remove();
-    $("#deliverychallan_product_table tbody tr:last td:eq(0) input").val("");
-    if (deliverychallan_code=='') {
-      $("#deliverychallan_saveproducts").attr("disabled",false);
-      $("#deliverychallan_product_div").show();
-      $("#deliverychallan_product_table tbody tr:last td:eq(0) input").focus();
-    }
-    else{$.ajax({
-      url: '/category?action=getproducts',
-      type: 'POST',
-      dataType: 'json',
-      async : false,
-      data: {"categorycode": deliverychallan_code},
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      }
-    })
-    .done(function(resp) {
-      console.log("success");
-      for (spec of resp["gkresult"]) {
-        var trs;
-        if (spec["attrtype"]==0) {
-          trs ='<option value="0" selected>Text</option>'+
-          '<option value="1">Number</option>'+
-          '<option value="2">Date</option>'+
-          '<option value="3">Option</option>'
-        }
-        else if (spec["attrtype"]==1) {
-          trs ='<option value="0">Text</option>'+
-          '<option value="1" selected>Number</option>'+
-          '<option value="2">Date</option>'+
-          '<option value="3">Option</option>'
-        }
-        else if (spec["attrtype"]==2) {
-          trs ='<option value="0">Text</option>'+
-          '<option value="1">Number</option>'+
-          '<option value="2" selected>Date</option>'+
-          '<option value="3">Option</option>'
-        }
-        else if (spec["attrtype"]==3) {
-          trs ='<option value="0">Text</option>'+
-          '<option value="1">Number</option>'+
-          '<option value="2">Date</option>'+
-          '<option value="3" selected>Option</option>'
-        }
-        $('#deliverychallan_spec_table tbody').prepend('<tr>'+
-          '<td class="col-xs-9">'+
-            '<input type="text" class="form-control input-sm spec_name" value="'+spec["attrname"]+'" placeholder="Spec Name">'+
-          '</td>'+
-          '<td class="col-xs-2">'+
-            '<select id="deliverychallan_spec_type" class="form-control input-sm spec_type">'+trs+
-            '</select>'+
-          '</td>'+
-          '<td class="col-xs-1">'+
-          '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-          '</td>'+
-        '</tr>');
-      }
-      $("#deliverychallan_savespecs").attr("disabled",false);
-      $("#deliverychallan_spec_div").show();
-      $("#deliverychallan_spec_table tbody tr:last td:eq(0) input").focus();
-    })
-    .fail(function() {
-      console.log("error");
-    })
-    .always(function() {
-      console.log("complete");
-    });
-  }
-  });
-  $("#deliverychallan_under").change(function(event) {
-    $("#deliverychallan_savespecs").attr("disabled",true);
-    $("#deliverychallan_spec_div").hide();
-  });
-
-  $(document).off("click",".spec_del").on("click", ".spec_del", function() {
-    $(this).closest('tr').fadeOut(200, function(){
-      $(this).closest('tr').remove();	 //closest method gives the closest element specified
-      $('#deliverychallan_spec_table tbody tr:last td:eq(0) input').focus().select();
-    });
-    $('#deliverychallan_spec_table tbody tr:last td:eq(0) input').select();
-  });
-  $("#deliverychallan_savespecs").click(function(event) {
-    if ($.trim($('#deliverychallan_name').val())=="") {
-      $("#category-blank-alert").alert();
-      $("#category-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#category-blank-alert").hide();
-      });
-      $('#deliverychallan_name').focus().select();
-      return false;
-    }
-    var specs = [];
-    for (var i = 0; i < $("#deliverychallan_spec_table tbody tr").length; i++) {
-      if ($.trim($("#deliverychallan_spec_table tbody tr:eq("+i+") td:eq(0) input").val())=="") {
-        $("#spec-blank-alert").alert();
-        $("#spec-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#spec-blank-alert").hide();
+        $.ajax({
+          url: '/deliverychallan?action=getproducts',
+          type: 'POST',
+          dataType: 'json',
+          async : false,
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          }
+        })
+        .done(function(resp) {
+          console.log("success");
+          if (resp["gkstatus"]==0) {
+            $('#deliverychallan_product_table tbody').append('<tr>'+
+            '<td class="col-xs-9">'+
+            '<select class="form-control input-sm product_name"></select>'+
+            '</td>'+
+            '<td class="col-xs-2">'+
+            '<input type="text" class="deliverychallan_product_quantity form-control input-sm text-right" value="">'+
+            '</td>'+
+            '<td class="col-xs-1">'+
+            '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+            '</td>'+
+            '</tr>');
+            for (product of resp["products"]) {
+              $('#deliverychallan_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
+            }
+            $('#deliverychallan_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
+            $('.deliverychallan_product_quantity').numeric({ negative: false});
+          }
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
         });
-        $("#deliverychallan_spec_table tbody tr:eq("+i+") td:eq(0) input").focus().select();
+
+      }
+    }
+
+    else if(event.which==190 && event.shiftKey)
+    {
+      event.preventDefault();
+      $('#deliverychallan_product_table tbody tr:eq('+nextindex1+') td:eq(1) input').focus().select();
+    }
+    else if (event.which==188 && event.shiftKey)
+    {
+      if(previndex1>-1)
+      {
+        event.preventDefault();
+        $('#deliverychallan_product_table tbody tr:eq('+previndex1+') td:eq(1) input').focus().select();
+      }
+      if (curindex1==0) {
+        event.preventDefault();
+        $("#deliverychallan_godown").focus().select();
+      }
+    }
+    else if (event.which==190 && event.ctrlKey) {
+      $('#deliverychallan_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+      event.preventDefault();
+    }
+    else if (event.ctrlKey && event.which==188) {
+      $('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
+      event.preventDefault();
+    }
+  });
+
+
+  $(document).off("click",".product_del").on("click", ".product_del", function() {
+    $(this).closest('tr').fadeOut(200, function(){
+      $(this).closest('tr').remove();	 //closest method gives the closest element productified
+      $('#deliverychallan_product_table tbody tr:last td:eq(0) input').focus().select();
+    });
+    $('#deliverychallan_product_table tbody tr:last td:eq(0) input').select();
+  });
+  $("#deliverychallan_save").click(function(event) {
+    var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
+    if ($.trim($('#deliverychallan_customer option:selected').val())=="") {
+      $("#custsup-blank-alert").alert();
+      $("#custsup-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#custsup-blank-alert").hide();
+      });
+      $('#deliverychallan_customer').focus();
+      return false;
+    }
+    if ($.trim($('#deliverychallan_date').val())=="") {
+      $("#date-blank-alert").alert();
+      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#date-blank-alert").hide();
+      });
+      $('#deliverychallan_date').focus();
+      return false;
+    }
+    if ($.trim($('#deliverychallan_month').val())=="") {
+      $("#date-blank-alert").alert();
+      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#date-blank-alert").hide();
+      });
+      $('#deliverychallan_month').focus();
+      return false;
+    }
+    if ($.trim($('#deliverychallan_year').val())=="") {
+      $("#date-blank-alert").alert();
+      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#date-blank-alert").hide();
+      });
+      $('#deliverychallan_year').focus();
+      return false;
+    }
+    if(!Date.parseExact($("#deliverychallan_date").val()+$("#deliverychallan_month").val()+$("#deliverychallan_year").val(), "ddMMyyyy")){
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#deliverychallan_date').focus().select();
+      return false;
+    }
+    if ($.trim($('#deliverychallan_challanno').val())=="") {
+      $("#challanno-blank-alert").alert();
+      $("#challanno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#challanno-blank-alert").hide();
+      });
+      $('#deliverychallan_challanno').focus();
+      return false;
+    }
+    var products = [];
+    for (var i = 0; i < $("#deliverychallan_product_table tbody tr").length; i++) {
+      if ($("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()=="") {
+        $("#product-blank-alert").alert();
+        $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#product-blank-alert").hide();
+        });
+        $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(0) select").focus();
         return false;
       }
       var obj = {};
-      obj.attrname = $("#deliverychallan_spec_table tbody tr:eq("+i+") td:eq(0) input").val();
-      obj.attrtype = $("#deliverychallan_spec_table tbody tr:eq("+i+") td:eq(1) select").val();
-      specs.push(obj);
+      obj.productcode = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val();
+      obj.qty = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(1) input").val();
+      products.push(obj);
     }
     $.ajax({
-      url: '/category?action=save',
+      url: '/deliverychallan?action=save',
       type: 'POST',
       dataType: 'json',
       async : false,
-      data: {"categoryname": $("#deliverychallan_name").val(),"subcategoryof":$("#deliverychallan_under").val(),"specs":JSON.stringify(specs)},
+      data: {"orderno": $("#deliverychallan_purchaseorder option:selected").val(),
+      "custid":$("#deliverychallan_customer option:selected").val(),
+      "dcno":$("#deliverychallan_challanno").val(),
+      "dcdate":$("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val(),
+      "inout":$("#deliverychallan_inout option:selected").val(),
+      "goid":$("#deliverychallan_godown option:selected").val(),
+      "products":JSON.stringify(products)},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -270,14 +378,14 @@ $(document).ready(function() {
     })
     .done(function(resp) {
       if(resp["gkstatus"] == 0){
-        $("a[href='#deliverychallan_create']").click();
+        $("#deliverychallan_create").click();
         $("#success-alert").alert();
         $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#success-alert").hide();
         });
       }
       else {
-        $("#deliverychallan_name").focus();
+        $("#deliverychallan_purchaseorder").focus();
         $("#failure-alert").alert();
         $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#failure-alert").hide();

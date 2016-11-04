@@ -248,6 +248,7 @@ $(document).ready(function() {
         $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#success-alert").hide();
         });
+        return false;
       }
       else {
         $("#category_name").focus();
@@ -255,6 +256,7 @@ $(document).ready(function() {
         $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#failure-alert").hide();
         });
+        return false;
       }
     })
     .fail(function() {

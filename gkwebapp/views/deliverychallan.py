@@ -41,12 +41,42 @@ def showadddeliverychallan(request):
 	header={"gktoken":request.headers["gktoken"]}
 	podata = requests.get("http://127.0.0.1:6543/purchaseorder?po=all", headers=header)
 	customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
+	suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
 	products = requests.get("http://127.0.0.1:6543/products", headers=header)
 	godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
-	return {"gkstatus": podata.json()["gkstatus"], "customers": customers.json()["gkresult"],"products": products.json()["gkresult"],"purchaseorders":podata.json()["gkresult"],"godowns":godowns.json()["gkresult"]}
+	return {"gkstatus": podata.json()["gkstatus"], "customers": customers.json()["gkresult"], "suppliers": suppliers.json()["gkresult"],"products": products.json()["gkresult"],"purchaseorders":podata.json()["gkresult"],"godowns":godowns.json()["gkresult"]}
+
+@view_config(route_name="deliverychallan",request_param="action=getproducts",renderer="json")
+def getproducts(request):
+	header={"gktoken":request.headers["gktoken"]}
+	products = requests.get("http://127.0.0.1:6543/products", headers=header)
+	return {"gkstatus": products.json()["gkstatus"],"products": products.json()["gkresult"]}
+
+@view_config(route_name="deliverychallan",request_param="action=getpurchaseorder",renderer="json")
+def getpurchaseorder(request):
+	header={"gktoken":request.headers["gktoken"]}
+	podata = requests.get("http://127.0.0.1:6543/purchaseorder?po=single&orderno=%s"%(request.params["orderno"]), headers=header)
+	print podata.json()["gkresult"]
+	return {"gkstatus": podata.json()["gkstatus"],"podata": podata.json()["gkresult"]}
 
 @view_config(route_name="deliverychallan",request_param="action=showedit",renderer="gkwebapp:templates/editdeliverychallan.jinja2")
 def showeditdeliverychallan(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/categories", headers=header)
 	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
+
+@view_config(route_name="deliverychallan",request_param="action=save",renderer="json")
+def savedelchal(request):
+	header={"gktoken":request.headers["gktoken"]}
+	delchaldata = {"custid":int(request.params["custid"]),"dcno":request.params["dcno"],"dcdate":request.params["dcdate"]}
+	products = {}
+	for  row in json.loads(request.params["products"]):
+		products[row["productcode"]] = row["qty"]
+	stockdata = {"inout":request.params["inout"],"items":products}
+	if request.params["orderno"]!='':
+		delchaldata["orderno"]=request.params["orderno"]
+	if request.params["goid"]!='':
+		stockdata["goid"]=int(request.params["goid"])
+	delchalwholedata = {"delchaldata":delchaldata,"stockdata":stockdata}
+	result=requests.post("http://127.0.0.1:6543/delchal",data=json.dumps(delchalwholedata),headers=header)
+	return {"gkstatus":result.json()["gkstatus"]}
