@@ -143,7 +143,7 @@ $(document).ready(function() {
     })
     .done(function(resp) {
       console.log("success");
-      for (spec of resp["gkresult"]) {
+      for (spec of resp["gkresult"].reverse()) {
         var trs;
         if (spec["attrtype"]==0) {
           trs ='<option value="0" selected>Text</option>'+
@@ -216,19 +216,21 @@ $(document).ready(function() {
       return false;
     }
     var specs = [];
-    for (var i = 0; i < $("#category_spec_table tbody tr").length; i++) {
-      if ($.trim($("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").val())=="") {
-        $("#spec-blank-alert").alert();
-        $("#spec-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#spec-blank-alert").hide();
-        });
-        $("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").focus().select();
-        return false;
+    if ($("#category_spec_div").is(':visible')) {
+      for (var i = 0; i < $("#category_spec_table tbody tr").length; i++) {
+        if ($.trim($("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").val())=="") {
+          $("#spec-blank-alert").alert();
+          $("#spec-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#spec-blank-alert").hide();
+          });
+          $("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").focus().select();
+          return false;
+        }
+        var obj = {};
+        obj.attrname = $("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").val();
+        obj.attrtype = $("#category_spec_table tbody tr:eq("+i+") td:eq(1) select").val();
+        specs.push(obj);
       }
-      var obj = {};
-      obj.attrname = $("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").val();
-      obj.attrtype = $("#category_spec_table tbody tr:eq("+i+") td:eq(1) select").val();
-      specs.push(obj);
     }
     $.ajax({
       url: '/category?action=save',

@@ -45,7 +45,7 @@ $(document).ready(function() {
     })
     .done(function(resp) {
       console.log("success");
-      for (spec of resp["gkresult"]) {
+      for (spec of resp["gkresult"].reverse()) {
         var trs;
         if (spec["attrtype"]==0) {
           trs ='<option value="0" selected>Text</option>'+
