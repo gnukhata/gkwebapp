@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+$('.modal-backdrop').remove();
   $("#addcatselect").focus();
 
   $(document).on("keydown",'.addprod input:not(:hidden), .addprod select', function(e) {
@@ -9,11 +9,13 @@ $(document).ready(function() {
     {
       e.preventDefault();
       var nextIndex = f.index(this) + 1;
-      if(nextIndex < n){
+      if(nextIndex < n)
+      {
         e.preventDefault();
-        f[nextIndex].focus();}
-
+        f[nextIndex].focus();
       }
+
+    }
     });
     $(document).on("keydown",'.addprod input:not(:hidden),.addprod select', function(e) {
        var n = $(".addprod input:not(:hidden),.addprod select").length;
@@ -44,7 +46,7 @@ $(document).ready(function() {
         }
       });
 
-  $("#addcatselect").bind("change keyup", function(event) {
+  $("#addcatselect").change(function(event) {
     /* Act on the event */
 
     var catcode= $("#addcatselect option:selected").val();
@@ -85,6 +87,28 @@ $(document).ready(function() {
 
   $("#addprodform").submit(function(event) {
     /* Act on the event */
+    if ($("#proddesc").val()=="")
+    {
+      $('.modal-backdrop').remove();
+      $("#blank-alert").alert();
+      $("#blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#blank-alert").hide();
+      });
+      $("#proddesc").focus();
+      $("#proddesc").select();
+      return false;
+    }
+    if ($("#adduom option:selected").val()=="")
+    {
+      $('.modal-backdrop').remove();
+      $("#uomblank-alert").alert();
+      $("#uomblank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#uomblank-alert").hide();
+      });
+      $("#adduom").focus();
+      $("#adduom").select();
+      return false;
+    }
     event.preventDefault();
     $.ajax({
       url: '/product?type=save',
@@ -102,6 +126,21 @@ $(document).ready(function() {
       if (resp["gkstatus"] ==0) {
 
         $("#addproduct").click();
+        $('.modal-backdrop').remove();
+        $("#addsuccess-alert").alert();
+        $("#addsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#addsuccess-alert").hide();
+        });
+      }
+      else if (resp["gkstatus"] ==1)
+      {
+        $('.modal-backdrop').remove();
+        $("#duplicate-alert").alert();
+        $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#duplicate-alert").hide();
+        });
+        $("#proddesc").focus();
+        $("#proddesc").select();
       }
       console.log("success");
     })

@@ -22,6 +22,30 @@
           <li class="nopadding" id="editproduct" role="presentation"><a data-toggle="pill" href="">{% trans %}Edit Product{% endtrans %}</a></li>
         </ul>
         <div class='tab-content '>
+          <div class="alert alert-success" id="addsuccess-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Product saved successfully.{% endtrans %}
+          </div>
+          <div class="alert alert-success" id="editsuccess-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Product edited successfully.{% endtrans %}
+          </div>
+          <div class="alert alert-success" id="deletesuccess-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Product deleted successfully.{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="duplicate-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Duplicate product under same category.{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="blank-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Product description cannot be blank.{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="uomblank-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please select the unit of measurement.{% endtrans %}
+          </div>
           <div class="tab-pane fade in active shadow" role="tabpanel" id="productdiv">
           </div>
         </div>

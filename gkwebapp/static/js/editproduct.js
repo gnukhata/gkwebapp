@@ -23,11 +23,12 @@ $(document).ready(function() {
     {
       e.preventDefault();
       var nextIndex = f.index(this) + 1;
-      if(nextIndex < n){
+      if(nextIndex < n)
+      {
         e.preventDefault();
-        f[nextIndex].focus();}
-
+        f[nextIndex].focus();
       }
+    }
     });
     $(document).on("keydown",'.editpr input:not(:hidden),.editpr select', function(e) {
        var n = $(".editpr input:not(:hidden),.editpr select").length;
@@ -68,7 +69,7 @@ $(document).ready(function() {
         }
       });
 
-  $("#prodselect").bind("change keyup", function(event) {
+  $("#prodselect").change(function(event) {
     /* Act on the event */
     var prodcode= $("#prodselect option:selected").val();
     if (prodcode!="")
@@ -136,8 +137,20 @@ $(document).ready(function() {
   });
 
   $("#editprodform").submit(function(event) {
-    /* Act on the event */
     event.preventDefault();
+    /* Act on the event */
+    if ($("#proddesc").val()=="")
+    {
+      $('.modal-backdrop').remove();
+      $("#blank-alert").alert();
+      $("#blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#blank-alert").hide();
+      });
+      $("#proddesc").focus();
+      $("#proddesc").select();
+      return false;
+    }
+
     $.ajax({
       url: '/product?type=edit',
       type: 'POST',
@@ -152,8 +165,23 @@ $(document).ready(function() {
     })
     .done(function(resp) {
       if (resp["gkstatus"] ==0) {
-
+        $('.modal-backdrop').remove();
+        $("#editsuccess-alert").alert();
+        $("#editsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#editsuccess-alert").hide();
+        });
         $("#editproduct").click();
+      }
+      else if (resp["gkstatus"] ==1)
+      {
+
+        $('.modal-backdrop').remove();
+        $("#duplicate-alert").alert();
+        $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#duplicate-alert").hide();
+        });
+        $("#proddesc").focus();
+        $("#proddesc").select();
       }
       console.log("success");
     })
@@ -167,7 +195,49 @@ $(document).ready(function() {
   });
 
 
+  $(document).on('click', '#epdelete', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    var prodcode= $("#prodselect option:selected").val();
+    $('#m_confirmdel').modal('show').one('click', '#proddel', function (e)
+    {
+    $.ajax({
+      url: '/product?type=delete',
+      type: 'POST',
+      global: false,
+      async: false,
+      datatype: 'json',
+      data: {"productcode":prodcode},
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+    })
+    .done(function(resp) {
+      if (resp["gkstatus"] ==0) {
+        $("#editproduct").click();
+        $('.modal-backdrop').remove();
+        $("#deletesuccess-alert").alert();
+        $("#deletesuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#deletesuccess-alert").hide();
+        });
+      }
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
+});
+$('#m_confirmdel').on('shown.bs.modal', function(event) {
+  $("#m_cancel").focus();
+});
+$('#m_confirmdel').on('hidden.bs.modal', function(event) {
+  $("#prodselect").focus();
+});
 
+  });
 
   $(document).on('click', '#epreset', function(event) {
     event.preventDefault();

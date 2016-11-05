@@ -93,6 +93,13 @@ def editproduct(request):
 	result = requests.put("http://127.0.0.1:6543/products", data=json.dumps(proddetails),headers=header)
 	return{"gkstatus":result.json()["gkstatus"]}
 
+@view_config(route_name="product",request_param="type=delete", renderer="json")
+def deleteproduct(request):
+	header={"gktoken":request.headers["gktoken"]}
+	print "thisssssssss: ",request.params["productcode"]
+	result = requests.delete("http://127.0.0.1:6543/products", data=json.dumps({"productcode":request.params["productcode"]}),headers=header)
+	return{"gkstatus":result.json()["gkstatus"]}
+
 
 @view_config(route_name="product",request_param="type=edittab", renderer="gkwebapp:templates/editproduct.jinja2")
 def editproducttab(request):
