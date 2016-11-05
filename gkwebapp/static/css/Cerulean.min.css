@@ -19,3 +19,10 @@
 #mainshellticker {
 	margin-top: 50px;
 }
+.panel{
+	border-color: rgb(23, 138, 204);
+}
+.panel-heading, .panel-title {
+	background-color: rgb(43, 162, 230);
+	color: white;
+}

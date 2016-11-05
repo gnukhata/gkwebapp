@@ -45,7 +45,8 @@ border-radius: 2px;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-    color: #black;
+	background-color: #bfbfbf;
+    color: black;
 }
 @media (max-width: 767px) {
 	.collapsing, .in {background-color: rgb(26,34,41); color: white;}
