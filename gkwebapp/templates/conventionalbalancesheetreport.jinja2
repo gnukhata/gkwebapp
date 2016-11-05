@@ -12,7 +12,6 @@
   }
   #liabtable td,#patable td {
     font-size: 75%;
-    color: black;
     padding: 4 !important;
     margin: 4 !important;
   }
@@ -85,7 +84,7 @@
 
             <td class="col-xs-6">
               {% if record["groupAccname"]=="Total" or record["groupAccname"]=="Sources:" or record["groupAccname"]=="Difference" %}
-              <a class="libgname" href="#" style="text-decoration: none; color:black;"><b>{{record["groupAccname"].upper()}}</b></a>
+              <a class="libgname" href="#" style="text-decoration: none;"><b>{{record["groupAccname"].upper()}}</b></a>
               {%elif record["groupAccname"]==""%}
               <a class="libgname" href="#">&nbsp</a>
               {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
@@ -149,7 +148,7 @@
     </div>
     <div class="table-responsive col-xs-6 nopadding" >
       <table id="patable" class="shadow table table-condensed fixed-table cbalsheettable">
-        <thead>
+        <thead class="bg-info">
           <tr>
             <th class="col-xs-6">{% trans %}Property and Assets{% endtrans %}</th>
             <th style="text-align:right" class="col-xs-2">&nbsp</th>
@@ -174,7 +173,7 @@
 
             <td class="col-xs-6">
               {% if record["groupAccname"]=="Total" or record["groupAccname"]=="Difference" or record["groupAccname"]=="Applications:" %}
-              <a class="pagname" href="#" style="text-decoration: none; color:black;"><b>{{record["groupAccname"].upper()}}</b></a>
+              <a class="pagname" href="#" style="text-decoration: none;"><b>{{record["groupAccname"].upper()}}</b></a>
               {%elif record["groupAccname"]==""%}
               <a class="pagname" href="#">&nbsp
               {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}

@@ -15,7 +15,6 @@
   }
   #satable td{
     font-size: 75%;
-    color: black;
     padding: 4 !important;
     margin: 4 !important;
   }
@@ -31,7 +30,7 @@
   }
   .fixed-table tbody{
     display:block;
-    height: calc(100vh - 16em);
+    height: calc(100vh - 15em);
     overflow-y:scroll;
   }
   .fixed-table thead,.fixed-table tbody tr{
@@ -76,7 +75,7 @@
 
           <td class="col-xs-9">
             {% if record["groupAccname"]=="Total" or record["groupAccname"]=="Sources:" or record["groupAccname"]=="Difference" %}
-            <a class="libgname" href="#" style="text-decoration: none; color:black;"><b>{{record["groupAccname"].upper()}}</b></a>
+            <a class="libgname" href="#" style="text-decoration: none;"><b>{{record["groupAccname"].upper()}}</b></a>
             {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
             &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"].upper()}}</a>
             {%elif record["groupAccflag"]==1 %}
@@ -146,7 +145,7 @@
 
           <td class="col-xs-9">
             {% if record["groupAccname"]=="Total" or record["groupAccname"]=="Difference" or record["groupAccname"]=="Applications:" %}
-            <a class="libgname" href="#" style="text-decoration: none; color:black;"><b>{{record["groupAccname"].upper()}}</b></a>
+            <a class="libgname" href="#" style="text-decoration: none;"><b>{{record["groupAccname"].upper()}}</b></a>
             {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
             &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"].upper()}}</a>
             {%elif record["groupAccflag"]==1 %}
