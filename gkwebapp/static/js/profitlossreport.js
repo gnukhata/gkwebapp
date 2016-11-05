@@ -23,6 +23,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+"Abhijith Balan" <abhijithb21@openmailbox.com>
 */
 
 $(document).ready(function() {
@@ -228,6 +229,34 @@ $(document).ready(function() {
 
 
 
+  });
+  $("#hideexpense").click(function(event){
+    $("#expensetbl").parentsUntil(".table-responsive").hide();
+    $(".table-responsive").removeClass("col-xs-6");
+    $("#hideexpense").hide(100);
+    $("#showexpense").show(100);
+    $("#hideincome").hide();
+  });
+  $("#showexpense").click(function(event){
+    $("#expensetbl").parentsUntil(".table-responsive").show();
+    $(".table-responsive").addClass("col-xs-6");
+    $("#showexpense").hide(100);
+    $("#hideexpense").show(100);
+    $("#hideincome").show();
+  });
+  $("#hideincome").click(function(event){
+    $("#incometbl").parentsUntil(".table-responsive").hide();
+    $(".table-responsive").removeClass("col-xs-6");
+    $("#hideincome").hide(100);
+    $("#showincome").show(100);
+    $("#hideexpense").hide();
+  });
+  $("#showincome").click(function(event){
+    $("#incometbl").parentsUntil(".table-responsive").show();
+    $(".table-responsive").addClass("col-xs-6");
+    $("#showincome").hide(100);
+    $("#hideincome").show(100);
+    $("#hideexpense").show();
   });
   $("#print").click(function(event){
       var todatearray = $("#ledtodate").val().split("-");
