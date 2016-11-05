@@ -20,6 +20,10 @@ th{
 	font-weight:bolder;
 }
 
+td > a {
+  color: black;
+}
+
 a:focus,
 .focus a {
 	outline: none !important;
