@@ -44,6 +44,7 @@ $(document).ready(function()
   if (pathname=="/showmainshell") {
     $("#forgotpassworddiv").addClass('col-md-6');
     $("#welcome").show();
+    $("#bootstrap").attr('href', '../static/css/Default.min.css');
   }
   $('#login_username').keydown(function(e){
       if (e.which == 13)
