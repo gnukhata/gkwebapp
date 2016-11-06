@@ -53,7 +53,6 @@ def showeditunit(request):
 def getunit(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=single&uomid=%d"%(int(request.params["uomid"])), headers=header)
-	print result.json()["gkstatus"]
 	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
 
 @view_config(route_name="unitofmeasurements",request_param="action=save",renderer="json")
@@ -64,7 +63,6 @@ def saveunit(request):
 	else:
 		dataset={"unitname":request.params["unitname"]}
 	result = requests.post("http://127.0.0.1:6543/unitofmeasurement", data=json.dumps(dataset),headers=header)
-	print result.json()["gkstatus"]
 	return {"gkstatus": result.json()["gkstatus"]}
 
 @view_config(route_name="unitofmeasurements",request_param="action=edit",renderer="json")
@@ -75,5 +73,11 @@ def editunit(request):
 	else:
 		dataset={"unitname":request.params["unitname"],"uomid":int(request.params["uomid"])}
 	result = requests.put("http://127.0.0.1:6543/unitofmeasurement", data=json.dumps(dataset),headers=header)
-	print result.json()["gkstatus"]
 	return {"gkstatus": result.json()["gkstatus"]}
+
+@view_config(route_name="unitofmeasurements", request_param="action=delete",renderer="json")
+def deleteunit(request):
+	header={"gktoken":request.headers["gktoken"]}
+	dataset={"uomid":int(request.params["uomid"])}
+	result = requests.delete("http://127.0.0.1:6543/unitofmeasurement",data =json.dumps(dataset), headers=header)
+	return {"gkstatus":result.json()["gkstatus"]}
