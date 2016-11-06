@@ -66,6 +66,8 @@
   {% endif %}
   <div class="row">
     <div class="table-responsive col-xs-6 nopadding">
+      <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="hideexpense" accesskey="e">{% trans %}Hid<u>e</u> Table{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+      <button class="btn btn-sm btn-success pull-right" type="button" style="display:none; margin-right: 15px;"  id="showincome" accesskey="w">{% trans %}Sho<u>w</u> Table{% endtrans %}<span class="glyphicon glyphicon-repeat" style="margin-left: 5px;"></span></button>
       <table id="expensetbl" class="shadow fixed-table table table-condensed cashflowtable" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
         <thead class="bg-info">
           <tr >
@@ -109,6 +111,8 @@
       </table>
     </div>
     <div class="table-responsive col-xs-6 nopadding">
+      <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;"  id="hideincome" accesskey="a">{% trans %}Hide T<u>a</u>ble{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+      <button class="btn btn-sm btn-success pull-right" type="button" style="display:none; margin-right: 15px;"  id="showexpense" accesskey="o">{% trans %}Sh<u>o</u>w Table{% endtrans %}<span class="glyphicon glyphicon-repeat" style="margin-left: 5px;"></span></button>
       <table id="incometbl" class="shadow table fixed-table table-condensed cashflowtable" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
         <thead class="bg-info">
           <tr >
@@ -154,10 +158,6 @@
     <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">{% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
     <button class="btn btn-sm btn-primary" type="button"  id="printpnl" accesskey="t">{% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
     <button class="btn btn-sm btn-primary" type="button"  id="realprintpnl" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
-    <button class="btn btn-sm btn-primary" type="button"  id="hideexpense" accesskey="e">{% trans %}Hide <u>E</u>xpense{% endtrans %}</button>
-    <button class="btn btn-sm btn-primary" type="button" style="display:none;"  id="showexpense" accesskey="e">{% trans %}Show <u>E</u>xpense{% endtrans %}</button>
-    <button class="btn btn-sm btn-primary" type="button"  id="hideincome" accesskey="o">{% trans %}Hide Inc<u>o</u>me{% endtrans %}</button>
-    <button class="btn btn-sm btn-primary" type="button" style="display:none;"  id="showincome" accesskey="o">{% trans %}Show Inc<u>o</u>me{% endtrans %}</button>
   </span>
   <input type="hidden" id="ledtodate" value="{{to}}">
   <input type="hidden" id="ledfromdate" value="{{from}}">
