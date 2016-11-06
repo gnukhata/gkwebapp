@@ -44,6 +44,7 @@ def showadddeliverychallan(request):
 	suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
 	products = requests.get("http://127.0.0.1:6543/products", headers=header)
 	godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	print podata.json()["gkstatus"]
 	return {"gkstatus": podata.json()["gkstatus"], "customers": customers.json()["gkresult"], "suppliers": suppliers.json()["gkresult"],"products": products.json()["gkresult"],"purchaseorders":podata.json()["gkresult"],"godowns":godowns.json()["gkresult"]}
 
 @view_config(route_name="deliverychallan",request_param="action=getproducts",renderer="json")
