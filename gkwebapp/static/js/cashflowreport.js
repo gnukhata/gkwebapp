@@ -137,6 +137,35 @@ $(document).ready(function() {
 		$(this).closest('tr').addClass('selected');
 	});
 
+	$("#hideleft").click(function(event){
+		$("#rctable").parentsUntil(".table-responsive").hide();
+		$(".table-responsive").removeClass("col-xs-6");
+		$("#hideleft").hide(100);
+		$("#showleft").show(100);
+		$("#hideright").hide();
+	});
+	$("#showleft").click(function(event){
+		$("#rctable").parentsUntil(".table-responsive").show();
+		$(".table-responsive").addClass("col-xs-6");
+		$("#showleft").hide(100);
+		$("#hideleft").show(100);
+		$("#hideright").show();
+	});
+	$("#hideright").click(function(event){
+		$("#pytable").parentsUntil(".table-responsive").hide();
+		$(".table-responsive").removeClass("col-xs-6");
+		$("#hideright").hide(100);
+		$("#showright").show(100);
+		$("#hideleft").hide();
+	});
+	$("#showright").click(function(event){
+		$("#pytable").parentsUntil(".table-responsive").show();
+		$(".table-responsive").addClass("col-xs-6");
+		$("#showright").hide(100);
+		$("#hideright").show(100);
+		$("#hideleft").show();
+	});
+
 $("#viewprintableversion").click(function(event) {
 
 	$.ajax(

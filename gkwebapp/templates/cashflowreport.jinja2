@@ -62,6 +62,8 @@
 	{% endif %}
 	<div class="row">
 		<div class="table-responsive col-xs-6 nopadding">
+			<button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="hideleft" accesskey="e">{% trans %}Hid<u>e</u> Table{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+      <button class="btn btn-sm btn-success pull-right" type="button" style="display:none; margin-right: 15px;"  id="showright" accesskey="w">{% trans %}Sho<u>w</u> Table{% endtrans %}<span class="glyphicon glyphicon-repeat" style="margin-left: 5px;"></span></button>
 			<table id="rctable" class="table shadow table-bordered cashflowtable" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
 				<thead class="bg-info">
 					<tr>
@@ -96,6 +98,8 @@
 			</table>
 		</div>
 		<div class="table-responsive col-xs-6 nopadding">
+			<button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;"  id="hideright" accesskey="a">{% trans %}Hide T<u>a</u>ble{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+      <button class="btn btn-sm btn-success pull-right" type="button" style="display:none; margin-right: 15px;"  id="showleft" accesskey="o">{% trans %}Sh<u>o</u>w Table{% endtrans %}<span class="glyphicon glyphicon-repeat" style="margin-left: 5px;"></span></button>
 			<table id="pytable" class="table shadow table-bordered cashflowtable"data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
 				<thead class="bg-info">
 					<tr>
