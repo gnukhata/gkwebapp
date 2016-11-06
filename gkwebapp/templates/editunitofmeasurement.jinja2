@@ -9,6 +9,14 @@
 
       {% trans %}Something went wrong!{% endtrans %}
     </div>
+    <div class="alert alert-success" id="delsuccess-alert"  aria-live="rude" role="alert" hidden>
+			<a href="" class="close" aria-label="close">&times;</a>
+			{% trans %}Unit deleted successfully.{% endtrans %}
+		</div>
+    <div class="alert alert-danger" id="subunit-alert"  aria-live="rude" role="alert" hidden>
+
+      <label for="vno">{% trans %}Subunit can't be Deleted!{% endtrans %}</label>
+    </div>
     <div class="alert alert-danger" id="unit-blank-alert"  aria-live="rude" role="alert" hidden>
 
       <label for="vno">{% trans %}Please enter Unit  name!{% endtrans %}</label>
@@ -50,13 +58,13 @@
       </div>
     </div>
   </div>
-      <div class="panel-footer" id="unit_btn" hidden>
+      <div class="panel-footer" id="unit_btn"  disabled hidden>
         <button id="unit_reset" class="btn btn-danger btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
-        <button class="btn btn-success btn-sm" id="unit_edit_save" accesskey="e">{% trans %}Sav<u>e</u>{% endtrans %}</button>
+        <button class="btn btn-primary btn-sm" id="unit_edit_save" accesskey="e">{% trans %}Sav<u>e</u>{% endtrans %}</button>
         <button id="unit_delete" class="btn btn-danger btn-sm" accesskey="d">{% trans %}<u>D</u>elete{% endtrans %}</button>
       </div>
     </div>
-    <div id="m_confirmdel" class="modal fade" tabindex="-1" role="dialog">
+    <div id="confirm_del" class="modal fade" tabindex="-1" role="dialog">
       <div class="vertical-alignment-helper">
         <div class="modal-dialog modal-sm vertical-align-center">
           <div class="modal-content">
@@ -75,6 +83,9 @@
         </div><!-- /.modal-dialog -->
       </div>
     </div><!-- /.modal -->
+
+    </div>
+  </div>
 
 
   </div>
