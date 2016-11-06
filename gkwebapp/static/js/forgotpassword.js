@@ -362,6 +362,6 @@ $(document).ready(function()
     $("#back").click(function(event){
     var code = $("#orgcode").val();
     $("#selectorg").load("/login?orgcode="+code+"&flag=0");
-    $("#forgotpassworddiv").load("/login?orgcode="+code+"&flag=1", setTimeout( function() { $("#username").focus(); }, 500 ));
+    $("#loader").load("/login?orgcode="+code+"&flag=1", setTimeout( function() { $("#username").focus(); }, 500 ));
   });
 });
