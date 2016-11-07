@@ -27,14 +27,12 @@ Contributors:
 */
 
 $(document).ready(function() {
+	$(".fixed-table-loading").remove();
 	$('#rctable tbody tr:first-child td:eq(1) a').focus();
 	$('#rctable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 	var rcindex = 0
 	var pyindex = 0
-	var percentwid = 100*(($(".table-fixedheader").width()-12)/$(".table-fixedheader").width());
-	$('.table-fixedheader thead').width(percentwid+"%");
-	var percentheigth = 100*(($("body").height()-$(".navbar").height()-148)/$("body").height());
-	$('.table-fixedheader tbody').height(percentheigth+"%");
+
 	$(document).off('focus' ,'.rcaccname').on('focus' ,'.rcaccname',function() {
 		$('#rctable tr').removeClass('selected');
 		$(this).closest('tr').addClass('selected');
@@ -84,7 +82,7 @@ $(document).ready(function() {
 
 	$("#rctable").off('click','tr').on('click','tr',function(e){
 		e.preventDefault();
-		var id = $(this).attr('value');
+		var id = $(this).attr('data-value');
 		var currindex = $(this).index();
 		$('#rctable tr').removeClass('selected');
 		$(this).toggleClass('selected');
@@ -93,7 +91,7 @@ $(document).ready(function() {
 	});
 
 	$("#rctable").off('keydown','tr').on('keydown','tr',function(e){
-		var id = $(this).attr('value');
+		var id = $(this).attr('data-value');
 		var rindex = $(this).index();
 
 		if(e.which==13)
@@ -103,9 +101,9 @@ $(document).ready(function() {
 		}
 });
 
-	$("#rctable tbody tr").off('dblclick').on('dblclick',function(e){
+	$("#rctable").off('dblclick','tr').on('dblclick','tr',function(e){
 		e.preventDefault();
-		var acccode = $(this).attr('value');
+		var acccode = $(this).attr('data-value');
 		if (acccode=="")
 		{
 				return false;
@@ -140,7 +138,7 @@ $(document).ready(function() {
 	});
 
 $("#viewprintableversion").click(function(event) {
-	
+
 	$.ajax(
 		{
 			type: "POST",
@@ -207,7 +205,7 @@ $("#viewprintableversion").click(function(event) {
 
 	$("#pytable").off('click','tr').on('click','tr',function(e){
 		e.preventDefault();
-		var id = $(this).attr('value');
+		var id = $(this).attr('data-value');
 		var currindex = $(this).index();
 		$('#pytable tr').removeClass('selected');
 		$(this).toggleClass('selected');
@@ -216,7 +214,7 @@ $("#viewprintableversion").click(function(event) {
 	});
 
 	$("#pytable").off('keydown','tr').on('keydown','tr',function(e){
-		var id = $(this).attr('value');
+		var id = $(this).attr('data-value');
 		var rindex = $(this).index();
 
 		if(e.which==13)
@@ -226,9 +224,9 @@ $("#viewprintableversion").click(function(event) {
 		}
 });
 
-	$("#pytable tbody tr").off('dblclick').on('dblclick',function(e){
+	$("#pytable").off('dblclick','tr').on('dblclick','tr',function(e){
 		e.preventDefault();
-		var acccode = $(this).attr('value');
+		var acccode = $(this).attr('data-value');
 		if (acccode=="")
 		{
 				return false;

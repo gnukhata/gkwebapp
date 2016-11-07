@@ -25,12 +25,9 @@ Contributors:
 */
 
 $(document).ready(function() {
+  $(".fixed-table-loading").remove();
   $('tbody tr:first-child td:first-child a').focus();
   $('tbody tr:first-child td:first-child a').closest('tr').addClass('selected');
-  var percentwid = 100*(($(".table-fixedheader").width()-12)/$(".table-fixedheader").width());
-  $('.table-fixedheader thead').width(percentwid+"%");
-  var percentheigth = 100*(($("body").height()-$(".navbar").height()-310)/$("body").height());
-  $('.table-fixedheader tbody').height(percentheigth+"%");
 
   $(document).off('focus' ,'.vno').on('focus' ,'.vno',function() {
     $('#vtable tr').removeClass('selected');
@@ -70,7 +67,7 @@ $(document).ready(function() {
   var urole = $("#urole").val();
 
   $("#vtable").off('keydown','tr').on('keydown','tr',function(e){
-    var id = $(this).attr('value');
+    var id = $(this).attr('data-value');
     var rindex = $(this).index();
 
     if(e.which==13)
@@ -146,7 +143,7 @@ $(document).ready(function() {
 
   $(".table").off('click','tr').on('click','tr',function(e){
     e.preventDefault();
-    var id = $(this).attr('value');
+    var id = $(this).attr('data-value');
     var currindex = $(this).index();
     $('#vtable tr').removeClass('selected');
     $(this).toggleClass('selected');
@@ -182,9 +179,9 @@ $("#viewprintableversion").click(function(event) {
 
 
 
-  $(".table").off('dblclick','tr:not(:first)').on('dblclick','tr:not(:first)',function(e){
+  $("#vtable").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
-    var id = $(this).attr('value');
+    var id = $(this).attr('data-value');
     $("#modalindex").val($(this).index());
     $.ajax(
       {

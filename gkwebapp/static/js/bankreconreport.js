@@ -232,7 +232,8 @@ $(document).ready(function() {
     $("#printtransactions").hide();
     $("#realprintbank").show();
     $("#recostmtdiv").hide();
-    $("#bankrecontable").removeClass('table-fixedheader');
+    $("#bankrecontable").removeClass('fixed-table');
+    $("#printhead").show();
   });
   $("#realprintbank").click(function(event) {
     window.print();

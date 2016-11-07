@@ -252,8 +252,8 @@ xhr.send();
 });
 
 $("#printbalance").click(function(event) {
-  $(".cbalsheettable").removeClass('table-fixedheader').addClass('table-keep').addClass('table-striped');;
-  $(".cbalsheettable tbody tr").unbind('dblclick');
+  $(".cbalsheettable").removeClass('fixed-table').addClass('table-striped');;
+  $(".cbalsheettable").unbind('dblclick');
   $('.cbalsheettable tbody a').contents().unwrap();
   $("#sbgbtn").remove();
   $("#accbtn").remove();

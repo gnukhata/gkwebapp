@@ -36,11 +36,11 @@
 	  <input type="hidden" id="side" name="side" value="{{ledgerrefresh["side"]}}"></input>
 		<div class="printorgdetails hidden-print" style="text-align:center;"><i>{% trans %}Ledger Account{% endtrans %}</i> : <b>{{ledgerheader["accountname"]}}</b>{% if ledgerheader["projectname"]!="" %}
 		<br><i>{% trans %}Project{% endtrans %}</i> : {{ledgerheader["projectname"]}}
-		{% endif %}<br><i>{% trans %}Period{% endtrans %}</i> : {{ledgerheader["calculatefrom"]}} {% trans %}to{% endtrans %} {{ledgerheader["calculateto"]}}</div>
+		{% endif %}<br><i>{% trans %}Period{% endtrans %}</i> : <b>{{ledgerheader["calculatefrom"]}}</b> {% trans %}to{% endtrans %} <b>{{ledgerheader["calculateto"]}}</div></b>
     <br>
 		<div class="table-responsive printorgdetails">
-			<table id="ledgertable" class="table shadow table-striped table-condensed">
-				<thead>
+			<table id="ledgertable" class="table shadow table-striped table-condensed table-bordered">
+				<thead class="bg-info">
 					<tr class="visible-print">
 						<th colspan="6" style="text-align:center; font-size:80%">
 							<i>{% trans %}Ledger Account{% endtrans %}: </i>{{ledgerheader["accountname"]}}<br>

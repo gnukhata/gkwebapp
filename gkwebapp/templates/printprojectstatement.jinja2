@@ -29,8 +29,8 @@
     <input type="hidden" id="projectname" name="projectname" value="{{projectname}}"></input>
 
     <div class="table-responsive printorgdetails">
-      <table id="prjsttable" class=" shadow table table-striped table-condensed">
-        <thead>
+      <table id="prjsttable" class=" shadow table table-striped table-condensed table-bordered">
+        <thead class="bg-info">
           <tr style="color:black; background-color:white;">
 						<th colspan="5" style="text-align:center; font-size:80%">
 							<i>{% trans %}Statement for{% endtrans %}: </i>{{projectname}}<br>
@@ -39,10 +39,10 @@
 					</tr>
           <tr>
             <th class="col-xs-1">{% trans %}Sr. No.{% endtrans %}</th>
-            <th class="col-xs-4">{% trans %}Account{% endtrans %}</th>
-            <th class="col-xs-3">{% trans %}Group{% endtrans %}</th>
-            <th style="text-align:right" class="col-xs-2">{% trans %}Total Outgoing{% endtrans %}</th>
-            <th style="text-align:right" class="col-xs-2">{% trans %}Total Incoming{% endtrans %}</th>
+            <th class="col-xs-7">{% trans %}Account{% endtrans %}</th>
+            <th class="col-xs-2">{% trans %}Group{% endtrans %}</th>
+            <th style="text-align:right" class="col-xs-1">{% trans %}Total Outgoing{% endtrans %}</th>
+            <th style="text-align:right" class="col-xs-1">{% trans %}Total Incoming{% endtrans %}</th>
           </tr>
         </thead>
         <tbody style="background-color:white;">
@@ -55,20 +55,20 @@
             <td class="col-xs-4">
             </td>
             {% else %}
-            <td class="col-xs-4">
+            <td class="col-xs-7">
               {{record['accountname']}}
             </td>
             {% endif %}
-            <td class="col-xs-3">
+            <td class="col-xs-2">
               {{record["groupname"]}}<br>
               {% if record.ttlRunDr %}
 								&nbsp&nbsp<i>{% trans %}Running Total{% endtrans %}:</i><br>
 							{% endif %}
             </td>
-            <td class="col-xs-2" style="text-align:right">
+            <td class="col-xs-1" style="text-align:right">
               {{record["totalout"]}}<br><i><u>{{record["ttlRunDr"]}}</u></i>
             </td>
-            <td class="col-xs-2" style="text-align:right">
+            <td class="col-xs-1" style="text-align:right">
               {{record["totalin"]}}<br><i><u>{{record["ttlRunCr"]}}</u></i>
             </td>
           </tr>
