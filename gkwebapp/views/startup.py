@@ -110,7 +110,10 @@ def selectorglogin(request):
 	gkdata = {"username":request.params["username"], "userpassword":request.params["userpassword"],"orgcode":request.params["orgcode"]}
 	result = requests.post("http://127.0.0.1:6543/login", data =json.dumps(gkdata))
 	if result.json()["gkstatus"]==0:
-		return  {"gktoken":result.json()["token"], "gkstatus":result.json()["gkstatus"]}
+		header = result.json()["token"]
+		print "headerrrrrrrrrrrrr:",header
+		result1 = requests.get("http://127.0.0.1:6543/organisation",headers={"gktoken":header})
+		return  {"gktoken":result.json()["token"], "gkstatus":result.json()["gkstatus"],"invflag":result1.json()["gkdata"]["invflag"]}
 	else:
 		return  {"gkstatus":result.json()["gkstatus"]}
 

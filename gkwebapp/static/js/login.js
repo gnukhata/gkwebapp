@@ -113,6 +113,7 @@ $(document).ready(function()
         var gt = resp['gktoken'];
 
         sessionStorage.gktoken = gt;
+        sessionStorage.invflag = resp["invflag"]
 
         $.ajax({
           url: '/theme',
