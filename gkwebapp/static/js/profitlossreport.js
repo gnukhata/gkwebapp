@@ -230,38 +230,7 @@ $(document).ready(function() {
 
 
   });
-  $("#hideexpense").click(function(event){
-    $("#expensetbl").parentsUntil(".table-responsive").hide();
-    $(".table-responsive").removeClass("col-xs-6");
-    $("#hideexpense").hide(100);
-    $("#pllclearfields").hide(100);
-    $("#showexpense").show(100);
-    $("#hideincome").hide();
-  });
-  $("#showexpense").click(function(event){
-    $("#expensetbl").parentsUntil(".table-responsive").show();
-    $(".table-responsive").addClass("col-xs-6");
-    $("#showexpense").hide(100);
-    $("#hideexpense").show(100);
-    $("#pllclearfields").show(100);
-    $("#hideincome").show();
-  });
-  $("#hideincome").click(function(event){
-    $("#incometbl").parentsUntil(".table-responsive").hide();
-    $(".table-responsive").removeClass("col-xs-6");
-    $("#hideincome").hide(100);
-    $("#plrclearfields").hide(100);
-    $("#showincome").show(100);
-    $("#hideexpense").hide();
-  });
-  $("#showincome").click(function(event){
-    $("#incometbl").parentsUntil(".table-responsive").show();
-    $(".table-responsive").addClass("col-xs-6");
-    $("#showincome").hide(100);
-    $("#hideincome").show(100);
-    $("#plrclearfields").show(100);
-    $("#hideexpense").show();
-  });
+  
   $('#plrclearfields').click(function(){
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
   });
@@ -274,6 +243,7 @@ $(document).ready(function() {
       $(this).val("");
     }
   });
+
   $("#print").click(function(event){
       var todatearray = $("#ledtodate").val().split("-");
       var orgtype = sessionStorage.getItem('orgt');
