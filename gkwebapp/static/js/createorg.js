@@ -97,9 +97,9 @@ $(document).ready(function()
   });
 
   $('.vdate').autotab('number');
-  $('input:text,select').keydown( function(e) {
-    var n = $("input:text,select").length;
-    var f = $('input:text,select');
+  $('input,select').keydown( function(e) {
+    var n = $("input,select").length;
+    var f = $('input,select');
     if (e.which == 13)
     {
 
@@ -222,10 +222,15 @@ $(document).ready(function()
       $("#toyear").keydown(function(event) {
         if (event.which==13) {
           $(this).val(yearpad($(this).val(),4));
-          $("#btnsubmit").click();
+
         }
       });
+      $("#invflag").keydown(function(event) {
+        if (event.which==13) {
+          $("#btnsubmit").click();
 
+        }
+      });
       $("#btnsubmit").click(function(event){
         event.preventDefault();
         var startday = $("#fromday").val();
@@ -350,12 +355,22 @@ $(document).ready(function()
         var otype = $("#orgtype option:selected").val();
         var fadate = $("#fromday").val()+"-"+$("#frommonth").val()+"-"+$("#fromyear").val();
         var tadate = $("#today").val()+"-"+$("#tomonth").val()+"-"+$("#toyear").val();
+        var invflag;
+        if ($("#invflag").is(":checked"))
+        {
+          invflag=1;
+        }
+        else
+        {
+          invflag=0;
+        }
         sessionStorage.setItem('orgn', $("#orgname").val());
         sessionStorage.setItem('orgt', otype);
         sessionStorage.setItem('year1', fadate);
         sessionStorage.setItem('year2', tadate);
         sessionStorage.setItem('yyyymmddyear1', fdate );
         sessionStorage.setItem('yyyymmddyear2', tdate );
+        sessionStorage.setItem('invflag', invflag );
         $.ajax({
           url: '/oexists',
           type: 'POST',
@@ -376,7 +391,7 @@ $(document).ready(function()
           }
           else
           {
-          $("#createorg").load("/createadmin?orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate );
+          $("#createorg").load("/createadmin?orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate+"&invflag="+invflag );
           }
           console.log("success");
         })
