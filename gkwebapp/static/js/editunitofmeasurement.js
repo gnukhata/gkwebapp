@@ -55,9 +55,7 @@ $(document).ready(function() {
         $("#unit_edit_innerdiv").show();
         $("#unit_edit_name").focus().select();
       }
-      else  {
-        $("#unit_edit_innerdiv").hide();
-      }
+      
       if (event.which==38  && $("#unit_edit_list option:selected").val()=='') {
         event.preventDefault();
         $("#unit_btn").hide();

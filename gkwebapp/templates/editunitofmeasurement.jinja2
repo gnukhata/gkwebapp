@@ -29,7 +29,7 @@
           <div class="form-group">
             <label for="unit_edit_list">{% trans %}<u>U</u>nit :{% endtrans %}</label>
             <select class="form-control input-sm" id="unit_edit_list" accesskey="g">
-              <option value="" selected>{% trans %}Select unit{% endtrans %}</option>
+              <option value="" disabled selected hidden>{% trans %}Select unit{% endtrans %}</option>
               {% for unitofmeasurement in gkresult %}
               <option value="{{unitofmeasurement['uomid']}}">{{unitofmeasurement["unitname"]}}</option>
               {% endfor %}
