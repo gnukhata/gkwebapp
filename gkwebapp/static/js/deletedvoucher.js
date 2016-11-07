@@ -31,6 +31,15 @@ $(".fixed-table-loading").remove();
   $(' #deletedvouchertable tbody tr:first-child td:eq(1) a').focus();
   $('#deletedvouchertable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 
+  $('#clearfields').click(function(){
+    $(".search").children(".form-control").val("");
+  });
+
+  $(".search").children(".form-control").keydown(function(event){
+    if (event.shiftKey && event.keyCode == 8) {
+      $(this).val("");
+    }
+  });
 
   $(document).off('focus' ,'.vno').on('focus' ,'.vno',function() {
     $('#deletedvouchertable tr').removeClass('selected');
