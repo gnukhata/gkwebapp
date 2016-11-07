@@ -87,6 +87,7 @@ span
       {% elif ledgerheader2["projectname"]!="" %}
       <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Project{% endtrans %}</i> : <strong>None</strong></span><br>
       {% endif %}
+      <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="llclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
       <table id="ledgertable1" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
         <thead class="bg-info">
           <tr>
@@ -168,6 +169,7 @@ span
       {% elif ledgerheader1["projectname"]!="" %}
       <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Project{% endtrans %}</i> : <strong>None</strong></span><br>
       {% endif %}
+      <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="lrclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
       <table id="ledgertable2" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
         <thead class="bg-info">
           <tr>

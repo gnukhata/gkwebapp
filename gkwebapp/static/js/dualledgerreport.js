@@ -306,5 +306,16 @@ $(document).ready(function() {
         }
       );
   });
+  $('#lrclearfields').click(function(){
+    $(this).siblings(".bootstrap-table").find(".form-control").val("");
+  });
+  $('#llclearfields').click(function(){
+    $(this).siblings(".bootstrap-table").find(".form-control").val("");
+  });
 
+  $(".search").children(".form-control").keydown(function(event){
+    if (event.shiftKey && event.keyCode == 8) {
+      $(this).val("");
+    }
+  });
 });
