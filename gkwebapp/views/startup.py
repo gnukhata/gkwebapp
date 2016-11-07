@@ -126,3 +126,16 @@ def orgdata(request):
 @view_config(route_name="showmainshell",renderer="gkwebapp:templates/mainshell.jinja2")
 def mainshell(request):
 	return {"status":"ok"}
+
+@view_config(route_name="theme",renderer="json")
+def theme(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result= requests.get("http://127.0.0.1:6543/user?type=theme",headers=header)
+	return {"theme":result.json()["gkresult"], "status":result.json()["gkstatus"]}
+
+@view_config(route_name="addtheme", renderer="json")
+def addtheme(request):
+	header={"gktoken":request.headers["gktoken"]}
+	themename= {"themename":request.params["themename"]}
+	result= requests.put("http://127.0.0.1:6543/user?type=theme",headers=header,data =json.dumps(themename))
+	return {"status":result.json()["gkstatus"]}

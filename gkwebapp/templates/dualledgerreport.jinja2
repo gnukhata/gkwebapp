@@ -8,18 +8,11 @@ span
   font-size: 95%;
 }
 
-
-  .selected
-  {
-    background-color: Aquamarine;
-  }
-
   .shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
   #ledgertable1 td,#ledgertable2 td {
       font-size: 75%;
-      color: black;
       padding: 4 !important;
       margin: 4 !important;
     }
@@ -95,7 +88,7 @@ span
       <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Project{% endtrans %}</i> : <strong>None</strong></span><br>
       {% endif %}
       <table id="ledgertable1" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
-        <thead>
+        <thead class="bg-info">
           <tr>
             <th class="col-xs-2">{% trans %}Date{% endtrans %}</th>
             <th class="col-xs-1" style="word-wrap: break-word;">{% trans %}V. No.{% endtrans %}</th>
@@ -176,7 +169,7 @@ span
       <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Project{% endtrans %}</i> : <strong>None</strong></span><br>
       {% endif %}
       <table id="ledgertable2" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
-        <thead>
+        <thead class="bg-info">
           <tr>
             <th class="col-xs-2">{% trans %}Date{% endtrans %}</th>
             <th class="col-xs-1" style="word-wrap: break-word;">{% trans %}V. No.{% endtrans %}</th>

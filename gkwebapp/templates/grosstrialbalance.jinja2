@@ -3,12 +3,6 @@
 <head>
 	<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Gross Trial Balance{% endtrans %}</title>
 	<style type="text/css">
-
-	.selected
-	{
-		background-color: Aquamarine;
-	}
-
 	.shadow {
 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	}
@@ -57,7 +51,7 @@
 	<span style="margin:auto; display:table;"><strong>{% trans %}Gross Trial Balance{% endtrans %}</strong> {% trans %}for the period from{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
 	<div class="row">
 		<table id="gtbtable" class="table shadow table-bordered trialbaltable" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
-			<thead>
+			<thead class="bg-info">
 				<tr>
 					<th class="col-xs-1">{% trans %}Sr. No.{% endtrans %}</th>
 					<th class="col-xs-5">{% trans %}Account Name{% endtrans %}</th>
@@ -81,7 +75,7 @@
 						{% if record['accountname']=="" %}
 						<a class="accname" href="">&nbsp</a>
 						{% else %}
-						<a class="accname" href="" style="text-decoration: none; color:black;">{{record['accountname']}}</a>
+						<a class="accname" href="" style="text-decoration: none;">{{record['accountname']}}</a>
 						{% endif %}
 						{% endif %}
 					</td>

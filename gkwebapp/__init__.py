@@ -50,7 +50,8 @@ def main(global_config, **settings):
 					context='gkwebapp.resources.MyResource',
 					renderer="templates/mytemplate.jinja2")
 	config.add_route('index', '/')
-	config.add_route('about', '/about')
+	config.add_route('theme', '/theme')
+	config.add_route('addtheme', '/addtheme')
 	config.add_route('existingorg', '/existingorg')
 	config.add_route('showeditOrg', '/showeditOrg')
 	config.add_route('showedituser', '/showedituser')

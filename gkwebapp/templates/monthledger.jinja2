@@ -3,12 +3,6 @@
 <head>
   <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Monthly Ledger{% endtrans %}</title>
 <style type="text/css">
-
-.selected
-{
-  background-color: Aquamarine;
-}
-
 .shadow {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -27,7 +21,7 @@ td {
       <div class="panel-body">
         <div class="table-responsive">
           <table id="mthltable" class="shadow table table-bordered table-condensed">
-            <thead>
+            <thead class="bg-info">
               <tr>
                 <th class="col-xs-3">{% trans %}Month{% endtrans %}</th>
                 <th style="text-align:right" class="col-xs-3">{% trans %}Debit{% endtrans %}</th>

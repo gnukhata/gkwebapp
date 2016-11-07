@@ -2,18 +2,11 @@
 <html lang="en">
 <head>
 <style type="text/css">
-
-.selected
-{
-  background-color: Aquamarine;
-}
-
 .shadow {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #vtable td {
 	font-size: 75%;
-	color: black;
 	padding: 4 !important;
 	margin: 4 !important;
 }
@@ -78,7 +71,7 @@
   <input type="hidden" id="modalindex" value=""></input>
  <div class="row">
     <table id="vtable" class="table table-condensed table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
-      <thead>
+      <thead class="bg-info">
         <tr>
             <th class="5width">{% trans %}V. No.{% endtrans %}</th>
             <th class="calign 5width">{% trans %}Status{% endtrans %}</th>

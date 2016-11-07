@@ -44,6 +44,7 @@ $(document).ready(function()
   if (pathname=="/showmainshell") {
     $("#forgotpassworddiv").addClass('col-md-6');
     $("#welcome").show();
+    $("#bootstrap").attr('href', '../static/css/Default.min.css');
   }
   $('#login_username').keydown(function(e){
       if (e.which == 13)
@@ -113,6 +114,20 @@ $(document).ready(function()
 
         sessionStorage.gktoken = gt;
 
+        $.ajax({
+          url: '/theme',
+          type: 'POST',
+          global: false,
+          async: false,
+          datatype: 'json',
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          }
+        })
+        .done(function(resp){
+          sessionStorage.gktheme = resp["theme"];
+        });
         window.location="/showmainshell";
       }
       else if(resp["gkstatus"]==2)

@@ -61,7 +61,15 @@ $(document).ready(function(){
         }
       });
 
-      $("#adduser").submit(function(e)
+      $("#answer").keydown(function(e){
+        if (e.which==13)
+        {
+          e.preventDefault();
+          $("#adduser_button").click();
+        }
+      });
+
+      $("#adduser_button").click(function(e)
       {
         if ($.trim($("#name").val())=="") {
           $("#username-blank-alert").alert();

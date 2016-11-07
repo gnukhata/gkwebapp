@@ -4,17 +4,11 @@
   <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Deleted Voucher{% endtrans %}</title>
   <style type="text/css">
 
-  .selected
-  {
-    background-color: Aquamarine;
-  }
-
   .shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
   #deletedvouchertable td {
       font-size: 75%;
-      color: black;
       padding: 4 !important;
       margin: 4 !important;
     }
@@ -58,7 +52,7 @@
   </br>
   <div class="row">
     <table id="deletedvouchertable" class=" table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
-      <thead>
+      <thead class="bg-info">
         <tr>
           <th class="col-xs-1">{% trans %}Date{% endtrans %}</th>
           <th class="col-xs-1">{% trans %}V.No.{% endtrans %}</th>

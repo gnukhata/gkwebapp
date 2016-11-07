@@ -4,17 +4,11 @@
 	<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Cash Flow{% endtrans %}</title>
 <style type="text/css">
 
-.selected
-{
-	background-color: Aquamarine;
-}
-
 .shadow {
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #rctable td ,#pytable td{
 	font-size: 75%;
-	color: black;
 	padding: 4 !important;
 	margin: 4 !important;
 }
@@ -69,7 +63,7 @@
 	<div class="row">
 		<div class="table-responsive col-xs-6 nopadding">
 			<table id="rctable" class="table shadow table-bordered cashflowtable" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
-				<thead >
+				<thead class="bg-info">
 					<tr>
 						<th class="col-xs-1">&nbsp</th>
 						<th class="col-xs-9">{% trans %}Particulars{% endtrans %}</th>
@@ -86,7 +80,7 @@
 							{% if rcrecord['accountcode']!="" %}
 							<a class="rcaccname" href="">{{rcrecord['particulars']}}</a>
 							{% else %}
-							<a class="rcaccname" href="" style="text-decoration: none; color:black;">{{rcrecord['particulars']}}</a>
+							<a class="rcaccname" href="" style="text-decoration: none;">{{rcrecord['particulars']}}</a>
 							{% endif %}
 						</td>
 							{% if rcrecord["amount"]=="." %}
@@ -103,7 +97,7 @@
 		</div>
 		<div class="table-responsive col-xs-6 nopadding">
 			<table id="pytable" class="table shadow table-bordered cashflowtable"data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
-				<thead>
+				<thead class="bg-info">
 					<tr>
 						<th class="col-xs-1">&nbsp</th>
 						<th class="col-xs-9">{% trans %}Particulars{% endtrans %}</th>
@@ -120,7 +114,7 @@
 							{% if pyrecord['accountcode']!="" %}
 							<a class="pyaccname" href="">{{pyrecord['particulars']}}</a>
 							{% else %}
-							<a class="pyaccname" href="" style="text-decoration: none; color:black;">{{pyrecord['particulars']}}</a>
+							<a class="pyaccname" href="" style="text-decoration: none;">{{pyrecord['particulars']}}</a>
 							{% endif %}
 						</td>
 							{% if pyrecord["amount"]=="." %}

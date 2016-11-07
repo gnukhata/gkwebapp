@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <title>{% trans %}GNUKhata{% endtrans %} | </title>
-  <link href="{{request.static_url('gkwebapp:static/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
+  <link id="bootstrap" href="{{request.static_url('gkwebapp:static/css/Default.min.css')}}" rel="stylesheet" type="text/css">
   <link href="{{request.static_url('gkwebapp:static/css/mainshellstyle.css')}}" rel="stylesheet" type="text/css">
 </head>
-<body style="background-image: url({{request.static_url('gkwebapp:static/images/old_mathematics.png')}})">
-  <nav class="navbar gknav navbar-fixed-top">
+<body>
+  <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
+      <div id="navhead" class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
           <span class="sr-only">{% trans %}Toggle navigation{% endtrans %}</span>
           <span class="icon-bar"></span>
@@ -93,6 +93,28 @@
             </ul>
           </li>
           <li class="dropdown">
+            <a href="" id="themes" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Theme{% endtrans %}</a>
+            <ul class="dropdown-menu scrollable">
+              <li><a class="themesmenu" value="Default" href="">{% trans %}Default{% endtrans %}</a></li>
+              <li><a class="themesmenu" value="Cerulean" href="">{% trans %}Cerulean{% endtrans %}</a></li>
+              <li><a class="themesmenu" value="Cosmo" href="">{% trans %}Cosmo{% endtrans %}</a></li>
+              <li><a class="themesmenu" value="Cyborg" href="">{% trans %}Cyborg{% endtrans %}</a></li>
+              <li><a class="themesmenu" value="Darkly" href="">{% trans %}Darkly{% endtrans %}</a></li>
+              <li><a class="themesmenu" value="Flatly" href="">{% trans %}Flatly{% endtrans %}</a></li>
+              <li><a class="themesmenu" value="Journal" href="">{% trans %}Journal{% endtrans %}</a></li>
+              <li><a class="themesmenu" value="Lumen" href="">{% trans %}Lumen{% endtrans %}</a></li>
+              <li><a class="themesmenu" value="Paper" href="">{% trans %}Paper{% endtrans %}</a></li>
+              <li><a class="themesmenu" value="Readable" href="">{% trans %}Readable{% endtrans %}</a></li>
+              <li><a class="themesmenu" value="Sandstone" href="">{% trans %}Sandstone{% endtrans %}</a></li>
+              <li><a class="themesmenu" value="Simplex" href="">{% trans %}Simplex{% endtrans %}</a></li>
+              <li><a class="themesmenu" value="Slate" href="">{% trans %}Slate{% endtrans %}</a></li>
+              <li><a class="themesmenu" value="Spacelab" href="">{% trans %}Spacelab{% endtrans %}</a></li>
+              <li><a class="themesmenu" value="Superhero" href="">{% trans %}Superhero{% endtrans %}</a></li>
+              <li><a class="themesmenu" value="Ubuntu" href="">{% trans %}Ubuntu{% endtrans %}</a></li>
+              <li><a class="themesmenu" value="Yeti" href="">{% trans %}Yeti{% endtrans %}</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
             <a href="" id="toolbar" class="dropdown-toggle toolbarmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Toolbar{% endtrans %}</a>
             <ul class="dropdown-menu scrollable">
               <li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="addaccounttb" href="">{% trans %}Create Account{% endtrans %} - F2</a></li>
@@ -128,7 +150,7 @@
   </div><!-- /.container-fluid -->
 </nav>
 <div class="container-fluid hidden-print">
-  <ul class="shadow" style="list-style-type: none; margin-top: 52px; padding: 0; overflow: hidden; background-color: rgb(248,248,248); height: 20px; border-radius: 5px;">
+  <ul id="mainshellticker" class="shadow" style="list-style-type: none; padding: 0; overflow: hidden; background-color: rgb(248,248,248); height: 20px; border-radius: 5px;">
     <li style="float: left;"><a data-toggle="tab" style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="orgdata" href=""></a></li>
     <li style="float: right;"><a style="margin-right: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="yeardata" href=""></a></li>
   </ul>

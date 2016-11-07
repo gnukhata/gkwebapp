@@ -8,11 +8,6 @@
     text-align:right;
   }
 
-  .selected
-  {
-    background-color: Aquamarine;
-  }
-
   .shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
@@ -70,7 +65,7 @@
     <span class="pull-right hidden-print header"><i>{% trans %}Period{% endtrans %}</i> : <b>{{ledgerheader["calculatefrom"]}}</b> {% trans %}to{% endtrans %} <b>{{ledgerheader["calculateto"]}}</b></span>
     <span style="margin:auto; display:table;" class="hidden-print header"><i>{% trans %}Cleared Transactions of{% endtrans %}</i> : <b>{{ledgerheader["accountname"]}}</b></span>
     <table id="clrbankrecontable" class=" table shadow table-bordered fixed-table">
-      <thead>
+      <thead class="bg-info">
         <tr id="printhead" style="display:none">
           <th class="text-center visible-print" style="font-size:80%" colspan="6">
             <i>{% trans %}Cleared Transactions of{% endtrans %}</i> : <b>{{ledgerheader["accountname"]}}</b><br>
