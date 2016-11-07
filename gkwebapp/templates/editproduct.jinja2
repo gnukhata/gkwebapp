@@ -1,22 +1,29 @@
-<!DOCTYPE html>
-<html>
-  <head>
-  </head>
-  <body>
-
-    <div class='container-fluid editpr'>
+<body>
+<div class="container-fluid" style="padding:1 !important; margin:0 !important;">
+    <div class='panel editpr'>
       <form id="editprodform">
-      <label for="prodselect" class="">{% trans %}Product{% endtrans %} :</label>
-      <select class = "form-control input-sm"  name = "productcode" id="prodselect" >
+        <div class="panel-heading" style="padding:4 !important; margin:0!important;" >
+
+        <div class="container-fluid ">
+
+
+
+      <label class="sr-only" for="prodselect">{% trans %}Product{% endtrans %} :</label>
+      <select class = "form-control"  name = "productcode" id="prodselect" >
         <option value="" disabled selected hidden>{% trans %}Select Product{% endtrans %}</option>
         {% for prod in gkresult %}
         <option value="{{prod['productcode']}}">{{prod["productdesc"]}}</option>
         {% endfor %}
       </select>
-      <div class="container-fluid nopadding" id="proddetails" disabled>
+
+  </div>
+</div>
+  <div class="panel-body">
+      <div class="" id="proddetails" disabled>
 
       </div>
-      <div class="btn-group-sm pbutn" hidden>
+      </div>
+      <div class="btn-group-sm pbutn panel-footer" hidden>
         <button type="submit" class="btn btn-primary btn-sm" id="epsubmit" name="submit" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
         <button id="epreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
         <button id="epdelete" class="btn btn-danger btn-sm" accesskey="d">{% trans %}<u>D</u>elete{% endtrans %}</button>
@@ -45,6 +52,6 @@
       </div><!-- /.modal -->
 
     </div>
+  </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editproduct.js')}}"></script>
   </body>
-</html>

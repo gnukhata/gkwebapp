@@ -1,46 +1,55 @@
-<!DOCTYPE html>
-<html>
-<head>
-</head>
 <body>
 
-  <div class='container-fluid addprod'>
+  <div class="container-fluid" style="padding:1 !important; margin:0 !important;">
 
-    <form id="addprodform">
-      <div class="form-group">
-        <label for="addcatselect" class="">{% trans %}Category{% endtrans %} :</label>
-        <select class = "form-control input-sm"  name = "catselect" id="addcatselect" >
-          <option value="" disabled selected hidden>{% trans %}Select Category{% endtrans %}</option>
-          {% for cat in gkresult["category"] %}
-          <option value="{{cat['categorycode']}}">{{cat["categoryname"]}}({{cat["subcount"]}})</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="form-group pds" hidden>
-        <label for="proddesc" class="">{% trans %}Product Description{% endtrans %} :</label>
-        <input type="text" class="form-control input-sm" name="proddesc"  id="proddesc" placeholder="Alphanumeric">
-      </div>
-      <div class="form-group pds" hidden>
-        <label for="uom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label>
-        <select class = "form-control input-sm sel"  name = "uom" id="adduom" >
-          <option value="" disabled selected hidden>{% trans %}Select Unit of Measurement{% endtrans %}</option>
-          {% for uom in gkresult["uom"] %}
-          <option value="{{uom['uomid']}}">{{uom["unitname"]}}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="form-group" id="specifications">
+    <div class=' addprod panel'>
 
-      </div>
-      <div class="btn-group-sm pbutn" hidden>
-        <button type="submit" class="btn btn-primary btn-sm" id="apsubmit" name="submit" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
-        <button id="apreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+          <form id="addprodform">
+            <div class="panel-heading" style="padding:4 !important; margin:0!important;" >
+            <div class="container-fluid">
+            <label class="sr-only" for="addcatselect">{% trans %}Category{% endtrans %} :</label>
+              <select class = "form-control input-sm"  name = "catselect" id="addcatselect" >
+                <option value="" selected >{% trans %}None{% endtrans %}</option>
+                {% for cat in gkresult["category"] %}
+                <option value="{{cat['categorycode']}}">{{cat["categoryname"]}}({{cat["subcount"]}})</option>
+                {% endfor %}
+              </select>
 
-      </div>
-    </form>
+            </div>
+          </div>
+          <div class="panel-body">
+            
+            <div class=" col-sm-6">
+            <div class="form-group pds">
+              <label for="proddesc" class="">{% trans %}Product Description{% endtrans %} :</label>
+              <input type="text" class="form-control input-sm" name="proddesc"  id="proddesc" placeholder="Alphanumeric">
+            </div>
+            <div class="form-group pds">
+              <label for="uom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label>
+              <select class = "form-control input-sm sel"  name = "uom" id="adduom" >
+                <option value="" disabled selected hidden>{% trans %}Select Unit of Measurement{% endtrans %}</option>
+                {% for uom in gkresult["uom"] %}
+                <option value="{{uom['uomid']}}">{{uom["unitname"]}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group col-sm-6" id="specifications">
+
+            </div>
 
 
+        </div>
+        <div class="btn-group-sm panel-footer">
+          <button type="submit" class="btn btn-primary btn-sm" id="apsubmit" name="submit" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
+          <button id="apreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+
+        </div>
+      </form>
+
+
+    </div>
   </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addproduct.js')}}"></script>
 </body>
-</html>

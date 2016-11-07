@@ -1,4 +1,11 @@
+
 {% if (gkresult|length)>0 %}
+<div class="panel">
+
+<div class="panel-body">
+  <div class="text-center">
+    <label  class=""><strong> <u>{% trans %}Specifications{% endtrans %}</u></strong> </label>
+  </div>
 {% for spec in gkresult %}
 <div class="form-group">
   <label for="{{spec['spcode']}}" class="">{{spec["attrname"]}} :</label>
@@ -17,5 +24,7 @@
 
 {% endfor %}
 
+</div>
 
+</div>
 {% endif %}

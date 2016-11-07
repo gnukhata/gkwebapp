@@ -341,6 +341,29 @@ $.ajax({
 });
 });
 
+
+$("#product").click(function (e){
+$.ajax({
+  url: '/product?type=tab',
+  type: "POST",
+  datatype: 'text/html',
+  beforeSend: function(xhr)
+  {
+    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+  }
+})
+.done(function(resp) {
+  $('#info').html(resp);
+})
+.fail(function() {
+  console.log("error");
+})
+.always(function() {
+  console.log("complete");
+});
+});
+
+
   $("#showeditorg").click(function (e){
 
     $.ajax({

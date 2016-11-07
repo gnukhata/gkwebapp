@@ -3,6 +3,8 @@ $(document).ready(function() {
   var sel1=0;
   var sel2=0;
   var sindex=0;
+  var category;
+  var existingcatspecs;
   $(document).on("focus",'#edituom',function() {
     sel1 = 1;
   });
@@ -27,6 +29,7 @@ $(document).ready(function() {
       {
         e.preventDefault();
         f[nextIndex].focus();
+        f[nextIndex].select();
       }
     }
     });
@@ -62,13 +65,13 @@ $(document).ready(function() {
           {
             e.preventDefault();
             f[prevIndex].focus();
+            f[nextIndex].select();
 
           }
         }
 
         }
       });
-
   $("#prodselect").change(function(event) {
     /* Act on the event */
     var prodcode= $("#prodselect option:selected").val();
@@ -95,7 +98,8 @@ $(document).ready(function() {
         $(".pbutn").show();
         $("#epsubmit").hide();
         $("#epedit").show();
-
+        category = $("#editcatselect option:selected").val();
+        existingcatspecs = $("#editspecifications").clone();
 
 
         console.log("success");
@@ -135,6 +139,50 @@ $(document).ready(function() {
     $("#proddesc").select();
 
   });
+
+  $(document).on("change","#editcatselect",function(event) {
+    /* Act on the event */
+
+    var catcode= $("#editcatselect option:selected").val();
+    if (catcode == category)
+    {
+      $("#editspecifications").html(existingcatspecs);
+      $('#editspecifications').find('input, textarea, button, select').prop('disabled',false);
+      return false;
+    }
+    if (catcode!="")
+    {
+
+      $.ajax({
+        url: '/product?type=specs',
+        type: 'POST',
+        global: false,
+        async: false,
+        datatype: 'text/html',
+        data: {"categorycode": catcode},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+      .done(function(resp)
+      {
+        $("#editspecifications").html("");
+        $("#editspecifications").html(resp);
+        console.log("success");
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+
+    }
+
+  });
+
+
 
   $("#editprodform").submit(function(event) {
     event.preventDefault();

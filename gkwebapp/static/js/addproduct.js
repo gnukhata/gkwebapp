@@ -13,6 +13,7 @@ $('.modal-backdrop').remove();
       {
         e.preventDefault();
         f[nextIndex].focus();
+        f[nextIndex].select();
       }
 
     }
@@ -39,6 +40,7 @@ $('.modal-backdrop').remove();
           {
             e.preventDefault();
             f[prevIndex].focus();
+            f[nextIndex].select();
 
           }
         }
@@ -70,8 +72,6 @@ $('.modal-backdrop').remove();
       {
         $("#specifications").html("");
         $("#specifications").html(resp);
-        $(".pbutn").show();
-        $(".pds").show();
         console.log("success");
       })
       .fail(function() {

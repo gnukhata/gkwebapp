@@ -58,6 +58,7 @@ def saveproduct(request):
 		if prd=="type":
 			continue
 		elif prd =="catselect":
+            if request.params[prd] !="" 
 			proddetails["categorycode"] = request.params[prd]
 		elif prd == "proddesc":
 			proddetails["productdesc"] = request.params[prd]
