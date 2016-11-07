@@ -199,6 +199,21 @@ $(document).ready(function() {
 		$("#showtrialbalance").click();
 	});
 
+	$('#gtbclearfields').click(function(){
+    $(this).siblings(".bootstrap-table").find(".form-control").val("");
+  });
+	$('#etbclearfields').click(function(){
+    $(this).siblings(".bootstrap-table").find(".form-control").val("");
+  });
+	$('#ntbclearfields').click(function(){
+    $(this).siblings(".bootstrap-table").find(".form-control").val("");
+  });
+  $(".search").children(".form-control").keydown(function(event){
+    if (event.shiftKey && event.keyCode == 8) {
+      $(this).val("");
+    }
+  });
+
 		$("#printbutton").click(function(event) {
 		event.preventDefault();
 		var orgname = sessionStorage.getItem('orgn');

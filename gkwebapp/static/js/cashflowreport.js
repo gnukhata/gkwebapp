@@ -165,7 +165,18 @@ $(document).ready(function() {
 		$("#hideright").show(100);
 		$("#hideleft").show();
 	});
+	$('#cfrclearfields').click(function(){
+    $(this).siblings(".bootstrap-table").find(".form-control").val("");
+  });
+  $('#cflclearfields').click(function(){
+    $(this).siblings(".bootstrap-table").find(".form-control").val("");
+  });
 
+  $(".search").children(".form-control").keydown(function(event){
+    if (event.shiftKey && event.keyCode == 8) {
+      $(this).val("");
+    }
+  });
 $("#viewprintableversion").click(function(event) {
 
 	$.ajax(

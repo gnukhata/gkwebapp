@@ -258,6 +258,18 @@ $(document).ready(function() {
     $("#hideincome").show(100);
     $("#hideexpense").show();
   });
+  $('#plrclearfields').click(function(){
+    $(this).siblings(".bootstrap-table").find(".form-control").val("");
+  });
+  $('#pllclearfields').click(function(){
+    $(this).siblings(".bootstrap-table").find(".form-control").val("");
+  });
+
+  $(".search").children(".form-control").keydown(function(event){
+    if (event.shiftKey && event.keyCode == 8) {
+      $(this).val("");
+    }
+  });
   $("#print").click(function(event){
       var todatearray = $("#ledtodate").val().split("-");
       var orgtype = sessionStorage.getItem('orgt');

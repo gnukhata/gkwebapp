@@ -296,6 +296,17 @@ $("#dualledger").click(function(event) {
 
 
 });
+
+$('#lclearfields').click(function(){
+  $(this).siblings(".bootstrap-table").find(".form-control").val("");
+});
+
+$(".search").children(".form-control").keydown(function(event){
+  if (event.shiftKey && event.keyCode == 8) {
+    $(this).val("");
+  }
+});
+
 $("#printledger").click(function(event) {
   var printdata = {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"monthlyflag":false,"narrationflag":$("#narrationflag").val()}
   if ($("#side").val()!="") {
