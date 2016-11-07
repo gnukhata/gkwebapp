@@ -86,16 +86,18 @@ def createadmin(request):
 
 	orgtype = request.params["orgtype"]
 
+	invflag = request.params["invflag"]
+
 	fromdate = request.params["fdate"]
 
 	todate = request.params["tdate"]
 
-	return {"orgname":orgname, "orgtype":orgtype, "fromdate":fromdate, "todate":todate}
+	return {"orgname":orgname, "orgtype":orgtype, "fromdate":fromdate, "todate":todate, "invflag":invflag}
 
 @view_config(route_name="createorglogin",renderer="json")
 def orglogin(request):
 
-	gkdata = {"orgdetails":{"orgname":request.params["orgname"], "orgtype":request.params["orgtype"], "yearstart":request.params["yearstart"], "yearend":request.params["yearend"]}, "userdetails":{"username":request.params["username"], "userpassword":request.params["password"],"userquestion":request.params["securityquestion"], "useranswer":request.params["securityanswer"]}}
+	gkdata = {"orgdetails":{"orgname":request.params["orgname"], "orgtype":request.params["orgtype"], "yearstart":request.params["yearstart"], "yearend":request.params["yearend"],"invflag":request.params["invflag"]}, "userdetails":{"username":request.params["username"], "userpassword":request.params["password"],"userquestion":request.params["securityquestion"], "useranswer":request.params["securityanswer"]}}
 	result = requests.post("http://127.0.0.1:6543/organisations", data =json.dumps(gkdata))
 	if result.json()["gkstatus"]==0:
 		return  {"gktoken":result.json()["token"],"gkstatus":result.json()["gkstatus"]}
