@@ -27,6 +27,7 @@ $(document).ready(function() {
       $(".panel-footer").show();
       $("#unit_edit_innerdiv").show();
       $("#unit_edit_save").hide();
+      $("#edit_btn").show();
 
       if($("#sub_unit_edit option:selected").val()==''){
         $("#edit_conversion_div").hide();
