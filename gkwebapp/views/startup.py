@@ -34,113 +34,112 @@ s = requests.session()
 
 @view_config(route_name="index", renderer="gkwebapp:templates/index.jinja2")
 def index(request):
-	return {"a":1}
+    return {"a":1}
 
 @view_config(route_name="existingorg", renderer="gkwebapp:templates/existingorg.jinja2")
 def existingorg(request):
-	result = requests.get("http://127.0.0.1:6543/organisations")
-	strData = []
-	for records in result.json()["gkdata"]:
-		sdata = {"orgname":str(records["orgname"]),"orgtype":str(records["orgtype"])}
-		strData.append(sdata)
-	return {"gkresult":strData}
+    result = requests.get("http://127.0.0.1:6543/organisations")
+    strData = []
+    for records in result.json()["gkdata"]:
+        sdata = {"orgname":str(records["orgname"]),"orgtype":str(records["orgtype"])}
+        strData.append(sdata)
+    return {"gkresult":strData}
 
 @view_config(route_name="orgexists", renderer="json")
 def orgexists(request):
-	result = s.get("http://127.0.0.1:6543/organisations")
-	strData = []
-	for records in result.json()["gkdata"]:
-		sdata = {"orgname":str(records["orgname"]),"orgtype":str(records["orgtype"])}
-		strData.append(sdata)
+    result = s.get("http://127.0.0.1:6543/organisations")
+    strData = []
+    for records in result.json()["gkdata"]:
+        sdata = {"orgname":str(records["orgname"]),"orgtype":str(records["orgtype"])}
+        strData.append(sdata)
 
-	if len(strData) ==0:
-		return {"gkresult":0}
-	else:
-		return {"gkresult":1}
+    if len(strData) ==0:
+        return {"gkresult":0}
+    else:
+        return {"gkresult":1}
 
 
 @view_config(route_name="yearcode", renderer="json")
 def yearcode(request):
-	oname = request.params["orgname"]
-	otype = request.params["orgtype"]
-	result = requests.get("http://127.0.0.1:6543/orgyears/%s/%s"%(oname,otype))
-	strData = []
+    oname = request.params["orgname"]
+    otype = request.params["orgtype"]
+    result = requests.get("http://127.0.0.1:6543/orgyears/%s/%s"%(oname,otype))
+    strData = []
 
-	for records in result.json()["gkdata"]:
-		sdata = {"yearstart":datetime.strftime(datetime.strptime(records["yearstart"],"%Y-%m-%d"),"%d-%m-%Y"),"yearend":datetime.strftime(datetime.strptime(records["yearend"],"%Y-%m-%d"),"%d-%m-%Y"), "orgcode":records["orgcode"]}
-		strData.append(sdata)
-	return {"gkresult":strData}
+    for records in result.json()["gkdata"]:
+        sdata = {"yearstart":datetime.strftime(datetime.strptime(records["yearstart"],"%Y-%m-%d"),"%d-%m-%Y"),"yearend":datetime.strftime(datetime.strptime(records["yearend"],"%Y-%m-%d"),"%d-%m-%Y"), "orgcode":records["orgcode"]}
+        strData.append(sdata)
+    return {"gkresult":strData}
 
 @view_config(route_name="login", renderer="gkwebapp:templates/login.jinja2")
 def login(request):
-	return {"code":request.params["orgcode"], "flag": request.params["flag"]}
+    return {"code":request.params["orgcode"], "flag": request.params["flag"]}
 
 
 @view_config(route_name="createorg", renderer="gkwebapp:templates/createorg.jinja2")
 def createorg(request):
-	return {"a":1}
+    return {"a":1}
 
 @view_config(route_name="createadmin", renderer="gkwebapp:templates/createadmin.jinja2")
 def createadmin(request):
-	orgname = request.params["orgname"]
+    orgname = request.params["orgname"]
 
-	orgtype = request.params["orgtype"]
+    orgtype = request.params["orgtype"]
 
-	invflag = request.params["invflag"]
+    invflag = request.params["invflag"]
 
-	fromdate = request.params["fdate"]
+    fromdate = request.params["fdate"]
 
-	todate = request.params["tdate"]
+    todate = request.params["tdate"]
 
-	return {"orgname":orgname, "orgtype":orgtype, "fromdate":fromdate, "todate":todate, "invflag":invflag}
+    return {"orgname":orgname, "orgtype":orgtype, "fromdate":fromdate, "todate":todate, "invflag":invflag}
 
 @view_config(route_name="createorglogin",renderer="json")
 def orglogin(request):
 
-	gkdata = {"orgdetails":{"orgname":request.params["orgname"], "orgtype":request.params["orgtype"], "yearstart":request.params["yearstart"], "yearend":request.params["yearend"],"invflag":request.params["invflag"]}, "userdetails":{"username":request.params["username"], "userpassword":request.params["password"],"userquestion":request.params["securityquestion"], "useranswer":request.params["securityanswer"]}}
-	result = requests.post("http://127.0.0.1:6543/organisations", data =json.dumps(gkdata))
-	if result.json()["gkstatus"]==0:
-		return  {"gktoken":result.json()["token"],"gkstatus":result.json()["gkstatus"]}
-	else:
-		return  {"gkstatus":result.json()["gkstatus"]}
+    gkdata = {"orgdetails":{"orgname":request.params["orgname"], "orgtype":request.params["orgtype"], "yearstart":request.params["yearstart"], "yearend":request.params["yearend"],"invflag":request.params["invflag"]}, "userdetails":{"username":request.params["username"], "userpassword":request.params["password"],"userquestion":request.params["securityquestion"], "useranswer":request.params["securityanswer"]}}
+    result = requests.post("http://127.0.0.1:6543/organisations", data =json.dumps(gkdata))
+    if result.json()["gkstatus"]==0:
+        return  {"gktoken":result.json()["token"],"gkstatus":result.json()["gkstatus"]}
+    else:
+        return  {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="userlogin",renderer="json")
 def selectorglogin(request):
 
-	gkdata = {"username":request.params["username"], "userpassword":request.params["userpassword"],"orgcode":request.params["orgcode"]}
-	result = requests.post("http://127.0.0.1:6543/login", data =json.dumps(gkdata))
-	if result.json()["gkstatus"]==0:
-		header = result.json()["token"]
-		print "headerrrrrrrrrrrrr:",header
-		result1 = requests.get("http://127.0.0.1:6543/organisation",headers={"gktoken":header})
-		return  {"gktoken":result.json()["token"], "gkstatus":result.json()["gkstatus"],"invflag":result1.json()["gkdata"]["invflag"]}
-	else:
-		return  {"gkstatus":result.json()["gkstatus"]}
+    gkdata = {"username":request.params["username"], "userpassword":request.params["userpassword"],"orgcode":request.params["orgcode"]}
+    result = requests.post("http://127.0.0.1:6543/login", data =json.dumps(gkdata))
+    if result.json()["gkstatus"]==0:
+        header = result.json()["token"]
+        result1 = requests.get("http://127.0.0.1:6543/organisation",headers={"gktoken":header})
+        return  {"gktoken":result.json()["token"], "gkstatus":result.json()["gkstatus"],"invflag":result1.json()["gkdata"]["invflag"]}
+    else:
+        return  {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="orgdata",renderer="json")
 def orgdata(request):
-	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/login",headers=header)
-	if result.json()["gkstatus"]==0:
-		return  {"gkresult":result.json()["gkresult"], "gkstatus":result.json()["gkstatus"]}
-	else:
-		return  {"gkstatus":result.json()["gkstatus"]}
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/login",headers=header)
+    if result.json()["gkstatus"]==0:
+        return  {"gkresult":result.json()["gkresult"], "gkstatus":result.json()["gkstatus"]}
+    else:
+        return  {"gkstatus":result.json()["gkstatus"]}
 
 
 
 @view_config(route_name="showmainshell",renderer="gkwebapp:templates/mainshell.jinja2")
 def mainshell(request):
-	return {"status":"ok"}
+    return {"status":"ok"}
 
 @view_config(route_name="theme",renderer="json")
 def theme(request):
-	header={"gktoken":request.headers["gktoken"]}
-	result= requests.get("http://127.0.0.1:6543/user?type=theme",headers=header)
-	return {"theme":result.json()["gkresult"], "status":result.json()["gkstatus"]}
+    header={"gktoken":request.headers["gktoken"]}
+    result= requests.get("http://127.0.0.1:6543/user?type=theme",headers=header)
+    return {"theme":result.json()["gkresult"], "status":result.json()["gkstatus"]}
 
 @view_config(route_name="addtheme", renderer="json")
 def addtheme(request):
-	header={"gktoken":request.headers["gktoken"]}
-	themename= {"themename":request.params["themename"]}
-	result= requests.put("http://127.0.0.1:6543/user?type=theme",headers=header,data =json.dumps(themename))
-	return {"status":result.json()["gkstatus"]}
+    header={"gktoken":request.headers["gktoken"]}
+    themename= {"themename":request.params["themename"]}
+    result= requests.put("http://127.0.0.1:6543/user?type=theme",headers=header,data =json.dumps(themename))
+    return {"status":result.json()["gkstatus"]}
