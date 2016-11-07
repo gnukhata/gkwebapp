@@ -15,7 +15,7 @@
 		</div>
     <div class="alert alert-danger" id="subunit-alert"  aria-live="rude" role="alert" hidden>
 
-      <label for="vno">{% trans %}Subunit can't be Deleted!{% endtrans %}</label>
+      <label for="vno">{% trans %}Unit can not be deleted , contains Subunit!{% endtrans %}</label>
     </div>
     <div class="alert alert-danger" id="unit-blank-alert"  aria-live="rude" role="alert" hidden>
 
@@ -27,7 +27,7 @@
       <div class="panel-body">
         <form>
           <div class="form-group">
-            <label for="unit_edit_list">{% trans %}<u>U</u>nit :{% endtrans %}</label>
+            <label for="unit_edit_list" id="edit_list">{% trans %}<u>U</u>nit :{% endtrans %}</label>
             <select class="form-control input-sm" id="unit_edit_list" accesskey="g">
               <option value="" disabled selected hidden>{% trans %}Select unit{% endtrans %}</option>
               {% for unitofmeasurement in gkresult %}
@@ -59,9 +59,10 @@
     </div>
   </div>
       <div class="panel-footer" id="unit_btn"  disabled hidden>
-        <button id="unit_reset" class="btn btn-danger btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+        <button id="unit_reset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
         <button class="btn btn-primary btn-sm" id="unit_edit_save" accesskey="e">{% trans %}Sav<u>e</u>{% endtrans %}</button>
         <button id="unit_delete" class="btn btn-danger btn-sm" accesskey="d">{% trans %}<u>D</u>elete{% endtrans %}</button>
+        <button id="edit_btn" class="btn btn-primary btn-sm" accesskey="t">{% trans %}Edi<u>t</u>{% endtrans %}</button>
       </div>
     </div>
     <div id="confirm_del" class="modal fade" tabindex="-1" role="dialog">

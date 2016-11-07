@@ -19,10 +19,15 @@ $(document).ready(function() {
     .done(function(resp) {
       var result = resp["gkresult"]
       $("#unit_edit_name").val(result["unitname"]);
+      $("#unit_edit_name").prop("disabled", true);
       $("#sub_unit_edit").val(result["subunitof"]);
+      $("#sub_unit_edit").prop("disabled", true);
       $("#unit_edit_conversion_rate").val(result["conversionrate"]);
+      $("#unit_edit_conversion_rate").prop("disabled", true);
       $(".panel-footer").show();
       $("#unit_edit_innerdiv").show();
+      $("#unit_edit_save").hide();
+
       if($("#sub_unit_edit option:selected").val()==''){
         $("#edit_conversion_div").hide();
       }
@@ -50,15 +55,16 @@ $(document).ready(function() {
       }
     });
     $("#unit_edit_list").keydown(function(event) {
-      if (event.which==13 &&  $("#unit_edit_list option:selected").val()!='') {
+
+      if (event.which==13) {
         event.preventDefault();
-        $("#unit_edit_innerdiv").show();
+        $("#edit_btn").hide();
+        $("#unit_edit_save").show();
+        $("#unit_edit_name").prop("disabled", false);
         $("#unit_edit_name").focus().select();
-      }
-      
-      if (event.which==38  && $("#unit_edit_list option:selected").val()=='') {
-        event.preventDefault();
-        $("#unit_btn").hide();
+        $("#sub_unit_edit").prop("disabled", false);
+        $("#unit_edit_conversion_rate").prop("disabled", false);
+
       }
 
    });
@@ -97,6 +103,16 @@ $(document).ready(function() {
 
   $("#unit_reset").click(function(event) {
     $("a[href ='#unit_edit']").click();
+  });
+
+  $("#edit_btn").click(function(event) {
+    $("#edit_btn").hide();
+    $("#unit_edit_save").show();
+    $("#unit_edit_name").prop("disabled", false);
+    $("#unit_edit_name").focus().select();
+    $("#sub_unit_edit").prop("disabled", false);
+    $("#unit_edit_conversion_rate").prop("disabled", false);
+
   });
 
   $("#unit_edit_save").click(function(event) {
