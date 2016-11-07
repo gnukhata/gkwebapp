@@ -43,6 +43,17 @@ $(document).ready(function() {
     $('#latable tr').removeClass('selected');
 
   });
+
+  $('#laclearfields').click(function(){
+    $(".search").children(".form-control").val("");
+  });
+
+  $(".search").children(".form-control").keydown(function(event){
+    if (event.shiftKey && event.keyCode == 8) {
+      $(this).val("");
+    }
+  });
+
   var curindex ;
   var nextindex;
   var previndex;
