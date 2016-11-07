@@ -3,14 +3,37 @@
 <head>
   <meta charset="utf-8">
   <title>{% trans %}GNUKhata | Category{% endtrans %}</title>
+  <style media="screen">
+  .fixed-table td {
+      font-size: 75%;
+      padding: 4 !important;
+      margin: 4 !important;
+    }
+  .fixed-table th {
+      font-size: 85%;
+  }
+  .fixed-table tbody {
+      display:block;
+      height: calc(100vh - 25em);
+      overflow-y:scroll;
+  }
+
+  .fixed-table thead ,.fixed-table tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  .fixed-table thead {
+      width: calc( 100% - 0.75em )
+  }
+  </style>
 </head>
 <body>
-  <div class="container-fluid well well-sm shadow" style="background-color:white;">
+  <div class="container-fluid row">
     <ul class="nav nav-pills nav-tabs" role="tablist">
       <li role="presentation" class="active"><a href="#category_create" aria-controls="category_create" role="tab" data-toggle="tab">{% trans %}Create Category{% endtrans %}</a></li>
       <li role="presentation"><a href="#category_edit" aria-controls="category_edit" role="tab" data-toggle="tab">{% trans %}Edit Category{% endtrans %}</a></li>
     </ul>
-    <br>
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane active" id="category_create">
 

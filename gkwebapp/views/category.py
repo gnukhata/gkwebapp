@@ -73,6 +73,12 @@ def savespecs(request):
 		for spec in specs:
 			specdata= {"attrname":spec["attrname"],"attrtype":int(spec["attrtype"]),"categorycode":result.json()["gkresult"]}
 			specresult = requests.post("http://127.0.0.1:6543/categoryspecs",data=json.dumps(specdata) ,headers=header)
+		taxes = json.loads(request.params["taxes"])
+		for tax in taxes:
+			taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"categorycode":result.json()["gkresult"]}
+			if tax["state"]!='':
+				taxdata["state"]=tax["state"]
+			taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
 		return {"gkstatus": result.json()["gkstatus"]}
 	else:
 		return {"gkstatus": result.json()["gkstatus"]}
