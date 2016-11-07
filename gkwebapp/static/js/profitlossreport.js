@@ -230,7 +230,7 @@ $(document).ready(function() {
 
 
   });
-  
+
   $('#plrclearfields').click(function(){
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
   });
@@ -243,6 +243,9 @@ $(document).ready(function() {
       $(this).val("");
     }
   });
+
+  $('#pllclearfields').siblings(".bootstrap-table").find(".search").removeClass("pull-left").addClass("pull-right");
+  $('#pllclearfields').siblings(".bootstrap-table").find(".columns-left").removeClass("pull-left").addClass("pull-right").css("margin-right","15px");
 
   $("#print").click(function(event){
       var todatearray = $("#ledtodate").val().split("-");
