@@ -141,6 +141,7 @@ $(document).ready(function() {
 		$("#rctable").parentsUntil(".table-responsive").hide();
 		$(".table-responsive").removeClass("col-xs-6");
 		$("#hideleft").hide(100);
+		$("#cflclearfields").hide(100);
 		$("#showleft").show(100);
 		$("#hideright").hide();
 	});
@@ -149,12 +150,14 @@ $(document).ready(function() {
 		$(".table-responsive").addClass("col-xs-6");
 		$("#showleft").hide(100);
 		$("#hideleft").show(100);
+		$("#cflclearfields").show(100);
 		$("#hideright").show();
 	});
 	$("#hideright").click(function(event){
 		$("#pytable").parentsUntil(".table-responsive").hide();
 		$(".table-responsive").removeClass("col-xs-6");
 		$("#hideright").hide(100);
+		$("#cfrclearfields").hide(100);
 		$("#showright").show(100);
 		$("#hideleft").hide();
 	});
@@ -163,6 +166,7 @@ $(document).ready(function() {
 		$(".table-responsive").addClass("col-xs-6");
 		$("#showright").hide(100);
 		$("#hideright").show(100);
+		$("#cfrclearfields").show(100);
 		$("#hideleft").show();
 	});
 	$('#cfrclearfields').click(function(){

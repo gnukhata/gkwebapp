@@ -234,6 +234,7 @@ $(document).ready(function() {
     $("#expensetbl").parentsUntil(".table-responsive").hide();
     $(".table-responsive").removeClass("col-xs-6");
     $("#hideexpense").hide(100);
+    $("#pllclearfields").hide(100);
     $("#showexpense").show(100);
     $("#hideincome").hide();
   });
@@ -242,12 +243,14 @@ $(document).ready(function() {
     $(".table-responsive").addClass("col-xs-6");
     $("#showexpense").hide(100);
     $("#hideexpense").show(100);
+    $("#pllclearfields").show(100);
     $("#hideincome").show();
   });
   $("#hideincome").click(function(event){
     $("#incometbl").parentsUntil(".table-responsive").hide();
     $(".table-responsive").removeClass("col-xs-6");
     $("#hideincome").hide(100);
+    $("#plrclearfields").hide(100);
     $("#showincome").show(100);
     $("#hideexpense").hide();
   });
@@ -256,6 +259,7 @@ $(document).ready(function() {
     $(".table-responsive").addClass("col-xs-6");
     $("#showincome").hide(100);
     $("#hideincome").show(100);
+    $("#plrclearfields").show(100);
     $("#hideexpense").show();
   });
   $('#plrclearfields').click(function(){
