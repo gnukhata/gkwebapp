@@ -1,0 +1,51 @@
+<body>
+<div class="row">
+  <div class="col-md-5">
+    <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Unit saved.{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Something went wrong!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="duplicate-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Unit Already Exist!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="unit-blank-alert"  aria-live="rude" role="alert" hidden>
+
+      <label for="vno">{% trans %}Please enter Unit  name!{% endtrans %}</label>
+    </div>
+
+    <div class="panel shadow unit_panel">
+      <div class="panel-body">
+        <form>
+          <div class="form-group">
+            <label for="unit_name">{% trans %} <u>U</u>nit Name :{% endtrans %}</label>
+            <input class="form-control input-sm" id="unit_name" placeholder="{% trans %}Enter Unit name{% endtrans %}" accesskey="a">
+          </div>
+          <div class="form-group">
+            <label for="sub_unit_of">{% trans %}<u>S</u>ub Unit Of{% endtrans %}</label>
+            <select class="form-control input-sm" id="sub_unit_of" accesskey="s">
+              <option value="" selected>None</option>
+              {% for unitofmeasurement in gkresult %}
+              <option value="{{unitofmeasurement['uomid']}}">{{unitofmeasurement["unitname"]}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group" id="conversion_div" hidden>
+            <label for="conversion_rate">{% trans %}<u>C</u>onversion Rate :{% endtrans %}</label>
+              <input class="form-control input-sm text-right" id="conversion_rate" aria-describedby="conversion_rate_help" placeholder=" Enter conversion rate" accesskey="c">
+          </div>
+        </form>
+      </div>
+      <div class="panel-footer">
+        <button  type="submit" class="btn btn-success btn-sm" id="unit_save"  accesskey="e" >{% trans %}Sav<u>e</u>{% endtrans %}</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addunitofmeasurement.js')}}"></script>
+</body>

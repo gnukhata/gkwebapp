@@ -658,6 +658,15 @@ $.ajax({
     }
   );
   });
+  $('#addcategory').click(function (e) {
+    $("#info").load("/category");
+  });
+  $('#addunit').click(function (e) {
+    $("#info").load("/unitofmeasurements");
+  });
+  $('#deliverychallan').click(function (e) {
+    $("#info").load("/deliverychallan");
+  });
 
   $("#showtrialbalance").click(function(event){
     $("#info").load("/showtrialbalance");

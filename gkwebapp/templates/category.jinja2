@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% trans %}GNUKhata | Category{% endtrans %}</title>
+</head>
+<body>
+  <div class="container-fluid well well-sm shadow" style="background-color:white;">
+    <ul class="nav nav-pills nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#category_create" aria-controls="category_create" role="tab" data-toggle="tab">{% trans %}Create Category{% endtrans %}</a></li>
+      <li role="presentation"><a href="#category_edit" aria-controls="category_edit" role="tab" data-toggle="tab">{% trans %}Edit Category{% endtrans %}</a></li>
+    </ul>
+    <br>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="category_create">
+
+      </div>
+      <div role="tabpanel" class="tab-pane" id="category_edit">
+
+      </div>
+    </div>
+
+
+  </div>
+</div>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/category.js')}}"></script>
+</body>
+</html>

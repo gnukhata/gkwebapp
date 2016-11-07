@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% trans %}GNUKhata | Delivery Challan{% endtrans %}</title>
+</head>
+<body>
+  <div class="container-fluid well well-sm shadow" style="background-color:white;">
+    <ul class="nav nav-pills nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="" id="deliverychallan_create" role="tab" data-toggle="tab">{% trans %}Create Delivery Challan{% endtrans %}</a></li>
+      <li role="presentation"><a href="" id="deliverychallan_edit" role="tab" data-toggle="tab">{% trans %}Edit Delivery Challan{% endtrans %}</a></li>
+    </ul>
+    <br>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="deliverychallan_div">
+
+      </div>
+    </div>
+
+
+  </div>
+</div>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/deliverychallan.js')}}"></script>
+</body>
+</html>
