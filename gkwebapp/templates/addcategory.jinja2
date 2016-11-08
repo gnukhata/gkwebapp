@@ -8,10 +8,7 @@
 
       {% trans %}Something went wrong!{% endtrans %}
     </div>
-    <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Something went wrong!{% endtrans %}
-    </div>
     <div class="alert alert-danger" id="duplicate-alert"  aria-live="rude" role="alert" hidden>
 
       {% trans %}Category already exists!{% endtrans %}
@@ -22,6 +19,14 @@
           <div class="col-md-6">
           <div class="alert alert-danger" id="category-blank-alert"  aria-live="rude" role="alert" hidden>
             <label for="vno">{% trans %}Please enter category name!{% endtrans %}</label>
+          </div>
+          <div class="alert alert-danger" id="tax-name-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Enter tax name!{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="tax-rate-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Enter tax rate!{% endtrans %}
           </div>
             <div class="form-group">
               <label for="category_name">{% trans %}N<u>a</u>me:{% endtrans %}</label>
@@ -63,7 +68,6 @@
                         <option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option>
                         <option value="Jharkhand" stateid="16">Jharkhand</option>
                         <option value="Karnataka" stateid="17">Karnataka</option>
-                        <option value="Kenmore" stateid="18">Kenmore</option>
                         <option value="Kerala" stateid="19">Kerala</option>
                         <option value="Lakshadweep" stateid="20">Lakshadweep</option>
                         <option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option>
@@ -72,10 +76,7 @@
                         <option value="Meghalaya" stateid="24">Meghalaya</option>
                         <option value="Mizoram" stateid="25">Mizoram</option>
                         <option value="Nagaland" stateid="26">Nagaland</option>
-                        <option value="Narora" stateid="27">Narora</option>
-                        <option value="Natwar" stateid="28">Natwar</option>
                         <option value="Odisha" stateid="29">Odisha</option>
-                        <option value="Paschim Medinipur" stateid="30">Paschim Medinipur</option>
                         <option value="Pondicherry" stateid="31">Pondicherry</option>
                         <option value="Punjab" stateid="32">Punjab</option>
                         <option value="Rajasthan" stateid="33">Rajasthan</option>
@@ -85,7 +86,6 @@
                         <option value="Tripura" stateid="37">Tripura</option>
                         <option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option>
                         <option value="Uttarakhand" stateid="39">Uttarakhand</option>
-                        <option value="Vaishali" stateid="40">Vaishali</option>
                         <option value="West Bengal" stateid="41">West Bengal</option>
                       </select>
                     </td>
@@ -151,8 +151,10 @@
 
       </div>
       <div class="panel-footer">
+        <div class="container-fluid">
         <button class="btn btn-primary btn-sm" id="category_addspecs" accesskey="s">{% trans %}Add <u>S</u>pecifications{% endtrans %}</button>
         <button class="btn btn-success btn-sm" id="category_savespecs" accesskey="e">{% trans %}Sav<u>e</u>{% endtrans %}</button>
+      </div>
       </div>
     </div>
   </div>

@@ -1,81 +1,127 @@
 <body>
-<div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
+  <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
     <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
 
       {% trans %}Category saved.{% endtrans %}
+    </div>
+    <div class="alert alert-success" id="success-delete-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Category deleted!{% endtrans %}
     </div>
     <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
 
       {% trans %}Something went wrong!{% endtrans %}
     </div>
+    <div class="alert alert-danger" id="failure-delete-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Cannot delete category!{% endtrans %}<br>
+      {% trans %}It has sub categories.{% endtrans %}
+    </div>
 
     <div class="panel shadow category_edit_panel">
 
       <div class="panel-body">
-        <div class="col-md-5">
-          <div class="alert alert-danger" id="category-blank-alert"  aria-live="rude" role="alert" hidden>
+        <div class="alert alert-danger" id="category-blank-alert"  aria-live="rude" role="alert" hidden>
 
-            <label for="vno">{% trans %}Please enter category name!{% endtrans %}</label>
-          </div>
-        <form>
-          <div class="form-group">
-            <label for="category_edit_list">{% trans %}Cate<u>g</u>ory :{% endtrans %}</label>
-            <select class="form-control input-sm" id="category_edit_list" accesskey="g">
-              <option value="" disabled selected hidden>{% trans %}Select Category{% endtrans %}</option>
-              {% for categories in gkresult %}
-              <option value="{{categories['categorycode']}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div id="category_edit_innerdiv" style="padding-left:10px;padding-right:10px;" hidden>
-          <div class="form-group">
-            <label for="category_edit_name">{% trans %}N<u>a</u>me :{% endtrans %}</label>
-            <input class="form-control input-sm" id="category_edit_name" placeholder="{% trans %}Enter category name{% endtrans %}" accesskey="a">
-          </div>
-          <div class="form-group">
-            <label for="category_edit_tax_vat">{% trans %}<u>V</u>AT :{% endtrans %}</label>
-            <div class="input-group">
-              <input class="form-control input-sm" id="category_edit_tax_vat" aria-describedby="vat_help" placeholder="VAT" accesskey="v">
-              <div class="input-group-addon">%</div>
-            </div>
-            <small id="vat_help" class="form-text text-muted">{% trans %}Enter VAT% if applicable.{% endtrans %}</small>
-          </div>
-          <div class="form-group">
-            <label for="category_edit_under">{% trans %}Un<u>d</u>er :{% endtrans %}</label>
-            <select class="form-control input-sm" id="category_edit_under" accesskey="d">
-              <option value="" selected>None</option>
-              {% for categories in gkresult %}
-              <option value="{{categories['categorycode']}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
-              {% endfor %}
-            </select>
-          </div>
-          </div>
-        </form>
-      </div>
-      <div class="col-md-7" id="category_edit_spec_div" hidden>
-        <div class="alert alert-danger" id="spec-blank-alert"  aria-live="rude" role="alert" hidden>
-
-          <label for="vno">{% trans %}Please enter specification name!{% endtrans %}</label>
+          <label for="vno">{% trans %}Please enter category name!{% endtrans %}</label>
         </div>
-          <table id="category_edit_spec_table" class="table table-condensed table-fixedheader">
-            <thead>
-              <tr>
-                <th class="col-xs-9">{% trans %}Spec Name{% endtrans %}</th>
-                <th class="col-xs-2">{% trans %}Type{% endtrans %}</th>
-                <th class="col-xs-1">{% trans %}Remove{% endtrans %}</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
+        <form>
+          <div class="container-fluid row">
 
+            <div class="form-group col-md-6">
+              <label for="category_edit_list">{% trans %}Cate<u>g</u>ory :{% endtrans %}</label>
+              <select class="form-control input-sm" id="category_edit_list" accesskey="g">
+                <option value="" disabled selected hidden>{% trans %}Select Category{% endtrans %}</option>
+                {% for categories in gkresult %}
+                <option value="{{categories['categorycode']}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div id="category_edit_innerdiv" hidden>
+            <div class="col-md-6">
+              <div class="alert alert-danger" id="category-blank-alert"  aria-live="rude" role="alert" hidden>
+                <label for="vno">{% trans %}Please enter category name!{% endtrans %}</label>
+              </div>
+              <div class="alert alert-danger" id="tax-name-blank-alert"  aria-live="rude" role="alert" hidden>
+
+                {% trans %}Enter tax name!{% endtrans %}
+              </div>
+              <div class="alert alert-danger" id="tax-rate-blank-alert"  aria-live="rude" role="alert" hidden>
+
+                {% trans %}Enter tax rate!{% endtrans %}
+              </div>
+              <div class="form-group">
+                <label for="category_edit_name">{% trans %}N<u>a</u>me:{% endtrans %}</label>
+                <input class="form-control input-sm" id="category_edit_name" placeholder="{% trans %}Enter category name{% endtrans %}" accesskey="a">
+              </div>
+              <div class="form-group">
+                <div class="panel">
+                  <table id="category_edit_tax_table" class="table table-condensed table-bordered fixed-edit-table">
+                    <thead class="bg-primary input-sm">
+                      <tr>
+                        <th class="col-xs-4">{% trans %}Tax Name{% endtrans %}</th>
+                        <th class="col-xs-4">{% trans %}State(optional){% endtrans %}</th>
+                        <th class="col-xs-3">{% trans %}Rate{% endtrans %}</th>
+                        <th class="col-xs-1"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="category_edit_under">{% trans %}Un<u>d</u>er:{% endtrans %}</label>
+                <select class="form-control input-sm" id="category_edit_under" accesskey="d">
+                  <option value="" selected>None</option>
+                  {% for categories in gkresult %}
+                  <option value="{{categories['categorycode']}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="alert alert-danger" id="spec-blank-alert"  aria-live="rude" role="alert" hidden>
+
+                <label for="vno">{% trans %}Please enter specification name!{% endtrans %}</label>
+              </div>
+              <div class="alert alert-danger" id="category-lastspec-alert"  aria-live="rude" role="alert" hidden>
+                <label for="vno">{% trans %}Minimum one spec required!{% endtrans %}</label>
+              </div>
+              <div class="panel">
+                <table id="category_edit_spec_table" class="table table-condensed table-bordered fixed-edit-table">
+                  <thead class="bg-primary input-sm">
+                    <tr>
+                      <th class="col-xs-8">{% trans %}Spec Name{% endtrans %}</th>
+                      <th class="col-xs-3">{% trans %}Type{% endtrans %}</th>
+                      <th class="col-xs-1"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+        <div class="panel-footer" hidden>
+          <div class="container-fluid">
+          <button class="btn btn-success btn-sm" id="category_edit_savespecs" accesskey="e">{% trans %}Sav<u>e</u>{% endtrans %}</button>
+          <button class="btn btn-danger btn-sm" id="category_edit_delete">{% trans %}Delete{% endtrans %}</button>
+        </div>
+        </div>
       </div>
-      </div>
-      <div class="panel-footer" hidden>
-        <button class="btn btn-success btn-sm" id="category_edit_savespecs" accesskey="e" disabled>{% trans %}Sav<u>e</u>{% endtrans %}</button>
-      </div>
+
     </div>
-
-</div>
-<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editcategory.js')}}"></script>
-</body>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editcategory.js')}}"></script>
+  </body>
