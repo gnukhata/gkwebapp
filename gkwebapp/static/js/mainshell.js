@@ -336,7 +336,7 @@ $("title").append(orname);
 $("#printorgname").append(orname);
 $("#printyears").append(styear + " to " + enyear);
 $("#showedituser").click(function(e){
-
+$("#msspinmodal").modal();
 $.ajax({
   url: '/showedituser',
   type: 'POST',
@@ -422,7 +422,7 @@ $.ajax({
 
 
   $("#showeditorg").click(function (e){
-
+    $("#msspinmodal").modal("show");
     $.ajax({
       type:"POST",
       url: "/showeditOrg",
@@ -442,6 +442,7 @@ $.ajax({
 
 
   $('#REMOVEuser').click(function (e) {
+    $("#msspinmodal").modal("show");
       $.ajax(
       {
 
@@ -463,7 +464,7 @@ $.ajax({
     });
 
   $('#editaccount').click(function (e) {
-
+    $("#msspinmodal").modal("show");
       $.ajax(
       {
 
@@ -484,12 +485,14 @@ $.ajax({
     });
 
     $('#changeorg').click(function (e) {
+      $("#msspinmodal").modal();
       sessionStorage.clear();
       window.location.replace("/");
 
       });
 
       $("#logout").click(function(event) {
+        $("#msspinmodal").modal();
         flag = 1;
         $.ajax({
           url: '/getorgcode',
@@ -516,6 +519,7 @@ $.ajax({
         $('.modal').modal('hide');
         $('#m_confirmdelorg').modal('show').one('click', '#orgdel', function (e)
         {
+          $("#msspinmodal").modal();
           $.ajax({
           url: '/deleteorg',
           type: 'POST',
@@ -549,6 +553,7 @@ $.ajax({
 
 
     $('#listofaccounts').click(function (e) {
+      $("#msspinmodal").modal("show");
       $.ajax(
         {
 
@@ -635,7 +640,7 @@ $.ajax({
 
 
   $('#fevoucher').click(function (e) {
-
+    $("#msspinmodal").modal("show");
       $.ajax(
       {
 
@@ -663,6 +668,7 @@ $.ajax({
   $("#yeardata").html(yeardata);
   }
   $('#addaccount').click(function (e) {
+    $("#msspinmodal").modal("show");
     $.ajax(
     {
 
@@ -684,7 +690,7 @@ $.ajax({
   });
 
   $('#createuser').click(function (e) {
-
+    $("#msspinmodal").modal("show");
     $.ajax({
       url: '/showuser',
       type: 'POST',
@@ -699,7 +705,7 @@ $.ajax({
 
 
     $("#showdeletedvoucher").click(function (e){
-
+      $("#msspinmodal").modal("show");
       $.ajax({
         url: '/showdeletedvoucher',
         type: 'POST',
@@ -719,7 +725,7 @@ $.ajax({
 
 
   $('#showviewledger').click(function (e) {
-
+    $("#msspinmodal").modal("show");
       $.ajax(
       {
 
@@ -741,7 +747,7 @@ $.ajax({
     });
 
     $('#BRS').click(function (e) {
-
+      $("#msspinmodal").modal("show");
         $.ajax(
         {
 
@@ -761,7 +767,7 @@ $.ajax({
       });
 
     $('#showprjstate').click(function (e) {
-
+      $("#msspinmodal").modal("show");
         $.ajax(
         {
 
@@ -783,6 +789,7 @@ $.ajax({
       });
 
   $('#showproject').click(function (e) {
+    $("#msspinmodal").modal("show");
     $.ajax(
     {
 
@@ -827,22 +834,27 @@ $.ajax({
   });
 
   $("#showtrialbalance").click(function(event){
+    $("#msspinmodal").modal("show");
     $("#info").load("/showtrialbalance");
   });
 
   $("#showcashflow").click(function(event){
+    $("#msspinmodal").modal("show");
     $("#info").load("/showcashflow");
   });
   $("#showprofitloss").click(function(event){
+    $("#msspinmodal").modal("show");
     var orgtype = sessionStorage.orgt.replace(/\s/g, "+");
     $("#info").load("/showprofitloss?orgtype="+orgtype);
   });
 
     $("#showbalancesheet").click(function(event){
+      $("#msspinmodal").modal("show");
       $("#info").load("/showbalancesheet");
     });
 
   $("#showclosebooks").click(function(event){
+    $("#msspinmodal").modal("show");
     $("#info").load("/showclosebooks");
   });
 

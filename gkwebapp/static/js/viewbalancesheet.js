@@ -25,6 +25,7 @@ Contributors:
 */
 
 $(document).ready(function() {
+  $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
 
   function pad (str, max) { //to add leading zeros in date

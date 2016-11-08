@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <title>{% trans %}GNUKhata{% endtrans %} | </title>
   <link id="bootstrap" href="{{request.static_url('gkwebapp:static/css/Default.min.css')}}" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" media="screen" href="{{request.static_url('gkwebapp:static/css/font-awesome.min.css')}}">
   <link href="{{request.static_url('gkwebapp:static/css/mainshellstyle.css')}}" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -435,7 +436,15 @@
     </div><!-- /.modal-dialog -->
   </div>
 </div><!-- /.modal -->
-
+<div id="msspinmodal" tabindex="-1" class="modal text-center fade" role="dialog">
+  <div class="vertical-alignment-helper">
+      <div id="msspinmodalcontent" class="modal-content vertical-align-center">
+        <div class="modal-body">
+          <i class="fa fa-spinner fa-spin" style="color:white; font-size:50px"></i>
+        </div>
+      </div>
+  </div>
+</div>
 <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
 <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.autotab.min.js')}}"></script>

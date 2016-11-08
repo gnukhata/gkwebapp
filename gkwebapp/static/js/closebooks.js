@@ -27,6 +27,7 @@ Contributors:
 
 $(document).ready(function()
 {
+  $("#msspinmodal").modal("hide");
   if (sessionStorage.booksclosedflag==1)
   {
     $(".closebooks").hide();

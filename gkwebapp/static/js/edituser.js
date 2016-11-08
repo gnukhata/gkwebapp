@@ -26,6 +26,7 @@ Contributors:
 */
 
 $(document).ready(function() {
+  $("#msspinmodal").modal("hide");
   $("#current_password").focus();
   $("#current_password").select();
 

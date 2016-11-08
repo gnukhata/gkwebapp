@@ -26,6 +26,7 @@ Contributors:
 */
 
 $(document).ready(function() {
+  $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
   if($("#username option").size()==1){
     $("#removeUserform").hide();

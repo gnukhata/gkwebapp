@@ -25,6 +25,7 @@ Contributors:
 */
 
 $(document).ready(function() {
+  $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
   $("#cashfl_fromdate").focus();
   $('.cashfl_autotab').autotab('number');

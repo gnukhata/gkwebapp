@@ -24,6 +24,7 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 */
 $(document).ready(function() {
+  $("#msspinmodal").modal("hide");
   $("#realprintbank").hide();
   $("#back").hide();
   var percentwid = 100*(($(".table-fixedheader").width()-12)/$(".table-fixedheader").width());

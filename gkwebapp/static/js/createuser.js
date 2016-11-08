@@ -25,6 +25,7 @@ Contributors:
 */
 
 $(document).ready(function(){
+  $("#msspinmodal").modal("hide");
   $("#name").focus();
   $('.modal-backdrop').remove();
   var inselect = 0;

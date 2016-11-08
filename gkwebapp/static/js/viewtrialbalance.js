@@ -25,6 +25,7 @@ Contributors:
 */
 
 $(document).ready(function() {
+  $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
   $("#trialbal_todate").focus();
   $('.trialbal_autotab').autotab('number');

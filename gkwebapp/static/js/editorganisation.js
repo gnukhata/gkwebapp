@@ -26,7 +26,7 @@ Contributors:
 */
 
 $(document).ready(function(){
-
+  $("#msspinmodal").modal("hide");
   $(".regdate").autotab('number');
   $(".fcradate").autotab('number');
 

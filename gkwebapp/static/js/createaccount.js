@@ -27,6 +27,7 @@ Contributors:
 
 $(document).ready(function()
 {
+  $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
   $("#openbal").numeric();
   $("#obal").hide();

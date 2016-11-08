@@ -27,6 +27,7 @@ Contributors:
 
 $(document).ready(function()
 {
+  $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
   $("#editaccountname").focus();
   $("#editaccountform").validate();
@@ -139,7 +140,7 @@ $("#editaccountname").keyup(function(e) {
     {
       $("#alertmsg").alert();
       $("#alertmsg").show();
-      
+
     }
     else
     {

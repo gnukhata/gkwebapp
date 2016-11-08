@@ -25,6 +25,7 @@ Contributors:
 */
 
 $(document).ready(function() {
+  $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
   $("#prjname").focus();
   var percentwid = 100*(($("table").width()-9)/$("table").width());

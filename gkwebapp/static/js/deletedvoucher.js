@@ -26,6 +26,7 @@ Contributors:
 */
 
 $(document).ready(function() {
+  $("#msspinmodal").modal("hide");
 $(".fixed-table-loading").remove();
 
   $(' #deletedvouchertable tbody tr:first-child td:eq(1) a').focus();
