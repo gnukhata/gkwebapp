@@ -54,6 +54,12 @@ def getspecs(request):
 	result = requests.get("http://127.0.0.1:6543/categoryspecs?categorycode=%d"%(int(request.params["categorycode"])), headers=header)
 	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
 
+@view_config(route_name="category",request_param="action=gettax",renderer="json")
+def gettax(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/tax?pscflag=c&categorycode=%d"%(int(request.params["categorycode"])), headers=header)
+	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
+
 @view_config(route_name="category",request_param="action=getCategory",renderer="json")
 def getCategory(request):
 	header={"gktoken":request.headers["gktoken"]}
@@ -73,6 +79,12 @@ def savespecs(request):
 		for spec in specs:
 			specdata= {"attrname":spec["attrname"],"attrtype":int(spec["attrtype"]),"categorycode":result.json()["gkresult"]}
 			specresult = requests.post("http://127.0.0.1:6543/categoryspecs",data=json.dumps(specdata) ,headers=header)
+		taxes = json.loads(request.params["taxes"])
+		for tax in taxes:
+			taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"categorycode":result.json()["gkresult"]}
+			if tax["state"]!='':
+				taxdata["state"]=tax["state"]
+			taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
 		return {"gkstatus": result.json()["gkstatus"]}
 	else:
 		return {"gkstatus": result.json()["gkstatus"]}
@@ -101,4 +113,11 @@ def editspecs(request):
 			for deletedspec in deletedspecs:
 				deletedspecdata= {"spcode":int(deletedspec)}
 				deletedspecresult = requests.delete("http://127.0.0.1:6543/categoryspecs",data=json.dumps(deletedspecdata) ,headers=header)
+	return {"gkstatus": result.json()["gkstatus"]}
+
+@view_config(route_name="category",request_param="action=delete",renderer="json")
+def deletecategory(request):
+	header={"gktoken":request.headers["gktoken"]}
+	categorydata = {"categorycode":int(request.params["categorycode"])}
+	result = requests.delete("http://127.0.0.1:6543/categories",data=json.dumps(categorydata), headers=header)
 	return {"gkstatus": result.json()["gkstatus"]}
