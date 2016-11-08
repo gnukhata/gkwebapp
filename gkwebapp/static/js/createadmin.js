@@ -77,6 +77,7 @@ $('input:not(:hidden),select').bind("keydown", function(e) {
 $("#loginform").submit(function(e)
 {
   e.preventDefault();
+  $("#spinmodal").modal();
   if ($.trim($("#username").val())=="") {
     $("#usrname-blank-alert").alert();
     $("#usrname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
