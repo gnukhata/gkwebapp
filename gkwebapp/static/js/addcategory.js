@@ -432,6 +432,10 @@ $(document).ready(function() {
     .always(function() {
       console.log("complete");
     });
+    event.stopPropogation();
+  });
 
+  $("#category_reset").click(function(event) {
+    $("a[href='#category_create']").click();
   });
 });

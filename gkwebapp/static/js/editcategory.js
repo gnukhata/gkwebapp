@@ -1,14 +1,19 @@
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $(".tax_rate").numeric();
+  $("#category_edit_savespecs").hide();
+  $(".category_edit_disable").prop("disabled",true);
   $("#category_edit_name").focus();
   var deletedspecs = [];
 
   $(document).keyup(function(event) {
     if(event.which == 45) {
-      event.preventDefault();
-      $("#category_edit_savespecs").click();
-      return false;
+      if ($("#category_edit_savespecs").is(":enabled")) {
+
+        event.preventDefault();
+        $("#category_edit_savespecs").click();
+        return false;
+      }
     }
   });
 
@@ -61,15 +66,15 @@ $(document).ready(function() {
         $('#category_edit_tax_table tbody tr').remove();
         $('#category_edit_tax_table tbody').append('<tr value="New">'+
         '<td class="col-xs-4">'+
-        '<input type="text" class="form-control input-sm tax_name" placeholder="Tax Name" value="">'+
+        '<input type="text" class="form-control category_edit_disable input-sm tax_name" placeholder="Tax Name" value="">'+
         '</td>'+
         '<td class="col-xs-4">'+
-        '<select class="form-control input-sm tax_state" >'+
+        '<select class="form-control category_edit_disable input-sm tax_state" >'+
         '<option value="">None</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>'+
         '</select>'+
         '</td>'+
         '<td class="col-xs-3">'+
-        '<input class="form-control input-sm tax_rate text-right"  placeholder="Rate" value="">'+
+        '<input class="form-control category_edit_disable input-sm tax_rate text-right"  placeholder="Rate" value="">'+
         '</td>'+
         '<td class="col-xs-1">'+
         '</td>'+
@@ -78,18 +83,18 @@ $(document).ready(function() {
       for (tax of resp["gkresult"]) {
         $('#category_edit_tax_table tbody').append('<tr value="'+tax["taxid"]+'">'+
         '<td class="col-xs-4">'+
-        '<input type="text" class="form-control input-sm tax_name" placeholder="Tax Name" value="'+tax["taxname"]+'">'+
+        '<input type="text" class="form-control category_edit_disable input-sm tax_name" placeholder="Tax Name" value="'+tax["taxname"]+'">'+
         '</td>'+
         '<td class="col-xs-4">'+
-        '<select class="form-control input-sm tax_state" >'+
+        '<select class="form-control category_edit_disable input-sm tax_state" >'+
         '<option value="">None</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>'+
         '</select>'+
         '</td>'+
         '<td class="col-xs-3">'+
-        '<input class="form-control input-sm tax_rate text-right"  placeholder="Rate" value="'+tax["taxrate"]+'">'+
+        '<input class="form-control category_edit_disable input-sm tax_rate text-right"  placeholder="Rate" value="'+tax["taxrate"]+'">'+
         '</td>'+
         '<td class="col-xs-1">'+
-        '<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+        '<a href="#" class="tax_del category_edit_disable"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
         '</td>'+
         '</tr>');
         $('#category_edit_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
@@ -122,10 +127,10 @@ $(document).ready(function() {
         $('#category_edit_spec_table tbody tr').remove();
         $('#category_edit_spec_table tbody').append('<tr value="New">'+
           '<td class="col-xs-8">'+
-            '<input type="text" class="form-control input-sm spec_name" placeholder="Spec Name">'+
+            '<input type="text" class="form-control category_edit_disable input-sm spec_name" placeholder="Spec Name">'+
           '</td>'+
           '<td class="col-xs-3">'+
-            '<select id="category_edit_spec_type" class="form-control input-sm spec_type">'+
+            '<select id="category_edit_spec_type" class="form-control category_edit_disable input-sm spec_type">'+
             '<option value="0">Text</option>'+
             '<option value="1">Number</option>'+
             '<option value="2">Date</option>'+
@@ -133,7 +138,7 @@ $(document).ready(function() {
             '</select>'+
           '</td>'+
           '<td class="col-xs-1">'+
-          '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+          '<a href="#" class="spec_del category_edit_disable"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
           '</td>'+
         '</tr>');
       }
@@ -165,14 +170,14 @@ $(document).ready(function() {
         }
         $('#category_edit_spec_table tbody').prepend('<tr value="'+spec["spcode"]+'">'+
           '<td class="col-xs-8">'+
-            '<input type="text" class="form-control input-sm spec_name" value="'+spec["attrname"]+'" placeholder="Spec Name">'+
+            '<input type="text" class="form-control category_edit_disable input-sm spec_name" value="'+spec["attrname"]+'" placeholder="Spec Name">'+
           '</td>'+
           '<td class="col-xs-3">'+
-            '<select id="category_edit_spec_type" class="form-control input-sm spec_type">'+trs+
+            '<select id="category_edit_spec_type" class="form-control category_edit_disable input-sm spec_type">'+trs+
             '</select>'+
           '</td>'+
           '<td class="col-xs-1">'+
-          '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+          '<a href="#" class="spec_del category_edit_disable"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
           '</td>'+
         '</tr>');
       }
@@ -185,12 +190,18 @@ $(document).ready(function() {
     .always(function() {
       console.log("complete");
     });
+    $("#category_edit_edit").show();
+    $("#category_edit_savespecs").hide();
+    $(".category_edit_disable").prop("disabled",true);
     $(".tax_rate").numeric();
   });
 
   $("#category_edit_list").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
+      $(".category_edit_disable").prop("disabled",false);
+      $("#category_edit_savespecs").show();
+      $("#category_edit_edit").hide();
       $("#category_edit_name").focus().select();
     }
     if (event.which==46) {
@@ -328,18 +339,18 @@ $(document).ready(function() {
         }
         $('#category_edit_tax_table tbody').append('<tr value="New">'+
         '<td class="col-xs-4">'+
-        '<input type="text" class="form-control input-sm tax_name" placeholder="Tax Name">'+
+        '<input type="text" class="form-control category_edit_disable input-sm tax_name" placeholder="Tax Name">'+
         '</td>'+
         '<td class="col-xs-4">'+
-        '<select class="form-control input-sm tax_state" >'+
+        '<select class="form-control category_edit_disable input-sm tax_state" >'+
         '<option value="">None</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>'+
         '</select>'+
         '</td>'+
         '<td class="col-xs-3">'+
-        '<input class="form-control input-sm tax_rate text-right"  placeholder="Rate">'+
+        '<input class="form-control category_edit_disable input-sm tax_rate text-right"  placeholder="Rate">'+
         '</td>'+
         '<td class="col-xs-1">'+
-        '<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+        '<a href="#" class="tax_del category_edit_disable"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
         '</td>'+
         '</tr>');
         $(".tax_rate").numeric();
@@ -382,6 +393,12 @@ $(document).ready(function() {
   });
   /* -----------------------Tax key events end----------------------------------------- */
 
+  $("#category_edit_edit").click(function(event) {
+    $(".category_edit_disable").prop("disabled",false);
+    $("#category_edit_savespecs").show();
+    $("#category_edit_edit").hide();
+    $("#category_edit_name").focus().select();
+  });
 
   $(document).off("keydown",".spec_name").on("keydown",".spec_name",function(event)
   {
@@ -423,10 +440,10 @@ $(document).ready(function() {
         }
         $('#category_edit_spec_table tbody').append('<tr value="New">'+
           '<td class="col-xs-8">'+
-            '<input type="text" class="form-control input-sm spec_name" placeholder="Spec Name">'+
+            '<input type="text" class="form-control category_edit_disable input-sm spec_name" placeholder="Spec Name">'+
           '</td>'+
           '<td class="col-xs-3">'+
-            '<select id="category_edit_spec_type" class="form-control input-sm spec_type">'+
+            '<select id="category_edit_spec_type" class="form-control category_edit_disable input-sm spec_type">'+
             '<option value="0">Text</option>'+
             '<option value="1">Number</option>'+
             '<option value="2">Date</option>'+
@@ -434,7 +451,7 @@ $(document).ready(function() {
             '</select>'+
           '</td>'+
           '<td class="col-xs-1">'+
-          '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+          '<a href="#" class="spec_del category_edit_disable"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
           '</td>'+
         '</tr>');
           $('#category_edit_spec_table tbody tr:eq('+nextindex1+') td:eq(0) input').focus().select();
@@ -553,6 +570,10 @@ $(document).ready(function() {
     .always(function() {
       console.log("complete");
     });
+    event.stopPropogation();
+  });
 
+  $("#category_edit_reset").click(function(event) {
+    $("a[href='#category_edit']").click();
   });
 });
