@@ -5,6 +5,7 @@ $(document).ready(function() {
   var sindex=0;
   var category;
   var existingcatspecs;
+  var prodcode;
   $(document).on("focus",'#edituom',function() {
     sel1 = 1;
   });
@@ -17,25 +18,68 @@ $(document).ready(function() {
   $(document).on("blur",'#editcatselect',function(){
     sel2 = 0;
   });
+  var edittextareasel;
+  $(document).on('focus', '#editproddesc',function(event) {
+    /* Act on the event */
+    edittextareasel=1;
 
-  $(document).on("keydown",'.editpr input:not(:hidden),.editpr select', function(e) {
-     var n = $(".editpr input:not(:hidden),.editpr select").length;
-     var f = $('.editpr input:not(:hidden),.editpr select');
-    if (e.which == 13)
+  });
+  $(document).on('blur', '#editproddesc',function(event) {
+    /* Act on the event */
+    edittextareasel=0;
+    $("#editproddesc").val($("#editproddesc").val().trim());
+
+  });
+  $(document).keydown(function(event)
+  {
+    /* Act on the event */
+    if (event.which == 45)
     {
-      e.preventDefault();
-      var nextIndex = f.index(this) + 1;
-      if(nextIndex < n)
-      {
-        e.preventDefault();
-        f[nextIndex].focus();
-        f[nextIndex].select();
-      }
+      event.preventDefault();
+      $("#epsubmit").click();
     }
+  });
+  var editdelta = 500;
+  var editlastkeypressTime =0;
+  $(document).on("keydown",'.editpr input:not(:hidden),.editpr textarea,.editpr select', function(e) {
+     var n = $(".editpr input:not(:hidden),.editpr textarea,.editpr select").length;
+     var f = $('.editpr input:not(:hidden),.editpr textarea,.editpr select');
+     if (e.which == 13)
+     {
+       var nextIndex = f.index(this) + 1;
+       if (edittextareasel==1)
+       {
+
+         var editthiskeypressTime = new Date();
+         if (editthiskeypressTime - editlastkeypressTime<=editdelta)
+         {
+             f[nextIndex].focus();
+             f[nextIndex].select();
+             editthiskeypressTime = 0;
+
+         }
+         editlastkeypressTime = editthiskeypressTime;
+
+       }
+       else
+       {
+
+
+         if(nextIndex < n)
+         {
+           e.preventDefault();
+           f[nextIndex].focus();
+           f[nextIndex].select();
+         }
+
+       }
+
+
+     }
     });
-    $(document).on("keydown",'.editpr input:not(:hidden),.editpr select', function(e) {
-       var n = $(".editpr input:not(:hidden),.editpr select").length;
-       var f = $('.editpr input:not(:hidden),.editpr select');
+    $(document).on("keydown",'.editpr input:not(:hidden),.editpr textarea,.editpr select', function(e) {
+       var n = $(".editpr input:not(:hidden),.editpr textarea,.editpr select").length;
+       var f = $('.editpr input:not(:hidden),.editpr textarea,.editpr select');
       if (e.which == 38)
       {
         var prevIndex = f.index(this) - 1;
@@ -74,7 +118,7 @@ $(document).ready(function() {
       });
   $("#prodselect").change(function(event) {
     /* Act on the event */
-    var prodcode= $("#prodselect option:selected").val();
+    prodcode= $("#prodselect option:selected").val();
     if (prodcode!="")
     {
 
@@ -120,7 +164,8 @@ $(document).ready(function() {
     /* Act on the event */
     if (event.which == 13)
     {
-        var prodcode= $("#prodselect option:selected").val();
+      event.preventDefault();
+        prodcode= $("#prodselect option:selected").val();
         if (prodcode!="")
         {
           $("#epedit").click();
@@ -135,8 +180,8 @@ $(document).ready(function() {
     $('#proddetails').find('input, textarea, button, select').prop('disabled',false);
     $("#epsubmit").show();
     $("#epedit").hide();
-    $("#proddesc").focus();
-    $("#proddesc").select();
+    $("#editproddesc").focus();
+    $("#editproddesc").select();
 
   });
 
@@ -184,18 +229,18 @@ $(document).ready(function() {
 
 
 
-  $("#editprodform").submit(function(event) {
+  $(document).on('click', '#epsubmit', function(event) {
     event.preventDefault();
     /* Act on the event */
-    if ($("#proddesc").val()=="")
+    if ($("#editproddesc").val()=="")
     {
       $('.modal-backdrop').remove();
       $("#blank-alert").alert();
       $("#blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#blank-alert").hide();
       });
-      $("#proddesc").focus();
-      $("#proddesc").select();
+      $("#editproddesc").focus();
+      $("#editproddesc").select();
       return false;
     }
 
@@ -219,6 +264,7 @@ $(document).ready(function() {
           $("#editsuccess-alert").hide();
         });
         $("#editproduct").click();
+        return false;
       }
       else if (resp["gkstatus"] ==1)
       {
@@ -228,8 +274,9 @@ $(document).ready(function() {
         $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#duplicate-alert").hide();
         });
-        $("#proddesc").focus();
-        $("#proddesc").select();
+        $("#editproddesc").focus();
+        $("#editproddesc").select();
+        return false;
       }
       console.log("success");
     })
@@ -239,14 +286,14 @@ $(document).ready(function() {
     .always(function() {
       console.log("complete");
     });
-
+event.stopPropogation();
   });
 
 
   $(document).on('click', '#epdelete', function(event) {
     event.preventDefault();
     /* Act on the event */
-    var prodcode= $("#prodselect option:selected").val();
+    prodcode= $("#prodselect option:selected").val();
     $('#m_confirmdel').modal('show').one('click', '#proddel', function (e)
     {
     $.ajax({

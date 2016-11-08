@@ -1,13 +1,14 @@
 <body>
 
-  <div class="container-fluid" style="padding:1 !important; margin:0 !important;">
+  <div class="container-fluid " style="padding:1 !important; maargin:0 !important;" >
 
     <div class=' addprod panel'>
 
+        <div class="panel-body ">
           <form id="addprodform">
-            <div class="panel-heading" style="padding:4 !important; margin:0!important;" >
-            <div class="container-fluid">
-            <label class="sr-only" for="addcatselect">{% trans %}Category{% endtrans %} :</label>
+          <div class="col-sm-6" >
+            <div class="form-group ">
+              <label class="" for="addcatselect">{% trans %}Category{% endtrans %} :</label>
               <select class = "form-control input-sm"  name = "catselect" id="addcatselect" >
                 <option value="" selected >{% trans %}None{% endtrans %}</option>
                 {% for cat in gkresult["category"] %}
@@ -16,13 +17,12 @@
               </select>
 
             </div>
-          </div>
-          <div class="panel-body">
-            
-            <div class=" col-sm-6">
+
+
             <div class="form-group pds">
-              <label for="proddesc" class="">{% trans %}Product Description{% endtrans %} :</label>
-              <input type="text" class="form-control input-sm" name="proddesc"  id="proddesc" placeholder="Alphanumeric">
+              <label for="addproddesc" class="">{% trans %}Product Description{% endtrans %} :</label>
+              <textarea class="form-control" name="addproddesc"  id="addproddesc" placeholder="Alphanumeric" aria-describedby = "proddesctextarea"></textarea>
+              <small id ="proddesctextarea" class="form-text text muted">Double press enter to shift focus to unit of measurement</small>
             </div>
             <div class="form-group pds">
               <label for="uom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label>
@@ -35,18 +35,22 @@
             </div>
           </div>
 
-          <div class="form-group col-sm-6" id="specifications">
 
-            </div>
+          <div class="col-sm-6" id="specifications">
+
+          </div>
 
 
+        </form>
         </div>
         <div class="btn-group-sm panel-footer">
-          <button type="submit" class="btn btn-primary btn-sm" id="apsubmit" name="submit" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
+          <div class="container-fluid">
+
+          <button class="btn btn-success btn-sm" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save">{% trans %}<u>S</u>ave{% endtrans %}</button>
           <button id="apreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+        </div>
 
         </div>
-      </form>
 
 
     </div>

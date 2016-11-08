@@ -1,36 +1,43 @@
 <body>
 <div class="container-fluid" style="padding:1 !important; margin:0 !important;">
     <div class='panel editpr'>
-      <form id="editprodform">
-        <div class="panel-heading" style="padding:4 !important; margin:0!important;" >
-
-        <div class="container-fluid ">
 
 
 
-      <label class="sr-only" for="prodselect">{% trans %}Product{% endtrans %} :</label>
-      <select class = "form-control"  name = "productcode" id="prodselect" >
-        <option value="" disabled selected hidden>{% trans %}Select Product{% endtrans %}</option>
-        {% for prod in gkresult %}
-        <option value="{{prod['productcode']}}">{{prod["productdesc"]}}</option>
-        {% endfor %}
-      </select>
-
-  </div>
-</div>
   <div class="panel-body">
-      <div class="" id="proddetails" disabled>
+    <form id="editprodform">
+      <div class="container-fluid row">
+
+    <div class="form-group  col-sm-12">
+
+
+
+      <label for="prodselect">{% trans %}Product{% endtrans %} :</label>
+        <select class = "form-control"  name = "productcode" id="prodselect" >
+          <option value="" disabled selected hidden>{% trans %}Select Product{% endtrans %}</option>
+          {% for prod in gkresult %}
+          <option value="{{prod['productcode']}}">{{prod["productdesc"]}}</option>
+          {% endfor %}
+        </select>
+
+
+    </div>
+  </div>
+      <div class="container-fluid" id="proddetails" style="padding:1 !important; margin:0 !important;" disabled >
 
       </div>
+    </form>
       </div>
       <div class="btn-group-sm pbutn panel-footer" hidden>
-        <button type="submit" class="btn btn-primary btn-sm" id="epsubmit" name="submit" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
-        <button id="epreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
-        <button id="epdelete" class="btn btn-danger btn-sm" accesskey="d">{% trans %}<u>D</u>elete{% endtrans %}</button>
+        <div class="container-fluid">
+
+        <button class="btn btn-success btn-sm" id="epsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save">{% trans %}<u>S</u>ave{% endtrans %}</button>
         <button id="epedit" class="btn btn-primary btn-sm" accesskey="t">{% trans %}Edi<u>t</u>{% endtrans %}</button>
+        <button id="epdelete" class="btn btn-danger btn-sm" accesskey="d">{% trans %}<u>D</u>elete{% endtrans %}</button>
+        <button id="epreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+      </div>
 
       </div>
-      </form>
       <div id="m_confirmdel" class="modal fade" tabindex="-1" role="dialog">
         <div class="vertical-alignment-helper">
           <div class="modal-dialog modal-sm vertical-align-center">

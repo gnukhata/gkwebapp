@@ -58,9 +58,9 @@ def saveproduct(request):
 		if prd=="type":
 			continue
 		elif prd =="catselect":
-            if request.params[prd] !="" 
-			proddetails["categorycode"] = request.params[prd]
-		elif prd == "proddesc":
+			if request.params[prd] !="":
+				proddetails["categorycode"] = request.params[prd]
+		elif prd == "addproddesc":
 			proddetails["productdesc"] = request.params[prd]
 		elif prd == "uom":
 			proddetails["uomid"] = request.params[prd]
@@ -83,8 +83,8 @@ def editproduct(request):
 			proddetails["productcode"] = request.params[prd]
 		elif prd =="catselect":
 			proddetails["categorycode"] = request.params[prd]
-		elif prd == "proddesc":
-			proddetails["productdesc"] = request.params[prd]
+		elif prd == "editproddesc":
+			proddetails["productdesc"] = request.params[prd];
 		elif prd == "uom":
 			proddetails["uomid"] = request.params[prd]
 		else:
@@ -97,7 +97,6 @@ def editproduct(request):
 @view_config(route_name="product",request_param="type=delete", renderer="json")
 def deleteproduct(request):
 	header={"gktoken":request.headers["gktoken"]}
-	print "thisssssssss: ",request.params["productcode"]
 	result = requests.delete("http://127.0.0.1:6543/products", data=json.dumps({"productcode":request.params["productcode"]}),headers=header)
 	return{"gkstatus":result.json()["gkstatus"]}
 
@@ -106,6 +105,7 @@ def deleteproduct(request):
 def editproducttab(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/products",headers=header)
+	print "thisssssss: ",result.json()["gkresult"]
 	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="product",request_param="type=details", renderer="gkwebapp:templates/editproductspecs.jinja2")
