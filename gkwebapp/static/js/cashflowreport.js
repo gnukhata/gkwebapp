@@ -149,8 +149,6 @@ $(document).ready(function() {
 			$(this).val("");
 		}
 	});
-	$('#cflclearfields').siblings(".bootstrap-table").find(".search").removeClass("pull-left").addClass("pull-right");
-	$('#cflclearfields').siblings(".bootstrap-table").find(".columns-left").removeClass("pull-left").addClass("pull-right").css("margin-right","15px");
 
 	$("#viewprintableversion").click(function(event) {
 

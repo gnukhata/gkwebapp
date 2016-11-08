@@ -244,9 +244,6 @@ $(document).ready(function() {
     }
   });
 
-  $('#pllclearfields').siblings(".bootstrap-table").find(".search").removeClass("pull-left").addClass("pull-right");
-  $('#pllclearfields').siblings(".bootstrap-table").find(".columns-left").removeClass("pull-left").addClass("pull-right").css("margin-right","15px");
-
   $("#print").click(function(event){
       var todatearray = $("#ledtodate").val().split("-");
       var orgtype = sessionStorage.getItem('orgt');
