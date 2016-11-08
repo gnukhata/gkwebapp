@@ -26,6 +26,7 @@ Contributors:
 
 $(document).ready(function() {
   $(".fixed-table-loading").remove();
+  $("#msspinmodal").modal("hide");
   $('tbody tr:first-child td:first-child a').focus();
   $('tbody tr:first-child td:first-child a').closest('tr').addClass('selected');
 
@@ -152,6 +153,7 @@ $(document).ready(function() {
   });
 
 $("#viewprintableversion").click(function(event) {
+  $("#msspinmodal").modal("show");
   $.ajax({
     type: "POST",
     url: "/printvouchers",

@@ -312,6 +312,7 @@ $("#printledger").click(function(event) {
   if ($("#side").val()!="") {
     printdata.side=$("#side").val();
   }
+  $("#msspinmodal").modal("show");
   $.ajax({
     url: '/printledger',
     type: 'POST',

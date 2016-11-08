@@ -60,6 +60,7 @@ $(document).ready(function() {
     {
 
         var code = $("#username option:selected").val();
+        $("#msspinmodal").modal("show");
         $.ajax({
           type: "POST",
           url: "/deleteuser",
@@ -80,6 +81,7 @@ $(document).ready(function() {
                 $("#remsuccess-alert").hide();
               });
               $('.modal-backdrop').remove();
+              $("#msspinmodal").modal("hide");
               return false;
           }
           else if (resp["gkstatus"]==4) {
@@ -88,6 +90,7 @@ $(document).ready(function() {
             $("#accessdenied-alert").hide();
             });
             $("#username").focus();
+            $("#msspinmodal").modal("hide");
             return false;
           }
           else if (resp["gkstatus"]==5) {
@@ -96,6 +99,7 @@ $(document).ready(function() {
             $("#actiondisallowed-alert").hide();
             });
             $("#username").focus();
+            $("#msspinmodal").modal("hide");
             return false;
           }
           else if (resp["gkstatus"]==3) {
@@ -104,6 +108,7 @@ $(document).ready(function() {
             $("#connectionfailed-alert").hide();
             });
             $("#username").focus();
+            $("#msspinmodal").modal("hide");
             return false;
           }
           }

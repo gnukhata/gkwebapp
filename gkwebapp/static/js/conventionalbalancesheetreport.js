@@ -27,7 +27,11 @@ Contributors:
 */
 
 $(document).ready(function() {
+
   oninvoice = 0;
+
+  $("#msspinmodal").modal("hide");
+
   $("#grpbtn").hide();
   $("#realprintbalance").hide();
   $('#liabtable tbody tr:first-child td:eq(0) a').focus();

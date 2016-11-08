@@ -131,6 +131,7 @@ $(document).ready(function() {
       $('#pnl_todate').focus().select();
       return false;
     }
+    $("#msspinmodal").modal("show");
     $.ajax(
       {
         type: "POST",

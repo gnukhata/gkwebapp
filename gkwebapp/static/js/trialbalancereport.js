@@ -27,6 +27,7 @@ Contributors:
 
 $(document).ready(function() {
 	$(".fixed-table-loading").remove();
+	$("#msspinmodal").modal("hide");
 	$('.trialbaltable tbody tr:first-child td:eq(1) a').focus();
 	$('.trialbaltable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 
@@ -77,6 +78,7 @@ $(document).ready(function() {
 			var endyear = sessionStorage.getItem('year2');
 
 			trialbalancetype = $("#trialbaltype").val();
+			$("#msspinmodal").modal("show");
 			$.ajax(
 				{
 					type: "GET",

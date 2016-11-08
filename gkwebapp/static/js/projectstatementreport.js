@@ -160,6 +160,7 @@ $(document).ready(function() {
   $("#printprjstatement").click(function(event) {
     var date = $("#calculateto").val().split("-");
     var newtodate = date[2]+"-"+date[1]+"-"+date[0];
+    $("#msspinmodal").modal("show");
     $.ajax(
       {
         type: "POST",

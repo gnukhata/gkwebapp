@@ -336,7 +336,7 @@ $("title").append(orname);
 $("#printorgname").append(orname);
 $("#printyears").append(styear + " to " + enyear);
 $("#showedituser").click(function(e){
-$("#msspinmodal").modal();
+$("#msspinmodal").modal("show");
 $.ajax({
   url: '/showedituser',
   type: 'POST',
@@ -485,15 +485,15 @@ $.ajax({
     });
 
     $('#changeorg').click(function (e) {
-      $("#msspinmodal").modal();
       sessionStorage.clear();
+      $("#msspinmodal").modal();
       window.location.replace("/");
 
       });
 
       $("#logout").click(function(event) {
-        $("#msspinmodal").modal();
         flag = 1;
+        $("#msspinmodal").modal();
         $.ajax({
           url: '/getorgcode',
           type: 'POST',
@@ -725,7 +725,7 @@ $.ajax({
 
 
   $('#showviewledger').click(function (e) {
-    $("#msspinmodal").modal("show");
+    $("#msspinmodal").modal();
       $.ajax(
       {
 
@@ -843,8 +843,8 @@ $.ajax({
     $("#info").load("/showcashflow");
   });
   $("#showprofitloss").click(function(event){
-    $("#msspinmodal").modal("show");
     var orgtype = sessionStorage.orgt.replace(/\s/g, "+");
+    $("#msspinmodal").modal("show");
     $("#info").load("/showprofitloss?orgtype="+orgtype);
   });
 
@@ -947,6 +947,7 @@ $.ajax({
   });
   $('.themesmenu').click(function(){
     var selectedtheme= $(this).html();
+    $("#msspinmodal").modal("show");
     $.ajax({
       url: '/addtheme',
       type: 'POST',

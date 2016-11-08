@@ -436,7 +436,7 @@ $("#findvoucher").submit(function(event) {
   $(".table").empty();
 
   var search = $("#searchby option:selected").val();
-
+  $("#msspinmodal").modal("show");
   $.ajax({
     type: "POST",
     url: "/getvouchers",

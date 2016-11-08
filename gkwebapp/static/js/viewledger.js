@@ -26,6 +26,7 @@ Contributors:
 
 $(document).ready(function() {
   $('.modal-backdrop').remove();
+  $("#msspinmodal").modal("hide");
   $("#viewledger_accname").focus();
   $('.viewledger_date').autotab('number');
 $("#viewledger_monthly").attr('checked', true);

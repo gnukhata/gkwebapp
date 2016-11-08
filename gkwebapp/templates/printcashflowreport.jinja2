@@ -167,7 +167,11 @@
 	</div>
 	<script type="text/javascript">
 	$(document).ready(function() {
+
 		oninvoice = 0;
+
+		$("#msspinmodal").modal("hide");
+
 		var todatearray = $("#ledtodate").val().split("-");
 		var fromdatearray = $("#ledfromdate").val().split("-");
 		var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];

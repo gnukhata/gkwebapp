@@ -151,7 +151,7 @@ $(document).ready(function() {
 	});
 
 	$("#viewprintableversion").click(function(event) {
-
+		$("#msspinmodal").modal("show");
 		$.ajax(
 			{
 				type: "POST",
