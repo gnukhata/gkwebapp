@@ -184,6 +184,7 @@ $(document).ready(function() {
 
   $("#prjform").submit(function(e)
   {
+    $("#msspinmodal").modal("show");
     if ($.trim($("#prjname").val())=="") {
       $("#blank-alert").alert();
       $("#blank-alert").fadeTo(2250, 500).slideUp(500, function(){

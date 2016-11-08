@@ -268,6 +268,7 @@ $(".dis").attr('disabled', true);
       $('#viewledger_todate').focus().select();
       return false;
     }
+    $("#msspinmodal").modal("show");
     $.ajax(
       {
         type: "POST",

@@ -68,7 +68,7 @@ $(document).ready(function(){
   });
 
   $("#editorganisationform").submit(function(event){
-
+    $("#msspinmodal").modal("show");
     var regdate=""
     var fcraregdate=""
     var regno=""

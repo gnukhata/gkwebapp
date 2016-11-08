@@ -191,6 +191,7 @@ $("#reset").click(function()
 $(document).off("click","#delete").on("click", "#delete", function(event)
 {
   event.preventDefault();
+  $("#msspinmodal").modal("show");
   $('.modal-backdrop').remove();
   $('.modal').modal('hide');
   $('#m_confirmdel').modal('show').one('click', '#accdel', function (e)
@@ -248,7 +249,7 @@ $(document).off("click","#delete").on("click", "#delete", function(event)
 
 $("#editaccountform").submit(function(e)
 {
-
+  $("#msspinmodal").modal("show");
   if ($.trim($("#accountname").val())=="") {
     $("#blank-alert").alert();
     $("#blank-alert").fadeTo(2250, 500).slideUp(500, function(){

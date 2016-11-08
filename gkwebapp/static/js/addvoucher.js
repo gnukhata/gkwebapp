@@ -1235,6 +1235,7 @@ $("#invsel").keyup(function(event) {
     }
     form_data.append("vdetails",JSON.stringify(details));
     form_data.append("transactions",JSON.stringify(output));
+    $("#msspinmodal").modal("show");
     $.ajax({
       type: "POST",
       url: "/addvoucher",

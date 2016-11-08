@@ -156,7 +156,7 @@ $(document).ready(function()
 
 $("#accountform").submit(function(e)
 {
-
+  $("#msspinmodal").modal("show");
   if ($.trim($("#accountname").val())=="") {
     $("#blank-alert").alert();
     $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){

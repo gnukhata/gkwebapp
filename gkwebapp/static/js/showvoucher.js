@@ -52,33 +52,43 @@ $(document).ready(function(){
 })(jQuery);
 
   $('#showcontra').unbind("click").click(function(){
+    $("#msspinmodal").modal("show");
     $(this).callvoucher("contra");
   });
   $('#showjournal').unbind("click").click(function(){
+    $("#msspinmodal").modal("show");
     $(this).callvoucher("journal");
   });
   $('#showpayment').unbind("click").click(function(){
+    $("#msspinmodal").modal("show");
     $(this).callvoucher("payment");
   });
   $('#showreceipt').unbind("click").click(function(){
+    $("#msspinmodal").modal("show");
     $(this).callvoucher("receipt");
   });
   $('#showdebitnote').unbind("click").click(function(){
+    $("#msspinmodal").modal("show");
     $(this).callvoucher("debitnote");
   });
   $('#showcreditnote').unbind("click").click(function(){
+    $("#msspinmodal").modal("show");
     $(this).callvoucher("creditnote");
   });
   $('#showsales').unbind("click").click(function(){
+    $("#msspinmodal").modal("show");
     $(this).callvoucher("sales");
   });
   $('#showpurchase').unbind("click").click(function(){
+    $("#msspinmodal").modal("show");
     $(this).callvoucher("purchase");
   });
   $('#showsalesreturn').unbind("click").click(function(){
+    $("#msspinmodal").modal("show");
     $(this).callvoucher("salesreturn");
   });
   $('#showpurchasereturn').unbind("click").click(function(){
+    $("#msspinmodal").modal("show");
     $(this).callvoucher("purchasereturn");
   });
 });
