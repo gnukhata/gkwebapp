@@ -301,8 +301,8 @@ $('#lclearfields').click(function(){
   $(this).siblings(".bootstrap-table").find(".form-control").val("");
 });
 
-$(".search").children(".form-control").keydown(function(event){
-  if (event.shiftKey && event.keyCode == 8) {
+$(".search").children(".form-control").keyup(function(event){
+  if (event.keyCode == 27) {
     $(this).val("");
   }
 });
