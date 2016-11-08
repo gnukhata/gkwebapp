@@ -82,6 +82,7 @@ $(document).ready(function()
   $("#loginform").submit(function(e)
   {
     e.preventDefault();
+    $("#loginspinmodal").modal();
     if ($.trim($("#login_username").val())=="") {
       $("#login_username-blank-alert").alert();
       $("#login_username-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
