@@ -177,7 +177,15 @@ $("#viewprintableversion").click(function(event) {
 
 });
 
+$('#fvclearfields').click(function(){
+  $(".search").children(".form-control").val("");
+});
 
+$(".search").children(".form-control").keyup(function(event){
+  if (event.keyCode == 27) {
+    $(this).val("");
+  }
+});
 
   $("#vtable").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
