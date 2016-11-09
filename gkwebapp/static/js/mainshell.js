@@ -661,6 +661,9 @@ $.ajax({
   $('#addcategory').click(function (e) {
     $("#info").load("/category");
   });
+  $('#customersupplier').click(function (e) {
+    $("#info").load("/customersuppliers");
+  });
   $('#addunit').click(function (e) {
     $("#info").load("/unitofmeasurements");
   });
