@@ -27,15 +27,11 @@ Contributors:
 */
 
 $(document).ready(function(){
-  $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');
-
-  console.log($("#navhead").height());
-  var oninvoice = 0;
-
-
-  $("#msspinmodal").modal("hide");
 
   $('.modal-backdrop').remove();
+  var oninvoice = 0;
+  $("#msspinmodal").modal("hide");
+  $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');
 
   $(document).keydown(function(event) {
         if(event.ctrlKey && event.keyCode == 83) {

@@ -25,7 +25,7 @@ Contributors:
 "Dinesh Sutar" <dinesh.sutar@openmailbox.org>
 */
 
-$(document).ready(function(){
+$(document).ready(function(){;
 $("#selectorg").load("/existingorg");
 $("#createorg").load("/createorg");
   $(document).keydown(function(event) {

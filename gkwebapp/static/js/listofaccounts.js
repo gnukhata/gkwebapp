@@ -59,7 +59,7 @@ $(document).ready(function() {
   var nextindex;
   var previndex;
 
-  
+
   $('#viewprintableversion').click(function (e) {
     $("#msspinmodal").modal("show");
     $.ajax({

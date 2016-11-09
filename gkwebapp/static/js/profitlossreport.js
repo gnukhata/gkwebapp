@@ -29,6 +29,7 @@ Contributors:
 $(document).ready(function() {
   oninvoice = 0;
   $(".fixed-table-loading").remove();
+  $('.modal-backdrop').remove();
   $("#msspinmodal").modal("hide");
   $("#realprintpnl").hide();
   $('#expensetbl tbody tr:first-child td:eq(1) a').focus();

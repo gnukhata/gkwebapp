@@ -28,6 +28,7 @@ Contributors:
 
 $(document).ready(function() {
   $('.modal-backdrop').remove();
+  $("#msspinmodal").modal("hide");
   $(".fixed-table-loading").remove();
 
   $(' #ledgertable tbody tr:first-child td:eq(1) a').focus();
