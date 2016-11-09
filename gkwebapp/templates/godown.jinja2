@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% trans %}GNUKhata | Godown{% endtrans %}</title>
+  <style media="screen">
+  .fixed-table td {
+      font-size: 75%;
+      padding: 4 !important;
+      margin: 4 !important;
+    }
+  .fixed-table th {
+      font-size: 85%;
+  }
+  .fixed-table tbody {
+      display:block;
+      height: calc(100vh - 25em);
+      overflow-y:scroll;
+  }
+
+  .fixed-table thead ,.fixed-table tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  .fixed-table thead {
+      width: calc( 100% - 0.75em )
+  }
+  .fixed-edit-table td {
+      font-size: 75%;
+      padding: 4 !important;
+      margin: 4 !important;
+    }
+  .fixed-edit-table th {
+      font-size: 85%;
+  }
+  .fixed-edit-table tbody {
+      display:block;
+      height: calc(100vh - 29em);
+      overflow-y:scroll;
+  }
+
+  .fixed-edit-table thead ,.fixed-edit-table tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  .fixed-edit-table thead {
+      width: calc( 100% - 0.75em )
+  }
+
+  </style>
+</head>
+<body>
+  <div class="container-fluid row">
+    <ul class="nav nav-pills" role="tablist">
+      <li role="presentation" class="active"><a href="#godown_create" aria-controls="godown_create" role="tab" data-toggle="tab">{% trans %}Create Godown{% endtrans %}</a></li>
+      <li role="presentation"><a href="#godown_edit" aria-controls="godown_edit" role="tab" data-toggle="tab">{% trans %}Edit Godown{% endtrans %}</a></li>
+    </ul>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="godown_create">
+
+      </div>
+      <div role="tabpanel" class="tab-pane" id="godown_edit">
+
+      </div>
+    </div>
+
+
+  </div>
+</div>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/godown.js')}}"></script>
+</body>
+</html>

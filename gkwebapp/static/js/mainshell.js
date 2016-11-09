@@ -242,9 +242,9 @@ $(document).ready(function(){
           $("#signout").click();
         }
       });
-      $('#addgodown').click(function (e) {
+      $('#godown').click(function (e) {
          $.ajax({
-           url: '/showgodown',
+           url: '/godown',
            type: 'POST',
            global: false,
            async: false,
@@ -255,26 +255,6 @@ $(document).ready(function(){
            $("#info").html(resp);
          })
        });
-
-       $('#editgodown').click(function (e) {
-           $.ajax(
-           {
-           type: "POST",
-           url: "/showeditgodown",
-           global: false,
-           async: false,
-           datatype: "text/html",
-           beforeSend: function(xhr)
-             {
-
-               xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-             },
-           success: function(resp)
-           {
-             $("#info").html(resp);
-           }
-           });
-         });
       $("#themes").keydown(function(event){
         if(event.which == 39){
           $("#toolbar").click();

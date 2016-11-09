@@ -34,29 +34,23 @@ from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import os
 
+@view_config(route_name="godown",renderer="gkwebapp:templates/godown.jinja2")
+def showcategory(request):
+	return {"status":True}
+
 @view_config(route_name="showgodown", renderer="gkwebapp:templates/creategodown.jinja2")
 def showgodown(request):
-	return {"gkresult":request.params}
+	return {"status":True}
 
 @view_config(route_name="showmultigodown", renderer="gkwebapp:templates/multiplegodowns.jinja2")
 def showmultigodown(request):
-	return {"gkresult":request.params}
-
-@view_config(route_name="godownexists", renderer="json")
-def godownexists(request):
-	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/godown", headers=header)
-	if(result.json()["gkstatus"] == 0):
-		gkdata = result.json()["gkresult"]
-		for record in gkdata:
-			if(record["goname"] == request.params["godownname"] and record["goaddr"] == request.params["godownaddress"] and record["gocontact"] == request.params["godowncontact"]):
-				return {"gkstatus":1}
-	return {"gkstatus":result.json()["gkstatus"]}
+	return {"status":True}
 
 @view_config(route_name="addgodown", renderer="json")
 def addgodown(request):
 	header={"gktoken":request.headers["gktoken"]}
 	gkdata = {"goname":request.params["godownname"],"goaddr":request.params["godownaddress"], "gocontact":request.params["godowncontact"]}
+	print gkdata
 	result = requests.post("http://127.0.0.1:6543/godown", data =json.dumps(gkdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 
