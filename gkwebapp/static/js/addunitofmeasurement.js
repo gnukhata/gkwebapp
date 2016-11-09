@@ -44,6 +44,16 @@ $(document).ready(function() {
       $("#conversion_div").hide();
     }
   });
+  $("#add_unit_reset").click(function(event) {
+    $("a[href='#unit_create']").click();
+  });
+  $(document).keyup(function(event) {
+    if(event.which == 45) {
+      $("#unit_save").click();
+      event.preventDefault();
+      return false;
+    }
+  });
   $("#unit_save").click(function(event) {
     if ($.trim($('#unit_name').val())=="") {
       $("#unit-blank-alert").alert();
@@ -96,6 +106,6 @@ $(document).ready(function() {
     .always(function() {
       console.log("complete");
     });
-
+    event.stopPropogation();
   });
 });
