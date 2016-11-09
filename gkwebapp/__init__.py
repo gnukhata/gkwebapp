@@ -66,6 +66,8 @@ def main(global_config, **settings):
 	config.add_route('createorg', '/createorg')
 	config.add_route('yearcode', '/yearcode')
 	config.add_route('login', '/login')
+	config.add_route('catsearch', '/catsearch')
+	config.add_route('product', '/product')
 	config.add_route('updaterecon', '/updaterecon')
 	config.add_route('orgdata', '/orgdata')
 	config.add_route('closebooks', '/closebooks')

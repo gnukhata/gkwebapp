@@ -1,0 +1,27 @@
+
+{% if (gkresult|length)>0 %}
+
+
+
+{% for spec in gkresult %}
+<div class="form-group">
+  <label for="{{spec['spcode']}}" class="">{{spec["attrname"]}} :</label>
+  {% if spec["attrtype"]==0 %}
+
+  <input type="text" class="form-control input-sm" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" placeholder="Alphanumeric">
+  {% elif spec["attrtype"]==1 %}
+  <input type="text" class="form-control input-sm numtype" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" placeholder="Alphanumeric">
+  {% elif spec["attrtype"]==2 %}
+  <input type="text" class="form-control input-sm " name="{{spec['spcode']}}"  id="{{spec['spcode']}}" placeholder="Date">
+  {% elif spec["attrtype"]==3 %}
+  <label class="radio-inline"><input value = "1" class="radtype" type="radio" name="{{spec['spcode']}}">{% trans %}Yes{% endtrans %}</label>
+  <label class="radio-inline"><input value = "0" class=" radtype" type="radio" name="{{spec['spcode']}}">{% trans %}No{% endtrans %}</label>
+  {% endif %}
+</div>
+
+{% endfor %}
+
+
+
+
+{% endif %}
