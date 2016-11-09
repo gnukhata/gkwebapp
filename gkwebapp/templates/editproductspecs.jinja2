@@ -2,16 +2,16 @@
 
   <div class="form-group">
     <label for="editproddesc" class="">{% trans %}Product Description{% endtrans %} :</label>
-    <input type='text' class="form-control input-sm" name="editproddesc"  id="editproddesc" value="{{gkresult['proddesc']['productdesc']}}" placeholder="Alphanumeric">
+    <input type='text' class="form-control input-sm" name="editproddesc"  id="editproddesc" value="{{proddesc['productdesc']}}" placeholder="Alphanumeric">
 
   </div>
   <div class="form-group">
     <label for="catselect" class="">{% trans %}Category{% endtrans %} :</label>
     <select class = "form-control input-sm "  name = "catselect" id="editcatselect" >
-      {% for cat in gkresult["category"] %}
-      {% if cat['categorycode']== gkresult["proddesc"]["categorycode"] %}
+      {% for cat in category %}
+      {% if cat['categorycode']== proddesc["categorycode"] %}
       <option value="{{cat['categorycode']}}" selected>{{cat["categoryname"]}}</option>
-      {% elif gkresult["proddesc"]["categorycode"]== None %}
+      {% elif proddesc["categorycode"]== None %}
       <option value="" selected>{% trans %}None{% endtrans %}</option>
       {% else %}
       <option value="{{cat['categorycode']}}" >{{cat["categoryname"]}}</option>
@@ -22,8 +22,8 @@
   <div class="form-group">
     <label for="uom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label>
     <select class = "form-control input-sm "  name = "uom" id="edituom" >
-      {% for uom in gkresult["uom"] %}
-      {% if uom["uomid"]== gkresult["proddesc"]["uomid"] %}
+      {% for uom in uom %}
+      {% if uom["uomid"]== proddesc["uomid"] %}
       <option value="{{uom['uomid']}}" selected>{{uom["unitname"]}}</option>
       {% else %}
       <option value="{{uom['uomid']}}">{{uom["unitname"]}}</option>
@@ -40,6 +40,7 @@
           <th class="col-xs-4">{% trans %}State(optional){% endtrans %}</th>
           <th class="col-xs-3">{% trans %}Rate{% endtrans %}</th>
           <th class="col-xs-1"></th>
+          <th class=""></th>
         </tr>
       </thead>
       <tbody>
@@ -52,23 +53,23 @@
 <div id="extsp">
 
 <div id = "editspecifications" class="col-sm-6">
-
+    {% if proddesc["categorycode"]!= None %}
 
       <div class="form-group ">
-        {% for spec in gkresult["prodspecs"] %}
-        {% for pdesc in gkresult["proddesc"]["specs"] %}
+        {% for spec in prodspecs %}
+        {% for pdesc in proddesc["specs"] %}
         {% if spec['spcode']|int == pdesc|int %}
         <div class="form-group">
 
           <label for="{{spec['spcode']}}" class="">{{spec["attrname"]}} :</label>
           {% if spec["attrtype"]==0 %}
-          <input type="text" class="form-control input-sm" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" value="{{gkresult['proddesc']['specs'][pdesc]}}" placeholder="Alphanumeric">
+          <input type="text" class="form-control input-sm" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" value="{{proddesc['specs'][pdesc]}}" placeholder="Alphanumeric">
           {% elif spec["attrtype"]==1 %}
-          <input type="text" class="form-control input-sm numtype" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" value="{{gkresult['proddesc']['specs'][pdesc]}}" placeholder="Numeric">
+          <input type="text" class="form-control input-sm numtype" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" value="{{proddesc['specs'][pdesc]}}" placeholder="Numeric">
           {% elif spec["attrtype"]==2 %}
-          <input type="text" class="form-control input-sm " name="{{spec['spcode']}}"  id="{{spec['spcode']}}" value="{{gkresult['proddesc']['specs'][pdesc]}}" placeholder="Date">
+          <input type="text" class="form-control input-sm " name="{{spec['spcode']}}"  id="{{spec['spcode']}}" value="{{proddesc['specs'][pdesc]}}" placeholder="Date">
           {% elif spec["attrtype"]==3 %}
-          {% if gkresult['proddesc']['specs'][pdesc]|int ==1 %}
+          {% if proddesc['specs'][pdesc]|int ==1 %}
           <label class="radio-inline"><input value = "1" class="radtype" type="radio" name="{{spec['spcode']}}" checked>{% trans %}Yes{% endtrans %}</label>
           <label class="radio-inline"><input value = "0" class=" radtype" type="radio" name="{{spec['spcode']}}">{% trans %}No{% endtrans %}</label>
           {% else %}
@@ -83,6 +84,7 @@
         {% endfor %}
       </div>
 
+      {% endif %}
 
 
 </div>

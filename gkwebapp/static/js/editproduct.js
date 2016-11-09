@@ -1,4 +1,5 @@
 $(document).ready(function() {
+$('.modal-backdrop').remove();
   $("#prodselect").focus();
   var sel1=0;
   var sel2=0;
@@ -111,8 +112,8 @@ $(document).ready(function() {
   $("#prodselect").change(function(event) {
     /* Act on the event */
     prodcode= $("#prodselect option:selected").val();
-    if (prodcode!="")
-    {
+
+        {
 
             $.ajax({
               url: '/product?type=details',
@@ -130,10 +131,10 @@ $(document).ready(function() {
             {
               $("#proddetails").html("");
               $("#proddetails").html(resp);
-              $('#proddetails').find('input, textarea, button, select').prop('disabled',true);
               $(".pbutn").show();
               $("#epsubmit").hide();
               $("#epedit").show();
+              $('#proddetails').find('input, textarea, button, select').prop('disabled',true);
               catcode= $("#editcatselect option:selected").val();
               console.log("success");
             })
@@ -219,7 +220,25 @@ $(document).ready(function() {
           $('#product_edit_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
         }
         $(".product_tax_disable").prop('disabled',true);
-        
+        $('#product_edit_tax_table tbody').append('<tr class="rowval blank" value="New">'+
+        '<td class="col-xs-4">'+
+        '<input type="text" class="form-control product_new_name input-sm tax_name" placeholder="Tax Name" value="">'+
+        '</td>'+
+        '<td class="col-xs-4">'+
+        '<select class="form-control product_new_state input-sm tax_state" >'+
+        '<option value="">None</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>'+
+        '</select>'+
+        '</td>'+
+        '<td class="col-xs-3">'+
+        '<input class="form-control product_new_rate input-sm tax_rate text-right"  placeholder="Rate" value="">'+
+        '</td>'+
+        '<td class="col-xs-1">'+
+        '</td>'+
+        '<td class="">'+
+        '<input type="hidden" class="form-control product_row_val input-sm tax_name" value="New">'+
+        '</td>'+
+        '</tr>');
+
       })
       .fail(function() {
         console.log("error");
@@ -228,9 +247,11 @@ $(document).ready(function() {
         console.log("complete");
       });
       category = $("#editcatselect option:selected").val();
-      existingcatspecs = $("#editspecifications").clone();
+      existingcatspecs = $("#extsp").clone();
 
     }
+
+
 
 
   });
@@ -288,8 +309,8 @@ $(".product_tax_disable").prop('disabled',false);
             })
             .done(function(resp)
             {
-              $("#extsp").html("");
-              $("#extsp").html(resp);
+              $("#editspecifications").html("");
+              $("#editspecifications").html(resp);
               console.log("success");
             })
             .fail(function() {
@@ -320,7 +341,7 @@ $(".product_tax_disable").prop('disabled',false);
         $(".catsp").remove();
 
         for (tax of resp["gkresult"]) {
-          $('#product_edit_tax_table tbody').append('<tr class="catsp" value="'+tax["taxid"]+'">'+
+          $('#product_edit_tax_table tbody').prepend('<tr class="catsp" value="'+tax["taxid"]+'">'+
           '<td class="col-xs-4">'+
           '<input type="text" class="form-control product_cat_tax_disable input-sm tax_name" placeholder="Tax Name" value="'+tax["taxname"]+'">'+
           '</td>'+
@@ -351,6 +372,9 @@ $(".product_tax_disable").prop('disabled',false);
         '<input class="form-control product_new_rate input-sm tax_rate text-right"  placeholder="Rate" value="">'+
         '</td>'+
         '<td class="col-xs-1">'+
+        '</td>'+
+        '<td class="">'+
+        '<input type="hidden" class="form-control product_row_val input-sm tax_name" value="New">'+
         '</td>'+
         '</tr>');
 
@@ -474,7 +498,7 @@ $(".product_tax_disable").prop('disabled',false);
           $('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').focus();
           return false;
         }
-        $('#product_edit_tax_table tbody').append('<tr class="rowval" value="new">'+
+        $('#product_edit_tax_table tbody').append('<tr class="rowval blank" value="new">'+
         '<td class="col-xs-4">'+
         '<input type="text" class="form-control input-sm tax_name product_new_name" placeholder="Tax Name">'+
         '</td>'+
@@ -487,7 +511,10 @@ $(".product_tax_disable").prop('disabled',false);
         '<input class="form-control input-sm tax_rate text-right product_new_rate"  placeholder="Rate">'+
         '</td>'+
         '<td class="col-xs-1">'+
-        '<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+
+        '</td>'+
+        '<td class="">'+
+        '<input type="hidden" class="form-control product_row_val input-sm tax_name" value="New" >'+
         '</td>'+
         '</tr>');
         $(".tax_rate").numeric();
@@ -549,12 +576,13 @@ $(".product_tax_disable").prop('disabled',false);
     var taxes = [];
     $("#product_edit_tax_table tbody tr").each(function(){
       var obj = {};
-
+      if ($(".product_new_name",this).val()!="") {
+      obj.taxrowid = $(".product_row_val",this).val();
       obj.taxname = $(".product_new_name",this).val();
       obj.state = $(".product_new_state",this).val();
       obj.taxrate = $(".product_new_rate",this).val();
-      obj.row = $(this).attr("value");
       taxes.push(obj);
+    }
 
 
     });
@@ -607,9 +635,11 @@ event.stopPropogation();
   });
 
 
-  $(document).on('click', '#epdelete', function(event) {
+  $('#epdelete').click(function(event) {
     event.preventDefault();
     /* Act on the event */
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
     prodcode= $("#prodselect option:selected").val();
     $('#m_confirmdel').modal('show').one('click', '#proddel', function (e)
     {
@@ -627,8 +657,8 @@ event.stopPropogation();
     })
     .done(function(resp) {
       if (resp["gkstatus"] ==0) {
-        $("#editproduct").click();
         $('.modal-backdrop').remove();
+        $("#editproduct").click();
         $("#deletesuccess-alert").alert();
         $("#deletesuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#deletesuccess-alert").hide();

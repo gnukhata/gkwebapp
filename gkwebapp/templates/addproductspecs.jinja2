@@ -15,7 +15,7 @@
   <input type="text" class="form-control input-sm " name="{{spec['spcode']}}"  id="{{spec['spcode']}}" placeholder="Date">
   {% elif spec["attrtype"]==3 %}
   <label class="radio-inline"><input value = "1" class="radtype" type="radio" name="{{spec['spcode']}}">{% trans %}Yes{% endtrans %}</label>
-  <label class="radio-inline"><input value = "0" class=" radtype" type="radio" name="{{spec['spcode']}}">{% trans %}No{% endtrans %}</label>
+  <label class="radio-inline"><input value = "0" class=" radtype" type="radio" name="{{spec['spcode']}}" checked>{% trans %}No{% endtrans %}</label>
   {% endif %}
 </div>
 
