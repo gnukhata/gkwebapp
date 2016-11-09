@@ -85,6 +85,9 @@ $(document).ready(function() {
             $("#goaddress").focus();
             $("#goaddress").select();
         }
+        if (event.which == 38) {
+          $("#editgoddet").focus();
+        }
     });
 
     $("#goaddress").keydown(function(event) {
@@ -106,6 +109,10 @@ $(document).ready(function() {
         if (event.which == 38) {
             $("#goaddress").select();
             $("#goaddress").focus();
+        }
+        if (event.which == 13) {
+          event.preventDefault();
+          $("#egdnsubmit").click();
         }
     });
 
