@@ -115,7 +115,13 @@ $(document).ready(function() {
     $("#unit_edit_conversion_rate").prop("disabled", false);
 
   });
-
+  $(document).keyup(function(event) {
+    if(event.which == 45) {
+      $("#unit_edit_save").click();
+      event.preventDefault();
+      return false;
+    }
+  });
   $("#unit_edit_save").click(function(event) {
     if ($.trim($('#unit_edit_name').val())=="") {
       $("#unit-blank-alert").alert();
@@ -145,6 +151,14 @@ $(document).ready(function() {
         });
         return false;
       }
+      else if(resp["gkstatus"] == 1){
+        $("#unit_edit_name").focus();
+        $("#duplicate-alert").alert();
+        $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("duplicate-alert").hide();
+        });
+        return false;
+      }
 
       else {
         $("#unit_edit_name").focus();
@@ -161,7 +175,7 @@ $(document).ready(function() {
     .always(function() {
       console.log("complete");
     });
-
+    event.stopPropogation();
   });
   $("#unit_delete").click(function(event) {
     event.preventDefault();
@@ -184,7 +198,6 @@ $(document).ready(function() {
           success: function(resp)
           {
             if (resp["gkstatus"]==0) {
-              $("#unit_reset").click();
               $('.modal-backdrop').remove();
               $("#delsuccess-alert").alert();
               $("#delsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
