@@ -116,6 +116,26 @@
         </div>
       </div>
 
+      <div id="confirm_del" class="modal fade" tabindex="-1" role="dialog">
+        <div class="vertical-alignment-helper">
+          <div class="modal-dialog modal-sm vertical-align-center">
+            <div class="modal-content">
+              <div class="modal-header">
+
+                <h4 class="modal-title">{% trans %}Delete?{% endtrans %}</h4>
+              </div>
+              <div class="modal-body">
+                <p>{% trans %}Are you sure?{% endtrans %}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+                <button type="button" id="accdel" data-dismiss="modal" class="btn btn-danger">{% trans %}Delete{% endtrans %}</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div>
+      </div><!-- /.modal -->
+
     </div>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editcategory.js')}}"></script>
   </body>
