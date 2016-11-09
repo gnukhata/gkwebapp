@@ -26,7 +26,9 @@ Contributors:
 */
 $(document).ready(function() {
     $('.modal-backdrop').remove();
+    $("#egdnsubmit").hide();
     $("#editgoddet").bind("change keyup", function() {
+        $("#egdnsubmit").hide();
         var goid = $("#editgoddet option:selected").val();
         var goname = $("#editgoddet option:selected").text();
         $.ajax({
@@ -65,7 +67,7 @@ $(document).ready(function() {
         $("#goaddress").prop("disabled", false);
         $("#gocontact").prop("disabled", false);
         $("#edit").hide();
-        $("#goname").focus().select();
+        $("#goname").focus();
     });
 
     $("#editgoddet").keyup(function(e) {
@@ -78,12 +80,11 @@ $(document).ready(function() {
 
     $("#goname").keydown(function(event) {
         if (event.which == 40) {
-            $("#goaddress").select().focus();
+            $("#gocontact").focus();
         }
         if (event.which == 13) {
             event.preventDefault();
-            $("#goaddress").focus();
-            $("#goaddress").select();
+            $("#gocontact").focus();
         }
         if (event.which == 38) {
           $("#editgoddet").focus();
@@ -91,24 +92,9 @@ $(document).ready(function() {
     });
 
     $("#goaddress").keydown(function(event) {
-        if (event.which == 40) {
-            $("#gocontact").select().focus();
-        }
         if (event.which == 38) {
             $("#goname").select();
             $("#goname").focus();
-        }
-        if (event.which == 13) {
-            event.preventDefault();
-            $("#gocontact").focus();
-            $("#gocontact").select();
-        }
-    });
-
-    $("#gocontact").keydown(function(event) {
-        if (event.which == 38) {
-            $("#goaddress").select();
-            $("#goaddress").focus();
         }
         if (event.which == 13) {
           event.preventDefault();
@@ -116,8 +102,22 @@ $(document).ready(function() {
         }
     });
 
+    $("#gocontact").keydown(function(event)
+    {
+        if (event.which == 38) {
+            $("#goname").focus();
+        }
+        if (event.which == 40) {
+            $("#gocontact").select().focus();
+        }
+        if (event.which == 13) {
+          event.preventDefault();
+          $("#goaddress").focus();
+        }
+    });
+
     $("#reset").click(function() {
-        $('#editgodown').click();
+        $("a[href ='#godown_edit']").click();
     });
 
 

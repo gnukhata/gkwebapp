@@ -50,17 +50,17 @@
 				</select>
 			</div>
 			<div id="editgodownform" hidden>
-				<div class="from-group">
-					<label for="godownname" id="godownname">{% trans %}Godown Name{% endtrans %} :</label>
+				<div class="form-group">
+					<label for="goname">{% trans %}Godown Name{% endtrans %} :</label>
 					<input type="text" id="goname" name="goname" class="form-control input-sm" value=""></input>
 				</div>
 				<div class="form-group">
-					<label for="godownaddress" id="godownaddress">{% trans %}Godown Address{% endtrans %} :</label>
-					<input type="text" id="goaddress" name="goaddress" class="form-control input-sm" value=""></input>
+					<label for="gocontact">{% trans %}Godown Contact{% endtrans %} :</label>
+					<input type="text" id="gocontact" class="form-control input-sm" name="gocontact"></input>
 				</div>
 				<div class="form-group">
-					<label for="godowncontact" id="godowncontact">{% trans %}Godown Contact{% endtrans %} :</label>
-					<input type="text" id="gocontact" class="form-control input-sm" name="gocontact"></input>
+					<label for="goaddress">{% trans %}Godown Address{% endtrans %} :</label>
+					<textarea id="goaddress" name="goaddress" class="form-control input-sm" value=""></textarea>
 				</div>
 				<input type="hidden" id="goid" class="form-control" name="goid" ></input>
 			</div>
