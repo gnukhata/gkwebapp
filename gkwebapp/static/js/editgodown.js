@@ -26,12 +26,6 @@ Contributors:
 */
 $(document).ready(function() {
     $('.modal-backdrop').remove();
-    $("#editgodowname").focus();
-    $("#editgodownform").validate();
-    $("#editgodownform").hide();
-    $("#alertmsg").hide();
-    $("#submit").hide();
-    $("#delete").hide();
     $("#editgoddet").bind("change keyup", function() {
         var goid = $("#editgoddet option:selected").val();
         var goname = $("#editgoddet option:selected").text();
@@ -57,7 +51,7 @@ $(document).ready(function() {
                 $("#gocontact").prop("disabled", true);
                 $("#goid").val(goddetails["godownid"]);
                 $("#editgodownform").show();
-                $("#alertmsg").hide();
+                $("#form-footer").show();
                 $("#delete").show();
                 $("#edit").show();
             }
@@ -66,11 +60,10 @@ $(document).ready(function() {
 
     $("#edit").click(function(event) {
         event.preventDefault();
-        $("#submit").show();
+        $("#egdnsubmit").show();
         $("#goname").prop("disabled", false);
         $("#goaddress").prop("disabled", false);
         $("#gocontact").prop("disabled", false);
-        $("#alertmsg").hide();
         $("#edit").hide();
         $("#goname").focus().select();
     });
@@ -167,8 +160,13 @@ $(document).ready(function() {
             $("#editgoddet").focus();
         });
     });
-
-    $("#editgodownform").submit(function(e) {
+    $(document).keydown(function(e){
+      if (e.which == 45) {
+        e.preventDefault();
+        $("#egdnsubmit").click();
+      }
+    });
+    $("#egdnsubmit").click(function(e) {
 
         if ($.trim($("#goname").val()) == "") {
             $("#blank-alert").alert();
