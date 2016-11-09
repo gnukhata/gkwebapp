@@ -43,6 +43,19 @@ def showcreatetransfernote(request):
 	godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
 	return {"products": products.json()["gkresult"],"godowns":godowns.json()["gkresult"]}
 
-@view_config(route_name="transfernotes",request_param="action=save",renderer="json")
+@view_config(route_name="transfernotes",request_param="action=showedit",renderer="gkwebapp:templates/edittransfernote.jinja2")
+def showedittransfernote(request):
+	header={"gktoken":request.headers["gktoken"]}
+	products = requests.get("http://127.0.0.1:6543/products", headers=header)
+	godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	return {"products": products.json()["gkresult"],"godowns":godowns.json()["gkresult"]}
+
+@view_config(route_name="customersuppliers",request_param="action=get",renderer="json")
+def getcustomersupplier(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/transfernote?qty=single&custid=%d"%(int(request.params["custid"])), headers=header)
+	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
+
+@view_config(route_name="transfernotes",request_param="action=get",renderer="json")
 def savetransfernote(request):
-    header={"gktoken":request.headers["gktoken"]}
+	header={"gktoken":request.headers["gktoken"]}
