@@ -59,22 +59,11 @@ $(document).ready(function() {
   $("#deliverychallan_challanno").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#deliverychallan_inout").focus().select();
+      $("#deliverychallan_godown").focus().select();
     }
     if (event.which==38) {
       event.preventDefault();
       $("#deliverychallan_year").focus().select();
-    }
-  });
-
-  $("#deliverychallan_inout").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#deliverychallan_godown").focus().select();
-    }
-    if (event.which==38 && $("#deliverychallan_inout option:selected").index()==0) {
-      event.preventDefault();
-      $("#deliverychallan_challanno").focus().select();
     }
   });
 
@@ -85,14 +74,14 @@ $(document).ready(function() {
     }
     if (event.which==38 && $("#deliverychallan_godown option:selected").index()==0) {
       event.preventDefault();
-      $("#deliverychallan_inout").focus().select();
+      $("#deliverychallan_challanno").focus().select();
     }
   });
 
   $("#deliverychallan_consignment").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $('#deliverychallan_schedule').focus().select();
+      $('#deliverychallan_product_table tbody tr:first td:eq(0) select').focus();
     }
     if (event.which==38) {
       event.preventDefault();
@@ -100,26 +89,7 @@ $(document).ready(function() {
     }
   });
 
-  var delta = 500;
-  var lastKeypressTime = 0;
-  $("#deliverychallan_schedule").keydown(function(event) {
-    if (event.which==13)
-    {
-      var thisKeypressTime = new Date();
-      if ( thisKeypressTime - lastKeypressTime <= delta )
-      {
-        $('#deliverychallan_product_table tbody tr:first td:eq(0) select').focus();
-        // optional - if we'd rather not detect a triple-press
-        // as a second double-press, reset the timestamp
-        thisKeypressTime = 0;
-      }
-      lastKeypressTime = thisKeypressTime;
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#deliverychallan_consignment").focus();
-    }
-  });
+
 
   $(document).keydown(function(event) {
     if(event.which == 45) {
@@ -137,7 +107,7 @@ $(document).ready(function() {
         type: 'POST',
         dataType: 'json',
         async : false,
-        data : {"orderno":$("#deliverychallan_purchaseorder option:selected").val()},
+        data : {"orderid":$("#deliverychallan_purchaseorder option:selected").val()},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -206,14 +176,7 @@ $(document).ready(function() {
     }
   });
 
-  $("#deliverychallan_customer").change(function(){
-    var selected = $("option:selected", this);
-    if(selected.parent()[0].id == "custgroup"){
-      $("#deliverychallan_inout").val("15");
-    } else if(selected.parent()[0].id == "supgroup"){
-      $("#deliverychallan_inout").val("9");
-    }
-  });
+
 
   $(document).off("keydown",".product_name").on("keydown",".product_name",function(event)
   {
@@ -423,18 +386,24 @@ $(document).ready(function() {
       obj.qty = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(1) input").val();
       products.push(obj);
     }
+      if($("#deliverychallan_customer option:selected").parent()[0].id == "custgroup"){
+        var inout = 15;
+      } else if($("#deliverychallan_customer option:selected").parent()[0].id == "supgroup"){
+        var inout = 9;
+      }
     $.ajax({
       url: '/deliverychallan?action=save',
       type: 'POST',
       dataType: 'json',
       async : false,
-      data: {"orderno": $("#deliverychallan_purchaseorder option:selected").val(),
+      data: {"orderid": $("#deliverychallan_purchaseorder option:selected").val(),
       "custid":$("#deliverychallan_customer option:selected").val(),
       "dcno":$("#deliverychallan_challanno").val(),
       "dcdate":$("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val(),
-      "inout":$("#deliverychallan_inout option:selected").val(),
+      "inout":inout,
       "goid":$("#deliverychallan_godown option:selected").val(),
-      "products":JSON.stringify(products)},
+      "products":JSON.stringify(products),
+      "dcflag":$("#deliverychallan_consignment option:selected").val()},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);

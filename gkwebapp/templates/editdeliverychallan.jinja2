@@ -11,7 +11,19 @@
 
     <div class="panel shadow deliverychallan_panel">
       <div class="panel-body">
-        <div class="col-md-5">
+        <div class="container-fluid row">
+
+          <div class="form-group col-md-5">
+            <label for="deliverychallan_list">{% trans %}Delivery Note:{% endtrans %}</label>
+            <select class="form-control input-sm" id="deliverychallan_list">
+              <option value="" disabled selected hidden>{% trans %}Select Delivery Note{% endtrans %}</option>
+              {% for dc in dcs %}
+              <option value="{{dc['dcid']}}">{{dc["dcno"]}}, {{dc["dcdate"]}}, {{dc["custname"]}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="col-md-5 deliverychallan_edit_div" hidden>
           <div class="alert alert-danger" id="custsup-blank-alert"  aria-live="rude" role="alert" hidden>
 
             <label for="vno">{% trans %}Please select a customer/supplier!{% endtrans %}</label>
@@ -100,7 +112,7 @@
               </label>
             </div>
           </div>
-          <div class="col-md-7" id="deliverychallan_product_div">
+          <div class="col-md-7 deliverychallan_edit_div" id="deliverychallan_product_div" hidden>
             <div class="alert alert-danger" id="product-blank-alert"  aria-live="rude" role="alert" hidden>
 
               <label for="vno">{% trans %}Please select a product!{% endtrans %}</label>
@@ -119,22 +131,6 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td class="col-xs-9">
-                    <select class="form-control input-sm product_name">
-                      <option value="" disabled hidden selected>Select Product</option>
-                      {% for product in products %}
-                      <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
-                      {% endfor %}
-                    </select>
-                  </td>
-                  <td class="col-xs-2">
-                    <input type="text" class="deliverychallan_product_quantity form-control input-sm text-right" value="">
-                  </td>
-                  <td class="col-xs-1">
-
-                  </td>
-                </tr>
               </tbody>
             </table>
             </div>

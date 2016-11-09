@@ -39,13 +39,19 @@ def showdeliverychallan(request):
 @view_config(route_name="deliverychallan",request_param="action=showadd",renderer="gkwebapp:templates/adddeliverychallan.jinja2")
 def showadddeliverychallan(request):
 	header={"gktoken":request.headers["gktoken"]}
-	podata = requests.get("http://127.0.0.1:6543/purchaseorder?po=all", headers=header)
+	#podata = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=16", headers=header)
+	#sodata = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=20", headers=header)
 	customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
 	suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
 	products = requests.get("http://127.0.0.1:6543/products", headers=header)
 	godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
-	print podata.json()["gkstatus"]
-	return {"gkstatus": podata.json()["gkstatus"], "customers": customers.json()["gkresult"], "suppliers": suppliers.json()["gkresult"],"products": products.json()["gkresult"],"purchaseorders":podata.json()["gkresult"],"godowns":godowns.json()["gkresult"]}
+	return {"gkstatus": customers.json()["gkstatus"], "customers": customers.json()["gkresult"], "suppliers": suppliers.json()["gkresult"],"products": products.json()["gkresult"],"godowns":godowns.json()["gkresult"]}
+
+@view_config(route_name="deliverychallan",request_param="action=showedit",renderer="gkwebapp:templates/editdeliverychallan.jinja2")
+def showeditdeliverychallan(request):
+	header={"gktoken":request.headers["gktoken"]}
+	delchals = requests.get("http://127.0.0.1:6543/delchal?delchal=all", headers=header)
+	return {"gkstatus":delchals.json()["gkstatus"],"delchals":delchals.json()["gkresult"]}
 
 @view_config(route_name="deliverychallan",request_param="action=getproducts",renderer="json")
 def getproducts(request):
@@ -68,13 +74,13 @@ def showeditdeliverychallan(request):
 @view_config(route_name="deliverychallan",request_param="action=save",renderer="json")
 def savedelchal(request):
 	header={"gktoken":request.headers["gktoken"]}
-	delchaldata = {"custid":int(request.params["custid"]),"dcno":request.params["dcno"],"dcdate":request.params["dcdate"]}
+	delchaldata = {"custid":int(request.params["custid"]),"dcno":request.params["dcno"],"dcdate":request.params["dcdate"],"dcflag":request.params["dcflag"]}
 	products = {}
 	for  row in json.loads(request.params["products"]):
 		products[row["productcode"]] = row["qty"]
 	stockdata = {"inout":request.params["inout"],"items":products}
-	if request.params["orderno"]!='':
-		delchaldata["orderno"]=request.params["orderno"]
+	if request.params["orderid"]!='':
+		delchaldata["orderno"]=request.params["orderid"]
 	if request.params["goid"]!='':
 		stockdata["goid"]=int(request.params["goid"])
 	delchalwholedata = {"delchaldata":delchaldata,"stockdata":stockdata}
