@@ -535,6 +535,11 @@ $(document).ready(function() {
   });
 
   $("#category_edit_delete").click(function(event) {
+    event.preventDefault();
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
+    $('#confirm_del').modal('show').one('click', '#accdel', function (e)
+    {
     $.ajax({
       url: '/category?action=delete',
       type: 'POST',
@@ -572,6 +577,13 @@ $(document).ready(function() {
     });
     event.stopPropogation();
   });
+    $("#confirm_del").on('shown.bs.modal', function(event) {
+      $("#m_cancel").focus();
+      });
+    $("#confirm_del").on('hidden.bs.modal', function(event) {
+      $("#category_edit_list").focus();
+});
+});
 
   $("#category_edit_reset").click(function(event) {
     $("a[href='#category_edit']").click();
