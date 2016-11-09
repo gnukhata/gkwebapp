@@ -27,6 +27,7 @@ Contributors:
 "Vaibhav Kurhe" <vaibspidy@openmailbox.org>
 "Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+"Sachin Patil" <sachpatil@openmailbox.org>
 """
 
 from pyramid.config import Configurator
@@ -145,5 +146,6 @@ def main(global_config, **settings):
 	config.add_route('printprojectstatement', '/printprojectstatement')
 	config.add_route('printledger', '/printledger')
 	config.add_route('unitofmeasurements','/unitofmeasurements')
+	config.add_route('customersuppliers','/customersuppliers')
 	config.scan('gkwebapp')
 	return config.make_wsgi_app()
