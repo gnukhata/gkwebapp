@@ -49,12 +49,28 @@ def getcatspecs(request):
 	result = requests.get("http://127.0.0.1:6543/categoryspecs?categorycode=%d"%(int(request.params["categorycode"])), headers=header)
 	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
+@view_config(route_name="product",request_param="type=cattax", renderer="json")
+def getcattax(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/tax?pscflag=c&categorycode=%d"%(int(request.params["categorycode"])), headers=header)
+	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="product",request_param="type=prodtax", renderer="json")
+def getprodtax(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/tax?pscflag=p&productcode=%d"%(int(request.params["productcode"])), headers=header)
+	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
+
+
+
 @view_config(route_name="product",request_param="type=save", renderer="json")
 def saveproduct(request):
 	header={"gktoken":request.headers["gktoken"]}
 	prdspecs = {}
 	proddetails={}
+	taxes =0
 	for prd in request.params:
+
 		if prd=="type":
 			continue
 		elif prd =="catselect":
@@ -64,18 +80,27 @@ def saveproduct(request):
 			proddetails["productdesc"] = request.params[prd]
 		elif prd == "uom":
 			proddetails["uomid"] = request.params[prd]
+		elif prd == "taxes":
+			taxes = json.loads(request.params["taxes"])
 		else:
 			prdspecs[prd]= request.params[prd]
 		proddetails["specs"] = prdspecs
-
 	result = requests.post("http://127.0.0.1:6543/products", data=json.dumps(proddetails),headers=header)
-	return{"gkstatus":result.json()["gkstatus"]}
+	for tax in taxes:
+		if len(tax)!=0:
+			taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":result.json()["gkresult"]}
+			if tax["state"]!='':
+				taxdata["state"]=tax["state"]
+			taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
+	return {"gkstatus": result.json()["gkstatus"]}
+
 
 @view_config(route_name="product",request_param="type=edit", renderer="json")
 def editproduct(request):
 	header={"gktoken":request.headers["gktoken"]}
 	prdspecs = {}
 	proddetails={}
+	taxes =0
 	for prd in request.params:
 		if prd=="type":
 			continue
@@ -87,12 +112,26 @@ def editproduct(request):
 			proddetails["productdesc"] = request.params[prd];
 		elif prd == "uom":
 			proddetails["uomid"] = request.params[prd]
+		elif prd == "taxes":
+			taxes = json.loads(request.params["taxes"])
 		else:
 			prdspecs[prd]= request.params[prd]
 		proddetails["specs"] = prdspecs
 
 	result = requests.put("http://127.0.0.1:6543/products", data=json.dumps(proddetails),headers=header)
-	return{"gkstatus":result.json()["gkstatus"]}
+	return {"gkstatus": result.json()["gkstatus"]}
+
+	'''for tax in taxes:
+		if len(tax)!=0:
+
+			taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":proddetails["productcode"]}
+			if tax["state"]!='':
+				taxdata["state"]=tax["state"]
+			if tax["row"]=="new":
+				taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
+			else:
+				taxdata["taxid"] = tax["row"]
+				taxresult = requests.put("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)'''
 
 @view_config(route_name="product",request_param="type=delete", renderer="json")
 def deleteproduct(request):
@@ -105,7 +144,7 @@ def deleteproduct(request):
 def editproducttab(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/products",headers=header)
-	print "thisssssss: ",result.json()["gkresult"]
+
 	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="product",request_param="type=details", renderer="gkwebapp:templates/editproductspecs.jinja2")

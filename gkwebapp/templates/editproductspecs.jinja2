@@ -2,8 +2,8 @@
 
   <div class="form-group">
     <label for="editproddesc" class="">{% trans %}Product Description{% endtrans %} :</label>
-    <textarea class="form-control input-sm" name="editproddesc"  id="editproddesc" placeholder="Alphanumeric" value="">{{gkresult['proddesc']['productdesc']}}</textarea>
-    <small id ="proddesctextarea" class="form-text text muted">Double press enter to shift focus to unit of measurement</small>
+    <input type='text' class="form-control input-sm" name="editproddesc"  id="editproddesc" value="{{gkresult['proddesc']['productdesc']}}" placeholder="Alphanumeric">
+
   </div>
   <div class="form-group">
     <label for="catselect" class="">{% trans %}Category{% endtrans %} :</label>
@@ -31,7 +31,26 @@
       {% endfor %}
     </select>
   </div>
+  <div class="form-group">
+    <div class="panel">
+    <table id="product_edit_tax_table" class="table table-condensed table-bordered fixed-table">
+      <thead class="bg-primary input-sm">
+        <tr>
+          <th class="col-xs-4">{% trans %}Tax Name{% endtrans %}</th>
+          <th class="col-xs-4">{% trans %}State(optional){% endtrans %}</th>
+          <th class="col-xs-3">{% trans %}Rate{% endtrans %}</th>
+          <th class="col-xs-1"></th>
+        </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
+    </div>
+  </div>
 </div>
+<div id="extsp">
+
 <div id = "editspecifications" class="col-sm-6">
 
 
@@ -66,4 +85,5 @@
 
 
 
+</div>
 </div>
