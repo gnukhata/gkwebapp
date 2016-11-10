@@ -1,6 +1,11 @@
 $(document).ready(function() {
 $('.modal-backdrop').remove();
   $("#prodselect").focus();
+  $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    $(".numtype").numeric();
+  });
   var sel1=0;
   var sel2=0;
   var sindex=0;
@@ -41,6 +46,38 @@ $('.modal-backdrop').remove();
       $("#epsubmit").click();
     }
   });
+
+
+  $(document).off('keyup', '.specdate').on('keyup', '.specdate',function (e) {
+        var textSoFar = $(this).val();
+        if (e.keyCode != 173 && e.keyCode != 109) {
+            if (e.keyCode != 8) {
+                if (textSoFar.length == 2 || textSoFar.length == 5) {
+                    $(this).val(textSoFar + "-");
+                }
+                    //to handle copy & paste of 8 digit
+                else if (e.keyCode == 86 && textSoFar.length == 8) {
+                    $(this).val(textSoFar.substr(0, 2) + "-" + textSoFar.substr(2, 2) + "-" + textSoFar.substr(4, 4));
+                }
+            }
+            else {
+                //backspace would skip the slashes and just remove the numbers
+                if (textSoFar.length == 5) {
+                    $(this).val(textSoFar.substring(0, 4));
+                }
+                else if (textSoFar.length == 2) {
+                    $(this).val(textSoFar.substring(0, 1));
+                }
+            }
+        }
+        else {
+            //remove slashes to avoid 12//01/2014
+            $(this).val(textSoFar.substring(0, textSoFar.length - 1));
+        }
+    });
+
+
+
 
   $(document).on('keydown', '#edituom', function(event) {
     if (event.which==13)
