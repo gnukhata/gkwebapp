@@ -23,14 +23,20 @@
               <label for="addproddesc" class="">{% trans %}Product Description{% endtrans %} :</label>
               <input type='text' class="form-control" name="addproddesc"  id="addproddesc" placeholder="Alphanumeric">
             </div>
-            <div class="form-group pds">
+            <div class="form-group pds olduom">
               <label for="uom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label>
-              <select class = "form-control input-sm sel"  name = "uom" id="adduom" >
+              <select class = "form-control input-sm sel"  name = "uom" id="adduom" aria-describedby="txtareahelp">
                 <option value="" disabled selected hidden>{% trans %}Select Unit of Measurement{% endtrans %}</option>
                 {% for uom in gkresult["uom"] %}
                 <option value="{{uom['uomid']}}">{{uom["unitname"]}}</option>
                 {% endfor %}
               </select>
+              <small id="txtareahelp" class="form-text text-muted">Press space to add new unit.</small>
+            </div>
+            <div class="form-group pds newuom" hidden>
+              <label for="newuom" class="">{% trans %}New Unit of Measurement{% endtrans %} :</label>
+              <input type='text' class="form-control" name="newuom"  id="newuom" placeholder="Name of the new unit" aria-describedby="textareahelp">
+              <small id="textareahelp" class="form-text text-muted">Press esc to cancel.</small>
             </div>
 
             <div class="form-group">
