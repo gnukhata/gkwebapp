@@ -268,6 +268,15 @@ $('.modal-backdrop').remove();
         }
 
     }
+    if (event.which==46)
+    {
+      event.preventDefault();
+        prodcode= $("#prodselect option:selected").val();
+        if (prodcode!="")
+        {
+          $('#epdelete').click();
+        }
+    }
   });
 
   $(document).on('click', '#epedit', function(event) {
