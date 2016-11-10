@@ -41,6 +41,7 @@ def showcreatetransfernote(request):
 	header={"gktoken":request.headers["gktoken"]}
 	products = requests.get("http://127.0.0.1:6543/products", headers=header)
 	godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	print products
 	return {"products": products.json()["gkresult"],"godowns":godowns.json()["gkresult"]}
 
 @view_config(route_name="transfernotes",request_param="action=showedit",renderer="gkwebapp:templates/edittransfernote.jinja2")
@@ -50,12 +51,15 @@ def showedittransfernote(request):
 	godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
 	return {"products": products.json()["gkresult"],"godowns":godowns.json()["gkresult"]}
 
-@view_config(route_name="customersuppliers",request_param="action=get",renderer="json")
-def getcustomersupplier(request):
-	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/transfernote?qty=single&custid=%d"%(int(request.params["custid"])), headers=header)
-	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
-
-@view_config(route_name="transfernotes",request_param="action=get",renderer="json")
+@view_config(route_name="transfernotes",request_param="action=save",renderer="json")
 def savetransfernote(request):
 	header={"gktoken":request.headers["gktoken"]}
+	print "parrrrrrrmd:",request.params
+	transferdata = {"transfernoteno":request.params["transfernoteno"],"transfernotedate":request.params["transfernotedate"],"togodown":request.params["togodown"],"transportationmode":request.params["transportationmode"],"nopkt":request.params["nopkt"]}
+	products = {}
+	for  row in json.loads(request.params["products"]):
+		products[row["productcode"]] = row["qty"]
+	stockdata = {"fromgodown":request.params["fromgodown"],"items":products}
+	tnwholedata = {"transferdata":transferdata,"stockdata":stockdata}
+	result=requests.post("http://127.0.0.1:6543/transfernote",data=json.dumps(tnwholedata),headers=header)
+	return {"gkstatus":result.json()["gkstatus"]}

@@ -97,7 +97,28 @@ $(document).ready(function() {
       return false;
     }
   });
+  $("#tn_from_godown").change(function() {
 
+      var value = $(this).val();
+
+      $("#tn_to_godown").children('option').each(function() {
+          if ( $(this).val() === value ) {
+              $(this).attr('disabled', true).siblings().removeAttr('disabled');
+          }
+      });
+
+  });
+  $("#tn_to_godown").change(function() {
+
+      var value = $(this).val();
+
+      $("#tn_from_godown").children('option').each(function() {
+          if ( $(this).val() === value ) {
+              $(this).attr('disabled', true).siblings().removeAttr('disabled');
+          }
+      });
+
+  });
 
   $(document).off("keydown",".product_name").on("keydown",".product_name",function(event)
   {
@@ -234,15 +255,23 @@ $(document).ready(function() {
     });
     $('#transfernote_product_table tbody tr:last td:eq(0) input').select();
   });
-  
+
   $("#transfernote_save").click(function(event) {
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
+    if ($.trim($('#transfernote_no').val())=="") {
+      $("#tnno-blank-alert").alert();
+      $("#tnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#tnno-blank-alert").hide();
+      });
+      $('#transfernote_no').focus();
+      return false;
+    }
     if ($.trim($('#tn_date').val())=="") {
       $("#date-blank-alert").alert();
       $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#date-blank-alert").hide();
       });
-      $('#deliverychallan_date').focus();
+      $('#tn_date').focus();
       return false;
     }
     if ($.trim($('#tn_month').val())=="") {
@@ -250,7 +279,7 @@ $(document).ready(function() {
       $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#date-blank-alert").hide();
       });
-      $('#deliverychallan_month').focus();
+      $('#tn_month').focus();
       return false;
     }
     if ($.trim($('#tn_year').val())=="") {
@@ -258,7 +287,7 @@ $(document).ready(function() {
       $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#date-blank-alert").hide();
       });
-      $('#deliverychallan_year').focus();
+      $('#tn_year').focus();
       return false;
     }
     if(!Date.parseExact($("#tn_date").val()+$("#tn_month").val()+$("#tn_year").val(), "ddMMyyyy")){
@@ -269,14 +298,24 @@ $(document).ready(function() {
       $('#tn_date').focus().select();
       return false;
     }
-    if ($.trim($('#transfernote_no').val())=="") {
-      $("#challanno-blank-alert").alert();
-      $("#challanno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#challanno-blank-alert").hide();
+    if ($.trim($('#tn_from_godown').val())=="") {
+      $("#godown-blank-alert").alert();
+      $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#godown-blank-alert").hide();
       });
-      $('#transfernote_no').focus();
+      $('#tn_from_godown').focus();
       return false;
     }
+    if ($.trim($('#tn_to_godown').val())=="") {
+      $("#godown-blank-alert").alert();
+      $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#godown-blank-alert").hide();
+      });
+      $('#tn_to_godown').focus();
+      return false;
+    }
+
+
     var products = [];
     for (var i = 0; i < $("#transfernote_product_table tbody tr").length; i++) {
       if ($("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()=="") {
@@ -305,12 +344,13 @@ $(document).ready(function() {
       type: 'POST',
       dataType: 'json',
       async : false,
-      data: {"orderno": $("#deliverychallan_purchaseorder option:selected").val(),
-      "custid":$("#deliverychallan_customer option:selected").val(),
-      "dcno":$("#deliverychallan_challanno").val(),
-      "dcdate":$("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val(),
-      "inout":$("#deliverychallan_inout option:selected").val(),
-      "goid":$("#deliverychallan_godown option:selected").val(),
+      data: {
+      "transfernoteno":$("#transfernote_no").val(),
+      "transfernotedate":$("#tn_year").val()+'-'+$("#tn_month").val()+'-'+$("#tn_date").val(),
+      "fromgodown":$("#tn_from_godown option:selected").val(),
+      "togodown":$("#tn_to_godown option:selected").val(),
+      "transportationmode":$("#transport_mode").val(),
+      "nopkt":$("#no_of_packet").val(),
       "products":JSON.stringify(products)},
       beforeSend: function(xhr)
       {
@@ -326,6 +366,7 @@ $(document).ready(function() {
         });
       }
       else {
+        alert(resp["gkstatus"])
         $("#transfernote_no").focus();
         $("#failure-alert").alert();
         $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){

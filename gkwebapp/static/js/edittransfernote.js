@@ -9,7 +9,7 @@ $(document).ready(function() {
       type: 'POST',
       dataType: 'json',
       async : false,
-      data: {"custid": $("#edit_cussup_list option:selected").val()},
+      data: {"transfernoteid": $("#edit_tn_list option:selected").val()},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -22,26 +22,22 @@ $(document).ready(function() {
       $("#edit_transfernote_no").prop("disabled", true);
       var deldatearray = podata.datedelivery.split(/\s*\-\s*/g);
       $("#edit_tn_date").val(deldatearray[0]);
+      $("#edit_tn_date").prop("disabled", true);
       $("#edit_tn_month").val(deldatearray[1]);
+      $("#edit_tn_month").prop("disabled", true);
       $("#edit_tn_year").val(deldatearray[2]);
-      $("#edit_cussup_name").val(result["custname"]);
-      $("#edit_cussup_name").prop("disabled", true);
-      $("#edit_cussup_email").val(result["custemail"]);
-      $("#edit_cussup_email").prop("disabled", true);
-      $("#edit_cussup_phone").val(result["custphone"]);
-      $("#edit_cussup_phone").prop("disabled", true);
-      $("#edit_cussup_address").val(result["custaddr"]);
-      $("#edit_cussup_address").prop("disabled", true);
-      $("#edit_cussup_fax").val(result["custfax"]);
-      $("#edit_cussup_fax").prop("disabled", true);
-      $("#edit_cussup_pan").val(result["custpan"]);
-      $("#edit_cussup_pan").prop("disabled", true);
-      $("#edit_cussup_tan").val(result["custtan"]);
-      $("#edit_cussup_tan").prop("disabled", true);
+      $("#edit_tn_year").prop("disabled", true);
+      $("#edit_transport_mode").val(result["custname"]);
+      $("#edit_transport_mode").prop("disabled", true);
+      $("#edit_tn_from_godown").val(result["custemail"]);
+      $("#edit_tn_from_godown").prop("disabled", true);
+      $("#edit_tn_to_godown").val(result["custphone"]);
+      $("#edit_tn_to_godown").prop("disabled", true);
+      $("#edit_no_of_packet").val(result["custaddr"]);
+      $("#edit_no_of_packet").prop("disabled", true);
       $(".panel-footer").show();
-      $("#cus_innerdiv").show();
-      $("#cussup_edit_save").hide();
-      $("#edit_cussup_btn").show();
+      $("#edit_transfernote_save").hide();
+      $("#edit_btn").show();
 
     })
     .fail(function() {
