@@ -71,7 +71,7 @@ $(document).ready(function() {
   $("#tn_to_godown").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#no_of_packet").focus().select();
+      $('#transfernote_product_table tbody tr:first td:eq(0) select').focus();
     }
     if (event.which==38 && $("#tn_to_godown option:selected").index()==0) {
       event.preventDefault();
@@ -82,14 +82,30 @@ $(document).ready(function() {
   $("#no_of_packet").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $('#transfernote_product_table tbody tr:first td:eq(0) select').focus();
+      $("#name_issuer").focus().select
     }
     if (event.which==38) {
       event.preventDefault();
       $("#tn_to_godown").focus().select();
     }
   });
+  $("#name_issuer").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#designation").focus().select
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#no_of_packet").focus().select();
+    }
+  });
 
+  $("#designation").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#transfernote_save").click();
+    }
+    });
   $(document).keyup(function(event) {
     if(event.which == 45) {
       $("#transfernote_save").click();
@@ -244,6 +260,10 @@ $(document).ready(function() {
     else if (event.ctrlKey && event.which==188) {
       $('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
       event.preventDefault();
+    }
+    else if (event.which==35) {
+      event.preventDefault();
+      $('#no_of_packet').focus().select();
     }
   });
 

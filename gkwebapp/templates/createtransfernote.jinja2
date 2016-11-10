@@ -12,7 +12,7 @@
   }
   .fixed-table tbody {
       display:block;
-      height: calc(100vh - 25em);
+      height: calc(100vh - 30em);
       overflow-y:scroll;
   }
 
@@ -104,10 +104,6 @@
                 {% endfor %}
               </select>
             </div>
-            <div class="form-group">
-              <label for="no_of_packet">{% trans %} Number Of Packets:{% endtrans %}</label>
-              <input class="form-control input-sm" id="no_of_packet">
-            </div>
 
           </div>
           <div class="col-md-7" id="transfernote_product_div">
@@ -119,12 +115,14 @@
 
               <label for="vno">{% trans %}Please enter quantity!{% endtrans %}</label>
             </div>
-            <table id="transfernote_product_table" class="fixed-table">
-              <thead>
+            <div class="form-group">
+            <div class="panel">
+            <table id="transfernote_product_table" class="table table-condensed table-borderd fixed-table">
+              <thead class="bg-primary">
                 <tr>
                   <th class="col-xs-9">{% trans %}Product{% endtrans %}</th>
                   <th class="col-xs-2">{% trans %}Quantity{% endtrans %}</th>
-                  <th class="col-xs-1">{% trans %}Remove{% endtrans %}</th>
+                  <th class="col-xs-1"></th>
                 </tr>
               </thead>
               <tbody>
@@ -146,9 +144,23 @@
                 </tr>
               </tbody>
             </table>
-          </form>
+          </div>
+          </div>
+          <div class="form-group">
+            <label for="no_of_packet">{% trans %} Number Of Packets:{% endtrans %}</label>
+            <input class="form-control input-sm" id="no_of_packet">
+          </div>
+          <div class="form-group">
+            <label for="name_issuer">{% trans %} Name Of Issuer:{% endtrans %}</label>
+            <input class="form-control input-sm" id="name_issuer">
+          </div>
+        <div class="form-group">
+          <label for="designation">{% trans %} Designation:{% endtrans %}</label>
+          <input class="form-control input-sm" id="designation">
         </div>
+      </form>
       </div>
+    </div>
       <div class="panel-footer">
         <button class="btn btn-success btn-sm" id="transfernote_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}">{% trans %}Save{% endtrans %}</button>
         <button id="transfernote_reset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>

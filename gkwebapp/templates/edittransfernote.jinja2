@@ -12,7 +12,7 @@
   }
   .fixed-table tbody {
       display:block;
-      height: calc(100vh - 25em);
+      height: calc(100vh - 30em);
       overflow-y:scroll;
   }
 
@@ -109,10 +109,6 @@
                 {% endfor %}
               </select>
             </div>
-            <div class="form-group hidden-load" hidden>
-              <label for="edit_no_of_packet">{% trans %} Number Of Packets:{% endtrans %}</label>
-              <input class="form-control input-sm" id="edit_no_of_packet">
-            </div>
 
           </div>
           <div class="col-md-7 hidden-load" hidden id="edit_transfernote_product_div">
@@ -129,7 +125,7 @@
                 <tr>
                   <th class="col-xs-9">{% trans %}Product{% endtrans %}</th>
                   <th class="col-xs-2">{% trans %}Quantity{% endtrans %}</th>
-                  <th class="col-xs-1">{% trans %}Remove{% endtrans %}</th>
+                  <th class="col-xs-1"></th>
                 </tr>
               </thead>
               <tbody>
@@ -152,6 +148,18 @@
               </tbody>
             </table>
           </form>
+          <div class="form-group hidden-load" hidden>
+            <label for="edit_no_of_packet">{% trans %} Number Of Packets:{% endtrans %}</label>
+            <input class="form-control input-sm" id="edit_no_of_packet">
+          </div>
+          <div class="form-group">
+            <label for="edit_name_issuer">{% trans %} Name Of Issuer:{% endtrans %}</label>
+            <input class="form-control input-sm" id="edit_name_issuer">
+          </div>
+        <div class="form-group">
+          <label for="designation">{% trans %} Designation:{% endtrans %}</label>
+          <input class="form-control input-sm" id="edit_designation">
+        </div>
         </div>
       </div>
       <div class="panel-footer">

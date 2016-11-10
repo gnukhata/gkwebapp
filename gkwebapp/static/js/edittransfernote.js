@@ -4,12 +4,16 @@ $(document).ready(function() {
   $(".panel-footer").hide();
 
   $("#edit_tn_list").change(function(event) {
+    var tnid = $("#edit_tn_list option:selected").val();
+    if (tnid != "") {
+
+
     $.ajax({
-      url: '/transfernnots?action=get',
+      url: '/transfernotes?action=get',
       type: 'POST',
       dataType: 'json',
       async : false,
-      data: {"transfernoteid": $("#edit_tn_list option:selected").val()},
+      data: {"transfernoteid": tnid },
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -46,6 +50,114 @@ $(document).ready(function() {
     .always(function() {
       console.log("complete");
     });
+  }
 
   });
-});
+  $("#edit_tn_list").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#edit_transfernote_no").focus().select();
+    }
+  });
+  $("#edit_transfernote_no").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#edit_tn_date").focus().select();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#edit_tn_list").focus().select();
+    }
+  });
+
+  $("#tn_month").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#tn_year").focus().select();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#tn_date").focus().select();
+    }
+  });
+  $("#tn_year").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#transport_mode").focus().select();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#tn_month").focus().select();
+    }
+  });
+
+  $("#transport_mode").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#tn_from_godown").focus().select();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#tn_year").focus().select();
+    }
+  });
+
+  $("#tn_from_godown").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#tn_to_godown").focus().select();
+    }
+    if (event.which==38 && $("#tn_from_godown option:selected").index()==0) {
+      event.preventDefault();
+      $("#transport_mode").focus().select();
+    }
+  });
+
+  $("#tn_to_godown").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $('#transfernote_product_table tbody tr:first td:eq(0) select').focus();
+    }
+    if (event.which==38 && $("#tn_to_godown option:selected").index()==0) {
+      event.preventDefault();
+      $("#tn_from_godown").focus().select();
+    }
+  });
+
+  $("#no_of_packet").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#name_issuer").focus().select
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#tn_to_godown").focus().select();
+    }
+  });
+  $("#name_issuer").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#designation").focus().select
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#no_of_packet").focus().select();
+    }
+  });
+
+  $("#designation").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#transfernote_save").click();
+    }
+    });
+  $(document).keyup(function(event) {
+    if(event.which == 45) {
+      $("#transfernote_save").click();
+      event.preventDefault();
+      return false;
+    }
+  });
+
+
+  });

@@ -51,15 +51,23 @@ def showedittransfernote(request):
 	godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
 	return {"products": products.json()["gkresult"],"godowns":godowns.json()["gkresult"]}
 
+@view_config(route_name="transfernotes",request_param="action=get",renderer="json")
+def gettransfernote(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/transfernote?tn=single&transfernoteid=%d"%(int(request.params["transfernoteid"])), headers=header)
+	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
+
+
 @view_config(route_name="transfernotes",request_param="action=save",renderer="json")
 def savetransfernote(request):
 	header={"gktoken":request.headers["gktoken"]}
-	print "parrrrrrrmd:",request.params
-	transferdata = {"transfernoteno":request.params["transfernoteno"],"transfernotedate":request.params["transfernotedate"],"togodown":request.params["togodown"],"transportationmode":request.params["transportationmode"],"nopkt":request.params["nopkt"]}
+	transferdata = {"transfernoteno":request.params["transfernoteno"],"transfernotedate":request.params["transfernotedate"],"togodown":request.params["togodown"],"transportationmode":request.params["transportationmode"]}
+	if request.params["nopkt"]!='':
+		transferdata["nopkt"]=request.params["nopkt"]
 	products = {}
 	for  row in json.loads(request.params["products"]):
 		products[row["productcode"]] = row["qty"]
-	stockdata = {"fromgodown":request.params["fromgodown"],"items":products}
+	stockdata = {"goid":request.params["fromgodown"],"items":products}
 	tnwholedata = {"transferdata":transferdata,"stockdata":stockdata}
 	result=requests.post("http://127.0.0.1:6543/transfernote",data=json.dumps(tnwholedata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
