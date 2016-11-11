@@ -38,7 +38,7 @@ $(document).ready(function() {
   $("#tn_year").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#transport_mode").focus().select();
+      $('#transfernote_product_table tbody tr:first td:eq(0) select').focus();
     }
     if (event.which==38) {
       event.preventDefault();
@@ -49,11 +49,11 @@ $(document).ready(function() {
   $("#transport_mode").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#tn_from_godown").focus().select();
+      $("#name_issuer").focus().select();
     }
     if (event.which==38) {
       event.preventDefault();
-      $("#tn_year").focus().select();
+      $("#tn_to_godown").focus().select();
     }
   });
 
@@ -64,14 +64,14 @@ $(document).ready(function() {
     }
     if (event.which==38 && $("#tn_from_godown option:selected").index()==0) {
       event.preventDefault();
-      $("#transport_mode").focus().select();
+      $("#no_of_packet").focus().select();
     }
   });
 
   $("#tn_to_godown").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $('#transfernote_product_table tbody tr:first td:eq(0) select').focus();
+      $("#transport_mode").focus();
     }
     if (event.which==38 && $("#tn_to_godown option:selected").index()==0) {
       event.preventDefault();
@@ -82,11 +82,7 @@ $(document).ready(function() {
   $("#no_of_packet").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#name_issuer").focus().select
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#tn_to_godown").focus().select();
+      $("#tn_from_godown").focus().select
     }
   });
   $("#name_issuer").keydown(function(event) {
@@ -96,7 +92,7 @@ $(document).ready(function() {
     }
     if (event.which==38) {
       event.preventDefault();
-      $("#no_of_packet").focus().select();
+      $("#transport_mode").focus().select();
     }
   });
 
@@ -104,6 +100,10 @@ $(document).ready(function() {
     if (event.which==13) {
       event.preventDefault();
       $("#transfernote_save").click();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#name_issuer").focus().select();
     }
     });
   $(document).keyup(function(event) {
@@ -134,6 +134,9 @@ $(document).ready(function() {
           }
       });
 
+  });
+  $("#transfernote_reset").click(function(event) {
+    $("#transfernote_create").click();
   });
 
   $(document).off("keydown",".product_name").on("keydown",".product_name",function(event)
@@ -371,6 +374,8 @@ $(document).ready(function() {
       "togodown":$("#tn_to_godown option:selected").val(),
       "transportationmode":$("#transport_mode").val(),
       "nopkt":$("#no_of_packet").val(),
+      "issuername":$("#name_issuer").val(),
+      "designation":$("#designation").val(),
       "products":JSON.stringify(products)},
       beforeSend: function(xhr)
       {
@@ -385,12 +390,11 @@ $(document).ready(function() {
           $("#success-alert").hide();
         });
       }
-      else {
-        alert(resp["gkstatus"])
+      if(resp["gkstatus"] == 1){
         $("#transfernote_no").focus();
-        $("#failure-alert").alert();
-        $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#failure-alert").hide();
+        $("#duplicate-alert").alert();
+        $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#duplicate-alert").hide();
         });
       }
     })
