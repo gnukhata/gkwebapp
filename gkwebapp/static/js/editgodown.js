@@ -85,6 +85,9 @@ $(document).ready(function() {
         e.preventDefault();
         $("#gostate").focus();
       }
+      if (e.which == 38) {
+          $("#editgoddet").focus();
+      }
     });
     $("#gostate").keydown(function(e){
       if (e.which == 13) {
