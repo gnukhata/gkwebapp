@@ -32,6 +32,7 @@ $(document).ready(function(){
   var oninvoice = 0;
   $("#msspinmodal").modal("hide");
   $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');
+  $("#"+sessionStorage.gktheme+"span").show();
 
   $(document).keydown(function(event) {
         if(event.ctrlKey && event.keyCode == 83) {
@@ -947,7 +948,7 @@ $.ajax({
     return false;
   });
   $('.themesmenu').click(function(){
-    var selectedtheme= $(this).html();
+    var selectedtheme= $(this).attr('id');
     $("#msspinmodal").modal("show");
     $.ajax({
       url: '/addtheme',
