@@ -6,7 +6,8 @@ $(document).ready(function() {
   $("#deliverychallan_edit_month").numeric();
   $("#deliverychallan_edit_year").numeric();
   $('.deliverychallan_edit_product_quantity').numeric({ negative: false});
-
+  $(".deliverychallan_edit_disable").prop("disabled",true);
+  var custsup  =$("#deliverychallan_edit_customer").find('optgroup').clone();
 
   $("#deliverychallan_edit_list").change(function(event) {
     $.ajax({
@@ -22,10 +23,60 @@ $(document).ready(function() {
     })
     .done(function(resp) {
       console.log("success");
-      $('#deliverychallan_edit_customer').append($('<option>', {
-        value: resp.delchaldata.delchaldata.custid,
-        text: resp.delchaldata.delchaldata.custname
-      }));
+      $("#deliverychallan_edit_customer").html(custsup);
+      var dcdatearray = resp.delchaldata.delchaldata.dcdate.split(/\s*\-\s*/g);
+      $("#deliverychallan_edit_date").val(dcdatearray[0]);
+      $("#deliverychallan_edit_month").val(dcdatearray[1]);
+      $("#deliverychallan_edit_year").val(dcdatearray[2]);
+      if (resp.delchaldata.stockdata.inout==9) {
+        $("#polabel").show();
+        $("#slabel").show();
+        $("#tgolabel").show();
+        $("#solabel").hide();
+        $("#clabel").hide();
+        $("#fgolabel").hide();
+        $("#customersgroup").remove();
+        $("label[for='deliverychallan_edit_issuername']").hide();
+        $("label[for='deliverychallan_edit_designation']").hide();
+        $('#deliverychallan_edit_issuername').hide();
+        $('#deliverychallan_edit_designation').hide();
+      }
+      else {
+        $("#polabel").hide();
+        $("#slabel").hide();
+        $("#tgolabel").hide();
+        $("#solabel").show();
+        $("#clabel").show();
+        $("#fgolabel").show();
+        $("#suppliersgroup").remove();
+        $("label[for='deliverychallan_edit_issuername']").show();
+        $("label[for='deliverychallan_edit_designation']").show();
+        $('#deliverychallan_edit_issuername').show();
+        $('#deliverychallan_edit_designation').show();
+        $('#deliverychallan_edit_issuername').val(resp.delchaldata.delchaldata.issuername);
+        $('#deliverychallan_edit_designation').val(resp.delchaldata.delchaldata.designation);
+      }
+      $('#deliverychallan_edit_customer').val(resp.delchaldata.delchaldata.custid);
+      $('#deliverychallan_edit_challanno').val(resp.delchaldata.delchaldata.dcno);
+      $('#deliverychallan_edit_godown').val(resp.delchaldata.delchaldata.goid);
+      $('#deliverychallan_edit_consignment').val(resp.delchaldata.delchaldata.dcflag);
+      $('#deliverychallan_edit_product_table tbody').empty();
+      $.each(resp.delchaldata.stockdata.items, function(key, value) {
+        $('#deliverychallan_edit_product_table tbody').append('<tr>'+
+        '<td class="col-xs-9">'+
+        '<select class="form-control deliverychallan_edit_disable input-sm product_name">'+
+        '<option value="'+key+'">'+value.productdesc+'</option>'+
+        '</select>'+
+        '</td>'+
+        '<td class="col-xs-2">'+
+        '<input type="text" class="deliverychallan_edit_product_quantity form-control deliverychallan_edit_disable input-sm text-right" value="'+value.qty+'">'+
+        '</td>'+
+        '<td class="col-xs-1">'+
+        '<a href="#" class="product_del deliverychallan_edit_disable"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+        '</td>'+
+        '</tr>');
+      });
+
       $(".deliverychallan_edit_div").show();
     })
     .fail(function() {
@@ -34,23 +85,25 @@ $(document).ready(function() {
     .always(function() {
       console.log("complete");
     });
-
+    $(".deliverychallan_edit_disable").prop("disabled",true);
   });
-  $("#deliverychallan_edit_purchaseorder").keydown(function(event) {
+
+  $("#deliverychallan_edit_list").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#deliverychallan_edit_customer").focus().select();
+      $("#deliverychallan_edit_challanno").focus().select();
     }
   });
+
 
   $("#deliverychallan_edit_customer").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#deliverychallan_edit_date").focus().select();
+      $("#deliverychallan_edit_godown").focus().select();
     }
-    if (event.which==38 && (document.getElementById('deliverychallan_edit_customer').selectedIndex==1||document.getElementById('deliverychallan_edit_customer').selectedIndex==0)) {
+    if (event.which==38 && document.getElementById('deliverychallan_edit_customer').selectedIndex==0) {
       event.preventDefault();
-      $("#deliverychallan_edit_purchaseorder").focus().select();
+      $("#deliverychallan_edit_year").focus().select();
     }
   });
 
@@ -61,7 +114,7 @@ $(document).ready(function() {
     }
     if (event.which==38) {
       event.preventDefault();
-      $("#deliverychallan_edit_customer").focus().select();
+      $("#deliverychallan_edit_challanno").focus().select();
     }
   });
   $("#deliverychallan_edit_month").keydown(function(event) {
@@ -78,7 +131,7 @@ $(document).ready(function() {
   $("#deliverychallan_edit_year").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#deliverychallan_edit_challanno").focus().select();
+      $("#deliverychallan_edit_customer").focus().select();
     }
     if (event.which==38) {
       event.preventDefault();
@@ -89,11 +142,11 @@ $(document).ready(function() {
   $("#deliverychallan_edit_challanno").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#deliverychallan_edit_godown").focus().select();
+      $("#deliverychallan_edit_date").focus().select();
     }
     if (event.which==38) {
       event.preventDefault();
-      $("#deliverychallan_edit_year").focus().select();
+      $("#deliverychallan_edit_list").focus().select();
     }
   });
 
@@ -104,7 +157,7 @@ $(document).ready(function() {
     }
     if (event.which==38 && $("#deliverychallan_edit_godown option:selected").index()==0) {
       event.preventDefault();
-      $("#deliverychallan_edit_challanno").focus().select();
+      $("#deliverychallan_edit_customer").focus().select();
     }
   });
 
@@ -113,7 +166,7 @@ $(document).ready(function() {
       event.preventDefault();
       $('#deliverychallan_edit_product_table tbody tr:first td:eq(0) select').focus();
     }
-    if (event.which==38) {
+    if (event.which==38 && document.getElementById('deliverychallan_edit_consignment').selectedIndex==0) {
       event.preventDefault();
       $("#deliverychallan_edit_godown").focus().select();
     }
@@ -130,79 +183,48 @@ $(document).ready(function() {
   });
 
 
-  $("#deliverychallan_edit_purchaseorder").change(function(event) {
-    if ($("#deliverychallan_edit_purchaseorder option:selected").val()!='') {
-      $.ajax({
-        url: '/deliverychallan?action=getpurchaseorder',
-        type: 'POST',
-        dataType: 'json',
-        async : false,
-        data : {"orderid":$("#deliverychallan_edit_purchaseorder option:selected").val()},
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-        }
-      })
-      .done(function(resp) {
-        if (resp["gkstatus"]==0) {
-          var podata = resp["podata"];
-          $("#deliverychallan_edit_customer").val(podata.csid);
-          var deldatearray = podata.datedelivery.split(/\s*\-\s*/g);
-          $("#deliverychallan_edit_date").val(deldatearray[0]);
-          $("#deliverychallan_edit_month").val(deldatearray[1]);
-          $("#deliverychallan_edit_year").val(deldatearray[2]);
-          if ($('#deliverychallan_edit_product_table tbody tr').length==1) {
-            $('#deliverychallan_edit_product_table tbody tr').remove();
-            $.each(podata["productdetails"], function(key, value) {
-              $.ajax({
-                url: '/deliverychallan?action=getproducts',
-                type: 'POST',
-                dataType: 'json',
-                async : false,
-                beforeSend: function(xhr)
-                {
-                  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                }
-              })
-              .done(function(resp) {
-                console.log("success");
-                if (resp["gkstatus"]==0) {
-                  $('#deliverychallan_edit_product_table tbody').append('<tr>'+
-                  '<td class="col-xs-9">'+
-                  '<select class="form-control input-sm product_name"></select>'+
-                  '</td>'+
-                  '<td class="col-xs-2">'+
-                  '<input type="text" class="deliverychallan_edit_product_quantity form-control input-sm text-right" value="">'+
-                  '</td>'+
-                  '<td class="col-xs-1">'+
-                  '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-                  '</td>'+
-                  '</tr>');
-                  for (product of resp["products"]) {
-                    $('#deliverychallan_edit_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
-                  }
-                  $('#deliverychallan_edit_product_table tbody tr:last td:eq(0) select').val(key);
-                  $('#deliverychallan_edit_product_table tbody tr:last td:eq(1) input').val(value.qty);
-                }
-              })
-              .fail(function() {
-                console.log("error");
-              })
-              .always(function() {
-                console.log("complete");
-              });
-              $('.deliverychallan_edit_product_quantity').numeric({ negative: false});
-            });
+  $("#deliverychallan_edit_list").change(function(event) {
+    if ($("#deliverychallan_edit_list option:selected").val()!='') {
+      $.each(podata["productdetails"], function(key, value) {
+        $.ajax({
+          url: '/deliverychallan?action=getproducts',
+          type: 'POST',
+          dataType: 'json',
+          async : false,
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
           }
-        }
-      })
-      .fail(function() {
-        console.log("error");
-      })
-      .always(function() {
-        console.log("complete");
+        })
+        .done(function(resp) {
+          console.log("success");
+          if (resp["gkstatus"]==0) {
+            $('#deliverychallan_edit_product_table tbody').append('<tr>'+
+            '<td class="col-xs-9">'+
+            '<select class="form-control input-sm product_name"></select>'+
+            '</td>'+
+            '<td class="col-xs-2">'+
+            '<input type="text" class="deliverychallan_edit_product_quantity form-control input-sm text-right" value="">'+
+            '</td>'+
+            '<td class="col-xs-1">'+
+            '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+            '</td>'+
+            '</tr>');
+            for (product of resp["products"]) {
+              $('#deliverychallan_edit_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
+            }
+            $('#deliverychallan_edit_product_table tbody tr:last td:eq(0) select').val(key);
+            $('#deliverychallan_edit_product_table tbody tr:last td:eq(1) input').val(value.qty);
+          }
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+        $('.deliverychallan_edit_product_quantity').numeric({ negative: false});
       });
-
     }
   });
 

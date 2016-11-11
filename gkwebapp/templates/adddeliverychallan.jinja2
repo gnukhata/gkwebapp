@@ -37,13 +37,12 @@
 
             <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
           </div>
-          <form>
             <div class="form-group">
               <label for="deliverychallan_purchaseorder">
                 {% if gkstatus=="in" %}
-                {% trans %}Purchse Order:{% endtrans %}
+                {% trans %}Purchse Order{% endtrans %}:
                 {% else %}
-                {% trans %}Sales Order:{% endtrans %}
+                {% trans %}Sales Order{% endtrans %}:
                 {% endif %}
               </label>
               <select class="form-control input-sm" id="deliverychallan_purchaseorder" accesskey="">
@@ -54,11 +53,29 @@
               </select>
             </div>
             <div class="form-group">
+              <label for="deliverychallan_challanno">{% trans %}Note No{% endtrans %}:</label>
+              <input class="form-control input-sm" id="deliverychallan_challanno" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a">
+            </div>
+            <div class="form-group">
+              <label for="deliverychallan_date">{% trans %}Note Date{% endtrans %}:</label>
+              <div class="form-inline">
+                  <div class="form-group ">
+                    <input type="text" class="form-control input-sm delchaldate" size="2" maxlength="2" placeholder="DD" id="deliverychallan_date" accesskey="v">
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control input-sm delchaldate" size="2" maxlength="2" placeholder="MM" id="deliverychallan_month" accesskey="v">
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control input-sm delchaldate" size="4" maxlength="4" placeholder="YYYY" id="deliverychallan_year" accesskey="v">
+                  </div>
+              </div>
+            </div>
+            <div class="form-group">
               <label for="deliverychallan_customer">
                 {% if gkstatus=="in" %}
-                {% trans %}Supplier:{% endtrans %}
+                {% trans %}Supplier{% endtrans %}:
                 {% else %}
-                {% trans %}Customer:{% endtrans %}
+                {% trans %}Customer{% endtrans %}:
                 {% endif %}
               </label>
               <select class="form-control input-sm" id="deliverychallan_customer" accesskey="">
@@ -74,30 +91,14 @@
                   {% endfor %}
               </select>
             </div>
-            <div class="form-group">
-              <label for="deliverychallan_date">{% trans %}Note Date:{% endtrans %}</label>
-              <div class="form-inline">
-                  <div class="form-group">
-                    <input type="text" class="form-control input-sm delchaldate" size="2" maxlength="2" placeholder="DD" id="deliverychallan_date" accesskey="v">
-                  </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control input-sm delchaldate" size="2" maxlength="2" placeholder="MM" id="deliverychallan_month" accesskey="v">
-                  </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control input-sm delchaldate" size="4" maxlength="4" placeholder="YYYY" id="deliverychallan_year" accesskey="v">
-                  </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="deliverychallan_challanno">{% trans %}Note No:{% endtrans %}</label>
-              <input class="form-control input-sm" id="deliverychallan_challanno" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a">
-            </div>
+
+
             <div class="form-group">
               <label for="deliverychallan_godown">
                 {% if gkstatus=="in" %}
-                {% trans %}To Godown:{% endtrans %}
+                {% trans %}To Godown{% endtrans %}:
                 {% else %}
-                {% trans %}From Godown:{% endtrans %}
+                {% trans %}From Godown{% endtrans %}:
                 {% endif %}
               </label>
               <select class="form-control input-sm" id="deliverychallan_godown" accesskey="">
@@ -131,8 +132,16 @@
 
               <label for="vno">{% trans %}Please enter quantity!{% endtrans %}</label>
             </div>
+            <div class="alert alert-danger" id="issuername-blank-alert"  aria-live="rude" role="alert" hidden>
+
+              <label for="vno">{% trans %}Please enter Issuer's name!{% endtrans %}</label>
+            </div>
+            <div class="alert alert-danger" id="designation-blank-alert"  aria-live="rude" role="alert" hidden>
+
+              <label for="vno">{% trans %}Please enter designation!{% endtrans %}</label>
+            </div>
             <div class="panel">
-            <table id="deliverychallan_product_table" class="table table-condensed table-bordered fixed-table">
+            <table id="deliverychallan_product_table" class="table shadow table-condensed table-bordered fixed-table">
               <thead class="bg-primary">
                 <tr>
                   <th class="col-xs-9">{% trans %}Product{% endtrans %}</th>
@@ -160,7 +169,17 @@
               </tbody>
             </table>
             </div>
-          </form>
+            {% if gkstatus=='out' %}
+
+            <div class="form-group">
+              <label for="deliverychallan_issuername">{% trans %}Issuer's Name{% endtrans %}:</label>
+              <input type="text" class="form-control input-sm" id="deliverychallan_issuername" placeholder="Enter name">
+            </div>
+            <div class="form-group">
+              <label for="deliverychallan_designation">{% trans %}Designation{% endtrans %}:</label>
+              <input type="text" class="form-control input-sm" id="deliverychallan_designation" placeholder="Enter designation">
+            </div>
+            {% endif %}
         </div>
       </div>
       <div class="panel-footer">

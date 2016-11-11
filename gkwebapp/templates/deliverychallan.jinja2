@@ -14,7 +14,7 @@
   }
   .fixed-table tbody {
       display:block;
-      height: calc(100vh - 18.5em);
+      height: 228px;
       overflow-y:scroll;
   }
 
@@ -23,7 +23,30 @@
       width:100%;
       table-layout:fixed;
   }
-  .fixed-table thead {
+  .fixed-edit-table thead {
+      width: calc( 100% - 0.6em )
+  }
+
+  .fixed-edit-table td {
+      font-size: 75%;
+      padding: 4 !important;
+      margin: 4 !important;
+    }
+  .fixed-edit-table th {
+      font-size: 85%;
+  }
+  .fixed-edit-table tbody {
+      display:block;
+      height: 160px;
+      overflow-y:scroll;
+  }
+
+  .fixed-edit-table thead ,.fixed-edit-table tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  .fixed-edit-table thead {
       width: calc( 100% - 0.6em )
   }
   </style>

@@ -9,18 +9,18 @@ $(document).ready(function() {
   $("#deliverychallan_purchaseorder").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#deliverychallan_customer").focus().select();
+      $("#deliverychallan_challanno").focus().select();
     }
   });
 
   $("#deliverychallan_customer").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#deliverychallan_date").focus().select();
+      $("#deliverychallan_godown").focus().select();
     }
     if (event.which==38 && (document.getElementById('deliverychallan_customer').selectedIndex==1||document.getElementById('deliverychallan_customer').selectedIndex==0)) {
       event.preventDefault();
-      $("#deliverychallan_purchaseorder").focus().select();
+      $("#deliverychallan_year").focus().select();
     }
   });
 
@@ -31,7 +31,7 @@ $(document).ready(function() {
     }
     if (event.which==38) {
       event.preventDefault();
-      $("#deliverychallan_customer").focus().select();
+      $("#deliverychallan_challanno").focus().select();
     }
   });
   $("#deliverychallan_month").keydown(function(event) {
@@ -48,7 +48,7 @@ $(document).ready(function() {
   $("#deliverychallan_year").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#deliverychallan_challanno").focus().select();
+      $("#deliverychallan_customer").focus().select();
     }
     if (event.which==38) {
       event.preventDefault();
@@ -59,11 +59,11 @@ $(document).ready(function() {
   $("#deliverychallan_challanno").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#deliverychallan_godown").focus().select();
+      $("#deliverychallan_date").focus().select();
     }
     if (event.which==38) {
       event.preventDefault();
-      $("#deliverychallan_year").focus().select();
+      $("#deliverychallan_purchaseorder").focus().select();
     }
   });
 
@@ -74,7 +74,7 @@ $(document).ready(function() {
     }
     if (event.which==38 && $("#deliverychallan_godown option:selected").index()==0) {
       event.preventDefault();
-      $("#deliverychallan_challanno").focus().select();
+      $("#deliverychallan_customer").focus().select();
     }
   });
 
@@ -83,9 +83,29 @@ $(document).ready(function() {
       event.preventDefault();
       $('#deliverychallan_product_table tbody tr:first td:eq(0) select').focus();
     }
-    if (event.which==38) {
+    if (event.which==38 && document.getElementById('deliverychallan_consignment').selectedIndex==0) {
       event.preventDefault();
       $("#deliverychallan_godown").focus().select();
+    }
+  });
+  $("#deliverychallan_issuername").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $('#deliverychallan_designation').focus();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $('#deliverychallan_product_table tbody tr:last td:eq(0) select').focus();
+    }
+  });
+  $("#deliverychallan_designation").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $('#deliverychallan_save').click();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#deliverychallan_issuername").focus().select();
     }
   });
 
@@ -213,6 +233,7 @@ $(document).ready(function() {
       $('#deliverychallan_product_table tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
       event.preventDefault();
     }
+
   });
   $(document).off("keydown",".deliverychallan_product_quantity").on("keydown",".deliverychallan_product_quantity",function(event)
   {
@@ -299,6 +320,10 @@ $(document).ready(function() {
       $('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
       event.preventDefault();
     }
+    else if (event.which==35) {
+      event.preventDefault();
+      $("#deliverychallan_issuername").focus().select();
+    }
   });
 
 
@@ -312,12 +337,12 @@ $(document).ready(function() {
   $("#deliverychallan_save").click(function(event) {
     event.stopPropagation();
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
-    if ($.trim($('#deliverychallan_customer option:selected').val())=="") {
-      $("#custsup-blank-alert").alert();
-      $("#custsup-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#custsup-blank-alert").hide();
+    if ($.trim($('#deliverychallan_challanno').val())=="") {
+      $("#challanno-blank-alert").alert();
+      $("#challanno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#challanno-blank-alert").hide();
       });
-      $('#deliverychallan_customer').focus();
+      $('#deliverychallan_challanno').focus();
       return false;
     }
     if ($.trim($('#deliverychallan_date').val())=="") {
@@ -352,14 +377,16 @@ $(document).ready(function() {
       $('#deliverychallan_date').focus().select();
       return false;
     }
-    if ($.trim($('#deliverychallan_challanno').val())=="") {
-      $("#challanno-blank-alert").alert();
-      $("#challanno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#challanno-blank-alert").hide();
+    if ($.trim($('#deliverychallan_customer option:selected').val())=="") {
+      $("#custsup-blank-alert").alert();
+      $("#custsup-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#custsup-blank-alert").hide();
       });
-      $('#deliverychallan_challanno').focus();
+      $('#deliverychallan_customer').focus();
       return false;
     }
+
+
     var products = [];
     for (var i = 0; i < $("#deliverychallan_product_table tbody tr").length; i++) {
       if ($("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()=="") {
@@ -383,6 +410,22 @@ $(document).ready(function() {
       obj.qty = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(1) input").val();
       products.push(obj);
     }
+    if ($.trim($('#deliverychallan_issuername').val())=="" && $("#status").val()=='15') {
+      $("#issuername-blank-alert").alert();
+      $("#issuername-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#issuername-blank-alert").hide();
+      });
+      $('#deliverychallan_issuername').focus();
+      return false;
+    }
+    if ($.trim($('#deliverychallan_designation').val())=="" && $("#status").val()=='15') {
+      $("#designation-blank-alert").alert();
+      $("#designation-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#designation-blank-alert").hide();
+      });
+      $('#deliverychallan_designation').focus();
+      return false;
+    }
     $.ajax({
       url: '/deliverychallan?action=save',
       type: 'POST',
@@ -393,6 +436,8 @@ $(document).ready(function() {
       "dcno":$("#deliverychallan_challanno").val(),
       "dcdate":$("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val(),
       "inout":$("#status").val(),
+      "issuername":$("#deliverychallan_issuername").val(),
+      "designation":$("#deliverychallan_designation").val(),
       "goid":$("#deliverychallan_godown option:selected").val(),
       "products":JSON.stringify(products),
       "dcflag":$("#deliverychallan_consignment option:selected").val()},

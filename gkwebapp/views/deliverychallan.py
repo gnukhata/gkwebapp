@@ -53,7 +53,10 @@ def showadddeliverychallan(request):
 def showeditdeliverychallan(request):
 	header={"gktoken":request.headers["gktoken"]}
 	delchals = requests.get("http://127.0.0.1:6543/delchal?delchal=all", headers=header)
-	return {"gkstatus":delchals.json()["gkstatus"],"delchals":delchals.json()["gkresult"]}
+	suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
+	customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
+	godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	return {"gkstatus":delchals.json()["gkstatus"],"delchals":delchals.json()["gkresult"],"suppliers":suppliers.json()["gkresult"],"customers":customers.json()["gkresult"],"godowns":godowns.json()["gkresult"]}
 
 @view_config(route_name="deliverychallan",request_param="action=getproducts",renderer="json")
 def getproducts(request):
@@ -71,14 +74,8 @@ def getpurchaseorder(request):
 def getdelchal(request):
 	header={"gktoken":request.headers["gktoken"]}
 	delchaldata = requests.get("http://127.0.0.1:6543/delchal?delchal=single&dcid=%d"%(int(request.params["dcid"])), headers=header)
-	print delchaldata.json()["gkresult"]
 	return {"gkstatus": delchaldata.json()["gkstatus"],"delchaldata": delchaldata.json()["gkresult"]}
 
-@view_config(route_name="deliverychallan",request_param="action=showedit",renderer="gkwebapp:templates/editdeliverychallan.jinja2")
-def showeditdeliverychallan(request):
-	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/delchal?delchal=all", headers=header)
-	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
 
 @view_config(route_name="deliverychallan",request_param="action=save",renderer="json")
 def savedelchal(request):
@@ -92,6 +89,10 @@ def savedelchal(request):
 		delchaldata["orderno"]=request.params["orderid"]
 	if request.params["goid"]!='':
 		stockdata["goid"]=int(request.params["goid"])
+	if request.params.has_key("issuername"):
+		delchaldata["issuername"]=request.params["issuername"]
+	if request.params.has_key("designation"):
+		delchaldata["designation"]=request.params["designation"]
 	delchalwholedata = {"delchaldata":delchaldata,"stockdata":stockdata}
 	result=requests.post("http://127.0.0.1:6543/delchal",data=json.dumps(delchalwholedata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
