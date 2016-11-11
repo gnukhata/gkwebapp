@@ -51,8 +51,14 @@ $(document).ready(function() {
                 $("#goaddress").prop("disabled", true);
                 $("#gocontact").val(goddetails["godowncontact"]);
                 $("#gocontact").prop("disabled", true);
+                $("#gostate").val(goddetails["godownstate"]);
+                $("#gostate").prop("disabled", true);
+                $("#godesignation").val(goddetails["godowndesignation"]);
+                $("#godesignation").prop("disabled", true);
+                $("#gocontactname").val(goddetails["godowncontactname"]);
+                $("#gocontactname").prop("disabled", true);
                 $("#goid").val(goddetails["godownid"]);
-                $("#editgodownform").show();
+                $(".editgodownform").show();
                 $("#form-footer").show();
                 $("#delete").show();
                 $("#edit").show();
@@ -71,7 +77,7 @@ $(document).ready(function() {
     });
 
     $("#editgoddet").keyup(function(e) {
-        if ($("#editgodownform").is(':visible')) {
+        if ($(".editgodownform").is(':visible')) {
             if (e.which == 13) {
                 $("#edit").click();
             }

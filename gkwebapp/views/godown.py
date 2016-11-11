@@ -50,7 +50,6 @@ def showmultigodown(request):
 def addgodown(request):
 	header={"gktoken":request.headers["gktoken"]}
 	gkdata = {"goname":request.params["godownname"], "goaddr":request.params["godownaddress"], "state":request.params["godownstate"], "gocontact":request.params["godowncontact"], "contactname":request.params["godowncontactname"], "designation":request.params["godowndesignation"]}
-	print gkdata
 	result = requests.post("http://127.0.0.1:6543/godown", data =json.dumps(gkdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 
@@ -83,7 +82,7 @@ def getgoddetails(request):
 	result = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(goid), headers=header)
 	if(result.json()["gkstatus"] == 0):
 		record = result.json()["gkresult"]
-		resp = {"godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godowncontact": str(record["gocontact"])}
+		resp = {"godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
 		return {"gkstatus":0, "gkresult":resp}
 	return {"gkstatus":result.json()["gkstatus"]}
 
