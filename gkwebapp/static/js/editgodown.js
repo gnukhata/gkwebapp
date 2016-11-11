@@ -91,7 +91,7 @@ $(document).ready(function() {
         e.preventDefault();
         $("#goaddress").focus().select();
       }
-      if (e.which == 38 && $("#gostate option:selected").index()==0) {
+      if (e.which == 38 && ($("#gostate option:selected").index()==1 || $("#gostate option:selected").index()==0)) {
         $("#goname").focus().select();
       }
     });

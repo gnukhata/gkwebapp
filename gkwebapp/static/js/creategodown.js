@@ -45,7 +45,7 @@ $(document).ready(function()
       e.preventDefault();
       $("#godownaddress").focus();
     }
-    if (e.which == 38 && $("#godownstate option:selected").index()==0) {
+    if (e.which == 38 && ($("#godownstate option:selected").index()==1 || $("#godownstate option:selected").index()==0)) {
       $("#godownname").focus();
     }
   });
