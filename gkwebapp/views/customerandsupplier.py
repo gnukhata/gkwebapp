@@ -59,14 +59,14 @@ def getcustomersupplier(request):
 @view_config(route_name="customersuppliers",request_param="action=save",renderer="json")
 def savecustomersupplier(request):
 	header={"gktoken":request.headers["gktoken"]}
-	dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"custpan":request.params["custpan"],"custtan":request.params["custtan"],"csflag":int(request.params["csflag"])}
+	dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"state":request.params["state"],"custpan":request.params["custpan"],"custtan":request.params["custtan"],"csflag":int(request.params["csflag"])}
 	result=requests.post("http://127.0.0.1:6543/customersupplier",data=json.dumps(dataset),headers=header)
 	return {"gkstatus": result.json()["gkstatus"]}
 
 @view_config(route_name="customersuppliers",request_param="action=edit",renderer="json")
 def editcustomersupplier(request):
 	header={"gktoken":request.headers["gktoken"]}
-	dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"custpan":request.params["custpan"],"custtan":request.params["custtan"],"csflag":int(request.params["csflag"]),"custid":int(request.params["custid"])}
+	dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"custpan":request.params["custpan"],"state":request.params["state"],"custtan":request.params["custtan"],"csflag":int(request.params["csflag"]),"custid":int(request.params["custid"])}
 	result=requests.put("http://127.0.0.1:6543/customersupplier",data=json.dumps(dataset),headers=header)
 	return {"gkstatus": result.json()["gkstatus"]}
 

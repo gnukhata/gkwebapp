@@ -29,11 +29,21 @@ $(document).ready(function() {
   $("#add_cussup_phone").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#add_cussup_address").focus().select();
+      $("#add_state").focus().select();
     }
     if (event.which==38) {
       event.preventDefault();
       $("#add_cussup_email").focus().select();
+    }
+  });
+  $("#add_state").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#add_cussup_address").focus().select();
+    }
+    if (event.which==38 && $("#add_state option:selected").index()==0)  {
+      event.preventDefault();
+      $("#add_cussup_phone").focus().select();
     }
   });
   var delta = 500;
@@ -128,6 +138,7 @@ $(document).ready(function() {
       "custfax": $("#add_cussup_fax").val(),
       "custpan": $("#add_cussup_pan").val(),
       "custtan": $("#add_cussup_tan").val(),
+      "state" : $("#add_state").val(),
       "csflag": $("#add_cussup option:selected").val()},
       beforeSend: function(xhr)
       {
@@ -187,6 +198,6 @@ $(document).ready(function() {
     .always(function() {
       console.log("complete");
     });
-    event.stopPropogation();
+    event.stopPropagation();
   });
 });

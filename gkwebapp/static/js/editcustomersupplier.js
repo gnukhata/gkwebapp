@@ -28,6 +28,8 @@ $(document).ready(function() {
       $("#edit_cussup_phone").prop("disabled", true);
       $("#edit_cussup_address").val(result["custaddr"]);
       $("#edit_cussup_address").prop("disabled", true);
+      $("#edit_state").val(result["state"]);
+      $("#edit_state").prop("disabled", true);
       $("#edit_cussup_fax").val(result["custfax"]);
       $("#edit_cussup_fax").prop("disabled", true);
       $("#edit_cussup_pan").val(result["custpan"]);
@@ -63,6 +65,7 @@ $(document).ready(function() {
       $("#edit_cussup_fax").prop("disabled", false);
       $("#edit_cussup_pan").prop("disabled", false);
       $("#edit_cussup_tan").prop("disabled", false);
+      $("#edit_state").prop("disabled", false);
 
     }
 
@@ -100,11 +103,20 @@ $(document).ready(function() {
   $("#edit_cussup_phone").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#edit_cussup_address").focus().select();
+      $("#edit_state").focus().select();
     }
     if (event.which==38){
       event.preventDefault();
       $("#edit_cussup_email").focus().select();
+    }
+  });
+  $("#edit_state").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+    }
+    if (event.which==38 && $("#edit_state option:selected").index()==0) {
+      event.preventDefault();
+      $("#edit_cussup_phone").focus().select();
     }
   });
   var delta = 500;
@@ -124,7 +136,7 @@ $(document).ready(function() {
     }
     if (event.which==38) {
       event.preventDefault();
-      $("#edit_cussup_phone").focus();
+      $("#edit_state").focus();
     }
   });
   $("#edit_cussup_fax").keydown(function(event) {
@@ -172,6 +184,7 @@ $(document).ready(function() {
     $("#edit_cussup_fax").prop("disabled", false);
     $("#edit_cussup_pan").prop("disabled", false);
     $("#edit_cussup_tan").prop("disabled", false);
+    $("#edit_state").prop("disabled", false);
   });
   $(document).keyup(function(event) {
     if(event.which == 45) {
@@ -203,6 +216,7 @@ $(document).ready(function() {
       "custfax": $("#edit_cussup_fax").val(),
       "custpan": $("#edit_cussup_pan").val(),
       "custtan": $("#edit_cussup_tan").val(),
+      "state"  : $("#edit_state").val(),
       "csflag": $("#edit_cussup option:selected").val()},
       beforeSend: function(xhr)
       {
