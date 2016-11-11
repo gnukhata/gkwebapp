@@ -89,10 +89,10 @@ $(document).ready(function() {
     $("#gostate").keydown(function(e){
       if (e.which == 13) {
         e.preventDefault();
-        $("#goaddress").focus();
+        $("#goaddress").focus().select();
       }
       if (e.which == 38 && $("#gostate option:selected").index()==0) {
-        $("#goname").focus();
+        $("#goname").focus().select();
       }
     });
         var delta = 500;
@@ -102,7 +102,7 @@ $(document).ready(function() {
             var thisKeypressTime = new Date();
             if ( thisKeypressTime - lastKeypressTime <= delta )
             {
-              $("#gocontactname").focus();
+              $("#gocontactname").focus().select();
               thisKeypressTime = 0;
             }
             lastKeypressTime = thisKeypressTime;
@@ -114,19 +114,19 @@ $(document).ready(function() {
         $("#gocontactname").keydown(function(e){
           if (e.which == 13) {
             e.preventDefault();
-            $("#godesignation").focus();
+            $("#godesignation").focus().select();
           }
           if (e.which == 38) {
-            $("#goaddress").focus();
+            $("#goaddress").focus().select();
           }
         });
         $("#godesignation").keydown(function(e){
           if (e.which == 13) {
             e.preventDefault();
-            $("#gocontact").focus();
+            $("#gocontact").focus().select();
           }
           if (e.which == 38) {
-            $("#gocontactname").focus();
+            $("#gocontactname").focus().select();
           }
         });
         $("#gocontact").keydown(function(e){
@@ -135,7 +135,7 @@ $(document).ready(function() {
             $("#egdnsubmit").click();
           }
           if (e.which == 38) {
-            $("#godesignation").focus();
+            $("#godesignation").focus().select();
           }
         });
 
