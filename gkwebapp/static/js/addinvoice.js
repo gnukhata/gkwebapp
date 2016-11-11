@@ -2,6 +2,14 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
   $('.invoicedate').autotab('number');
   $("#invoice_deliverynote").focus();
+  if ($("#status").val()=='15')
+  {
+    $(".invoice_issuer").show();
+    $(".fixed-table").removeClass('fixed-tablepurchase');
+    $(".fixed-table").addClass('fixed-tablesale');
+
+  }
+  
   $("#invoice_date").numeric();
   $("#invoice_month").numeric();
   $("#invoice_year").numeric();
