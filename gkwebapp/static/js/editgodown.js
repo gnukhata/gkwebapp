@@ -27,6 +27,7 @@ Contributors:
 $(document).ready(function() {
     $('.modal-backdrop').remove();
     $("#egdnsubmit").hide();
+
     $("#editgoddet").bind("change keyup", function() {
         $("#egdnsubmit").hide();
         var goid = $("#editgoddet option:selected").val();
@@ -72,53 +73,77 @@ $(document).ready(function() {
         $("#goname").prop("disabled", false);
         $("#goaddress").prop("disabled", false);
         $("#gocontact").prop("disabled", false);
+        $("#gostate").prop("disabled", false);
+        $("#godesignation").prop("disabled", false);
+        $("#gocontactname").prop("disabled", false);
         $("#edit").hide();
         $("#goname").focus();
     });
+
+    $("#goname").keydown(function(e){
+      if (e.which == 13) {
+        e.preventDefault();
+        $("#gostate").focus();
+      }
+    });
+    $("#gostate").keydown(function(e){
+      if (e.which == 13) {
+        e.preventDefault();
+        $("#goaddress").focus();
+      }
+      if (e.which == 38 && $("#gostate option:selected").index()==0) {
+        $("#goname").focus();
+      }
+    });
+        var delta = 500;
+        var lastKeypressTime = 0;
+        $("#goaddress").keydown(function(e){
+          if (e.which == 13) {
+            var thisKeypressTime = new Date();
+            if ( thisKeypressTime - lastKeypressTime <= delta )
+            {
+              $("#gocontactname").focus();
+              thisKeypressTime = 0;
+            }
+            lastKeypressTime = thisKeypressTime;
+          }
+          if (e.which == 38) {
+            $("#gostate").focus();
+          }
+        });
+        $("#gocontactname").keydown(function(e){
+          if (e.which == 13) {
+            e.preventDefault();
+            $("#godesignation").focus();
+          }
+          if (e.which == 38) {
+            $("#goaddress").focus();
+          }
+        });
+        $("#godesignation").keydown(function(e){
+          if (e.which == 13) {
+            e.preventDefault();
+            $("#gocontact").focus();
+          }
+          if (e.which == 38) {
+            $("#gocontactname").focus();
+          }
+        });
+        $("#gocontact").keydown(function(e){
+          if (e.which == 13) {
+            e.preventDefault();
+            $("#egdnsubmit").click();
+          }
+          if (e.which == 38) {
+            $("#godesignation").focus();
+          }
+        });
 
     $("#editgoddet").keyup(function(e) {
         if ($(".editgodownform").is(':visible')) {
             if (e.which == 13) {
                 $("#edit").click();
             }
-        }
-    });
-
-    $("#goname").keydown(function(event) {
-        if (event.which == 40) {
-            $("#gocontact").focus();
-        }
-        if (event.which == 13) {
-            event.preventDefault();
-            $("#gocontact").focus();
-        }
-        if (event.which == 38) {
-          $("#editgoddet").focus();
-        }
-    });
-
-    $("#goaddress").keydown(function(event) {
-        if (event.which == 38) {
-            $("#goname").select();
-            $("#goname").focus();
-        }
-        if (event.which == 13) {
-          event.preventDefault();
-          $("#egdnsubmit").click();
-        }
-    });
-
-    $("#gocontact").keydown(function(event)
-    {
-        if (event.which == 38) {
-            $("#goname").focus();
-        }
-        if (event.which == 40) {
-            $("#gocontact").select().focus();
-        }
-        if (event.which == 13) {
-          event.preventDefault();
-          $("#goaddress").focus();
         }
     });
 
@@ -209,6 +234,9 @@ $(document).ready(function() {
         var goname = $("#goname").val();
         var goaddr = $("#goaddress").val();
         var gocontact = $("#gocontact").val();
+        var gocontactname = $("#gocontactname").val();
+        var godesignation = $("#godesignation").val();
+        var gostate = $("#gostate option:selected").val();
         $.ajax({
             type: "POST",
             url: "/editgodown",
@@ -219,7 +247,10 @@ $(document).ready(function() {
                 "goid": goid,
                 "goname": goname,
                 "goaddr": goaddr,
-                "gocontact": gocontact
+                "gocontact": gocontact,
+                "gocontactname": gocontactname,
+                "godesignation": godesignation,
+                "gostate": gostate
             },
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
