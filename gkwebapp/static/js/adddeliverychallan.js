@@ -91,10 +91,10 @@ $(document).ready(function() {
 
 
 
-  $(document).keydown(function(event) {
+  $(document).off("keyup").on("keyup",function(event) {
     if(event.which == 45) {
-      $("#deliverychallan_save").click();
       event.preventDefault();
+      $("#deliverychallan_save").click();
       return false;
     }
   });
@@ -117,10 +117,6 @@ $(document).ready(function() {
         if (resp["gkstatus"]==0) {
           var podata = resp["podata"];
           $("#deliverychallan_customer").val(podata.csid);
-          var deldatearray = podata.datedelivery.split(/\s*\-\s*/g);
-          $("#deliverychallan_date").val(deldatearray[0]);
-          $("#deliverychallan_month").val(deldatearray[1]);
-          $("#deliverychallan_year").val(deldatearray[2]);
           if ($('#deliverychallan_product_table tbody tr').length==1) {
             $('#deliverychallan_product_table tbody tr').remove();
             $.each(podata["productdetails"], function(key, value) {
@@ -152,7 +148,7 @@ $(document).ready(function() {
                     $('#deliverychallan_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
                   }
                   $('#deliverychallan_product_table tbody tr:last td:eq(0) select').val(key);
-                  $('#deliverychallan_product_table tbody tr:last td:eq(1) input').val(value);
+                  $('#deliverychallan_product_table tbody tr:last td:eq(1) input').val(value.qty);
                 }
               })
               .fail(function() {
@@ -314,6 +310,7 @@ $(document).ready(function() {
     $('#deliverychallan_product_table tbody tr:last td:eq(0) input').select();
   });
   $("#deliverychallan_save").click(function(event) {
+    event.stopPropagation();
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     if ($.trim($('#deliverychallan_customer option:selected').val())=="") {
       $("#custsup-blank-alert").alert();
@@ -386,11 +383,6 @@ $(document).ready(function() {
       obj.qty = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(1) input").val();
       products.push(obj);
     }
-      if($("#deliverychallan_customer option:selected").parent()[0].id == "custgroup"){
-        var inout = 15;
-      } else if($("#deliverychallan_customer option:selected").parent()[0].id == "supgroup"){
-        var inout = 9;
-      }
     $.ajax({
       url: '/deliverychallan?action=save',
       type: 'POST',
@@ -400,7 +392,7 @@ $(document).ready(function() {
       "custid":$("#deliverychallan_customer option:selected").val(),
       "dcno":$("#deliverychallan_challanno").val(),
       "dcdate":$("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val(),
-      "inout":inout,
+      "inout":$("#status").val(),
       "goid":$("#deliverychallan_godown option:selected").val(),
       "products":JSON.stringify(products),
       "dcflag":$("#deliverychallan_consignment option:selected").val()},
@@ -411,11 +403,25 @@ $(document).ready(function() {
     })
     .done(function(resp) {
       if(resp["gkstatus"] == 0){
-        $("#deliverychallan_create").click();
+        if ($("#status").val()=='9') {
+          $("#deliverychallan_record").click();
+        }
+        else {
+          $("#deliverychallan_create").click();
+        }
         $("#success-alert").alert();
         $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#success-alert").hide();
         });
+        return false;
+      }
+      else if(resp["gkstatus"]==1) {
+        $("#deliverychallan_challanno").focus();
+        $("#duplicate-alert").alert();
+        $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#duplicate-alert").hide();
+        });
+        return false;
       }
       else {
         $("#deliverychallan_purchaseorder").focus();
@@ -423,6 +429,7 @@ $(document).ready(function() {
         $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#failure-alert").hide();
         });
+        return false;
       }
     })
     .fail(function() {
@@ -432,5 +439,6 @@ $(document).ready(function() {
       console.log("complete");
     });
 
+    return false;
   });
 });

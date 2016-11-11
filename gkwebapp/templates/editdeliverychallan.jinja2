@@ -9,16 +9,16 @@
       {% trans %}Something went wrong!{% endtrans %}
     </div>
 
-    <div class="panel shadow deliverychallan_panel">
+    <div class="panel shadow deliverychallan_edit_panel">
       <div class="panel-body">
         <div class="container-fluid row">
 
           <div class="form-group col-md-5">
-            <label for="deliverychallan_list">{% trans %}Delivery Note:{% endtrans %}</label>
-            <select class="form-control input-sm" id="deliverychallan_list">
+            <label for="deliverychallan_edit_list">{% trans %}Delivery Note:{% endtrans %}</label>
+            <select class="form-control input-sm" id="deliverychallan_edit_list">
               <option value="" disabled selected hidden>{% trans %}Select Delivery Note{% endtrans %}</option>
-              {% for dc in dcs %}
-              <option value="{{dc['dcid']}}">{{dc["dcno"]}}, {{dc["dcdate"]}}, {{dc["custname"]}}</option>
+              {% for dc in gkresult %}
+              <option value="{{dc['dcid']}}">{{dc["dcno"]}}, {{dc["custname"]}}</option>
               {% endfor %}
             </select>
           </div>
@@ -42,69 +42,43 @@
           </div>
           <form>
             <div class="form-group">
-              <label for="deliverychallan_purchaseorder">{% trans %}Purchase Order:{% endtrans %}</label>
-              <select class="form-control input-sm" id="deliverychallan_purchaseorder" accesskey="">
+              <label for="deliverychallan_edit_purchaseorder">{% trans %}Purchase Order:{% endtrans %}</label>
+              <select class="form-control input-sm" id="deliverychallan_edit_purchaseorder" accesskey="">
                 <option value="" selected>None</option>
-                <optgroup label="Purchase Orders" id="po">}
-                {% for purchaseorder in purchaseorders %}
-                <option value="{{purchaseorder['orderid']}}">{{purchaseorder["orderno"]}}, {{purchaseorder["orderdate"]}}, {{purchaseorder["custname"]}}</option>
-                {% endfor %}
-              </optgroup>
-              <optgroup label="Sales Orders" id="so">}
-              {% for salesorder in salesorders %}
-              <option value="{{salesorder['orderid']}}">{{salesorder["orderid"]}}, {{salesorder["orderdate"]}}, {{salesorder["custname"]}}</option>
-              {% endfor %}
-            </optgroup>
               </select>
             </div>
             <div class="form-group">
-              <label for="deliverychallan_customer">{% trans %}Customer/Supplier:{% endtrans %}</label>
-              <select class="form-control input-sm" id="deliverychallan_customer" accesskey="">
-                <option value="" disabled hidden selected>Select Customer/Supplier</option>
-                <optgroup label="Customers" id="custgroup">
-                  {% for customer in customers %}
-                  <option value="{{customer['custid']}}">{{customer["custname"]}}</option>
-                  {% endfor %}
-                </optgroup>
-                <optgroup label="Suppliers" id="supgroup">
-                  {% for supplier in suppliers %}
-                  <option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
-                  {% endfor %}
-                </optgroup>
+              <label for="deliverychallan_edit_customer">{% trans %}Customer/Supplier:{% endtrans %}</label>
+              <select class="form-control input-sm" id="deliverychallan_edit_customer" accesskey="">
+
               </select>
             </div>
             <div class="form-group">
-              <label for="deliverychallan_date">{% trans %}Date:{% endtrans %}</label>
+              <label for="deliverychallan_edit_date">{% trans %}Date:{% endtrans %}</label>
               <div class="form-inline">
-                <form class="form-inline">
                   <div class="form-group">
-                    <input type="text" class="form-control input-sm delchaldate" size="2" maxlength="2" placeholder="DD" id="deliverychallan_date" accesskey="v">
+                    <input type="text" class="form-control input-sm delchaldate" size="2" maxlength="2" placeholder="DD" id="deliverychallan_edit_date" accesskey="v">
                   </div>
                   <div class="form-group">
-                    <input type="text" class="form-control input-sm delchaldate" size="2" maxlength="2" placeholder="MM" id="deliverychallan_month" accesskey="v">
+                    <input type="text" class="form-control input-sm delchaldate" size="2" maxlength="2" placeholder="MM" id="deliverychallan_edit_month" accesskey="v">
                   </div>
                   <div class="form-group">
-                    <input type="text" class="form-control input-sm delchaldate" size="4" maxlength="4" placeholder="YYYY" id="deliverychallan_year" accesskey="v">
+                    <input type="text" class="form-control input-sm delchaldate" size="4" maxlength="4" placeholder="YYYY" id="deliverychallan_edit_year" accesskey="v">
                   </div>
-                </form>
               </div>
             </div>
             <div class="form-group">
-              <label for="deliverychallan_challanno">{% trans %}Note No:{% endtrans %}</label>
-              <input class="form-control input-sm" id="deliverychallan_challanno" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a">
+              <label for="deliverychallan_edit_challanno">{% trans %}Note No:{% endtrans %}</label>
+              <input class="form-control input-sm" id="deliverychallan_edit_challanno" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a">
             </div>
             <div class="form-group">
-              <label for="deliverychallan_godown">{% trans %}Godown:{% endtrans %}</label>
-              <select class="form-control input-sm" id="deliverychallan_godown" accesskey="">
-                <option value=""  selected>{% trans %}None{% endtrans %}</option>
-                {% for godown in godowns %}
-                <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
-                {% endfor %}
+              <label for="deliverychallan_edit_godown">{% trans %}Godown:{% endtrans %}</label>
+              <select class="form-control input-sm" id="deliverychallan_edit_godown" accesskey="">
               </select>
             </div>
             <div class="form-group">
-              <label for="deliverychallan_consignment">Note Type:</label>
-                <select class="form-control input-sm" id="deliverychallan_consignment" accesskey="">
+              <label for="deliverychallan_edit_consignment">Note Type:</label>
+                <select class="form-control input-sm" id="deliverychallan_edit_consignment" accesskey="">
                   <option value="4"  selected>{% trans %}Delivery Challan{% endtrans %}</option>
                   <option value="3">{% trans %}Consignment{% endtrans %}</option>
                   <option value="19">{% trans %}Sample{% endtrans %}</option>
@@ -112,7 +86,7 @@
               </label>
             </div>
           </div>
-          <div class="col-md-7 deliverychallan_edit_div" id="deliverychallan_product_div" hidden>
+          <div class="col-md-7 deliverychallan_edit_div" id="deliverychallan_edit_product_div" hidden>
             <div class="alert alert-danger" id="product-blank-alert"  aria-live="rude" role="alert" hidden>
 
               <label for="vno">{% trans %}Please select a product!{% endtrans %}</label>
@@ -122,7 +96,7 @@
               <label for="vno">{% trans %}Please enter quantity!{% endtrans %}</label>
             </div>
             <div class="panel">
-            <table id="deliverychallan_product_table" class="table table-condensed table-bordered fixed-table">
+            <table id="deliverychallan_edit_product_table" class="table table-condensed table-bordered fixed-table">
               <thead class="bg-primary">
                 <tr>
                   <th class="col-xs-9">{% trans %}Product{% endtrans %}</th>
@@ -140,7 +114,7 @@
       <div class="panel-footer">
         <div class="container-fluid">
 
-        <button class="btn btn-success btn-sm" id="deliverychallan_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save anywhere on the current screen">{% trans %}Save{% endtrans %}</button>
+        <button class="btn btn-success btn-sm" id="deliverychallan_edit_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save anywhere on the current screen">{% trans %}Save{% endtrans %}</button>
         <label class="btn btn-primary btn-sm" for="my-file-selector">
           <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');" aria-describedby="attachhelp">
           {% trans %}Attac<u>h</u>{% endtrans %}
@@ -154,5 +128,5 @@
 
   </div>
 </div>
-<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/adddeliverychallan.js')}}"></script>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editdeliverychallan.js')}}"></script>
 </body>
