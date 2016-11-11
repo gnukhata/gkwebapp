@@ -62,7 +62,7 @@ $(document).ready(function() {
       event.preventDefault();
       $("#tn_to_godown").focus().select();
     }
-    if (event.which==38 && $("#tn_from_godown option:selected").index()==0) {
+    if (event.which==38 && (document.getElementById('tn_from_godown').selectedIndex==1||document.getElementById('tn_from_godown').selectedIndex==0)) {
       event.preventDefault();
       $("#no_of_packet").focus().select();
     }
@@ -73,7 +73,7 @@ $(document).ready(function() {
       event.preventDefault();
       $("#transport_mode").focus();
     }
-    if (event.which==38 && $("#tn_to_godown option:selected").index()==0) {
+    if (event.which==38 && (document.getElementById('tn_to_godown').selectedIndex==1||document.getElementById('tn_to_godown').selectedIndex==0)) {
       event.preventDefault();
       $("#tn_from_godown").focus().select();
     }
@@ -113,28 +113,7 @@ $(document).ready(function() {
       return false;
     }
   });
-  $("#tn_from_godown").change(function() {
 
-      var value = $(this).val();
-
-      $("#tn_to_godown").children('option').each(function() {
-          if ( $(this).val() === value ) {
-              $(this).attr('disabled', true).siblings().removeAttr('disabled');
-          }
-      });
-
-  });
-  $("#tn_to_godown").change(function() {
-
-      var value = $(this).val();
-
-      $("#tn_from_godown").children('option').each(function() {
-          if ( $(this).val() === value ) {
-              $(this).attr('disabled', true).siblings().removeAttr('disabled');
-          }
-      });
-
-  });
   $("#transfernote_reset").click(function(event) {
     $("#transfernote_create").click();
   });
@@ -337,6 +316,15 @@ $(document).ready(function() {
       $('#tn_to_godown').focus();
       return false;
     }
+    if ($.trim($('#tn_from_godown').val())==$('#tn_to_godown').val()) {
+      $("#godown-same-alert").alert();
+      $("#godown-same-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#godown-same-alert").hide();
+      });
+      $('#tn_from_godown').focus();
+      return false;
+    }
+
 
 
     var products = [];

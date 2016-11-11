@@ -72,6 +72,10 @@
 
             <label for="vno">{% trans %}transfer Note Deleted Successfully!{% endtrans %}</label>
           </div>
+          <div class="alert alert-danger" id="godown-same-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}From and To godown can not be same !{% endtrans %}</label>
+          </div>
           <form>
             <div class="form-group">
               <label for="edit_tn_list">{% trans %}Transfer Note:{% endtrans %}</label>
@@ -129,7 +133,7 @@
             <div class="form-group hidden-load" hidden>
               <label for="edit_tn_from_godown">{% trans %} From Godown:{% endtrans %}</label>
               <select class="form-control input-sm disable" id="edit_tn_from_godown" accesskey="">
-                <option value=""  selected>{% trans %}Select Godown{% endtrans %}</option>
+                <option value=""  disabled hidden selected>{% trans %}Select Godown{% endtrans %}</option>
                 {% for godown in godowns %}
                 <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
                 {% endfor %}
@@ -138,7 +142,7 @@
             <div class="form-group hidden-load" hidden>
               <label for="edit_tn_to_godown">{% trans %} To Godown:{% endtrans %}</label>
               <select class="form-control input-sm disable" id="edit_tn_to_godown" accesskey="">
-                <option value=""  selected>{% trans %}Select Godown{% endtrans %}</option>
+                <option value=""  disabled hidden selected>{% trans %}Select Godown{% endtrans %}</option>
                 {% for godown in godowns %}
                 <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
                 {% endfor %}
