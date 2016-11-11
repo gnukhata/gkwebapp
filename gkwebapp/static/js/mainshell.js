@@ -187,6 +187,15 @@ $(document).ready(function(){
           $("#showpurchasereturn").click();
           event.preventDefault();
           }
+        if (event.ctrlKey && event.keyCode == 192) {
+          $(".search").children(".form-control").focus();
+        }
+        if (event.ctrlKey && event.keyCode == 192) {
+          $(".search").children(".form-control:first").focus();
+        }
+        if (event.ctrlKey && event.shiftKey && event.keyCode == 192) {
+          $(".search").children(".form-control:last").focus();
+        }
       });
       $(".mastermenu").keydown(function(event){
         if(event.which == 39){
