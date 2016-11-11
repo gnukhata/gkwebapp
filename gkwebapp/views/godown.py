@@ -49,7 +49,7 @@ def showmultigodown(request):
 @view_config(route_name="addgodown", renderer="json")
 def addgodown(request):
 	header={"gktoken":request.headers["gktoken"]}
-	gkdata = {"goname":request.params["godownname"],"goaddr":request.params["godownaddress"], "gocontact":request.params["godowncontact"]}
+	gkdata = {"goname":request.params["godownname"], "goaddr":request.params["godownaddress"], "state":request.params["godownstate"], "gocontact":request.params["godowncontact"], "contactname":request.params["godowncontactname"], "designation":request.params["godowndesignation"]}
 	print gkdata
 	result = requests.post("http://127.0.0.1:6543/godown", data =json.dumps(gkdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}

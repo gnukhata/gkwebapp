@@ -25,7 +25,7 @@
 					{% trans %}Please enter address!{% endtrans %}
 				</div>
 
-				<div class="alert alert-danger" id="contactblank-alert"  aria-live="rude" role="alert" hidden>
+				<div class="alert alert-danger" id="stateblank-alert"  aria-live="rude" role="alert" hidden>
 
 					{% trans %}Please select state!{% endtrans %}
 				</div>
@@ -34,9 +34,9 @@
 					<input type="text" id="godownname" class="form-control input-sm" name="godownname" accesskey="g"></input>
 				</div>
 				<div class="form-group">
-					<label for="godownstate" id="godnstate">{% trans %}Stat<u>e</u>{% endtrans %} : </label>
-					<select id="godownstate" class="form-control input-sm tax_state" accesskey="e">
-						<option value="">None</option>
+					<label for="godownstate" id="godnstate">{% trans %}Sta<u>t</u>e{% endtrans %} : </label>
+					<select id="godownstate" class="form-control input-sm tax_state" accesskey="t">
+						<option value="" disabled selected hidden>None</option>
 						<option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
 						<option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>
 						<option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option>
@@ -83,8 +83,8 @@
 			</div>
 			<div class="col-sm-6">
 				<div class="form-group">
-					<label for="godownname" id="godnname">{% trans %}C<u>o</u>ntact Name{% endtrans %} : </label>
-					<input type="text" id="godowncontact" class="form-control input-sm" name="godownname" accesskey="o"></input>
+					<label for="godowncontactname" id="godnname">{% trans %}C<u>o</u>ntact Name{% endtrans %} : </label>
+					<input type="text" id="godowncontactname" class="form-control input-sm" name="godownname" accesskey="o"></input>
 				</div>
 				<div class="form-group">
 					<label for="godowndesignation" id="godndesignation">{% trans %}De<u>s</u>ignation{% endtrans %} : </label>

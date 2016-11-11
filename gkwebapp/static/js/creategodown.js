@@ -33,30 +33,22 @@ $(document).ready(function()
   {
     $("a[href ='#godown_create']").click();
   });
-  $('input:not(:hidden),select').bind("keydown", function(e) {
-    var n = $("input:not(:hidden),textarea").length;
-    var f = $('input:not(:hidden),textarea');
-    if (e.which == 13)
-    {
-      var nextIndex = f.index(this) + 1;
-      if(nextIndex < n){
-        e.preventDefault();
-        f[nextIndex].focus();}
 
-      }
-    });
-    $('input:not(:hidden),textarea').bind("keydown", function(e) {
-      var n = $("input:not(:hidden),textarea").length;
-      var f = $('input:not(:hidden),textarea');
-      if (e.which == 38)
-      {
-        var prevIndex = f.index(this) - 1;
-        if(prevIndex >= 0){
-          e.preventDefault();
-          f[prevIndex].focus();}
-
-        }
-      });
+  $("#godownname").keydown(function(e){
+    if (e.which == 13) {
+      e.preventDefault();
+      $("#godownstate").focus();
+    }
+  });
+  $("#godownstate").keydown(function(e){
+    if (e.which == 13) {
+      e.preventDefault();
+      $("#godownaddress").focus();
+    }
+    if (e.which == 38 && $("#godownstate option:selected").index()==0) {
+      $("#godownname").focus();
+    }
+  });
       var delta = 500;
       var lastKeypressTime = 0;
       $("#godownaddress").keydown(function(e){
@@ -64,12 +56,40 @@ $(document).ready(function()
           var thisKeypressTime = new Date();
           if ( thisKeypressTime - lastKeypressTime <= delta )
           {
-            $("#gdnsubmit").click();
-            // optional - if we'd rather not detect a triple-press
-            // as a second double-press, reset the timestamp
+            $("#godowncontactname").focus();
             thisKeypressTime = 0;
           }
           lastKeypressTime = thisKeypressTime;
+        }
+        if (e.which == 38) {
+          $("#godownstate").focus();
+        }
+      });
+      $("#godowncontactname").keydown(function(e){
+        if (e.which == 13) {
+          e.preventDefault();
+          $("#godowndesignation").focus();
+        }
+        if (e.which == 38) {
+          $("#godownaddress").focus();
+        }
+      });
+      $("#godowndesignation").keydown(function(e){
+        if (e.which == 13) {
+          e.preventDefault();
+          $("#godowncontact").focus();
+        }
+        if (e.which == 38) {
+          $("#godowncontactname").focus();
+        }
+      });
+      $("#godowncontact").keydown(function(e){
+        if (e.which == 13) {
+          e.preventDefault();
+          $("#gdnsubmit").click();
+        }
+        if (e.which == 38) {
+          $("#godowndesignation").focus();
         }
       });
       $(document).keydown(function(event) {
@@ -87,7 +107,15 @@ $(document).ready(function()
           $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
             $("#blank-alert").hide();
           });
-          $("#godownname").focus().select();
+          $("#godownname").focus();
+          return false;
+        }
+        if ($.trim($("#godownstate option:selected").text())=="None") {
+          $("#stateblank-alert").alert();
+          $("#stateblank-alert").fadeTo(2250, 200).slideUp(500, function(){
+            $("#stateblank-alert").hide();
+          });
+          $("#godownstate").focus();
           return false;
         }
         if ($.trim($("#godownaddress").val())=="") {
@@ -95,15 +123,7 @@ $(document).ready(function()
           $("#addressblank-alert").fadeTo(2250, 200).slideUp(500, function(){
             $("#addressblank-alert").hide();
           });
-          $("#godownaddress").focus().select();
-          return false;
-        }
-        if ($.trim($("#godowncontact").val())=="") {
-          $("#contactblank-alert").alert();
-          $("#contactblank-alert").fadeTo(2250, 200).slideUp(500, function(){
-            $("#contactblank-alert").hide();
-          });
-          $("#godowncontact").focus().select();
+          $("#godownaddress").focus();
           return false;
         }
         $.ajax(
@@ -114,7 +134,7 @@ $(document).ready(function()
             global: false,
             async: false,
             datatype: "json",
-            data: {"godownname":$("#godownname").val(), "godownaddress":$("#godownaddress").val(), "godowncontact":$("#godowncontact").val()},
+            data: {"godownname":$("#godownname").val(), "godownstate":$("#godownstate").val(), "godownaddress":$("#godownaddress").val(), "godowncontactname":$("#godowncontactname").val(), "godowndesignation":$("#godowndesignation").val(), "godowncontact":$("#godowncontact").val()},
             beforeSend: function(xhr)
             {
               xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
