@@ -90,6 +90,49 @@ $(document).ready(function() {
 
   $("#deliverychallan_edit_list").keydown(function(event) {
     if (event.which==13) {
+      if ($("#deliverychallan_edit_list option:selected").val()!='' && event.which=='13') {
+        $("#deliverychallan_edit_product_table > tbody >tr").each(function(i, tr) {
+          alert(tr+i);
+          $.ajax({
+            url: '/deliverychallan?action=getproducts',
+            type: 'POST',
+            dataType: 'json',
+            async : false,
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+          })
+          .done(function(resp) {
+            console.log("success");
+            if (resp["gkstatus"]==0) {
+              $('#deliverychallan_edit_product_table tbody').append('<tr>'+
+              '<td class="col-xs-9">'+
+              '<select class="form-control input-sm product_name"></select>'+
+              '</td>'+
+              '<td class="col-xs-2">'+
+              '<input type="text" class="deliverychallan_edit_product_quantity form-control input-sm text-right" value="">'+
+              '</td>'+
+              '<td class="col-xs-1">'+
+              '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+              '</td>'+
+              '</tr>');
+              for (product of resp["products"]) {
+                $('#deliverychallan_edit_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
+              }
+              $('#deliverychallan_edit_product_table tbody tr:last td:eq(0) select').val(key);
+              $('#deliverychallan_edit_product_table tbody tr:last td:eq(1) input').val(value.qty);
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          .always(function() {
+            console.log("complete");
+          });
+          $('.deliverychallan_edit_product_quantity').numeric({ negative: false});
+        });
+      }
       event.preventDefault();
       $("#deliverychallan_edit_challanno").focus().select();
     }
@@ -183,50 +226,7 @@ $(document).ready(function() {
   });
 
 
-  $("#deliverychallan_edit_list").change(function(event) {
-    if ($("#deliverychallan_edit_list option:selected").val()!='') {
-      $.each(podata["productdetails"], function(key, value) {
-        $.ajax({
-          url: '/deliverychallan?action=getproducts',
-          type: 'POST',
-          dataType: 'json',
-          async : false,
-          beforeSend: function(xhr)
-          {
-            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-          }
-        })
-        .done(function(resp) {
-          console.log("success");
-          if (resp["gkstatus"]==0) {
-            $('#deliverychallan_edit_product_table tbody').append('<tr>'+
-            '<td class="col-xs-9">'+
-            '<select class="form-control input-sm product_name"></select>'+
-            '</td>'+
-            '<td class="col-xs-2">'+
-            '<input type="text" class="deliverychallan_edit_product_quantity form-control input-sm text-right" value="">'+
-            '</td>'+
-            '<td class="col-xs-1">'+
-            '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-            '</td>'+
-            '</tr>');
-            for (product of resp["products"]) {
-              $('#deliverychallan_edit_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
-            }
-            $('#deliverychallan_edit_product_table tbody tr:last td:eq(0) select').val(key);
-            $('#deliverychallan_edit_product_table tbody tr:last td:eq(1) input').val(value.qty);
-          }
-        })
-        .fail(function() {
-          console.log("error");
-        })
-        .always(function() {
-          console.log("complete");
-        });
-        $('.deliverychallan_edit_product_quantity').numeric({ negative: false});
-      });
-    }
-  });
+
 
 
 
