@@ -3,12 +3,60 @@
 <head>
   <meta charset="utf-8">
   <title>{% trans %}GNUKhata | Delivery Challan{% endtrans %}</title>
+  <style media="screen">
+  .fixed-table td {
+      font-size: 75%;
+      padding: 4 !important;
+      margin: 4 !important;
+    }
+  .fixed-table th {
+      font-size: 85%;
+  }
+  .fixed-table tbody {
+      display:block;
+      height: 228px;
+      overflow-y:scroll;
+  }
+
+  .fixed-table thead ,.fixed-table tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  .fixed-table thead {
+      width: calc( 100% - 0.6em )
+  }
+
+  .fixed-edit-table td {
+      font-size: 75%;
+      padding: 4 !important;
+      margin: 4 !important;
+    }
+  .fixed-edit-table th {
+      font-size: 85%;
+  }
+  .fixed-edit-table tbody {
+      display:block;
+      height: 160px;
+      overflow-y:scroll;
+  }
+
+  .fixed-edit-table thead ,.fixed-edit-table tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  .fixed-edit-table thead {
+      width: calc( 100% - 0.6em )
+  }
+  </style>
 </head>
 <body>
   <div class="container-fluid row" >
     <ul class="nav nav-pills nav-tabs" role="tablist">
-      <li role="presentation" class="active"><a href="" id="deliverychallan_create" role="tab" data-toggle="tab">{% trans %}Create Delivery Challan{% endtrans %}</a></li>
-      <li role="presentation"><a href="" id="deliverychallan_edit" role="tab" data-toggle="tab">{% trans %}Edit Delivery Challan{% endtrans %}</a></li>
+      <li role="presentation" class="active"><a href="" id="deliverychallan_record" role="tab" data-toggle="tab">{% trans %}Delivery In{% endtrans %}</a></li>
+      <li role="presentation" ><a href="" id="deliverychallan_create" role="tab" data-toggle="tab">{% trans %}Delivery Out{% endtrans %}</a></li>
+      <li role="presentation"><a href="" id="deliverychallan_edit" role="tab" data-toggle="tab">{% trans %}Edit Delivery Note{% endtrans %}</a></li>
     </ul>
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane active" id="deliverychallan_div">
