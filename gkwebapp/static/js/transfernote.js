@@ -41,13 +41,13 @@ $(document).ready(function() {
   );
   });
   $("#transfernote_create").click();
-  
-  $("#transfernote_recieved").click(function() {
+
+  $("#transfernote_received").click(function() {
     $.ajax(
     {
 
     type: "POST",
-    url: "/transfernotes?action=showedit",
+    url: "/transfernotes?action=showreceived",
     global: false,
     async: false,
     datatype: "text/html",
@@ -58,6 +58,9 @@ $(document).ready(function() {
     success: function(resp)
     {
       $("#transfernote_div").html(resp);
+      $("#rec_tn_list").change(function(event) {
+      var rtnid = $("#rec_tn_list option:selected").val();
+    });
     }
     }
   );
