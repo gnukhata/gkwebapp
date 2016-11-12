@@ -505,4 +505,56 @@ $(document).ready(function() {
     });
     event.stopPropogation();
   });
+
+  $("#deliverychallan_edit_delete").click(function(event) {
+    event.preventDefault();
+    if ($("#deliverychallan_edit_list option:selected").val()!='') {
+      $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
+    $('#confirm_del').modal('show').one('click', '#deldel', function (e)
+    {
+    $.ajax({
+      url: '/deliverychallan?action=delete',
+      type: 'POST',
+      dataType: 'json',
+      async : false,
+      data: {"dcid": $("#deliverychallan_edit_list option:selected").val()},
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+    })
+    .done(function(resp) {
+      if(resp["gkstatus"] == 0){
+        $("#deliverychallan_edit").click();
+        $("#success-delete-alert").alert();
+        $("#success-delete-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#success-delete-alert").hide();
+        });
+        return false;
+      }
+      if(resp["gkstatus"] == 5) {
+        $("#deliverychallan_edit_list").focus();
+        $("#failure-delete-alert").alert();
+        $("#failure-delete-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#failure-delete-alert").hide();
+        });
+        return false;
+      }
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
+  });
+    $("#confirm_del").on('shown.bs.modal', function(event) {
+      $("#m_cancel").focus();
+      });
+    $("#confirm_del").on('hidden.bs.modal', function(event) {
+      $("#deliverychallan_edit_list").focus();
+});
+}
+});
 });
