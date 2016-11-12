@@ -486,4 +486,12 @@ $(document).ready(function() {
 
     return false;
   });
+  $("#deliverychallan_reset").click(function(event) {
+    if ($("#status").val()=='9') {
+      $("#deliverychallan_record").click();
+    }
+    else {
+      $("#deliverychallan_create").click();
+    }
+  });
 });
