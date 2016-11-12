@@ -6,6 +6,19 @@ $(document).ready(function() {
     /* Act on the event */
     $(".numtype").numeric();
   });
+  $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    if ($(this).val()=="")
+    {
+    $(this).val(parseFloat(0).toFixed(2));
+    }
+    else
+    {
+      $(this).val(parseFloat($(this).val()).toFixed(2));
+    }
+  });
+
   var sel1=0;
   var sel2=0;
   var sindex=0;
@@ -210,7 +223,7 @@ $(document).ready(function() {
             '</select>'+
             '</td>'+
             '<td class="col-xs-3">'+
-            '<input class="form-control product_cat_tax_disable input-sm tax_rate text-right"  placeholder="Rate" value="'+tax["taxrate"]+'">'+
+            '<input class="form-control product_cat_tax_disable input-sm tax_rate text-right numtype"  placeholder="Rate" value="'+tax["taxrate"]+'">'+
             '</td>'+
             '<td class="col-xs-1">'+
             '</td>'+
@@ -251,7 +264,7 @@ $(document).ready(function() {
           '</select>'+
           '</td>'+
           '<td class="col-xs-3">'+
-          '<input class="form-control product_tax_disable input-sm tax_rate text-right"  placeholder="Rate" value="'+tax["taxrate"]+'">'+
+          '<input class="form-control product_tax_disable input-sm tax_rate text-right numtype"  placeholder="Rate" value="'+tax["taxrate"]+'">'+
           '</td>'+
           '<td class="col-xs-1">'+
           '</td>'+
@@ -269,12 +282,9 @@ $(document).ready(function() {
         '</select>'+
         '</td>'+
         '<td class="col-xs-3">'+
-        '<input class="form-control product_new_rate input-sm tax_rate text-right"  placeholder="Rate" value="">'+
+        '<input class="form-control product_new_rate input-sm tax_rate text-right numtype"  placeholder="Rate" value="">'+
         '</td>'+
         '<td class="col-xs-1">'+
-        '</td>'+
-        '<td class="">'+
-        '<input type="hidden" class="form-control product_row_val input-sm tax_name" value="New">'+
         '</td>'+
         '</tr>');
 
@@ -417,12 +427,9 @@ $(document).ready(function() {
         '</select>'+
         '</td>'+
         '<td class="col-xs-3">'+
-        '<input class="form-control product_new_rate input-sm tax_rate text-right"  placeholder="Rate" value="">'+
+        '<input class="form-control product_new_rate input-sm tax_rate text-right numtype"  placeholder="Rate" value="">'+
         '</td>'+
         '<td class="col-xs-1">'+
-        '</td>'+
-        '<td class="">'+
-        '<input type="hidden" class="form-control product_row_val input-sm tax_name" value="New">'+
         '</td>'+
         '</tr>');
 
@@ -556,13 +563,10 @@ $(document).ready(function() {
         '</select>'+
         '</td>'+
         '<td class="col-xs-3">'+
-        '<input class="form-control input-sm tax_rate text-right product_new_rate"  placeholder="Rate">'+
+        '<input class="form-control input-sm tax_rate text-right product_new_rate numtype"  placeholder="Rate">'+
         '</td>'+
         '<td class="col-xs-1">'+
 
-        '</td>'+
-        '<td class="">'+
-        '<input type="hidden" class="form-control product_row_val input-sm tax_name" value="New" >'+
         '</td>'+
         '</tr>');
         $(".tax_rate").numeric();
@@ -624,11 +628,12 @@ $(document).ready(function() {
     var taxes = [];
     $("#product_edit_tax_table tbody tr").each(function(){
       var obj = {};
-      if ($(".product_new_name",this).val()!="") {
-        obj.taxrowid = $(this).attr('value');
-        obj.taxname = $(".product_new_name",this).val();
-        obj.state = $(".product_new_state",this).val();
-        obj.taxrate = $(".product_new_rate",this).val();
+      curindex = $(this).index();
+      if ($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) input").val()!="") {
+        obj.taxrowid = $("#product_edit_tax_table tbody tr:eq("+curindex+")").attr('value');
+        obj.taxname = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) input").val();
+        obj.state = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select option:selected").val();
+        obj.taxrate = parseFloat($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(2) input").val()).toFixed(2);
         taxes.push(obj);
       }
 

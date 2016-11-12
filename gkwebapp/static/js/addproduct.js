@@ -14,6 +14,18 @@ $('.modal-backdrop').remove();
     /* Act on the event */
     $(".numtype").numeric();
   });
+  $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    if ($(this).val()=="")
+    {
+    $(this).val(parseFloat(0).toFixed(2));
+    }
+    else
+    {
+      $(this).val(parseFloat($(this).val()).toFixed(2));
+    }
+  });
 
 $(document).off('blur', '#addproddesc').on('blur', '#addproddesc',function(event) {
   /* Act on the event */
@@ -246,7 +258,7 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
                 '</select>'+
                 '</td>'+
                 '<td class="col-xs-3">'+
-                '<input class="form-control product_cat_tax_disable input-sm tax_rate text-right"  placeholder="Rate" value="'+tax["taxrate"]+'">'+
+                '<input class="form-control product_cat_tax_disable input-sm tax_rate text-right numtype"  placeholder="Rate" value="'+tax["taxrate"]+'">'+
                 '</td>'+
                 '<td class="col-xs-1">'+
                 '</td>'+
@@ -263,7 +275,7 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
               '</select>'+
               '</td>'+
               '<td class="col-xs-3">'+
-              '<input class="form-control  input-sm tax_rate text-right product_new_rate"  placeholder="Rate" value="">'+
+              '<input class="form-control  input-sm tax_rate text-right product_new_rate numtype"  placeholder="Rate" value="">'+
               '</td>'+
               '<td class="col-xs-1">'+
               '</td>'+
@@ -280,7 +292,7 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
               '</select>'+
               '</td>'+
               '<td class="col-xs-3">'+
-              '<input class="form-control  input-sm tax_rate text-right product_new_rate"  placeholder="Rate" value="">'+
+              '<input class="form-control  input-sm tax_rate text-right product_new_rate numtype"  placeholder="Rate" value="">'+
               '</td>'+
               '<td class="col-xs-1">'+
               '</td>'+
@@ -338,7 +350,7 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
       '</select>'+
       '</td>'+
       '<td class="col-xs-3">'+
-      '<input class="form-control product_new_rate input-sm tax_rate text-right"  placeholder="Rate" value="">'+
+      '<input class="form-control product_new_rate input-sm tax_rate text-right numtype"  placeholder="Rate" value="">'+
       '</td>'+
       '<td class="col-xs-1">'+
       '</td>'+
@@ -462,7 +474,7 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
         '</select>'+
         '</td>'+
         '<td class="col-xs-3">'+
-        '<input class="form-control input-sm tax_rate text-right product_new_rate"  placeholder="Rate">'+
+        '<input class="form-control input-sm tax_rate text-right product_new_rate numtype"  placeholder="Rate">'+
         '</td>'+
         '<td class="col-xs-1">'+
         '<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
