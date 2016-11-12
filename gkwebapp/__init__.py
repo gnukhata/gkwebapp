@@ -148,6 +148,7 @@ def main(global_config, **settings):
 	config.add_route('printprojectstatement', '/printprojectstatement')
 	config.add_route('printledger', '/printledger')
 	config.add_route('unitofmeasurements','/unitofmeasurements')
+	config.add_route('godown', '/godown')
 	config.add_route('customersuppliers','/customersuppliers')
 	config.scan('gkwebapp')
 	return config.make_wsgi_app()

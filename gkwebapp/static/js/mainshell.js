@@ -242,6 +242,19 @@ $(document).ready(function(){
           $("#signout").click();
         }
       });
+      $('#godown').click(function (e) {
+         $.ajax({
+           url: '/godown',
+           type: 'POST',
+           global: false,
+           async: false,
+           datatype: 'text/html',
+
+         })
+         .done(function(resp) {
+           $("#info").html(resp);
+         })
+       });
       $("#themes").keydown(function(event){
         if(event.which == 39){
           $("#toolbar").click();
