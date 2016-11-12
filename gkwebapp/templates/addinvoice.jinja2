@@ -45,6 +45,10 @@
 
             <label for="vno">{% trans %}Please enter invoice no.!{% endtrans %}</label>
           </div>
+          <div class="alert alert-danger" id="issuer-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}Please enter issuer's name!{% endtrans %}</label>
+          </div>
           <div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
 
             <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
@@ -207,19 +211,19 @@
                     </select>
                   </td>
                   <td class="col-xs-2">
-                    <input type="text" class="invoice_product_quantity form-control input-sm text-right" value="" placeholder="0">
+                    <input type="text" class="invoice_product_quantity form-control input-sm text-right" value="0" placeholder="0">
                   </td>
                   <td class="col-xs-2">
-                    <input type="text" class="invoice_product_per_price form-control input-sm text-right" value="" placeholder="0.00">
+                    <input type="text" class="invoice_product_per_price form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
                   </td>
                   <td class="col-xs-1">
-                    <input type="text" class="invoice_product_tax_rate form-control input-sm text-right" value="" placeholder="0.00">
+                    <input type="text" class="invoice_product_tax_rate form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
                   </td>
                   <td class="col-xs-1">
-                    <input type="text" class="invoice_product_tax_amount form-control input-sm text-right" value="" placeholder="0.00">
+                    <input type="text" class="invoice_product_tax_amount form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
                   </td>
                   <td class="col-xs-2">
-                    <input type="text" class="invoice_product_total form-control input-sm text-right" value="" placeholder="0.00" disabled>
+                    <input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
                   </td>
                   <td class="col-xs-1">
 

@@ -79,6 +79,18 @@ $(document).off('focus', '#newuom').on('focus', '#newuom', function(event) {
   /* Act on the event */
   newuom =1;
 });
+var txst=0;
+$(document).off('focus', '.tax_state').on('focus', '.tax_state', function(event) {
+  event.preventDefault();
+  /* Act on the event */
+  txst =1;
+});
+
+$(document).off('blur', '.tax_state').on('blur', '.tax_state', function(event) {
+  event.preventDefault();
+  /* Act on the event */
+  txst =0;
+});
 
 $(document).off('blur', '#newuom').on('blur', '#newuom', function(event) {
   event.preventDefault();
@@ -198,14 +210,15 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
        var f = $('.addprod input:not(:hidden),.addprod textarea,.addprod select');
       if (e.which == 38)
       {
+        var sindex=0;
         var prevIndex = f.index(this) - 1;
         var elementType = $(this).prop('nodeName');
         if(prevIndex > -1)
         {
           if (elementType=="SELECT")
           {
-            var sindex= $(".sel option:selected").index();
-            if (sindex <=1)
+            sindex= $(".sel option:selected").index();
+            if (sindex <=1 && txst!=1)
             {
               e.preventDefault();
               f[prevIndex].focus();
@@ -213,9 +226,13 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
           }
           else
           {
+
+
+            
             e.preventDefault();
             f[prevIndex].focus();
             f[nextIndex].select();
+
 
           }
         }

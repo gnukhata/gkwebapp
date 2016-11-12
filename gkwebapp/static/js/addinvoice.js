@@ -113,6 +113,38 @@ $(document).ready(function() {
     }
   });
 
+  $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    $(".numtype").numeric();
+  });
+  $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    if ($(this).val()=="")
+    {
+    $(this).val(parseFloat(0).toFixed(2));
+    }
+    else
+    {
+      $(this).val(parseFloat($(this).val()).toFixed(2));
+    }
+  });
+
+  $(document).off('focus', '.invoice_product_quantity').on('focus', '.invoice_product_quantity', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    $(".numtype").numeric();
+  });
+  $(document).off('blur', '.invoice_product_quantity').on('blur', '.invoice_product_quantity', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    if ($(this).val()=="")
+    {
+    $(this).val(0);
+    }
+  });
+
   $(document).off('change', '#invoice_state').on('change', '#invoice_state', function(event) {
     event.preventDefault();
     /* Act on the event */
@@ -247,16 +279,16 @@ $(document).off('keydown', '#invoice_issuer_designation').on('keydown', '#invoic
             '<input type="text" class="invoice_product_quantity form-control deliverychallan_edit_disable input-sm text-right" value="'+value.qty+'">'+
             '</td>'+
             '<td class="col-xs-2">'+
-            '<input type="text" class="invoice_product_per_price form-control deliverychallan_edit_disable input-sm text-right" value="0.00">'+
+            '<input type="text" class="invoice_product_per_price form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00">'+
             '</td>'+
             '<td class="col-xs-1">'+
-            '<input type="text" class="invoice_product_tax_rate form-control input-sm text-right" value="0.00">'+
+            '<input type="text" class="invoice_product_tax_rate form-control input-sm numtype text-right" value="0.00">'+
             '</td>'+
             '<td class="col-xs-1">'+
-            '<input type="text" class="invoice_product_tax_amount form-control input-sm text-right" value="0.00" disabled>'+
+            '<input type="text" class="invoice_product_tax_amount form-control input-sm numtype text-right" value="0.00" disabled>'+
             '</td>'+
             '<td class="col-xs-2">'+
-            '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm text-right" value="0.00" disabled>'+
+            '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00" disabled>'+
             '</td>'+
             '<td class="col-xs-1">'+
             '<a href="#" class="product_del deliverychallan_edit_disable"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
@@ -300,16 +332,16 @@ $(document).off('keydown', '#invoice_issuer_designation').on('keydown', '#invoic
           '<input type="text" class="invoice_product_quantity form-control input-sm text-right" value="0">'+
           '</td>'+
           '<td class="col-xs-2">'+
-          '<input type="text" class="invoice_product_per_price form-control input-sm text-right" value="0.00">'+
+          '<input type="text" class="invoice_product_per_price form-control input-sm numtype text-right" value="0.00">'+
           '</td>'+
           '<td class="col-xs-1">'+
-          '<input type="text" class="invoice_product_tax_rate form-control input-sm text-right" value="0.00">'+
+          '<input type="text" class="invoice_product_tax_rate form-control input-sm numtype text-right" value="0.00">'+
           '</td>'+
           '<td class="col-xs-1">'+
-          '<input type="text" class="invoice_product_tax_amount form-control input-sm text-right" value="0.00" disabled>'+
+          '<input type="text" class="invoice_product_tax_amount form-control input-sm numtype text-right" value="0.00" disabled>'+
           '</td>'+
           '<td class="col-xs-2">'+
-          '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm text-right" value="0.00" disabled>'+
+          '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00" disabled>'+
           '</td>'+
           '<td class="col-xs-1">'+
 
@@ -443,6 +475,10 @@ $(document).off('blur', '.invoice_product_tax_amount').on('blur', '.invoice_prod
   $(document).off('change', '.invoice_product_quantity').on('change', '.invoice_product_quantity', function(event) {
     event.preventDefault();
     /* Act on the event */
+    if ($(this).val()=="")
+    {
+    $(this).val(0);
+    }
     var curindex = $(this).closest('#invoice_product_table tbody tr').index();
     var rowqty = parseFloat($('#invoice_product_table tbody tr:eq('+curindex+') td:eq(1) input').val()).toFixed(2);
     var rowprice = parseFloat($('#invoice_product_table tbody tr:eq('+curindex+') td:eq(2) input').val()).toFixed(2);
@@ -484,6 +520,10 @@ $(document).off('blur', '.invoice_product_tax_amount').on('blur', '.invoice_prod
     var curindex = $(this).closest('tr').index();
     var nextindex = curindex+1;
     var previndex = curindex-1;
+    if ($(this).val()=="")
+    {
+    $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(1) input').val(0);
+    }
     if (event.which==13) {
       event.preventDefault();
       var curindex = $(this).closest('#invoice_product_table tbody tr').index();
@@ -762,16 +802,16 @@ $(document).off('blur', '.invoice_product_tax_amount').on('blur', '.invoice_prod
             '<input type="text" class="invoice_product_quantity form-control input-sm text-right" value="0">'+
             '</td>'+
             '<td class="col-xs-2">'+
-            '<input type="text" class="invoice_product_per_price form-control input-sm text-right" value="0.00">'+
+            '<input type="text" class="invoice_product_per_price form-control input-sm numtype text-right" value="0.00">'+
             '</td>'+
             '<td class="col-xs-1">'+
-            '<input type="text" class="invoice_product_tax_rate form-control input-sm text-right" value="0.00">'+
+            '<input type="text" class="invoice_product_tax_rate form-control input-sm numtype text-right" value="0.00">'+
             '</td>'+
             '<td class="col-xs-1">'+
-            '<input type="text" class="invoice_product_tax_amount form-control input-sm text-right" value="0.00" disabled>'+
+            '<input type="text" class="invoice_product_tax_amount form-control input-sm numtype text-right" value="0.00" disabled>'+
             '</td>'+
             '<td class="col-xs-2">'+
-            '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm text-right" value="0.00" disabled>'+
+            '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00" disabled>'+
             '</td>'+
             '<td class="col-xs-1">'+
             '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
@@ -947,7 +987,22 @@ $(document).off('blur', '.invoice_product_tax_amount').on('blur', '.invoice_prod
 
     }
     stock["items"] = items;
-    stock["inout"] = 9;
+    if ($("#status").val()=='9') {
+      stock["inout"] = 9;
+
+    }
+    else {
+      stock["inout"] = 15;
+      if ($("#invoice_issuer_name").val()=="")
+      {
+      $("#invoice_issuer_name").focus();
+      $("#issuer-blank-alert").alert();
+      $("#issuer-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#issuer-blank-alert").hide();
+      });
+      return false;
+    }
+    }
     $.ajax({
       url: '/invoice?action=save',
       type: 'POST',

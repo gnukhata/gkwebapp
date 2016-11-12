@@ -120,6 +120,18 @@ $(document).ready(function() {
 
     }
   });
+  var txst=0;
+  $(document).off('focus', '.tax_state').on('focus', '.tax_state', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    txst =1;
+  });
+
+  $(document).off('blur', '.tax_state').on('blur', '.tax_state', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    txst =0;
+  });
   $(document).on("keydown",'.editpr input:not(:hidden),.editpr textarea,.editpr select', function(e) {
     var n = $(".editpr input:not(:hidden),.editpr textarea,.editpr select").length;
     var f = $('.editpr input:not(:hidden),.editpr textarea,.editpr select');
@@ -142,7 +154,7 @@ $(document).ready(function() {
             sindex= $("#editcatselect option:selected").index();
           }
 
-          if (sindex ==0)
+          if (sindex ==0 && txst ==0)
           {
             e.preventDefault();
             f[prevIndex].focus();
