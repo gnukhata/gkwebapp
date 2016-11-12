@@ -200,7 +200,7 @@ $(document).ready(function() {
           $(".catsp").remove();
 
           for (tax of resp["gkresult"]) {
-            $('#product_edit_tax_table tbody').append('<tr class="catsp " value="'+tax["taxid"]+'">'+
+            $('#product_edit_tax_table tbody').append('<tr class="catsp product_row_val" value="'+tax["taxid"]+'">'+
             '<td class="col-xs-4">'+
             '<input type="text" class="form-control product_cat_tax_disable input-sm tax_name" placeholder="Tax Name" value="'+tax["taxname"]+'">'+
             '</td>'+
@@ -241,7 +241,7 @@ $(document).ready(function() {
       .done(function(resp) {
         console.log("success");
         for (tax of resp["gkresult"]) {
-          $('#product_edit_tax_table tbody').append('<tr class="rowval" value="'+tax["taxid"]+'">'+
+          $('#product_edit_tax_table tbody').append('<tr class="product_row_val" value="'+tax["taxid"]+'">'+
           '<td class="col-xs-4">'+
           '<input type="text" class="form-control product_tax_disable input-sm tax_name" placeholder="Tax Name" value="'+tax["taxname"]+'">'+
           '</td>'+
@@ -259,7 +259,7 @@ $(document).ready(function() {
           $('#product_edit_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
         }
         $(".product_tax_disable").prop('disabled',true);
-        $('#product_edit_tax_table tbody').append('<tr class="rowval blank" value="New">'+
+        $('#product_edit_tax_table tbody').append('<tr class="product_row_val blank" value="New">'+
         '<td class="col-xs-4">'+
         '<input type="text" class="form-control product_new_name input-sm tax_name" placeholder="Tax Name" value="">'+
         '</td>'+
@@ -407,7 +407,7 @@ $(document).ready(function() {
           $('#product_edit_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
         }
         $(".product_cat_tax_disable").prop('disabled',true);
-        $('#product_edit_tax_table tbody').append('<tr class="rowval blank" value="New">'+
+        $('#product_edit_tax_table tbody').append('<tr class="product_row_val blank" value="New">'+
         '<td class="col-xs-4">'+
         '<input type="text" class="form-control product_new_name input-sm tax_name" placeholder="Tax Name" value="">'+
         '</td>'+
@@ -546,7 +546,7 @@ $(document).ready(function() {
           $('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').focus();
           return false;
         }
-        $('#product_edit_tax_table tbody').append('<tr class="rowval blank" value="new">'+
+        $('#product_edit_tax_table tbody').append('<tr class="product_row_val blank" value="new">'+
         '<td class="col-xs-4">'+
         '<input type="text" class="form-control input-sm tax_name product_new_name" placeholder="Tax Name">'+
         '</td>'+
@@ -625,7 +625,7 @@ $(document).ready(function() {
     $("#product_edit_tax_table tbody tr").each(function(){
       var obj = {};
       if ($(".product_new_name",this).val()!="") {
-        obj.taxrowid = $(".product_row_val",this).val();
+        obj.taxrowid = $(this).attr('value');
         obj.taxname = $(".product_new_name",this).val();
         obj.state = $(".product_new_state",this).val();
         obj.taxrate = $(".product_new_rate",this).val();

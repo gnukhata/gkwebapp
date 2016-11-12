@@ -158,8 +158,8 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
             {
               $('#adduom').append($('<option value='+uom["uomid"]+'>'+uom["unitname"]+'</option>'));
             }
-            $("#adduom").focus();
-            $("#adduom").select();
+            $('#product_tax_table tbody tr:last td:eq(0) input').focus();
+            $('#product_tax_table tbody tr:last td:eq(0) input').select();
 
             $("#adduom option").filter(function(i,e){return $(e).text()==unitname}).prop('selected', true);
           }
