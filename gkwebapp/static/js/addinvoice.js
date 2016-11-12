@@ -9,7 +9,7 @@ $(document).ready(function() {
     $(".fixed-table").addClass('fixed-tablesale');
 
   }
-  
+
   $("#invoice_date").numeric();
   $("#invoice_month").numeric();
   $("#invoice_year").numeric();
@@ -78,6 +78,23 @@ $(document).ready(function() {
     }
   });
 
+$(document).off('keydown', '#invoice_issuer_name').on('keydown', '#invoice_issuer_name', function(event) {
+  /* Act on the event */
+  if (event.which==13)
+  {
+    event.preventDefault();
+    $("#invoice_issuer_designation").focus().select();
+  }
+});
+
+$(document).off('keydown', '#invoice_issuer_designation').on('keydown', '#invoice_issuer_designation', function(event) {
+  /* Act on the event */
+  if (event.which==13)
+  {
+    event.preventDefault();
+    $("#invoice_save").click();
+  }
+});
 
   $(document).off("keyup").on("keyup",function(event) {
     if(event.which == 45) {
@@ -88,6 +105,7 @@ $(document).ready(function() {
   });
 
 
+
   $("#invoice_deliverynote").change(function(event) {
     if ($("#invoice_deliverynote option:selected").val()!='') {
       $.ajax({
@@ -95,7 +113,7 @@ $(document).ready(function() {
         type: 'POST',
         dataType: 'json',
         async : false,
-        data : {"orderid":$("#invoice_deliverynote option:selected").val()},
+        data : {"dcid":$("#invoice_deliverynote option:selected").val()},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -103,58 +121,33 @@ $(document).ready(function() {
       })
       .done(function(resp) {
         if (resp["gkstatus"]==0) {
-          var podata = resp["podata"];
-          $("#invoice_customer").val(podata.csid);
-          if ($('#invoice_product_table tbody tr').length==1) {
-            $('#invoice_product_table tbody tr').remove();
-            $.each(podata["productdetails"], function(key, value) {
-              $.ajax({
-                url: '/invoice?action=getproducts',
-                type: 'POST',
-                dataType: 'json',
-                async : false,
-                beforeSend: function(xhr)
-                {
-                  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                }
-              })
-              .done(function(resp) {
-                console.log("success");
-                if (resp["gkstatus"]==0) {
-                  $('#invoice_product_table tbody').append('<tr>'+
-                  '<td class="col-xs-5">'+
-                  '<select class="form-control input-sm product_name"></select>'+
-                  '</td>'+
-                  '<td class="col-xs-2">'+
-                  '<input type="text" class="invoice_product_quantity form-control input-sm text-right" value="">'+
-                  '</td>'+
-                  '<td class="col-xs-2">'+
-                  '<input type="text" class="invoice_product_per_price form-control input-sm text-right" value="">'+
-                  '</td>'+
-                  '<td class="col-xs-2">'+
-                  '<input type="text" class="invoice_product_tax_amount form-control input-sm text-right" value="">'+
-                  '</td>'+
-                  '<td class="col-xs-1">'+
-                  '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-                  '</td>'+
-                  '</tr>');
-                  for (product of resp["products"]) {
-                    $('#invoice_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
-                  }
-                  $('#invoice_product_table tbody tr:last td:eq(0) select').val(key);
-                  $('#invoice_product_table tbody tr:last td:eq(1) input').val(value.qty);
-                }
-              })
-              .fail(function() {
-                console.log("error");
-              })
-              .always(function() {
-                console.log("complete");
-              });
-              $('.invoice_product_quantity').numeric({ negative: false});
-              $('.invoice_product_per_price').numeric({ negative: false});
-            });
-          }
+          $("#invoice_customer").val(resp["delchal"]["delchaldata"]["custid"]);
+          $('#invoice_product_table tbody').empty();
+          var totqty = 0;
+          $.each(resp.delchal.stockdata.items, function(key, value) {
+            $('#invoice_product_table tbody').append('<tr>'+
+            '<td class="col-xs-5">'+
+            '<select class="form-control deliverychallan_edit_disable input-sm product_name">'+
+            '<option value="'+key+'">'+value.productdesc+'</option>'+
+            '</select>'+
+            '</td>'+
+            '<td class="col-xs-2">'+
+            '<input type="text" class="invoice_product_quantity form-control deliverychallan_edit_disable input-sm text-right" value="'+value.qty+'">'+
+            '</td>'+
+            '<td class="col-xs-2">'+
+            '<input type="text" class="invoice_product_per_price form-control deliverychallan_edit_disable input-sm text-right" value="0.00">'+
+            '</td>'+
+            '<td class="col-xs-2">'+
+            '<input type="text" class="invoice_product_tax_amount form-control deliverychallan_edit_disable input-sm text-right" value="0.00">'+
+            '</td>'+
+            '<td class="col-xs-1">'+
+            '<a href="#" class="product_del deliverychallan_edit_disable"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+            '</td>'+
+            '</tr>');
+            totqty += +value.qty;
+          });
+          $('#invoice_product_table tfoot tr:last td:eq(1) input').val(parseFloat(totqty).toFixed(2));
+
         }
       })
       .fail(function() {
@@ -164,6 +157,56 @@ $(document).ready(function() {
         console.log("complete");
       });
 
+    }
+    else
+    {
+      $.ajax({
+        url: '/invoice?action=getproducts',
+        type: 'POST',
+        dataType: 'json',
+        async : false,
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+      .done(function(resp) {
+        console.log("success");
+        if (resp["gkstatus"]==0) {
+          $('#invoice_product_table tbody').empty();
+          $('#invoice_product_table tbody').append('<tr>'+
+          '<td class="col-xs-5">'+
+          '<select class="form-control input-sm product_name"></select>'+
+          '</td>'+
+          '<td class="col-xs-2">'+
+          '<input type="text" class="invoice_product_quantity form-control input-sm text-right" value="0">'+
+          '</td>'+
+          '<td class="col-xs-2">'+
+          '<input type="text" class="invoice_product_per_price form-control input-sm text-right" value="0.00">'+
+          '</td>'+
+          '<td class="col-xs-2">'+
+          '<input type="text" class="invoice_product_tax_amount form-control input-sm text-right" value="0.00">'+
+          '</td>'+
+          '<td class="col-xs-1">'+
+
+          '</td>'+
+          '</tr>');
+          for (product of resp["products"]) {
+            $('#invoice_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
+          }
+          $('#invoice_product_table tbody tr:last td:eq(0) select').prepend(('<option value="" selected>None</option>'));
+          $('#invoice_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
+          $('.invoice_product_quantity').numeric({ negative: false});
+          $('.invoice_product_per_price').numeric({ negative: false});
+        }
+        $('#invoice_product_table tfoot tr:last td:eq(1) input').val(parseFloat(0).toFixed(2));
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
     }
   });
 
@@ -221,10 +264,37 @@ $(document).off('focus', '.invoice_product_per_price').on('focus', '.invoice_pro
   $(".invoice_product_per_price").numeric();
 });
 
+
+$(document).off('blur', '.invoice_product_per_price').on('blur', '.invoice_product_per_price', function(event) {
+  event.preventDefault();
+  /* Act on the event */
+  if ($(this).val()!="") {
+    $(this).val(parseFloat($(this).val()).toFixed(2));
+
+  }
+  else
+  {
+    $(this).val(parseFloat(0).toFixed(2));
+  }
+});
+
 $(document).off('focus', '.invoice_product_tax_amount').on('focus', '.invoice_product_tax_amount', function(event) {
   event.preventDefault();
   /* Act on the event */
   $(".invoice_product_tax_amount").numeric();
+});
+
+$(document).off('blur', '.invoice_product_tax_amount').on('blur', '.invoice_product_tax_amount', function(event) {
+  event.preventDefault();
+  /* Act on the event */
+  if ($(this).val()!="") {
+    $(this).val(parseFloat($(this).val()).toFixed(2));
+
+  }
+  else
+  {
+    $(this).val(parseFloat(0).toFixed(2));
+  }
 });
 
   $(document).off('change', '.invoice_product_quantity').on('change', '.invoice_product_quantity', function(event) {
@@ -345,6 +415,12 @@ $(document).off('focus', '.invoice_product_tax_amount').on('focus', '.invoice_pr
   $(document).off("keydown",".invoice_product_tax_amount").on("keydown",".invoice_product_tax_amount",function(event)
   {
 
+    if (event.which==35 && $("#status").val()=='15')
+    {
+      event.preventDefault();
+      $("#invoice_issuer_name").focus().select();
+    }
+
     var curindex1 = $(this).closest('tr').index();
     var nextindex1 = curindex1+1;
     var previndex1 = curindex1-1;
@@ -380,13 +456,13 @@ $(document).off('focus', '.invoice_product_tax_amount').on('focus', '.invoice_pr
             '<select class="form-control input-sm product_name"></select>'+
             '</td>'+
             '<td class="col-xs-2">'+
-            '<input type="text" class="invoice_product_quantity form-control input-sm text-right" value="">'+
+            '<input type="text" class="invoice_product_quantity form-control input-sm text-right" value="0">'+
             '</td>'+
             '<td class="col-xs-2">'+
-            '<input type="text" class="invoice_product_per_price form-control input-sm text-right" value="">'+
+            '<input type="text" class="invoice_product_per_price form-control input-sm text-right" value="0.00">'+
             '</td>'+
             '<td class="col-xs-2">'+
-            '<input type="text" class="invoice_product_tax_amount form-control input-sm text-right" value="">'+
+            '<input type="text" class="invoice_product_tax_amount form-control input-sm text-right" value="0.00">'+
             '</td>'+
             '<td class="col-xs-1">'+
             '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
@@ -510,7 +586,7 @@ $(document).off('focus', '.invoice_product_tax_amount').on('focus', '.invoice_pr
         $("#invoice_product_table tbody tr:eq("+i+") td:eq(0) select").focus();
         return false;
       }
-      if ($("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val()=="") {
+      if ($("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val()=="" || $("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val()==0) {
         $("#quantity-blank-alert").alert();
         $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#quantity-blank-alert").hide();
@@ -518,7 +594,7 @@ $(document).off('focus', '.invoice_product_tax_amount').on('focus', '.invoice_pr
         $("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").focus();
         return false;
       }
-      if ($("#invoice_product_table tbody tr:eq("+i+") td:eq(2) input").val()=="") {
+      if ($("#invoice_product_table tbody tr:eq("+i+") td:eq(2) input").val()=="" || $("#invoice_product_table tbody tr:eq("+i+") td:eq(2) input").val()==0) {
         $("#price-blank-alert").alert();
         $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#price-blank-alert").hide();

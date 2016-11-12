@@ -71,27 +71,18 @@ def saveinvoice(request):
 
 @view_config(route_name="invoice",request_param="action=showedit",renderer="gkwebapp:templates/editinvoice.jinja2")
 def showeditinvoice(request):
-    header={"gktoken":request.headers["gktoken"]}
-    delchals = requests.get("http://127.0.0.1:6543/delchal?delchal=all", headers=header)
-    return {"gkstatus":delchals.json()["gkstatus"],"delchals":delchals.json()["gkresult"]}
-
-	'''products = {}
-	for  row in json.loads(request.params["products"]):
-		products[row["productcode"]] = row["qty"]
-	stockdata = {"inout":request.params["inout"],"items":products}
-	if request.params["orderid"]!='':
-		delchaldata["orderno"]=request.params["orderid"]
-	if request.params["goid"]!='':
-		stockdata["goid"]=int(request.params["goid"])
-	delchalwholedata = {"delchaldata":delchaldata,"stockdata":stockdata}
-
-
-
-@view_config(route_name="invoice",request_param="action=getpurchaseorder",renderer="json")
-def getpurchaseorder(request):
 	header={"gktoken":request.headers["gktoken"]}
-	delchal = requests.get("http://127.0.0.1:6543/purchaseorder?poso=single&orderid=%d"%(int(request.params["orderid"])), headers=header)
+	delchals = requests.get("http://127.0.0.1:6543/delchal?delchal=all", headers=header)
+	return {"gkstatus":delchals.json()["gkstatus"],"delchals":delchals.json()["gkresult"]}
+
+
+@view_config(route_name="invoice",request_param="action=getdeliverynote",renderer="json")
+def getdeliverynote(request):
+	header={"gktoken":request.headers["gktoken"]}
+	delchal = requests.get("http://127.0.0.1:6543/delchal?delchal=single&dcid=%d"%(int(request.params["dcid"])), headers=header)
 	return {"gkstatus": delchal.json()["gkstatus"],"delchal": delchal.json()["gkresult"]}
+'''
+
 
 @view_config(route_name="invoice",request_param="action=getdelchal",renderer="json")
 def getdelchal(request):
