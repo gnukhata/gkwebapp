@@ -128,16 +128,11 @@
             </div>
         </div>
       </div>
-      <div class="panel-footer">
+      <div class="panel-footer" hidden>
         <div class="container-fluid">
-
-        <button class="btn btn-success btn-sm" id="deliverychallan_edit_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save anywhere on the current screen">{% trans %}Save{% endtrans %}</button>
-        <label class="btn btn-primary btn-sm" for="my-file-selector">
-          <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');" aria-describedby="attachhelp">
-          {% trans %}Attac<u>h</u>{% endtrans %}
-        </label>
-        <small id="attachhelp" class="form-text text-muted">You can attach image files</small>
-        <span class='label label-info' id="upload-file-info"></span>
+        <button class="btn btn-primary btn-sm" id="deliverychallan_edit_edit">{% trans %}Edit{% endtrans %}</button>
+        <button class="btn btn-success btn-sm deliverychallan_edit_disable" id="deliverychallan_edit_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save anywhere on the current screen">{% trans %}Save{% endtrans %}</button>
+        <button class="btn btn-warning btn-sm" id="deliverychallan_edit_reset">{% trans %}Reset{% endtrans %}</button>
       </div>
       </div>
     </div>

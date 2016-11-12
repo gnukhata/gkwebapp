@@ -84,7 +84,7 @@ def savedelchal(request):
 	products = {}
 	for  row in json.loads(request.params["products"]):
 		products[row["productcode"]] = row["qty"]
-	stockdata = {"inout":request.params["inout"],"items":products}
+	stockdata = {"inout":int(request.params["inout"]),"items":products}
 	if request.params["orderid"]!='':
 		delchaldata["orderno"]=request.params["orderid"]
 	if request.params["goid"]!='':
@@ -95,4 +95,22 @@ def savedelchal(request):
 		delchaldata["designation"]=request.params["designation"]
 	delchalwholedata = {"delchaldata":delchaldata,"stockdata":stockdata}
 	result=requests.post("http://127.0.0.1:6543/delchal",data=json.dumps(delchalwholedata),headers=header)
+	return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="deliverychallan",request_param="action=edit",renderer="json")
+def editdelchal(request):
+	header={"gktoken":request.headers["gktoken"]}
+	delchaldata = {"custid":int(request.params["custid"]),"dcno":request.params["dcno"],"dcid":request.params["dcid"],"dcdate":request.params["dcdate"],"dcflag":request.params["dcflag"]}
+	products = {}
+	for  row in json.loads(request.params["products"]):
+		products[row["productcode"]] = row["qty"]
+	stockdata = {"inout":int(request.params["inout"]),"items":products}
+	if request.params["goid"]!='':
+		stockdata["goid"]=int(request.params["goid"])
+	if request.params.has_key("issuername"):
+		delchaldata["issuername"]=request.params["issuername"]
+	if request.params.has_key("designation"):
+		delchaldata["designation"]=request.params["designation"]
+	delchalwholedata = {"delchaldata":delchaldata,"stockdata":stockdata}
+	result=requests.put("http://127.0.0.1:6543/delchal",data=json.dumps(delchalwholedata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
