@@ -38,8 +38,7 @@ $(document).ready(function() {
       $("#edit_tn_date").val(deldatearray[0]);
       $("#edit_tn_month").val(deldatearray[1]);
       $("#edit_tn_year").val(deldatearray[2]);
-      if ($('#transfernote_product_table tbody tr').length==0) {
-        $('#transfernote_product_table tbody tr').remove();
+      $('#transfernote_product_table tbody tr').remove();
         $.each(result["productdetails"], function(key, value) {
           $.ajax({
             url: '/deliverychallan?action=getproducts',
@@ -80,7 +79,7 @@ $(document).ready(function() {
           });
           $('.transfernote_product_quantity').numeric({ negative: false});
         });
-      }
+
 
 
     })
