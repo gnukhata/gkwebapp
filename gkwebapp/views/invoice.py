@@ -20,10 +20,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
 
 
 Contributors:
-"Krishnakant Mane" <kk@dff.org.in>
-"Arun Kelkar" <arunkelkar@dff.org.in>
 "Ishan Masdekar " <imasdekar@dff.org.in>
-"Navin Karkera" <navin@dff.org.in>
 """
 
 from pyramid.view import view_config
@@ -81,6 +78,20 @@ def getdeliverynote(request):
 	header={"gktoken":request.headers["gktoken"]}
 	delchal = requests.get("http://127.0.0.1:6543/delchal?delchal=single&dcid=%d"%(int(request.params["dcid"])), headers=header)
 	return {"gkstatus": delchal.json()["gkstatus"],"delchal": delchal.json()["gkresult"]}
+
+@view_config(route_name="invoice",request_param="action=gettax",renderer="json")
+def getstatetax(request):
+	header={"gktoken":request.headers["gktoken"]}
+	if request.params["state"]=="":
+		taxdata = requests.get("http://127.0.0.1:6543/tax?pscflag=i&productcode=%d"%(int(request.params["productcode"])), headers=header)
+	else:
+		taxdata = requests.get("http://127.0.0.1:6543/tax?pscflag=i&productcode=%d&state=%s"%(int(request.params["productcode"]),request.params["state"]), headers=header)
+
+
+	return {"gkstatus": taxdata.json()["gkstatus"],"taxdata": taxdata.json()["gkresult"]}
+
+
+
 '''
 
 

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-$('.modal-backdrop').remove();
+  $('.modal-backdrop').remove();
   $("#prodselect").focus();
   $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
     event.preventDefault();
@@ -49,32 +49,32 @@ $('.modal-backdrop').remove();
 
 
   $(document).off('keyup', '.specdate').on('keyup', '.specdate',function (e) {
-        var textSoFar = $(this).val();
-        if (e.keyCode != 173 && e.keyCode != 109) {
-            if (e.keyCode != 8) {
-                if (textSoFar.length == 2 || textSoFar.length == 5) {
-                    $(this).val(textSoFar + "-");
-                }
-                    //to handle copy & paste of 8 digit
-                else if (e.keyCode == 86 && textSoFar.length == 8) {
-                    $(this).val(textSoFar.substr(0, 2) + "-" + textSoFar.substr(2, 2) + "-" + textSoFar.substr(4, 4));
-                }
-            }
-            else {
-                //backspace would skip the slashes and just remove the numbers
-                if (textSoFar.length == 5) {
-                    $(this).val(textSoFar.substring(0, 4));
-                }
-                else if (textSoFar.length == 2) {
-                    $(this).val(textSoFar.substring(0, 1));
-                }
-            }
+    var textSoFar = $(this).val();
+    if (e.keyCode != 173 && e.keyCode != 109) {
+      if (e.keyCode != 8) {
+        if (textSoFar.length == 2 || textSoFar.length == 5) {
+          $(this).val(textSoFar + "-");
         }
-        else {
-            //remove slashes to avoid 12//01/2014
-            $(this).val(textSoFar.substring(0, textSoFar.length - 1));
+        //to handle copy & paste of 8 digit
+        else if (e.keyCode == 86 && textSoFar.length == 8) {
+          $(this).val(textSoFar.substr(0, 2) + "-" + textSoFar.substr(2, 2) + "-" + textSoFar.substr(4, 4));
         }
-    });
+      }
+      else {
+        //backspace would skip the slashes and just remove the numbers
+        if (textSoFar.length == 5) {
+          $(this).val(textSoFar.substring(0, 4));
+        }
+        else if (textSoFar.length == 2) {
+          $(this).val(textSoFar.substring(0, 1));
+        }
+      }
+    }
+    else {
+      //remove slashes to avoid 12//01/2014
+      $(this).val(textSoFar.substring(0, textSoFar.length - 1));
+    }
+  });
 
 
 
@@ -92,132 +92,88 @@ $('.modal-backdrop').remove();
 
 
   $(document).on("keydown",'.editpr input:not(:hidden),.editpr textarea,.editpr select', function(e) {
-     var n = $(".editpr input:not(:hidden),.editpr textarea,.editpr select").length;
-     var f = $('.editpr input:not(:hidden),.editpr textarea,.editpr select');
-     if (e.which == 13)
-     {
-       var nextIndex = f.index(this) + 1;
+    var n = $(".editpr input:not(:hidden),.editpr textarea,.editpr select").length;
+    var f = $('.editpr input:not(:hidden),.editpr textarea,.editpr select');
+    if (e.which == 13)
+    {
+      var nextIndex = f.index(this) + 1;
 
-                if(nextIndex < n)
-                {
-                  e.preventDefault();
-                  f[nextIndex].focus();
-                  f[nextIndex].select();
-                }
-
-     }
-    });
-    $(document).on("keydown",'.editpr input:not(:hidden),.editpr textarea,.editpr select', function(e) {
-       var n = $(".editpr input:not(:hidden),.editpr textarea,.editpr select").length;
-       var f = $('.editpr input:not(:hidden),.editpr textarea,.editpr select');
-      if (e.which == 38)
+      if(nextIndex < n)
       {
-        var prevIndex = f.index(this) - 1;
-        var elementType = $(this).prop('nodeName');
-        if(prevIndex > -1)
+        e.preventDefault();
+        f[nextIndex].focus();
+        f[nextIndex].select();
+      }
+
+    }
+  });
+  $(document).on("keydown",'.editpr input:not(:hidden),.editpr textarea,.editpr select', function(e) {
+    var n = $(".editpr input:not(:hidden),.editpr textarea,.editpr select").length;
+    var f = $('.editpr input:not(:hidden),.editpr textarea,.editpr select');
+    if (e.which == 38)
+    {
+      var prevIndex = f.index(this) - 1;
+      var elementType = $(this).prop('nodeName');
+      if(prevIndex > -1)
+      {
+        if (elementType=="SELECT")
         {
-          if (elementType=="SELECT")
+          if (sel1 == 1 && sel2 == 0)
           {
-            if (sel1 == 1 && sel2 == 0)
-            {
 
-              sindex= $("#edituom option:selected").index();
-            }
-            else if (sel1 == 0 && sel2 == 1)
-            {
-
-              sindex= $("#editcatselect option:selected").index();
-            }
-
-            if (sindex ==0)
-            {
-              e.preventDefault();
-              f[prevIndex].focus();
-            }
+            sindex= $("#edituom option:selected").index();
           }
-          else
+          else if (sel1 == 0 && sel2 == 1)
+          {
+
+            sindex= $("#editcatselect option:selected").index();
+          }
+
+          if (sindex ==0)
           {
             e.preventDefault();
             f[prevIndex].focus();
-            f[nextIndex].select();
-
           }
         }
+        else
+        {
+          e.preventDefault();
+          f[prevIndex].focus();
+          f[nextIndex].select();
 
         }
-      });
+      }
+
+    }
+  });
   $("#prodselect").change(function(event) {
     /* Act on the event */
     prodcode= $("#prodselect option:selected").val();
 
-        {
-
-            $.ajax({
-              url: '/product?type=details',
-              type: 'POST',
-              global: false,
-              async: false,
-              datatype: 'text/html',
-              data: {"productcode": prodcode},
-              beforeSend: function(xhr)
-              {
-                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-              }
-            })
-            .done(function(resp)
-            {
-              $("#proddetails").html("");
-              $("#proddetails").html(resp);
-              $(".pbutn").show();
-              $("#epsubmit").hide();
-              $("#epedit").show();
-              $('#proddetails').find('input, textarea, button, select').prop('disabled',true);
-              catcode= $("#editcatselect option:selected").val();
-              console.log("success");
-            })
-            .fail(function() {
-              console.log("error");
-            })
-            .always(function() {
-              console.log("complete");
-            });
+    {
 
       $.ajax({
-        url: '/product?type=cattax',
+        url: '/product?type=details',
         type: 'POST',
-        dataType: 'json',
-        async : false,
-        data: {"categorycode": catcode},
+        global: false,
+        async: false,
+        datatype: 'text/html',
+        data: {"productcode": prodcode},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
         }
       })
-      .done(function(resp) {
+      .done(function(resp)
+      {
+        $("#proddetails").html("");
+        $("#proddetails").html(resp);
+        $(".pbutn").show();
+        $("#epsubmit").hide();
+        $("#epedit").show();
+        $('#proddetails').find('input, textarea, button, select').prop('disabled',true);
+        catcode= $("#editcatselect option:selected").val();
         console.log("success");
-        $(".blank").remove();
-        $(".catsp").remove();
-
-        for (tax of resp["gkresult"]) {
-          $('#product_edit_tax_table tbody').append('<tr class="catsp " value="'+tax["taxid"]+'">'+
-          '<td class="col-xs-4">'+
-          '<input type="text" class="form-control product_cat_tax_disable input-sm tax_name" placeholder="Tax Name" value="'+tax["taxname"]+'">'+
-          '</td>'+
-          '<td class="col-xs-4">'+
-          '<select class="form-control product_cat_tax_disable input-sm tax_state" >'+
-          '<option value="">None</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>'+
-          '</select>'+
-          '</td>'+
-          '<td class="col-xs-3">'+
-          '<input class="form-control product_cat_tax_disable input-sm tax_rate text-right"  placeholder="Rate" value="'+tax["taxrate"]+'">'+
-          '</td>'+
-          '<td class="col-xs-1">'+
-          '</td>'+
-          '</tr>');
-          $('#product_edit_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
-        }
-        $(".product_cat_tax_disable").prop('disabled',true);
-
       })
       .fail(function() {
         console.log("error");
@@ -225,6 +181,52 @@ $('.modal-backdrop').remove();
       .always(function() {
         console.log("complete");
       });
+      if(catcode!="")
+      {
+        $.ajax({
+          url: '/product?type=cattax',
+          type: 'POST',
+          dataType: 'json',
+          async : false,
+          data: {"categorycode": catcode},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          }
+        })
+        .done(function(resp) {
+          console.log("success");
+          $(".blank").remove();
+          $(".catsp").remove();
+
+          for (tax of resp["gkresult"]) {
+            $('#product_edit_tax_table tbody').append('<tr class="catsp " value="'+tax["taxid"]+'">'+
+            '<td class="col-xs-4">'+
+            '<input type="text" class="form-control product_cat_tax_disable input-sm tax_name" placeholder="Tax Name" value="'+tax["taxname"]+'">'+
+            '</td>'+
+            '<td class="col-xs-4">'+
+            '<select class="form-control product_cat_tax_disable input-sm tax_state" >'+
+            '<option value="">None</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>'+
+            '</select>'+
+            '</td>'+
+            '<td class="col-xs-3">'+
+            '<input class="form-control product_cat_tax_disable input-sm tax_rate text-right"  placeholder="Rate" value="'+tax["taxrate"]+'">'+
+            '</td>'+
+            '<td class="col-xs-1">'+
+            '</td>'+
+            '</tr>');
+            $('#product_edit_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
+          }
+          $(".product_cat_tax_disable").prop('disabled',true);
+
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+      }
       $.ajax({
         url: '/product?type=prodtax',
         type: 'POST',
@@ -298,21 +300,21 @@ $('.modal-backdrop').remove();
     if (event.which == 13)
     {
       event.preventDefault();
-        prodcode= $("#prodselect option:selected").val();
-        if (prodcode!="")
-        {
-          $("#epedit").click();
-        }
+      prodcode= $("#prodselect option:selected").val();
+      if (prodcode!="")
+      {
+        $("#epedit").click();
+      }
 
     }
     if (event.which==46)
     {
       event.preventDefault();
-        prodcode= $("#prodselect option:selected").val();
-        if (prodcode!="")
-        {
-          $('#epdelete').click();
-        }
+      prodcode= $("#prodselect option:selected").val();
+      if (prodcode!="")
+      {
+        $('#epdelete').click();
+      }
     }
   });
 
@@ -325,8 +327,8 @@ $('.modal-backdrop').remove();
     $("#editproddesc").focus();
     $("#editproddesc").select();
     catcode= $("#editcatselect option:selected").val();
-$(".product_cat_tax_disable").prop('disabled',true);
-$(".product_tax_disable").prop('disabled',false);
+    $(".product_cat_tax_disable").prop('disabled',true);
+    $(".product_tax_disable").prop('disabled',false);
   });
 
   $(document).on("change","#editcatselect",function(event) {
@@ -341,30 +343,30 @@ $(".product_tax_disable").prop('disabled',false);
     }
     else {
 
-            $.ajax({
-              url: '/product?type=specs',
-              type: 'POST',
-              global: false,
-              async: false,
-              datatype: 'text/html',
-              data: {"categorycode": catcode},
-              beforeSend: function(xhr)
-              {
-                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-              }
-            })
-            .done(function(resp)
-            {
-              $("#editspecifications").html("");
-              $("#editspecifications").html(resp);
-              console.log("success");
-            })
-            .fail(function() {
-              console.log("error");
-            })
-            .always(function() {
-              console.log("complete");
-            });
+      $.ajax({
+        url: '/product?type=specs',
+        type: 'POST',
+        global: false,
+        async: false,
+        datatype: 'text/html',
+        data: {"categorycode": catcode},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+      .done(function(resp)
+      {
+        $("#editspecifications").html("");
+        $("#editspecifications").html(resp);
+        console.log("success");
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
     }
 
     if (catcode!="")
@@ -455,9 +457,9 @@ $(".product_tax_disable").prop('disabled',false);
         $("#category_name").focus().select();
       }
       else {
-      event.preventDefault();
-      $('#product_edit_tax_table tbody tr:eq('+previndex+') td:eq(0) input').focus().select();
-    }
+        event.preventDefault();
+        $('#product_edit_tax_table tbody tr:eq('+previndex+') td:eq(0) input').focus().select();
+      }
     }
     else if(event.which==190 && event.shiftKey)
     {
@@ -623,12 +625,12 @@ $(".product_tax_disable").prop('disabled',false);
     $("#product_edit_tax_table tbody tr").each(function(){
       var obj = {};
       if ($(".product_new_name",this).val()!="") {
-      obj.taxrowid = $(".product_row_val",this).val();
-      obj.taxname = $(".product_new_name",this).val();
-      obj.state = $(".product_new_state",this).val();
-      obj.taxrate = $(".product_new_rate",this).val();
-      taxes.push(obj);
-    }
+        obj.taxrowid = $(".product_row_val",this).val();
+        obj.taxname = $(".product_new_name",this).val();
+        obj.state = $(".product_new_state",this).val();
+        obj.taxrate = $(".product_new_rate",this).val();
+        taxes.push(obj);
+      }
 
 
     });
@@ -677,7 +679,7 @@ $(".product_tax_disable").prop('disabled',false);
     .always(function() {
       console.log("complete");
     });
-event.stopPropogation();
+    event.stopPropogation();
   });
 
 
@@ -689,41 +691,41 @@ event.stopPropogation();
     prodcode= $("#prodselect option:selected").val();
     $('#m_confirmdel').modal('show').one('click', '#proddel', function (e)
     {
-    $.ajax({
-      url: '/product?type=delete',
-      type: 'POST',
-      global: false,
-      async: false,
-      datatype: 'json',
-      data: {"productcode":prodcode},
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      }
-    })
-    .done(function(resp) {
-      if (resp["gkstatus"] ==0) {
-        $('.modal-backdrop').remove();
-        $("#editproduct").click();
-        $("#deletesuccess-alert").alert();
-        $("#deletesuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#deletesuccess-alert").hide();
-        });
-      }
-    })
-    .fail(function() {
-      console.log("error");
-    })
-    .always(function() {
-      console.log("complete");
+      $.ajax({
+        url: '/product?type=delete',
+        type: 'POST',
+        global: false,
+        async: false,
+        datatype: 'json',
+        data: {"productcode":prodcode},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+      .done(function(resp) {
+        if (resp["gkstatus"] ==0) {
+          $('.modal-backdrop').remove();
+          $("#editproduct").click();
+          $("#deletesuccess-alert").alert();
+          $("#deletesuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#deletesuccess-alert").hide();
+          });
+        }
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
     });
-});
-$('#m_confirmdel').on('shown.bs.modal', function(event) {
-  $("#m_cancel").focus();
-});
-$('#m_confirmdel').on('hidden.bs.modal', function(event) {
-  $("#prodselect").focus();
-});
+    $('#m_confirmdel').on('shown.bs.modal', function(event) {
+      $("#m_cancel").focus();
+    });
+    $('#m_confirmdel').on('hidden.bs.modal', function(event) {
+      $("#prodselect").focus();
+    });
 
   });
 
