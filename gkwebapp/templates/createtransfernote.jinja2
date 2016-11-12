@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style type="text/css">
+ td {
+      font-size: 65%;
+      padding: 4 !important;
+      margin: 4 !important;
+    }
+ th {
+      font-size: 75%;
+  }
+  .fixed-table tbody {
+      display:block;
+      height: 225px;
+      overflow-y:scroll;
+  }
+
+  .fixed-table thead ,.fixed-table tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  .fixed-table thead {
+      width: calc( 100% - 0.7em )
+  }
+  </style>
+</head>
+<body>
+  <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
+    <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Transfer Note saved.{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Something went wrong!{% endtrans %}
+    </div>
+
+    <div class="panel shadow transfernote_panel">
+      <div class="panel-body">
+        <div class="col-md-6">
+          <div class="alert alert-danger" id="custsup-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}Please Enter Date{% endtrans %}</label>
+          </div>
+          <div class="alert alert-danger" id="date-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}Please enter date!{% endtrans %}</label>
+          </div>
+          <div class="alert alert-danger" id="duplicate-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}Transfernote No.Already Exist!{% endtrans %}</label>
+          </div>
+          <div class="alert alert-danger" id="tnno-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}Please Enter Transfer Note No.!{% endtrans %}</label>
+          </div>
+          <div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
+          </div>
+          <div class="alert alert-danger" id="godown-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}Godown Must be Selected!{% endtrans %}</label>
+          </div>
+          <div class="alert alert-danger" id="product-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}Please select a product!{% endtrans %}</label>
+          </div>
+          <div class="alert alert-danger" id="quantity-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}Please enter quantity!{% endtrans %}</label>
+          </div>
+          <div class="alert alert-danger" id="godown-same-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}From and To godown can not be same !{% endtrans %}</label>
+          </div>
+          <form>
+            <div class="form-group">
+              <label for="transfernote_no">{% trans %}Transfer Note No:{% endtrans %}</label>
+              <input class="form-control input-sm" id="transfernote_no" placeholder="{% trans %}Enter Transfer Note no{% endtrans %}" >
+            </div>
+            <div class="form-group">
+              <label for="transfernote_date">{% trans %}Date:{% endtrans %}</label>
+              <div class="form-inline">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="DD" id="tn_date" accesskey="v">
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="MM" id="tn_month" accesskey="v">
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control input-sm tndate" size="4" maxlength="4" placeholder="YYYY" id="tn_year" accesskey="v">
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="panel">
+                <table id="transfernote_product_table" class="table table-condensed table-borderd fixed-table">
+                  <thead class="bg-primary">
+                    <tr>
+                      <th class="col-xs-9">{% trans %}Product{% endtrans %}</th>
+                      <th class="col-xs-2">{% trans %}Quantity{% endtrans %}</th>
+                      <th class="col-xs-1"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="col-xs-9">
+                        <select class="form-control input-sm product_name">
+                          <option value="" disabled hidden selected>Select Product</option>
+                          {% for product in products %}
+                          <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
+                          {% endfor %}
+                        </select>
+                      </td>
+                      <td class="col-xs-2">
+                        <input type="text" class="transfernote_product_quantity form-control input-sm text-right" value="">
+                      </td>
+                      <td class="col-xs-1">
+
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <small id="txtareahelp" class="form-text text-muted">Press end to Enter No of Packets.</small>
+              </div>
+            </div>
+          </div>
+            <div class="col-md-6" id="transfernote_godown_div">
+              <div class="form-group">
+                <label for="no_of_packet">{% trans %} Number Of Packets:{% endtrans %}</label>
+                <input class="form-control input-sm" id="no_of_packet">
+              </div>
+
+            <div class="form-group">
+              <label for="tn_from_godown">{% trans %} From Godown:{% endtrans %}</label>
+              <select class="form-control input-sm" id="tn_from_godown" accesskey="">
+                <option value=""  disabled hidden selected>{% trans %}Select Godown{% endtrans %}</option>
+                {% for godown in godowns %}
+                <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="tn_to_godown">{% trans %} To Godown:{% endtrans %}</label>
+              <select class="form-control input-sm" id="tn_to_godown" accesskey="">
+                <option value=""  disabled  hidden selected>{% trans %}Select Godown{% endtrans %}</option>
+                {% for godown in godowns %}
+                <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="transport_mode">{% trans %} Mode Of Transport:{% endtrans %}</label>
+              <input class="form-control input-sm" id="transport_mode">
+            </div>
+
+          <div class="form-group">
+            <label for="name_issuer">{% trans %} Name Of Issuer:{% endtrans %}</label>
+            <input class="form-control input-sm" id="name_issuer">
+          </div>
+        <div class="form-group">
+          <label for="designation">{% trans %} Designation:{% endtrans %}</label>
+          <input class="form-control input-sm" id="designation">
+        </div>
+      </form>
+      </div>
+    </div>
+      <div class="panel-footer">
+        <button class="btn btn-success btn-sm" id="transfernote_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}">{% trans %}Save{% endtrans %}</button>
+        <button id="transfernote_reset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/createtransfernote.js')}}"></script>
+</body>

@@ -703,6 +703,9 @@ $.ajax({
   $('#addunit').click(function (e) {
     $("#info").load("/unitofmeasurements");
   });
+  $('#createtransfernote').click(function (e) {
+    $("#info").load("/transfernotes");
+  });
   $('#deliverychallan').click(function (e) {
     $("#info").load("/deliverychallan");
   });
