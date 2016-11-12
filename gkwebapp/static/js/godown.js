@@ -4,7 +4,7 @@ $(document).ready(function() {
     {
 
     type: "POST",
-    url: "/showgodown",
+    url: "/godown?type=addtab",
     global: false,
     async: false,
     datatype: "text/html",
@@ -25,7 +25,7 @@ $(document).ready(function() {
     {
 
     type: "POST",
-    url: "/showeditgodown",
+    url: "/godown?type=edittab",
     global: false,
     async: false,
     datatype: "text/html",

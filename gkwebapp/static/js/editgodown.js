@@ -34,7 +34,7 @@ $(document).ready(function() {
         var goname = $("#editgoddet option:selected").text();
         $.ajax({
             type: "POST",
-            url: "/getgoddetails",
+            url: "/godown?type=getgoddetails",
             data: {
                 "goid": goid
             },
@@ -165,7 +165,7 @@ $(document).ready(function() {
             var goid = $("#editgoddet option:selected").val();
             $.ajax({
                 type: "POST",
-                url: "/deletegodown",
+                url: "/godown?type=delete",
                 global: false,
                 async: false,
                 datatype: "json",
@@ -225,10 +225,10 @@ $(document).ready(function() {
             $("#goaddress").focus().select();
             return false;
         };
-        if ($.trim($("#gocontact").val()) == "") {
-            $("#contactblank-alert").alert();
-            $("#contactblank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                $("#contactblank-alert").hide();
+        if ($.trim($("#gostate").val()) == "") {
+            $("#stateblank-alert").alert();
+            $("#stateblank-alert").fadeTo(2250, 500).slideUp(500, function() {
+                $("#stateblank-alert").hide();
             });
             $("#gocontact").focus().select();
             return false;
@@ -242,7 +242,7 @@ $(document).ready(function() {
         var gostate = $("#gostate option:selected").val();
         $.ajax({
             type: "POST",
-            url: "/editgodown",
+            url: "/godown?type=edit",
             global: false,
             async: false,
             datatype: "json",

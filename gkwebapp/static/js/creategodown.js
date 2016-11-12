@@ -130,7 +130,7 @@ $(document).ready(function()
           {
 
             type: "POST",
-            url: "/addgodown",
+            url: "/godown?type=add",
             global: false,
             async: false,
             datatype: "json",

@@ -38,22 +38,22 @@ import os
 def showcategory(request):
 	return {"status":True}
 
-@view_config(route_name="showgodown", renderer="gkwebapp:templates/creategodown.jinja2")
+@view_config(route_name="godown",request_param="type=addtab", renderer="gkwebapp:templates/creategodown.jinja2")
 def showgodown(request):
 	return {"status":True}
 
-@view_config(route_name="showmultigodown", renderer="gkwebapp:templates/multiplegodowns.jinja2")
+@view_config(route_name="godown",request_param="type=multigodown", renderer="gkwebapp:templates/multiplegodowns.jinja2")
 def showmultigodown(request):
 	return {"status":True}
 
-@view_config(route_name="addgodown", renderer="json")
+@view_config(route_name="godown",request_param="type=add", renderer="json")
 def addgodown(request):
 	header={"gktoken":request.headers["gktoken"]}
 	gkdata = {"goname":request.params["godownname"], "goaddr":request.params["godownaddress"], "state":request.params["godownstate"], "gocontact":request.params["godowncontact"], "contactname":request.params["godowncontactname"], "designation":request.params["godowndesignation"]}
 	result = requests.post("http://127.0.0.1:6543/godown", data =json.dumps(gkdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 
-@view_config(route_name="addmultigodowns", renderer="json")
+@view_config(route_name="godown",request_param="type=addmulti", renderer="json")
 def addmultigodowns(request):
 	header={"gktoken":request.headers["gktoken"]}
 	goddetails = json.loads(request.params["goddetails"])
@@ -65,7 +65,7 @@ def addmultigodowns(request):
 		result = requests.post("http://127.0.0.1:6543/godown", data =json.dumps(gkdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 
-@view_config(route_name="showeditgodown", renderer="gkwebapp:templates/editgodown.jinja2")
+@view_config(route_name="godown",request_param="type=edittab", renderer="gkwebapp:templates/editgodown.jinja2")
 def showeditgodown(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/godown", headers=header)
@@ -75,7 +75,7 @@ def showeditgodown(request):
 		goddata.append(gdata)
 	return {"gkresult":goddata}
 
-@view_config(route_name="getgoddetails", renderer="json")
+@view_config(route_name="godown",request_param="type=getgoddetails", renderer="json")
 def getgoddetails(request):
 	header={"gktoken":request.headers["gktoken"]}
 	goid = int(request.params["goid"])
@@ -86,14 +86,14 @@ def getgoddetails(request):
 		return {"gkstatus":0, "gkresult":resp}
 	return {"gkstatus":result.json()["gkstatus"]}
 
-@view_config(route_name="deletegodown", renderer="json")
+@view_config(route_name="godown",request_param="type=delete", renderer="json")
 def deletegodown(request):
 	header={"gktoken":request.headers["gktoken"]}
 	gkdata={"goid":request.params["goid"]}
 	result = requests.delete("http://127.0.0.1:6543/godown",data =json.dumps(gkdata), headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 
-@view_config(route_name="editgodown", renderer="json")
+@view_config(route_name="godown",request_param="type=edit", renderer="json")
 def editgodown(request):
 		header={"gktoken":request.headers["gktoken"]}
 		gkdata = {"goid":request.params["goid"],"goname":request.params["goname"],"goaddr":request.params["goaddr"], "gocontact": request.params["gocontact"]}
