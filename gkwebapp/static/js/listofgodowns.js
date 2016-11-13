@@ -103,4 +103,26 @@ $(document).ready(function() {
     });
   });
 
+  $("#print").click(function(event) {
+        event.preventDefault();
+        var xhr = new XMLHttpRequest();
+
+        xhr.open('GET', '/godown?type=spreadsheet&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2'), true);
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        xhr.responseType = 'blob';
+
+        xhr.onload = function(e) {
+        if (this.status == 200) {
+        // get binary data as a response
+          var blob = this.response;
+          var url = window.URL.createObjectURL(blob);
+          window.location.assign(url)
+        }
+      };
+
+      xhr.send();
+
+
+  });
+
 });

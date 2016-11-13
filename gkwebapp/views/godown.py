@@ -34,6 +34,7 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import os
+from odslib import ODS
 
 @view_config(route_name="godown",renderer="gkwebapp:templates/godown.jinja2")
 def godown(request):
@@ -120,3 +121,45 @@ def printlistofgodowns(request):
 		gdata= {"godownstatus":str(record["godownstatus"]), "srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
 		goddata.append(gdata)
 	return {"gkresult":goddata}
+
+@view_config(route_name="godown",request_param="type=spreadsheet", renderer="")
+def listofgodownssspreadsheet(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	result = result.json()["gkresult"]
+	fystart = str(request.params["fystart"]);
+	fyend = str(request.params["fyend"]);
+	orgname = str(request.params["orgname"])
+	orgname += " (FY: " + fystart+" to "+fyend +")"
+	ods = ODS()
+	sheet = ods.content.getSheet(0)
+	sheet.setSheetName("List of Godowns")
+	sheet.getRow(0).setHeight("23pt")
+
+	sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("16pt")
+	ods.content.mergeCells(0,0,4,1)
+	sheet.getRow(1).setHeight("18pt")
+	sheet.getCell(0,1).stringValue("List Of Godowns").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+	ods.content.mergeCells(0,1,4,1)
+	sheet.getColumn(1).setWidth("4cm")
+	sheet.getColumn(2).setWidth("8cm")
+	sheet.getColumn(3).setWidth("4cm")
+	sheet.getCell(0,2).stringValue("Sr. No.").setBold(True)
+	sheet.getCell(1,2).stringValue("Godown Name").setBold(True)
+	sheet.getCell(2,2).stringValue("Address").setBold(True)
+	sheet.getCell(3,2).stringValue("Status").setBold(True)
+	row = 3
+	for godown in result:
+		sheet.getCell(0, row).stringValue(godown["srno"])
+		sheet.getCell(1, row).stringValue(godown["goname"])
+		sheet.getCell(2, row).stringValue(godown["goaddr"]+" , "+godown["state"])
+		sheet.getCell(3, row).stringValue(godown["godownstatus"])
+		row += 1
+
+	ods.save("response.ods")
+	repFile = open("response.ods")
+	rep = repFile.read()
+	repFile.close()
+	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	os.remove("response.ods")
+	return Response(rep, headerlist=headerList.items())
