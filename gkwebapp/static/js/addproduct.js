@@ -1,6 +1,31 @@
 $(document).ready(function() {
 $('.modal-backdrop').remove();
   $("#addcatselect").focus();
+  $('.proddate').autotab('number');
+
+  $(document).off('focus', '.proddate').on('focus', '.proddate', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    $(".proddate").numeric();
+  });
+
+  $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    $(".numtype").numeric();
+  });
+  $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    if ($(this).val()=="")
+    {
+    $(this).val(parseFloat(0).toFixed(2));
+    }
+    else
+    {
+      $(this).val(parseFloat($(this).val()).toFixed(2));
+    }
+  });
 
 $(document).off('blur', '#addproddesc').on('blur', '#addproddesc',function(event) {
   /* Act on the event */
@@ -8,6 +33,37 @@ $(document).off('blur', '#addproddesc').on('blur', '#addproddesc',function(event
 $("#addproddesc").val($("#addproddesc").val().trim());
 
 });
+
+
+$(document).off('keyup', '.specdate').on('keyup', '.specdate',function (e) {
+      var textSoFar = $(this).val();
+      if (e.keyCode != 173 && e.keyCode != 109) {
+          if (e.keyCode != 8) {
+              if (textSoFar.length == 2 || textSoFar.length == 5) {
+                  $(this).val(textSoFar + "-");
+              }
+                  //to handle copy & paste of 8 digit
+              else if (e.keyCode == 86 && textSoFar.length == 8) {
+                  $(this).val(textSoFar.substr(0, 2) + "-" + textSoFar.substr(2, 2) + "-" + textSoFar.substr(4, 4));
+              }
+          }
+          else {
+              //backspace would skip the slashes and just remove the numbers
+              if (textSoFar.length == 5) {
+                  $(this).val(textSoFar.substring(0, 4));
+              }
+              else if (textSoFar.length == 2) {
+                  $(this).val(textSoFar.substring(0, 1));
+              }
+          }
+      }
+      else {
+          //remove slashes to avoid 12//01/2014
+          $(this).val(textSoFar.substring(0, textSoFar.length - 1));
+      }
+  });
+
+
 $(document).keyup(function(event)
 {
   /* Act on the event */
@@ -22,6 +78,18 @@ $(document).off('focus', '#newuom').on('focus', '#newuom', function(event) {
   event.preventDefault();
   /* Act on the event */
   newuom =1;
+});
+var txst=0;
+$(document).off('focus', '.tax_state').on('focus', '.tax_state', function(event) {
+  event.preventDefault();
+  /* Act on the event */
+  txst =1;
+});
+
+$(document).off('blur', '.tax_state').on('blur', '.tax_state', function(event) {
+  event.preventDefault();
+  /* Act on the event */
+  txst =0;
 });
 
 $(document).off('blur', '#newuom').on('blur', '#newuom', function(event) {
@@ -114,8 +182,8 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
             {
               $('#adduom').append($('<option value='+uom["uomid"]+'>'+uom["unitname"]+'</option>'));
             }
-            $("#adduom").focus();
-            $("#adduom").select();
+            $('#product_tax_table tbody tr:last td:eq(0) input').focus();
+            $('#product_tax_table tbody tr:last td:eq(0) input').select();
 
             $("#adduom option").filter(function(i,e){return $(e).text()==unitname}).prop('selected', true);
           }
@@ -142,14 +210,15 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
        var f = $('.addprod input:not(:hidden),.addprod textarea,.addprod select');
       if (e.which == 38)
       {
+        var sindex=0;
         var prevIndex = f.index(this) - 1;
         var elementType = $(this).prop('nodeName');
         if(prevIndex > -1)
         {
           if (elementType=="SELECT")
           {
-            var sindex= $(".sel option:selected").index();
-            if (sindex <=1)
+            sindex= $(".sel option:selected").index();
+            if (sindex <=1 && txst!=1)
             {
               e.preventDefault();
               f[prevIndex].focus();
@@ -157,9 +226,13 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
           }
           else
           {
+
+
+            
             e.preventDefault();
             f[prevIndex].focus();
             f[nextIndex].select();
+
 
           }
         }
@@ -202,7 +275,7 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
                 '</select>'+
                 '</td>'+
                 '<td class="col-xs-3">'+
-                '<input class="form-control product_cat_tax_disable input-sm tax_rate text-right"  placeholder="Rate" value="'+tax["taxrate"]+'">'+
+                '<input class="form-control product_cat_tax_disable input-sm tax_rate text-right numtype"  placeholder="Rate" value="'+tax["taxrate"]+'">'+
                 '</td>'+
                 '<td class="col-xs-1">'+
                 '</td>'+
@@ -219,7 +292,7 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
               '</select>'+
               '</td>'+
               '<td class="col-xs-3">'+
-              '<input class="form-control  input-sm tax_rate text-right product_new_rate"  placeholder="Rate" value="">'+
+              '<input class="form-control  input-sm tax_rate text-right product_new_rate numtype"  placeholder="Rate" value="">'+
               '</td>'+
               '<td class="col-xs-1">'+
               '</td>'+
@@ -236,7 +309,7 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
               '</select>'+
               '</td>'+
               '<td class="col-xs-3">'+
-              '<input class="form-control  input-sm tax_rate text-right product_new_rate"  placeholder="Rate" value="">'+
+              '<input class="form-control  input-sm tax_rate text-right product_new_rate numtype"  placeholder="Rate" value="">'+
               '</td>'+
               '<td class="col-xs-1">'+
               '</td>'+
@@ -294,7 +367,7 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
       '</select>'+
       '</td>'+
       '<td class="col-xs-3">'+
-      '<input class="form-control product_new_rate input-sm tax_rate text-right"  placeholder="Rate" value="">'+
+      '<input class="form-control product_new_rate input-sm tax_rate text-right numtype"  placeholder="Rate" value="">'+
       '</td>'+
       '<td class="col-xs-1">'+
       '</td>'+
@@ -418,7 +491,7 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
         '</select>'+
         '</td>'+
         '<td class="col-xs-3">'+
-        '<input class="form-control input-sm tax_rate text-right product_new_rate"  placeholder="Rate">'+
+        '<input class="form-control input-sm tax_rate text-right product_new_rate numtype"  placeholder="Rate">'+
         '</td>'+
         '<td class="col-xs-1">'+
         '<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
@@ -503,7 +576,9 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
 
     });
     var addformdata = $("#addprodform").serializeArray();
+
     addformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
+
     $.ajax({
       url: '/product?type=save',
       type: 'POST',

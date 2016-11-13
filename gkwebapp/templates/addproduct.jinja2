@@ -31,12 +31,12 @@
                 <option value="{{uom['uomid']}}">{{uom["unitname"]}}</option>
                 {% endfor %}
               </select>
-              <small id="txtareahelp" class="form-text text-muted">Press space to add new unit.</small>
+              <small id="txtareahelp" class="form-text text-muted">{% trans %}Press space to add new unit.{% endtrans %}</small>
             </div>
             <div class="form-group pds newuom" hidden>
               <label for="newuom" class="">{% trans %}New Unit of Measurement{% endtrans %} :</label>
               <input type='text' class="form-control" name="newuom"  id="newuom" placeholder="Name of the new unit" aria-describedby="textareahelp">
-              <small id="textareahelp" class="form-text text-muted">Press esc to cancel.</small>
+              <small id="textareahelp" class="form-text text-muted">{% trans %}Press esc to cancel.{% endtrans %}</small>
             </div>
 
             <div class="form-group">
@@ -97,7 +97,7 @@
                       </select>
                     </td>
                     <td class="col-xs-3">
-                        <input class="form-control input-sm tax_rate text-right product_new_rate"  placeholder="Rate">
+                        <input class="form-control input-sm tax_rate text-right product_new_rate numtype"  placeholder="Rate">
                     </td>
                     <td class="col-xs-1">
 

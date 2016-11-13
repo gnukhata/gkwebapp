@@ -10,9 +10,9 @@
 
   <input type="text" class="form-control input-sm" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" placeholder="Alphanumeric">
   {% elif spec["attrtype"]==1 %}
-  <input type="text" class="form-control input-sm numtype" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" placeholder="Alphanumeric">
+  <input type="text" class="form-control input-sm numtype" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" placeholder="Numeric">
   {% elif spec["attrtype"]==2 %}
-  <input type="text" class="form-control input-sm " name="{{spec['spcode']}}"  id="{{spec['spcode']}}" placeholder="Date">
+  <input type="text" class="form-control input-sm specdate" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" placeholder="DD-MM-YYYY">
   {% elif spec["attrtype"]==3 %}
   <label class="radio-inline"><input value = "1" class="radtype" type="radio" name="{{spec['spcode']}}">{% trans %}Yes{% endtrans %}</label>
   <label class="radio-inline"><input value = "0" class=" radtype" type="radio" name="{{spec['spcode']}}" checked>{% trans %}No{% endtrans %}</label>

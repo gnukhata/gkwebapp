@@ -67,7 +67,7 @@
           {% elif spec["attrtype"]==1 %}
           <input type="text" class="form-control input-sm numtype" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" value="{{proddesc['specs'][pdesc]}}" placeholder="Numeric">
           {% elif spec["attrtype"]==2 %}
-          <input type="text" class="form-control input-sm " name="{{spec['spcode']}}"  id="{{spec['spcode']}}" value="{{proddesc['specs'][pdesc]}}" placeholder="Date">
+          <input type="text" class="form-control input-sm specdate" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" value="{{proddesc['specs'][pdesc]}}" placeholder="DD-MM-YYYY">
           {% elif spec["attrtype"]==3 %}
           {% if proddesc['specs'][pdesc]|int ==1 %}
           <label class="radio-inline"><input value = "1" class="radtype" type="radio" name="{{spec['spcode']}}" checked>{% trans %}Yes{% endtrans %}</label>

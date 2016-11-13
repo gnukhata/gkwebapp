@@ -94,7 +94,7 @@ def saveproduct(request):
 			continue
 		else:
 			prdspecs[prd]= request.params[prd]
-			print "jjjjjjjjjjjj:",prd
+
 		proddetails["specs"] = prdspecs
 	result = requests.post("http://127.0.0.1:6543/products", data=json.dumps(proddetails),headers=header)
 	for tax in taxes:
@@ -112,13 +112,15 @@ def editproduct(request):
 	prdspecs = {}
 	proddetails={}
 	taxes =0
+	
 	for prd in request.params:
 		if prd=="type":
 			continue
 		elif prd =="productcode":
 			proddetails["productcode"] = request.params[prd]
 		elif prd =="catselect":
-			proddetails["categorycode"] = request.params[prd]
+			if request.params[prd] !="":
+				proddetails["categorycode"] = request.params[prd]
 		elif prd == "editproddesc":
 			proddetails["productdesc"] = request.params[prd];
 		elif prd == "uom":
@@ -132,14 +134,13 @@ def editproduct(request):
 	result = requests.put("http://127.0.0.1:6543/products", data=json.dumps(proddetails),headers=header)
 
 	for tax in taxes:
-		print "thisssssss: ",tax
-		print "thaaaattttt:",proddetails["productcode"]
+
 		if len(tax)!=0:
 
 			taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":proddetails["productcode"]}
 			if tax["state"]!='':
 				taxdata["state"]=tax["state"]
-			if tax["taxrowid"]=="New":
+			if tax["taxrowid"]=="new":
 				taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
 			else:
 				taxdata["taxid"] = tax["taxrowid"]

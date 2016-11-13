@@ -697,6 +697,9 @@ $.ajax({
   $('#addcategory').click(function (e) {
     $("#info").load("/category");
   });
+  $('#invoice').click(function (e) {
+    $("#info").load("/invoice");
+  });
   $('#customersupplier').click(function (e) {
     $("#info").load("/customersuppliers");
   });
