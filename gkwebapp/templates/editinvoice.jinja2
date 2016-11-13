@@ -30,7 +30,7 @@
           <div class="alert alert-danger" id="custsup-blank-alert"  aria-live="rude" role="alert" hidden>
 
             <label for="vno">
-              {% if gkstatus=="in" %}
+              {% if gkresult[""]=="in" %}
               {% trans %}Please select a supplier!{% endtrans %}
               {% else %}
               {% trans %}Please select a customer!{% endtrans %}
@@ -53,8 +53,19 @@
 
             <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
           </div>
+          <div class="form-group col-md-12">
+            <label for="invoice_deliverynote">
+              {% trans %}Invoice{% endtrans %} :
+            </label>
+            <select class="form-control input-sm" id="invoice_all_no" accesskey="">
+              <option value="" disabled hidden selected>{% trans %}Select Invoice{% endtrans %}</option>
+              {% for invoice in gkresult %}
+              <option value="{{invoice['invid']}}">{{invoice["invoiceno"]}}, {{invoice["custname"]}}</option>
+              {% endfor %}
+            </select>
+          </div>
 
-          <div class="col-md-3">
+          <div class="col-md-3 invdetails" hidden>
 
             <div class="form-group">
               <label for="invoice_deliverynote">
@@ -77,14 +88,14 @@
             </div>
           </div>
 
-          <div class="col-md-2">
+          <div class="col-md-2 invdetails" hidden>
 
             <div class="form-group">
               <label for="invoice_challanno">{% trans %}Invoice No{% endtrans %} :</label>
               <input class="form-control input-sm" id="invoice_challanno" placeholder="{% trans %}Enter invoice no{% endtrans %}" accesskey="a">
             </div>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-2 invdetails"  hidden>
 
             <div class="form-group">
               <label for="invoice_date">{% trans %}Date{% endtrans %} :</label>
@@ -103,27 +114,18 @@
 
           </div>
 
-          <div class="col-md-3">
+          <div class="col-md-3 invdetails"  hidden>
 
             <div class="form-group">
-              <label for="invoice_customer">
-                {% if gkstatus=="in" %}
+              <label for="invoice_customer" class="supp" hidden>
                 {% trans %}Supplier{% endtrans %} :
-                {% else %}
+                </label>
+                <label for="invoice_customer" class="cust" hidden>
                 {% trans %}Customer{% endtrans %} :
-                {% endif %}
+
               </label>
               <select class="form-control input-sm" id="invoice_customer" accesskey="">
-                <option value="" disabled hidden selected>
-                  {% if gkstatus=="in" %}
-                  {% trans %}Select Supplier{% endtrans %}
-                  {% else %}
-                  {% trans %}Select Customer{% endtrans %}
-                  {% endif %}
-                </option>
-                {% for supplier in suppliers %}
-                <option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
-                {% endfor %}
+
               </select>
             </div>
           </div>
@@ -185,7 +187,7 @@
         </div>
 
 
-        <div class="container-fluid" id="invoice_product_div">
+        <div class="container-fluid invdetails" id="invoice_product_div"  hidden>
           <div class="panel">
 
             <table id="invoice_product_table" class="shadow table table-condensed table-bordered fixed-table fixed-tablepurchase">
@@ -217,7 +219,7 @@
                     <input type="text" class="invoice_product_per_price form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
                   </td>
                   <td class="col-xs-1">
-                    <input type="text" class="invoice_product_tax_rate form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
+                    <input type="text" class="invoice_product_tax_rate form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
                   </td>
                   <td class="col-xs-1">
                     <input type="text" class="invoice_product_tax_amount form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
@@ -298,5 +300,5 @@
 
   </div>
 
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addinvoice.js')}}"></script>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editinvoice.js')}}"></script>
 </body>

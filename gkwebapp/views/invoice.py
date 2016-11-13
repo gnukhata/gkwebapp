@@ -57,7 +57,8 @@ def saveinvoice(request):
 
 	invoicedata = {"invoiceno":request.params["invoiceno"],"invoicedate":request.params["invoicedate"],
 		"tax":json.loads(request.params["tax"]),"custid":request.params["custid"],
-		"contents":json.loads(request.params["contents"])}
+		"contents":json.loads(request.params["contents"]),
+		"issuername":request.params["issuername"],"designation":request.params["designation"]}
 
 	stock = json.loads(request.params["stock"])
 	if request.params["dcid"]!="":
@@ -91,22 +92,15 @@ def getstatetax(request):
 	return {"gkstatus": taxdata.json()["gkstatus"],"taxdata": taxdata.json()["gkresult"]}
 
 
-
-'''
-
-
-@view_config(route_name="invoice",request_param="action=getdelchal",renderer="json")
-def getdelchal(request):
-	header={"gktoken":request.headers["gktoken"]}
-	delchaldata = requests.get("http://127.0.0.1:6543/delchal?delchal=single&dcid=%d"%(int(request.params["dcid"])), headers=header)
-
-	return {"gkstatus": delchaldata.json()["gkstatus"],"delchaldata": delchaldata.json()["gkresult"]}
-
 @view_config(route_name="invoice",request_param="action=showedit",renderer="gkwebapp:templates/editinvoice.jinja2")
 def showeditinvoice(request):
 	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/delchal?delchal=all", headers=header)
+	result = requests.get("http://127.0.0.1:6543/invoice?inv=all", headers=header)
 	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
 
 
-'''
+@view_config(route_name="invoice",request_param="action=getinvdetails",renderer="json")
+def getInvoiceDetails(request):
+	header={"gktoken":request.headers["gktoken"]}
+	invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
+	return {"gkstatus": invoicedata.json()["gkstatus"],"invoicedata": invoicedata.json()["gkresult"]}
