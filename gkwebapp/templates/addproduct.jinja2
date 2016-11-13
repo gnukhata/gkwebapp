@@ -21,7 +21,7 @@
 
             <div class="form-group pds">
               <label for="addproddesc" class="">{% trans %}Product Description{% endtrans %} :</label>
-              <input type='text' class="form-control" name="addproddesc"  id="addproddesc" placeholder="Alphanumeric">
+              <input type='text' class="form-control input-sm" name="addproddesc"  id="addproddesc" placeholder="Alphanumeric">
             </div>
             <div class="form-group pds olduom">
               <label for="uom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label>
@@ -32,6 +32,13 @@
                 {% endfor %}
               </select>
               <small id="txtareahelp" class="form-text text-muted">{% trans %}Press space to add new unit.{% endtrans %}</small>
+            </div>
+            <div class="form-group pds">
+              <label for="addproddesc" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+              <div class="input-group">
+                <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
+                <span class="input-group-addon input-sm" id="unitaddon"></span>
+              </div>
             </div>
             <div class="form-group pds newuom" hidden>
               <label for="newuom" class="">{% trans %}New Unit of Measurement{% endtrans %} :</label>
@@ -53,7 +60,11 @@
                 <tbody>
                   <tr>
                     <td class="col-xs-4">
-                      <input type="text" class="form-control input-sm tax_name product_new_name" placeholder="Tax Name">
+                      <select class="form-control input-sm tax_name product_new_name">
+                        <option value="" selected>Select Tax</option>
+                        <option value="VAT">VAT</option>
+                        <option value="CVAT">CVAT</option>
+                      </select>
                     </td>
                     <td class="col-xs-4">
                       <select class="form-control input-sm tax_state product_new_state" >
