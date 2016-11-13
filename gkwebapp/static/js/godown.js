@@ -73,6 +73,9 @@ $(document).ready(function() {
     else if(e.target.attributes.href.value=="#godown_edit"){
       $("#editgoddet").focus();
     }
+    else if(e.target.attributes.href.value=="#godown_list"){
+      $('#latable tbody tr:first-child td:eq(1) a').focus();
+    }
   });
   $("a[href ='#godown_edit']").click(function(event) {
     $("#editgoddet").focus();
