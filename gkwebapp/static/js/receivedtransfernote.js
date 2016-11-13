@@ -50,11 +50,13 @@ $(document).ready(function() {
           if (result["recieved"] ==false) {
             $("#recstatus").html("Pending");
             $("#rec_received").show();
+            $("#rec_received").prop("disabled", false);
           }
           else  {
 
             $("#recstatus").html("Received");
-            $("#rec_received").hide();
+              $("#rec_received").hide();
+            $("#rec_received").prop("disabled", true);
           }
 
 
@@ -71,12 +73,13 @@ $(document).ready(function() {
       });
 
       $("#rec_tn_list").keydown(function(event) {
-        if (event.which==13 ) {
+        if (event.which==13) {
             $("#rec_received").click();
           }
-        
+
       });
       $("#rec_received").click(function(event) {
+
         event.preventDefault();
         $('.modal-backdrop').remove();
         $('.modal').modal('hide');
