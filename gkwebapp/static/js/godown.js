@@ -16,6 +16,29 @@ $(document).ready(function() {
     {
       $("#godown_create").html(resp);
       $("#godown_edit").html("");
+      $("#godown_list").html("");
+    }
+    }
+  );
+  });
+  $("a[href ='#godown_list']").click(function() {
+    $.ajax(
+    {
+
+    type: "POST",
+    url: "/godown?type=list",
+    global: false,
+    async: false,
+    datatype: "text/html",
+    beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+    success: function(resp)
+    {
+      $("#godown_list").html(resp);
+      $("#godown_create").html("");
+      $("#godown_edit").html("");
     }
     }
   );
@@ -37,6 +60,7 @@ $(document).ready(function() {
     {
       $("#godown_edit").html(resp);
       $("#godown_create").html("");
+      $("#godown_list").html("");
     }
     }
   );

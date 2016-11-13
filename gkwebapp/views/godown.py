@@ -25,6 +25,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+"Abhijith Balan" <abhijithb21@openmailbox.org>
 """
 
 from pyramid.view import view_config
@@ -35,7 +36,7 @@ from pyramid.response import Response
 import os
 
 @view_config(route_name="godown",renderer="gkwebapp:templates/godown.jinja2")
-def showcategory(request):
+def godown(request):
 	return {"status":True}
 
 @view_config(route_name="godown",request_param="type=addtab", renderer="gkwebapp:templates/creategodown.jinja2")
@@ -45,6 +46,16 @@ def showgodown(request):
 @view_config(route_name="godown",request_param="type=multigodown", renderer="gkwebapp:templates/multiplegodowns.jinja2")
 def showmultigodown(request):
 	return {"status":True}
+
+@view_config(route_name="godown",request_param="type=list", renderer="gkwebapp:templates/listofgodowns.jinja2")
+def listofgodowns(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	goddata=[]
+	for record in result.json()["gkresult"]:
+		gdata= {"godownstatus":str(record["godownstatus"]), "srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
+		goddata.append(gdata)
+	return {"gkresult":goddata}
 
 @view_config(route_name="godown",request_param="type=add", renderer="json")
 def addgodown(request):
