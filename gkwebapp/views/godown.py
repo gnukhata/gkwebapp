@@ -47,16 +47,6 @@ def showgodown(request):
 def showmultigodown(request):
 	return {"status":True}
 
-@view_config(route_name="godown",request_param="type=list", renderer="gkwebapp:templates/listofgodowns.jinja2")
-def listofgodowns(request):
-	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/godown", headers=header)
-	goddata=[]
-	for record in result.json()["gkresult"]:
-		gdata= {"godownstatus":str(record["godownstatus"]), "srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
-		goddata.append(gdata)
-	return {"gkresult":goddata}
-
 @view_config(route_name="godown",request_param="type=add", renderer="json")
 def addgodown(request):
 	header={"gktoken":request.headers["gktoken"]}
@@ -110,3 +100,23 @@ def editgodown(request):
 		gkdata = {"goid":request.params["goid"],"goname":request.params["goname"],"goaddr":request.params["goaddr"], "gocontact": request.params["gocontact"]}
 		result = requests.put("http://127.0.0.1:6543/godown", data =json.dumps(gkdata),headers=header)
 		return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="godown",request_param="type=list", renderer="gkwebapp:templates/listofgodowns.jinja2")
+def listofgodowns(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	goddata=[]
+	for record in result.json()["gkresult"]:
+		gdata= {"godownstatus":str(record["godownstatus"]), "srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
+		goddata.append(gdata)
+	return {"gkresult":goddata}
+
+@view_config(route_name="godown",request_param="type=printable", renderer="gkwebapp:templates/printlistofgodowns.jinja2")
+def printlistofgodowns(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	goddata=[]
+	for record in result.json()["gkresult"]:
+		gdata= {"godownstatus":str(record["godownstatus"]), "srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
+		goddata.append(gdata)
+	return {"gkresult":goddata}
