@@ -404,7 +404,7 @@ $(document).off('keydown', '#invoice_issuer_designation').on('keydown', '#invoic
         console.log("complete");
       });
     }
-    
+
   });
 
 
@@ -713,8 +713,14 @@ $(document).off('blur', '.invoice_product_tax_amount').on('blur', '.invoice_prod
         // jquery enables us to select specific elements inside a table easily like below.
         $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
       });
-
-      $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').focus().select();
+      if ($("#status").val()=='9')
+      {
+        $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').focus().select();
+      }
+      else
+      {
+        $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').focus();
+      }
     }
     else if(event.which==190 && event.shiftKey)
     {
@@ -788,6 +794,9 @@ $(document).off('blur', '.invoice_product_tax_amount').on('blur', '.invoice_prod
 
   $(document).off("keydown",".invoice_product_tax_rate").on("keydown",".invoice_product_tax_rate",function(event)
   {
+    var curindex1 = $(this).closest('tr').index();
+    var nextindex1 = curindex1+1;
+    var previndex1 = curindex1-1;
 
     if (event.which==35 && $("#status").val()=='15')
     {
@@ -805,10 +814,8 @@ $(document).off('blur', '.invoice_product_tax_amount').on('blur', '.invoice_prod
       $("#invoice_issuer_name").focus().select();
     }
 
-    var curindex1 = $(this).closest('tr').index();
-    var nextindex1 = curindex1+1;
-    var previndex1 = curindex1-1;
-    if (event.which==13) {
+    else if (event.which==13)
+    {
       event.preventDefault();
       if (curindex1 != ($("#invoice_product_table tbody tr").length-1)) {
         $('#invoice_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
@@ -961,6 +968,15 @@ $(document).off('blur', '.invoice_product_tax_amount').on('blur', '.invoice_prod
     else if (event.ctrlKey && event.which==188) {
       $('#invoice_product_table tbody tr:eq('+curindex1+') td:eq(2) input').focus();
       event.preventDefault();
+    }
+    else
+    {
+      if ($("#status").val()=='15')
+      {
+        event.preventDefault();
+
+      }
+
     }
   });
 
