@@ -63,7 +63,7 @@ $(document).ready(function() {
     }
     if (event.which==38) {
       event.preventDefault();
-      $("#add_cussup_phone").focus();
+      $("#add_state").focus();
     }
   });
   $("#add_cussup_fax").keydown(function(event) {
