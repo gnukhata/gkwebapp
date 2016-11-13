@@ -74,12 +74,11 @@ $(document).ready(function() {
 
       $("#rec_tn_list").keydown(function(event) {
         if (event.which==13) {
-            $("#rec_received").click();
+          $("#rec_received").focus();
           }
 
       });
       $("#rec_received").click(function(event) {
-
         event.preventDefault();
         $('.modal-backdrop').remove();
         $('.modal').modal('hide');
