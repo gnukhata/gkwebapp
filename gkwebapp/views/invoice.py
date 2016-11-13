@@ -103,5 +103,4 @@ def showeditinvoice(request):
 def getInvoiceDetails(request):
 	header={"gktoken":request.headers["gktoken"]}
 	invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
-
 	return {"gkstatus": invoicedata.json()["gkstatus"],"invoicedata": invoicedata.json()["gkresult"]}
