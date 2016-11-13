@@ -404,6 +404,7 @@ $(document).off('keydown', '#invoice_issuer_designation').on('keydown', '#invoic
         console.log("complete");
       });
     }
+    
   });
 
 
