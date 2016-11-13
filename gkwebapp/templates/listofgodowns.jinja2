@@ -27,13 +27,19 @@
           <a class="libgname" href="">{{record["godownname"]}}</a>
         </td>
         <td class="col-xs-6" >
-
-
-         {{record["godownaddress"]}}
+          {{record["godownaddress"]}}
+          <br>
+          {{record["godownstate"]}}
         </td>
-        <td class="col-xs-2">
+        {% if record["godownstatus"] == "Active" %}
+        <td class="col-xs-2 text-success">
           {{record["godownstatus"]}}
         </td>
+        {% else %}
+        <td class="col-xs-2 text-danger">
+          {{record["godownstatus"]}}
+        </td>
+        {% endif %}
       </tr>
       {% endfor %}
 
