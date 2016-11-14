@@ -11,6 +11,8 @@ $(document).ready(function() {
 
   $("#invoice_all_no").change(function(event) {
     /* Act on the event */
+
+
     var invid = $("#invoice_all_no option:selected").val();
     if (invid!="")
     {
@@ -48,9 +50,15 @@ $(document).ready(function() {
           $(".invoice_issuer").show();
           $("#invoice_issuer_name").val(resp["invoicedata"]["issuername"]);
           $("#invoice_issuer_designation").val(resp["invoicedata"]["designation"]);
+          $(".fixed-table").removeClass('viewfixed-tablepurchase');
+          $(".fixed-table").addClass('viewfixed-tablesale');
+          
+
         }
         else
         {
+          $(".fixed-table").removeClass('viewfixed-tablesale');
+          $(".fixed-table").addClass('viewfixed-tablepurchase');
           $(".cust").hide();
           $(".supp").show();
           $(".invstate").hide();
@@ -149,6 +157,7 @@ $(document).ready(function() {
       console.log("complete");
     });
     }
+
   });
 
 $("#invoice_all_no").keydown(function(event) {
