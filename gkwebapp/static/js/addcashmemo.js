@@ -1304,7 +1304,7 @@ $(document).ready(function() {
       "invoiceno":$("#invoice_challanno").val(),
       "invoicedate":$("#invoice_year").val()+'-'+$("#invoice_month").val()+'-'+$("#invoice_date").val(),
       "contents":JSON.stringify(contents),
-      "taxstate":$("#invoice_state option: selected").val(),
+      "taxstate":$("#invoice_state option:selected").val(),
       "tax":JSON.stringify(tax),
       "stock":JSON.stringify(stock)},
       beforeSend: function(xhr)

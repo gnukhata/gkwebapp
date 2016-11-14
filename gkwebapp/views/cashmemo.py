@@ -43,6 +43,7 @@ def showaddcashmemo(request):
 def showeditcashmemo(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/invoice?inv=all", headers=header)
+	print result.json()
 	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
 
 @view_config(route_name="cashmemos",request_param="action=getproducts",renderer="json")
