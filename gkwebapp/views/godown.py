@@ -73,7 +73,7 @@ def showeditgodown(request):
 	result = requests.get("http://127.0.0.1:6543/godown", headers=header)
 	goddata=[]
 	for record in result.json()["gkresult"]:
-		gdata= {"godownname":str(record["goname"]),"godownid":str(record["goid"])}
+		gdata= {"godownname":str(record["goname"]),"godownid":str(record["goid"]),"godownaddress": str(record["goaddr"])}
 		goddata.append(gdata)
 	return {"gkresult":goddata}
 

@@ -31,7 +31,7 @@
 					<select class = "form-control input-sm" id="editgoddet" accesskey="w">
 						<option value="" disabled selected hidden>{% trans %}Select Godown{% endtrans %}</option>
 						{% for gods in gkresult %}
-						<option value="{{gods['godownid']}}">{{gods["godownname"]}}</option>
+						<option value="{{gods['godownid']}}">{{gods["godownname"]}} ({{gods["godownaddress"]}})</option>
 						{% endfor %}
 					</select>
 				</div>
