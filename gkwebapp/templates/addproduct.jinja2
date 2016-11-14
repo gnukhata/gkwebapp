@@ -33,17 +33,17 @@
               </select>
               <small id="txtareahelp" class="form-text text-muted">{% trans %}Press space to add new unit.{% endtrans %}</small>
             </div>
+            <div class="form-group pds newuom" hidden>
+              <label for="newuom" class="">{% trans %}New Unit of Measurement{% endtrans %} :</label>
+              <input type='text' class="form-control input-sm" name="newuom"  id="newuom" placeholder="Name of the new unit" aria-describedby="textareahelp">
+              <small id="textareahelp" class="form-text text-muted">{% trans %}Press esc to cancel.{% endtrans %}</small>
+            </div>
             <div class="form-group pds">
-              <label for="addproddesc" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+              <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
               <div class="input-group">
                 <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
                 <span class="input-group-addon input-sm" id="unitaddon"></span>
               </div>
-            </div>
-            <div class="form-group pds newuom" hidden>
-              <label for="newuom" class="">{% trans %}New Unit of Measurement{% endtrans %} :</label>
-              <input type='text' class="form-control" name="newuom"  id="newuom" placeholder="Name of the new unit" aria-describedby="textareahelp">
-              <small id="textareahelp" class="form-text text-muted">{% trans %}Press esc to cancel.{% endtrans %}</small>
             </div>
 
             <div class="form-group">

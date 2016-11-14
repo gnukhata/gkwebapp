@@ -1,18 +1,19 @@
 <div class="col-sm-6 ">
-
+<div class="editpr">
   <div class="form-group">
     <label for="editproddesc" class="">{% trans %}Product Description{% endtrans %} :</label>
     <input type='text' class="form-control input-sm" name="editproddesc"  id="editproddesc" value="{{proddesc['productdesc']}}" placeholder="Alphanumeric">
 
   </div>
   <div class="form-group">
-    <label for="catselect" class="">{% trans %}Category{% endtrans %} :</label>
+    <label for="editcatselect" class="">{% trans %}Category{% endtrans %} :</label>
     <select class = "form-control input-sm "  name = "catselect" id="editcatselect" >
+      {% if proddesc["categorycode"]== None %}
+      <option value="" selected>{% trans %}None{% endtrans %}</option>
+      {% endif %}
       {% for cat in category %}
       {% if cat['categorycode']== proddesc["categorycode"] %}
       <option value="{{cat['categorycode']}}" selected>{{cat["categoryname"]}}</option>
-      {% elif proddesc["categorycode"]== None %}
-      <option value="" selected>{% trans %}None{% endtrans %}</option>
       {% else %}
       <option value="{{cat['categorycode']}}" >{{cat["categoryname"]}}</option>
       {% endif %}
@@ -20,7 +21,7 @@
     </select>
   </div>
   <div class="form-group">
-    <label for="uom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label>
+    <label for="edituom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label>
     <select class = "form-control input-sm "  name = "uom" id="edituom" >
       {% for uom in uom %}
       {% if uom["uomid"]== proddesc["uomid"] %}
@@ -31,8 +32,16 @@
       {% endfor %}
     </select>
   </div>
-  <div class="form-group">
-    <div class="panel">
+  <div class="form-group pds">
+    <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+    <div class="input-group">
+      <input type='text' class="form-control text-right input-sm" name="openingstock"  id="editopeningstock" value="{{proddesc['openingstock']}}" aria-describedby="unitaddon">
+      <span class="input-group-addon input-sm" id="unitaddon"></span>
+    </div>
+  </div>
+  </div>
+  <div class="form-group taxdiv">
+    <div class="panel taxinnerdiv">
     <table id="product_edit_tax_table" class="table table-condensed table-bordered fixed-table">
       <thead class="bg-primary input-sm">
         <tr>
@@ -52,7 +61,7 @@
 </div>
 <div id="extsp">
 
-<div id = "editspecifications" class="col-sm-6">
+<div id = "editspecifications" class="col-sm-6 editpr">
     {% if proddesc["categorycode"]!= None %}
 
       <div class="form-group ">
