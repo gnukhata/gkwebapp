@@ -40,7 +40,7 @@ $(document).ready(function() {
     }
   );
   });
-  $("#invoice_edit").click(function() {
+  $("#invoice_view").click(function() {
     $.ajax(
     {
 
