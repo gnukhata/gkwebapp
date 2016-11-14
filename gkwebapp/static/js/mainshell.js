@@ -694,6 +694,26 @@ $.ajax({
     }
   );
   });
+  $("#addcashmemo").click(function() {
+    $.ajax(
+    {
+
+    type: "POST",
+    url: "/cashmemos?action=showadd&status=out",
+    global: false,
+    async: false,
+    datatype: "text/html",
+    beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+    success: function(resp)
+    {
+      $("#info").html(resp);
+    }
+    }
+  );
+  });
   $('#addcategory').click(function (e) {
     $("#info").load("/category");
   });
@@ -709,6 +729,7 @@ $.ajax({
   $('#createtransfernote').click(function (e) {
     $("#info").load("/transfernotes");
   });
+
   $('#deliverychallan').click(function (e) {
     $("#info").load("/deliverychallan");
   });

@@ -1,0 +1,69 @@
+
+"""
+Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+  This file is part of GNUKhata:A modular,robust and Free Accounting System.
+
+  GNUKhata is Free Software; you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation; either version 3 of
+  the License, or (at your option) any later version.and old.stockflag = 's'
+
+  GNUKhata is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public
+  License along with GNUKhata (COPYING); if not, write to the
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+  Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+
+
+Contributors:
+"Ishan Masdekar " <imasdekar@dff.org.in>
+"""
+
+from pyramid.view import view_config
+import requests, json
+from datetime import datetime
+from pyramid.renderers import render_to_response
+
+
+@view_config(route_name="cashmemos",request_param="action=showadd",renderer="gkwebapp:templates/addcashmemo.jinja2")
+def showaddcashmemo(request):
+	header={"gktoken":request.headers["gktoken"]}
+	products = requests.get("http://127.0.0.1:6543/products", headers=header)
+	return {"gkstatus": request.params["status"],"products": products.json()["gkresult"]}
+
+@view_config(route_name="cashmemos",request_param="action=getproducts",renderer="json")
+def getproducts(request):
+	header={"gktoken":request.headers["gktoken"]}
+	products = requests.get("http://127.0.0.1:6543/products", headers=header)
+	return {"gkstatus": products.json()["gkstatus"],"products": products.json()["gkresult"]}
+
+
+@view_config(route_name="cashmemos",request_param="action=save",renderer="json")
+def saveinvoice(request):
+	header={"gktoken":request.headers["gktoken"]}
+
+	cashmemodata = {"invoiceno":request.params["invoiceno"],"invoicedate":request.params["invoicedate"],
+		"tax":json.loads(request.params["tax"]),
+		"contents":json.loads(request.params["contents"])}
+
+	stock = json.loads(request.params["stock"])
+	invoicewholedata = {"invoice":cashmemo,"stock":stock}
+	result=requests.post("http://127.0.0.1:6543/invoice",data=json.dumps(invoicewholedata),headers=header)
+	return {"gkstatus":result.json()["gkstatus"]}
+
+
+
+@view_config(route_name="cashmemos",request_param="action=gettax",renderer="json")
+def getstatetax(request):
+	header={"gktoken":request.headers["gktoken"]}
+	if request.params["state"]=="":
+		taxdata = requests.get("http://127.0.0.1:6543/tax?pscflag=i&productcode=%d"%(int(request.params["productcode"])), headers=header)
+	else:
+		taxdata = requests.get("http://127.0.0.1:6543/tax?pscflag=i&productcode=%d&state=%s"%(int(request.params["productcode"]),request.params["state"]), headers=header)
+
+
+	return {"gkstatus": taxdata.json()["gkstatus"],"taxdata": taxdata.json()["gkresult"]}
