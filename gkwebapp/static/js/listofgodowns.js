@@ -51,7 +51,8 @@ $(document).ready(function() {
     curindex = $(this).closest('tr').index();
     nextindex = curindex+1;
     previndex = curindex-1;
-    if (event.which==40)
+    n = $(".libgname").length;
+    if (event.which==40 && nextindex < n)
     {
       event.preventDefault();
       $('#latable tbody tr:eq('+nextindex+') td:eq(1) a').focus();
@@ -92,8 +93,7 @@ $(document).ready(function() {
       },
     })
     .done(function(resp) {
-      $(".nav-pills").hide();
-      $("#godown_list").html(resp);
+      $("#info").html(resp);
     })
     .fail(function() {
       console.log("error");

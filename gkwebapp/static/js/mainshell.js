@@ -525,6 +525,27 @@ $.ajax({
       );
       });
 
+      $('#listofgodowns').click(function (e) {
+        $.ajax(
+          {
+
+          type: "POST",
+          url: "/godown?type=list",
+          global: false,
+          async: false,
+          datatype: "text/html",
+          beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            },
+          success: function(resp)
+          {
+            $("#info").html(resp);
+          }
+          }
+        );
+        });
+
 
   $('#fevoucher').click(function (e) {
 

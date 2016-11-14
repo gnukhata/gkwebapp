@@ -63,9 +63,7 @@
             {{record["godownname"]}}
           </td>
           <td class="col-xs-6" >
-            {{record["godownaddress"]}}
-            <br>
-            {{record["godownstate"]}}
+            {{record["godownaddress"]}}, {{record["godownstate"]}}
           </td>
           <td class="col-xs-2">
             {{record["godownstatus"]}}
@@ -87,7 +85,7 @@
         window.print();
       });
       $("#loaback").click(function(event) {
-        $("a[href ='#godown_list']").click();
+        $("#listofgodowns").click();
       });
     });
   </script>
