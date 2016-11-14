@@ -13,13 +13,15 @@ $(document).ready(function() {
 
   $("#invoice_all_no").change(function(event) {
     /* Act on the event */
+
+
     var invid = $("#invoice_all_no option:selected").val();
     if (invid!="")
     {
 
 
     $.ajax({
-      url: '/cashmemos?action=getinvdetails',
+      url: '/invoice?action=getinvdetails',
       type: 'POST',
       dataType: 'json',
       async : false,
@@ -32,18 +34,39 @@ $(document).ready(function() {
     .done(function(resp) {
       if (resp["gkstatus"]==0)
       {
-          $(".hidden-load").show();
+        $(".hidden-load").show();
         var invdatearray = resp.invoicedata.invoicedate.split(/\s*\-\s*/g);
         $("#invoice_date").val(invdatearray[0]);
         $("#invoice_month").val(invdatearray[1]);
         $("#invoice_year").val(invdatearray[2]);
         $(".invdetails").show();
-        console.log(resp["invoicedata"]["taxstate"]);
-        $("#invoice_state").val(resp["invoicedata"]["taxstate"]);
         $(document).find('.invdetails input,.invdetails select, .invstate select,.invoice_issuer input').prop("disabled",true);
         $("#invoice_challanno").val(resp["invoicedata"]["invoiceno"]);
+        if (resp["invoicedata"]["csflag"]==3)
+        {
+          $(".invstate").show();
+          $(".cust").show();
+          $(".supp").hide();
+          $(".invoice_issuer").show();
+          $("#invoice_issuer_name").val(resp["invoicedata"]["issuername"]);
+          $("#invoice_issuer_designation").val(resp["invoicedata"]["designation"]);
+          $(".fixed-table").removeClass('viewfixed-tablepurchase');
+          $(".fixed-table").addClass('viewfixed-tablesale');
 
 
+        }
+        else
+        {
+          $(".fixed-table").removeClass('viewfixed-tablesale');
+          $(".fixed-table").addClass('viewfixed-tablepurchase');
+          $(".cust").hide();
+          $(".supp").show();
+          $(".invstate").hide();
+          $(".invoice_issuer").hide();
+        }
+        $("#invoice_customer").empty();
+        $("#invoice_customer").append('<option value="'+resp["invoicedata"]["custid"]+'">'+resp["invoicedata"]["custname"]+'</option>');
+        $("#invoice_state").val(resp["invoicedata"]["taxstate"]);
         $('#edit_invoice_product_table tbody').empty();
         for (content in resp["invoicedata"]["contents"])
         {
@@ -134,19 +157,20 @@ $(document).ready(function() {
       console.log("complete");
     });
     }
+
   });
 
 $("#invoice_all_no").keydown(function(event) {
   /* Act on the event */
   if (event.which==13) {
-    $("#invedit").click();
+    /*$("#invedit").click();*/
   }
 });
 $(document).off('click', '#invedit').on('click', '#invedit', function(event) {
   event.preventDefault();
   /* Act on the event */
   $.ajax({
-    url: '/cashmemos?action=getproducts',
+    url: '/invoice?action=getproducts',
     type: 'POST',
     dataType: 'json',
     async : false,
@@ -161,6 +185,7 @@ $(document).off('click', '#invedit').on('click', '#invedit', function(event) {
       for (var i = 0; i < $("#invoice_product_table tbody tr").length; i++)
       {
         for (product of resp["products"]) {
+          alert("asd");
           var curprd = $('#invoice_product_table tbody tr:'+i+' td:eq(0) select').text();
           $('#invoice_product_table tbody tr:'+i+' td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
 
@@ -332,7 +357,7 @@ $(document).off('click', '#invedit').on('click', '#invedit', function(event) {
       var curindex = $(this).closest('tbody tr').index();
       productcode = $(this).find('option:selected').val();
       $.ajax({
-        url: '/cashmemos?action=gettax',
+        url: '/invoice?action=gettax',
         type: 'POST',
         dataType: 'json',
         async : false,
@@ -1243,5 +1268,10 @@ $(document).off('blur', '.invoice_product_tax_amount').on('blur', '.invoice_prod
     });
 
     return false;
+  });
+  $(document).off('click', '#invoice_reset').on('click', '#invoice_reset', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    $("#invoice_view").click();
   });
 });
