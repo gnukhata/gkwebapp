@@ -190,7 +190,7 @@
         <div class="container-fluid invdetails" id="invoice_product_div"  hidden>
           <div class="panel">
 
-            <table id="invoice_product_table" class="shadow table table-condensed table-bordered fixed-table fixed-tablepurchase">
+            <table id="edit_invoice_product_table" class="shadow table table-condensed table-bordered fixed-table fixed-tablepurchase">
               <thead class="bg-primary">
                 <tr>
                   <th class="col-xs-3">{% trans %}Product{% endtrans %}</th>
@@ -284,15 +284,12 @@
 
       </div>
       <div class="panel-footer">
-        <div class="container-fluid">
+        <div class="container-fluid btndisablediv" hidden>
 
           <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save">{% trans %}Save{% endtrans %}</button>
-          <label class="btn btn-primary btn-sm" for="my-file-selector">
-            <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');" aria-describedby="attachhelp">
-            {% trans %}Attac<u>h</u>{% endtrans %}
-          </label>
-          <small id="attachhelp" class="form-text text-muted">You can attach image files</small>
-          <span class='label label-info' id="upload-file-info"></span>
+          <button id="invedit" class="btn btn-primary btn-sm btndisable" accesskey="t">{% trans %}Edi<u>t</u>{% endtrans %}</button>
+          <button id="invdelete" class="btn btn-danger btn-sm" accesskey="d">{% trans %}<u>D</u>elete{% endtrans %}</button>
+          <button id="invreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
         </div>
       </div>
     </div>
