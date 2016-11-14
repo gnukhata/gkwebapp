@@ -11,6 +11,8 @@ $(document).ready(function() {
 
   $("#invoice_all_no").change(function(event) {
     /* Act on the event */
+
+
     var invid = $("#invoice_all_no option:selected").val();
     if (invid!="")
     {
@@ -48,9 +50,15 @@ $(document).ready(function() {
           $(".invoice_issuer").show();
           $("#invoice_issuer_name").val(resp["invoicedata"]["issuername"]);
           $("#invoice_issuer_designation").val(resp["invoicedata"]["designation"]);
+          $(".fixed-table").removeClass('viewfixed-tablepurchase');
+          $(".fixed-table").addClass('viewfixed-tablesale');
+          
+
         }
         else
         {
+          $(".fixed-table").removeClass('viewfixed-tablesale');
+          $(".fixed-table").addClass('viewfixed-tablepurchase');
           $(".cust").hide();
           $(".supp").show();
           $(".invstate").hide();
@@ -58,7 +66,7 @@ $(document).ready(function() {
         }
         $("#invoice_customer").empty();
         $("#invoice_customer").append('<option value="'+resp["invoicedata"]["custid"]+'">'+resp["invoicedata"]["custname"]+'</option>');
-        $("#invoice_state").val(resp["invoicedata"]["state"]);
+        $("#invoice_state").val(resp["invoicedata"]["taxstate"]);
         $('#edit_invoice_product_table tbody').empty();
         for (content in resp["invoicedata"]["contents"])
         {
@@ -149,12 +157,13 @@ $(document).ready(function() {
       console.log("complete");
     });
     }
+
   });
 
 $("#invoice_all_no").keydown(function(event) {
   /* Act on the event */
   if (event.which==13) {
-    $("#invedit").click();
+    /*$("#invedit").click();*/
   }
 });
 $(document).off('click', '#invedit').on('click', '#invedit', function(event) {
@@ -1259,5 +1268,10 @@ $(document).off('blur', '.invoice_product_tax_amount').on('blur', '.invoice_prod
     });
 
     return false;
+  });
+  $(document).off('click', '#invoice_reset').on('click', '#invoice_reset', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    $("#invoice_view").click();
   });
 });

@@ -60,7 +60,7 @@
             <select class="form-control input-sm" id="invoice_all_no" accesskey="">
               <option value="" disabled hidden selected>{% trans %}Select Invoice{% endtrans %}</option>
               {% for invoice in gkresult %}
-              <option value="{{invoice['invid']}}">{{invoice["invoiceno"]}}, {{invoice["custname"]}}</option>
+              <option value="{{invoice['invid']}}">{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
               {% endfor %}
             </select>
           </div>
@@ -133,9 +133,10 @@
           <div class="col-md-2 invstate" hidden>
 
             <div class="form-group">
-              <label for="invoice_state">{% trans %}State{% endtrans %} :</label>
+              <label for="invoice_state">{% trans %}Vat for{% endtrans %} :</label>
               <select class="form-control input-sm tax_state product_new_state" id="invoice_state">
-                <option value="">None</option>
+                <option value="none">None</option>
+                <option value="">Central</option>
                 <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
                 <option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>
                 <option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option>
@@ -190,7 +191,7 @@
         <div class="container-fluid invdetails" id="invoice_product_div"  hidden>
           <div class="panel">
 
-            <table id="edit_invoice_product_table" class="shadow table table-condensed table-bordered fixed-table fixed-tablepurchase">
+            <table id="edit_invoice_product_table" class="shadow table table-condensed table-bordered fixed-table">
               <thead class="bg-primary">
                 <tr>
                   <th class="col-xs-3">{% trans %}Product{% endtrans %}</th>
@@ -287,9 +288,7 @@
         <div class="container-fluid btndisablediv" hidden>
 
           <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save">{% trans %}Save{% endtrans %}</button>
-          <button id="invedit" class="btn btn-primary btn-sm btndisable" accesskey="t">{% trans %}Edi<u>t</u>{% endtrans %}</button>
-          <button id="invdelete" class="btn btn-danger btn-sm" accesskey="d">{% trans %}<u>D</u>elete{% endtrans %}</button>
-          <button id="invreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+
         </div>
       </div>
     </div>

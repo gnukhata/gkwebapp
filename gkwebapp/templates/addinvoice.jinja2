@@ -14,22 +14,22 @@
     </div>
     <div class="alert alert-danger" id="product-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      <label for="vno">{% trans %}Please select a product!{% endtrans %}</label>
+      <label >{% trans %}Please select a product!{% endtrans %}</label>
     </div>
     <div class="alert alert-danger" id="quantity-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      <label for="vno">{% trans %}Please enter quantity!{% endtrans %}</label>
+      <label >{% trans %}Please enter quantity!{% endtrans %}</label>
     </div>
     <div class="alert alert-danger" id="price-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      <label for="vno">{% trans %}Please enter the price per unit!{% endtrans %}</label>
+      <label >{% trans %}Please enter the price per unit!{% endtrans %}</label>
     </div>
     <div class="panel invoice_panel shadow">
       <div class="panel-body">
         <div class="container-fluid row">
           <div class="alert alert-danger" id="custsup-blank-alert"  aria-live="rude" role="alert" hidden>
 
-            <label for="vno">
+            <label >
               {% if gkstatus=="in" %}
               {% trans %}Please select a supplier!{% endtrans %}
               {% else %}
@@ -39,19 +39,19 @@
           </div>
           <div class="alert alert-danger" id="date-blank-alert"  aria-live="rude" role="alert" hidden>
 
-            <label for="vno">{% trans %}Please enter date!{% endtrans %}</label>
+            <label >{% trans %}Please enter date!{% endtrans %}</label>
           </div>
           <div class="alert alert-danger" id="challanno-blank-alert"  aria-live="rude" role="alert" hidden>
 
-            <label for="vno">{% trans %}Please enter invoice no.!{% endtrans %}</label>
+            <label >{% trans %}Please enter invoice no.!{% endtrans %}</label>
           </div>
           <div class="alert alert-danger" id="issuer-blank-alert"  aria-live="rude" role="alert" hidden>
 
-            <label for="vno">{% trans %}Please enter issuer's name!{% endtrans %}</label>
+            <label >{% trans %}Please enter issuer's name!{% endtrans %}</label>
           </div>
           <div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
 
-            <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
+            <label >{% trans %}Please enter date in proper format!{% endtrans %}</label>
           </div>
 
           <div class="col-md-3">
@@ -288,14 +288,8 @@
       </div>
       <div class="panel-footer">
         <div class="container-fluid">
-
           <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save">{% trans %}Save{% endtrans %}</button>
-          <label class="btn btn-primary btn-sm" for="my-file-selector">
-            <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');" aria-describedby="attachhelp">
-            {% trans %}Attac<u>h</u>{% endtrans %}
-          </label>
-          <small id="attachhelp" class="form-text text-muted">You can attach image files</small>
-          <span class='label label-info' id="upload-file-info"></span>
+          <button id="invoice_reset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
         </div>
       </div>
     </div>

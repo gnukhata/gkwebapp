@@ -43,37 +43,37 @@ $(document).ready(function() {
   });
 
 
-    function pad (str, max) { //to add leading zeros in date
-      str = str.toString();
-      if (str.length==1) {
-        return str.length < max ? pad("0" + str, max) : str;
-      }
-      else{
-        return str
-      }
+  function pad (str, max) { //to add leading zeros in date
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("0" + str, max) : str;
     }
-    function yearpad (str, max) {
-      str = str.toString();
-      if (str.length==1) {
-        return str.length < max ? pad("200" + str, max) : str;
-      }
-      else if (str.length==2) {
-        return str.length < max ? pad("20" + str, max) : str;
-      }
-      else{
-        return str
-      }
+    else{
+      return str
     }
-    $("#invoice_date").blur(function(event) {
-      $(this).val(pad($(this).val(),2));
-    });
-    $("#invoice_month").blur(function(event) {
-      $(this).val(pad($(this).val(),2));
-    });
+  }
+  function yearpad (str, max) {
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("200" + str, max) : str;
+    }
+    else if (str.length==2) {
+      return str.length < max ? pad("20" + str, max) : str;
+    }
+    else{
+      return str
+    }
+  }
+  $("#invoice_date").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#invoice_month").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
 
-    $("#invoice_year").blur(function(event) {
-      $(this).val(yearpad($(this).val(),4));
-    });
+  $("#invoice_year").blur(function(event) {
+    $(this).val(yearpad($(this).val(),4));
+  });
 
   $("#invoice_date").keydown(function(event) {
     if (event.which==13) {
@@ -194,6 +194,7 @@ $(document).ready(function() {
       }
       else
       {
+        if (productcode!="") {
 
         $.ajax({
           url: '/invoice?action=gettax',
@@ -219,6 +220,7 @@ $(document).ready(function() {
         .always(function() {
           console.log("complete");
         });
+      }
       }
     });
 
@@ -509,7 +511,14 @@ $(document).ready(function() {
         $("#invoice_schedule").focus().select();
       }
       else {
-        $('#invoice_product_table tbody tr:eq('+previndex+') td:eq(3) input').focus().select();
+        if ($("#status").val()=='9')
+        {
+          $('#invoice_product_table tbody tr:eq('+previndex+') td:eq(3) input').focus().select();
+        }
+        else
+        {
+          $('#invoice_product_table tbody tr:eq('+previndex+') td:eq(2) input').focus().select();
+        }
       }
     }
     else if (event.which==190 && event.ctrlKey) {
@@ -524,7 +533,7 @@ $(document).ready(function() {
     $(".invoice_product_quantity").numeric();
   });
 
-  $(document).off('focus', '.invoice_product_tax_rate').on('focus', '.invoice_product_quantity', function(event) {
+  $(document).off('focus', '.invoice_product_tax_rate').on('focus', '.invoice_product_tax_rate', function(event) {
     event.preventDefault();
     /* Act on the event */
     $(".invoice_product_quantity").numeric();
@@ -957,8 +966,16 @@ $(document).ready(function() {
 
     }
     else if (event.which==190 && event.ctrlKey) {
-      $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').focus().select();
       event.preventDefault();
+      if ($("#status").val()=='9')
+      {
+        $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').focus().select();
+      }
+      else
+      {
+        $('#invoice_product_table tbody tr:eq('+nextindex+') td:eq(0) select').focus().select();
+      }
+
     }
   });
 
@@ -1104,31 +1121,31 @@ $(document).ready(function() {
               else {
 
 
-              $.ajax({
-                url: '/invoice?action=gettax',
-                type: 'POST',
-                dataType: 'json',
-                async : false,
-                data : {"productcode":productcode, "state":state},
-                beforeSend: function(xhr)
-                {
-                  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                }
-              })
-              .done(function(resp) {
-                console.log("success");
-                if (resp["gkstatus"]==0) {
-                  $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').val(parseFloat(resp['taxdata']).toFixed(2));
-                }
+                $.ajax({
+                  url: '/invoice?action=gettax',
+                  type: 'POST',
+                  dataType: 'json',
+                  async : false,
+                  data : {"productcode":productcode, "state":state},
+                  beforeSend: function(xhr)
+                  {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                  }
+                })
+                .done(function(resp) {
+                  console.log("success");
+                  if (resp["gkstatus"]==0) {
+                    $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').val(parseFloat(resp['taxdata']).toFixed(2));
+                  }
 
-              })
-              .fail(function() {
-                console.log("error");
-              })
-              .always(function() {
-                console.log("complete");
-              });
-            }
+                })
+                .fail(function() {
+                  console.log("error");
+                })
+                .always(function() {
+                  console.log("complete");
+                });
+              }
             }
 
             taxrate=0.00;
@@ -1213,8 +1230,50 @@ $(document).ready(function() {
     $(this).closest('tr').fadeOut(200, function(){
       $(this).closest('tr').remove();	 //closest method gives the closest element productified
       $('#invoice_product_table tbody tr:last td:eq(0) input').focus().select();
+      pqty=0;
+      ptaxamt=0.00;
+      ptotal=0.00;
+      perprice=0.00;
+      taxrate=0.00;
+
+      $(".invoice_product_quantity").each(function(){
+        pqty += +$(this).val();
+
+        // jquery enables us to select specific elements inside a table easily like below.
+        $('#invoice_product_table tfoot tr:last td:eq(1) input').val(pqty); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
+      });
+
+      $(".invoice_product_per_price").each(function(){
+        perprice += +$(this).val();
+
+        // jquery enables us to select specific elements inside a table easily like below.
+        $('#invoice_product_table tfoot tr:last td:eq(2) input').val(parseFloat(perprice).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
+      });
+
+      $(".invoice_product_tax_rate").each(function(){
+        taxrate += +$(this).val();
+
+        // jquery enables us to select specific elements inside a table easily like below.
+        $('#invoice_product_table tfoot tr:last td:eq(3) input').val(parseFloat(taxrate).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
+      });
+
+      $(".invoice_product_tax_amount").each(function(){
+        ptaxamt += +$(this).val();
+
+        // jquery enables us to select specific elements inside a table easily like below.
+        $('#invoice_product_table tfoot tr:last td:eq(4) input').val(parseFloat(ptaxamt).toFixed(2));
+      });
+
+      $(".invoice_product_total").each(function(){
+        ptotal += +$(this).val();
+
+        // jquery enables us to select specific elements inside a table easily like below.
+        $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
+      });
     });
-    $('#invoice_product_table tbody tr:last td:eq(0) input').select();
+
+
+    $('#invoice_product_table tbody tr:last td:eq(0) select').select();
   });
   $("#invoice_save").click(function(event) {
     event.stopPropagation();
@@ -1340,7 +1399,8 @@ $(document).ready(function() {
       "tax":JSON.stringify(tax),
       "stock":JSON.stringify(stock),
       "issuername":issuername,
-      "designation":designation},
+      "designation":designation,
+      "taxstate":$("#invoice_state option:selected").val()},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -1385,5 +1445,18 @@ $(document).ready(function() {
     });
 
     return false;
+  });
+  $(document).off('click', '#invoice_reset').on('click', '#invoice_reset', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    if ($("#status").val()=='9')
+    {
+      $("#invoice_record").click();
+
+    }
+    else
+    {
+      $("#invoice_create").click();
+    }
   });
 });

@@ -28,6 +28,20 @@
   }
 
 
+  .viewfixed-tablepurchase tbody {
+      display:block;
+      height: calc(100vh - 25.5em);
+      min-height: 160px;
+      overflow-y:scroll;
+  }
+
+  .viewfixed-tablesale tbody {
+      display:block;
+      height: calc(100vh - 30em);
+      min-height: 140px;
+      overflow-y:scroll;
+  }
+
 
   .fixed-table thead ,.fixed-table tbody tr,.fixed-table tfoot tr {
       display:table;
@@ -51,7 +65,8 @@
     <ul class="nav nav-pills nav-tabs" role="tablist">
       <li role="presentation" class="active"><a href="" id="invoice_record" role="tab" data-toggle="tab">{% trans %}Purchase Invoice{% endtrans %}</a></li>
       <li role="presentation" ><a href="" id="invoice_create" role="tab" data-toggle="tab">{% trans %}Sale Invoice{% endtrans %}</a></li>
-      
+      <li role="presentation" ><a href="" id="invoice_view" role="tab" data-toggle="tab">{% trans %}View Invoice{% endtrans %}</a></li>
+
     </ul>
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane active" id="invoice_div">
