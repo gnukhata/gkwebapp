@@ -74,7 +74,15 @@ $(document).ready(function() {
 
       $("#rec_tn_list").keydown(function(event) {
         if (event.which==13) {
+          event.preventDefault();
           $("#rec_received").focus();
+          }
+
+      });
+      $("#rec_received").keydown(function(event) {
+        if (event.which==38) {
+          event.preventDefault();
+          $("#rec_tn_list").focus();
           }
 
       });

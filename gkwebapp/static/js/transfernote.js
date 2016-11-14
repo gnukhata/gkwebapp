@@ -58,9 +58,6 @@ $(document).ready(function() {
     success: function(resp)
     {
       $("#transfernote_div").html(resp);
-      $("#rec_tn_list").change(function(event) {
-      var rtnid = $("#rec_tn_list option:selected").val();
-    });
     }
     }
   );
