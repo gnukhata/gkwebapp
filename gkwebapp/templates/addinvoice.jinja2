@@ -131,9 +131,10 @@
           <div class="col-md-2 invstate" hidden>
 
             <div class="form-group">
-              <label for="invoice_state">{% trans %}State{% endtrans %} :</label>
+              <label for="invoice_state">{% trans %}VAT for{% endtrans %} :</label>
               <select class="form-control input-sm tax_state product_new_state" id="invoice_state">
-                <option value="">None</option>
+                <option value="none">None</option>
+                <option value="">Central</option>
                 <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
                 <option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>
                 <option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option>
@@ -217,7 +218,11 @@
                     <input type="text" class="invoice_product_per_price form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
                   </td>
                   <td class="col-xs-1">
-                    <input type="text" class="invoice_product_tax_rate form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
+                    {% if gkstatus=="in" %}
+                      <input type="text" class="invoice_product_tax_rate form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
+                    {% else %}
+                    <input type="text" class="invoice_product_tax_rate form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
+                    {% endif %}
                   </td>
                   <td class="col-xs-1">
                     <input type="text" class="invoice_product_tax_amount form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
