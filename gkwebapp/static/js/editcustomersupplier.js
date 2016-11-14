@@ -113,6 +113,7 @@ $(document).ready(function() {
   $("#edit_state").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
+      $("#edit_cussup_address").focus().select();
     }
     if (event.which==38 && $("#edit_state option:selected").index()==0) {
       event.preventDefault();
