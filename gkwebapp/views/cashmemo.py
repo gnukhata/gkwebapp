@@ -21,6 +21,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
 
 Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
+"sachin Patil"  <sachpatil@openmailbox.org>
 """
 
 from pyramid.view import view_config
@@ -28,12 +29,21 @@ import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
 
+@view_config(route_name="cashmemos",renderer="gkwebapp:templates/cashmemo.jinja2")
+def showinvoice(request):
+	return {"status":True}
 
 @view_config(route_name="cashmemos",request_param="action=showadd",renderer="gkwebapp:templates/addcashmemo.jinja2")
 def showaddcashmemo(request):
 	header={"gktoken":request.headers["gktoken"]}
 	products = requests.get("http://127.0.0.1:6543/products", headers=header)
 	return {"gkstatus": request.params["status"],"products": products.json()["gkresult"]}
+
+@view_config(route_name="cashmemos",request_param="action=showedit",renderer="gkwebapp:templates/viewcashmemo.jinja2")
+def showeditcashmemo(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/invoice?inv=all", headers=header)
+	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
 
 @view_config(route_name="cashmemos",request_param="action=getproducts",renderer="json")
 def getproducts(request):
@@ -46,12 +56,12 @@ def getproducts(request):
 def saveinvoice(request):
 	header={"gktoken":request.headers["gktoken"]}
 
-	cashmemodata = {"invoiceno":request.params["invoiceno"],"invoicedate":request.params["invoicedate"],
+	cashmemodata = {"invoiceno":request.params["invoiceno"],"icflag":3,"taxstate":request.params["taxstate"],"invoicedate":request.params["invoicedate"],
 		"tax":json.loads(request.params["tax"]),
 		"contents":json.loads(request.params["contents"])}
 
 	stock = json.loads(request.params["stock"])
-	invoicewholedata = {"invoice":cashmemo,"stock":stock}
+	invoicewholedata = {"invoice":cashmemodata,"stock":stock}
 	result=requests.post("http://127.0.0.1:6543/invoice",data=json.dumps(invoicewholedata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 
@@ -67,3 +77,11 @@ def getstatetax(request):
 
 
 	return {"gkstatus": taxdata.json()["gkstatus"],"taxdata": taxdata.json()["gkresult"]}
+
+
+
+@view_config(route_name="cashmemos",request_param="action=getinvdetails",renderer="json")
+def getInvoiceDetails(request):
+	header={"gktoken":request.headers["gktoken"]}
+	invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
+	return {"gkstatus": invoicedata.json()["gkstatus"],"invoicedata": invoicedata.json()["gkresult"]}

@@ -102,15 +102,25 @@
 
             <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
           </div>
-
-          <div class="col-md-4">
+          <div class="form-group col-md-12">
+            <label for="invoice_deliverynote">
+              {% trans %}Invoice{% endtrans %} :
+            </label>
+            <select class="form-control input-sm" id="invoice_all_no" accesskey="">
+              <option value="" disabled hidden selected>{% trans %}Select Invoice{% endtrans %}</option>
+              {% for invoice in gkresult %}
+              <option value="{{invoice['invid']}}">{{invoice["invoiceno"]}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-md-4" hidden>
 
             <div class="form-group">
               <label for="invoice_challanno">{% trans %}Invoice No{% endtrans %} :</label>
               <input class="form-control input-sm" id="invoice_challanno" placeholder="{% trans %}Enter invoice no{% endtrans %}" accesskey="a">
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4" hidden>
 
             <div class="form-group">
               <label for="invoice_date">{% trans %}Date{% endtrans %} :</label>
@@ -131,7 +141,7 @@
 
 
 
-          <div class="col-md-4 invstate" >
+          <div class="col-md-4 invstate" hidden>
 
             <div class="form-group">
               <label for="invoice_state">{% trans %}VAT for{% endtrans %} :</label>
@@ -188,7 +198,7 @@
         </div>
 
 
-        <div class="container-fluid" id="invoice_product_div">
+        <div class="container-fluid" hidden id="invoice_product_div">
           <div class="panel">
 
             <table id="invoice_product_table" class="shadow table table-condensed table-bordered fixed-table fixed-tablepurchase">
@@ -266,23 +276,11 @@
 
 
       </div>
-      <div class="panel-footer">
-        <div class="container-fluid">
-
-          <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save">{% trans %}Save{% endtrans %}</button>
-          <label class="btn btn-primary btn-sm" for="my-file-selector">
-            <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');" aria-describedby="attachhelp">
-            {% trans %}Attac<u>h</u>{% endtrans %}
-          </label>
-          <small id="attachhelp" class="form-text text-muted">You can attach image files</small>
-          <span class='label label-info' id="upload-file-info"></span>
-        </div>
-      </div>
-    </div>
+      
 
 
   </div>
 
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addcashmemo.js')}}"></script>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewcashmemo.js')}}"></script>
 </body>
 </html>

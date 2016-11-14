@@ -694,26 +694,7 @@ $.ajax({
     }
   );
   });
-  $("#addcashmemo").click(function() {
-    $.ajax(
-    {
 
-    type: "POST",
-    url: "/cashmemos?action=showadd&status=out",
-    global: false,
-    async: false,
-    datatype: "text/html",
-    beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-      },
-    success: function(resp)
-    {
-      $("#info").html(resp);
-    }
-    }
-  );
-  });
   $('#addcategory').click(function (e) {
     $("#info").load("/category");
   });
@@ -725,6 +706,9 @@ $.ajax({
   });
   $('#addunit').click(function (e) {
     $("#info").load("/unitofmeasurements");
+  });
+  $('#addcashmemo').click(function (e) {
+    $("#info").load("/cashmemos");
   });
   $('#createtransfernote').click(function (e) {
     $("#info").load("/transfernotes");
