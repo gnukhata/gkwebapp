@@ -100,8 +100,6 @@ def editspecs(request):
 	if result.json()["gkstatus"]==0:
 		specs = json.loads(request.params["specs"])
 		deletedspecs = json.loads(request.params["deletedspecs"])
-		print len(deletedspecs)
-		print deletedspecs
 		for spec in specs:
 			if spec["spcode"] != "New":
 				specdata= {"attrname":spec["attrname"],"attrtype":int(spec["attrtype"]),"spcode":int(spec["spcode"]),"categorycode":int(request.params["categorycode"])}
@@ -113,6 +111,25 @@ def editspecs(request):
 			for deletedspec in deletedspecs:
 				deletedspecdata= {"spcode":int(deletedspec)}
 				deletedspecresult = requests.delete("http://127.0.0.1:6543/categoryspecs",data=json.dumps(deletedspecdata) ,headers=header)
+		taxs = json.loads(request.params["taxes"])
+		deletedtaxs = json.loads(request.params["deletedtaxs"])
+		for tax in taxs:
+			if tax["taxid"] != "New":
+				taxdata= {"taxid":tax["taxid"],"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"categorycode":int(request.params["categorycode"])}
+				if tax["state"]!='':
+					taxdata["state"]=tax["state"]
+				else:
+					taxdata["state"]=None
+				taxresult = requests.put("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
+			else:
+				taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"categorycode":int(request.params["categorycode"])}
+				if tax["state"]!='':
+					taxdata["state"]=tax["state"]
+				taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
+		if len(deletedtaxs)>0:
+			for deletedtax in deletedtaxs:
+				deletedtaxdata= {"taxid":int(deletedtax)}
+				deletedtaxresult = requests.delete("http://127.0.0.1:6543/tax",data=json.dumps(deletedtaxdata) ,headers=header)
 	return {"gkstatus": result.json()["gkstatus"]}
 
 @view_config(route_name="category",request_param="action=delete",renderer="json")

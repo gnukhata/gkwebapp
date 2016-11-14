@@ -88,6 +88,8 @@ def saveproduct(request):
 			proddetails["productdesc"] = request.params[prd]
 		elif prd == "uom":
 			proddetails["uomid"] = request.params[prd]
+		elif prd == "openingstock":
+			proddetails["openingstock"] = request.params[prd]
 		elif prd == "taxes":
 			taxes = json.loads(request.params["taxes"])
 		elif prd == "newuom":
@@ -97,12 +99,13 @@ def saveproduct(request):
 
 		proddetails["specs"] = prdspecs
 	result = requests.post("http://127.0.0.1:6543/products", data=json.dumps(proddetails),headers=header)
-	for tax in taxes:
-		if len(tax)!=0:
-			taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":result.json()["gkresult"]}
-			if tax["state"]!='':
-				taxdata["state"]=tax["state"]
-			taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
+	if len(taxes)>0:
+		for tax in taxes:
+			if len(tax)!=0:
+				taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":result.json()["gkresult"]}
+				if tax["state"]!='':
+					taxdata["state"]=tax["state"]
+				taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
 	return {"gkstatus": result.json()["gkstatus"]}
 
 
@@ -112,7 +115,7 @@ def editproduct(request):
 	prdspecs = {}
 	proddetails={}
 	taxes =0
-	
+
 	for prd in request.params:
 		if prd=="type":
 			continue

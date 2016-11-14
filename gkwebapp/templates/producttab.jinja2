@@ -18,7 +18,8 @@
   }
   .fixed-table tbody {
       display:block;
-      height: calc(100vh - 33em);
+      height: calc(100vh - 38em);
+      min-height: 125px;
       overflow-y:scroll;
   }
 
@@ -39,7 +40,7 @@
 
 
         <ul class="nav nav-pills nav-tabs " role="tablist">
-          <li class="active nopadding" id="addproduct" role="presentation"><a data-toggle="pill" href="" >{% trans %}Add New Product{% endtrans %}</a></li>
+          <li class="active nopadding" id="addproduct" role="presentation"><a data-toggle="pill" href="" >{% trans %}Create Product{% endtrans %}</a></li>
           <li class="nopadding" id="editproduct" role="presentation"><a data-toggle="pill" href="">{% trans %}Edit Product{% endtrans %}</a></li>
         </ul>
         <div class='tab-content '>
@@ -66,6 +67,14 @@
           <div class="alert alert-danger" id="uomblank-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}Please select the unit of measurement.{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="tax-duplicate-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Duplicate Tax!{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="failure-delete-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Cannot delete product!{% endtrans %}<br>
           </div>
           <div class="tab-pane active" role="tabpanel" id="productdiv">
           </div>

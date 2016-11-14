@@ -22,11 +22,15 @@
           </div>
           <div class="alert alert-danger" id="tax-name-blank-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Enter tax name!{% endtrans %}
+            {% trans %}Select tax name!{% endtrans %}
           </div>
           <div class="alert alert-danger" id="tax-rate-blank-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}Enter tax rate!{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="tax-duplicate-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Duplicate Tax!{% endtrans %}
           </div>
             <div class="form-group">
               <label for="category_name">{% trans %}N<u>a</u>me:{% endtrans %}</label>
@@ -46,7 +50,11 @@
                 <tbody>
                   <tr>
                     <td class="col-xs-4">
-                      <input type="text" class="form-control input-sm tax_name" placeholder="Tax Name">
+                      <select class="form-control input-sm tax_name">
+                        <option value="" selected>Select Tax</option>
+                        <option value="VAT">VAT</option>
+                        <option value="CVAT">CVAT</option>
+                      </select>
                     </td>
                     <td class="col-xs-4">
                       <select class="form-control input-sm tax_state" >
