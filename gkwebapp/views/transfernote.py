@@ -49,6 +49,12 @@ def showedittransfernote(request):
 		transfernote = requests.get("http://127.0.0.1:6543/transfernote?tn=all",headers=header)
 		return {"products": products.json()["gkresult"],"godowns":godowns.json()["gkresult"],"transfernote":transfernote.json()["gkresult"]}
 
+@view_config(route_name="transfernotes",request_param="action=showreceived",renderer="gkwebapp:templates/receivedtransfernote.jinja2")
+def showreceivedtransfernote(request):
+		header={"gktoken":request.headers["gktoken"]}
+		transfernote = requests.get("http://127.0.0.1:6543/transfernote?tn=all",headers=header)
+		return {"transfernote":transfernote.json()["gkresult"]}
+
 @view_config(route_name="transfernotes",request_param="action=get",renderer="json")
 def gettransfernote(request):
 		header={"gktoken":request.headers["gktoken"]}
@@ -90,4 +96,11 @@ def deltransfernotes(request):
 		header={"gktoken":request.headers["gktoken"]}
 		dataset={"transfernoteid":int(request.params["transfernoteid"])}
 		result = requests.delete("http://127.0.0.1:6543/transfernote",data =json.dumps(dataset), headers=header)
+		return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="transfernotes",request_param="action=received",renderer="json")
+def recieved(request):
+		header={"gktoken":request.headers["gktoken"]}
+		dataset={"transfernoteid":int(request.params["transfernoteid"])}
+		result=requests.put("http://127.0.0.1:6543/transfernote?received=true",data=json.dumps(dataset),headers=header)
 		return {"gkstatus":result.json()["gkstatus"]}

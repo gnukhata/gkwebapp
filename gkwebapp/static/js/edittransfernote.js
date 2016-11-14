@@ -38,8 +38,7 @@ $(document).ready(function() {
       $("#edit_tn_date").val(deldatearray[0]);
       $("#edit_tn_month").val(deldatearray[1]);
       $("#edit_tn_year").val(deldatearray[2]);
-      if ($('#transfernote_product_table tbody tr').length==0) {
-        $('#transfernote_product_table tbody tr').remove();
+      $('#transfernote_product_table tbody tr').remove();
         $.each(result["productdetails"], function(key, value) {
           $.ajax({
             url: '/deliverychallan?action=getproducts',
@@ -80,7 +79,7 @@ $(document).ready(function() {
           });
           $('.transfernote_product_quantity').numeric({ negative: false});
         });
-      }
+
 
 
     })
@@ -208,6 +207,37 @@ $(document).ready(function() {
       $("#edit_name_issuer").focus().select();
     }
     });
+    function pad (str, max) { //to add leading zeros in date
+      str = str.toString();
+      if (str.length==1) {
+        return str.length < max ? pad("0" + str, max) : str;
+      }
+      else{
+        return str
+      }
+    }
+    function yearpad (str, max) {
+      str = str.toString();
+      if (str.length==1) {
+        return str.length < max ? pad("200" + str, max) : str;
+      }
+      else if (str.length==2) {
+        return str.length < max ? pad("20" + str, max) : str;
+      }
+      else{
+        return str
+      }
+    }
+    $("#edit_tn_date").blur(function(event) {
+      $(this).val(pad($(this).val(),2));
+    });
+    $("#edit_tn_month").blur(function(event) {
+      $(this).val(pad($(this).val(),2));
+    });
+
+    $("#edit_tn_year").blur(function(event) {
+      $(this).val(yearpad($(this).val(),4));
+      });
   $(document).keyup(function(event) {
     if(event.which == 45) {
       $("#edit_transfernote_save").click();

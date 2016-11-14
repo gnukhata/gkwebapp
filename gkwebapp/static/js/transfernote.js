@@ -42,4 +42,24 @@ $(document).ready(function() {
   });
   $("#transfernote_create").click();
 
+  $("#transfernote_received").click(function() {
+    $.ajax(
+    {
+
+    type: "POST",
+    url: "/transfernotes?action=showreceived",
+    global: false,
+    async: false,
+    datatype: "text/html",
+    beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+    success: function(resp)
+    {
+      $("#transfernote_div").html(resp);
+    }
+    }
+  );
+  });
 });

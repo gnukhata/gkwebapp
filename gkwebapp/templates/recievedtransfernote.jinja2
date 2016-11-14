@@ -80,35 +80,17 @@
             <div class="form-group">
               <label for="edit_tn_list">{% trans %}Transfer Note:{% endtrans %}</label>
               <select class="form-control input-sm " id="edit_tn_list" accesskey="">
-                <option value="" disabled hidden selected>Select Transfer Note</option>
-                {% for tn in transfernote %}
-                <option value="{{tn['transfernoteid']}}">{{tn["transfernoteno"]}} , {{tn["transfernotedate"]}}</option>
-                {% endfor %}>
-              </select>
             </div>
             <div class="form-group hidden-load" hidden>
               <label for="edit_transfernote_no">{% trans %}Transfer Note No:{% endtrans %}</label>
-              <input class="form-control input-sm disable" id="edit_transfernote_no" placeholder="{% trans %}Enter Transfer Note no{% endtrans %}" >
             </div>
             <div class="form-group hidden-load" hidden>
               <label for="edit_transfernote_date">{% trans %}Date:{% endtrans %}</label>
-              <div class="form-inline">
-                <form class="form-inline">
-                  <div class="form-group">
-                    <input type="text" class="form-control input-sm tndate disable" size="2" maxlength="2" placeholder="DD" id="edit_tn_date" accesskey="v">
-                  </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control input-sm tndate disable" size="2" maxlength="2" placeholder="MM" id="edit_tn_month" accesskey="v">
-                  </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control input-sm tndate disable" size="4" maxlength="4" placeholder="YYYY" id="edit_tn_year" accesskey="v">
-                  </div>
-                </form>
-              </div>
+
             </div>
             <div class="form-group hidden-load" hidden>
               <div class="panel">
-                <table id="transfernote_product_table" class="table table-condensed  shadow table-borderd fixed-table">
+                <table id="transfernote_product_table" class="table table-condensed table-borderd fixed-table">
                   <thead class="bg-primary">
                     <tr>
                       <th class="col-xs-9">{% trans %}Product{% endtrans %}</th>
@@ -120,78 +102,43 @@
 
                   </tbody>
                 </table>
-                <small id="txtareahelp" class="form-text text-muted">Press end to Enter No of Packets.</small>
               </div>
             </div>
           </div>
             <div class="col-md-6" id="edit_transfernote_godown_div">
               <div class="form-group hidden-load" hidden>
                 <label for="edit_no_of_packet">{% trans %} Number Of Packets:{% endtrans %}</label>
-                <input class="form-control input-sm disable" id="edit_no_of_packet">
               </div>
 
             <div class="form-group hidden-load" hidden>
               <label for="edit_tn_from_godown">{% trans %} From Godown:{% endtrans %}</label>
-              <select class="form-control input-sm disable" id="edit_tn_from_godown" accesskey="">
-                <option value=""  disabled hidden selected>{% trans %}Select Godown{% endtrans %}</option>
-                {% for godown in godowns %}
-                <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
-                {% endfor %}
-              </select>
             </div>
             <div class="form-group hidden-load" hidden>
               <label for="edit_tn_to_godown">{% trans %} To Godown:{% endtrans %}</label>
-              <select class="form-control input-sm disable" id="edit_tn_to_godown" accesskey="">
-                <option value=""  disabled hidden selected>{% trans %}Select Godown{% endtrans %}</option>
-                {% for godown in godowns %}
-                <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
-                {% endfor %}
-              </select>
             </div>
             <div class="form-group hidden-load" hidden>
               <label for="edit_transport_mode">{% trans %} Mode Of Transport:{% endtrans %}</label>
-              <input class="form-control input-sm disable" id="edit_transport_mode">
             </div>
 
           <div class="form-group hidden-load" hidden>
             <label for="edit_name_issuer">{% trans %} Name Of Issuer:{% endtrans %}</label>
-            <input class="form-control input-sm disable" id="edit_name_issuer">
           </div>
         <div class="edit_form-group hidden-load" hidden>
           <label for="designation">{% trans %} Designation:{% endtrans %}</label>
-          <input class="form-control input-sm disable" id="edit_designation">
         </div>
       </form>
       </div>
     </div>
       <div class="panel-footer hidden-load" hidden>
-        <button class="btn btn-success btn-sm" id="edit_transfernote_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}">{% trans %}Save{% endtrans %}</button>
-        <button id="edit_transfernote_reset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
-        <button id="tn_delete" class="btn btn-danger btn-sm" accesskey="d">{% trans %}<u>D</u>elete{% endtrans %}</button>
-        <button id="edit_btn" class="btn btn-primary btn-sm" accesskey="t">{% trans %}Edi<u>t</u>{% endtrans %}</button>
+      <form>
+        <label for="edit_name_issuer">{% trans %} Recieved :{% endtrans %}</label>
+      <input type="radio" >Yes
+      <input type="radio" checked>No<br>
+      </form>
       </div>
     </div>
-    <div id="confirm_del" class="modal fade" tabindex="-1" role="dialog">
-      <div class="vertical-alignment-helper">
-        <div class="modal-dialog modal-sm vertical-align-center">
-          <div class="modal-content">
-            <div class="modal-header">
-
-              <h4 class="modal-title">{% trans %}Delete?{% endtrans %}</h4>
-            </div>
-            <div class="modal-body">
-              <p>{% trans %}Are you sure?{% endtrans %}</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-              <button type="button" id="accdel" data-dismiss="modal" class="btn btn-danger">{% trans %}Delete{% endtrans %}</button>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div>
-    </div><!-- /.modal -->
 
   </div>
 </div>
-<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/edittransfernote.js')}}"></script>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/recievedtransfernote.js')}}"></script>
 </body>
