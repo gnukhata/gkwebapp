@@ -35,7 +35,6 @@ $(document).ready(function() {
       },
     success: function(resp)
     {
-      console.log(resp["gkstatus"]);
       $("#cashmemo_div").html(resp);
     }
     }

@@ -2,6 +2,8 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
   $('.invoicedate').autotab('number');
   $("#invoice_all_no").focus();
+  $(".hidden-load").hide();
+  $(".disable").prop("disabled", true);
 
   var pqty=0.00;
   var ptaxamt=0.00;
@@ -28,37 +30,20 @@ $(document).ready(function() {
       }
     })
     .done(function(resp) {
-
       if (resp["gkstatus"]==0)
       {
-        $(".btndisablediv").show();
-        $(".btn-success").hide();
+          $(".hidden-load").show();
         var invdatearray = resp.invoicedata.invoicedate.split(/\s*\-\s*/g);
         $("#invoice_date").val(invdatearray[0]);
         $("#invoice_month").val(invdatearray[1]);
         $("#invoice_year").val(invdatearray[2]);
         $(".invdetails").show();
+        console.log(resp["invoicedata"]["taxstate"]);
+        $("#invoice_state").val(resp["invoicedata"]["taxstate"]);
         $(document).find('.invdetails input,.invdetails select, .invstate select,.invoice_issuer input').prop("disabled",true);
         $("#invoice_challanno").val(resp["invoicedata"]["invoiceno"]);
-        if (resp["invoicedata"]["csflag"]==3)
-        {
-          $(".invstate").show();
-          $(".cust").show();
-          $(".supp").hide();
-          $(".invoice_issuer").show();
-          $("#invoice_issuer_name").val(resp["invoicedata"]["issuername"]);
-          $("#invoice_issuer_designation").val(resp["invoicedata"]["designation"]);
-        }
-        else
-        {
-          $(".cust").hide();
-          $(".supp").show();
-          $(".invstate").hide();
-          $(".invoice_issuer").hide();
-        }
-        $("#invoice_customer").empty();
-        $("#invoice_customer").append('<option value="'+resp["invoicedata"]["custid"]+'">'+resp["invoicedata"]["custname"]+'</option>');
-        $("#invoice_state").val(resp["invoicedata"]["state"]);
+
+
         $('#edit_invoice_product_table tbody').empty();
         for (content in resp["invoicedata"]["contents"])
         {
@@ -161,7 +146,7 @@ $(document).off('click', '#invedit').on('click', '#invedit', function(event) {
   event.preventDefault();
   /* Act on the event */
   $.ajax({
-    url: '/invoice?action=getproducts',
+    url: '/cashmemos?action=getproducts',
     type: 'POST',
     dataType: 'json',
     async : false,
@@ -176,7 +161,6 @@ $(document).off('click', '#invedit').on('click', '#invedit', function(event) {
       for (var i = 0; i < $("#invoice_product_table tbody tr").length; i++)
       {
         for (product of resp["products"]) {
-          alert("asd");
           var curprd = $('#invoice_product_table tbody tr:'+i+' td:eq(0) select').text();
           $('#invoice_product_table tbody tr:'+i+' td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
 
@@ -348,7 +332,7 @@ $(document).off('click', '#invedit').on('click', '#invedit', function(event) {
       var curindex = $(this).closest('tbody tr').index();
       productcode = $(this).find('option:selected').val();
       $.ajax({
-        url: '/invoice?action=gettax',
+        url: '/cashmemos?action=gettax',
         type: 'POST',
         dataType: 'json',
         async : false,

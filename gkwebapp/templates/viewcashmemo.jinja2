@@ -76,16 +76,7 @@
     <div class="panel invoice_panel shadow">
       <div class="panel-body">
         <div class="container-fluid row">
-          <div class="alert alert-danger" id="custsup-blank-alert"  aria-live="rude" role="alert" hidden>
 
-            <label for="vno">
-              {% if gkstatus=="in" %}
-              {% trans %}Please select a supplier!{% endtrans %}
-              {% else %}
-              {% trans %}Please select a customer!{% endtrans %}
-              {% endif %}
-            </label>
-          </div>
           <div class="alert alert-danger" id="date-blank-alert"  aria-live="rude" role="alert" hidden>
 
             <label for="vno">{% trans %}Please enter date!{% endtrans %}</label>
@@ -109,30 +100,30 @@
             <select class="form-control input-sm" id="invoice_all_no" accesskey="">
               <option value="" disabled hidden selected>{% trans %}Select Invoice{% endtrans %}</option>
               {% for invoice in gkresult %}
-              <option value="{{invoice['invid']}}">{{invoice["invoiceno"]}}</option>
+              <option value="{{invoice['invid']}}">{{invoice["invoiceno"]}} {{invoice["invoicedate"]}}</option>
               {% endfor %}
             </select>
           </div>
-          <div class="col-md-4" hidden>
+          <div class="col-md-4 hidden-load" hidden>
 
             <div class="form-group">
               <label for="invoice_challanno">{% trans %}Invoice No{% endtrans %} :</label>
-              <input class="form-control input-sm" id="invoice_challanno" placeholder="{% trans %}Enter invoice no{% endtrans %}" accesskey="a">
+              <input class="form-control input-sm disable" id="invoice_challanno" placeholder="{% trans %}Enter invoice no{% endtrans %}" accesskey="a">
             </div>
           </div>
-          <div class="col-md-4" hidden>
+          <div class="col-md-4 hidden-load" hidden>
 
             <div class="form-group">
               <label for="invoice_date">{% trans %}Date{% endtrans %} :</label>
               <div class="form-inline ">
                 <div class="form-group">
-                  <input type="text" class="form-control input-sm invoicedate" size="2" maxlength="2" placeholder="DD" id="invoice_date" accesskey="v">
+                  <input type="text" class="form-control input-sm invoicedate disable" size="2" maxlength="2" placeholder="DD" id="invoice_date" accesskey="v">
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control input-sm invoicedate" size="2" maxlength="2" placeholder="MM" id="invoice_month" accesskey="v">
+                  <input type="text" class="form-control input-sm invoicedate disable" size="2" maxlength="2" placeholder="MM" id="invoice_month" accesskey="v">
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control input-sm invoicedate" size="4" maxlength="4" placeholder="YYYY" id="invoice_year" accesskey="v">
+                  <input type="text" class="form-control input-sm invoicedate disable" size="4" maxlength="4" placeholder="YYYY" id="invoice_year" accesskey="v">
                 </div>
               </div>
             </div>
@@ -141,11 +132,11 @@
 
 
 
-          <div class="col-md-4 invstate" hidden>
+          <div class="col-md-4 hidden-load" hidden >
 
             <div class="form-group">
               <label for="invoice_state">{% trans %}VAT for{% endtrans %} :</label>
-              <select class="form-control input-sm tax_state product_new_state" id="invoice_state">
+              <select class="form-control input-sm tax_state product_new_state disable" id="invoice_state">
                 <option value="none">None</option>
                 <option value="">Central</option>
                 <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
@@ -198,10 +189,10 @@
         </div>
 
 
-        <div class="container-fluid" hidden id="invoice_product_div">
+        <div class="container-fluid hidden-load" hidden  id="invoice_product_div">
           <div class="panel">
 
-            <table id="invoice_product_table" class="shadow table table-condensed table-bordered fixed-table fixed-tablepurchase">
+            <table id="invoice_product_table" class="shadow table table-condensed table-bordered fixed-table fixed-tablepurchase disable">
               <thead class="bg-primary">
                 <tr>
                   <th class="col-xs-3">{% trans %}Product{% endtrans %}</th>
@@ -215,7 +206,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td class="col-xs-3">
+                  <td class="col-xs-3 disable">
                     <select class="form-control input-sm product_name">
                       <option value="" disabled hidden selected>Select Product</option>
                       {% for product in products %}
