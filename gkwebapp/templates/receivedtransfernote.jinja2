@@ -85,6 +85,7 @@
             <div class="form-group">
               <label for="rec_tn_list">{% trans %}Transfer Note:{% endtrans %}</label>
               <select class="form-control input-sm " id="rec_tn_list" accesskey="">
+                <option value="" disabled hidden selected>Select Transfer Note</option>
                 {% for tn in transfernote %}
                 <option value="{{tn['transfernoteid']}}">{{tn["transfernoteno"]}} , {{tn["transfernotedate"]}}</option>
                 {% endfor %}>

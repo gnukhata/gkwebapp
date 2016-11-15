@@ -85,3 +85,9 @@ def getInvoiceDetails(request):
 	header={"gktoken":request.headers["gktoken"]}
 	invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
 	return {"gkstatus": invoicedata.json()["gkstatus"],"invoicedata": invoicedata.json()["gkresult"]}
+
+@view_config(route_name="cashmemos",request_param="action=cancel",renderer="json")
+def getproducts(request):
+	header={"gktoken":request.headers["gktoken"]}
+	invoice = requests.delete("http://127.0.0.1:6543/invoice",data=json.dumps({"invid":request.params["cashmemoid"],"cancelflag":1,"icflag":3}), headers=header)
+	return {"gkstatus": invoice.json()["gkstatus"]}
