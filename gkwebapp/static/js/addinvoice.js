@@ -343,7 +343,6 @@ $(document).ready(function() {
             '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00" disabled>'+
             '</td>'+
             '<td class="col-xs-1">'+
-            '<a href="#" class="product_del deliverychallan_edit_disable"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
             '</td>'+
             '</tr>');
             totqty += +value.qty;
