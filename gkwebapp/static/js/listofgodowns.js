@@ -28,7 +28,6 @@ Contributors:
 $(document).ready(function() {
   $(".modal-backdrop").remove();
   $(".fixed-table-loading").remove();
-  $(".nav-pills").show();
 
   $('#latable tbody tr:first-child td:eq(1) a').focus();
   $('#latable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
@@ -83,7 +82,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: "POST",
-      url: "/godown?type=printable",
+      url: "/category?type=printable",
       global: false,
       async: false,
       datatype: "text/html",
