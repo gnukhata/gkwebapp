@@ -138,3 +138,9 @@ def deletecategory(request):
 	categorydata = {"categorycode":int(request.params["categorycode"])}
 	result = requests.delete("http://127.0.0.1:6543/categories",data=json.dumps(categorydata), headers=header)
 	return {"gkstatus": result.json()["gkstatus"]}
+
+@view_config(route_name="category",request_param="action=list",renderer="gkwebapp:templates/listofcategories.jinja2")
+def listofcategories(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/categories", headers=header)
+	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
