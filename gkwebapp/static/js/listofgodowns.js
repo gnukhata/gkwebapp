@@ -82,7 +82,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: "POST",
-      url: "/category?type=printable",
+      url: "/godown?type=printable",
       global: false,
       async: false,
       datatype: "text/html",
