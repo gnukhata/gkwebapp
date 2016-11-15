@@ -38,9 +38,9 @@ $(document).ready(function() {
         if (resp.invoicedata.cancelflag==1)
         {
           $("#cancelmsg").show();
-          $("#alertstrong").append(resp.invoicedata.canceldate);
-          $("#invcl").show();
+          $("#alertstrong").html("Invoice cancelled on "+resp.invoicedata.canceldate);
           $("#invcl").prop("disabled",true);
+          $("#invcl").hide();
 
 
         }
@@ -48,7 +48,7 @@ $(document).ready(function() {
         {
           $("#cancelmsg").hide();
           $("#invcl").prop("disabled",false);
-          $("#invcl").hide();
+          $("#invcl").show();
         }
         var invdatearray = resp.invoicedata.invoicedate.split(/\s*\-\s*/g);
         $("#invoice_date").val(invdatearray[0]);
