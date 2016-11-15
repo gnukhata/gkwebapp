@@ -28,45 +28,43 @@ $(document).ready(function() {
     $('.modal-backdrop').remove();
     $("#egdnsubmit").hide();
 
-    $("#editgoddet").bind("change keyup", function(e) {
+    $("#editgoddet").bind("change", function(e) {
         $("#egdnsubmit").hide();
         var goid = $("#editgoddet option:selected").val();
         var goname = $("#editgoddet option:selected").text();
-        if (e.which != 45) {
-          $.ajax({
-              type: "POST",
-              url: "/godown?type=getgoddetails",
-              data: {
-                  "goid": goid
-              },
-              global: false,
-              async: false,
-              dataType: "json",
-              beforeSend: function(xhr) {
-                  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-              },
-              success: function(resp) {
-                  goddetails = resp["gkresult"];
-                  $("#goname").val(goddetails["godownname"]);
-                  $("#goname").prop("disabled", true);
-                  $("#goaddress").val(goddetails["godownaddress"]);
-                  $("#goaddress").prop("disabled", true);
-                  $("#gocontact").val(goddetails["godowncontact"]);
-                  $("#gocontact").prop("disabled", true);
-                  $("#gostate").val(goddetails["godownstate"]);
-                  $("#gostate").prop("disabled", true);
-                  $("#godesignation").val(goddetails["godowndesignation"]);
-                  $("#godesignation").prop("disabled", true);
-                  $("#gocontactname").val(goddetails["godowncontactname"]);
-                  $("#gocontactname").prop("disabled", true);
-                  $("#goid").val(goddetails["godownid"]);
-                  $(".editgodownform").show();
-                  $("#form-footer").show();
-                  $("#delete").show();
-                  $("#edit").show();
-              }
-          });
-        }
+        $.ajax({
+            type: "POST",
+            url: "/godown?type=getgoddetails",
+            data: {
+                "goid": goid
+            },
+            global: false,
+            async: false,
+            dataType: "json",
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            },
+            success: function(resp) {
+                goddetails = resp["gkresult"];
+                $("#goname").val(goddetails["godownname"]);
+                $("#goname").prop("disabled", true);
+                $("#goaddress").val(goddetails["godownaddress"]);
+                $("#goaddress").prop("disabled", true);
+                $("#gocontact").val(goddetails["godowncontact"]);
+                $("#gocontact").prop("disabled", true);
+                $("#gostate").val(goddetails["godownstate"]);
+                $("#gostate").prop("disabled", true);
+                $("#godesignation").val(goddetails["godowndesignation"]);
+                $("#godesignation").prop("disabled", true);
+                $("#gocontactname").val(goddetails["godowncontactname"]);
+                $("#gocontactname").prop("disabled", true);
+                $("#goid").val(goddetails["godownid"]);
+                $(".editgodownform").show();
+                $("#form-footer").show();
+                $("#delete").show();
+                $("#edit").show();
+            }
+        });
     });
 
     $("#edit").click(function(event) {
