@@ -58,6 +58,23 @@ $(document).ready(function() {
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
 
+
+$(document).off("change","#invsel").on('change', '#invsel', function(event) {
+  event.preventDefault();
+  /* Act on the event */
+  var inv = $("#invsel option:selected").attr("total");
+  if ($.trim(inv)!="")
+  {
+  $("#invtotal").val(parseFloat(inv).toFixed(2));
+  }
+  else
+  {
+  $("#invtotal").val(parseFloat(0).toFixed(2));
+  }
+});
+
+
+
   //Calculates the total dr and cr amout when a change event is fired.
   $(document).off("change",".dramt").on("change", ".dramt", function() {
     drsum=0;
