@@ -104,7 +104,10 @@ $(document).ready(function() {
     }
   });
 
+$("#invoice_reset").click(function(event) {
+  $("#cashmemo_create").click();
 
+});
 
   $("#invoice_state").keydown(function(event) {
     if (event.which==13) {
