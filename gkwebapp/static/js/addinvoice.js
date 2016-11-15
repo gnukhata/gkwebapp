@@ -1399,6 +1399,7 @@ $(document).ready(function() {
       "stock":JSON.stringify(stock),
       "issuername":issuername,
       "designation":designation,
+      "invtotal": $('#invoice_product_table tfoot tr:last td:eq(5) input').val(),
       "taxstate":$("#invoice_state option:selected").val()},
       beforeSend: function(xhr)
       {

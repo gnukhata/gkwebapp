@@ -35,6 +35,21 @@ $(document).ready(function() {
       {
         $(".btndisablediv").show();
         $(".btn-success").hide();
+        if (resp.invoicedata.cancelflag==1)
+        {
+          $("#cancelmsg").show();
+          $("#alertstrong").append(resp.invoicedata.canceldate);
+          $("#invcl").show();
+          $("#invcl").prop("disabled",true);
+
+
+        }
+        else
+        {
+          $("#cancelmsg").hide();
+          $("#invcl").prop("disabled",false);
+          $("#invcl").hide();
+        }
         var invdatearray = resp.invoicedata.invoicedate.split(/\s*\-\s*/g);
         $("#invoice_date").val(invdatearray[0]);
         $("#invoice_month").val(invdatearray[1]);
@@ -52,7 +67,7 @@ $(document).ready(function() {
           $("#invoice_issuer_designation").val(resp["invoicedata"]["designation"]);
           $(".fixed-table").removeClass('viewfixed-tablepurchase');
           $(".fixed-table").addClass('viewfixed-tablesale');
-          
+
 
         }
         else
@@ -1274,4 +1289,60 @@ $(document).off('blur', '.invoice_product_tax_amount').on('blur', '.invoice_prod
     /* Act on the event */
     $("#invoice_view").click();
   });
+
+
+      $('#invcl').click(function(event) {
+        event.preventDefault();
+        /* Act on the event */
+        $('.modal-backdrop').remove();
+        $('.modal').modal('hide');
+        invcode= $("#invoice_all_no option:selected").val();
+        $('#m_confirmdel').modal('show').one('click', '#invcancel', function (e)
+        {
+          $.ajax({
+            url: '/invoice?action=cancel',
+            type: 'POST',
+            global: false,
+            async: false,
+            datatype: 'json',
+            data: {"invid":invcode},
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+          })
+          .done(function(resp) {
+            if (resp["gkstatus"] ==0) {
+              $('.modal-backdrop').remove();
+              $("#editproduct").click();
+              $("#invoicecancelsuccess-alert").alert();
+              $("#invoicecancelsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#invoicecancelsuccess-alert").hide();
+              });
+            }
+            else if(resp["gkstatus"] == 5) {
+              $("#invoice_all_no").focus();
+              $("#failure-delete-alert").alert();
+              $("#failure-delete-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#failure-delete-alert").hide();
+              });
+              return false;
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          .always(function() {
+            console.log("complete");
+          });
+        });
+        $('#m_confirmdel').on('shown.bs.modal', function(event) {
+          $("#m_cancel").focus();
+        });
+        $('#m_confirmdel').on('hidden.bs.modal', function(event) {
+          $("#invoice_all_no").focus();
+        });
+
+      });
+
 });
