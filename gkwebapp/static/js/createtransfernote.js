@@ -381,6 +381,11 @@ $(document).ready(function() {
       obj.qty = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").val();
       products.push(obj);
     }
+    event.preventDefault();
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
+    $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function (e)
+    {
     $.ajax({
       url: '/transfernotes?action=save',
       type: 'POST',
@@ -399,9 +404,9 @@ $(document).ready(function() {
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      }
-    })
-    .done(function(resp) {
+      },
+      success: function(resp) {
+      console.log(resp["gkstatus"]);
       if(resp["gkstatus"] == 0){
         $("#transfernote_create").click();
         $("#success-alert").alert();
@@ -416,13 +421,16 @@ $(document).ready(function() {
           $("#duplicate-alert").hide();
         });
       }
-    })
-    .fail(function() {
-      console.log("error");
-    })
-    .always(function() {
-      console.log("complete");
+    }
+
     });
+    });
+  });
+  $("#confirm_yes").on('shown.bs.modal', function(event) {
+    $("#tn_save_no").focus();
 
   });
+  $("#confirm_yes").on('hidden.bs.modal', function(event) {
+    $("transfernote_no").focus();
+});
 });
