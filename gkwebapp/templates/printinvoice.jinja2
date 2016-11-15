@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>GNUKhata</title>
+    <link id="bootstrap" href="../static/css/Default.min.css" rel="stylesheet" type="text/css">
+    <style>
+    @page {
+      size: 21cm 29.7cm;
+      margin: 10mm 3mm 15mm 10mm; /* change the margins as you want them to be. */
+    }
+    td {
+      font-size: 85%;
+      padding: 2px !important;
+      margin:  0 !important;
+    }
+    body {
+       background-image: none;
+   }
+    th {
+      font-size: 95%;
+      padding: 3px !important;
+      margin:  0 !important;
+    }
+		table { page-break-inside:auto }
+		tr    { page-break-inside:avoid; page-break-after:auto }
+    thead { display: table-header-group; }
+    tfoot { display: table-footer-group; }
+
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+
+      <div class="col-xs-6">
+        <h4>Digital Freedom Foundation</br><small>A-203, Block No. 5, Station Road,</br>Dadar - 400063,</br>Maharashtra</small></h4>
+        To,
+        <h4>Comet Media Foundation</br><small>Station Road,</br>Fort - 400056,</br>Maharashtra</small></h4>
+      </div>
+      <div class="col-sm-offset-1 col-sm-5">
+        <h2 class="text-right">Invoice</h2><br>
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td class="col-xs-4">
+                  <strong>Invoice No. </strong>
+              </td>
+              <td class="text-right">
+                012345
+              </td>
+            </tr>
+            <tr>
+                <td class="col-xs-4">
+                  <strong>Date</strong>
+                </td>
+                <td class="text-right">
+                  01-04-2016
+                </td>
+            </tr>
+            <tr>
+              <td class="col-xs-4">
+                <strong>VAT No.</strong>
+              </td>
+              <td class="text-right">
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <hr style="border-color:grey;margin-top:2px; margin-bottom:2px;">
+    <div class="row">
+      <div class="form-inline col-xs-12">
+        <div class="form-group">
+          <label for="subject" id="sublabel">Subject :</label>
+          <input type="text" class="form-control hidden-print" id="subject" placeholder="">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <table class="table table-bordered table-condensed">
+            <thead class="bg-primary">
+              <tr>
+                <th>
+                  Description
+                </th>
+                <th>
+                  Qty
+                </th>
+                <th>
+                  Price per Unit
+                </th>
+                <th>
+                  Tax Rate
+                </th>
+                <th>
+                  Tax Amount
+                </th>
+                <th>
+                  Total
+                </th>
+              </tr>
+            </thead>
+          <tbody>
+            <tr>
+              <td>
+                Lenevo Thinkpad T440
+              </td>
+              <td>
+                10 pieces
+              </td>
+              <td>
+                150000
+              </td>
+              <td>
+                12.5
+              </td>
+              <td>
+                17000
+              </td>
+              <td>
+                220000
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Lenevo Thinkpad T440
+              </td>
+              <td>
+                10 pieces
+              </td>
+              <td>
+                150000
+              </td>
+              <td>
+                12.5
+              </td>
+              <td>
+                17000
+              </td>
+              <td>
+                220000
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+      <hr style="border-color:grey;margin-top:2px; margin-bottom:2px;">
+      <div class="row">
+      <div class="col-xs-7">
+        <label for="notes" class="hidden-print">Notes :</label>
+        <textarea name="name" row='3' id="notes" class="form-control hidden-print" id="notes"></textarea>
+        <p class="visible-print" id = "notespara">
+        </p>
+      </div>
+      <div class="col-xs-5 ">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td>
+                Subtotal
+              </td>
+              <td class="text-right">
+                500000
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Tax amount
+              </td>
+              <td class="text-right">
+                1500
+              </td>
+            </tr>
+            <tr>
+              <th>
+                TOTAL
+              </th>
+              <th class="text-right">
+                501500
+              </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-xs-6">
+          <strong><i>Thank you for your Business</i></strong>
+        </div>
+        <div class="text-right col-xs-6">
+          <strong>Navin Karkera</strong>
+          <i>(Godown Keeper)</i>
+        </div>
+      </div>
+    </div>
+    <script src="../static/js/jquery-2.2.0.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    (function() {
+  var beforePrint = function() {
+      $("#subject").hide();
+      $("#notes").hide();
+      if ($("#subject").val()!='') {
+        $("#sublabel").html("Subject : "+$("#subject").val());
+      } else {
+        $("#sublabel").html("");
+      }
+
+      if ($("#notes").val()!='') {
+        $("#notespara").html("<strong>Notes :</strong> "+$("#notes").val());
+      } else {
+        $("#notespara").html("");
+      }
+  };
+  var afterPrint = function() {
+      $("#sublabel").html("Subject :");
+      $("#notespara").html("Notes : ");
+      $("#subject").show();
+      $("#notes").show();
+  };
+
+  if (window.matchMedia) {
+      var mediaQueryList = window.matchMedia('print');
+      mediaQueryList.addListener(function(mql) {
+          if (mql.matches) {
+              beforePrint();
+          } else {
+              afterPrint();
+          }
+      });
+  }
+
+  window.onbeforeprint = beforePrint;
+  window.onafterprint = afterPrint;
+}());
+    </script>
+  </body>
+</html>
