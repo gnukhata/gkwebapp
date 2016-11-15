@@ -98,7 +98,7 @@ def deletegodown(request):
 @view_config(route_name="godown",request_param="type=edit", renderer="json")
 def editgodown(request):
 		header={"gktoken":request.headers["gktoken"]}
-		gkdata = {"goid":request.params["goid"],"goname":request.params["goname"],"goaddr":request.params["goaddr"], "gocontact": request.params["gocontact"]}
+		gkdata = {"goid":request.params["goid"],"goname":request.params["goname"],"goaddr":request.params["goaddr"], "state":request.params["gostate"], "gocontact": request.params["gocontact"], "contactname":request.params["gocontactname"], "designation":request.params["godesignation"]}
 		result = requests.put("http://127.0.0.1:6543/godown", data =json.dumps(gkdata),headers=header)
 		return {"gkstatus":result.json()["gkstatus"]}
 

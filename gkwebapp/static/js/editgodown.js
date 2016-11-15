@@ -28,43 +28,45 @@ $(document).ready(function() {
     $('.modal-backdrop').remove();
     $("#egdnsubmit").hide();
 
-    $("#editgoddet").bind("change keyup", function() {
+    $("#editgoddet").bind("change keyup", function(e) {
         $("#egdnsubmit").hide();
         var goid = $("#editgoddet option:selected").val();
         var goname = $("#editgoddet option:selected").text();
-        $.ajax({
-            type: "POST",
-            url: "/godown?type=getgoddetails",
-            data: {
-                "goid": goid
-            },
-            global: false,
-            async: false,
-            dataType: "json",
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-            },
-            success: function(resp) {
-                goddetails = resp["gkresult"];
-                $("#goname").val(goddetails["godownname"]);
-                $("#goname").prop("disabled", true);
-                $("#goaddress").val(goddetails["godownaddress"]);
-                $("#goaddress").prop("disabled", true);
-                $("#gocontact").val(goddetails["godowncontact"]);
-                $("#gocontact").prop("disabled", true);
-                $("#gostate").val(goddetails["godownstate"]);
-                $("#gostate").prop("disabled", true);
-                $("#godesignation").val(goddetails["godowndesignation"]);
-                $("#godesignation").prop("disabled", true);
-                $("#gocontactname").val(goddetails["godowncontactname"]);
-                $("#gocontactname").prop("disabled", true);
-                $("#goid").val(goddetails["godownid"]);
-                $(".editgodownform").show();
-                $("#form-footer").show();
-                $("#delete").show();
-                $("#edit").show();
-            }
-        });
+        if (e.which != 45) {
+          $.ajax({
+              type: "POST",
+              url: "/godown?type=getgoddetails",
+              data: {
+                  "goid": goid
+              },
+              global: false,
+              async: false,
+              dataType: "json",
+              beforeSend: function(xhr) {
+                  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+              },
+              success: function(resp) {
+                  goddetails = resp["gkresult"];
+                  $("#goname").val(goddetails["godownname"]);
+                  $("#goname").prop("disabled", true);
+                  $("#goaddress").val(goddetails["godownaddress"]);
+                  $("#goaddress").prop("disabled", true);
+                  $("#gocontact").val(goddetails["godowncontact"]);
+                  $("#gocontact").prop("disabled", true);
+                  $("#gostate").val(goddetails["godownstate"]);
+                  $("#gostate").prop("disabled", true);
+                  $("#godesignation").val(goddetails["godowndesignation"]);
+                  $("#godesignation").prop("disabled", true);
+                  $("#gocontactname").val(goddetails["godowncontactname"]);
+                  $("#gocontactname").prop("disabled", true);
+                  $("#goid").val(goddetails["godownid"]);
+                  $(".editgodownform").show();
+                  $("#form-footer").show();
+                  $("#delete").show();
+                  $("#edit").show();
+              }
+          });
+        }
     });
 
     $("#edit").click(function(event) {
@@ -92,7 +94,7 @@ $(document).ready(function() {
     $("#gostate").keydown(function(e){
       if (e.which == 13) {
         e.preventDefault();
-        $("#goaddress").focus().select();
+        $("#goaddress").focus();
       }
       if (e.which == 38 && ($("#gostate option:selected").index()==1 || $("#gostate option:selected").index()==0)) {
         $("#goname").focus().select();
@@ -201,7 +203,7 @@ $(document).ready(function() {
             $("#editgoddet").focus();
         });
     });
-    $(document).keydown(function(e){
+    $(document).off("keyup").on("keyup", function(e) {
       if (e.which == 45) {
         e.preventDefault();
         $("#egdnsubmit").click();
@@ -235,7 +237,7 @@ $(document).ready(function() {
         };
         var goid = $("#editgoddet option:selected").val();
         var goname = $("#goname").val();
-        var goaddr = $("#goaddress").val();
+        var goaddr = $.trim($("#goaddress").val());
         var gocontact = $("#gocontact").val();
         var gocontactname = $("#gocontactname").val();
         var godesignation = $("#godesignation").val();

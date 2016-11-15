@@ -92,10 +92,10 @@ $(document).ready(function()
           $("#godowndesignation").focus();
         }
       });
-      $(document).keydown(function(event) {
+      $(document).off("keyup").on("keyup",function(event) {
         if(event.which == 45) {
-          $("#gdnsubmit").click();
           event.preventDefault();
+          $("#gdnsubmit").click();
           return false;
         }
       });
@@ -134,7 +134,7 @@ $(document).ready(function()
             global: false,
             async: false,
             datatype: "json",
-            data: {"godownname":$("#godownname").val(), "godownstate":$("#godownstate").val(), "godownaddress":$("#godownaddress").val(), "godowncontactname":$("#godowncontactname").val(), "godowndesignation":$("#godowndesignation").val(), "godowncontact":$("#godowncontact").val()},
+            data: {"godownname":$("#godownname").val(), "godownstate":$("#godownstate").val(), "godownaddress":$.trim($("#godownaddress").val()), "godowncontactname":$("#godowncontactname").val(), "godowndesignation":$("#godowndesignation").val(), "godowncontact":$("#godowncontact").val()},
             beforeSend: function(xhr)
             {
               xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
