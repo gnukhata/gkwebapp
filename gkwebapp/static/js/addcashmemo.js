@@ -1306,6 +1306,7 @@ $("#invoice_reset").click(function(event) {
       data: {
       "invoiceno":$("#invoice_challanno").val(),
       "invoicedate":$("#invoice_year").val()+'-'+$("#invoice_month").val()+'-'+$("#invoice_date").val(),
+      "invoicetotal": $("#invoice_product_table tfoot tr:last td:eq(5) input").val(),
       "contents":JSON.stringify(contents),
       "taxstate":$("#invoice_state option:selected").val(),
       "tax":JSON.stringify(tax),

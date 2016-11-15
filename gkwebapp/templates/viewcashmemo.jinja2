@@ -42,6 +42,10 @@
     display:block;
     width: calc( 100% - 0.75em );
   }
+  .nopadding{
+    margin:0 !important;
+    padding:0 !important;
+  }
 
 
   </style>
@@ -103,6 +107,8 @@
               <option value="{{invoice['invid']}}">{{invoice["invoiceno"]}} {{invoice["invoicedate"]}}</option>
               {% endfor %}
             </select>
+            <div class="alert alert-danger nopadding" id="cancelmsg" aria-live="rude" role="alert" hidden>
+              <strong id="alertstrong">Cash Memo cancelled on  </strong>
           </div>
           <div class="col-md-4 hidden-load" hidden>
 

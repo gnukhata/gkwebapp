@@ -56,7 +56,7 @@ def getproducts(request):
 def saveinvoice(request):
 	header={"gktoken":request.headers["gktoken"]}
 
-	cashmemodata = {"invoiceno":request.params["invoiceno"],"icflag":3,"taxstate":request.params["taxstate"],"invoicedate":request.params["invoicedate"],
+	cashmemodata = {"invoiceno":request.params["invoiceno"],"invoicetotal":request.params["invoicetotal"],"icflag":3,"taxstate":request.params["taxstate"],"invoicedate":request.params["invoicedate"],
 		"tax":json.loads(request.params["tax"]),
 		"contents":json.loads(request.params["contents"])}
 
