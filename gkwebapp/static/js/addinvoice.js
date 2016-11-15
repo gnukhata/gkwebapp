@@ -1385,6 +1385,11 @@ $(document).ready(function() {
         return false;
       }
     }
+    event.preventDefault();
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
+    $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function (e)
+    {
     $.ajax({
       url: '/invoice?action=save',
       type: 'POST',
@@ -1446,6 +1451,14 @@ $(document).ready(function() {
 
     return false;
   });
+});
+$("#confirm_yes").on('shown.bs.modal', function(event) {
+  $("#tn_save_no").focus();
+
+});
+$("#confirm_yes").on('hidden.bs.modal', function(event) {
+  $("invoice_deliverynote").focus();
+});
   $(document).off('click', '#invoice_reset').on('click', '#invoice_reset', function(event) {
     event.preventDefault();
     /* Act on the event */

@@ -1331,7 +1331,7 @@ $(document).off('blur', '.invoice_product_tax_amount').on('blur', '.invoice_prod
       $("#m_cancel").focus();
     });
     $("#confirm_del").on('hidden.bs.modal', function(event) {
-      $("#cashmemo_view").click();
+      $("#invoice_all_no").focus();
     });
 
 

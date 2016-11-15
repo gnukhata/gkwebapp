@@ -1367,6 +1367,6 @@ $("#invoice_reset").click(function(event) {
 
   });
   $("#confirm_yes").on('hidden.bs.modal', function(event) {
-    $("transfernote_no").focus();
+    $("invoice_challanno").focus();
 });
 });
