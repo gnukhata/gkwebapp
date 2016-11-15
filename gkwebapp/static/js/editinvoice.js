@@ -1314,7 +1314,7 @@ $(document).off('blur', '.invoice_product_tax_amount').on('blur', '.invoice_prod
           .done(function(resp) {
             if (resp["gkstatus"] ==0) {
               $('.modal-backdrop').remove();
-              $("#editproduct").click();
+              $("#invoice_view").click();
               $("#invoicecancelsuccess-alert").alert();
               $("#invoicecancelsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#invoicecancelsuccess-alert").hide();

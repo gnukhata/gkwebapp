@@ -25,6 +25,21 @@ $(document).ready(function() {
     })
     .done(function(resp) {
       console.log("success");
+      if (resp.delchaldata.delchaldata.cancelflag==1)
+      {
+        $("#cancelmsg").show();
+        $("#alertstrong").html("Delivery Note cancelled on "+resp.delchaldata.delchaldata.canceldate);
+        $("#deliverychallan_edit_delete").prop("disabled",true);
+        $("#deliverychallan_edit_delete").hide();
+
+
+      }
+      else
+      {
+        $("#cancelmsg").hide();
+        $("#deliverychallan_edit_delete").prop("disabled",false);
+        $("#deliverychallan_edit_delete").show();
+      }
       $("#deliverychallan_edit_customer").html(custsup);
       var dcdatearray = resp.delchaldata.delchaldata.dcdate.split(/\s*\-\s*/g);
       $("#deliverychallan_edit_date").val(dcdatearray[0]);

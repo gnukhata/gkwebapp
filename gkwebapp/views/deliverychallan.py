@@ -85,8 +85,7 @@ def savedelchal(request):
 	for  row in json.loads(request.params["products"]):
 		products[row["productcode"]] = row["qty"]
 	stockdata = {"inout":int(request.params["inout"]),"items":products}
-	if request.params["orderid"]!='':
-		delchaldata["orderno"]=request.params["orderid"]
+
 	if request.params["goid"]!='':
 		stockdata["goid"]=int(request.params["goid"])
 	if request.params.has_key("issuername"):
@@ -118,6 +117,6 @@ def editdelchal(request):
 @view_config(route_name="deliverychallan",request_param="action=delete",renderer="json")
 def deletedelchal(request):
 	header={"gktoken":request.headers["gktoken"]}
-	deldata = {"dcid":int(request.params["dcid"])}
+	deldata = {"dcid":int(request.params["dcid"]),"cancelflag":1}
 	result = requests.delete("http://127.0.0.1:6543/delchal",data=json.dumps(deldata), headers=header)
 	return {"gkstatus": result.json()["gkstatus"]}
