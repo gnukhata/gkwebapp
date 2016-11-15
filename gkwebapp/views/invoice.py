@@ -104,3 +104,9 @@ def Invoicedelete(request):
 	header={"gktoken":request.headers["gktoken"]}
 	invoicedata = requests.delete("http://127.0.0.1:6543/invoice",data =json.dumps({"invid":request.params["invid"],"cancelflag":1,"icflag":9}), headers=header)
 	return {"gkstatus": invoicedata.json()["gkstatus"]}
+
+@view_config(route_name="invoice",request_param="action=print",renderer="json")
+def Invoiceprint(request):
+	test =  request.params["printset"]
+	print json.loads(test)
+	return {"gkstatus": invoicedata.json()["gkstatus"]}

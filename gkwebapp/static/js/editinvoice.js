@@ -54,6 +54,7 @@ $(document).ready(function() {
         $("#invoice_date").val(invdatearray[0]);
         $("#invoice_month").val(invdatearray[1]);
         $("#invoice_year").val(invdatearray[2]);
+        $("#invoice_deliverynote").val(resp.invoicedata.dcno+", "+resp.invoicedata.custname);
         $(".invdetails").show();
         $(document).find('.invdetails input,.invdetails select, .invstate select,.invoice_issuer input').prop("disabled",true);
         $("#invoice_challanno").val(resp["invoicedata"]["invoiceno"]);
