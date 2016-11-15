@@ -1,7 +1,7 @@
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $('.delchaldate').autotab('number');
-  $("#deliverychallan_purchaseorder").focus();
+  $("#deliverychallan_challanno").focus();
   $("#deliverychallan_date").numeric();
   $("#deliverychallan_month").numeric();
   $("#deliverychallan_year").numeric();
@@ -463,8 +463,7 @@ $(document).ready(function() {
       type: 'POST',
       dataType: 'json',
       async : false,
-      data: {"orderid": $("#deliverychallan_purchaseorder option:selected").val(),
-      "custid":$("#deliverychallan_customer option:selected").val(),
+      data: {"custid":$("#deliverychallan_customer option:selected").val(),
       "dcno":$("#deliverychallan_challanno").val(),
       "dcdate":$("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val(),
       "inout":$("#status").val(),

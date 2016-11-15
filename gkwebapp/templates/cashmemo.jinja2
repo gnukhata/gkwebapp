@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% trans %}GNUKhata | Cash Memo{% endtrans %}</title>
+  <style media="screen">
+  .fixed-table td {
+      font-size: 75%;
+      padding: 4 !important;
+      margin: 4 !important;
+    }
+  .fixed-table th {
+      font-size: 85%;
+  }
+
+  .fixed-tablepurchase tbody {
+      display:block;
+      height: calc(100vh - 25.5em);
+      min-height: 160px;
+      overflow-y:scroll;
+  }
+
+  .fixed-tablesale tbody {
+      display:block;
+      height: calc(100vh - 29em);
+      min-height: 140px;
+      overflow-y:scroll;
+  }
+
+
+
+  .fixed-table thead ,.fixed-table tbody tr,.fixed-table tfoot tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  .fixed-table thead {
+      width: calc( 100% - 0.75em );
+  }
+
+  .fixed-table tfoot {
+    display:block;
+    width: calc( 100% - 0.75em );
+  }
+
+
+  </style>
+</head>
+<body>
+  <div class="container-fluid row" >
+    <ul class="nav nav-pills nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="" id="cashmemo_create" role="tab" data-toggle="tab">{% trans %}Add Cash Memo{% endtrans %}</a></li>
+      <li role="presentation"><a href="" id="cashmemo_view" role="tab" data-toggle="tab">{% trans %}View Cash Memo{% endtrans %}</a></li>
+    </ul>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="cashmemo_div">
+
+      </div>
+    </div>
+
+
+  </div>
+
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/cashmemo.js')}}"></script>
+</body>
+</html>

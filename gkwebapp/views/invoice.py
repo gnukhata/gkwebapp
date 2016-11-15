@@ -56,7 +56,7 @@ def saveinvoice(request):
 	header={"gktoken":request.headers["gktoken"]}
 
 	invoicedata = {"invoiceno":request.params["invoiceno"],"taxstate":request.params["taxstate"],"invoicedate":request.params["invoicedate"],
-		"tax":json.loads(request.params["tax"]),"custid":request.params["custid"],
+		"tax":json.loads(request.params["tax"]),"custid":request.params["custid"],"invoicetotal":request.params["invtotal"],
 		"contents":json.loads(request.params["contents"]),
 		"issuername":request.params["issuername"],"designation":request.params["designation"]}
 
@@ -104,3 +104,9 @@ def getInvoiceDetails(request):
 	header={"gktoken":request.headers["gktoken"]}
 	invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
 	return {"gkstatus": invoicedata.json()["gkstatus"],"invoicedata": invoicedata.json()["gkresult"]}
+
+@view_config(route_name="invoice",request_param="action=cancel",renderer="json")
+def Invoicedelete(request):
+	header={"gktoken":request.headers["gktoken"]}
+	invoicedata = requests.delete("http://127.0.0.1:6543/invoice",data =json.dumps({"invid":request.params["invid"],"cancelflag":1,"icflag":9}), headers=header)
+	return {"gkstatus": invoicedata.json()["gkstatus"]}

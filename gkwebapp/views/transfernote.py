@@ -94,7 +94,7 @@ def edittransfernote(request):
 @view_config(route_name="transfernotes", request_param="action=delete",renderer="json")
 def deltransfernotes(request):
 		header={"gktoken":request.headers["gktoken"]}
-		dataset={"transfernoteid":int(request.params["transfernoteid"])}
+		dataset={"transfernoteid":int(request.params["transfernoteid"]),"cancelflag":1}
 		result = requests.delete("http://127.0.0.1:6543/transfernote",data =json.dumps(dataset), headers=header)
 		return {"gkstatus":result.json()["gkstatus"]}
 

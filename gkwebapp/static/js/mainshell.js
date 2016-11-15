@@ -694,6 +694,7 @@ $.ajax({
     }
   );
   });
+
   $('#addcategory').click(function (e) {
     $("#info").load("/category");
   });
@@ -706,9 +707,13 @@ $.ajax({
   $('#addunit').click(function (e) {
     $("#info").load("/unitofmeasurements");
   });
+  $('#addcashmemo').click(function (e) {
+    $("#info").load("/cashmemos");
+  });
   $('#createtransfernote').click(function (e) {
     $("#info").load("/transfernotes");
   });
+
   $('#deliverychallan').click(function (e) {
     $("#info").load("/deliverychallan");
   });

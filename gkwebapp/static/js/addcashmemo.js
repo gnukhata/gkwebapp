@@ -1,7 +1,7 @@
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $('.invoicedate').autotab('number');
-  $("#invoice_deliverynote").focus();
+  $("#invoice_challanno").focus();
 
   var issuername;
   var designation;
@@ -36,44 +36,41 @@ $(document).ready(function() {
       event.preventDefault();
       $("#invoice_date").focus().select();
     }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#invoice_deliverynote").focus().select();
-    }
+
   });
 
 
-  function pad (str, max) { //to add leading zeros in date
-    str = str.toString();
-    if (str.length==1) {
-      return str.length < max ? pad("0" + str, max) : str;
+    function pad (str, max) { //to add leading zeros in date
+      str = str.toString();
+      if (str.length==1) {
+        return str.length < max ? pad("0" + str, max) : str;
+      }
+      else{
+        return str
+      }
     }
-    else{
-      return str
+    function yearpad (str, max) {
+      str = str.toString();
+      if (str.length==1) {
+        return str.length < max ? pad("200" + str, max) : str;
+      }
+      else if (str.length==2) {
+        return str.length < max ? pad("20" + str, max) : str;
+      }
+      else{
+        return str
+      }
     }
-  }
-  function yearpad (str, max) {
-    str = str.toString();
-    if (str.length==1) {
-      return str.length < max ? pad("200" + str, max) : str;
-    }
-    else if (str.length==2) {
-      return str.length < max ? pad("20" + str, max) : str;
-    }
-    else{
-      return str
-    }
-  }
-  $("#invoice_date").blur(function(event) {
-    $(this).val(pad($(this).val(),2));
-  });
-  $("#invoice_month").blur(function(event) {
-    $(this).val(pad($(this).val(),2));
-  });
+    $("#invoice_date").blur(function(event) {
+      $(this).val(pad($(this).val(),2));
+    });
+    $("#invoice_month").blur(function(event) {
+      $(this).val(pad($(this).val(),2));
+    });
 
-  $("#invoice_year").blur(function(event) {
-    $(this).val(yearpad($(this).val(),4));
-  });
+    $("#invoice_year").blur(function(event) {
+      $(this).val(yearpad($(this).val(),4));
+    });
 
   $("#invoice_date").keydown(function(event) {
     if (event.which==13) {
@@ -99,7 +96,7 @@ $(document).ready(function() {
   $("#invoice_year").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#invoice_customer").focus().select();
+      $("#invoice_state").focus().select();
     }
     if (event.which==38) {
       event.preventDefault();
@@ -107,29 +104,10 @@ $(document).ready(function() {
     }
   });
 
-  $("#invoice_customer").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      if ($("#status").val()=='15')
-      {
-        $('#invoice_state').focus();
+$("#invoice_reset").click(function(event) {
+  $("#cashmemo_create").click();
 
-      }
-      else
-      {
-        $('#invoice_product_table tbody tr:first td:eq(0) select').focus();
-      }
-
-    }
-    if (event.which==38 && (document.getElementById('invoice_customer').selectedIndex==1||document.getElementById('invoice_customer').selectedIndex==0)) {
-      event.preventDefault();
-
-
-      $("#invoice_year").focus().select();
-
-
-    }
-  });
+});
 
   $("#invoice_state").keydown(function(event) {
     if (event.which==13) {
@@ -141,7 +119,7 @@ $(document).ready(function() {
       event.preventDefault();
 
 
-      $("#invoice_customer").focus();
+      $("#invoice_year").focus();
 
 
     }
@@ -194,7 +172,6 @@ $(document).ready(function() {
       }
       else
       {
-        if (productcode!="") {
 
         $.ajax({
           url: '/invoice?action=gettax',
@@ -220,7 +197,6 @@ $(document).ready(function() {
         .always(function() {
           console.log("complete");
         });
-      }
       }
     });
 
@@ -343,6 +319,7 @@ $(document).ready(function() {
             '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00" disabled>'+
             '</td>'+
             '<td class="col-xs-1">'+
+            '<a href="#" class="product_del deliverychallan_edit_disable"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
             '</td>'+
             '</tr>');
             totqty += +value.qty;
@@ -510,14 +487,7 @@ $(document).ready(function() {
         $("#invoice_schedule").focus().select();
       }
       else {
-        if ($("#status").val()=='9')
-        {
-          $('#invoice_product_table tbody tr:eq('+previndex+') td:eq(3) input').focus().select();
-        }
-        else
-        {
-          $('#invoice_product_table tbody tr:eq('+previndex+') td:eq(2) input').focus().select();
-        }
+        $('#invoice_product_table tbody tr:eq('+previndex+') td:eq(3) input').focus().select();
       }
     }
     else if (event.which==190 && event.ctrlKey) {
@@ -532,7 +502,7 @@ $(document).ready(function() {
     $(".invoice_product_quantity").numeric();
   });
 
-  $(document).off('focus', '.invoice_product_tax_rate').on('focus', '.invoice_product_tax_rate', function(event) {
+  $(document).off('focus', '.invoice_product_tax_rate').on('focus', '.invoice_product_quantity', function(event) {
     event.preventDefault();
     /* Act on the event */
     $(".invoice_product_quantity").numeric();
@@ -965,16 +935,8 @@ $(document).ready(function() {
 
     }
     else if (event.which==190 && event.ctrlKey) {
+      $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').focus().select();
       event.preventDefault();
-      if ($("#status").val()=='9')
-      {
-        $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').focus().select();
-      }
-      else
-      {
-        $('#invoice_product_table tbody tr:eq('+nextindex+') td:eq(0) select').focus().select();
-      }
-
     }
   });
 
@@ -1120,31 +1082,31 @@ $(document).ready(function() {
               else {
 
 
-                $.ajax({
-                  url: '/invoice?action=gettax',
-                  type: 'POST',
-                  dataType: 'json',
-                  async : false,
-                  data : {"productcode":productcode, "state":state},
-                  beforeSend: function(xhr)
-                  {
-                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                  }
-                })
-                .done(function(resp) {
-                  console.log("success");
-                  if (resp["gkstatus"]==0) {
-                    $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').val(parseFloat(resp['taxdata']).toFixed(2));
-                  }
+              $.ajax({
+                url: '/invoice?action=gettax',
+                type: 'POST',
+                dataType: 'json',
+                async : false,
+                data : {"productcode":productcode, "state":state},
+                beforeSend: function(xhr)
+                {
+                  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+              })
+              .done(function(resp) {
+                console.log("success");
+                if (resp["gkstatus"]==0) {
+                  $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').val(parseFloat(resp['taxdata']).toFixed(2));
+                }
 
-                })
-                .fail(function() {
-                  console.log("error");
-                })
-                .always(function() {
-                  console.log("complete");
-                });
-              }
+              })
+              .fail(function() {
+                console.log("error");
+              })
+              .always(function() {
+                console.log("complete");
+              });
+            }
             }
 
             taxrate=0.00;
@@ -1229,50 +1191,8 @@ $(document).ready(function() {
     $(this).closest('tr').fadeOut(200, function(){
       $(this).closest('tr').remove();	 //closest method gives the closest element productified
       $('#invoice_product_table tbody tr:last td:eq(0) input').focus().select();
-      pqty=0;
-      ptaxamt=0.00;
-      ptotal=0.00;
-      perprice=0.00;
-      taxrate=0.00;
-
-      $(".invoice_product_quantity").each(function(){
-        pqty += +$(this).val();
-
-        // jquery enables us to select specific elements inside a table easily like below.
-        $('#invoice_product_table tfoot tr:last td:eq(1) input').val(pqty); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
-      });
-
-      $(".invoice_product_per_price").each(function(){
-        perprice += +$(this).val();
-
-        // jquery enables us to select specific elements inside a table easily like below.
-        $('#invoice_product_table tfoot tr:last td:eq(2) input').val(parseFloat(perprice).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
-      });
-
-      $(".invoice_product_tax_rate").each(function(){
-        taxrate += +$(this).val();
-
-        // jquery enables us to select specific elements inside a table easily like below.
-        $('#invoice_product_table tfoot tr:last td:eq(3) input').val(parseFloat(taxrate).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
-      });
-
-      $(".invoice_product_tax_amount").each(function(){
-        ptaxamt += +$(this).val();
-
-        // jquery enables us to select specific elements inside a table easily like below.
-        $('#invoice_product_table tfoot tr:last td:eq(4) input').val(parseFloat(ptaxamt).toFixed(2));
-      });
-
-      $(".invoice_product_total").each(function(){
-        ptotal += +$(this).val();
-
-        // jquery enables us to select specific elements inside a table easily like below.
-        $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
-      });
     });
-
-
-    $('#invoice_product_table tbody tr:last td:eq(0) select').select();
+    $('#invoice_product_table tbody tr:last td:eq(0) input').select();
   });
   $("#invoice_save").click(function(event) {
     event.stopPropagation();
@@ -1318,14 +1238,7 @@ $(document).ready(function() {
       $('#invoice_date').focus().select();
       return false;
     }
-    if ($.trim($('#invoice_customer option:selected').val())=="") {
-      $("#custsup-blank-alert").alert();
-      $("#custsup-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#custsup-blank-alert").hide();
-      });
-      $('#invoice_customer').focus();
-      return false;
-    }
+
     var tax = {};
     var contents = {};
     var stock= {};
@@ -1391,21 +1304,18 @@ $(document).ready(function() {
     $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function (e)
     {
     $.ajax({
-      url: '/invoice?action=save',
+      url: '/cashmemos?action=save',
       type: 'POST',
       dataType: 'json',
       async : false,
-      data: {"dcid": $("#invoice_deliverynote option:selected").val(),
-      "custid":$("#invoice_customer option:selected").val(),
+      data: {
       "invoiceno":$("#invoice_challanno").val(),
       "invoicedate":$("#invoice_year").val()+'-'+$("#invoice_month").val()+'-'+$("#invoice_date").val(),
+      "invoicetotal": $("#invoice_product_table tfoot tr:last td:eq(5) input").val(),
       "contents":JSON.stringify(contents),
+      "taxstate":$("#invoice_state option:selected").val(),
       "tax":JSON.stringify(tax),
-      "stock":JSON.stringify(stock),
-      "issuername":issuername,
-      "designation":designation,
-      "invtotal": $('#invoice_product_table tfoot tr:last td:eq(5) input').val(),
-      "taxstate":$("#invoice_state option:selected").val()},
+      "stock":JSON.stringify(stock)},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -1434,7 +1344,7 @@ $(document).ready(function() {
         return false;
       }
       else {
-        $("#invoice_deliverynote").focus();
+        $("#invoice_challanno").focus();
         $("#failure-alert").alert();
         $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#failure-alert").hide();
@@ -1451,25 +1361,12 @@ $(document).ready(function() {
 
     return false;
   });
-});
-$("#confirm_yes").on('shown.bs.modal', function(event) {
-  $("#tn_save_no").focus();
-
-});
-$("#confirm_yes").on('hidden.bs.modal', function(event) {
-  $("invoice_deliverynote").focus();
-});
-  $(document).off('click', '#invoice_reset').on('click', '#invoice_reset', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    if ($("#status").val()=='9')
-    {
-      $("#invoice_record").click();
-
-    }
-    else
-    {
-      $("#invoice_create").click();
-    }
   });
+  $("#confirm_yes").on('shown.bs.modal', function(event) {
+    $("#tn_save_no").focus();
+
+  });
+  $("#confirm_yes").on('hidden.bs.modal', function(event) {
+    $("invoice_challanno").focus();
+});
 });

@@ -2,6 +2,8 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
   $('.invoicedate').autotab('number');
   $("#invoice_all_no").focus();
+  $(".hidden-load").hide();
+  $(".disable").prop("disabled", true);
 
   var pqty=0.00;
   var ptaxamt=0.00;
@@ -30,15 +32,13 @@ $(document).ready(function() {
       }
     })
     .done(function(resp) {
-
       if (resp["gkstatus"]==0)
       {
-        $(".btndisablediv").show();
-        $(".btn-success").hide();
+        $(".hidden-load").show();
         if (resp.invoicedata.cancelflag==1)
         {
           $("#cancelmsg").show();
-          $("#alertstrong").html("Invoice cancelled on "+resp.invoicedata.canceldate);
+          $("#alertstrong").html("Cashmemo cancelled on "+resp.invoicedata.canceldate);
           $("#invcl").prop("disabled",true);
           $("#invcl").hide();
 
@@ -1290,59 +1290,50 @@ $(document).off('blur', '.invoice_product_tax_amount').on('blur', '.invoice_prod
     $("#invoice_view").click();
   });
 
-
-      $('#invcl').click(function(event) {
-        event.preventDefault();
-        /* Act on the event */
-        $('.modal-backdrop').remove();
-        $('.modal').modal('hide');
-        invcode= $("#invoice_all_no option:selected").val();
-        $('#m_confirmdel').modal('show').one('click', '#invcancel', function (e)
+  $("#invcl").click(function(event) {
+    event.stopPropagation();
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
+    $('#confirm_del').modal('show').one('click', '#accdel', function (e)
+    {
+      $.ajax(
         {
-          $.ajax({
-            url: '/invoice?action=cancel',
-            type: 'POST',
-            global: false,
-            async: false,
-            datatype: 'json',
-            data: {"invid":invcode},
-            beforeSend: function(xhr)
-            {
-              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-            }
-          })
-          .done(function(resp) {
-            if (resp["gkstatus"] ==0) {
+
+          type: "POST",
+          url: '/cashmemos?action=cancel',
+          async: false,
+          datatype: "json",
+          data:{"cashmemoid": $("#invoice_all_no option:selected").val()},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+          success: function(resp)
+          {
+            if (resp["gkstatus"]==0) {
+              $("#invoice_all_no").click();
               $('.modal-backdrop').remove();
-              $("#invoice_view").click();
-              $("#invoicecancelsuccess-alert").alert();
-              $("#invoicecancelsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#invoicecancelsuccess-alert").hide();
+              $("#cash-success-alert").alert();
+              $("#cash-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#cash-success-alert").hide();
+
               });
             }
-            else if(resp["gkstatus"] == 5) {
-              $("#invoice_all_no").focus();
-              $("#failure-delete-alert").alert();
-              $("#failure-delete-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#failure-delete-alert").hide();
-              });
-              return false;
-            }
-          })
-          .fail(function() {
-            console.log("error");
-          })
-          .always(function() {
-            console.log("complete");
-          });
-        });
-        $('#m_confirmdel').on('shown.bs.modal', function(event) {
-          $("#m_cancel").focus();
-        });
-        $('#m_confirmdel').on('hidden.bs.modal', function(event) {
-          $("#invoice_all_no").focus();
+
+
+
+          }
+
         });
 
-      });
+    });
+    $("#confirm_del").on('shown.bs.modal', function(event) {
+      $("#m_cancel").focus();
+    });
+    $("#confirm_del").on('hidden.bs.modal', function(event) {
+      $("#invoice_all_no").focus();
+    });
 
+
+    });
 });

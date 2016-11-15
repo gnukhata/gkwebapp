@@ -37,21 +37,7 @@
 
             <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
           </div>
-            <div class="form-group">
-              <label for="deliverychallan_purchaseorder">
-                {% if gkstatus=="in" %}
-                {% trans %}Purchse Order{% endtrans %}:
-                {% else %}
-                {% trans %}Sales Order{% endtrans %}:
-                {% endif %}
-              </label>
-              <select class="form-control input-sm" id="deliverychallan_purchaseorder" accesskey="">
-                <option value="" selected>None</option>
-                {% for purchaseorder in purchaseorders %}
-                <option value="{{purchaseorder['orderid']}}">{{purchaseorder["orderno"]}}, {{purchaseorder["orderdate"]}}, {{purchaseorder["custname"]}}</option>
-                {% endfor %}
-              </select>
-            </div>
+            
             <div class="form-group">
               <label for="deliverychallan_challanno">{% trans %}Note No{% endtrans %}:</label>
               <input class="form-control input-sm" id="deliverychallan_challanno" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a">
