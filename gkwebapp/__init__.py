@@ -53,6 +53,8 @@ def main(global_config, **settings):
 	config.add_route('index', '/')
 	config.add_route('theme', '/theme')
 	config.add_route('addtheme', '/addtheme')
+	config.add_route('backupfile', '/backupfile')
+	config.add_route('recoveryfile', '/recoveryfile')
 	config.add_route('invoice', '/invoice')
 	config.add_route('existingorg', '/existingorg')
 	config.add_route('showeditOrg', '/showeditOrg')
