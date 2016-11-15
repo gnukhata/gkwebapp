@@ -106,7 +106,7 @@ $(document).ready(function() {
         event.preventDefault();
         var xhr = new XMLHttpRequest();
 
-        xhr.open('GET', '/godown?type=spreadsheet&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2'), true);
+        xhr.open('GET', '/category?action=spreadsheet&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2'), true);
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
         xhr.responseType = 'blob';
 
