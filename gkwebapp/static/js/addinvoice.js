@@ -1472,4 +1472,59 @@ $("#confirm_yes").on('hidden.bs.modal', function(event) {
       $("#invoice_create").click();
     }
   });
+
+  $("#invoice_saveprint").click(function(event) {
+    printset = []
+    for (var i = 0; i < $("#invoice_product_table tbody tr").length; i++) {
+      if ($("#invoice_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()=="") {
+        $("#product-blank-alert").alert();
+        $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#product-blank-alert").hide();
+        });
+        $("#invoice_product_table tbody tr:eq("+i+") td:eq(0) select").focus();
+        return false;
+      }
+      if ($("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val()=="" || $("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val()==0) {
+        $("#quantity-blank-alert").alert();
+        $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#quantity-blank-alert").hide();
+        });
+        $("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").focus();
+        return false;
+      }
+      if ($("#invoice_product_table tbody tr:eq("+i+") td:eq(2) input").val()=="" || $("#invoice_product_table tbody tr:eq("+i+") td:eq(2) input").val()==0) {
+        $("#price-blank-alert").alert();
+        $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#price-blank-alert").hide();
+        });
+        $("#invoice_product_table tbody tr:eq("+i+") td:eq(2) input").focus();
+        return false;
+      }
+      var obj = {};
+
+      obj.productdesc = $("#invoice_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").text();
+      obj.qty = $("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val();
+      obj.ppu = $("#invoice_product_table tbody tr:eq("+i+") td:eq(2) input").val();
+      obj.taxrate = $("#invoice_product_table tbody tr:eq("+i+") td:eq(3) input").val();
+      obj.taxamt = $("#invoice_product_table tbody tr:eq("+i+") td:eq(4) input").val();
+      obj.rowtotal = $("#invoice_product_table tbody tr:eq("+i+") td:eq(5) input").val();
+      printset.push(obj);
+    }
+    $.ajax({
+      url: '/invoice?action=print',
+      type: 'POST',
+      dataType: 'html',
+      data: {"printset":JSON.stringify(printset)},
+    })
+    .done(function() {
+      console.log("success");
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
+
+  });
 });
