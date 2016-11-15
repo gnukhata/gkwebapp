@@ -25,6 +25,17 @@ $(document).ready(function() {
           var result = resp["gkresult"];
 
           $(".hidden-load").show();
+          if (result["cancelflag"]==1) {
+            $("#cancelmsg").show();
+            $("#alertstrong").html("Transfer Note cancelled on "+result.canceldate);
+            $("#rec_cancel").prop("disabled",true);
+            $("#rec_cancel").hide();
+          }
+          else {
+            $("#cancelmsg").hide();
+            $("#rec_cancel").prop("disabled",false);
+            $("#rec_cancel").show();
+          }
           $("#rec_transfernote_no").html(result["transfernoteno"]);
 
           $("#rec_transport_mode").html(result["transportationmode"]);
@@ -130,6 +141,52 @@ $(document).ready(function() {
           $("#rec_tn_list").focus();
         });
        });
+       $("#rec_cancel").click(function(event) {
+         event.preventDefault();
+         $('.modal-backdrop').remove();
+         $('.modal').modal('hide');
+         $('#confirm_del').modal('show').one('click', '#accdel', function (e)
+         {
+           $.ajax(
+             {
+
+               type: "POST",
+               url: '/transfernotes?action=delete',
+               async: false,
+               datatype: "json",
+               data:{"transfernoteid": $("#rec_tn_list option:selected").val()},
+               beforeSend: function(xhr)
+               {
+                 xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+               },
+               success: function(resp)
+
+               {
+                 if (resp["gkstatus"]==0) {
+                   $("#transfernote_edit").click();
+                   $('.modal-backdrop').remove();
+                   $("#delsuccess-alert").alert();
+                   $("#delsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
+                     $("#delsuccess-alert").hide();
+
+                   });
+                 }
+
+
+
+               }
+
+             });
+
+         });
+         $("#confirm_del").on('shown.bs.modal', function(event) {
+           $("#m_cancel").focus();
+         });
+         $("#confirm_del").on('hidden.bs.modal', function(event) {
+           $("#rec_tn_list").focus();
+         });
+        });
+
 
 
   });
