@@ -77,6 +77,10 @@
 
       <label for="vno">{% trans %}Please enter the price per unit!{% endtrans %}</label>
     </div>
+    <div class="alert alert-success" id="cash-success-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Cash Memo Cancelled.{% endtrans %}
+    </div>
     <div class="panel invoice_panel shadow">
       <div class="panel-body">
         <div class="container-fluid row">
@@ -109,6 +113,7 @@
             </select>
             <div class="alert alert-danger nopadding" id="cancelmsg" aria-live="rude" role="alert" hidden>
               <strong id="alertstrong">Cash Memo cancelled on  </strong>
+          </div>
           </div>
           <div class="col-md-4 hidden-load" hidden>
 
@@ -272,7 +277,7 @@
         <div class="panel-footer">
           <div class="container-fluid">
 
-            <button class="btn btn-danger btn-sm" id="invoice_cncel" data-toggle="tooltip" data-placement="top" >{% trans %}Cancel{% endtrans %}</button>
+            <button class="btn btn-danger btn-sm hidden-load" id="invcl" data-toggle="tooltip" data-placement="top" >{% trans %}Cancel{% endtrans %}</button>
 
           </div>
         </div>
@@ -282,7 +287,7 @@
               <div class="modal-content">
                 <div class="modal-header">
 
-                  <h4 class="modal-title">{% trans %}Cancle?{% endtrans %}</h4>
+                  <h4 class="modal-title">{% trans %}Cancel?{% endtrans %}</h4>
                 </div>
                 <div class="modal-body">
                   <p>{% trans %}Are you sure?{% endtrans %}</p>
@@ -294,10 +299,9 @@
               </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
           </div>
-        </div><!-- /.mod
+        </div><!-- /.mod-->
 
 
-      </div>
 
 
 

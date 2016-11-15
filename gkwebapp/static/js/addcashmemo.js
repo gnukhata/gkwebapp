@@ -1298,6 +1298,11 @@ $("#invoice_reset").click(function(event) {
         return false;
       }
     }
+    event.preventDefault();
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
+    $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function (e)
+    {
     $.ajax({
       url: '/cashmemos?action=save',
       type: 'POST',
@@ -1356,4 +1361,12 @@ $("#invoice_reset").click(function(event) {
 
     return false;
   });
+  });
+  $("#confirm_yes").on('shown.bs.modal', function(event) {
+    $("#tn_save_no").focus();
+
+  });
+  $("#confirm_yes").on('hidden.bs.modal', function(event) {
+    $("transfernote_no").focus();
+});
 });

@@ -35,6 +35,21 @@ $(document).ready(function() {
       if (resp["gkstatus"]==0)
       {
         $(".hidden-load").show();
+        if (resp.invoicedata.cancelflag==1)
+        {
+          $("#cancelmsg").show();
+          $("#alertstrong").html("Cashmemo cancelled on "+resp.invoicedata.canceldate);
+          $("#invcl").prop("disabled",true);
+          $("#invcl").hide();
+
+
+        }
+        else
+        {
+          $("#cancelmsg").hide();
+          $("#invcl").prop("disabled",false);
+          $("#invcl").show();
+        }
         var invdatearray = resp.invoicedata.invoicedate.split(/\s*\-\s*/g);
         $("#invoice_date").val(invdatearray[0]);
         $("#invoice_month").val(invdatearray[1]);
@@ -1275,4 +1290,50 @@ $(document).off('blur', '.invoice_product_tax_amount').on('blur', '.invoice_prod
     $("#invoice_view").click();
   });
 
+  $("#invcl").click(function(event) {
+    event.stopPropagation();
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
+    $('#confirm_del').modal('show').one('click', '#accdel', function (e)
+    {
+      $.ajax(
+        {
+
+          type: "POST",
+          url: '/cashmemos?action=cancel',
+          async: false,
+          datatype: "json",
+          data:{"cashmemoid": $("#invoice_all_no option:selected").val()},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+          success: function(resp)
+          {
+            if (resp["gkstatus"]==0) {
+              $("#invoice_all_no").click();
+              $('.modal-backdrop').remove();
+              $("#cash-success-alert").alert();
+              $("#cash-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#cash-success-alert").hide();
+
+              });
+            }
+
+
+
+          }
+
+        });
+
+    });
+    $("#confirm_del").on('shown.bs.modal', function(event) {
+      $("#m_cancel").focus();
+    });
+    $("#confirm_del").on('hidden.bs.modal', function(event) {
+      $("#cashmemo_view").click();
+    });
+
+
+    });
 });
