@@ -261,8 +261,10 @@ def viewstockreport(request):
 	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="product",request_param="type=showstockreport", renderer="gkwebapp:templates/showstockreport.jinja2")
-def viewstockreport(request):
+def showstockreport(request):
 	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/products",headers=header)
-
+	productcode = int(request.params["productcode"])
+	calculatefrom = request.params["calculatefrom"]
+	calculateto = request.params["calculateto"]
+	result = requests.get("http://127.0.0.1:6543/report?type=stockreport&productcode=%d&startdate=%s&enddate=%s"%(productcode, calculatefrom, calculateto),headers=header)
 	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
