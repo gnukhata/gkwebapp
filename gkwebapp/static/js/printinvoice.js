@@ -1,11 +1,22 @@
 
 $(document).ready(function() {
   oninvoice = 1;
+  $("#subject").focus();
+  $("title").html("GNUKhata")
+  $("#subject").keydown(function(event) {
+    if (event.which==13) {
+      $("#notes").focus().select();
+    }
+  });
+
+  $("#invprint").click(function(event) {
+    window.print();
+  });
   (function() {
 var beforePrint = function() {
   console.log("beforeprint");
   if (oninvoice==1) {
-    $("#printorgnameyear").addClass('hidden-print');
+    $("#printorgnameyear").removeClass('visible-print').addClass('hidden-print');
   }
     $("#subject").hide();
     $("#notes").hide();
@@ -23,7 +34,7 @@ var beforePrint = function() {
 };
 var afterPrint = function() {
   console.log("afterPrint");
-    $("#printorgnameyear").removeClass('hidden-print');
+    $("#printorgnameyear").removeClass('hidden-print').addClass('visible-print');
     $("#printyears").removeClass('hidden-print');
     $("#sublabel").html("Subject :");
     $("#notespara").html("Notes : ");
