@@ -84,7 +84,11 @@
               <input class="form-control input-sm" id="invoice_challanno" placeholder="{% trans %}Enter invoice no{% endtrans %}" accesskey="a">
             </div>
           </div>
+          {% if gkstatus == "in" %}
+          <div class="col-md-3">
+          {% else %}
           <div class="col-md-2">
+          {% endif %}
 
             <div class="form-group">
               <label for="invoice_date">{% trans %}Date{% endtrans %} :</label>
