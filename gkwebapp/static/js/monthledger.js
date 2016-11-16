@@ -26,6 +26,7 @@ Contributors:
 */
 
 $(document).ready(function() {
+  oninvoice = 0;
   $(".fixed-table-loading").remove();
   $('#mthltable tbody tr:first-child td:eq(0) a').focus();
   $('#mthltable tbody tr:first-child td:eq(0) a').closest('tr').addClass('selected');
