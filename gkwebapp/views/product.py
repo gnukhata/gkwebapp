@@ -251,3 +251,8 @@ def listofstockitemsspreadsheet(request):
 	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
 	os.remove("response.ods")
 	return Response(rep, headerlist=headerList.items())
+
+@view_config(route_name="product",request_param="type=viewstockreport", renderer="gkwebapp:templates/viewstockreport.jinja2")
+def viewstockreport(request):
+	header={"gktoken":request.headers["gktoken"]}
+	return{"gkresult":0}
