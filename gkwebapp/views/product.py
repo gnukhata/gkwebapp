@@ -23,6 +23,7 @@ Contributors:
 "Krishnakant Mane" <kk@dff.org.in>
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
+"Abhijith Balan" <abhijithb21@openmailbox.org>
 """
 
 from pyramid.view import view_config
@@ -255,4 +256,13 @@ def listofstockitemsspreadsheet(request):
 @view_config(route_name="product",request_param="type=viewstockreport", renderer="gkwebapp:templates/viewstockreport.jinja2")
 def viewstockreport(request):
 	header={"gktoken":request.headers["gktoken"]}
-	return{"gkresult":0}
+	result = requests.get("http://127.0.0.1:6543/products",headers=header)
+
+	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="product",request_param="type=showstockreport", renderer="gkwebapp:templates/showstockreport.jinja2")
+def viewstockreport(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/products",headers=header)
+
+	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
