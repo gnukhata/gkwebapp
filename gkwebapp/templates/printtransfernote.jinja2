@@ -1,0 +1,149 @@
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>GNUKhata</title>
+    <style>
+    @page {
+      size: 21cm 29.7cm;
+      margin: 10mm 3mm 15mm 10mm; /* change the margins as you want them to be. */
+    }
+    td {
+      font-size: 75%;
+      padding: 2px !important;
+      margin:  0 !important;
+    }
+    body {
+       background-image: none;
+   }
+    th {
+      font-size: 85%;
+      padding: 3px !important;
+      margin:  0 !important;
+    }
+		table { page-break-inside:auto }
+		tr    { page-break-inside:avoid; page-break-after:auto }
+    thead { display: table-header-group; }
+    tfoot { display: table-footer-group; }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+
+      <div class="col-xs-6">
+        <h4>{{org["orgname"]}}</br><small>{{org["orgaddr"]}},</br>{{org["orgcity"]}} - {{org["orgpincode"]}},</br>{{org["orgstate"]}}</small></h4>
+          <h4>{{fromgodown["goname"]}}</br><small>{{fromgodown["goaddr"]}},</br>{{fromgodown["state"]}}</small></h4>
+          to
+        <h4>{{togodown["goname"]}}</br><small>{{togodown["goaddr"]}},</br>{{togodown["state"]}}</small></h4>
+      </div>
+      <div class="col-xs-offset-1 col-xs-5">
+        <h2 class="text-right">Transfer Note</h2><br>
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td class="col-xs-5">
+                  <strong>Transfernote No. </strong>
+              </td>
+              <td class="text-right">
+                {{transfernoteno}}
+              </td>
+            </tr>
+            <tr>
+                <td class="col-xs-5">
+                  <strong>Date</strong>
+                </td>
+                <td class="text-right">
+                  {{transfernotedate}}
+                </td>
+            </tr>
+            <tr>
+              <td class="col-xs-5">
+                <strong>No.of Packet</strong>
+              </td>
+              <td class="text-right">
+                {{nopkt}}
+              </td>
+            </tr>
+            <tr>
+                <td class="col-xs-5">
+                  <strong> Mode Of Transport</strong>
+                </td>
+                <td class="text-right">
+                  {{transportationmode}}
+                </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-inline col-xs-12">
+        <div class="form-group">
+          <label for="subject" id="sublabel">Subject :</label>
+          <input type="text" class="form-control hidden-print" id="subject" placeholder="">
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-xs-12">
+        <hr style="border-color:grey;margin-top:0px; margin-bottom:0px;">
+        <table class="table table-bordered table-condensed" style="margin-bottom:0px;">
+            <thead class="bg-primary">
+              <tr>
+                <th>
+                  Description
+                </th>
+                <th class="text-right">
+                  Qty
+                </th>
+
+              </tr>
+            </thead>
+          <tbody>
+            {% for set in tableset %}
+            <tr>
+              <td>
+                {{set["productdesc"]}}
+              </td>
+              <td class="text-right">
+                {{set["qty"]}}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <hr style="border-color:grey;margin-top:0px; margin-bottom:0px;">
+      </div>
+    </div>
+
+
+      <div class="row">
+      <div class="col-xs-7">
+        <label for="notes" class="hidden-print">Notes :</label>
+        <textarea name="name" row='3' id="notes" class="form-control hidden-print" id="notes"></textarea>
+        <p class="visible-print" id = "notespara">
+        </p>
+      </div>
+      
+      </div>
+      <br>
+      <div class="row">
+        <div class="text-right col-xs-12">
+          <strong>{{issuername}}</strong>
+          {% if designation!='' %}
+          <i>({{designation}})</i>
+          {% endif %}
+        </div>
+      </div>
+      <span style="margin:auto; display:table;">
+    		<button type="button" class="btn btn-sm btn-danger hidden-print" id="tnback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+    		<button type="button" class="btn btn-sm btn-info hidden-print" id="tnprint" >{% trans %}Prin<u>t</u>{% endtrans %}</button>
+    	</span>
+    </div>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/printtransfernote.js')}}"></script>
+  </body>
+</html>

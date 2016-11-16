@@ -91,3 +91,13 @@ def getproducts(request):
 	header={"gktoken":request.headers["gktoken"]}
 	invoice = requests.delete("http://127.0.0.1:6543/invoice",data=json.dumps({"invid":request.params["cashmemoid"],"cancelflag":1,"icflag":3}), headers=header)
 	return {"gkstatus": invoice.json()["gkstatus"]}
+
+@view_config(route_name="cashmemos",request_param="action=print",renderer="gkwebapp:templates/printcashmemo.jinja2")
+def Invoiceprint(request):
+	header={"gktoken":request.headers["gktoken"]}
+	org = requests.get("http://127.0.0.1:6543/organisation", headers=header)
+	tableset = json.loads(request.params["printset"])
+	return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],
+	"tableset":tableset,"invoiceno":request.params["invoiceno"],"invoicedate":request.params["invoicedate"],
+	"subtotal":request.params["subtotal"],
+	"taxtotal":request.params["taxtotal"],"gtotal":request.params["gtotal"]}

@@ -104,3 +104,15 @@ def recieved(request):
 		dataset={"transfernoteid":int(request.params["transfernoteid"])}
 		result=requests.put("http://127.0.0.1:6543/transfernote?received=true",data=json.dumps(dataset),headers=header)
 		return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="transfernotes",request_param="action=print",renderer="gkwebapp:templates/printtransfernote.jinja2")
+def tnprint(request):
+	header={"gktoken":request.headers["gktoken"]}
+	org = requests.get("http://127.0.0.1:6543/organisation", headers=header)
+	fromgodown=requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["fromgodown"])), headers=header)
+	togodown=requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["togodown"])), headers=header)
+	tableset = json.loads(request.params["printset"])
+	return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],
+	"tableset":tableset,"transfernoteno":request.params["transfernoteno"],"transfernotedate":request.params["transfernotedate"],
+	"togodown":togodown.json()["gkresult"],"transportationmode":request.params["transportationmode"],"issuername":request.params["issuername"],
+	"designation":request.params["designation"],"nopkt":request.params["nopkt"],"fromgodown":fromgodown.json()["gkresult"]}
