@@ -192,6 +192,10 @@
           {% endif %}
         </div>
       </div>
+      <span style="margin:auto; display:table;">
+    		<button type="button" class="btn btn-sm btn-danger hidden-print" id="invback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+    		<button type="button" class="btn btn-sm btn-info hidden-print" id="invprint" >{% trans %}Prin<u>t</u>{% endtrans %}</button>
+    	</span>
     </div>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/printinvoice.js')}}"></script>
   </body>
