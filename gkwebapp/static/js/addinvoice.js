@@ -638,10 +638,7 @@ $(document).ready(function() {
     var curindex = $(this).closest('tr').index();
     var nextindex = curindex+1;
     var previndex = curindex-1;
-    if ($(this).val()=="")
-    {
-      $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(1) input').val(0);
-    }
+
     if (event.which==13) {
       event.preventDefault();
       var curindex = $(this).closest('#invoice_product_table tbody tr').index();
@@ -714,6 +711,10 @@ $(document).ready(function() {
   $(document).off('change', '.invoice_product_per_price').on('change', '.invoice_product_per_price', function(event) {
     event.preventDefault();
     /* Act on the event */
+    if ($(this).val()=="")
+    {
+      $(this).val(0);
+    }
     var curindex = $(this).closest('#invoice_product_table tbody tr').index();
     var rowqty = parseFloat($('#invoice_product_table tbody tr:eq('+curindex+') td:eq(1) input').val()).toFixed(2);
     var rowprice = parseFloat($('#invoice_product_table tbody tr:eq('+curindex+') td:eq(2) input').val()).toFixed(2);
@@ -981,6 +982,10 @@ $(document).ready(function() {
   $(document).off('change', '.invoice_product_tax_rate').on('change', '.invoice_product_tax_rate', function(event) {
     event.preventDefault();
     /* Act on the event */
+    if ($(this).val()=="")
+    {
+      $(this).val(0);
+    }
     var curindex = $(this).closest('#invoice_product_table tbody tr').index();
     var rowqty = parseFloat($('#invoice_product_table tbody tr:eq('+curindex+') td:eq(1) input').val()).toFixed(2);
     var rowprice = parseFloat($('#invoice_product_table tbody tr:eq('+curindex+') td:eq(2) input').val()).toFixed(2);
@@ -1474,7 +1479,8 @@ $("#confirm_yes").on('hidden.bs.modal', function(event) {
   });
 
   $("#invoice_saveprint").click(function(event) {
-    printset = []
+    printset = [];
+    subtotal = 0;
     for (var i = 0; i < $("#invoice_product_table tbody tr").length; i++) {
       if ($("#invoice_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()=="") {
         $("#product-blank-alert").alert();
@@ -1505,6 +1511,7 @@ $("#confirm_yes").on('hidden.bs.modal', function(event) {
       obj.productdesc = $("#invoice_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").text();
       obj.qty = $("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val();
       obj.ppu = $("#invoice_product_table tbody tr:eq("+i+") td:eq(2) input").val();
+      subtotal += +(obj.qty*obj.ppu);
       obj.taxrate = $("#invoice_product_table tbody tr:eq("+i+") td:eq(3) input").val();
       obj.taxamt = $("#invoice_product_table tbody tr:eq("+i+") td:eq(4) input").val();
       obj.rowtotal = $("#invoice_product_table tbody tr:eq("+i+") td:eq(5) input").val();
@@ -1514,10 +1521,25 @@ $("#confirm_yes").on('hidden.bs.modal', function(event) {
       url: '/invoice?action=print',
       type: 'POST',
       dataType: 'html',
-      data: {"printset":JSON.stringify(printset)},
+      data: {"dc": $("#invoice_deliverynote option:selected").attr("dcno"),
+      "custid":$("#invoice_customer option:selected").val(),
+      "invoiceno":$("#invoice_challanno").val(),
+      "invoicedate":$("#invoice_date").val()+'-'+$("#invoice_month").val()+'-'+$("#invoice_year").val(),
+      "printset":JSON.stringify(printset),
+      "issuername":$("#invoice_issuer_name").val(),
+      "designation":$("#invoice_issuer_designation").val(),
+      "subtotal":parseFloat(subtotal).toFixed(2),
+      "taxtotal":$("#invoice_product_table tfoot tr:first td:eq(4) input").val(),
+      "gtotal":$("#invoice_product_table tfoot tr:first td:eq(5) input").val(),
+      },
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
     })
-    .done(function() {
+    .done(function(resp) {
       console.log("success");
+      $('#info').html(resp);
     })
     .fail(function() {
       console.log("error");
