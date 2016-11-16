@@ -37,6 +37,7 @@ $(document).ready(function() {
     {
       $("#godown_edit").html(resp);
       $("#godown_create").html("");
+      $("#godown_list").html("");
     }
     }
   );

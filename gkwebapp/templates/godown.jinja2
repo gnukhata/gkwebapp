@@ -48,12 +48,45 @@
   .fixed-edit-table thead {
       width: calc( 100% - 0.75em )
   }
+  .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  #latable td {
+    font-size: 75%;
+    padding: 4 !important;
+    margin: 4 !important;
+  }
+
+  #latable th {
+    font-size: 85%;
+  }
+
+  .card-view .title {
+      font-weight: bold;
+      display: inline-block;
+      min-width: 30%;
+      text-align: left !important;
+  }
+
+  #latable tbody {
+      display:block;
+      height: calc(100vh - 18em);
+      overflow-y:scroll;
+  }
+  #latable thead,#latable tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  #latable thead {
+      width: calc( 100% - 0.65em );
+  }
 
   </style>
 </head>
 <body>
   <div class="container-fluid row">
-    <ul class="nav nav-pills nav-tabs" role="tablist">
+    <ul class="nav nav-pills nav-tabs hidden-print" role="tablist">
       <li role="presentation" class="active"><a href="#godown_create" aria-controls="godown_create" role="tab" data-toggle="tab">{% trans %}Create Godown{% endtrans %}</a></li>
       <li role="presentation"><a href="#godown_edit" aria-controls="godown_edit" role="tab" data-toggle="tab">{% trans %}Edit Godown{% endtrans %}</a></li>
     </ul>

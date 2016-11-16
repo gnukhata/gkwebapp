@@ -28,7 +28,7 @@ $(document).ready(function() {
     $('.modal-backdrop').remove();
     $("#egdnsubmit").hide();
 
-    $("#editgoddet").bind("change keyup", function() {
+    $("#editgoddet").bind("change", function(e) {
         $("#egdnsubmit").hide();
         var goid = $("#editgoddet option:selected").val();
         var goname = $("#editgoddet option:selected").text();
@@ -92,7 +92,7 @@ $(document).ready(function() {
     $("#gostate").keydown(function(e){
       if (e.which == 13) {
         e.preventDefault();
-        $("#goaddress").focus().select();
+        $("#goaddress").focus();
       }
       if (e.which == 38 && ($("#gostate option:selected").index()==1 || $("#gostate option:selected").index()==0)) {
         $("#goname").focus().select();
@@ -201,7 +201,7 @@ $(document).ready(function() {
             $("#editgoddet").focus();
         });
     });
-    $(document).keydown(function(e){
+    $(document).off("keyup").on("keyup", function(e) {
       if (e.which == 45) {
         e.preventDefault();
         $("#egdnsubmit").click();
@@ -235,7 +235,7 @@ $(document).ready(function() {
         };
         var goid = $("#editgoddet option:selected").val();
         var goname = $("#goname").val();
-        var goaddr = $("#goaddress").val();
+        var goaddr = $.trim($("#goaddress").val());
         var gocontact = $("#gocontact").val();
         var gocontactname = $("#gocontactname").val();
         var godesignation = $("#godesignation").val();

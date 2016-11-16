@@ -31,6 +31,9 @@ from pyramid.view import view_config
 import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
+from pyramid.response import Response
+import os
+from odslib import ODS
 
 @view_config(route_name="category",renderer="gkwebapp:templates/category.jinja2")
 def showcategory(request):
@@ -138,3 +141,57 @@ def deletecategory(request):
 	categorydata = {"categorycode":int(request.params["categorycode"])}
 	result = requests.delete("http://127.0.0.1:6543/categories",data=json.dumps(categorydata), headers=header)
 	return {"gkstatus": result.json()["gkstatus"]}
+
+@view_config(route_name="category",request_param="action=list",renderer="gkwebapp:templates/listofcategories.jinja2")
+def listofcategories(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/categories", headers=header)
+	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
+
+@view_config(route_name="category",request_param="action=printable", renderer="gkwebapp:templates/printlistofcategories.jinja2")
+def printlistofgodowns(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/categories", headers=header)
+	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
+
+@view_config(route_name="category",request_param="action=spreadsheet", renderer="")
+def listofgodownssspreadsheet(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/categories", headers=header)
+	result = result.json()["gkresult"]
+	fystart = str(request.params["fystart"]);
+	fyend = str(request.params["fyend"]);
+	orgname = str(request.params["orgname"])
+	orgname += " (FY: " + fystart+" to "+fyend +")"
+	ods = ODS()
+	sheet = ods.content.getSheet(0)
+	sheet.setSheetName("List of Categories")
+	sheet.getRow(0).setHeight("23pt")
+
+	sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("16pt")
+	ods.content.mergeCells(0,0,4,1)
+	sheet.getRow(1).setHeight("18pt")
+	sheet.getCell(0,1).stringValue("List Of Categories").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+	ods.content.mergeCells(0,1,4,1)
+	sheet.getColumn(1).setWidth("7cm")
+	sheet.getColumn(2).setWidth("7cm")
+	sheet.getColumn(3).setWidth("2cm")
+	sheet.getCell(0,2).stringValue("Sr. No.").setBold(True)
+	sheet.getCell(1,2).stringValue("Category Name").setBold(True)
+	sheet.getCell(2,2).stringValue("Subcategory Of").setBold(True)
+	sheet.getCell(3,2).stringValue("Stock").setBold(True)
+	row = 3
+	for category in result:
+		sheet.getCell(0, row).stringValue(category["srno"])
+		sheet.getCell(1, row).stringValue(category["categoryname"])
+		sheet.getCell(2, row).stringValue(category["parentcategory"])
+		sheet.getCell(3, row).stringValue(category["categorystatus"])
+		row += 1
+
+	ods.save("response.ods")
+	repFile = open("response.ods")
+	rep = repFile.read()
+	repFile.close()
+	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	os.remove("response.ods")
+	return Response(rep, headerlist=headerList.items())

@@ -29,9 +29,9 @@
 				<div class="form-group">
 					<label for="editgodownname" id="godname">{% trans %}Godo<u>w</u>n Name{% endtrans %} :</label>
 					<select class = "form-control input-sm" id="editgoddet" accesskey="w">
-						<option value="" disabled selected hidden>{% trans %}Select Godown{% endtrans %}</option>
+						<option value="disabled" disabled selected hidden>{% trans %}Select Godown{% endtrans %}</option>
 						{% for gods in gkresult %}
-						<option value="{{gods['godownid']}}">{{gods["godownname"]}}</option>
+						<option value="{{gods['godownid']}}">{{gods["godownname"]}} ({{gods["godownaddress"]}})</option>
 						{% endfor %}
 					</select>
 				</div>

@@ -70,6 +70,9 @@
               <li><a class="reportmenu" href="" data-toggle="tab" id="fevoucher">{% trans %}Find/Edit Voucher{% endtrans %}</a></li>
               <li><a class="reportmenu" href="" data-toggle="tab" id="listofaccounts">{% trans %}List of Accounts{% endtrans %}</a></li>
               <li><a class="hideoperator hidemanager reportmenu" href="" data-toggle="tab" id="showdeletedvoucher">{% trans %}List of Deleted Vouchers{% endtrans %}</a></li>
+              <li><a class="reportmenu" href="" data-toggle="tab" id="listofgodowns">{% trans %}List of Godowns{% endtrans %}</a></li>
+              <li><a class="reportmenu" href="" data-toggle="tab" id="listofcategories">{% trans %}List of Categories{% endtrans %}</a></li>
+              <li><a class="reportmenu" href="" data-toggle="tab" id="listofstockitems">{% trans %}List of Stock Items{% endtrans %}</a></li>
             </ul>
           </li>
           <li class="dropdown">
@@ -164,7 +167,7 @@
     <li style="float: right;"><a style="margin-right: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="yeardata" href=""></a></li>
   </ul>
 </div>
-<div class="visible-print printorgdetails" style="text-align:center;"><b id="printorgname"></b><br>(<i>{% trans %}FY{% endtrans %}:</i><b id="printyears"></b>)</div>
+<div class="visible-print printorgdetails" id="printorgnameyear" style="text-align:center;"><b id="printorgname"></b><br>(<i>{% trans %}FY{% endtrans %}:</i><b id="printyears"></b>)</div>
 <div id="info" style="margin-top: 10px; margin-bottom: 10px;" class="container-fluid tab-pane">
   <div class="panel shadow" >
     <div class="panel-heading">

@@ -29,6 +29,9 @@ from pyramid.view import view_config
 import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
+from pyramid.response import Response
+import os
+from odslib import ODS
 
 
 @view_config(route_name="product",request_param="type=tab", renderer="gkwebapp:templates/producttab.jinja2")
@@ -175,3 +178,62 @@ def productdetails(request):
 	result2 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
 	result3 = requests.get("http://127.0.0.1:6543/categories", headers=header)
 	return{"proddesc":result.json()["gkresult"],"prodspecs":prodspecs,"uom":result2.json()["gkresult"],"category":result3.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="product",request_param="type=list", renderer="gkwebapp:templates/listofstockitems.jinja2")
+def listofstockitems(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/products",headers=header)
+
+	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="product",request_param="type=printable", renderer="gkwebapp:templates/printlistofstockitems.jinja2")
+def printlistofstockitems(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/products",headers=header)
+
+	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="product",request_param="type=spreadsheet", renderer="")
+def listofstockitemsspreadsheet(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/products", headers=header)
+	result = result.json()["gkresult"]
+	fystart = str(request.params["fystart"]);
+	fyend = str(request.params["fyend"]);
+	orgname = str(request.params["orgname"])
+	orgname += " (FY: " + fystart+" to "+fyend +")"
+	ods = ODS()
+	sheet = ods.content.getSheet(0)
+	sheet.setSheetName("List of Stock Items")
+	sheet.getRow(0).setHeight("23pt")
+
+	sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("16pt")
+	ods.content.mergeCells(0,0,5,1)
+	sheet.getRow(1).setHeight("18pt")
+	sheet.getCell(0,1).stringValue("List Of Stock Items").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+	ods.content.mergeCells(0,1,5,1)
+	sheet.getColumn(1).setWidth("4cm")
+	sheet.getColumn(2).setWidth("5cm")
+	sheet.getColumn(3).setWidth("4cm")
+	sheet.getColumn(4).setWidth("3cm")
+	sheet.getCell(0,2).stringValue("Sr. No.").setBold(True)
+	sheet.getCell(1,2).stringValue("Stock Item").setBold(True)
+	sheet.getCell(2,2).stringValue("Category").setBold(True)
+	sheet.getCell(3,2).stringValue("Unit Of Measurement").setBold(True)
+	sheet.getCell(4,2).stringValue("Status").setBold(True)
+	row = 3
+	for stock in result:
+		sheet.getCell(0, row).stringValue(stock["srno"])
+		sheet.getCell(1, row).stringValue(stock["productdesc"])
+		sheet.getCell(2, row).stringValue(stock["categoryname"])
+		sheet.getCell(3, row).stringValue(stock["unitname"])
+		sheet.getCell(4, row).stringValue(stock["productstatus"])
+		row += 1
+
+	ods.save("response.ods")
+	repFile = open("response.ods")
+	rep = repFile.read()
+	repFile.close()
+	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	os.remove("response.ods")
+	return Response(rep, headerlist=headerList.items())

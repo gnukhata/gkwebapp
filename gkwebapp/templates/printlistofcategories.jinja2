@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}List of Categories{% endtrans %}</title>
+  <style type="text/css">
+
+  td {
+  	font-size: 65%;
+  	color: black;
+  }
+
+  th {
+  	font-size: 70%;
+  }
+
+  @page {
+    size : 21cm 29.7cm;
+    margin : 10mm 10mm 20mm 10mm
+  }
+  thead{
+    display: table-header-group;
+  }
+  tfoot{
+    display: table-footer-group;
+  }
+
+  </style>
+</head>
+<body>
+  <span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>{% trans %}List of Categories{% endtrans %}</strong></span>
+
+  <div class="table-responsive printorgdetails">
+    <table class="table table-condensed table-bordered table-striped shadow">
+      <thead class="bg-info">
+        <tr class="visible-print">
+          <th colspan="4" style="text-align:center; font-size:80%;">
+            {% trans %}List of Categories{% endtrans %}
+          </th>
+        </tr>
+        <tr>
+          <th class="col-xs-1" >
+            {% trans %}Sr. No.{% endtrans %}
+          </th>
+          <th class="col-xs-5" >
+            {% trans %}Category Name{% endtrans %}
+          </th>
+          <th class="col-xs-5" >
+            {% trans %}Subcategory Of{% endtrans %}
+          </th>
+          <th class="col-xs-1" >
+            {% trans %}Status{% endtrans %}
+          </th>
+      </thead>
+      <tbody>
+
+        {% for record in gkresult %}
+        <tr	value="{{record["categorycode"]}}">
+          <td class="col-xs-1 " >
+            {{record["srno"]}}
+          </td>
+          <td class="col-xs-5">
+            {{record["categoryname"]}}
+          </td>
+          <td class="col-xs-5" >
+            {{record["parentcategory"]}}
+          </td>
+          <td class="col-xs-1">
+            {{record["categorystatus"]}}
+          </td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+    <span style="margin:auto; display:table;">
+  		<button type="button" class="btn btn-sm btn-danger hidden-print" id="loaback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+  		<button type="button" class="btn btn-sm btn-info hidden-print" id="loaprint" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
+  	</span>
+  </div>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      oninvoice = 0;
+      $("title").html("GNUKhata")
+      $("#loaprint").click(function(event) {
+        window.print();
+      });
+      $("#loaback").click(function(event) {
+        $("#listofcategories").click();
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -525,6 +525,70 @@ $.ajax({
       );
       });
 
+      $('#listofgodowns').click(function (e) {
+        $.ajax(
+          {
+
+          type: "POST",
+          url: "/godown?type=list",
+          global: false,
+          async: false,
+          datatype: "text/html",
+          beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            },
+          success: function(resp)
+          {
+            $("#info").html(resp);
+          }
+          }
+        );
+        });
+
+        $('#listofcategories').click(function (e) {
+          $.ajax(
+            {
+
+            type: "POST",
+            url: "/category?action=list",
+            global: false,
+            async: false,
+            datatype: "text/html",
+            beforeSend: function(xhr)
+              {
+                xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+              },
+            success: function(resp)
+            {
+              $("#info").html(resp);
+            }
+            }
+          );
+          });
+
+          $('#listofstockitems').click(function (e) {
+            $.ajax(
+              {
+
+              type: "POST",
+              url: "/product?type=list",
+              global: false,
+              async: false,
+              datatype: "text/html",
+              beforeSend: function(xhr)
+                {
+                  xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+                },
+              success: function(resp)
+              {
+                $("#info").html(resp);
+              }
+              }
+            );
+            });
+
+
 
   $('#fevoucher').click(function (e) {
 
