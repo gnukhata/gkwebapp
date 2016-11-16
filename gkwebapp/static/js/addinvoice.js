@@ -99,7 +99,12 @@ $(document).ready(function() {
   $("#invoice_year").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#invoice_customer").focus().select();
+      if ($("#invoice_customer").is(":disabled")) {
+        $("#invoice_state").focus();
+      }
+      else {
+        $("#invoice_customer").focus().select();
+      }
     }
     if (event.which==38) {
       event.preventDefault();
@@ -140,8 +145,12 @@ $(document).ready(function() {
     if (event.which==38 && (document.getElementById('invoice_state').selectedIndex==0)) {
       event.preventDefault();
 
-
-      $("#invoice_customer").focus();
+      if ($("#invoice_customer").is(":disabled")) {
+        $("#invoice_year").focus().select();
+      }
+      else {
+        $("#invoice_customer").focus().select();
+      }
 
 
     }
@@ -223,7 +232,10 @@ $(document).ready(function() {
       }
       }
     });
-
+    if (state != "none")
+    {
+      $(".invoice_product_tax_rate").change();
+    }
 
   });
 
@@ -318,6 +330,7 @@ $(document).ready(function() {
       .done(function(resp) {
         if (resp["gkstatus"]==0) {
           $("#invoice_customer").val(resp["delchal"]["delchaldata"]["custid"]);
+          $("#invoice_customer").prop("disabled",true);
           $('#invoice_product_table tbody').empty();
           var totqty = 0;
           $.each(resp.delchal.stockdata.items, function(key, value) {
@@ -423,6 +436,7 @@ $(document).ready(function() {
       })
       .done(function(resp) {
         console.log("success");
+        $("#invoice_customer").prop("disabled",false);
         if (resp["gkstatus"]==0) {
           $('#invoice_product_table tbody').empty();
           $('#invoice_product_table tbody').append('<tr>'+

@@ -56,7 +56,7 @@ $(document).ready(function() {
         $("#invoice_month").val(invdatearray[1]);
         $("#invoice_year").val(invdatearray[2]);
 
-        if (resp.invoicedata.orderid!=null) {
+        if (resp.invoicedata.dcno!=null) {
           dcno =resp.invoicedata.dcno;
           $("#invoice_deliverynote").val(resp.invoicedata.dcno+", "+resp.invoicedata.custname);
         }
