@@ -8,6 +8,7 @@ $(document).ready(function() {
   $("#deliverychallan_edit_year").numeric();
   $('.deliverychallan_edit_product_quantity').numeric({ negative: false});
   $(".deliverychallan_edit_disable").prop("disabled",true);
+  $("#deliverychallan_editprint").hide();
   var custsup  =$("#deliverychallan_edit_customer").find('optgroup').clone();
   var inout ;
 
@@ -58,6 +59,7 @@ $(document).ready(function() {
         $("label[for='deliverychallan_edit_designation']").hide();
         $('#deliverychallan_edit_issuername').hide();
         $('#deliverychallan_edit_designation').hide();
+        $("#deliverychallan_editprint").hide();
       }
       else {
         $("#polabel").hide();
@@ -69,6 +71,7 @@ $(document).ready(function() {
         $("#suppliersgroup").remove();
         $("label[for='deliverychallan_edit_issuername']").show();
         $("label[for='deliverychallan_edit_designation']").show();
+        $("#deliverychallan_editprint").show();
         $('#deliverychallan_edit_issuername').show();
         $('#deliverychallan_edit_designation').show();
         $('#deliverychallan_edit_issuername').val(resp.delchaldata.delchaldata.issuername);
@@ -111,42 +114,7 @@ $(document).ready(function() {
 
   $("#deliverychallan_edit_list").keydown(function(event) {
     if (event.which==13) {
-      if ($("#deliverychallan_edit_list option:selected").val()!='' && event.which=='13') {
-        $("#deliverychallan_edit_product_table > tbody >tr").each(function(i, tr) {
-          var prodval = $("select.product_name", tr).val();
-          $("select.product_name", tr).empty();
-          $.ajax({
-            url: '/deliverychallan?action=getproducts',
-            type: 'POST',
-            dataType: 'json',
-            async : false,
-            beforeSend: function(xhr)
-            {
-              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-            }
-          })
-          .done(function(resp) {
-            console.log("success");
-            if (resp["gkstatus"]==0) {
-              for (product of resp["products"]) {
-                $('select.product_name',tr).append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
-              }
-              $('select.product_name',tr).val(prodval);
-            }
-          })
-          .fail(function() {
-            console.log("error");
-          })
-          .always(function() {
-            console.log("complete");
-          });
-          $('.deliverychallan_edit_product_quantity').numeric({ negative: false});
-        });
-        $(".deliverychallan_edit_disable").prop("disabled",false);
-        $("#deliverychallan_edit_challanno").focus().select();
-        $("#deliverychallan_edit_save").show();
-        $("#deliverychallan_edit_edit").hide();
-      }
+      $("#deliverychallan_editprint").focus();
       event.preventDefault();
     }
   });
@@ -601,5 +569,47 @@ $(document).ready(function() {
       $("#deliverychallan_edit_list").focus();
 });
 }
+});
+
+$("#deliverychallan_editprint").click(function(event) {
+  printset = [];
+  qtytotal =0;
+  for (var i = 0; i < $("#deliverychallan_edit_product_table tbody tr").length; i++) {
+    var obj = {};
+
+    obj.productdesc = $("#deliverychallan_edit_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").text();
+    obj.qty = $("#deliverychallan_edit_product_table tbody tr:eq("+i+") td:eq(1) input").val();
+    qtytotal += +obj.qty;
+    printset.push(obj);
+  }
+  $.ajax({
+    url: '/deliverychallan?action=print',
+    type: 'POST',
+    dataType: 'html',
+    data: {"dcno": $("#deliverychallan_edit_challanno").val(),
+    "custid":$("#deliverychallan_edit_customer option:selected").val(),
+    "dcdate":$("#deliverychallan_edit_month").val()+'-'+$("#deliverychallan_edit_month").val()+'-'+$("#deliverychallan_edit_year").val(),
+    "printset":JSON.stringify(printset),
+    "issuername":$("#deliverychallan_edit_issuername").val(),
+    "designation":$("#deliverychallan_edit_designation").val(),
+    "goid":$("#deliverychallan_edit_godown option:selected").val(),
+    "notetype":$("#deliverychallan_edit_consignment option:selected").text(),
+    "qtytotal":qtytotal,
+    },
+    beforeSend: function(xhr)
+    {
+      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+    }
+  })
+  .done(function(resp) {
+    console.log("success");
+    $('#info').html(resp);
+  })
+  .fail(function() {
+    console.log("error");
+  })
+  .always(function() {
+    console.log("complete");
+  });
 });
 });
