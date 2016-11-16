@@ -151,7 +151,13 @@ def viewvoucher(request):
 
 
 	if result.json()["gkstatus"]==0:
-		return {"projects":projects.json()["gkresult"],"vtype":type,"voucher":vc,"userrole":result.json()["userrole"],"draccounts":draccounts,"craccounts":craccounts}
+
+		if type=="sales" or type=="purchase":
+			invdata = requests.get("http://127.0.0.1:6543/invoice?inv=all", headers=header)
+			if invdata.json()["gkstatus"]==0:
+				return {"projects":projects.json()["gkresult"],"vtype":type,"voucher":vc,"userrole":result.json()["userrole"],"draccounts":draccounts,"craccounts":craccounts,"invoicedata":invdata.json()["gkresult"]}
+		else:
+			return {"projects":projects.json()["gkresult"],"vtype":type,"voucher":vc,"userrole":result.json()["userrole"],"draccounts":draccounts,"craccounts":craccounts,"invoicedata":0}
 	else:
 		return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)
 
@@ -167,6 +173,11 @@ def editvoucher(request):
 		gkdata={"vouchercode":vdetails["vcode"],"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails["projectcode"])}
 	else:
 		gkdata={"vouchercode":vdetails["vcode"],"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":None}
+	if vdetails["vtype"] == "purchase" or vdetails["vtype"] == "sales":
+		if vdetails["invid"] != "":
+			gkdata["invid"] = vdetails["invid"]
+		else:
+			gkdata["invid"] = None
 	if vdetails["delattach"]:
 		gkdata["attachment"]=None
 		gkdata["attachmentcount"]=0

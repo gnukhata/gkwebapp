@@ -41,7 +41,6 @@
   */
   table.table-fixedheader>tbody {
     overflow-y: scroll;
-    height: 20%;
 
   }
   /*
@@ -123,6 +122,10 @@
     <div class="alert alert-danger" id="balance-alert" aria-live="rude" role="alert" hidden>
 
       {% trans %}Totals misbalance!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="invoicebalance-alert" aria-live="rude" role="alert" hidden>
+
+      {% trans %}Voucher total cannot be greater than Invoice total!{% endtrans %}
     </div>
     <div class="alert alert-danger" id="zero-alert" aria-live="rude" role="alert" hidden>
 
@@ -236,7 +239,11 @@
                 </th>
               </tr>
             </thead>
-            <tbody>
+            {% if vtype == "purchase" or vtype == "sales"%}
+            <tbody style="height: 20%;">
+            {% else %}
+            <tbody style="height: 45%;">
+            {% endif %}
               <tr>
                 <td class="col-xs-1">
                   <select class="form-control input-sm crdr" disabled>
