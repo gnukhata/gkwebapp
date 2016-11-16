@@ -12,6 +12,10 @@ $(document).ready(function() {
   $("#invprint").click(function(event) {
     window.print();
   });
+
+  $("#invback").click(function(event) {
+    $("#invoice").click();
+  });
   (function() {
 var beforePrint = function() {
   console.log("beforeprint");
