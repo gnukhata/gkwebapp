@@ -65,7 +65,10 @@ def saveinvoice(request):
 		invoicedata["dcid"] = request.params["dcid"]
 	invoicewholedata = {"invoice":invoicedata,"stock":stock}
 	result=requests.post("http://127.0.0.1:6543/invoice",data=json.dumps(invoicewholedata),headers=header)
-	return {"gkstatus":result.json()["gkstatus"]}
+	if result.json()["gkstatus"]==0:
+		return {"gkstatus":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
+	else:
+		return {"gkstatus":result.json()["gkstatus"]}
 
 
 @view_config(route_name="invoice",request_param="action=getdeliverynote",renderer="json")
@@ -104,3 +107,14 @@ def Invoicedelete(request):
 	header={"gktoken":request.headers["gktoken"]}
 	invoicedata = requests.delete("http://127.0.0.1:6543/invoice",data =json.dumps({"invid":request.params["invid"],"cancelflag":1,"icflag":9}), headers=header)
 	return {"gkstatus": invoicedata.json()["gkstatus"]}
+
+@view_config(route_name="invoice",request_param="action=print",renderer="gkwebapp:templates/printinvoice.jinja2")
+def Invoiceprint(request):
+	header={"gktoken":request.headers["gktoken"]}
+	org = requests.get("http://127.0.0.1:6543/organisation", headers=header)
+	cust = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(request.params["custid"])), headers=header)
+	tableset = json.loads(request.params["printset"])
+	return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"cust":cust.json()["gkresult"],
+	"tableset":tableset,"invoiceno":request.params["invoiceno"],"invoicedate":request.params["invoicedate"],"dcno":request.params["dc"],
+	"issuername":request.params["issuername"],"designation":request.params["designation"],"subtotal":request.params["subtotal"],
+	"taxtotal":request.params["taxtotal"],"gtotal":request.params["gtotal"]}

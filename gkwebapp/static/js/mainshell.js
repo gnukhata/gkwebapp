@@ -29,7 +29,7 @@ Contributors:
 $(document).ready(function(){
   $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');
   console.log($("#navhead").height());
-
+  var oninvoice = 0;
   $('.modal-backdrop').remove();
 
   $(document).keydown(function(event) {

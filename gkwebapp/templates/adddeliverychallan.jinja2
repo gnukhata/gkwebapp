@@ -37,7 +37,7 @@
 
             <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
           </div>
-            
+
             <div class="form-group">
               <label for="deliverychallan_challanno">{% trans %}Note No{% endtrans %}:</label>
               <input class="form-control input-sm" id="deliverychallan_challanno" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a">
@@ -173,6 +173,9 @@
 
         <button class="btn btn-success btn-sm" id="deliverychallan_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save anywhere on the current screen">{% trans %}Save{% endtrans %}</button>
         <button class="btn btn-warning btn-sm" id="deliverychallan_reset">{% trans %}Reset{% endtrans %}</button>
+        {% if gkstatus=="out" %}
+        <button id="deliverychallan_saveprint" class="btn btn-primary btn-sm" >{% trans %}Save & Print{% endtrans %}</button>
+        {% endif %}
       </div>
       </div>
     </div>

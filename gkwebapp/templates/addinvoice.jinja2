@@ -61,15 +61,15 @@
                 {% trans %}Delivery Note{% endtrans %} :
               </label>
               <select class="form-control input-sm" id="invoice_deliverynote" accesskey="">
-                <option value="" selected>None</option>
+                <option value="" dcno = "" selected>None</option>
                 {% for deliverynote in deliverynotes %}
                 {% if gkstatus=="in" %}
                 {% if deliverynote['csflag']==19 %}
-                <option value="{{deliverynote['dcid']}}">{{deliverynote["dcno"]}}, {{deliverynote["custname"]}}</option>
+                <option value="{{deliverynote['dcid']}}" dcno = "{{deliverynote["dcno"]}}">{{deliverynote["dcno"]}}, {{deliverynote["custname"]}}</option>
                 {% endif %}
                 {% else %}
                 {% if deliverynote['csflag']==3 %}
-                <option value="{{deliverynote['dcid']}}">{{deliverynote["dcno"]}}, {{deliverynote["custname"]}}</option>
+                <option value="{{deliverynote['dcid']}}" dcno = "{{deliverynote["dcno"]}}">{{deliverynote["dcno"]}}, {{deliverynote["custname"]}}</option>
                 {% endif %}
                 {% endif %}
                 {% endfor %}
@@ -84,7 +84,11 @@
               <input class="form-control input-sm" id="invoice_challanno" placeholder="{% trans %}Enter invoice no{% endtrans %}" accesskey="a">
             </div>
           </div>
+          {% if gkstatus == "in" %}
+          <div class="col-md-3">
+          {% else %}
           <div class="col-md-2">
+          {% endif %}
 
             <div class="form-group">
               <label for="invoice_date">{% trans %}Date{% endtrans %} :</label>
@@ -290,6 +294,9 @@
         <div class="container-fluid">
           <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save">{% trans %}Save{% endtrans %}</button>
           <button id="invoice_reset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+          {% if gkstatus=="out" %}
+          <button id="invoice_saveprint" class="btn btn-primary btn-sm" >{% trans %}Save & Print{% endtrans %}</button>
+          {% endif %}
         </div>
       </div>
       <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">

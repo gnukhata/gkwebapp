@@ -1,0 +1,234 @@
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>GNUKhata</title>
+    <style>
+    @page {
+      size: 21cm 29.7cm;
+      margin: 10mm 3mm 15mm 10mm; /* change the margins as you want them to be. */
+    }
+    td {
+      font-size: 75%;
+      padding: 2px !important;
+      margin:  0 !important;
+    }
+    body {
+       background-image: none;
+   }
+    th {
+      font-size: 85%;
+      padding: 3px !important;
+      margin:  0 !important;
+    }
+		table { page-break-inside:auto }
+		tr    { page-break-inside:avoid; page-break-after:auto }
+    thead { display: table-header-group; }
+    tfoot { display: table-footer-group; }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+
+      <div class="col-xs-6">
+          <h4>{{org["orgname"]}}</br>
+            <small>
+              {% if org["orgaddr"]!='' %}
+              {{org["orgaddr"]}},
+              {% endif %}
+              {% if org["orgcity"]!='' %}
+              </br>{{org["orgcity"]}} - {{org["orgpincode"]}},
+              {% endif %}
+              {% if org["orgstate"]!='' %}
+            </br>{{org["orgstate"]}}.
+              {% endif %}
+              {% if org["orgtelno"]!='' %}
+            </br>Contact No.: {{org["orgtelno"]}}
+              {% endif %}
+              {% if org["orgemail"]!='' %}
+              <br>Email : {{org["orgemail"]}}
+              {% endif %}
+              {% if org["orgfax"] %}
+              <br>Fax : {{org["orgfax"]}}
+              {% endif %}
+              {% if org["orgwebsite"]!='' %}
+              <br>Website : {{org["orgwebsite"]}}
+              {% endif %}
+          <br></small></h4>
+          <hr style="border-color:grey;margin-top:0px; margin-bottom:0px;">
+        To,
+        <h4>{{cust["custname"]}}</br><small>{{cust["custaddr"]}},</br>{{cust["state"]}}
+          {% if cust["custphone"]!='' %}
+          <br>Contact No.: {{cust["custphone"]}}
+          {% endif %}
+          {% if cust["custemail"]!='' %}
+          <br>Email : {{cust["custemail"]}}
+          {% endif %}
+        </small></h4>
+
+      </div>
+      <div class="col-sm-offset-1 col-sm-5">
+        <h2 class="text-right">Invoice</h2><br>
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td class="col-xs-5">
+                  <strong>Invoice No. </strong>
+              </td>
+              <td class="text-right">
+                {{invoiceno}}
+              </td>
+            </tr>
+            <tr>
+                <td class="col-xs-5">
+                  <strong>Date</strong>
+                </td>
+                <td class="text-right">
+                  {{invoicedate}}
+                </td>
+            </tr>
+            <tr>
+              <td class="col-xs-5">
+                <strong>VAT No.</strong>
+              </td>
+              <td class="text-right">
+                {{org["orgmvat"]}}
+              </td>
+            </tr>
+            <tr>
+              <td class="col-xs-5">
+                <strong>Delivery note.</strong>
+              </td>
+              <td class="text-right">
+                {{dcno}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-inline col-xs-12">
+        <div class="form-group">
+          <label for="subject" id="sublabel">Subject :</label>
+          <input type="text" class="form-control hidden-print" id="subject" placeholder="">
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-xs-12">
+
+        <table class="table table-bordered table-condensed" style="margin-bottom:0px;">
+            <thead class="bg-primary" style="border-bottom-style:double; border-top-style:double;">
+              <tr>
+                <th>
+                  Description
+                </th>
+                <th class="text-right">
+                  Qty
+                </th>
+                <th class="text-right">
+                  Price per Unit
+                </th>
+                <th class="text-right">
+                  Tax Rate
+                </th>
+                <th class="text-right">
+                  Tax Amount
+                </th>
+                <th class="text-right">
+                  Total
+                </th>
+              </tr>
+            </thead>
+          <tbody>
+            {% for set in tableset %}
+            <tr>
+              <td>
+                {{set["productdesc"]}}
+              </td>
+              <td class="text-right">
+                {{set["qty"]}}
+              </td>
+              <td class="text-right">
+                {{set["ppu"]}}
+              </td>
+              <td class="text-right">
+                {{set["taxrate"]}}
+              </td>
+              <td class="text-right">
+                {{set["taxamt"]}}
+              </td>
+              <td class="text-right">
+                {{set["rowtotal"]}}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <hr style="border-color:grey;margin-top:0px; margin-bottom:0px;">
+      </div>
+    </div>
+
+
+      <div class="row">
+      <div class="col-xs-7">
+        <label for="notes" class="hidden-print">Notes :</label>
+        <textarea name="name" row='3' id="notes" class="form-control hidden-print" id="notes"></textarea>
+        <p class="visible-print" id = "notespara">
+        </p>
+      </div>
+      <div class="col-xs-5 ">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td>
+                Subtotal
+              </td>
+              <td class="text-right">
+                {{subtotal}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Tax amount
+              </td>
+              <td class="text-right">
+                {{taxtotal}}
+              </td>
+            </tr>
+            <tr>
+              <th>
+                TOTAL
+              </th>
+              <td class="text-right">
+                {{gtotal}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-xs-6">
+          <strong><i>Thank you for your business!</i></strong>
+        </div>
+        <div class="text-right col-xs-6">
+          <strong>{{issuername}}</strong>
+          {% if designation!='' %}
+          <i>({{designation}})</i>
+          {% endif %}
+        </div>
+      </div>
+      <span style="margin:auto; display:table;">
+    		<button type="button" class="btn btn-sm btn-danger hidden-print" id="invback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+    		<button type="button" class="btn btn-sm btn-info hidden-print" id="invprint" >{% trans %}Prin<u>t</u>{% endtrans %}</button>
+    	</span>
+    </div>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/printinvoice.js')}}"></script>
+  </body>
+</html>

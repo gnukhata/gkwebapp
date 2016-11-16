@@ -120,3 +120,20 @@ def deletedelchal(request):
 	deldata = {"dcid":int(request.params["dcid"]),"cancelflag":1}
 	result = requests.delete("http://127.0.0.1:6543/delchal",data=json.dumps(deldata), headers=header)
 	return {"gkstatus": result.json()["gkstatus"]}
+
+@view_config(route_name="deliverychallan",request_param="action=print",renderer="gkwebapp:templates/printdeliverychallan.jinja2")
+def deliveryprint(request):
+	header={"gktoken":request.headers["gktoken"]}
+	print request.params
+	org = requests.get("http://127.0.0.1:6543/organisation", headers=header)
+	cust = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(request.params["custid"])), headers=header)
+	if request.params["goid"] != '':
+		godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
+		godowndata = godown.json()["gkresult"]
+	else:
+		godowndata = ''
+	tableset = json.loads(request.params["printset"])
+	return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"cust":cust.json()["gkresult"],
+	"tableset":tableset,"dcno":request.params["dcno"],"dcdate":request.params["dcdate"],"dcno":request.params["dcno"],
+	"issuername":request.params["issuername"],"designation":request.params["designation"],"godown":godowndata,
+	"notetype":request.params["notetype"],"qtytotal":request.params["qtytotal"]}

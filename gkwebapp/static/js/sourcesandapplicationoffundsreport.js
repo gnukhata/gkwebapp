@@ -27,7 +27,7 @@ Contributors:
 */
 
 $(document).ready(function() {
-
+  oninvoice = 0;
   $("#grpbtn").hide();
   $("#realprintbalance").hide();
   var percentwid = 100*(($("table").width()-12)/$("table").width());
