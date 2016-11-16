@@ -354,6 +354,21 @@ $.ajax({
 });
 });
 
+$("#backuporg").click(function(e){
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/backupfile', true);
+    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    xhr.responseType = 'blob';
+    xhr.onload = function(e) {
+    if (this.status == 200) {
+    // get binary data as a response
+      var blob = this.response;
+      var url = window.URL.createObjectURL(blob);
+      window.location.assign(url)
+    }
+  };
+    xhr.send();
+  });
 
 $("#product").click(function (e){
 $.ajax({
