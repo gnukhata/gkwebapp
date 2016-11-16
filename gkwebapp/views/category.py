@@ -185,10 +185,7 @@ def listofgodownssspreadsheet(request):
 		sheet.getCell(0, row).stringValue(category["srno"])
 		sheet.getCell(1, row).stringValue(category["categoryname"])
 		sheet.getCell(2, row).stringValue(category["parentcategory"])
-		if category["categorystatus"] == "Active":
-			sheet.getCell(3, row).stringValue("Yes")
-		else:
-			sheet.getCell(3, row).stringValue("No")
+		sheet.getCell(3, row).stringValue(category["categorystatus"])
 		row += 1
 
 	ods.save("response.ods")

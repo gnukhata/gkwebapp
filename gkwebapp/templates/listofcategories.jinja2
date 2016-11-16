@@ -54,7 +54,7 @@
           {% trans %}Subcategory Of{% endtrans %}
         </th>
         <th class="col-xs-1" >
-          {% trans %}Stock{% endtrans %}
+          {% trans %}Status{% endtrans %}
         </th>
       </tr>
     </thead>
@@ -73,11 +73,11 @@
         </td>
         {% if record["categorystatus"] == "Active" %}
         <td class="col-xs-1 text-success">
-          Yes
+          {{record["categorystatus"]}}
         </td>
         {% else %}
         <td class="col-xs-1 text-danger">
-          No
+          {{record["categorystatus"]}}
         </td>
         {% endif %}
       </tr>
