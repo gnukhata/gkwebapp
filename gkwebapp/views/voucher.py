@@ -45,18 +45,23 @@ def showvoucher(request):
 		result = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s"%(type), headers=header)
 		projects = requests.get("http://127.0.0.1:6543/projects", headers=header)
 		if result.json()["gkstatus"]==0:
-			return render_to_response("gkwebapp:templates/addvoucher.jinja2",{"lastdetails":lastdetails,"draccounts":result.json()["gkresult"],"craccounts":result.json()["gkresult"],"projects":projects.json()["gkresult"],"vtype":type},request=request)
+			return render_to_response("gkwebapp:templates/addvoucher.jinja2",{"lastdetails":lastdetails,"draccounts":result.json()["gkresult"],"craccounts":result.json()["gkresult"],"projects":projects.json()["gkresult"],"vtype":type,"invoicedata":0},request=request)
 	elif type=="creditnote" or type=="debitnote" or type=="salesreturn" or type=="purchasereturn":
 		result = requests.get("http://127.0.0.1:6543/accountsbyrule?type=journal", headers=header)
 		projects = requests.get("http://127.0.0.1:6543/projects", headers=header)
 		if result.json()["gkstatus"]==0:
-			return render_to_response("gkwebapp:templates/addvoucher.jinja2",{"lastdetails":lastdetails,"draccounts":result.json()["gkresult"],"craccounts":result.json()["gkresult"],"projects":projects.json()["gkresult"],"vtype":type},request=request)
+			return render_to_response("gkwebapp:templates/addvoucher.jinja2",{"lastdetails":lastdetails,"draccounts":result.json()["gkresult"],"craccounts":result.json()["gkresult"],"projects":projects.json()["gkresult"],"vtype":type,"invoicedata":0},request=request)
 	else:
 		drresult = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s&side=Dr"%(type), headers=header)
 		crresult = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s&side=Cr"%(type), headers=header)
 		projects = requests.get("http://127.0.0.1:6543/projects", headers=header)
 		if drresult.json()["gkstatus"]==0 and crresult.json()["gkstatus"]==0:
-			return render_to_response("gkwebapp:templates/addvoucher.jinja2",{"lastdetails":lastdetails,"draccounts":drresult.json()["gkresult"],"craccounts":crresult.json()["gkresult"],"projects":projects.json()["gkresult"],"vtype":type},request=request)
+			if type =="purchase" or type =="sales":
+				invdata = requests.get("http://127.0.0.1:6543/invoice?inv=all", headers=header)
+				if invdata.json()["gkstatus"]==0:
+					return render_to_response("gkwebapp:templates/addvoucher.jinja2",{"lastdetails":lastdetails,"draccounts":drresult.json()["gkresult"],"craccounts":crresult.json()["gkresult"],"projects":projects.json()["gkresult"],"vtype":type,"invoicedata":invdata.json()["gkresult"]},request=request)
+			else:
+				return render_to_response("gkwebapp:templates/addvoucher.jinja2",{"lastdetails":lastdetails,"draccounts":drresult.json()["gkresult"],"craccounts":crresult.json()["gkresult"],"projects":projects.json()["gkresult"],"vtype":type,"invoicedata":0},request=request)
 
 @view_config(route_name="getcjaccounts", renderer="json")
 def cjaccounts(request):
@@ -92,6 +97,11 @@ def addvoucher(request):
 		gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails["projectcode"])}
 	else:
 		gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"]}
+	if vdetails["vtype"] == "purchase" or vdetails["vtype"] == "sales":
+		if vdetails["invid"] != "":
+			gkdata["invid"] = vdetails["invid"]
+		else:
+			gkdata["invid"] = None
 	try:
 		files = {}
 		count = 0

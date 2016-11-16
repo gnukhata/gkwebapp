@@ -58,6 +58,23 @@ $(document).ready(function() {
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
 
+
+$(document).off("change","#invsel").on('change', '#invsel', function(event) {
+  event.preventDefault();
+  /* Act on the event */
+  var inv = $("#invsel option:selected").attr("total");
+  if ($.trim(inv)!="")
+  {
+  $("#invtotal").val(parseFloat(inv).toFixed(2));
+  }
+  else
+  {
+  $("#invtotal").val(parseFloat(0).toFixed(2));
+  }
+});
+
+
+
   //Calculates the total dr and cr amout when a change event is fired.
   $(document).off("change",".dramt").on("change", ".dramt", function() {
     drsum=0;
@@ -235,9 +252,36 @@ $(document).ready(function() {
     }
   });
 
+  $("#invsel").keydown(function(event) {
+    if (event.which==188 && event.ctrlKey) {
+      $('#vyear').focus().select();
+      event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+      $('#vtable tbody tr:first select:enabled').focus();
+      event.preventDefault();
+    }
+  });
+
+
+$("#invsel").keyup(function(event) {
+  /* Act on the event */
+  if (event.which==13) {
+
+    $('#vtable tbody tr:first select:enabled').focus();
+  }
+});
+
   $('#vyear').keyup(function(event) {
     if(event.which==13 && $('#vyear').val()!=""){
-      $('#vtable tbody tr:first td:eq(1) select').focus();
+      if ($('#vtype').val()=="sales" || $('#vtype').val()=="purchase")
+      {
+        $("#invsel").focus();
+      }
+      else
+      {
+        $('#vtable tbody tr:first select:enabled').focus();
+      }
     }
     if (event.which==38) {
       $("#vmonth").select().focus();
@@ -252,7 +296,14 @@ $(document).ready(function() {
       event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-      $('#vtable tbody tr:first select:enabled').focus();
+      if ($('#vtype').val()=="sales" || $('#vtype').val()=="purchase")
+      {
+        $("#invsel").focus();
+      }
+      else
+      {
+        $('#vtable tbody tr:first select:enabled').focus();
+      }
       event.preventDefault();
     }
   });
@@ -487,7 +538,15 @@ $(document).ready(function() {
       }
       if (curindex==0) {
         event.preventDefault();
-        $("#vyear").focus().select();
+        if ($('#vtype').val()=="sales" || $('#vtype').val()=="purchase")
+        {
+          $("#invsel").focus();
+        }
+        else
+        {
+          $("#vyear").focus().select();
+
+        }
       }
     }
     if (event.which==188 && event.ctrlKey) {
@@ -495,7 +554,15 @@ $(document).ready(function() {
       event.preventDefault();
       if (curindex==0) {
         event.preventDefault();
-        $("#vyear").focus().select();
+        if ($('#vtype').val()=="sales" || $('#vtype').val()=="purchase")
+        {
+          $("#invsel").focus();
+        }
+        else
+        {
+          $("#vyear").focus().select();
+
+        }
       }
       if(curindex==1)
       {
@@ -1144,6 +1211,27 @@ $(document).ready(function() {
     var filelist = [];
     for (var i = 0; i < files.length; i++) {
       form_data.append("file"+i,files[i])
+    }
+    if ($('#vtype').val()=="sales" || $('#vtype').val()=="purchase")
+    {
+      details.invid = $("#invsel option:selected").val();
+      var invoicetotal= $("#invtotal").val();
+      var vtotal= $('#vtable tfoot tr:last td:eq(2) input').val();
+      if (details.invid!="")
+      {
+
+      if (vtotal>invoicetotal)
+      {
+        $('#vtable tbody tr:first td:eq(1) input').focus();
+        $('#vtable tbody tr:first td:eq(1) input').select();
+        $("#invoicebalance-alert").alert();
+        $("#invoicebalance-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#invoicebalance-alert").hide();
+        });
+        $('#vtable tbody tr:first input:enabled').focus().select();
+        return false;
+      }
+    }
     }
     form_data.append("vdetails",JSON.stringify(details));
     form_data.append("transactions",JSON.stringify(output));

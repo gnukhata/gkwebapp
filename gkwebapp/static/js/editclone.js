@@ -1,21 +1,21 @@
 /*
 Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-  This file is part of GNUKhata:A modular,robust and Free Accounting System.
+This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
-  GNUKhata is Free Software; you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as
-  published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+GNUKhata is Free Software; you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation; either version 3 of
+the License, or (at your option) any later version.and old.stockflag = 's'
 
-  GNUKhata is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU Affero General Public License for more details.
+GNUKhata is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-  You should have received a copy of the GNU Affero General Public
-  License along with GNUKhata (COPYING); if not, write to the
-  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-  Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+You should have received a copy of the GNU Affero General Public
+License along with GNUKhata (COPYING); if not, write to the
+Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
 
 
 Contributors:
@@ -26,6 +26,19 @@ Contributors:
 
 $(document).ready(function()
 {
+  if ($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase")
+  {
+    var inv = $("#invsel option:selected").attr("total");
+    if ($.trim(inv)!="")
+    {
+      $("#invtotal").val(parseFloat(inv).toFixed(2));
+    }
+    else
+    {
+      $("#invtotal").val(parseFloat(0).toFixed(2));
+    }
+
+  }
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   $("#vctable").hide();
@@ -46,12 +59,26 @@ $(document).ready(function()
   var percentwid = 100*(($("#vctable").width()-1)/$("#vctable").width());
   $('#vctable thead').width(percentwid+"%");
 
-if (sessionStorage.booksclosedflag==1) {
-  $("#lock").remove();
-  $("#edit").remove();
-  $("#clone").remove();
-  $("#delete").remove();
-}
+  if (sessionStorage.booksclosedflag==1) {
+    $("#lock").remove();
+    $("#edit").remove();
+    $("#clone").remove();
+    $("#delete").remove();
+  }
+  $(document).off("change","#invsel").on('change', '#invsel', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    var inv = $("#invsel option:selected").attr("total");
+    if ($.trim(inv)!="")
+    {
+      $("#invtotal").val(parseFloat(inv).toFixed(2));
+    }
+    else
+    {
+      $("#invtotal").val(parseFloat(0).toFixed(2));
+    }
+  });
+
 
   var demodrsum = 0;
   var democrsum = 0;
@@ -84,6 +111,7 @@ if (sessionStorage.booksclosedflag==1) {
 
   $("#demovctable").find("input,select,textarea,button").prop("disabled",true);
   $("#vno").prop('disabled', true);
+  $("#invsel").prop('disabled', true);
   $(".vdate").prop('disabled', true);
   $("#narr").prop('disabled', true);
   $("#project").prop('disabled', true);
@@ -150,7 +178,7 @@ if (sessionStorage.booksclosedflag==1) {
     {
       $("#edit").focus();
     }
-      /* Act on the event */
+    /* Act on the event */
   });
 
 
@@ -169,7 +197,7 @@ if (sessionStorage.booksclosedflag==1) {
     {
       $("#clone").focus();
     }
-      /* Act on the event */
+    /* Act on the event */
   });
 
   $("#clone").keydown(function(event)
@@ -243,6 +271,7 @@ if (sessionStorage.booksclosedflag==1) {
     $("#vno").prop('disabled', true);
     $(".ttl").prop('disabled', true);
     $(".vdate").prop('disabled', false);
+    $("#invsel").prop('disabled', false);
     $("#vdate").focus().select();
     $("#vctable").show();
     $("#demovctable").hide();
@@ -270,6 +299,7 @@ if (sessionStorage.booksclosedflag==1) {
     $(".ttl").prop('disabled', true);
     $("#save").show();
     $("#vno").prop('disabled', false);
+    $("#invsel").prop('disabled', false);
     $("#vno").focus().select();
     $("#vctable").show();
     $("#demovctable").hide();
@@ -460,8 +490,8 @@ if (sessionStorage.booksclosedflag==1) {
 
   $('#vno').keydown(function(event) {
     if (event.which==190 && event.ctrlKey) {
-        $("#vdate").focus().select();
-        event.preventDefault();
+      $("#vdate").focus().select();
+      event.preventDefault();
     }
   });
 
@@ -484,12 +514,12 @@ if (sessionStorage.booksclosedflag==1) {
   });
   $('#vdate').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-        $('#vno').focus().select();
-        event.preventDefault();
+      $('#vno').focus().select();
+      event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#vmonth').focus().select();
-        event.preventDefault();
+      $('#vmonth').focus().select();
+      event.preventDefault();
     }
   });
 
@@ -504,12 +534,12 @@ if (sessionStorage.booksclosedflag==1) {
 
   $('#vmonth').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-        $('#vdate').focus().select();
-        event.preventDefault();
+      $('#vdate').focus().select();
+      event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#vyear').focus().select();
-        event.preventDefault();
+      $('#vyear').focus().select();
+      event.preventDefault();
     }
   });
 
@@ -521,14 +551,59 @@ if (sessionStorage.booksclosedflag==1) {
       $("#vmonth").select().focus();
     }
   });
-  $('#vyear').keydown(function(event) {
+  $("#invsel").keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-        $('#vmonth').focus().select();
-        event.preventDefault();
+      $('#vyear').focus().select();
+      event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#vctable tbody tr:first select:enabled:first').focus();
-        event.preventDefault();
+      $('#vctable tbody tr:first select:enabled').focus();
+      event.preventDefault();
+    }
+  });
+
+
+  $("#invsel").keyup(function(event) {
+    /* Act on the event */
+    if (event.which==13) {
+
+      $('#vctable tbody tr:first select:enabled').focus();
+    }
+  });
+
+  $('#vyear').keyup(function(event) {
+    if(event.which==13 && $('#vyear').val()!=""){
+      if ($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase")
+      {
+        $("#invsel").focus();
+      }
+      else
+      {
+        $('#vctable tbody tr:first select:enabled').focus();
+      }
+    }
+    if (event.which==38) {
+      $("#vmonth").select().focus();
+    }
+    if (event.which==40) {
+      $("#vctable tbody tr:first select:enabled)").select().focus();
+    }
+  });
+  $('#vyear').keydown(function(event) {
+    if (event.which==188 && event.ctrlKey) {
+      $('#vmonth').focus().select();
+      event.preventDefault();
+    }
+    if (event.which==190 && event.ctrlKey) {
+      if ($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase")
+      {
+        $("#invsel").focus();
+      }
+      else
+      {
+        $('#vctable tbody tr:first select:enabled').focus();
+      }
+      event.preventDefault();
     }
   });
 
@@ -539,26 +614,26 @@ if (sessionStorage.booksclosedflag==1) {
   });
   $('#project').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-        $('#vctable tbody tr:last input:enabled').focus().select();
-        event.preventDefault();
+      $('#vctable tbody tr:last input:enabled').focus().select();
+      event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#narr').focus().select();
-        event.preventDefault();
+      $('#narr').focus().select();
+      event.preventDefault();
     }
     if (event.which==13) {
       event.preventDefault();
     }
   });
 
-  $('#narr').keydown(function(event) {
+  $('#narr').keyup(function(event) {
     if (event.which==188 && event.ctrlKey) {
-        $('#project').focus().select();
-        event.preventDefault();
+      $('#project').focus().select();
+      event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#save').focus();
-        event.preventDefault();
+      $('#save').focus();
+      event.preventDefault();
     }
     if (event.which==13) {
       $('#save').click();
@@ -568,8 +643,8 @@ if (sessionStorage.booksclosedflag==1) {
 
   $('#save').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-        $('#narr').focus().select();
-        event.preventDefault();
+      $('#narr').focus().select();
+      event.preventDefault();
     }
   });
 
@@ -665,17 +740,25 @@ if (sessionStorage.booksclosedflag==1) {
       }
       if (curindex==0) {
         event.preventDefault();
-        $("#vyear").focus().select();
+        if ($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase")
+        {
+          $("#invsel").focus();
+        }
+        else
+        {
+          $("#vyear").focus().select();
+
+        }
       }
     }
     if (event.which==188 && event.ctrlKey) {
-        $('#vctable tbody tr:eq('+curindex+') td:eq(0) select').focus();
-        event.preventDefault();
+      $('#vctable tbody tr:eq('+curindex+') td:eq(0) select').focus();
+      event.preventDefault();
 
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#vctable tbody tr:eq('+curindex+') input:enabled').focus().select();
-        event.preventDefault();
+      $('#vctable tbody tr:eq('+curindex+') input:enabled').focus().select();
+      event.preventDefault();
     }
   });
   $(document).off("keydown",".crdr").on("keydown",".crdr",function(event){
@@ -698,17 +781,25 @@ if (sessionStorage.booksclosedflag==1) {
       event.preventDefault();
     }
     if (event.which==188 && event.ctrlKey) {
-        if (curindex == 0) {
+      if (curindex == 0) {
+        if ($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase")
+        {
+          $("#invsel").focus();
+        }
+        else
+        {
           $("#vyear").focus().select();
+
         }
-        else{
-          $('#vctable tbody tr:eq('+previndex+') input:enabled').focus().select();
-          event.preventDefault();
-        }
+      }
+      else{
+        $('#vctable tbody tr:eq('+previndex+') input:enabled').focus().select();
+        event.preventDefault();
+      }
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#vctable tbody tr:eq('+curindex+') td:eq(1) select').focus();
-        event.preventDefault();
+      $('#vctable tbody tr:eq('+curindex+') td:eq(1) select').focus();
+      event.preventDefault();
     }
   });
   $(document).off("keydown",".cramt").on("keydown",".cramt",function(event){
@@ -730,15 +821,15 @@ if (sessionStorage.booksclosedflag==1) {
       }
     }
     if (event.which==188 && event.ctrlKey) {
-        $('#vctable tbody tr:eq('+curindex+') td:eq(1) select').focus();
-        event.preventDefault();
+      $('#vctable tbody tr:eq('+curindex+') td:eq(1) select').focus();
+      event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#vctable tbody tr:eq('+nextindex+') select:enabled:first').focus();
-        event.preventDefault();
-        if (curindex==lastindex) {
-          $("#project").focus();
-        }
+      $('#vctable tbody tr:eq('+nextindex+') select:enabled:first').focus();
+      event.preventDefault();
+      if (curindex==lastindex) {
+        $("#project").focus();
+      }
     }
   });
   $(document).off("keydown",".dramt").on("keydown",".dramt",function(event){
@@ -759,15 +850,15 @@ if (sessionStorage.booksclosedflag==1) {
       }
     }
     if (event.which==188 && event.ctrlKey) {
-        $('#vctable tbody tr:eq('+curindex+') td:eq(1) select').focus();
-        event.preventDefault();
+      $('#vctable tbody tr:eq('+curindex+') td:eq(1) select').focus();
+      event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-        $('#vctable tbody tr:eq('+nextindex+') select:enabled:first').focus();
-        event.preventDefault();
-        if (curindex==lastindex) {
-          $("#project").focus();
-        }
+      $('#vctable tbody tr:eq('+nextindex+') select:enabled:first').focus();
+      event.preventDefault();
+      if (curindex==lastindex) {
+        $("#project").focus();
+      }
     }
   });
 
@@ -1107,40 +1198,40 @@ if (sessionStorage.booksclosedflag==1) {
     }
   });
 
-$("#delete").click(function(event) {
-  /* Act on the event */
-  var cnf = confirm("Are you sure?");
-  if (cnf) {
+  $("#delete").click(function(event) {
+    /* Act on the event */
+    var cnf = confirm("Are you sure?");
+    if (cnf) {
 
-    $.ajax({
-      url: '/deletevoucher',
-      type: 'POST',
-      datatype: 'json',
-      data: {vcode: $("#vcode").val()},
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-      },
-    })
-    .done(function(jsonobj) {
-      if(jsonobj["gkstatus"]==0){
-        $('#myModal').modal('hide');
+      $.ajax({
+        url: '/deletevoucher',
+        type: 'POST',
+        datatype: 'json',
+        data: {vcode: $("#vcode").val()},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      })
+      .done(function(jsonobj) {
+        if(jsonobj["gkstatus"]==0){
+          $('#myModal').modal('hide');
 
-      }
-      else {
-        $("#notran-del-alert").alert();
-        $("#notran-del-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#notran-del-alert").hide();
-        });
-      }
-    });
+        }
+        else {
+          $("#notran-del-alert").alert();
+          $("#notran-del-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#notran-del-alert").hide();
+          });
+        }
+      });
 
-  }
-  else {
-    $("#delete").focus();
-  }
+    }
+    else {
+      $("#delete").focus();
+    }
 
-});
+  });
 
   $('#save').click(function(event) {
     var allow = true;
@@ -1243,86 +1334,107 @@ $("#delete").click(function(event) {
     for (var i = 0; i < files.length; i++) {
       form_data.append("file"+i,files[i])
     }
-      if(ecflag=="clone")
+    if ($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase")
+    {
+      details.invid = $("#invsel option:selected").val();
+      var invoicetotal= $("#invtotal").val();
+      var vtotal= $('#vctable tfoot tr:last td:eq(2) input').val();
+      if (details.invid!="")
       {
-        form_data.append("vdetails",JSON.stringify(details));
-        form_data.append("transactions",JSON.stringify(output));
-        $.ajax({
-          type: "POST",
-          url: "/addvoucher",
-          global: false,
-          contentType: false,
-          cache: false,
-          processData: false,
-          async: false,
-          datatype: "json",
-          data: form_data,
-          beforeSend: function(xhr)
-          {
-            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-          },
-          success: function(resp)
-          {
-            if(resp.gkstatus){
 
-              $("#myModal").modal('hide');
-              $('.modal-backdrop').remove();
-              $("tbody tr:eq("+$("#modalindex").val()+")").dblclick();
-            }
-            else {
-              $("#notran-clone-alert").alert();
-              $("#notran-clone-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#notran-clone-alert").hide();
-              });
-            }
-
-          }
-        });
-      }
-      else if (ecflag=="edit")
-      {
-        if ($("#removeattach").is(":checked")) {
-            details.delattach = true
+        if (vtotal>invoicetotal)
+        {
+          $('#vctable tbody tr:first td:eq(1) input').focus();
+          $('#vctable tbody tr:first td:eq(1) input').select();
+          $("#invoicebalance-alert").alert();
+          $("#invoicebalance-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#invoicebalance-alert").hide();
+          });
+          $('#vctable tbody tr:first input:enabled').focus().select();
+          return false;
         }
-        else {
-          details.delattach = false
-        }
-        details.vcode=$('#vcode').val();
-        form_data.append("vdetails",JSON.stringify(details));
-        form_data.append("transactions",JSON.stringify(output));
-        $.ajax({
-          type: "POST",
-          url: "/editvoucher",
-          global: false,
-          contentType: false,
-          cache: false,
-          processData: false,
-          async: false,
-          datatype: "json",
-          data: form_data,
-          beforeSend: function(xhr)
-          {
-            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-          },
-          success: function(resp)
-          {
-            if(resp.gkstatus){
-
-              $("#myModal").modal('hide');
-              $('.modal-backdrop').remove();
-              $("tbody tr:eq("+$("#modalindex").val()+")").dblclick();
-            }
-            else {
-              $("#notran-edit-alert").alert();
-              $("#notran-edit-alert").fadeTo(2250, 500).slideUp(500, function(){
-
-                $("#notran-edit-alert").hide();
-              });
-            }
-
-          }
-        });
       }
+    }
+    if(ecflag=="clone")
+    {
+      form_data.append("vdetails",JSON.stringify(details));
+      form_data.append("transactions",JSON.stringify(output));
+      $.ajax({
+        type: "POST",
+        url: "/addvoucher",
+        global: false,
+        contentType: false,
+        cache: false,
+        processData: false,
+        async: false,
+        datatype: "json",
+        data: form_data,
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          if(resp.gkstatus){
+
+            $("#myModal").modal('hide');
+            $('.modal-backdrop').remove();
+            $("tbody tr:eq("+$("#modalindex").val()+")").dblclick();
+          }
+          else {
+            $("#notran-clone-alert").alert();
+            $("#notran-clone-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#notran-clone-alert").hide();
+            });
+          }
+
+        }
+      });
+    }
+    else if (ecflag=="edit")
+    {
+      if ($("#removeattach").is(":checked")) {
+        details.delattach = true
+      }
+      else {
+        details.delattach = false
+      }
+      details.vcode=$('#vcode').val();
+      form_data.append("vdetails",JSON.stringify(details));
+      form_data.append("transactions",JSON.stringify(output));
+      $.ajax({
+        type: "POST",
+        url: "/editvoucher",
+        global: false,
+        contentType: false,
+        cache: false,
+        processData: false,
+        async: false,
+        datatype: "json",
+        data: form_data,
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          if(resp.gkstatus){
+
+            $("#myModal").modal('hide');
+            $('.modal-backdrop').remove();
+            $("tbody tr:eq("+$("#modalindex").val()+")").dblclick();
+          }
+          else {
+            $("#notran-edit-alert").alert();
+            $("#notran-edit-alert").fadeTo(2250, 500).slideUp(500, function(){
+
+              $("#notran-edit-alert").hide();
+            });
+          }
+
+        }
+      });
+    }
 
 
   });

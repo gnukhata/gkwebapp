@@ -41,7 +41,6 @@
   */
   table.table-fixedheader>tbody {
     overflow-y: scroll;
-    height: 45%;
 
   }
   /*
@@ -124,6 +123,10 @@
 
       {% trans %}Totals misbalance!{% endtrans %}
     </div>
+    <div class="alert alert-danger" id="invoicebalance-alert" aria-live="rude" role="alert" hidden>
+
+      {% trans %}Voucher total cannot be greater than Invoice total!{% endtrans %}
+    </div>
     <div class="alert alert-danger" id="zero-alert" aria-live="rude" role="alert" hidden>
 
       {% trans %}Voucher amount cannot be zero!{% endtrans %}
@@ -154,7 +157,7 @@
 
 
     <form id="voucher" name="voucher">
-      <div class="form-inline well well-sm shadow" >
+      <div class="form-inline well well-sm  " style="margin:0 !important;" >
 
         <div class="form-group">
           <label for="vno">{% trans %}<u>V</u>oucher No.{% endtrans %}:</label><label for="vno" style="color:red;font-size: 120%;">*</label>
@@ -191,7 +194,30 @@
         </div>
 
       </div>
-      <div class="panel flow shadow">
+      {% if invoicedata!=0 %}
+      <div class="form-inline well well-sm ">
+        <div class="form-group ">
+
+          <label for="invsel">{% trans %}Select Invoice {% endtrans %}:</label>
+          <select id="invsel" class="form-control input-sm invoice_no" >
+            <option value="" selected total="">{% trans %}None{% endtrans %}</option>
+            {% for invoice in invoicedata %}
+            {% if vtype == "purchase" and invoice["csflag"]|int == 19 %}
+              <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}">{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
+            {% elif vtype == "sales" and invoice["csflag"]|int == 3 %}
+              <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}">{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
+            {% endif %}
+            {% endfor %}
+
+          </select>
+        </div>
+        <div class="form-group pull-right" >
+          <label for="invtotal">{% trans %}Invoice Total Amount {% endtrans %}:</label>
+          <input type="text" id="invtotal" class="form-control input-sm" value="0.00" placeholder="" disabled>
+        </div>
+      </div>
+      {% endif %}
+      <div class="panel flow shadow ">
         <div class="table-responsive">
           <table id="vtable" class="table table-condensed table-fixedheader">
             <thead class="bg-info">
@@ -213,7 +239,11 @@
                 </th>
               </tr>
             </thead>
-            <tbody>
+            {% if vtype == "purchase" or vtype == "sales"%}
+            <tbody style="height: 20%;">
+            {% else %}
+            <tbody style="height: 45%;">
+            {% endif %}
               <tr>
                 <td class="col-xs-1">
                   <select class="form-control input-sm crdr" disabled>

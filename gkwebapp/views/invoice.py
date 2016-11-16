@@ -67,12 +67,6 @@ def saveinvoice(request):
 	result=requests.post("http://127.0.0.1:6543/invoice",data=json.dumps(invoicewholedata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 
-@view_config(route_name="invoice",request_param="action=showedit",renderer="gkwebapp:templates/editinvoice.jinja2")
-def showeditinvoice(request):
-	header={"gktoken":request.headers["gktoken"]}
-	delchals = requests.get("http://127.0.0.1:6543/delchal?delchal=all", headers=header)
-	return {"gkstatus":delchals.json()["gkstatus"],"delchals":delchals.json()["gkresult"]}
-
 
 @view_config(route_name="invoice",request_param="action=getdeliverynote",renderer="json")
 def getdeliverynote(request):
