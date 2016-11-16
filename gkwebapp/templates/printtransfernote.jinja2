@@ -32,10 +32,47 @@
       <div class="row">
 
       <div class="col-xs-6">
-        <h4>{{org["orgname"]}}</br><small>{{org["orgaddr"]}},</br>{{org["orgcity"]}} - {{org["orgpincode"]}},</br>{{org["orgstate"]}}</small></h4>
-          <h4>{{fromgodown["goname"]}}</br><small>{{fromgodown["goaddr"]}},</br>{{fromgodown["state"]}}</small></h4>
-          to
-        <h4>{{togodown["goname"]}}</br><small>{{togodown["goaddr"]}},</br>{{togodown["state"]}}</small></h4>
+        <h4>{{org["orgname"]}}</br>
+          <small>
+            {% if org["orgaddr"]!='' %}
+            {{org["orgaddr"]}},
+            {% endif %}
+            {% if org["orgcity"]!='' %}
+            </br>{{org["orgcity"]}} - {{org["orgpincode"]}},
+            {% endif %}
+            {% if org["orgstate"]!='' %}
+          </br>{{org["orgstate"]}}.
+            {% endif %}
+            {% if org["orgtelno"]!='' %}
+          </br>Contact No.: {{org["orgtelno"]}}
+            {% endif %}
+            {% if org["orgemail"]!='' %}
+            <br>Email : {{org["orgemail"]}}
+            {% endif %}
+            {% if org["orgfax"] %}
+            <br>Fax : {{org["orgfax"]}}
+            {% endif %}
+            {% if org["orgwebsite"]!='' %}
+            <br>Website : {{org["orgwebsite"]}}
+            {% endif %}
+        <br></small></h4>
+        <hr style="border-color:grey;margin-top:0px; margin-bottom:0px;">
+          <h4>{{fromgodown["goname"]}}
+          </br><small>{{fromgodown["goaddr"]}},
+          </br>{{fromgodown["state"]}}
+          {% if fromgodown["contactname"]!='' %}
+          <br>Contact : {{fromgodown["contactname"]}} - {{fromgodown["gocontact"]}}
+          {% endif %}
+        </small></h4>
+        <hr style="border-color:grey;margin-top:0px; margin-bottom:0px;">
+          To,
+        <h4>{{togodown["goname"]}}
+        </br><small>{{togodown["goaddr"]}},
+        </br>{{togodown["state"]}}
+        {% if togodown["contactname"]!='' %}
+        <br>Contact : {{togodown["contactname"]}} - {{togodown["gocontact"]}}
+        {% endif %}
+      </small></h4>
       </div>
       <div class="col-xs-offset-1 col-xs-5">
         <h2 class="text-right">Transfer Note</h2><br>
@@ -90,9 +127,8 @@
 
     <div class="row">
       <div class="col-xs-12">
-        <hr style="border-color:grey;margin-top:0px; margin-bottom:0px;">
         <table class="table table-bordered table-condensed" style="margin-bottom:0px;">
-            <thead class="bg-primary">
+            <thead class="bg-primary" style="border-bottom-style:double; border-top-style:double;">
               <tr>
                 <th>
                   Description
@@ -128,7 +164,7 @@
         <p class="visible-print" id = "notespara">
         </p>
       </div>
-      
+
       </div>
       <br>
       <div class="row">

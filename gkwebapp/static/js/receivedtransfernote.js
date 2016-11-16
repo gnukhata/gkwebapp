@@ -34,6 +34,7 @@ $(document).ready(function() {
             $("#alertstrong").html("Transfer Note cancelled on "+result.canceldate);
             $("#rec_cancel").prop("disabled",true);
             $("#rec_cancel").hide();
+            $("#tn_editprint").hide();
           }
           else {
             $("#cancelmsg").hide();
