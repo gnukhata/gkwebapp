@@ -365,6 +365,8 @@ $.ajax({
 });
 });
 
+
+
 $("#backuporg").click(function(e){
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '/backupfile', true);
@@ -381,11 +383,65 @@ $("#backuporg").click(function(e){
     xhr.send();
   });
 
+if (sessionStorage.invflag ==1)
+{
+  $("#act_inv").remove();
+}
+
+  $("#act_inv").click(function (e){
+    $("#inventorymodal").on('shown.bs.modal', function(event) {
+      $("#inv_no").focus();
+
+    });
+    $('#inventorymodal').modal('show').one('click', '#inv_no', function (e)
+    {
+      $('#inventorymodal').modal("hide");
+    });
+    $('#inventorymodal').modal('show').one('click', '#inv_yes', function (e)
+    {
+
+      $.ajax({
+        url: '/editorganisation?edit=inventoryactivate',
+        type: "POST",
+        datatype: 'json',
+        global: false,
+        async: false,
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+      .done(function(resp) {
+
+        if (resp['gkstatus']==0)
+        {
+          sessionStorage.setItem('invflag', 1 );
+          $("#success-alert").alert();
+          $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#success-alert").hide();
+            location.reload();
+          });
+          return false;
+        }
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+    });
+  });
+
+
+
 $("#product").click(function (e){
 $.ajax({
   url: '/product?type=tab',
   type: "POST",
   datatype: 'text/html',
+  global: false,
+  async: false,
   beforeSend: function(xhr)
   {
     xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
