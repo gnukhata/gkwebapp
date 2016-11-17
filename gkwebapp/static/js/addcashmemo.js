@@ -1507,7 +1507,7 @@ $("#invoice_saveprint").click(function(event) {
   event.preventDefault();
   $('.modal-backdrop').remove();
   $('.modal').modal('hide');
-  $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function (e)
+  $('#confirm_yes_print').modal('show').one('click', '#tn_save_yesprint', function (e)
   {
   $.ajax({
     url: '/cashmemos?action=save',
@@ -1599,5 +1599,12 @@ $("#invoice_saveprint").click(function(event) {
 
 
 
+});
+$("#confirm_yes_print").on('shown.bs.modal', function(event) {
+  $("#tn_save_noprint").focus();
+
+});
+$("#confirm_yes_print").on('hidden.bs.modal', function(event) {
+  $("#invoice_challanno").focus();
 });
 });

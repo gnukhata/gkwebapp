@@ -563,7 +563,7 @@ $("#tn_saveprint").click(function(event) {
   event.preventDefault();
   $('.modal-backdrop').remove();
   $('.modal').modal('hide');
-  $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function (e)
+  $('#confirm_yestnprint').modal('show').one('click', '#tn_save_yesprint', function (e)
   {
   $.ajax({
     url: '/transfernotes?action=save',
@@ -648,6 +648,13 @@ $("#tn_saveprint").click(function(event) {
 
   });
   });
+  $("#confirm_yestnprint").on('shown.bs.modal', function(event) {
+    $("#tn_save_noprint").focus();
+
+  });
+  $("#confirm_yestnprint").on('hidden.bs.modal', function(event) {
+    $("#transfernote_no").focus();
+});
 
 
 });

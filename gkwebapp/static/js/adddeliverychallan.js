@@ -662,7 +662,7 @@ $(document).ready(function() {
     event.preventDefault();
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
-    $('#confirm_yes').modal('show').one('click', '#dc_save_yes', function (e)
+    $('#confirm_yes_dc').modal('show').one('click', '#dc_save_yesprint', function (e)
     {
     $.ajax({
       url: '/deliverychallan?action=save',
@@ -754,6 +754,13 @@ $(document).ready(function() {
 
     return false;
   });
+});
+$("#confirm_yes_dc").on('shown.bs.modal', function(event) {
+  $("#dc_save_noprint").focus();
+
+});
+$("#confirm_yes_dc").on('hidden.bs.modal', function(event) {
+  $("#deliverychallan_challanno").focus();
 });
 
 
