@@ -2,9 +2,13 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-body">
+        <div class="alert alert-danger" id="cat-blank-alert"  aria-live="rude" role="alert" hidden>
+          <label >{% trans %}No sub-categories under the selected category{% endtrans %}</label>
+
+        </div>
         <div class="panel shadow" >
           <div class="panel-heading">
-            <div class="panel-title">{% trans %}Search Category{% endtrans %}</div>
+            <div class="panel-title">{% trans %}Search{% endtrans %}</div>
           </div>
           <div style="padding-top:5px" class="panel-body" >
             <table id="catsearchtab" class="table table-bordered table-condensed" data-toggle="table" data-show-toggle="true">
@@ -14,10 +18,10 @@
                     {% trans %}Category{% endtrans %}
                   </th>
                   <th>
-                    {% trans %}Show Sub-Category{% endtrans %}
+                    {% trans %}Products Under{% endtrans %}
                   </th>
                   <th>
-                    {% trans %}Show Products Under{% endtrans %}
+                    {% trans %}Show Sub-Category{% endtrans %}
                   </th>
                 </tr>
               </thead>
@@ -26,16 +30,20 @@
                   <td class = "cols-md-6">
                     <select class = "form-control input-sm catsearch"  name = "categoryname" >
                       <option value="" disabled selected hidden>{% trans %}Select Category{% endtrans %}</option>
+                      <option data-value="" >{% trans %}None{% endtrans %}</option>
                       {% for topcat in gkresult %}
                       <option data-value="{{topcat['categorycode']}}">{{topcat["categoryname"]}}({{topcat["subcount"]}})</option>
                       {% endfor %}
                     </select>
                   </td>
                   <td class = "cols-md-3">
-                    <button id="sub-cat" class="btn-primary btn-sm showcat">{% trans %}Show Category{% endtrans %}</button>
+                    <select class = "form-control input-sm catprod"  name = "categoryproduct" >
+                      <option value="" disabled selected hidden>{% trans %}None{% endtrans %}</option>
+
+                    </select>
                   </td>
                   <td class = "cols-md-3">
-                    <button id="catproduct" class="btn-primary btn-sm showprod">{% trans %}Show Product{% endtrans %}</button>
+                    <button id="sub-cat" class="btn-primary btn-sm showcat">{% trans %}Show Sub-Category{% endtrans %}</button>
                   </td>
                 </tr>
               </tbody>

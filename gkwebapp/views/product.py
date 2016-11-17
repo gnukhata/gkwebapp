@@ -58,6 +58,20 @@ def getcattax(request):
 	result = requests.get("http://127.0.0.1:6543/tax?pscflag=c&categorycode=%d"%(int(request.params["categorycode"])), headers=header)
 	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
+@view_config(route_name="product",request_param="by=category", renderer="json")
+def getprodbycat(request):
+	header={"gktoken":request.headers["gktoken"]}
+	if request.params["categorycode"]=="":
+		result = requests.get("http://127.0.0.1:6543/products?by=category&categorycode=", headers=header)
+	else:
+		result = requests.get("http://127.0.0.1:6543/products?by=category&categorycode=%d"%(int(request.params["categorycode"])), headers=header)
+	print "prodddddddddddd: ", len(result.json()["gkresult"])
+	if len(result.json()["gkresult"])==0:
+		return{"gkresult":0,"gkstatus":result.json()["gkstatus"]}
+	else:
+		return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
+
+
 @view_config(route_name="product",request_param="type=prodtax", renderer="json")
 def getprodtax(request):
 	header={"gktoken":request.headers["gktoken"]}
