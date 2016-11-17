@@ -244,12 +244,12 @@ $(document).ready(function() {
   $(document).off('change', '.product_name').on('change', '.product_name', function(event) {
     event.preventDefault();
     /* Act on the event */
+    var productcode = $(this).find('option:selected').val();
+    var curindex = $(this).closest('tbody tr').index();
     if ($("#status").val()=='15')
     {
 
       var state = $("#invoice_state option:selected").val();
-      var productcode = $(this).find('option:selected').val();
-      var curindex = $(this).closest('tbody tr').index();
       if (state == "none")
       {
         $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').val(parseFloat(0).toFixed(2));
@@ -282,6 +282,30 @@ $(document).ready(function() {
         });
       }
     }
+    $.ajax({
+      url: '/invoice?action=getproduct',
+      type: 'POST',
+      dataType: 'json',
+      async : false,
+      data : {"productcode":productcode},
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+    })
+    .done(function(resp) {
+      console.log("success");
+      if (resp["gkstatus"]==0) {
+        $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(1) span').text(resp["unitname"]);
+      }
+
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
 
 
   });
@@ -341,7 +365,10 @@ $(document).ready(function() {
             '</select>'+
             '</td>'+
             '<td class="col-xs-2">'+
+            '<div class="input-group">'+
             '<input type="text" class="invoice_product_quantity form-control deliverychallan_edit_disable input-sm text-right" value="'+value.qty+'">'+
+              '<span class="input-group-addon input-sm" id="unitaddon">'+value.unitname+'</span>'+
+            '</div>'+
             '</td>'+
             '<td class="col-xs-2">'+
             '<input type="text" class="invoice_product_per_price form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00">'+
@@ -444,7 +471,10 @@ $(document).ready(function() {
           '<select class="form-control input-sm product_name"></select>'+
           '</td>'+
           '<td class="col-xs-2">'+
+          '<div class="input-group">'+
           '<input type="text" class="invoice_product_quantity form-control input-sm text-right" value="0">'+
+            '<span class="input-group-addon input-sm" id="unitaddon"></span>'+
+          '</div>'+
           '</td>'+
           '<td class="col-xs-2">'+
           '<input type="text" class="invoice_product_per_price form-control input-sm numtype text-right" value="0.00">'+
@@ -841,7 +871,10 @@ $(document).ready(function() {
               '<select class="form-control input-sm product_name"></select>'+
               '</td>'+
               '<td class="col-xs-2">'+
+              '<div class="input-group">'+
               '<input type="text" class="invoice_product_quantity form-control input-sm text-right" value="0">'+
+                '<span class="input-group-addon input-sm" id="unitaddon"></span>'+
+              '</div>'+
               '</td>'+
               '<td class="col-xs-2">'+
               '<input type="text" class="invoice_product_per_price form-control input-sm numtype text-right" value="0.00">'+
@@ -940,6 +973,7 @@ $(document).ready(function() {
                 $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
               });
 
+              $(".product_name").change();
               $('#invoice_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
               $('.invoice_product_quantity').numeric({ negative: false});
               $('.invoice_product_per_price').numeric({ negative: false});
@@ -1093,7 +1127,10 @@ $(document).ready(function() {
             '<select class="form-control input-sm product_name"></select>'+
             '</td>'+
             '<td class="col-xs-2">'+
+            '<div class="input-group">'+
             '<input type="text" class="invoice_product_quantity form-control input-sm text-right" value="0">'+
+              '<span class="input-group-addon input-sm" id="unitaddon"></span>'+
+            '</div>'+
             '</td>'+
             '<td class="col-xs-2">'+
             '<input type="text" class="invoice_product_per_price form-control input-sm numtype text-right" value="0.00">'+
@@ -1195,6 +1232,7 @@ $(document).ready(function() {
             $('#invoice_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
             $('.invoice_product_quantity').numeric({ negative: false});
             $('.invoice_product_per_price').numeric({ negative: false});
+            $(".product_name").change();
           }
         })
         .fail(function() {
@@ -1638,6 +1676,7 @@ $("#confirm_yes").on('hidden.bs.modal', function(event) {
 
           obj.productdesc = $("#invoice_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").text();
           obj.qty = $("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val();
+          obj.unitname = $("#invoice_product_table tbody tr:eq("+i+") td:eq(1) span").text();
           obj.ppu = $("#invoice_product_table tbody tr:eq("+i+") td:eq(2) input").val();
           subtotal += +(obj.qty*obj.ppu);
           obj.taxrate = $("#invoice_product_table tbody tr:eq("+i+") td:eq(3) input").val();

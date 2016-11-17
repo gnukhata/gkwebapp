@@ -84,9 +84,16 @@ def getstatetax(request):
 		taxdata = requests.get("http://127.0.0.1:6543/tax?pscflag=i&productcode=%d"%(int(request.params["productcode"])), headers=header)
 	else:
 		taxdata = requests.get("http://127.0.0.1:6543/tax?pscflag=i&productcode=%d&state=%s"%(int(request.params["productcode"]),request.params["state"]), headers=header)
+	result = requests.get("http://127.0.0.1:6543/products?qty=single&productcode=%d"%(int(request.params['productcode'])),headers=header)
+	unit = result.json()["gkresult"]
+	return {"gkstatus": taxdata.json()["gkstatus"],"taxdata": taxdata.json()["gkresult"],"unitname":unit["unitname"]}
 
-
-	return {"gkstatus": taxdata.json()["gkstatus"],"taxdata": taxdata.json()["gkresult"]}
+@view_config(route_name="invoice",request_param="action=getproduct",renderer="json")
+def getproduct(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/products?qty=single&productcode=%d"%(int(request.params['productcode'])),headers=header)
+	unit = result.json()["gkresult"]
+	return {"gkstatus": result.json()["gkstatus"],"unitname":unit["unitname"]}
 
 
 @view_config(route_name="invoice",request_param="action=showedit",renderer="gkwebapp:templates/editinvoice.jinja2")
