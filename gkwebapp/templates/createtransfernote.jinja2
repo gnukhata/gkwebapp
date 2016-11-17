@@ -60,6 +60,10 @@
 
             <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
           </div>
+          <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please enter date within the financial year!{% endtrans %}
+          </div>
           <div class="alert alert-danger" id="godown-blank-alert"  aria-live="rude" role="alert" hidden>
 
             <label for="vno">{% trans %}Godown Must be Selected!{% endtrans %}</label>
