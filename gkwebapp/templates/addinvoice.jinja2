@@ -216,7 +216,10 @@
                     </select>
                   </td>
                   <td class="col-xs-2">
-                    <input type="text" class="invoice_product_quantity form-control input-sm text-right" value="0" placeholder="0">
+                    <div class="input-group">
+                      <input type="text" class="invoice_product_quantity form-control input-sm text-right" value="0" placeholder="0" aria-describedby="unitaddon">
+                      <span class="input-group-addon input-sm" id="unitaddon"></span>
+                    </div>
                   </td>
                   <td class="col-xs-2">
                     <input type="text" class="invoice_product_per_price form-control input-sm text-right numtype" value="0.00" placeholder="0.00">

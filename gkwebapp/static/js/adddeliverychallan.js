@@ -186,11 +186,14 @@ $(document).ready(function() {
                 console.log("success");
                 if (resp["gkstatus"]==0) {
                   $('#deliverychallan_product_table tbody').append('<tr>'+
-                  '<td class="col-xs-9">'+
+                  '<td class="col-xs-7">'+
                   '<select class="form-control input-sm product_name"></select>'+
                   '</td>'+
-                  '<td class="col-xs-2">'+
+                  '<td class="col-xs-4">'+
+                  '<div class="input-group">'+
                   '<input type="text" class="deliverychallan_product_quantity form-control input-sm text-right" value="">'+
+                    '<span class="input-group-addon input-sm" id="unitaddon"></span>'+
+                  '</div>'+
                   '</td>'+
                   '<td class="col-xs-1">'+
                   '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
@@ -201,6 +204,7 @@ $(document).ready(function() {
                   }
                   $('#deliverychallan_product_table tbody tr:last td:eq(0) select').val(key);
                   $('#deliverychallan_product_table tbody tr:last td:eq(1) input').val(value.qty);
+                  $(".product_name").change();
                 }
               })
               .fail(function() {
@@ -223,7 +227,35 @@ $(document).ready(function() {
 
     }
   });
+  $(document).off("change",".product_name").on("change",".product_name",function(event)
+  {
+    var productcode = $(this).find('option:selected').val();
+    var curindex = $(this).closest('tbody tr').index();
+  $.ajax({
+    url: '/invoice?action=getproduct',
+    type: 'POST',
+    dataType: 'json',
+    async : false,
+    data : {"productcode":productcode},
+    beforeSend: function(xhr)
+    {
+      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+    }
+  })
+  .done(function(resp) {
+    console.log("success");
+    if (resp["gkstatus"]==0) {
+      $('#deliverychallan_product_table tbody tr:eq('+curindex+') td:eq(1) span').text(resp["unitname"]);
+    }
 
+  })
+  .fail(function() {
+    console.log("error");
+  })
+  .always(function() {
+    console.log("complete");
+  });
+});
 
 
   $(document).off("keydown",".product_name").on("keydown",".product_name",function(event)
@@ -300,11 +332,14 @@ $(document).ready(function() {
           console.log("success");
           if (resp["gkstatus"]==0) {
             $('#deliverychallan_product_table tbody').append('<tr>'+
-            '<td class="col-xs-9">'+
+            '<td class="col-xs-7">'+
             '<select class="form-control input-sm product_name"></select>'+
             '</td>'+
-            '<td class="col-xs-2">'+
+            '<td class="col-xs-4">'+
+            '<div class="input-group">'+
             '<input type="text" class="deliverychallan_product_quantity form-control input-sm text-right" value="">'+
+              '<span class="input-group-addon input-sm" id="unitaddon"></span>'+
+            '</div>'+
             '</td>'+
             '<td class="col-xs-1">'+
             '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
@@ -315,6 +350,7 @@ $(document).ready(function() {
             }
             $('#deliverychallan_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
             $('.deliverychallan_product_quantity').numeric({ negative: false});
+            $(".product_name").change();
           }
         })
         .fail(function() {
@@ -458,6 +494,11 @@ $(document).ready(function() {
       $('#deliverychallan_designation').focus();
       return false;
     }
+    event.preventDefault();
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
+    $('#confirm_yes').modal('show').one('click', '#dc_save_yes', function (e)
+    {
     $.ajax({
       url: '/deliverychallan?action=save',
       type: 'POST',
@@ -516,6 +557,14 @@ $(document).ready(function() {
     });
 
     return false;
+  });
+  });
+  $("#confirm_yes").on('shown.bs.modal', function(event) {
+    $("#dc_save_no").focus();
+
+  });
+  $("#confirm_yes").on('hidden.bs.modal', function(event) {
+    $("#deliverychallan_challanno").focus();
   });
 
   $("#deliverychallan_saveprint").click(function(event) {
@@ -610,6 +659,11 @@ $(document).ready(function() {
       $('#deliverychallan_designation').focus();
       return false;
     }
+    event.preventDefault();
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
+    $('#confirm_yes').modal('show').one('click', '#dc_save_yes', function (e)
+    {
     $.ajax({
       url: '/deliverychallan?action=save',
       type: 'POST',
@@ -639,6 +693,7 @@ $(document).ready(function() {
 
             obj.productdesc = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").text();
             obj.qty = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(1) input").val();
+            obj.unitname = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(1) span").text();
             qtytotal += +obj.qty;
             printset.push(obj);
           }
@@ -699,6 +754,8 @@ $(document).ready(function() {
 
     return false;
   });
+});
+
 
   $("#deliverychallan_reset").click(function(event) {
     if ($("#status").val()=='9') {
