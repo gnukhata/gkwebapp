@@ -1644,7 +1644,7 @@ $("#confirm_yes").on('hidden.bs.modal', function(event) {
     event.preventDefault();
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
-    $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function (e)
+    $('#confirm_yes_print').modal('show').one('click', '#tn_save_yesprint', function (e)
     {
     $.ajax({
       url: '/invoice?action=save',
@@ -1742,5 +1742,12 @@ $("#confirm_yes").on('hidden.bs.modal', function(event) {
 
 
 
+  });
+  $("#confirm_yes_print").on('shown.bs.modal', function(event) {
+    $("#tn_save_noprint").focus();
+
+  });
+  $("#confirm_yes_print").on('hidden.bs.modal', function(event) {
+    $("#invoice_challanno").focus();
   });
 });
