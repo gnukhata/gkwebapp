@@ -96,7 +96,10 @@ $(document).ready(function() {
           '</select>'+
           '</td>'+
           '<td class="col-xs-2">'+
+          '<div class="input-group">'+
           '<input type="text" class="invoice_product_quantity form-control deliverychallan_edit_disable edit_invoice_disable input-sm text-right" value="'+resp["invoicedata"]["contents"][content]["qty"]+'">'+
+            '<span class="input-group-addon input-sm" id="unitaddon">'+resp["invoicedata"]["contents"][content]["unitname"]+'</span>'+
+          '</div>'+
           '</td>'+
           '<td class="col-xs-2">'+
           '<input type="text" class="invoice_product_per_price form-control deliverychallan_edit_disable edit_invoice_disable input-sm numtype text-right" value="'+resp["invoicedata"]["contents"][content]["priceperunit"]+'">'+
@@ -1348,6 +1351,7 @@ $(document).off('blur', '.invoice_product_tax_amount').on('blur', '.invoice_prod
         obj.productdesc = $("#edit_invoice_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").text();
         obj.qty = $("#edit_invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val();
         obj.ppu = $("#edit_invoice_product_table tbody tr:eq("+i+") td:eq(2) input").val();
+        obj.unitname = $("#edit_invoice_product_table tbody tr:eq("+i+") td:eq(1) span").text();
         subtotal += +(obj.qty*obj.ppu);
         obj.taxrate = $("#edit_invoice_product_table tbody tr:eq("+i+") td:eq(3) input").val();
         obj.taxamt = $("#edit_invoice_product_table tbody tr:eq("+i+") td:eq(4) input").val();

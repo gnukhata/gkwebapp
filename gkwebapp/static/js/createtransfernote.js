@@ -189,6 +189,37 @@ $(document).ready(function() {
       event.preventDefault();
     }
   });
+
+  $(document).off("change",".product_name").on("change",".product_name",function(event)
+  {
+    var productcode = $(this).find('option:selected').val();
+    var curindex = $(this).closest('tbody tr').index();
+  $.ajax({
+    url: '/invoice?action=getproduct',
+    type: 'POST',
+    dataType: 'json',
+    async : false,
+    data : {"productcode":productcode},
+    beforeSend: function(xhr)
+    {
+      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+    }
+  })
+  .done(function(resp) {
+    console.log("success");
+    if (resp["gkstatus"]==0) {
+      $('#transfernote_product_table tbody tr:eq('+curindex+') td:eq(1) span').text(resp["unitname"]);
+    }
+
+  })
+  .fail(function() {
+    console.log("error");
+  })
+  .always(function() {
+    console.log("complete");
+  });
+});
+
   $(document).off("keydown",".transfernote_product_quantity").on("keydown",".transfernote_product_quantity",function(event)
   {
     var curindex1 = $(this).closest('tr').index();
@@ -222,11 +253,14 @@ $(document).ready(function() {
           console.log("success");
           if (resp["gkstatus"]==0) {
             $('#transfernote_product_table tbody').append('<tr>'+
-            '<td class="col-xs-9">'+
+            '<td class="col-xs-7">'+
             '<select class="form-control input-sm product_name"></select>'+
             '</td>'+
-            '<td class="col-xs-2">'+
+            '<td class="col-xs-4">'+
+            '<div class="input-group">'+
             '<input type="text" class="transfernote_product_quantity form-control input-sm text-right" value="">'+
+              '<span class="input-group-addon input-sm" id="unitaddon"></span>'+
+            '</div>'+
             '</td>'+
             '<td class="col-xs-1">'+
             '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
@@ -237,6 +271,7 @@ $(document).ready(function() {
             }
             $('#transfernote_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
             $('.transfernote_product_quantity').numeric({ negative: false});
+            $(".product_name").change();
           }
         })
         .fail(function() {
@@ -558,6 +593,7 @@ $("#tn_saveprint").click(function(event) {
         var obj = {};
       obj.productdesc = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").text();
       obj.qty = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").val();
+      obj.unitname = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) span").text();
 
       printset.push(obj);
       }
