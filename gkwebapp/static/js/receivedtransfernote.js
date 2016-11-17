@@ -4,7 +4,10 @@ $(document).ready(function() {
       $(".hidden-load").hide();
       $("#rec_received").hide();
       $(".disable").prop("disabled", true);
+      $("#tn_editprint").hide();
       var tnid ="";
+      var fromgodownid;
+      var togodownid;
 
       $("#rec_tn_list").change(function(event) {
         tnid = $("#rec_tn_list option:selected").val();
@@ -25,11 +28,13 @@ $(document).ready(function() {
           var result = resp["gkresult"];
 
           $(".hidden-load").show();
+          $("#tn_editprint").show();
           if (result["cancelflag"]==1) {
             $("#cancelmsg").show();
             $("#alertstrong").html("Transfer Note cancelled on "+result.canceldate);
             $("#rec_cancel").prop("disabled",true);
             $("#rec_cancel").hide();
+            $("#tn_editprint").hide();
           }
           else {
             $("#cancelmsg").hide();
@@ -39,8 +44,10 @@ $(document).ready(function() {
           $("#rec_transfernote_no").html(result["transfernoteno"]);
 
           $("#rec_transport_mode").html(result["transportationmode"]);
-          $("#rec_tn_from_godown").html(result["fromgodownid"]);
-          $("#rec_tn_to_godown").html(result["togodownid"]);
+          $("#rec_tn_from_godown").html(result["fromgodown"]);
+          fromgodownid = result.fromgodownid;
+          togodownid = result.togodownid;
+          $("#rec_tn_to_godown").html(result["togodown"]);
           $("#rec_no_of_packet").html(result["nopkt"]);
           $("#rec_name_issuer").html(result["issuername"]);
           $("#rec_designation").html(result["designation"]);
@@ -186,7 +193,45 @@ $(document).ready(function() {
            $("#rec_tn_list").focus();
          });
         });
+        $("#tn_editprint").click(function(event) {
+          printset = [];
+          for (var i = 0; i < $("#transfernote_product_table tbody tr").length; i++) {
+            var obj = {};
+            obj.productdesc = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0)").html();
+            obj.qty = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(1)").html();
 
+            printset.push(obj);
+          }
+          $.ajax({
+            url: '/transfernotes?action=print',
+            type: 'POST',
+            dataType: 'html',
+            data: {
+              "transfernoteno":$("#rec_transfernote_no").text(),
+              "transfernotedate":$("#rec_transfernote_date").text(),
+              "fromgodown":fromgodownid,
+              "togodown":togodownid,
+              "transportationmode":$("#rec_transport_mode").text(),
+              "nopkt":$("#rec_no_of_packet").text(),
+              "printset":JSON.stringify(printset),
+              "issuername":$("#rec_name_issuer").text(),
+              "designation":$("#rec_designation").text()},
+              beforeSend: function(xhr)
+              {
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+              }
+            })
+            .done(function(resp) {
+              console.log("success");
+              $('#info').html(resp);
+            })
+            .fail(function() {
+              console.log("error");
+            })
+            .always(function() {
+              console.log("complete");
+            });
 
+        });
 
   });

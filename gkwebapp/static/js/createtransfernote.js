@@ -431,6 +431,187 @@ $(document).ready(function() {
 
   });
   $("#confirm_yes").on('hidden.bs.modal', function(event) {
-    $("transfernote_no").focus();
+    $("#transfernote_no").focus();
 });
+$("#tn_saveprint").click(function(event) {
+  var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
+  if ($.trim($('#transfernote_no').val())=="") {
+    $("#tnno-blank-alert").alert();
+    $("#tnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#tnno-blank-alert").hide();
+    });
+    $('#transfernote_no').focus();
+    return false;
+  }
+  if ($.trim($('#tn_date').val())=="") {
+    $("#date-blank-alert").alert();
+    $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#date-blank-alert").hide();
+    });
+    $('#tn_date').focus();
+    return false;
+  }
+  if ($.trim($('#tn_month').val())=="") {
+    $("#date-blank-alert").alert();
+    $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#date-blank-alert").hide();
+    });
+    $('#tn_month').focus();
+    return false;
+  }
+  if ($.trim($('#tn_year').val())=="") {
+    $("#date-blank-alert").alert();
+    $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#date-blank-alert").hide();
+    });
+    $('#tn_year').focus();
+    return false;
+  }
+  if(!Date.parseExact($("#tn_date").val()+$("#tn_month").val()+$("#tn_year").val(), "ddMMyyyy")){
+    $("#date-alert").alert();
+    $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#date-alert").hide();
+    });
+    $('#tn_date').focus().select();
+    return false;
+  }
+  if ($.trim($('#tn_from_godown').val())=="") {
+    $("#godown-blank-alert").alert();
+    $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#godown-blank-alert").hide();
+    });
+    $('#tn_from_godown').focus();
+    return false;
+  }
+  if ($.trim($('#tn_to_godown').val())=="") {
+    $("#godown-blank-alert").alert();
+    $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#godown-blank-alert").hide();
+    });
+    $('#tn_to_godown').focus();
+    return false;
+  }
+  if ($.trim($('#tn_from_godown').val())==$('#tn_to_godown').val()) {
+    $("#godown-same-alert").alert();
+    $("#godown-same-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#godown-same-alert").hide();
+    });
+    $('#tn_from_godown').focus();
+    return false;
+  }
+
+
+
+  var products = [];
+  for (var i = 0; i < $("#transfernote_product_table tbody tr").length; i++) {
+    if ($("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()=="") {
+      $("#product-blank-alert").alert();
+      $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#product-blank-alert").hide();
+      });
+      $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select").focus();
+      return false;
+    }
+    if ($("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").val()=="") {
+      $("#quantity-blank-alert").alert();
+      $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#quantity-blank-alert").hide();
+      });
+      $("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").focus();
+      return false;
+    }
+    var obj = {};
+    obj.productcode = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val();
+    obj.qty = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").val();
+    products.push(obj);
+  }
+  event.preventDefault();
+  $('.modal-backdrop').remove();
+  $('.modal').modal('hide');
+  $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function (e)
+  {
+  $.ajax({
+    url: '/transfernotes?action=save',
+    type: 'POST',
+    dataType: 'json',
+    async : false,
+    data: {
+    "transfernoteno":$("#transfernote_no").val(),
+    "transfernotedate":$("#tn_year").val()+'-'+$("#tn_month").val()+'-'+$("#tn_date").val(),
+    "fromgodown":$("#tn_from_godown option:selected").val(),
+    "togodown":$("#tn_to_godown option:selected").val(),
+    "transportationmode":$("#transport_mode").val(),
+    "nopkt":$("#no_of_packet").val(),
+    "issuername":$("#name_issuer").val(),
+    "designation":$("#designation").val(),
+    "products":JSON.stringify(products)},
+    beforeSend: function(xhr)
+    {
+      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+    },
+  })
+  .done(function(resp) {
+    console.log("success");
+    if(resp["gkstatus"] == 0){
+      printset = [];
+      for (var i = 0; i < $("#transfernote_product_table tbody tr").length; i++) {
+        var obj = {};
+      obj.productdesc = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").text();
+      obj.qty = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").val();
+
+      printset.push(obj);
+      }
+      $.ajax({
+        url: '/transfernotes?action=print',
+        type: 'POST',
+        dataType: 'html',
+        data: {
+          "transfernoteno":$("#transfernote_no").val(),
+          "transfernotedate":$("#tn_year").val()+'-'+$("#tn_month").val()+'-'+$("#tn_date").val(),
+          "fromgodown":$("#tn_from_godown option:selected").val(),
+          "togodown":$("#tn_to_godown option:selected").val(),
+          "transportationmode":$("#transport_mode").val(),
+          "nopkt":$("#no_of_packet").val(),
+          "printset":JSON.stringify(printset),
+          "issuername":$("#name_issuer").val(),
+          "designation":$("#designation").val(),
+          "products":JSON.stringify(products)},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+      .done(function(resp) {
+        console.log("success");
+        $('#info').html(resp);
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+
+    }
+
+      if(resp["gkstatus"] == 1){
+      $("#transfernote_no").focus();
+      $("#duplicate-alert").alert();
+      $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#duplicate-alert").hide();
+      });
+    }
+
+  })
+  .fail(function() {
+    console.log("error");
+  })
+  .always(function() {
+    console.log("complete");
+  });
+
+  });
+  });
+
+
 });
