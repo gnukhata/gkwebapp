@@ -125,4 +125,7 @@ $(document).ready(function() {
   xhr.send();
 
   });
+  $("#viewanotherstock").click(function(event){
+    $("#showstockreport").click();
+  });
   });

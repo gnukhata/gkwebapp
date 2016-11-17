@@ -21,6 +21,9 @@
 		tr    { page-break-inside:avoid; page-break-after:auto }
     thead { display: table-header-group; }
     tfoot { display: table-footer-group; }
+		.rightlist {
+	    text-align: right;
+	  }
     </style>
 	</head>
 	<body>
@@ -124,7 +127,7 @@
 			$(document).ready(function() {
 				$("title").html("GNUKhata");
 				$("#printback").click(function(event) {
-					var backdata = {"productcode":$("#productcode").val(),"productdesc":$("#productdesc").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val()};
+					var backdata = {"productcode":$("#productcode").val(),"productdesc":$("#productdesc").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(), "backflag":1};
 					$.ajax(
 						{
 							type: "POST",

@@ -266,19 +266,28 @@ def showstockreport(request):
 	productcode = int(request.params["productcode"])
 	calculatefrom = request.params["calculatefrom"]
 	calculateto = request.params["calculateto"]
+	scalculatefrom = request.params["calculatefrom"]
+	scalculateto = request.params["calculateto"]
 	productdesc = request.params["productdesc"]
-	stockrefresh = {"productcode":productcode,"calculatefrom":calculatefrom,"calculateto":calculateto,"productdesc":productdesc}
-	result = requests.get("http://127.0.0.1:6543/report?type=stockreport&productcode=%d&startdate=%s&enddate=%s"%(productcode, calculatefrom, calculateto),headers=header)
+	if int(request.params["backflag"]) > 0:
+		scalculatefrom = datetime.strptime(calculatefrom, '%d-%m-%Y').strftime('%Y-%m-%d')
+		scalculateto = datetime.strptime(calculateto, '%d-%m-%Y').strftime('%Y-%m-%d')
+		stockrefresh = {"productcode":productcode,"calculatefrom":calculatefrom,"calculateto":calculateto,"productdesc":productdesc}
+	else:
+		stockrefresh = {"productcode":productcode,"calculatefrom":datetime.strptime(calculatefrom, '%Y-%m-%d').strftime('%d-%m-%Y'),"calculateto":datetime.strptime(calculateto, '%Y-%m-%d').strftime('%d-%m-%Y'),"productdesc":productdesc}
+	result = requests.get("http://127.0.0.1:6543/report?type=stockreport&productcode=%d&startdate=%s&enddate=%s"%(productcode, scalculatefrom, scalculateto),headers=header)
 	return render_to_response("gkwebapp:templates/showstockreport.jinja2",{"gkresult":result.json()["gkresult"],"stockrefresh":stockrefresh},request=request)
 
 @view_config(route_name="product",request_param="type=printablestockreport")
 def printablestockreport(request):
 	header={"gktoken":request.headers["gktoken"]}
 	productcode = int(request.params["productcode"])
-	calculatefrom = request.params["calculatefrom"]
-	calculateto = request.params["calculateto"]
+	scalculatefrom = request.params["calculatefrom"]
+	scalculateto = request.params["calculateto"]
+	calculatefrom = datetime.strptime(scalculatefrom, '%d-%m-%Y').strftime('%Y-%m-%d')
+	calculateto = datetime.strptime(scalculateto, '%d-%m-%Y').strftime('%Y-%m-%d')
 	productdesc = request.params["productdesc"]
-	stockrefresh = {"productcode":productcode,"calculatefrom":calculatefrom,"calculateto":calculateto,"productdesc":productdesc}
+	stockrefresh = {"productcode":productcode,"calculatefrom":scalculatefrom,"calculateto":scalculateto,"productdesc":productdesc}
 	result = requests.get("http://127.0.0.1:6543/report?type=stockreport&productcode=%d&startdate=%s&enddate=%s"%(productcode, calculatefrom, calculateto),headers=header)
 	return render_to_response("gkwebapp:templates/printstockreport.jinja2",{"gkresult":result.json()["gkresult"],"stockrefresh":stockrefresh},request=request)
 
@@ -288,13 +297,16 @@ def stockreportspreadsheet(request):
 	productcode = int(request.params["productcode"])
 	calculatefrom = request.params["calculatefrom"]
 	calculateto = request.params["calculateto"]
+	scalculatefrom = datetime.strptime(calculatefrom, '%d-%m-%Y').strftime('%Y-%m-%d')
+	scalculateto = datetime.strptime(calculateto, '%d-%m-%Y').strftime('%Y-%m-%d')
 	productdesc = request.params["productdesc"]
-	result = requests.get("http://127.0.0.1:6543/report?type=stockreport&productcode=%d&startdate=%s&enddate=%s"%(productcode, calculatefrom, calculateto),headers=header)
+	result = requests.get("http://127.0.0.1:6543/report?type=stockreport&productcode=%d&startdate=%s&enddate=%s"%(productcode, scalculatefrom, scalculateto),headers=header)
 	result = result.json()["gkresult"]
 	fystart = str(request.params["fystart"]);
+	ystart = datetime.strptime(fystart, '%Y-%m-%d').strftime('%d-%m-%Y')
 	fyend = str(request.params["fyend"]);
 	orgname = str(request.params["orgname"])
-	orgname += " (FY: " + fystart+" to "+fyend +")"
+	orgname += " (FY: " + ystart+" to "+fyend +")"
 	ods = ODS()
 	sheet = ods.content.getSheet(0)
 	sheet.setSheetName("List of Stock Items")
@@ -303,7 +315,7 @@ def stockreportspreadsheet(request):
 	sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("16pt")
 	ods.content.mergeCells(0,0,7,1)
 	sheet.getRow(1).setHeight("18pt")
-	sheet.getCell(0,1).stringValue("List Of Stock Items").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+	sheet.getCell(0,1).stringValue("Stock Report for "+productdesc+" (Period : "+calculatefrom+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
 	ods.content.mergeCells(0,1,7,1)
 	sheet.getColumn(1).setWidth("4cm")
 	sheet.getColumn(2).setWidth("5cm")
@@ -313,9 +325,9 @@ def stockreportspreadsheet(request):
 	sheet.getCell(1,2).stringValue("Particulars").setBold(True)
 	sheet.getCell(2,2).stringValue("Trn Type").setBold(True)
 	sheet.getCell(3,2).stringValue("INV/DC No").setBold(True)
-	sheet.getCell(4,2).stringValue("Inward").setBold(True)
-	sheet.getCell(5,2).stringValue("Outward").setBold(True)
-	sheet.getCell(6,2).stringValue("Balance").setBold(True)
+	sheet.getCell(4,2).stringValue("Inward").setBold(True).setAlignHorizontal("right")
+	sheet.getCell(5,2).stringValue("Outward").setBold(True).setAlignHorizontal("right")
+	sheet.getCell(6,2).stringValue("Balance").setBold(True).setAlignHorizontal("right")
 	row = 3
 	for stock in result:
 		if stock["particulars"]=="opening stock" and stock["invdcno"]=="" and stock["date"]=="":
@@ -323,7 +335,7 @@ def stockreportspreadsheet(request):
 			sheet.getCell(1, row).stringValue(stock["particulars"].title())
 			sheet.getCell(2, row).stringValue("")
 			sheet.getCell(3, row).stringValue("")
-			sheet.getCell(4, row).stringValue(stock["inward"])
+			sheet.getCell(4, row).stringValue(stock["inward"]).setAlignHorizontal("right")
 			sheet.getCell(5, row).stringValue("")
 			sheet.getCell(6, row).stringValue("")
 		if stock["particulars"]!="opening stock" and stock["invdcno"]!="" and stock["date"]!="":
@@ -331,16 +343,16 @@ def stockreportspreadsheet(request):
 			sheet.getCell(1, row).stringValue(stock["particulars"])
 			sheet.getCell(2, row).stringValue(stock["trntype"])
 			sheet.getCell(3, row).stringValue(stock["invdcno"])
-			sheet.getCell(4, row).stringValue(stock["inwardqty"])
-			sheet.getCell(5, row).stringValue(stock["outwardqty"])
-			sheet.getCell(6, row).stringValue(stock["balance"])
+			sheet.getCell(4, row).stringValue(stock["inwardqty"]).setAlignHorizontal("right")
+			sheet.getCell(5, row).stringValue(stock["outwardqty"]).setAlignHorizontal("right")
+			sheet.getCell(6, row).stringValue(stock["balance"]).setAlignHorizontal("right")
 		if stock["particulars"]=="Total" and stock["invdcno"]=="" and stock["date"]=="":
 			sheet.getCell(0, row).stringValue("")
 			sheet.getCell(1, row).stringValue(stock["particulars"])
 			sheet.getCell(2, row).stringValue("")
 			sheet.getCell(3, row).stringValue("")
-			sheet.getCell(4, row).stringValue(stock["totalinwardqty"])
-			sheet.getCell(5, row).stringValue(stock["totaloutwardqty"])
+			sheet.getCell(4, row).stringValue(stock["totalinwardqty"]).setAlignHorizontal("right")
+			sheet.getCell(5, row).stringValue(stock["totaloutwardqty"]).setAlignHorizontal("right")
 			sheet.getCell(6, row).stringValue("")
 		row += 1
 
