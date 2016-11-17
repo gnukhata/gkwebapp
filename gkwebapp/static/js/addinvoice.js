@@ -100,7 +100,12 @@ $(document).ready(function() {
     if (event.which==13) {
       event.preventDefault();
       if ($("#invoice_customer").is(":disabled")) {
-        $("#invoice_state").focus();
+        if ($("#status").val()=='15'){
+          $("#invoice_state").focus();
+        }
+        else {
+          $('#invoice_product_table tbody tr:first td:eq(0) select').focus();
+        }
       }
       else {
         $("#invoice_customer").focus().select();
@@ -750,6 +755,10 @@ $(document).ready(function() {
       $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
       event.preventDefault();
     }
+    else if (event.which==35) {
+      event.preventDefault();
+      $("#invoice_issuer_name").focus().select();
+    }
   });
 
   $(document).off('change', '.invoice_product_per_price').on('change', '.invoice_product_per_price', function(event) {
@@ -1025,6 +1034,10 @@ $(document).ready(function() {
       }
 
     }
+    else if (event.which==35) {
+      event.preventDefault();
+      $("#invoice_issuer_name").focus().select();
+    }
   });
 
   $(document).off('change', '.invoice_product_tax_rate').on('change', '.invoice_product_tax_rate', function(event) {
@@ -1270,6 +1283,10 @@ $(document).ready(function() {
       $('#invoice_product_table tbody tr:eq('+curindex1+') td:eq(2) input').focus();
       event.preventDefault();
     }
+    else if (event.which==35) {
+      event.preventDefault();
+      $("#invoice_issuer_name").focus().select();
+    }
     else
     {
       if ($("#status").val()=='15')
@@ -1459,7 +1476,7 @@ $(document).ready(function() {
       "contents":JSON.stringify(contents),
       "tax":JSON.stringify(tax),
       "stock":JSON.stringify(stock),
-      "issuername":issuername,
+        "issuername":issuername,
       "designation":designation,
       "invtotal": $('#invoice_product_table tfoot tr:last td:eq(5) input').val(),
       "taxstate":$("#invoice_state option:selected").val()},
