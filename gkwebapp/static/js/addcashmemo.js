@@ -2,7 +2,8 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
   $('.invoicedate').autotab('number');
   $("#invoice_challanno").focus();
-
+  var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
+  var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   var issuername;
   var designation;
   var pqty=0.00;
@@ -1269,6 +1270,15 @@ $("#invoice_reset").click(function(event) {
       $('#invoice_date').focus().select();
       return false;
     }
+    var curdate = Date.parseExact($("#invoice_year").val()+$("#invoice_month").val()+$("#invoice_date").val(), "yyyyMMdd")
+    if (!curdate.between(financialstart,financialend)) {
+      $("#between-date-alert").alert();
+      $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#between-date-alert").hide();
+      });
+      $('#invoice_date').focus().select();
+      return false;
+    }
 
     var tax = {};
     var contents = {};
@@ -1444,7 +1454,15 @@ $("#invoice_saveprint").click(function(event) {
     $('#invoice_date').focus().select();
     return false;
   }
-
+  var curdate = Date.parseExact($("#invoice_year").val()+$("#invoice_month").val()+$("#invoice_date").val(), "yyyyMMdd")
+  if (!curdate.between(financialstart,financialend)) {
+    $("#between-date-alert").alert();
+    $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#between-date-alert").hide();
+    });
+    $('#invoice_date').focus().select();
+    return false;
+  }
   var tax = {};
   var contents = {};
   var stock= {};

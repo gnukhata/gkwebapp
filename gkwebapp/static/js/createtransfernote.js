@@ -6,6 +6,8 @@ $(document).ready(function() {
   $("#tn_month").numeric();
   $("#tn_year").numeric();
   $("#no_of_packet").numeric();
+  var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
+  var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   $('.transfernote_product_quantity').numeric({ negative: false});
   $("#transfernote_no").keydown(function(event) {
     if (event.which==13) {
@@ -366,6 +368,15 @@ $(document).ready(function() {
       $('#tn_date').focus().select();
       return false;
     }
+    var curdate = Date.parseExact($("#tn_year").val()+$("#tn_month").val()+$("#tn_date").val(), "yyyyMMdd")
+    if (!curdate.between(financialstart,financialend)) {
+      $("#between-date-alert").alert();
+      $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#between-date-alert").hide();
+      });
+      $('#tn_date').focus().select();
+      return false;
+    }
     if ($.trim($('#tn_from_godown').val())=="") {
       $("#godown-blank-alert").alert();
       $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -506,6 +517,15 @@ $("#tn_saveprint").click(function(event) {
     $("#date-alert").alert();
     $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#date-alert").hide();
+    });
+    $('#tn_date').focus().select();
+    return false;
+  }
+  var curdate = Date.parseExact($("#tn_year").val()+$("#tn_month").val()+$("#tn_date").val(), "yyyyMMdd")
+  if (!curdate.between(financialstart,financialend)) {
+    $("#between-date-alert").alert();
+    $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#between-date-alert").hide();
     });
     $('#tn_date').focus().select();
     return false;

@@ -6,7 +6,8 @@ $(document).ready(function() {
   $("#deliverychallan_month").numeric();
   $("#deliverychallan_year").numeric();
   $('.deliverychallan_product_quantity').numeric({ negative: false});
-
+  var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
+  var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   function pad (str, max) { //to add leading zeros in date
     str = str.toString();
     if (str.length==1) {
@@ -445,6 +446,15 @@ $(document).ready(function() {
       $('#deliverychallan_date').focus().select();
       return false;
     }
+    var curdate = Date.parseExact($("#deliverychallan_year").val()+$("#deliverychallan_month").val()+$("#deliverychallan_date").val(), "yyyyMMdd")
+    if (!curdate.between(financialstart,financialend)) {
+      $("#between-date-alert").alert();
+      $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#between-date-alert").hide();
+      });
+      $('#deliverychallan_date').focus().select();
+      return false;
+    }
     if ($.trim($('#deliverychallan_customer option:selected').val())=="") {
       $("#custsup-blank-alert").alert();
       $("#custsup-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -606,6 +616,15 @@ $(document).ready(function() {
       $("#date-alert").alert();
       $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#date-alert").hide();
+      });
+      $('#deliverychallan_date').focus().select();
+      return false;
+    }
+    var curdate = Date.parseExact($("#deliverychallan_year").val()+$("#deliverychallan_month").val()+$("#deliverychallan_date").val(), "yyyyMMdd")
+    if (!curdate.between(financialstart,financialend)) {
+      $("#between-date-alert").alert();
+      $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#between-date-alert").hide();
       });
       $('#deliverychallan_date').focus().select();
       return false;
