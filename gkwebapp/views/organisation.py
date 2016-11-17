@@ -38,6 +38,17 @@ def showeditOrg(request):
 	result = requests.get("http://127.0.0.1:6543/organisation", headers=header)
 	return {"gkresult":result.json()["gkdata"],"gkstatus":result.json()["gkstatus"]}
 
+
+@view_config(route_name="editorganisation", request_param="edit=inventoryactivate",  renderer="json")
+def inventoryActivate(request):
+
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.put("http://127.0.0.1:6543/organisations?type=getinventory", data=json.dumps({"invflag":1}), headers=header)
+
+	return {"gkstatus":result.json()["gkstatus"]}
+
+
+
 @view_config(route_name="oexists", renderer="json")
 def oexists(request):
 	result = requests.get("http://127.0.0.1:6543/organisations?type=exists&orgname=%s&orgtype=%s&finstart=%s&finend=%s"%(request.params["orgname"],request.params["orgtype"],request.params["finstart"],request.params["finend"]))
@@ -60,7 +71,7 @@ def getOrgcode(request):
 def closebooks(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/rollclose?task=closebooks&financialend=%s"%(request.params["financialend"]), headers=header)
-	print result.json()["gkstatus"]
+
 	return {"gkstatus":result.json()["gkstatus"]}
 
 
@@ -68,7 +79,7 @@ def closebooks(request):
 def rollover(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/rollclose?task=rollover&financialend=%s&financialstart=%s"%(request.params["financialend"],request.params["financialstart"]), headers=header)
-	print result.json()["gkstatus"]
+	
 	return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="deleteorg", renderer="json")

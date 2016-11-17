@@ -33,7 +33,7 @@
     <input type="hidden" id="calculateto" name="calculateto" value="{{stockrefresh["calculateto"]}}"></input>
     <input type="hidden" id="financialstart" name="financialstart" value="{{stockrefresh["financialstart"]}}"></input>
 		<div class="printorgdetails hidden-print" style="text-align:center;">
-    <i>{% trans %}Stock Report for{% endtrans %}</i> <strong>{{stockrefresh["productdesc"]}}</strong>
+    <i>{% trans %}Stock Report{% endtrans %}</i> : <strong>{{stockrefresh["productdesc"]}}</strong>
 		<i>{% trans %}Period{% endtrans %}</i> : <strong>{{stockrefresh["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{stockrefresh["calculateto"]}}</strong>
   </div>
 		<div class="table-responsive printorgdetails">

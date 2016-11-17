@@ -85,6 +85,7 @@
               <li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="tab" id="REMOVEuser" href="">{% trans %}Remove User{% endtrans %}</a></li>
               <li><a class="administrationmenu" data-toggle="tab" id="showedituser" href="">{% trans %}Change Password{% endtrans %}</a></li>
               <li class="hideoperator hidemanager rollover"><a class="administrationmenu" data-toggle="tab" id="showclosebooks" href="">{% trans %}Close Books/Roll Over{% endtrans %}</a></li>
+              <li class="hideoperator hidemanager rollover"><a class="administrationmenu" data-toggle="tab" id="act_inv" href="">{% trans %}Activate Inventory{% endtrans %}</a></li>
               <li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="tab" id="backuporg" href="">{% trans %}Back Up Organisation{% endtrans %}</a></li>
               <li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="tab" id="deleteorg" href="">{% trans %}Delete Organisation{% endtrans %}</a></li>
             </ul>
@@ -189,6 +190,26 @@
       </div>
     </div>
 </div>
+<div class="modal fade modal-sm col-xs-offset-4 " id="inventorymodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="">Activate Inventory</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
+
+          {% trans %}Inventory module activated.{% endtrans %}
+        </div>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id ="inv_no">No</button>
+        <button type="button" class="btn btn-primary" id ="inv_yes">Yes</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <div class="container-fluid tab-pane" id="catsearchmodal">
 
 </div>
