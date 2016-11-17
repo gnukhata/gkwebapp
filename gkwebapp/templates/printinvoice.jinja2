@@ -96,6 +96,8 @@
                 {{org["orgmvat"]}}
               </td>
             </tr>
+            {% if dcno!='' %}
+
             <tr>
               <td class="col-xs-5">
                 <strong>Delivery note.</strong>
@@ -104,6 +106,7 @@
                 {{dcno}}
               </td>
             </tr>
+            {% endif %}
           </tbody>
         </table>
       </div>
