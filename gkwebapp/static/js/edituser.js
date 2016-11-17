@@ -26,6 +26,7 @@ Contributors:
 */
 
 $(document).ready(function() {
+  $("#msspinmodal").modal("hide");
   $("#current_password").focus();
   $("#current_password").select();
 
@@ -56,6 +57,7 @@ $(document).ready(function() {
       $("#checkpassuser-blank-alert").hide();
       });
       $("#new_password").focus().select();
+      $("#msspinmodal").modal("hide");
       return false;
     }
   });
@@ -68,6 +70,7 @@ $(document).ready(function() {
         $("#curpass-blank-alert").hide();
       });
       $("#current_password").focus().select();
+      $("#msspinmodal").modal("hide");
       return false;
     }
     if ($.trim($("#new_password").val())=="") {
@@ -76,6 +79,7 @@ $(document).ready(function() {
         $("#password-blank-alert").hide();
       });
       $("#new_password").focus().select();
+      $("#msspinmodal").modal("hide");
       return false;
     }
     if ($.trim($("#confirm_password").val())=="") {
@@ -84,6 +88,7 @@ $(document).ready(function() {
         $("#cnfpass-blank-alert").hide();
       });
       $("#confirm_password").focus().select();
+      $("#msspinmodal").modal("hide");
       return false;
     }
 
@@ -93,12 +98,14 @@ $(document).ready(function() {
       $("#checkpassuser-mismatch-alert").hide();
       });
       $("#new_password").focus().select();
+      $("#msspinmodal").modal("hide");
       return false;
     }
     var orgcode="";
     var orgstatus="";
     var loginstatus="";
     var editstatus="";
+    $("#msspinmodal").modal("show");
     $.ajax(
       {
         type: "POST",

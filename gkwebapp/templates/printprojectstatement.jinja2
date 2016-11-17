@@ -30,7 +30,7 @@
 
     <div class="table-responsive printorgdetails">
       <table id="prjsttable" class=" shadow table table-striped table-condensed table-bordered">
-        <thead class="bg-info">
+        <thead class="bg-primary">
           <tr style="color:black; background-color:white;">
 						<th colspan="5" style="text-align:center; font-size:80%">
 							<i>{% trans %}Statement for{% endtrans %}: </i>{{projectname}}<br>
@@ -87,6 +87,7 @@
 				$("#printback").click(function(event) {
 					var date = $("#calculateto").val().split("-");
 			    var newtodate = date[2]+"-"+date[1]+"-"+date[0];
+					$("#msspinmodal").modal("hide");
 					$.ajax(
 		        {
 		          type: "POST",

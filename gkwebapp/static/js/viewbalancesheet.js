@@ -25,6 +25,7 @@ Contributors:
 */
 
 $(document).ready(function() {
+  $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
 
   function pad (str, max) { //to add leading zeros in date
@@ -206,6 +207,7 @@ $(document).ready(function() {
     if (($("#viewbalsht_viewbalsht_fromday").val()=="" || $("#viewbalsht_frommonth").val()=="" || $("#viewbalsht_fromyear").val()=="" || $("#viewbalsht_today").val()=="" || $("#viewbalsht_tomonth").val()=="" || $("#viewbalsht_toyear").val()=="")) {
       return false;
     }
+    $("#msspinmodal").modal("show");
     $.ajax(
       {
         type: "POST",

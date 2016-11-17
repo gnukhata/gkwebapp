@@ -26,11 +26,21 @@ Contributors:
 */
 
 $(document).ready(function() {
+  $("#msspinmodal").modal("hide");
 $(".fixed-table-loading").remove();
 
   $(' #deletedvouchertable tbody tr:first-child td:eq(1) a').focus();
   $('#deletedvouchertable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 
+  $('#clearfields').click(function(){
+    $(".search").children(".form-control").val("");
+  });
+
+  $(".search").children(".form-control").keyup(function(event){
+    if (event.keyCode == 27) {
+      $(this).val("");
+    }
+  });
 
   $(document).off('focus' ,'.vno').on('focus' ,'.vno',function() {
     $('#deletedvouchertable tr').removeClass('selected');

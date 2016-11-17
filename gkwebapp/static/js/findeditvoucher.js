@@ -25,6 +25,7 @@ Contributors:
 */
 
 $(document).ready(function() {
+  $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
   $("#searchby").focus();
   $('.vcdate').autotab('number');
@@ -435,7 +436,7 @@ $("#findvoucher").submit(function(event) {
   $(".table").empty();
 
   var search = $("#searchby option:selected").val();
-
+  $("#msspinmodal").modal("show");
   $.ajax({
     type: "POST",
     url: "/getvouchers",

@@ -42,7 +42,7 @@
 		<div class="table-responsive printorgdetails col-xs-6 nopadding">
 			<table class="table table-condensed table-bordered table-striped shadow">
 
-				<thead class="bg-info">
+				<thead class="bg-primary">
 					<tr class="visible-print">
 						<th colspan="4" style="text-align:left; font-size:80%;">
 							{% if orgtype=="Profit Making" %}
@@ -102,7 +102,7 @@
 		<div class="table-responsive printorgdetails col-xs-6 nopadding">
 			<table class="table table-condensed table-bordered shadow table-striped">
 
-				<thead>
+				<thead class="bg-primary">
 					<tr class="visible-print">
 						<th colspan="4" style="text-align:right; font-size:80%;">
 							{% trans %}Period{% endtrans %}: {{from}} {% trans %}to{% endtrans %} {{to}}
@@ -167,7 +167,11 @@
 	</div>
 	<script type="text/javascript">
 	$(document).ready(function() {
+
 		oninvoice = 0;
+
+		$("#msspinmodal").modal("hide");
+
 		var todatearray = $("#ledtodate").val().split("-");
 		var fromdatearray = $("#ledfromdate").val().split("-");
 		var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];

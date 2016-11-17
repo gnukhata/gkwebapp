@@ -28,6 +28,7 @@ Contributors:
 
 $(document).ready(function() {
   $('.modal-backdrop').remove();
+  $("#msspinmodal").modal("hide");
   $(".fixed-table-loading").remove();
 
   $(' #ledgertable tbody tr:first-child td:eq(1) a').focus();
@@ -296,11 +297,23 @@ $("#dualledger").click(function(event) {
 
 
 });
+
+$('#lclearfields').click(function(){
+  $(this).siblings(".bootstrap-table").find(".form-control").val("");
+});
+
+$(".search").children(".form-control").keyup(function(event){
+  if (event.keyCode == 27) {
+    $(this).val("");
+  }
+});
+
 $("#printledger").click(function(event) {
   var printdata = {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"monthlyflag":false,"narrationflag":$("#narrationflag").val()}
   if ($("#side").val()!="") {
     printdata.side=$("#side").val();
   }
+  $("#msspinmodal").modal("show");
   $.ajax({
     url: '/printledger',
     type: 'POST',

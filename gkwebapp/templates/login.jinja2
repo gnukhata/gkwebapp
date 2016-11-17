@@ -22,6 +22,27 @@
       color: black;
     }
   }
+  .vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+    pointer-events:none; /* This makes sure that we can still click outside of the modal to close it */
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events:none;
+}
+.modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width:inherit;
+    height:inherit;
+    /* To center horizontally */
+    margin: 0 auto;
+    pointer-events: all;
+		background: inherit;
+}
   </style>
 
 </head>
@@ -33,7 +54,7 @@
     </ul>
   </div>
   <div id="loader" class="container-fluid">
-    <div class="col-md-6" id="welcome">
+    <div class="col-md-6" id="welcome" style="display:none;">
       <div class="alert alert-danger" aria-live="rude" role="alert" id="duplicate-org-alert" hidden>
         {% trans %}Duplicate Organisation!{% endtrans %}
 
@@ -94,7 +115,7 @@
               <!-- Button -->
               <div class="col-sm-12 controls">
                 <button id="login" type="submit" class="btn btn-success " accesskey="l"><span class="glyphicon glyphicon-arrow-right" style="margin-right: 5px;"></span>{% trans %}<u>L</u>ogin{% endtrans %}</button>
-                <button id="changeorg" class="btn btn-warning"><span class="glyphicon glyphicon-refresh" style="margin-right: 5px;" accesskey="c"></span>{% trans %}<u>C</u>hange Organisation{% endtrans %}</button>
+                <button id="changeorg" class="btn btn-warning" accesskey="c"><span class="glyphicon glyphicon-refresh" style="margin-right: 5px;"></span>{% trans %}<u>C</u>hange Organisation{% endtrans %}</button>
               </div>
             </div>
           </form>
@@ -102,7 +123,15 @@
       </div>
     </div>
   </div>
-
+  <div id="loginspinmodal" tabindex="-1" class="modal text-center fade" role="dialog">
+    <div class="vertical-alignment-helper">
+        <div class="modal-content vertical-align-center">
+          <div class="modal-body">
+            <i class="fa fa-spinner fa-spin" style="color:white; font-size:50px"></i>
+          </div>
+        </div>
+    </div>
+  </div>
 
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/login.js')}}"></script>
 </body>

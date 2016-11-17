@@ -27,10 +27,12 @@ Contributors:
 */
 
 $(document).ready(function(){
-  $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');
-  console.log($("#navhead").height());
-  var oninvoice = 0;
+
   $('.modal-backdrop').remove();
+  var oninvoice = 0;
+  $("#msspinmodal").modal("hide");
+  $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');
+  $("#"+sessionStorage.gktheme+"span").show();
 
   $(document).keydown(function(event) {
         if(event.ctrlKey && event.keyCode == 83) {
@@ -185,6 +187,15 @@ $(document).ready(function(){
           $("#showpurchasereturn").click();
           event.preventDefault();
           }
+        if (event.ctrlKey && event.keyCode == 192) {
+          $(".search").children(".form-control").focus();
+        }
+        if (event.ctrlKey && event.keyCode == 192) {
+          $(".search").children(".form-control:first").focus();
+        }
+        if (event.ctrlKey && event.shiftKey && event.keyCode == 192) {
+          $(".search").children(".form-control:last").focus();
+        }
       });
       $(".mastermenu").keydown(function(event){
         if(event.which == 39){
@@ -336,7 +347,7 @@ $("title").append(orname);
 $("#printorgname").append(orname);
 $("#printyears").append(styear + " to " + enyear);
 $("#showedituser").click(function(e){
-
+$("#msspinmodal").modal("show");
 $.ajax({
   url: '/showedituser',
   type: 'POST',
@@ -422,7 +433,7 @@ $.ajax({
 
 
   $("#showeditorg").click(function (e){
-
+    $("#msspinmodal").modal("show");
     $.ajax({
       type:"POST",
       url: "/showeditOrg",
@@ -442,6 +453,7 @@ $.ajax({
 
 
   $('#REMOVEuser').click(function (e) {
+    $("#msspinmodal").modal("show");
       $.ajax(
       {
 
@@ -463,7 +475,7 @@ $.ajax({
     });
 
   $('#editaccount').click(function (e) {
-
+    $("#msspinmodal").modal("show");
       $.ajax(
       {
 
@@ -485,12 +497,14 @@ $.ajax({
 
     $('#changeorg').click(function (e) {
       sessionStorage.clear();
+      $("#msspinmodal").modal();
       window.location.replace("/");
 
       });
 
       $("#logout").click(function(event) {
         flag = 1;
+        $("#msspinmodal").modal();
         $.ajax({
           url: '/getorgcode',
           type: 'POST',
@@ -516,6 +530,7 @@ $.ajax({
         $('.modal').modal('hide');
         $('#m_confirmdelorg').modal('show').one('click', '#orgdel', function (e)
         {
+          $("#msspinmodal").modal();
           $.ajax({
           url: '/deleteorg',
           type: 'POST',
@@ -549,6 +564,7 @@ $.ajax({
 
 
     $('#listofaccounts').click(function (e) {
+      $("#msspinmodal").modal("show");
       $.ajax(
         {
 
@@ -635,7 +651,7 @@ $.ajax({
 
 
   $('#fevoucher').click(function (e) {
-
+    $("#msspinmodal").modal("show");
       $.ajax(
       {
 
@@ -663,6 +679,7 @@ $.ajax({
   $("#yeardata").html(yeardata);
   }
   $('#addaccount').click(function (e) {
+    $("#msspinmodal").modal("show");
     $.ajax(
     {
 
@@ -684,7 +701,7 @@ $.ajax({
   });
 
   $('#createuser').click(function (e) {
-
+    $("#msspinmodal").modal("show");
     $.ajax({
       url: '/showuser',
       type: 'POST',
@@ -699,7 +716,7 @@ $.ajax({
 
 
     $("#showdeletedvoucher").click(function (e){
-
+      $("#msspinmodal").modal("show");
       $.ajax({
         url: '/showdeletedvoucher',
         type: 'POST',
@@ -719,7 +736,7 @@ $.ajax({
 
 
   $('#showviewledger').click(function (e) {
-
+    $("#msspinmodal").modal();
       $.ajax(
       {
 
@@ -741,7 +758,7 @@ $.ajax({
     });
 
     $('#BRS').click(function (e) {
-
+      $("#msspinmodal").modal("show");
         $.ajax(
         {
 
@@ -761,7 +778,7 @@ $.ajax({
       });
 
     $('#showprjstate').click(function (e) {
-
+      $("#msspinmodal").modal("show");
         $.ajax(
         {
 
@@ -783,6 +800,7 @@ $.ajax({
       });
 
   $('#showproject').click(function (e) {
+    $("#msspinmodal").modal("show");
     $.ajax(
     {
 
@@ -827,22 +845,27 @@ $.ajax({
   });
 
   $("#showtrialbalance").click(function(event){
+    $("#msspinmodal").modal("show");
     $("#info").load("/showtrialbalance");
   });
 
   $("#showcashflow").click(function(event){
+    $("#msspinmodal").modal("show");
     $("#info").load("/showcashflow");
   });
   $("#showprofitloss").click(function(event){
     var orgtype = sessionStorage.orgt.replace(/\s/g, "+");
+    $("#msspinmodal").modal("show");
     $("#info").load("/showprofitloss?orgtype="+orgtype);
   });
 
     $("#showbalancesheet").click(function(event){
+      $("#msspinmodal").modal("show");
       $("#info").load("/showbalancesheet");
     });
 
   $("#showclosebooks").click(function(event){
+    $("#msspinmodal").modal("show");
     $("#info").load("/showclosebooks");
   });
 
@@ -934,7 +957,8 @@ $.ajax({
     return false;
   });
   $('.themesmenu').click(function(){
-    var selectedtheme= $(this).html();
+    var selectedtheme= $(this).attr('id');
+    $("#msspinmodal").modal("show");
     $.ajax({
       url: '/addtheme',
       type: 'POST',

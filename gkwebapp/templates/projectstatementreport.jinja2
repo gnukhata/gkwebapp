@@ -45,7 +45,9 @@
 	.calign{
 		text-align:center;
 	}
-
+  .row{
+    margin-top: 5px;
+  }
 
   </style>
 </head>
@@ -57,8 +59,9 @@
   <span style="margin:auto; display:table;"><i>{% trans %}Statement for{% endtrans %}</i> : <b>{{projectname}}</b></span>
 
   <div class="row">
+    <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="psclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
     <table id="prjsttable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
-      <thead class="bg-info">
+      <thead class="bg-primary">
         <tr>
           <th class="col-xs-1">{% trans %}Sr. No.{% endtrans %}</th>
           <th class="col-xs-7">{% trans %}Account{% endtrans %}</th>

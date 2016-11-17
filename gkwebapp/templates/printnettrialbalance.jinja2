@@ -30,7 +30,7 @@ tfoot{
 	<span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>{% trans %}Net Trial Balance{% endtrans %}</strong> {% trans %}for the period from{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
 	<div class="table-responsive printorgdetails">
 		<table class="table table-condensed  table-bordered table-striped shadow">
-			<thead class="bg-info">
+			<thead class="bg-primary">
         <tr class="visible-print">
           <th colspan="5" style="text-align:center; font-size:80%;">
             {% trans %}Net Trial Balance for the period from{% endtrans %} {{from}} {% trans %}to{% endtrans %} {{to}}
@@ -88,7 +88,11 @@ tfoot{
 	<input type="hidden" id="trialbaltype" value="{{trialbalancetype}}">
 <script type="text/javascript">
   $(document).ready(function() {
+
 		oninvoice = 0;
+
+		$("#msspinmodal").modal("hide");
+
     $("title").html("GNUKhata")
     $("#nettbprint").click(function(event) {
       window.print();

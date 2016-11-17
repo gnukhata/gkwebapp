@@ -29,6 +29,7 @@ $(document).ready(function(){
   (function($){
     $.fn.callvoucher = function(vtype){
         return this.each(function(){
+          $("#msspinmodal").modal("show");
           $.ajax(
           {
           type: "POST",

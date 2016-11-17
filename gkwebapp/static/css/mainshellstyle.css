@@ -34,3 +34,6 @@ a:focus,
 .table{
 	font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
 }
+#msspinmodalcontent {
+	background: inherit;
+}

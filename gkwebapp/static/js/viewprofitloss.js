@@ -25,6 +25,7 @@ Contributors:
 */
 
 $(document).ready(function() {
+  $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
   $("#pnl_todate").focus();
   $('.pnl_autotab').autotab('number');
@@ -130,6 +131,7 @@ $(document).ready(function() {
       $('#pnl_todate').focus().select();
       return false;
     }
+    $("#msspinmodal").modal("show");
     $.ajax(
       {
         type: "POST",

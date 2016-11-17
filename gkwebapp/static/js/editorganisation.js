@@ -26,7 +26,7 @@ Contributors:
 */
 
 $(document).ready(function(){
-
+  $("#msspinmodal").modal("hide");
   $(".regdate").autotab('number');
   $(".fcradate").autotab('number');
 
@@ -68,7 +68,7 @@ $(document).ready(function(){
   });
 
   $("#editorganisationform").submit(function(event){
-
+    $("#msspinmodal").modal("show");
     var regdate=""
     var fcraregdate=""
     var regno=""

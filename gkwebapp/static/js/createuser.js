@@ -25,7 +25,11 @@ Contributors:
 */
 
 $(document).ready(function(){
+  $("#msspinmodal").modal("hide");
   $("#name").focus();
+  $("#name").focus(function(){
+    $("#msspinmodal").modal("hide");
+  });
   $('.modal-backdrop').remove();
   var inselect = 0;
   $("#userrole").focus(function(){
@@ -127,6 +131,7 @@ $(document).ready(function(){
           $("#answer").focus();
           return false;
         }
+        $("#msspinmodal").modal("show");
         $.ajax(
           {
             type: "POST",

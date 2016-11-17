@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <title>{% trans %}GNUKhata{% endtrans %} | </title>
   <link id="bootstrap" href="{{request.static_url('gkwebapp:static/css/Default.min.css')}}" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" media="screen" href="{{request.static_url('gkwebapp:static/css/font-awesome.min.css')}}">
   <link href="{{request.static_url('gkwebapp:static/css/mainshellstyle.css')}}" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -109,23 +110,23 @@
           <li class="dropdown">
             <a href="" id="themes" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Theme{% endtrans %}</a>
             <ul class="dropdown-menu scrollable">
-              <li><a class="themesmenu" value="Default" href="">{% trans %}Default{% endtrans %}</a></li>
-              <li><a class="themesmenu" value="Cerulean" href="">{% trans %}Cerulean{% endtrans %}</a></li>
-              <li><a class="themesmenu" value="Cosmo" href="">{% trans %}Cosmo{% endtrans %}</a></li>
-              <li><a class="themesmenu" value="Cyborg" href="">{% trans %}Cyborg{% endtrans %}</a></li>
-              <li><a class="themesmenu" value="Darkly" href="">{% trans %}Darkly{% endtrans %}</a></li>
-              <li><a class="themesmenu" value="Flatly" href="">{% trans %}Flatly{% endtrans %}</a></li>
-              <li><a class="themesmenu" value="Journal" href="">{% trans %}Journal{% endtrans %}</a></li>
-              <li><a class="themesmenu" value="Lumen" href="">{% trans %}Lumen{% endtrans %}</a></li>
-              <li><a class="themesmenu" value="Paper" href="">{% trans %}Paper{% endtrans %}</a></li>
-              <li><a class="themesmenu" value="Readable" href="">{% trans %}Readable{% endtrans %}</a></li>
-              <li><a class="themesmenu" value="Sandstone" href="">{% trans %}Sandstone{% endtrans %}</a></li>
-              <li><a class="themesmenu" value="Simplex" href="">{% trans %}Simplex{% endtrans %}</a></li>
-              <li><a class="themesmenu" value="Slate" href="">{% trans %}Slate{% endtrans %}</a></li>
-              <li><a class="themesmenu" value="Spacelab" href="">{% trans %}Spacelab{% endtrans %}</a></li>
-              <li><a class="themesmenu" value="Superhero" href="">{% trans %}Superhero{% endtrans %}</a></li>
-              <li><a class="themesmenu" value="Ubuntu" href="">{% trans %}Ubuntu{% endtrans %}</a></li>
-              <li><a class="themesmenu" value="Yeti" href="">{% trans %}Yeti{% endtrans %}</a></li>
+              <li><a class="themesmenu" id="Default" href="">{% trans %}Default{% endtrans %}<span id="Defaultspan"  class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+              <li><a class="themesmenu" id="Cerulean" href="">{% trans %}Cerulean{% endtrans %}<span id="Ceruleanspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+              <li><a class="themesmenu" id="Cosmo" href="">{% trans %}Cosmo{% endtrans %}<span id="Cosmospan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+              <li><a class="themesmenu" id="Cyborg" href="">{% trans %}Cyborg{% endtrans %}<span id="Cyborgspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+              <li><a class="themesmenu" id="Darkly" href="">{% trans %}Darkly{% endtrans %}<span id="Darklyspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+              <li><a class="themesmenu" id="Flatly" href="">{% trans %}Flatly{% endtrans %}<span id="Flatlyspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+              <li><a class="themesmenu" id="Journal" href="">{% trans %}Journal{% endtrans %}<span id="Journalspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+              <li><a class="themesmenu" id="Lumen" href="">{% trans %}Lumen{% endtrans %}<span id="Lumenspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+              <li><a class="themesmenu" id="Paper" href="">{% trans %}Paper{% endtrans %}<span id="Paperspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+              <li><a class="themesmenu" id="Readable" href="">{% trans %}Readable{% endtrans %}<span id="Readablespan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+              <li><a class="themesmenu" id="Sandstone" href="">{% trans %}Sandstone{% endtrans %}<span id="Sandstonespan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+              <li><a class="themesmenu" id="Simplex" href="">{% trans %}Simplex{% endtrans %}<span id="Simplexspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+              <li><a class="themesmenu" id="Slate" href="">{% trans %}Slate{% endtrans %}<span id="Slatespan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+              <li><a class="themesmenu" id="Spacelab" href="">{% trans %}Spacelab{% endtrans %}<span id="Spacelabspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+              <li><a class="themesmenu" id="Superhero" href="">{% trans %}Superhero{% endtrans %}<span id="Superherospan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+              <li><a class="themesmenu" id="Ubuntu" href="">{% trans %}Ubuntu{% endtrans %}<span id="Ubuntuspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+              <li><a class="themesmenu" id="Yeti" href="">{% trans %}Yeti{% endtrans %}<span id="Yetispan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
             </ul>
           </li>
           <li class="dropdown">
@@ -178,12 +179,12 @@
     </div>
     <div style="padding-top:20px" class="panel-body" >
           <p>{% trans %}To access submenus in the Menu Bar press{% endtrans %} "Ctrl + Shift + {% trans %}Underlined Character".{% endtrans %}</p>
-          <p>{% trans %}To view ToolBar press{% endtrans %} "F1".</p>
+          <p>{% trans %}To view Toolbar press{% endtrans %} "F1".</p>
           <p> {% trans %}To use screen specific shortcuts{% endtrans %} : </p>
           <p class="shortcut">{% trans %}If using Firefox, press{% endtrans %} "Alt + Shift + {% trans %}the underlined character".{% endtrans %}</p>
           <p class="shortcut">{% trans %}If using Google Chrome, Opera or Internet Explorer press{% endtrans %} "Alt + {% trans %}the underlined character".{% endtrans %}</p>
           <p class="shortcut">{% trans %}If using older versions of Opera(prior to version 12.1) use{% endtrans %} "Shift + Esc + {% trans %}the underlined character".{% endtrans %}</p>
-          <p><a data-toggle="modal" id="shortcutslink" data-target="#gnukhatashortcuts">{% trans %}Shortcuts{% endtrans %}</a> {% trans %}are given in the Tool Bar and the Help Tab of the Menu Bar.{% endtrans %}</p>
+          <p><a data-toggle="modal" id="shortcutslink" data-target="#gnukhatashortcuts">{% trans %}Shortcuts{% endtrans %}</a> {% trans %}are given in the Toolbar and the Help Tab of the Menu Bar.{% endtrans %}</p>
       </div>
     </div>
 </div>
@@ -435,7 +436,15 @@
     </div><!-- /.modal-dialog -->
   </div>
 </div><!-- /.modal -->
-
+<div id="msspinmodal" tabindex="-1" class="modal text-center fade" role="dialog">
+  <div class="vertical-alignment-helper">
+      <div id="msspinmodalcontent" class="modal-content vertical-align-center">
+        <div class="modal-body">
+          <i class="fa fa-spinner fa-spin" style="color:white; font-size:50px"></i>
+        </div>
+      </div>
+  </div>
+</div>
 <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
 <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.autotab.min.js')}}"></script>

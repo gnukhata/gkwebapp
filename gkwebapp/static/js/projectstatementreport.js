@@ -26,7 +26,11 @@ Contributors:
 */
 
 $(document).ready(function() {
+
   oninvoice = 0;
+
+  $("#msspinmodal").modal("hide");
+
   $(".fixed-table-loading").remove();
 
   $(' #prjsttable tbody tr:first-child td:eq(1) a').focus();
@@ -118,6 +122,15 @@ $(document).ready(function() {
       );
 
   });
+  $('#psclearfields').click(function(){
+    $(this).siblings(".bootstrap-table").find(".form-control").val("");
+  });
+
+  $(".search").children(".form-control").keyup(function(event){
+    if (event.keyCode == 27) {
+      $(this).val("");
+    }
+  });
   $("#print").click(function(event) {
     var date = $("#calculateto").val().split("-");
     var newtodate = date[2]+"-"+date[1]+"-"+date[0];
@@ -147,6 +160,7 @@ $(document).ready(function() {
   $("#printprjstatement").click(function(event) {
     var date = $("#calculateto").val().split("-");
     var newtodate = date[2]+"-"+date[1]+"-"+date[0];
+    $("#msspinmodal").modal("show");
     $.ajax(
       {
         type: "POST",

@@ -125,6 +125,7 @@ $("#loginform").submit(function(e)
     $("#securityanswer").focus();
     return false;
   }
+  $("#spinmodal").modal("show");
     $.ajax(
     {
     //alert("starting ajax");
@@ -147,7 +148,11 @@ $("#loginform").submit(function(e)
       else if(resp['gkstatus']==3) {
 
         $("#createnav").click();
-        $("#createorg").load("/createorg",setTimeout( function() { $("#orgname").focus(); }, 500 ));
+        $("#spinmodal").hide();
+        $('.modal-backdrop').remove();
+        $("#createorg").load("/createorg",setTimeout( function() {
+          $("#orgname").focus();
+        }, 500 ));
         $("#duplicate-org-alert").alert();
         $("#duplicate-org-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#duplicate-org-alert").hide();

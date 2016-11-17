@@ -23,11 +23,14 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+"Abhijith Balan" <abhijithb21@openmailbox.com>
 */
 
 $(document).ready(function() {
   oninvoice = 0;
   $(".fixed-table-loading").remove();
+  $('.modal-backdrop').remove();
+  $("#msspinmodal").modal("hide");
   $("#realprintpnl").hide();
   $('#expensetbl tbody tr:first-child td:eq(1) a').focus();
   $('#expensetbl tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
@@ -229,6 +232,20 @@ $(document).ready(function() {
 
 
   });
+
+  $('#plrclearfields').click(function(){
+    $(this).siblings(".bootstrap-table").find(".form-control").val("");
+  });
+  $('#pllclearfields').click(function(){
+    $(this).siblings(".bootstrap-table").find(".form-control").val("");
+  });
+
+  $(".search").children(".form-control").keyup(function(event){
+    if (event.keyCode == 27) {
+      $(this).val("");
+    }
+  });
+
   $("#print").click(function(event){
       var todatearray = $("#ledtodate").val().split("-");
       var orgtype = sessionStorage.getItem('orgt');

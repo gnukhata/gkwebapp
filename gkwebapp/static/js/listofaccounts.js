@@ -1,21 +1,21 @@
 /*
 Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-  This file is part of GNUKhata:A modular,robust and Free Accounting System.
+This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
-  GNUKhata is Free Software; you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as
-  published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+GNUKhata is Free Software; you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation; either version 3 of
+the License, or (at your option) any later version.and old.stockflag = 's'
 
-  GNUKhata is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU Affero General Public License for more details.
+GNUKhata is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-  You should have received a copy of the GNU Affero General Public
-  License along with GNUKhata (COPYING); if not, write to the
-  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-  Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+You should have received a copy of the GNU Affero General Public
+License along with GNUKhata (COPYING); if not, write to the
+Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
 
 
 Contributors:
@@ -26,6 +26,7 @@ Contributors:
 */
 
 $(document).ready(function() {
+  $("#msspinmodal").modal("hide");
   $(".modal-backdrop").remove();
   $(".fixed-table-loading").remove();
 
@@ -43,34 +44,45 @@ $(document).ready(function() {
     $('#latable tr').removeClass('selected');
 
   });
+
+  $('#laclearfields').click(function(){
+    $(".search").children(".form-control").val("");
+  });
+
+  $(".search").children(".form-control").keyup(function(event){
+    if (event.keyCode == 27) {
+      $(this).val("");
+    }
+  });
+
   var curindex ;
   var nextindex;
   var previndex;
 
 
   $('#viewprintableversion').click(function (e) {
-
-$.ajax({
+    $("#msspinmodal").modal("show");
+    $.ajax({
       type: "POST",
       url: "/listofaccountsprint",
       global: false,
       async: false,
       datatype: "text/html",
       beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-})
-.done(function(resp) {
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+    })
+    .done(function(resp) {
       $("#info").html(resp);
-})
-.fail(function() {
-  console.log("error");
-})
-.always(function() {
-  console.log("complete");
-});
-});
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
+  });
 
 
   $(document).off('keydown' ,'.libgname').on('keydown' ,'.libgname',function(event) {
@@ -104,23 +116,23 @@ $.ajax({
 
   });
   $("#print").click(function(event) {
-        event.preventDefault();
-        var xhr = new XMLHttpRequest();
+    event.preventDefault();
+    var xhr = new XMLHttpRequest();
 
-        xhr.open('GET', '/printlistofaccounts?fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2'), true);
-        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        xhr.responseType = 'blob';
+    xhr.open('GET', '/printlistofaccounts?fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2'), true);
+    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    xhr.responseType = 'blob';
 
-        xhr.onload = function(e) {
-        if (this.status == 200) {
+    xhr.onload = function(e) {
+      if (this.status == 200) {
         // get binary data as a response
-          var blob = this.response;
-          var url = window.URL.createObjectURL(blob);
-          window.location.assign(url)
-        }
-      };
+        var blob = this.response;
+        var url = window.URL.createObjectURL(blob);
+        window.location.assign(url)
+      }
+    };
 
-      xhr.send();
+    xhr.send();
 
 
   });

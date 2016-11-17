@@ -27,6 +27,7 @@ Contributors:
 
 $(document).ready(function() {
 	$(".fixed-table-loading").remove();
+	$("#msspinmodal").modal("hide");
 	$('.trialbaltable tbody tr:first-child td:eq(1) a').focus();
 	$('.trialbaltable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 
@@ -77,6 +78,7 @@ $(document).ready(function() {
 			var endyear = sessionStorage.getItem('year2');
 
 			trialbalancetype = $("#trialbaltype").val();
+			$("#msspinmodal").modal("show");
 			$.ajax(
 				{
 					type: "GET",
@@ -198,6 +200,21 @@ $(document).ready(function() {
 	$("#tbback").click(function(event) {
 		$("#showtrialbalance").click();
 	});
+
+	$('#gtbclearfields').click(function(){
+    $(this).siblings(".bootstrap-table").find(".form-control").val("");
+  });
+	$('#etbclearfields').click(function(){
+    $(this).siblings(".bootstrap-table").find(".form-control").val("");
+  });
+	$('#ntbclearfields').click(function(){
+    $(this).siblings(".bootstrap-table").find(".form-control").val("");
+  });
+  $(".search").children(".form-control").keyup(function(event){
+    if (event.keyCode == 27) {
+      $(this).val("");
+    }
+  });
 
 		$("#printbutton").click(function(event) {
 		event.preventDefault();

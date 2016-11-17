@@ -38,6 +38,7 @@ Events are attached to dynamically created elements using document on method.
 Document off is used to remove an already attached event to an element, so as to make sure that an event is fired only once.
 */
 $(document).ready(function() {
+  $("#msspinmodal").modal("hide");
   $(".modal-backdrop").remove();
   $("#vno").focus().select();
   $('.vdate').autotab('number');    //autotab is a library for automatically switching the focus to next input when max allowed characters are filled.
@@ -1235,6 +1236,7 @@ $("#invsel").keyup(function(event) {
     }
     form_data.append("vdetails",JSON.stringify(details));
     form_data.append("transactions",JSON.stringify(output));
+    $("#msspinmodal").modal("show");
     $.ajax({
       type: "POST",
       url: "/addvoucher",

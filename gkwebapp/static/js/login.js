@@ -98,6 +98,7 @@ $(document).ready(function()
         $("#userpassword").focus();
         return false;
     }
+    $("#loginspinmodal").modal("show");
       $.ajax(
       {
       type: "POST",
@@ -138,6 +139,8 @@ $(document).ready(function()
           $("#login-blank-alert").hide();
         });
         $("#login_username").focus();
+        $("#loginspinmodal").modal("hide");
+        $('.modal-backdrop').remove();
         return false;
       }
       }
