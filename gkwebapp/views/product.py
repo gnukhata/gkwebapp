@@ -65,7 +65,7 @@ def getprodbycat(request):
 		result = requests.get("http://127.0.0.1:6543/products?by=category&categorycode=", headers=header)
 	else:
 		result = requests.get("http://127.0.0.1:6543/products?by=category&categorycode=%d"%(int(request.params["categorycode"])), headers=header)
-	print "prodddddddddddd: ", len(result.json()["gkresult"])
+
 	if len(result.json()["gkresult"])==0:
 		return{"gkresult":0,"gkstatus":result.json()["gkstatus"]}
 	else:
