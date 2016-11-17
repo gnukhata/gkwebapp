@@ -26,8 +26,9 @@ Contributors:
 
 $(document).ready(function()
 {
-  if ($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase")
+  if (($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase") && sessionStorage.invflag==1)
   {
+    $(".invhide").show();
     var inv = $("#invsel option:selected").attr("total");
     if ($.trim(inv)!="")
     {
@@ -38,6 +39,10 @@ $(document).ready(function()
       $("#invtotal").val(parseFloat(0).toFixed(2));
     }
 
+  }
+  else
+  {
+      $(".invhide").hide();
   }
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
@@ -573,7 +578,7 @@ $(document).ready(function()
 
   $('#vyear').keyup(function(event) {
     if(event.which==13 && $('#vyear').val()!=""){
-      if ($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase")
+      if (($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase") && sessionStorage.invflag==1)
       {
         $("#invsel").focus();
       }
@@ -595,7 +600,7 @@ $(document).ready(function()
       event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-      if ($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase")
+      if (($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase") && sessionStorage.invflag==1)
       {
         $("#invsel").focus();
       }
@@ -740,7 +745,7 @@ $(document).ready(function()
       }
       if (curindex==0) {
         event.preventDefault();
-        if ($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase")
+        if (($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase") && sessionStorage.invflag==1)
         {
           $("#invsel").focus();
         }
@@ -782,7 +787,7 @@ $(document).ready(function()
     }
     if (event.which==188 && event.ctrlKey) {
       if (curindex == 0) {
-        if ($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase")
+        if (($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase") && sessionStorage.invflag==1)
         {
           $("#invsel").focus();
         }
@@ -1334,7 +1339,7 @@ $(document).ready(function()
     for (var i = 0; i < files.length; i++) {
       form_data.append("file"+i,files[i])
     }
-    if ($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase")
+    if (($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase") && sessionStorage.invflag==1)
     {
       details.invid = $("#invsel option:selected").val();
       var invoicetotal= $("#invtotal").val();
@@ -1354,6 +1359,10 @@ $(document).ready(function()
           return false;
         }
       }
+    }
+    else
+    {
+      details.invid = "";
     }
     if(ecflag=="clone")
     {
