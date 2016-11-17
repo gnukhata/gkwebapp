@@ -1,3 +1,21 @@
+[17-November-2016 Release 3.5]
+* Addition of support for choosing themes.
+* Facility of search in all table views.
+* Much awaited inventory module added which includes:
+  - Creation of dynamic categories and sub-categories,
+  - Creation of products under the categories with custom units of measurement,
+  - Creation of customer/supplier and Godown,
+  - Generation and printing of Delivery Note,
+  - Generation and printing of Invoice,
+  - Generation and printing of Cash Memo,
+  - Generation and printing of Transfer Note,
+  - Complete database backup and restore,
+  - Generation and printing of product wise Stock report with spreadsheet option.
+  - Generation and printing of godown report with spreadsheet option.
+  - Generation and printing of Category wise report with spreadsheet option.
+  - Linking of invoice and vouchers.
+  - Option to activate inventory module any time in the financial year.
+
 [04-July-2016 Release 3.0]
 * Now documents can be attached to transactions.
 * Applied a new theme.
