@@ -216,7 +216,7 @@ $(document).ready(function() {
         global: false,
         async: false,
         datatype: "text/html",
-        data: {"productcode":$("#viewstock_productname").val(),"calculatefrom":$("#viewstock_fromyear").val()+"-"+$("#viewstock_frommonth").val()+"-"+$("#viewstock_fromdate").val(),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"financialstart":sessionStorage.yyyymmddyear1},
+        data: {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculatefrom":$("#viewstock_fromyear").val()+"-"+$("#viewstock_frommonth").val()+"-"+$("#viewstock_fromdate").val(),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"financialstart":sessionStorage.yyyymmddyear1},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
