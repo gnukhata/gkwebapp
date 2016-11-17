@@ -42,6 +42,17 @@ $(document).ready(function() {
     $('#latable tr').removeClass('selected');
 
   });
+
+  $('#laclearfields').click(function(){
+    $(".search").children(".form-control").val("");
+  });
+
+  $(".search").children(".form-control").keyup(function(event){
+    if (event.keyCode == 27) {
+      $(this).val("");
+    }
+  });
+
   var curindex ;
   var nextindex;
   var previndex;
