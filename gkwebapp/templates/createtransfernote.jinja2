@@ -198,6 +198,25 @@
         </div><!-- /.modal-dialog -->
       </div>
     </div><!-- /.modal -->
+    <div id="confirm_yestnprint" class="modal" tabindex="-1" role="dialog">
+      <div class="vertical-alignment-helper">
+        <div class="modal-dialog modal-sm vertical-align-center">
+          <div class="modal-content">
+            <div class="modal-header">
+
+              <h4 class="modal-title">{% trans %}Save?{% endtrans %}</h4>
+            </div>
+            <div class="modal-body">
+              <p>{% trans %}Are you sure?{% endtrans %}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id ="tn_save_noprint" class="btn btn-warning" data-dismiss="modal">{% trans %}NO{% endtrans %}</button>
+              <button type="button" id="tn_save_yesprint" data-dismiss="modal" class="btn btn-success">{% trans %}YES{% endtrans %}</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div>
+    </div><!-- /.modal -->
 
 
   </div>

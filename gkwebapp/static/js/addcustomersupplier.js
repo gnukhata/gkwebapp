@@ -107,6 +107,7 @@ $(document).ready(function() {
     }
   });
   $("#cussup_save").click(function(event) {
+    event.preventDefault();
     var custsupdata=$("#add_cussup option:selected").val();
     if ($.trim($("#add_cussup option:selected").val())=="") {
       $("#cussup-blank-alert").alert();

@@ -14,7 +14,9 @@ td{
 	word-wrap: break-word;
 	font-weight: bold;
 }
-
+.modal-open{
+	overflow: auto;
+}
 th{
 	word-wrap: break-word;
 	font-weight:bolder;

@@ -283,6 +283,7 @@ $(document).ready(function() {
 });
 $("#cussup_delete").click(function(event) {
   event.preventDefault();
+  var custsupdat=$("#edit_cussup option:selected").val();
   $('.modal-backdrop').remove();
   $('.modal').modal('hide');
   $('#confirm_del').modal('show').one('click', '#accdel', function (e)
@@ -303,25 +304,17 @@ $("#cussup_delete").click(function(event) {
         {
           if (resp["gkstatus"]==0) {
             $("#customersupplier_edit").click();
-            $('.modal-backdrop').remove();
-            $("#delsuccess-alert").alert();
-            $("#delsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
-              $("#delsuccess-alert").hide();
-
-            });
-          }
-          else {
             if (custsupdat == '3') {
-              $("#cus-success-alert").alert();
-              $("#cus-success-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#cus-success-alert").hide();
+              $("#cus-delsuccess-alert").alert();
+              $("#cus-delsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#cus-delsuccess-alert").hide();
               });
               return false;
             }
             else  {
-              $("#sup-success-alert").alert();
-              $("#sup-success-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#sup-success-alert").hide();
+              $("#sup-delsuccess-alert").alert();
+              $("#sup-delsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#sup-delsuccess-alert").hide();
               });
               return false;
             }
@@ -333,11 +326,11 @@ $("#cussup_delete").click(function(event) {
       });
 
   });
+});
   $("#confirm_del").on('shown.bs.modal', function(event) {
     $("#m_cancel").focus();
   });
   $("#confirm_del").on('hidden.bs.modal', function(event) {
     $("#edit_cussup_list").focus();
   });
- });
 });
