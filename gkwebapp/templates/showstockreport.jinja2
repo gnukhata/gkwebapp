@@ -112,7 +112,12 @@
           <a class="libgname" href="">{{record["particulars"]}}</a>
         </td>
         <td class="col-xs-2" >
-          {{record["trntype"]}}
+          {% if record["trntype"] == "delchal" %}
+              Delivery Note
+          {% endif %}
+          {% if record["trntype"] == "invoice" %}
+              Invoice
+          {% endif %}
         </td>
         <td value="{{record["invdcid"]}}" class="col-xs-2" >
           {{record["invdcno"]}}
