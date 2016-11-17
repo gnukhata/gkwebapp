@@ -182,6 +182,25 @@
       </div>
       </div>
     </div>
+    <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
+      <div class="vertical-alignment-helper">
+        <div class="modal-dialog modal-sm vertical-align-center">
+          <div class="modal-content">
+            <div class="modal-header">
+
+              <h4 class="modal-title">{% trans %}Save?{% endtrans %}</h4>
+            </div>
+            <div class="modal-body">
+              <p>{% trans %}Are you sure?{% endtrans %}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id ="dc_save_no" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
+              <button type="button" id="dc_save_yes" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div>
+    </div><!-- /.modal -->
 
 
   </div>

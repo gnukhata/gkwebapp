@@ -494,6 +494,11 @@ $(document).ready(function() {
       $('#deliverychallan_designation').focus();
       return false;
     }
+    event.preventDefault();
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
+    $('#confirm_yes').modal('show').one('click', '#dc_save_yes', function (e)
+    {
     $.ajax({
       url: '/deliverychallan?action=save',
       type: 'POST',
@@ -552,6 +557,14 @@ $(document).ready(function() {
     });
 
     return false;
+  });
+  });
+  $("#confirm_yes").on('shown.bs.modal', function(event) {
+    $("#dc_save_no").focus();
+
+  });
+  $("#confirm_yes").on('hidden.bs.modal', function(event) {
+    $("#deliverychallan_challanno").focus();
   });
 
   $("#deliverychallan_saveprint").click(function(event) {
@@ -646,6 +659,11 @@ $(document).ready(function() {
       $('#deliverychallan_designation').focus();
       return false;
     }
+    event.preventDefault();
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
+    $('#confirm_yes').modal('show').one('click', '#dc_save_yes', function (e)
+    {
     $.ajax({
       url: '/deliverychallan?action=save',
       type: 'POST',
@@ -736,6 +754,8 @@ $(document).ready(function() {
 
     return false;
   });
+});
+
 
   $("#deliverychallan_reset").click(function(event) {
     if ($("#status").val()=='9') {
