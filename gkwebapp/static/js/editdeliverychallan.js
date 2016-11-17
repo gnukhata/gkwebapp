@@ -84,13 +84,16 @@ $(document).ready(function() {
       $('#deliverychallan_edit_product_table tbody').empty();
       $.each(resp.delchaldata.stockdata.items, function(key, value) {
         $('#deliverychallan_edit_product_table tbody').append('<tr>'+
-        '<td class="col-xs-9">'+
+        '<td class="col-xs-7">'+
         '<select class="form-control deliverychallan_edit_disable input-sm product_name">'+
         '<option value="'+key+'">'+value.productdesc+'</option>'+
         '</select>'+
         '</td>'+
-        '<td class="col-xs-2">'+
+        '<td class="col-xs-4">'+
+        '<div class="input-group">'+
         '<input type="text" class="deliverychallan_edit_product_quantity form-control deliverychallan_edit_disable input-sm text-right" value="'+value.qty+'">'+
+          '<span class="input-group-addon input-sm" id="unitaddon">'+value.unitname+'</span>'+
+        '</div>'+
         '</td>'+
         '<td class="col-xs-1">'+
         '<a href="#" class="product_del deliverychallan_edit_disable"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
@@ -321,10 +324,10 @@ $(document).ready(function() {
           console.log("success");
           if (resp["gkstatus"]==0) {
             $('#deliverychallan_edit_product_table tbody').append('<tr>'+
-            '<td class="col-xs-9">'+
+            '<td class="col-xs-7">'+
             '<select class="form-control input-sm product_name"></select>'+
             '</td>'+
-            '<td class="col-xs-2">'+
+            '<td class="col-xs-4">'+
             '<input type="text" class="deliverychallan_edit_product_quantity form-control input-sm text-right" value="">'+
             '</td>'+
             '<td class="col-xs-1">'+
@@ -579,6 +582,7 @@ $("#deliverychallan_editprint").click(function(event) {
 
     obj.productdesc = $("#deliverychallan_edit_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").text();
     obj.qty = $("#deliverychallan_edit_product_table tbody tr:eq("+i+") td:eq(1) input").val();
+    obj.unitname = $("#deliverychallan_edit_product_table tbody tr:eq("+i+") td:eq(1) span").text();
     qtytotal += +obj.qty;
     printset.push(obj);
   }
