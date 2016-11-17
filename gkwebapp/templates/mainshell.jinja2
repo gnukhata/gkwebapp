@@ -29,20 +29,25 @@
             <a href="" id="master" class="dropdown-toggle mastermenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>M</u>aster</a>
             <ul class="dropdown-menu">
               <li><a  class="mastermenu" data-toggle="tab" id="addaccount" href="">{% trans %}Create Account{% endtrans %}</a></li>
-              <li><a class="mastermenu" data-toggle="tab" id="addcategory" href="">{% trans %}Category{% endtrans %}</a></li>
-              <li><a  class="mastermenu" data-toggle="tab" id="product" href="">Product</a></li>
-              <li><a  class="mastermenu" data-toggle="tab" id="invoice" href="">Invoice</a></li>
-              <li><a  class="mastermenu" data-toggle="tab" id="searchcategory" href="">Search Products</a></li>
               <li><a  class="mastermenu" data-toggle="tab" href="" id="editaccount">{% trans %}Edit Account{% endtrans %}</a></li>
               <li><a class="mastermenu" data-toggle="tab" href="" id="showeditorg">{% trans %}Edit Organisation Particulars{% endtrans %}</a></li>
               <li><a class="mastermenu" data-toggle="tab" id="showproject" href="">{% trans %}Cost Center{% endtrans %}</a></li>
               <li><a class="mastermenu" data-toggle="tab" id="BRS" href="">{% trans %}Bank Reconciliation Statement{% endtrans %}</a></li>
-              <li><a class="mastermenu" data-toggle="tab" id="deliverychallan" href="">{% trans %}Delivery Challan{% endtrans %}</a></li>
-              <li><a  class="mastermenu" data-toggle="tab" id="godown" href="">{% trans %}Godown{% endtrans %}</a></li>
-              <li><a class="mastermenu" data-toggle="tab" id="addunit" href="">{% trans %}Units Of Measurements{% endtrans %}</a></li>
-              <li><a class="mastermenu" data-toggle="tab" id="customersupplier" href="">{% trans %}Customer and Supplier{% endtrans %}</a></li>
-              <li><a class="mastermenu" data-toggle="tab" id="createtransfernote" href="">{% trans %}Transfer Note{% endtrans %}</a></li>
-              <li><a class="mastermenu" data-toggle="tab" id="addcashmemo" href="">{% trans %}Cash Memo{% endtrans %}</a></li>
+            </ul>
+          </li>
+          <li class="dropdown closebooks inventory_hide">
+            <a href="" id="inventory" class="dropdown-toggle inventorymenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>I</u>nventory</a>
+            <ul class="dropdown-menu">
+              <li><a class="inventorymenu" data-toggle="tab" id="addcategory" href="">{% trans %}Category{% endtrans %}</a></li>
+              <li><a class="inventorymenu" data-toggle="tab" id="addunit" href="">{% trans %}Units Of Measurement{% endtrans %}</a></li>
+              <li><a  class="inventorymenu" data-toggle="tab" id="product" href="">Product</a></li>
+              <li><a class="inventorymenu" data-toggle="tab" id="customersupplier" href="">{% trans %}Customer and Supplier{% endtrans %}</a></li>
+              <li><a class="inventorymenu" data-toggle="tab" id="deliverychallan" href="">{% trans %}Delivery Note{% endtrans %}</a></li>
+              <li><a  class="inventorymenu" data-toggle="tab" id="invoice" href="">Invoice</a></li>
+              <li><a class="inventorymenu" data-toggle="tab" id="addcashmemo" href="">{% trans %}Cash Memo{% endtrans %}</a></li>
+              <li><a  class="inventorymenu" data-toggle="tab" id="searchcategory" href="">Search Products</a></li>
+              <li><a  class="inventorymenu" data-toggle="tab" id="godown" href="">{% trans %}Godown{% endtrans %}</a></li>
+              <li><a class="inventorymenu" data-toggle="tab" id="createtransfernote" href="">{% trans %}Transfer Note{% endtrans %}</a></li>
             </ul>
           </li>
           <li class="dropdown closebooks">
@@ -72,10 +77,10 @@
               <li><a class="reportmenu" href="" data-toggle="tab" id="fevoucher">{% trans %}Find/Edit Voucher{% endtrans %}</a></li>
               <li><a class="reportmenu" href="" data-toggle="tab" id="listofaccounts">{% trans %}List of Accounts{% endtrans %}</a></li>
               <li><a class="hideoperator hidemanager reportmenu" href="" data-toggle="tab" id="showdeletedvoucher">{% trans %}List of Deleted Vouchers{% endtrans %}</a></li>
-              <li><a class="reportmenu" href="" data-toggle="tab" id="showstockreport">{% trans %}Stock{% endtrans %}</a></li>
-              <li><a class="reportmenu" href="" data-toggle="tab" id="listofgodowns">{% trans %}List of Godowns{% endtrans %}</a></li>
-              <li><a class="reportmenu" href="" data-toggle="tab" id="listofcategories">{% trans %}List of Categories{% endtrans %}</a></li>
-              <li><a class="reportmenu" href="" data-toggle="tab" id="listofstockitems">{% trans %}List of Stock Items{% endtrans %}</a></li>
+              <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="showstockreport">{% trans %}Stock{% endtrans %}</a></li>
+              <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listofgodowns">{% trans %}List of Godowns{% endtrans %}</a></li>
+              <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listofcategories">{% trans %}List of Categories{% endtrans %}</a></li>
+              <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listofstockitems">{% trans %}List of Stock Items{% endtrans %}</a></li>
             </ul>
           </li>
           <li class="dropdown">
@@ -198,7 +203,7 @@
         <h4 class="modal-title" id="">Activate Inventory</h4>
       </div>
       <div class="modal-body">
-        <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
+        <div class="alert alert-success" id="inventory_activate_success-alert"  aria-live="rude" role="alert" hidden>
 
           {% trans %}Inventory module activated.{% endtrans %}
         </div>
@@ -385,22 +390,16 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">{% trans %}About{% endtrans %}</h4>
+        <h4 class="modal-title">{% trans %}GNUKhata <small style="color:white;"> version 3.5</small>{% endtrans %}</h4>
       </div>
       <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
         <p>
-          <a href="http://gnukhata.in" target="_blank">{% trans %}GNUKhata{% endtrans %}</a> {% trans %}is a free and flexible software for accounting with upcoming support inventory management being developed at{% endtrans %} <a href="http://dff.org.in" target="_blank">{% trans %}Digital Freedom Foundation{% endtrans %}</a>.
-          {% trans %}It is a Free and Open Source Software that supports a wide range of applications in every field of economic activity, including factory or farm-based production, point of sales accounting & inventory and work in the service sector.{% endtrans %}
+          <a href="http://gnukhata.in" target="_blank">{% trans %}GNUKhata{% endtrans %}</a> {% trans %} a free and open source, industry standard software for accounting and inventory management being developed at{% endtrans %} <a href="http://dff.org.in" target="_blank">{% trans %}Digital Freedom Foundation{% endtrans %}</a>.
+          {% trans %}Supports various profit making and non-profit economic sectors.{% endtrans %}
+
         </p>
-        <p>
-          {% trans %}While it serves such traditional accounting requirements, its special feature is that it can support emerging sectors of the economy who are being required to keep audited accounts, such as self-help groups, craft producers and micro-finance groups.{% endtrans %}
-          {% trans %}GNUKhata is highly customizable, given its open source nature.{% endtrans %}
-        </p>
-        <p>
-          {% trans %}It can be easily transformed into Indian languages, largely unreached by existing software solutions.{% endtrans %}
-          {% trans %}GNUKhata is soon to be extended to include a payroll section.{% endtrans %}
-          {% trans %}We hope to take it to a stage where it can become a tool for remote banking.{% endtrans %}
-        </p>
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
@@ -424,13 +423,14 @@
         </p>
         <p>
           Abhijith Balan <a href="mailto:abhijithb21@openmailbox.org">abhijithb21@openmailbox.org</a><br />
-          Abhishek Alai <a href="mailto:abbhishek971@gmail.com">abbhishek971@gmail.com</a><br />
-          Ashutosh Paralikar <a href="mailto:ashutosh@thefossblog.com">ashutosh@thefossblog.com</a><br />
+          Bhagyashree Pandhare <a href="mailto:bhagya.pandhare@openmailbox.org">bhagya.pandhare@openmailbox.org</a><br />
           Bhavesh Bawadhane <a href="mailto:bbhavesh07@gmail.com">bbhavesh07@gmail.com</a><br />
-          Dinesh Sutar <a href="mailto:dinesh.sutar@openmailbox.org">dinesh.sutar@openmailbox.org</a><br />
-          Vaibhav Kurhe <a href="mailto:vaibspidy@openmailbox.org">vaibspidy@openmailbox.org</a><br />
-          Vanita Rajpurohit <a href="mailto:vanita.rajpurohit9819@gmail.com">vanita.rajpurohit9819@gmail.com</a><br />
-          Vinayak Kusumkar <a href="mailto:vinayakkusumkar@openmailbox.org">vinayakkusumkar@openmailbox.org</a><br />
+          Pornima Kolte <a href="mailto:pornima@openmailbox.org">pornima@openmailbox.org</a><br />
+          Prajkta Patkar <a href="mailto:prajkta.patkar007@gmail.com">prajkta.patkar007@gmail.com</a><br />
+          Sachin Patil <a href="mailto:sachpatil@openmailbox.org">sachpatil@openmailbox.org</a><br />
+        </p>
+        <p>
+          For former developers list visit <a href="http://gnukhata.in/#team" target="_blank">{% trans %}gnukhata.in{% endtrans %}</a>
         </p>
       </div>
       <div class="modal-footer">

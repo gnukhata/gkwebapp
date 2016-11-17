@@ -40,6 +40,14 @@ Document off is used to remove an already attached event to an element, so as to
 $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $(".modal-backdrop").remove();
+  if (sessionStorage.invflag==0)
+  {
+    $(".invhide").hide();
+  }
+  else
+  {
+    $(".invhide").show();
+  }
   $("#vno").focus().select();
   $('.vdate').autotab('number');    //autotab is a library for automatically switching the focus to next input when max allowed characters are filled.
   $('.dramt').numeric({ negative: false });   //numeric is a library used for restricting the user to input only numbers and decimal inside a text box
@@ -275,7 +283,7 @@ $("#invsel").keyup(function(event) {
 
   $('#vyear').keyup(function(event) {
     if(event.which==13 && $('#vyear').val()!=""){
-      if ($('#vtype').val()=="sales" || $('#vtype').val()=="purchase")
+      if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invflag ==1)
       {
         $("#invsel").focus();
       }
@@ -297,7 +305,7 @@ $("#invsel").keyup(function(event) {
       event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-      if ($('#vtype').val()=="sales" || $('#vtype').val()=="purchase")
+      if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invflag ==1)
       {
         $("#invsel").focus();
       }
@@ -539,7 +547,7 @@ $("#invsel").keyup(function(event) {
       }
       if (curindex==0) {
         event.preventDefault();
-        if ($('#vtype').val()=="sales" || $('#vtype').val()=="purchase")
+        if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invflag ==1)
         {
           $("#invsel").focus();
         }
@@ -555,7 +563,7 @@ $("#invsel").keyup(function(event) {
       event.preventDefault();
       if (curindex==0) {
         event.preventDefault();
-        if ($('#vtype').val()=="sales" || $('#vtype').val()=="purchase")
+        if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invflag ==1)
         {
           $("#invsel").focus();
         }
@@ -1213,7 +1221,7 @@ $("#invsel").keyup(function(event) {
     for (var i = 0; i < files.length; i++) {
       form_data.append("file"+i,files[i])
     }
-    if ($('#vtype').val()=="sales" || $('#vtype').val()=="purchase")
+    if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invflag ==1)
     {
       details.invid = $("#invsel option:selected").val();
       var invoicetotal= $("#invtotal").val();
@@ -1233,6 +1241,10 @@ $("#invsel").keyup(function(event) {
         return false;
       }
     }
+    }
+    else
+    {
+    details.invid="" ;
     }
     form_data.append("vdetails",JSON.stringify(details));
     form_data.append("transactions",JSON.stringify(output));

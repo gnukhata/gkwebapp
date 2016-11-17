@@ -31,6 +31,15 @@ $(document).ready(function(){
   $('.modal-backdrop').remove();
   var oninvoice = 0;
   $("#msspinmodal").modal("hide");
+  if (sessionStorage.invflag ==1)
+  {
+    $("#act_inv").remove();
+  }
+  else
+  {
+
+    $(".inventory_hide").remove();
+  }
   $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');
   $("#"+sessionStorage.gktheme+"span").show();
 
@@ -43,6 +52,10 @@ $(document).ready(function(){
           $("#master").click();
           event.preventDefault();
           }
+          if(event.ctrlKey && event.keyCode == 73) {
+            $("#inventory").click();
+            event.preventDefault();
+            }
         if(event.ctrlKey && event.keyCode == 84) {
           $("#transaction").click();
           event.preventDefault();
@@ -199,10 +212,25 @@ $(document).ready(function(){
       });
       $(".mastermenu").keydown(function(event){
         if(event.which == 39){
+          if (sessionStorage.invflag ==1)
+          {
+            $("#inventory").click();
+          }
+          else
+          {
           $("#transaction").click();
+          }
         }
         if(event.which == 37){
           $("#toolbar").click();
+        }
+      });
+      $(".inventorymenu").keydown(function(event){
+        if(event.which == 39){
+          $("#transaction").click();
+        }
+        if(event.which == 37){
+          $("#master").click();
         }
       });
       $(".transactionmenu").keydown(function(event){
@@ -210,7 +238,14 @@ $(document).ready(function(){
           $("#report").click();
         }
         if(event.which == 37){
+          if (sessionStorage.invflag ==1)
+          {
+            $("#inventory").click();
+          }
+          else
+          {
           $("#master").click();
+          }
         }
       });
       $(".reportmenu").keydown(function(event){
@@ -383,10 +418,7 @@ $("#backuporg").click(function(e){
     xhr.send();
   });
 
-if (sessionStorage.invflag ==1)
-{
-  $("#act_inv").remove();
-}
+
 
   $("#act_inv").click(function (e){
     $("#inventorymodal").on('shown.bs.modal', function(event) {
@@ -416,9 +448,9 @@ if (sessionStorage.invflag ==1)
         if (resp['gkstatus']==0)
         {
           sessionStorage.setItem('invflag', 1 );
-          $("#success-alert").alert();
-          $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#success-alert").hide();
+          $("#inventory_activate_success-alert").alert();
+          $("#inventory_activate_success-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#inventory_activate_success-alert").hide();
             location.reload();
           });
           return false;
