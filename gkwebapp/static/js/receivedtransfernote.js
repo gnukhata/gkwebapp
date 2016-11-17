@@ -60,7 +60,7 @@ $(document).ready(function() {
             value.productdesc+
             '</td>'+
             '<td class="col-xs-3">'+
-            value.qty+
+            value.qty+' ' +value.unitname+
             '</td>'+
 
            '</tr>');

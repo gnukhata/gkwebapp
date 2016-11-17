@@ -102,14 +102,14 @@
                 <table id="transfernote_product_table" class="table table-condensed shadow table-borderd fixed-table">
                   <thead class="bg-primary">
                     <tr>
-                      <th class="col-xs-9">{% trans %}Product{% endtrans %}</th>
-                      <th class="col-xs-2">{% trans %}Quantity{% endtrans %}</th>
+                      <th class="col-xs-7">{% trans %}Product{% endtrans %}</th>
+                      <th class="col-xs-4">{% trans %}Quantity{% endtrans %}</th>
                       <th class="col-xs-1"></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td class="col-xs-9">
+                      <td class="col-xs-7">
                         <select class="form-control input-sm product_name">
                           <option value="" disabled hidden selected>Select Product</option>
                           {% for product in products %}
@@ -117,8 +117,11 @@
                           {% endfor %}
                         </select>
                       </td>
-                      <td class="col-xs-2">
-                        <input type="text" class="transfernote_product_quantity form-control input-sm text-right" value="">
+                      <td class="col-xs-4">
+                        <div class="input-group">
+                          <input type="text" class="transfernote_product_quantity form-control input-sm text-right" value="">
+                          <span class="input-group-addon input-sm" id="unitaddon"></span>
+                        </div>
                       </td>
                       <td class="col-xs-1">
 
