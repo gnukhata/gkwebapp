@@ -23,6 +23,7 @@ Contributors:
 "Krishnakant Mane" <kk@dff.org.in>
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
+"Abhijith Balan" <abhijithb21@openmailbox.org>
 """
 
 from pyramid.view import view_config
@@ -242,6 +243,117 @@ def listofstockitemsspreadsheet(request):
 		sheet.getCell(2, row).stringValue(stock["categoryname"])
 		sheet.getCell(3, row).stringValue(stock["unitname"])
 		sheet.getCell(4, row).stringValue(stock["productstatus"])
+		row += 1
+
+	ods.save("response.ods")
+	repFile = open("response.ods")
+	rep = repFile.read()
+	repFile.close()
+	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	os.remove("response.ods")
+	return Response(rep, headerlist=headerList.items())
+
+@view_config(route_name="product",request_param="type=viewstockreport", renderer="gkwebapp:templates/viewstockreport.jinja2")
+def viewstockreport(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/products",headers=header)
+
+	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="product",request_param="type=showstockreport")
+def showstockreport(request):
+	header={"gktoken":request.headers["gktoken"]}
+	productcode = int(request.params["productcode"])
+	calculatefrom = request.params["calculatefrom"]
+	calculateto = request.params["calculateto"]
+	scalculatefrom = request.params["calculatefrom"]
+	scalculateto = request.params["calculateto"]
+	productdesc = request.params["productdesc"]
+	if int(request.params["backflag"]) > 0:
+		scalculatefrom = datetime.strptime(calculatefrom, '%d-%m-%Y').strftime('%Y-%m-%d')
+		scalculateto = datetime.strptime(calculateto, '%d-%m-%Y').strftime('%Y-%m-%d')
+		stockrefresh = {"productcode":productcode,"calculatefrom":calculatefrom,"calculateto":calculateto,"productdesc":productdesc}
+	else:
+		stockrefresh = {"productcode":productcode,"calculatefrom":datetime.strptime(calculatefrom, '%Y-%m-%d').strftime('%d-%m-%Y'),"calculateto":datetime.strptime(calculateto, '%Y-%m-%d').strftime('%d-%m-%Y'),"productdesc":productdesc}
+	result = requests.get("http://127.0.0.1:6543/report?type=stockreport&productcode=%d&startdate=%s&enddate=%s"%(productcode, scalculatefrom, scalculateto),headers=header)
+	return render_to_response("gkwebapp:templates/showstockreport.jinja2",{"gkresult":result.json()["gkresult"],"stockrefresh":stockrefresh},request=request)
+
+@view_config(route_name="product",request_param="type=printablestockreport")
+def printablestockreport(request):
+	header={"gktoken":request.headers["gktoken"]}
+	productcode = int(request.params["productcode"])
+	scalculatefrom = request.params["calculatefrom"]
+	scalculateto = request.params["calculateto"]
+	calculatefrom = datetime.strptime(scalculatefrom, '%d-%m-%Y').strftime('%Y-%m-%d')
+	calculateto = datetime.strptime(scalculateto, '%d-%m-%Y').strftime('%Y-%m-%d')
+	productdesc = request.params["productdesc"]
+	stockrefresh = {"productcode":productcode,"calculatefrom":scalculatefrom,"calculateto":scalculateto,"productdesc":productdesc}
+	result = requests.get("http://127.0.0.1:6543/report?type=stockreport&productcode=%d&startdate=%s&enddate=%s"%(productcode, calculatefrom, calculateto),headers=header)
+	return render_to_response("gkwebapp:templates/printstockreport.jinja2",{"gkresult":result.json()["gkresult"],"stockrefresh":stockrefresh},request=request)
+
+@view_config(route_name="product",request_param="type=stockreportspreadsheet", renderer="")
+def stockreportspreadsheet(request):
+	header={"gktoken":request.headers["gktoken"]}
+	productcode = int(request.params["productcode"])
+	calculatefrom = request.params["calculatefrom"]
+	calculateto = request.params["calculateto"]
+	scalculatefrom = datetime.strptime(calculatefrom, '%d-%m-%Y').strftime('%Y-%m-%d')
+	scalculateto = datetime.strptime(calculateto, '%d-%m-%Y').strftime('%Y-%m-%d')
+	productdesc = request.params["productdesc"]
+	result = requests.get("http://127.0.0.1:6543/report?type=stockreport&productcode=%d&startdate=%s&enddate=%s"%(productcode, scalculatefrom, scalculateto),headers=header)
+	result = result.json()["gkresult"]
+	fystart = str(request.params["fystart"]);
+	ystart = datetime.strptime(fystart, '%Y-%m-%d').strftime('%d-%m-%Y')
+	fyend = str(request.params["fyend"]);
+	orgname = str(request.params["orgname"])
+	orgname += " (FY: " + ystart+" to "+fyend +")"
+	ods = ODS()
+	sheet = ods.content.getSheet(0)
+	sheet.setSheetName("List of Stock Items")
+	sheet.getRow(0).setHeight("23pt")
+
+	sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("16pt")
+	ods.content.mergeCells(0,0,7,1)
+	sheet.getRow(1).setHeight("18pt")
+	sheet.getCell(0,1).stringValue("Stock Report for "+productdesc+" (Period : "+calculatefrom+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+	ods.content.mergeCells(0,1,7,1)
+	sheet.getColumn(1).setWidth("4cm")
+	sheet.getColumn(2).setWidth("5cm")
+	sheet.getColumn(3).setWidth("4cm")
+	sheet.getColumn(4).setWidth("3cm")
+	sheet.getCell(0,2).stringValue("Date").setBold(True)
+	sheet.getCell(1,2).stringValue("Particulars").setBold(True)
+	sheet.getCell(2,2).stringValue("Trn Type").setBold(True)
+	sheet.getCell(3,2).stringValue("INV/DC No").setBold(True)
+	sheet.getCell(4,2).stringValue("Inward").setBold(True).setAlignHorizontal("right")
+	sheet.getCell(5,2).stringValue("Outward").setBold(True).setAlignHorizontal("right")
+	sheet.getCell(6,2).stringValue("Balance").setBold(True).setAlignHorizontal("right")
+	row = 3
+	for stock in result:
+		if stock["particulars"]=="opening stock" and stock["invdcno"]=="" and stock["date"]=="":
+			sheet.getCell(0, row).stringValue("")
+			sheet.getCell(1, row).stringValue(stock["particulars"].title())
+			sheet.getCell(2, row).stringValue("")
+			sheet.getCell(3, row).stringValue("")
+			sheet.getCell(4, row).stringValue(stock["inward"]).setAlignHorizontal("right")
+			sheet.getCell(5, row).stringValue("")
+			sheet.getCell(6, row).stringValue("")
+		if stock["particulars"]!="opening stock" and stock["invdcno"]!="" and stock["date"]!="":
+			sheet.getCell(0, row).stringValue(stock["date"])
+			sheet.getCell(1, row).stringValue(stock["particulars"])
+			sheet.getCell(2, row).stringValue(stock["trntype"])
+			sheet.getCell(3, row).stringValue(stock["invdcno"])
+			sheet.getCell(4, row).stringValue(stock["inwardqty"]).setAlignHorizontal("right")
+			sheet.getCell(5, row).stringValue(stock["outwardqty"]).setAlignHorizontal("right")
+			sheet.getCell(6, row).stringValue(stock["balance"]).setAlignHorizontal("right")
+		if stock["particulars"]=="Total" and stock["invdcno"]=="" and stock["date"]=="":
+			sheet.getCell(0, row).stringValue("")
+			sheet.getCell(1, row).stringValue(stock["particulars"])
+			sheet.getCell(2, row).stringValue("")
+			sheet.getCell(3, row).stringValue("")
+			sheet.getCell(4, row).stringValue(stock["totalinwardqty"]).setAlignHorizontal("right")
+			sheet.getCell(5, row).stringValue(stock["totaloutwardqty"]).setAlignHorizontal("right")
+			sheet.getCell(6, row).stringValue("")
 		row += 1
 
 	ods.save("response.ods")

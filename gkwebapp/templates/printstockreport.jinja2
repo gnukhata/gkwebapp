@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Stock Report{% endtrans %} | {{stockrefresh["productdesc"]}}</title>
+    <style>
+    @page {
+      size: 21cm 29.7cm;
+      margin: 10mm 10mm 20mm 10mm; /* change the margins as you want them to be. */
+    }
+    td {
+      font-size: 71%;
+    }
+
+    th {
+      font-size: 75%;
+    }
+		table { page-break-inside:auto }
+		tr    { page-break-inside:avoid; page-break-after:auto }
+    thead { display: table-header-group; }
+    tfoot { display: table-footer-group; }
+		.rightlist {
+	    text-align: right;
+	  }
+    </style>
+	</head>
+	<body>
+    <input type="hidden" id="productcode" name="productcode" value="{{stockrefresh["productcode"]}}"></input>
+    <input type="hidden" id="productdesc" name="productdesc" value="{{stockrefresh["productdesc"]}}"></input>
+    <input type="hidden" id="calculatefrom" name="calculatefrom" value="{{stockrefresh["calculatefrom"]}}"></input>
+    <input type="hidden" id="calculateto" name="calculateto" value="{{stockrefresh["calculateto"]}}"></input>
+    <input type="hidden" id="financialstart" name="financialstart" value="{{stockrefresh["financialstart"]}}"></input>
+		<div class="printorgdetails hidden-print" style="text-align:center;">
+    <i>{% trans %}Stock Report for{% endtrans %}</i> <strong>{{stockrefresh["productdesc"]}}</strong>
+		<i>{% trans %}Period{% endtrans %}</i> : <strong>{{stockrefresh["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{stockrefresh["calculateto"]}}</strong>
+  </div>
+		<div class="table-responsive printorgdetails">
+			<table id="ledgertable" class="table shadow table-striped table-condensed table-bordered">
+				<thead class="bg-primary">
+					<tr class="visible-print">
+						<th colspan="7" style="text-align:center; font-size:80%">
+							<i>{% trans %}Stock Report for{% endtrans %}</i> <strong>{{stockrefresh["productdesc"]}}</strong>
+							<i>{% trans %}Period{% endtrans %}</i> : <strong>{{stockrefresh["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{stockrefresh["calculateto"]}}</strong>
+						</th>
+					</tr>
+					<tr>
+            <th class="col-xs-1" >
+              {% trans %}Date{% endtrans %}
+            </th>
+            <th class="col-xs-4" >
+              {% trans %}Particulars{% endtrans %}
+            </th>
+            <th class="col-xs-2" >
+              {% trans %}Trn Type{% endtrans %}
+            </th>
+            <th class="col-xs-2" >
+              {% trans %}INV/DC No{% endtrans %}
+            </th>
+            <th class="col-xs-1 rightlist" >
+              {% trans %}Inward{% endtrans %}
+            </th>
+            <th class="col-xs-1 rightlist" >
+              {% trans %}Outward{% endtrans %}
+            </th>
+            <th class="col-xs-1 rightlist" >
+              {% trans %}Balance{% endtrans %}
+            </th>
+					</tr>
+				</thead>
+        {% for record in gkresult %}
+				{% if record["particulars"] !="Total" and record["invdcno"]!="" and record["date"]!="" %}
+	      <tr value="{{record["invdcid"]}}">
+	        <td class="col-xs-1 " >
+	          {{record["date"]}}
+	        </td>
+	        <td class="col-xs-4">
+	          <a class="libgname" href="">{{record["particulars"]}}</a>
+	        </td>
+	        <td class="col-xs-2" >
+	          {% if record["trntype"] == "delchal" %}
+	              Delivery Note
+	          {% endif %}
+	          {% if record["trntype"] == "invoice" %}
+	              Invoice
+	          {% endif %}
+	        </td>
+	        <td value="{{record["invdcid"]}}" class="col-xs-2" >
+	          {{record["invdcno"]}}
+	        </td>
+	        <td class="col-xs-1 rightlist">
+	          {{record["inwardqty"]}}
+	        </td>
+	        <td class="col-xs-1 rightlist" >
+	          {{record["outwardqty"]}}
+	        </td>
+	        <td class="col-xs-1 rightlist" >
+	          {{record["balance"]}}
+	        </td>
+	      </tr>
+	      {% endif %}
+	      {% if record["particulars"] =="Total" and record["invdcno"]=="" and record["date"]=="" %}
+	      <tr>
+	        <td class="col-xs-1 " >
+	        </td>
+	        <td class="col-xs-4">
+	          <a class="libgname" href="">{{record["particulars"]}}</a>
+	        </td>
+	        <td class="col-xs-2" >
+	        </td>
+	        <td class="col-xs-2" >
+	        </td>
+	        <td class="col-xs-1 rightlist">
+	          {{record["totalinwardqty"]}}
+	        </td>
+	        <td class="col-xs-1 rightlist" >
+	          {{record["totaloutwardqty"]}}
+	        </td>
+	        <td class="col-xs-1 rightlist" >
+	        </td>
+	      </tr>
+	      {% endif %}
+        {% endfor %}
+				</tbody>
+			</table>
+			<span style="margin:auto; display:table;">
+				<button class="btn btn-sm btn-primary hidden-print" type="button" id="printback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+				<button class="btn btn-sm btn-primary hidden-print" type="button"	id="realprint" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
+			</span>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("title").html("GNUKhata");
+				$("#printback").click(function(event) {
+					var backdata = {"productcode":$("#productcode").val(),"productdesc":$("#productdesc").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(), "backflag":1};
+					$.ajax(
+						{
+							type: "POST",
+							url: "/product?type=showstockreport",
+							global: false,
+							async: false,
+							datatype: "text/html",
+							data: backdata,
+							beforeSend: function(xhr)
+							{
+								xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+							}
+						})
+						.done(function(resp)
+						{
+							$("#info").html("");
+							$("#info").html(resp);
+						}
+					);
+				});
+				$("#realprint").click(function(event) {
+					window.print();
+				});
+			});
+		</script>
+	</body>
+</html>

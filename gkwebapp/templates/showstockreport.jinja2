@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Stock Report{% endtrans %}</title>
+
+  <style type="text/css">
+  .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  #latable td {
+    font-size: 75%;
+    padding: 4 !important;
+    margin: 4 !important;
+  }
+
+  #latable th {
+    font-size: 85%;
+  }
+
+  .card-view .title {
+      font-weight: bold;
+      display: inline-block;
+      min-width: 30%;
+      text-align: left !important;
+  }
+
+  #latable tbody {
+      display:block;
+      height: calc(100vh - 18em);
+      overflow-y:scroll;
+  }
+  #latable thead,#latable tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  #latable thead {
+      width: calc( 100% - 0.65em );
+  }
+
+  .rightlist {
+    text-align: right;
+  }
+
+  </style>
+</head>
+<body>
+  <input type="hidden" id="productcode" name="productcode" value="{{stockrefresh["productcode"]}}"></input>
+  <input type="hidden" id="productdesc" name="productdesc" value="{{stockrefresh["productdesc"]}}"></input>
+  <input type="hidden" id="calculatefrom" name="calculatefrom" value="{{stockrefresh["calculatefrom"]}}"></input>
+  <input type="hidden" id="calculateto" name="calculateto" value="{{stockrefresh["calculateto"]}}"></input>
+  <input type="hidden" id="financialstart" name="financialstart" value="{{stockrefresh["financialstart"]}}"></input>
+
+  <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{stockrefresh["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{stockrefresh["calculateto"]}}</strong></span>
+  <span style="margin:auto; display:table;"><i>{% trans %}Stock Report for{% endtrans %}</i> <strong>{{stockrefresh["productdesc"]}}</strong></span>
+
+  <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
+    <thead class="bg-primary">
+      <tr>
+        <th class="col-xs-1" >
+          {% trans %}Date{% endtrans %}
+        </th>
+        <th class="col-xs-4" >
+          {% trans %}Particulars{% endtrans %}
+        </th>
+        <th class="col-xs-2" >
+          {% trans %}Trn Type{% endtrans %}
+        </th>
+        <th class="col-xs-2" >
+          {% trans %}INV/DC No{% endtrans %}
+        </th>
+        <th class="col-xs-1 rightlist" >
+          {% trans %}Inward{% endtrans %}
+        </th>
+        <th class="col-xs-1 rightlist" >
+          {% trans %}Outward{% endtrans %}
+        </th>
+        <th class="col-xs-1 rightlist" >
+          {% trans %}Balance{% endtrans %}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+
+      {% for record in gkresult %}
+      {% if record["particulars"] =="opening stock" and record["invdcno"]=="" and record["date"]=="" %}
+      <tr>
+        <td class="col-xs-1 " >
+        </td>
+        <td class="col-xs-4">
+          <a class="libgname text-capitalize" href="">{{record["particulars"]}}</a>
+        </td>
+        <td class="col-xs-2" >
+        </td>
+        <td class="col-xs-2" >
+        </td>
+        <td class="col-xs-1 rightlist">
+          {{record["inward"]}}
+        </td>
+        <td class="col-xs-1 rightlist" >
+        </td>
+        <td class="col-xs-1 rightlist" >
+        </td>
+      </tr>
+      {% endif %}
+      {% if record["particulars"] !="Total" and record["invdcno"]!="" and record["date"]!="" %}
+      <tr value="{{record["invdcid"]}}">
+        <td class="col-xs-1 " >
+          {{record["date"]}}
+        </td>
+        <td class="col-xs-4">
+          <a class="libgname" href="">{{record["particulars"]}}</a>
+        </td>
+        <td class="col-xs-2" >
+          {% if record["trntype"] == "delchal" %}
+              Delivery Note
+          {% endif %}
+          {% if record["trntype"] == "invoice" %}
+              Invoice
+          {% endif %}
+        </td>
+        <td value="{{record["invdcid"]}}" class="col-xs-2" >
+          {{record["invdcno"]}}
+        </td>
+        <td class="col-xs-1 rightlist">
+          {{record["inwardqty"]}}
+        </td>
+        <td class="col-xs-1 rightlist" >
+          {{record["outwardqty"]}}
+        </td>
+        <td class="col-xs-1 rightlist" >
+          {{record["balance"]}}
+        </td>
+      </tr>
+      {% endif %}
+      {% if record["particulars"] =="Total" and record["invdcno"]=="" and record["date"]=="" %}
+      <tr>
+        <td class="col-xs-1 " >
+        </td>
+        <td class="col-xs-4">
+          <a class="libgname" href="">{{record["particulars"]}}</a>
+        </td>
+        <td class="col-xs-2" >
+        </td>
+        <td class="col-xs-2" >
+        </td>
+        <td class="col-xs-1 rightlist">
+          {{record["totalinwardqty"]}}
+        </td>
+        <td class="col-xs-1 rightlist" >
+          {{record["totaloutwardqty"]}}
+        </td>
+        <td class="col-xs-1 rightlist" >
+        </td>
+      </tr>
+      {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+  <span style="margin:auto; display:table;">
+    <nbsp><nbsp>
+      <button type="button" class="btn btn-sm btn-danger" id="viewanotherstock" accesskey="w">{% trans %}Vie<u>w</u> Another Stock{% endtrans %}</button>
+    <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">{% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
+      <button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="t">{% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
+  </span>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/showstockreport.js')}}"></script>
+</body>
+</html>
