@@ -143,6 +143,7 @@ $("#loginform").submit(function(e)
 
         sessionStorage.gktoken = gt;
         sessionStorage.gktheme = 'Default';
+        sessionStorage.reload = 1;
         window.location="/showmainshell";
       }
       else if(resp['gkstatus']==3) {

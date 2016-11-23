@@ -130,6 +130,7 @@ $(document).ready(function()
         .done(function(resp){
           sessionStorage.gktheme = resp["theme"];
         });
+        sessionStorage.reload = 1;
         window.location="/showmainshell";
       }
       else if(resp["gkstatus"]==2)
