@@ -31,8 +31,8 @@
       <div class="panel-body">
         <form>
           <div class="form-group">
-            <label for="unit_edit_list" id="edit_list">{% trans %}<u>U</u>nit :{% endtrans %}</label>
-            <select class="form-control input-sm" id="unit_edit_list" accesskey="g">
+            <label for="unit_edit_list" id="edit_list">{% trans %}Unit :{% endtrans %}</label>
+            <select class="form-control input-sm" id="unit_edit_list">
               <option value="" disabled selected hidden>{% trans %}Select unit{% endtrans %}</option>
               {% for unitofmeasurement in gkresult %}
               <option value="{{unitofmeasurement['uomid']}}">{{unitofmeasurement["unitname"]}}</option>
@@ -41,12 +41,12 @@
           </div>
           <div id="unit_edit_innerdiv" style="padding-left:10px;padding-right:10px;" hidden>
           <div class="form-group">
-            <label for="unit_edit_name">{% trans %}N<u>a</u>me :{% endtrans %}</label>
-            <input class="form-control input-sm" id="unit_edit_name" placeholder="{% trans %}Enter unit name{% endtrans %}" accesskey="a">
+            <label for="unit_edit_name">{% trans %}Name :{% endtrans %}</label>
+            <input class="form-control input-sm" id="unit_edit_name" placeholder="{% trans %}Enter unit name{% endtrans %}">
           </div>
           <div class="form-group">
-            <label for="sub_unit_edit">{% trans %}<u>S</u>ub Unit Of :{% endtrans %}</label>
-            <select class="form-control input-sm" id="sub_unit_edit" accesskey="d">
+            <label for="sub_unit_edit">{% trans %}Sub Unit Of :{% endtrans %}</label>
+            <select class="form-control input-sm" id="sub_unit_edit">
               <option value="" selected>None</option>
               {% for unitofmeasurement in gkresult %}
               <option value="{{unitofmeasurement['uomid']}}">{{unitofmeasurement["unitname"]}}</option>
@@ -54,19 +54,19 @@
             </select>
           </div>
           <div class="form-group" id="edit_conversion_div">
-            <label for="unit_edit_conversion_rate">{% trans %}<u>C</u>onversion Rate:{% endtrans %}</label>
+            <label for="unit_edit_conversion_rate">{% trans %}Conversion Rate:{% endtrans %}</label>
             <div >
-              <input class="form-control input-sm text-right"  id="unit_edit_conversion_rate" aria-describedby="conversion_rate_help" placeholder="Enter conversion rate" accesskey="v">
+              <input class="form-control input-sm text-right"  id="unit_edit_conversion_rate" aria-describedby="conversion_rate_help" placeholder="Enter conversion rate">
           </div>
         </form>
       </div>
     </div>
   </div>
       <div class="panel-footer" id="unit_btn"  disabled hidden>
-        <button id="unit_reset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
-        <button class="btn btn-primary btn-sm" id="unit_edit_save" accesskey="e"data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}">{% trans %}Sav<u>e</u>{% endtrans %}</button>
-        <button id="unit_delete" class="btn btn-danger btn-sm" accesskey="d">{% trans %}<u>D</u>elete{% endtrans %}</button>
-        <button id="edit_btn" class="btn btn-primary btn-sm" accesskey="t">{% trans %}Edi<u>t</u>{% endtrans %}</button>
+        <button id="unit_reset" class="btn btn-warning btn-sm">{% trans %}Reset{% endtrans %}</button>
+        <button class="btn btn-primary btn-sm" id="unit_edit_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}">{% trans %}Save{% endtrans %}</button>
+        <button id="unit_delete" class="btn btn-danger btn-sm">{% trans %}Delete{% endtrans %}</button>
+        <button id="edit_btn" class="btn btn-primary btn-sm">{% trans %}Edit{% endtrans %}</button>
       </div>
     </div>
     <div id="confirm_del" class="modal fade" tabindex="-1" role="dialog">
