@@ -29,6 +29,12 @@ Contributors:
 $(document).ready(function(){
 
   $('.modal-backdrop').remove();
+
+  if (sessionStorage.reload == 1)
+  {
+      sessionStorage.reload = 0;
+      location.reload();
+  }
   var oninvoice = 0;
   $("#msspinmodal").modal("hide");
   if (sessionStorage.invflag ==1)
