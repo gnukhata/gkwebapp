@@ -76,48 +76,56 @@ setTimeout( function() { $("#orgname").focus(); }, 500 );
 
 $("#restorebutton").click(function(event){
   event.preventDefault();
-  var form_data = new FormData();
-  var files = $("#openrecovery")[0].files[0];
-  form_data.append("file",files);
-  $.ajax({
-    type: "POST",
-    url: "/recoveryfile",
-    global: false,
-    contentType: false,
-    cache: false,
-    processData: false,
-    async: false,
-    datatype: "json",
-    data: form_data,
-    beforeSend: function(xhr)
-    {
-      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-    },
-    success: function(resp)
-    {
-      if(resp["gkstatus"] ==0){
-        $("#recovery-success-alert").alert();
-        $("#recovery-success-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#recovery-success-alert").hide();
-          $("#restoredialog").hide();
-          $(".modal-backdrop").remove();
-          location.reload();
-        });
+  if ($("#openrecovery")[0].files.length > 0) {
+    var form_data = new FormData();
+    var files = $("#openrecovery")[0].files[0];
+    form_data.append("file",files);
+    $.ajax({
+      type: "POST",
+      url: "/recoveryfile",
+      global: false,
+      contentType: false,
+      cache: false,
+      processData: false,
+      async: false,
+      datatype: "json",
+      data: form_data,
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+      success: function(resp)
+      {
+        if(resp["gkstatus"] ==0){
+          $("#recovery-success-alert").alert();
+          $("#recovery-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#recovery-success-alert").hide();
+            $("#restoredialog").hide();
+            $(".modal-backdrop").remove();
+            location.reload();
+          });
+        }
+        if(resp["gkstatus"] ==5){
+          $("#data-exist-alert").alert();
+          $("#data-exist-alert").fadeTo(2500, 500).slideUp(500, function(){
+            $("#data-exist-alert").hide();
+          });
+        }
+        if(resp["gkstatus"] ==3) {
+          $("#recovery-failure-alert").alert();
+          $("#recovery-failure-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#recovery-failure-alert").hide();
+          });
+        }
       }
-      if(resp["gkstatus"] ==5){
-        $("#data-exist-alert").alert();
-        $("#data-exist-alert").fadeTo(2500, 500).slideUp(500, function(){
-          $("#data-exist-alert").hide();
-        });
-      }
-      if(resp["gkstatus"] ==3) {
-        $("#recovery-failure-alert").alert();
-        $("#recovery-failure-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#recovery-failure-alert").hide();
-        });
-      }
-    }
-  });
+    });
+  }
+  else {
+    $("#no-backup-alert").alert();
+    $("#no-backup-alert").fadeTo(2500, 500).slideUp(500, function(){
+      $("#no-backup-alert").hide();
+    });
+  }
 });
   return;
 });

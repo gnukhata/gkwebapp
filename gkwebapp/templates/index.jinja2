@@ -204,6 +204,10 @@
           <h4 class="modal-title">{% trans %}Restore Data{% endtrans %}</h4>
         </div>
         <div class="modal-body">
+          <div class="alert alert-warning" id="no-backup-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please upload a backup file.{% endtrans %}
+          </div>
           <div class="alert alert-success" id="recovery-success-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}Restoring is complete.{% endtrans %}
@@ -217,7 +221,7 @@
             {% trans %}Restoring failed. You already have some data.{% endtrans %}
           </div>
           <dl>
-            <dt style="margin-bottom: 10px;">This feature allows you to estore your data that you have as backup.</dt>
+            <dt style="margin-bottom: 10px;">This feature allows you to restore your data that you have as backup.</dt>
             <dd>Click on the "Upload Backup File" button.</dd>
             <dd>Select your back up file and open it.</dd>
             <dd>Click "Start Restore" to start restoring data from backup.</dd>
