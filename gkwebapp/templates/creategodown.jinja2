@@ -20,16 +20,16 @@
 					{% trans %}Please enter godown name!{% endtrans %}
 				</div>
 				<div class="form-group">
-					<label for="godownname" id="godnname">{% trans %}<u>G</u>odown Name{% endtrans %} : </label>
-					<input type="text" id="godownname" class="form-control input-sm" name="godownname" accesskey="g"></input>
+					<label for="godownname" id="godnname">{% trans %}Godown Name{% endtrans %} : </label>
+					<input type="text" id="godownname" class="form-control input-sm" name="godownname"></input>
 				</div>
 				<div class="alert alert-danger" id="stateblank-alert"  aria-live="rude" role="alert" hidden>
 
 					{% trans %}Please select state!{% endtrans %}
 				</div>
 				<div class="form-group">
-					<label for="godownstate" id="godnstate">{% trans %}Sta<u>t</u>e{% endtrans %} : </label>
-					<select id="godownstate" class="form-control input-sm tax_state" accesskey="t">
+					<label for="godownstate" id="godnstate">{% trans %}State{% endtrans %} : </label>
+					<select id="godownstate" class="form-control input-sm tax_state">
 						<option value="" disabled selected hidden>None</option>
 						<option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
 						<option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>
@@ -74,30 +74,30 @@
 					{% trans %}Please enter address!{% endtrans %}
 				</div>
 				<div class="form-group">
-					<label for="godownaddress" id="godnaddress">{% trans %}<u>A</u>ddress{% endtrans %} : </label>
-					<textarea type="text" id="godownaddress" class="form-control" name="godownaddress" accesskey="a"></textarea>
+					<label for="godownaddress" id="godnaddress">{% trans %}Address{% endtrans %} : </label>
+					<textarea type="text" id="godownaddress" class="form-control" name="godownaddress"></textarea>
 				</div>
 				<small id="gdtextareahelp" class="form-text text-muted">Double press enter to shift focus to Contact Name.</small>
 			</div>
 			<div class="col-sm-6">
 				<div class="form-group">
-					<label for="godowncontactname" id="godnname">{% trans %}C<u>o</u>ntact Name{% endtrans %} : </label>
-					<input type="text" id="godowncontactname" class="form-control input-sm" name="godownname" accesskey="o"></input>
+					<label for="godowncontactname" id="godnname">{% trans %}Contact Name{% endtrans %} : </label>
+					<input type="text" id="godowncontactname" class="form-control input-sm" name="godownname"></input>
 				</div>
 				<div class="form-group">
-					<label for="godowndesignation" id="godndesignation">{% trans %}De<u>s</u>ignation{% endtrans %} : </label>
-					<input type="text" id="godowndesignation" class="form-control input-sm" name="godowndesignation" accesskey="s"></input>
+					<label for="godowndesignation" id="godndesignation">{% trans %}Designation{% endtrans %} : </label>
+					<input type="text" id="godowndesignation" class="form-control input-sm" name="godowndesignation"></input>
 				</div>
 				<div class="form-group">
-					<label for="godowncontact" id="godncontact">{% trans %}Contact Num<u>b</u>er{% endtrans %} : </label>
-					<input type="text" id="godowncontact" class="form-control input-sm" name="godowncontact" accesskey="b"></input>
+					<label for="godowncontact" id="godncontact">{% trans %}Contact Number{% endtrans %} : </label>
+					<input type="text" id="godowncontact" class="form-control input-sm" name="godowncontact"></input>
 				</div>
 			</div>
 		</div>
 		<div class="panel-footer">
 			<div class="container-fluid">
-				<button type="submit" class="btn btn-success btn-sm" id="gdnsubmit" name="submit" accesskey="v">{% trans %}Sa<u>v</u>e{% endtrans %}</button>
-				<button id="gdnreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+				<button type="submit" class="btn btn-success btn-sm" id="gdnsubmit" name="submit">{% trans %}Save{% endtrans %}</button>
+				<button id="gdnreset" class="btn btn-warning btn-sm">{% trans %}Reset{% endtrans %}</button>
 			</div>
 		</div>
 	</div>

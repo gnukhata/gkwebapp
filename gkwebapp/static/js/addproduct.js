@@ -2,7 +2,7 @@ $(document).ready(function() {
 $('.modal-backdrop').remove();
   $("#addcatselect").focus();
   $('.proddate').autotab('number');
-
+  $("#openingstock").numeric();
   $(document).off('focus', '.proddate').on('focus', '.proddate', function(event) {
     event.preventDefault();
     /* Act on the event */

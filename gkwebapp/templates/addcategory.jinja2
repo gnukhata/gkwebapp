@@ -33,8 +33,8 @@
             {% trans %}Duplicate Tax!{% endtrans %}
           </div>
             <div class="form-group">
-              <label for="category_name">{% trans %}N<u>a</u>me:{% endtrans %}</label>
-              <input class="form-control input-sm" id="category_name" placeholder="{% trans %}Enter category name{% endtrans %}" accesskey="a">
+              <label for="category_name">{% trans %}Name:{% endtrans %}</label>
+              <input class="form-control input-sm" id="category_name" placeholder="{% trans %}Enter category name{% endtrans %}">
             </div>
             <div class="form-group">
               <div class="panel">
@@ -111,8 +111,8 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label for="category_under">{% trans %}Un<u>d</u>er:{% endtrans %}</label>
-              <select class="form-control input-sm" id="category_under" accesskey="d">
+              <label for="category_under">{% trans %}Under:{% endtrans %}</label>
+              <select class="form-control input-sm" id="category_under">
                 <option value="" selected>None</option>
                 {% for categories in gkresult %}
                 <option value="{{categories['categorycode']}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
@@ -160,8 +160,8 @@
       </div>
       <div class="panel-footer">
         <div class="container-fluid">
-        <button class="btn btn-success btn-sm" id="category_savespecs" accesskey="e" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert key anywhere on the current screen to save{% endtrans %}">{% trans %}Sav<u>e</u>{% endtrans %}</button>
-        <button class="btn btn-warning btn-sm" id="category_reset" accesskey="">{% trans %}Reset{% endtrans %}</button>
+        <button class="btn btn-success btn-sm" id="category_savespecs" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert key anywhere on the current screen to save{% endtrans %}">{% trans %}Save{% endtrans %}</button>
+        <button class="btn btn-warning btn-sm" id="category_reset">{% trans %}Reset{% endtrans %}</button>
       </div>
       </div>
     </div>

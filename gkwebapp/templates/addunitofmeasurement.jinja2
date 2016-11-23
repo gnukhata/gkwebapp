@@ -22,12 +22,12 @@
       <div class="panel-body">
         <form>
           <div class="form-group">
-            <label for="unit_name">{% trans %} <u>U</u>nit Name :{% endtrans %}</label>
-            <input class="form-control input-sm" id="unit_name" placeholder="{% trans %}Enter Unit name{% endtrans %}" accesskey="a">
+            <label for="unit_name">{% trans %} Unit Name :{% endtrans %}</label>
+            <input class="form-control input-sm" id="unit_name" placeholder="{% trans %}Enter Unit name{% endtrans %}">
           </div>
           <div class="form-group">
-            <label for="sub_unit_of">{% trans %}<u>S</u>ub Unit Of{% endtrans %}</label>
-            <select class="form-control input-sm" id="sub_unit_of" accesskey="s">
+            <label for="sub_unit_of">{% trans %}Sub Unit Of{% endtrans %}</label>
+            <select class="form-control input-sm" id="sub_unit_of">
               <option value="" selected>None</option>
               {% for unitofmeasurement in gkresult %}
               <option value="{{unitofmeasurement['uomid']}}">{{unitofmeasurement["unitname"]}}</option>
@@ -35,14 +35,14 @@
             </select>
           </div>
           <div class="form-group" id="conversion_div" hidden>
-            <label for="conversion_rate">{% trans %}<u>C</u>onversion Rate :{% endtrans %}</label>
-              <input class="form-control input-sm text-right" id="conversion_rate" aria-describedby="conversion_rate_help" placeholder=" Enter conversion rate" accesskey="c">
+            <label for="conversion_rate">{% trans %}Conversion Rate :{% endtrans %}</label>
+              <input class="form-control input-sm text-right" id="conversion_rate" aria-describedby="conversion_rate_help" placeholder=" Enter conversion rate">
           </div>
         </form>
       </div>
       <div class="panel-footer">
-        <button  type="submit" class="btn btn-success btn-sm" id="unit_save"  accesskey="e" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}">{% trans %}Sav<u>e</u>{% endtrans %}</button>
-        <button id="add_unit_reset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+        <button  type="submit" class="btn btn-success btn-sm" id="unit_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}">{% trans %}Save{% endtrans %}</button>
+        <button id="add_unit_reset" class="btn btn-warning btn-sm">{% trans %}Reset{% endtrans %}</button>
       </div>
     </div>
 
