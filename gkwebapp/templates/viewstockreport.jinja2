@@ -37,7 +37,7 @@
         <div style="margin-bottom: 5px" class="col-xs-12 from-group">
           <label for="viewstock_productname">{% trans %}Product{% endtrans %}:</label>
           <select class = "form-control input-sm" id="viewstock_productname"  name = "productname" >
-            <option value="" disabled selected hidden>{% trans %}Select Account{% endtrans %}</option>
+            <option value="" disabled selected hidden>{% trans %}Select Product{% endtrans %}</option>
             {% for product in gkresult %}
             <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
             {% endfor %}
