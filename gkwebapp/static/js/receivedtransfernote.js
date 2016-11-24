@@ -132,6 +132,7 @@ $(document).ready(function() {
                     $("#rec-confirm-alert").hide();
 
                   });
+                  $("#rec_received").hide();
                 }
 
 
