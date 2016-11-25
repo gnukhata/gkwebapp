@@ -235,14 +235,14 @@ def listofstockitemsspreadsheet(request):
 	sheet.getCell(1,2).stringValue("Stock Item").setBold(True)
 	sheet.getCell(2,2).stringValue("Category").setBold(True)
 	sheet.getCell(3,2).stringValue("Unit Of Measurement").setBold(True)
-	sheet.getCell(4,2).stringValue("Status").setBold(True)
+	sheet.getCell(4,2).stringValue("Stock").setBold(True).setAlignHorizontal("right")
 	row = 3
 	for stock in result:
 		sheet.getCell(0, row).stringValue(stock["srno"])
 		sheet.getCell(1, row).stringValue(stock["productdesc"])
 		sheet.getCell(2, row).stringValue(stock["categoryname"])
 		sheet.getCell(3, row).stringValue(stock["unitname"])
-		sheet.getCell(4, row).stringValue(stock["productstatus"])
+		sheet.getCell(4, row).stringValue(stock["productquantity"]).setAlignHorizontal("right")
 		row += 1
 
 	ods.save("response.ods")
