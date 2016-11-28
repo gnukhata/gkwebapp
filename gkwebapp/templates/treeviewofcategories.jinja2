@@ -37,17 +37,28 @@
   #latable thead {
       width: calc( 100% - 0.65em );
   }
-
   </style>
 </head>
 <body>
   <span style="margin:auto; display:table; font-size:120%;"><strong>{% trans %}Tree View of Categories{% endtrans %}</strong></span>
-  <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="tvback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
-  {% for record in gkresult %}
-    <ul class="list-unstyled">
-      <li><a href="" class="topparent"><span class="glyphicon glyphicon-triangle-right"></span>{{record["categoryname"]}}</a><input type="text" class="categorycode" name="name" value={{record["categorycode"]}} hidden></li>
-    </ul>
-  {% endfor %}
+  <div class="row">
+    <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px; margin-bottom: 15px;" id="tvback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+  </div>
+  <div class="container-fluid">
+    {% for record in gkresult %}
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-primary">
+          <a href="" class="topparent list-group-item list-group-item-primary">
+            <span class="glyphicon glyphicon-triangle-right"></span>
+            <span class="glyphicon glyphicon-triangle-bottom" style="display:none;"></span>
+            {{record["categoryname"]}}
+            <span class="badge">{{record["subcount"]}}</span>
+          </a>
+          <input type="text" class="categorycode" name="name" value={{record["categorycode"]}} hidden>
+        </li>
+      </ul>
+    {% endfor %}
+  </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/treeviewofcategories.js')}}"></script>
 </body>
