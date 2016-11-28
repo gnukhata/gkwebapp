@@ -178,6 +178,15 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
 
     event.preventDefault();
     var unitname = $.trim($("#newuom").val());
+    $("#adduom > option").each(function() {
+    if (unitname.toLowerCase() == $.trim($(this).text()).toLowerCase()) {
+      $("#duplicate-unit-alert").alert();
+      $("#duplicate-unit-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#duplicate-unit-alert").hide();
+      });
+      unitname = "";
+    }
+    });
     if (unitname!="") {
 
 
@@ -544,6 +553,7 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
   /* -----------------------Tax key events end----------------------------------------- */
 
   $(document).on('click', '#apsubmit', function(event) {
+    event.preventDefault();
     /* Act on the event */
     if ($("#addproddesc").val()=="")
     {
@@ -567,7 +577,18 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
       $("#adduom").select();
       return false;
     }
-    event.preventDefault();
+    if ($("#openingstock").val()=="")
+    {
+      $('.modal-backdrop').remove();
+      $("#os-blank-alert").alert();
+      $("#os-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#os-blank-alert").hide();
+      });
+      $("#openingstock").focus();
+      $("#openingstock").select();
+      $("#openingstock").val("0.00");
+      return false;
+    }
     var taxes = [];
     $("#product_tax_table tbody tr").each(function(){
       var obj = {};
