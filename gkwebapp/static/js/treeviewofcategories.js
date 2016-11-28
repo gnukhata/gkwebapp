@@ -2,11 +2,12 @@ $(document).ready(function() {
   $("#tvback").click(function(event) {
     $("#listofcategories").click();
   });
-  $(".topparent").click(function(event){
+  $(document).off("click",".topparent").on("click", ".topparent", function(event){
     event.preventDefault();
     var indextp = $(".topparent").index(this);
     console.log($(".topparent").index(this));
     var categorycode = $(".topparent").eq(indextp).next(".categorycode").val();
+    console.log(categorycode);
     $.ajax({
       url: '/category?action=treechildren',
       type: 'POST',
