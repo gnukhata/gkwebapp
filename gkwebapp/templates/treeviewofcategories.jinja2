@@ -44,15 +44,15 @@
   <div class="row">
     <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px; margin-bottom: 15px;" id="tvback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
   </div>
-  <div class="container-fluid">
+  <div class="container">
     {% for record in gkresult %}
       <ul class="list-group">
         <li class="list-group-item list-group-item-primary">
-          <a href="" class="topparent list-group-item list-group-item-primary">
+          <a href="" class="topparent list-group-item list-group-item-primary" aria-expanded="false">
             <span class="glyphicon glyphicon-triangle-right"></span>
             <span class="glyphicon glyphicon-triangle-bottom" style="display:none;"></span>
             {{record["categoryname"]}}
-            <span class="badge">{{record["subcount"]}}</span>
+            <span class="sr-only">has </span><span class="badge">{{record["subcount"]}}</span><span class="sr-only"> sub-categories</span>
           </a>
           <input type="text" class="categorycode" name="name" value={{record["categorycode"]}} hidden>
         </li>
