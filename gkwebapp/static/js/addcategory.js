@@ -1,7 +1,7 @@
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $(".tax_rate").numeric();
-  $("#category_name").focus();
+  $("#category_under").focus();
 
 
   $("#category_name").keydown(function(event) {
@@ -9,17 +9,20 @@ $(document).ready(function() {
       event.preventDefault();
       $("#category_tax_table tbody tr:first td:first select").focus();
     }
+    if (event.which==38 ) {
+      event.preventDefault();
+      $("#category_under").focus();
+    }
   });
 
   $("#category_under").keydown(function(event) {
+
     if (event.which==13) {
-      event.preventDefault();
-      $("#category_spec_table tbody tr:first td:first input").focus();
+        event.preventDefault();
+        $("#category_name").focus();
+        $("#category_name").select();
     }
-    if (event.which==38 && $("#category_under option:selected").index()==0) {
-      event.preventDefault();
-      $("#category_tax_table tbody tr:first td:first select").focus();
-    }
+
   });
   /* -----------------------Tax key events start----------------------------------------- */
   $(document).off("keydown",".tax_name").on("keydown",".tax_name",function(event)
@@ -175,7 +178,7 @@ $(document).ready(function() {
     }
     else if (event.which==35) {
       event.preventDefault();
-      $('#category_under').focus().select();
+      $("#category_spec_table tbody tr:first td:first input").focus();
     }
 
   });

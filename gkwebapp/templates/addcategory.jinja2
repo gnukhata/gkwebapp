@@ -16,7 +16,7 @@
 
     <div class="panel shadow category_panel">
       <div class="panel-body">
-          <div class="col-md-6">
+
           <div class="alert alert-danger" id="category-blank-alert"  aria-live="rude" role="alert" hidden>
             <label for="vno">{% trans %}Please enter category name!{% endtrans %}</label>
           </div>
@@ -32,11 +32,28 @@
 
             {% trans %}Duplicate Tax!{% endtrans %}
           </div>
-            <div class="form-group">
-              <label for="category_name">{% trans %}Name:{% endtrans %}</label>
-              <input class="form-control input-sm" id="category_name" placeholder="{% trans %}Enter category name{% endtrans %}">
+          <div class="">
+
+          <div class="form-group row">
+              <div class="col-md-6">
+            <label for="category_under">{% trans %}Parent Category:{% endtrans %}</label>
+            <select class="form-control input-sm" id="category_under">
+              <option value="" selected>{% trans %}Primary{% endtrans %}</option>
+              {% for categories in gkresult %}
+              <option value="{{categories['categorycode']}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
+              {% endfor %}
+            </select>
+        </div>
+          </div>
+            <div class="form-group row">
+                <div class="col-md-6">
+              <label for="category_name">{% trans %}Child Category:{% endtrans %}</label>
+              <input class="form-control input-sm" id="category_name" placeholder="{% trans %}Enter child category name{% endtrans %}">
+          </div>
             </div>
-            <div class="form-group">
+        </div>
+            <div class="row">
+            <div class="form-group col-md-6">
               <div class="panel">
               <table id="category_tax_table" class="table table-condensed table-bordered fixed-table">
                 <thead class="bg-primary input-sm">
@@ -107,18 +124,9 @@
                 </tbody>
               </table>
               </div>
+
             </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="category_under">{% trans %}Under:{% endtrans %}</label>
-              <select class="form-control input-sm" id="category_under">
-                <option value="" selected>None</option>
-                {% for categories in gkresult %}
-                <option value="{{categories['categorycode']}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
-                {% endfor %}
-              </select>
-            </div>
+            <div class="form-group col-md-6">
             <div class="alert alert-danger" id="spec-blank-alert"  aria-live="rude" role="alert" hidden>
 
               <label for="vno">{% trans %}Please enter specification name!{% endtrans %}</label>
@@ -154,6 +162,7 @@
                 </tr>
               </tbody>
             </table>
+            </div>
             </div>
           </div>
 

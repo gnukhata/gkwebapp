@@ -77,9 +77,9 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="category_edit_under">{% trans %}Under:{% endtrans %}</label>
+                <label for="category_edit_under">{% trans %}Parent Category:{% endtrans %}</label>
                 <select class="form-control category_edit_disable input-sm" id="category_edit_under">
-                  <option value="" selected>None</option>
+                  <option value="" selected>{% trans %}Primary{% endtrans %}</option>
                   {% for categories in gkresult %}
                   <option value="{{categories['categorycode']}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
                   {% endfor %}
