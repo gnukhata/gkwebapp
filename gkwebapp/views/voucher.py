@@ -38,6 +38,7 @@ import cStringIO
 @view_config(route_name="showvoucher")
 def showvoucher(request):
 	type= request.params["type"]
+	invflag= int(request.params["invflag"])
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/transaction?details=last&type=%s"%(type), headers=header)
 	lastdetails = result.json()["gkresult"]
@@ -56,7 +57,7 @@ def showvoucher(request):
 		crresult = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s&side=Cr"%(type), headers=header)
 		projects = requests.get("http://127.0.0.1:6543/projects", headers=header)
 		if drresult.json()["gkstatus"]==0 and crresult.json()["gkstatus"]==0:
-			if type =="purchase" or type =="sales":
+			if invflag == 1 and (type =="purchase" or type =="sales"):
 				invdata = requests.get("http://127.0.0.1:6543/invoice?inv=all", headers=header)
 				if invdata.json()["gkstatus"]==0:
 					return render_to_response("gkwebapp:templates/addvoucher.jinja2",{"lastdetails":lastdetails,"draccounts":drresult.json()["gkresult"],"craccounts":crresult.json()["gkresult"],"projects":projects.json()["gkresult"],"vtype":type,"invoicedata":invdata.json()["gkresult"]},request=request)

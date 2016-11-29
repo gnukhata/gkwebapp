@@ -37,7 +37,7 @@ $(document).ready(function(){
           global: false,
           async: false,
           datatype: "json",
-          data : {"type":vtype},
+          data : {"type":vtype,"invflag":sessionStorage.invflag},
           beforeSend: function(xhr)
             {
               xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
