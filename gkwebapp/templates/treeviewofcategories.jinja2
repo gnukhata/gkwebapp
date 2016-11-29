@@ -37,6 +37,13 @@
   #latable thead {
       width: calc( 100% - 0.65em );
   }
+  .list-group {
+    margin: 0;
+    padding: 0;
+  }
+  .list-group-item {
+    padding: 5;
+  }
   </style>
 </head>
 <body>
@@ -44,7 +51,7 @@
   <div class="row">
     <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px; margin-bottom: 15px;" id="tvback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
   </div>
-  <div class="container">
+  <div class="container-fluid">
     {% for record in gkresult %}
       <ul class="list-group">
         <li class="list-group-item list-group-item-primary">
@@ -52,7 +59,7 @@
             <span class="glyphicon glyphicon-triangle-right"></span>
             <span class="glyphicon glyphicon-triangle-bottom" style="display:none;"></span>
             {{record["categoryname"]}}
-            <span class="sr-only">has </span><span class="badge">{{record["subcount"]}}</span><span class="sr-only"> sub-categories</span>
+            <span class="sr-only">has </span><span class="badge">{{record["subcount"]}}</span><span class="sr-only"> child categories</span>
           </a>
           <input type="text" class="categorycode" name="name" value={{record["categorycode"]}} hidden>
         </li>

@@ -7,6 +7,8 @@ $(document).ready(function() {
     var indextp = $(".topparent").index(this);
     var categorycode = $(".topparent").eq(indextp).next(".categorycode").val();
     if ($(this).closest("li").children().length > 2) {
+      $(this).children(".glyphicon-triangle-bottom").toggle();
+      $(this).children(".glyphicon-triangle-right").toggle();
       $(this).attr('aria-expanded', 'false');
       $(this).blur();
       $(".topparent").eq(indextp).focus();
