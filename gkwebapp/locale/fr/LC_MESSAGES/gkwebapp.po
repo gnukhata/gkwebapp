@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-08-26 17:18+0530\n"
+"POT-Creation-Date: 2016-11-30 17:25+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -18,88 +18,4253 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
-#: gkwebapp/templates/index.jinja2:6 gkwebapp/templates/index.jinja2:86
+#: gkwebapp/templates/addcashmemo.jinja2:5 gkwebapp/templates/cashmemo.jinja2:5
+#: gkwebapp/templates/viewcashmemo.jinja2:5
+msgid "GNUKhata | Cash Memo"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:54
+msgid "Cash Memo saved."
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:58
+#: gkwebapp/templates/addcategory.jinja2:9
+#: gkwebapp/templates/addcustomersupplier.jinja2:22
+#: gkwebapp/templates/adddeliverychallan.jinja2:9
+#: gkwebapp/templates/addinvoice.jinja2:9
+#: gkwebapp/templates/addunitofmeasurement.jinja2:10
+#: gkwebapp/templates/createtransfernote.jinja2:37
+#: gkwebapp/templates/editcategory.jinja2:13
+#: gkwebapp/templates/editcustomersupplier.jinja2:21
+#: gkwebapp/templates/editdeliverychallan.jinja2:9
+#: gkwebapp/templates/editinvoice.jinja2:9
+#: gkwebapp/templates/edittransfernote.jinja2:37
+#: gkwebapp/templates/editunitofmeasurement.jinja2:10
+#: gkwebapp/templates/receivedtransfernote.jinja2:41
+#: gkwebapp/templates/viewcashmemo.jinja2:62
+msgid "Something went wrong!"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:62
+#: gkwebapp/templates/addinvoice.jinja2:13
+#: gkwebapp/templates/editinvoice.jinja2:13
+#: gkwebapp/templates/viewcashmemo.jinja2:66
+msgid "Duplicate invoice no.!"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:66
+#: gkwebapp/templates/adddeliverychallan.jinja2:119
+#: gkwebapp/templates/addinvoice.jinja2:17
+#: gkwebapp/templates/createtransfernote.jinja2:73
+#: gkwebapp/templates/editdeliverychallan.jinja2:113
+#: gkwebapp/templates/editinvoice.jinja2:17
+#: gkwebapp/templates/edittransfernote.jinja2:65
+#: gkwebapp/templates/receivedtransfernote.jinja2:69
+#: gkwebapp/templates/viewcashmemo.jinja2:70
+msgid "Please select a product!"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:70
+#: gkwebapp/templates/adddeliverychallan.jinja2:123
+#: gkwebapp/templates/addinvoice.jinja2:21
+#: gkwebapp/templates/createtransfernote.jinja2:77
+#: gkwebapp/templates/editdeliverychallan.jinja2:117
+#: gkwebapp/templates/editinvoice.jinja2:21
+#: gkwebapp/templates/edittransfernote.jinja2:69
+#: gkwebapp/templates/receivedtransfernote.jinja2:73
+#: gkwebapp/templates/viewcashmemo.jinja2:74
+msgid "Please enter quantity!"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:74
+#: gkwebapp/templates/addinvoice.jinja2:25
+#: gkwebapp/templates/editinvoice.jinja2:25
+#: gkwebapp/templates/viewcashmemo.jinja2:78
+msgid "Please enter the price per unit!"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:83
+#: gkwebapp/templates/adddeliverychallan.jinja2:22
+#: gkwebapp/templates/addinvoice.jinja2:34
+#: gkwebapp/templates/editinvoice.jinja2:34
+msgid "Please select a supplier!"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:85
+#: gkwebapp/templates/adddeliverychallan.jinja2:24
+#: gkwebapp/templates/addinvoice.jinja2:36
+#: gkwebapp/templates/editinvoice.jinja2:36
+msgid "Please select a customer!"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:91
+#: gkwebapp/templates/adddeliverychallan.jinja2:30
+#: gkwebapp/templates/addinvoice.jinja2:42
+#: gkwebapp/templates/createtransfernote.jinja2:49
+#: gkwebapp/templates/editdeliverychallan.jinja2:44
+#: gkwebapp/templates/editinvoice.jinja2:42
+#: gkwebapp/templates/edittransfernote.jinja2:49
+#: gkwebapp/templates/receivedtransfernote.jinja2:53
+#: gkwebapp/templates/viewcashmemo.jinja2:90
+msgid "Please enter date!"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:95
+#: gkwebapp/templates/addinvoice.jinja2:46
+#: gkwebapp/templates/editinvoice.jinja2:46
+#: gkwebapp/templates/viewcashmemo.jinja2:94
+msgid "Please enter invoice no.!"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:99
+#: gkwebapp/templates/addinvoice.jinja2:50
+#: gkwebapp/templates/editinvoice.jinja2:50
+#: gkwebapp/templates/viewcashmemo.jinja2:98
+msgid "Please enter issuer's name!"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:103
+#: gkwebapp/templates/adddeliverychallan.jinja2:38
+#: gkwebapp/templates/addinvoice.jinja2:54
+#: gkwebapp/templates/bankreconreport.jinja2:51
+#: gkwebapp/templates/clearedbankreconreport.jinja2:53
+#: gkwebapp/templates/createtransfernote.jinja2:61
+#: gkwebapp/templates/editdeliverychallan.jinja2:52
+#: gkwebapp/templates/editinvoice.jinja2:54
+#: gkwebapp/templates/editorganisation.jinja2:29
+#: gkwebapp/templates/edittransfernote.jinja2:57
+#: gkwebapp/templates/findeditvoucher.jinja2:29
+#: gkwebapp/templates/receivedtransfernote.jinja2:61
+#: gkwebapp/templates/viewbalancesheet.jinja2:24
+#: gkwebapp/templates/viewbankrecon.jinja2:24
+#: gkwebapp/templates/viewcashflow.jinja2:24
+#: gkwebapp/templates/viewcashmemo.jinja2:102
+#: gkwebapp/templates/viewdualledger.jinja2:26
+#: gkwebapp/templates/viewledger.jinja2:23
+#: gkwebapp/templates/viewprofitloss.jinja2:33
+#: gkwebapp/templates/viewprojectstatement.jinja2:24
+#: gkwebapp/templates/viewstockreport.jinja2:23
+#: gkwebapp/templates/viewtrialbalance.jinja2:24
+msgid "Please enter date in proper format!"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:107
+#: gkwebapp/templates/adddeliverychallan.jinja2:42
+#: gkwebapp/templates/addinvoice.jinja2:58
+#: gkwebapp/templates/createtransfernote.jinja2:65
+#: gkwebapp/templates/findeditvoucher.jinja2:34
+#: gkwebapp/templates/viewbalancesheet.jinja2:29
+#: gkwebapp/templates/viewbankrecon.jinja2:28
+#: gkwebapp/templates/viewcashflow.jinja2:28
+#: gkwebapp/templates/viewdualledger.jinja2:30
+#: gkwebapp/templates/viewledger.jinja2:27
+#: gkwebapp/templates/viewprofitloss.jinja2:37
+#: gkwebapp/templates/viewprojectstatement.jinja2:28
+#: gkwebapp/templates/viewstockreport.jinja2:27
+#: gkwebapp/templates/viewtrialbalance.jinja2:28
+msgid "Please enter date within the financial year!"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:113
+#: gkwebapp/templates/addinvoice.jinja2:87
+#: gkwebapp/templates/editinvoice.jinja2:92
+#: gkwebapp/templates/viewcashmemo.jinja2:121
+msgid "Invoice No"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:114
+#: gkwebapp/templates/addinvoice.jinja2:88
+#: gkwebapp/templates/editinvoice.jinja2:93
+#: gkwebapp/templates/viewcashmemo.jinja2:122
+msgid "Enter invoice no"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:120
+#: gkwebapp/templates/addinvoice.jinja2:98
+#: gkwebapp/templates/bankreconreport.jinja2:74
+#: gkwebapp/templates/clearedbankreconreport.jinja2:76
+#: gkwebapp/templates/deletedvoucher.jinja2:58
+#: gkwebapp/templates/dualledgerreport.jinja2:94
+#: gkwebapp/templates/dualledgerreport.jinja2:176
+#: gkwebapp/templates/editdeliverychallan.jinja2:59
+#: gkwebapp/templates/editinvoice.jinja2:99
+#: gkwebapp/templates/findvouchertable.jinja2:79
+#: gkwebapp/templates/ledgerreport.jinja2:78
+#: gkwebapp/templates/printledger.jinja2:51
+#: gkwebapp/templates/printstockreport.jinja2:50
+#: gkwebapp/templates/printtransactions.jinja2:41
+#: gkwebapp/templates/showstockreport.jinja2:61
+#: gkwebapp/templates/viewcashmemo.jinja2:128
+msgid "Date"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:141
+#: gkwebapp/templates/addinvoice.jinja2:142
+#: gkwebapp/templates/viewcashmemo.jinja2:149
+msgid "VAT for"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:201
+#: gkwebapp/templates/adddeliverychallan.jinja2:137
+#: gkwebapp/templates/addinvoice.jinja2:203
+#: gkwebapp/templates/createtransfernote.jinja2:109
+#: gkwebapp/templates/editdeliverychallan.jinja2:123
+#: gkwebapp/templates/editinvoice.jinja2:195
+#: gkwebapp/templates/editproduct.jinja2:15
+#: gkwebapp/templates/edittransfernote.jinja2:114
+#: gkwebapp/templates/receivedtransfernote.jinja2:113
+#: gkwebapp/templates/viewcashmemo.jinja2:209
+#: gkwebapp/templates/viewstockreport.jinja2:38
+msgid "Product"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:202
+#: gkwebapp/templates/adddeliverychallan.jinja2:138
+#: gkwebapp/templates/addinvoice.jinja2:204
+#: gkwebapp/templates/createtransfernote.jinja2:110
+#: gkwebapp/templates/editdeliverychallan.jinja2:124
+#: gkwebapp/templates/editinvoice.jinja2:196
+#: gkwebapp/templates/edittransfernote.jinja2:115
+#: gkwebapp/templates/receivedtransfernote.jinja2:114
+#: gkwebapp/templates/viewcashmemo.jinja2:210
+msgid "Quantity"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:203
+#: gkwebapp/templates/addinvoice.jinja2:205
+#: gkwebapp/templates/editinvoice.jinja2:197
+#: gkwebapp/templates/viewcashmemo.jinja2:211
+msgid "Price Per Unit"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:204
+#: gkwebapp/templates/editinvoice.jinja2:198
+#: gkwebapp/templates/viewcashmemo.jinja2:212
+msgid "Tax Rate"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:205
+#: gkwebapp/templates/addinvoice.jinja2:207
+#: gkwebapp/templates/editinvoice.jinja2:199
+#: gkwebapp/templates/viewcashmemo.jinja2:213
+msgid "Tax Amount"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:206
+#: gkwebapp/templates/addcashmemo.jinja2:246
+#: gkwebapp/templates/addinvoice.jinja2:208
+#: gkwebapp/templates/addinvoice.jinja2:252
+#: gkwebapp/templates/createaccount.jinja2:212
+#: gkwebapp/templates/createaccount.jinja2:238
+#: gkwebapp/templates/createaccountpopup.jinja2:132
+#: gkwebapp/templates/createaccountpopup.jinja2:158
+#: gkwebapp/templates/editinvoice.jinja2:200
+#: gkwebapp/templates/editinvoice.jinja2:237
+#: gkwebapp/templates/viewcashmemo.jinja2:214
+#: gkwebapp/templates/viewcashmemo.jinja2:251
+msgid "Total"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:279
+#: gkwebapp/templates/addcategory.jinja2:172
+#: gkwebapp/templates/addcustomersupplier.jinja2:123
+#: gkwebapp/templates/adddeliverychallan.jinja2:181
+#: gkwebapp/templates/addinvoice.jinja2:302
+#: gkwebapp/templates/addunitofmeasurement.jinja2:44
+#: gkwebapp/templates/creategodown.jinja2:99
+#: gkwebapp/templates/createtransfernote.jinja2:181
+#: gkwebapp/templates/editcategory.jinja2:115
+#: gkwebapp/templates/editcustomersupplier.jinja2:156
+#: gkwebapp/templates/editgodown.jinja2:141
+#: gkwebapp/templates/editinvoice.jinja2:288
+#: gkwebapp/templates/edittransfernote.jinja2:168
+#: gkwebapp/templates/editunitofmeasurement.jinja2:67
+msgid "Save"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:280
+#: gkwebapp/templates/addcategory.jinja2:173
+#: gkwebapp/templates/addcustomersupplier.jinja2:124
+#: gkwebapp/templates/adddeliverychallan.jinja2:182
+#: gkwebapp/templates/addinvoice.jinja2:303
+#: gkwebapp/templates/addunitofmeasurement.jinja2:45
+#: gkwebapp/templates/creategodown.jinja2:100
+#: gkwebapp/templates/createtransfernote.jinja2:182
+#: gkwebapp/templates/editcategory.jinja2:117
+#: gkwebapp/templates/editcustomersupplier.jinja2:159
+#: gkwebapp/templates/editgodown.jinja2:142
+#: gkwebapp/templates/editproduct.jinja2:37
+#: gkwebapp/templates/editunitofmeasurement.jinja2:66
+msgid "Reset"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:281
+#: gkwebapp/templates/adddeliverychallan.jinja2:184
+#: gkwebapp/templates/addinvoice.jinja2:305
+msgid "Save & Print"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:290
+#: gkwebapp/templates/addcashmemo.jinja2:309
+#: gkwebapp/templates/adddeliverychallan.jinja2:195
+#: gkwebapp/templates/adddeliverychallan.jinja2:214
+#: gkwebapp/templates/addinvoice.jinja2:315
+#: gkwebapp/templates/addinvoice.jinja2:334
+#: gkwebapp/templates/createtransfernote.jinja2:192
+#: gkwebapp/templates/createtransfernote.jinja2:211
+msgid "Save?"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:293
+#: gkwebapp/templates/addcashmemo.jinja2:312
+#: gkwebapp/templates/adddeliverychallan.jinja2:198
+#: gkwebapp/templates/adddeliverychallan.jinja2:217
+#: gkwebapp/templates/addinvoice.jinja2:318
+#: gkwebapp/templates/addinvoice.jinja2:337
+#: gkwebapp/templates/closebooks.jinja2:176
+#: gkwebapp/templates/createtransfernote.jinja2:195
+#: gkwebapp/templates/createtransfernote.jinja2:214
+#: gkwebapp/templates/editaccount.jinja2:112
+#: gkwebapp/templates/editcategory.jinja2:131
+#: gkwebapp/templates/editcustomersupplier.jinja2:171
+#: gkwebapp/templates/editdeliverychallan.jinja2:159
+#: gkwebapp/templates/editgodown.jinja2:128
+#: gkwebapp/templates/editinvoice.jinja2:303
+#: gkwebapp/templates/editproduct.jinja2:50
+#: gkwebapp/templates/edittransfernote.jinja2:183
+#: gkwebapp/templates/editunitofmeasurement.jinja2:81
+#: gkwebapp/templates/mainshell.jinja2:458
+#: gkwebapp/templates/project.jinja2:197
+#: gkwebapp/templates/receivedtransfernote.jinja2:167
+#: gkwebapp/templates/receivedtransfernote.jinja2:187
+#: gkwebapp/templates/removeUser.jinja2:71
+#: gkwebapp/templates/viewcashmemo.jinja2:293
+msgid "Are you sure?"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:296
+#: gkwebapp/templates/addcashmemo.jinja2:315
+#: gkwebapp/templates/adddeliverychallan.jinja2:201
+#: gkwebapp/templates/adddeliverychallan.jinja2:220
+#: gkwebapp/templates/addinvoice.jinja2:321
+#: gkwebapp/templates/addinvoice.jinja2:340
+#: gkwebapp/templates/addproductspecs.jinja2:18
+#: gkwebapp/templates/closebooks.jinja2:181
+#: gkwebapp/templates/editdeliverychallan.jinja2:162
+#: gkwebapp/templates/editinvoice.jinja2:306
+#: gkwebapp/templates/editproductspecs.jinja2:83
+#: gkwebapp/templates/editproductspecs.jinja2:86
+#: gkwebapp/templates/receivedtransfernote.jinja2:170
+#: gkwebapp/templates/removeUser.jinja2:75
+#: gkwebapp/templates/viewcashmemo.jinja2:296
+msgid "No"
+msgstr ""
+
+#: gkwebapp/templates/addcashmemo.jinja2:297
+#: gkwebapp/templates/addcashmemo.jinja2:316
+#: gkwebapp/templates/adddeliverychallan.jinja2:202
+#: gkwebapp/templates/adddeliverychallan.jinja2:221
+#: gkwebapp/templates/addinvoice.jinja2:322
+#: gkwebapp/templates/addinvoice.jinja2:341
+#: gkwebapp/templates/addproductspecs.jinja2:17
+#: gkwebapp/templates/closebooks.jinja2:180
+#: gkwebapp/templates/editdeliverychallan.jinja2:163
+#: gkwebapp/templates/editinvoice.jinja2:307
+#: gkwebapp/templates/editproductspecs.jinja2:82
+#: gkwebapp/templates/editproductspecs.jinja2:85
+#: gkwebapp/templates/receivedtransfernote.jinja2:171
+#: gkwebapp/templates/removeUser.jinja2:74
+#: gkwebapp/templates/viewcashmemo.jinja2:297
+msgid "Yes"
+msgstr ""
+
+#: gkwebapp/templates/addcategory.jinja2:5
+#: gkwebapp/templates/editcategory.jinja2:5
+msgid "Category saved."
+msgstr ""
+
+#: gkwebapp/templates/addcategory.jinja2:14
+msgid "Category already exists!"
+msgstr ""
+
+#: gkwebapp/templates/addcategory.jinja2:21
+#: gkwebapp/templates/editcategory.jinja2:25
+#: gkwebapp/templates/editcategory.jinja2:43
+msgid "Please enter category name!"
+msgstr ""
+
+#: gkwebapp/templates/addcategory.jinja2:25
+#: gkwebapp/templates/editcategory.jinja2:47
+msgid "Select tax name!"
+msgstr ""
+
+#: gkwebapp/templates/addcategory.jinja2:29
+#: gkwebapp/templates/editcategory.jinja2:51
+msgid "Enter tax rate!"
+msgstr ""
+
+#: gkwebapp/templates/addcategory.jinja2:33
+#: gkwebapp/templates/editcategory.jinja2:55
+#: gkwebapp/templates/producttab.jinja2:70
+msgid "Duplicate Tax!"
+msgstr ""
+
+#: gkwebapp/templates/addcategory.jinja2:39
+#: gkwebapp/templates/editcategory.jinja2:80
+msgid "Parent Category:"
+msgstr ""
+
+#: gkwebapp/templates/addcategory.jinja2:41
+#: gkwebapp/templates/editcategory.jinja2:82
+msgid "Primary"
+msgstr ""
+
+#: gkwebapp/templates/addcategory.jinja2:50
+msgid "Child Category:"
+msgstr ""
+
+#: gkwebapp/templates/addcategory.jinja2:51
+msgid "Enter child category name"
+msgstr ""
+
+#: gkwebapp/templates/addcategory.jinja2:61
+#: gkwebapp/templates/addproduct.jinja2:54
+#: gkwebapp/templates/editcategory.jinja2:66
+#: gkwebapp/templates/editproductspecs.jinja2:48
+msgid "Tax Name"
+msgstr ""
+
+#: gkwebapp/templates/addcategory.jinja2:62
+#: gkwebapp/templates/addproduct.jinja2:55
+#: gkwebapp/templates/creategodown.jinja2:31
+#: gkwebapp/templates/editcategory.jinja2:67
+#: gkwebapp/templates/editgodown.jinja2:53
+#: gkwebapp/templates/editorganisation.jinja2:82
+#: gkwebapp/templates/editproductspecs.jinja2:49
+msgid "State"
+msgstr ""
+
+#: gkwebapp/templates/addcategory.jinja2:63
+#: gkwebapp/templates/addproduct.jinja2:56
+#: gkwebapp/templates/editcategory.jinja2:68
+#: gkwebapp/templates/editproductspecs.jinja2:50
+msgid "Rate%"
+msgstr ""
+
+#: gkwebapp/templates/addcategory.jinja2:132
+#: gkwebapp/templates/editcategory.jinja2:90
+msgid "Please enter specification name!"
+msgstr ""
+
+#: gkwebapp/templates/addcategory.jinja2:135
+#: gkwebapp/templates/editcategory.jinja2:93
+msgid "Minimum one spec required!"
+msgstr ""
+
+#: gkwebapp/templates/addcategory.jinja2:141
+#: gkwebapp/templates/editcategory.jinja2:99
+msgid "Spec Name"
+msgstr ""
+
+#: gkwebapp/templates/addcategory.jinja2:142
+#: gkwebapp/templates/deletedvoucher.jinja2:60
+#: gkwebapp/templates/editcategory.jinja2:100
+#: gkwebapp/templates/findeditvoucher.jinja2:86
+#: gkwebapp/templates/findvouchertable.jinja2:80
+#: gkwebapp/templates/ledgerreport.jinja2:81
+#: gkwebapp/templates/printledger.jinja2:53
+#: gkwebapp/templates/printtransactions.jinja2:42
+msgid "Type"
+msgstr ""
+
+#: gkwebapp/templates/addcategory.jinja2:172
+#: gkwebapp/templates/editcategory.jinja2:115
+msgid "Press Insert key anywhere on the current screen to save"
+msgstr ""
+
+#: gkwebapp/templates/addcustomersupplier.jinja2:5
+#: gkwebapp/templates/editcustomersupplier.jinja2:5
+msgid "Supplier saved."
+msgstr ""
+
+#: gkwebapp/templates/addcustomersupplier.jinja2:9
+#: gkwebapp/templates/editcustomersupplier.jinja2:9
+msgid "Customer saved."
+msgstr ""
+
+#: gkwebapp/templates/addcustomersupplier.jinja2:13
+#: gkwebapp/templates/editcustomersupplier.jinja2:13
+msgid "Customer Already Exist!"
+msgstr ""
+
+#: gkwebapp/templates/addcustomersupplier.jinja2:17
+#: gkwebapp/templates/editcustomersupplier.jinja2:17
+msgid "Supplier Already Exist!"
+msgstr ""
+
+#: gkwebapp/templates/addcustomersupplier.jinja2:26
+#: gkwebapp/templates/editcustomersupplier.jinja2:41
+msgid "Please Enter name!"
+msgstr ""
+
+#: gkwebapp/templates/addcustomersupplier.jinja2:34
+#: gkwebapp/templates/editcustomersupplier.jinja2:48
+#: gkwebapp/templates/editdeliverychallan.jinja2:40
+msgid "Please select a customer/supplier!"
+msgstr ""
+
+#: gkwebapp/templates/addcustomersupplier.jinja2:38
+#: gkwebapp/templates/editcustomersupplier.jinja2:71
+msgid "Role:"
+msgstr ""
+
+#: gkwebapp/templates/addcustomersupplier.jinja2:46
+#: gkwebapp/templates/editcategory.jinja2:58
+#: gkwebapp/templates/editcustomersupplier.jinja2:78
+msgid "Name:"
+msgstr ""
+
+#: gkwebapp/templates/addcustomersupplier.jinja2:47
+#: gkwebapp/templates/editcustomersupplier.jinja2:79
+msgid "Enter Name"
+msgstr ""
+
+#: gkwebapp/templates/addcustomersupplier.jinja2:50
+#: gkwebapp/templates/editcustomersupplier.jinja2:82
+msgid "Email:"
+msgstr ""
+
+#: gkwebapp/templates/addcustomersupplier.jinja2:54
+#: gkwebapp/templates/editcustomersupplier.jinja2:86
+msgid "Phone No:"
+msgstr ""
+
+#: gkwebapp/templates/addcustomersupplier.jinja2:58
+#: gkwebapp/templates/editcustomersupplier.jinja2:90
+msgid "State:"
+msgstr ""
+
+#: gkwebapp/templates/addcustomersupplier.jinja2:108
+msgid "Fax :"
+msgstr ""
+
+#: gkwebapp/templates/addcustomersupplier.jinja2:112
+msgid "PAN:"
+msgstr ""
+
+#: gkwebapp/templates/addcustomersupplier.jinja2:116
+msgid "TIN:"
+msgstr ""
+
+#: gkwebapp/templates/addcustomersupplier.jinja2:123
+#: gkwebapp/templates/addunitofmeasurement.jinja2:44
+#: gkwebapp/templates/createtransfernote.jinja2:181
+#: gkwebapp/templates/editcustomersupplier.jinja2:156
+#: gkwebapp/templates/edittransfernote.jinja2:168
+#: gkwebapp/templates/editunitofmeasurement.jinja2:67
+msgid "Press Insert to save anywhere on the current screen to save"
+msgstr ""
+
+#: gkwebapp/templates/adddeliverychallan.jinja2:5
+#: gkwebapp/templates/editdeliverychallan.jinja2:5
+msgid "Delivery note saved."
+msgstr ""
+
+#: gkwebapp/templates/adddeliverychallan.jinja2:13
+msgid "Duplicate Note no.!"
+msgstr ""
+
+#: gkwebapp/templates/adddeliverychallan.jinja2:34
+#: gkwebapp/templates/editdeliverychallan.jinja2:48
+msgid "Please enter note no.!"
+msgstr ""
+
+#: gkwebapp/templates/adddeliverychallan.jinja2:46
+#: gkwebapp/templates/editdeliverychallan.jinja2:55
+msgid "Note No"
+msgstr ""
+
+#: gkwebapp/templates/adddeliverychallan.jinja2:47
+#: gkwebapp/templates/editdeliverychallan.jinja2:56
+msgid "Enter challan no"
+msgstr ""
+
+#: gkwebapp/templates/adddeliverychallan.jinja2:50
+msgid "Note Date"
+msgstr ""
+
+#: gkwebapp/templates/adddeliverychallan.jinja2:66
+#: gkwebapp/templates/addinvoice.jinja2:119
+#: gkwebapp/templates/editdeliverychallan.jinja2:74
+#: gkwebapp/templates/editinvoice.jinja2:119
+msgid "Supplier"
+msgstr ""
+
+#: gkwebapp/templates/adddeliverychallan.jinja2:68
+#: gkwebapp/templates/addinvoice.jinja2:121
+#: gkwebapp/templates/editdeliverychallan.jinja2:73
+#: gkwebapp/templates/editinvoice.jinja2:122
+msgid "Customer"
+msgstr ""
+
+#: gkwebapp/templates/adddeliverychallan.jinja2:74
+#: gkwebapp/templates/addinvoice.jinja2:127
+msgid "Select Supplier"
+msgstr ""
+
+#: gkwebapp/templates/adddeliverychallan.jinja2:76
+#: gkwebapp/templates/addinvoice.jinja2:129
+msgid "Select Customer"
+msgstr ""
+
+#: gkwebapp/templates/adddeliverychallan.jinja2:89
+#: gkwebapp/templates/editdeliverychallan.jinja2:92
+msgid "To Godown"
+msgstr ""
+
+#: gkwebapp/templates/adddeliverychallan.jinja2:91
+#: gkwebapp/templates/editdeliverychallan.jinja2:91
+msgid "From Godown"
+msgstr ""
+
+#: gkwebapp/templates/adddeliverychallan.jinja2:95
+#: gkwebapp/templates/addproduct.jinja2:13
+#: gkwebapp/templates/addvoucher.jinja2:203
+#: gkwebapp/templates/addvoucher.jinja2:320
+#: gkwebapp/templates/editdeliverychallan.jinja2:94
+#: gkwebapp/templates/editproductspecs.jinja2:12
+#: gkwebapp/templates/searchcategory.jinja2:33
+#: gkwebapp/templates/searchcategory.jinja2:41
+#: gkwebapp/templates/viewdualledger.jinja2:78
+#: gkwebapp/templates/viewledger.jinja2:76
+#: gkwebapp/templates/viewvoucher.jinja2:197
+#: gkwebapp/templates/viewvoucher.jinja2:431
+#: gkwebapp/templates/viewvoucher.jinja2:438
+msgid "None"
+msgstr ""
+
+#: gkwebapp/templates/adddeliverychallan.jinja2:104
+#: gkwebapp/templates/editdeliverychallan.jinja2:103
+msgid "Delivery Challan"
+msgstr ""
+
+#: gkwebapp/templates/adddeliverychallan.jinja2:105
+#: gkwebapp/templates/editdeliverychallan.jinja2:104
+msgid "Consignment"
+msgstr ""
+
+#: gkwebapp/templates/adddeliverychallan.jinja2:106
+#: gkwebapp/templates/editdeliverychallan.jinja2:105
+msgid "Sample"
+msgstr ""
+
+#: gkwebapp/templates/adddeliverychallan.jinja2:127
+msgid "Please enter Issuer's name!"
+msgstr ""
+
+#: gkwebapp/templates/adddeliverychallan.jinja2:131
+msgid "Please enter designation!"
+msgstr ""
+
+#: gkwebapp/templates/adddeliverychallan.jinja2:168
+#: gkwebapp/templates/addinvoice.jinja2:284
+#: gkwebapp/templates/editdeliverychallan.jinja2:133
+#: gkwebapp/templates/editinvoice.jinja2:269
+msgid "Issuer's Name"
+msgstr ""
+
+#: gkwebapp/templates/adddeliverychallan.jinja2:172
+#: gkwebapp/templates/addinvoice.jinja2:292
+#: gkwebapp/templates/creategodown.jinja2:88
+#: gkwebapp/templates/editdeliverychallan.jinja2:137
+#: gkwebapp/templates/editgodown.jinja2:111
+#: gkwebapp/templates/editinvoice.jinja2:277
+msgid "Designation"
+msgstr ""
+
+#: gkwebapp/templates/addinvoice.jinja2:5
+#: gkwebapp/templates/editinvoice.jinja2:5
+#: gkwebapp/templates/viewcashmemo.jinja2:58
+msgid "Invoice saved."
+msgstr ""
+
+#: gkwebapp/templates/addinvoice.jinja2:65
+#: gkwebapp/templates/editdeliverychallan.jinja2:25
+#: gkwebapp/templates/editinvoice.jinja2:83
+#: gkwebapp/templates/mainshell.jinja2:45
+msgid "Delivery Note"
+msgstr ""
+
+#: gkwebapp/templates/addinvoice.jinja2:206
+msgid "Tax Rate%"
+msgstr ""
+
+#: gkwebapp/templates/addinvoice.jinja2:285
+#: gkwebapp/templates/editinvoice.jinja2:270
+msgid "Issuer's name"
+msgstr ""
+
+#: gkwebapp/templates/addinvoice.jinja2:293
+#: gkwebapp/templates/editinvoice.jinja2:278
+msgid "Issuer's designation"
+msgstr ""
+
+#: gkwebapp/templates/addproduct.jinja2:11
+#: gkwebapp/templates/editproductspecs.jinja2:9
+#: gkwebapp/templates/listofstockitems.jinja2:55
+#: gkwebapp/templates/mainshell.jinja2:41
+#: gkwebapp/templates/printlistofstockitems.jinja2:48
+#: gkwebapp/templates/searchcategory.jinja2:18
+msgid "Category"
+msgstr ""
+
+#: gkwebapp/templates/addproduct.jinja2:23
+#: gkwebapp/templates/editproductspecs.jinja2:4
+msgid "Product Description"
+msgstr ""
+
+#: gkwebapp/templates/addproduct.jinja2:27
+#: gkwebapp/templates/editproductspecs.jinja2:24
+#: gkwebapp/templates/listofstockitems.jinja2:58
+#: gkwebapp/templates/printlistofstockitems.jinja2:51
+msgid "Unit of Measurement"
+msgstr ""
+
+#: gkwebapp/templates/addproduct.jinja2:29
+msgid "Select Unit of Measurement"
+msgstr ""
+
+#: gkwebapp/templates/addproduct.jinja2:34
+msgid "Press space to add new unit."
+msgstr ""
+
+#: gkwebapp/templates/addproduct.jinja2:37
+msgid "New Unit of Measurement"
+msgstr ""
+
+#: gkwebapp/templates/addproduct.jinja2:39
+msgid "Press esc to cancel."
+msgstr ""
+
+#: gkwebapp/templates/addproduct.jinja2:42
+#: gkwebapp/templates/editproductspecs.jinja2:36
+msgid "Opening Stock"
+msgstr ""
+
+#: gkwebapp/templates/addproduct.jinja2:135
+#: gkwebapp/templates/addvoucher.jinja2:338
+#: gkwebapp/templates/createaccount.jinja2:183
+#: gkwebapp/templates/createaccountpopup.jinja2:104
+#: gkwebapp/templates/editaccount.jinja2:96
+#: gkwebapp/templates/editorganisation.jinja2:203
+#: gkwebapp/templates/editproduct.jinja2:34
+#: gkwebapp/templates/edituser.jinja2:66
+#: gkwebapp/templates/forgotpassword.jinja2:84
+#: gkwebapp/templates/project.jinja2:224
+#: gkwebapp/templates/viewvoucher.jinja2:468
+msgid "<u>S</u>ave"
+msgstr ""
+
+#: gkwebapp/templates/addproduct.jinja2:136
+#: gkwebapp/templates/addvoucher.jinja2:343
+#: gkwebapp/templates/createaccount.jinja2:184
+#: gkwebapp/templates/editaccount.jinja2:97
+#: gkwebapp/templates/edittransfernote.jinja2:169
+#: gkwebapp/templates/findeditvoucher.jinja2:139
+#: gkwebapp/templates/viewbalancesheet.jinja2:77
+#: gkwebapp/templates/viewbankrecon.jinja2:77
+#: gkwebapp/templates/viewcashflow.jinja2:55
+#: gkwebapp/templates/viewdualledger.jinja2:88
+#: gkwebapp/templates/viewledger.jinja2:86
+#: gkwebapp/templates/viewprofitloss.jinja2:60
+#: gkwebapp/templates/viewprojectstatement.jinja2:70
+#: gkwebapp/templates/viewstockreport.jinja2:77
+#: gkwebapp/templates/viewtrialbalance.jinja2:61
+msgid "R<u>e</u>set"
+msgstr ""
+
+#: gkwebapp/templates/addunitofmeasurement.jinja2:6
+#: gkwebapp/templates/editunitofmeasurement.jinja2:6
+msgid "Unit saved."
+msgstr ""
+
+#: gkwebapp/templates/addunitofmeasurement.jinja2:14
+#: gkwebapp/templates/editunitofmeasurement.jinja2:18
+msgid "Unit Already Exist!"
+msgstr ""
+
+#: gkwebapp/templates/addunitofmeasurement.jinja2:18
+#: gkwebapp/templates/editunitofmeasurement.jinja2:26
+msgid "Please enter Unit  name!"
+msgstr ""
+
+#: gkwebapp/templates/addunitofmeasurement.jinja2:25
+msgid " Unit Name :"
+msgstr ""
+
+#: gkwebapp/templates/addunitofmeasurement.jinja2:26
+msgid "Enter Unit name"
+msgstr ""
+
+#: gkwebapp/templates/addunitofmeasurement.jinja2:29
+msgid "Sub Unit Of"
+msgstr ""
+
+#: gkwebapp/templates/addunitofmeasurement.jinja2:38
+msgid "Conversion Rate :"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:7
+#: gkwebapp/templates/bankreconreport.jinja2:4
+#: gkwebapp/templates/cashflowreport.jinja2:4
+#: gkwebapp/templates/clearedbankreconreport.jinja2:4
+#: gkwebapp/templates/closebooks.jinja2:4
+#: gkwebapp/templates/conventionalbalancesheetreport.jinja2:4
+#: gkwebapp/templates/createadmin.jinja2:7
+#: gkwebapp/templates/createuser.jinja2:6
+#: gkwebapp/templates/deletedvoucher.jinja2:4
+#: gkwebapp/templates/dualledgerreport.jinja2:4
+#: gkwebapp/templates/editaccount.jinja2:5
+#: gkwebapp/templates/editorganisation.jinja2:5
+#: gkwebapp/templates/edituser.jinja2:5
+#: gkwebapp/templates/extendedtrialbalance.jinja2:4
+#: gkwebapp/templates/findeditvoucher.jinja2:4
+#: gkwebapp/templates/forgotpassword.jinja2:12
+#: gkwebapp/templates/grosstrialbalance.jinja2:4
+#: gkwebapp/templates/index.jinja2:6 gkwebapp/templates/index.jinja2:154
+#: gkwebapp/templates/ledgerreport.jinja2:4
+#: gkwebapp/templates/listofaccounts.jinja2:4
+#: gkwebapp/templates/listofcategories.jinja2:4
+#: gkwebapp/templates/listofgodowns.jinja2:4
+#: gkwebapp/templates/listofstockitems.jinja2:4
+#: gkwebapp/templates/login.jinja2:5 gkwebapp/templates/mainshell.jinja2:5
+#: gkwebapp/templates/mainshell.jinja2:22
+#: gkwebapp/templates/mainshell.jinja2:404
+#: gkwebapp/templates/monthledger.jinja2:4
+#: gkwebapp/templates/nettrialbalance.jinja2:4
+#: gkwebapp/templates/printcashflowreport.jinja2:4
+#: gkwebapp/templates/printcashflowreport.jinja2:5
+#: gkwebapp/templates/printextendedtrialbalance.jinja2:4
+#: gkwebapp/templates/printgrosstrialbalance.jinja2:4
+#: gkwebapp/templates/printledger.jinja2:7
+#: gkwebapp/templates/printlistofaccounts.jinja2:4
+#: gkwebapp/templates/printlistofcategories.jinja2:4
+#: gkwebapp/templates/printlistofgodowns.jinja2:4
+#: gkwebapp/templates/printlistofstockitems.jinja2:4
+#: gkwebapp/templates/printnettrialbalance.jinja2:4
+#: gkwebapp/templates/printprojectstatement.jinja2:7
+#: gkwebapp/templates/printstockreport.jinja2:7
+#: gkwebapp/templates/printtransactions.jinja2:4
+#: gkwebapp/templates/profitlossreport.jinja2:5
+#: gkwebapp/templates/profitlossreport.jinja2:7
+#: gkwebapp/templates/project.jinja2:5
+#: gkwebapp/templates/projectstatementreport.jinja2:4
+#: gkwebapp/templates/removeUser.jinja2:7
+#: gkwebapp/templates/showstockreport.jinja2:4
+#: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:7
+#: gkwebapp/templates/viewbalancesheet.jinja2:5
+#: gkwebapp/templates/viewbankrecon.jinja2:5
+#: gkwebapp/templates/viewcashflow.jinja2:5
+#: gkwebapp/templates/viewdualledger.jinja2:5
+#: gkwebapp/templates/viewledger.jinja2:5
+#: gkwebapp/templates/viewprofitloss.jinja2:6
+#: gkwebapp/templates/viewprofitloss.jinja2:8
+#: gkwebapp/templates/viewprojectstatement.jinja2:5
+#: gkwebapp/templates/viewstockreport.jinja2:5
+#: gkwebapp/templates/viewtrialbalance.jinja2:5
 msgid "GNUKhata"
 msgstr ""
 
-#: gkwebapp/templates/index.jinja2:80
+#: gkwebapp/templates/addvoucher.jinja2:7
+msgid "Voucher"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:112
+msgid "Voucher saved."
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:116
+#: gkwebapp/templates/viewbankrecon.jinja2:36
+#: gkwebapp/templates/viewdualledger.jinja2:38
+#: gkwebapp/templates/viewledger.jinja2:35
+msgid "Please select an account!"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:120
+msgid "Voucher could not be saved. "
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:124
+#: gkwebapp/templates/viewvoucher.jinja2:116
+msgid "Totals misbalance!"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:128
+#: gkwebapp/templates/viewvoucher.jinja2:120
+msgid "Voucher total cannot be greater than Invoice total!"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:132
+#: gkwebapp/templates/viewvoucher.jinja2:124
+msgid "Voucher amount cannot be zero!"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:136
+#: gkwebapp/templates/viewvoucher.jinja2:128
+msgid "Voucher with zero amount cannot be saved!"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:140
+#: gkwebapp/templates/viewvoucher.jinja2:132
+msgid "An account can be selected only once!"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:144
+#: gkwebapp/templates/findeditvoucher.jinja2:46
+#: gkwebapp/templates/viewvoucher.jinja2:136
+msgid "Please enter voucher number!"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:148
+#: gkwebapp/templates/viewvoucher.jinja2:140
+msgid "Please enter voucher date in proper format!"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:151
+#: gkwebapp/templates/viewvoucher.jinja2:151
+msgid "You are entering a post-dated transaction!"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:155
+#: gkwebapp/templates/viewvoucher.jinja2:148
+msgid "Please enter voucher date within the financial year!"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:163
+msgid "<u>V</u>oucher No."
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:168
+#: gkwebapp/templates/findeditvoucher.jinja2:95
+#: gkwebapp/templates/findvouchertable.jinja2:105
+#: gkwebapp/templates/mainshell.jinja2:60
+#: gkwebapp/templates/mainshell.jinja2:155
+#: gkwebapp/templates/mainshell.jinja2:304
+#: gkwebapp/templates/printtransactions.jinja2:62
+#: gkwebapp/templates/viewvoucher.jinja2:161
+msgid "Contra"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:170
+#: gkwebapp/templates/findeditvoucher.jinja2:96
+#: gkwebapp/templates/findvouchertable.jinja2:109
+#: gkwebapp/templates/mainshell.jinja2:57
+#: gkwebapp/templates/mainshell.jinja2:152
+#: gkwebapp/templates/mainshell.jinja2:295
+#: gkwebapp/templates/printtransactions.jinja2:66
+#: gkwebapp/templates/viewvoucher.jinja2:163
+msgid "Payment"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:172
+#: gkwebapp/templates/findeditvoucher.jinja2:97
+#: gkwebapp/templates/findvouchertable.jinja2:113
+#: gkwebapp/templates/mainshell.jinja2:56
+#: gkwebapp/templates/mainshell.jinja2:151
+#: gkwebapp/templates/mainshell.jinja2:292
+#: gkwebapp/templates/printtransactions.jinja2:70
+#: gkwebapp/templates/viewvoucher.jinja2:165
+msgid "Receipt"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:174
+#: gkwebapp/templates/findeditvoucher.jinja2:98
+#: gkwebapp/templates/findvouchertable.jinja2:117
+#: gkwebapp/templates/mainshell.jinja2:61
+#: gkwebapp/templates/mainshell.jinja2:126
+#: gkwebapp/templates/mainshell.jinja2:156
+#: gkwebapp/templates/mainshell.jinja2:307
+#: gkwebapp/templates/printtransactions.jinja2:74
+#: gkwebapp/templates/viewvoucher.jinja2:167
+msgid "Journal"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:176
+#: gkwebapp/templates/findeditvoucher.jinja2:99
+#: gkwebapp/templates/findvouchertable.jinja2:121
+#: gkwebapp/templates/printtransactions.jinja2:78
+#: gkwebapp/templates/viewvoucher.jinja2:169
+msgid "Sales"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:178
+#: gkwebapp/templates/findeditvoucher.jinja2:100
+#: gkwebapp/templates/findvouchertable.jinja2:125
+#: gkwebapp/templates/mainshell.jinja2:59
+#: gkwebapp/templates/mainshell.jinja2:154
+#: gkwebapp/templates/mainshell.jinja2:301
+#: gkwebapp/templates/printtransactions.jinja2:82
+#: gkwebapp/templates/viewvoucher.jinja2:171
+msgid "Purchase"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:180
+#: gkwebapp/templates/deletedvoucher.jinja2:88
+#: gkwebapp/templates/findeditvoucher.jinja2:101
+#: gkwebapp/templates/findvouchertable.jinja2:129
+#: gkwebapp/templates/ledgerreport.jinja2:125
+#: gkwebapp/templates/mainshell.jinja2:64
+#: gkwebapp/templates/mainshell.jinja2:159
+#: gkwebapp/templates/mainshell.jinja2:316
+#: gkwebapp/templates/printledger.jinja2:80
+#: gkwebapp/templates/printtransactions.jinja2:86
+#: gkwebapp/templates/viewvoucher.jinja2:173
+msgid "Credit Note"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:182
+#: gkwebapp/templates/deletedvoucher.jinja2:90
+#: gkwebapp/templates/findeditvoucher.jinja2:102
+#: gkwebapp/templates/findvouchertable.jinja2:133
+#: gkwebapp/templates/ledgerreport.jinja2:127
+#: gkwebapp/templates/mainshell.jinja2:65
+#: gkwebapp/templates/mainshell.jinja2:160
+#: gkwebapp/templates/mainshell.jinja2:319
+#: gkwebapp/templates/printledger.jinja2:82
+#: gkwebapp/templates/printtransactions.jinja2:90
+#: gkwebapp/templates/viewvoucher.jinja2:175
+msgid "Debit Note"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:184
+#: gkwebapp/templates/deletedvoucher.jinja2:86
+#: gkwebapp/templates/findeditvoucher.jinja2:103
+#: gkwebapp/templates/findvouchertable.jinja2:137
+#: gkwebapp/templates/ledgerreport.jinja2:123
+#: gkwebapp/templates/mainshell.jinja2:62
+#: gkwebapp/templates/mainshell.jinja2:157
+#: gkwebapp/templates/mainshell.jinja2:310
+#: gkwebapp/templates/printledger.jinja2:78
+#: gkwebapp/templates/printtransactions.jinja2:94
+#: gkwebapp/templates/viewvoucher.jinja2:177
+msgid "Sale Return"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:186
+#: gkwebapp/templates/deletedvoucher.jinja2:84
+#: gkwebapp/templates/findeditvoucher.jinja2:104
+#: gkwebapp/templates/findvouchertable.jinja2:141
+#: gkwebapp/templates/ledgerreport.jinja2:121
+#: gkwebapp/templates/mainshell.jinja2:63
+#: gkwebapp/templates/mainshell.jinja2:158
+#: gkwebapp/templates/mainshell.jinja2:313
+#: gkwebapp/templates/printledger.jinja2:76
+#: gkwebapp/templates/printtransactions.jinja2:98
+#: gkwebapp/templates/viewvoucher.jinja2:179
+msgid "Purchase Return"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:190
+#: gkwebapp/templates/viewvoucher.jinja2:184
+msgid "<u>D</u>ate"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:201
+#: gkwebapp/templates/viewvoucher.jinja2:195
+msgid "Select Invoice "
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:215
+#: gkwebapp/templates/viewvoucher.jinja2:217
+msgid "Invoice Total Amount "
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:226
+#: gkwebapp/templates/viewvoucher.jinja2:228
+#: gkwebapp/templates/viewvoucher.jinja2:323
+msgid "Cr/Dr"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:229
+#: gkwebapp/templates/editaccount.jinja2:65
+#: gkwebapp/templates/extendedtrialbalance.jinja2:59
+#: gkwebapp/templates/grosstrialbalance.jinja2:58
+#: gkwebapp/templates/listofaccounts.jinja2:57
+#: gkwebapp/templates/multipleaccounts.jinja2:159
+#: gkwebapp/templates/multipleaccounts.jinja2:162
+#: gkwebapp/templates/nettrialbalance.jinja2:59
+#: gkwebapp/templates/printextendedtrialbalance.jinja2:41
+#: gkwebapp/templates/printgrosstrialbalance.jinja2:41
+#: gkwebapp/templates/printlistofaccounts.jinja2:45
+#: gkwebapp/templates/printnettrialbalance.jinja2:41
+#: gkwebapp/templates/viewbankrecon.jinja2:39
+#: gkwebapp/templates/viewdualledger.jinja2:41
+#: gkwebapp/templates/viewledger.jinja2:38
+#: gkwebapp/templates/viewvoucher.jinja2:231
+#: gkwebapp/templates/viewvoucher.jinja2:326
+msgid "Account Name"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:232
+#: gkwebapp/templates/viewvoucher.jinja2:234
+#: gkwebapp/templates/viewvoucher.jinja2:329
+msgid "Dr Amount"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:235
+#: gkwebapp/templates/viewvoucher.jinja2:237
+#: gkwebapp/templates/viewvoucher.jinja2:332
+msgid "Cr Amount"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:238
+#: gkwebapp/templates/multipleaccounts.jinja2:164
+#: gkwebapp/templates/multiplegodowns.jinja2:152
+#: gkwebapp/templates/removeUser.jinja2:68
+#: gkwebapp/templates/viewvoucher.jinja2:335
+msgid "Remove"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:250
+#: gkwebapp/templates/addvoucher.jinja2:275
+#: gkwebapp/templates/viewvoucher.jinja2:246
+#: gkwebapp/templates/viewvoucher.jinja2:276
+#: gkwebapp/templates/viewvoucher.jinja2:344
+#: gkwebapp/templates/viewvoucher.jinja2:377
+msgid "Dr"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:251
+#: gkwebapp/templates/addvoucher.jinja2:274
+#: gkwebapp/templates/viewvoucher.jinja2:247
+#: gkwebapp/templates/viewvoucher.jinja2:275
+#: gkwebapp/templates/viewvoucher.jinja2:345
+#: gkwebapp/templates/viewvoucher.jinja2:376
+msgid "Cr"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:317
+#: gkwebapp/templates/viewvoucher.jinja2:422
+msgid "Pro<u>j</u>ect"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:327
+msgid "Narra<u>t</u>ion"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:348
+msgid "Add Acc<u>o</u>unt"
+msgstr ""
+
+#: gkwebapp/templates/addvoucher.jinja2:353
+msgid "Attac<u>h</u>"
+msgstr ""
+
+#: gkwebapp/templates/bankreconreport.jinja2:4
+#: gkwebapp/templates/clearedbankreconreport.jinja2:4
+#: gkwebapp/templates/viewbankrecon.jinja2:5
+#: gkwebapp/templates/viewbankrecon.jinja2:19
+msgid "Bank Reconciliation"
+msgstr ""
+
+#: gkwebapp/templates/bankreconreport.jinja2:4
+msgid "Uncleared Transactions"
+msgstr ""
+
+#: gkwebapp/templates/bankreconreport.jinja2:55
+#: gkwebapp/templates/clearedbankreconreport.jinja2:57
+msgid "Clearance date cannot be before the voucher date!"
+msgstr ""
+
+#: gkwebapp/templates/bankreconreport.jinja2:63
+#: gkwebapp/templates/bankreconreport.jinja2:70
+#: gkwebapp/templates/clearedbankreconreport.jinja2:65
+#: gkwebapp/templates/clearedbankreconreport.jinja2:72
+#: gkwebapp/templates/dualledgerreport.jinja2:83
+#: gkwebapp/templates/dualledgerreport.jinja2:165
+#: gkwebapp/templates/ledgerreport.jinja2:70
+#: gkwebapp/templates/printcashflowreport.jinja2:108
+#: gkwebapp/templates/printledger.jinja2:39
+#: gkwebapp/templates/printledger.jinja2:47
+#: gkwebapp/templates/printprojectstatement.jinja2:37
+#: gkwebapp/templates/printstockreport.jinja2:37
+#: gkwebapp/templates/printstockreport.jinja2:45
+#: gkwebapp/templates/profitlossreport.jinja2:120
+#: gkwebapp/templates/projectstatementreport.jinja2:58
+#: gkwebapp/templates/showstockreport.jinja2:54
+msgid "Period"
+msgstr ""
+
+#: gkwebapp/templates/bankreconreport.jinja2:63
+#: gkwebapp/templates/bankreconreport.jinja2:70
+#: gkwebapp/templates/cashflowreport.jinja2:61
+#: gkwebapp/templates/cashflowreport.jinja2:63
+#: gkwebapp/templates/clearedbankreconreport.jinja2:65
+#: gkwebapp/templates/clearedbankreconreport.jinja2:72
+#: gkwebapp/templates/dualledgerreport.jinja2:83
+#: gkwebapp/templates/dualledgerreport.jinja2:165
+#: gkwebapp/templates/extendedtrialbalance.jinja2:52
+#: gkwebapp/templates/findeditvoucher.jinja2:126
+#: gkwebapp/templates/grosstrialbalance.jinja2:51
+#: gkwebapp/templates/ledgerreport.jinja2:70
+#: gkwebapp/templates/nettrialbalance.jinja2:52
+#: gkwebapp/templates/printcashflowreport.jinja2:37
+#: gkwebapp/templates/printcashflowreport.jinja2:39
+#: gkwebapp/templates/printcashflowreport.jinja2:108
+#: gkwebapp/templates/printextendedtrialbalance.jinja2:30
+#: gkwebapp/templates/printextendedtrialbalance.jinja2:36
+#: gkwebapp/templates/printgrosstrialbalance.jinja2:30
+#: gkwebapp/templates/printgrosstrialbalance.jinja2:36
+#: gkwebapp/templates/printledger.jinja2:39
+#: gkwebapp/templates/printledger.jinja2:47
+#: gkwebapp/templates/printnettrialbalance.jinja2:30
+#: gkwebapp/templates/printnettrialbalance.jinja2:36
+#: gkwebapp/templates/printprojectstatement.jinja2:37
+#: gkwebapp/templates/printstockreport.jinja2:37
+#: gkwebapp/templates/printstockreport.jinja2:45
+#: gkwebapp/templates/profitlossreport.jinja2:64
+#: gkwebapp/templates/profitlossreport.jinja2:67
+#: gkwebapp/templates/profitlossreport.jinja2:120
+#: gkwebapp/templates/projectstatementreport.jinja2:58
+#: gkwebapp/templates/showstockreport.jinja2:54
+msgid "to"
+msgstr ""
+
+#: gkwebapp/templates/bankreconreport.jinja2:64
+#: gkwebapp/templates/bankreconreport.jinja2:69
+msgid "Uncleared Transactions of"
+msgstr ""
+
+#: gkwebapp/templates/bankreconreport.jinja2:75
+#: gkwebapp/templates/clearedbankreconreport.jinja2:77
+#: gkwebapp/templates/dualledgerreport.jinja2:95
+#: gkwebapp/templates/dualledgerreport.jinja2:177
+#: gkwebapp/templates/findvouchertable.jinja2:77
+#: gkwebapp/templates/ledgerreport.jinja2:79
+msgid "V. No."
+msgstr ""
+
+#: gkwebapp/templates/bankreconreport.jinja2:76
+#: gkwebapp/templates/bankreconreport.jinja2:77
+#: gkwebapp/templates/cashflowreport.jinja2:72
+#: gkwebapp/templates/cashflowreport.jinja2:107
+#: gkwebapp/templates/clearedbankreconreport.jinja2:78
+#: gkwebapp/templates/clearedbankreconreport.jinja2:79
+#: gkwebapp/templates/deletedvoucher.jinja2:61
+#: gkwebapp/templates/dualledgerreport.jinja2:97
+#: gkwebapp/templates/dualledgerreport.jinja2:102
+#: gkwebapp/templates/dualledgerreport.jinja2:179
+#: gkwebapp/templates/dualledgerreport.jinja2:184
+#: gkwebapp/templates/ledgerreport.jinja2:83
+#: gkwebapp/templates/ledgerreport.jinja2:88
+#: gkwebapp/templates/printcashflowreport.jinja2:57
+#: gkwebapp/templates/printcashflowreport.jinja2:113
+#: gkwebapp/templates/printledger.jinja2:54
+#: gkwebapp/templates/printstockreport.jinja2:53
+#: gkwebapp/templates/profitlossreport.jinja2:85
+#: gkwebapp/templates/profitlossreport.jinja2:125
+#: gkwebapp/templates/showstockreport.jinja2:64
+msgid "Particulars"
+msgstr ""
+
+#: gkwebapp/templates/bankreconreport.jinja2:78
+#: gkwebapp/templates/clearedbankreconreport.jinja2:80
+#: gkwebapp/templates/dualledgerreport.jinja2:98
+#: gkwebapp/templates/dualledgerreport.jinja2:103
+#: gkwebapp/templates/dualledgerreport.jinja2:180
+#: gkwebapp/templates/dualledgerreport.jinja2:185
+#: gkwebapp/templates/grosstrialbalance.jinja2:59
+#: gkwebapp/templates/ledgerreport.jinja2:84
+#: gkwebapp/templates/ledgerreport.jinja2:89
+#: gkwebapp/templates/monthledger.jinja2:27
+#: gkwebapp/templates/nettrialbalance.jinja2:60
+#: gkwebapp/templates/printgrosstrialbalance.jinja2:42
+#: gkwebapp/templates/printledger.jinja2:55
+#: gkwebapp/templates/printnettrialbalance.jinja2:42
+msgid "Debit"
+msgstr ""
+
+#: gkwebapp/templates/bankreconreport.jinja2:79
+#: gkwebapp/templates/clearedbankreconreport.jinja2:81
+#: gkwebapp/templates/dualledgerreport.jinja2:99
+#: gkwebapp/templates/dualledgerreport.jinja2:104
+#: gkwebapp/templates/dualledgerreport.jinja2:181
+#: gkwebapp/templates/dualledgerreport.jinja2:186
+#: gkwebapp/templates/grosstrialbalance.jinja2:60
+#: gkwebapp/templates/ledgerreport.jinja2:85
+#: gkwebapp/templates/ledgerreport.jinja2:90
+#: gkwebapp/templates/monthledger.jinja2:28
+#: gkwebapp/templates/nettrialbalance.jinja2:61
+#: gkwebapp/templates/printgrosstrialbalance.jinja2:43
+#: gkwebapp/templates/printledger.jinja2:56
+#: gkwebapp/templates/printnettrialbalance.jinja2:43
+msgid "Credit"
+msgstr ""
+
+#: gkwebapp/templates/bankreconreport.jinja2:80
+#: gkwebapp/templates/clearedbankreconreport.jinja2:82
+msgid "Clearance Date"
+msgstr ""
+
+#: gkwebapp/templates/bankreconreport.jinja2:81
+#: gkwebapp/templates/clearedbankreconreport.jinja2:83
+msgid "Memo"
+msgstr ""
+
+#: gkwebapp/templates/bankreconreport.jinja2:147
+#: gkwebapp/templates/clearedbankreconreport.jinja2:151
+msgid "R<u>e</u>conciliation Menu"
+msgstr ""
+
+#: gkwebapp/templates/bankreconreport.jinja2:148
+msgid "Cle<u>a</u>red Items"
+msgstr ""
+
+#: gkwebapp/templates/bankreconreport.jinja2:149
+msgid "<u>S</u>tatement's Printable Version"
+msgstr ""
+
+#: gkwebapp/templates/bankreconreport.jinja2:150
+msgid "<u>T</u>ransaction's Printable Version"
+msgstr ""
+
+#: gkwebapp/templates/bankreconreport.jinja2:151
+#: gkwebapp/templates/monthledger.jinja2:76
+#: gkwebapp/templates/printcashflowreport.jinja2:165
+#: gkwebapp/templates/printcashmemo.jinja2:206
+#: gkwebapp/templates/printdeliverychallan.jinja2:189
+#: gkwebapp/templates/printgrosstrialbalance.jinja2:93
+#: gkwebapp/templates/printinvoice.jinja2:232
+#: gkwebapp/templates/printledger.jinja2:129
+#: gkwebapp/templates/printlistofaccounts.jinja2:78
+#: gkwebapp/templates/printlistofcategories.jinja2:77
+#: gkwebapp/templates/printlistofgodowns.jinja2:78
+#: gkwebapp/templates/printlistofstockitems.jinja2:84
+#: gkwebapp/templates/printnettrialbalance.jinja2:85
+#: gkwebapp/templates/printprojectstatement.jinja2:80
+#: gkwebapp/templates/printstockreport.jinja2:129
+#: gkwebapp/templates/printtransactions.jinja2:125
+#: gkwebapp/templates/printtransfernote.jinja2:180
+#: gkwebapp/templates/profitlossreport.jinja2:160
+#: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:224
+msgid "Prin<u>t</u>"
+msgstr ""
+
+#: gkwebapp/templates/bankreconreport.jinja2:152
+#: gkwebapp/templates/cashflowreport.jinja2:139
+#: gkwebapp/templates/conventionalbalancesheetreport.jinja2:242
+#: gkwebapp/templates/dualledgerreport.jinja2:248
+#: gkwebapp/templates/extendedtrialbalance.jinja2:121
+#: gkwebapp/templates/forgotpassword.jinja2:85
+#: gkwebapp/templates/grosstrialbalance.jinja2:116
+#: gkwebapp/templates/ledgerreport.jinja2:184
+#: gkwebapp/templates/monthledger.jinja2:74
+#: gkwebapp/templates/nettrialbalance.jinja2:109
+#: gkwebapp/templates/printcashflowreport.jinja2:164
+#: gkwebapp/templates/printcashmemo.jinja2:205
+#: gkwebapp/templates/printdeliverychallan.jinja2:188
+#: gkwebapp/templates/printextendedtrialbalance.jinja2:96
+#: gkwebapp/templates/printgrosstrialbalance.jinja2:92
+#: gkwebapp/templates/printinvoice.jinja2:231
+#: gkwebapp/templates/printledger.jinja2:128
+#: gkwebapp/templates/printlistofaccounts.jinja2:77
+#: gkwebapp/templates/printlistofcategories.jinja2:76
+#: gkwebapp/templates/printlistofgodowns.jinja2:77
+#: gkwebapp/templates/printlistofstockitems.jinja2:83
+#: gkwebapp/templates/printnettrialbalance.jinja2:84
+#: gkwebapp/templates/printprojectstatement.jinja2:79
+#: gkwebapp/templates/printstockreport.jinja2:128
+#: gkwebapp/templates/printtransactions.jinja2:124
+#: gkwebapp/templates/printtransfernote.jinja2:179
+#: gkwebapp/templates/profitlossreport.jinja2:157
+#: gkwebapp/templates/projectstatementreport.jinja2:102
+#: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:213
+msgid "<u>B</u>ack"
+msgstr ""
+
+#: gkwebapp/templates/cashflowreport.jinja2:4
+#: gkwebapp/templates/mainshell.jinja2:74
+#: gkwebapp/templates/mainshell.jinja2:165
+#: gkwebapp/templates/printcashflowreport.jinja2:4
+msgid "Cash Flow"
+msgstr ""
+
+#: gkwebapp/templates/cashflowreport.jinja2:61
+#: gkwebapp/templates/printcashflowreport.jinja2:37
+#: gkwebapp/templates/printcashflowreport.jinja2:49
+msgid "Cash Flow Account"
+msgstr ""
+
+#: gkwebapp/templates/cashflowreport.jinja2:61
+#: gkwebapp/templates/cashflowreport.jinja2:63
+#: gkwebapp/templates/printcashflowreport.jinja2:37
+#: gkwebapp/templates/printcashflowreport.jinja2:39
+#: gkwebapp/templates/profitlossreport.jinja2:64
+#: gkwebapp/templates/profitlossreport.jinja2:67
+msgid "for the period"
+msgstr ""
+
+#: gkwebapp/templates/cashflowreport.jinja2:63
+#: gkwebapp/templates/printcashflowreport.jinja2:39
+#: gkwebapp/templates/printcashflowreport.jinja2:51
+msgid "Receipt & Payment Account"
+msgstr ""
+
+#: gkwebapp/templates/cashflowreport.jinja2:67
+#: gkwebapp/templates/cashflowreport.jinja2:102
+#: gkwebapp/templates/deletedvoucher.jinja2:54
+#: gkwebapp/templates/dualledgerreport.jinja2:90
+#: gkwebapp/templates/dualledgerreport.jinja2:172
+#: gkwebapp/templates/extendedtrialbalance.jinja2:54
+#: gkwebapp/templates/findvouchertable.jinja2:73
+#: gkwebapp/templates/grosstrialbalance.jinja2:53
+#: gkwebapp/templates/ledgerreport.jinja2:74
+#: gkwebapp/templates/listofaccounts.jinja2:49
+#: gkwebapp/templates/listofcategories.jinja2:44
+#: gkwebapp/templates/listofgodowns.jinja2:44
+#: gkwebapp/templates/listofstockitems.jinja2:44
+#: gkwebapp/templates/nettrialbalance.jinja2:55
+#: gkwebapp/templates/profitlossreport.jinja2:71
+#: gkwebapp/templates/profitlossreport.jinja2:115
+#: gkwebapp/templates/projectstatementreport.jinja2:62
+msgid "Clear Search"
+msgstr ""
+
+#: gkwebapp/templates/cashflowreport.jinja2:73
+#: gkwebapp/templates/cashflowreport.jinja2:108
+#: gkwebapp/templates/conventionalbalancesheetreport.jinja2:66
+#: gkwebapp/templates/conventionalbalancesheetreport.jinja2:156
+#: gkwebapp/templates/deletedvoucher.jinja2:62
+#: gkwebapp/templates/deletedvoucher.jinja2:63
+#: gkwebapp/templates/findeditvoucher.jinja2:87
+#: gkwebapp/templates/printcashflowreport.jinja2:58
+#: gkwebapp/templates/printcashflowreport.jinja2:114
+#: gkwebapp/templates/profitlossreport.jinja2:86
+#: gkwebapp/templates/profitlossreport.jinja2:126
+msgid "Amount"
+msgstr ""
+
+#: gkwebapp/templates/cashflowreport.jinja2:140
+#: gkwebapp/templates/conventionalbalancesheetreport.jinja2:247
+#: gkwebapp/templates/extendedtrialbalance.jinja2:122
+#: gkwebapp/templates/grosstrialbalance.jinja2:117
+#: gkwebapp/templates/listofaccounts.jinja2:92
+#: gkwebapp/templates/listofcategories.jinja2:91
+#: gkwebapp/templates/listofgodowns.jinja2:91
+#: gkwebapp/templates/listofstockitems.jinja2:97
+#: gkwebapp/templates/monthledger.jinja2:75
+#: gkwebapp/templates/nettrialbalance.jinja2:110
+#: gkwebapp/templates/profitlossreport.jinja2:158
+#: gkwebapp/templates/projectstatementreport.jinja2:103
+#: gkwebapp/templates/showstockreport.jinja2:163
+#: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:222
+msgid "E<u>x</u>port to Spreadsheet"
+msgstr ""
+
+#: gkwebapp/templates/cashflowreport.jinja2:141
+#: gkwebapp/templates/conventionalbalancesheetreport.jinja2:248
+#: gkwebapp/templates/extendedtrialbalance.jinja2:123
+#: gkwebapp/templates/findvouchertable.jinja2:172
+#: gkwebapp/templates/grosstrialbalance.jinja2:118
+#: gkwebapp/templates/ledgerreport.jinja2:191
+#: gkwebapp/templates/listofaccounts.jinja2:93
+#: gkwebapp/templates/listofcategories.jinja2:92
+#: gkwebapp/templates/listofgodowns.jinja2:92
+#: gkwebapp/templates/listofstockitems.jinja2:98
+#: gkwebapp/templates/nettrialbalance.jinja2:111
+#: gkwebapp/templates/profitlossreport.jinja2:159
+#: gkwebapp/templates/projectstatementreport.jinja2:104
+#: gkwebapp/templates/showstockreport.jinja2:164
+#: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:223
+msgid "View Prin<u>t</u>able Version"
+msgstr ""
+
+#: gkwebapp/templates/cashmemo.jinja2:52
+msgid "Add Cash Memo"
+msgstr ""
+
+#: gkwebapp/templates/cashmemo.jinja2:53
+msgid "View Cash Memo"
+msgstr ""
+
+#: gkwebapp/templates/category.jinja2:5
+msgid "GNUKhata | Category"
+msgstr ""
+
+#: gkwebapp/templates/category.jinja2:52
+msgid "Create Category"
+msgstr ""
+
+#: gkwebapp/templates/category.jinja2:53
+msgid "Edit Category"
+msgstr ""
+
+#: gkwebapp/templates/clearedbankreconreport.jinja2:4
+msgid "Cleared Transactions"
+msgstr ""
+
+#: gkwebapp/templates/clearedbankreconreport.jinja2:66
+#: gkwebapp/templates/clearedbankreconreport.jinja2:71
+msgid "Cleared Transactions of"
+msgstr ""
+
+#: gkwebapp/templates/clearedbankreconreport.jinja2:152
+msgid "Uncle<u>a</u>red Items"
+msgstr ""
+
+#: gkwebapp/templates/clearedbankreconreport.jinja2:153
+msgid "S</u>tatement's Printable Version"
+msgstr ""
+
+#: gkwebapp/templates/clearedbankreconreport.jinja2:154
+msgid "T</u>ransaction's Printable Version"
+msgstr ""
+
+#: gkwebapp/templates/clearedbankreconreport.jinja2:155
+#: gkwebapp/templates/conventionalbalancesheetreport.jinja2:249
+#: gkwebapp/templates/printextendedtrialbalance.jinja2:97
+msgid "Prin<u>t"
+msgstr ""
+
+#: gkwebapp/templates/clearedbankreconreport.jinja2:156
+msgid "B</u>ack"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:13
+#: gkwebapp/templates/createorg.jinja2:39
+msgid "Improper Date!"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:16
+msgid "There are transactions beyond the closure date. Books cannot be closed."
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:20
+msgid "Books have been closed for the current Financial Year."
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:24
+#: gkwebapp/templates/createorg.jinja2:35
+msgid "Please enter Date!"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:28
+msgid "Books cannot be closed!"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:32
+msgid "Rollover cannot be done!"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:36
+msgid "Financial year end should be greater or equal to start date!"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:42
+msgid "Close Books and Rollover"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:47
+#: gkwebapp/templates/closebooks.jinja2:49
+#: gkwebapp/templates/closebooks.jinja2:56
+msgid "CLOSE BOOKS"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:48
+msgid ""
+"After Close Books, balances in all expense and income accounts are "
+"transferred to Profit & Loss or Income & Expenditure account and these "
+"accounts are closed."
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:49
+msgid "After"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:49
+msgid ""
+"is done, transactions cannot be recorded but ledger accounts can be "
+"viewed."
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:51
+msgid "ROLL OVER"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:52
+msgid ""
+"a new organization with the same name and type is created for the next "
+"accounting year,"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:53
+msgid ""
+"every existing asset and liability account is automatically opened under "
+"its respective Group and Sub-Group and correct opening balance is brought"
+" down,"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:54
+msgid ""
+"in case of expense and income accounts these are also opened under their "
+"respective Groups and Sub-Groups, of course, without opening balances,"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:55
+msgid ""
+"The Closing Stock of the earlier year gets transferred to the next year "
+"as Opening Stock.\n"
+"            This module can only be activated after"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:56
+msgid "is done."
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:64
+msgid "Close Books"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:67
+msgid "Current Financial Year"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:70
+#: gkwebapp/templates/closebooks.jinja2:109
+#: gkwebapp/templates/closebooks.jinja2:132
+#: gkwebapp/templates/createorg.jinja2:77
+msgid "Enter From Day"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:73
+#: gkwebapp/templates/closebooks.jinja2:112
+#: gkwebapp/templates/closebooks.jinja2:135
+#: gkwebapp/templates/createorg.jinja2:80
+msgid "Enter From Month"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:76
+#: gkwebapp/templates/closebooks.jinja2:115
+#: gkwebapp/templates/closebooks.jinja2:138
+#: gkwebapp/templates/createorg.jinja2:83
+msgid "Enter From Year"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:80
+#: gkwebapp/templates/closebooks.jinja2:118
+#: gkwebapp/templates/closebooks.jinja2:141
+#: gkwebapp/templates/createorg.jinja2:86
+#: gkwebapp/templates/viewcashflow.jinja2:43
+#: gkwebapp/templates/viewprofitloss.jinja2:48
+#: gkwebapp/templates/viewtrialbalance.jinja2:40
+msgid "To"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:82
+#: gkwebapp/templates/closebooks.jinja2:120
+#: gkwebapp/templates/closebooks.jinja2:143
+#: gkwebapp/templates/createorg.jinja2:88
+msgid "Enter To Day"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:85
+#: gkwebapp/templates/closebooks.jinja2:123
+#: gkwebapp/templates/closebooks.jinja2:146
+#: gkwebapp/templates/createorg.jinja2:91
+msgid "Enter To Month"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:88
+#: gkwebapp/templates/closebooks.jinja2:126
+#: gkwebapp/templates/closebooks.jinja2:149
+#: gkwebapp/templates/createorg.jinja2:94
+msgid "Enter To Year"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:92
+msgid "Clo<u>s</u>e Books"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:103
+msgid "Roll Over"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:106
+msgid "Roll Over for the Period"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:107
+msgid "Current Financial Year From"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:130
+msgid "New Financial Year From"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:153
+msgid "Roll O<u>v</u>er"
+msgstr ""
+
+#: gkwebapp/templates/closebooks.jinja2:173
+msgid "Confirm"
+msgstr ""
+
+#: gkwebapp/templates/conventionalbalancesheetreport.jinja2:50
+#: gkwebapp/templates/viewbalancesheet.jinja2:61
+msgid "Conventional Balance Sheet"
+msgstr ""
+
+#: gkwebapp/templates/conventionalbalancesheetreport.jinja2:50
+#: gkwebapp/templates/conventionalbalancesheetreport.jinja2:52
+#: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:58
+msgid "as on"
+msgstr ""
+
+#: gkwebapp/templates/conventionalbalancesheetreport.jinja2:52
+#: gkwebapp/templates/viewbalancesheet.jinja2:68
+msgid "Conventional Statement of Affairs"
+msgstr ""
+
+#: gkwebapp/templates/conventionalbalancesheetreport.jinja2:60
+msgid "Capital and Liabilities"
+msgstr ""
+
+#: gkwebapp/templates/conventionalbalancesheetreport.jinja2:62
+msgid "Corpus and Liabilities"
+msgstr ""
+
+#: gkwebapp/templates/conventionalbalancesheetreport.jinja2:153
+msgid "Property and Assets"
+msgstr ""
+
+#: gkwebapp/templates/conventionalbalancesheetreport.jinja2:243
+#: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:214
+msgid "Show Sub<u>g</u>roups"
+msgstr ""
+
+#: gkwebapp/templates/conventionalbalancesheetreport.jinja2:244
+#: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:215
+msgid "Sho<u>w</u> Groups"
+msgstr ""
+
+#: gkwebapp/templates/conventionalbalancesheetreport.jinja2:245
+#: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:216
+msgid "Show All <u>A</u>ccounts"
+msgstr ""
+
+#: gkwebapp/templates/conventionalbalancesheetreport.jinja2:246
+msgid "<u>S</u>ources & Applications of Funds"
+msgstr ""
+
+#: gkwebapp/templates/createaccount.jinja2:5
+#: gkwebapp/templates/createaccountpopup.jinja2:5
+msgid "GNUKhata | Create Account"
+msgstr ""
+
+#: gkwebapp/templates/createaccount.jinja2:113
+#: gkwebapp/templates/createaccountpopup.jinja2:37
+msgid "Account created successfully."
+msgstr ""
+
+#: gkwebapp/templates/createaccount.jinja2:117
+#: gkwebapp/templates/createaccountpopup.jinja2:41
+msgid "Account could not be created."
+msgstr ""
+
+#: gkwebapp/templates/createaccount.jinja2:121
+#: gkwebapp/templates/createaccountpopup.jinja2:45
+#: gkwebapp/templates/editaccount.jinja2:42
+#: gkwebapp/templates/multipleaccounts.jinja2:120
+msgid "Please enter account name!"
+msgstr ""
+
+#: gkwebapp/templates/createaccount.jinja2:126
+#: gkwebapp/templates/createaccountpopup.jinja2:50
+msgid "Please enter new sub-group name!"
+msgstr ""
+
+#: gkwebapp/templates/createaccount.jinja2:131
+#: gkwebapp/templates/createaccountpopup.jinja2:55
+msgid "Please select group name!"
+msgstr ""
+
+#: gkwebapp/templates/createaccount.jinja2:136
+#: gkwebapp/templates/createaccountpopup.jinja2:60
+msgid "Please select sub-group name!"
+msgstr ""
+
+#: gkwebapp/templates/createaccount.jinja2:141
+#: gkwebapp/templates/createaccountpopup.jinja2:65
+#: gkwebapp/templates/editaccount.jinja2:47
+msgid "Account already exists!"
+msgstr ""
+
+#: gkwebapp/templates/createaccount.jinja2:147
+#: gkwebapp/templates/createaccountpopup.jinja2:71
+#: gkwebapp/templates/mainshell.jinja2:31
+#: gkwebapp/templates/mainshell.jinja2:149
+#: gkwebapp/templates/mainshell.jinja2:286
+msgid "Create Account"
+msgstr ""
+
+#: gkwebapp/templates/createaccount.jinja2:157
+#: gkwebapp/templates/createaccountpopup.jinja2:81
+msgid "<u>G</u>roup Name"
+msgstr ""
+
+#: gkwebapp/templates/createaccount.jinja2:159
+#: gkwebapp/templates/createaccountpopup.jinja2:83
+msgid "Select Group"
+msgstr ""
+
+#: gkwebapp/templates/createaccount.jinja2:165
+#: gkwebapp/templates/createaccountpopup.jinja2:89
+msgid "Su<u>b</u>-Group Name"
+msgstr ""
+
+#: gkwebapp/templates/createaccount.jinja2:167
+#: gkwebapp/templates/createaccountpopup.jinja2:91
+msgid "Select Sub-Group"
+msgstr ""
+
+#: gkwebapp/templates/createaccount.jinja2:171
+#: gkwebapp/templates/createaccountpopup.jinja2:95
+msgid "Ne<u>w</u> Sub-Group Name"
+msgstr ""
+
+#: gkwebapp/templates/createaccount.jinja2:175
+msgid "Crea<u>t</u>e Multiple Accounts"
+msgstr ""
+
+#: gkwebapp/templates/createaccount.jinja2:177
+#: gkwebapp/templates/createaccountpopup.jinja2:98
+#: gkwebapp/templates/editaccount.jinja2:88
+msgid "<u>A</u>ccount Name"
+msgstr ""
+
+#: gkwebapp/templates/createaccount.jinja2:180
+#: gkwebapp/templates/createaccountpopup.jinja2:101
+#: gkwebapp/templates/editaccount.jinja2:91
+msgid "<u>O</u>pening Balance"
+msgstr ""
+
+#: gkwebapp/templates/createaccount.jinja2:198
+#: gkwebapp/templates/createaccount.jinja2:224
+#: gkwebapp/templates/createaccountpopup.jinja2:118
+#: gkwebapp/templates/createaccountpopup.jinja2:144
+#: gkwebapp/templates/editaccount.jinja2:82
+#: gkwebapp/templates/extendedtrialbalance.jinja2:65
+#: gkwebapp/templates/grosstrialbalance.jinja2:63
+#: gkwebapp/templates/listofaccounts.jinja2:60
+#: gkwebapp/templates/nettrialbalance.jinja2:62
+#: gkwebapp/templates/printextendedtrialbalance.jinja2:47
+#: gkwebapp/templates/printgrosstrialbalance.jinja2:46
+#: gkwebapp/templates/printlistofaccounts.jinja2:48
+#: gkwebapp/templates/printnettrialbalance.jinja2:44
+msgid "Group Name"
+msgstr ""
+
+#: gkwebapp/templates/createaccount.jinja2:199
+#: gkwebapp/templates/createaccount.jinja2:225
+#: gkwebapp/templates/createaccountpopup.jinja2:119
+#: gkwebapp/templates/createaccountpopup.jinja2:145
+msgid "No. of Accounts"
+msgstr ""
+
+#: gkwebapp/templates/createaccount.jinja2:200
+#: gkwebapp/templates/createaccount.jinja2:226
+#: gkwebapp/templates/createaccountpopup.jinja2:120
+#: gkwebapp/templates/createaccountpopup.jinja2:146
+msgid "Group Balance"
+msgstr ""
+
+#: gkwebapp/templates/createaccount.jinja2:243
+#: gkwebapp/templates/createaccountpopup.jinja2:163
+msgid "Difference in Balance"
+msgstr ""
+
+#: gkwebapp/templates/createadmin.jinja2:42
+msgid "Create Admin"
+msgstr ""
+
+#: gkwebapp/templates/createadmin.jinja2:50
+#: gkwebapp/templates/createuser.jinja2:29 gkwebapp/templates/login.jinja2:82
+msgid "Please enter username!"
+msgstr ""
+
+#: gkwebapp/templates/createadmin.jinja2:54
+#: gkwebapp/templates/createuser.jinja2:33 gkwebapp/templates/login.jinja2:86
+msgid "Please enter password!"
+msgstr ""
+
+#: gkwebapp/templates/createadmin.jinja2:58
+#: gkwebapp/templates/createuser.jinja2:37
+msgid "Please re-enter password!"
+msgstr ""
+
+#: gkwebapp/templates/createadmin.jinja2:62
+#: gkwebapp/templates/edituser.jinja2:31
+msgid "Password not confirmed!"
+msgstr ""
+
+#: gkwebapp/templates/createadmin.jinja2:66
+#: gkwebapp/templates/createuser.jinja2:49
+msgid "Please enter security question!"
+msgstr ""
+
+#: gkwebapp/templates/createadmin.jinja2:70
+#: gkwebapp/templates/createuser.jinja2:53
+msgid "Please enter the answer of security question!"
+msgstr ""
+
+#: gkwebapp/templates/createadmin.jinja2:77
+msgid "<u>U</u>sername"
+msgstr ""
+
+#: gkwebapp/templates/createadmin.jinja2:80
+msgid "<u>P</u>assword"
+msgstr ""
+
+#: gkwebapp/templates/createadmin.jinja2:83
+msgid "<u>C</u>onfirm Password"
+msgstr ""
+
+#: gkwebapp/templates/createadmin.jinja2:86
+#: gkwebapp/templates/createuser.jinja2:88
+#: gkwebapp/templates/forgotpassword.jinja2:59
+msgid "Security <u>Q</u>uestion"
+msgstr ""
+
+#: gkwebapp/templates/createadmin.jinja2:89
+msgid "<u>A</u>nswer to  Security Question"
+msgstr ""
+
+#: gkwebapp/templates/createadmin.jinja2:97
+msgid "Create & <u>L</u>ogin"
+msgstr ""
+
+#: gkwebapp/templates/creategodown.jinja2:6
+msgid "Godown created successfully."
+msgstr ""
+
+#: gkwebapp/templates/creategodown.jinja2:10
+msgid "Godown could not be created."
+msgstr ""
+
+#: gkwebapp/templates/creategodown.jinja2:15
+#: gkwebapp/templates/editgodown.jinja2:20
+#: gkwebapp/templates/multiplegodowns.jinja2:140
+msgid "Godown already exists!"
+msgstr ""
+
+#: gkwebapp/templates/creategodown.jinja2:20
+#: gkwebapp/templates/editgodown.jinja2:42
+#: gkwebapp/templates/multiplegodowns.jinja2:127
+msgid "Please enter godown name!"
+msgstr ""
+
+#: gkwebapp/templates/creategodown.jinja2:23
+#: gkwebapp/templates/editgodown.jinja2:30
+#: gkwebapp/templates/editgodown.jinja2:45
+#: gkwebapp/templates/listofgodowns.jinja2:52
+#: gkwebapp/templates/multiplegodowns.jinja2:149
+#: gkwebapp/templates/printlistofgodowns.jinja2:45
+msgid "Godown Name"
+msgstr ""
+
+#: gkwebapp/templates/creategodown.jinja2:28
+msgid "Please select state!"
+msgstr ""
+
+#: gkwebapp/templates/creategodown.jinja2:74
+#: gkwebapp/templates/editgodown.jinja2:96
+msgid "Please enter address!"
+msgstr ""
+
+#: gkwebapp/templates/creategodown.jinja2:77
+#: gkwebapp/templates/editgodown.jinja2:99
+#: gkwebapp/templates/editorganisation.jinja2:66
+#: gkwebapp/templates/printlistofgodowns.jinja2:48
+msgid "Address"
+msgstr ""
+
+#: gkwebapp/templates/creategodown.jinja2:84
+#: gkwebapp/templates/editgodown.jinja2:107
+msgid "Contact Name"
+msgstr ""
+
+#: gkwebapp/templates/creategodown.jinja2:92
+#: gkwebapp/templates/editgodown.jinja2:115
+msgid "Contact Number"
+msgstr ""
+
+#: gkwebapp/templates/createorg.jinja2:23
+msgid "Please enter organisation name!"
+msgstr ""
+
+#: gkwebapp/templates/createorg.jinja2:27
+msgid "Duplicate organisation!"
+msgstr ""
+
+#: gkwebapp/templates/createorg.jinja2:31
+msgid "Financial end date should be greater or equal to start date!"
+msgstr ""
+
+#: gkwebapp/templates/createorg.jinja2:43
+#: gkwebapp/templates/mainshell.jinja2:244
+msgid "Create Organisation"
+msgstr ""
+
+#: gkwebapp/templates/createorg.jinja2:49
+#: gkwebapp/templates/existingorg.jinja2:42
+msgid "<u>O</u>rganisation Name"
+msgstr ""
+
+#: gkwebapp/templates/createorg.jinja2:54
+msgid "<u>C</u>ase"
+msgstr ""
+
+#: gkwebapp/templates/createorg.jinja2:56
+msgid "As"
+msgstr ""
+
+#: gkwebapp/templates/createorg.jinja2:56
+msgid "is"
+msgstr ""
+
+#: gkwebapp/templates/createorg.jinja2:57
+msgid "Upper Case"
+msgstr ""
+
+#: gkwebapp/templates/createorg.jinja2:58
+msgid "Lower Case"
+msgstr ""
+
+#: gkwebapp/templates/createorg.jinja2:59
+msgid "Title Case"
+msgstr ""
+
+#: gkwebapp/templates/createorg.jinja2:65
+msgid "Organisation <u>T</u>ype"
+msgstr ""
+
+#: gkwebapp/templates/createorg.jinja2:67
+msgid "Profit Making"
+msgstr ""
+
+#: gkwebapp/templates/createorg.jinja2:68
+msgid "Not For Profit"
+msgstr ""
+
+#: gkwebapp/templates/createorg.jinja2:73
+msgid "<u>F</u>inancial Year"
+msgstr ""
+
+#: gkwebapp/templates/createorg.jinja2:101
+msgid "Inventory"
+msgstr ""
+
+#: gkwebapp/templates/createorg.jinja2:106
+msgid "<u>P</u>roceed"
+msgstr ""
+
+#: gkwebapp/templates/createtransfernote.jinja2:33
+#: gkwebapp/templates/edittransfernote.jinja2:33
+#: gkwebapp/templates/receivedtransfernote.jinja2:37
+msgid "Transfer Note saved."
+msgstr ""
+
+#: gkwebapp/templates/createtransfernote.jinja2:45
+#: gkwebapp/templates/edittransfernote.jinja2:45
+#: gkwebapp/templates/receivedtransfernote.jinja2:49
+msgid "Please Enter Date"
+msgstr ""
+
+#: gkwebapp/templates/createtransfernote.jinja2:53
+msgid "Transfernote No.Already Exist!"
+msgstr ""
+
+#: gkwebapp/templates/createtransfernote.jinja2:57
+#: gkwebapp/templates/edittransfernote.jinja2:53
+#: gkwebapp/templates/receivedtransfernote.jinja2:57
+msgid "Please Enter Transfer Note No.!"
+msgstr ""
+
+#: gkwebapp/templates/createtransfernote.jinja2:69
+#: gkwebapp/templates/edittransfernote.jinja2:61
+#: gkwebapp/templates/receivedtransfernote.jinja2:65
+msgid "Godown Must be Selected!"
+msgstr ""
+
+#: gkwebapp/templates/createtransfernote.jinja2:81
+#: gkwebapp/templates/edittransfernote.jinja2:77
+#: gkwebapp/templates/receivedtransfernote.jinja2:81
+msgid "From and To godown can not be same !"
+msgstr ""
+
+#: gkwebapp/templates/createtransfernote.jinja2:85
+#: gkwebapp/templates/edittransfernote.jinja2:90
+#: gkwebapp/templates/receivedtransfernote.jinja2:102
+msgid "Transfer Note No:"
+msgstr ""
+
+#: gkwebapp/templates/createtransfernote.jinja2:86
+#: gkwebapp/templates/edittransfernote.jinja2:91
+msgid "Enter Transfer Note no"
+msgstr ""
+
+#: gkwebapp/templates/createtransfernote.jinja2:89
+#: gkwebapp/templates/edittransfernote.jinja2:94
+#: gkwebapp/templates/receivedtransfernote.jinja2:105
+msgid "Date:"
+msgstr ""
+
+#: gkwebapp/templates/createtransfernote.jinja2:142
+#: gkwebapp/templates/edittransfernote.jinja2:129
+#: gkwebapp/templates/receivedtransfernote.jinja2:127
+msgid " Number Of Packets:"
+msgstr ""
+
+#: gkwebapp/templates/createtransfernote.jinja2:147
+#: gkwebapp/templates/edittransfernote.jinja2:134
+#: gkwebapp/templates/receivedtransfernote.jinja2:131
+msgid " From Godown:"
+msgstr ""
+
+#: gkwebapp/templates/createtransfernote.jinja2:149
+#: gkwebapp/templates/createtransfernote.jinja2:158
+#: gkwebapp/templates/editgodown.jinja2:32
+#: gkwebapp/templates/edittransfernote.jinja2:136
+#: gkwebapp/templates/edittransfernote.jinja2:145
+msgid "Select Godown"
+msgstr ""
+
+#: gkwebapp/templates/createtransfernote.jinja2:156
+#: gkwebapp/templates/edittransfernote.jinja2:143
+#: gkwebapp/templates/receivedtransfernote.jinja2:134
+msgid " To Godown:"
+msgstr ""
+
+#: gkwebapp/templates/createtransfernote.jinja2:165
+#: gkwebapp/templates/edittransfernote.jinja2:152
+#: gkwebapp/templates/receivedtransfernote.jinja2:137
+msgid " Mode Of Transport:"
+msgstr ""
+
+#: gkwebapp/templates/createtransfernote.jinja2:170
+#: gkwebapp/templates/edittransfernote.jinja2:157
+#: gkwebapp/templates/receivedtransfernote.jinja2:141
+msgid " Name Of Issuer:"
+msgstr ""
+
+#: gkwebapp/templates/createtransfernote.jinja2:174
+#: gkwebapp/templates/edittransfernote.jinja2:161
+#: gkwebapp/templates/receivedtransfernote.jinja2:144
+msgid " Designation:"
+msgstr ""
+
+#: gkwebapp/templates/createtransfernote.jinja2:183
+msgid " Save & Print"
+msgstr ""
+
+#: gkwebapp/templates/createtransfernote.jinja2:198
+#: gkwebapp/templates/createtransfernote.jinja2:217
+msgid "NO"
+msgstr ""
+
+#: gkwebapp/templates/createtransfernote.jinja2:199
+#: gkwebapp/templates/createtransfernote.jinja2:218
+msgid "YES"
+msgstr ""
+
+#: gkwebapp/templates/createuser.jinja2:6
+msgid "Create User"
+msgstr ""
+
+#: gkwebapp/templates/createuser.jinja2:22
+msgid "Create New User"
+msgstr ""
+
+#: gkwebapp/templates/createuser.jinja2:41
+#: gkwebapp/templates/edituser.jinja2:43
+msgid "Password doesn't match!"
+msgstr ""
+
+#: gkwebapp/templates/createuser.jinja2:45
+msgid "Please select role!"
+msgstr ""
+
+#: gkwebapp/templates/createuser.jinja2:57
+msgid "User successfully added!"
+msgstr ""
+
+#: gkwebapp/templates/createuser.jinja2:61
+msgid "User already exists!"
+msgstr ""
+
+#: gkwebapp/templates/createuser.jinja2:65
+msgid "You don't have authentication to add new user!"
+msgstr ""
+
+#: gkwebapp/templates/createuser.jinja2:68
+#: gkwebapp/templates/forgotpassword.jinja2:54
+#: gkwebapp/templates/removeUser.jinja2:43
+msgid "Us<u>e</u>rname"
+msgstr ""
+
+#: gkwebapp/templates/createuser.jinja2:72
+msgid "Pass<u>w</u>ord"
+msgstr ""
+
+#: gkwebapp/templates/createuser.jinja2:76
+#: gkwebapp/templates/edituser.jinja2:60
+msgid "C<u>o</u>nfirm Password"
+msgstr ""
+
+#: gkwebapp/templates/createuser.jinja2:80
+msgid "Selec<u>t</u> Role"
+msgstr ""
+
+#: gkwebapp/templates/createuser.jinja2:82
+msgid "Select a role"
+msgstr ""
+
+#: gkwebapp/templates/createuser.jinja2:83
+msgid "Manager"
+msgstr ""
+
+#: gkwebapp/templates/createuser.jinja2:84
+msgid "Operator"
+msgstr ""
+
+#: gkwebapp/templates/createuser.jinja2:92
+msgid "<u>S</u>ecurity Answer"
+msgstr ""
+
+#: gkwebapp/templates/createuser.jinja2:99
+msgid "Cre<u>a</u>te"
+msgstr ""
+
+#: gkwebapp/templates/customersupplier.jinja2:5
+msgid "GNUKhata | Customer and Supplier"
+msgstr ""
+
+#: gkwebapp/templates/customersupplier.jinja2:10
+msgid "Create Customer/Supplier"
+msgstr ""
+
+#: gkwebapp/templates/customersupplier.jinja2:11
+msgid "Edit Customer/Supplier"
+msgstr ""
+
+#: gkwebapp/templates/deletedvoucher.jinja2:4
+msgid "Deleted Voucher"
+msgstr ""
+
+#: gkwebapp/templates/deletedvoucher.jinja2:51
+#: gkwebapp/templates/mainshell.jinja2:79
+msgid "List of Deleted Vouchers"
+msgstr ""
+
+#: gkwebapp/templates/deletedvoucher.jinja2:59
+#: gkwebapp/templates/printledger.jinja2:52
+#: gkwebapp/templates/printtransactions.jinja2:40
+msgid "V.No."
+msgstr ""
+
+#: gkwebapp/templates/deletedvoucher.jinja2:64
+#: gkwebapp/templates/dualledgerreport.jinja2:86
+#: gkwebapp/templates/dualledgerreport.jinja2:88
+#: gkwebapp/templates/dualledgerreport.jinja2:168
+#: gkwebapp/templates/dualledgerreport.jinja2:170
+#: gkwebapp/templates/ledgerreport.jinja2:68
+#: gkwebapp/templates/printledger.jinja2:38
+msgid "Project"
+msgstr ""
+
+#: gkwebapp/templates/deliverychallan.jinja2:5
+msgid "GNUKhata | Delivery Challan"
+msgstr ""
+
+#: gkwebapp/templates/deliverychallan.jinja2:62
+msgid "Delivery In"
+msgstr ""
+
+#: gkwebapp/templates/deliverychallan.jinja2:63
+msgid "Delivery Out"
+msgstr ""
+
+#: gkwebapp/templates/deliverychallan.jinja2:64
+msgid "View Delivery Note"
+msgstr ""
+
+#: gkwebapp/templates/dualledgerreport.jinja2:4
+#: gkwebapp/templates/ledgerreport.jinja2:4
+#: gkwebapp/templates/mainshell.jinja2:71
+#: gkwebapp/templates/mainshell.jinja2:162
+#: gkwebapp/templates/mainshell.jinja2:325
+#: gkwebapp/templates/printledger.jinja2:7
+#: gkwebapp/templates/viewledger.jinja2:5
+msgid "Ledger"
+msgstr ""
+
+#: gkwebapp/templates/dualledgerreport.jinja2:58
+#: gkwebapp/templates/findeditvoucher.jinja2:40
+#: gkwebapp/templates/ledgerreport.jinja2:53
+msgid "Unauthorized to Lock/Unlock Transactions!"
+msgstr ""
+
+#: gkwebapp/templates/dualledgerreport.jinja2:84
+#: gkwebapp/templates/dualledgerreport.jinja2:166
+#: gkwebapp/templates/printprojectstatement.jinja2:42
+#: gkwebapp/templates/projectstatementreport.jinja2:67
+msgid "Account"
+msgstr ""
+
+#: gkwebapp/templates/dualledgerreport.jinja2:100
+#: gkwebapp/templates/dualledgerreport.jinja2:182
+#: gkwebapp/templates/ledgerreport.jinja2:86
+#: gkwebapp/templates/printstockreport.jinja2:68
+#: gkwebapp/templates/showstockreport.jinja2:79
+msgid "Balance"
+msgstr ""
+
+#: gkwebapp/templates/editaccount.jinja2:5
+#: gkwebapp/templates/editaccount.jinja2:59
+#: gkwebapp/templates/mainshell.jinja2:32
+msgid "Edit Account"
+msgstr ""
+
+#: gkwebapp/templates/editaccount.jinja2:28
+msgid "Account edited successfully."
+msgstr ""
+
+#: gkwebapp/templates/editaccount.jinja2:33
+msgid "Account deleted successfully."
+msgstr ""
+
+#: gkwebapp/templates/editaccount.jinja2:38
+msgid "Account could not be edited."
+msgstr ""
+
+#: gkwebapp/templates/editaccount.jinja2:52
+msgid "Account cannot be deleted!"
+msgstr ""
+
+#: gkwebapp/templates/editaccount.jinja2:53
+msgid "Transactions might be remaining for this account."
+msgstr ""
+
+#: gkwebapp/templates/editaccount.jinja2:67
+#: gkwebapp/templates/viewbankrecon.jinja2:41
+#: gkwebapp/templates/viewdualledger.jinja2:43
+#: gkwebapp/templates/viewledger.jinja2:40
+msgid "Select Account"
+msgstr ""
+
+#: gkwebapp/templates/editaccount.jinja2:73
+msgid "This is a system generated account, cannot be edited/deleted."
+msgstr ""
+
+#: gkwebapp/templates/editaccount.jinja2:76
+msgid "Name of this system generated account cannot be edited."
+msgstr ""
+
+#: gkwebapp/templates/editaccount.jinja2:85
+#: gkwebapp/templates/listofaccounts.jinja2:63
+#: gkwebapp/templates/printlistofaccounts.jinja2:51
+msgid "Sub-Group Name"
+msgstr ""
+
+#: gkwebapp/templates/editaccount.jinja2:98
+#: gkwebapp/templates/edittransfernote.jinja2:170
+#: gkwebapp/templates/viewvoucher.jinja2:469
+msgid "<u>D</u>elete"
+msgstr ""
+
+#: gkwebapp/templates/editaccount.jinja2:99
+#: gkwebapp/templates/edittransfernote.jinja2:171
+msgid "Edi<u>t</u>"
+msgstr ""
+
+#: gkwebapp/templates/editaccount.jinja2:109
+#: gkwebapp/templates/editcategory.jinja2:128
+#: gkwebapp/templates/editcustomersupplier.jinja2:168
+#: gkwebapp/templates/editgodown.jinja2:125
+#: gkwebapp/templates/editproduct.jinja2:47
+#: gkwebapp/templates/edittransfernote.jinja2:180
+#: gkwebapp/templates/editunitofmeasurement.jinja2:78
+#: gkwebapp/templates/project.jinja2:194
+#: gkwebapp/templates/receivedtransfernote.jinja2:184
+msgid "Delete?"
+msgstr ""
+
+#: gkwebapp/templates/editaccount.jinja2:115
+#: gkwebapp/templates/editcategory.jinja2:134
+#: gkwebapp/templates/editcustomersupplier.jinja2:174
+#: gkwebapp/templates/editdeliverychallan.jinja2:144
+#: gkwebapp/templates/editgodown.jinja2:131
+#: gkwebapp/templates/editinvoice.jinja2:289
+#: gkwebapp/templates/editproduct.jinja2:53
+#: gkwebapp/templates/edittransfernote.jinja2:186
+#: gkwebapp/templates/editunitofmeasurement.jinja2:84
+#: gkwebapp/templates/mainshell.jinja2:461
+#: gkwebapp/templates/multipleaccounts.jinja2:191
+#: gkwebapp/templates/multiplegodowns.jinja2:176
+#: gkwebapp/templates/project.jinja2:200
+#: gkwebapp/templates/receivedtransfernote.jinja2:154
+#: gkwebapp/templates/receivedtransfernote.jinja2:190
+#: gkwebapp/templates/viewcashmemo.jinja2:280
+msgid "Cancel"
+msgstr ""
+
+#: gkwebapp/templates/editaccount.jinja2:116
+#: gkwebapp/templates/editcategory.jinja2:116
+#: gkwebapp/templates/editcategory.jinja2:135
+#: gkwebapp/templates/editcustomersupplier.jinja2:157
+#: gkwebapp/templates/editcustomersupplier.jinja2:175
+#: gkwebapp/templates/editgodown.jinja2:132
+#: gkwebapp/templates/editgodown.jinja2:143
+#: gkwebapp/templates/editproduct.jinja2:36
+#: gkwebapp/templates/editproduct.jinja2:54
+#: gkwebapp/templates/edittransfernote.jinja2:187
+#: gkwebapp/templates/editunitofmeasurement.jinja2:68
+#: gkwebapp/templates/editunitofmeasurement.jinja2:85
+#: gkwebapp/templates/mainshell.jinja2:462
+#: gkwebapp/templates/project.jinja2:154 gkwebapp/templates/project.jinja2:201
+#: gkwebapp/templates/receivedtransfernote.jinja2:191
+msgid "Delete"
+msgstr ""
+
+#: gkwebapp/templates/editcategory.jinja2:9
+msgid "Category deleted!"
+msgstr ""
+
+#: gkwebapp/templates/editcategory.jinja2:17
+msgid "Cannot delete category!"
+msgstr ""
+
+#: gkwebapp/templates/editcategory.jinja2:31
+msgid "Category :"
+msgstr ""
+
+#: gkwebapp/templates/editcategory.jinja2:33
+#: gkwebapp/templates/searchcategory.jinja2:32
+msgid "Select Category"
+msgstr ""
+
+#: gkwebapp/templates/editcategory.jinja2:59
+msgid "Enter category name"
+msgstr ""
+
+#: gkwebapp/templates/editcategory.jinja2:114
+#: gkwebapp/templates/editcustomersupplier.jinja2:158
+#: gkwebapp/templates/editgodown.jinja2:144
+#: gkwebapp/templates/editproduct.jinja2:35
+#: gkwebapp/templates/editunitofmeasurement.jinja2:69
+#: gkwebapp/templates/project.jinja2:157
+msgid "Edit"
+msgstr ""
+
+#: gkwebapp/templates/editcustomersupplier.jinja2:25
+msgid "Customer deleted successfully."
+msgstr ""
+
+#: gkwebapp/templates/editcustomersupplier.jinja2:29
+msgid "Supplier deleted successfully."
+msgstr ""
+
+#: gkwebapp/templates/editcustomersupplier.jinja2:33
+msgid "Customer can not be deleted"
+msgstr ""
+
+#: gkwebapp/templates/editcustomersupplier.jinja2:37
+msgid "Supplier can not be deleted"
+msgstr ""
+
+#: gkwebapp/templates/editcustomersupplier.jinja2:52
+msgid "Customers & Suppliers List:"
+msgstr ""
+
+#: gkwebapp/templates/editcustomersupplier.jinja2:140
+msgid "Fax"
+msgstr ""
+
+#: gkwebapp/templates/editcustomersupplier.jinja2:144
+msgid "Pan:"
+msgstr ""
+
+#: gkwebapp/templates/editcustomersupplier.jinja2:148
+msgid "Tan:"
+msgstr ""
+
+#: gkwebapp/templates/editdeliverychallan.jinja2:13
+msgid "Delivery note cancelled."
+msgstr ""
+
+#: gkwebapp/templates/editdeliverychallan.jinja2:17
+msgid "Delivery Note cannot be cancelled!"
+msgstr ""
+
+#: gkwebapp/templates/editdeliverychallan.jinja2:27
+msgid "Select Delivery Note"
+msgstr ""
+
+#: gkwebapp/templates/editdeliverychallan.jinja2:145
+#: gkwebapp/templates/editinvoice.jinja2:290
+#: gkwebapp/templates/receivedtransfernote.jinja2:155
+#: gkwebapp/templates/viewcashmemo.jinja2:281
+msgid "Print"
+msgstr ""
+
+#: gkwebapp/templates/editdeliverychallan.jinja2:156
+#: gkwebapp/templates/editinvoice.jinja2:300
+#: gkwebapp/templates/viewcashmemo.jinja2:290
+msgid "Cancel?"
+msgstr ""
+
+#: gkwebapp/templates/editgodown.jinja2:6
+msgid "Godown edited successfully."
+msgstr ""
+
+#: gkwebapp/templates/editgodown.jinja2:11
+msgid "Godown deleted successfully."
+msgstr ""
+
+#: gkwebapp/templates/editgodown.jinja2:16
+msgid "Godown could not be edited."
+msgstr ""
+
+#: gkwebapp/templates/editgodown.jinja2:25
+msgid "Godown cannot be deleted!"
+msgstr ""
+
+#: gkwebapp/templates/editgodown.jinja2:50
+msgid "Please enter contact!"
+msgstr ""
+
+#: gkwebapp/templates/editinvoice.jinja2:58
+msgid "Invoice successfully cancelled."
+msgstr ""
+
+#: gkwebapp/templates/editinvoice.jinja2:62
+msgid "Invoice cannot be cancelled!"
+msgstr ""
+
+#: gkwebapp/templates/editinvoice.jinja2:66
+#: gkwebapp/templates/viewcashmemo.jinja2:106
+msgid "Invoice"
+msgstr ""
+
+#: gkwebapp/templates/editinvoice.jinja2:69
+#: gkwebapp/templates/viewcashmemo.jinja2:109
+msgid "Select Invoice"
+msgstr ""
+
+#: gkwebapp/templates/editinvoice.jinja2:134
+msgid "Vat for"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:5
+#: gkwebapp/templates/editorganisation.jinja2:21
+msgid "Edit Organisation"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:33
+msgid "Organisation Details edited successfully."
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:37
+#: gkwebapp/templates/edituser.jinja2:35
+#: gkwebapp/templates/forgotpassword.jinja2:24
+#: gkwebapp/templates/removeUser.jinja2:40
+msgid "Connection Failed."
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:49
+msgid "Registration Number"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:57
+msgid "FCRA Registration Number"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:74
+msgid "Country"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:90
+msgid "City"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:98
+msgid "Service Tax Number"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:106
+msgid "Permanent Account Number"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:121
+msgid "Date Of Registration"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:124
+msgid "Enter Registrtion Day"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:127
+msgid "Enter Registration Month"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:130
+msgid "Enter Registration Year"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:136
+msgid "Date Of FCRA Registration"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:139
+msgid "Enter FCRA Registrtion Day"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:142
+msgid "Enter FCRA Registration Month"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:145
+msgid "Enter FCRA Registration Year"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:152
+msgid "Email"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:160
+msgid "Telephone Number"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:168
+msgid "Website"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:176
+msgid "Postal Code"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:184
+msgid "Fax Number"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:192
+msgid "VAT Number"
+msgstr ""
+
+#: gkwebapp/templates/editorganisation.jinja2:204
+msgid "<u>R</u>eset"
+msgstr ""
+
+#: gkwebapp/templates/editproduct.jinja2:17
+#: gkwebapp/templates/viewstockreport.jinja2:40
+msgid "Select Product"
+msgstr ""
+
+#: gkwebapp/templates/edittransfernote.jinja2:73
+msgid "Transfer Note Deleted Successfully!"
+msgstr ""
+
+#: gkwebapp/templates/edittransfernote.jinja2:81
+#: gkwebapp/templates/receivedtransfernote.jinja2:90
+msgid "Transfer Note:"
+msgstr ""
+
+#: gkwebapp/templates/editunitofmeasurement.jinja2:14
+msgid "Unit deleted successfully."
+msgstr ""
+
+#: gkwebapp/templates/editunitofmeasurement.jinja2:22
+msgid "Unit can not be deleted , contains Subunit!"
+msgstr ""
+
+#: gkwebapp/templates/editunitofmeasurement.jinja2:34
+msgid "Unit :"
+msgstr ""
+
+#: gkwebapp/templates/editunitofmeasurement.jinja2:36
+msgid "Select unit"
+msgstr ""
+
+#: gkwebapp/templates/editunitofmeasurement.jinja2:44
+msgid "Name :"
+msgstr ""
+
+#: gkwebapp/templates/editunitofmeasurement.jinja2:45
+msgid "Enter unit name"
+msgstr ""
+
+#: gkwebapp/templates/editunitofmeasurement.jinja2:48
+msgid "Sub Unit Of :"
+msgstr ""
+
+#: gkwebapp/templates/editunitofmeasurement.jinja2:57
+msgid "Conversion Rate:"
+msgstr ""
+
+#: gkwebapp/templates/edituser.jinja2:5
+msgid "Edit User"
+msgstr ""
+
+#: gkwebapp/templates/edituser.jinja2:17 gkwebapp/templates/mainshell.jinja2:91
+#: gkwebapp/templates/mainshell.jinja2:352
+msgid "Change Password"
+msgstr ""
+
+#: gkwebapp/templates/edituser.jinja2:23
+msgid "Changes saved successfully."
+msgstr ""
+
+#: gkwebapp/templates/edituser.jinja2:27
+msgid "Please enter current password!"
+msgstr ""
+
+#: gkwebapp/templates/edituser.jinja2:39
+msgid "Access denied!"
+msgstr ""
+
+#: gkwebapp/templates/edituser.jinja2:47
+msgid "Please enter the new password!"
+msgstr ""
+
+#: gkwebapp/templates/edituser.jinja2:51
+msgid "Usern<u>a</u>me"
+msgstr ""
+
+#: gkwebapp/templates/edituser.jinja2:54
+msgid "Current Pass<u>w</u>ord"
+msgstr ""
+
+#: gkwebapp/templates/edituser.jinja2:57
+msgid "N<u>e</u>w Password"
+msgstr ""
+
+#: gkwebapp/templates/existingorg.jinja2:27
+msgid "Please select organisation!"
+msgstr ""
+
+#: gkwebapp/templates/existingorg.jinja2:31
+#: gkwebapp/templates/existingorg.jinja2:44
+msgid "Select Organisation"
+msgstr ""
+
+#: gkwebapp/templates/existingorg.jinja2:52
+msgid "Select <u>F</u>inancial Year"
+msgstr ""
+
+#: gkwebapp/templates/existingorg.jinja2:54
+msgid "Select Financial Year"
+msgstr ""
+
+#: gkwebapp/templates/existingorg.jinja2:67
+msgid "<u>N</u>ext"
+msgstr ""
+
+#: gkwebapp/templates/extendedtrialbalance.jinja2:4
+#: gkwebapp/templates/extendedtrialbalance.jinja2:52
+#: gkwebapp/templates/printextendedtrialbalance.jinja2:4
+#: gkwebapp/templates/printextendedtrialbalance.jinja2:30
+#: gkwebapp/templates/viewtrialbalance.jinja2:55
+msgid "Extended Trial Balance"
+msgstr ""
+
+#: gkwebapp/templates/extendedtrialbalance.jinja2:52
+#: gkwebapp/templates/grosstrialbalance.jinja2:51
+#: gkwebapp/templates/nettrialbalance.jinja2:52
+#: gkwebapp/templates/printextendedtrialbalance.jinja2:30
+#: gkwebapp/templates/printgrosstrialbalance.jinja2:30
+#: gkwebapp/templates/printnettrialbalance.jinja2:30
+msgid "for the period from"
+msgstr ""
+
+#: gkwebapp/templates/extendedtrialbalance.jinja2:58
+#: gkwebapp/templates/grosstrialbalance.jinja2:57
+#: gkwebapp/templates/listofaccounts.jinja2:54
+#: gkwebapp/templates/listofcategories.jinja2:49
+#: gkwebapp/templates/listofgodowns.jinja2:49
+#: gkwebapp/templates/listofstockitems.jinja2:49
+#: gkwebapp/templates/nettrialbalance.jinja2:58
+#: gkwebapp/templates/printextendedtrialbalance.jinja2:40
+#: gkwebapp/templates/printgrosstrialbalance.jinja2:40
+#: gkwebapp/templates/printlistofaccounts.jinja2:42
+#: gkwebapp/templates/printlistofcategories.jinja2:42
+#: gkwebapp/templates/printlistofgodowns.jinja2:42
+#: gkwebapp/templates/printlistofstockitems.jinja2:42
+#: gkwebapp/templates/printnettrialbalance.jinja2:40
+#: gkwebapp/templates/printprojectstatement.jinja2:41
+#: gkwebapp/templates/projectstatementreport.jinja2:66
+msgid "Sr. No."
+msgstr ""
+
+#: gkwebapp/templates/extendedtrialbalance.jinja2:60
+#: gkwebapp/templates/multipleaccounts.jinja2:160
+#: gkwebapp/templates/printextendedtrialbalance.jinja2:42
+msgid "Opening Balance"
+msgstr ""
+
+#: gkwebapp/templates/extendedtrialbalance.jinja2:61
+#: gkwebapp/templates/printextendedtrialbalance.jinja2:43
+msgid "Total Drs"
+msgstr ""
+
+#: gkwebapp/templates/extendedtrialbalance.jinja2:62
+#: gkwebapp/templates/printextendedtrialbalance.jinja2:44
+msgid "Total Crs"
+msgstr ""
+
+#: gkwebapp/templates/extendedtrialbalance.jinja2:63
+#: gkwebapp/templates/grosstrialbalance.jinja2:61
+#: gkwebapp/templates/printextendedtrialbalance.jinja2:45
+#: gkwebapp/templates/printgrosstrialbalance.jinja2:44
+msgid "Dr Balance"
+msgstr ""
+
+#: gkwebapp/templates/extendedtrialbalance.jinja2:64
+#: gkwebapp/templates/grosstrialbalance.jinja2:62
+#: gkwebapp/templates/printextendedtrialbalance.jinja2:46
+#: gkwebapp/templates/printgrosstrialbalance.jinja2:45
+msgid "Cr Balance"
+msgstr ""
+
+#: gkwebapp/templates/extendedtrialbalance.jinja2:119
+#: gkwebapp/templates/grosstrialbalance.jinja2:114
+msgid "Net Tri<u>a</u>l Balance"
+msgstr ""
+
+#: gkwebapp/templates/extendedtrialbalance.jinja2:120
+#: gkwebapp/templates/nettrialbalance.jinja2:107
+msgid "<u>G</u>ross Trial Balance"
+msgstr ""
+
+#: gkwebapp/templates/findeditvoucher.jinja2:4
+msgid "Find-Edit Voucher"
+msgstr ""
+
+#: gkwebapp/templates/findeditvoucher.jinja2:24
+msgid "Voucher deleted successfully."
+msgstr ""
+
+#: gkwebapp/templates/findeditvoucher.jinja2:52
+msgid "Please enter an amount!"
+msgstr ""
+
+#: gkwebapp/templates/findeditvoucher.jinja2:58
+msgid "Please enter a narration!"
+msgstr ""
+
+#: gkwebapp/templates/findeditvoucher.jinja2:64
+msgid "Please enter a proper date!"
+msgstr ""
+
+#: gkwebapp/templates/findeditvoucher.jinja2:70
+msgid "No transactions found"
+msgstr ""
+
+#: gkwebapp/templates/findeditvoucher.jinja2:75
+msgid "Find Voucher"
+msgstr ""
+
+#: gkwebapp/templates/findeditvoucher.jinja2:80
+msgid "Search Voucher B<u>y"
+msgstr ""
+
+#: gkwebapp/templates/findeditvoucher.jinja2:84
+msgid "Select Criteria"
+msgstr ""
+
+#: gkwebapp/templates/findeditvoucher.jinja2:85
+msgid "Voucher Number"
+msgstr ""
+
+#: gkwebapp/templates/findeditvoucher.jinja2:88
+msgid "Time Interval"
+msgstr ""
+
+#: gkwebapp/templates/findeditvoucher.jinja2:89
+#: gkwebapp/templates/findvouchertable.jinja2:85
+#: gkwebapp/templates/printtransactions.jinja2:47
+#: gkwebapp/templates/viewbankrecon.jinja2:71
+#: gkwebapp/templates/viewdualledger.jinja2:74
+#: gkwebapp/templates/viewledger.jinja2:72
+msgid "Narration"
+msgstr ""
+
+#: gkwebapp/templates/findeditvoucher.jinja2:138
+msgid "<u>S</u>earch"
+msgstr ""
+
+#: gkwebapp/templates/findvouchertable.jinja2:78
+#: gkwebapp/templates/ledgerreport.jinja2:80
+#: gkwebapp/templates/listofcategories.jinja2:58
+#: gkwebapp/templates/listofgodowns.jinja2:58
+#: gkwebapp/templates/listofstockitems.jinja2:61
+#: gkwebapp/templates/printlistofcategories.jinja2:51
+#: gkwebapp/templates/printlistofgodowns.jinja2:51
+#: gkwebapp/templates/printlistofstockitems.jinja2:54
+msgid "Status"
+msgstr ""
+
+#: gkwebapp/templates/findvouchertable.jinja2:81
+#: gkwebapp/templates/printtransactions.jinja2:43
+msgid "Dr Accounts"
+msgstr ""
+
+#: gkwebapp/templates/findvouchertable.jinja2:82
+#: gkwebapp/templates/printtransactions.jinja2:44
+msgid "Cr Accounts"
+msgstr ""
+
+#: gkwebapp/templates/findvouchertable.jinja2:83
+#: gkwebapp/templates/printtransactions.jinja2:45
+msgid "Dr Amounts"
+msgstr ""
+
+#: gkwebapp/templates/findvouchertable.jinja2:84
+#: gkwebapp/templates/printtransactions.jinja2:46
+msgid "Cr Amounts"
+msgstr ""
+
+#: gkwebapp/templates/forgotpassword.jinja2:18
+msgid "Could not change password"
+msgstr ""
+
+#: gkwebapp/templates/forgotpassword.jinja2:18
+msgid "Please revisit your entries."
+msgstr ""
+
+#: gkwebapp/templates/forgotpassword.jinja2:21
+msgid "No such user."
+msgstr ""
+
+#: gkwebapp/templates/forgotpassword.jinja2:27
+msgid "Please enter a"
+msgstr ""
+
+#: gkwebapp/templates/forgotpassword.jinja2:27
+msgid "Username"
+msgstr ""
+
+#: gkwebapp/templates/forgotpassword.jinja2:30
+msgid "A valid"
+msgstr ""
+
+#: gkwebapp/templates/forgotpassword.jinja2:30
+#: gkwebapp/templates/forgotpassword.jinja2:39
+msgid "Security Answer"
+msgstr ""
+
+#: gkwebapp/templates/forgotpassword.jinja2:30
+msgid "is required."
+msgstr ""
+
+#: gkwebapp/templates/forgotpassword.jinja2:33
+msgid "New Password"
+msgstr ""
+
+#: gkwebapp/templates/forgotpassword.jinja2:33
+msgid "cannot be blank."
+msgstr ""
+
+#: gkwebapp/templates/forgotpassword.jinja2:36
+msgid "Passwords do not match."
+msgstr ""
+
+#: gkwebapp/templates/forgotpassword.jinja2:39
+msgid "incorrect."
+msgstr ""
+
+#: gkwebapp/templates/forgotpassword.jinja2:42
+msgid "Password"
+msgstr ""
+
+#: gkwebapp/templates/forgotpassword.jinja2:42
+msgid "not confirmed."
+msgstr ""
+
+#: gkwebapp/templates/forgotpassword.jinja2:47
+msgid "Forgot Password?"
+msgstr ""
+
+#: gkwebapp/templates/forgotpassword.jinja2:64
+msgid "Security <u>A</u>nswer"
+msgstr ""
+
+#: gkwebapp/templates/forgotpassword.jinja2:69
+msgid "Enter New Pass<u>w</u>ord"
+msgstr ""
+
+#: gkwebapp/templates/forgotpassword.jinja2:74
+msgid "C<u>o</u>nfirm New Password"
+msgstr ""
+
+#: gkwebapp/templates/godown.jinja2:5
+msgid "GNUKhata | Godown"
+msgstr ""
+
+#: gkwebapp/templates/godown.jinja2:90
+msgid "Create Godown"
+msgstr ""
+
+#: gkwebapp/templates/godown.jinja2:91
+msgid "Edit Godown"
+msgstr ""
+
+#: gkwebapp/templates/grosstrialbalance.jinja2:4
+#: gkwebapp/templates/grosstrialbalance.jinja2:51
+#: gkwebapp/templates/printgrosstrialbalance.jinja2:4
+#: gkwebapp/templates/printgrosstrialbalance.jinja2:30
+#: gkwebapp/templates/viewtrialbalance.jinja2:54
+msgid "Gross Trial Balance"
+msgstr ""
+
+#: gkwebapp/templates/grosstrialbalance.jinja2:115
+#: gkwebapp/templates/nettrialbalance.jinja2:108
+msgid "<u>E</u>xtended Trial Balance"
+msgstr ""
+
+#: gkwebapp/templates/index.jinja2:148 gkwebapp/templates/mainshell.jinja2:16
 msgid "Toggle navigation"
 msgstr ""
 
-#: gkwebapp/templates/index.jinja2:92
+#: gkwebapp/templates/index.jinja2:160 gkwebapp/templates/mainshell.jinja2:241
 msgid "Select Existing Organisation"
 msgstr ""
 
-#: gkwebapp/templates/index.jinja2:92
+#: gkwebapp/templates/index.jinja2:160
 msgid "Select <u>E</u>xisting Organisation"
 msgstr ""
 
-#: gkwebapp/templates/index.jinja2:93
+#: gkwebapp/templates/index.jinja2:161
 msgid "C<u>r</u>eate Organisation"
 msgstr ""
 
-#: gkwebapp/templates/index.jinja2:110
+#: gkwebapp/templates/index.jinja2:162
+msgid "Restore <u>D</u>ata"
+msgstr ""
+
+#: gkwebapp/templates/index.jinja2:164 gkwebapp/templates/mainshell.jinja2:140
+msgid "<u>L</u>anguage"
+msgstr ""
+
+#: gkwebapp/templates/index.jinja2:166 gkwebapp/templates/mainshell.jinja2:142
+msgid "English"
+msgstr ""
+
+#: gkwebapp/templates/index.jinja2:167 gkwebapp/templates/mainshell.jinja2:143
+msgid "मराठी"
+msgstr ""
+
+#: gkwebapp/templates/index.jinja2:187 gkwebapp/templates/login.jinja2:59
 msgid "Duplicate Organisation!"
 msgstr ""
 
-#: gkwebapp/templates/index.jinja2:116
+#: gkwebapp/templates/index.jinja2:191 gkwebapp/templates/login.jinja2:65
 msgid "Welcome To GNUKhata"
 msgstr ""
 
-#: gkwebapp/templates/index.jinja2:116
+#: gkwebapp/templates/index.jinja2:191 gkwebapp/templates/login.jinja2:65
 msgid "A Free and Open Source Accounting Software"
 msgstr ""
 
-#: gkwebapp/templates/index.jinja2:120
+#: gkwebapp/templates/index.jinja2:196 gkwebapp/templates/login.jinja2:70
 msgid "It is Lightweight."
 msgstr ""
 
-#: gkwebapp/templates/index.jinja2:121
+#: gkwebapp/templates/index.jinja2:197 gkwebapp/templates/login.jinja2:71
 msgid ""
 "It can scale upto a cloud based deployment or down to a standalone "
 "installation."
 msgstr ""
 
-#: gkwebapp/templates/index.jinja2:122
+#: gkwebapp/templates/index.jinja2:198 gkwebapp/templates/login.jinja2:72
 msgid "It is fast and robust."
 msgstr ""
 
-#: gkwebapp/templates/index.jinja2:123
+#: gkwebapp/templates/index.jinja2:199 gkwebapp/templates/login.jinja2:73
 msgid "It is based on double entry system of accounting."
 msgstr ""
 
-#: gkwebapp/templates/index.jinja2:126
+#: gkwebapp/templates/index.jinja2:202 gkwebapp/templates/login.jinja2:76
 msgid "GNUKhata is developed by"
 msgstr ""
 
-#: gkwebapp/templates/index.jinja2:126
+#: gkwebapp/templates/index.jinja2:202 gkwebapp/templates/login.jinja2:76
 msgid "Digital Freedom Foundation(DFF)"
 msgstr ""
 
-#: gkwebapp/templates/index.jinja2:126
+#: gkwebapp/templates/index.jinja2:202 gkwebapp/templates/login.jinja2:76
 msgid "and is currently funded by"
 msgstr ""
 
-#: gkwebapp/templates/index.jinja2:126
+#: gkwebapp/templates/index.jinja2:202 gkwebapp/templates/login.jinja2:76
 msgid "International Centre for Free and Open Source Software(ICFOSS)."
 msgstr ""
 
-#: gkwebapp/templates/index.jinja2:130
-msgid "Copyright © Digital Freedom Foundation 2013,2014,2015,2016. Visit"
+#: gkwebapp/templates/index.jinja2:212
+msgid "Restore Data"
 msgstr ""
 
-#: gkwebapp/templates/index.jinja2:130
+#: gkwebapp/templates/index.jinja2:217
+msgid "Please upload a backup file."
+msgstr ""
+
+#: gkwebapp/templates/index.jinja2:221
+msgid "Restoring is complete."
+msgstr ""
+
+#: gkwebapp/templates/index.jinja2:225
+msgid "Restoring failed."
+msgstr ""
+
+#: gkwebapp/templates/index.jinja2:229
+msgid "Restoring failed. You already have some data."
+msgstr ""
+
+#: gkwebapp/templates/index.jinja2:243
+msgid "Upload <u>B</u>ackup File"
+msgstr ""
+
+#: gkwebapp/templates/index.jinja2:265
+msgid "Copyright © Digital Freedom Foundation 2013,2014,2015,2016"
+msgstr ""
+
+#: gkwebapp/templates/index.jinja2:265
+msgid "This software is licensed under GNU AGPLv3."
+msgstr ""
+
+#: gkwebapp/templates/index.jinja2:265 gkwebapp/templates/mainshell.jinja2:386
+msgid "Visit"
+msgstr ""
+
+#: gkwebapp/templates/index.jinja2:265 gkwebapp/templates/mainshell.jinja2:386
+#: gkwebapp/templates/mainshell.jinja2:440
 msgid "gnukhata.in"
 msgstr ""
 
-#: gkwebapp/templates/index.jinja2:130
+#: gkwebapp/templates/index.jinja2:265 gkwebapp/templates/mainshell.jinja2:386
 msgid "for more information."
 msgstr ""
 
-#: gkwebapp/templates/index.jinja2:131
+#: gkwebapp/templates/invoice.jinja2:5
+msgid "GNUKhata | Invoice"
+msgstr ""
+
+#: gkwebapp/templates/invoice.jinja2:71
+msgid "Purchase Invoice"
+msgstr ""
+
+#: gkwebapp/templates/invoice.jinja2:72
+msgid "Sale Invoice"
+msgstr ""
+
+#: gkwebapp/templates/invoice.jinja2:73
+msgid "View Invoice"
+msgstr ""
+
+#: gkwebapp/templates/ledgerreport.jinja2:71
+#: gkwebapp/templates/monthledger.jinja2:18
+#: gkwebapp/templates/printledger.jinja2:37
+#: gkwebapp/templates/printledger.jinja2:46
+msgid "Ledger Account"
+msgstr ""
+
+#: gkwebapp/templates/ledgerreport.jinja2:186
+msgid "<u>V</u>iew Another Ledger"
+msgstr ""
+
+#: gkwebapp/templates/ledgerreport.jinja2:187
+msgid "Dual Led<u>g</u>ers"
+msgstr ""
+
+#: gkwebapp/templates/ledgerreport.jinja2:188
+msgid "Only <u>D</u>rs"
+msgstr ""
+
+#: gkwebapp/templates/ledgerreport.jinja2:189
+msgid "Onl<u>y</u> Crs"
+msgstr ""
+
+#: gkwebapp/templates/ledgerreport.jinja2:190
+msgid "E<u>x</u>port to Spreadsheet</u>"
+msgstr ""
+
+#: gkwebapp/templates/listofaccounts.jinja2:4
+#: gkwebapp/templates/listofcategories.jinja2:4
+#: gkwebapp/templates/listofgodowns.jinja2:4
+#: gkwebapp/templates/listofstockitems.jinja2:4
+#: gkwebapp/templates/printcashflowreport.jinja2:5
+#: gkwebapp/templates/printlistofaccounts.jinja2:4
+#: gkwebapp/templates/printtransactions.jinja2:4
+#: gkwebapp/templates/projectstatementreport.jinja2:4
+#: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:7
+msgid "Statement"
+msgstr ""
+
+#: gkwebapp/templates/listofaccounts.jinja2:46
+#: gkwebapp/templates/mainshell.jinja2:78
+#: gkwebapp/templates/mainshell.jinja2:166
+#: gkwebapp/templates/mainshell.jinja2:337
+#: gkwebapp/templates/printlistofaccounts.jinja2:30
+#: gkwebapp/templates/printlistofaccounts.jinja2:37
+msgid "List of Accounts"
+msgstr ""
+
+#: gkwebapp/templates/listofcategories.jinja2:52
+#: gkwebapp/templates/printlistofcategories.jinja2:45
+msgid "Category Name"
+msgstr ""
+
+#: gkwebapp/templates/listofcategories.jinja2:55
+#: gkwebapp/templates/printlistofcategories.jinja2:48
+msgid "Subcategory Of"
+msgstr ""
+
+#: gkwebapp/templates/listofgodowns.jinja2:55
+msgid "Group Addess"
+msgstr ""
+
+#: gkwebapp/templates/listofstockitems.jinja2:52
+#: gkwebapp/templates/printlistofstockitems.jinja2:45
+msgid "Stock Item"
+msgstr ""
+
+#: gkwebapp/templates/login.jinja2:90
+msgid "Username or Password is incorrect!"
+msgstr ""
+
+#: gkwebapp/templates/login.jinja2:94
+msgid "Sign In"
+msgstr ""
+
+#: gkwebapp/templates/login.jinja2:101
+msgid "<u>U</u>sername :"
+msgstr ""
+
+#: gkwebapp/templates/login.jinja2:106
+msgid "<u>P</u>assword :"
+msgstr ""
+
+#: gkwebapp/templates/login.jinja2:110
+msgid "<u>F</u>orgot Password?"
+msgstr ""
+
+#: gkwebapp/templates/login.jinja2:117
+msgid "<u>L</u>ogin"
+msgstr ""
+
+#: gkwebapp/templates/login.jinja2:118
+msgid "<u>C</u>hange Organisation"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:29
+msgid "<u>M</u>aster"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:33
+msgid "Edit Organisation Particulars"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:34
+#: gkwebapp/templates/mainshell.jinja2:164
+msgid "Cost Center"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:35
+#: gkwebapp/templates/mainshell.jinja2:168
+#: gkwebapp/templates/mainshell.jinja2:283
+msgid "Bank Reconciliation Statement"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:39
+msgid "<u>I</u>nventory"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:42
+msgid "Units Of Measurement"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:44
+msgid "Customer and Supplier"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:47
+msgid "Cash Memo"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:49
+msgid "Godown"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:50
+msgid "Transfer Note"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:54
+msgid "<u>T</u>ransaction"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:58
+#: gkwebapp/templates/mainshell.jinja2:153
+#: gkwebapp/templates/mainshell.jinja2:298
+msgid "Sale"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:69
+msgid "<u>R</u>eport"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:72
+#: gkwebapp/templates/mainshell.jinja2:163
+#: gkwebapp/templates/mainshell.jinja2:328
+#: gkwebapp/templates/viewtrialbalance.jinja2:5
+msgid "Trial Balance"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:73
+msgid "Cost Center Statement"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:75
+#: gkwebapp/templates/mainshell.jinja2:340
+msgid "Balance Sheet"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:76
+#: gkwebapp/templates/mainshell.jinja2:343
+#: gkwebapp/templates/profitlossreport.jinja2:5
+msgid "Profit & Loss"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:77
+#: gkwebapp/templates/mainshell.jinja2:161
+msgid "Find/Edit Voucher"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:80
+msgid "Stock"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:81
+#: gkwebapp/templates/printlistofgodowns.jinja2:4
+#: gkwebapp/templates/printlistofgodowns.jinja2:30
+#: gkwebapp/templates/printlistofgodowns.jinja2:37
+msgid "List of Godowns"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:82
+#: gkwebapp/templates/printlistofcategories.jinja2:4
+#: gkwebapp/templates/printlistofcategories.jinja2:30
+#: gkwebapp/templates/printlistofcategories.jinja2:37
+msgid "List of Categories"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:83
+#: gkwebapp/templates/printlistofstockitems.jinja2:4
+#: gkwebapp/templates/printlistofstockitems.jinja2:30
+#: gkwebapp/templates/printlistofstockitems.jinja2:37
+msgid "List of Stock Items"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:87
+msgid "A<u>d</u>ministration"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:89
+#: gkwebapp/templates/mainshell.jinja2:346
+msgid "New User"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:90
+#: gkwebapp/templates/mainshell.jinja2:349
+#: gkwebapp/templates/removeUser.jinja2:7
+#: gkwebapp/templates/removeUser.jinja2:17
+msgid "Remove User"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:92
+#: gkwebapp/templates/mainshell.jinja2:355
+msgid "Close Books/Roll Over"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:93
+msgid "Activate Inventory"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:94
+msgid "Back Up Data"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:95
+#: gkwebapp/templates/mainshell.jinja2:358
+msgid "Delete Organisation"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:99
+msgid "<u>H</u>elp"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:101
+#: gkwebapp/templates/mainshell.jinja2:172
+#: gkwebapp/templates/mainshell.jinja2:361
+msgid "Manual"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:102
+#: gkwebapp/templates/mainshell.jinja2:201
+#: gkwebapp/templates/mainshell.jinja2:234
+msgid "Shortcuts"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:103
+#: gkwebapp/templates/mainshell.jinja2:422
+msgid "Authors"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:104
+#: gkwebapp/templates/mainshell.jinja2:378
+msgid "License"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:105
+msgid "About"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:111
+msgid "<u>S</u>ign Out"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:113
+#: gkwebapp/templates/mainshell.jinja2:274
+msgid "Logout"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:114
+#: gkwebapp/templates/mainshell.jinja2:277
+msgid "Change Organisation"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:118
+msgid "Theme"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:120
+msgid "Default"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:121
+msgid "Cerulean"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:122
+msgid "Cosmo"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:123
+msgid "Cyborg"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:124
+msgid "Darkly"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:125
+msgid "Flatly"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:127
+msgid "Lumen"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:128
+msgid "Paper"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:129
+msgid "Readable"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:130
+msgid "Sandstone"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:131
+msgid "Simplex"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:132
+msgid "Slate"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:133
+msgid "Spacelab"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:134
+msgid "Superhero"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:135
+msgid "Ubuntu"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:136
+msgid "Yeti"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:147
+#: gkwebapp/templates/mainshell.jinja2:268
+msgid "Toolbar"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:150
+#: gkwebapp/templates/mainshell.jinja2:289
+msgid "Find & Edit Account"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:167
+msgid "Create & Edit Cost Center"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:187
+msgid "FY"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:191
+msgid "About Keyboard Shortcuts"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:195
+msgid "To access submenus in the Menu Bar press"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:195
+msgid "Underlined Character\"."
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:196
+msgid "To view Toolbar press  \"F1\"."
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:197
+msgid "To use screen specific shortcuts"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:198
+msgid "If using Firefox, press"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:198
+#: gkwebapp/templates/mainshell.jinja2:199
+#: gkwebapp/templates/mainshell.jinja2:200
+msgid "the underlined character\"."
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:199
+msgid "If using Google Chrome, Opera or Internet Explorer press"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:200
+msgid "If using older versions of Opera(prior to version 12.1) use"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:201
+msgid "are given in the Toolbar and the Help Tab of the Menu Bar."
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:215
+msgid "Inventory module activated."
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:238
+msgid "Index Page"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:247
+msgid "Menu"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:250
+msgid "Master"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:253
+msgid "Transaction"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:256
+msgid "Report"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:259
+msgid "Administration"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:262
+msgid "Help"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:265
+msgid "Sign Out"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:271
+msgid "Sub-Menu"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:280
+msgid "Create & Edit Cost Center/Project"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:322
+msgid "Find & Edit Voucher"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:331
+#: gkwebapp/templates/viewprojectstatement.jinja2:5
+msgid "Project Statement"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:334
+msgid "Cash Flow/Receipt & Payment Account"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:364
+msgid "Individual Screen"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:364
+msgid "(Underlined Character)"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:368
+#: gkwebapp/templates/mainshell.jinja2:390
+#: gkwebapp/templates/mainshell.jinja2:412
+#: gkwebapp/templates/mainshell.jinja2:444
+msgid "Close"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:382
+msgid "This software is licensed under version 3 of the"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:382
+msgid "GNU Affero General Public License(GNU AGPLv3)"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:383
+msgid "You may use a newer version of the same license."
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:383
+msgid "The libraries used in this software are licensed under their respective"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:383
+msgid "free software licenses"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:386
+msgid "Copyright © Digital Freedom Foundation 2013,2014,2015,2016."
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:400
+msgid "GNUKhata <small style=\"color:white;\"> version 3.5</small>"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:404
 msgid ""
-"This software is licensed under GNU AGPLv3. You may use a newer version "
-"of the same license."
+" a free and open source, industry standard software for accounting and "
+"inventory management being developed at"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:404
+msgid "Digital Freedom Foundation"
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:405
+msgid "Supports various profit making and non-profit economic sectors."
+msgstr ""
+
+#: gkwebapp/templates/mainshell.jinja2:455
+msgid "Delete Organisation?"
+msgstr ""
+
+#: gkwebapp/templates/monthledger.jinja2:4
+#: gkwebapp/templates/viewledger.jinja2:46
+msgid "Monthly Ledger"
+msgstr ""
+
+#: gkwebapp/templates/monthledger.jinja2:26
+msgid "Month"
+msgstr ""
+
+#: gkwebapp/templates/monthledger.jinja2:29
+msgid "No. of Vouchers"
+msgstr ""
+
+#: gkwebapp/templates/multipleaccounts.jinja2:125
+msgid "Account name already exists!"
+msgstr ""
+
+#: gkwebapp/templates/multipleaccounts.jinja2:127
+msgid "Multiple Accounts"
+msgstr ""
+
+#: gkwebapp/templates/multipleaccounts.jinja2:137
+#: gkwebapp/templates/printprojectstatement.jinja2:43
+#: gkwebapp/templates/projectstatementreport.jinja2:68
+msgid "Group"
+msgstr ""
+
+#: gkwebapp/templates/multipleaccounts.jinja2:143
+msgid "Sub-Group"
+msgstr ""
+
+#: gkwebapp/templates/multipleaccounts.jinja2:192
+#: gkwebapp/templates/multiplegodowns.jinja2:177
+msgid "Sa<u>v</u>e"
+msgstr ""
+
+#: gkwebapp/templates/multiplegodowns.jinja2:131
+msgid "Please enter godown Address!"
+msgstr ""
+
+#: gkwebapp/templates/multiplegodowns.jinja2:135
+msgid "Please enter godown Contact!"
+msgstr ""
+
+#: gkwebapp/templates/multiplegodowns.jinja2:142
+msgid "Multiple Godowns"
+msgstr ""
+
+#: gkwebapp/templates/multiplegodowns.jinja2:150
+msgid "Godown Address"
+msgstr ""
+
+#: gkwebapp/templates/multiplegodowns.jinja2:151
+msgid "Godown Contact"
+msgstr ""
+
+#: gkwebapp/templates/nettrialbalance.jinja2:4
+#: gkwebapp/templates/nettrialbalance.jinja2:52
+#: gkwebapp/templates/printnettrialbalance.jinja2:4
+#: gkwebapp/templates/printnettrialbalance.jinja2:30
+#: gkwebapp/templates/viewtrialbalance.jinja2:53
+msgid "Net Trial Balance"
+msgstr ""
+
+#: gkwebapp/templates/printcashflowreport.jinja2:71
+#: gkwebapp/templates/printcashflowreport.jinja2:127
+#: gkwebapp/templates/printextendedtrialbalance.jinja2:59
+#: gkwebapp/templates/printgrosstrialbalance.jinja2:58
+#: gkwebapp/templates/printledger.jinja2:94
+#: gkwebapp/templates/printnettrialbalance.jinja2:56
+#: gkwebapp/templates/printprojectstatement.jinja2:65
+msgid "Running Total"
+msgstr ""
+
+#: gkwebapp/templates/printextendedtrialbalance.jinja2:36
+msgid "Extended Trial Balance for the period from"
+msgstr ""
+
+#: gkwebapp/templates/printgrosstrialbalance.jinja2:36
+msgid "Gross Trial Balance for the period from"
+msgstr ""
+
+#: gkwebapp/templates/printnettrialbalance.jinja2:36
+msgid "Net Trial Balance for the period from"
+msgstr ""
+
+#: gkwebapp/templates/printprojectstatement.jinja2:36
+#: gkwebapp/templates/projectstatementreport.jinja2:59
+msgid "Statement for"
+msgstr ""
+
+#: gkwebapp/templates/printprojectstatement.jinja2:44
+msgid "Total Outgoing"
+msgstr ""
+
+#: gkwebapp/templates/printprojectstatement.jinja2:45
+msgid "Total Incoming"
+msgstr ""
+
+#: gkwebapp/templates/printstockreport.jinja2:7
+#: gkwebapp/templates/printstockreport.jinja2:36
+#: gkwebapp/templates/showstockreport.jinja2:4
+#: gkwebapp/templates/showstockreport.jinja2:55
+msgid "Stock Report"
+msgstr ""
+
+#: gkwebapp/templates/printstockreport.jinja2:44
+msgid "Stock Report for"
+msgstr ""
+
+#: gkwebapp/templates/printstockreport.jinja2:56
+#: gkwebapp/templates/showstockreport.jinja2:67
+msgid "Trn Type"
+msgstr ""
+
+#: gkwebapp/templates/printstockreport.jinja2:59
+#: gkwebapp/templates/showstockreport.jinja2:70
+msgid "INV/DC No"
+msgstr ""
+
+#: gkwebapp/templates/printstockreport.jinja2:62
+#: gkwebapp/templates/showstockreport.jinja2:73
+msgid "Inward"
+msgstr ""
+
+#: gkwebapp/templates/printstockreport.jinja2:65
+#: gkwebapp/templates/showstockreport.jinja2:76
+msgid "Outward"
+msgstr ""
+
+#: gkwebapp/templates/printtransactions.jinja2:36
+msgid "List of Transactions"
+msgstr ""
+
+#: gkwebapp/templates/producttab.jinja2:40
+msgid "Create Product"
+msgstr ""
+
+#: gkwebapp/templates/producttab.jinja2:41
+msgid "Edit Product"
+msgstr ""
+
+#: gkwebapp/templates/producttab.jinja2:46
+msgid "Product saved successfully."
+msgstr ""
+
+#: gkwebapp/templates/producttab.jinja2:50
+msgid "Product edited successfully."
+msgstr ""
+
+#: gkwebapp/templates/producttab.jinja2:54
+msgid "Product deleted successfully."
+msgstr ""
+
+#: gkwebapp/templates/producttab.jinja2:58
+msgid "Duplicate product under same category."
+msgstr ""
+
+#: gkwebapp/templates/producttab.jinja2:62
+msgid "Product description cannot be blank."
+msgstr ""
+
+#: gkwebapp/templates/producttab.jinja2:66
+msgid "Please select the unit of measurement."
+msgstr ""
+
+#: gkwebapp/templates/producttab.jinja2:74
+msgid "Cannot delete product!"
+msgstr ""
+
+#: gkwebapp/templates/profitlossreport.jinja2:7
+msgid "Income & Expenditure"
+msgstr ""
+
+#: gkwebapp/templates/profitlossreport.jinja2:64
+#: gkwebapp/templates/profitlossreport.jinja2:77
+msgid "Profit & Loss Account"
+msgstr ""
+
+#: gkwebapp/templates/profitlossreport.jinja2:67
+#: gkwebapp/templates/profitlossreport.jinja2:79
+msgid "Income & Expenditure Account"
+msgstr ""
+
+#: gkwebapp/templates/project.jinja2:5
+msgid "Projects"
+msgstr ""
+
+#: gkwebapp/templates/project.jinja2:99
+msgid "Project saved."
+msgstr ""
+
+#: gkwebapp/templates/project.jinja2:103
+msgid "Project could not be saved."
+msgstr ""
+
+#: gkwebapp/templates/project.jinja2:107
+msgid "Please enter project name!"
+msgstr ""
+
+#: gkwebapp/templates/project.jinja2:111
+msgid "Project already exists!"
+msgstr ""
+
+#: gkwebapp/templates/project.jinja2:115
+msgid "Project cannot be deleted!"
+msgstr ""
+
+#: gkwebapp/templates/project.jinja2:116
+msgid "Transactions might be remaining for this project."
+msgstr ""
+
+#: gkwebapp/templates/project.jinja2:121
+msgid "Add Cost Center"
+msgstr ""
+
+#: gkwebapp/templates/project.jinja2:125
+#: gkwebapp/templates/viewprojectstatement.jinja2:58
+msgid "Pro<u>j</u>ect Name"
+msgstr ""
+
+#: gkwebapp/templates/project.jinja2:128
+msgid "Sanc<u>t</u>ioned Amount"
+msgstr ""
+
+#: gkwebapp/templates/project.jinja2:131
+#: gkwebapp/templates/viewimages.jinja2:53
+msgid "<u>A</u>dd"
+msgstr ""
+
+#: gkwebapp/templates/project.jinja2:141
+msgid "Cost Center List"
+msgstr ""
+
+#: gkwebapp/templates/project.jinja2:148
+#: gkwebapp/templates/viewdualledger.jinja2:76
+#: gkwebapp/templates/viewledger.jinja2:74
+msgid "Project Name"
+msgstr ""
+
+#: gkwebapp/templates/project.jinja2:151 gkwebapp/templates/project.jinja2:220
+msgid "Sanctioned Amount"
+msgstr ""
+
+#: gkwebapp/templates/project.jinja2:213
+msgid "Edit Project"
+msgstr ""
+
+#: gkwebapp/templates/project.jinja2:217
+msgid "Project name"
+msgstr ""
+
+#: gkwebapp/templates/projectstatementreport.jinja2:69
+msgid "Outgoings"
+msgstr ""
+
+#: gkwebapp/templates/projectstatementreport.jinja2:70
+msgid "Incomings"
+msgstr ""
+
+#: gkwebapp/templates/receivedtransfernote.jinja2:77
+msgid "Transfer Note Cancelled"
+msgstr ""
+
+#: gkwebapp/templates/receivedtransfernote.jinja2:85
+msgid "Transfer Note received "
+msgstr ""
+
+#: gkwebapp/templates/receivedtransfernote.jinja2:147
+msgid " Status:"
+msgstr ""
+
+#: gkwebapp/templates/receivedtransfernote.jinja2:153
+#: gkwebapp/templates/transfernote.jinja2:11
+msgid "Received"
+msgstr ""
+
+#: gkwebapp/templates/receivedtransfernote.jinja2:164
+msgid "Received ?"
+msgstr ""
+
+#: gkwebapp/templates/removeUser.jinja2:23
+msgid "Please select an user!"
+msgstr ""
+
+#: gkwebapp/templates/removeUser.jinja2:28
+msgid "User removed successfully."
+msgstr ""
+
+#: gkwebapp/templates/removeUser.jinja2:32
+msgid "You are not allowed to remove this user."
+msgstr ""
+
+#: gkwebapp/templates/removeUser.jinja2:36
+msgid "The action is disallowed temporarily."
+msgstr ""
+
+#: gkwebapp/templates/removeUser.jinja2:45
+msgid "Select User"
+msgstr ""
+
+#: gkwebapp/templates/removeUser.jinja2:55
+msgid "No users found!"
+msgstr ""
+
+#: gkwebapp/templates/removeUser.jinja2:55
+msgid "You can create"
+msgstr ""
+
+#: gkwebapp/templates/removeUser.jinja2:55
+msgid "new users"
+msgstr ""
+
+#: gkwebapp/templates/removeUser.jinja2:59
+msgid "Remo<u>v</u>e"
+msgstr ""
+
+#: gkwebapp/templates/searchcategory.jinja2:6
+msgid "No sub-categories under the selected category"
+msgstr ""
+
+#: gkwebapp/templates/searchcategory.jinja2:11
+msgid "Search"
+msgstr ""
+
+#: gkwebapp/templates/searchcategory.jinja2:21
+msgid "Products Under"
+msgstr ""
+
+#: gkwebapp/templates/searchcategory.jinja2:24
+#: gkwebapp/templates/searchcategory.jinja2:46
+msgid "Show Sub-Category"
+msgstr ""
+
+#: gkwebapp/templates/showstockreport.jinja2:162
+msgid "Vie<u>w</u> Another Stock"
+msgstr ""
+
+#: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:58
+msgid "Statement of Sources and Applications of Funds"
+msgstr ""
+
+#: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:218
+msgid "C<u>o</u>nventional Balance Sheet"
+msgstr ""
+
+#: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:220
+msgid "C<u>o</u>nventional Statement of Affairs"
+msgstr ""
+
+#: gkwebapp/templates/transfernote.jinja2:5
+msgid "GNUKhata | Transfer Note"
+msgstr ""
+
+#: gkwebapp/templates/transfernote.jinja2:10
+msgid "Create Transfer Note"
+msgstr ""
+
+#: gkwebapp/templates/unitofmeasurement.jinja2:5
+msgid "GNUKhata | Unit Of Measurement"
+msgstr ""
+
+#: gkwebapp/templates/unitofmeasurement.jinja2:10
+msgid "Create Unit "
+msgstr ""
+
+#: gkwebapp/templates/unitofmeasurement.jinja2:11
+msgid "Edit Unit"
+msgstr ""
+
+#: gkwebapp/templates/viewbalancesheet.jinja2:19
+msgid "View"
+msgstr ""
+
+#: gkwebapp/templates/viewbalancesheet.jinja2:34
+#: gkwebapp/templates/viewbankrecon.jinja2:48
+#: gkwebapp/templates/viewdualledger.jinja2:51
+#: gkwebapp/templates/viewledger.jinja2:49
+#: gkwebapp/templates/viewprojectstatement.jinja2:35
+#: gkwebapp/templates/viewstockreport.jinja2:48
+msgid "From Date"
+msgstr ""
+
+#: gkwebapp/templates/viewbalancesheet.jinja2:46
+#: gkwebapp/templates/viewprojectstatement.jinja2:47
+msgid "To <u>D</u>ate"
+msgstr ""
+
+#: gkwebapp/templates/viewbalancesheet.jinja2:57
+msgid "<u>T</u>ype"
+msgstr ""
+
+#: gkwebapp/templates/viewbalancesheet.jinja2:62
+#: gkwebapp/templates/viewbalancesheet.jinja2:69
+msgid "Sources & Applications of Funds"
+msgstr ""
+
+#: gkwebapp/templates/viewbalancesheet.jinja2:76
+#: gkwebapp/templates/viewbankrecon.jinja2:76
+#: gkwebapp/templates/viewcashflow.jinja2:54
+#: gkwebapp/templates/viewledger.jinja2:85
+#: gkwebapp/templates/viewprofitloss.jinja2:59
+#: gkwebapp/templates/viewprojectstatement.jinja2:69
+#: gkwebapp/templates/viewstockreport.jinja2:76
+#: gkwebapp/templates/viewtrialbalance.jinja2:60
+msgid "<u>V</u>iew"
+msgstr ""
+
+#: gkwebapp/templates/viewbankrecon.jinja2:32
+#: gkwebapp/templates/viewcashflow.jinja2:32
+#: gkwebapp/templates/viewdualledger.jinja2:34
+#: gkwebapp/templates/viewledger.jinja2:31
+#: gkwebapp/templates/viewstockreport.jinja2:31
+msgid "From date should be smaller or equal to to date !"
+msgstr ""
+
+#: gkwebapp/templates/viewbankrecon.jinja2:60
+#: gkwebapp/templates/viewdualledger.jinja2:63
+#: gkwebapp/templates/viewledger.jinja2:61
+#: gkwebapp/templates/viewstockreport.jinja2:61
+msgid "To Date"
+msgstr ""
+
+#: gkwebapp/templates/viewcashflow.jinja2:5
+#: gkwebapp/templates/viewcashflow.jinja2:19
+msgid "View Cash Flow"
+msgstr ""
+
+#: gkwebapp/templates/viewcashflow.jinja2:34
+#: gkwebapp/templates/viewprofitloss.jinja2:39
+#: gkwebapp/templates/viewtrialbalance.jinja2:30
+msgid "From"
+msgstr ""
+
+#: gkwebapp/templates/viewcashmemo.jinja2:82
+msgid "Cash Memo Cancelled."
+msgstr ""
+
+#: gkwebapp/templates/viewdualledger.jinja2:5
+msgid "Dual Ledgers"
+msgstr ""
+
+#: gkwebapp/templates/viewdualledger.jinja2:21
+msgid "View Dual Ledgers"
+msgstr ""
+
+#: gkwebapp/templates/viewdualledger.jinja2:87
+msgid "Vie<u>w</u>"
+msgstr ""
+
+#: gkwebapp/templates/viewimages.jinja2:6
+msgid "V.No"
+msgstr ""
+
+#: gkwebapp/templates/viewimages.jinja2:32
+msgid "Image No"
+msgstr ""
+
+#: gkwebapp/templates/viewimages.jinja2:35
+msgid "Remove image"
+msgstr ""
+
+#: gkwebapp/templates/viewimages.jinja2:45
+msgid "Changes saved."
+msgstr ""
+
+#: gkwebapp/templates/viewimages.jinja2:56
+msgid "<u>S</u>ave Changes"
+msgstr ""
+
+#: gkwebapp/templates/viewledger.jinja2:19
+msgid "View Ledger"
+msgstr ""
+
+#: gkwebapp/templates/viewprofitloss.jinja2:6
+#: gkwebapp/templates/viewprofitloss.jinja2:24
+msgid "View Profit & Loss"
+msgstr ""
+
+#: gkwebapp/templates/viewprofitloss.jinja2:8
+#: gkwebapp/templates/viewprofitloss.jinja2:26
+msgid "View Income & Expenditure"
+msgstr ""
+
+#: gkwebapp/templates/viewprojectstatement.jinja2:19
+msgid "View Project Statement"
+msgstr ""
+
+#: gkwebapp/templates/viewprojectstatement.jinja2:32
+msgid "Please select a project!"
+msgstr ""
+
+#: gkwebapp/templates/viewprojectstatement.jinja2:60
+msgid "Please select"
+msgstr ""
+
+#: gkwebapp/templates/viewstockreport.jinja2:5
+msgid "stock"
+msgstr ""
+
+#: gkwebapp/templates/viewstockreport.jinja2:19
+msgid "View Stock"
+msgstr ""
+
+#: gkwebapp/templates/viewstockreport.jinja2:35
+msgid "Please select a Product!"
+msgstr ""
+
+#: gkwebapp/templates/viewtrialbalance.jinja2:19
+msgid "View Trial Balance"
+msgstr ""
+
+#: gkwebapp/templates/viewtrialbalance.jinja2:51
+msgid "<u>T</u>rial Balance type"
+msgstr ""
+
+#: gkwebapp/templates/viewvoucher.jinja2:104
+msgid "Voucher could not be deleted."
+msgstr ""
+
+#: gkwebapp/templates/viewvoucher.jinja2:108
+msgid "Voucher could not be edited."
+msgstr ""
+
+#: gkwebapp/templates/viewvoucher.jinja2:112
+msgid "Voucher could not be cloned."
+msgstr ""
+
+#: gkwebapp/templates/viewvoucher.jinja2:144
+msgid "No attachment found!"
+msgstr ""
+
+#: gkwebapp/templates/viewvoucher.jinja2:157
+msgid "Voucher No"
+msgstr ""
+
+#: gkwebapp/templates/viewvoucher.jinja2:443
+msgid "N<u>a</u>rration"
+msgstr ""
+
+#: gkwebapp/templates/viewvoucher.jinja2:462
+msgid "Unloc<u>k</u>"
+msgstr ""
+
+#: gkwebapp/templates/viewvoucher.jinja2:464
+msgid "Loc<u>k</u>"
+msgstr ""
+
+#: gkwebapp/templates/viewvoucher.jinja2:466
+msgid "<u>E</u>dit"
+msgstr ""
+
+#: gkwebapp/templates/viewvoucher.jinja2:467
+msgid "Cl<u>o</u>ne"
+msgstr ""
+
+#: gkwebapp/templates/viewvoucher.jinja2:471
+msgid "View Attac<u>h</u>ment"
+msgstr ""
+
+#: gkwebapp/templates/viewvoucher.jinja2:477
+#: gkwebapp/templates/viewvoucher.jinja2:485
+msgid "Add Attachm<u>e</u>nt"
+msgstr ""
+
+#: gkwebapp/templates/viewvoucher.jinja2:490
+msgid "Bac<u>k</u>"
 msgstr ""
 
 #~ msgid "Hello!"
@@ -136,5 +4301,11 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Copyright © Digital Freedom Foundation 2013,2014,2015,2016. Visit "
+#~ msgstr ""
+
+#~ msgid "Copyright © Digital Freedom Foundation 2013,2014,2015,2016. Visit"
+#~ msgstr ""
+
+#~ msgid "To view Toolbar press"
 #~ msgstr ""
 

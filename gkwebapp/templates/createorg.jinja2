@@ -49,6 +49,7 @@
                 <label for="orgname">{% trans %}<u>O</u>rganisation Name{% endtrans %}: </label>
                 <input name="orgname" class="form-control" placeholder="Enter Organisation Name" id="orgname" type="text" data-validation-required-message="Please Enter Organisation Name" accesskey="o"/>
                 <br/>
+                {% if locale =='en' %}
 
                 <label for="orgcase">{% trans %}<u>C</u>ase{% endtrans %}: </label>
                 <select name="orgcase" class="form-control" id="orgcase" accesskey="c">
@@ -57,8 +58,9 @@
                   <option value="Lower Case">{% trans %}Lower Case{% endtrans %}</option>
                   <option value="Title Case">{% trans %}Title Case{% endtrans %}</option>
                 </select>
-
                 <br/>
+                {% endif %}
+
 
                 <label for="orgtype">{% trans %}Organisation <u>T</u>ype{% endtrans %}: </label>
                 <select name="orgtype" class="form-control" id="orgtype" data-validation-required-message="Please select Organisation Type" accesskey="t">
@@ -100,7 +102,7 @@
                   <input type="checkbox" name="invflag" id="invflag" value="">
 
                 </div>
-                
+
                 <button class="btn btn-success" id="btnsubmit" type="submit" accesskey="p"><span class="glyphicon glyphicon-arrow-right"></span>{% trans %}<u>P</u>roceed{% endtrans %}</button>
               </div>
 

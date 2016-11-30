@@ -51,6 +51,7 @@ def main(global_config, **settings):
 					context='gkwebapp.resources.MyResource',
 					renderer="templates/mytemplate.jinja2")
 	config.add_route('index', '/')
+	config.add_route('locale', '/locale')
 	config.add_route('theme', '/theme')
 	config.add_route('addtheme', '/addtheme')
 	config.add_route('backupfile', '/backupfile')
