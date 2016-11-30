@@ -1,4 +1,4 @@
-# Hindi translations for PROJECT.
+# Marathi translations for PROJECT.
 # Copyright (C) 2011 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
@@ -10,7 +10,7 @@ msgstr ""
 "POT-Creation-Date: 2016-11-30 17:25+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: hi\n"
+"Language: mr\n"
 "Language-Team: fr <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "MIME-Version: 1.0\n"
@@ -24,8 +24,9 @@ msgid "GNUKhata | Cash Memo"
 msgstr ""
 
 #: gkwebapp/templates/addcashmemo.jinja2:54
+#, fuzzy
 msgid "Cash Memo saved."
-msgstr ""
+msgstr "बदल नोंदवले."
 
 #: gkwebapp/templates/addcashmemo.jinja2:58
 #: gkwebapp/templates/addcategory.jinja2:9
@@ -61,8 +62,9 @@ msgstr ""
 #: gkwebapp/templates/edittransfernote.jinja2:65
 #: gkwebapp/templates/receivedtransfernote.jinja2:69
 #: gkwebapp/templates/viewcashmemo.jinja2:70
+#, fuzzy
 msgid "Please select a product!"
-msgstr ""
+msgstr "प्रोजेक्ट निवडा"
 
 #: gkwebapp/templates/addcashmemo.jinja2:70
 #: gkwebapp/templates/adddeliverychallan.jinja2:123
@@ -73,29 +75,33 @@ msgstr ""
 #: gkwebapp/templates/edittransfernote.jinja2:69
 #: gkwebapp/templates/receivedtransfernote.jinja2:73
 #: gkwebapp/templates/viewcashmemo.jinja2:74
+#, fuzzy
 msgid "Please enter quantity!"
-msgstr ""
+msgstr "तारीख टाका"
 
 #: gkwebapp/templates/addcashmemo.jinja2:74
 #: gkwebapp/templates/addinvoice.jinja2:25
 #: gkwebapp/templates/editinvoice.jinja2:25
 #: gkwebapp/templates/viewcashmemo.jinja2:78
+#, fuzzy
 msgid "Please enter the price per unit!"
-msgstr ""
+msgstr "योग्य तारीख टाका!"
 
 #: gkwebapp/templates/addcashmemo.jinja2:83
 #: gkwebapp/templates/adddeliverychallan.jinja2:22
 #: gkwebapp/templates/addinvoice.jinja2:34
 #: gkwebapp/templates/editinvoice.jinja2:34
+#, fuzzy
 msgid "Please select a supplier!"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव निवडा"
 
 #: gkwebapp/templates/addcashmemo.jinja2:85
 #: gkwebapp/templates/adddeliverychallan.jinja2:24
 #: gkwebapp/templates/addinvoice.jinja2:36
 #: gkwebapp/templates/editinvoice.jinja2:36
+#, fuzzy
 msgid "Please select a customer!"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव निवडा"
 
 #: gkwebapp/templates/addcashmemo.jinja2:91
 #: gkwebapp/templates/adddeliverychallan.jinja2:30
@@ -106,22 +112,25 @@ msgstr ""
 #: gkwebapp/templates/edittransfernote.jinja2:49
 #: gkwebapp/templates/receivedtransfernote.jinja2:53
 #: gkwebapp/templates/viewcashmemo.jinja2:90
+#, fuzzy
 msgid "Please enter date!"
-msgstr ""
+msgstr "तारीख टाका"
 
 #: gkwebapp/templates/addcashmemo.jinja2:95
 #: gkwebapp/templates/addinvoice.jinja2:46
 #: gkwebapp/templates/editinvoice.jinja2:46
 #: gkwebapp/templates/viewcashmemo.jinja2:94
+#, fuzzy
 msgid "Please enter invoice no.!"
-msgstr ""
+msgstr "व्हावचर क्रमांक टाका!"
 
 #: gkwebapp/templates/addcashmemo.jinja2:99
 #: gkwebapp/templates/addinvoice.jinja2:50
 #: gkwebapp/templates/editinvoice.jinja2:50
 #: gkwebapp/templates/viewcashmemo.jinja2:98
+#, fuzzy
 msgid "Please enter issuer's name!"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव"
 
 #: gkwebapp/templates/addcashmemo.jinja2:103
 #: gkwebapp/templates/adddeliverychallan.jinja2:38
@@ -146,7 +155,7 @@ msgstr ""
 #: gkwebapp/templates/viewstockreport.jinja2:23
 #: gkwebapp/templates/viewtrialbalance.jinja2:24
 msgid "Please enter date in proper format!"
-msgstr ""
+msgstr "व्हावचरची तारीख योग्य प्रकारे टाका"
 
 #: gkwebapp/templates/addcashmemo.jinja2:107
 #: gkwebapp/templates/adddeliverychallan.jinja2:42
@@ -163,7 +172,7 @@ msgstr ""
 #: gkwebapp/templates/viewstockreport.jinja2:27
 #: gkwebapp/templates/viewtrialbalance.jinja2:28
 msgid "Please enter date within the financial year!"
-msgstr ""
+msgstr "हिशेब वर्षातील तारीख टाका!"
 
 #: gkwebapp/templates/addcashmemo.jinja2:113
 #: gkwebapp/templates/addinvoice.jinja2:87
@@ -196,13 +205,14 @@ msgstr ""
 #: gkwebapp/templates/showstockreport.jinja2:61
 #: gkwebapp/templates/viewcashmemo.jinja2:128
 msgid "Date"
-msgstr ""
+msgstr "तारीख"
 
 #: gkwebapp/templates/addcashmemo.jinja2:141
 #: gkwebapp/templates/addinvoice.jinja2:142
 #: gkwebapp/templates/viewcashmemo.jinja2:149
+#, fuzzy
 msgid "VAT for"
-msgstr ""
+msgstr "स्टेटमेंटचा कालावधी"
 
 #: gkwebapp/templates/addcashmemo.jinja2:201
 #: gkwebapp/templates/adddeliverychallan.jinja2:137
@@ -240,15 +250,17 @@ msgstr ""
 #: gkwebapp/templates/addcashmemo.jinja2:204
 #: gkwebapp/templates/editinvoice.jinja2:198
 #: gkwebapp/templates/viewcashmemo.jinja2:212
+#, fuzzy
 msgid "Tax Rate"
-msgstr ""
+msgstr "राज्य"
 
 #: gkwebapp/templates/addcashmemo.jinja2:205
 #: gkwebapp/templates/addinvoice.jinja2:207
 #: gkwebapp/templates/editinvoice.jinja2:199
 #: gkwebapp/templates/viewcashmemo.jinja2:213
+#, fuzzy
 msgid "Tax Amount"
-msgstr ""
+msgstr "डे रक्कम"
 
 #: gkwebapp/templates/addcashmemo.jinja2:206
 #: gkwebapp/templates/addcashmemo.jinja2:246
@@ -263,7 +275,7 @@ msgstr ""
 #: gkwebapp/templates/viewcashmemo.jinja2:214
 #: gkwebapp/templates/viewcashmemo.jinja2:251
 msgid "Total"
-msgstr ""
+msgstr "बेरीज"
 
 #: gkwebapp/templates/addcashmemo.jinja2:279
 #: gkwebapp/templates/addcategory.jinja2:172
@@ -340,7 +352,7 @@ msgstr ""
 #: gkwebapp/templates/removeUser.jinja2:71
 #: gkwebapp/templates/viewcashmemo.jinja2:293
 msgid "Are you sure?"
-msgstr ""
+msgstr "नक्की?"
 
 #: gkwebapp/templates/addcashmemo.jinja2:296
 #: gkwebapp/templates/addcashmemo.jinja2:315
@@ -358,7 +370,7 @@ msgstr ""
 #: gkwebapp/templates/removeUser.jinja2:75
 #: gkwebapp/templates/viewcashmemo.jinja2:296
 msgid "No"
-msgstr ""
+msgstr "नाही"
 
 #: gkwebapp/templates/addcashmemo.jinja2:297
 #: gkwebapp/templates/addcashmemo.jinja2:316
@@ -376,32 +388,37 @@ msgstr ""
 #: gkwebapp/templates/removeUser.jinja2:74
 #: gkwebapp/templates/viewcashmemo.jinja2:297
 msgid "Yes"
-msgstr ""
+msgstr "हो"
 
 #: gkwebapp/templates/addcategory.jinja2:5
 #: gkwebapp/templates/editcategory.jinja2:5
+#, fuzzy
 msgid "Category saved."
-msgstr ""
+msgstr "व्हावचर नोंदवले."
 
 #: gkwebapp/templates/addcategory.jinja2:14
+#, fuzzy
 msgid "Category already exists!"
-msgstr ""
+msgstr "वापरणारा अस्तित्वात आहे!"
 
 #: gkwebapp/templates/addcategory.jinja2:21
 #: gkwebapp/templates/editcategory.jinja2:25
 #: gkwebapp/templates/editcategory.jinja2:43
+#, fuzzy
 msgid "Please enter category name!"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव"
 
 #: gkwebapp/templates/addcategory.jinja2:25
 #: gkwebapp/templates/editcategory.jinja2:47
+#, fuzzy
 msgid "Select tax name!"
-msgstr ""
+msgstr "ग्रुप निवडा!"
 
 #: gkwebapp/templates/addcategory.jinja2:29
 #: gkwebapp/templates/editcategory.jinja2:51
+#, fuzzy
 msgid "Enter tax rate!"
-msgstr ""
+msgstr "योग्य तारीख टाका!"
 
 #: gkwebapp/templates/addcategory.jinja2:33
 #: gkwebapp/templates/editcategory.jinja2:55
@@ -431,8 +448,9 @@ msgstr ""
 #: gkwebapp/templates/addproduct.jinja2:54
 #: gkwebapp/templates/editcategory.jinja2:66
 #: gkwebapp/templates/editproductspecs.jinja2:48
+#, fuzzy
 msgid "Tax Name"
-msgstr ""
+msgstr "प्रोजेक्टचे नाव"
 
 #: gkwebapp/templates/addcategory.jinja2:62
 #: gkwebapp/templates/addproduct.jinja2:55
@@ -442,19 +460,21 @@ msgstr ""
 #: gkwebapp/templates/editorganisation.jinja2:82
 #: gkwebapp/templates/editproductspecs.jinja2:49
 msgid "State"
-msgstr ""
+msgstr "राज्य"
 
 #: gkwebapp/templates/addcategory.jinja2:63
 #: gkwebapp/templates/addproduct.jinja2:56
 #: gkwebapp/templates/editcategory.jinja2:68
 #: gkwebapp/templates/editproductspecs.jinja2:50
+#, fuzzy
 msgid "Rate%"
-msgstr ""
+msgstr "तारीख"
 
 #: gkwebapp/templates/addcategory.jinja2:132
 #: gkwebapp/templates/editcategory.jinja2:90
+#, fuzzy
 msgid "Please enter specification name!"
-msgstr ""
+msgstr "संस्थेचे नाव!"
 
 #: gkwebapp/templates/addcategory.jinja2:135
 #: gkwebapp/templates/editcategory.jinja2:93
@@ -463,8 +483,9 @@ msgstr ""
 
 #: gkwebapp/templates/addcategory.jinja2:141
 #: gkwebapp/templates/editcategory.jinja2:99
+#, fuzzy
 msgid "Spec Name"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव"
 
 #: gkwebapp/templates/addcategory.jinja2:142
 #: gkwebapp/templates/deletedvoucher.jinja2:60
@@ -475,7 +496,7 @@ msgstr ""
 #: gkwebapp/templates/printledger.jinja2:53
 #: gkwebapp/templates/printtransactions.jinja2:42
 msgid "Type"
-msgstr ""
+msgstr "प्रकार"
 
 #: gkwebapp/templates/addcategory.jinja2:172
 #: gkwebapp/templates/editcategory.jinja2:115
@@ -484,34 +505,40 @@ msgstr ""
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:5
 #: gkwebapp/templates/editcustomersupplier.jinja2:5
+#, fuzzy
 msgid "Supplier saved."
-msgstr ""
+msgstr "व्हावचर नोंदवले."
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:9
 #: gkwebapp/templates/editcustomersupplier.jinja2:9
+#, fuzzy
 msgid "Customer saved."
-msgstr ""
+msgstr "व्हावचर नोंदवले."
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:13
 #: gkwebapp/templates/editcustomersupplier.jinja2:13
+#, fuzzy
 msgid "Customer Already Exist!"
-msgstr ""
+msgstr "वापरणारा अस्तित्वात आहे!"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:17
 #: gkwebapp/templates/editcustomersupplier.jinja2:17
+#, fuzzy
 msgid "Supplier Already Exist!"
-msgstr ""
+msgstr "वापरणारा अस्तित्वात आहे!"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:26
 #: gkwebapp/templates/editcustomersupplier.jinja2:41
+#, fuzzy
 msgid "Please Enter name!"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:34
 #: gkwebapp/templates/editcustomersupplier.jinja2:48
 #: gkwebapp/templates/editdeliverychallan.jinja2:40
+#, fuzzy
 msgid "Please select a customer/supplier!"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव निवडा"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:38
 #: gkwebapp/templates/editcustomersupplier.jinja2:71
@@ -521,18 +548,21 @@ msgstr ""
 #: gkwebapp/templates/addcustomersupplier.jinja2:46
 #: gkwebapp/templates/editcategory.jinja2:58
 #: gkwebapp/templates/editcustomersupplier.jinja2:78
+#, fuzzy
 msgid "Name:"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:47
 #: gkwebapp/templates/editcustomersupplier.jinja2:79
+#, fuzzy
 msgid "Enter Name"
-msgstr ""
+msgstr "खात्याचे नाव टाका!"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:50
 #: gkwebapp/templates/editcustomersupplier.jinja2:82
+#, fuzzy
 msgid "Email:"
-msgstr ""
+msgstr "इमेल"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:54
 #: gkwebapp/templates/editcustomersupplier.jinja2:86
@@ -541,8 +571,9 @@ msgstr ""
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:58
 #: gkwebapp/templates/editcustomersupplier.jinja2:90
+#, fuzzy
 msgid "State:"
-msgstr ""
+msgstr "राज्य"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:108
 msgid "Fax :"
@@ -571,13 +602,15 @@ msgid "Delivery note saved."
 msgstr ""
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:13
+#, fuzzy
 msgid "Duplicate Note no.!"
-msgstr ""
+msgstr "संस्था अस्तित्वात आहे!"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:34
 #: gkwebapp/templates/editdeliverychallan.jinja2:48
+#, fuzzy
 msgid "Please enter note no.!"
-msgstr ""
+msgstr "तारीख टाका"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:46
 #: gkwebapp/templates/editdeliverychallan.jinja2:55
@@ -590,8 +623,9 @@ msgid "Enter challan no"
 msgstr ""
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:50
+#, fuzzy
 msgid "Note Date"
-msgstr ""
+msgstr "पर्यंत"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:66
 #: gkwebapp/templates/addinvoice.jinja2:119
@@ -609,13 +643,15 @@ msgstr ""
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:74
 #: gkwebapp/templates/addinvoice.jinja2:127
+#, fuzzy
 msgid "Select Supplier"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव निवडा"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:76
 #: gkwebapp/templates/addinvoice.jinja2:129
+#, fuzzy
 msgid "Select Customer"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव निवडा"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:89
 #: gkwebapp/templates/editdeliverychallan.jinja2:92
@@ -641,7 +677,7 @@ msgstr ""
 #: gkwebapp/templates/viewvoucher.jinja2:431
 #: gkwebapp/templates/viewvoucher.jinja2:438
 msgid "None"
-msgstr ""
+msgstr "कोणतेही नाही"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:104
 #: gkwebapp/templates/editdeliverychallan.jinja2:103
@@ -655,23 +691,27 @@ msgstr ""
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:106
 #: gkwebapp/templates/editdeliverychallan.jinja2:105
+#, fuzzy
 msgid "Sample"
-msgstr ""
+msgstr "विक्री"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:127
+#, fuzzy
 msgid "Please enter Issuer's name!"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:131
+#, fuzzy
 msgid "Please enter designation!"
-msgstr ""
+msgstr "तपशिल टाका!"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:168
 #: gkwebapp/templates/addinvoice.jinja2:284
 #: gkwebapp/templates/editdeliverychallan.jinja2:133
 #: gkwebapp/templates/editinvoice.jinja2:269
+#, fuzzy
 msgid "Issuer's Name"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:172
 #: gkwebapp/templates/addinvoice.jinja2:292
@@ -679,14 +719,16 @@ msgstr ""
 #: gkwebapp/templates/editdeliverychallan.jinja2:137
 #: gkwebapp/templates/editgodown.jinja2:111
 #: gkwebapp/templates/editinvoice.jinja2:277
+#, fuzzy
 msgid "Designation"
-msgstr ""
+msgstr "संस्था एडिट करा"
 
 #: gkwebapp/templates/addinvoice.jinja2:5
 #: gkwebapp/templates/editinvoice.jinja2:5
 #: gkwebapp/templates/viewcashmemo.jinja2:58
+#, fuzzy
 msgid "Invoice saved."
-msgstr ""
+msgstr "व्हावचर नोंदवले."
 
 #: gkwebapp/templates/addinvoice.jinja2:65
 #: gkwebapp/templates/editdeliverychallan.jinja2:25
@@ -701,8 +743,9 @@ msgstr ""
 
 #: gkwebapp/templates/addinvoice.jinja2:285
 #: gkwebapp/templates/editinvoice.jinja2:270
+#, fuzzy
 msgid "Issuer's name"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव"
 
 #: gkwebapp/templates/addinvoice.jinja2:293
 #: gkwebapp/templates/editinvoice.jinja2:278
@@ -763,7 +806,7 @@ msgstr ""
 #: gkwebapp/templates/project.jinja2:224
 #: gkwebapp/templates/viewvoucher.jinja2:468
 msgid "<u>S</u>ave"
-msgstr ""
+msgstr "नोंदवा"
 
 #: gkwebapp/templates/addproduct.jinja2:136
 #: gkwebapp/templates/addvoucher.jinja2:343
@@ -781,30 +824,35 @@ msgstr ""
 #: gkwebapp/templates/viewstockreport.jinja2:77
 #: gkwebapp/templates/viewtrialbalance.jinja2:61
 msgid "R<u>e</u>set"
-msgstr ""
+msgstr "पुन्हा"
 
 #: gkwebapp/templates/addunitofmeasurement.jinja2:6
 #: gkwebapp/templates/editunitofmeasurement.jinja2:6
+#, fuzzy
 msgid "Unit saved."
-msgstr ""
+msgstr "व्हावचर नोंदवले."
 
 #: gkwebapp/templates/addunitofmeasurement.jinja2:14
 #: gkwebapp/templates/editunitofmeasurement.jinja2:18
+#, fuzzy
 msgid "Unit Already Exist!"
-msgstr ""
+msgstr "खाते अस्तित्वात आहे!"
 
 #: gkwebapp/templates/addunitofmeasurement.jinja2:18
 #: gkwebapp/templates/editunitofmeasurement.jinja2:26
+#, fuzzy
 msgid "Please enter Unit  name!"
-msgstr ""
+msgstr "खात्याचे नाव टाका!"
 
 #: gkwebapp/templates/addunitofmeasurement.jinja2:25
+#, fuzzy
 msgid " Unit Name :"
-msgstr ""
+msgstr "खात्याचे नाव टाका!"
 
 #: gkwebapp/templates/addunitofmeasurement.jinja2:26
+#, fuzzy
 msgid "Enter Unit name"
-msgstr ""
+msgstr "खात्याचे नाव टाका!"
 
 #: gkwebapp/templates/addunitofmeasurement.jinja2:29
 msgid "Sub Unit Of"
@@ -873,31 +921,31 @@ msgstr ""
 #: gkwebapp/templates/viewstockreport.jinja2:5
 #: gkwebapp/templates/viewtrialbalance.jinja2:5
 msgid "GNUKhata"
-msgstr ""
+msgstr "गन्यु खाता"
 
 #: gkwebapp/templates/addvoucher.jinja2:7
 msgid "Voucher"
-msgstr ""
+msgstr "व्हावचर"
 
 #: gkwebapp/templates/addvoucher.jinja2:112
 msgid "Voucher saved."
-msgstr ""
+msgstr "व्हावचर नोंदवले."
 
 #: gkwebapp/templates/addvoucher.jinja2:116
 #: gkwebapp/templates/viewbankrecon.jinja2:36
 #: gkwebapp/templates/viewdualledger.jinja2:38
 #: gkwebapp/templates/viewledger.jinja2:35
 msgid "Please select an account!"
-msgstr ""
+msgstr "खाते निवडा!"
 
 #: gkwebapp/templates/addvoucher.jinja2:120
 msgid "Voucher could not be saved. "
-msgstr ""
+msgstr "व्हावचर नोंदवता आले नाही."
 
 #: gkwebapp/templates/addvoucher.jinja2:124
 #: gkwebapp/templates/viewvoucher.jinja2:116
 msgid "Totals misbalance!"
-msgstr ""
+msgstr "असमान बेरीज!"
 
 #: gkwebapp/templates/addvoucher.jinja2:128
 #: gkwebapp/templates/viewvoucher.jinja2:120
@@ -907,28 +955,28 @@ msgstr ""
 #: gkwebapp/templates/addvoucher.jinja2:132
 #: gkwebapp/templates/viewvoucher.jinja2:124
 msgid "Voucher amount cannot be zero!"
-msgstr ""
+msgstr "व्हावचरची रक्कम शून्य असु शकत नाही!"
 
 #: gkwebapp/templates/addvoucher.jinja2:136
 #: gkwebapp/templates/viewvoucher.jinja2:128
 msgid "Voucher with zero amount cannot be saved!"
-msgstr ""
+msgstr "शुन्य रकमेचे व्हावचर नोंदवता येणार नाही!"
 
 #: gkwebapp/templates/addvoucher.jinja2:140
 #: gkwebapp/templates/viewvoucher.jinja2:132
 msgid "An account can be selected only once!"
-msgstr ""
+msgstr "एक खाते फक्त एकदाच निवडता येईल!"
 
 #: gkwebapp/templates/addvoucher.jinja2:144
 #: gkwebapp/templates/findeditvoucher.jinja2:46
 #: gkwebapp/templates/viewvoucher.jinja2:136
 msgid "Please enter voucher number!"
-msgstr ""
+msgstr "व्हावचर क्रमांक टाका!"
 
 #: gkwebapp/templates/addvoucher.jinja2:148
 #: gkwebapp/templates/viewvoucher.jinja2:140
 msgid "Please enter voucher date in proper format!"
-msgstr ""
+msgstr "योग्य प्रकारे व्हावचरची तारीख टाका!"
 
 #: gkwebapp/templates/addvoucher.jinja2:151
 #: gkwebapp/templates/viewvoucher.jinja2:151
@@ -938,11 +986,11 @@ msgstr ""
 #: gkwebapp/templates/addvoucher.jinja2:155
 #: gkwebapp/templates/viewvoucher.jinja2:148
 msgid "Please enter voucher date within the financial year!"
-msgstr ""
+msgstr "हिशेब वर्षातील तारीख टाका!"
 
 #: gkwebapp/templates/addvoucher.jinja2:163
 msgid "<u>V</u>oucher No."
-msgstr ""
+msgstr "व्हावचर क्र."
 
 #: gkwebapp/templates/addvoucher.jinja2:168
 #: gkwebapp/templates/findeditvoucher.jinja2:95
@@ -953,7 +1001,7 @@ msgstr ""
 #: gkwebapp/templates/printtransactions.jinja2:62
 #: gkwebapp/templates/viewvoucher.jinja2:161
 msgid "Contra"
-msgstr ""
+msgstr "कॉन्ट्रा"
 
 #: gkwebapp/templates/addvoucher.jinja2:170
 #: gkwebapp/templates/findeditvoucher.jinja2:96
@@ -964,7 +1012,7 @@ msgstr ""
 #: gkwebapp/templates/printtransactions.jinja2:66
 #: gkwebapp/templates/viewvoucher.jinja2:163
 msgid "Payment"
-msgstr ""
+msgstr "पेमेंट"
 
 #: gkwebapp/templates/addvoucher.jinja2:172
 #: gkwebapp/templates/findeditvoucher.jinja2:97
@@ -975,7 +1023,7 @@ msgstr ""
 #: gkwebapp/templates/printtransactions.jinja2:70
 #: gkwebapp/templates/viewvoucher.jinja2:165
 msgid "Receipt"
-msgstr ""
+msgstr "रिसिट"
 
 #: gkwebapp/templates/addvoucher.jinja2:174
 #: gkwebapp/templates/findeditvoucher.jinja2:98
@@ -987,7 +1035,7 @@ msgstr ""
 #: gkwebapp/templates/printtransactions.jinja2:74
 #: gkwebapp/templates/viewvoucher.jinja2:167
 msgid "Journal"
-msgstr ""
+msgstr "जर्नल"
 
 #: gkwebapp/templates/addvoucher.jinja2:176
 #: gkwebapp/templates/findeditvoucher.jinja2:99
@@ -995,7 +1043,7 @@ msgstr ""
 #: gkwebapp/templates/printtransactions.jinja2:78
 #: gkwebapp/templates/viewvoucher.jinja2:169
 msgid "Sales"
-msgstr ""
+msgstr "सेल्स"
 
 #: gkwebapp/templates/addvoucher.jinja2:178
 #: gkwebapp/templates/findeditvoucher.jinja2:100
@@ -1006,7 +1054,7 @@ msgstr ""
 #: gkwebapp/templates/printtransactions.jinja2:82
 #: gkwebapp/templates/viewvoucher.jinja2:171
 msgid "Purchase"
-msgstr ""
+msgstr "परचेस"
 
 #: gkwebapp/templates/addvoucher.jinja2:180
 #: gkwebapp/templates/deletedvoucher.jinja2:88
@@ -1020,7 +1068,7 @@ msgstr ""
 #: gkwebapp/templates/printtransactions.jinja2:86
 #: gkwebapp/templates/viewvoucher.jinja2:173
 msgid "Credit Note"
-msgstr ""
+msgstr "क्रेडिट नोट"
 
 #: gkwebapp/templates/addvoucher.jinja2:182
 #: gkwebapp/templates/deletedvoucher.jinja2:90
@@ -1034,7 +1082,7 @@ msgstr ""
 #: gkwebapp/templates/printtransactions.jinja2:90
 #: gkwebapp/templates/viewvoucher.jinja2:175
 msgid "Debit Note"
-msgstr ""
+msgstr "डेबिट नोट"
 
 #: gkwebapp/templates/addvoucher.jinja2:184
 #: gkwebapp/templates/deletedvoucher.jinja2:86
@@ -1048,7 +1096,7 @@ msgstr ""
 #: gkwebapp/templates/printtransactions.jinja2:94
 #: gkwebapp/templates/viewvoucher.jinja2:177
 msgid "Sale Return"
-msgstr ""
+msgstr "सेल्स रिटर्न"
 
 #: gkwebapp/templates/addvoucher.jinja2:186
 #: gkwebapp/templates/deletedvoucher.jinja2:84
@@ -1062,12 +1110,12 @@ msgstr ""
 #: gkwebapp/templates/printtransactions.jinja2:98
 #: gkwebapp/templates/viewvoucher.jinja2:179
 msgid "Purchase Return"
-msgstr ""
+msgstr "परचेस रिटर्न"
 
 #: gkwebapp/templates/addvoucher.jinja2:190
 #: gkwebapp/templates/viewvoucher.jinja2:184
 msgid "<u>D</u>ate"
-msgstr ""
+msgstr "तारीख"
 
 #: gkwebapp/templates/addvoucher.jinja2:201
 #: gkwebapp/templates/viewvoucher.jinja2:195
@@ -1083,7 +1131,7 @@ msgstr ""
 #: gkwebapp/templates/viewvoucher.jinja2:228
 #: gkwebapp/templates/viewvoucher.jinja2:323
 msgid "Cr/Dr"
-msgstr ""
+msgstr "डे/क्रेx"
 
 #: gkwebapp/templates/addvoucher.jinja2:229
 #: gkwebapp/templates/editaccount.jinja2:65
@@ -1103,19 +1151,19 @@ msgstr ""
 #: gkwebapp/templates/viewvoucher.jinja2:231
 #: gkwebapp/templates/viewvoucher.jinja2:326
 msgid "Account Name"
-msgstr ""
+msgstr "खात्याचे नाव"
 
 #: gkwebapp/templates/addvoucher.jinja2:232
 #: gkwebapp/templates/viewvoucher.jinja2:234
 #: gkwebapp/templates/viewvoucher.jinja2:329
 msgid "Dr Amount"
-msgstr ""
+msgstr "डे रक्कम"
 
 #: gkwebapp/templates/addvoucher.jinja2:235
 #: gkwebapp/templates/viewvoucher.jinja2:237
 #: gkwebapp/templates/viewvoucher.jinja2:332
 msgid "Cr Amount"
-msgstr ""
+msgstr "क्रे रक्कम"
 
 #: gkwebapp/templates/addvoucher.jinja2:238
 #: gkwebapp/templates/multipleaccounts.jinja2:164
@@ -1123,7 +1171,7 @@ msgstr ""
 #: gkwebapp/templates/removeUser.jinja2:68
 #: gkwebapp/templates/viewvoucher.jinja2:335
 msgid "Remove"
-msgstr ""
+msgstr "काढुन टाका"
 
 #: gkwebapp/templates/addvoucher.jinja2:250
 #: gkwebapp/templates/addvoucher.jinja2:275
@@ -1132,7 +1180,7 @@ msgstr ""
 #: gkwebapp/templates/viewvoucher.jinja2:344
 #: gkwebapp/templates/viewvoucher.jinja2:377
 msgid "Dr"
-msgstr ""
+msgstr "डे"
 
 #: gkwebapp/templates/addvoucher.jinja2:251
 #: gkwebapp/templates/addvoucher.jinja2:274
@@ -1141,40 +1189,40 @@ msgstr ""
 #: gkwebapp/templates/viewvoucher.jinja2:345
 #: gkwebapp/templates/viewvoucher.jinja2:376
 msgid "Cr"
-msgstr ""
+msgstr "क्रे"
 
 #: gkwebapp/templates/addvoucher.jinja2:317
 #: gkwebapp/templates/viewvoucher.jinja2:422
 msgid "Pro<u>j</u>ect"
-msgstr ""
+msgstr "प्रोजेक्ट"
 
 #: gkwebapp/templates/addvoucher.jinja2:327
 msgid "Narra<u>t</u>ion"
-msgstr ""
+msgstr "तपशिल"
 
 #: gkwebapp/templates/addvoucher.jinja2:348
 msgid "Add Acc<u>o</u>unt"
-msgstr ""
+msgstr "खाते वाढवा"
 
 #: gkwebapp/templates/addvoucher.jinja2:353
 msgid "Attac<u>h</u>"
-msgstr ""
+msgstr "जोडा"
 
 #: gkwebapp/templates/bankreconreport.jinja2:4
 #: gkwebapp/templates/clearedbankreconreport.jinja2:4
 #: gkwebapp/templates/viewbankrecon.jinja2:5
 #: gkwebapp/templates/viewbankrecon.jinja2:19
 msgid "Bank Reconciliation"
-msgstr ""
+msgstr "बँक रिकन्सिलएिशन"
 
 #: gkwebapp/templates/bankreconreport.jinja2:4
 msgid "Uncleared Transactions"
-msgstr ""
+msgstr "अनक्लिअर्ड व्यवहार"
 
 #: gkwebapp/templates/bankreconreport.jinja2:55
 #: gkwebapp/templates/clearedbankreconreport.jinja2:57
 msgid "Clearance date cannot be before the voucher date!"
-msgstr ""
+msgstr "क्लिअरन्सची तारीख व्यवहाराच्या तारखेच्या आधीची असू शकत नाही"
 
 #: gkwebapp/templates/bankreconreport.jinja2:63
 #: gkwebapp/templates/bankreconreport.jinja2:70
@@ -1193,7 +1241,7 @@ msgstr ""
 #: gkwebapp/templates/projectstatementreport.jinja2:58
 #: gkwebapp/templates/showstockreport.jinja2:54
 msgid "Period"
-msgstr ""
+msgstr "कालावधी"
 
 #: gkwebapp/templates/bankreconreport.jinja2:63
 #: gkwebapp/templates/bankreconreport.jinja2:70
@@ -1228,12 +1276,12 @@ msgstr ""
 #: gkwebapp/templates/projectstatementreport.jinja2:58
 #: gkwebapp/templates/showstockreport.jinja2:54
 msgid "to"
-msgstr ""
+msgstr "पर्यंत"
 
 #: gkwebapp/templates/bankreconreport.jinja2:64
 #: gkwebapp/templates/bankreconreport.jinja2:69
 msgid "Uncleared Transactions of"
-msgstr ""
+msgstr "अनक्लिअर्ड व्यवहार"
 
 #: gkwebapp/templates/bankreconreport.jinja2:75
 #: gkwebapp/templates/clearedbankreconreport.jinja2:77
@@ -1242,7 +1290,7 @@ msgstr ""
 #: gkwebapp/templates/findvouchertable.jinja2:77
 #: gkwebapp/templates/ledgerreport.jinja2:79
 msgid "V. No."
-msgstr ""
+msgstr "व्हा. क्र."
 
 #: gkwebapp/templates/bankreconreport.jinja2:76
 #: gkwebapp/templates/bankreconreport.jinja2:77
@@ -1265,7 +1313,7 @@ msgstr ""
 #: gkwebapp/templates/profitlossreport.jinja2:125
 #: gkwebapp/templates/showstockreport.jinja2:64
 msgid "Particulars"
-msgstr ""
+msgstr "तपशिल"
 
 #: gkwebapp/templates/bankreconreport.jinja2:78
 #: gkwebapp/templates/clearedbankreconreport.jinja2:80
@@ -1282,7 +1330,7 @@ msgstr ""
 #: gkwebapp/templates/printledger.jinja2:55
 #: gkwebapp/templates/printnettrialbalance.jinja2:42
 msgid "Debit"
-msgstr ""
+msgstr "डे"
 
 #: gkwebapp/templates/bankreconreport.jinja2:79
 #: gkwebapp/templates/clearedbankreconreport.jinja2:81
@@ -1299,34 +1347,34 @@ msgstr ""
 #: gkwebapp/templates/printledger.jinja2:56
 #: gkwebapp/templates/printnettrialbalance.jinja2:43
 msgid "Credit"
-msgstr ""
+msgstr "क्रे"
 
 #: gkwebapp/templates/bankreconreport.jinja2:80
 #: gkwebapp/templates/clearedbankreconreport.jinja2:82
 msgid "Clearance Date"
-msgstr ""
+msgstr "क्लिअरन्सची तारीख"
 
 #: gkwebapp/templates/bankreconreport.jinja2:81
 #: gkwebapp/templates/clearedbankreconreport.jinja2:83
 msgid "Memo"
-msgstr ""
+msgstr "टिपण"
 
 #: gkwebapp/templates/bankreconreport.jinja2:147
 #: gkwebapp/templates/clearedbankreconreport.jinja2:151
 msgid "R<u>e</u>conciliation Menu"
-msgstr ""
+msgstr "रिकन्सलएिशन मेन्यु"
 
 #: gkwebapp/templates/bankreconreport.jinja2:148
 msgid "Cle<u>a</u>red Items"
-msgstr ""
+msgstr "क्लिअर्ड व्यवहार"
 
 #: gkwebapp/templates/bankreconreport.jinja2:149
 msgid "<u>S</u>tatement's Printable Version"
-msgstr ""
+msgstr "छपाई योग्य स्टेटमेंट"
 
 #: gkwebapp/templates/bankreconreport.jinja2:150
 msgid "<u>T</u>ransaction's Printable Version"
-msgstr ""
+msgstr "छपाई योग्य व्यवहार"
 
 #: gkwebapp/templates/bankreconreport.jinja2:151
 #: gkwebapp/templates/monthledger.jinja2:76
@@ -1348,7 +1396,7 @@ msgstr ""
 #: gkwebapp/templates/profitlossreport.jinja2:160
 #: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:224
 msgid "Prin<u>t</u>"
-msgstr ""
+msgstr "छापा"
 
 #: gkwebapp/templates/bankreconreport.jinja2:152
 #: gkwebapp/templates/cashflowreport.jinja2:139
@@ -1380,20 +1428,21 @@ msgstr ""
 #: gkwebapp/templates/projectstatementreport.jinja2:102
 #: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:213
 msgid "<u>B</u>ack"
-msgstr ""
+msgstr "पुन्हा"
 
 #: gkwebapp/templates/cashflowreport.jinja2:4
 #: gkwebapp/templates/mainshell.jinja2:74
 #: gkwebapp/templates/mainshell.jinja2:165
 #: gkwebapp/templates/printcashflowreport.jinja2:4
+#, fuzzy
 msgid "Cash Flow"
-msgstr ""
+msgstr "कॅश फ्लो बघा"
 
 #: gkwebapp/templates/cashflowreport.jinja2:61
 #: gkwebapp/templates/printcashflowreport.jinja2:37
 #: gkwebapp/templates/printcashflowreport.jinja2:49
 msgid "Cash Flow Account"
-msgstr ""
+msgstr "कॅश फ्लो स्टेटमेंट"
 
 #: gkwebapp/templates/cashflowreport.jinja2:61
 #: gkwebapp/templates/cashflowreport.jinja2:63
@@ -1402,13 +1451,13 @@ msgstr ""
 #: gkwebapp/templates/profitlossreport.jinja2:64
 #: gkwebapp/templates/profitlossreport.jinja2:67
 msgid "for the period"
-msgstr ""
+msgstr "कालावधी"
 
 #: gkwebapp/templates/cashflowreport.jinja2:63
 #: gkwebapp/templates/printcashflowreport.jinja2:39
 #: gkwebapp/templates/printcashflowreport.jinja2:51
 msgid "Receipt & Payment Account"
-msgstr ""
+msgstr "रिसिट आणि पेमेंट खाते"
 
 #: gkwebapp/templates/cashflowreport.jinja2:67
 #: gkwebapp/templates/cashflowreport.jinja2:102
@@ -1442,7 +1491,7 @@ msgstr ""
 #: gkwebapp/templates/profitlossreport.jinja2:86
 #: gkwebapp/templates/profitlossreport.jinja2:126
 msgid "Amount"
-msgstr ""
+msgstr "रक्कम"
 
 #: gkwebapp/templates/cashflowreport.jinja2:140
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:247
@@ -1459,7 +1508,7 @@ msgstr ""
 #: gkwebapp/templates/showstockreport.jinja2:163
 #: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:222
 msgid "E<u>x</u>port to Spreadsheet"
-msgstr ""
+msgstr "स्प्रेड शीट बनवा"
 
 #: gkwebapp/templates/cashflowreport.jinja2:141
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:248
@@ -1477,23 +1526,25 @@ msgstr ""
 #: gkwebapp/templates/showstockreport.jinja2:164
 #: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:223
 msgid "View Prin<u>t</u>able Version"
-msgstr ""
+msgstr "छपाई योग्य स्टेटमेंट बनवा"
 
 #: gkwebapp/templates/cashmemo.jinja2:52
 msgid "Add Cash Memo"
 msgstr ""
 
 #: gkwebapp/templates/cashmemo.jinja2:53
+#, fuzzy
 msgid "View Cash Memo"
-msgstr ""
+msgstr "कॅश फ्लो बघा"
 
 #: gkwebapp/templates/category.jinja2:5
 msgid "GNUKhata | Category"
 msgstr ""
 
 #: gkwebapp/templates/category.jinja2:52
+#, fuzzy
 msgid "Create Category"
-msgstr ""
+msgstr "वापरणारा निर्माण करा"
 
 #: gkwebapp/templates/category.jinja2:53
 msgid "Edit Category"
@@ -1501,7 +1552,7 @@ msgstr ""
 
 #: gkwebapp/templates/clearedbankreconreport.jinja2:4
 msgid "Cleared Transactions"
-msgstr ""
+msgstr "क्लिअर्ड व्यवहार"
 
 #: gkwebapp/templates/clearedbankreconreport.jinja2:66
 #: gkwebapp/templates/clearedbankreconreport.jinja2:71
@@ -1510,30 +1561,30 @@ msgstr ""
 
 #: gkwebapp/templates/clearedbankreconreport.jinja2:152
 msgid "Uncle<u>a</u>red Items"
-msgstr ""
+msgstr "अनक्लिअर्ड व्यवहार"
 
 #: gkwebapp/templates/clearedbankreconreport.jinja2:153
 msgid "S</u>tatement's Printable Version"
-msgstr ""
+msgstr "छपाई योग्य स्टेटमेंट"
 
 #: gkwebapp/templates/clearedbankreconreport.jinja2:154
 msgid "T</u>ransaction's Printable Version"
-msgstr ""
+msgstr "छपाई योग्य व्यवहारांचे स्टेटमेंट"
 
 #: gkwebapp/templates/clearedbankreconreport.jinja2:155
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:249
 #: gkwebapp/templates/printextendedtrialbalance.jinja2:97
 msgid "Prin<u>t"
-msgstr ""
+msgstr "छापा"
 
 #: gkwebapp/templates/clearedbankreconreport.jinja2:156
 msgid "B</u>ack"
-msgstr ""
+msgstr "पुन्हा"
 
 #: gkwebapp/templates/closebooks.jinja2:13
 #: gkwebapp/templates/createorg.jinja2:39
 msgid "Improper Date!"
-msgstr ""
+msgstr "चुकीची तारीख!"
 
 #: gkwebapp/templates/closebooks.jinja2:16
 msgid "There are transactions beyond the closure date. Books cannot be closed."
@@ -1541,34 +1592,34 @@ msgstr ""
 
 #: gkwebapp/templates/closebooks.jinja2:20
 msgid "Books have been closed for the current Financial Year."
-msgstr ""
+msgstr "चालू वर्षाची पुस्तके बंद केली आहेत."
 
 #: gkwebapp/templates/closebooks.jinja2:24
 #: gkwebapp/templates/createorg.jinja2:35
 msgid "Please enter Date!"
-msgstr ""
+msgstr "तारीख टाका"
 
 #: gkwebapp/templates/closebooks.jinja2:28
 msgid "Books cannot be closed!"
-msgstr ""
+msgstr "हिशेबाची पुस्तके बंद करता येणार नाहीत."
 
 #: gkwebapp/templates/closebooks.jinja2:32
 msgid "Rollover cannot be done!"
-msgstr ""
+msgstr "रोल ओव्हर करता येणार नाही."
 
 #: gkwebapp/templates/closebooks.jinja2:36
 msgid "Financial year end should be greater or equal to start date!"
-msgstr ""
+msgstr "वर्ष अखेरची तारीख प्रारंभ दिनाहून आधीची असु शकत नाही."
 
 #: gkwebapp/templates/closebooks.jinja2:42
 msgid "Close Books and Rollover"
-msgstr ""
+msgstr "हिशेबाची पुस्तके बंद करणे आणि रोल ओव्हर करणे"
 
 #: gkwebapp/templates/closebooks.jinja2:47
 #: gkwebapp/templates/closebooks.jinja2:49
 #: gkwebapp/templates/closebooks.jinja2:56
 msgid "CLOSE BOOKS"
-msgstr ""
+msgstr "हिशेबाची पुस्तके बंद करा."
 
 #: gkwebapp/templates/closebooks.jinja2:48
 msgid ""
@@ -1579,23 +1630,23 @@ msgstr ""
 
 #: gkwebapp/templates/closebooks.jinja2:49
 msgid "After"
-msgstr ""
+msgstr "नंतर"
 
 #: gkwebapp/templates/closebooks.jinja2:49
 msgid ""
 "is done, transactions cannot be recorded but ledger accounts can be "
 "viewed."
-msgstr ""
+msgstr "केल्यानंतर व्यवहारांची नोंद करता येणार नाही पण खाते उतारा बघता येईल"
 
 #: gkwebapp/templates/closebooks.jinja2:51
 msgid "ROLL OVER"
-msgstr ""
+msgstr "रोल ओव्हर करा"
 
 #: gkwebapp/templates/closebooks.jinja2:52
 msgid ""
 "a new organization with the same name and type is created for the next "
 "accounting year,"
-msgstr ""
+msgstr "पुढील वर्षासाठी ह्याच नावाची आणि प्रकारची संस्था निर्माण केली जाईल."
 
 #: gkwebapp/templates/closebooks.jinja2:53
 msgid ""
@@ -1603,19 +1654,23 @@ msgid ""
 "its respective Group and Sub-Group and correct opening balance is brought"
 " down,"
 msgstr ""
+"सर्व मालमत्ता आणि देणी खाती आपोआप त्यांच्या त्यांच्या ग्रुप आणि "
+"सबग्रुपमध्ये योग्य आरंभीच्या शिलकीसह उघडली जातील."
 
 #: gkwebapp/templates/closebooks.jinja2:54
 msgid ""
 "in case of expense and income accounts these are also opened under their "
 "respective Groups and Sub-Groups, of course, without opening balances,"
 msgstr ""
+"सर्व उत्पन्न आणि खर्चाची खाती आपोआप त्यांच्या त्यांच्या ग्रुप आणि "
+"सबग्रुपमध्ये अर्थातच आरंभीच्या शिलकीविना उघडली जातील."
 
 #: gkwebapp/templates/closebooks.jinja2:55
 msgid ""
 "The Closing Stock of the earlier year gets transferred to the next year "
 "as Opening Stock.\n"
 "            This module can only be activated after"
-msgstr ""
+msgstr "वर्ष अखेरीचा शिल्लक माल पुढील वर्षाचा आरंभीचा माल म्हणुन दाखवला जाईल."
 
 #: gkwebapp/templates/closebooks.jinja2:56
 msgid "is done."
@@ -1623,32 +1678,32 @@ msgstr ""
 
 #: gkwebapp/templates/closebooks.jinja2:64
 msgid "Close Books"
-msgstr ""
+msgstr "हिशेबाची पुस्तके बंद करा."
 
 #: gkwebapp/templates/closebooks.jinja2:67
 msgid "Current Financial Year"
-msgstr ""
+msgstr "चालू हिशेबाचे वर्ष"
 
 #: gkwebapp/templates/closebooks.jinja2:70
 #: gkwebapp/templates/closebooks.jinja2:109
 #: gkwebapp/templates/closebooks.jinja2:132
 #: gkwebapp/templates/createorg.jinja2:77
 msgid "Enter From Day"
-msgstr ""
+msgstr "आरंभीचा दिवस"
 
 #: gkwebapp/templates/closebooks.jinja2:73
 #: gkwebapp/templates/closebooks.jinja2:112
 #: gkwebapp/templates/closebooks.jinja2:135
 #: gkwebapp/templates/createorg.jinja2:80
 msgid "Enter From Month"
-msgstr ""
+msgstr "महिना"
 
 #: gkwebapp/templates/closebooks.jinja2:76
 #: gkwebapp/templates/closebooks.jinja2:115
 #: gkwebapp/templates/closebooks.jinja2:138
 #: gkwebapp/templates/createorg.jinja2:83
 msgid "Enter From Year"
-msgstr ""
+msgstr "वर्ष"
 
 #: gkwebapp/templates/closebooks.jinja2:80
 #: gkwebapp/templates/closebooks.jinja2:118
@@ -1658,146 +1713,146 @@ msgstr ""
 #: gkwebapp/templates/viewprofitloss.jinja2:48
 #: gkwebapp/templates/viewtrialbalance.jinja2:40
 msgid "To"
-msgstr ""
+msgstr "पर्यंत"
 
 #: gkwebapp/templates/closebooks.jinja2:82
 #: gkwebapp/templates/closebooks.jinja2:120
 #: gkwebapp/templates/closebooks.jinja2:143
 #: gkwebapp/templates/createorg.jinja2:88
 msgid "Enter To Day"
-msgstr ""
+msgstr "अखेरचा दिवस"
 
 #: gkwebapp/templates/closebooks.jinja2:85
 #: gkwebapp/templates/closebooks.jinja2:123
 #: gkwebapp/templates/closebooks.jinja2:146
 #: gkwebapp/templates/createorg.jinja2:91
 msgid "Enter To Month"
-msgstr ""
+msgstr "अखेरचा महिना"
 
 #: gkwebapp/templates/closebooks.jinja2:88
 #: gkwebapp/templates/closebooks.jinja2:126
 #: gkwebapp/templates/closebooks.jinja2:149
 #: gkwebapp/templates/createorg.jinja2:94
 msgid "Enter To Year"
-msgstr ""
+msgstr "वर्ष अखेर"
 
 #: gkwebapp/templates/closebooks.jinja2:92
 msgid "Clo<u>s</u>e Books"
-msgstr ""
+msgstr "हिशेबाची पुस्तके बंद करा"
 
 #: gkwebapp/templates/closebooks.jinja2:103
 msgid "Roll Over"
-msgstr ""
+msgstr "रोल ओव्हर करा"
 
 #: gkwebapp/templates/closebooks.jinja2:106
 msgid "Roll Over for the Period"
-msgstr ""
+msgstr "रोल ओव्हर कालावधी"
 
 #: gkwebapp/templates/closebooks.jinja2:107
 msgid "Current Financial Year From"
-msgstr ""
+msgstr "चालू वर्षाचा आरंभ"
 
 #: gkwebapp/templates/closebooks.jinja2:130
 msgid "New Financial Year From"
-msgstr ""
+msgstr "नवीन वर्षाचा आरंभ"
 
 #: gkwebapp/templates/closebooks.jinja2:153
 msgid "Roll O<u>v</u>er"
-msgstr ""
+msgstr "रोल ओव्हर करा"
 
 #: gkwebapp/templates/closebooks.jinja2:173
 msgid "Confirm"
-msgstr ""
+msgstr "कन्फर्म करा"
 
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:50
 #: gkwebapp/templates/viewbalancesheet.jinja2:61
 msgid "Conventional Balance Sheet"
-msgstr ""
+msgstr "कन्व्हेनशनल बॅलन्स शीट"
 
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:50
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:52
 #: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:58
 msgid "as on"
-msgstr ""
+msgstr "तारीख"
 
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:52
 #: gkwebapp/templates/viewbalancesheet.jinja2:68
 msgid "Conventional Statement of Affairs"
-msgstr ""
+msgstr "कन्व्हेनशनल स्टेटमेंट आॅफ अफेअर्स"
 
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:60
 msgid "Capital and Liabilities"
-msgstr ""
+msgstr "कॅपिटल आणि लायबिलीटीज"
 
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:62
 msgid "Corpus and Liabilities"
-msgstr ""
+msgstr "कॉर्पस आणि लायबिलीटीज"
 
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:153
 msgid "Property and Assets"
-msgstr ""
+msgstr "प्रॉपर्टी आणि अॅसेटस्"
 
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:243
 #: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:214
 msgid "Show Sub<u>g</u>roups"
-msgstr ""
+msgstr "सब ग्रुप दाखवा"
 
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:244
 #: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:215
 msgid "Sho<u>w</u> Groups"
-msgstr ""
+msgstr "ग्रुप दाखवा"
 
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:245
 #: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:216
 msgid "Show All <u>A</u>ccounts"
-msgstr ""
+msgstr "सर्व खाती दाखवा"
 
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:246
 msgid "<u>S</u>ources & Applications of Funds"
-msgstr ""
+msgstr "सोर्सेस आणि अॅप्लिकेशन्स आॅफ फंडस्"
 
 #: gkwebapp/templates/createaccount.jinja2:5
 #: gkwebapp/templates/createaccountpopup.jinja2:5
 msgid "GNUKhata | Create Account"
-msgstr ""
+msgstr "गन्यु खाता । खाते निर्माण करा"
 
 #: gkwebapp/templates/createaccount.jinja2:113
 #: gkwebapp/templates/createaccountpopup.jinja2:37
 msgid "Account created successfully."
-msgstr ""
+msgstr "खाते निर्माण केले."
 
 #: gkwebapp/templates/createaccount.jinja2:117
 #: gkwebapp/templates/createaccountpopup.jinja2:41
 msgid "Account could not be created."
-msgstr ""
+msgstr "खाते निर्माण करता आले नाही."
 
 #: gkwebapp/templates/createaccount.jinja2:121
 #: gkwebapp/templates/createaccountpopup.jinja2:45
 #: gkwebapp/templates/editaccount.jinja2:42
 #: gkwebapp/templates/multipleaccounts.jinja2:120
 msgid "Please enter account name!"
-msgstr ""
+msgstr "खात्याचे नाव टाका!"
 
 #: gkwebapp/templates/createaccount.jinja2:126
 #: gkwebapp/templates/createaccountpopup.jinja2:50
 msgid "Please enter new sub-group name!"
-msgstr ""
+msgstr "नवीन सब ग्रुपचे नाव टाका!"
 
 #: gkwebapp/templates/createaccount.jinja2:131
 #: gkwebapp/templates/createaccountpopup.jinja2:55
 msgid "Please select group name!"
-msgstr ""
+msgstr "ग्रुप निवडा!"
 
 #: gkwebapp/templates/createaccount.jinja2:136
 #: gkwebapp/templates/createaccountpopup.jinja2:60
 msgid "Please select sub-group name!"
-msgstr ""
+msgstr "सब ग्रुप निवडा!"
 
 #: gkwebapp/templates/createaccount.jinja2:141
 #: gkwebapp/templates/createaccountpopup.jinja2:65
 #: gkwebapp/templates/editaccount.jinja2:47
 msgid "Account already exists!"
-msgstr ""
+msgstr "खाते अस्तित्वात आहे!"
 
 #: gkwebapp/templates/createaccount.jinja2:147
 #: gkwebapp/templates/createaccountpopup.jinja2:71
@@ -1805,48 +1860,48 @@ msgstr ""
 #: gkwebapp/templates/mainshell.jinja2:149
 #: gkwebapp/templates/mainshell.jinja2:286
 msgid "Create Account"
-msgstr ""
+msgstr "खाते निर्माण करा"
 
 #: gkwebapp/templates/createaccount.jinja2:157
 #: gkwebapp/templates/createaccountpopup.jinja2:81
 msgid "<u>G</u>roup Name"
-msgstr ""
+msgstr "ग्रुपचे नाव"
 
 #: gkwebapp/templates/createaccount.jinja2:159
 #: gkwebapp/templates/createaccountpopup.jinja2:83
 msgid "Select Group"
-msgstr ""
+msgstr "ग्रुप निवडा"
 
 #: gkwebapp/templates/createaccount.jinja2:165
 #: gkwebapp/templates/createaccountpopup.jinja2:89
 msgid "Su<u>b</u>-Group Name"
-msgstr ""
+msgstr "सब ग्रुप"
 
 #: gkwebapp/templates/createaccount.jinja2:167
 #: gkwebapp/templates/createaccountpopup.jinja2:91
 msgid "Select Sub-Group"
-msgstr ""
+msgstr "सब ग्रुप निवडा"
 
 #: gkwebapp/templates/createaccount.jinja2:171
 #: gkwebapp/templates/createaccountpopup.jinja2:95
 msgid "Ne<u>w</u> Sub-Group Name"
-msgstr ""
+msgstr "सब ग्रुप नाव"
 
 #: gkwebapp/templates/createaccount.jinja2:175
 msgid "Crea<u>t</u>e Multiple Accounts"
-msgstr ""
+msgstr "अनेक खाती निर्माण करा"
 
 #: gkwebapp/templates/createaccount.jinja2:177
 #: gkwebapp/templates/createaccountpopup.jinja2:98
 #: gkwebapp/templates/editaccount.jinja2:88
 msgid "<u>A</u>ccount Name"
-msgstr ""
+msgstr "खात्याचे नाव"
 
 #: gkwebapp/templates/createaccount.jinja2:180
 #: gkwebapp/templates/createaccountpopup.jinja2:101
 #: gkwebapp/templates/editaccount.jinja2:91
 msgid "<u>O</u>pening Balance"
-msgstr ""
+msgstr "आरंभीची शिल्लक"
 
 #: gkwebapp/templates/createaccount.jinja2:198
 #: gkwebapp/templates/createaccount.jinja2:224
@@ -1862,106 +1917,110 @@ msgstr ""
 #: gkwebapp/templates/printlistofaccounts.jinja2:48
 #: gkwebapp/templates/printnettrialbalance.jinja2:44
 msgid "Group Name"
-msgstr ""
+msgstr "ग्रुपचे नाव"
 
 #: gkwebapp/templates/createaccount.jinja2:199
 #: gkwebapp/templates/createaccount.jinja2:225
 #: gkwebapp/templates/createaccountpopup.jinja2:119
 #: gkwebapp/templates/createaccountpopup.jinja2:145
 msgid "No. of Accounts"
-msgstr ""
+msgstr "खात्यांची संख्या"
 
 #: gkwebapp/templates/createaccount.jinja2:200
 #: gkwebapp/templates/createaccount.jinja2:226
 #: gkwebapp/templates/createaccountpopup.jinja2:120
 #: gkwebapp/templates/createaccountpopup.jinja2:146
 msgid "Group Balance"
-msgstr ""
+msgstr "ग्रुपची शिल्लक"
 
 #: gkwebapp/templates/createaccount.jinja2:243
 #: gkwebapp/templates/createaccountpopup.jinja2:163
 msgid "Difference in Balance"
-msgstr ""
+msgstr "शिलकीतला फरक"
 
 #: gkwebapp/templates/createadmin.jinja2:42
 msgid "Create Admin"
-msgstr ""
+msgstr "अॅडमिन निर्माण करा"
 
 #: gkwebapp/templates/createadmin.jinja2:50
 #: gkwebapp/templates/createuser.jinja2:29 gkwebapp/templates/login.jinja2:82
 msgid "Please enter username!"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव"
 
 #: gkwebapp/templates/createadmin.jinja2:54
 #: gkwebapp/templates/createuser.jinja2:33 gkwebapp/templates/login.jinja2:86
 msgid "Please enter password!"
-msgstr ""
+msgstr "पासवर्ड टाका"
 
 #: gkwebapp/templates/createadmin.jinja2:58
 #: gkwebapp/templates/createuser.jinja2:37
 msgid "Please re-enter password!"
-msgstr ""
+msgstr "पुन्हा पासवर्ड टाका"
 
 #: gkwebapp/templates/createadmin.jinja2:62
 #: gkwebapp/templates/edituser.jinja2:31
 msgid "Password not confirmed!"
-msgstr ""
+msgstr "पासवर्ड कन्फर्म झाला नाही!"
 
 #: gkwebapp/templates/createadmin.jinja2:66
 #: gkwebapp/templates/createuser.jinja2:49
 msgid "Please enter security question!"
-msgstr ""
+msgstr "सुरक्षेचा प्रश्न टाका!"
 
 #: gkwebapp/templates/createadmin.jinja2:70
 #: gkwebapp/templates/createuser.jinja2:53
 msgid "Please enter the answer of security question!"
-msgstr ""
+msgstr "सुरक्षेच्या प्रश्नाचे उत्तर टाका"
 
 #: gkwebapp/templates/createadmin.jinja2:77
 msgid "<u>U</u>sername"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव"
 
 #: gkwebapp/templates/createadmin.jinja2:80
 msgid "<u>P</u>assword"
-msgstr ""
+msgstr "पासवर्ड टाका"
 
 #: gkwebapp/templates/createadmin.jinja2:83
 msgid "<u>C</u>onfirm Password"
-msgstr ""
+msgstr "पासवर्ड कन्फर्म करा"
 
 #: gkwebapp/templates/createadmin.jinja2:86
 #: gkwebapp/templates/createuser.jinja2:88
 #: gkwebapp/templates/forgotpassword.jinja2:59
 msgid "Security <u>Q</u>uestion"
-msgstr ""
+msgstr "सुरक्षेचा प्रश्न टाका"
 
 #: gkwebapp/templates/createadmin.jinja2:89
 msgid "<u>A</u>nswer to  Security Question"
-msgstr ""
+msgstr "सुरक्षेच्या प्रश्नाचे उत्तर"
 
 #: gkwebapp/templates/createadmin.jinja2:97
 msgid "Create & <u>L</u>ogin"
-msgstr ""
+msgstr "लॉगिन निर्माण करा"
 
 #: gkwebapp/templates/creategodown.jinja2:6
+#, fuzzy
 msgid "Godown created successfully."
-msgstr ""
+msgstr "खाते निर्माण केले."
 
 #: gkwebapp/templates/creategodown.jinja2:10
+#, fuzzy
 msgid "Godown could not be created."
-msgstr ""
+msgstr "खाते निर्माण करता आले नाही."
 
 #: gkwebapp/templates/creategodown.jinja2:15
 #: gkwebapp/templates/editgodown.jinja2:20
 #: gkwebapp/templates/multiplegodowns.jinja2:140
+#, fuzzy
 msgid "Godown already exists!"
-msgstr ""
+msgstr "खाते अस्तित्वात आहे!"
 
 #: gkwebapp/templates/creategodown.jinja2:20
 #: gkwebapp/templates/editgodown.jinja2:42
 #: gkwebapp/templates/multiplegodowns.jinja2:127
+#, fuzzy
 msgid "Please enter godown name!"
-msgstr ""
+msgstr "रक्कम टाका!"
 
 #: gkwebapp/templates/creategodown.jinja2:23
 #: gkwebapp/templates/editgodown.jinja2:30
@@ -1973,25 +2032,28 @@ msgid "Godown Name"
 msgstr ""
 
 #: gkwebapp/templates/creategodown.jinja2:28
+#, fuzzy
 msgid "Please select state!"
-msgstr ""
+msgstr "रोल निवडा!"
 
 #: gkwebapp/templates/creategodown.jinja2:74
 #: gkwebapp/templates/editgodown.jinja2:96
+#, fuzzy
 msgid "Please enter address!"
-msgstr ""
+msgstr "तारीख टाका"
 
 #: gkwebapp/templates/creategodown.jinja2:77
 #: gkwebapp/templates/editgodown.jinja2:99
 #: gkwebapp/templates/editorganisation.jinja2:66
 #: gkwebapp/templates/printlistofgodowns.jinja2:48
 msgid "Address"
-msgstr ""
+msgstr "पत्ता"
 
 #: gkwebapp/templates/creategodown.jinja2:84
 #: gkwebapp/templates/editgodown.jinja2:107
+#, fuzzy
 msgid "Contact Name"
-msgstr ""
+msgstr "प्रोजेक्टचे नाव"
 
 #: gkwebapp/templates/creategodown.jinja2:92
 #: gkwebapp/templates/editgodown.jinja2:115
@@ -2000,25 +2062,25 @@ msgstr ""
 
 #: gkwebapp/templates/createorg.jinja2:23
 msgid "Please enter organisation name!"
-msgstr ""
+msgstr "संस्थेचे नाव!"
 
 #: gkwebapp/templates/createorg.jinja2:27
 msgid "Duplicate organisation!"
-msgstr ""
+msgstr "संस्था अस्तित्वात आहे!"
 
 #: gkwebapp/templates/createorg.jinja2:31
 msgid "Financial end date should be greater or equal to start date!"
-msgstr ""
+msgstr "वर्ष अखेरची तारीख आरंभीच्या तारखेच्या नंतरची असायला हवी"
 
 #: gkwebapp/templates/createorg.jinja2:43
 #: gkwebapp/templates/mainshell.jinja2:244
 msgid "Create Organisation"
-msgstr ""
+msgstr "संस्था निर्माण करा"
 
 #: gkwebapp/templates/createorg.jinja2:49
 #: gkwebapp/templates/existingorg.jinja2:42
 msgid "<u>O</u>rganisation Name"
-msgstr ""
+msgstr "संस्थेचे नाव"
 
 #: gkwebapp/templates/createorg.jinja2:54
 msgid "<u>C</u>ase"
@@ -2046,19 +2108,19 @@ msgstr ""
 
 #: gkwebapp/templates/createorg.jinja2:65
 msgid "Organisation <u>T</u>ype"
-msgstr ""
+msgstr "संस्थेचा प्रकार"
 
 #: gkwebapp/templates/createorg.jinja2:67
 msgid "Profit Making"
-msgstr ""
+msgstr "व्यावसायिक"
 
 #: gkwebapp/templates/createorg.jinja2:68
 msgid "Not For Profit"
-msgstr ""
+msgstr "स्वयंसेवी"
 
 #: gkwebapp/templates/createorg.jinja2:73
 msgid "<u>F</u>inancial Year"
-msgstr ""
+msgstr "हिशेबाचे वर्ष"
 
 #: gkwebapp/templates/createorg.jinja2:101
 msgid "Inventory"
@@ -2066,7 +2128,7 @@ msgstr ""
 
 #: gkwebapp/templates/createorg.jinja2:106
 msgid "<u>P</u>roceed"
-msgstr ""
+msgstr "पुढे चला"
 
 #: gkwebapp/templates/createtransfernote.jinja2:33
 #: gkwebapp/templates/edittransfernote.jinja2:33
@@ -2077,18 +2139,21 @@ msgstr ""
 #: gkwebapp/templates/createtransfernote.jinja2:45
 #: gkwebapp/templates/edittransfernote.jinja2:45
 #: gkwebapp/templates/receivedtransfernote.jinja2:49
+#, fuzzy
 msgid "Please Enter Date"
-msgstr ""
+msgstr "तारीख टाका"
 
 #: gkwebapp/templates/createtransfernote.jinja2:53
+#, fuzzy
 msgid "Transfernote No.Already Exist!"
-msgstr ""
+msgstr "वापरणारा अस्तित्वात आहे!"
 
 #: gkwebapp/templates/createtransfernote.jinja2:57
 #: gkwebapp/templates/edittransfernote.jinja2:53
 #: gkwebapp/templates/receivedtransfernote.jinja2:57
+#, fuzzy
 msgid "Please Enter Transfer Note No.!"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव"
 
 #: gkwebapp/templates/createtransfernote.jinja2:69
 #: gkwebapp/templates/edittransfernote.jinja2:61
@@ -2116,8 +2181,9 @@ msgstr ""
 #: gkwebapp/templates/createtransfernote.jinja2:89
 #: gkwebapp/templates/edittransfernote.jinja2:94
 #: gkwebapp/templates/receivedtransfernote.jinja2:105
+#, fuzzy
 msgid "Date:"
-msgstr ""
+msgstr "तारीख"
 
 #: gkwebapp/templates/createtransfernote.jinja2:142
 #: gkwebapp/templates/edittransfernote.jinja2:129
@@ -2160,8 +2226,9 @@ msgstr ""
 #: gkwebapp/templates/createtransfernote.jinja2:174
 #: gkwebapp/templates/edittransfernote.jinja2:161
 #: gkwebapp/templates/receivedtransfernote.jinja2:144
+#, fuzzy
 msgid " Designation:"
-msgstr ""
+msgstr "संस्था एडिट करा"
 
 #: gkwebapp/templates/createtransfernote.jinja2:183
 msgid " Save & Print"
@@ -2174,76 +2241,77 @@ msgstr ""
 
 #: gkwebapp/templates/createtransfernote.jinja2:199
 #: gkwebapp/templates/createtransfernote.jinja2:218
+#, fuzzy
 msgid "YES"
-msgstr ""
+msgstr "हो"
 
 #: gkwebapp/templates/createuser.jinja2:6
 msgid "Create User"
-msgstr ""
+msgstr "वापरणारा निर्माण करा"
 
 #: gkwebapp/templates/createuser.jinja2:22
 msgid "Create New User"
-msgstr ""
+msgstr "नवीन वापरणारा निर्माण करा"
 
 #: gkwebapp/templates/createuser.jinja2:41
 #: gkwebapp/templates/edituser.jinja2:43
 msgid "Password doesn't match!"
-msgstr ""
+msgstr "पासवर्ड कन्फर्म होत नाही!"
 
 #: gkwebapp/templates/createuser.jinja2:45
 msgid "Please select role!"
-msgstr ""
+msgstr "रोल निवडा!"
 
 #: gkwebapp/templates/createuser.jinja2:57
 msgid "User successfully added!"
-msgstr ""
+msgstr "नवीन वापरणारा निर्माण केला!"
 
 #: gkwebapp/templates/createuser.jinja2:61
 msgid "User already exists!"
-msgstr ""
+msgstr "वापरणारा अस्तित्वात आहे!"
 
 #: gkwebapp/templates/createuser.jinja2:65
 msgid "You don't have authentication to add new user!"
-msgstr ""
+msgstr "तुम्हाला नवीन वापरणारा निर्माण करण्याचा अधिकार नाही!"
 
 #: gkwebapp/templates/createuser.jinja2:68
 #: gkwebapp/templates/forgotpassword.jinja2:54
 #: gkwebapp/templates/removeUser.jinja2:43
 msgid "Us<u>e</u>rname"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव"
 
 #: gkwebapp/templates/createuser.jinja2:72
 msgid "Pass<u>w</u>ord"
-msgstr ""
+msgstr "पासवर्ड"
 
 #: gkwebapp/templates/createuser.jinja2:76
 #: gkwebapp/templates/edituser.jinja2:60
 msgid "C<u>o</u>nfirm Password"
-msgstr ""
+msgstr "पासवर्ड कन्फर्म करा"
 
 #: gkwebapp/templates/createuser.jinja2:80
 msgid "Selec<u>t</u> Role"
-msgstr ""
+msgstr "रोल निवडा"
 
 #: gkwebapp/templates/createuser.jinja2:82
 msgid "Select a role"
-msgstr ""
+msgstr "रोल निवडा"
 
 #: gkwebapp/templates/createuser.jinja2:83
 msgid "Manager"
-msgstr ""
+msgstr "मॅनेजर"
 
 #: gkwebapp/templates/createuser.jinja2:84
 msgid "Operator"
-msgstr ""
+msgstr "आॅपरेटर"
 
 #: gkwebapp/templates/createuser.jinja2:92
 msgid "<u>S</u>ecurity Answer"
-msgstr ""
+msgstr "सुरक्षेचा प्रश्न टाका"
 
 #: gkwebapp/templates/createuser.jinja2:99
 msgid "Cre<u>a</u>te"
-msgstr ""
+msgstr "निर्माण करा"
 
 #: gkwebapp/templates/customersupplier.jinja2:5
 msgid "GNUKhata | Customer and Supplier"
@@ -2259,18 +2327,18 @@ msgstr ""
 
 #: gkwebapp/templates/deletedvoucher.jinja2:4
 msgid "Deleted Voucher"
-msgstr ""
+msgstr "रद्द केलेली व्हावचर्स"
 
 #: gkwebapp/templates/deletedvoucher.jinja2:51
 #: gkwebapp/templates/mainshell.jinja2:79
 msgid "List of Deleted Vouchers"
-msgstr ""
+msgstr "रद्द केलेल्या व्हावचर्सची यादी"
 
 #: gkwebapp/templates/deletedvoucher.jinja2:59
 #: gkwebapp/templates/printledger.jinja2:52
 #: gkwebapp/templates/printtransactions.jinja2:40
 msgid "V.No."
-msgstr ""
+msgstr "व्हा. क्र."
 
 #: gkwebapp/templates/deletedvoucher.jinja2:64
 #: gkwebapp/templates/dualledgerreport.jinja2:86
@@ -2280,7 +2348,7 @@ msgstr ""
 #: gkwebapp/templates/ledgerreport.jinja2:68
 #: gkwebapp/templates/printledger.jinja2:38
 msgid "Project"
-msgstr ""
+msgstr "प्रोजेक्ट"
 
 #: gkwebapp/templates/deliverychallan.jinja2:5
 msgid "GNUKhata | Delivery Challan"
@@ -2306,20 +2374,20 @@ msgstr ""
 #: gkwebapp/templates/printledger.jinja2:7
 #: gkwebapp/templates/viewledger.jinja2:5
 msgid "Ledger"
-msgstr ""
+msgstr "लेजर"
 
 #: gkwebapp/templates/dualledgerreport.jinja2:58
 #: gkwebapp/templates/findeditvoucher.jinja2:40
 #: gkwebapp/templates/ledgerreport.jinja2:53
 msgid "Unauthorized to Lock/Unlock Transactions!"
-msgstr ""
+msgstr "नोंद लॉक आणि अनलॉक करण्याचा अधिकार तुम्हाला नाही!"
 
 #: gkwebapp/templates/dualledgerreport.jinja2:84
 #: gkwebapp/templates/dualledgerreport.jinja2:166
 #: gkwebapp/templates/printprojectstatement.jinja2:42
 #: gkwebapp/templates/projectstatementreport.jinja2:67
 msgid "Account"
-msgstr ""
+msgstr "खाते"
 
 #: gkwebapp/templates/dualledgerreport.jinja2:100
 #: gkwebapp/templates/dualledgerreport.jinja2:182
@@ -2327,65 +2395,65 @@ msgstr ""
 #: gkwebapp/templates/printstockreport.jinja2:68
 #: gkwebapp/templates/showstockreport.jinja2:79
 msgid "Balance"
-msgstr ""
+msgstr "शिल्लक"
 
 #: gkwebapp/templates/editaccount.jinja2:5
 #: gkwebapp/templates/editaccount.jinja2:59
 #: gkwebapp/templates/mainshell.jinja2:32
 msgid "Edit Account"
-msgstr ""
+msgstr "खाते एडिट करा"
 
 #: gkwebapp/templates/editaccount.jinja2:28
 msgid "Account edited successfully."
-msgstr ""
+msgstr "खाते एडिट केले."
 
 #: gkwebapp/templates/editaccount.jinja2:33
 msgid "Account deleted successfully."
-msgstr ""
+msgstr "खाते काढुन टाकले."
 
 #: gkwebapp/templates/editaccount.jinja2:38
 msgid "Account could not be edited."
-msgstr ""
+msgstr "खाते एडिट करता आले नाही."
 
 #: gkwebapp/templates/editaccount.jinja2:52
 msgid "Account cannot be deleted!"
-msgstr ""
+msgstr "खाते काढुन टाकता आले नाही!"
 
 #: gkwebapp/templates/editaccount.jinja2:53
 msgid "Transactions might be remaining for this account."
-msgstr ""
+msgstr "खात्यात व्यवहाराच्या नोंदी असतील."
 
 #: gkwebapp/templates/editaccount.jinja2:67
 #: gkwebapp/templates/viewbankrecon.jinja2:41
 #: gkwebapp/templates/viewdualledger.jinja2:43
 #: gkwebapp/templates/viewledger.jinja2:40
 msgid "Select Account"
-msgstr ""
+msgstr "खाते निवडा"
 
 #: gkwebapp/templates/editaccount.jinja2:73
 msgid "This is a system generated account, cannot be edited/deleted."
-msgstr ""
+msgstr "आज्ञावलीने निर्माण केलेले हे खाते एडिट करता वा काढुन टाकता येणार नाही."
 
 #: gkwebapp/templates/editaccount.jinja2:76
 msgid "Name of this system generated account cannot be edited."
-msgstr ""
+msgstr "आज्ञावलीने निर्माण केलेल्या ह्या खात्याचे नाव एडिट करता येणार नाही."
 
 #: gkwebapp/templates/editaccount.jinja2:85
 #: gkwebapp/templates/listofaccounts.jinja2:63
 #: gkwebapp/templates/printlistofaccounts.jinja2:51
 msgid "Sub-Group Name"
-msgstr ""
+msgstr "सब ग्रुप नाव"
 
 #: gkwebapp/templates/editaccount.jinja2:98
 #: gkwebapp/templates/edittransfernote.jinja2:170
 #: gkwebapp/templates/viewvoucher.jinja2:469
 msgid "<u>D</u>elete"
-msgstr ""
+msgstr "काढुन टाका"
 
 #: gkwebapp/templates/editaccount.jinja2:99
 #: gkwebapp/templates/edittransfernote.jinja2:171
 msgid "Edi<u>t</u>"
-msgstr ""
+msgstr "एडिट करा"
 
 #: gkwebapp/templates/editaccount.jinja2:109
 #: gkwebapp/templates/editcategory.jinja2:128
@@ -2397,7 +2465,7 @@ msgstr ""
 #: gkwebapp/templates/project.jinja2:194
 #: gkwebapp/templates/receivedtransfernote.jinja2:184
 msgid "Delete?"
-msgstr ""
+msgstr "काढुन टाकु?"
 
 #: gkwebapp/templates/editaccount.jinja2:115
 #: gkwebapp/templates/editcategory.jinja2:134
@@ -2416,7 +2484,7 @@ msgstr ""
 #: gkwebapp/templates/receivedtransfernote.jinja2:190
 #: gkwebapp/templates/viewcashmemo.jinja2:280
 msgid "Cancel"
-msgstr ""
+msgstr "नको"
 
 #: gkwebapp/templates/editaccount.jinja2:116
 #: gkwebapp/templates/editcategory.jinja2:116
@@ -2434,7 +2502,7 @@ msgstr ""
 #: gkwebapp/templates/project.jinja2:154 gkwebapp/templates/project.jinja2:201
 #: gkwebapp/templates/receivedtransfernote.jinja2:191
 msgid "Delete"
-msgstr ""
+msgstr "काढुन टाका"
 
 #: gkwebapp/templates/editcategory.jinja2:9
 msgid "Category deleted!"
@@ -2450,8 +2518,9 @@ msgstr ""
 
 #: gkwebapp/templates/editcategory.jinja2:33
 #: gkwebapp/templates/searchcategory.jinja2:32
+#, fuzzy
 msgid "Select Category"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव निवडा"
 
 #: gkwebapp/templates/editcategory.jinja2:59
 msgid "Enter category name"
@@ -2464,23 +2533,27 @@ msgstr ""
 #: gkwebapp/templates/editunitofmeasurement.jinja2:69
 #: gkwebapp/templates/project.jinja2:157
 msgid "Edit"
-msgstr ""
+msgstr "एडिट"
 
 #: gkwebapp/templates/editcustomersupplier.jinja2:25
+#, fuzzy
 msgid "Customer deleted successfully."
-msgstr ""
+msgstr "व्हावचर काढुन टाकले"
 
 #: gkwebapp/templates/editcustomersupplier.jinja2:29
+#, fuzzy
 msgid "Supplier deleted successfully."
-msgstr ""
+msgstr "व्हावचर काढुन टाकले"
 
 #: gkwebapp/templates/editcustomersupplier.jinja2:33
+#, fuzzy
 msgid "Customer can not be deleted"
-msgstr ""
+msgstr "खाते काढुन टाकता आले नाही!"
 
 #: gkwebapp/templates/editcustomersupplier.jinja2:37
+#, fuzzy
 msgid "Supplier can not be deleted"
-msgstr ""
+msgstr "प्रोजेक्ट काढुन टाकता येणार नाही."
 
 #: gkwebapp/templates/editcustomersupplier.jinja2:52
 msgid "Customers & Suppliers List:"
@@ -2503,8 +2576,9 @@ msgid "Delivery note cancelled."
 msgstr ""
 
 #: gkwebapp/templates/editdeliverychallan.jinja2:17
+#, fuzzy
 msgid "Delivery Note cannot be cancelled!"
-msgstr ""
+msgstr "प्रोजेक्ट काढुन टाकता येणार नाही."
 
 #: gkwebapp/templates/editdeliverychallan.jinja2:27
 msgid "Select Delivery Note"
@@ -2514,42 +2588,51 @@ msgstr ""
 #: gkwebapp/templates/editinvoice.jinja2:290
 #: gkwebapp/templates/receivedtransfernote.jinja2:155
 #: gkwebapp/templates/viewcashmemo.jinja2:281
+#, fuzzy
 msgid "Print"
-msgstr ""
+msgstr "छापा"
 
 #: gkwebapp/templates/editdeliverychallan.jinja2:156
 #: gkwebapp/templates/editinvoice.jinja2:300
 #: gkwebapp/templates/viewcashmemo.jinja2:290
+#, fuzzy
 msgid "Cancel?"
-msgstr ""
+msgstr "नको"
 
 #: gkwebapp/templates/editgodown.jinja2:6
+#, fuzzy
 msgid "Godown edited successfully."
-msgstr ""
+msgstr "खाते एडिट केले."
 
 #: gkwebapp/templates/editgodown.jinja2:11
+#, fuzzy
 msgid "Godown deleted successfully."
-msgstr ""
+msgstr "खाते काढुन टाकले."
 
 #: gkwebapp/templates/editgodown.jinja2:16
+#, fuzzy
 msgid "Godown could not be edited."
-msgstr ""
+msgstr "खाते एडिट करता आले नाही."
 
 #: gkwebapp/templates/editgodown.jinja2:25
+#, fuzzy
 msgid "Godown cannot be deleted!"
-msgstr ""
+msgstr "खाते काढुन टाकता आले नाही!"
 
 #: gkwebapp/templates/editgodown.jinja2:50
+#, fuzzy
 msgid "Please enter contact!"
-msgstr ""
+msgstr "रक्कम टाका!"
 
 #: gkwebapp/templates/editinvoice.jinja2:58
+#, fuzzy
 msgid "Invoice successfully cancelled."
-msgstr ""
+msgstr "नवीन वापरणारा निर्माण केला!"
 
 #: gkwebapp/templates/editinvoice.jinja2:62
+#, fuzzy
 msgid "Invoice cannot be cancelled!"
-msgstr ""
+msgstr "प्रोजेक्ट काढुन टाकता येणार नाही."
 
 #: gkwebapp/templates/editinvoice.jinja2:66
 #: gkwebapp/templates/viewcashmemo.jinja2:106
@@ -2562,117 +2645,120 @@ msgid "Select Invoice"
 msgstr ""
 
 #: gkwebapp/templates/editinvoice.jinja2:134
+#, fuzzy
 msgid "Vat for"
-msgstr ""
+msgstr "स्टेटमेंटचा कालावधी"
 
 #: gkwebapp/templates/editorganisation.jinja2:5
 #: gkwebapp/templates/editorganisation.jinja2:21
 msgid "Edit Organisation"
-msgstr ""
+msgstr "संस्था एडिट करा"
 
 #: gkwebapp/templates/editorganisation.jinja2:33
 msgid "Organisation Details edited successfully."
-msgstr ""
+msgstr "संस्थेचा तपशिल एडिट केला."
 
 #: gkwebapp/templates/editorganisation.jinja2:37
 #: gkwebapp/templates/edituser.jinja2:35
 #: gkwebapp/templates/forgotpassword.jinja2:24
 #: gkwebapp/templates/removeUser.jinja2:40
 msgid "Connection Failed."
-msgstr ""
+msgstr "कनेक्शन होउु शकले नाही."
 
 #: gkwebapp/templates/editorganisation.jinja2:49
 msgid "Registration Number"
-msgstr ""
+msgstr "नोंदणी क्र."
 
 #: gkwebapp/templates/editorganisation.jinja2:57
 msgid "FCRA Registration Number"
-msgstr ""
+msgstr "एफ. सि. आर. ए. नोंदणी क्र."
 
 #: gkwebapp/templates/editorganisation.jinja2:74
 msgid "Country"
-msgstr ""
+msgstr "देश"
 
 #: gkwebapp/templates/editorganisation.jinja2:90
 msgid "City"
-msgstr ""
+msgstr "शहर"
 
 #: gkwebapp/templates/editorganisation.jinja2:98
 msgid "Service Tax Number"
-msgstr ""
+msgstr "सर्व्हिस टॅक्स क्र"
 
 #: gkwebapp/templates/editorganisation.jinja2:106
 msgid "Permanent Account Number"
-msgstr ""
+msgstr "परमनंट अकौंट नंबर"
 
 #: gkwebapp/templates/editorganisation.jinja2:121
 msgid "Date Of Registration"
-msgstr ""
+msgstr "नोंदणीची तारीख"
 
 #: gkwebapp/templates/editorganisation.jinja2:124
 msgid "Enter Registrtion Day"
-msgstr ""
+msgstr "नोंदणीचा दिवस टाका"
 
 #: gkwebapp/templates/editorganisation.jinja2:127
 msgid "Enter Registration Month"
-msgstr ""
+msgstr "नोंदणीचा महिना टाका"
 
 #: gkwebapp/templates/editorganisation.jinja2:130
 msgid "Enter Registration Year"
-msgstr ""
+msgstr "नोंदणीचे वर्ष टाका"
 
 #: gkwebapp/templates/editorganisation.jinja2:136
 msgid "Date Of FCRA Registration"
-msgstr ""
+msgstr "एफ. सि. आर. ए. नोंदणीची तारीख"
 
 #: gkwebapp/templates/editorganisation.jinja2:139
 msgid "Enter FCRA Registrtion Day"
-msgstr ""
+msgstr "नोंदणीचा दिवस"
 
 #: gkwebapp/templates/editorganisation.jinja2:142
 msgid "Enter FCRA Registration Month"
-msgstr ""
+msgstr "एफ. सि. आर. ए. नोंदणीचा महिना टाका"
 
 #: gkwebapp/templates/editorganisation.jinja2:145
 msgid "Enter FCRA Registration Year"
-msgstr ""
+msgstr "एफ. सि. आर. ए. नोंदणीचे वर्ष टाका"
 
 #: gkwebapp/templates/editorganisation.jinja2:152
 msgid "Email"
-msgstr ""
+msgstr "इमेल"
 
 #: gkwebapp/templates/editorganisation.jinja2:160
 msgid "Telephone Number"
-msgstr ""
+msgstr "टेलिफोन नं."
 
 #: gkwebapp/templates/editorganisation.jinja2:168
 msgid "Website"
-msgstr ""
+msgstr "वेबसाईट"
 
 #: gkwebapp/templates/editorganisation.jinja2:176
 msgid "Postal Code"
-msgstr ""
+msgstr "पोस्टाचा कोड."
 
 #: gkwebapp/templates/editorganisation.jinja2:184
 msgid "Fax Number"
-msgstr ""
+msgstr "फॅक्स नं."
 
 #: gkwebapp/templates/editorganisation.jinja2:192
 msgid "VAT Number"
-msgstr ""
+msgstr "व्हॅट नं."
 
 #: gkwebapp/templates/editorganisation.jinja2:204
 msgid "<u>R</u>eset"
-msgstr ""
+msgstr "पुन्हा"
 
 #: gkwebapp/templates/editproduct.jinja2:17
 #: gkwebapp/templates/viewstockreport.jinja2:40
+#, fuzzy
 msgid "Select Product"
-msgstr ""
+msgstr "ग्रुप निवडा"
 
 #: gkwebapp/templates/edittransfernote.jinja2:73
+#, fuzzy
 msgid "Transfer Note Deleted Successfully!"
-msgstr ""
+msgstr "व्हावचर काढुन टाकले"
 
 #: gkwebapp/templates/edittransfernote.jinja2:81
 #: gkwebapp/templates/receivedtransfernote.jinja2:90
@@ -2680,28 +2766,32 @@ msgid "Transfer Note:"
 msgstr ""
 
 #: gkwebapp/templates/editunitofmeasurement.jinja2:14
+#, fuzzy
 msgid "Unit deleted successfully."
-msgstr ""
+msgstr "खाते काढुन टाकले."
 
 #: gkwebapp/templates/editunitofmeasurement.jinja2:22
+#, fuzzy
 msgid "Unit can not be deleted , contains Subunit!"
-msgstr ""
+msgstr "खाते काढुन टाकता आले नाही!"
 
 #: gkwebapp/templates/editunitofmeasurement.jinja2:34
 msgid "Unit :"
 msgstr ""
 
 #: gkwebapp/templates/editunitofmeasurement.jinja2:36
+#, fuzzy
 msgid "Select unit"
-msgstr ""
+msgstr "खाते निवडा"
 
 #: gkwebapp/templates/editunitofmeasurement.jinja2:44
 msgid "Name :"
 msgstr ""
 
 #: gkwebapp/templates/editunitofmeasurement.jinja2:45
+#, fuzzy
 msgid "Enter unit name"
-msgstr ""
+msgstr "खात्याचे नाव टाका!"
 
 #: gkwebapp/templates/editunitofmeasurement.jinja2:48
 msgid "Sub Unit Of :"
@@ -2713,61 +2803,61 @@ msgstr ""
 
 #: gkwebapp/templates/edituser.jinja2:5
 msgid "Edit User"
-msgstr ""
+msgstr "वापरणार्‍याचा तपशिल एडिट करा"
 
 #: gkwebapp/templates/edituser.jinja2:17 gkwebapp/templates/mainshell.jinja2:91
 #: gkwebapp/templates/mainshell.jinja2:352
 msgid "Change Password"
-msgstr ""
+msgstr "पासवर्ड बदला"
 
 #: gkwebapp/templates/edituser.jinja2:23
 msgid "Changes saved successfully."
-msgstr ""
+msgstr "बदल केले."
 
 #: gkwebapp/templates/edituser.jinja2:27
 msgid "Please enter current password!"
-msgstr ""
+msgstr "सध्याचा पासवर्ड टाका!"
 
 #: gkwebapp/templates/edituser.jinja2:39
 msgid "Access denied!"
-msgstr ""
+msgstr "तुम्हाला पुढे जाता येणार नाही!"
 
 #: gkwebapp/templates/edituser.jinja2:47
 msgid "Please enter the new password!"
-msgstr ""
+msgstr "नवीन पासवर्ड टाका!"
 
 #: gkwebapp/templates/edituser.jinja2:51
 msgid "Usern<u>a</u>me"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव"
 
 #: gkwebapp/templates/edituser.jinja2:54
 msgid "Current Pass<u>w</u>ord"
-msgstr ""
+msgstr "सध्याचा पासवर्ड टाका"
 
 #: gkwebapp/templates/edituser.jinja2:57
 msgid "N<u>e</u>w Password"
-msgstr ""
+msgstr "नवीन पासवर्ड टाका"
 
 #: gkwebapp/templates/existingorg.jinja2:27
 msgid "Please select organisation!"
-msgstr ""
+msgstr "संस्था निवडा!"
 
 #: gkwebapp/templates/existingorg.jinja2:31
 #: gkwebapp/templates/existingorg.jinja2:44
 msgid "Select Organisation"
-msgstr ""
+msgstr "संस्था निवडा!"
 
 #: gkwebapp/templates/existingorg.jinja2:52
 msgid "Select <u>F</u>inancial Year"
-msgstr ""
+msgstr "हिशेबाचे वर्ष निवडा"
 
 #: gkwebapp/templates/existingorg.jinja2:54
 msgid "Select Financial Year"
-msgstr ""
+msgstr "हिशेबाचे वर्ष निवडा"
 
 #: gkwebapp/templates/existingorg.jinja2:67
 msgid "<u>N</u>ext"
-msgstr ""
+msgstr "पुढे चला"
 
 #: gkwebapp/templates/extendedtrialbalance.jinja2:4
 #: gkwebapp/templates/extendedtrialbalance.jinja2:52
@@ -2775,7 +2865,7 @@ msgstr ""
 #: gkwebapp/templates/printextendedtrialbalance.jinja2:30
 #: gkwebapp/templates/viewtrialbalance.jinja2:55
 msgid "Extended Trial Balance"
-msgstr ""
+msgstr "एक्स्टेंडेड ट्रायल बॅलन्स"
 
 #: gkwebapp/templates/extendedtrialbalance.jinja2:52
 #: gkwebapp/templates/grosstrialbalance.jinja2:51
@@ -2784,7 +2874,7 @@ msgstr ""
 #: gkwebapp/templates/printgrosstrialbalance.jinja2:30
 #: gkwebapp/templates/printnettrialbalance.jinja2:30
 msgid "for the period from"
-msgstr ""
+msgstr "कालावधी"
 
 #: gkwebapp/templates/extendedtrialbalance.jinja2:58
 #: gkwebapp/templates/grosstrialbalance.jinja2:57
@@ -2803,91 +2893,91 @@ msgstr ""
 #: gkwebapp/templates/printprojectstatement.jinja2:41
 #: gkwebapp/templates/projectstatementreport.jinja2:66
 msgid "Sr. No."
-msgstr ""
+msgstr "अनु. क्र."
 
 #: gkwebapp/templates/extendedtrialbalance.jinja2:60
 #: gkwebapp/templates/multipleaccounts.jinja2:160
 #: gkwebapp/templates/printextendedtrialbalance.jinja2:42
 msgid "Opening Balance"
-msgstr ""
+msgstr "आरंभीची शिल्लक"
 
 #: gkwebapp/templates/extendedtrialbalance.jinja2:61
 #: gkwebapp/templates/printextendedtrialbalance.jinja2:43
 msgid "Total Drs"
-msgstr ""
+msgstr "डेबिट बेरीज"
 
 #: gkwebapp/templates/extendedtrialbalance.jinja2:62
 #: gkwebapp/templates/printextendedtrialbalance.jinja2:44
 msgid "Total Crs"
-msgstr ""
+msgstr "क्रेडिट बेरीज"
 
 #: gkwebapp/templates/extendedtrialbalance.jinja2:63
 #: gkwebapp/templates/grosstrialbalance.jinja2:61
 #: gkwebapp/templates/printextendedtrialbalance.jinja2:45
 #: gkwebapp/templates/printgrosstrialbalance.jinja2:44
 msgid "Dr Balance"
-msgstr ""
+msgstr "डेबिट बॅलन्स"
 
 #: gkwebapp/templates/extendedtrialbalance.jinja2:64
 #: gkwebapp/templates/grosstrialbalance.jinja2:62
 #: gkwebapp/templates/printextendedtrialbalance.jinja2:46
 #: gkwebapp/templates/printgrosstrialbalance.jinja2:45
 msgid "Cr Balance"
-msgstr ""
+msgstr "क्रेडिट बॅलन्स"
 
 #: gkwebapp/templates/extendedtrialbalance.jinja2:119
 #: gkwebapp/templates/grosstrialbalance.jinja2:114
 msgid "Net Tri<u>a</u>l Balance"
-msgstr ""
+msgstr "नेट ट्रायल बॅलन्स"
 
 #: gkwebapp/templates/extendedtrialbalance.jinja2:120
 #: gkwebapp/templates/nettrialbalance.jinja2:107
 msgid "<u>G</u>ross Trial Balance"
-msgstr ""
+msgstr "ग्रॉस ट्रायल बॅलन्स"
 
 #: gkwebapp/templates/findeditvoucher.jinja2:4
 msgid "Find-Edit Voucher"
-msgstr ""
+msgstr "व्हावचर शोधा, एडिट करा"
 
 #: gkwebapp/templates/findeditvoucher.jinja2:24
 msgid "Voucher deleted successfully."
-msgstr ""
+msgstr "व्हावचर काढुन टाकले"
 
 #: gkwebapp/templates/findeditvoucher.jinja2:52
 msgid "Please enter an amount!"
-msgstr ""
+msgstr "रक्कम टाका!"
 
 #: gkwebapp/templates/findeditvoucher.jinja2:58
 msgid "Please enter a narration!"
-msgstr ""
+msgstr "तपशिल टाका!"
 
 #: gkwebapp/templates/findeditvoucher.jinja2:64
 msgid "Please enter a proper date!"
-msgstr ""
+msgstr "योग्य तारीख टाका!"
 
 #: gkwebapp/templates/findeditvoucher.jinja2:70
 msgid "No transactions found"
-msgstr ""
+msgstr "व्यवहारांच्या नोंदी सापडल्या नाहीत"
 
 #: gkwebapp/templates/findeditvoucher.jinja2:75
 msgid "Find Voucher"
-msgstr ""
+msgstr "व्हावचर शोधा"
 
 #: gkwebapp/templates/findeditvoucher.jinja2:80
 msgid "Search Voucher B<u>y"
-msgstr ""
+msgstr "व्हावचर शोधण्याचा पर्याय"
 
 #: gkwebapp/templates/findeditvoucher.jinja2:84
 msgid "Select Criteria"
-msgstr ""
+msgstr "पर्याय निवडा"
 
 #: gkwebapp/templates/findeditvoucher.jinja2:85
 msgid "Voucher Number"
-msgstr ""
+msgstr "व्हावचर क्र."
 
 #: gkwebapp/templates/findeditvoucher.jinja2:88
 msgid "Time Interval"
-msgstr ""
+msgstr "कालावधी"
 
 #: gkwebapp/templates/findeditvoucher.jinja2:89
 #: gkwebapp/templates/findvouchertable.jinja2:85
@@ -2896,11 +2986,11 @@ msgstr ""
 #: gkwebapp/templates/viewdualledger.jinja2:74
 #: gkwebapp/templates/viewledger.jinja2:72
 msgid "Narration"
-msgstr ""
+msgstr "तपशिल"
 
 #: gkwebapp/templates/findeditvoucher.jinja2:138
 msgid "<u>S</u>earch"
-msgstr ""
+msgstr "शोधा"
 
 #: gkwebapp/templates/findvouchertable.jinja2:78
 #: gkwebapp/templates/ledgerreport.jinja2:80
@@ -2911,108 +3001,110 @@ msgstr ""
 #: gkwebapp/templates/printlistofgodowns.jinja2:51
 #: gkwebapp/templates/printlistofstockitems.jinja2:54
 msgid "Status"
-msgstr ""
+msgstr "स्टेटस"
 
 #: gkwebapp/templates/findvouchertable.jinja2:81
 #: gkwebapp/templates/printtransactions.jinja2:43
 msgid "Dr Accounts"
-msgstr ""
+msgstr "डेबिट खाती"
 
 #: gkwebapp/templates/findvouchertable.jinja2:82
 #: gkwebapp/templates/printtransactions.jinja2:44
 msgid "Cr Accounts"
-msgstr ""
+msgstr "क्रेडिट खाती"
 
 #: gkwebapp/templates/findvouchertable.jinja2:83
 #: gkwebapp/templates/printtransactions.jinja2:45
 msgid "Dr Amounts"
-msgstr ""
+msgstr "डेबिट रकमा"
 
 #: gkwebapp/templates/findvouchertable.jinja2:84
 #: gkwebapp/templates/printtransactions.jinja2:46
 msgid "Cr Amounts"
-msgstr ""
+msgstr "क्रेडिट रकमा"
 
 #: gkwebapp/templates/forgotpassword.jinja2:18
 msgid "Could not change password"
-msgstr ""
+msgstr "पासवर्ड बदलता आला नाही"
 
 #: gkwebapp/templates/forgotpassword.jinja2:18
 msgid "Please revisit your entries."
-msgstr ""
+msgstr "पुन्हा प्रयत्न करा"
 
 #: gkwebapp/templates/forgotpassword.jinja2:21
 msgid "No such user."
-msgstr ""
+msgstr "ह्या नावाचा कोणी वापरणारा नाही"
 
 #: gkwebapp/templates/forgotpassword.jinja2:27
+#, fuzzy
 msgid "Please enter a"
-msgstr ""
+msgstr "पुन्हा टाका"
 
 #: gkwebapp/templates/forgotpassword.jinja2:27
 msgid "Username"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव"
 
 #: gkwebapp/templates/forgotpassword.jinja2:30
 msgid "A valid"
-msgstr ""
+msgstr "एक योग्य"
 
 #: gkwebapp/templates/forgotpassword.jinja2:30
 #: gkwebapp/templates/forgotpassword.jinja2:39
 msgid "Security Answer"
-msgstr ""
+msgstr "सुरक्षेच्या प्रश्नाचे उत्तर"
 
 #: gkwebapp/templates/forgotpassword.jinja2:30
 msgid "is required."
-msgstr ""
+msgstr "टाका"
 
 #: gkwebapp/templates/forgotpassword.jinja2:33
 msgid "New Password"
-msgstr ""
+msgstr "नवीन पासवर्ड"
 
 #: gkwebapp/templates/forgotpassword.jinja2:33
 msgid "cannot be blank."
-msgstr ""
+msgstr "ही जागा मोकळी सोडता येणार नाही."
 
 #: gkwebapp/templates/forgotpassword.jinja2:36
 msgid "Passwords do not match."
-msgstr ""
+msgstr "पासवर्ड कन्फर्म होत नाही."
 
 #: gkwebapp/templates/forgotpassword.jinja2:39
 msgid "incorrect."
-msgstr ""
+msgstr "चुकीचा आहे."
 
 #: gkwebapp/templates/forgotpassword.jinja2:42
 msgid "Password"
-msgstr ""
+msgstr "पासवर्ड"
 
 #: gkwebapp/templates/forgotpassword.jinja2:42
 msgid "not confirmed."
-msgstr ""
+msgstr "कन्फर्म होत नाही."
 
 #: gkwebapp/templates/forgotpassword.jinja2:47
 msgid "Forgot Password?"
-msgstr ""
+msgstr "पासवर्ड विसरलात?"
 
 #: gkwebapp/templates/forgotpassword.jinja2:64
 msgid "Security <u>A</u>nswer"
-msgstr ""
+msgstr "सुरक्षेच्या प्रश्नाचे उत्तर"
 
 #: gkwebapp/templates/forgotpassword.jinja2:69
 msgid "Enter New Pass<u>w</u>ord"
-msgstr ""
+msgstr "नवीन पासवर्ड टाका"
 
 #: gkwebapp/templates/forgotpassword.jinja2:74
 msgid "C<u>o</u>nfirm New Password"
-msgstr ""
+msgstr "पासवर्ड कन्फर्म करा"
 
 #: gkwebapp/templates/godown.jinja2:5
 msgid "GNUKhata | Godown"
 msgstr ""
 
 #: gkwebapp/templates/godown.jinja2:90
+#, fuzzy
 msgid "Create Godown"
-msgstr ""
+msgstr "अॅडमिन निर्माण करा"
 
 #: gkwebapp/templates/godown.jinja2:91
 msgid "Edit Godown"
@@ -3024,36 +3116,36 @@ msgstr ""
 #: gkwebapp/templates/printgrosstrialbalance.jinja2:30
 #: gkwebapp/templates/viewtrialbalance.jinja2:54
 msgid "Gross Trial Balance"
-msgstr ""
+msgstr "ग्रॉस ट्रायल बॅलन्स"
 
 #: gkwebapp/templates/grosstrialbalance.jinja2:115
 #: gkwebapp/templates/nettrialbalance.jinja2:108
 msgid "<u>E</u>xtended Trial Balance"
-msgstr ""
+msgstr "एक्स्टेंडेड ट्रायल बॅलन्स"
 
 #: gkwebapp/templates/index.jinja2:148 gkwebapp/templates/mainshell.jinja2:16
 msgid "Toggle navigation"
-msgstr ""
+msgstr "टॉगल नेव्हिगेशन"
 
 #: gkwebapp/templates/index.jinja2:160 gkwebapp/templates/mainshell.jinja2:241
 msgid "Select Existing Organisation"
-msgstr ""
+msgstr "अस्तित्वात असलेली संस्था निवडा"
 
 #: gkwebapp/templates/index.jinja2:160
 msgid "Select <u>E</u>xisting Organisation"
-msgstr ""
+msgstr "अस्तित्वात असलेली संस्था निवडा"
 
 #: gkwebapp/templates/index.jinja2:161
 msgid "C<u>r</u>eate Organisation"
-msgstr ""
+msgstr "संस्था निर्माण करा"
 
 #: gkwebapp/templates/index.jinja2:162
 msgid "Restore <u>D</u>ata"
-msgstr ""
+msgstr "डेटा पुनर्संचयित"
 
 #: gkwebapp/templates/index.jinja2:164 gkwebapp/templates/mainshell.jinja2:140
 msgid "<u>L</u>anguage"
-msgstr ""
+msgstr "भाषा"
 
 #: gkwebapp/templates/index.jinja2:166 gkwebapp/templates/mainshell.jinja2:142
 msgid "English"
@@ -3065,49 +3157,49 @@ msgstr ""
 
 #: gkwebapp/templates/index.jinja2:187 gkwebapp/templates/login.jinja2:59
 msgid "Duplicate Organisation!"
-msgstr ""
+msgstr "संस्था अस्तित्वात आहे"
 
 #: gkwebapp/templates/index.jinja2:191 gkwebapp/templates/login.jinja2:65
 msgid "Welcome To GNUKhata"
-msgstr ""
+msgstr "‘गन्यु खात्यामध्ये आपले स्वागत आहे."
 
 #: gkwebapp/templates/index.jinja2:191 gkwebapp/templates/login.jinja2:65
 msgid "A Free and Open Source Accounting Software"
-msgstr ""
+msgstr "एक मुक्त हिशेब लेखनाची आज्ञावली"
 
 #: gkwebapp/templates/index.jinja2:196 gkwebapp/templates/login.jinja2:70
 msgid "It is Lightweight."
-msgstr ""
+msgstr "कमी मेमरी स्पेस व्यापणारी"
 
 #: gkwebapp/templates/index.jinja2:197 gkwebapp/templates/login.jinja2:71
 msgid ""
 "It can scale upto a cloud based deployment or down to a standalone "
 "installation."
-msgstr ""
+msgstr "स्टँड अलोनपासुन क्लाउूड बेस्ड काँप्युटींगपर्यंत वापरता येउू शकणारी!"
 
 #: gkwebapp/templates/index.jinja2:198 gkwebapp/templates/login.jinja2:72
 msgid "It is fast and robust."
-msgstr ""
+msgstr "वेगवान आणि मजबुत"
 
 #: gkwebapp/templates/index.jinja2:199 gkwebapp/templates/login.jinja2:73
 msgid "It is based on double entry system of accounting."
-msgstr ""
+msgstr "डबल एंट्री सिस्टिमवर आधारीत"
 
 #: gkwebapp/templates/index.jinja2:202 gkwebapp/templates/login.jinja2:76
 msgid "GNUKhata is developed by"
-msgstr ""
+msgstr "गन्यु खाता विकसित करणारे"
 
 #: gkwebapp/templates/index.jinja2:202 gkwebapp/templates/login.jinja2:76
 msgid "Digital Freedom Foundation(DFF)"
-msgstr ""
+msgstr "डिझिटल फ्रीडम फौंडेशन (डिएफएफ)"
 
 #: gkwebapp/templates/index.jinja2:202 gkwebapp/templates/login.jinja2:76
 msgid "and is currently funded by"
-msgstr ""
+msgstr "सध्या अर्थिक  सहाय्य देणारी संस्था"
 
 #: gkwebapp/templates/index.jinja2:202 gkwebapp/templates/login.jinja2:76
 msgid "International Centre for Free and Open Source Software(ICFOSS)."
-msgstr ""
+msgstr "इंटरनॅशनल सेंटर फॉर फ्री अँड ओपन सोर्स सॉफ्टवेर (आयसिफॉस)"
 
 #: gkwebapp/templates/index.jinja2:212
 msgid "Restore Data"
@@ -3134,12 +3226,14 @@ msgid "Upload <u>B</u>ackup File"
 msgstr ""
 
 #: gkwebapp/templates/index.jinja2:265
+#, fuzzy
 msgid "Copyright © Digital Freedom Foundation 2013,2014,2015,2016"
-msgstr ""
+msgstr "कॉपी राईट ©डिझिटल फ्रीडम फौंडेशन २०१३, २०१४, २०१५, २०१६."
 
 #: gkwebapp/templates/index.jinja2:265
+#, fuzzy
 msgid "This software is licensed under GNU AGPLv3."
-msgstr ""
+msgstr "ही आज्ञावली गन्यु अॅफेरो जनरल पब्लिक लायसेन्स"
 
 #: gkwebapp/templates/index.jinja2:265 gkwebapp/templates/mainshell.jinja2:386
 msgid "Visit"
@@ -3152,7 +3246,7 @@ msgstr ""
 
 #: gkwebapp/templates/index.jinja2:265 gkwebapp/templates/mainshell.jinja2:386
 msgid "for more information."
-msgstr ""
+msgstr "गन्युखाता डॉट इन"
 
 #: gkwebapp/templates/invoice.jinja2:5
 msgid "GNUKhata | Invoice"
@@ -3175,27 +3269,27 @@ msgstr ""
 #: gkwebapp/templates/printledger.jinja2:37
 #: gkwebapp/templates/printledger.jinja2:46
 msgid "Ledger Account"
-msgstr ""
+msgstr "खात्याचे नाव"
 
 #: gkwebapp/templates/ledgerreport.jinja2:186
 msgid "<u>V</u>iew Another Ledger"
-msgstr ""
+msgstr "अन्य खाते बघा"
 
 #: gkwebapp/templates/ledgerreport.jinja2:187
 msgid "Dual Led<u>g</u>ers"
-msgstr ""
+msgstr "दोन खाती बघा"
 
 #: gkwebapp/templates/ledgerreport.jinja2:188
 msgid "Only <u>D</u>rs"
-msgstr ""
+msgstr "फक्त डेबिट व्यवहार"
 
 #: gkwebapp/templates/ledgerreport.jinja2:189
 msgid "Onl<u>y</u> Crs"
-msgstr ""
+msgstr "फक्त क्रेडिट व्यवहार"
 
 #: gkwebapp/templates/ledgerreport.jinja2:190
 msgid "E<u>x</u>port to Spreadsheet</u>"
-msgstr ""
+msgstr "स्प्रेड शीट बनवा"
 
 #: gkwebapp/templates/listofaccounts.jinja2:4
 #: gkwebapp/templates/listofcategories.jinja2:4
@@ -3207,7 +3301,7 @@ msgstr ""
 #: gkwebapp/templates/projectstatementreport.jinja2:4
 #: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:7
 msgid "Statement"
-msgstr ""
+msgstr "स्टेटमेंट"
 
 #: gkwebapp/templates/listofaccounts.jinja2:46
 #: gkwebapp/templates/mainshell.jinja2:78
@@ -3216,7 +3310,7 @@ msgstr ""
 #: gkwebapp/templates/printlistofaccounts.jinja2:30
 #: gkwebapp/templates/printlistofaccounts.jinja2:37
 msgid "List of Accounts"
-msgstr ""
+msgstr "खात्यांची यादी"
 
 #: gkwebapp/templates/listofcategories.jinja2:52
 #: gkwebapp/templates/printlistofcategories.jinja2:45
@@ -3229,8 +3323,9 @@ msgid "Subcategory Of"
 msgstr ""
 
 #: gkwebapp/templates/listofgodowns.jinja2:55
+#, fuzzy
 msgid "Group Addess"
-msgstr ""
+msgstr "ग्रुपचे नाव"
 
 #: gkwebapp/templates/listofstockitems.jinja2:52
 #: gkwebapp/templates/printlistofstockitems.jinja2:45
@@ -3239,54 +3334,55 @@ msgstr ""
 
 #: gkwebapp/templates/login.jinja2:90
 msgid "Username or Password is incorrect!"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव वा पासवर्ड चुकीचा आहे"
 
 #: gkwebapp/templates/login.jinja2:94
 msgid "Sign In"
-msgstr ""
+msgstr "साइन इन करा"
 
 #: gkwebapp/templates/login.jinja2:101
 msgid "<u>U</u>sername :"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव:"
 
 #: gkwebapp/templates/login.jinja2:106
 msgid "<u>P</u>assword :"
-msgstr ""
+msgstr "पासवर्ड :"
 
 #: gkwebapp/templates/login.jinja2:110
 msgid "<u>F</u>orgot Password?"
-msgstr ""
+msgstr "पासवर्ड विसरलात?"
 
 #: gkwebapp/templates/login.jinja2:117
 msgid "<u>L</u>ogin"
-msgstr ""
+msgstr "लॉग इन "
 
 #: gkwebapp/templates/login.jinja2:118
 msgid "<u>C</u>hange Organisation"
-msgstr ""
+msgstr "संस्था बदला"
 
 #: gkwebapp/templates/mainshell.jinja2:29
 msgid "<u>M</u>aster"
-msgstr ""
+msgstr "मास्टर"
 
 #: gkwebapp/templates/mainshell.jinja2:33
 msgid "Edit Organisation Particulars"
-msgstr ""
+msgstr "संस्था तपशिल बदला"
 
 #: gkwebapp/templates/mainshell.jinja2:34
 #: gkwebapp/templates/mainshell.jinja2:164
 msgid "Cost Center"
-msgstr ""
+msgstr "कॉस्ट सेंटर"
 
 #: gkwebapp/templates/mainshell.jinja2:35
 #: gkwebapp/templates/mainshell.jinja2:168
 #: gkwebapp/templates/mainshell.jinja2:283
 msgid "Bank Reconciliation Statement"
-msgstr ""
+msgstr "बँक रिकन्सिलएिशन स्टेटमेंट"
 
 #: gkwebapp/templates/mainshell.jinja2:39
+#, fuzzy
 msgid "<u>I</u>nventory"
-msgstr ""
+msgstr "रिपोर्ट"
 
 #: gkwebapp/templates/mainshell.jinja2:42
 msgid "Units Of Measurement"
@@ -3310,44 +3406,44 @@ msgstr ""
 
 #: gkwebapp/templates/mainshell.jinja2:54
 msgid "<u>T</u>ransaction"
-msgstr ""
+msgstr "व्यवहार"
 
 #: gkwebapp/templates/mainshell.jinja2:58
 #: gkwebapp/templates/mainshell.jinja2:153
 #: gkwebapp/templates/mainshell.jinja2:298
 msgid "Sale"
-msgstr ""
+msgstr "विक्री"
 
 #: gkwebapp/templates/mainshell.jinja2:69
 msgid "<u>R</u>eport"
-msgstr ""
+msgstr "रिपोर्ट"
 
 #: gkwebapp/templates/mainshell.jinja2:72
 #: gkwebapp/templates/mainshell.jinja2:163
 #: gkwebapp/templates/mainshell.jinja2:328
 #: gkwebapp/templates/viewtrialbalance.jinja2:5
 msgid "Trial Balance"
-msgstr ""
+msgstr "ट्रायल बॅलन्स"
 
 #: gkwebapp/templates/mainshell.jinja2:73
 msgid "Cost Center Statement"
-msgstr ""
+msgstr "कॉस्ट सेंटर स्टेटमेंट"
 
 #: gkwebapp/templates/mainshell.jinja2:75
 #: gkwebapp/templates/mainshell.jinja2:340
 msgid "Balance Sheet"
-msgstr ""
+msgstr "बॅलन्स शीट"
 
 #: gkwebapp/templates/mainshell.jinja2:76
 #: gkwebapp/templates/mainshell.jinja2:343
 #: gkwebapp/templates/profitlossreport.jinja2:5
 msgid "Profit & Loss"
-msgstr ""
+msgstr "प्रॉफीट अँड लॉस"
 
 #: gkwebapp/templates/mainshell.jinja2:77
 #: gkwebapp/templates/mainshell.jinja2:161
 msgid "Find/Edit Voucher"
-msgstr ""
+msgstr "व्हावचर शोधा, एडिट करा"
 
 #: gkwebapp/templates/mainshell.jinja2:80
 msgid "Stock"
@@ -3357,8 +3453,9 @@ msgstr ""
 #: gkwebapp/templates/printlistofgodowns.jinja2:4
 #: gkwebapp/templates/printlistofgodowns.jinja2:30
 #: gkwebapp/templates/printlistofgodowns.jinja2:37
+#, fuzzy
 msgid "List of Godowns"
-msgstr ""
+msgstr "खात्यांची यादी"
 
 #: gkwebapp/templates/mainshell.jinja2:82
 #: gkwebapp/templates/printlistofcategories.jinja2:4
@@ -3376,24 +3473,24 @@ msgstr ""
 
 #: gkwebapp/templates/mainshell.jinja2:87
 msgid "A<u>d</u>ministration"
-msgstr ""
+msgstr "अॅडमिनिस्ट्रेशन"
 
 #: gkwebapp/templates/mainshell.jinja2:89
 #: gkwebapp/templates/mainshell.jinja2:346
 msgid "New User"
-msgstr ""
+msgstr "नवीन वापरणारा"
 
 #: gkwebapp/templates/mainshell.jinja2:90
 #: gkwebapp/templates/mainshell.jinja2:349
 #: gkwebapp/templates/removeUser.jinja2:7
 #: gkwebapp/templates/removeUser.jinja2:17
 msgid "Remove User"
-msgstr ""
+msgstr "वापरणारा रद्द करा"
 
 #: gkwebapp/templates/mainshell.jinja2:92
 #: gkwebapp/templates/mainshell.jinja2:355
 msgid "Close Books/Roll Over"
-msgstr ""
+msgstr "क्लोज बुक्स । रोल ओव्हर"
 
 #: gkwebapp/templates/mainshell.jinja2:93
 msgid "Activate Inventory"
@@ -3406,55 +3503,55 @@ msgstr ""
 #: gkwebapp/templates/mainshell.jinja2:95
 #: gkwebapp/templates/mainshell.jinja2:358
 msgid "Delete Organisation"
-msgstr ""
+msgstr "संस्था काढुन टाका"
 
 #: gkwebapp/templates/mainshell.jinja2:99
 msgid "<u>H</u>elp"
-msgstr ""
+msgstr "सहाय्य"
 
 #: gkwebapp/templates/mainshell.jinja2:101
 #: gkwebapp/templates/mainshell.jinja2:172
 #: gkwebapp/templates/mainshell.jinja2:361
 msgid "Manual"
-msgstr ""
+msgstr "मॅन्युअल"
 
 #: gkwebapp/templates/mainshell.jinja2:102
 #: gkwebapp/templates/mainshell.jinja2:201
 #: gkwebapp/templates/mainshell.jinja2:234
 msgid "Shortcuts"
-msgstr ""
+msgstr "शॉर्ट कटस्"
 
 #: gkwebapp/templates/mainshell.jinja2:103
 #: gkwebapp/templates/mainshell.jinja2:422
 msgid "Authors"
-msgstr ""
+msgstr "आज्ञावली लिहिणारे"
 
 #: gkwebapp/templates/mainshell.jinja2:104
 #: gkwebapp/templates/mainshell.jinja2:378
 msgid "License"
-msgstr ""
+msgstr "परवाना"
 
 #: gkwebapp/templates/mainshell.jinja2:105
 msgid "About"
-msgstr ""
+msgstr "विषयी"
 
 #: gkwebapp/templates/mainshell.jinja2:111
 msgid "<u>S</u>ign Out"
-msgstr ""
+msgstr "साईन आउूट"
 
 #: gkwebapp/templates/mainshell.jinja2:113
 #: gkwebapp/templates/mainshell.jinja2:274
 msgid "Logout"
-msgstr ""
+msgstr "लॉग आउूट"
 
 #: gkwebapp/templates/mainshell.jinja2:114
 #: gkwebapp/templates/mainshell.jinja2:277
 msgid "Change Organisation"
-msgstr ""
+msgstr "संस्था बदला"
 
 #: gkwebapp/templates/mainshell.jinja2:118
 msgid "Theme"
-msgstr ""
+msgstr "थीम"
 
 #: gkwebapp/templates/mainshell.jinja2:120
 msgid "Default"
@@ -3493,16 +3590,18 @@ msgid "Readable"
 msgstr ""
 
 #: gkwebapp/templates/mainshell.jinja2:130
+#, fuzzy
 msgid "Sandstone"
-msgstr ""
+msgstr "व्यवहार"
 
 #: gkwebapp/templates/mainshell.jinja2:131
 msgid "Simplex"
 msgstr ""
 
 #: gkwebapp/templates/mainshell.jinja2:132
+#, fuzzy
 msgid "Slate"
-msgstr ""
+msgstr "तारीख"
 
 #: gkwebapp/templates/mainshell.jinja2:133
 msgid "Spacelab"
@@ -3523,28 +3622,28 @@ msgstr ""
 #: gkwebapp/templates/mainshell.jinja2:147
 #: gkwebapp/templates/mainshell.jinja2:268
 msgid "Toolbar"
-msgstr ""
+msgstr "टूल बार"
 
 #: gkwebapp/templates/mainshell.jinja2:150
 #: gkwebapp/templates/mainshell.jinja2:289
 msgid "Find & Edit Account"
-msgstr ""
+msgstr "खाते शोधा आणि एडिट करा"
 
 #: gkwebapp/templates/mainshell.jinja2:167
 msgid "Create & Edit Cost Center"
-msgstr ""
+msgstr "कॉस्ट सेंटर निर्माण करा ।  एडिट करा"
 
 #: gkwebapp/templates/mainshell.jinja2:187
 msgid "FY"
-msgstr ""
+msgstr "आर्थिक वर्ष"
 
 #: gkwebapp/templates/mainshell.jinja2:191
 msgid "About Keyboard Shortcuts"
-msgstr ""
+msgstr "कीबोर्ड शॉर्टकट बद्दल"
 
 #: gkwebapp/templates/mainshell.jinja2:195
 msgid "To access submenus in the Menu Bar press"
-msgstr ""
+msgstr "मेन्यु बारच्या सब मेन्युसाठी"
 
 #: gkwebapp/templates/mainshell.jinja2:195
 msgid "Underlined Character\"."
@@ -3552,15 +3651,15 @@ msgstr ""
 
 #: gkwebapp/templates/mainshell.jinja2:196
 msgid "To view Toolbar press  \"F1\"."
-msgstr ""
+msgstr "टूलबार बघण्यासाठी \"F1\" दाबा "
 
 #: gkwebapp/templates/mainshell.jinja2:197
 msgid "To use screen specific shortcuts"
-msgstr ""
+msgstr "स्क्रीन स्पेसिफिक शॉर्ट कटस् वापरण्यासाठी"
 
 #: gkwebapp/templates/mainshell.jinja2:198
 msgid "If using Firefox, press"
-msgstr ""
+msgstr "जर फायर फॉक्स वापरत असाल तर"
 
 #: gkwebapp/templates/mainshell.jinja2:198
 #: gkwebapp/templates/mainshell.jinja2:199
@@ -3570,15 +3669,15 @@ msgstr ""
 
 #: gkwebapp/templates/mainshell.jinja2:199
 msgid "If using Google Chrome, Opera or Internet Explorer press"
-msgstr ""
+msgstr "जर गूगल क्रोम, आॅपेरा वा इंटरनेट एक्स्प्लोरर वापरत असाल तर"
 
 #: gkwebapp/templates/mainshell.jinja2:200
 msgid "If using older versions of Opera(prior to version 12.1) use"
-msgstr ""
+msgstr "जर आॅपेराची जुनी आवृत्ती (१२.१ पुर्वीची )वापरत असाल तर"
 
 #: gkwebapp/templates/mainshell.jinja2:201
 msgid "are given in the Toolbar and the Help Tab of the Menu Bar."
-msgstr ""
+msgstr "टूल बार आणि मेन्यु बारच्या सहाय्य टॅब मध्ये दिलेले आहेत"
 
 #: gkwebapp/templates/mainshell.jinja2:215
 msgid "Inventory module activated."
@@ -3586,56 +3685,56 @@ msgstr ""
 
 #: gkwebapp/templates/mainshell.jinja2:238
 msgid "Index Page"
-msgstr ""
+msgstr "इंडेक्स पेज"
 
 #: gkwebapp/templates/mainshell.jinja2:247
 msgid "Menu"
-msgstr ""
+msgstr "मेन्यु"
 
 #: gkwebapp/templates/mainshell.jinja2:250
 msgid "Master"
-msgstr ""
+msgstr "मास्टर"
 
 #: gkwebapp/templates/mainshell.jinja2:253
 msgid "Transaction"
-msgstr ""
+msgstr "व्यवहार"
 
 #: gkwebapp/templates/mainshell.jinja2:256
 msgid "Report"
-msgstr ""
+msgstr "रिपोर्ट"
 
 #: gkwebapp/templates/mainshell.jinja2:259
 msgid "Administration"
-msgstr ""
+msgstr "अॅडमिनिस्ट्रेशन"
 
 #: gkwebapp/templates/mainshell.jinja2:262
 msgid "Help"
-msgstr ""
+msgstr "सहाय्य"
 
 #: gkwebapp/templates/mainshell.jinja2:265
 msgid "Sign Out"
-msgstr ""
+msgstr "साईन आउूट"
 
 #: gkwebapp/templates/mainshell.jinja2:271
 msgid "Sub-Menu"
-msgstr ""
+msgstr "सब मेन्यु"
 
 #: gkwebapp/templates/mainshell.jinja2:280
 msgid "Create & Edit Cost Center/Project"
-msgstr ""
+msgstr "कॉस्ट सेंटर, प्रोजेक्ट निर्माण करा । एडिट करा"
 
 #: gkwebapp/templates/mainshell.jinja2:322
 msgid "Find & Edit Voucher"
-msgstr ""
+msgstr "व्हावचर शोधा आणि एडिट करा"
 
 #: gkwebapp/templates/mainshell.jinja2:331
 #: gkwebapp/templates/viewprojectstatement.jinja2:5
 msgid "Project Statement"
-msgstr ""
+msgstr "प्रोजेक्ट स्टेटमेंट"
 
 #: gkwebapp/templates/mainshell.jinja2:334
 msgid "Cash Flow/Receipt & Payment Account"
-msgstr ""
+msgstr "कॅश फ्लो । रिसीट अँड पेमेंट अकौंट"
 
 #: gkwebapp/templates/mainshell.jinja2:364
 msgid "Individual Screen"
@@ -3650,41 +3749,44 @@ msgstr ""
 #: gkwebapp/templates/mainshell.jinja2:412
 #: gkwebapp/templates/mainshell.jinja2:444
 msgid "Close"
-msgstr ""
+msgstr "बंद करा"
 
 #: gkwebapp/templates/mainshell.jinja2:382
 msgid "This software is licensed under version 3 of the"
-msgstr ""
+msgstr "ही आज्ञावली गन्यु अॅफेरो जनरल पब्लिक लायसेन्स"
 
 #: gkwebapp/templates/mainshell.jinja2:382
 msgid "GNU Affero General Public License(GNU AGPLv3)"
-msgstr ""
+msgstr "(जीएनयु एजीपीएल आवृत्ती ३) नुसार वितरीत केली आहे."
 
 #: gkwebapp/templates/mainshell.jinja2:383
 msgid "You may use a newer version of the same license."
-msgstr ""
+msgstr "ह्या परवान्याची नवीन आवृत्ती तुम्ही वापरू शकता."
 
 #: gkwebapp/templates/mainshell.jinja2:383
 msgid "The libraries used in this software are licensed under their respective"
-msgstr ""
+msgstr "ह्या आज्ञावलीत वापरलेल्या लायब्ररीज मुक्त आज्ञावली परवान्यानुसार"
 
 #: gkwebapp/templates/mainshell.jinja2:383
 msgid "free software licenses"
-msgstr ""
+msgstr "वितरीत केल्या गेल्या आहेत."
 
 #: gkwebapp/templates/mainshell.jinja2:386
 msgid "Copyright © Digital Freedom Foundation 2013,2014,2015,2016."
-msgstr ""
+msgstr "कॉपी राईट ©डिझिटल फ्रीडम फौंडेशन २०१३, २०१४, २०१५, २०१६."
 
 #: gkwebapp/templates/mainshell.jinja2:400
 msgid "GNUKhata <small style=\"color:white;\"> version 3.5</small>"
 msgstr ""
 
 #: gkwebapp/templates/mainshell.jinja2:404
+#, fuzzy
 msgid ""
 " a free and open source, industry standard software for accounting and "
 "inventory management being developed at"
 msgstr ""
+"ही मुक्त आज्ञावली लवचिक असुन लवकरच हिला डिझिटल फ्रीडम फौंडेशन विकसित करत "
+"असलेली इन्व्हेंटरी मॅनेजमेंट सपोर्ट सिस्टिम जोडली जाणार आहे."
 
 #: gkwebapp/templates/mainshell.jinja2:404
 msgid "Digital Freedom Foundation"
@@ -3696,55 +3798,58 @@ msgstr ""
 
 #: gkwebapp/templates/mainshell.jinja2:455
 msgid "Delete Organisation?"
-msgstr ""
+msgstr "संस्था काढुन टाकु?"
 
 #: gkwebapp/templates/monthledger.jinja2:4
 #: gkwebapp/templates/viewledger.jinja2:46
 msgid "Monthly Ledger"
-msgstr ""
+msgstr "मासिक खाते उतारा"
 
 #: gkwebapp/templates/monthledger.jinja2:26
 msgid "Month"
-msgstr ""
+msgstr "महिना"
 
 #: gkwebapp/templates/monthledger.jinja2:29
 msgid "No. of Vouchers"
-msgstr ""
+msgstr "व्हावचर्सची संख्या"
 
 #: gkwebapp/templates/multipleaccounts.jinja2:125
 msgid "Account name already exists!"
-msgstr ""
+msgstr "खाते अस्तित्वात आहे!"
 
 #: gkwebapp/templates/multipleaccounts.jinja2:127
 msgid "Multiple Accounts"
-msgstr ""
+msgstr "अनेक खाती"
 
 #: gkwebapp/templates/multipleaccounts.jinja2:137
 #: gkwebapp/templates/printprojectstatement.jinja2:43
 #: gkwebapp/templates/projectstatementreport.jinja2:68
 msgid "Group"
-msgstr ""
+msgstr "ग्रुप"
 
 #: gkwebapp/templates/multipleaccounts.jinja2:143
 msgid "Sub-Group"
-msgstr ""
+msgstr "सब ग्रुप"
 
 #: gkwebapp/templates/multipleaccounts.jinja2:192
 #: gkwebapp/templates/multiplegodowns.jinja2:177
 msgid "Sa<u>v</u>e"
-msgstr ""
+msgstr "नोंदवा"
 
 #: gkwebapp/templates/multiplegodowns.jinja2:131
+#, fuzzy
 msgid "Please enter godown Address!"
-msgstr ""
+msgstr "तारीख टाका"
 
 #: gkwebapp/templates/multiplegodowns.jinja2:135
+#, fuzzy
 msgid "Please enter godown Contact!"
-msgstr ""
+msgstr "रक्कम टाका!"
 
 #: gkwebapp/templates/multiplegodowns.jinja2:142
+#, fuzzy
 msgid "Multiple Godowns"
-msgstr ""
+msgstr "अनेक खाती"
 
 #: gkwebapp/templates/multiplegodowns.jinja2:150
 msgid "Godown Address"
@@ -3760,7 +3865,7 @@ msgstr ""
 #: gkwebapp/templates/printnettrialbalance.jinja2:30
 #: gkwebapp/templates/viewtrialbalance.jinja2:53
 msgid "Net Trial Balance"
-msgstr ""
+msgstr "नेट ट्रायल बॅलन्स"
 
 #: gkwebapp/templates/printcashflowreport.jinja2:71
 #: gkwebapp/templates/printcashflowreport.jinja2:127
@@ -3770,32 +3875,32 @@ msgstr ""
 #: gkwebapp/templates/printnettrialbalance.jinja2:56
 #: gkwebapp/templates/printprojectstatement.jinja2:65
 msgid "Running Total"
-msgstr ""
+msgstr "रनिंग टोटल"
 
 #: gkwebapp/templates/printextendedtrialbalance.jinja2:36
 msgid "Extended Trial Balance for the period from"
-msgstr ""
+msgstr "एक्स्टेंडेड ट्रायल बॅलन्सचा कालावधी"
 
 #: gkwebapp/templates/printgrosstrialbalance.jinja2:36
 msgid "Gross Trial Balance for the period from"
-msgstr ""
+msgstr "ग्रॉस ट्रायल बॅलन्सचा कालावधी"
 
 #: gkwebapp/templates/printnettrialbalance.jinja2:36
 msgid "Net Trial Balance for the period from"
-msgstr ""
+msgstr "नेट ट्रायल बॅलन्सचा कालावधी"
 
 #: gkwebapp/templates/printprojectstatement.jinja2:36
 #: gkwebapp/templates/projectstatementreport.jinja2:59
 msgid "Statement for"
-msgstr ""
+msgstr "स्टेटमेंटचा कालावधी"
 
 #: gkwebapp/templates/printprojectstatement.jinja2:44
 msgid "Total Outgoing"
-msgstr ""
+msgstr "टोटल आउूटगोईंग"
 
 #: gkwebapp/templates/printprojectstatement.jinja2:45
 msgid "Total Incoming"
-msgstr ""
+msgstr "टोटल इनकमिंग"
 
 #: gkwebapp/templates/printstockreport.jinja2:7
 #: gkwebapp/templates/printstockreport.jinja2:36
@@ -3830,57 +3935,63 @@ msgstr ""
 
 #: gkwebapp/templates/printtransactions.jinja2:36
 msgid "List of Transactions"
-msgstr ""
+msgstr "व्यवहारांची यादी"
 
 #: gkwebapp/templates/producttab.jinja2:40
 msgid "Create Product"
 msgstr ""
 
 #: gkwebapp/templates/producttab.jinja2:41
+#, fuzzy
 msgid "Edit Product"
-msgstr ""
+msgstr "एडिट प्रोजेक्ट"
 
 #: gkwebapp/templates/producttab.jinja2:46
+#, fuzzy
 msgid "Product saved successfully."
-msgstr ""
+msgstr "बदल केले."
 
 #: gkwebapp/templates/producttab.jinja2:50
+#, fuzzy
 msgid "Product edited successfully."
-msgstr ""
+msgstr "खाते एडिट केले."
 
 #: gkwebapp/templates/producttab.jinja2:54
+#, fuzzy
 msgid "Product deleted successfully."
-msgstr ""
+msgstr "व्हावचर काढुन टाकले"
 
 #: gkwebapp/templates/producttab.jinja2:58
 msgid "Duplicate product under same category."
 msgstr ""
 
 #: gkwebapp/templates/producttab.jinja2:62
+#, fuzzy
 msgid "Product description cannot be blank."
-msgstr ""
+msgstr "ही जागा मोकळी सोडता येणार नाही."
 
 #: gkwebapp/templates/producttab.jinja2:66
 msgid "Please select the unit of measurement."
 msgstr ""
 
 #: gkwebapp/templates/producttab.jinja2:74
+#, fuzzy
 msgid "Cannot delete product!"
-msgstr ""
+msgstr "प्रोजेक्ट काढुन टाकता येणार नाही."
 
 #: gkwebapp/templates/profitlossreport.jinja2:7
 msgid "Income & Expenditure"
-msgstr ""
+msgstr "इन्कम अँड एक्स्पेंडीचर"
 
 #: gkwebapp/templates/profitlossreport.jinja2:64
 #: gkwebapp/templates/profitlossreport.jinja2:77
 msgid "Profit & Loss Account"
-msgstr ""
+msgstr "प्रॉफीट अँड लॉस अकौंट"
 
 #: gkwebapp/templates/profitlossreport.jinja2:67
 #: gkwebapp/templates/profitlossreport.jinja2:79
 msgid "Income & Expenditure Account"
-msgstr ""
+msgstr "इन्कम अँड एक्स्पेंडीचर अकौंट"
 
 #: gkwebapp/templates/project.jinja2:5
 msgid "Projects"
@@ -3888,75 +3999,75 @@ msgstr ""
 
 #: gkwebapp/templates/project.jinja2:99
 msgid "Project saved."
-msgstr ""
+msgstr "प्रोजेक्ट नोंदवला"
 
 #: gkwebapp/templates/project.jinja2:103
 msgid "Project could not be saved."
-msgstr ""
+msgstr "प्रोजेक्ट नोंदवु शकलो नाही."
 
 #: gkwebapp/templates/project.jinja2:107
 msgid "Please enter project name!"
-msgstr ""
+msgstr "प्रोजेक्टचे नाव टाका!"
 
 #: gkwebapp/templates/project.jinja2:111
 msgid "Project already exists!"
-msgstr ""
+msgstr "प्रोजेक्ट अस्तित्वात आहे!"
 
 #: gkwebapp/templates/project.jinja2:115
 msgid "Project cannot be deleted!"
-msgstr ""
+msgstr "प्रोजेक्ट काढुन टाकता येणार नाही."
 
 #: gkwebapp/templates/project.jinja2:116
 msgid "Transactions might be remaining for this project."
-msgstr ""
+msgstr "प्रोजेक्टमध्ये व्यवहारांची नोंद असेल."
 
 #: gkwebapp/templates/project.jinja2:121
 msgid "Add Cost Center"
-msgstr ""
+msgstr "नवे कॉस्ट सेंटर निर्माण करा"
 
 #: gkwebapp/templates/project.jinja2:125
 #: gkwebapp/templates/viewprojectstatement.jinja2:58
 msgid "Pro<u>j</u>ect Name"
-msgstr ""
+msgstr "प्रोजेक्टचे नाव"
 
 #: gkwebapp/templates/project.jinja2:128
 msgid "Sanc<u>t</u>ioned Amount"
-msgstr ""
+msgstr "सँक्शन्ड अमौंट"
 
 #: gkwebapp/templates/project.jinja2:131
 #: gkwebapp/templates/viewimages.jinja2:53
 msgid "<u>A</u>dd"
-msgstr ""
+msgstr "वाढवा"
 
 #: gkwebapp/templates/project.jinja2:141
 msgid "Cost Center List"
-msgstr ""
+msgstr "कॉस्ट सेंटरची यादी"
 
 #: gkwebapp/templates/project.jinja2:148
 #: gkwebapp/templates/viewdualledger.jinja2:76
 #: gkwebapp/templates/viewledger.jinja2:74
 msgid "Project Name"
-msgstr ""
+msgstr "प्रोजेक्टचे नाव"
 
 #: gkwebapp/templates/project.jinja2:151 gkwebapp/templates/project.jinja2:220
 msgid "Sanctioned Amount"
-msgstr ""
+msgstr "सँक्शन्ड अमौंट"
 
 #: gkwebapp/templates/project.jinja2:213
 msgid "Edit Project"
-msgstr ""
+msgstr "एडिट प्रोजेक्ट"
 
 #: gkwebapp/templates/project.jinja2:217
 msgid "Project name"
-msgstr ""
+msgstr "प्रोजेक्टचे नाव"
 
 #: gkwebapp/templates/projectstatementreport.jinja2:69
 msgid "Outgoings"
-msgstr ""
+msgstr "आउूटगोईंग\""
 
 #: gkwebapp/templates/projectstatementreport.jinja2:70
 msgid "Incomings"
-msgstr ""
+msgstr "इनकमिंग"
 
 #: gkwebapp/templates/receivedtransfernote.jinja2:77
 msgid "Transfer Note Cancelled"
@@ -3967,8 +4078,9 @@ msgid "Transfer Note received "
 msgstr ""
 
 #: gkwebapp/templates/receivedtransfernote.jinja2:147
+#, fuzzy
 msgid " Status:"
-msgstr ""
+msgstr "स्टेटस"
 
 #: gkwebapp/templates/receivedtransfernote.jinja2:153
 #: gkwebapp/templates/transfernote.jinja2:11
@@ -3981,39 +4093,40 @@ msgstr ""
 
 #: gkwebapp/templates/removeUser.jinja2:23
 msgid "Please select an user!"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव निवडा"
 
 #: gkwebapp/templates/removeUser.jinja2:28
 msgid "User removed successfully."
-msgstr ""
+msgstr "वापरणार्‍याचे नाव काढुन टाकले."
 
 #: gkwebapp/templates/removeUser.jinja2:32
 msgid "You are not allowed to remove this user."
-msgstr ""
+msgstr "वापरणार्‍याचे नाव काढुन टाकण्याचा अधिकार तुम्हाला नाही."
 
 #: gkwebapp/templates/removeUser.jinja2:36
 msgid "The action is disallowed temporarily."
-msgstr ""
+msgstr "ही कृती सध्या प्रतिबंधीत आहे."
 
 #: gkwebapp/templates/removeUser.jinja2:45
 msgid "Select User"
-msgstr ""
+msgstr "वापरणार्‍याचे नाव निवडा"
 
 #: gkwebapp/templates/removeUser.jinja2:55
 msgid "No users found!"
-msgstr ""
+msgstr "असा वापरणारा अस्तित्वात नाही!"
 
 #: gkwebapp/templates/removeUser.jinja2:55
 msgid "You can create"
-msgstr ""
+msgstr "तुम्ही निर्माण करू शकता"
 
 #: gkwebapp/templates/removeUser.jinja2:55
 msgid "new users"
-msgstr ""
+msgstr "नवीन वापरणारे"
 
 #: gkwebapp/templates/removeUser.jinja2:59
+#, fuzzy
 msgid "Remo<u>v</u>e"
-msgstr ""
+msgstr "निर्माण करा"
 
 #: gkwebapp/templates/searchcategory.jinja2:6
 msgid "No sub-categories under the selected category"
@@ -4033,20 +4146,21 @@ msgid "Show Sub-Category"
 msgstr ""
 
 #: gkwebapp/templates/showstockreport.jinja2:162
+#, fuzzy
 msgid "Vie<u>w</u> Another Stock"
-msgstr ""
+msgstr "व्हावचर क्र."
 
 #: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:58
 msgid "Statement of Sources and Applications of Funds"
-msgstr ""
+msgstr "सोर्सेस आणि अॅप्लिकेशन्स आॅफ फंडस"
 
 #: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:218
 msgid "C<u>o</u>nventional Balance Sheet"
-msgstr ""
+msgstr "कन्व्हेनशनल बॅलन्स शीट"
 
 #: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:220
 msgid "C<u>o</u>nventional Statement of Affairs"
-msgstr ""
+msgstr "कन्व्हेनशनल स्टेटमेंट आॅफ अफेअर्स"
 
 #: gkwebapp/templates/transfernote.jinja2:5
 msgid "GNUKhata | Transfer Note"
@@ -4061,16 +4175,18 @@ msgid "GNUKhata | Unit Of Measurement"
 msgstr ""
 
 #: gkwebapp/templates/unitofmeasurement.jinja2:10
+#, fuzzy
 msgid "Create Unit "
-msgstr ""
+msgstr "खाते निर्माण करा"
 
 #: gkwebapp/templates/unitofmeasurement.jinja2:11
+#, fuzzy
 msgid "Edit Unit"
-msgstr ""
+msgstr "खाते एडिट करा"
 
 #: gkwebapp/templates/viewbalancesheet.jinja2:19
 msgid "View"
-msgstr ""
+msgstr "बघा"
 
 #: gkwebapp/templates/viewbalancesheet.jinja2:34
 #: gkwebapp/templates/viewbankrecon.jinja2:48
@@ -4079,21 +4195,21 @@ msgstr ""
 #: gkwebapp/templates/viewprojectstatement.jinja2:35
 #: gkwebapp/templates/viewstockreport.jinja2:48
 msgid "From Date"
-msgstr ""
+msgstr "पासुन"
 
 #: gkwebapp/templates/viewbalancesheet.jinja2:46
 #: gkwebapp/templates/viewprojectstatement.jinja2:47
 msgid "To <u>D</u>ate"
-msgstr ""
+msgstr "पर्यंत"
 
 #: gkwebapp/templates/viewbalancesheet.jinja2:57
 msgid "<u>T</u>ype"
-msgstr ""
+msgstr "प्रकार"
 
 #: gkwebapp/templates/viewbalancesheet.jinja2:62
 #: gkwebapp/templates/viewbalancesheet.jinja2:69
 msgid "Sources & Applications of Funds"
-msgstr ""
+msgstr "सोर्सेस अँड अॅप्लिकेशन्स आॅफ फंडस"
 
 #: gkwebapp/templates/viewbalancesheet.jinja2:76
 #: gkwebapp/templates/viewbankrecon.jinja2:76
@@ -4104,7 +4220,7 @@ msgstr ""
 #: gkwebapp/templates/viewstockreport.jinja2:76
 #: gkwebapp/templates/viewtrialbalance.jinja2:60
 msgid "<u>V</u>iew"
-msgstr ""
+msgstr "बघा"
 
 #: gkwebapp/templates/viewbankrecon.jinja2:32
 #: gkwebapp/templates/viewcashflow.jinja2:32
@@ -4119,18 +4235,18 @@ msgstr ""
 #: gkwebapp/templates/viewledger.jinja2:61
 #: gkwebapp/templates/viewstockreport.jinja2:61
 msgid "To Date"
-msgstr ""
+msgstr "पर्यंत"
 
 #: gkwebapp/templates/viewcashflow.jinja2:5
 #: gkwebapp/templates/viewcashflow.jinja2:19
 msgid "View Cash Flow"
-msgstr ""
+msgstr "कॅश फ्लो बघा"
 
 #: gkwebapp/templates/viewcashflow.jinja2:34
 #: gkwebapp/templates/viewprofitloss.jinja2:39
 #: gkwebapp/templates/viewtrialbalance.jinja2:30
 msgid "From"
-msgstr ""
+msgstr "पासुन"
 
 #: gkwebapp/templates/viewcashmemo.jinja2:82
 msgid "Cash Memo Cancelled."
@@ -4138,61 +4254,61 @@ msgstr ""
 
 #: gkwebapp/templates/viewdualledger.jinja2:5
 msgid "Dual Ledgers"
-msgstr ""
+msgstr "दोन खाती"
 
 #: gkwebapp/templates/viewdualledger.jinja2:21
 msgid "View Dual Ledgers"
-msgstr ""
+msgstr "बघा दोन खाती"
 
 #: gkwebapp/templates/viewdualledger.jinja2:87
 msgid "Vie<u>w</u>"
-msgstr ""
+msgstr "बघा"
 
 #: gkwebapp/templates/viewimages.jinja2:6
 msgid "V.No"
-msgstr ""
+msgstr "व्हा. क्र."
 
 #: gkwebapp/templates/viewimages.jinja2:32
 msgid "Image No"
-msgstr ""
+msgstr "इमेज नं."
 
 #: gkwebapp/templates/viewimages.jinja2:35
 msgid "Remove image"
-msgstr ""
+msgstr "इमेज काढुन टाका"
 
 #: gkwebapp/templates/viewimages.jinja2:45
 msgid "Changes saved."
-msgstr ""
+msgstr "बदल नोंदवले."
 
 #: gkwebapp/templates/viewimages.jinja2:56
 msgid "<u>S</u>ave Changes"
-msgstr ""
+msgstr "बदल नोंदवा"
 
 #: gkwebapp/templates/viewledger.jinja2:19
 msgid "View Ledger"
-msgstr ""
+msgstr "खाते उतारा बघा"
 
 #: gkwebapp/templates/viewprofitloss.jinja2:6
 #: gkwebapp/templates/viewprofitloss.jinja2:24
 msgid "View Profit & Loss"
-msgstr ""
+msgstr "प्रॉफीट अँड लॉस अकौंट बघा"
 
 #: gkwebapp/templates/viewprofitloss.jinja2:8
 #: gkwebapp/templates/viewprofitloss.jinja2:26
 msgid "View Income & Expenditure"
-msgstr ""
+msgstr "इन्कम अँड एक्स्पेंडीचर अकौंट बघा"
 
 #: gkwebapp/templates/viewprojectstatement.jinja2:19
 msgid "View Project Statement"
-msgstr ""
+msgstr "प्रोजेक्ट स्टेटमेंट बघा"
 
 #: gkwebapp/templates/viewprojectstatement.jinja2:32
 msgid "Please select a project!"
-msgstr ""
+msgstr "प्रोजेक्ट निवडा"
 
 #: gkwebapp/templates/viewprojectstatement.jinja2:60
 msgid "Please select"
-msgstr ""
+msgstr "निवडा"
 
 #: gkwebapp/templates/viewstockreport.jinja2:5
 msgid "stock"
@@ -4203,82 +4319,112 @@ msgid "View Stock"
 msgstr ""
 
 #: gkwebapp/templates/viewstockreport.jinja2:35
+#, fuzzy
 msgid "Please select a Product!"
-msgstr ""
+msgstr "प्रोजेक्ट निवडा"
 
 #: gkwebapp/templates/viewtrialbalance.jinja2:19
 msgid "View Trial Balance"
-msgstr ""
+msgstr "ट्रायल बॅलन्स बघा"
 
 #: gkwebapp/templates/viewtrialbalance.jinja2:51
 msgid "<u>T</u>rial Balance type"
-msgstr ""
+msgstr "ट्रायल बॅलन्सचा प्रकार"
 
 #: gkwebapp/templates/viewvoucher.jinja2:104
 msgid "Voucher could not be deleted."
-msgstr ""
+msgstr "व्हावचर काढुन टाकता आले नाही."
 
 #: gkwebapp/templates/viewvoucher.jinja2:108
 msgid "Voucher could not be edited."
-msgstr ""
+msgstr "व्हावचरमध्ये बदल करता आले नाही."
 
 #: gkwebapp/templates/viewvoucher.jinja2:112
 msgid "Voucher could not be cloned."
-msgstr ""
+msgstr "व्हावचर क्लोन करता आले नाही."
 
 #: gkwebapp/templates/viewvoucher.jinja2:144
 msgid "No attachment found!"
-msgstr ""
+msgstr "अॅटॅचमेंट आढळली नाही!"
 
 #: gkwebapp/templates/viewvoucher.jinja2:157
 msgid "Voucher No"
-msgstr ""
+msgstr "व्हावचर क्र."
 
 #: gkwebapp/templates/viewvoucher.jinja2:443
 msgid "N<u>a</u>rration"
-msgstr ""
+msgstr "तपशिल"
 
 #: gkwebapp/templates/viewvoucher.jinja2:462
 msgid "Unloc<u>k</u>"
-msgstr ""
+msgstr "अनलॉक करा"
 
 #: gkwebapp/templates/viewvoucher.jinja2:464
 msgid "Loc<u>k</u>"
-msgstr ""
+msgstr "लॉक करा"
 
 #: gkwebapp/templates/viewvoucher.jinja2:466
 msgid "<u>E</u>dit"
-msgstr ""
+msgstr "एडिट करा"
 
 #: gkwebapp/templates/viewvoucher.jinja2:467
 msgid "Cl<u>o</u>ne"
-msgstr ""
+msgstr "क्लोन करा"
 
 #: gkwebapp/templates/viewvoucher.jinja2:471
 msgid "View Attac<u>h</u>ment"
-msgstr ""
+msgstr "अॅटॅचमेंट बघा"
 
 #: gkwebapp/templates/viewvoucher.jinja2:477
 #: gkwebapp/templates/viewvoucher.jinja2:485
 msgid "Add Attachm<u>e</u>nt"
-msgstr ""
+msgstr "अॅटॅचमेंट जोडा"
 
 #: gkwebapp/templates/viewvoucher.jinja2:490
 msgid "Bac<u>k</u>"
-msgstr ""
+msgstr "पुन्हा"
 
 #~ msgid "GNUKhata is developed by "
-#~ msgstr ""
+#~ msgstr "गन्यु खाता ही आज्ञावली डिझिटल फ्रीडम फौंडेशनने विकसित केली आहे."
 
 #~ msgid "Copyright © Digital Freedom Foundation 2013,2014,2015,2016. Visit "
 #~ msgstr ""
 
+#~ msgid "Welcome To GNUKhata "
+#~ msgstr "गन्यु खाता मध्ये आपले स्वागत आहे!"
+
+#~ msgid "Features of GNUKhata"
+#~ msgstr "गन्यु खात्याची वैशिष्टये"
+
+#~ msgid "It is Lightweight "
+#~ msgstr "कमी मेमरी स्पेस व्यापणारी"
+
+#~ msgid "It is Scalable"
+#~ msgstr "व्याप्ती वाढवता येउ शकणारी"
+
+#~ msgid "It is Fast and Robust "
+#~ msgstr "वेगवान आणि मजबुत"
+
+#~ msgid "It can be deployed for profit making and non profit Organisations"
+#~ msgstr "व्यावसायिक आणि स्वयंसेवी संस्थांसाठी उपयुक्त"
+
+#~ msgid "Flow"
+#~ msgstr "कॅश फ्लो"
+
+#~ msgid "Voucher Type"
+#~ msgstr "व्हा. प्रकार"
+
 #~ msgid "Copyright © Digital Freedom Foundation 2013,2014,2015,2016. Visit"
-#~ msgstr ""
+#~ msgstr "कॉपी राईट ©डिझिटल फ्रीडम फौंडेशन २०१३, २०१४, २०१५, २०१६."
 
 #~ msgid ""
 #~ msgstr ""
 
-#~ msgid "To view Toolbar press"
+#~ msgid "GNUKhata is highly customizable, given its open source nature."
 #~ msgstr ""
 
+#~ msgid "GNUKhata is soon to be extended to include a payroll section."
+#~ msgstr "लवकरच गन्यु खात्यामध्ये पे रोल आज्ञावली समाविष्ट केली जाणार आहे."
+
+#~ msgid "Rsources emo<u>v</u>e"
+#~ msgstr "काढुन टाका"

@@ -26,7 +26,7 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <li class="dropdown closebooks">
-            <a href="" id="master" class="dropdown-toggle mastermenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>M</u>aster</a>
+            <a href="" id="master" class="dropdown-toggle mastermenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>M</u>aster{% endtrans %}</a>
             <ul class="dropdown-menu">
               <li><a  class="mastermenu" data-toggle="tab" id="addaccount" href="">{% trans %}Create Account{% endtrans %}</a></li>
               <li><a  class="mastermenu" data-toggle="tab" href="" id="editaccount">{% trans %}Edit Account{% endtrans %}</a></li>
@@ -36,7 +36,7 @@
             </ul>
           </li>
           <li class="dropdown closebooks inventory_hide">
-            <a href="" id="inventory" class="dropdown-toggle inventorymenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><u>I</u>nventory</a>
+            <a href="" id="inventory" class="dropdown-toggle inventorymenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>I</u>nventory{% endtrans %}</a>
             <ul class="dropdown-menu">
               <li><a class="inventorymenu" data-toggle="tab" id="addcategory" href="">{% trans %}Category{% endtrans %}</a></li>
               <li><a class="inventorymenu" data-toggle="tab" id="addunit" href="">{% trans %}Units Of Measurement{% endtrans %}</a></li>
@@ -137,6 +137,13 @@
             </ul>
           </li>
           <li class="dropdown">
+            <a href="" id="lang" class="dropdown-toggle mastermenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>L</u>anguage{% endtrans %}</a>
+            <ul class="dropdown-menu">
+              <li><a  class="langmenu" id="mar" href="/locale?language=en">{% trans %}English{% endtrans %}</a></li>
+              <li><a  class="langmenu" id="mar" href="/locale?language=mr">{% trans %}मराठी{% endtrans %}</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
             <a href="" id="toolbar" class="dropdown-toggle toolbarmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Toolbar{% endtrans %}</a>
             <ul class="dropdown-menu scrollable">
               <li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="addaccounttb" href="">{% trans %}Create Account{% endtrans %} - F2</a></li>
@@ -186,7 +193,7 @@
     </div>
     <div style="padding-top:20px" class="panel-body" >
           <p>{% trans %}To access submenus in the Menu Bar press{% endtrans %} "Ctrl + Shift + {% trans %}Underlined Character".{% endtrans %}</p>
-          <p>{% trans %}To view Toolbar press{% endtrans %} "F1".</p>
+          <p>{% trans %}To view Toolbar press  "F1".{% endtrans %}</p>
           <p> {% trans %}To use screen specific shortcuts{% endtrans %} : </p>
           <p class="shortcut">{% trans %}If using Firefox, press{% endtrans %} "Alt + Shift + {% trans %}the underlined character".{% endtrans %}</p>
           <p class="shortcut">{% trans %}If using Google Chrome, Opera or Internet Explorer press{% endtrans %} "Alt + {% trans %}the underlined character".{% endtrans %}</p>

@@ -31,6 +31,20 @@ from pyramid.view import view_config
 import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
+from pyramid.response import Response
+from pyramid.httpexceptions import HTTPFound
+
+@view_config(route_name='locale')
+def set_locale_cookie(request):
+	if request.GET['language']:
+		language = request.GET['language']
+		response = Response()
+		response.set_cookie('_LOCALE_',
+							value=language,
+							max_age=31536000)  # max_age = year
+	return HTTPFound(location=request.environ['HTTP_REFERER'],
+					 headers=response.headers)
+
 
 @view_config(route_name="showeditOrg", renderer="gkwebapp:templates/editorganisation.jinja2")
 def showeditOrg(request):
@@ -79,7 +93,7 @@ def closebooks(request):
 def rollover(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/rollclose?task=rollover&financialend=%s&financialstart=%s"%(request.params["financialend"],request.params["financialstart"]), headers=header)
-	
+
 	return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="deleteorg", renderer="json")

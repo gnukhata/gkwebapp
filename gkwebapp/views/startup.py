@@ -30,6 +30,7 @@ from pyramid.view import view_config
 import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
+from pyramid.i18n import default_locale_negotiator
 s = requests.session()
 
 @view_config(route_name="index", renderer="gkwebapp:templates/index.jinja2")
@@ -78,7 +79,8 @@ def login(request):
 
 @view_config(route_name="createorg", renderer="gkwebapp:templates/createorg.jinja2")
 def createorg(request):
-    return {"a":1}
+
+    return {"locale":default_locale_negotiator(request)}
 
 @view_config(route_name="createadmin", renderer="gkwebapp:templates/createadmin.jinja2")
 def createadmin(request):
