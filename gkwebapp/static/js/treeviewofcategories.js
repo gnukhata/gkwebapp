@@ -7,6 +7,7 @@ $(document).ready(function() {
     var categoryname = $(this).html();
     $("#messagespan").append(categoryname);
   });
+  $(".topparent").first().focus();
   $(document).off("click",".topparent").on("click", ".topparent", function(event){
     event.preventDefault();
     var indextp = $(".topparent").index(this);

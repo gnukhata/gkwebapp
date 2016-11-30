@@ -580,12 +580,6 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
     if ($("#openingstock").val()=="")
     {
       $('.modal-backdrop').remove();
-      $("#os-blank-alert").alert();
-      $("#os-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#os-blank-alert").hide();
-      });
-      $("#openingstock").focus();
-      $("#openingstock").select();
       $("#openingstock").val("0.00");
       return false;
     }
