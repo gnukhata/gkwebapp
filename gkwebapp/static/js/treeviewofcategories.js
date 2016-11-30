@@ -2,6 +2,11 @@ $(document).ready(function() {
   $("#tvback").click(function(event) {
     $("#listofcategories").click();
   });
+  $("#messagespan").append('Tree View of Categories'+'There are '+$(".list-group").length+' parent categories. They are ');
+  $(".categoryname").each(function() {
+    var categoryname = $(this).html();
+    $("#messagespan").append(categoryname);
+  });
   $(document).off("click",".topparent").on("click", ".topparent", function(event){
     event.preventDefault();
     var indextp = $(".topparent").index(this);
