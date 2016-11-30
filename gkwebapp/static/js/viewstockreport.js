@@ -65,12 +65,10 @@ $(document).ready(function() {
     }
   }
 
-  $("#viewstock_productname").keydown(function(e){
-    if (e.which == 13) {
+  $("#viewstock_productname").change(function(e){
       e.preventDefault();
       $(".dis").attr('disabled', false);
       $("#viewstock_fromdate").focus();
-    }
   });
 
   $("#viewstock_fromdate").blur(function(event) {

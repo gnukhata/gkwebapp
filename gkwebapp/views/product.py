@@ -309,13 +309,13 @@ def stockreportspreadsheet(request):
 	orgname += " (FY: " + ystart+" to "+fyend +")"
 	ods = ODS()
 	sheet = ods.content.getSheet(0)
-	sheet.setSheetName("List of Stock Items")
+	sheet.setSheetName("Product Report")
 	sheet.getRow(0).setHeight("23pt")
 
 	sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("16pt")
 	ods.content.mergeCells(0,0,7,1)
 	sheet.getRow(1).setHeight("18pt")
-	sheet.getCell(0,1).stringValue("Stock Report for "+productdesc+" (Period : "+calculatefrom+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+	sheet.getCell(0,1).stringValue("Product Report for "+productdesc+" (Period : "+calculatefrom+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
 	ods.content.mergeCells(0,1,7,1)
 	sheet.getColumn(1).setWidth("4cm")
 	sheet.getColumn(2).setWidth("5cm")

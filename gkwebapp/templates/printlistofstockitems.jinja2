@@ -35,7 +35,7 @@
     <table class="table table-condensed table-bordered table-striped shadow">
       <thead class="bg-primary">
         <tr class="visible-print">
-          <th colspan="4" style="text-align:center; font-size:80%;">
+          <th colspan="5" style="text-align:center; font-size:80%;">
             {% trans %}List of Stock Items{% endtrans %}
           </th>
         </tr>
@@ -65,7 +65,7 @@
             {{record["srno"]}}
           </td>
           <td class="col-xs-5">
-            <a class="libgname" href="">{{record["productdesc"]}}</a>
+            {{record["productdesc"]}}
           </td>
           <td class="col-xs-3" >
             {{record["categoryname"]}}
