@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{% trans %}GNUKhata{% endtrans %} | {{projectname}} {% trans %}Statement{% endtrans %}</title>
+
+  <style type="text/css">
+  .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  #latable td {
+    font-size: 75%;
+    padding: 4 !important;
+    margin: 4 !important;
+  }
+
+  #latable th {
+    font-size: 85%;
+  }
+
+  .card-view .title {
+      font-weight: bold;
+      display: inline-block;
+      min-width: 30%;
+      text-align: left !important;
+  }
+
+  #latable tbody {
+      display:block;
+      height: calc(100vh - 16em);
+      overflow-y:scroll;
+  }
+  #latable thead,#latable tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  #latable thead {
+      width: calc( 100% - 0.65em );
+  }
+  .list-group {
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+  .list-group-item {
+    padding: 5;
+    border-top-style: none;
+    border-right-style: none;
+    border-bottom-style: none;
+    border-left-style: solid;
+    border-width: medium;
+  }
+  </style>
+</head>
+<body>
+  <span style="margin:auto; display:table; font-size:120%;"><strong>{% trans %}Tree View of Categories{% endtrans %}</strong></span><span id="messagespan" class="sr-only" aria-live="rude"></span>
+  <div class="row">
+    <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px; margin-bottom: 15px;" id="tvback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+  </div>
+  <div class="container-fluid">
+    {% for record in gkresult %}
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-primary">
+          <a href="" class="topparent list-group-item list-group-item-primary" aria-expanded="false">
+            <span class="glyphicon glyphicon-triangle-right"></span>
+            <span class="glyphicon glyphicon-triangle-bottom" style="display:none;"></span>
+            <span class="categoryname">{{record["categoryname"]}}</span>
+            <span class="sr-only">has </span><span class="badge">{{record["subcount"]}}</span><span class="sr-only"> child categories</span>
+          </a>
+          <input type="text" class="categorycode" name="name" value={{record["categorycode"]}} hidden>
+        </li>
+      </ul>
+    {% endfor %}
+  </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/treeviewofcategories.js')}}"></script>
+</body>
+</html>

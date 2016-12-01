@@ -195,3 +195,15 @@ def listofgodownssspreadsheet(request):
 	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
 	os.remove("response.ods")
 	return Response(rep, headerlist=headerList.items())
+
+@view_config(route_name="category",request_param="action=tree",renderer="gkwebapp:templates/treeviewofcategories.jinja2")
+def treeviewofcategories(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/categories?type=topcategories", headers=header)
+	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
+
+@view_config(route_name="category",request_param="action=treechildren",renderer="json")
+def childrenofcategories(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/categories?type=children&categorycode=%d"%(int(request.params["categorycode"])), headers=header)
+	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}

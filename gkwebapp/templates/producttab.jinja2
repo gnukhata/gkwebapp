@@ -53,6 +53,10 @@
 
             {% trans %}Product deleted successfully.{% endtrans %}
           </div>
+          <div class="alert alert-danger" id="duplicate-unit-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}This unit exists. Please select it from the list.{% endtrans %}
+          </div>
           <div class="alert alert-danger" id="duplicate-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}Duplicate product under same category.{% endtrans %}
@@ -60,6 +64,10 @@
           <div class="alert alert-danger" id="blank-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}Product description cannot be blank.{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="os-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}<b>Opening Stock</b> is blank. Please enter <b>0.00</b> if you have no opening stock.{% endtrans %}
           </div>
           <div class="alert alert-danger" id="uomblank-alert"  aria-live="rude" role="alert" hidden>
 

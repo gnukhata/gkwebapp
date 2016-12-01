@@ -37,10 +37,14 @@
   #latable thead {
       width: calc( 100% - 0.65em );
   }
+  .rightlist {
+    text-align: right;
+  }
 
   </style>
 </head>
 <body>
+  <span style="margin:auto; display:table; font-size:120%;"><strong>{% trans %}List of Stock Items{% endtrans %}</strong></span>
   <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="laclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
   <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
     <thead class="bg-primary">
@@ -48,7 +52,7 @@
         <th class="col-xs-1" >
           {% trans %}Sr. No.{% endtrans %}
         </th>
-        <th class="col-xs-4" >
+        <th class="col-xs-5" >
           {% trans %}Stock Item{% endtrans %}
         </th>
         <th class="col-xs-3" >
@@ -57,8 +61,8 @@
         <th class="col-xs-2" >
           {% trans %}Unit of Measurement{% endtrans %}
         </th>
-        <th class="col-xs-2" >
-          {% trans %}Status{% endtrans %}
+        <th class="col-xs-1 rightlist" >
+          {% trans %}Stock{% endtrans %}
         </th>
       </tr>
     </thead>
@@ -69,7 +73,7 @@
         <td class="col-xs-1 " >
           {{record["srno"]}}
         </td>
-        <td class="col-xs-4">
+        <td class="col-xs-5">
           <a class="libgname" href="">{{record["productdesc"]}}</a>
         </td>
         <td class="col-xs-3" >
@@ -78,13 +82,13 @@
         <td class="col-xs-2" >
           {{record["unitname"]}}
         </td>
-        {% if record["productstatus"] == "Active" %}
-        <td class="col-xs-2 text-success">
-          {{record["productstatus"]}}
+        {% if record["productquantity"] == "0.00" %}
+        <td class="col-xs-1 text-danger rightlist">
+          {{record["productquantity"]}}
         </td>
         {% else %}
-        <td class="col-xs-2 text-danger">
-          {{record["productstatus"]}}
+        <td class="col-xs-1 text-success rightlist">
+          {{record["productquantity"]}}
         </td>
         {% endif %}
       </tr>

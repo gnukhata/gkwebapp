@@ -23,7 +23,9 @@
   tfoot{
     display: table-footer-group;
   }
-
+  .rightlist {
+    text-align: right;
+  }
   </style>
 </head>
 <body>
@@ -33,7 +35,7 @@
     <table class="table table-condensed table-bordered table-striped shadow">
       <thead class="bg-primary">
         <tr class="visible-print">
-          <th colspan="4" style="text-align:center; font-size:80%;">
+          <th colspan="5" style="text-align:center; font-size:80%;">
             {% trans %}List of Stock Items{% endtrans %}
           </th>
         </tr>
@@ -41,7 +43,7 @@
           <th class="col-xs-1" >
             {% trans %}Sr. No.{% endtrans %}
           </th>
-          <th class="col-xs-4" >
+          <th class="col-xs-5" >
             {% trans %}Stock Item{% endtrans %}
           </th>
           <th class="col-xs-3" >
@@ -50,8 +52,8 @@
           <th class="col-xs-2" >
             {% trans %}Unit of Measurement{% endtrans %}
           </th>
-          <th class="col-xs-2" >
-            {% trans %}Status{% endtrans %}
+          <th class="col-xs-1 rightlist" >
+            {% trans %}Stock{% endtrans %}
           </th>
         </tr>
       </thead>
@@ -62,8 +64,8 @@
           <td class="col-xs-1 " >
             {{record["srno"]}}
           </td>
-          <td class="col-xs-4">
-            <a class="libgname" href="">{{record["productdesc"]}}</a>
+          <td class="col-xs-5">
+            {{record["productdesc"]}}
           </td>
           <td class="col-xs-3" >
             {{record["categoryname"]}}
@@ -71,9 +73,15 @@
           <td class="col-xs-2" >
             {{record["unitname"]}}
           </td>
-          <td class="col-xs-2">
-            {{record["productstatus"]}}
+          {% if record["productquantity"] == "0.00" %}
+          <td class="col-xs-1 rightlist">
+            {{record["productquantity"]}}
           </td>
+          {% else %}
+          <td class="col-xs-1 rightlist">
+            {{record["productquantity"]}}
+          </td>
+          {% endif %}
         </tr>
         {% endfor %}
 

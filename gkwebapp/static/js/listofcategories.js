@@ -135,4 +135,28 @@ $(document).ready(function() {
 
   });
 
+  $('#tree').click(function (e) {
+
+    $.ajax({
+      type: "POST",
+      url: "/category?action=tree",
+      global: false,
+      async: false,
+      datatype: "text/html",
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+    })
+    .done(function(resp) {
+      $("#info").html(resp);
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
+  });
+
 });

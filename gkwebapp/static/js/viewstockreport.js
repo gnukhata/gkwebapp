@@ -65,11 +65,20 @@ $(document).ready(function() {
     }
   }
 
-  $("#viewstock_productname").keydown(function(e){
-    if (e.which == 13) {
-      e.preventDefault();
-      $(".dis").attr('disabled', false);
-      $("#viewstock_fromdate").focus();
+  $("#viewstock_productname").change(function(){
+        $(this).keyup(function(e){
+            if (e.which == 13) {
+              e.preventDefault();
+              $(".dis").attr('disabled', false);
+              $("#viewstock_fromdate").focus();
+            }
+        });
+        $(".dis").attr('disabled', false);
+  });
+
+  $("#viewstock_fromdate").keyup(function(e){
+    if (e.which == 38) {
+      $("#viewstock_productname").focus();
     }
   });
 
