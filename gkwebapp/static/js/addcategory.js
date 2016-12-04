@@ -1,7 +1,15 @@
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $(".tax_rate").numeric();
-  $("#category_under").focus();
+  if ($("#catcount").val()==0)
+  {
+      $("#category_name").focus();
+  }
+  else
+  {
+      $("#category_under").focus();
+
+  }
 
 
   $("#category_name").keydown(function(event) {

@@ -33,8 +33,8 @@
         <thead class="bg-primary">
           <tr style="color:black; background-color:white;">
 						<th colspan="5" style="text-align:center; font-size:80%">
-							<i>{% trans %}Statement for{% endtrans %}: </i>{{projectname}}<br>
-							<i>{% trans %}Period{% endtrans %}: </i>{{from}} {% trans %}to{% endtrans %} {{to}}
+							<i>{% trans %}Statement for{% endtrans %} : </i>{{projectname}}<br>
+							<i>{% trans %}Period{% endtrans %} : </i>{{from}} {% trans %}to{% endtrans %} {{to}}
 						</th>
 					</tr>
           <tr>
@@ -62,7 +62,7 @@
             <td class="col-xs-2">
               {{record["groupname"]}}<br>
               {% if record.ttlRunDr %}
-								&nbsp&nbsp<i>{% trans %}Running Total{% endtrans %}:</i><br>
+								&nbsp&nbsp<i>{% trans %}Running Total{% endtrans %} :</i><br>
 							{% endif %}
             </td>
             <td class="col-xs-1" style="text-align:right">

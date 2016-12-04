@@ -154,7 +154,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
           <form id="viewvoucher" name="voucher" class="" action="" method="get">
             <div class="form-inline">
               <div class="well well-sm" >
-                <label for="vno">{% trans %}Voucher No{% endtrans %}:</label><label for="vno" style="color:red;font-size: 120%;">*</label>
+                <label for="vno">{% trans %}Voucher No{% endtrans %} :</label><label for="vno" style="color:red;font-size: 120%;">*</label>
                 <input type="text" name="vno" class=" form-control input-sm" id="vno" size="10" value="{{voucher["vouchernumber"]}}">
                 <div class="form-group col-xs-offset-2">
                   {% if vtype=="contra" %}
@@ -181,7 +181,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                 </div>
 
                 <div class="pull-right form-group">
-                  <label for="vdate">{% trans %}<u>D</u>ate{% endtrans %}:</label>
+                  <label for="vdate">{% trans %}<u>D</u>ate{% endtrans %} :</label>
                   <input type="text" class="vdate form-control input-sm" id="vdate" value="{{voucher['voucherdate'][:2]}}" size="2" maxlength="2" placeholder="DD"accesskey="d">
                   <input type="text" id="vmonth" class="vdate form-control input-sm" value="{{voucher['voucherdate'][3:5]}}" size="2" maxlength="2" placeholder="MM">
                   <input type="text" id="vyear" class="vdate form-control input-sm" value="{{voucher['voucherdate'][6:]}}" size="4" maxlength="4" placeholder="YYYY">
@@ -192,7 +192,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
             <div class="form-inline well well-sm invhide">
               <div class="form-group ">
 
-                <label for="invsel">{% trans %}Select Invoice {% endtrans %}:</label>
+                <label for="invsel">{% trans %}Select Invoice {% endtrans %} :</label>
                 <select id="invsel" class="form-control input-sm invoice_no" >
                   <option value="" total="">{% trans %}None{% endtrans %}</option>
                   {% for invoice in invoicedata %}
@@ -214,7 +214,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                 </select>
               </div>
               <div class="form-group pull-right" >
-                <label for="invtotal">{% trans %}Invoice Total Amount {% endtrans %}:</label>
+                <label for="invtotal">{% trans %}Invoice Total Amount {% endtrans %} :</label>
                 <input type="text" id="invtotal" class="form-control input-sm" value="0.00" placeholder="" disabled>
               </div>
             </div>
@@ -419,7 +419,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
             </div>
 
             <div class="col-xs-1">
-              <label for="project">{% trans %}Pro<u>j</u>ect{% endtrans %}:</label>
+              <label for="project">{% trans %}Pro<u>j</u>ect{% endtrans %} :</label>
             </div>
             <div class="col-xs-3">
               <select class="form-control input-sm" id="project" accesskey="j">
@@ -440,7 +440,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
               </select>
             </div>
             <div class="col-xs-1">
-              <label for="narration">{% trans %}N<u>a</u>rration{% endtrans %}:</label>
+              <label for="narration">{% trans %}N<u>a</u>rration{% endtrans %} :</label>
             </div>
             <div class="pull-right">
               <textarea class="form-control" name="narration" id="narr" rows="2" cols="50" accesskey="a">{{voucher["narration"]}}</textarea>
