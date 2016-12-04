@@ -94,6 +94,7 @@ def saveproduct(request):
 	header={"gktoken":request.headers["gktoken"]}
 	prdspecs = {}
 	proddetails={}
+	productdetails={}
 	taxes =0
 	for prd in request.params:
 
@@ -116,7 +117,8 @@ def saveproduct(request):
 			prdspecs[prd]= request.params[prd]
 
 		proddetails["specs"] = prdspecs
-	result = requests.post("http://127.0.0.1:6543/products", data=json.dumps(proddetails),headers=header)
+		productdetails = {"productdetails":proddetails, "godownflag":False}
+	result = requests.post("http://127.0.0.1:6543/products", data=json.dumps(productdetails),headers=header)
 	if len(taxes)>0:
 		for tax in taxes:
 			if len(tax)!=0:
