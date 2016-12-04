@@ -134,6 +134,7 @@ def editproduct(request):
 	header={"gktoken":request.headers["gktoken"]}
 	prdspecs = {}
 	proddetails={}
+	productdetails={}
 	taxes =0
 
 	for prd in request.params:
@@ -153,8 +154,8 @@ def editproduct(request):
 		else:
 			prdspecs[prd]= request.params[prd]
 		proddetails["specs"] = prdspecs
-
-	result = requests.put("http://127.0.0.1:6543/products", data=json.dumps(proddetails),headers=header)
+		productdetails = {"productdetails":proddetails, "godownflag":False}
+	result = requests.put("http://127.0.0.1:6543/products", data=json.dumps(productdetails),headers=header)
 
 	for tax in taxes:
 
