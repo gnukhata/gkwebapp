@@ -22,7 +22,7 @@
         <div class="container-fluid row">
 
           <div class="form-group col-md-5">
-            <label for="deliverychallan_edit_list">{% trans %}Delivery Note{% endtrans %}:</label>
+            <label for="deliverychallan_edit_list">{% trans %}Delivery Note{% endtrans %} :</label>
             <select class="form-control input-sm" id="deliverychallan_edit_list">
               <option value="" disabled selected hidden>{% trans %}Select Delivery Note{% endtrans %}</option>
               {% for dc in delchals %}
@@ -52,11 +52,11 @@
             <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
           </div>
           <div class="form-group">
-            <label for="deliverychallan_edit_challanno">{% trans %}Note No{% endtrans %}:</label>
+            <label for="deliverychallan_edit_challanno">{% trans %}Note No{% endtrans %} :</label>
             <input class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_challanno" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a">
           </div>
             <div class="form-group">
-              <label for="deliverychallan_edit_date">{% trans %}Date{% endtrans %}:</label>
+              <label for="deliverychallan_edit_date">{% trans %}Date{% endtrans %} :</label>
               <div class="form-inline">
                   <div class="form-group">
                     <input type="text" class="form-control deliverychallan_edit_disable input-sm delchaldate" size="2" maxlength="2" placeholder="DD" id="deliverychallan_edit_date" accesskey="v">
@@ -70,8 +70,8 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="deliverychallan_edit_customer" id="clabel">{% trans %}Customer{% endtrans %}:</label>
-              <label for="deliverychallan_edit_customer" id="slabel">{% trans %}Supplier{% endtrans %}:</label>
+              <label for="deliverychallan_edit_customer" id="clabel">{% trans %}Customer{% endtrans %} :</label>
+              <label for="deliverychallan_edit_customer" id="slabel">{% trans %}Supplier{% endtrans %} :</label>
               <select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_customer" accesskey="">
                 <optgroup id="customersgroup">
                   {% for customer in customers %}
@@ -88,8 +88,8 @@
 
 
             <div class="form-group">
-              <label for="deliverychallan_edit_godown" id="fgolabel">{% trans %}From Godown{% endtrans %}:</label>
-              <label for="deliverychallan_edit_godown" id="tgolabel">{% trans %}To Godown{% endtrans %}:</label>
+              <label for="deliverychallan_edit_godown" id="fgolabel">{% trans %}From Godown{% endtrans %} :</label>
+              <label for="deliverychallan_edit_godown" id="tgolabel">{% trans %}To Godown{% endtrans %} :</label>
               <select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_godown" accesskey="">
                 <option value=""  selected>{% trans %}None{% endtrans %}</option>
                 {% for godown in godowns %}
@@ -100,7 +100,7 @@
             <div class="form-group">
               <label for="deliverychallan_edit_consignment">Note Type:</label>
                 <select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_consignment" accesskey="">
-                  <option value="4"  selected>{% trans %}Delivery Challan{% endtrans %}</option>
+                  <option value="4"  selected>{% trans %}Sale{% endtrans %}</option>
                   <option value="3">{% trans %}Consignment{% endtrans %}</option>
                   <option value="19">{% trans %}Sample{% endtrans %}</option>
                 </select>
@@ -130,11 +130,11 @@
             </table>
             </div>
             <div class="form-group">
-              <label for="deliverychallan_edit_issuername">{% trans %}Issuer's Name{% endtrans %}:</label>
+              <label for="deliverychallan_edit_issuername">{% trans %}Issuer's Name{% endtrans %} :</label>
               <input type="text" class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_issuername" placeholder="Enter name">
             </div>
             <div class="form-group">
-              <label for="deliverychallan_edit_designation">{% trans %}Designation{% endtrans %}:</label>
+              <label for="deliverychallan_edit_designation">{% trans %}Designation{% endtrans %} :</label>
               <input type="text" class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_designation" placeholder="Enter designation">
             </div>
         </div>

@@ -46,12 +46,12 @@
 
             <form id="createorgform"  role="form">
               <div class="form-group">
-                <label for="orgname">{% trans %}<u>O</u>rganisation Name{% endtrans %}: </label>
+                <label for="orgname">{% trans %}<u>O</u>rganisation Name{% endtrans %} : </label>
                 <input name="orgname" class="form-control" placeholder="Enter Organisation Name" id="orgname" type="text" data-validation-required-message="Please Enter Organisation Name" accesskey="o"/>
                 <br/>
                 {% if locale =='en' or locale ==None %}
 
-                <label for="orgcase">{% trans %}<u>C</u>ase{% endtrans %}: </label>
+                <label for="orgcase">{% trans %}<u>C</u>ase{% endtrans %} : </label>
                 <select name="orgcase" class="form-control" id="orgcase" accesskey="c">
                   <option value="As-Is">{% trans %}As{% endtrans %}-{% trans %}is{% endtrans %}</option>
                   <option value="Upper Case">{% trans %}Upper Case{% endtrans %}</option>
@@ -62,7 +62,7 @@
                 {% endif %}
 
 
-                <label for="orgtype">{% trans %}Organisation <u>T</u>ype{% endtrans %}: </label>
+                <label for="orgtype">{% trans %}Organisation <u>T</u>ype{% endtrans %} : </label>
                 <select name="orgtype" class="form-control" id="orgtype" data-validation-required-message="Please select Organisation Type" accesskey="t">
                   <option value="Profit Making">{% trans %}Profit Making{% endtrans %}</option>
                   <option value="Not For Profit">{% trans %}Not For Profit{% endtrans %}</option>
@@ -70,7 +70,7 @@
 
                 <br/>
 
-                <label for="financialdate">{% trans %}<u>F</u>inancial Year{% endtrans %}: </label>
+                <label for="financialdate">{% trans %}<u>F</u>inancial Year{% endtrans %} : </label>
 
                 <div class="form-inline">
 

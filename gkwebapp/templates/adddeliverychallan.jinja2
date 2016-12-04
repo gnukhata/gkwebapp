@@ -43,11 +43,11 @@
           </div>
 
             <div class="form-group">
-              <label for="deliverychallan_challanno">{% trans %}Note No{% endtrans %}:</label>
+              <label for="deliverychallan_challanno">{% trans %}Note No{% endtrans %} :</label>
               <input class="form-control input-sm" id="deliverychallan_challanno" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a">
             </div>
             <div class="form-group">
-              <label for="deliverychallan_date">{% trans %}Note Date{% endtrans %}:</label>
+              <label for="deliverychallan_date">{% trans %}Note Date{% endtrans %} :</label>
               <div class="form-inline">
                   <div class="form-group ">
                     <input type="text" class="form-control input-sm delchaldate" size="2" maxlength="2" placeholder="DD" id="deliverychallan_date" accesskey="v">
@@ -63,9 +63,9 @@
             <div class="form-group">
               <label for="deliverychallan_customer">
                 {% if gkstatus=="in" %}
-                {% trans %}Supplier{% endtrans %}:
+                {% trans %}Supplier{% endtrans %} :
                 {% else %}
-                {% trans %}Customer{% endtrans %}:
+                {% trans %}Customer{% endtrans %} :
                 {% endif %}
               </label>
               <select class="form-control input-sm" id="deliverychallan_customer" accesskey="">
@@ -86,9 +86,9 @@
             <div class="form-group">
               <label for="deliverychallan_godown">
                 {% if gkstatus=="in" %}
-                {% trans %}To Godown{% endtrans %}:
+                {% trans %}To Godown{% endtrans %} :
                 {% else %}
-                {% trans %}From Godown{% endtrans %}:
+                {% trans %}From Godown{% endtrans %} :
                 {% endif %}
               </label>
               <select class="form-control input-sm" id="deliverychallan_godown" accesskey="">
@@ -165,11 +165,11 @@
             {% if gkstatus=='out' %}
 
             <div class="form-group">
-              <label for="deliverychallan_issuername">{% trans %}Issuer's Name{% endtrans %}:</label>
+              <label for="deliverychallan_issuername">{% trans %}Issuer's Name{% endtrans %} :</label>
               <input type="text" class="form-control input-sm" id="deliverychallan_issuername" placeholder="Enter name">
             </div>
             <div class="form-group">
-              <label for="deliverychallan_designation">{% trans %}Designation{% endtrans %}:</label>
+              <label for="deliverychallan_designation">{% trans %}Designation{% endtrans %} :</label>
               <input type="text" class="form-control input-sm" id="deliverychallan_designation" placeholder="Enter designation">
             </div>
             {% endif %}

@@ -43,8 +43,8 @@
 				<thead class="bg-primary">
 					<tr class="visible-print">
 						<th colspan="6" style="text-align:center; font-size:80%">
-							<i>{% trans %}Ledger Account{% endtrans %}: </i>{{ledgerheader["accountname"]}}<br>
-							<i>{% trans %}Period{% endtrans %}: </i>{{ledgerheader["calculatefrom"]}} {% trans %}to{% endtrans %} {{ledgerheader["calculateto"]}}
+							<i>{% trans %}Ledger Account{% endtrans %} : </i>{{ledgerheader["accountname"]}}<br>
+							<i>{% trans %}Period{% endtrans %} : </i>{{ledgerheader["calculatefrom"]}} {% trans %}to{% endtrans %} {{ledgerheader["calculateto"]}}
 						</th>
 					</tr>
 					<tr>
@@ -91,7 +91,7 @@
 							{{pr}} <br>
 							{% endfor %}
 							{% if record.ttlRunDr %}
-								&nbsp&nbsp&nbsp&nbsp <i>{% trans %}Running Total{% endtrans %}:</i><br>
+								&nbsp&nbsp&nbsp&nbsp <i>{% trans %}Running Total{% endtrans %} :</i><br>
 							{% endif %}
 							{% if record['narration']!="" and narrationflag==true %}
 							({{record['narration']}})
