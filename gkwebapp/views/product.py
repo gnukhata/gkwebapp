@@ -45,7 +45,8 @@ def addproducttab(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/categories", headers=header)
 	result1 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
-	return{"gkresult":{"category":result.json()["gkresult"],"uom":result1.json()["gkresult"]},"gkstatus":result.json()["gkstatus"]}
+	result2 = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	return{"gkresult":{"category":result.json()["gkresult"],"uom":result1.json()["gkresult"]},"godown":result2.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="product",request_param="type=specs", renderer="gkwebapp:templates/addproductspecs.jinja2")
 def getcatspecs(request):

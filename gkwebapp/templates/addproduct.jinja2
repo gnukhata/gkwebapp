@@ -38,13 +38,43 @@
               <input type='text' class="form-control input-sm" name="newuom"  id="newuom" placeholder="Name of the new unit" aria-describedby="textareahelp">
               <small id="textareahelp" class="form-text text-muted">{% trans %}Press esc to cancel.{% endtrans %}</small>
             </div>
-            <div class="form-group pds">
-              <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
-              <div class="input-group">
-                <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
-                <span class="input-group-addon input-sm" id="unitaddon"></span>
+              {% if not godown %}
+              <div class="form-group pds">
+                <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+                <div class="input-group">
+                  <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
+                  <span class="input-group-addon input-sm" id="unitaddon"></span>
+                </div>
               </div>
-            </div>
+              {% else %}
+              <div class="form-group">
+                <div class="panel">
+                <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
+                  <thead class="bg-primary input-sm">
+                    <tr>
+                      <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
+                      <th class="col-xs-4 text-center">{% trans %}Opening Balance{% endtrans %}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="col-xs-8">
+                        <select class="form-control input-sm godown_name">
+                          <option value="" selected>Select Godown</option>
+                          {% for record in godown %}
+                            <option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
+                          {% endfor %}
+                        </select>
+                      </td>
+                      <td class="col-xs-4">
+                          <input class="form-control input-sm godown_ob text-right numtype"  placeholder="Opening Balance">
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+              {% endif %}
 
             <div class="form-group">
               <div class="panel">
