@@ -4,8 +4,8 @@
 
     <div class=' addprod panel'>
 
-        <div class="panel-body ">
-          <form id="addprodform">
+      <div class="panel-body ">
+        <form id="addprodform">
           <div class="col-sm-6" >
             <div class="form-group ">
               <label class="" for="addcatselect">{% trans %}Category{% endtrans %} :</label>
@@ -38,46 +38,58 @@
               <input type='text' class="form-control input-sm" name="newuom"  id="newuom" placeholder="Name of the new unit" aria-describedby="textareahelp">
               <small id="textareahelp" class="form-text text-muted">{% trans %}Press esc to cancel.{% endtrans %}</small>
             </div>
-              {% if not godown %}
-              <div class="form-group pds">
-                <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
-                <div class="input-group">
-                  <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
-                  <span class="input-group-addon input-sm" id="unitaddon"></span>
-                </div>
+            {% if not godown %}
+            <div class="form-group pds">
+              <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+              <div class="input-group">
+                <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
+                <span class="input-group-addon input-sm" id="unitaddon"></span>
+                <input type="text" id="godownpresence" value="0" hidden="">
               </div>
-              {% else %}
-              <div class="form-group">
-                <div class="panel">
-                <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
-                  <thead class="bg-primary input-sm">
-                    <tr>
-                      <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
-                      <th class="col-xs-4 text-center">{% trans %}Opening Balance{% endtrans %}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="col-xs-8">
-                        <select class="form-control input-sm godown_name">
-                          <option value="" selected>Select Godown</option>
-                          {% for record in godown %}
-                            <option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
-                          {% endfor %}
-                        </select>
-                      </td>
-                      <td class="col-xs-4">
-                          <input class="form-control input-sm godown_ob text-right numtype"  placeholder="Opening Balance">
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                </div>
-              </div>
-              {% endif %}
-
+            </div>
+            {% else %}
             <div class="form-group">
-              <div class="panel">
+              <input type="checkbox" id="godownflag" value="">
+            </input>
+            <input type="text" id="godownpresence" value="1" hidden="">
+            <label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
+          </div>
+          <div id="nogodown" class="form-group pds">
+            <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+            <div class="input-group">
+              <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
+              <span class="input-group-addon input-sm" id="unitaddon"></span>
+            </div>
+          </div>
+          <div  id="openingstockdiv" class="form-group" hidden>
+            <div class="panel">
+              <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
+                <thead class="bg-primary input-sm">
+                  <tr>
+                    <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
+                    <th class="col-xs-4 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for record in godown %}
+                  <tr>
+                    <td class="col-xs-8">
+                      <label style="border-style:solid; border-radius: 3px; border-width:1; border-color: #d9dbdb; padding-top:7px; padding-bottom:3px;" class="col-xs-12">{{record["goname"]}}({{record["goaddr"]}})</label>
+                      <input type="text"value="{{record["goid"]}}" class="godownid" hidden>
+                    </td>
+                    <td class="col-xs-4">
+                      <input class="form-control input-sm godown_ob text-right numtype" value="0.00">
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          {% endif %}
+
+          <div class="form-group">
+            <div class="panel">
               <table id="product_tax_table" class="table table-condensed table-bordered fixed-table">
                 <thead class="bg-primary input-sm">
                   <tr>
@@ -138,7 +150,7 @@
                       </select>
                     </td>
                     <td class="col-xs-3">
-                        <input class="form-control input-sm tax_rate text-right product_new_rate numtype"  placeholder="Rate">
+                      <input class="form-control input-sm tax_rate text-right product_new_rate numtype"  placeholder="Rate">
                     </td>
                     <td class="col-xs-1">
 
@@ -146,30 +158,30 @@
                   </tr>
                 </tbody>
               </table>
-              </div>
             </div>
-
           </div>
 
-
-          <div class="col-sm-6" id="specifications">
-
-          </div>
-
-
-        </form>
         </div>
-        <div class="btn-group-sm panel-footer">
-          <div class="container-fluid">
 
-          <button class="btn btn-success btn-sm" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save">{% trans %}<u>S</u>ave{% endtrans %}</button>
-          <button id="apreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
-        </div>
+
+        <div class="col-sm-6" id="specifications">
 
         </div>
 
+
+      </form>
+    </div>
+    <div class="btn-group-sm panel-footer">
+      <div class="container-fluid">
+
+        <button class="btn btn-success btn-sm" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save">{% trans %}<u>S</u>ave{% endtrans %}</button>
+        <button id="apreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+      </div>
 
     </div>
+
+
   </div>
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addproduct.js')}}"></script>
+</div>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addproduct.js')}}"></script>
 </body>
