@@ -1,5 +1,6 @@
 $(document).ready(function() {
-$('.modal-backdrop').remove();
+  var godownflag = 0;
+  $('.modal-backdrop').remove();
   $("#addcatselect").focus();
   $('.proddate').autotab('number');
   $("#openingstock").numeric();
@@ -8,7 +9,20 @@ $('.modal-backdrop').remove();
     /* Act on the event */
     $(".proddate").numeric();
   });
-
+  $("#godownflag").click(function(e){
+    if ($(this).is(":checked")) {
+      godownflag = 1;
+      $("#godownflag").val(1);
+      $("#openingstockdiv").show();
+      $("#nogodown").hide();
+    }
+    else {
+      godownflag = 0;
+      $("#godownflag").val(0);
+      $("#openingstockdiv").hide();
+      $("#nogodown").show();
+    }
+  });
   $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
     event.preventDefault();
     /* Act on the event */
@@ -19,7 +33,7 @@ $('.modal-backdrop').remove();
     /* Act on the event */
     if ($(this).val()=="")
     {
-    $(this).val(parseFloat(0).toFixed(2));
+      $(this).val(parseFloat(0).toFixed(2));
     }
     else
     {
@@ -27,249 +41,296 @@ $('.modal-backdrop').remove();
     }
   });
 
-$(document).off('blur', '#addproddesc').on('blur', '#addproddesc',function(event) {
-  /* Act on the event */
+  $(document).off('blur', '#addproddesc').on('blur', '#addproddesc',function(event) {
+    /* Act on the event */
 
-$("#addproddesc").val($("#addproddesc").val().trim());
+    $("#addproddesc").val($("#addproddesc").val().trim());
 
-});
-
-
-$(document).off('keyup', '.specdate').on('keyup', '.specdate',function (e) {
-      var textSoFar = $(this).val();
-      if (e.keyCode != 173 && e.keyCode != 109) {
-          if (e.keyCode != 8) {
-              if (textSoFar.length == 2 || textSoFar.length == 5) {
-                  $(this).val(textSoFar + "-");
-              }
-                  //to handle copy & paste of 8 digit
-              else if (e.keyCode == 86 && textSoFar.length == 8) {
-                  $(this).val(textSoFar.substr(0, 2) + "-" + textSoFar.substr(2, 2) + "-" + textSoFar.substr(4, 4));
-              }
-          }
-          else {
-              //backspace would skip the slashes and just remove the numbers
-              if (textSoFar.length == 5) {
-                  $(this).val(textSoFar.substring(0, 4));
-              }
-              else if (textSoFar.length == 2) {
-                  $(this).val(textSoFar.substring(0, 1));
-              }
-          }
-      }
-      else {
-          //remove slashes to avoid 12//01/2014
-          $(this).val(textSoFar.substring(0, textSoFar.length - 1));
-      }
   });
 
 
-$(document).off('keyup').on('keyup',function(event)
-{
-  /* Act on the event */
-  if (event.which == 45)
-  {
-    event.preventDefault();
-    $("#apsubmit").click();
-  }
-});
-var newuom=0;
-$(document).off('focus', '#newuom').on('focus', '#newuom', function(event) {
-  event.preventDefault();
-  /* Act on the event */
-  newuom =1;
-});
-var txst=0;
-$(document).off('focus', '.tax_state').on('focus', '.tax_state', function(event) {
-  event.preventDefault();
-  /* Act on the event */
-  txst =1;
-});
-
-$(document).off('blur', '.tax_state').on('blur', '.tax_state', function(event) {
-  event.preventDefault();
-  /* Act on the event */
-  txst =0;
-});
-
-$(document).off('blur', '#newuom').on('blur', '#newuom', function(event) {
-  event.preventDefault();
-  /* Act on the event */
-  newuom =0;
-});
-$("#addcatselect").keydown(function(event) {
-  if (event.which==13) {
-    event.preventDefault();
-    $("#addproddesc").focus().select();
-  }
-});
-
-$("#addproddesc").keydown(function(event) {
-  if (event.which==38) {
-    event.preventDefault();
-    $("#addcatselect").focus().select();
-  }
-  else if (event.which==13) {
-    event.preventDefault();
-    $("#adduom").focus();
-  }
-});
-
-
-$("#adduom").change(function(event) {
-  if ($("#adduom option:selected").val()!='') {
-    $("#unitaddon").html($("#adduom option:selected").text());
-  }
-});
-
-$("#openingstock").focus(function(event) {
-  if ($("#adduom option:selected").val()!='') {
-    $("#unitaddon").html($("#adduom option:selected").text());
-  }
-});
-
-$(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
-  if (event.which==13)
-  {
-    event.preventDefault();
-
-    $("#openingstock").focus().select();
-
-  }
-  else if (event.which==32)
-  {
-    event.preventDefault();
-    $(".olduom").hide();
-    $(".newuom").show();
-
-    $("#newuom").focus();
-  }
-  else if (event.which==38 && (document.getElementById('adduom').selectedIndex==1||document.getElementById('adduom').selectedIndex==0)) {
-    $("#addproddesc").focus().select();
-  }
-
-  /* Act on the event */
-});
-$("#openingstock").keydown(function(event) {
-  if (event.which==13) {
-    event.preventDefault();
-    if ($("#product_tax_table tbody tr:first td:eq(0) select").is(":disabled")||$("#product_tax_table tbody tr").length==0) {
-      $('#specifications').find("input:first").focus().select();
+  $(document).off('keyup', '.specdate').on('keyup', '.specdate',function (e) {
+    var textSoFar = $(this).val();
+    if (e.keyCode != 173 && e.keyCode != 109) {
+      if (e.keyCode != 8) {
+        if (textSoFar.length == 2 || textSoFar.length == 5) {
+          $(this).val(textSoFar + "-");
+        }
+        //to handle copy & paste of 8 digit
+        else if (e.keyCode == 86 && textSoFar.length == 8) {
+          $(this).val(textSoFar.substr(0, 2) + "-" + textSoFar.substr(2, 2) + "-" + textSoFar.substr(4, 4));
+        }
+      }
+      else {
+        //backspace would skip the slashes and just remove the numbers
+        if (textSoFar.length == 5) {
+          $(this).val(textSoFar.substring(0, 4));
+        }
+        else if (textSoFar.length == 2) {
+          $(this).val(textSoFar.substring(0, 1));
+        }
+      }
     }
     else {
-      $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+      //remove slashes to avoid 12//01/2014
+      $(this).val(textSoFar.substring(0, textSoFar.length - 1));
     }
-  }
-  else if (event.which==38) {
-    $("#adduom").focus();
-  }
-});
-$(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
-  /* Act on the event */
-  if (event.which==27)
-  {
-    event.preventDefault();
-    $(".olduom").show();
-    $(".newuom").hide();
-    $("#adduom").focus();
-  }
-  if (event.which==13)
-  {
+  });
 
-    event.preventDefault();
-    var unitname = $.trim($("#newuom").val());
-    $("#adduom > option").each(function() {
-    if (unitname.toLowerCase() == $.trim($(this).text()).toLowerCase()) {
-      $("#duplicate-unit-alert").alert();
-      $("#duplicate-unit-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#duplicate-unit-alert").hide();
-      });
-      unitname = "";
+
+  $(document).off('keyup').on('keyup',function(event)
+  {
+    /* Act on the event */
+    if (event.which == 45)
+    {
+      event.preventDefault();
+      $("#apsubmit").click();
     }
-    });
-    if (unitname!="") {
+  });
+  var newuom=0;
+  $(document).off('focus', '#newuom').on('focus', '#newuom', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    newuom =1;
+  });
+  var txst=0;
+  $(document).off('focus', '.tax_state').on('focus', '.tax_state', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    txst =1;
+  });
+
+  $(document).off('blur', '.tax_state').on('blur', '.tax_state', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    txst =0;
+  });
+
+  $(document).off('blur', '#newuom').on('blur', '#newuom', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    newuom =0;
+  });
+  $("#addcatselect").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#addproddesc").focus().select();
+    }
+  });
+
+  $("#addproddesc").keydown(function(event) {
+    if (event.which==38) {
+      event.preventDefault();
+      $("#addcatselect").focus().select();
+    }
+    else if (event.which==13) {
+      event.preventDefault();
+      $("#adduom").focus();
+    }
+  });
 
 
-    $.ajax({
-      url: '/product?type=uom',
-      type: 'POST',
-      dataType: 'json',
-      async : false,
-      data: {"unitname": unitname},
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+  $("#adduom").change(function(event) {
+    if ($("#adduom option:selected").val()!='') {
+      $("#unitaddon").html($("#adduom option:selected").text());
+    }
+  });
+
+  $("#openingstock").focus(function(event) {
+    if ($("#adduom option:selected").val()!='') {
+      $("#unitaddon").html($("#adduom option:selected").text());
+    }
+  });
+
+  $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
+    if (event.which == 13 && $("#godownpresence").val()==0) {
+      $("#openingstock").focus().select();
+    }
+    if (event.which==13 && $("#godownpresence").val()==1)
+    {
+      event.preventDefault();
+
+      $("#godownflag").focus().select();
+
+    }
+    else if (event.which==32)
+    {
+      event.preventDefault();
+      $(".olduom").hide();
+      $(".newuom").show();
+
+      $("#newuom").focus();
+    }
+    else if (event.which==38 && (document.getElementById('adduom').selectedIndex==1||document.getElementById('adduom').selectedIndex==0)) {
+      $("#addproddesc").focus().select();
+    }
+
+    /* Act on the event */
+  });
+  $("#godownflag").keydown(function(event){
+    if (event.which == 13 && godownflag == 0) {
+      event.preventDefault();
+      $("#openingstock").focus().select();
+    }
+    if (event.which == 13 && godownflag == 1) {
+      event.preventDefault();
+      $(".godown_ob").first().focus().select();
+    }
+    if (event.which == 38) {
+      $("#adduom").focus();
+    }
+  });
+  $(".godown_ob").keydown(function(event){
+    if (event.which == 13) {
+      var n = $(".godown_ob").index(this);
+      var m = n+1;
+      console.log(n+','+m);
+      if (m < $(".godown_ob").length) {
+        $(".godown_ob").eq(m).focus().select();
       }
-    })
-    .done(function(resp) {
-      if (resp["gkstatus"]==0)
+      else {
+        event.preventDefault();
+        if ($("#product_tax_table tbody tr:first td:eq(0) select").is(":disabled")||$("#product_tax_table tbody tr").length==0) {
+          $('#specifications').find("input:first").focus().select();
+        }
+        else {
+          $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+        }
+      }
+    }
+    if (event.which == 38) {
+      var n = $(".godown_ob").index(this);
+      if (n == 0) {
+        $("#godownflag").focus().select();
+      }
+      else {
+        $(".godown_ob").eq(n-1).focus().select();
+      }
+    }
+  });
+  $("#openingstock").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      if ($("#product_tax_table tbody tr:first td:eq(0) select").is(":disabled")||$("#product_tax_table tbody tr").length==0) {
+        $('#specifications').find("input:first").focus().select();
+      }
+      else {
+        $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+      }
+    }
+    else if (event.which==38 && $("#godownpresence").val()==1) {
+      $("#godownflag").focus().select();
+    }
+    else if (event.which==38 && $("#godownpresence").val()==0) {
+      $("#adduom").focus().select();
+    }
+  });
+  $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
+    /* Act on the event */
+    if (event.which==27)
+    {
+      event.preventDefault();
+      $(".olduom").show();
+      $(".newuom").hide();
+      $("#adduom").focus();
+    }
+    if (event.which==13)
+    {
+
+      event.preventDefault();
+      var unitname = $.trim($("#newuom").val());
+      $("#adduom > option").each(function() {
+        if (unitname.toLowerCase() == $.trim($(this).text()).toLowerCase()) {
+          $("#duplicate-unit-alert").alert();
+          $("#duplicate-unit-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#duplicate-unit-alert").hide();
+          });
+          unitname = "";
+        }
+      });
+      if (unitname!="") {
+
+
+        $.ajax({
+          url: '/product?type=uom',
+          type: 'POST',
+          dataType: 'json',
+          async : false,
+          data: {"unitname": unitname},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          }
+        })
+        .done(function(resp) {
+          if (resp["gkstatus"]==0)
+          {
+            $(".olduom").show();
+            $(".newuom").hide();
+            $('#adduom').empty();
+            for (uom of resp["gkresult"])
+            {
+              $('#adduom').append($('<option value='+uom["uomid"]+'>'+uom["unitname"]+'</option>'));
+            }
+
+            $("#adduom option").filter(function(i,e){return $(e).text()==unitname}).prop('selected', true);
+            $('#openingstock').focus().select();
+          }
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+      }
+      else
       {
         $(".olduom").show();
         $(".newuom").hide();
-        $('#adduom').empty();
-        for (uom of resp["gkresult"])
-        {
-          $('#adduom').append($('<option value='+uom["uomid"]+'>'+uom["unitname"]+'</option>'));
-        }
-
-        $("#adduom option").filter(function(i,e){return $(e).text()==unitname}).prop('selected', true);
-        $('#openingstock').focus().select();
+        $("#adduom").focus();
       }
-    })
-    .fail(function() {
-      console.log("error");
-    })
-    .always(function() {
-      console.log("complete");
-    });
     }
-    else
-    {
-    $(".olduom").show();
-    $(".newuom").hide();
-    $("#adduom").focus();
-    }
-  }
 
-});
+  });
 
 
   $(document).on("keydown",'#specifications input:not(:hidden),#specifications textarea, #specifications select', function(e) {
-     var n = $("#specifications input:not(:hidden),#specifications textarea,#specifications select").length;
-     var f = $('#specifications input:not(:hidden),#specifications textarea,#specifications select');
+    var n = $("#specifications input:not(:hidden),#specifications textarea,#specifications select").length;
+    var f = $('#specifications input:not(:hidden),#specifications textarea,#specifications select');
 
-     if (e.which == 13)
-     {
-       var nextIndex = f.index(this) + 1;
+    if (e.which == 13)
+    {
+      var nextIndex = f.index(this) + 1;
 
-         if(nextIndex < n)
-         {
-           e.preventDefault();
-           f[nextIndex].focus();
-           f[nextIndex].select();
-         }
-         else {
-           e.preventDefault();
-           $("#apsubmit").click();
-         }
-      }
-      if (e.which == 38)
+      if(nextIndex < n)
       {
-        var sindex=0;
-        var prevIndex = f.index(this) - 1;
-        if(prevIndex > -1)
-        {
+        e.preventDefault();
+        f[nextIndex].focus();
+        f[nextIndex].select();
+      }
+      else {
+        e.preventDefault();
+        $("#apsubmit").click();
+      }
+    }
+    if (e.which == 38)
+    {
+      var sindex=0;
+      var prevIndex = f.index(this) - 1;
+      if(prevIndex > -1)
+      {
 
 
-            e.preventDefault();
-            f[prevIndex].focus();
-            f[nextIndex].select();
+        e.preventDefault();
+        f[prevIndex].focus();
+        f[nextIndex].select();
 
-        }
+      }
 
-        }
+    }
 
-    });
+  });
 
   $("#addcatselect").change(function(event) {
     /* Act on the event */
@@ -280,56 +341,56 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
     if (catcode!="")
     {
 
-          $.ajax({
-            url: '/product?type=cattax',
-            type: 'POST',
-            dataType: 'json',
-            async : false,
-            data: {"categorycode": catcode},
-            beforeSend: function(xhr)
-            {
-              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-            }
-          })
-          .done(function(resp) {
-            console.log("success");
-            $('#product_tax_table tbody tr').remove();
-            if (resp["gkresult"].length>0) {
-              for (tax of resp["gkresult"]) {
-                $('#product_tax_table tbody').append('<tr value="'+tax["taxid"]+'">'+
-                '<td class="col-xs-4">'+
-                '<select class="form-control input-sm product_cat_tax_disable tax_name">'+
-                  '<option value="" selected>Select Tax</option>'+
-                  '<option value="VAT">VAT</option>'+
-                  '<option value="CVAT">CVAT</option>'+
-                '</select>'+
-                '</td>'+
-                '<td class="col-xs-4">'+
-                '<select class="form-control product_cat_tax_disable input-sm tax_state" >'+
-                '<option value="">None</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>'+
-                '</select>'+
-                '</td>'+
-                '<td class="col-xs-3">'+
-                '<input class="form-control product_cat_tax_disable input-sm tax_rate text-right numtype"  placeholder="Rate" value="'+tax["taxrate"]+'">'+
-                '</td>'+
-                '<td class="col-xs-1">'+
-                '</td>'+
-                '</tr>');
-                $('#product_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
-                $('#product_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
-              }
+      $.ajax({
+        url: '/product?type=cattax',
+        type: 'POST',
+        dataType: 'json',
+        async : false,
+        data: {"categorycode": catcode},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+      .done(function(resp) {
+        console.log("success");
+        $('#product_tax_table tbody tr').remove();
+        if (resp["gkresult"].length>0) {
+          for (tax of resp["gkresult"]) {
+            $('#product_tax_table tbody').append('<tr value="'+tax["taxid"]+'">'+
+            '<td class="col-xs-4">'+
+            '<select class="form-control input-sm product_cat_tax_disable tax_name">'+
+            '<option value="" selected>Select Tax</option>'+
+            '<option value="VAT">VAT</option>'+
+            '<option value="CVAT">CVAT</option>'+
+            '</select>'+
+            '</td>'+
+            '<td class="col-xs-4">'+
+            '<select class="form-control product_cat_tax_disable input-sm tax_state" >'+
+            '<option value="">None</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>'+
+            '</select>'+
+            '</td>'+
+            '<td class="col-xs-3">'+
+            '<input class="form-control product_cat_tax_disable input-sm tax_rate text-right numtype"  placeholder="Rate" value="'+tax["taxrate"]+'">'+
+            '</td>'+
+            '<td class="col-xs-1">'+
+            '</td>'+
+            '</tr>');
+            $('#product_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
+            $('#product_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
+          }
 
-            }
+        }
 
-            $(".product_cat_tax_disable").prop('disabled',true);
+        $(".product_cat_tax_disable").prop('disabled',true);
 
-          })
-          .fail(function() {
-            console.log("error");
-          })
-          .always(function() {
-            console.log("complete");
-          });
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
 
       $.ajax({
         url: '/product?type=specs',
@@ -365,9 +426,9 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
       $('#product_tax_table tbody').append('<tr value="New">'+
       '<td class="col-xs-4">'+
       '<select class="form-control input-sm tax_name product_new_name">'+
-        '<option value="" selected>Select Tax</option>'+
-        '<option value="VAT">VAT</option>'+
-        '<option value="CVAT">CVAT</option>'+
+      '<option value="" selected>Select Tax</option>'+
+      '<option value="VAT">VAT</option>'+
+      '<option value="CVAT">CVAT</option>'+
       '</select>'+
       '</td>'+
       '<td class="col-xs-4">'+
@@ -399,7 +460,7 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
     else if (event.which==188 && event.shiftKey)
     {
       if (curindex==0) {
-      $("#category_name").focus().select();
+        $("#category_name").focus().select();
       }
       if(previndex>-1)
       {
@@ -495,9 +556,9 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
         $('#product_tax_table tbody').append('<tr>'+
         '<td class="col-xs-4">'+
         '<select class="form-control input-sm tax_name product_new_name">'+
-          '<option value="" selected>Select Tax</option>'+
-          '<option value="VAT">VAT</option>'+
-          '<option value="CVAT">CVAT</option>'+
+        '<option value="" selected>Select Tax</option>'+
+        '<option value="VAT">VAT</option>'+
+        '<option value="CVAT">CVAT</option>'+
         '</select>'+
         '</td>'+
         '<td class="col-xs-4">'+
@@ -583,66 +644,89 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
       $("#openingstock").val("0.00");
       return false;
     }
+    if ($(".godown_ob").val()=="") {
+      $('.modal-backdrop').remove();
+      $(this).val("0.00");
+    }
     var taxes = [];
     $("#product_tax_table tbody tr").each(function(){
       var obj = {};
       if ($.trim($(".product_new_name",this).val())!="" || $.trim($(".product_new_rate",this).val())!="" ) {
 
-      obj.taxname = $(".product_new_name",this).val();
-      obj.state = $(".product_new_state",this).val();
-      obj.taxrate = $(".product_new_rate",this).val();
-      taxes.push(obj);
-    }
+        obj.taxname = $(".product_new_name",this).val();
+        obj.state = $(".product_new_state",this).val();
+        obj.taxrate = $(".product_new_rate",this).val();
+        taxes.push(obj);
+      }
+
+
+    });
+    var obj = {};
+    $("#godown_ob_table tbody tr").each(function(){
+      if ($.trim($(".godownid",this).val())!="") {
+
+
+        if ($.trim($(".godown_ob",this).val())=="") {
+          obj[$(".godownid",this).val()] = "0.00"
+        }
+        else {
+          obj[$(".godownid",this).val()] = $(".godown_ob",this).val();
+        }
+      }
 
 
     });
     var addformdata = $("#addprodform").serializeArray();
 
     addformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
+    console.log(JSON.stringify(obj));
+    if ($("#godownflag").val() == 1) {
+      addformdata.push({name: 'godowns', value: JSON.stringify(obj)});
+    }
+      $.ajax({
+        url: '/product?type=save',
+        type: 'POST',
+        global: false,
+        async: false,
+        datatype: 'json',
+        data: addformdata,
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+      .done(function(resp) {
+        console.log(resp["gkstatus"]);
+        if (resp["gkstatus"] ==0) {
 
-    $.ajax({
-      url: '/product?type=save',
-      type: 'POST',
-      global: false,
-      async: false,
-      datatype: 'json',
-      data: addformdata,
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      }
-    })
-    .done(function(resp) {
-      if (resp["gkstatus"] ==0) {
-
-        $("#addproduct").click();
-        $('.modal-backdrop').remove();
-        $("#addsuccess-alert").alert();
-        $("#addsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#addsuccess-alert").hide();
-        });
-        return false;
-      }
-      else if (resp["gkstatus"] ==1)
-      {
-        $('.modal-backdrop').remove();
-        $("#duplicate-alert").alert();
-        $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#duplicate-alert").hide();
-        });
-        $("#addproddesc").focus();
-        $("#addproddesc").select();
-        return false;
-      }
-      console.log("success");
-    })
-    .fail(function() {
-      console.log("error");
-    })
-    .always(function() {
-      console.log("complete");
-    });
-event.stopPropogation();
+          $("#addproduct").click();
+          $('.modal-backdrop').remove();
+          $("#addsuccess-alert").alert();
+          $("#addsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#addsuccess-alert").hide();
+          });
+          return false;
+        }
+        else if (resp["gkstatus"] ==1)
+        {
+          $('.modal-backdrop').remove();
+          $("#duplicate-alert").alert();
+          $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#duplicate-alert").hide();
+          });
+          $("#addproddesc").focus();
+          $("#addproddesc").select();
+          return false;
+        }
+        console.log("success");
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+    event.stopPropogation();
   });
 
   $(document).on('click', '#apreset', function(event) {
