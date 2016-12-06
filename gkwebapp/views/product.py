@@ -96,11 +96,20 @@ def saveproduct(request):
 	prdspecs = {}
 	proddetails={}
 	productdetails={}
+	godownflag=False
 	taxes =0
+	godowns=0
+	goid=0
+	goopeningstock=0.00
 	for prd in request.params:
 
 		if prd=="type":
 			continue
+		elif prd=="godownflag":
+			if request.params[prd] > 0:
+				godownflag=True
+			else:
+				godownflag=False
 		elif prd =="catselect":
 			if request.params[prd] !="":
 				proddetails["categorycode"] = request.params[prd]
@@ -112,13 +121,15 @@ def saveproduct(request):
 			proddetails["openingstock"] = request.params[prd]
 		elif prd == "taxes":
 			taxes = json.loads(request.params["taxes"])
+		elif prd == "godowns":
+			godowns = json.loads(request.params["godowns"])
 		elif prd == "newuom":
 			continue
 		else:
 			prdspecs[prd]= request.params[prd]
 
 		proddetails["specs"] = prdspecs
-		productdetails = {"productdetails":proddetails, "godownflag":False}
+	productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
 	result = requests.post("http://127.0.0.1:6543/products", data=json.dumps(productdetails),headers=header)
 	if len(taxes)>0:
 		for tax in taxes:

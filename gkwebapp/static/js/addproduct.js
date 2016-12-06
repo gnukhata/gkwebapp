@@ -12,11 +12,13 @@ $(document).ready(function() {
   $("#godownflag").click(function(e){
     if ($(this).is(":checked")) {
       godownflag = 1;
+      $("#godownflag").val(1);
       $("#openingstockdiv").show();
       $("#nogodown").hide();
     }
     else {
       godownflag = 0;
+      $("#godownflag").val(0);
       $("#openingstockdiv").hide();
       $("#nogodown").show();
     }
@@ -659,11 +661,28 @@ $(document).ready(function() {
 
 
     });
-    if (godownflag == 0) {
-      var addformdata = $("#addprodform").serializeArray();
+    var obj = {};
+    $("#godown_ob_table tbody tr").each(function(){
+      if ($.trim($(".godownid",this).val())!="") {
 
-      addformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
 
+        if ($.trim($(".godown_ob",this).val())=="") {
+          obj[$(".godownid",this).val()] = "0.00"
+        }
+        else {
+          obj[$(".godownid",this).val()] = $(".godown_ob",this).val();
+        }
+      }
+
+
+    });
+    var addformdata = $("#addprodform").serializeArray();
+
+    addformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
+    console.log(JSON.stringify(obj));
+    if ($("#godownflag").val() == 1) {
+      addformdata.push({name: 'godowns', value: JSON.stringify(obj)});
+    }
       $.ajax({
         url: '/product?type=save',
         type: 'POST',
@@ -677,6 +696,7 @@ $(document).ready(function() {
         }
       })
       .done(function(resp) {
+        console.log(resp["gkstatus"]);
         if (resp["gkstatus"] ==0) {
 
           $("#addproduct").click();
@@ -706,7 +726,6 @@ $(document).ready(function() {
       .always(function() {
         console.log("complete");
       });
-    }
     event.stopPropogation();
   });
 
