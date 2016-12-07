@@ -1368,7 +1368,7 @@ $("#invoice_reset").click(function(event) {
           $("#invoice_record").click();
         }
         else {
-          $("#invoice_create").click();
+          $("#cashmemo_create").click();
         }
         $("#success-alert").alert();
         $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
