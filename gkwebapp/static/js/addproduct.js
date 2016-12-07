@@ -460,7 +460,7 @@ $(document).ready(function() {
     else if (event.which==188 && event.shiftKey)
     {
       if (curindex==0) {
-        $("#category_name").focus().select();
+        $("#addcatselect").focus().select();
       }
       if(previndex>-1)
       {

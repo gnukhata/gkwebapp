@@ -207,7 +207,8 @@ def productdetails(request):
 		prodspecs = result1.json()["gkresult"]
 	result2 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
 	result3 = requests.get("http://127.0.0.1:6543/categories", headers=header)
-	return{"proddesc":result.json()["gkresult"],"prodspecs":prodspecs,"uom":result2.json()["gkresult"],"category":result3.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
+	result4 = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	return{"proddesc":result.json()["gkresult"],"prodspecs":prodspecs,"uom":result2.json()["gkresult"],"category":result3.json()["gkresult"],"godown":result4.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="product",request_param="type=list", renderer="gkwebapp:templates/listofstockitems.jinja2")
 def listofstockitems(request):
