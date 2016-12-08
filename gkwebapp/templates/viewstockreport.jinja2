@@ -70,6 +70,17 @@
               </div>
             </div>
           </div>
+          {% if godown %}
+          <div class="form-group">
+            <label for="editgodownname" id="godname">{% trans %}Godown Name{% endtrans %} :</label>
+            <select class = "form-control input-sm" id="editgoddet">
+              <option value="disabled" disabled selected hidden>{% trans %}Select Godown{% endtrans %}</option>
+              {% for gods in godown %}
+              <option value="{{gods['goid']}}">{{gods["goname"]}} ({{gods["goaddr"]}})</option>
+              {% endfor %}
+            </select>
+          </div>
+          {% endif %}
         </div>
       </div>
       <div class="panel-footer">

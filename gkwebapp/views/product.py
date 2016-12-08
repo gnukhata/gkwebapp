@@ -273,8 +273,8 @@ def listofstockitemsspreadsheet(request):
 def viewstockreport(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/products",headers=header)
-
-	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
+	result1 = requests.get("http://127.0.0.1:6543/godown",headers=header)
+	return{"gkresult":result.json()["gkresult"], "godown":result1.json()["gkresult"], "gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="product",request_param="type=showstockreport")
 def showstockreport(request):
