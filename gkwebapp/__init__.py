@@ -157,5 +157,6 @@ def main(global_config, **settings):
 	config.add_route('customersuppliers','/customersuppliers')
 	config.add_route('transfernotes','/transfernotes')
 	config.add_route('cashmemos','/cashmemos')
+	config.add_route('import','/import')
 	config.scan('gkwebapp')
 	return config.make_wsgi_app()

@@ -25,6 +25,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Abhijith Balan" <abhijithb21@openmailbox.org>
+"Prajakta Patkar" <prajkta.patkar007@gmail.com>
 """
 
 from pyramid.view import view_config
@@ -34,6 +35,46 @@ from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import base64
 import os, shutil
+from openpyxl import load_workbook
+
+@view_config(route_name='import',renderor='json')
+def tallyImport():
+	header={"gktoken":request.headers["gktoken"]}
+	talFile  = request.POST["talfile"].file
+	wbTally = load_workbook(talFile)
+	accountSheet = wbTally.active
+	accountList = tuple(accountSheet.rows)
+	gsResult = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist",headers=header)
+	groups = gsResult["gkresult"]
+	curgrpid = None
+	parentgroupid = None
+	for accRow in accountList:
+		if accRow[0].value == None:
+			continue
+		if accRow[0].font.b:
+			curgrpid = groups[accRow[0].value]
+			parentgroupid = groups[accRow[0].value] 
+		if accRow[0].font.b == False and accRow[0].font.i == False:
+			if groups.has_key(accRow[0].value):
+				curgrpid = groups[accRow[0].value]
+			else:
+				newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
+				curgrpid = newsub["gkresult"]
+		if accRow[0].font.i:
+			if accRow[1]==None and accRow[2]==None:
+				newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
+				continue
+			if accRow[1]==None:
+				newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal": accRow[2].value}),headers=header)
+				continue
+			if accRow[2]==None:
+				newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal": accRow[1].value}),headers=header)
+				continue
+		
+			
+		
+				
+			
 
 @view_config(route_name="backupfile", renderer="")
 def backup(request):
