@@ -741,9 +741,26 @@ $(document).ready(function() {
 
 
     });
+    var obj = {};
+    $("#editgodown_ob_table tbody tr").each(function(){
+      if ($.trim($(".editgodownid",this).val())!="") {
 
+
+        if ($.trim($(".editgodown_ob",this).val())=="") {
+          obj[$(".editgodownid",this).val()] = "0.00"
+        }
+        else {
+          obj[$(".editgodownid",this).val()] = $(".editgodown_ob",this).val();
+        }
+      }
+
+
+    });
     var editformdata = $("#editprodform").serializeArray();
     editformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
+    if ($("#editgodownflag").val() == 1) {
+      addformdata.push({name: 'godowns', value: JSON.stringify(obj)});
+    }
     $.ajax({
       url: '/product?type=edit',
       type: 'POST',

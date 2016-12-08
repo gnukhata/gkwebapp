@@ -698,7 +698,6 @@ $(document).ready(function() {
     var addformdata = $("#addprodform").serializeArray();
 
     addformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
-    console.log(JSON.stringify(obj));
     if ($("#godownflag").val() == 1) {
       addformdata.push({name: 'godowns', value: JSON.stringify(obj)});
     }
