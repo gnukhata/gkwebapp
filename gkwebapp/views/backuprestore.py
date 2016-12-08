@@ -36,6 +36,7 @@ from pyramid.response import Response
 import base64
 import os, shutil
 from openpyxl import load_workbook
+from openpyxl.drawing.graphic import GroupShape
 
 @view_config(route_name='import',renderor='json')
 def tallyImport():
@@ -53,7 +54,8 @@ def tallyImport():
 			continue
 		if accRow[0].font.b:
 			curgrpid = groups[accRow[0].value]
-			parentgroupid = groups[accRow[0].value] 
+			parentgroupid = groups[accRow[0].value]
+			continue
 		if accRow[0].font.b == False and accRow[0].font.i == False:
 			if groups.has_key(accRow[0].value):
 				curgrpid = groups[accRow[0].value]
@@ -62,7 +64,14 @@ def tallyImport():
 				curgrpid = newsub["gkresult"]
 		if accRow[0].font.i:
 			if accRow[1]==None and accRow[2]==None:
-				newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
+				if parentgroupid == curgrpid and parentgroupid == groups["Fixed Assets"]:
+					if groups.has_key(accRow[0].value):
+						curgrpid = groups[accRow[0].value]
+						newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
+					else:
+						newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
+						curgrpid = newsub["gkresult"]
+						newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
 				continue
 			if accRow[1]==None:
 				newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal": accRow[2].value}),headers=header)
