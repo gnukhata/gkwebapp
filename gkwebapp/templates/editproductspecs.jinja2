@@ -115,18 +115,18 @@
 
           <label for="{{spec['spcode']}}" class="">{{spec["attrname"]}} :</label>
           {% if spec["attrtype"]==0 %}
-          <input type="text" class="form-control input-sm editspec" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" value="{{proddesc['specs'][pdesc]}}" placeholder="Alphanumeric">
+          <input type="text" class="form-control input-sm" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" value="{{proddesc['specs'][pdesc]}}" placeholder="Alphanumeric">
           {% elif spec["attrtype"]==1 %}
-          <input type="text" class="form-control input-sm numtype editspec" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" value="{{proddesc['specs'][pdesc]}}" placeholder="Numeric">
+          <input type="text" class="form-control input-sm numtype" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" value="{{proddesc['specs'][pdesc]}}" placeholder="Numeric">
           {% elif spec["attrtype"]==2 %}
-          <input type="text" class="form-control input-sm specdate editspec" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" value="{{proddesc['specs'][pdesc]}}" placeholder="DD-MM-YYYY">
+          <input type="text" class="form-control input-sm specdate" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" value="{{proddesc['specs'][pdesc]}}" placeholder="DD-MM-YYYY">
           {% elif spec["attrtype"]==3 %}
           {% if proddesc['specs'][pdesc]|int ==1 %}
-          <label class="radio-inline"><input value = "1" class="radtype editspec" type="radio" name="{{spec['spcode']}}" checked>{% trans %}Yes{% endtrans %}</label>
-          <label class="radio-inline"><input value = "0" class=" radtype editspec" type="radio" name="{{spec['spcode']}}">{% trans %}No{% endtrans %}</label>
+          <label class="radio-inline"><input value = "1" class="radtype" type="radio" name="{{spec['spcode']}}" checked>{% trans %}Yes{% endtrans %}</label>
+          <label class="radio-inline"><input value = "0" class=" radtype" type="radio" name="{{spec['spcode']}}">{% trans %}No{% endtrans %}</label>
           {% else %}
-          <label class="radio-inline"><input value = "1" class="radtype editspec" type="radio" name="{{spec['spcode']}}">{% trans %}Yes{% endtrans %}</label>
-          <label class="radio-inline"><input value = "0" class=" radtype editspec" type="radio" name="{{spec['spcode']}}" checked>{% trans %}No{% endtrans %}</label>
+          <label class="radio-inline"><input value = "1" class="radtype" type="radio" name="{{spec['spcode']}}">{% trans %}Yes{% endtrans %}</label>
+          <label class="radio-inline"><input value = "0" class=" radtype" type="radio" name="{{spec['spcode']}}" checked>{% trans %}No{% endtrans %}</label>
           {% endif %}
           {% endif %}
         </div>

@@ -447,6 +447,28 @@ $(document).ready(function() {
 
   });
   /* -----------------------Tax key events start----------------------------------------- */
+
+  $(document).off("keyup",".tax_name").on("keyup",".tax_name",function(event)
+  {
+    var curindex = $(this).closest('tr').index();
+    var nextindex = curindex+1;
+    var previndex = curindex-1;
+    if (event.which==188 && event.shiftKey)
+    {
+      if (curindex==0 && $("#godownflag").val()==0) {
+      $("#openingstock").focus().select();
+      }
+      if (curindex==0 && $("#godownflag").val()==1) {
+      $(".godown_ob:last").focus().select();
+      }
+      if(previndex>-1 && curindex != 0)
+      {
+        event.preventDefault();
+        $('#product_tax_table tbody tr:eq('+previndex+') td:eq(0) select').focus().select();
+      }
+    }
+  });
+
   $(document).off("keydown",".tax_name").on("keydown",".tax_name",function(event)
   {
     var curindex = $(this).closest('tr').index();
@@ -459,9 +481,6 @@ $(document).ready(function() {
     }
     else if (event.which==188 && event.shiftKey)
     {
-      if (curindex==0) {
-        $("#addcatselect").focus().select();
-      }
       if(previndex>-1)
       {
         event.preventDefault();
