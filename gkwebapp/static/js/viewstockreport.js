@@ -203,7 +203,7 @@ $(document).ready(function() {
 			$('#viewstock_productname').focus()
 			return false;
 		}
-		if ($("#editgoddet").val()==null) {
+		if ($("#editgoddet").val()==null && $("#godownflag").val()==1) {
 			$("#godown-blank-alert").alert();
 			$("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 				$("#godown-blank-alert").hide();
@@ -269,15 +269,12 @@ $(document).ready(function() {
 			$('#viewstock_todate').focus().select();
 			return false;
 		}
-		if (true) {
-
-		}
 		var dataset = {}
 		if ($("#godownflag").val()==0) {
-			dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculatefrom":$("#viewstock_fromyear").val()+"-"+$("#viewstock_frommonth").val()+"-"+$("#viewstock_fromdate").val(),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"backflag":0,"godownflag":$("#godownflag").val(),"goid":-1}
+			dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculatefrom":$("#viewstock_fromyear").val()+"-"+$("#viewstock_frommonth").val()+"-"+$("#viewstock_fromdate").val(),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"backflag":0,"godownflag":$("#godownflag").val(),"goid":-1,"goname":""}
 		}
 		else if ($("#godownflag").val()==1) {
-			dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculatefrom":$("#viewstock_fromyear").val()+"-"+$("#viewstock_frommonth").val()+"-"+$("#viewstock_fromdate").val(),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"backflag":0,"godownflag":$("#godownflag").val(), "goid":$("#editgoddet option:selected").val()}
+			dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculatefrom":$("#viewstock_fromyear").val()+"-"+$("#viewstock_frommonth").val()+"-"+$("#viewstock_fromdate").val(),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"backflag":0,"godownflag":$("#godownflag").val(), "goid":$("#editgoddet option:selected").val(), "goname":$("#editgoddet option:selected").text()}
 		}
 		$.ajax(
 			{

@@ -32,8 +32,15 @@
     <input type="hidden" id="calculatefrom" name="calculatefrom" value="{{stockrefresh["calculatefrom"]}}"></input>
     <input type="hidden" id="calculateto" name="calculateto" value="{{stockrefresh["calculateto"]}}"></input>
     <input type="hidden" id="financialstart" name="financialstart" value="{{stockrefresh["financialstart"]}}"></input>
+		<input type="hidden" id="godownflag" name="godownflag" value="{{stockrefresh["godownflag"]}}"></input>
+		<input type="hidden" id="goid" name="goid" value="{{stockrefresh["goid"]}}"></input>
+		<input type="hidden" id="goname" name="goname" value="{{godown}}"></input>
 		<div class="printorgdetails hidden-print" style="text-align:center;">
-    <i>{% trans %}Product Report{% endtrans %}</i> for <strong>{{stockrefresh["productdesc"]}}</strong>
+    {% if godown=="" %}
+    	<i>{% trans %}Product Report{% endtrans %} for </i><strong>{{stockrefresh["productdesc"]}}</strong>
+		{% else %}
+			<i>{% trans %}Godown Wise Product Report{% endtrans %} for </i><strong>{{stockrefresh["productdesc"]}}</strong><i> in </i><strong>{{godown}}</strong>
+    {% endif %}
 		<i>{% trans %}Period{% endtrans %}</i> : <strong>{{stockrefresh["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{stockrefresh["calculateto"]}}</strong>
   </div>
 		<div class="table-responsive printorgdetails">
@@ -70,7 +77,27 @@
 					</tr>
 				</thead>
         {% for record in gkresult %}
-				{% if record["particulars"] !="Total" and record["invdcno"]!="" and record["date"]!="" %}
+				{% if record["particulars"] =="opening stock" and (record["invdcno"]=="" or record["dcinvtnno"]=="") and record["date"]=="" %}
+	      <tr>
+	        <td class="col-xs-1 " >
+	        </td>
+	        <td class="col-xs-4">
+	          {{record["particulars"]}}
+	        </td>
+	        <td class="col-xs-2" >
+	        </td>
+	        <td class="col-xs-2" >
+	        </td>
+	        <td class="col-xs-1 rightlist">
+	          {{record["inward"]}}
+	        </td>
+	        <td class="col-xs-1 rightlist" >
+	        </td>
+	        <td class="col-xs-1 rightlist" >
+	        </td>
+	      </tr>
+	      {% endif %}
+				{% if record["particulars"] !="Total" and (record["invdcno"]!="" or record["dcinvtnno"]!="") and record["date"]!="" %}
 	      <tr value="{{record["invdcid"]}}">
 	        <td class="col-xs-1 " >
 	          {{record["date"]}}
@@ -100,7 +127,7 @@
 	        </td>
 	      </tr>
 	      {% endif %}
-	      {% if record["particulars"] =="Total" and record["invdcno"]=="" and record["date"]=="" %}
+	      {% if record["particulars"] =="Total" and (record["invdcno"]=="" or record["dcinvtnno"]=="") and record["date"]=="" %}
 	      <tr>
 	        <td class="col-xs-1 " >
 	        </td>
@@ -133,7 +160,14 @@
 			$(document).ready(function() {
 				$("title").html("GNUKhata");
 				$("#printback").click(function(event) {
-					var backdata = {"productcode":$("#productcode").val(),"productdesc":$("#productdesc").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(), "backflag":1};
+					var backdata = {}
+					if ($("#godownflag").val()==0) {
+			      backdata = {"productcode":$("#productcode").val(),"productdesc":$("#productdesc").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(), "godownflag":$("#godownflag").val(), "goid":"-1", "goname":"", "backflag":1}
+			    }
+			    else {
+			      backdata = {"productcode":$("#productcode").val(),"productdesc":$("#productdesc").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(), "godownflag":$("#godownflag").val(), "goid":$("#goid").val(), "goname":$("#goname").val(), "backflag":1}
+			    }
+					console.log(backdata);
 					$.ajax(
 						{
 							type: "POST",

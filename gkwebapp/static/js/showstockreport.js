@@ -90,7 +90,14 @@ $(document).ready(function() {
   });
 
   $('#viewprintableversion').click(function (e) {
-    var printdata = {"productcode":$("#productcode").val(),"productdesc":$("#productdesc").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val()}
+    var printdata ={}
+    if ($("#godownflag").val()==0) {
+      printdata = {"productcode":$("#productcode").val(),"productdesc":$("#productdesc").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(), "godownflag":$("#godownflag").val(), "goid":"-1", "goname":""}
+    }
+    else {
+      printdata = {"productcode":$("#productcode").val(),"productdesc":$("#productdesc").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(), "godownflag":$("#godownflag").val(), "goid":$("#goid").val(), "goname":$("#goname").val()}
+    }
+    console.log(printdata);
     $.ajax({
       type: "POST",
       url: "/product?type=printablestockreport",
@@ -120,7 +127,12 @@ $(document).ready(function() {
     var orgtype = sessionStorage.getItem('orgt');
     var xhr = new XMLHttpRequest();
 
-    xhr.open('GET', '/product?type=stockreportspreadsheet&orgname='+ orgname+'&fystart='+sessionStorage.yyyymmddyear1+'&fyend='+sessionStorage.getItem('year2')+'&calculatefrom='+$("#calculatefrom").val()+'&calculateto='+$("#calculateto").val()+'&productcode='+$("#productcode").val()+'&productdesc='+$("#productdesc").val(), true);
+    if ($("#godownflag").val()==0) {
+      xhr.open('GET', '/product?type=stockreportspreadsheet&orgname='+ orgname+'&fystart='+sessionStorage.yyyymmddyear1+'&fyend='+sessionStorage.getItem('year2')+'&calculatefrom='+$("#calculatefrom").val()+'&calculateto='+$("#calculateto").val()+'&productcode='+$("#productcode").val()+'&productdesc='+$("#productdesc").val()+'&godownflag=0&goid=-1&goname=""', true);
+    }
+    else {
+      xhr.open('GET', '/product?type=stockreportspreadsheet&orgname='+ orgname+'&fystart='+sessionStorage.yyyymmddyear1+'&fyend='+sessionStorage.getItem('year2')+'&calculatefrom='+$("#calculatefrom").val()+'&calculateto='+$("#calculateto").val()+'&productcode='+$("#productcode").val()+'&productdesc='+$("#productdesc").val()+'&godownflag=1&goid='+$("#goid").val()+'&goname='+$("#goname").val(), true);
+    }
     xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
     xhr.responseType = 'blob';
 
