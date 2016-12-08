@@ -279,6 +279,8 @@ def viewstockreport(request):
 @view_config(route_name="product",request_param="type=showstockreport")
 def showstockreport(request):
 	header={"gktoken":request.headers["gktoken"]}
+	godownflag = int(request.params["godownflag"])
+	goid = int(request.params["goid"])
 	productcode = int(request.params["productcode"])
 	calculatefrom = request.params["calculatefrom"]
 	calculateto = request.params["calculateto"]
@@ -291,7 +293,10 @@ def showstockreport(request):
 		stockrefresh = {"productcode":productcode,"calculatefrom":calculatefrom,"calculateto":calculateto,"productdesc":productdesc}
 	else:
 		stockrefresh = {"productcode":productcode,"calculatefrom":datetime.strptime(calculatefrom, '%Y-%m-%d').strftime('%d-%m-%Y'),"calculateto":datetime.strptime(calculateto, '%Y-%m-%d').strftime('%d-%m-%Y'),"productdesc":productdesc}
-	result = requests.get("http://127.0.0.1:6543/report?type=stockreport&productcode=%d&startdate=%s&enddate=%s"%(productcode, scalculatefrom, scalculateto),headers=header)
+	if godownflag>0:
+		result = requests.get("http://127.0.0.1:6543/report?type=godownstockreport&goid=%d&productcode=%d&startdate=%s&enddate=%s"%(goid, productcode, scalculatefrom, scalculateto),headers=header)
+	else:
+		result = requests.get("http://127.0.0.1:6543/report?type=stockreport&productcode=%d&startdate=%s&enddate=%s"%(productcode, scalculatefrom, scalculateto),headers=header)
 	return render_to_response("gkwebapp:templates/showstockreport.jinja2",{"gkresult":result.json()["gkresult"],"stockrefresh":stockrefresh},request=request)
 
 @view_config(route_name="product",request_param="type=printablestockreport")
