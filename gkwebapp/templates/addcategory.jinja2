@@ -52,6 +52,51 @@
               <input class="form-control input-sm" id="category_name" placeholder="{% trans %}Enter child category name{% endtrans %}">
           </div>
             </div>
+
+            <div class="form-group col-md-6">
+            <div class="alert alert-danger" id="spec-blank-alert"  aria-live="rude" role="alert" hidden>
+
+              <label for="vno">{% trans %}Please enter specification name!{% endtrans %}</label>
+            </div>
+            <div class="alert alert-danger" id="category-lastspec-alert"  aria-live="rude" role="alert" hidden>
+              <label for="vno">{% trans %}Minimum one spec required!{% endtrans %}</label>
+            </div>
+            <div class="panel">
+            <table id="category_spec_table" class="table table-condensed table-bordered fixed-table">
+              <thead class="bg-primary input-sm">
+                <tr>
+                  <th class="col-xs-8">{% trans %}Spec Name{% endtrans %}</th>
+                  <th class="col-xs-3">{% trans %}Type{% endtrans %}</th>
+                  <th class="col-xs-1"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="col-xs-8">
+                    <input type="text" id="category_spec_name" class="form-control input-sm spec_name" placeholder="Spec Name">
+                  </td>
+                  <td class="col-xs-3">
+                    <select id="category_spec_type" class="form-control input-sm spec_type" name="">
+                      <option value="0">Text</option>
+                      <option value="1">Number</option>
+                      <option value="2">Date</option>
+                      <option value="3">Option</option>
+                    </select>
+                  </td>
+                  <td class="col-xs-1">
+                    <a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            </div>
+            <small id="spectotaxhelp" class="form-text text-muted">{% trans %}Press End Key on specification type to switch to tax name.{% endtrans %}</small><br>
+            <small id="navigation" class="form-text text-muted">{% trans %}Press 'Ctrl + <' and 'Ctrl + >' to navigate through fields of specification and tax.{% endtrans %}</small>
+
+            </div>
+
+
         </div>
             <div class="row">
             <div class="form-group col-md-6">
@@ -125,46 +170,10 @@
                 </tbody>
               </table>
               </div>
+              <small id="taxtospechelp" class="form-text text-muted">{% trans %}Press Left Arrow Key on tax name to switch to specification name. {% endtrans %}</small>
 
             </div>
-            <div class="form-group col-md-6">
-            <div class="alert alert-danger" id="spec-blank-alert"  aria-live="rude" role="alert" hidden>
 
-              <label for="vno">{% trans %}Please enter specification name!{% endtrans %}</label>
-            </div>
-            <div class="alert alert-danger" id="category-lastspec-alert"  aria-live="rude" role="alert" hidden>
-              <label for="vno">{% trans %}Minimum one spec required!{% endtrans %}</label>
-            </div>
-            <div class="panel">
-            <table id="category_spec_table" class="table table-condensed table-bordered fixed-table">
-              <thead class="bg-primary input-sm">
-                <tr>
-                  <th class="col-xs-8">{% trans %}Spec Name{% endtrans %}</th>
-                  <th class="col-xs-3">{% trans %}Type{% endtrans %}</th>
-                  <th class="col-xs-1"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="col-xs-8">
-                    <input type="text" id="category_spec_name" class="form-control input-sm spec_name" placeholder="Spec Name">
-                  </td>
-                  <td class="col-xs-3">
-                    <select id="category_spec_type" class="form-control input-sm spec_type" name="">
-                      <option value="0">Text</option>
-                      <option value="1">Number</option>
-                      <option value="2">Date</option>
-                      <option value="3">Option</option>
-                    </select>
-                  </td>
-                  <td class="col-xs-1">
-                    <a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            </div>
-            </div>
           </div>
 
       </div>
