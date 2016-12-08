@@ -217,6 +217,10 @@ $(document).ready(function() {
       event.preventDefault();
       $('#category_spec_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
     }
+    else if (event.ctrlKey && event.which==190) {
+      $('.spec_type').focus();
+      event.preventDefault();
+    }
   });
 
 
@@ -264,7 +268,6 @@ $(document).ready(function() {
       $('#category_spec_table tbody tr:eq('+curindex1+') td:eq(0) input').focus().select();
       event.preventDefault();
     }
-
     else if (event.which==35) {
       event.preventDefault();
       $(".tax_name:first").focus();
