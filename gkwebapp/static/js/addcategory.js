@@ -8,14 +8,12 @@ $(document).ready(function() {
   else
   {
       $("#category_under").focus();
-
   }
-
-
   $("#category_name").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#category_tax_table tbody tr:first td:first select").focus();
+
+      $("#category_spec_table tbody tr:first td:first input").focus();
     }
     if (event.which==38 ) {
       event.preventDefault();
@@ -65,6 +63,10 @@ $(document).ready(function() {
     else if (event.which==13) {
       event.preventDefault();
       $('#category_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
+    }
+    else if(event.which==37){
+       event.preventDefault();
+       $('.spec_name').focus();
     }
   });
 
@@ -184,10 +186,7 @@ $(document).ready(function() {
       event.preventDefault();
       $('#category_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
     }
-    else if (event.which==35) {
-      event.preventDefault();
-      $("#category_spec_table tbody tr:first td:first input").focus();
-    }
+
 
   });
   $(document).off("click",".tax_del").on("click", ".tax_del", function() {
@@ -219,6 +218,10 @@ $(document).ready(function() {
       $('#category_spec_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
     }
   });
+
+
+
+
   $(document).off("keydown",".spec_type").on("keydown",".spec_type",function(event)
   {
     var curindex1 = $(this).closest('tr').index();
@@ -261,9 +264,13 @@ $(document).ready(function() {
       $('#category_spec_table tbody tr:eq('+curindex1+') td:eq(0) input').focus().select();
       event.preventDefault();
     }
+
+    else if (event.which==35) {
+      event.preventDefault();
+      $(".tax_name:first").focus();
+    }
   });
   /* -----------------------Spec key events end----------------------------------------- */
-
   $(document).keyup(function(event) {
     if(event.which == 45) {
       event.preventDefault();
