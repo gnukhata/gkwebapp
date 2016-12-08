@@ -64,7 +64,16 @@ $(document).ready(function() {
       return str
     }
   }
-
+  $("#godownflag").click(function(e){
+    if ($(this).is(":checked")) {
+      $("#godownflag").val(1);
+      $("#goselect").show();
+    }
+    else {
+      $("#godownflag").val(0);
+      $("#goselect").hide();
+    }
+  });
   $("#viewstock_productname").change(function(){
         $(this).keyup(function(e){
             if (e.which == 13) {
@@ -75,13 +84,6 @@ $(document).ready(function() {
         });
         $(".dis").attr('disabled', false);
   });
-
-  $("#viewstock_fromdate").keyup(function(e){
-    if (e.which == 38) {
-      $("#viewstock_productname").focus();
-    }
-  });
-
   $("#viewstock_fromdate").blur(function(event) {
     $(this).val(pad($(this).val(),2));
   });
@@ -104,14 +106,16 @@ $(document).ready(function() {
   });
   $("#viewstock_fromdate").keydown(function(e){
     if(e.which==13){
+      e.preventDefault();
       $("#viewstock_frommonth").focus();
     }
     if(e.which==38){
-      $("#viewstock_monthly").focus();
+      $("#viewstock_productname").focus();
     }
   });
   $("#viewstock_frommonth").keydown(function(e){
     if(e.which==13){
+      e.preventDefault();
       $("#viewstock_fromyear").focus();
     }
     if(e.which==38){
@@ -120,6 +124,7 @@ $(document).ready(function() {
   });
   $("#viewstock_fromyear").keydown(function(e){
     if(e.which==13){
+      e.preventDefault();
       $("#viewstock_todate").focus();
     }
     if(e.which==38){
@@ -128,6 +133,7 @@ $(document).ready(function() {
   });
   $("#viewstock_todate").keydown(function(e){
     if(e.which==13){
+      e.preventDefault();
       $("#viewstock_tomonth").focus();
     }
     if(e.which==38){
@@ -136,21 +142,58 @@ $(document).ready(function() {
   });
   $("#viewstock_tomonth").keydown(function(e){
     if(e.which==13){
+      e.preventDefault();
       $("#viewstock_toyear").focus();
     }
     if(e.which==38){
       $("#viewstock_todate").focus();
     }
   });
-  $("#viewstock_toyear").keydown(function(e){
-    if(e.which==13){
+  if ($("#godowpresent").val()==0) {
+    $("#viewstock_toyear").keydown(function(e){
+      if(e.which==13){
+        e.preventDefault();
+        $("#viewstock_submit").click();
+      }
+      if(e.which==38){
+        $("#viewstock_tomonth").focus();
+      }
+    });
+  }
+
+  else {
+    $("#viewstock_toyear").keydown(function(e){
+      if(e.which==13){
+        e.preventDefault();
+        $("#godownflag").focus().select();
+      }
+      if(e.which==38){
+        $("#viewstock_tomonth").focus();
+      }
+    });
+    $("#editgoddet").keydown(function(e){
+      if(e.which==13){
+        e.preventDefault();
+        $("#viewstock_submit").click();
+      }
+      if(e.which==38){
+        $("#godownflag").focus().select();
+      }
+    });
+  }
+  $("#godownflag").keydown(function(e){
+    if (e.which == 13 && $(this).val()==0) {
+      e.preventDefault();
       $("#viewstock_submit").click();
     }
-    if(e.which==38){
-      $("#viewstock_tomonth").focus();
+    if (e.which == 13 && $(this).val()==1) {
+      e.preventDefault();
+      $("#editgoddet").focus()  ;
+    }
+    if (e.which == 38) {
+      $("#viewstock_toyear").focus();
     }
   });
-
   $("#viewstock_submit").click(function(event) {
     if ($("#viewstock_productname").val()==null) {
       $("#account-blank-alert").alert();
