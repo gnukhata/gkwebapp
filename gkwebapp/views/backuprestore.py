@@ -46,40 +46,40 @@ def tallyImport():
 	accountSheet = wbTally.active
 	accountList = tuple(accountSheet.rows)
 	gsResult = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist",headers=header)
-	groups = gsResult["gkresult"]
+	groups = gsResult.json()["gkresult"]
 	curgrpid = None
 	parentgroupid = None
 	for accRow in accountList:
 		if accRow[0].value == None:
 			continue
 		if accRow[0].font.b:
-			curgrpid = groups[accRow[0].value]
-			parentgroupid = groups[accRow[0].value]
+			curgrpid = groups[accRow[0].value.strip()]
+			parentgroupid = groups[accRow[0].value.strip()]
 			continue
 		if accRow[0].font.b == False and accRow[0].font.i == False:
 			if groups.has_key(accRow[0].value):
-				curgrpid = groups[accRow[0].value]
+				curgrpid = groups[accRow[0].value.strip()]
 			else:
 				newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
-				curgrpid = newsub["gkresult"]
+				curgrpid = newsub.json()["gkresult"]
+				
 		if accRow[0].font.i:
-			if accRow[1]==None and accRow[2]==None:
+			if accRow[1].value==None and accRow[2].value==None:
 				if parentgroupid == curgrpid and parentgroupid == groups["Fixed Assets"]:
 					if groups.has_key(accRow[0].value):
-						curgrpid = groups[accRow[0].value]
+						curgrpid = groups[accRow[0].value.strip()]
 						newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
 					else:
 						newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
-						curgrpid = newsub["gkresult"]
+						curgrpid = newsub.json()["gkresult"]
 						newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
 				else:
 					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
-					
 					continue
-			if accRow[1]==None:
+			if accRow[1].value==None:
 				if parentgroupid == curgrpid and parentgroupid == groups["Fixed Assets"]:
 					if groups.has_key(accRow[0].value):
-						curgrpid = groups[accRow[0].value]
+						curgrpid = groups[accRow[0].value.strip()]
 						newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[2].value}),headers=header)
 					else:
 						newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
@@ -88,10 +88,10 @@ def tallyImport():
 				else:
 					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[2].value}),headers=header)
 					continue
-			if accRow[2]==None:
+			if accRow[2].value==None:
 				if parentgroupid == curgrpid and parentgroupid == groups["Fixed Assets"]:
 					if groups.has_key(accRow[0].value):
-						curgrpid = groups[accRow[0].value]
+						curgrpid = groups[accRow[0].value.strip()]
 						newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
 					else:
 						newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
@@ -99,8 +99,7 @@ def tallyImport():
 						newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
 				else:
 					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
-					continue		
-			
+					continue				
 
 @view_config(route_name="backupfile", renderer="")
 def backup(request):
