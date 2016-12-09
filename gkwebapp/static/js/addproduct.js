@@ -479,14 +479,6 @@ $(document).ready(function() {
       event.preventDefault();
       $('#product_tax_table tbody tr:eq('+nextindex+') td:eq(0) select').focus().select();
     }
-    else if (event.which==188 && event.shiftKey)
-    {
-      if(previndex>-1)
-      {
-        event.preventDefault();
-        $('#product_tax_table tbody tr:eq('+previndex+') td:eq(0) select').focus().select();
-      }
-    }
     else if (event.which==188 && event.ctrlKey) {
       event.preventDefault();
       $('#product_tax_table tbody tr:eq('+previndex+') td:eq(2) input').focus().select();

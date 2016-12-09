@@ -8,6 +8,42 @@ $(document).ready(function() {
       $("#editgodownflag").val(1);
       $("#editopeningstockdiv").show();
       $("#editnogodown").hide();
+      $(".editgodownid").each(function(){
+        var indexgp = $(".editgodownid").index(this);
+        $.ajax({
+          url: '/product?by=godown',
+          type: 'POST',
+          dataType: 'json',
+          async : false,
+          data: {"goid":$(this).val(), "productcode":$("#prodselect option:selected").val()},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          }
+        })
+        .done(function(resp) {
+          var goopeningstock=resp["gkresult"]
+          if (resp["gkstatus"]==0)
+          {
+            if (goopeningstock.length == 0) {
+              goopeningstock = "0.00";
+            }
+            else {
+              for (i in goopeningstock) {
+                goopeningstock=goopeningstock[i].goopeningstock;
+              }
+
+            }
+            $(".editgodown_ob").eq(indexgp).val(goopeningstock);
+          }
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+      });
     }
     else {
       editgodownflag = 0;
@@ -75,6 +111,7 @@ $(document).ready(function() {
       $("#epsubmit").click();
     }
   });
+
 
 
   $(document).off('keyup', '.specdate').on('keyup', '.specdate',function (e) {

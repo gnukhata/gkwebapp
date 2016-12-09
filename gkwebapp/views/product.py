@@ -73,6 +73,11 @@ def getprodbycat(request):
 	else:
 		return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
+@view_config(route_name="product",request_param="by=godown", renderer="json")
+def getgodownproduct(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/products?by=godown&productcode=%d&goid=%d"%(int(request.params["productcode"]), int(request.params["goid"])), headers=header)
+	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="product",request_param="type=prodtax", renderer="json")
 def getprodtax(request):
