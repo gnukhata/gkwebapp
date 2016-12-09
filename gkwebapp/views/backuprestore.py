@@ -25,7 +25,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Abhijith Balan" <abhijithb21@openmailbox.org>
-"Prajakta Patkar" <prajkta.patkar007@gmail.com>
+"Prajkta Patkar" <prajkta.patkar007@gmail.com>
 """
 
 from pyramid.view import view_config
@@ -74,12 +74,25 @@ def tallyImport():
 						newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
 				continue
 			if accRow[1]==None:
-				newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal": accRow[2].value}),headers=header)
+				if parentgroupid == curgrpid and parentgroupid == groups["Fixed Assets"]:
+					if groups.has_key(accRow[0].value):
+						curgrpid = groups[accRow[0].value]
+						newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[2].value}),headers=header)
+					else:
+						newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
+						curgrpid = newsub["gkresult"]
+						newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[2].value}),headers=header)
 				continue
 			if accRow[2]==None:
-				newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal": accRow[1].value}),headers=header)
-				continue
-		
+				if parentgroupid == curgrpid and parentgroupid == groups["Fixed Assets"]:
+					if groups.has_key(accRow[0].value):
+						curgrpid = groups[accRow[0].value]
+						newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
+					else:
+						newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
+						curgrpid = newsub["gkresult"]
+						newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
+				continue		
 			
 		
 				
