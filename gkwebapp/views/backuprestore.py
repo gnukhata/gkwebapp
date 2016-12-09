@@ -38,7 +38,7 @@ import os, shutil
 from openpyxl import load_workbook
 from openpyxl.drawing.graphic import GroupShape
 
-@view_config(route_name='import',renderor='json')
+@view_config(route_name='import',renderer='json')
 def tallyImport():
 	header={"gktoken":request.headers["gktoken"]}
 	talFile  = request.POST["talfile"].file
@@ -72,7 +72,10 @@ def tallyImport():
 						newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
 						curgrpid = newsub["gkresult"]
 						newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
-				continue
+				else:
+					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
+					
+					continue
 			if accRow[1]==None:
 				if parentgroupid == curgrpid and parentgroupid == groups["Fixed Assets"]:
 					if groups.has_key(accRow[0].value):
@@ -82,7 +85,9 @@ def tallyImport():
 						newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
 						curgrpid = newsub["gkresult"]
 						newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[2].value}),headers=header)
-				continue
+				else:
+					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[2].value}),headers=header)
+					continue
 			if accRow[2]==None:
 				if parentgroupid == curgrpid and parentgroupid == groups["Fixed Assets"]:
 					if groups.has_key(accRow[0].value):
@@ -92,10 +97,9 @@ def tallyImport():
 						newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
 						curgrpid = newsub["gkresult"]
 						newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
-				continue		
-			
-		
-				
+				else:
+					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
+					continue		
 			
 
 @view_config(route_name="backupfile", renderer="")
