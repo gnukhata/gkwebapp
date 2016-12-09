@@ -126,7 +126,12 @@
           {% endif %}
         </td>
         <td value="{{record["invdcid"]}}" class="col-xs-2" >
-          {{record["invdcno"]}}
+          {% if record["invdcno"]!="" %}
+            {{record["invdcno"]}}
+          {% endif %}
+          {% if record["dcinvtnno"]!="" %}
+            {{record["dcinvtnno"]}}
+          {% endif %}
         </td>
         <td class="col-xs-1 rightlist">
           {{record["inwardqty"]}}

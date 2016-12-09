@@ -313,7 +313,10 @@ def printablestockreport(request):
 	calculateto = datetime.strptime(scalculateto, '%d-%m-%Y').strftime('%Y-%m-%d')
 	productdesc = request.params["productdesc"]
 	stockrefresh = {"productcode":productcode,"calculatefrom":scalculatefrom,"calculateto":scalculateto,"productdesc":productdesc,"godownflag":godownflag,"goid":goid}
-	result = requests.get("http://127.0.0.1:6543/report?type=stockreport&productcode=%d&startdate=%s&enddate=%s"%(productcode, calculatefrom, calculateto),headers=header)
+	if godownflag > 0:
+		result = requests.get("http://127.0.0.1:6543/report?type=godownstockreport&productcode=%d&startdate=%s&enddate=%s&goid=%d&godownflag=%d"%(productcode, calculatefrom, calculateto, goid, godownflag),headers=header)
+	else:
+		result = requests.get("http://127.0.0.1:6543/report?type=stockreport&productcode=%d&startdate=%s&enddate=%s"%(productcode, calculatefrom, calculateto),headers=header)
 	return render_to_response("gkwebapp:templates/printstockreport.jinja2",{"gkresult":result.json()["gkresult"],"stockrefresh":stockrefresh,"godown":goname},request=request)
 
 @view_config(route_name="product",request_param="type=stockreportspreadsheet", renderer="")
@@ -328,7 +331,10 @@ def stockreportspreadsheet(request):
 	scalculatefrom = datetime.strptime(calculatefrom, '%d-%m-%Y').strftime('%Y-%m-%d')
 	scalculateto = datetime.strptime(calculateto, '%d-%m-%Y').strftime('%Y-%m-%d')
 	productdesc = request.params["productdesc"]
-	result = requests.get("http://127.0.0.1:6543/report?type=stockreport&productcode=%d&startdate=%s&enddate=%s"%(productcode, scalculatefrom, scalculateto),headers=header)
+	if godownflag > 0:
+		result = requests.get("http://127.0.0.1:6543/report?type=godownstockreport&productcode=%d&startdate=%s&enddate=%s&goid=%d&godownflag=%d"%(productcode, scalculatefrom, scalculateto, goid, godownflag),headers=header)
+	else:
+		result = requests.get("http://127.0.0.1:6543/report?type=stockreport&productcode=%d&startdate=%s&enddate=%s"%(productcode, scalculatefrom, scalculateto),headers=header)
 	result = result.json()["gkresult"]
 	fystart = str(request.params["fystart"]);
 	ystart = datetime.strptime(fystart, '%Y-%m-%d').strftime('%d-%m-%Y')
@@ -362,7 +368,7 @@ def stockreportspreadsheet(request):
 		sheet.getCell(6,3).stringValue("Balance").setBold(True).setAlignHorizontal("right")
 		row = 4
 		for stock in result:
-			if stock["particulars"]=="opening stock" and stock["invdcno"]=="" and stock["date"]=="":
+			if stock["particulars"]=="opening stock" and stock["dcinvtnno"]=="" and stock["date"]=="":
 				sheet.getCell(0, row).stringValue("")
 				sheet.getCell(1, row).stringValue(stock["particulars"].title())
 				sheet.getCell(2, row).stringValue("")
@@ -370,15 +376,15 @@ def stockreportspreadsheet(request):
 				sheet.getCell(4, row).stringValue(stock["inward"]).setAlignHorizontal("right")
 				sheet.getCell(5, row).stringValue("")
 				sheet.getCell(6, row).stringValue("")
-			if stock["particulars"]!="opening stock" and stock["invdcno"]!="" and stock["date"]!="":
+			if stock["particulars"]!="opening stock" and stock["dcinvtnno"]!="" and stock["date"]!="":
 				sheet.getCell(0, row).stringValue(stock["date"])
 				sheet.getCell(1, row).stringValue(stock["particulars"])
 				sheet.getCell(2, row).stringValue(stock["trntype"])
-				sheet.getCell(3, row).stringValue(stock["invdcno"])
+				sheet.getCell(3, row).stringValue(stock["dcinvtnno"])
 				sheet.getCell(4, row).stringValue(stock["inwardqty"]).setAlignHorizontal("right")
 				sheet.getCell(5, row).stringValue(stock["outwardqty"]).setAlignHorizontal("right")
 				sheet.getCell(6, row).stringValue(stock["balance"]).setAlignHorizontal("right")
-			if stock["particulars"]=="Total" and stock["invdcno"]=="" and stock["date"]=="":
+			if stock["particulars"]=="Total" and stock["dcinvtnno"]=="" and stock["date"]=="":
 				sheet.getCell(0, row).stringValue("")
 				sheet.getCell(1, row).stringValue(stock["particulars"])
 				sheet.getCell(2, row).stringValue("")
