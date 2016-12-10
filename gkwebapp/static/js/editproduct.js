@@ -775,14 +775,10 @@ $(document).ready(function() {
         obj.taxrate = parseFloat($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(2) input").val()).toFixed(2);
         taxes.push(obj);
       }
-
-
     });
     var obj = {};
     $("#editgodown_ob_table tbody tr").each(function(){
       if ($.trim($(".editgodownid",this).val())!="") {
-
-
         if ($.trim($(".editgodown_ob",this).val())=="") {
           obj[$(".editgodownid",this).val()] = "0.00"
         }
@@ -790,13 +786,11 @@ $(document).ready(function() {
           obj[$(".editgodownid",this).val()] = $(".editgodown_ob",this).val();
         }
       }
-
-
     });
     var editformdata = $("#editprodform").serializeArray();
     editformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
     if ($("#editgodownflag").val() == 1) {
-      addformdata.push({name: 'godowns', value: JSON.stringify(obj)});
+      editformdata.push({name: 'godowns', value: JSON.stringify(obj)});
     }
     $.ajax({
       url: '/product?type=edit',

@@ -153,10 +153,19 @@ def editproduct(request):
 	proddetails={}
 	productdetails={}
 	taxes =0
-
+	godownflag=False
+	godowns=0
+	goid=0
+	goopeningstock=0.00
+	print request.params
 	for prd in request.params:
 		if prd=="type":
 			continue
+		elif prd=="godownflag":
+			if request.params[prd] > 0:
+				godownflag=True
+			else:
+				godownflag=False
 		elif prd =="productcode":
 			proddetails["productcode"] = request.params[prd]
 		elif prd =="catselect":
@@ -166,12 +175,16 @@ def editproduct(request):
 			proddetails["productdesc"] = request.params[prd];
 		elif prd == "uom":
 			proddetails["uomid"] = request.params[prd]
+		elif prd == "openingstock":
+			proddetails["openingstock"] = request.params[prd]
 		elif prd == "taxes":
 			taxes = json.loads(request.params["taxes"])
+		elif prd == "godowns":
+			godowns = json.loads(request.params["godowns"])
 		else:
 			prdspecs[prd]= request.params[prd]
 		proddetails["specs"] = prdspecs
-		productdetails = {"productdetails":proddetails, "godownflag":False}
+		productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
 	result = requests.put("http://127.0.0.1:6543/products", data=json.dumps(productdetails),headers=header)
 
 	for tax in taxes:
