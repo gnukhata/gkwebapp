@@ -779,10 +779,7 @@ $(document).ready(function() {
     var obj = {};
     $("#editgodown_ob_table tbody tr").each(function(){
       if ($.trim($(".editgodownid",this).val())!="") {
-        if ($.trim($(".editgodown_ob",this).val())=="") {
-          obj[$(".editgodownid",this).val()] = "0.00"
-        }
-        else {
+        if ($.trim($(".editgodown_ob",this).val())!="" && $.trim($(".editgodown_ob",this).val())!= "0.00") {
           obj[$(".editgodownid",this).val()] = $(".editgodown_ob",this).val();
         }
       }

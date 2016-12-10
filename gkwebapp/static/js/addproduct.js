@@ -675,17 +675,10 @@ $(document).ready(function() {
     var obj = {};
     $("#godown_ob_table tbody tr").each(function(){
       if ($.trim($(".godownid",this).val())!="") {
-
-
-        if ($.trim($(".godown_ob",this).val())=="") {
-          obj[$(".godownid",this).val()] = "0.00"
-        }
-        else {
+        if ($.trim($(".godown_ob",this).val())!="" &&  $.trim($(".godown_ob",this).val())!= "0.00") {
           obj[$(".godownid",this).val()] = $(".godown_ob",this).val();
         }
       }
-
-
     });
     var addformdata = $("#addprodform").serializeArray();
 
