@@ -124,6 +124,7 @@ def tallyImport():
 		#the name and code will be changed when main for loop iterates.
 		ledgerAccount = ""
 		ledgerCode = None
+		voucherCodes = []
 		for accSheet in sheets:
 			if wbTally.index(accSheet) == 0:
 				continue
@@ -132,22 +133,21 @@ def tallyImport():
 			voucherRows = accsheet.rows
 			voucherDate = ""
 			for v in voucherRows:
-				if v[0].value == None and v[1].value == None and v[2].value == None:
+				if (v[0].value == None and v[1].value == None and v[2].value == None) or v[4].value in voucherCodes:
 					continue
 				if v[0].value != None or v[0].value != "Educational":
 					voucherDate = v[0].value
-					vouchernumber = v[4].value
-					vouchertype = v[3].value
-					narration = voucherRows[voucherRows.index(v)+1][2].value
-					if v[5].value != None:
-						drs = {ledgerCode: v[5].value}
-						crs = {v[2].value:v[5].value}
-					if v[6].value != None:
-						crs = {ledgerCode: v[6].value}
-						drs = {v[2].value:v[6].value}
-						
-					newvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps({"voucherdate":voucherDate,"vouchernumber":vouchernumber,"vouchertype":vouchertype,"drs":drs,"crs":crs,"narration":narration}),headers=header)
-
+				vouchernumber = v[4].value
+				voucherCodes.append(vouchernumber)
+				vouchertype = v[3].value
+				narration = voucherRows[voucherRows.index(v)+1][2].value
+				if v[5].value != None:
+					drs = {ledgerCode: v[5].value}
+					crs = {v[2].value:v[5].value}
+				if v[6].value != None:
+					crs = {ledgerCode: v[6].value}
+					drs = {v[2].value:v[6].value}
+				newvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps({"voucherdate":voucherDate,"vouchernumber":vouchernumber,"vouchertype":vouchertype,"drs":drs,"crs":crs,"narration":narration}),headers=header)
 				
 		
 			return{"gkstatus":result.json()["gkstatus"]}
