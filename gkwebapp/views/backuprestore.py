@@ -134,10 +134,17 @@ def tallyImport():
 			for v in voucherRows:
 				if v[0].value == None and v[1].value == None and v[2].value == None:
 					continue
-				if v[0].value != None or v[0].value != "Education":
+				if v[0].value != None or v[0].value != "Educational":
 					voucherDate = v[0].value
-					
-					
+					vouchernumber = v[4].value
+					vouchertype = v[3].value
+					narration = voucherRows[voucherRows.index(v)+1][2].value
+					if v[5].value != None:
+						drs = {ledgerCode: v[5].value}
+						crs = {v[2].value:v[5].value}
+					if v[6].value != None:
+						crs = {ledgerCode: v[6].value}
+						drs = {v[2].value:v[6].value}
 
 				
 		
