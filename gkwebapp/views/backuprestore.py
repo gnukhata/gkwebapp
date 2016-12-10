@@ -40,38 +40,107 @@ from openpyxl.drawing.graphic import GroupShape
 
 @view_config(route_name='import',renderer='json')
 def tallyImport():
-	header={"gktoken":request.headers["gktoken"]}
-	talFile  = request.POST["talfile"].file
-	wbTally = load_workbook(talFile)
-	accountSheet = wbTally.active
-	accountList = tuple(accountSheet.rows)
-	gsResult = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist",headers=header)
-	groups = gsResult.json()["gkresult"]
-	curgrpid = None
-	parentgroupid = None
-	for accRow in accountList:
-		if accRow[0].value == None:
-			continue
-		if accRow[0].font.b:
-			curgrpid = groups[accRow[0].value.strip()]
-			parentgroupid = groups[accRow[0].value.strip()]
-			continue
-		if accRow[0].font.b == False and accRow[0].font.i == False:
-			if groups.has_key(accRow[0].value):
+	"""
+	This function will take a spreadsheet containing data from tally.
+	Then the code will read the file using parsing library (openpyxl).
+	With a number of post calls to REST API, the data is added to GNUKhata.
+	The data consists of :
+	*new subgroups if they don't exist,
+	*new accounts under existing or new subgroups
+	* new accounts undr group as per data provided.
+	The data from tally should be in the following format.
+	* first sheet must contain the list of accounts
+	* Structure should be groups with their optional subgroups
+	* if accounts are to be under a group then they should come immediately below the group
+	* if there are subgroups under the group they should imediately follow the group
+	* groups are in bold
+	*accounts are italics
+	* subgroups are normal
+	* list of groups should be exactly as per GNUKhata (13 at the most ).
+	The code will then look at rest of the sheets which contain list of transactions for every account.
+	a loop will first go through list of sheets, skipping first sheet with index 0
+	then for every sheet, list of rows will be taken.
+	For every row containing date in first column it will look for all data in same row.
+	The data will include particular, voucher type, voucher number, Dr or Cr.
+	The name of the account in the particulars column is  in the same row.
+	Note that title of the sheet has the account name for which transactions are being recorded.
+	This is called the ledger account.
+	So if the amount in a certain transaction is in the Dr. column,
+	it means that the account in particulars column will have same amount for Cr.
+	If the row next to the row containing date is blank except the particulars column, it means it is narration.
+	If the row has empty value in date column but has all other columns filled,
+	then it means this voucher is for the same date.
+	So it is obvious that once we see date in the first column, it is stored in a variable.
+	This value will only change the next time we see another date.
+	"""
+	#First we will get list of existing groups and subgroups for this organisation.
+	#we will of course lead the workbook from the request.
+	try:
+		header={"gktoken":request.headers["gktoken"]}
+		talFile  = request.POST["talfile"].file
+		wbTally = load_workbook(talFile)
+		accountSheet = wbTally.active
+		accountList = tuple(accountSheet.rows)
+		gsResult = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist",headers=header)
+		groups = gsResult.json()["gkresult"]
+		curgrpid = None
+		parentgroupid = None
+		#now looping through rows and adding accounts.
+		#Active sheet is the first sheet containing group, subgroups and accounts.
+		for accRow in accountList:
+			if accRow[0].value == None:
+				continue
+			if accRow[0].font.b:
 				curgrpid = groups[accRow[0].value.strip()]
-			else:
-				newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
-				curgrpid = newsub.json()["gkresult"]
-		if accRow[0].font.i:
-			if accRow[1].value==None and accRow[2].value==None:
-				newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
+				parentgroupid = groups[accRow[0].value.strip()]
 				continue
-			if accRow[1].value==None:
-				newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[2].value}),headers=header)
+			if accRow[0].font.b == False and accRow[0].font.i == False:
+				if groups.has_key(accRow[0].value):
+					curgrpid = groups[accRow[0].value.strip()]
+				else:
+					newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
+					curgrpid = newsub.json()["gkresult"]
+			if accRow[0].font.i:
+				if accRow[1].value==None and accRow[2].value==None:
+					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
+					continue
+				if accRow[1].value==None:
+					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[2].value}),headers=header)
+					continue
+				if accRow[2].value==None:
+					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
+					continue
+		#now we will loop through all sheets.
+		#we will then enter the vouchers for all the accounts.
+		#first we will get the list of all accounts we have just created.
+		#the dictionary thus returned will have 
+		#accountname as key and accountcode as value.
+		acclist = requests.get("http://127.0.0.1:6544/accounts?acclist",headers=header)
+		accounts = acclist.json()["gkresult"]
+		#getting all sheets from workbook.
+		#first sheet with index 0 will be skipped.
+		sheets = wbTally.worksheets
+		#we need two variables for accountname and accountcode.
+		#the name and code will be changed when main for loop iterates.
+		ledgerAccount = ""
+		ledgerCode = None
+		for accSheet in sheets:
+			if wbTally.index(accSheet) == 0:
 				continue
-			if accRow[2].value==None:
-				newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
-				continue		
+			ledgerAccount = accSheet.title
+			ledgerCode = accounts[ledgerAccount]
+			voucherRows = accsheet.rows
+			for v in voucherRows:
+				if v[0].value == None and v[1].value == None and v[2].value == None:
+					continue
+				
+
+				
+		
+			return{"gkstatus":result.json()["gkstatus"]}
+	except:
+		print "file not found"
+		return{"gkstatus":False}
 
 @view_config(route_name="backupfile", renderer="")
 def backup(request):
