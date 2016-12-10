@@ -130,10 +130,14 @@ def tallyImport():
 			ledgerAccount = accSheet.title
 			ledgerCode = accounts[ledgerAccount]
 			voucherRows = accsheet.rows
+			voucherDate = ""
 			for v in voucherRows:
 				if v[0].value == None and v[1].value == None and v[2].value == None:
 					continue
-				
+				if v[0].value != None or v[0].value != "Education":
+					voucherDate = v[0].value
+					
+					
 
 				
 		
