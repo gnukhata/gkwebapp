@@ -26,56 +26,16 @@
         </div>
         <form>
           <div class="container-fluid row">
-
-            <div class="form-group col-md-6">
-              <label for="category_edit_list">{% trans %}Category :{% endtrans %}</label>
-              <select class="form-control input-sm" id="category_edit_list">
-                <option value="" disabled selected hidden>{% trans %}Select Category{% endtrans %}</option>
-                {% for categories in gkresult %}
-                <option value="{{categories['categorycode']}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-          <div id="category_edit_innerdiv" hidden>
             <div class="col-md-6">
-              <div class="alert alert-danger" id="category-blank-alert"  aria-live="rude" role="alert" hidden>
-                <label for="vno">{% trans %}Please enter category name!{% endtrans %}</label>
-              </div>
-              <div class="alert alert-danger" id="tax-name-blank-alert"  aria-live="rude" role="alert" hidden>
-
-                {% trans %}Select tax name!{% endtrans %}
-              </div>
-              <div class="alert alert-danger" id="tax-rate-blank-alert"  aria-live="rude" role="alert" hidden>
-
-                {% trans %}Enter tax rate!{% endtrans %}
-              </div>
-              <div class="alert alert-danger" id="tax-duplicate-alert"  aria-live="rude" role="alert" hidden>
-
-                {% trans %}Duplicate Tax!{% endtrans %}
-              </div>
               <div class="form-group">
-                <label for="category_edit_name">{% trans %}Name:{% endtrans %}</label>
-                <input class="form-control category_edit_disable input-sm" id="category_edit_name" placeholder="{% trans %}Enter category name{% endtrans %}">
+                <label for="category_edit_list">{% trans %}Category :{% endtrans %}</label>
+                <select class="form-control input-sm" id="category_edit_list">
+                  <option value="" disabled selected hidden>{% trans %}Select Category{% endtrans %}</option>
+                  {% for categories in gkresult %}
+                  <option value="{{categories['categorycode']}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
+                  {% endfor %}
+                </select>
               </div>
-              <div class="form-group">
-                <div class="panel">
-                  <table id="category_edit_tax_table" class="table table-condensed table-bordered fixed-edit-table">
-                    <thead class="bg-primary input-sm">
-                      <tr>
-                        <th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
-                        <th class="col-xs-4 text-center">{% trans %}State{% endtrans %}</th>
-                        <th class="col-xs-3 text-center">{% trans %}Rate%{% endtrans %}</th>
-                        <th class="col-xs-1"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
               <div class="form-group">
                 <label for="category_edit_under">{% trans %}Parent Category:{% endtrans %}</label>
                 <select class="form-control category_edit_disable input-sm" id="category_edit_under">
@@ -85,6 +45,14 @@
                   {% endfor %}
                 </select>
               </div>
+              <div class="form-group">
+                <label for="category_edit_name">{% trans %}Child Category:{% endtrans %}</label>
+                <input class="form-control category_edit_disable input-sm" id="category_edit_name" placeholder="{% trans %}Enter category name{% endtrans %}">
+              </div>
+            </div>
+            </div>
+          <div id="category_edit_innerdiv" hidden>
+            <div class="col-md-6">
               <div class="alert alert-danger" id="spec-blank-alert"  aria-live="rude" role="alert" hidden>
 
                 <label for="vno">{% trans %}Please enter specification name!{% endtrans %}</label>
@@ -106,8 +74,44 @@
                   </tbody>
                 </table>
               </div>
+              <small id="spectotaxhelp" class="form-text text-muted">{% trans %}Press End Key on specification type to switch to tax name.{% endtrans %}</small><br>
+              <small id="navigation" class="form-text text-muted">{% trans %}Press 'Ctrl + <' and 'Ctrl + >' to navigate through fields of specification and tax.{% endtrans %}</small>
             </div>
+          <div class="col-md-6">
+            <div class="alert alert-danger" id="category-blank-alert"  aria-live="rude" role="alert" hidden>
+              <label for="vno">{% trans %}Please enter category name!{% endtrans %}</label>
+            </div>
+            <div class="alert alert-danger" id="tax-name-blank-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Select tax name!{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="tax-rate-blank-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Enter tax rate!{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="tax-duplicate-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Duplicate Tax!{% endtrans %}
+            </div>
+            <div class="form-group">
+              <div class="panel">
+                <table id="category_edit_tax_table" class="table table-condensed table-bordered fixed-edit-table">
+                  <thead class="bg-primary input-sm">
+                    <tr>
+                      <th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
+                      <th class="col-xs-4 text-center">{% trans %}State{% endtrans %}</th>
+                      <th class="col-xs-3 text-center">{% trans %}Rate%{% endtrans %}</th>
+                      <th class="col-xs-1"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <small id="taxtospechelp" class="form-text text-muted">{% trans %}Press Left Arrow Key on tax name to switch to specification name. {% endtrans %}</small>
           </div>
+        </div>
         </div>
         <div class="panel-footer" hidden>
           <div class="container-fluid">

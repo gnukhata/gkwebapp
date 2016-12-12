@@ -66,7 +66,7 @@ $(document).ready(function() {
     }
     else if(event.which==37){
        event.preventDefault();
-       $('.spec_name').focus();
+       $('.spec_name').first().focus();
     }
   });
 
@@ -211,7 +211,12 @@ $(document).ready(function() {
     }
     else if (event.which==38) {
       event.preventDefault();
-      $('#category_spec_table tbody tr:eq('+previndex+') td:eq(0) input').focus().select();
+      if (curindex == 0) {
+        $("#category_name").focus().select();
+      }
+      else {
+        $('#category_spec_table tbody tr:eq('+previndex+') td:eq(0) input').focus().select();
+      }
     }
     else if (event.which==13) {
       event.preventDefault();

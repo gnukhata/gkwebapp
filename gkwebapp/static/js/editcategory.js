@@ -3,7 +3,7 @@ $(document).ready(function() {
   $(".tax_rate").numeric();
   $("#category_edit_savespecs").hide();
   $(".category_edit_disable").prop("disabled",true);
-  $("#category_edit_name").focus();
+  $("#category_edit_under").focus().select();
   var deletedspecs = [];
   var deletedtaxs = [];
 
@@ -202,7 +202,7 @@ $(document).ready(function() {
     });
     $("#category_edit_edit").show();
     $("#category_edit_savespecs").hide();
-    $(".category_edit_disable").prop("disabled",true);
+    $(".category_edit_disable").prop("disabled",false);
     $(".tax_rate").numeric();
   });
 
@@ -212,7 +212,7 @@ $(document).ready(function() {
       $(".category_edit_disable").prop("disabled",false);
       $("#category_edit_savespecs").show();
       $("#category_edit_edit").hide();
-      $("#category_edit_name").focus().select();
+      $("#category_edit_under").focus().select();
     }
     if (event.which==46) {
       event.preventDefault();
@@ -223,7 +223,7 @@ $(document).ready(function() {
   $("#category_edit_name").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#category_edit_tax_table tbody tr:first td:first select").focus();
+      $("#category_edit_spec_table tbody tr:first td:first input").focus();
     }
     if (event.which==38) {
       event.preventDefault();
@@ -234,11 +234,11 @@ $(document).ready(function() {
   $("#category_edit_under").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#category_edit_spec_table tbody tr:first td:first input").focus();
+      $("#category_edit_name").focus().select();
     }
     if (event.which==38 && $("#category_edit_under option:selected").index()==0) {
       event.preventDefault();
-      $("#category_edit_tax_table tbody tr:first td:first select").focus();
+      $("#category_edit_list").focus().select();
     }
   });
 
@@ -275,6 +275,10 @@ $(document).ready(function() {
     else if (event.which==13) {
       event.preventDefault();
       $('#category_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
+    }
+    else if (event.which == 37) {
+         event.preventDefault();
+         $('.spec_name').first().focus();
     }
   });
 
@@ -394,11 +398,6 @@ $(document).ready(function() {
       event.preventDefault();
       $('#category_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
     }
-    else if (event.which==35) {
-      event.preventDefault();
-      $('#category_edit_under').focus().select();
-    }
-
   });
   $(document).off("click",".tax_del").on("click", ".tax_del", function() {
     deletedtaxs.push($(this).closest('tr').attr('value'));
@@ -414,7 +413,7 @@ $(document).ready(function() {
     $(".category_edit_disable").prop("disabled",false);
     $("#category_edit_savespecs").show();
     $("#category_edit_edit").hide();
-    $("#category_edit_name").focus().select();
+    $("#category_edit_under").focus().select();
   });
 
   $(document).off("keydown",".spec_name").on("keydown",".spec_name",function(event)
@@ -428,8 +427,15 @@ $(document).ready(function() {
       $('#category_edit_spec_table tbody tr:eq('+nextindex+') td:eq(0) input').focus().select();
     }
     else if (event.which==38) {
-      event.preventDefault();
-      $('#category_edit_spec_table tbody tr:eq('+previndex+') td:eq(0) input').focus().select();
+      console.log(curindex);
+      if (curindex == 0) {
+        event.preventDefault();
+        $("#category_edit_name").focus().select();
+      }
+      else {
+        event.preventDefault();
+        $('#category_edit_spec_table tbody tr:eq('+previndex+') td:eq(0) input').focus().select();
+      }
     }
     else if (event.which==13) {
       event.preventDefault();
@@ -478,6 +484,10 @@ $(document).ready(function() {
         $('#category_edit_spec_table tbody tr:eq('+curindex1+') td:eq(0) input').focus().select();
         event.preventDefault();
       }
+      if (event.which == 35) {
+        event.preventDefault();
+        $("#category_edit_tax_table tbody tr:first td:first select").focus();
+      }
     });
 
   $(document).off("click",".spec_del").on("click", ".spec_del", function() {
@@ -494,7 +504,7 @@ $(document).ready(function() {
       $("#category-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#category-blank-alert").hide();
       });
-      $('#category_edit_name').focus().select();
+      $('#category_edit_under').focus().select();
       return false;
     }
     var specs = [];
@@ -570,7 +580,7 @@ $(document).ready(function() {
         return false;
       }
       else {
-        $("#category_edit_name").focus();
+        $("#category_edit_under").focus();
         $("#failure-alert").alert();
         $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#failure-alert").hide();
