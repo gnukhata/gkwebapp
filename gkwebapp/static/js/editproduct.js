@@ -51,7 +51,7 @@ $(document).ready(function() {
     $("#editproddesc").val($("#editproddesc").val().trim());
 
   });
-  $(document).keydown(function(event)
+  $(document).keyup(function(event)
   {
     /* Act on the event */
     if (event.which == 45)
@@ -389,8 +389,11 @@ $(document).ready(function() {
     if ($(".nogodownentry").length < $(".editgodownid").length) {
       $("#editnogodown").hide();
       $("#editopeningstockdiv").show();
+      $("#editgodownflag").val("1");
     }
-
+    else {
+      $("#editgodownflag").val("0");
+    }
   });
 
   $("#prodselect").keyup(function(event) {
@@ -742,7 +745,7 @@ $(document).ready(function() {
   });
   /* -----------------------Tax key events end----------------------------------------- */
 
-  $(document).on('click', '#epsubmit', function(event) {
+  $("#epsubmit").click(function(event) {
     event.preventDefault();
     /* Act on the event */
     if ($("#editproddesc").val()=="")
@@ -794,6 +797,7 @@ $(document).ready(function() {
       }
     })
     .done(function(resp) {
+      console.log(resp["gkstatus"]);
       if (resp["gkstatus"] ==0) {
         $('.modal-backdrop').remove();
         $("#editsuccess-alert").alert();
@@ -823,7 +827,7 @@ $(document).ready(function() {
     .always(function() {
       console.log("complete");
     });
-    event.stopPropogation();
+    event.stopPropagation();
   });
 
 

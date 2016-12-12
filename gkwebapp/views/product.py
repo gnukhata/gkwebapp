@@ -103,7 +103,7 @@ def saveproduct(request):
 	productdetails={}
 	godownflag=False
 	taxes =0
-	godowns=0
+	godowns={}
 	goid=0
 	goopeningstock=0.00
 	for prd in request.params:
@@ -154,10 +154,9 @@ def editproduct(request):
 	productdetails={}
 	taxes =0
 	godownflag=False
-	godowns=0
+	godowns={}
 	goid=0
 	goopeningstock=0.00
-	print request.params
 	for prd in request.params:
 		if prd=="type":
 			continue
