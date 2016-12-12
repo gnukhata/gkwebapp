@@ -38,8 +38,12 @@ import os, shutil
 from openpyxl import load_workbook
 from openpyxl.drawing.graphic import GroupShape
 
-@view_config(route_name='import',renderer='json')
-def tallyImport():
+@view_config(route_name='import',request_param='action=show',renderer='gkwebapp:templates/tallyimport.jinja2')
+def showtallyImport(request):
+	return {"gkstatus":0}
+
+@view_config(route_name='import',request_param='action=import',renderer='json')
+def tallyImport(request):
 	"""
 	This function will take a spreadsheet containing data from tally.
 	Then the code will read the file using parsing library (openpyxl).
@@ -76,7 +80,9 @@ def tallyImport():
 	#First we will get list of existing groups and subgroups for this organisation.
 	#we will of course lead the workbook from the request.
 	try:
-		wbTally = load_workbook("tal.xlsx")
+		header={"gktoken":request.headers["gktoken"]}
+		xlsxfile = request.POST['xlsxfile'].file
+		wbTally = load_workbook(xlsxfile)
 		wbTally._active_sheet_index = 0
 		accountSheet = wbTally.active
 		accountList = tuple(accountSheet.rows)
@@ -107,7 +113,7 @@ def tallyImport():
 				if accRow[2].value==None:
 					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
 					continue
-		#the dictionary thus returned will have 
+		#the dictionary thus returned will have
 		#accountname as key and accountcode as value.
 		acclist = requests.get("http://127.0.0.1:6543/accounts?acclist",headers=header)
 		accounts = acclist.json()["gkresult"]
@@ -127,13 +133,13 @@ def tallyImport():
 			voucherRows = tuple(accSheet.rows)
 			voucherDate = ""
 			for v in voucherRows:
-				if (v[0].value == None and v[1].value == None and v[2].value == None) or v[4].value in voucherCodes:
+				if (v[3].value == None) or v[4].value in voucherCodes:
 					continue
 				if v[0].value != None:
 					voucherDate = str(v[0].value)
 				vouchernumber = v[4].value
 				voucherCodes.append(vouchernumber)
-				vouchertype = v[3].value
+				vouchertype = v[3].value.strip().lower()
 				narration = voucherRows[voucherRows.index(v)+1][2].value
 				if v[5].value != None:
 					drs = {ledgerCode: v[5].value}
@@ -142,11 +148,11 @@ def tallyImport():
 					crs = {ledgerCode: v[6].value}
 					drs = {accounts[v[2].value]:v[6].value}
 				newvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps({"voucherdate":voucherDate,"vouchernumber":vouchernumber,"vouchertype":vouchertype,"drs":drs,"crs":crs,"narration":narration}),headers=header)
-			
-		return{"gkstatus":result.json()["gkstatus"]}
+
+		return {"gkstatus":0}
 	except:
 		print "file not found"
-		return{"gkstatus":False}
+		return {"gkstatus":3}
 
 @view_config(route_name="backupfile", renderer="")
 def backup(request):

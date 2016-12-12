@@ -1090,4 +1090,7 @@ $.ajax({
       }
     });
   });
+  $('#tallyimport').click(function (e) {
+    $("#info").load("/import?action=show");
+  });
 });
