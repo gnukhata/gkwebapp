@@ -76,17 +76,14 @@ def tallyImport():
 	#First we will get list of existing groups and subgroups for this organisation.
 	#we will of course lead the workbook from the request.
 	try:
-		header={"gktoken":request.headers["gktoken"]}
-		talFile  = request.POST["talfile"].file
-		wbTally = load_workbook(talFile)
+		wbTally = load_workbook("tal.xlsx")
+		wbTally._active_sheet_index = 0
 		accountSheet = wbTally.active
 		accountList = tuple(accountSheet.rows)
 		gsResult = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist",headers=header)
 		groups = gsResult.json()["gkresult"]
 		curgrpid = None
 		parentgroupid = None
-		#now looping through rows and adding accounts.
-		#Active sheet is the first sheet containing group, subgroups and accounts.
 		for accRow in accountList:
 			if accRow[0].value == None:
 				continue
@@ -110,12 +107,9 @@ def tallyImport():
 				if accRow[2].value==None:
 					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
 					continue
-		#now we will loop through all sheets.
-		#we will then enter the vouchers for all the accounts.
-		#first we will get the list of all accounts we have just created.
 		#the dictionary thus returned will have 
 		#accountname as key and accountcode as value.
-		acclist = requests.get("http://127.0.0.1:6544/accounts?acclist",headers=header)
+		acclist = requests.get("http://127.0.0.1:6543/accounts?acclist",headers=header)
 		accounts = acclist.json()["gkresult"]
 		#getting all sheets from workbook.
 		#first sheet with index 0 will be skipped.
@@ -128,29 +122,28 @@ def tallyImport():
 		for accSheet in sheets:
 			if wbTally.index(accSheet) == 0:
 				continue
-			ledgerAccount = accSheet.title
+			ledgerAccount = accSheet.title.strip()
 			ledgerCode = accounts[ledgerAccount]
-			voucherRows = accsheet.rows
+			voucherRows = tuple(accSheet.rows)
 			voucherDate = ""
 			for v in voucherRows:
 				if (v[0].value == None and v[1].value == None and v[2].value == None) or v[4].value in voucherCodes:
 					continue
-				if v[0].value != None or v[0].value != "Educational":
-					voucherDate = v[0].value
+				if v[0].value != None:
+					voucherDate = str(v[0].value)
 				vouchernumber = v[4].value
 				voucherCodes.append(vouchernumber)
 				vouchertype = v[3].value
 				narration = voucherRows[voucherRows.index(v)+1][2].value
 				if v[5].value != None:
 					drs = {ledgerCode: v[5].value}
-					crs = {v[2].value:v[5].value}
+					crs = {accounts[v[2].value]:v[5].value}
 				if v[6].value != None:
 					crs = {ledgerCode: v[6].value}
-					drs = {v[2].value:v[6].value}
+					drs = {accounts[v[2].value]:v[6].value}
 				newvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps({"voucherdate":voucherDate,"vouchernumber":vouchernumber,"vouchertype":vouchertype,"drs":drs,"crs":crs,"narration":narration}),headers=header)
-				
-		
-			return{"gkstatus":result.json()["gkstatus"]}
+			
+				return{"gkstatus":result.json()["gkstatus"]}
 	except:
 		print "file not found"
 		return{"gkstatus":False}
