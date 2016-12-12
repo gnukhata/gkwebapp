@@ -67,21 +67,27 @@
                 <thead class="bg-primary input-sm">
                   <tr>
                     <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
-                    <th class="col-xs-4 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+                    <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+                    <th class="col-xs-1"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  {% for record in godown %}
                   <tr>
                     <td class="col-xs-8">
-                      <label style="border-style:solid; border-radius: 3px; border-width:1; border-color: #d9dbdb; padding-top:7px; padding-bottom:3px;" class="col-xs-12">{{record["goname"]}}({{record["goaddr"]}})</label>
-                      <input type="text" value="{{record["goid"]}}" class="godownid" hidden>
+                      <select class="form-control input-sm godown_name">
+                        <option value="" selected>Select Godown</option>
+                        {% for record in godown %}
+                        <option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
+                        {% endfor %}
+                      </select>
                     </td>
-                    <td class="col-xs-4">
+                    <td class="col-xs-3">
                       <input class="form-control input-sm godown_ob text-right numtype" value="0.00">
                     </td>
+                    <td class="col-xs-1">
+                      <a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                    </td>
                   </tr>
-                  {% endfor %}
                 </tbody>
               </table>
             </div>

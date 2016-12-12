@@ -69,6 +69,10 @@
 
             {% trans %}<b>Opening Stock</b> is blank. Please enter <b>0.00</b> if you have no opening stock.{% endtrans %}
           </div>
+          <div class="alert alert-danger" id="godown-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please select a godown.{% endtrans %}
+          </div>
           <div class="alert alert-danger" id="uomblank-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}Please select the unit of measurement.{% endtrans %}
@@ -76,6 +80,10 @@
           <div class="alert alert-danger" id="tax-duplicate-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}Duplicate Tax!{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="no-godown-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}There are no more godowns!{% endtrans %}
           </div>
           <div class="alert alert-danger" id="failure-delete-alert"  aria-live="rude" role="alert" hidden>
 
