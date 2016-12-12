@@ -764,11 +764,11 @@ $(document).ready(function() {
 
 
     });
-    var obj = {};
+    var gobj = {};
     $("#godown_ob_table tbody tr").each(function(){
-      if ($.trim($(".godownid",this).val())!="") {
+      if ($.trim($(".godown_name",this).val())!="") {
         if ($.trim($(".godown_ob",this).val())!="" &&  $.trim($(".godown_ob",this).val())!= "0.00") {
-          obj[$(".godownid",this).val()] = $(".godown_ob",this).val();
+          gobj[$(".godown_name",this).val()] = $(".godown_ob",this).val();
         }
       }
     });
@@ -776,7 +776,7 @@ $(document).ready(function() {
 
     addformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
     if ($("#godownflag").val() == 1) {
-      addformdata.push({name: 'godowns', value: JSON.stringify(obj)});
+      addformdata.push({name: 'godowns', value: JSON.stringify(gobj)});
     }
       $.ajax({
         url: '/product?type=save',
