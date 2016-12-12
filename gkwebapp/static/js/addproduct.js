@@ -174,7 +174,7 @@ $(document).ready(function() {
     }
     if (event.which == 13 && godownflag == 1) {
       event.preventDefault();
-      $(".godown_ob").first().focus().select();
+      $(".godown_name").first().focus().select();
     }
     if (event.which == 38) {
       $("#adduom").focus();
@@ -672,7 +672,7 @@ $(document).ready(function() {
         if ($("#godown_ob_table tbody tr").length == numberofgodowns || $("#godown_ob_table tbody tr").length > numberofgodowns) {
           var taxdisabled = $('#product_tax_table tbody tr:first td:eq(0) select').is(":disabled");
           if (taxdisabled) {
-            console.log($("#specifications").contents("div").children("input").first().focus());
+            $("#specifications").contents("div").children("input").first().focus();
           }
           else {
             $('#product_tax_table tbody tr:first td:eq(0) select').focus().select();
