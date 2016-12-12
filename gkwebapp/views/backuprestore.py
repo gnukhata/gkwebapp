@@ -143,7 +143,7 @@ def tallyImport():
 					drs = {accounts[v[2].value]:v[6].value}
 				newvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps({"voucherdate":voucherDate,"vouchernumber":vouchernumber,"vouchertype":vouchertype,"drs":drs,"crs":crs,"narration":narration}),headers=header)
 			
-				return{"gkstatus":result.json()["gkstatus"]}
+		return{"gkstatus":result.json()["gkstatus"]}
 	except:
 		print "file not found"
 		return{"gkstatus":False}
