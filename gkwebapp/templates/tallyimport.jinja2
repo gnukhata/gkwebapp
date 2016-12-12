@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% trans %}GNUKhata | Import from Tally{% endtrans %}</title>
+</head>
+<body>
+  <div class='container-fluid'>
+    <div class="row">
+      <div class="panel shadow">
+        <div class="panel-heading">
+          Tally Import Wizard
+        </div>
+        <div class="panel-body">
+            <p>Welcome to the Data import wizard of GNUKhata.  It will assist you to import data from Other software, particularly Tally ERP 9.
+              However if the proper specifications are followed, you can get data from other programs too.
+              <br>
+              All you need is a spreadsheet in xlsx format.<br>
+              The data in the spreadsheet however has to comply with the import specification given below.
+              <br>
+              <ul>
+                <li>
+                  First sheet must have list of groups, subgroups and accounts.<br>
+                </li>
+                <li>
+                  Every group must be followed by it's subgroups if any.<br>
+                </li>
+                <li>
+                  Every subgroup must be followed by it's list of accounts.<br>
+                </li>
+                <li>
+                  If accounts are under a group directly, then the list must follow the group.<br>
+                </li>
+                <li>
+                  All groups must be in bold, accounts in italics and subgroups normal.<br>
+                </li>
+                <li>
+                  This data must be in column A of the sheet.<br>
+                </li>
+                <li>
+                  The following 2 columns B and C must have either Dr or Cr opening balance for the account.<br>
+                </li>
+                <li>
+                  Every sheet following the first sheet must have a title of the ledger exported.<br>
+                </li>
+                <li>
+                  Every ledger will be on individual sheet.<br>
+                </li>
+                <li>
+                  All column headers or additional information must be removed.<br>
+                </li>
+                <li>
+                  Unique incremental voucher numbers are asumed to be present.<br>
+                </li>
+              </ul>
+
+                  You can export data from Tally 9 ERP which exports list of accounts and ledgers in a single workbook.<br>
+                  After you export the said data, please make the slight changes mentioned above.<br>
+                  Note that First sheet will require maximum changes, because ledgers are exported by Tally ERP 9 in a definite structure.</p>
+                <div class="alert alert-success" id="import-success-alert"  aria-live="rude" role="alert" hidden>
+
+                  {% trans %}Data imported successfully{% endtrans %} <b id='filename'></b>.
+                </div>
+                <div class="alert alert-danger" id="import-failure-alert"  aria-live="rude" role="alert" hidden>
+
+                  {% trans %}Something went wrong.{% endtrans %}
+                </div>
+                <div class="alert alert-danger" id="import-blank-alert"  aria-live="rude" role="alert" hidden>
+
+                  {% trans %}File not found.{% endtrans %}
+                </div>
+              </div>
+              <div class="panel-footer">
+                <div class="form-inline">
+                  <label class="btn btn-primary btn-sm" for="my-file-selector">
+                    <input name="spreadsheet" accesskey="w" class="input-sm" id="my-file-selector" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" / style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
+                    {% trans %}Bro<u>w</u>se{% endtrans %}
+                  </label>
+                  <span class='label label-info' id="upload-file-info"></span>
+                  <div class="form-group">
+                    <button type="button" name="button" class="btn btn-sm btn-primary" id="import">Import</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="confirm_yes_print" class="modal" tabindex="-1" role="dialog">
+            <div class="vertical-alignment-helper">
+              <div class="modal-dialog modal-sm vertical-align-center">
+                <div class="modal-content">
+                  <div class="modal-header">
+
+                    <h4 class="modal-title">{% trans %}Import{% endtrans %}</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>{% trans %}Are you sure?{% endtrans %}</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" id ="tn_save_noprint" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
+                    <button type="button" id="tn_save_yesprint" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/tallyimport.js')}}"></script>
+      </body>
+      </html>
