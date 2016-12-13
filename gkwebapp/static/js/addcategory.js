@@ -396,7 +396,13 @@ $(document).ready(function() {
     }
     var specs = [];
     for (var i = 0; i < $("#category_spec_table tbody tr").length; i++) {
-      if ($.trim($("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").val())=="") {
+      var obj = {};
+      if ($.trim($("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").val())!="") {
+        obj.attrname = $("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").val();
+        obj.attrtype = $("#category_spec_table tbody tr:eq("+i+") td:eq(1) select").val();
+        specs.push(obj);
+      }
+      else if ($("#category_spec_table tbody tr").length == 1) {
         $("#spec-blank-alert").alert();
         $("#spec-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#spec-blank-alert").hide();
@@ -404,10 +410,6 @@ $(document).ready(function() {
         $("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").focus().select();
         return false;
       }
-      var obj = {};
-      obj.attrname = $("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").val();
-      obj.attrtype = $("#category_spec_table tbody tr:eq("+i+") td:eq(1) select").val();
-      specs.push(obj);
     }
     var taxes = [];
     var allow = true;
