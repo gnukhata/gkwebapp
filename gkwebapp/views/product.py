@@ -111,7 +111,7 @@ def saveproduct(request):
 		if prd=="type":
 			continue
 		elif prd=="godownflag":
-			if request.params[prd] > 0:
+			if int(request.params[prd]) > 0:
 				godownflag=True
 			else:
 				godownflag=False
@@ -161,7 +161,7 @@ def editproduct(request):
 		if prd=="type":
 			continue
 		elif prd=="godownflag":
-			if request.params[prd] > 0:
+			if int(request.params[prd]) > 0:
 				godownflag=True
 			else:
 				godownflag=False
