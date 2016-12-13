@@ -1,3 +1,13 @@
+[13-December-2016 Release 3.5.1]
+* Stock Report
+* Godown wise stock report
+* Function for importing data from tally
+* Localization and Internationalization
+* Added missing headers to the reports
+* UI for entering godown wise stock
+* Facilitated selection of parent category before child category
+* Tree view of categories
+
 [17-November-2016 Release 3.5]
 * Addition of support for choosing themes.
 * Facility of search in all table views.
