@@ -706,6 +706,15 @@ $(document).ready(function() {
       event.preventDefault();
       $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(1) input').focus().select();
     }
+    else if (event.which==40 && event.shiftKey) {
+      var taxdisabled = $('#product_tax_table tbody tr:first td:eq(0) select').is(":disabled");
+      if (taxdisabled) {
+        $("#specifications").contents("div").children("input").first().focus();
+      }
+      else {
+        $('#product_tax_table tbody tr:first td:eq(0) select').focus().select();
+      }
+    }
   });
   $(document).off("click",".godown_del").on("click", ".godown_del", function() {
     $(this).closest('tr').fadeOut(200, function(){
