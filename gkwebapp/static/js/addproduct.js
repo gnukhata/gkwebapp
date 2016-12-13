@@ -682,7 +682,6 @@ $(document).ready(function() {
         $('#godown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
         $(".godown_ob").numeric();
         $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
-        $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option').eq(selectindex).attr('disabled','disabled');
       }
     }
     else if(event.which==190 && event.shiftKey)
@@ -760,6 +759,29 @@ $(document).ready(function() {
       $('.modal-backdrop').remove();
       $(this).val("0.00");
     }
+    var allow=true;
+    $("#godown_ob_table tbody tr").each(function() {
+      var goid = $(".godown_name", this).val();
+      var ccount=0;
+      $("#godown_ob_table tbody tr").each(function() {
+        if(goid==$(".godown_name", this).val()){
+          ccount =ccount +1;
+        }
+      });
+      if (ccount>1) {
+        allow=false;
+      }
+      else {
+        allow=true;
+      }
+    });
+    if (!allow) {
+      $("#godown-same-alert").alert();
+      $("#godown-same-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#godown-same-alert").hide();
+      });
+        return false;
+    }
     var taxes = [];
     $("#product_tax_table tbody tr").each(function(){
       var obj = {};
@@ -830,7 +852,7 @@ $(document).ready(function() {
       .always(function() {
         console.log("complete");
       });
-    event.stopPropogation();
+    event.stopPropagation();
   });
 
   $(document).on('click', '#apreset', function(event) {

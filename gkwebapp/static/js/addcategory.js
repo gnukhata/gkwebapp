@@ -221,7 +221,16 @@ $(document).ready(function() {
       $('#category_spec_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
     }
     else if (event.ctrlKey && event.which==190) {
-      $('.spec_type').focus();
+      $('#category_spec_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
+      event.preventDefault();
+    }
+    else if (event.ctrlKey && event.which==188) {
+      if (previndex>-1) {
+        $('#category_spec_table tbody tr:eq('+previndex+') td:eq(1) select').focus().select();
+      }
+      else {
+        $('#category_spec_table tbody tr:eq('+curindex+') td:eq(1) select').focus().select();
+      }
       event.preventDefault();
     }
   });
@@ -268,8 +277,17 @@ $(document).ready(function() {
       }
     }
     else if (event.ctrlKey && event.which==188) {
-      $('#category_spec_table tbody tr:eq('+curindex1+') td:eq(0) input').focus().select();
       event.preventDefault();
+      if (previndex1>-1) {
+        $('#category_spec_table tbody tr:eq('+previndex1+') td:eq(0) input').focus().select();
+      }
+      else {
+        $('#category_spec_table tbody tr:eq('+curindex1+') td:eq(0) input').focus().select();
+      }
+    }
+    else if (event.ctrlKey && event.which==190) {
+      event.preventDefault();
+      $('#category_spec_table tbody tr:eq('+nextindex1+') td:eq(0) input').focus().select();
     }
     else if (event.which==35) {
       event.preventDefault();

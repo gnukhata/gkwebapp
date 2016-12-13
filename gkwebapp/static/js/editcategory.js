@@ -36,7 +36,6 @@ $(document).ready(function() {
       var result = resp["gkresult"]
       $("#category_edit_name").val(result["categoryname"]);
       $("#category_edit_under").val(result["subcategoryof"]);
-      $("#category_edit_addspecs").attr('disabled',false);
       $(".panel-footer").show();
       $("#category_edit_innerdiv").show();
     })
@@ -191,7 +190,6 @@ $(document).ready(function() {
           '</td>'+
         '</tr>');
       }
-      $("#category_edit_savespecs").attr("disabled",false);
       $("#category_edit_spec_div").show();
     })
     .fail(function() {
@@ -202,7 +200,7 @@ $(document).ready(function() {
     });
     $("#category_edit_edit").show();
     $("#category_edit_savespecs").hide();
-    $(".category_edit_disable").prop("disabled",false);
+    $(".category_edit_disable").prop("disabled",true);
     $(".tax_rate").numeric();
   });
 
@@ -443,8 +441,17 @@ $(document).ready(function() {
       $('#category_edit_spec_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
     }
     else if (event.ctrlKey && event.which==190) {
-      $('.spec_type').focus();
       event.preventDefault();
+      $('#category_edit_spec_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
+    }
+    else if (event.ctrlKey && event.which==188) {
+      event.preventDefault();
+      if (previndex>-1) {
+        $('#category_edit_spec_table tbody tr:eq('+previndex+') td:eq(1) select').focus().select();
+      }
+      else {
+        $('#category_edit_spec_table tbody tr:eq('+curindex+') td:eq(1) select').focus().select();
+      }
     }
   });
   $(document).off("keydown",".spec_type").on("keydown",".spec_type",function(event)
@@ -486,8 +493,12 @@ $(document).ready(function() {
         }
       }
       else if (event.ctrlKey && event.which==188) {
-        $('#category_edit_spec_table tbody tr:eq('+curindex1+') td:eq(0) input').focus().select();
         event.preventDefault();
+          $('#category_edit_spec_table tbody tr:eq('+curindex1+') td:eq(0) input').focus().select();
+        }
+      else if (event.ctrlKey && event.which==190) {
+        event.preventDefault();
+        $('#category_edit_spec_table tbody tr:eq('+nextindex1+') td:eq(0) input').focus().select();
       }
       if (event.which == 35) {
         event.preventDefault();
