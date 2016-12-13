@@ -50,9 +50,16 @@
   <input type="hidden" id="calculatefrom" name="calculatefrom" value="{{stockrefresh["calculatefrom"]}}"></input>
   <input type="hidden" id="calculateto" name="calculateto" value="{{stockrefresh["calculateto"]}}"></input>
   <input type="hidden" id="financialstart" name="financialstart" value="{{stockrefresh["financialstart"]}}"></input>
+  <input type="hidden" id="godownflag" name="godownflag" value="{{stockrefresh["godownflag"]}}"></input>
+  <input type="hidden" id="goid" name="goid" value="{{stockrefresh["goid"]}}"></input>
+  <input type="hidden" id="goname" name="goname" value="{{godown}}"></input>
 
   <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{stockrefresh["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{stockrefresh["calculateto"]}}</strong></span>
-  <span style="margin:auto; display:table;"><i>{% trans %}Product Report{% endtrans %}</i> for <strong>{{stockrefresh["productdesc"]}}</strong></span>
+  {% if godown == "" %}
+  <span style="margin:auto; display:table;"><i>{% trans %}Product Report{% endtrans %} for </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
+  {% else %}
+  <span style="margin:auto; display:table;"><i>{% trans %}Godown Wise Product Report{% endtrans %} for </i><strong>{{stockrefresh["productdesc"]}}</strong><i> in </i><strong>{{godown}}</strong></span>
+  {% endif %}
 
   <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
     <thead class="bg-primary">
@@ -81,9 +88,8 @@
       </tr>
     </thead>
     <tbody>
-
       {% for record in gkresult %}
-      {% if record["particulars"] =="opening stock" and record["invdcno"]=="" and record["date"]=="" %}
+      {% if record["particulars"] =="opening stock" and (record["invdcno"]=="" or record["dcinvtnno"]=="") and record["date"]=="" %}
       <tr>
         <td class="col-xs-1 " >
         </td>
@@ -103,7 +109,7 @@
         </td>
       </tr>
       {% endif %}
-      {% if record["particulars"] !="Total" and record["invdcno"]!="" and record["date"]!="" %}
+      {% if record["particulars"] !="Total" and (record["invdcno"]!="" or record["dcinvtnno"]!="") and record["date"]!="" %}
       <tr value="{{record["invdcid"]}}">
         <td class="col-xs-1 " >
           {{record["date"]}}
@@ -120,7 +126,12 @@
           {% endif %}
         </td>
         <td value="{{record["invdcid"]}}" class="col-xs-2" >
-          {{record["invdcno"]}}
+          {% if record["invdcno"]!="" %}
+            {{record["invdcno"]}}
+          {% endif %}
+          {% if record["dcinvtnno"]!="" %}
+            {{record["dcinvtnno"]}}
+          {% endif %}
         </td>
         <td class="col-xs-1 rightlist">
           {{record["inwardqty"]}}
@@ -133,7 +144,7 @@
         </td>
       </tr>
       {% endif %}
-      {% if record["particulars"] =="Total" and record["invdcno"]=="" and record["date"]=="" %}
+      {% if record["particulars"] =="Total" and (record["invdcno"]=="" or record["dcinvtnno"]=="") and record["date"]=="" %}
       <tr>
         <td class="col-xs-1 " >
         </td>

@@ -32,6 +32,7 @@
       {% endfor %}
     </select>
   </div>
+  {% if not godown %}
   <div class="form-group pds">
     <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
     <div class="input-group">
@@ -39,6 +40,42 @@
       <span class="input-group-addon input-sm" id="unitaddon"></span>
     </div>
   </div>
+  <input type="text" name="godownflag" id="editgodownflag" value="0" hidden>
+  {% else %}
+<input type="text" name="godownflag" id="editgodownflag" value="0" hidden>
+<div id="editnogodown" class="form-group pds">
+  <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+  <div class="input-group">
+    <input type='text' class="form-control text-right input-sm" name="openingstock"  id="editopeningstock" value="{{proddesc['openingstock']}}" aria-describedby="unitaddon">
+    <span class="input-group-addon input-sm" id="unitaddon"></span>
+  </div>
+</div>
+<div  id="editopeningstockdiv" class="form-group" hidden>
+  <div class="panel">
+    <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">
+      <thead class="bg-primary input-sm">
+        <tr>
+          <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
+          <th class="col-xs-4 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in godown %}
+        <tr>
+          <td class="col-xs-8">
+            <label style="border-style:solid; border-radius: 3px; border-width:1; border-color: #d9dbdb; padding-top:7px; padding-bottom:3px;" class="col-xs-12">{{record["goname"]}}({{record["goaddr"]}})</label>
+          </td>
+          <td class="col-xs-4">
+            <input class="form-control input-sm editgodown_ob text-right numtype" value="0.00">
+            <input type="text" value="{{record["goid"]}}" class="editgodownid" hidden>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+  {% endif %}
   </div>
   <div class="form-group taxdiv">
     <div class="panel taxinnerdiv">
@@ -57,6 +94,8 @@
       </tbody>
     </table>
     </div>
+    <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' from tax name to shift focus to opening stock.</small><br>
+    <small id="taxhelp2" class="form-text text-muted">Press 'Ctrl + >' or 'Ctrl + <' to navigate within tax name, state and tax rate.</small>
   </div>
 </div>
 <div id="extsp">

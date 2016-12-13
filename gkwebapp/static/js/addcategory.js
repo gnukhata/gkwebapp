@@ -43,9 +43,6 @@ $(document).ready(function() {
     }
     else if (event.which==188 && event.shiftKey)
     {
-      if (curindex==0) {
-      $("#category_name").focus().select();
-      }
       if(previndex>-1)
       {
         event.preventDefault();
@@ -54,7 +51,12 @@ $(document).ready(function() {
     }
     else if (event.which==188 && event.ctrlKey) {
       event.preventDefault();
-      $('#category_tax_table tbody tr:eq('+previndex+') td:eq(2) input').focus().select();
+      if (curindex==0) {
+      $('.spec_name').first().focus().select();
+      }
+      else {
+        $('#category_tax_table tbody tr:eq('+previndex+') td:eq(2) input').focus().select();
+      }
     }
     else if (event.which==190 && event.ctrlKey) {
       $('#category_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
@@ -63,10 +65,6 @@ $(document).ready(function() {
     else if (event.which==13) {
       event.preventDefault();
       $('#category_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
-    }
-    else if(event.which==37){
-       event.preventDefault();
-       $('.spec_name').focus();
     }
   });
 
@@ -211,14 +209,28 @@ $(document).ready(function() {
     }
     else if (event.which==38) {
       event.preventDefault();
-      $('#category_spec_table tbody tr:eq('+previndex+') td:eq(0) input').focus().select();
+      if (curindex == 0) {
+        $("#category_name").focus().select();
+      }
+      else {
+        $('#category_spec_table tbody tr:eq('+previndex+') td:eq(0) input').focus().select();
+      }
     }
     else if (event.which==13) {
       event.preventDefault();
       $('#category_spec_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
     }
     else if (event.ctrlKey && event.which==190) {
-      $('.spec_type').focus();
+      $('#category_spec_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
+      event.preventDefault();
+    }
+    else if (event.ctrlKey && event.which==188) {
+      if (previndex>-1) {
+        $('#category_spec_table tbody tr:eq('+previndex+') td:eq(1) select').focus().select();
+      }
+      else {
+        $('#category_spec_table tbody tr:eq('+curindex+') td:eq(1) select').focus().select();
+      }
       event.preventDefault();
     }
   });
@@ -265,8 +277,17 @@ $(document).ready(function() {
       }
     }
     else if (event.ctrlKey && event.which==188) {
-      $('#category_spec_table tbody tr:eq('+curindex1+') td:eq(0) input').focus().select();
       event.preventDefault();
+      if (previndex1>-1) {
+        $('#category_spec_table tbody tr:eq('+previndex1+') td:eq(0) input').focus().select();
+      }
+      else {
+        $('#category_spec_table tbody tr:eq('+curindex1+') td:eq(0) input').focus().select();
+      }
+    }
+    else if (event.ctrlKey && event.which==190) {
+      event.preventDefault();
+      $('#category_spec_table tbody tr:eq('+nextindex1+') td:eq(0) input').focus().select();
     }
     else if (event.which==35) {
       event.preventDefault();
@@ -393,7 +414,13 @@ $(document).ready(function() {
     }
     var specs = [];
     for (var i = 0; i < $("#category_spec_table tbody tr").length; i++) {
-      if ($.trim($("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").val())=="") {
+      var obj = {};
+      if ($.trim($("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").val())!="") {
+        obj.attrname = $("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").val();
+        obj.attrtype = $("#category_spec_table tbody tr:eq("+i+") td:eq(1) select").val();
+        specs.push(obj);
+      }
+      else if ($("#category_spec_table tbody tr").length == 1) {
         $("#spec-blank-alert").alert();
         $("#spec-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#spec-blank-alert").hide();
@@ -401,10 +428,6 @@ $(document).ready(function() {
         $("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").focus().select();
         return false;
       }
-      var obj = {};
-      obj.attrname = $("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").val();
-      obj.attrtype = $("#category_spec_table tbody tr:eq("+i+") td:eq(1) select").val();
-      specs.push(obj);
     }
     var taxes = [];
     var allow = true;

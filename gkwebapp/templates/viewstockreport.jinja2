@@ -34,8 +34,12 @@
 
           <label for="viewstock_accname">{% trans %}Please select a Product!{% endtrans %}</label>
         </div>
+        <div class="alert alert-danger" id="godown-blank-alert" aria-live="rude" role="alert" hidden>
+
+          <label>{% trans %}Please select a Godown!{% endtrans %}</label>
+        </div>
         <div style="margin-bottom: 5px" class="col-xs-12 from-group">
-          <label for="viewstock_productname">{% trans %}Product{% endtrans %} :</label>
+          <label for="viewstock_productname" style="margin-top: 10px;">{% trans %}Product{% endtrans %} :</label>
           <select class = "form-control input-sm" id="viewstock_productname"  name = "productname" >
             <option value="" disabled selected hidden>{% trans %}Select Product{% endtrans %}</option>
             {% for product in gkresult %}
@@ -70,6 +74,25 @@
               </div>
             </div>
           </div>
+          {% if not godown %}
+          <input type="text" id="godownpresent" value="0" hidden>
+          <input type="checkbox" id="godownflag" value="0" hidden>
+          {% else %}
+          <div class="form-group">
+            <input type="text" id="godownpresent" value="1" hidden>
+            <input type="checkbox" id="godownflag" style="margin-top: 20px;" value="0">
+            <label for="godownflag">Godown Wise Product Report</label>
+          </div>
+          <div class="form-group" id="goselect" hidden>
+            <label for="editgoddet">{% trans %}Godown{% endtrans %} :</label>
+            <select class = "form-control input-sm" id="editgoddet">
+              <option value="disabled" disabled selected hidden>{% trans %}Select Godown{% endtrans %}</option>
+              {% for gods in godown %}
+              <option value="{{gods['goid']}}">{{gods["goname"]}} ({{gods["goaddr"]}})</option>
+              {% endfor %}
+            </select>
+          </div>
+          {% endif %}
         </div>
       </div>
       <div class="panel-footer">
