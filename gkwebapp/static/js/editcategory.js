@@ -266,7 +266,12 @@ $(document).ready(function() {
     }
     else if (event.which==188 && event.ctrlKey) {
       event.preventDefault();
-      $('#category_edit_tax_table tbody tr:eq('+previndex+') td:eq(2) input').focus().select();
+      if (curindex == 0) {
+        $('.spec_name').first().focus().select();
+      }
+      else {
+        $('#category_edit_tax_table tbody tr:eq('+previndex+') td:eq(2) input').focus().select();
+      }
     }
     else if (event.which==190 && event.ctrlKey) {
       $('#category_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
@@ -275,10 +280,6 @@ $(document).ready(function() {
     else if (event.which==13) {
       event.preventDefault();
       $('#category_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
-    }
-    else if (event.which == 37) {
-         event.preventDefault();
-         $('.spec_name').first().focus();
     }
   });
 
@@ -440,6 +441,10 @@ $(document).ready(function() {
     else if (event.which==13) {
       event.preventDefault();
       $('#category_edit_spec_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
+    }
+    else if (event.ctrlKey && event.which==190) {
+      $('.spec_type').focus();
+      event.preventDefault();
     }
   });
   $(document).off("keydown",".spec_type").on("keydown",".spec_type",function(event)

@@ -43,9 +43,6 @@ $(document).ready(function() {
     }
     else if (event.which==188 && event.shiftKey)
     {
-      if (curindex==0) {
-      $("#category_name").focus().select();
-      }
       if(previndex>-1)
       {
         event.preventDefault();
@@ -54,7 +51,12 @@ $(document).ready(function() {
     }
     else if (event.which==188 && event.ctrlKey) {
       event.preventDefault();
-      $('#category_tax_table tbody tr:eq('+previndex+') td:eq(2) input').focus().select();
+      if (curindex==0) {
+      $('.spec_name').first().focus().select();
+      }
+      else {
+        $('#category_tax_table tbody tr:eq('+previndex+') td:eq(2) input').focus().select();
+      }
     }
     else if (event.which==190 && event.ctrlKey) {
       $('#category_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
@@ -63,10 +65,6 @@ $(document).ready(function() {
     else if (event.which==13) {
       event.preventDefault();
       $('#category_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
-    }
-    else if(event.which==37){
-       event.preventDefault();
-       $('.spec_name').first().focus();
     }
   });
 
