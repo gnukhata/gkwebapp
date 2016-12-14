@@ -140,10 +140,17 @@ def tallyImport(request):
 				vouchernumber = v[4].value
 				voucherCodes.append(vouchernumber)
 				vouchertype = v[3].value.strip().lower()
-				narration = voucherRows[voucherRows.index(v)+1][2].value
 				if v[5].value != None:
 					drs = {ledgerCode: v[5].value}
-					crs = {accounts[v[2].value]:v[5].value}
+					if v[2].value == "(as per details)":
+						accIndex = voucherRows[voucherRows.index(v )+1]
+						CurAccount = voucherRows[voucherRows.index(v )+1 ][3].value 
+						while accounts.has_key(CurAccount):
+							crs = {accounts[CurAccount]:v[6].value}
+							accIndex = accIndex +1
+							CurAccount = voucherRows[accIndex][3].value
+					else:
+						crs = {accounts[v[2].value]:v[5].value}
 				if v[6].value != None:
 					crs = {ledgerCode: v[6].value}
 					drs = {accounts[v[2].value]:v[6].value}
