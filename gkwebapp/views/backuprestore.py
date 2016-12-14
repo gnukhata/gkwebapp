@@ -153,6 +153,14 @@ def tallyImport(request):
 						crs = {accounts[v[2].value]:v[5].value}
 				if v[6].value != None:
 					crs = {ledgerCode: v[6].value}
+					if v[2].value == "(as per details)":
+						accIndex = voucherRows[voucherRows.index(v )+1]
+						CurAccount = voucherRows[voucherRows.index(v )+1 ][3].value 
+						while accounts.has_key(CurAccount):
+							drs = {accounts[CurAccount]:v[5].value}
+							accIndex = accIndex +1
+							CurAccount = voucherRows[accIndex][3].value
+				else:
 					drs = {accounts[v[2].value]:v[6].value}
 				newvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps({"voucherdate":voucherDate,"vouchernumber":vouchernumber,"vouchertype":vouchertype,"drs":drs,"crs":crs,"narration":narration}),headers=header)
 
