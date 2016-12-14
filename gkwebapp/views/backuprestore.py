@@ -143,25 +143,36 @@ def tallyImport(request):
 			if v[5].value != None:
 				drs = {ledgerCode: v[5].value}
 				if v[2].value == "(as per details)":
+					print "case of multiple Crs "
 					accIndex = voucherRows[voucherRows.index(v )+1]
-					CurAccount = voucherRows[voucherRows.index(v )+1 ][3].value 
+					CurAccount = voucherRows[voucherRows.index(v)+1 ][2].value
+					crs = {}
 					while accounts.has_key(CurAccount):
-						crs = {accounts[CurAccount]:v[6].value}
+						crValue = voucherRows[accIndex][6].value[0:len(voucherRows[accIndex][6].value )-2]
+						print crValue
+						crs  [accounts[CurAccount]] =  crvalue
 						accIndex = accIndex +1
 						CurAccount = voucherRows[accIndex][3].value
+					narration = voucherRows[accIndex][2].value
 				else:
 					crs = {accounts[v[2].value]:v[5].value}
+					narration = voucherRows[voucherRows.index(v)+1 ][2].value
 			if v[6].value != None:
 				crs = {ledgerCode: v[6].value}
 				if v[2].value == "(as per details)":
-					accIndex = voucherRows[voucherRows.index(v )+1]
-					CurAccount = voucherRows[voucherRows.index(v )+1 ][3].value 
+					accIndex = voucherRows[voucherRows.index(v)+1]
+					CurAccount = voucherRows[voucherRows.index(v)+1 ][2].value 
 					while accounts.has_key(CurAccount):
-						drs = {accounts[CurAccount]:v[5].value}
+						drValue = voucherRows[accIndex][5].value[0:len(voucherRows[accIndex][5].value)-2]
+						print drValue
+						drs = {accounts[CurAccount]:drValue}
 						accIndex = accIndex +1
 						CurAccount = voucherRows[accIndex][3].value
-			else:
-				drs = {accounts[v[2].value]:v[6].value}
+					narration = voucherRows[accIndex][2].value
+					print narration
+				else:
+					drs = {accounts[v[2].value]:v[6].value}
+					narration = voucherRows[voucherRows.index(v )+1 ][2].value
 			newvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps({"voucherdate":voucherDate,"vouchernumber":vouchernumber,"vouchertype":vouchertype,"drs":drs,"crs":crs,"narration":narration}),headers=header)
 
 	return {"gkstatus":0}
