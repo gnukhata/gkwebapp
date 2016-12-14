@@ -129,17 +129,21 @@ def tallyImport(request):
 		if wbTally.index(accSheet) == 0:
 			continue
 		ledgerAccount = accSheet.title.strip()
+		print ledgerAccount
 		ledgerCode = accounts[ledgerAccount]
+		print ledgerCode
 		voucherRows = tuple(accSheet.rows)
 		voucherDate = ""
 		for v in voucherRows:
 			if (v[3].value == None) or v[4].value in voucherCodes:
+				print "this code exist"
 				continue
 			if v[0].value != None:
 				voucherDate = str(v[0].value)
 			vouchernumber = v[4].value
 			voucherCodes.append(vouchernumber)
 			vouchertype = v[3].value.strip().lower()
+			print v[2].value
 			if v[5].value != None:
 				drs = {ledgerCode: v[5].value}
 				if v[2].value == "(as per details)":
