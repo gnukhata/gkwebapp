@@ -133,22 +133,45 @@ def tallyImport(request):
 			voucherRows = tuple(accSheet.rows)
 			voucherDate = ""
 			for v in voucherRows:
-				if (v[3].value == None) or v[4].value in voucherCodes:
+				if v[3].value !=  None and v[4].value != None:
+					numType = {v[4].value:v[3].value.strip().lower()}
+				if (v[3].value == None) or numType in voucherCodes:
 					continue
 				if v[0].value != None:
 					voucherDate = str(v[0].value)
 				vouchernumber = v[4].value
-				voucherCodes.append(vouchernumber)
+				voucherCodes.append(numType)
 				vouchertype = v[3].value.strip().lower()
-				narration = voucherRows[voucherRows.index(v)+1][2].value
 				if v[5].value != None:
 					drs = {ledgerCode: v[5].value}
-					crs = {accounts[v[2].value]:v[5].value}
+					if v[2].value == "(as per details)":
+						accIndex = voucherRows.index(v )+1
+						CurAccount = voucherRows[voucherRows.index(v)+1 ][2].value.strip()
+						crs = {}
+						while accounts.has_key(CurAccount):
+							crs  [accounts[CurAccount.strip()]] = voucherRows[accIndex][6].value
+							accIndex = accIndex +1
+							CurAccount = voucherRows[accIndex][2].value
+						narration = voucherRows[accIndex][2].value
+					else:
+						crs = {accounts[v[2].value]:v[5].value}
+						narration = voucherRows[voucherRows.index(v)+1 ][2].value
 				if v[6].value != None:
 					crs = {ledgerCode: v[6].value}
-					drs = {accounts[v[2].value]:v[6].value}
+					if v[2].value == "(as per details)":
+						accIndex = voucherRows.index(v)+1
+						CurAccount = voucherRows[voucherRows.index(v)+1 ][2].value.strip()
+						drs = {}
+						while accounts.has_key(CurAccount):
+							drs[accounts[CurAccount.strip()]] = voucherRows[accIndex][5].value
+							accIndex = accIndex +1
+							CurAccount = voucherRows[accIndex][2].value
+						narration = voucherRows[accIndex][2].value
+					else:
+						drs = {accounts[v[2].value]:v[6].value}
+						narration = voucherRows[voucherRows.index(v )+1 ][2].value
 				newvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps({"voucherdate":voucherDate,"vouchernumber":vouchernumber,"vouchertype":vouchertype,"drs":drs,"crs":crs,"narration":narration}),headers=header)
-
+	
 		return {"gkstatus":0}
 	except:
 		print "file not found"
