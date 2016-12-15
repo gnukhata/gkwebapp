@@ -129,34 +129,27 @@ def tallyImport(request):
 		if wbTally.index(accSheet) == 0:
 			continue
 		ledgerAccount = accSheet.title.strip()
-		print ledgerAccount
 		ledgerCode = accounts[ledgerAccount]
-		print ledgerCode
 		voucherRows = tuple(accSheet.rows)
 		voucherDate = ""
 		for v in voucherRows:
 			if v[3].value !=  None and v[4].value != None:
 				numType = {v[4].value:v[3].value.strip().lower()}
 			if (v[3].value == None) or numType in voucherCodes:
-				print "this code exist"
 				continue
 			if v[0].value != None:
 				voucherDate = str(v[0].value)
 			vouchernumber = v[4].value
 			voucherCodes.append(numType)
 			vouchertype = v[3].value.strip().lower()
-			print v[2].value
 			if v[5].value != None:
 				drs = {ledgerCode: v[5].value}
 				if v[2].value == "(as per details)":
-					print "case of multiple Crs "
 					accIndex = voucherRows.index(v )+1
 					CurAccount = voucherRows[voucherRows.index(v)+1 ][2].value.strip()
 					crs = {}
 					while accounts.has_key(CurAccount):
-						print accIndex
 						crValue = voucherRows[accIndex][6].value
-						print crValue
 						crs  [accounts[CurAccount.strip()]] =  crValue
 						accIndex = accIndex +1
 						CurAccount = voucherRows[accIndex][2].value
@@ -167,23 +160,15 @@ def tallyImport(request):
 			if v[6].value != None:
 				crs = {ledgerCode: v[6].value}
 				if v[2].value == "(as per details)":
-					print "case of multiple drs"
 					accIndex = voucherRows.index(v)+1
 					CurAccount = voucherRows[voucherRows.index(v)+1 ][2].value.strip()
 					drs = {}
-					print accounts.has_key("PRINTING & STATIONARY")
 					while accounts.has_key(CurAccount):
-						print accIndex
 						drValue = voucherRows[accIndex][5].value
-						print drValue
 						drs[accounts[CurAccount.strip()]] =  drValue
-						print drs
 						accIndex = accIndex +1
-						print CurAccount
 						CurAccount = voucherRows[accIndex][2].value
-						print CurAccount
 					narration = voucherRows[accIndex][2].value
-					print narration
 				else:
 					drs = {accounts[v[2].value]:v[6].value}
 					narration = voucherRows[voucherRows.index(v )+1 ][2].value
