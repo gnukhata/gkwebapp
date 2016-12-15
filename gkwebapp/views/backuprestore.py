@@ -157,7 +157,7 @@ def tallyImport(request):
 						print accIndex
 						crValue = voucherRows[accIndex][6].value
 						print crValue
-						crs  [accounts[CurAccount]] =  crValue
+						crs  [accounts[CurAccount.strip()]] =  crValue
 						accIndex = accIndex +1
 						CurAccount = voucherRows[accIndex][2].value
 					narration = voucherRows[accIndex][2].value
