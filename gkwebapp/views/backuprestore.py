@@ -135,13 +135,14 @@ def tallyImport(request):
 		voucherRows = tuple(accSheet.rows)
 		voucherDate = ""
 		for v in voucherRows:
-			if (v[3].value == None) or v[4].value in voucherCodes:
+			numType = {v[4].value:v[3].value.strip().lower()}
+			if (v[3].value == None) or numType in voucherCodes:
 				print "this code exist"
 				continue
 			if v[0].value != None:
 				voucherDate = str(v[0].value)
 			vouchernumber = v[4].value
-			voucherCodes.append(vouchernumber)
+			voucherCodes.append(numType)
 			vouchertype = v[3].value.strip().lower()
 			print v[2].value
 			if v[5].value != None:
