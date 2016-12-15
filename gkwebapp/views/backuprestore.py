@@ -151,15 +151,15 @@ def tallyImport(request):
 				if v[2].value == "(as per details)":
 					print "case of multiple Crs "
 					accIndex = voucherRows.index(v )+1
-					CurAccount = voucherRows[voucherRows.index(v)+1 ][2].value
+					CurAccount = voucherRows[voucherRows.index(v)+1 ][2].value.strip()
 					crs = {}
 					while accounts.has_key(CurAccount):
 						print accIndex
 						crValue = voucherRows[accIndex][6].value
 						print crValue
-						crs  [accounts[CurAccount]] =  crvalue
+						crs  [accounts[CurAccount]] =  crValue
 						accIndex = accIndex +1
-						CurAccount = voucherRows[accIndex][3].value
+						CurAccount = voucherRows[accIndex][2].value
 					narration = voucherRows[accIndex][2].value
 				else:
 					crs = {accounts[v[2].value]:v[5].value}
@@ -167,15 +167,21 @@ def tallyImport(request):
 			if v[6].value != None:
 				crs = {ledgerCode: v[6].value}
 				if v[2].value == "(as per details)":
+					print "case of multiple drs"
 					accIndex = voucherRows.index(v)+1
-					CurAccount = voucherRows[voucherRows.index(v)+1 ][2].value 
+					CurAccount = voucherRows[voucherRows.index(v)+1 ][2].value.strip()
+					drs = {}
+					print accounts.has_key("PRINTING & STATIONARY")
 					while accounts.has_key(CurAccount):
 						print accIndex
 						drValue = voucherRows[accIndex][5].value
 						print drValue
-						drs = {accounts[CurAccount]:drValue}
+						drs[accounts[CurAccount.strip()]] =  drValue
+						print drs
 						accIndex = accIndex +1
-						CurAccount = voucherRows[accIndex][3].value
+						print CurAccount
+						CurAccount = voucherRows[accIndex][2].value
+						print CurAccount
 					narration = voucherRows[accIndex][2].value
 					print narration
 				else:
