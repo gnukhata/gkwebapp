@@ -87,7 +87,7 @@ msgstr "ദയവായി അളവാനുസൃതം വില നല്‍
 #: gkwebapp/templates/addinvoice.jinja2:34
 #: gkwebapp/templates/editinvoice.jinja2:34
 msgid "Please select a supplier!"
-msgstr "ദയവായി ഒരു സപ്ളയറെ തിരഞെടുക്കുക!"
+msgstr "ദയവായി ഒരു സപ്ലയറെ തിരഞെടുക്കുക!"
 
 #: gkwebapp/templates/addcashmemo.jinja2:85
 #: gkwebapp/templates/adddeliverychallan.jinja2:24
@@ -512,7 +512,7 @@ msgstr "ഉപഭോക്താവിനെക്കുറിച്ചുള്
 #: gkwebapp/templates/addcustomersupplier.jinja2:17
 #: gkwebapp/templates/editcustomersupplier.jinja2:17
 msgid "Supplier Already Exist!"
-msgstr "സപ്പ്ളയറെക്കുറിച്ചുള്ള വിവരങ്ങള്‍ നേരത്തേ സൂക്ഷിച്ചിട്ടുള്ളതാണ്!"
+msgstr "സപ്ലയറെക്കുറിച്ചുള്ള വിവരങ്ങള്‍ നേരത്തേ സൂക്ഷിച്ചിട്ടുള്ളതാണ്!"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:26
 #: gkwebapp/templates/editcustomersupplier.jinja2:41
@@ -523,52 +523,52 @@ msgstr "ദയവായി പേര് നല്‍കുക!"
 #: gkwebapp/templates/editcustomersupplier.jinja2:48
 #: gkwebapp/templates/editdeliverychallan.jinja2:40
 msgid "Please select a customer/supplier!"
-msgstr "ദയവായി ഒരു ഉപഭോക്താവിനെയോ സപ്പ്ളയറെയോ തിരഞെടുക്കുക!"
+msgstr "ദയവായി ഒരു ഉപഭോക്താവിനെയോ സപ്ലയറെയോ തിരഞെടുക്കുക!"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:38
 #: gkwebapp/templates/editcustomersupplier.jinja2:71
 msgid "Role:"
-msgstr ""
+msgstr "റോള്‍:"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:46
 #: gkwebapp/templates/editcustomersupplier.jinja2:78
 msgid "Name:"
-msgstr ""
+msgstr "പേര്:"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:47
 #: gkwebapp/templates/editcustomersupplier.jinja2:79
 msgid "Enter Name"
-msgstr ""
+msgstr "പേര് നല്‍കുക"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:50
 #: gkwebapp/templates/editcustomersupplier.jinja2:82
 msgid "Email:"
-msgstr ""
+msgstr "ഇ-മെയില്‍:"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:54
 #: gkwebapp/templates/editcustomersupplier.jinja2:86
 msgid "Phone No:"
-msgstr ""
+msgstr "ഫോണ്‍ നം:"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:58
 #: gkwebapp/templates/editcustomersupplier.jinja2:90
 msgid "State:"
-msgstr ""
+msgstr "സംസ്ഥാനം:"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:108
 #: gkwebapp/templates/editcustomersupplier.jinja2:140
 msgid "Fax:"
-msgstr ""
+msgstr "ഫാക്സ്:"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:112
 #: gkwebapp/templates/editcustomersupplier.jinja2:144
 msgid "PAN:"
-msgstr ""
+msgstr "പാന്‍:"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:116
 #: gkwebapp/templates/editcustomersupplier.jinja2:148
 msgid "TIN:"
-msgstr ""
+msgstr "ടിന്‍:"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:123
 #: gkwebapp/templates/addunitofmeasurement.jinja2:44
@@ -577,59 +577,59 @@ msgstr ""
 #: gkwebapp/templates/edittransfernote.jinja2:168
 #: gkwebapp/templates/editunitofmeasurement.jinja2:67
 msgid "Press Insert to save anywhere on the current screen to save"
-msgstr ""
+msgstr "സൂക്ഷിക്കാനായി സ്ക്രീനിലെവിടെനിന്നും Insert കീ അമര്‍ത്തുക"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:5
 #: gkwebapp/templates/editdeliverychallan.jinja2:5
 msgid "Delivery note saved."
-msgstr ""
+msgstr "ഡെലിവറി നോട്ട് സൂക്ഷിച്ചിരിക്കുന്നു."
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:13
 msgid "Duplicate Note no.!"
-msgstr ""
+msgstr "ഡെലിവറി നം. നേരത്തേ സൂക്ഷിച്ചിട്ടുള്ളതാണ്!"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:34
 #: gkwebapp/templates/editdeliverychallan.jinja2:48
 msgid "Please enter note no.!"
-msgstr ""
+msgstr "ദയവായി നോട്ട് നം നല്‍കുക!"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:46
 #: gkwebapp/templates/editdeliverychallan.jinja2:55
 msgid "Note No"
-msgstr ""
+msgstr "നോട്ട് നം"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:47
 #: gkwebapp/templates/editdeliverychallan.jinja2:56
 msgid "Enter challan no"
-msgstr ""
+msgstr "ചലാന്‍ നം നല്‍കുക"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:50
 msgid "Note Date"
-msgstr ""
+msgstr "നോട്ട് തീയതി"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:66
 #: gkwebapp/templates/addinvoice.jinja2:119
 #: gkwebapp/templates/editdeliverychallan.jinja2:74
 #: gkwebapp/templates/editinvoice.jinja2:119
 msgid "Supplier"
-msgstr ""
+msgstr "സപ്ലയര്‍"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:68
 #: gkwebapp/templates/addinvoice.jinja2:121
 #: gkwebapp/templates/editdeliverychallan.jinja2:73
 #: gkwebapp/templates/editinvoice.jinja2:122
 msgid "Customer"
-msgstr ""
+msgstr "ഉപഭോക്താവ്"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:74
 #: gkwebapp/templates/addinvoice.jinja2:127
 msgid "Select Supplier"
-msgstr ""
+msgstr "സപ്ലയറെ തിരഞെടുക്കുക"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:76
 #: gkwebapp/templates/addinvoice.jinja2:129
 msgid "Select Customer"
-msgstr ""
+msgstr "ഉപഭോക്താവിനെ തിരഞെടുക്കുക"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:89
 #: gkwebapp/templates/editdeliverychallan.jinja2:92
