@@ -21,12 +21,12 @@ msgstr ""
 #: gkwebapp/templates/addcashmemo.jinja2:5 gkwebapp/templates/cashmemo.jinja2:5
 #: gkwebapp/templates/viewcashmemo.jinja2:5
 msgid "GNUKhata | Cash Memo"
-msgstr ""
+msgstr "ഗ്നൂഖാത്ത | കാശ് മെമൊ"
 
 #: gkwebapp/templates/addcashmemo.jinja2:54
 #: gkwebapp/templates/viewcashmemo.jinja2:58
 msgid "Cash Memo saved."
-msgstr ""
+msgstr "കാശ് മെമൊ സൂക്ഷിച്ചിരിക്കുന്നു."
 
 #: gkwebapp/templates/addcashmemo.jinja2:58
 #: gkwebapp/templates/addcategory.jinja2:9
@@ -44,12 +44,12 @@ msgstr ""
 #: gkwebapp/templates/receivedtransfernote.jinja2:41
 #: gkwebapp/templates/viewcashmemo.jinja2:62
 msgid "Something went wrong!"
-msgstr ""
+msgstr "എന്തോ കുഴപ്പം പട്ട്റ്റിയിരിക്കുന്നു!"
 
 #: gkwebapp/templates/addcashmemo.jinja2:62
 #: gkwebapp/templates/viewcashmemo.jinja2:66
 msgid "Duplicate cash memo no.!"
-msgstr ""
+msgstr "കശ് മെമൊ നമ്പര്‍ നേരത്തേ സൂക്ഷിച്ചിട്ടുള്ളതാണ്!"
 
 #: gkwebapp/templates/addcashmemo.jinja2:66
 #: gkwebapp/templates/adddeliverychallan.jinja2:119
@@ -61,7 +61,7 @@ msgstr ""
 #: gkwebapp/templates/receivedtransfernote.jinja2:69
 #: gkwebapp/templates/viewcashmemo.jinja2:70
 msgid "Please select a product!"
-msgstr ""
+msgstr "ദയവായി ഒരു ഉല്പന്നം നല്‍കുക!"
 
 #: gkwebapp/templates/addcashmemo.jinja2:70
 #: gkwebapp/templates/adddeliverychallan.jinja2:123
@@ -73,28 +73,28 @@ msgstr ""
 #: gkwebapp/templates/receivedtransfernote.jinja2:73
 #: gkwebapp/templates/viewcashmemo.jinja2:74
 msgid "Please enter quantity!"
-msgstr ""
+msgstr "ദയവായി അളവ് നല്‍കുക!"
 
 #: gkwebapp/templates/addcashmemo.jinja2:74
 #: gkwebapp/templates/addinvoice.jinja2:25
 #: gkwebapp/templates/editinvoice.jinja2:25
 #: gkwebapp/templates/viewcashmemo.jinja2:78
 msgid "Please enter the price per unit!"
-msgstr ""
+msgstr "ദയവായി അളവാനുസൃതം വില നല്‍കുക!"
 
 #: gkwebapp/templates/addcashmemo.jinja2:83
 #: gkwebapp/templates/adddeliverychallan.jinja2:22
 #: gkwebapp/templates/addinvoice.jinja2:34
 #: gkwebapp/templates/editinvoice.jinja2:34
 msgid "Please select a supplier!"
-msgstr ""
+msgstr "ദയവായി ഒരു സപ്ളയറെ തിരഞെടുക്കുക!"
 
 #: gkwebapp/templates/addcashmemo.jinja2:85
 #: gkwebapp/templates/adddeliverychallan.jinja2:24
 #: gkwebapp/templates/addinvoice.jinja2:36
 #: gkwebapp/templates/editinvoice.jinja2:36
 msgid "Please select a customer!"
-msgstr ""
+msgstr "ദയവായി ഒരു ഉപഭോക്താവിനെ തിരഞെടുക്കുക!"
 
 #: gkwebapp/templates/addcashmemo.jinja2:91
 #: gkwebapp/templates/adddeliverychallan.jinja2:30
@@ -106,19 +106,19 @@ msgstr ""
 #: gkwebapp/templates/receivedtransfernote.jinja2:53
 #: gkwebapp/templates/viewcashmemo.jinja2:90
 msgid "Please enter date!"
-msgstr ""
+msgstr "ദയവായി തീയതി നല്‍കുക!"
 
 #: gkwebapp/templates/addcashmemo.jinja2:95
 #: gkwebapp/templates/viewcashmemo.jinja2:94
 msgid "Please enter cash memo no.!"
-msgstr ""
+msgstr "ദയവായി കാശ് മെമൊ നമ്പര്‍ നല്‍കുക!"
 
 #: gkwebapp/templates/addcashmemo.jinja2:99
 #: gkwebapp/templates/addinvoice.jinja2:50
 #: gkwebapp/templates/editinvoice.jinja2:50
 #: gkwebapp/templates/viewcashmemo.jinja2:98
 msgid "Please enter issuer's name!"
-msgstr ""
+msgstr "ദയവായി ഇഷ്യുവറുടെ പേരു നല്‍കുക!"
 
 #: gkwebapp/templates/addcashmemo.jinja2:103
 #: gkwebapp/templates/adddeliverychallan.jinja2:38
@@ -143,7 +143,7 @@ msgstr ""
 #: gkwebapp/templates/viewstockreport.jinja2:23
 #: gkwebapp/templates/viewtrialbalance.jinja2:24
 msgid "Please enter date in proper format!"
-msgstr ""
+msgstr "ദയവായി തീയതി ശരിയായ രീതിയില്‍ നല്‍കുക!"
 
 #: gkwebapp/templates/addcashmemo.jinja2:107
 #: gkwebapp/templates/adddeliverychallan.jinja2:42
@@ -160,16 +160,16 @@ msgstr ""
 #: gkwebapp/templates/viewstockreport.jinja2:27
 #: gkwebapp/templates/viewtrialbalance.jinja2:28
 msgid "Please enter date within the financial year!"
-msgstr ""
+msgstr "ദയവായി സാമ്പത്തികവര്‍ഷത്തിനകത്തുവരുന്ന തീയതി നല്‍കുക!"
 
 #: gkwebapp/templates/addcashmemo.jinja2:113
 #: gkwebapp/templates/viewcashmemo.jinja2:121
 msgid "Cash Memo No"
-msgstr ""
+msgstr "കാശ് മെമൊ നമ്പര്‍"
 
 #: gkwebapp/templates/addcashmemo.jinja2:114
 msgid "Enter Cash Memo no"
-msgstr ""
+msgstr "കാശ് മെമൊ നമ്പര്‍ നല്‍കുക"
 
 #: gkwebapp/templates/addcashmemo.jinja2:120
 #: gkwebapp/templates/addinvoice.jinja2:98
@@ -188,12 +188,12 @@ msgstr ""
 #: gkwebapp/templates/showstockreport.jinja2:68
 #: gkwebapp/templates/viewcashmemo.jinja2:128
 msgid "Date"
-msgstr ""
+msgstr "തീയതി"
 
 #: gkwebapp/templates/addcashmemo.jinja2:141
 #: gkwebapp/templates/viewcashmemo.jinja2:149
 msgid "VAT Applicable to"
-msgstr ""
+msgstr "വാറ്റ് ബാധകമായ സംസ്ഥാനം"
 
 #: gkwebapp/templates/addcashmemo.jinja2:201
 #: gkwebapp/templates/adddeliverychallan.jinja2:137
@@ -207,7 +207,7 @@ msgstr ""
 #: gkwebapp/templates/viewcashmemo.jinja2:209
 #: gkwebapp/templates/viewstockreport.jinja2:42
 msgid "Product"
-msgstr ""
+msgstr "ഉല്‍പന്നം"
 
 #: gkwebapp/templates/addcashmemo.jinja2:202
 #: gkwebapp/templates/adddeliverychallan.jinja2:138
@@ -219,27 +219,27 @@ msgstr ""
 #: gkwebapp/templates/receivedtransfernote.jinja2:114
 #: gkwebapp/templates/viewcashmemo.jinja2:210
 msgid "Quantity"
-msgstr ""
+msgstr "അളവ്"
 
 #: gkwebapp/templates/addcashmemo.jinja2:203
 #: gkwebapp/templates/addinvoice.jinja2:205
 #: gkwebapp/templates/editinvoice.jinja2:197
 #: gkwebapp/templates/viewcashmemo.jinja2:211
 msgid "Price Per Unit"
-msgstr ""
+msgstr "അളവാനുസൃതമുള്ള വില"
 
 #: gkwebapp/templates/addcashmemo.jinja2:204
 #: gkwebapp/templates/editinvoice.jinja2:198
 #: gkwebapp/templates/viewcashmemo.jinja2:212
 msgid "Tax Rate"
-msgstr ""
+msgstr "ടാക്സ് നിരക്ക്"
 
 #: gkwebapp/templates/addcashmemo.jinja2:205
 #: gkwebapp/templates/addinvoice.jinja2:207
 #: gkwebapp/templates/editinvoice.jinja2:199
 #: gkwebapp/templates/viewcashmemo.jinja2:213
 msgid "Tax Amount"
-msgstr ""
+msgstr "ടാക്സ് തുക"
 
 #: gkwebapp/templates/addcashmemo.jinja2:206
 #: gkwebapp/templates/addcashmemo.jinja2:246
@@ -254,7 +254,7 @@ msgstr ""
 #: gkwebapp/templates/viewcashmemo.jinja2:214
 #: gkwebapp/templates/viewcashmemo.jinja2:251
 msgid "Total"
-msgstr ""
+msgstr "മൊത്തം"
 
 #: gkwebapp/templates/addcashmemo.jinja2:279
 #: gkwebapp/templates/addcategory.jinja2:180
@@ -271,7 +271,7 @@ msgstr ""
 #: gkwebapp/templates/edittransfernote.jinja2:168
 #: gkwebapp/templates/editunitofmeasurement.jinja2:67
 msgid "Save"
-msgstr ""
+msgstr "സൂക്ഷിക്കുക"
 
 #: gkwebapp/templates/addcashmemo.jinja2:280
 #: gkwebapp/templates/addcategory.jinja2:181
@@ -287,13 +287,13 @@ msgstr ""
 #: gkwebapp/templates/editproduct.jinja2:37
 #: gkwebapp/templates/editunitofmeasurement.jinja2:66
 msgid "Reset"
-msgstr ""
+msgstr "പുനക്രമീകരിക്കുക"
 
 #: gkwebapp/templates/addcashmemo.jinja2:281
 #: gkwebapp/templates/adddeliverychallan.jinja2:184
 #: gkwebapp/templates/addinvoice.jinja2:305
 msgid "Save & Print"
-msgstr ""
+msgstr "സൂക്ഷിച്ച് പതിപ്പെടുക്കുക"
 
 #: gkwebapp/templates/addcashmemo.jinja2:290
 #: gkwebapp/templates/addcashmemo.jinja2:309
@@ -304,7 +304,7 @@ msgstr ""
 #: gkwebapp/templates/createtransfernote.jinja2:192
 #: gkwebapp/templates/createtransfernote.jinja2:211
 msgid "Save?"
-msgstr ""
+msgstr "സൂക്ഷിക്കണമോ?"
 
 #: gkwebapp/templates/addcashmemo.jinja2:293
 #: gkwebapp/templates/addcashmemo.jinja2:312
@@ -332,7 +332,7 @@ msgstr ""
 #: gkwebapp/templates/tallyimport.jinja2:119
 #: gkwebapp/templates/viewcashmemo.jinja2:293
 msgid "Are you sure?"
-msgstr ""
+msgstr "താങ്കള്‍ക്ക് ഉറപ്പാണോ?"
 
 #: gkwebapp/templates/addcashmemo.jinja2:296
 #: gkwebapp/templates/addcashmemo.jinja2:315
@@ -351,7 +351,7 @@ msgstr ""
 #: gkwebapp/templates/tallyimport.jinja2:122
 #: gkwebapp/templates/viewcashmemo.jinja2:296
 msgid "No"
-msgstr ""
+msgstr "അല്ല"
 
 #: gkwebapp/templates/addcashmemo.jinja2:297
 #: gkwebapp/templates/addcashmemo.jinja2:316
@@ -370,27 +370,27 @@ msgstr ""
 #: gkwebapp/templates/tallyimport.jinja2:123
 #: gkwebapp/templates/viewcashmemo.jinja2:297
 msgid "Yes"
-msgstr ""
+msgstr "അതെ"
 
 #: gkwebapp/templates/addcategory.jinja2:5
 #: gkwebapp/templates/editcategory.jinja2:5
 msgid "Category saved."
-msgstr ""
+msgstr "തരം സൂക്ഷിച്ചിരിക്കുന്നു"
 
 #: gkwebapp/templates/addcategory.jinja2:14
 msgid "Category already exists!"
-msgstr ""
+msgstr "ഈ തരം നേരത്തേ സൂക്ഷിച്ചതാണ്!"
 
 #: gkwebapp/templates/addcategory.jinja2:21
 #: gkwebapp/templates/editcategory.jinja2:25
 #: gkwebapp/templates/editcategory.jinja2:88
 msgid "Please enter category name!"
-msgstr ""
+msgstr "ദയവായി തരം ഏതെന്നു നല്‍കുക!"
 
 #: gkwebapp/templates/addcategory.jinja2:25
 #: gkwebapp/templates/editcategory.jinja2:92
 msgid "Select tax name!"
-msgstr ""
+msgstr "ടാക്സ് തിരഞെടുക്കുക!"
 
 #: gkwebapp/templates/addcategory.jinja2:29
 #: gkwebapp/templates/editcategory.jinja2:96
