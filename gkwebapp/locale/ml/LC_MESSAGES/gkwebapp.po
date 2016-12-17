@@ -458,14 +458,14 @@ msgstr "വിവരണതരത്തില്‍നിന്ന് ടാക�
 msgid ""
 "Press 'Ctrl + <' and 'Ctrl + >' to navigate through fields of "
 "specification and tax."
-msgstr ""
+msgstr "വിവരണത്തിന്റെയും ടാക്സിന്റെയും ഫീല്‍ടുകളിലൂടെ നീങ്ങാന്‍ 'Ctrl + <', 'Ctrl + >' എന്നിവ അമര്‍ത്തുക."
 
 #: gkwebapp/templates/addcategory.jinja2:105
 #: gkwebapp/templates/addproduct.jinja2:103
 #: gkwebapp/templates/editcategory.jinja2:107
 #: gkwebapp/templates/editproductspecs.jinja2:85
 msgid "Tax Name"
-msgstr ""
+msgstr "ടാക്സ്"
 
 #: gkwebapp/templates/addcategory.jinja2:106
 #: gkwebapp/templates/addproduct.jinja2:104
@@ -475,55 +475,55 @@ msgstr ""
 #: gkwebapp/templates/editorganisation.jinja2:82
 #: gkwebapp/templates/editproductspecs.jinja2:86
 msgid "State"
-msgstr ""
+msgstr "സംസ്ഥാനം"
 
 #: gkwebapp/templates/addcategory.jinja2:107
 #: gkwebapp/templates/addproduct.jinja2:105
 #: gkwebapp/templates/editcategory.jinja2:109
 #: gkwebapp/templates/editproductspecs.jinja2:87
 msgid "Rate%"
-msgstr ""
+msgstr "നിരക്ക്%"
 
 #: gkwebapp/templates/addcategory.jinja2:171
 #: gkwebapp/templates/editcategory.jinja2:118
 msgid "Press 'Ctrl + <' on tax name to switch to specification name. "
-msgstr ""
+msgstr "വിവരണത്തില്‍നിന്ന് ടാക്സിലേക്ക് നീങ്ങാന്‍ 'Ctrl + <' അമര്‍ത്തുക."
 
 #: gkwebapp/templates/addcategory.jinja2:180
 #: gkwebapp/templates/editcategory.jinja2:126
 msgid "Press Insert key anywhere on the current screen to save"
-msgstr ""
+msgstr "സൂക്ഷിക്കാനായി ഈ സ്ക്രീനിലെവിടെനിന്നും Insert കീ അമര്‍ത്തുക"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:5
 #: gkwebapp/templates/editcustomersupplier.jinja2:5
 msgid "Supplier saved."
-msgstr ""
+msgstr "സപ്പ്ളയറെക്കുറിച്ചുള്ള വിവരങ്ങള്‍ സൂക്ഷിച്ചിരിക്കുന്നു."
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:9
 #: gkwebapp/templates/editcustomersupplier.jinja2:9
 msgid "Customer saved."
-msgstr ""
+msgstr "ഉപഭോക്താവിനെക്കുറിച്ചുള്ള വിവരങ്ങള്‍ സൂക്ഷിച്ചിരിക്കുന്നു."
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:13
 #: gkwebapp/templates/editcustomersupplier.jinja2:13
 msgid "Customer Already Exist!"
-msgstr ""
+msgstr "ഉപഭോക്താവിനെക്കുറിച്ചുള്ള വിവരങ്ങള്‍ നേരത്തേ സൂക്ഷിചിട്ടുള്ളതാണ്!"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:17
 #: gkwebapp/templates/editcustomersupplier.jinja2:17
 msgid "Supplier Already Exist!"
-msgstr ""
+msgstr "സപ്പ്ളയറെക്കുറിച്ചുള്ള വിവരങ്ങള്‍ നേരത്തേ സൂക്ഷിച്ചിട്ടുള്ളതാണ്!"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:26
 #: gkwebapp/templates/editcustomersupplier.jinja2:41
 msgid "Please Enter name!"
-msgstr ""
+msgstr "ദയവായി പേര് നല്‍കുക!"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:34
 #: gkwebapp/templates/editcustomersupplier.jinja2:48
 #: gkwebapp/templates/editdeliverychallan.jinja2:40
 msgid "Please select a customer/supplier!"
-msgstr ""
+msgstr "ദയവായി ഒരു ഉപഭോക്താവിനെയോ സപ്പ്ളയറെയോ തിരഞെടുക്കുക!"
 
 #: gkwebapp/templates/addcustomersupplier.jinja2:38
 #: gkwebapp/templates/editcustomersupplier.jinja2:71
