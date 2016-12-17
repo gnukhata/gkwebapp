@@ -395,47 +395,47 @@ msgstr "ടാക്സ് തിരഞെടുക്കുക!"
 #: gkwebapp/templates/addcategory.jinja2:29
 #: gkwebapp/templates/editcategory.jinja2:96
 msgid "Enter tax rate!"
-msgstr ""
+msgstr "ടാക്സ് നിരക്ക് നല്‍കുക!"
 
 #: gkwebapp/templates/addcategory.jinja2:33
 #: gkwebapp/templates/editcategory.jinja2:100
 #: gkwebapp/templates/producttab.jinja2:86
 msgid "Duplicate Tax!"
-msgstr ""
+msgstr "ഈ ടാക്സ് വിവരം നേരത്തേ സൂക്ഷിച്ചതാണ്!"
 
 #: gkwebapp/templates/addcategory.jinja2:40
 #: gkwebapp/templates/editcategory.jinja2:52
 msgid "Parent Category:"
-msgstr ""
+msgstr "മൂല തരം:"
 
 #: gkwebapp/templates/addcategory.jinja2:42
 #: gkwebapp/templates/editcategory.jinja2:54
 msgid "Primary"
-msgstr ""
+msgstr "പ്രാഥമികം"
 
 #: gkwebapp/templates/addcategory.jinja2:51
 #: gkwebapp/templates/editcategory.jinja2:61
 msgid "Child Category:"
-msgstr ""
+msgstr "ഉപ തര്ം:"
 
 #: gkwebapp/templates/addcategory.jinja2:52
 msgid "Enter child category name"
-msgstr ""
+msgstr "ഉപതരത്തിന്റെ പേരു നല്‍കുക"
 
 #: gkwebapp/templates/addcategory.jinja2:61
 #: gkwebapp/templates/editcategory.jinja2:46
 msgid "Please enter specification name!"
-msgstr ""
+msgstr "ദയവായി വിവരണം നല്‍കുക!"
 
 #: gkwebapp/templates/addcategory.jinja2:64
 #: gkwebapp/templates/editcategory.jinja2:49
 msgid "Minimum one spec required!"
-msgstr ""
+msgstr "ഒരു വിവരണമെങ്കിലും നല്കേണ്ടതുണ്ട്!"
 
 #: gkwebapp/templates/addcategory.jinja2:70
 #: gkwebapp/templates/editcategory.jinja2:73
 msgid "Spec Name"
-msgstr ""
+msgstr "വിവരണം"
 
 #: gkwebapp/templates/addcategory.jinja2:71
 #: gkwebapp/templates/deletedvoucher.jinja2:60
@@ -446,12 +446,12 @@ msgstr ""
 #: gkwebapp/templates/printledger.jinja2:53
 #: gkwebapp/templates/printtransactions.jinja2:42
 msgid "Type"
-msgstr ""
+msgstr "തരം"
 
 #: gkwebapp/templates/addcategory.jinja2:96
 #: gkwebapp/templates/editcategory.jinja2:83
 msgid "Press End Key on specification type to switch to tax name."
-msgstr ""
+msgstr "വിവരണതരത്തില്‍നിന്ന് ടാക്സിലേക്ക് മാറാനായി End കീ അമര്‍ത്തുക."
 
 #: gkwebapp/templates/addcategory.jinja2:97
 #: gkwebapp/templates/editcategory.jinja2:84
