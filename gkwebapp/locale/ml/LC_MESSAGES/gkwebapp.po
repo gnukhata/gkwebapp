@@ -1,7 +1,7 @@
-# Hindi translations for PROJECT.
-# Copyright (C) 2011 ORGANIZATION
+# Malayalam translations for GNUKhata.
+# Copyright (C) 2016 Digital Freedom Foundation
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+# Abhijith Balan <abhijithb21@openmailbox.org>, 2016.
 #
 msgid ""
 msgstr ""
@@ -11,7 +11,7 @@ msgstr ""
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ml\n"
-"Language-Team: fr <LL@li.org>\n"
+"Language-Team: ml <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -4431,4 +4431,3 @@ msgstr ""
 
 #~ msgid "GNUKhata <small style=\"color:white;\"> version 3.5</small>"
 #~ msgstr ""
-
