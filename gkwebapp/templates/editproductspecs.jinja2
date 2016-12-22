@@ -62,13 +62,22 @@
       <tbody>
         {% for record in godown %}
         <tr>
-          <td class="col-xs-8">
-            <label style="border-style:solid; border-radius: 3px; border-width:1; border-color: #d9dbdb; padding-top:7px; padding-bottom:3px;" class="col-xs-12">{{record["goname"]}}({{record["goaddr"]}})</label>
-          </td>
-          <td class="col-xs-4">
-            <input class="form-control input-sm editgodown_ob text-right numtype" value="0.00">
-            <input type="text" value="{{record["goid"]}}" class="editgodownid" hidden>
-          </td>
+          <tr class="editgodownid">
+            <td class="col-xs-8">
+              <select class="form-control input-sm editgodown_name">
+                <option value="" selected>Select Godown</option>
+                {% for record in godown %}
+                <option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
+                {% endfor %}
+              </select>
+            </td>
+            <td class="col-xs-3">
+              <input class="form-control input-sm editgodown_ob text-right numtype" value="0.00">
+            </td>
+            <td class="col-xs-1">
+              <a href="#" class="editgodown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+            </td>
+          </tr>
         </tr>
         {% endfor %}
       </tbody>

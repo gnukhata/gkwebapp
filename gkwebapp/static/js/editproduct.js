@@ -111,7 +111,9 @@ $(document).ready(function() {
       }
 
     }
-
+    else if (event.which==173) {
+      event.preventDefault();
+    }
     /* Act on the event */
   });
 
@@ -141,6 +143,9 @@ $(document).ready(function() {
       else {
         $(".editgodown_ob").eq(n-1).focus().select();
       }
+    }
+    else if (event.which==173) {
+      event.preventDefault();
     }
   });
 

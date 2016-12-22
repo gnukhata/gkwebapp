@@ -74,7 +74,13 @@ def getpurchaseorder(request):
 def getdelchal(request):
 	header={"gktoken":request.headers["gktoken"]}
 	delchaldata = requests.get("http://127.0.0.1:6543/delchal?delchal=single&dcid=%d"%(int(request.params["dcid"])), headers=header)
-	return {"gkstatus": delchaldata.json()["gkstatus"],"delchaldata": delchaldata.json()["gkresult"]}
+	delchalresult = {}
+	delchalresult = delchaldata.json()["gkresult"]
+	if int(delchalresult["stockdata"]["inout"])==9:
+		inoutflag="in"
+	else:
+		inoutflag="out"
+	return {"gkstatus": delchaldata.json()["gkstatus"],"delchaldata": delchaldata.json()["gkresult"],"inoutflag":inoutflag}
 
 
 @view_config(route_name="deliverychallan",request_param="action=save",renderer="json")

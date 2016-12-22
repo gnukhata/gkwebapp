@@ -196,6 +196,9 @@ $(document).ready(function() {
     else if (event.which==38 && $("#godownpresence").val()==0) {
       $("#adduom").focus().select();
     }
+    else if (event.which==173) {
+      event.preventDefault();
+    }
   });
   $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
     /* Act on the event */
@@ -709,14 +712,19 @@ $(document).ready(function() {
       event.preventDefault();
       $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(1) input').focus().select();
     }
-    else if (event.which==40 && event.shiftKey) {
+    else if (event.which==35) {
+      event.preventDefault();
       var taxdisabled = $('#product_tax_table tbody tr:first td:eq(0) select').is(":disabled");
-      if (taxdisabled) {
+      var taxcount = $('#product_tax_table tbody tr').length;
+      if (taxdisabled || taxcount<1) {
         $("#specifications").contents("div").children("input").first().focus();
       }
       else {
         $('#product_tax_table tbody tr:first td:eq(0) select').focus().select();
       }
+    }
+    else if (event.which==173) {
+      event.preventDefault();
     }
   });
   $(document).off("click",".godown_del").on("click", ".godown_del", function() {
