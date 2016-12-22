@@ -1,22 +1,11 @@
-# Malayalam translations for GNUKhata.
-# Copyright (C) 2016 Digital Freedom Foundation
-# This file is distributed under the same license as the PROJECT project.
-# Abhijith Balan <abhijithb21@openmailbox.org>, 2016.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-12-17 16:03+0530\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: ml\n"
-"Language-Team: ml <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.3.4\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: GNUKhata\n"
+"Language: ml\n"
 
 #: gkwebapp/templates/addcashmemo.jinja2:5 gkwebapp/templates/cashmemo.jinja2:5
 #: gkwebapp/templates/viewcashmemo.jinja2:5
@@ -49,7 +38,7 @@ msgstr "എന്തോ കുഴപ്പം പട്ട്റ്റിയി�
 #: gkwebapp/templates/addcashmemo.jinja2:62
 #: gkwebapp/templates/viewcashmemo.jinja2:66
 msgid "Duplicate cash memo no.!"
-msgstr "കശ് മെമൊ നമ്പര്‍ നേരത്തേ സൂക്ഷിച്ചിട്ടുള്ളതാണ്!"
+msgstr "കാശ് മെമൊ നമ്പര്‍ നേരത്തേ സൂക്ഷിച്ചിട്ടുള്ളതാണ്!"
 
 #: gkwebapp/templates/addcashmemo.jinja2:66
 #: gkwebapp/templates/adddeliverychallan.jinja2:119
@@ -455,9 +444,7 @@ msgstr "വിവരണതരത്തില്‍നിന്ന് ടാക�
 
 #: gkwebapp/templates/addcategory.jinja2:97
 #: gkwebapp/templates/editcategory.jinja2:84
-msgid ""
-"Press 'Ctrl + <' and 'Ctrl + >' to navigate through fields of "
-"specification and tax."
+msgid "Press 'Ctrl + <' and 'Ctrl + >' to navigate through fields of specification and tax."
 msgstr "വിവരണത്തിന്റെയും ടാക്സിന്റെയും ഫീല്‍ടുകളിലൂടെ നീങ്ങാന്‍ 'Ctrl + <', 'Ctrl + >' എന്നിവ അമര്‍ത്തുക."
 
 #: gkwebapp/templates/addcategory.jinja2:105
@@ -634,12 +621,12 @@ msgstr "ഉപഭോക്താവിനെ തിരഞെടുക്കു�
 #: gkwebapp/templates/adddeliverychallan.jinja2:89
 #: gkwebapp/templates/editdeliverychallan.jinja2:92
 msgid "To Godown"
-msgstr ""
+msgstr "കയറ്റി അയക്കുന്ന ഗോഡൗണ്‍"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:91
 #: gkwebapp/templates/editdeliverychallan.jinja2:91
 msgid "From Godown"
-msgstr ""
+msgstr "ഇറക്കുന്ന ഗോഡൗണ്‍"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:95
 #: gkwebapp/templates/addproduct.jinja2:13
@@ -655,7 +642,7 @@ msgstr ""
 #: gkwebapp/templates/viewvoucher.jinja2:431
 #: gkwebapp/templates/viewvoucher.jinja2:438
 msgid "None"
-msgstr ""
+msgstr "ഒന്നുമില്ല"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:104
 #: gkwebapp/templates/editdeliverychallan.jinja2:103
@@ -663,32 +650,32 @@ msgstr ""
 #: gkwebapp/templates/mainshell.jinja2:154
 #: gkwebapp/templates/mainshell.jinja2:299
 msgid "Sale"
-msgstr ""
+msgstr "വില്പന"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:105
 #: gkwebapp/templates/editdeliverychallan.jinja2:104
 msgid "Consignment"
-msgstr ""
+msgstr "കണ്‍സൈന്‍മെന്റ്"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:106
 #: gkwebapp/templates/editdeliverychallan.jinja2:105
 msgid "Sample"
-msgstr ""
+msgstr "സാമ്പിള്‍"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:127
 msgid "Please enter Issuer's name!"
-msgstr ""
+msgstr "ദയവായി ഇഷ്യുവറിന്റെ പേരു നല്‍കുക!"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:131
 msgid "Please enter designation!"
-msgstr ""
+msgstr "ദയവായി പദവി നല്‍കുക!"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:168
 #: gkwebapp/templates/addinvoice.jinja2:284
 #: gkwebapp/templates/editdeliverychallan.jinja2:133
 #: gkwebapp/templates/editinvoice.jinja2:269
 msgid "Issuer's Name"
-msgstr ""
+msgstr "ഇഷ്യുവറുടെ പേര്"
 
 #: gkwebapp/templates/adddeliverychallan.jinja2:172
 #: gkwebapp/templates/addinvoice.jinja2:292
@@ -697,58 +684,58 @@ msgstr ""
 #: gkwebapp/templates/editgodown.jinja2:111
 #: gkwebapp/templates/editinvoice.jinja2:277
 msgid "Designation"
-msgstr ""
+msgstr "പദവി"
 
 #: gkwebapp/templates/addinvoice.jinja2:5
 #: gkwebapp/templates/editinvoice.jinja2:5
 msgid "Invoice saved."
-msgstr ""
+msgstr "ഇന്‍വോയിസ് സൂക്ഷിച്ചിരിക്കുന്നു."
 
 #: gkwebapp/templates/addinvoice.jinja2:13
 #: gkwebapp/templates/editinvoice.jinja2:13
 msgid "Duplicate invoice no.!"
-msgstr ""
+msgstr "ഇന്‍വോയിസ് നം. നേരത്തേ സൂക്ഷിച്ചതാണ്!"
 
 #: gkwebapp/templates/addinvoice.jinja2:46
 #: gkwebapp/templates/editinvoice.jinja2:46
 msgid "Please enter invoice no.!"
-msgstr ""
+msgstr "ദയവായി ഇന്‍വോയിസ് നം നല്‍കുക!"
 
 #: gkwebapp/templates/addinvoice.jinja2:65
 #: gkwebapp/templates/editdeliverychallan.jinja2:25
 #: gkwebapp/templates/editinvoice.jinja2:83
 #: gkwebapp/templates/mainshell.jinja2:45
 msgid "Delivery Note"
-msgstr ""
+msgstr "ഡെലിവറി നോട്ട്"
 
 #: gkwebapp/templates/addinvoice.jinja2:87
 #: gkwebapp/templates/editinvoice.jinja2:92
 msgid "Invoice No"
-msgstr ""
+msgstr "ഇന്‍വോയിസ് നം"
 
 #: gkwebapp/templates/addinvoice.jinja2:88
 #: gkwebapp/templates/editinvoice.jinja2:93
 #: gkwebapp/templates/viewcashmemo.jinja2:122
 msgid "Enter invoice no"
-msgstr ""
+msgstr "ഇന്‍വോയിസ് നം നല്‍കുക"
 
 #: gkwebapp/templates/addinvoice.jinja2:142
 msgid "VAT Applicable To"
-msgstr ""
+msgstr "വാറ്റ് ബാധകമായ സംസ്ഥാനം"
 
 #: gkwebapp/templates/addinvoice.jinja2:206
 msgid "Tax Rate%"
-msgstr ""
+msgstr "ടാക്സ് നിരക്ക്%"
 
 #: gkwebapp/templates/addinvoice.jinja2:285
 #: gkwebapp/templates/editinvoice.jinja2:270
 msgid "Issuer's name"
-msgstr ""
+msgstr "ഇഷ്യുവറുടെ പേര്"
 
 #: gkwebapp/templates/addinvoice.jinja2:293
 #: gkwebapp/templates/editinvoice.jinja2:278
 msgid "Issuer's designation"
-msgstr ""
+msgstr "ഇഷ്യുവറുടെ പദവി"
 
 #: gkwebapp/templates/addproduct.jinja2:11
 #: gkwebapp/templates/editproductspecs.jinja2:9
@@ -757,35 +744,35 @@ msgstr ""
 #: gkwebapp/templates/printlistofstockitems.jinja2:50
 #: gkwebapp/templates/searchcategory.jinja2:18
 msgid "Category"
-msgstr ""
+msgstr "തരം"
 
 #: gkwebapp/templates/addproduct.jinja2:23
 #: gkwebapp/templates/editproductspecs.jinja2:4
 msgid "Product Description"
-msgstr ""
+msgstr "ഉല്‍പന്നത്തെക്കുരിച്ചുള്ള വിവരണം"
 
 #: gkwebapp/templates/addproduct.jinja2:27
 #: gkwebapp/templates/editproductspecs.jinja2:24
 #: gkwebapp/templates/listofstockitems.jinja2:62
 #: gkwebapp/templates/printlistofstockitems.jinja2:53
 msgid "Unit of Measurement"
-msgstr ""
+msgstr "അളവ്"
 
 #: gkwebapp/templates/addproduct.jinja2:29
 msgid "Select Unit of Measurement"
-msgstr ""
+msgstr "അളവ് തിരഞെടുക്കുക"
 
 #: gkwebapp/templates/addproduct.jinja2:34
 msgid "Press space to add new unit."
-msgstr ""
+msgstr "പുതിയ അളവ് ചേര്‍ക്കാനായി സ്പേസ് ബാര്‍ അമര്‍ത്തുക."
 
 #: gkwebapp/templates/addproduct.jinja2:37
 msgid "New Unit of Measurement"
-msgstr ""
+msgstr "പുതിയ അളവ്"
 
 #: gkwebapp/templates/addproduct.jinja2:39
 msgid "Press esc to cancel."
-msgstr ""
+msgstr "കാന്‍സല്‍ ചെയ്യാന്‍ 'Esc' കീ അമര്‍ത്തുക."
 
 #: gkwebapp/templates/addproduct.jinja2:43
 #: gkwebapp/templates/addproduct.jinja2:58
@@ -794,23 +781,21 @@ msgstr ""
 #: gkwebapp/templates/editproductspecs.jinja2:47
 #: gkwebapp/templates/editproductspecs.jinja2:59
 msgid "Opening Stock"
-msgstr ""
+msgstr "തുടക്കത്തിലെ ശേഖരം"
 
 #: gkwebapp/templates/addproduct.jinja2:55
 msgid "Godown Wise Opening Stock"
-msgstr ""
+msgstr "ഗോഡൗണ്‍ പ്രമാണമുള്ള തുടക്കത്തിലെ ശേഖരം"
 
 #: gkwebapp/templates/addproduct.jinja2:69
 #: gkwebapp/templates/editproductspecs.jinja2:58
 #: gkwebapp/templates/mainshell.jinja2:49
 #: gkwebapp/templates/viewstockreport.jinja2:87
 msgid "Godown"
-msgstr ""
+msgstr "ഗോഡൗണ്‍"
 
 #: gkwebapp/templates/addproduct.jinja2:94
-msgid ""
-"Press 'Shift + Down arrow Key' from godown opening stock to shift focus "
-"to tax or specifications."
+msgid "Press 'Shift + Down arrow Key' from godown opening stock to shift focus to tax or specifications."
 msgstr ""
 
 #: gkwebapp/templates/addproduct.jinja2:187
@@ -1635,10 +1620,7 @@ msgid "CLOSE BOOKS"
 msgstr ""
 
 #: gkwebapp/templates/closebooks.jinja2:48
-msgid ""
-"After Close Books, balances in all expense and income accounts are "
-"transferred to Profit & Loss or Income & Expenditure account and these "
-"accounts are closed."
+msgid "After Close Books, balances in all expense and income accounts are transferred to Profit & Loss or Income & Expenditure account and these accounts are closed."
 msgstr ""
 
 #: gkwebapp/templates/closebooks.jinja2:49
@@ -1646,9 +1628,7 @@ msgid "After"
 msgstr ""
 
 #: gkwebapp/templates/closebooks.jinja2:49
-msgid ""
-"is done, transactions cannot be recorded but ledger accounts can be "
-"viewed."
+msgid "is done, transactions cannot be recorded but ledger accounts can be viewed."
 msgstr ""
 
 #: gkwebapp/templates/closebooks.jinja2:51
@@ -1656,28 +1636,19 @@ msgid "ROLL OVER"
 msgstr ""
 
 #: gkwebapp/templates/closebooks.jinja2:52
-msgid ""
-"a new organization with the same name and type is created for the next "
-"accounting year,"
+msgid "a new organization with the same name and type is created for the next accounting year,"
 msgstr ""
 
 #: gkwebapp/templates/closebooks.jinja2:53
-msgid ""
-"every existing asset and liability account is automatically opened under "
-"its respective Group and Sub-Group and correct opening balance is brought"
-" down,"
+msgid "every existing asset and liability account is automatically opened under its respective Group and Sub-Group and correct opening balance is brought down,"
 msgstr ""
 
 #: gkwebapp/templates/closebooks.jinja2:54
-msgid ""
-"in case of expense and income accounts these are also opened under their "
-"respective Groups and Sub-Groups, of course, without opening balances,"
+msgid "in case of expense and income accounts these are also opened under their respective Groups and Sub-Groups, of course, without opening balances,"
 msgstr ""
 
 #: gkwebapp/templates/closebooks.jinja2:55
-msgid ""
-"The Closing Stock of the earlier year gets transferred to the next year "
-"as Opening Stock.\n"
+msgid "The Closing Stock of the earlier year gets transferred to the next year as Opening Stock.\n"
 "            This module can only be activated after"
 msgstr ""
 
@@ -3130,9 +3101,7 @@ msgid "It is Lightweight."
 msgstr ""
 
 #: gkwebapp/templates/index.jinja2:197 gkwebapp/templates/login.jinja2:71
-msgid ""
-"It can scale upto a cloud based deployment or down to a standalone "
-"installation."
+msgid "It can scale upto a cloud based deployment or down to a standalone installation."
 msgstr ""
 
 #: gkwebapp/templates/index.jinja2:198 gkwebapp/templates/login.jinja2:72
@@ -3737,9 +3706,7 @@ msgid "GNUKhata <small style=\"color:white;\"> version 3.5.1</small>"
 msgstr ""
 
 #: gkwebapp/templates/mainshell.jinja2:405
-msgid ""
-" a free and open source, industry standard software for accounting and "
-"inventory management being developed at"
+msgid " a free and open source, industry standard software for accounting and inventory management being developed at"
 msgstr ""
 
 #: gkwebapp/templates/mainshell.jinja2:405
@@ -3924,9 +3891,7 @@ msgid "Product description cannot be blank."
 msgstr ""
 
 #: gkwebapp/templates/producttab.jinja2:70
-msgid ""
-"<b>Opening Stock</b> is blank. Please enter <b>0.00</b> if you have no "
-"opening stock."
+msgid "<b>Opening Stock</b> is blank. Please enter <b>0.00</b> if you have no opening stock."
 msgstr ""
 
 #: gkwebapp/templates/producttab.jinja2:74
@@ -4384,50 +4349,3 @@ msgstr ""
 msgid "Bac<u>k</u>"
 msgstr ""
 
-#~ msgid "GNUKhata is developed by "
-#~ msgstr ""
-
-#~ msgid "Copyright © Digital Freedom Foundation 2013,2014,2015,2016. Visit "
-#~ msgstr ""
-
-#~ msgid "Copyright © Digital Freedom Foundation 2013,2014,2015,2016. Visit"
-#~ msgstr ""
-
-#~ msgid ""
-#~ msgstr ""
-
-#~ msgid "To view Toolbar press"
-#~ msgstr ""
-
-#~ msgid "VAT for"
-#~ msgstr ""
-
-#~ msgid "Fax :"
-#~ msgstr ""
-
-#~ msgid "Delivery Challan"
-#~ msgstr ""
-
-#~ msgid "Fax"
-#~ msgstr ""
-
-#~ msgid "Pan:"
-#~ msgstr ""
-
-#~ msgid "Tan:"
-#~ msgstr ""
-
-#~ msgid "Subcategory Of"
-#~ msgstr ""
-
-#~ msgid "Group Addess"
-#~ msgstr ""
-
-#~ msgid "Units Of Measurement"
-#~ msgstr ""
-
-#~ msgid "Back Up Data"
-#~ msgstr ""
-
-#~ msgid "GNUKhata <small style=\"color:white;\"> version 3.5</small>"
-#~ msgstr ""
