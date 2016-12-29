@@ -275,6 +275,10 @@ $(document).ready(function() {
       $('#category_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
       event.preventDefault();
     }
+    else if (($("#category_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='CVAT') && event.which==13 ) {
+        event.preventDefault();
+        $('#category_edit_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
+    }
     else if (event.which==13) {
       event.preventDefault();
       $('#category_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
