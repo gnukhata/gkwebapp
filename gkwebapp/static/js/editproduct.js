@@ -96,7 +96,12 @@ $(document).ready(function() {
       $("#editproddesc").focus().select();
     }
   });
-
+  $(document).on('keydown', '#editproddesc', function(event) {
+    if (event.which==38) {
+      event.preventDefault();
+      $("#prodselect").focus();
+    }
+  });
 
   $(document).on('keydown', '#editopeningstock', function(event) {
     if (event.which==13)
@@ -358,7 +363,7 @@ $(document).ready(function() {
         type: 'POST',
         dataType: 'json',
         async : false,
-        data: {"goid":$(this).val(), "productcode":$("#prodselect option:selected").val()},
+        data: {"productcode":$("#prodselect option:selected").val()},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -366,21 +371,21 @@ $(document).ready(function() {
       })
       .done(function(resp) {
         var goopeningstock=resp["gkresult"]
+        var editgoopeningstock = 0;
+        var goid = 0;
+        console.log(goopeningstock);
         if (resp["gkstatus"]==0)
         {
           if (goopeningstock.length == 0) {
             goopeningstock = "0.00";
-            $(".godownflag").hide();
           }
           else {
             for (i in goopeningstock) {
-              goopeningstock=goopeningstock[i].goopeningstock;
+              editgoopeningstock=goopeningstock[i].goopeningstock;
+              goid=goopeningstock[i].goid;
+              $(".editgodown_ob").eq(indexgp).val(editgoopeningstock);
+              $(".editgodown_name").eq(indexgp).val(goid);
             }
-
-          }
-          $(".editgodown_ob").eq(indexgp).val(goopeningstock);
-          if ($(".editgodown_ob").eq(indexgp).val()==0) {
-            $(".editgodown_ob").eq(indexgp).addClass("nogodownentry");
           }
         }
       })
@@ -391,14 +396,6 @@ $(document).ready(function() {
         console.log("complete");
       });
     });
-    if ($(".nogodownentry").length < $(".editgodownid").length) {
-      $("#editnogodown").hide();
-      $("#editopeningstockdiv").show();
-      $("#editgodownflag").val("1");
-    }
-    else {
-      $("#editgodownflag").val("0");
-    }
   });
 
   $("#prodselect").keyup(function(event) {

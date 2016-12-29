@@ -43,6 +43,7 @@
   <input type="text" name="godownflag" id="editgodownflag" value="0" hidden>
   {% else %}
 <input type="text" name="godownflag" id="editgodownflag" value="0" hidden>
+{% if numberofgodowns==0 %}
 <div id="editnogodown" class="form-group pds">
   <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
   <div class="input-group">
@@ -50,7 +51,8 @@
     <span class="input-group-addon input-sm" id="unitaddon"></span>
   </div>
 </div>
-<div  id="editopeningstockdiv" class="form-group" hidden>
+{% else %}
+<div  id="editopeningstockdiv" class="form-group">
   <div class="panel">
     <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">
       <thead class="bg-primary input-sm">
@@ -60,7 +62,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for record in godown %}
+        {% for record in range(numberofgodowns) %}
         <tr>
           <tr class="editgodownid">
             <td class="col-xs-8">
@@ -84,6 +86,7 @@
     </table>
   </div>
 </div>
+{% endif %}
   {% endif %}
   </div>
   <div class="form-group taxdiv">
