@@ -1405,7 +1405,7 @@ $(document).ready(function() {
 
     if ($("#invoice_deliverynote option:selected").val()!="")
     {
-        var dcdate = Date.parseExact($("#invoice_deliverynote option:selected").attr("dcdate"), "dd-MM-yyyy");
+
         if (Date.parseExact($("#invoice_deliverynote option:selected").attr("dcdate"), "dd-MM-yyyy").compareTo(curdate)==1) {
             $("#invdc-date-alert").alert();
             $("#invdc-date-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -1627,7 +1627,7 @@ $("#confirm_yes").on('hidden.bs.modal', function(event) {
 
     if ($("#invoice_deliverynote option:selected").val()!="")
     {
-        var dcdate = Date.parseExact($("#invoice_deliverynote option:selected").attr("dcdate"), "dd-MM-yyyy");
+        
         if (Date.parseExact($("#invoice_deliverynote option:selected").attr("dcdate"), "dd-MM-yyyy").compareTo(curdate)==1) {
             $("#invdc-date-alert").alert();
             $("#invdc-date-alert").fadeTo(2250, 500).slideUp(500, function(){
