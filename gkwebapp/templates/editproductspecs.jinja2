@@ -67,9 +67,8 @@
           <tr class="editgodownid">
             <td class="col-xs-8">
               <select class="form-control input-sm editgodown_name">
-                <option value="" selected>Select Godown</option>
                 {% for record in godown %}
-                <option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
+                <option value={{record["goid"]}}>{{record["goname"]}}({{record["goaddr"]}})</option>
                 {% endfor %}
               </select>
             </td>

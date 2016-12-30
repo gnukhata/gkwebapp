@@ -355,8 +355,6 @@ $(document).ready(function() {
 
 
     }
-
-    $(".editgodownid").each(function(){
       var indexgp = $(".editgodownid").index(this);
       $.ajax({
         url: '/product?by=godown',
@@ -370,21 +368,21 @@ $(document).ready(function() {
         }
       })
       .done(function(resp) {
-        var goopeningstock=resp["gkresult"]
+        var goopeningstock=resp["gkresult"];
+        console.log(goopeningstock);
         var editgoopeningstock = 0;
         var goid = 0;
-        console.log(goopeningstock);
         if (resp["gkstatus"]==0)
         {
           if (goopeningstock.length == 0) {
-            goopeningstock = "0.00";
+            editgoopeningstock = "0.00";
           }
           else {
             for (i in goopeningstock) {
               editgoopeningstock=goopeningstock[i].goopeningstock;
               goid=goopeningstock[i].goid;
-              $(".editgodown_ob").eq(indexgp).val(editgoopeningstock);
-              $(".editgodown_name").eq(indexgp).val(goid);
+              $(".editgodown_ob").eq(i).val(editgoopeningstock);
+              $(".editgodown_name").eq(i).val(goid);
             }
           }
         }
@@ -395,7 +393,6 @@ $(document).ready(function() {
       .always(function() {
         console.log("complete");
       });
-    });
   });
 
   $("#prodselect").keyup(function(event) {
