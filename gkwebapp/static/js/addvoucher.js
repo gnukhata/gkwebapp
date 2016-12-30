@@ -1224,10 +1224,23 @@ $("#invsel").keyup(function(event) {
     if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invflag ==1)
     {
       details.invid = $("#invsel option:selected").val();
-      var invoicetotal= $("#invtotal").val();
-      var vtotal= $('#vtable tfoot tr:last td:eq(2) input').val();
+      var invoicetotal= $("#invsel option:selected").attr("total");
+      var vtotal=0;
+      $(".cramt").each(function(){
+        vtotal += +$(this).val();
+    });
+
       if (details.invid!="")
       {
+
+          if (Date.parseExact($("#invsel option:selected").attr("invdate"), "dd-MM-yyyy").compareTo(curdate)==1) {
+              $("#inv-date-alert").alert();
+              $("#inv-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#inv-date-alert").hide();
+              });
+              $('#vdate').focus().select();
+              return false;
+          }
 
       if (vtotal>invoicetotal)
       {
