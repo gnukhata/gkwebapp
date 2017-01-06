@@ -23,7 +23,9 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 */
-
+/*
+This script is for the view page of project statement report.
+*/
 $(document).ready(function() {
   if ($('#viewprjstate_prjname').length) {
     $("#viewprjstate_todate").focus();
@@ -37,14 +39,14 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#viewprjstate_todate").focus();
   $('.viewprjstate_date').autotab('number');
-  var sel1 = 0;
+  var sel1 = 0; // flag for focus on combo box
   $("#viewprjstate_prjname").focus(function(){
     sel1 = 1;
   });
   $("#viewprjstate_prjname").blur(function(){
     sel1 = 0;
   });
-  if (sessionStorage.orgt=="Profit Making") {
+  if (sessionStorage.orgt=="Profit Making") { // changing headings and messages depending on type of organisation.
     $("#prjhead").html("Cost Center");
     $("#prjalert").html("Please select a cost center");
     $("#prjnamelbl").html("Cost Center: ");
@@ -61,7 +63,7 @@ $(document).ready(function() {
       return str
     }
   }
-  function yearpad (str, max) {
+  function yearpad (str, max) { //to add leading 20 or 200 to year
     str = str.toString();
     if (str.length==1) {
       return str.length < max ? pad("200" + str, max) : str;
@@ -83,7 +85,7 @@ $(document).ready(function() {
   $("#viewprjstate_toyear").blur(function(event) {
     $(this).val(yearpad($(this).val(),4));
   });
-
+// Setting default date to financialstart and end.
   var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
   $("#viewprjstate_fromdate").val(fromdatearray[2])
   $("#viewprjstate_frommonth").val(fromdatearray[1])
@@ -93,7 +95,7 @@ $(document).ready(function() {
   $("#viewprjstate_tomonth").val(todatearray[1])
   $("#viewprjstate_toyear").val(todatearray[0])
   $("#viewprjstate_todate").select();
-  $('input:text:enabled,select:enabled').keydown( function(e) {
+  $('input:text:enabled,select:enabled').keydown( function(e) { // function for shifting focus on enter and up arrow key.
     var n = $("input:text:enabled,select:enabled").length;
     var f = $('input:text:enabled,select:enabled');
       if (e.which == 13)
@@ -116,13 +118,14 @@ $(document).ready(function() {
         }
       }
     });
-  $("#viewprjstate_prjname").keydown(function(event) {
+  $("#viewprjstate_prjname").keydown(function(event) { // submit on enter key
     if (event.which==13) {
       $("#viewprjstate_submit").click();
     }
   });
 
   $("#viewprjstate_submit").click(function(event) {
+    // --------------------starting validations------------------
     if ($("#viewprjstate_prjname").val()==null) {
       $("#account-blank-alert").alert();
       $("#account-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -158,6 +161,7 @@ $(document).ready(function() {
       $('#viewprjstate_todate').focus().select();
       return false;
     }
+    // -----------------------end of validations---------------------
     $.ajax(
       {
         type: "POST",

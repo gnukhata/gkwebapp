@@ -24,7 +24,9 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Abhijith Balan" <abhijithb21@openmailbox.org>
 */
-
+/*
+This script is for the view page of stock report.
+*/
 $(document).ready(function() {
 	$('.modal-backdrop').remove();
 	$("#viewstock_productname").focus();
@@ -33,7 +35,9 @@ $(document).ready(function() {
 
 	var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
 	var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
-	var sel1 = 0;
+	var sel1 = 0; // flag for focus on combo box
+
+	// Setting default date to financialstart and end.
 	var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
 	$("#viewstock_fromdate").val(fromdatearray[2])
 	$("#viewstock_frommonth").val(fromdatearray[1])
@@ -52,7 +56,7 @@ $(document).ready(function() {
 			return str
 		}
 	}
-	function yearpad (str, max) {
+	function yearpad (str, max) { //to add leading 20 or 200 to year
 		str = str.toString();
 		if (str.length==1) {
 			return str.length < max ? pad("200" + str, max) : str;
@@ -64,6 +68,8 @@ $(document).ready(function() {
 			return str
 		}
 	}
+
+	// function to toggle godown option depending on check box.
 	$("#godownflag").click(function(e){
 		if ($(this).is(":checked")) {
 			$("#godownflag").val(1);
@@ -74,6 +80,7 @@ $(document).ready(function() {
 			$("#goselect").hide();
 		}
 	});
+	// function to enable date fields on change of combo box  and setting focus on the date field on enter keyup.
 	$("#viewstock_productname").change(function(){
 				$(this).keyup(function(e){
 						if (e.which == 13) {
@@ -104,6 +111,7 @@ $(document).ready(function() {
 	$("#viewstock_toyear").blur(function(event) {
 		$(this).val(yearpad($(this).val(),4));
 	});
+	// navigation functions for enter key and up arrow keys.
 	$("#viewstock_fromdate").keydown(function(e){
 		if(e.which==13){
 			e.preventDefault();
@@ -195,6 +203,7 @@ $(document).ready(function() {
 		}
 	});
 	$("#viewstock_submit").click(function(event) {
+		// --------------------starting validations------------------
 		if ($("#viewstock_productname").val()==null) {
 			$("#account-blank-alert").alert();
 			$("#account-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -269,6 +278,9 @@ $(document).ready(function() {
 			$('#viewstock_todate').focus().select();
 			return false;
 		}
+		// -----------------------end of validations---------------------
+
+		// creating dataset for retrieving report from the server.
 		var dataset = {}
 		if ($("#godownflag").val()==0) {
 			dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculatefrom":$("#viewstock_fromyear").val()+"-"+$("#viewstock_frommonth").val()+"-"+$("#viewstock_fromdate").val(),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"backflag":0,"godownflag":$("#godownflag").val(),"goid":-1,"goname":""}

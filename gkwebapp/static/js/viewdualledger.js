@@ -23,21 +23,23 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 */
-
+/*
+This script is for the view page of Dual Ledger report.
+*/
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#viewdualledger_accname").focus();
   $('.viewdualledger_date').autotab('number');
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
-  var sel1 = 0;
+  var sel1 = 0; // flag for focus on combo box
   $("#viewdualledger_prjname").focus(function(){
     sel1 = 1;
   });
   $("#viewdualledger_prjname").blur(function(){
     sel1 = 0;
   });
-
+	// Setting default date to financialstart and end.
   var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
   $("#viewdualledger_fromdate").val(fromdatearray[2])
   $("#viewdualledger_frommonth").val(fromdatearray[1])
@@ -56,7 +58,7 @@ $(document).ready(function() {
       return str
     }
   }
-  function yearpad (str, max) {
+  function yearpad (str, max) { //to add leading 20 or 200 to year
     str = str.toString();
     if (str.length==1) {
       return str.length < max ? pad("200" + str, max) : str;
@@ -91,7 +93,7 @@ $(document).ready(function() {
   });
 
 
-  $('input:text:enabled,input:checkbox:enabled,select:enabled').keydown( function(e) {
+  $('input:text:enabled,input:checkbox:enabled,select:enabled').keydown( function(e) { // function for shifting focus on enter and up arrow key.
     var n = $("input:text:enabled,input:checkbox:enabled,select:enabled").length;
     var f = $('input:text:enabled,input:checkbox:enabled,select:enabled');
       if (e.which == 13)
@@ -138,6 +140,7 @@ $(document).ready(function() {
 
 
   $("#viewdualledger_submit").click(function(event) {
+    // --------------------starting validations------------------
     if ($("#viewdualledger_accname").val()==null) {
       $("#account-blank-alert").alert();
       $("#account-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -204,6 +207,7 @@ $(document).ready(function() {
       $('#viewdualledger_todate').focus().select();
       return false;
     }
+
     var prj;
     if ($('#viewdualledger_prjname').length) {
       prj=$('#viewdualledger_prjname').val();
@@ -211,6 +215,9 @@ $(document).ready(function() {
     else {
     prj ="";
     }
+
+    // -----------------------end of validations---------------------
+
     $.ajax(
       {
         type: "POST",

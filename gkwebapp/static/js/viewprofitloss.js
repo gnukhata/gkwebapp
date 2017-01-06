@@ -23,7 +23,9 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 */
-
+/*
+This script is for the view page of Profit and loss report.
+*/
 $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
@@ -40,7 +42,7 @@ $(document).ready(function() {
       return str
     }
   }
-  function yearpad (str, max) {
+  function yearpad (str, max) { //to add leading 20 or 200 to year
     str = str.toString();
     if (str.length==1) {
       return str.length < max ? pad("200" + str, max) : str;
@@ -63,7 +65,7 @@ $(document).ready(function() {
     $(this).val(yearpad($(this).val(),4));
   });
 
-  $('input:text:enabled').keydown( function(e) {
+  $('input:text:enabled').keydown( function(e) { // function for shifting focus on enter and up arrow key.
     var n = $("input:text:enabled").length;
     var f = $('input:text:enabled');
       if (e.which == 13)
@@ -86,7 +88,7 @@ $(document).ready(function() {
         }
       }
     });
-
+// Setting default date to financialstart and end.
   var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
   $("#pnl_fromdate").val(fromdatearray[2])
   $("#pnl_frommonth").val(fromdatearray[1])
@@ -105,6 +107,7 @@ $(document).ready(function() {
   });
 
   $("#pnl_view").click(function(event) {
+    // --------------------starting validations------------------
     if ($("#pnl_toyear").val() ==0||$("#pnl_tomonth").val()==0||$("#pnl_todate").val()==0) {
       $("#date-alert").alert();
       $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
@@ -131,6 +134,7 @@ $(document).ready(function() {
       $('#pnl_todate').focus().select();
       return false;
     }
+    // -----------------------end of validations---------------------
     $("#msspinmodal").modal("show");
     $.ajax(
       {
