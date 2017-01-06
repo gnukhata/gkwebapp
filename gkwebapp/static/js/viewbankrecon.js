@@ -23,13 +23,16 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 */
-
+/*
+This script is for the view page of Bank reconciliation..
+*/
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#viewbankrecon_accname").focus();
   $('.viewbankrecon_date').autotab('number');
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
+  // Setting default date to financialstart and end.
   var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
   $("#viewbankrecon_fromdate").val(fromdatearray[2])
   $("#viewbankrecon_frommonth").val(fromdatearray[1])
@@ -48,7 +51,7 @@ $(document).ready(function() {
       return str
     }
   }
-  function yearpad (str, max) {
+  function yearpad (str, max) {//to add leading 20 or 200 to year
     str = str.toString();
     if (str.length==1) {
       return str.length < max ? pad("200" + str, max) : str;
@@ -83,7 +86,7 @@ $(document).ready(function() {
   });
 
 
-  $('input:text:enabled,input:checkbox:enabled,select:enabled').keydown( function(e) {
+  $('input:text:enabled,input:checkbox:enabled,select:enabled').keydown( function(e) { // function for shifting focus on enter and up arrow key.
     var n = $("input:text:enabled,input:checkbox:enabled,select:enabled").length;
     var f = $('input:text:enabled,input:checkbox:enabled,select:enabled');
       if (e.which == 13)
@@ -113,6 +116,7 @@ $(document).ready(function() {
 
 
   $("#viewbankrecon_submit").click(function(event) {
+    // --------------------starting validations------------------
     if ($("#viewbankrecon_accname").val()==null) {
       $("#account-blank-alert").alert();
       $("#account-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -179,6 +183,10 @@ $(document).ready(function() {
       $('#viewbankrecon_todate').focus().select();
       return false;
     }
+    // -----------------------end of validations---------------------
+
+    // ajax to get Uncleared transactions.
+    // Data: accountcode, period and narrationflag
     $.ajax(
       {
         type: "POST",
