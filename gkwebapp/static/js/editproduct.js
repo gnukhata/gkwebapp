@@ -797,7 +797,7 @@ $(document).ready(function() {
     var nextindex1 = curindex1+1;
     var previndex1 = curindex1-1;
     var selectindex = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').index();
-    var numberofgodowns = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option').length-1;
+    var numberofgodowns = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option').length;
     if (event.which==13) {
       event.preventDefault();
       if (curindex1 != ($("#editgodown_ob_table tbody tr").length-1)) {
@@ -820,7 +820,7 @@ $(document).ready(function() {
           $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(1) input').focus();
           return false;
         }
-        if ($("#editgodown_ob_table tbody tr").length == numberofgodowns || $("#editgodown_ob_table tbody tr").length > numberofgodowns) {
+        if ($("#editgodown_ob_table tbody tr").length == numberofgodowns) {
           var taxdisabled = $('#product_edit_tax_table tbody tr:first td:eq(0) select').is(":disabled");
           if (taxdisabled) {
             $("#editspecifications").contents("div").children("input").first().focus();
