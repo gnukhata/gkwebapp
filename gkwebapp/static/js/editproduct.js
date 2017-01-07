@@ -107,12 +107,18 @@ $(document).ready(function() {
     if (event.which==13)
     {
       event.preventDefault();
-      if ($("#product_edit_tax_table tbody tr:first td:eq(0) select").is(":disabled")) {
-        $("#editspecifications").find('input:first').focus().select();
+      var taxdisabled = $('#product_edit_tax_table tbody tr:first td:eq(0) select').is(":disabled");
+      var taxcount = $('#product_edit_tax_table tbody tr').length;
+      if (taxdisabled || taxcount<1) {
+        if ($("#editspecifications").contents(".form-group").length == 0) {
+          $('#epsubmit').focus();
+        }
+        else {
+          $("#editspecifications").contents(".form-group:first").find("input:first").focus().select();
+        }
       }
       else {
-
-        $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
+        $('#product_edit_tax_table tbody tr:first td:eq(0) select').focus().select();
       }
 
     }
@@ -133,7 +139,7 @@ $(document).ready(function() {
       else {
         event.preventDefault();
         if ($("#product_edit_tax_table tbody tr:first td:eq(0) select").is(":disabled")||$("#product_edit_tax_table tbody tr").length==0) {
-          $('#editspecifications').find("input:first").focus().select();
+          $('#editspecifications').contents(".form-group:first").find("input:first").focus();
         }
         else {
           $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
@@ -734,7 +740,7 @@ $(document).ready(function() {
     }
     else if (event.which==35) {
       event.preventDefault();
-      $('#specifications').find("input:first").focus().select();
+      $('#specifications').contents(".form-group:first").find("input:first").focus().select();
     }
 
   });
@@ -822,8 +828,16 @@ $(document).ready(function() {
         }
         if ($("#editgodown_ob_table tbody tr").length == numberofgodowns) {
           var taxdisabled = $('#product_edit_tax_table tbody tr:first td:eq(0) select').is(":disabled");
-          if (taxdisabled) {
-            $("#editspecifications").contents("div").children("input").first().focus();
+          var taxcount = $('#product_edit_tax_table tbody tr').length;
+          console.log(taxcount);
+          if (taxdisabled || taxcount<1) {
+            if ($("#editspecifications").contents(".form-group").length == 0) {
+              console.log($("#editspecifications").contents(".form-group").length);
+              $('#epsubmit').focus();
+            }
+            else {
+              $("#editspecifications").contents(".form-group:first").find("input:first").focus().select();
+            }
           }
           else {
             $('#product_edit_tax_table tbody tr:first td:eq(0) select').focus().select();
@@ -861,7 +875,12 @@ $(document).ready(function() {
       var taxdisabled = $('#product_edit_tax_table tbody tr:first td:eq(0) select').is(":disabled");
       var taxcount = $('#product_edit_tax_table tbody tr').length;
       if (taxdisabled || taxcount<1) {
-        $("#editspecifications").contents("div").children("input").first().focus();
+        if ($("#editspecifications").contents(".form-group").length == 0) {
+          $('#epsubmit').focus();
+        }
+        else {
+          $("#editspecifications").contents(".form-group:first").find("input:first").focus().select();
+        }
       }
       else {
         $('#product_edit_tax_table tbody tr:first td:eq(0) select').focus().select();

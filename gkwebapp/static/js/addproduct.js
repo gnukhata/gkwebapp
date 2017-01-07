@@ -184,7 +184,10 @@ $(document).ready(function() {
     if (event.which==13) {
       event.preventDefault();
       if ($("#product_tax_table tbody tr:first td:eq(0) select").is(":disabled")||$("#product_tax_table tbody tr").length==0) {
-        $('#specifications').find("input:first").focus().select();
+        $('#specifications').contents(".form-group:first").find("input:first").focus();
+        if ($('#specifications').contents(".form-group").length == 0) {
+          $("#apsubmit").focus();
+        }
       }
       else {
         $("#product_tax_table tbody tr:first td:eq(0) select").focus();
@@ -590,7 +593,7 @@ $(document).ready(function() {
     }
     else if (event.which==35) {
       event.preventDefault();
-      $('#specifications').find("input:first").focus().select();
+      $('#specifications').contents(".form-group:first").find("input:first").focus();
     }
 
   });
@@ -678,8 +681,14 @@ $(document).ready(function() {
         }
         if ($("#godown_ob_table tbody tr").length == numberofgodowns || $("#godown_ob_table tbody tr").length > numberofgodowns) {
           var taxdisabled = $('#product_tax_table tbody tr:first td:eq(0) select').is(":disabled");
-          if (taxdisabled) {
-            $("#specifications").contents("div").children("input").first().focus();
+          var taxcount = $('#product_tax_table tbody tr').length;
+          if (taxdisabled || taxcount<1) {
+            if ($("#specifications").contents(".form-group").length==0) {
+              $("#apsubmit").focus();
+            }
+            else {
+              $("#specifications").contents(".form-group:first").find("input:first").focus();
+            }
           }
           else {
             $('#product_tax_table tbody tr:first td:eq(0) select').focus().select();
@@ -717,7 +726,12 @@ $(document).ready(function() {
       var taxdisabled = $('#product_tax_table tbody tr:first td:eq(0) select').is(":disabled");
       var taxcount = $('#product_tax_table tbody tr').length;
       if (taxdisabled || taxcount<1) {
-        $("#specifications").contents("div").children("input").first().focus();
+        if ($("#specifications").contents(".form-group").length == 0) {
+          $("apsubmit").focus();
+        }
+        else {
+          $("#specifications").contents(".form-group:first").find("input:first").focus();
+        }
       }
       else {
         $('#product_tax_table tbody tr:first td:eq(0) select').focus().select();
