@@ -317,9 +317,11 @@
           </table>
         </div>
       </div>
-      <div class="form-inline">
-        <div class="form-group">
+      <div class="form-group">
+        <div class="form-group col-md-6 pull-right">
+      {% if  projects %}
           <label for="project">{% trans %}Pro<u>j</u>ect{% endtrans %} :</label>
+            <div class="form-group">
 
           <select class="form-control input-sm" id="project" accesskey="j">
             <option value="">{% trans %}None{% endtrans %}</option>
@@ -328,37 +330,44 @@
             {% endfor %}}
           </select>
         </div>
-        <div class="form-group pull-right">
-          <label for="narration">{% trans %}Narra<u>t</u>ion{% endtrans %} :</label>
-          <textarea class="form-control" name="narration" id="narration" rows="3" cols="70" accesskey="t"></textarea>
+      {% endif %}
+          <div class="form-inline" >
+              <button type="button" id="save" name="submit" class="btn btn-success" accesskey="s">
+                {% trans %}<u>S</u>ave{% endtrans %}
+              </button>
+            <div class="form-group">
+              <button type="button" id="reset" class="btn btn-danger" accesskey="e">
+                {% trans %}R<u>e</u>set{% endtrans %}
+              </button>
+            </div>
+            <div class="form-group">
+              <button type="button" id="popup" class="btn btn-primary" accesskey="o">
+                {% trans %}Add Acc<u>o</u>unt{% endtrans %}
+              </button>
+            </div>
+                  <label class="btn btn-primary" for="my-file-selector">
+                    <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
+                    {% trans %}Attac<u>h</u>{% endtrans %}
+                  </label>
+                  <span class='label label-info' id="upload-file-info"></span>
+
+            </div>
         </div>
+          <div class="form-group pull-left col-md-6">
+            <label for="narration">{% trans %}Narra<u>t</u>ion{% endtrans %} :</label>
+            <textarea class="form-control" name="narration" id="narration" rows="3" cols="70" accesskey="t"></textarea>
+          </div>
+
+
       </div>
+
+
       <input type="hidden" id="vtype" name="vtype" value="{{vtype}}">
 
 
     </form>
-    <div class="form-inline">
-      <div class="form-group">
-        <button type="button" id="save" name="submit" class="btn btn-success" accesskey="s">
-          {% trans %}<u>S</u>ave{% endtrans %}
-        </button>
-      </div>
-      <div class="form-group">
-        <button type="button" id="reset" class="btn btn-danger" accesskey="e">
-          {% trans %}R<u>e</u>set{% endtrans %}
-        </button>
-      </div>
-      <div class="form-group">
-        <button type="button" id="popup" class="btn btn-primary" accesskey="o">
-          {% trans %}Add Acc<u>o</u>unt{% endtrans %}
-        </button>
-      </div>
-            <label class="btn btn-primary" for="my-file-selector">
-              <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
-              {% trans %}Attac<u>h</u>{% endtrans %}
-            </label>
-            <span class='label label-info' id="upload-file-info"></span>
-      </div>
+
+
     </div>
 
 

@@ -317,18 +317,15 @@ $("#invsel").keyup(function(event) {
     }
   });
 
-  $('#project').keyup(function(event) {
-    if(event.which==13){
-      $('#narration').select().focus();
-    }
-  });
+
   $('#project').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-      $('#vtable tbody tr:last input:enabled').focus().select();
+      $('#narration').focus().select();
+
       event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-      $('#narration').focus().select();
+      $('#save').focus().select();
       event.preventDefault();
     }
     if (event.which==13) {
@@ -337,17 +334,35 @@ $("#invsel").keyup(function(event) {
   });
   $('#narration').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-      $('#project').focus().select();
+      $('#vtable tbody tr:last input:enabled').focus().select();
       event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-      $('#save').focus();
+      $('#project').focus();
       event.preventDefault();
     }
+    if (event.which==38) {
+      $('#vtable tbody tr:last input:enabled').focus().select();
+      event.preventDefault();
+    }
+    if (event.which==13 && $('#project').val()== undefined){
+          $('#save').click();
+      }
   });
+    var details = {}
+  $('#narration').keyup(function(event) {
+    if (details.projectcode!="" && event.which==13) {
+
+        $('#project').focus();
+      event.preventDefault();
+    }
+
+  });
+
+
   $('#save').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-      $('#narration').focus().select();
+      $('#project').focus().select();
       event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
@@ -407,7 +422,7 @@ $("#invsel").keyup(function(event) {
   });
 
 
-  $('#narration').keyup(function(event) {
+  $('#project').keyup(function(event) {
     if(event.which==13){
       if ($('#drtotal').val()!=$('#crtotal').val()) {
         outfocus = true;
@@ -437,7 +452,8 @@ $("#invsel").keyup(function(event) {
       event.preventDefault();
     }
     if (event.which==38) {
-      $("#project").select().focus();
+      $("#narration").select().focus();
+      event.preventDefault();
     }
   });
   //This event fires when the crdr select box option is changed
@@ -638,7 +654,7 @@ $("#invsel").keyup(function(event) {
       $('#vtable tbody tr:eq('+nextindex+') select:enabled:first').focus();
       event.preventDefault();
       if (curindex==lastindex) {
-        $("#project").focus();
+        $("#narration").focus();
       }
     }
   });
@@ -667,7 +683,7 @@ $("#invsel").keyup(function(event) {
       $('#vtable tbody tr:eq('+nextindex+') select:enabled:first').focus();
       event.preventDefault();
       if (curindex==lastindex) {
-        $("#project").focus();
+        $("#narration").focus();
       }
     }
   });
@@ -723,7 +739,7 @@ $("#invsel").keyup(function(event) {
         }
         else {
           if((diff).toFixed(2)==0){
-            $("#project").focus();
+            $("#narration").focus();
             return false;
           }
           $.ajax({
@@ -793,7 +809,7 @@ $("#invsel").keyup(function(event) {
         }
         else {
           if((diff).toFixed(2)==0){
-            $("#project").focus();
+            $("#narration").focus();
             return false;
           }
           $.ajax({
@@ -859,7 +875,7 @@ $("#invsel").keyup(function(event) {
           });
           return false;
         }
-        $("#project").focus();
+        $("#narration").focus();
       }
       curindex=null;
       lastindex=null;
@@ -909,7 +925,7 @@ $("#invsel").keyup(function(event) {
         }
         else {
           if((diff).toFixed(2)==0){
-            $("#project").focus();
+            $("#narration").focus();
             return false;
           }
           $.ajax({
@@ -984,7 +1000,7 @@ $("#invsel").keyup(function(event) {
         }
         else {
           if((diff).toFixed(2)==0){
-            $("#project").focus();
+            $("#narration").focus();
             return false;
           }
           $.ajax({
@@ -1049,7 +1065,7 @@ $("#invsel").keyup(function(event) {
           });
           return false;
         }
-        $("#project").focus();
+        $("#narration").focus();
       }
     }
     if (event.which==13 && outfocus) {
@@ -1213,6 +1229,15 @@ $("#invsel").keyup(function(event) {
     details.vno=$('#vno').val();
     details.vdate=$('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
     details.projectcode=$('#project').val();
+    jQuery(function(){
+      if ((jQuery('#project').length)) {
+        $('#project').val();
+      } // returns 1
+      else {
+        details.projectcode=""
+      }
+    });
+
     details.narration=$.trim($('#narration').val());
     details.vtype=$('#vtype').val();
     var form_data = new FormData();
