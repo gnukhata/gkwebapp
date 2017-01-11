@@ -42,8 +42,9 @@
   </div>
   <input type="text" name="godownflag" id="editgodownflag" value="0" hidden>
   {% else %}
-<input type="text" name="godownflag" id="editgodownflag" value="0" hidden>
 {% if numberofgodowns==0 %}
+<input type="checkbox" name="godownflag" id="editgodownflag" value="0">
+<label class="" for="editgodownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
 <div id="editnogodown" class="form-group pds">
   <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
   <div class="input-group">
@@ -51,7 +52,38 @@
     <span class="input-group-addon input-sm" id="unitaddon"></span>
   </div>
 </div>
+<div  id="editopeningstockdiv" class="form-group">
+  <div class="panel">
+    <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">
+      <thead class="bg-primary input-sm">
+        <tr>
+          <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
+          <th class="col-xs-4 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="editgodownid">
+            <td class="col-xs-8">
+              <select class="form-control input-sm editgodown_name">
+                <option value="" disabled selected hidden>Select Godown</option>
+                {% for record in godown %}
+                <option value={{record["goid"]}}>{{record["goname"]}}({{record["goaddr"]}})</option>
+                {% endfor %}
+              </select>
+            </td>
+            <td class="col-xs-3">
+              <input class="form-control input-sm editgodown_ob text-right numtype" value="0.00">
+            </td>
+            <td class="col-xs-1">
+              <a href="#" class="editgodown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 {% else %}
+<input type="text" name="godownflag" id="editgodownflag" value="1" hidden>
 <div  id="editopeningstockdiv" class="form-group">
   <div class="panel">
     <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">

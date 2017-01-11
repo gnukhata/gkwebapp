@@ -19,6 +19,19 @@ $(document).ready(function() {
     }
   });
 
+  $(document).off('click', '#editgodownflag').on('click', '#editgodownflag', function(e){
+    if ($(this).is(":checked")) {
+      $("#editgodownflag").val(1);
+      $("#editnogodown").hide();
+      $("#editopeningstockdiv").show();
+    }
+    else {
+      $("#editgodownflag").val(0);
+      $("#editopeningstockdiv").hide();
+      $("#editnogodown").show();
+    }
+  });
+
   var sel1=0;
   var sel2=0;
   var sindex=0;
@@ -803,7 +816,7 @@ $(document).ready(function() {
     var nextindex1 = curindex1+1;
     var previndex1 = curindex1-1;
     var selectindex = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').index();
-    var numberofgodowns = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option').length;
+    var numberofgodowns = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length;
     if (event.which==13) {
       event.preventDefault();
       if (curindex1 != ($("#editgodown_ob_table tbody tr").length-1)) {
@@ -928,9 +941,9 @@ $(document).ready(function() {
     });
     var obj = {};
     $("#editgodown_ob_table tbody tr").each(function(){
-      if ($.trim($(".editgodownid",this).val())!="") {
+      if ($.trim($(".editgodown_name",this).val())!="") {
         if ($.trim($(".editgodown_ob",this).val())!="" && $.trim($(".editgodown_ob",this).val())!= "0.00") {
-          obj[$(".editgodownid",this).val()] = $(".editgodown_ob",this).val();
+          obj[$(".editgodown_name",this).val()] = $(".editgodown_ob",this).val();
         }
       }
     });
@@ -939,6 +952,7 @@ $(document).ready(function() {
     if ($("#editgodownflag").val() == 1) {
       editformdata.push({name: 'godowns', value: JSON.stringify(obj)});
     }
+    console.log(editformdata);
     $.ajax({
       url: '/product?type=edit',
       type: 'POST',
