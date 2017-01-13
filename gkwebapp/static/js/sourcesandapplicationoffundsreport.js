@@ -25,15 +25,18 @@ Contributors:
 "Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
 */
-
+/*
+ This file is for report page of sources and application of funds report.
+ */
 $(document).ready(function() {
 
-  oninvoice = 0;
+  oninvoice = 0; // Global variable declared in mainshell is used to remove organisation name in printing of invoice.
 
   $("#msspinmodal").modal("hide");
-
+// Hide group view button and print button, because group view si displayed by default.
   $("#grpbtn").hide();
   $("#realprintbalance").hide();
+// Calculating width depending on the screen size.
   var percentwid = 100*(($("table").width()-12)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   var percentheigth = 100*(($("body").height()-$(".navbar").height()-148)/$("body").height());
@@ -64,6 +67,7 @@ $(document).ready(function() {
   var sbgrpflag=0
 
 $("#grpbtn").click(function(event){
+// This function only shows group balances, hides subgroup and accounts balances.
   event.preventDefault();
   $(".subgroupacc").css("display", "none");
   $(".groupacc").css("display", "none");
@@ -80,6 +84,7 @@ $("#grpbtn").click(function(event){
 });
 
   $("#sbgbtn").click(function(event){
+// this function hides all accounts balances and displays only subgroup and group balances.
     event.preventDefault();
       $(".groupacc").removeAttr('style');
       $(".subgroupacc").css("display", "none");
@@ -91,6 +96,7 @@ $("#grpbtn").click(function(event){
   });
 
   $("#accbtn").click(function(event){
+// This function shows all group, subgroups and accounts balances.
     event.preventDefault();
       $(".groupacc").removeAttr('style');
       $(".subgroupacc").removeAttr('style');
@@ -102,6 +108,7 @@ $("#grpbtn").click(function(event){
   });
 
   $(document).off('keydown' ,'.libgname').on('keydown' ,'.libgname',function(event) {
+// This function navigates between rows of the table by getting the next and previous index of visible rows.
     curindex = $(this).closest('tr');
 		nextindex = $(curindex).nextAll("tr:visible:first").index();
 		previndex = $(curindex).prevAll("tr:visible:first").index();;
