@@ -129,6 +129,7 @@ $(document).ready(function() {
     }
   });
   $("#add_cussup_reset").click(function(event) {
+      // click the customer/supplier create tab to reload the current page in tab creating a reset effect
     $("#customersupplier_create").click();
   });
   $(document).keyup(function(event) {
@@ -139,8 +140,11 @@ $(document).ready(function() {
     }
   });
   $("#cussup_save").click(function(event) {
+      //save event for saving the customer/supplier
     event.preventDefault();
-    var custsupdata=$("#add_cussup option:selected").val();
+    var custsupdata=$("#add_cussup option:selected").val(); //select with option either customer or supplier
+    // custsupdata = 3 if customer or 19 if supplier
+    //validations to check if none of the required fields are left blank
     if ($.trim($("#add_cussup option:selected").val())=="") {
       $("#cussup-blank-alert").alert();
       $("#cussup-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -158,7 +162,7 @@ $(document).ready(function() {
       $("#add_cussup_name").focus();
       return false;
     }
-
+// ajax call for saving the customer/supplier
     $.ajax({
       url: '/customersuppliers?action=save',
       type: 'POST',
@@ -175,7 +179,7 @@ $(document).ready(function() {
       "csflag": $("#add_cussup option:selected").val()},
       beforeSend: function(xhr)
       {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken); //attaching the jwt token in the header
       }
     })
     .done(function(resp) {
@@ -198,6 +202,7 @@ $(document).ready(function() {
 
       }
       if(resp["gkstatus"] ==1){
+          // gkstatus 1 implies its a duplicate entry.
         if (custsupdata == '3') {
           $("#add_cussup_name").focus();
           $("#cus-duplicate-alert").alert();
@@ -231,6 +236,6 @@ $(document).ready(function() {
     .always(function() {
       console.log("complete");
     });
-    event.stopPropagation();
+    event.stopPropagation(); // stoopping the event for unnecessarily repeating itself
   });
 });

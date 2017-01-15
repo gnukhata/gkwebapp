@@ -17,7 +17,7 @@ $(document).ready(function() {
       return str
     }
   }
-  function yearpad (str, max) {
+  function yearpad (str, max) { //to add leading 20 or 200 in the year
     str = str.toString();
     if (str.length==1) {
       return str.length < max ? pad("200" + str, max) : str;
@@ -39,6 +39,7 @@ $(document).ready(function() {
   $("#deliverychallan_year").blur(function(event) {
     $(this).val(yearpad($(this).val(),4));
   });
+  // events for shifting focus. Enter shifts to next element and up arrow shifts to previous
   $("#deliverychallan_purchaseorder").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
@@ -153,83 +154,9 @@ $(document).ready(function() {
   });
 
 
-  $("#deliverychallan_purchaseorder").change(function(event) {
-    if ($("#deliverychallan_purchaseorder option:selected").val()!='') {
-      $.ajax({
-        url: '/deliverychallan?action=getpurchaseorder',
-        type: 'POST',
-        dataType: 'json',
-        async : false,
-        data : {"orderid":$("#deliverychallan_purchaseorder option:selected").val()},
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-        }
-      })
-      .done(function(resp) {
-        if (resp["gkstatus"]==0) {
-          var podata = resp["podata"];
-          $("#deliverychallan_customer").val(podata.csid);
-          if ($('#deliverychallan_product_table tbody tr').length==1) {
-            $('#deliverychallan_product_table tbody tr').remove();
-            $.each(podata["productdetails"], function(key, value) {
-              $.ajax({
-                url: '/deliverychallan?action=getproducts',
-                type: 'POST',
-                dataType: 'json',
-                async : false,
-                beforeSend: function(xhr)
-                {
-                  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                }
-              })
-              .done(function(resp) {
-                console.log("success");
-                if (resp["gkstatus"]==0) {
-                  $('#deliverychallan_product_table tbody').append('<tr>'+
-                  '<td class="col-xs-7">'+
-                  '<select class="form-control input-sm product_name"></select>'+
-                  '</td>'+
-                  '<td class="col-xs-4">'+
-                  '<div class="input-group">'+
-                  '<input type="text" class="deliverychallan_product_quantity form-control input-sm text-right" value="">'+
-                    '<span class="input-group-addon input-sm" id="unitaddon"></span>'+
-                  '</div>'+
-                  '</td>'+
-                  '<td class="col-xs-1">'+
-                  '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-                  '</td>'+
-                  '</tr>');
-                  for (product of resp["products"]) {
-                    $('#deliverychallan_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
-                  }
-                  $('#deliverychallan_product_table tbody tr:last td:eq(0) select').val(key);
-                  $('#deliverychallan_product_table tbody tr:last td:eq(1) input').val(value.qty);
-                  $(".product_name").change();
-                }
-              })
-              .fail(function() {
-                console.log("error");
-              })
-              .always(function() {
-                console.log("complete");
-              });
-              $('.deliverychallan_product_quantity').numeric({ negative: false});
-            });
-          }
-        }
-      })
-      .fail(function() {
-        console.log("error");
-      })
-      .always(function() {
-        console.log("complete");
-      });
 
-    }
-  });
   $(document).off("change",".product_name").on("change",".product_name",function(event)
-  {
+  { // depending on the productcode its unit of measurement is retrieved from te database and displayed to the user 
     var productcode = $(this).find('option:selected').val();
     var curindex = $(this).closest('tbody tr').index();
   $.ajax({
