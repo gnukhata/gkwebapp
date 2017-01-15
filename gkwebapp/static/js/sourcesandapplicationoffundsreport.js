@@ -139,12 +139,16 @@ $("#grpbtn").click(function(event){
   });
 
   $(".cbalsheettable tbody tr").dblclick(function(event) {
+// Drill down function.
       event.preventDefault();
       var grpcode = $(this).attr('value');
       if(grpcode==""){
+      // If value of this row is blank then do nothing.
         return false;
       }
       else if (grpcode.indexOf("g") != -1) {
+    // If value contains 'g' character then it must be a group code. So children of this group is displayed.
+    // Class name of the hidden rows are same as the group code.
         $("."+grpcode).slideToggle(1);
         $("."+grpcode).removeAttr('style');
         $("."+grpcode).each(function(index) {
@@ -156,6 +160,8 @@ $("#grpbtn").click(function(event){
         });
       }
       else {
+// If value is purely in numbers i.e no character 'g' is present then the value must be an account code.
+// Ledger of the given account code is display.
     		var newfromdate = sessionStorage.yyyymmddyear1;
     		$.ajax(
     			{
@@ -179,6 +185,7 @@ $("#grpbtn").click(function(event){
   });
 
   $("#satable").off('click','tr').on('click','tr',function(e){
+// Function to add selected class on click.
     e.preventDefault();
     var id = $(this).attr('value');
     var currindex = $(this).index();
@@ -190,6 +197,7 @@ $("#grpbtn").click(function(event){
 
 
   $("#saback").click(function(event) {
+// BAck function to display balancesheet report from the print screen.
     if ($("#realprintbalance").is(":visible")) {
       $.ajax(
         {
@@ -239,7 +247,7 @@ $("#cbalbutn").click(function(event) {
 
 
 $("#print").click(function(event) {
-
+// Function to serve a spreadsheet to the client of the balance sheet report.
   event.preventDefault();
   var orgname = sessionStorage.getItem('orgn');
   var orgtype = sessionStorage.getItem('orgt');
@@ -263,6 +271,7 @@ xhr.send();
 });
 
 $("#printbalance").click(function(event) {
+// function to display a printable version of the balance sheet report.
   $(".cbalsheettable").removeClass('fixed-table').addClass('table-striped');;
   $(".cbalsheettable").unbind('dblclick');
   $('.cbalsheettable tbody a').contents().unwrap();

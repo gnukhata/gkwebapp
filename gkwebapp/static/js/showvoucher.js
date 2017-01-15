@@ -23,9 +23,12 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 */
-
+/*
+This script is for displaying addvoucher page.
+*/
 $(document).ready(function(){
   $('.modal-backdrop').remove();
+// This function calls the addvoucher interface depending on the value of vtype.
   (function($){
     $.fn.callvoucher = function(vtype){
         return this.each(function(){
@@ -51,7 +54,7 @@ $(document).ready(function(){
         });
     }
 })(jQuery);
-
+// following events call the above function along with the voucher type.
   $('#showcontra').unbind("click").click(function(){
     $(this).callvoucher("contra");
   });

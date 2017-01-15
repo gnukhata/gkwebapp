@@ -24,7 +24,7 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
 */
-
+// This script is for the project statement report.
 $(document).ready(function() {
 
   oninvoice = 0;
@@ -36,7 +36,7 @@ $(document).ready(function() {
   $(' #prjsttable tbody tr:first-child td:eq(1) a').focus();
   $('#prjsttable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 
-
+// Add and remove selected class to the row on focus and blure respectively.
   $(document).off('focus' ,'.prjstaccs').on('focus' ,'.prjstaccs',function() {
     $('#prjsttable tr').removeClass('selected');
     $(this).closest('tr').addClass('selected');
@@ -52,6 +52,7 @@ $(document).ready(function() {
 
 
   $(document).off('keydown' ,'.prjstaccs').on('keydown' ,'.prjstaccs',function(event) {
+// Navigation function for table rows
     curindex = $(this).closest('tr').index();
     nextindex = curindex+1;
     previndex = curindex-1;
@@ -73,6 +74,7 @@ $(document).ready(function() {
 
 
   $("#prjsttable").off('click','tr').on('click','tr',function(e){
+// Add selected class on click.
     e.preventDefault();
     var id = $(this).attr('data-value');
     var currindex = $(this).index();
@@ -94,6 +96,7 @@ $(document).ready(function() {
   });
 
   $("#prjsttable").off('dblclick','tr').on('dblclick','tr',function(e){
+// Function to drill down to account ledger of the selected account.
     e.preventDefault();
     var acccode = $(this).attr('data-value');
     if (acccode=="")
@@ -123,6 +126,7 @@ $(document).ready(function() {
 
   });
   $('#psclearfields').click(function(){
+// Clear search field.
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
   });
 
@@ -132,6 +136,7 @@ $(document).ready(function() {
     }
   });
   $("#print").click(function(event) {
+// Function to serve a spreadsheet of the project statement.
     var date = $("#calculateto").val().split("-");
     var newtodate = date[2]+"-"+date[1]+"-"+date[0];
       event.preventDefault();
@@ -158,6 +163,7 @@ $(document).ready(function() {
 });
 
   $("#printprjstatement").click(function(event) {
+// Function to display a printable version of the report.
     var date = $("#calculateto").val().split("-");
     var newtodate = date[2]+"-"+date[1]+"-"+date[0];
     $("#msspinmodal").modal("show");

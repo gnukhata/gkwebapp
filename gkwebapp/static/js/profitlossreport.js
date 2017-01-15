@@ -25,7 +25,7 @@ Contributors:
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
 "Abhijith Balan" <abhijithb21@openmailbox.com>
 */
-
+// This script is for the profit and loss report.
 $(document).ready(function() {
   oninvoice = 0;
   $(".fixed-table-loading").remove();
@@ -36,6 +36,8 @@ $(document).ready(function() {
   $('#expensetbl tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
   var rcindex = 0
   var pyindex = 0
+
+// Add and remove selected class to the row on focus and blur respectively for expensetbl.
   $(document).off('focus' ,'.rcaccname').on('focus' ,'.rcaccname',function() {
     $('#expensetbl tr').removeClass('selected');
     $(this).closest('tr').addClass('selected');
@@ -51,6 +53,7 @@ $(document).ready(function() {
   var date = $("#ledtodate").val().split("-");
   var newtodate = date[2]+"-"+date[1]+"-"+date[0];
 
+// Navigation function for table rows for expensetbl
   $(document).off('keydown' ,'.rcaccname').on('keydown' ,'.rcaccname',function(event) {
     curindex = $(this).closest('tr').index();
     rcindex = $(this).closest('tr').index();
@@ -79,6 +82,7 @@ $(document).ready(function() {
   var urole = $("#urole").val();
 
 
+// Add selected class on click for expensetbl.
   $("#expensetbl").off('click','tr').on('click','tr',function(e){
     e.preventDefault();
     var id = $(this).attr('data-value');
@@ -100,6 +104,7 @@ $(document).ready(function() {
     }
 });
 
+// Function to drill down to account ledger of the selected account for expensetbl.
   $("#expensetbl").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
     var acccode = $(this).attr('data-value');
@@ -134,6 +139,7 @@ $(document).ready(function() {
 
   });
 
+// Add and remove selected class to the row on focus and blur respectively for incometbl.
   $(document).off('focus' ,'.pyaccname').on('focus' ,'.pyaccname',function() {
     $('#incometbl tr').removeClass('selected');
     $(this).closest('tr').addClass('selected');
@@ -149,6 +155,7 @@ $(document).ready(function() {
   var date = $("#ledtodate").val().split("-");
   var newtodate = date[2]+"-"+date[1]+"-"+date[0];
 
+// Navigation function for table rows for incometbl
   $(document).off('keydown' ,'.pyaccname').on('keydown' ,'.pyaccname',function(event) {
     curindex = $(this).closest('tr').index();
     pyindex = $(this).closest('tr').index();
@@ -178,6 +185,7 @@ $(document).ready(function() {
   var urole = $("#urole").val();
 
 
+// Add selected class on click for incometbl.
   $("#incometbl").off('click','tr').on('click','tr',function(e){
     e.preventDefault();
     var id = $(this).attr('data-value');
@@ -199,6 +207,7 @@ $(document).ready(function() {
     }
 });
 
+// Function to drill down to account ledger of the selected account for incometbl.
   $("#incometbl").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
     var acccode = $(this).attr('data-value');
@@ -233,6 +242,7 @@ $(document).ready(function() {
 
   });
 
+// Functions to clear search fields.
   $('#plrclearfields').click(function(){
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
   });
@@ -247,6 +257,7 @@ $(document).ready(function() {
   });
 
   $("#print").click(function(event){
+// Function to serve spreadsheet of the report.
       var todatearray = $("#ledtodate").val().split("-");
       var orgtype = sessionStorage.getItem('orgt');
       var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
@@ -273,6 +284,7 @@ $(document).ready(function() {
 
 
     $("#printpnl").click(function(event) {
+// Displays a printable version of the report.
       $("#incometbl").unbind('dblclick');
       $("#expensetbl").unbind('dblclick');
       $('table a').contents().unwrap();
@@ -286,6 +298,7 @@ $(document).ready(function() {
     });
 
   $("#pnlback").click(function(event) {
+// Function to return from printable version.
     if ($("#realprintpnl").is(":visible")) {
       var todatearray = $("#ledtodate").val().split("-");
       var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
