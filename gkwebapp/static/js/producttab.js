@@ -1,4 +1,4 @@
-$/*
+/*
 Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
@@ -24,7 +24,7 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 */
 // This script is for the product base page.
- (document).ready(function() {
+$(document).ready(function() {
   $("#addproduct").click(function(event)
   {
     /* Tab to load add product page. */
