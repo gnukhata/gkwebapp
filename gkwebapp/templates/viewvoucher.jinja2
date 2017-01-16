@@ -428,7 +428,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                 {% for project in projects %}
                 {% if project['projectcode']==voucher["project"] %}
                 <option value="{{project['projectcode']}}" selected>{{project['projectname']}}</option>
-                <option value="">{% trans %}None{% endtrans %}</option>
+                <option value="" >{% trans %}None{% endtrans %}</option>
                 {% else %}
                 <option value="{{project['projectcode']}}">{{project['projectname']}}</option>
                 {% endif %}

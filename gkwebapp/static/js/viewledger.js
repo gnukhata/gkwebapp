@@ -73,7 +73,7 @@ $(".dis").attr('disabled', true);
       return str
     }
   }
-
+  
   $("#viewledger_fromdate").blur(function(event) {
     $(this).val(pad($(this).val(),2));
   });
@@ -142,18 +142,28 @@ $(".dis").attr('disabled', true);
       $("#viewledger_tomonth").focus();
     }
   });
+
   $("#viewledger_nar").keydown(function(e){
     if(e.which==13){
-      $("#viewledger_prjname").focus();
+      if (  $('#viewledger_prjname').val()== undefined) {
+      $('#viewledger_submit').click();
+      event.preventDefault();
+      }
+      else {
+        $('#viewledger_prjname').focus();
+        event.preventDefault();
+      }
     }
     if(e.which==38){
       $("#viewledger_toyear").focus();
+    event.preventDefault();
     }
   });
   $("#viewledger_prjname").keydown(function(e){
     var s1 = $("#viewledger_prjname option:selected").index();
     if(e.which==38 && s1==0){
       $("#viewledger_nar").focus();
+    event.preventDefault();
     }
   });
     $("#viewledger_monthly").change(function(event) {
@@ -192,6 +202,7 @@ $(".dis").attr('disabled', true);
     $("#viewledger_prjname").keydown(function(event) {
       if (event.which==13) {
         $("#viewledger_submit").click();
+      event.preventDefault();
       }
     });
 
@@ -199,6 +210,7 @@ $(".dis").attr('disabled', true);
     if (event.which==13) {
       if ($("#viewledger_monthly").is(":checked")) {
       $("#viewledger_submit").click();
+      event.preventDefault();
     }
     }
   });
@@ -271,6 +283,15 @@ $(".dis").attr('disabled', true);
       return false;
     }
     $("#msspinmodal").modal("show");
+
+      var prj;
+      if ($('#viewledger_prjname').length) {
+        prj=$('#viewledger_prjname').val();
+      } // returns 1
+      else {
+      prj ="";
+      }
+
     $.ajax(
       {
         type: "POST",
@@ -278,7 +299,7 @@ $(".dis").attr('disabled', true);
         global: false,
         async: false,
         datatype: "text/html",
-        data: {"backflag":0,"accountcode":$("#viewledger_accname").val(),"calculatefrom":$("#viewledger_fromyear").val()+"-"+$("#viewledger_frommonth").val()+"-"+$("#viewledger_fromdate").val(),"calculateto":$("#viewledger_toyear").val()+"-"+$("#viewledger_tomonth").val()+"-"+$("#viewledger_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#viewledger_prjname").val(),"monthlyflag":$("#viewledger_monthly").is(":checked"),"narrationflag":$("#viewledger_nar").is(":checked")},
+        data: {"backflag":0,"accountcode":$("#viewledger_accname").val(),"calculatefrom":$("#viewledger_fromyear").val()+"-"+$("#viewledger_frommonth").val()+"-"+$("#viewledger_fromdate").val(),"calculateto":$("#viewledger_toyear").val()+"-"+$("#viewledger_tomonth").val()+"-"+$("#viewledger_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":prj,"monthlyflag":$("#viewledger_monthly").is(":checked"),"narrationflag":$("#viewledger_nar").is(":checked")},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

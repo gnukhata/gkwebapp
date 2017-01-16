@@ -1378,14 +1378,13 @@ $(document).ready(function()
     details.vno=$('#vno').val();
     details.vdate=$('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
     details.projectcode=$('#project').val();
-    jQuery(function(){
-      if ((jQuery('#project').length)) {
-        $('#project').val();
+
+      if ($('#project').length) {
+          details.projectcode=$('#project').val();
       } // returns 1
       else {
         details.projectcode=""
       }
-    });
     details.narration=$('#narr').val();
     details.vtype=$('#m_vtype').val();
     var form_data = new FormData();

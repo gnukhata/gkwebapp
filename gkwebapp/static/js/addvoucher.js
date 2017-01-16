@@ -1229,14 +1229,13 @@ $("#invsel").keyup(function(event) {
     details.vno=$('#vno').val();
     details.vdate=$('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
     details.projectcode=$('#project').val();
-    jQuery(function(){
-      if ((jQuery('#project').length)) {
-        $('#project').val();
+
+      if ($('#project').length) {
+        details.projectcode=$('#project').val();
       } // returns 1
       else {
         details.projectcode=""
       }
-    });
 
     details.narration=$.trim($('#narration').val());
     details.vtype=$('#vtype').val();
