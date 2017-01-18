@@ -23,29 +23,31 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 */
-
+// This script is for multiple account popup.
 $(document).ready(function() {
-  $(".m_openbal").numeric();
+  $(".m_openbal").numeric();// opening balance column will only accept numbers, decimal and minus sign.
 
   $(document).off("keydown",".m_accname").on("keydown",".m_accname",function(event)
   {
+  // This is the keydown event for account name column fields.
     $(".m_openbal").numeric();
     var curindex = $(this).closest('tr').index();
     var nextindex = curindex+1;
     var previndex = curindex-1;
-    var m_grpnm = $.trim($("#m_gname").val());
-
+    var m_grpnm = $.trim($("#m_gname").val());// get value of groupname selected.
 
     if (event.which==40)
     {
       if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
       {
+        // If groupname is Direct or Indirect income OR direct or Indirect Expense there will be no opening balance field so focus will be shifted to next account name.
         $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input').focus();
         $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input').select();
 
       }
       else
       {
+        // else it will be shifted to the corresponding opening balance field.
         $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').focus();
         $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').select();
       }
@@ -55,12 +57,14 @@ $(document).ready(function() {
 
       if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
       {
+        // If groupname is Direct or Indirect income OR direct or Indirect Expense there will be no opening balance field so focus will be shifted to previous account name.
         $('#m_acctable tbody tr:eq('+previndex+') td:eq(0) input').focus();
         $('#m_acctable tbody tr:eq('+previndex+') td:eq(0) input').select();
 
       }
       else
       {
+        // else it will be shifted to the previous opening balance field.
         $('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input').focus();
         $('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input').select();
       }
@@ -69,19 +73,22 @@ $(document).ready(function() {
     {
       if(m_grpnm=="Select Group" || m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
       {
-
+        //If groupname is Direct or Indirect income OR direct or Indirect Expense there will be no opening balance field
         if ($(this).closest('tr').is(":last-child"))
         {
+          // If its the last row then a new row is added by calling the function addRow.
           addRow(curindex);
         }
         else
         {
+        // If groupname is Direct or Indirect income OR direct or Indirect Expense there will be no opening balance field so focus will be shifted to next account name.
           $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').focus();
           $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').select();
         }
       }
       else
       {
+        // else focus will be shifted to corresponding opening balance field.
         $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').focus().select();
       }
 
@@ -90,7 +97,7 @@ $(document).ready(function() {
 
   function addRow(curindex)
   {
-
+// This function will validate the current row and then add a new row.
     var accname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').val();
     if (accname=="")
     {
@@ -129,7 +136,7 @@ $(document).ready(function() {
         var m_grpnm = $.trim($("#m_gname").val());
         if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
         {
-
+          // will add row with only account name field as the groups mentioned above do not have opening balance.
           $("#m_acctable").append('<tr>'+
           '<td class="col-xs-10"><input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name"></td>'+
           '<td class="col-xs-2">'+
@@ -140,6 +147,7 @@ $(document).ready(function() {
       }
       else
       {
+      // will add row with both account name and opening balance.
         $("#m_acctable").append('<tr>'+
         '<td class="col-xs-7"><input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name"></td>'+
         '<td class="col-xs-3">'+
@@ -154,7 +162,7 @@ $(document).ready(function() {
     }
 
 
-    $('#m_acctable tbody tr:last td:eq(0) input').focus().select();
+    $('#m_acctable tbody tr:last td:eq(0) input').focus().select();// finally focus is set to the account name of the last row.
   }
 });
 
@@ -162,6 +170,7 @@ $(document).ready(function() {
 
 $(document).off("keydown",".m_openbal").on("keydown",".m_openbal", function(event)
 {
+// Keydown event for opening balance field.
   $(".m_openbal").numeric();
   var curindex = $(this).closest('tr').index();
   var nextindex = curindex+1;
@@ -184,7 +193,7 @@ $(document).off("keydown",".m_openbal").on("keydown",".m_openbal", function(even
   }
   if(event.which == 13)
   {
-
+    // Validates whether the account name of corresponfing row is blank or not.
     var accnt = $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').val();
 
     if(accnt=="")
@@ -201,15 +210,18 @@ $(document).off("keydown",".m_openbal").on("keydown",".m_openbal", function(even
 
     if ($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').val()==0 || $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').val()=="")
     {
+      // Default value 0.00 is set if the field is left blank or its value is 0.
       $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').val("0.00");
     }
 
     if ($(this).closest('tr').is(":last-child"))
     {
+    // If the current row is the last row then addrow function is called.
       addRow(curindex);
     }
     else
     {
+    // Else focus is set to the account name of the next row.
       $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').focus();
       $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').select();
     }
@@ -219,6 +231,7 @@ $(document).off("keydown",".m_openbal").on("keydown",".m_openbal", function(even
 });
 
 $(document).off("click",".m_del").on("click", ".m_del", function() {
+// This function will delete the current row.
   $(this).closest('tr').fadeOut(200, function(){
     $(this).closest('tr').remove();	 //closest method gives the closest element specified
     $('#m_acctable tbody tr:last td:eq(0) input').focus().select();
@@ -229,7 +242,7 @@ var allow = true;
 var blankindex = 0;
 $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
 
-
+// Function to save all accounts in the table.
   var output = [];	// This is an array which will contain dictionaries representing rows of the table.
   var m_grpnm = $.trim($("#m_gname").val());
   $("#m_acctable tbody tr").each(function() { //loop for the rows of the table body
@@ -237,15 +250,17 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
     var accn = $(".m_accname", this).val();
     if (accn=="")
     {
+      // If account name in any row is blank then the allow variable is set to false, also the index of the same row is saved.
       allow = false;
       blankindex = $(this).closest('tr').index();
 
     }
-    var obj = {};
+    var obj = {};// Dictionary is created for every row.
 
     obj.accountname = $(".m_accname", this).val();
     if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income" || $(".m_openbal", this).val()=="")
     {
+      // Opening balance is set to 0.00 is its zero or group name is one from the above mentioned groups.
       obj.openbal = "0.00";
     }
     else {
@@ -258,7 +273,7 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
   });
 
   if (!allow) {
-
+    // If allow variable is false then the process is stopped and user is indicated about the blank group name.
     $("#m_blank-alert").alert();
     $("#m_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#m_blank-alert").hide();
@@ -268,7 +283,7 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
     return false;
   };
 
-
+// ajax function below takes list of dictionaries "output" as input and saves all accounts.
   $.ajax({
     url: '/multiacc',
     type: 'POST',

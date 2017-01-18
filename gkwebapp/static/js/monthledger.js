@@ -24,7 +24,7 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
 */
-
+// this script is for monthly ledger report.
 $(document).ready(function() {
 
   oninvoice = 0;
