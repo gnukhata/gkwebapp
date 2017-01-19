@@ -14,11 +14,13 @@
 
   #ledgertable th {
     font-size: 85%;
+   
+    
   }
   .card-view .title {
       font-weight: bold;
       display: inline-block;
-      min-width: 30%;
+      min-width: 20%;
       text-align: left !important;
   }
   #ledgertable tbody {
@@ -44,7 +46,20 @@
   .calign{
     text-align:center;
   }
+  .dtwrap{
+  	width :6%
+  	 }
+ .smwrap{
+ 	width:4%
+ }	
+ .lngwrap{
+ 	width:20%
+ }
+ .mdwrap{
+ 	width:8%
+ }
 
+ 
   </style>
 </head>
 <body>
@@ -75,102 +90,103 @@
     <table id="ledgertable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
       <thead class="bg-primary">
         <tr>
-          <th class="col-xs-1">{% trans %}Date{% endtrans %}</th>
-          <th class="col-xs-1">{% trans %}V. No.{% endtrans %}</th>
-          <th class="col-xs-1 calign ">{% trans %}Status{% endtrans %}</th>
-          <th class="col-xs-1">{% trans %}Type{% endtrans %}</th>
+          <th class="dtwrap calign" >{% trans %}Date{% endtrans %}</th>
+          <th class="smwrap calign" >{% trans %}V. No.{% endtrans %}</th>
+          <th class="smwrap calign" >{% trans %}Status{% endtrans %}</th>
+          <th class="mdwrap calign">{% trans %}Type{% endtrans %}</th>
           {% if ledgerheader["projectname"]=="" %}
-          <th class="col-xs-4">{% trans %}Particulars{% endtrans %}</th>
-          <th class="col-xs-1 ralign">{% trans %}Debit{% endtrans %}</th>
-          <th class="col-xs-1 ralign">{% trans %}Credit{% endtrans %}</th>
-          <th class="col-xs-2 ralign">{% trans %}Balance{% endtrans %}</th>
+          <th class="lngwrap calign">{% trans %}Particulars{% endtrans %}</th>
+          <th class="dtwrap ralign">{% trans %}Debit{% endtrans %}</th>
+          <th class="dtwrap ralign">{% trans %}Credit{% endtrans %}</th>
+          <th class="dtwrap ralign">{% trans %}Balance{% endtrans %}</th>
           {% else %}
-          <th class="col-xs-6">{% trans %}Particulars{% endtrans %}</th>
-          <th class="col-xs-1 ralign">{% trans %}Debit{% endtrans %}</th>
-          <th class="col-xs-1 ralign">{% trans %}Credit{% endtrans %}</th>
+          <th class="lngwrap calign">{% trans %}Particulars{% endtrans %}</th>
+          <th class="dtwrap ralign">{% trans %}Debit{% endtrans %}</th>
+          <th class="dtwrap ralign">{% trans %}Credit{% endtrans %}</th>
           {% endif %}
         </tr>
       </thead>
       <tbody>
         {% for record in records %}
         <tr  data-value="{{record['vouchercode']}}">
-          <td class="col-xs-1">
+          <td class="dtwrap calign">
             {{record['voucherdate']}}
           </td>
           {% if record['vouchernumber']=="" %}
-          <td class="col-xs-1" >
+          <td class="smwrap calign">
             <a class="vno" href="">&nbsp</a>
           </td>
           {% else %}
-          <td class="col-xs-1">
+          <td class="smwrap calign">
             <a class="vno" href="">{{record['vouchernumber']}}</a>
           </td>
           {% endif %}
           {% if (record['status']) %}
-          <td class="col-xs-1 calign cred">***</td>
+          <td class="smwrap calign cred">***</td>
           {% else %}
           {% if (record['status'])=="" %}
-          <td class="col-xs-1" value="na"></td>
+          <td class="smwrap calign" value="na"></td>
           {%else%}
-          <td class="col-xs-1 calign cred"> </td>
+          <td class="smwrap calign cred"> </td>
           {% endif %}
           {% endif %}
           {% if record["vouchertype"]=="" %}
-          <td class="col-xs-1">&nbsp</td>
+          <td class="mdwrap calign">&nbsp</td>
           {% elif (record["vouchertype"]=="purchasereturn")%}
-          <td class="col-xs-1">{% trans %}Purchase Return{% endtrans %}</td>
+          <td class="mdwrap calign">{% trans %}Purchase Return{% endtrans %}</td>
           {% elif (record["vouchertype"]=="salesreturn")%}
-          <td class="col-xs-1">{% trans %}Sale Return{% endtrans %}</td>
+          <td class="mdwrap calign">{% trans %}Sale Return{% endtrans %}</td>
           {% elif (record["vouchertype"]=="creditnote")%}
-          <td class="col-xs-1">{% trans %}Credit Note{% endtrans %}</td>
+          <td class="mdwrap calign">{% trans %}Credit Note{% endtrans %}</td>
           {% elif (record["vouchertype"]=="debitnote")%}
-          <td class="col-xs-1">{% trans %}Debit Note{% endtrans %}</td>
+          <td class="mdwrap calign">{% trans %}Debit Note{% endtrans %}</td>
           {% else %}
-          <td class="col-xs-1" style="text-align:left">
+          <td class="mdwrap calign" >
             {{(record["vouchertype"]).title()}}
           </td>
           {% endif %}
 
           {% if ledgerheader["projectname"]=="" %}
-          <td class="col-xs-4">
+          
+          <td class="lngwrap">
             {% for pr in record['particulars'] %}
             {{pr}} <br>
             {% endfor %}
-            {% if record['narration']!="" and narrationflag==true %}
-            ({{record['narration']}})
+           {% if record['narration']!="" and narrationflag==true %}
+         <span style="font-size:0.9em">   ({{record['narration']}}) </span>
             {% endif %}
           </td>
           {%if record["advflag"]==1%}
-          <td class="col-xs-1 ralign cred">
+          <td class="dtwrap ralign cred">
             <b>{{record["Dr"]}}</b>
           </td>
-          <td class="col-xs-1 ralign cred">
+          <td class="dtwrap ralign cred">
             <b>{{record["Cr"]}}</b>
           </td>
           {%else%}
-          <td class="col-xs-1 ralign">
+          <td class="dtwrap ralign">
             {{record["Dr"]}}
           </td>
-          <td class="col-xs-1 ralign">
+          <td class="dtwrap ralign">
             {{record["Cr"]}}
           </td>
           {%endif%}
-          <td class="col-xs-2 ralign">
+          <td class="dtwrap ralign">
             {{record["balance"]}}
           </td>
           {% else %}
-          <td class="col-xs-6">
+          <td class ="lngwrap">
             {% for pr in record['particulars'] %}
             {{pr}} <br>
             {% endfor %}
             {% if record['narration']!="" and narrationflag==true %}
-            ({{record['narration']}})
+           <span style="font-size:0.9em" > ({{record['narration']}}) </span>
             {% endif %}
           </td>
-          <td class="col-xs-1 ralign">
+          <td class="dtwrap ralign">
             {{record["Dr"]}}
           </td>
-          <td class="col-xs-1 ralign">
+          <td class="dtwrap ralign">
             {{record["Cr"]}}
           </td>
           {% endif %}
