@@ -842,10 +842,8 @@ $(document).ready(function() {
         if ($("#editgodown_ob_table tbody tr").length == numberofgodowns) {
           var taxdisabled = $('#product_edit_tax_table tbody tr:first td:eq(0) select').is(":disabled");
           var taxcount = $('#product_edit_tax_table tbody tr').length;
-          console.log(taxcount);
           if (taxdisabled || taxcount<1) {
             if ($("#editspecifications").contents(".form-group").length == 0) {
-              console.log($("#editspecifications").contents(".form-group").length);
               $('#epsubmit').focus();
             }
             else {

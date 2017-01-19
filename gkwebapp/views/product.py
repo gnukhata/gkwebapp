@@ -133,7 +133,7 @@ def saveproduct(request):
 		else:
 			prdspecs[prd]= request.params[prd]
 
-		proddetails["specs"] = prdspecs
+	proddetails["specs"] = prdspecs
 	productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
 	result = requests.post("http://127.0.0.1:6543/products", data=json.dumps(productdetails),headers=header)
 	if len(taxes)>0:
@@ -182,8 +182,8 @@ def editproduct(request):
 			godowns = json.loads(request.params["godowns"])
 		else:
 			prdspecs[prd]= request.params[prd]
-		proddetails["specs"] = prdspecs
-		productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
+	proddetails["specs"] = prdspecs
+	productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
 	result = requests.put("http://127.0.0.1:6543/products", data=json.dumps(productdetails),headers=header)
 
 	for tax in taxes:
