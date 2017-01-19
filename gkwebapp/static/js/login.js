@@ -23,10 +23,11 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 */
-
+// This script is for login page.
 $(document).ready(function()
 {
   $("#login_username").focus();
+  // Retrives organisation details from sessionstorage.
   var orname = sessionStorage.getItem('orgn');
   var ortype = sessionStorage.getItem('orgt');
   var styear = sessionStorage.getItem('year1');
@@ -36,16 +37,19 @@ $(document).ready(function()
   var yeardata = "Financial Year : " + styear + " to " + enyear;
   if(orgdata!=""||yeardata!="")
   {
+  // displays organisation details in the status bar.
   $("#ticker").show();
   $("#welcome").hide();
   $("#orgdata").html(orgdata);
   $("#yeardata").html(yeardata);
   }
   if (pathname=="/showmainshell") {
+  // if user just logged out then the div is set to col-md-6 size.
     $("#forgotpassworddiv").addClass('col-md-6');
     $("#welcome").show();
     $("#bootstrap").attr('href', '../static/css/Default.min.css');
   }
+// Navigation functions.
   $('#login_username').keydown(function(e){
       if (e.which == 13)
       {
@@ -62,18 +66,21 @@ $(document).ready(function()
         }
   });
   $("#back").click(function(event){
+  // loads select organisation page on back.
     event.preventDefault();
     $("#selectorg").load("/existingorg" );
 
   });
 
   $("#forgotpwdlink").click(function(event){
+    //calls forgotpassword page and passes organisation code as data.
     event.preventDefault();
     var code = $("#orgcode").val();
     $("#selectorg").load("/forgotpassword?orgcode="+ code);
     $("#forgotpassworddiv").load("/forgotpassword?orgcode="+ code);
   });
   $("#changeorg").click(function(event){
+    // loads first page of GNUKhata.
     event.preventDefault();
   window.location.replace("/");
   });
@@ -81,6 +88,8 @@ $(document).ready(function()
 
   $("#loginform").submit(function(e)
   {
+    // submit fires when users clicks on login button.
+    // username and password along with organisation code is passed as data.
     e.preventDefault();
     if ($.trim($("#login_username").val())=="") {
       $("#login_username-blank-alert").alert();
@@ -112,10 +121,10 @@ $(document).ready(function()
       if(resp["gkstatus"]==0)
       {
         var gt = resp['gktoken'];
-
+        // on successfull login a token is received as response which is stored in sessionstorage.
         sessionStorage.gktoken = gt;
         sessionStorage.invflag = resp["invflag"]
-
+        // Theme is fetched for the user and stored in sessionstorage.
         $.ajax({
           url: '/theme',
           type: 'POST',
@@ -131,6 +140,7 @@ $(document).ready(function()
           sessionStorage.gktheme = resp["theme"];
         });
         sessionStorage.reload = 1;
+        // finally mainshell is called.
         window.location="/showmainshell";
       }
       else if(resp["gkstatus"]==2)
