@@ -53,7 +53,10 @@ width:3%
 width:6%
 }
 .lngwrap{
-width:20%
+width:22%
+}
+.ewrap{
+	width:8%
 }
 
 </style>
@@ -65,20 +68,20 @@ width:20%
 			<button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="ntbclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
 			<thead class="bg-primary">
 				<tr>
-					<th class="col-xs-1">{% trans %}Sr. No.{% endtrans %}</th>
-					<th class="col-xs-5">{% trans %}Account Name{% endtrans %}</th>
-					<th class="col-xs-2 ralign">{% trans %}Debit{% endtrans %}</th>
-					<th class="col-xs-2 ralign">{% trans %}Credit{% endtrans %}</th>
-					<th class="col-xs-2 calign" >{% trans %}Group Name{% endtrans %}</th>
+					<th class="smwrap calign">{% trans %}Sr. No.{% endtrans %}</th>
+					<th class="lngwrap">{% trans %}Account Name{% endtrans %}</th>
+					<th class="mdwrap ralign">{% trans %}Debit{% endtrans %}</th>
+					<th class="mdwrap ralign">{% trans %}Credit{% endtrans %}</th>
+					<th class="ewrap calign" >{% trans %}Group Name{% endtrans %}</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for record in records %}
 				<tr	data-value="{{record['accountcode']}}">
-					<td class="col-xs-1">
+					<td class="smwrap calign">
 						{{record['srno']}}
 					</td>
-					<td class="col-xs-5">
+					<td class="lngwrap">
 						{% if record['srno']!="" %}
 							<a class="accname" href="">{{record['accountname']}}</a>
 						{% else %}
@@ -91,21 +94,21 @@ width:20%
 					</td>
 
 					{%if record["advflag"]==1%}
-					<td class="col-xs-2  ralign cred">
+					<td class="mdwrap  ralign cred">
 						<b>{{record["Dr"]}}</b>
 					</td>
-					<td class="col-xs-2 ralign cred" >
+					<td class="mdwrap ralign cred" >
 						<b>{{record["Cr"]}}</b>
 					</td>
 					{%else%}
-					<td class="col-xs-2 ralign" >
+					<td class="mdwrap ralign" >
 						{{record["Dr"]}}
 					</td>
-					<td class="col-xs-2 ralign">
+					<td class="mdwrap ralign">
 						{{record["Cr"]}}
 					</td>
 					{%endif%}
-					<td class="col-xs-2 calign">
+					<td class="ewrap calign">
 						{{record["groupname"]}}
 					</td>
 				</tr>
