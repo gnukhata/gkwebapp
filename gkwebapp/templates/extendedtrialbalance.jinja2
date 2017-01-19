@@ -45,6 +45,20 @@
 	.calign{
 		text-align:center;
 	}
+	.smwrap{
+	width:4%
+	}
+
+	.mdwrap{
+	width:6%
+	}
+	.lngwrap{
+	width:22%
+	}
+	.ewrap{
+	width:8%
+	}
+
 
 	</style>
 </head>
@@ -55,23 +69,23 @@
 		<table id="gtbtable" class="table shadow table-bordered trialbaltable" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
 			<thead class="bg-primary">
 				<tr>
-					<th class="col-xs-1">{% trans %}Sr. No.{% endtrans %}</th>
-					<th class="col-xs-3">{% trans %}Account Name{% endtrans %}</th>
-					<th class="col-xs-2 ralign">{% trans %}Opening Balance{% endtrans %}</th>
-					<th class="col-xs-1 ralign">{% trans %}Total Drs{% endtrans %}</th>
-					<th class="col-xs-1 ralign">{% trans %}Total Crs{% endtrans %}</th>
-					<th class="col-xs-1 ralign">{% trans %}Dr Balance{% endtrans %}</th>
-					<th class="col-xs-1 ralign">{% trans %}Cr Balance{% endtrans %}</th>
-					<th class="col-xs-2 calign">{% trans %}Group Name{% endtrans %}</th>
+					<th class="smwrap calign">{% trans %}Sr.No.{% endtrans %}</th>
+					<th class="lngwrap">{% trans %}Account Name{% endtrans %}</th>
+					<th class="ewrap ralign">{% trans %}Opening Balance{% endtrans %}</th>
+					<th class="mdwrap ralign">{% trans %}Total Drs{% endtrans %}</th>
+					<th class="mdwrap ralign">{% trans %}Total Crs{% endtrans %}</th>
+					<th class="mdwrap ralign">{% trans %}Dr Balance{% endtrans %}</th>
+					<th class="mdwrap ralign">{% trans %}Cr Balance{% endtrans %}</th>
+					<th class="ewrap calign">{% trans %}Group Name{% endtrans %}</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for record in records %}
 				<tr	data-value="{{record['accountcode']}}">
-					<td class="col-xs-1">
+					<td class="smwrap calign">
 						{{record['srno']}}
 					</td>
-					<td class="col-xs-3">
+					<td class="lngwrap">
 						{% if record['srno']!="" %}
 						<a class="accname" href="">{{record['accountname']}}</a>
 						{% else %}
@@ -82,32 +96,32 @@
 						{% endif %}
 						{% endif %}
 					</td>
-					<td class="col-xs-2 ralign">
+					<td class="ewrap ralign">
 						{{record["openingbalance"]}}
 					</td>
-					<td class="col-xs-1 ralign">
+					<td class="mdwrap ralign">
 						{{record["totaldr"]}}
 					</td>
-					<td class="col-xs-1 ralign">
+					<td class="mdwrap ralign">
 						{{record["totalcr"]}}
 					</td>
 
 					{%if record["advflag"]==1%}
-					<td class="col-xs-1 ralign cred">
+					<td class="mdwrap ralign cred">
 						<b>{{record["curbaldr"]}}</b>
 					</td>
-					<td class="col-xs-1 ralign cred">
+					<td class="mdwrap ralign cred">
 						<b>{{record["curbalcr"]}}</b>
 					</td>
 					{%else%}
-					<td class="col-xs-1 ralign">
+					<td class="mdwrap ralign">
 						{{record["curbaldr"]}}
 					</td>
-					<td class="col-xs-1 ralign">
+					<td class="mdwrap ralign">
 						{{record["curbalcr"]}}
 					</td>
 					{%endif%}
-					<td class="col-xs-2 calign">
+					<td class="ewrap calign">
 						{{record["groupname"]}}
 					</td>
 				</tr>
