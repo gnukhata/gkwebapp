@@ -24,7 +24,7 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 */
 
-// This script is for the add customer/supplier page
+// This script is for the addcustomer/supplier.jinja2
 
 $(document).ready(function() {
 //All the navigation events where pressing enter shifts focus to the next element and pressing the up arrow key focuses the previous element
