@@ -24,7 +24,7 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Abhijith Balan" <abhijithb21@openmailbox.org>
 */
-
+// This script file is for list of stock items report.
 $(document).ready(function() {
   $(".modal-backdrop").remove();
   $(".fixed-table-loading").remove();
@@ -32,7 +32,7 @@ $(document).ready(function() {
   $('#latable tbody tr:first-child td:eq(1) a').focus();
   $('#latable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 
-
+  // functions to add remove selected class on focus and blur.
   $(document).off('focus' ,'.libgname').on('focus' ,'.libgname',function() {
     $('#latable tr').removeClass('selected');
     $(this).closest('tr').addClass('selected');
@@ -43,10 +43,11 @@ $(document).ready(function() {
 
   });
 
+  // Button to clear search field.
   $('#laclearfields').click(function(){
     $(".search").children(".form-control").val("");
   });
-
+  // clear search field on ESC key.
   $(".search").children(".form-control").keyup(function(event){
     if (event.keyCode == 27) {
       $(this).val("");
@@ -58,6 +59,7 @@ $(document).ready(function() {
   var previndex;
 
   $(document).off('keydown' ,'.libgname').on('keydown' ,'.libgname',function(event) {
+  // Navigation between rows using up down arrow keys.
     curindex = $(this).closest('tr').index();
     nextindex = curindex+1;
     previndex = curindex-1;
@@ -90,7 +92,7 @@ $(document).ready(function() {
   });
 
   $('#viewprintableversion').click(function (e) {
-
+// calls a printable version of the report.
     $.ajax({
       type: "POST",
       url: "/product?type=printable",
@@ -114,6 +116,7 @@ $(document).ready(function() {
   });
 
   $("#print").click(function(event) {
+  // serves a spreadsheet file to the client of this report.
         event.preventDefault();
         var xhr = new XMLHttpRequest();
 

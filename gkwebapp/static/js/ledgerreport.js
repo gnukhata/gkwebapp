@@ -25,7 +25,8 @@ Contributors:
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
 "Sachin Patil" <sachpatil@openmailbox.org>
 */
-
+// This script is for ledger report.
+// refer listofstockitems.js file for documentation.
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#msspinmodal").modal("hide");
