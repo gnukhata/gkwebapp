@@ -910,6 +910,14 @@ $(document).ready(function() {
   });
   /* -----------------------Godown Key events end here----------------------------------------- */
 
+$(document).off("keyup", ".spec").on("keyup", ".spec", function(event) {
+if (event.which ==13) {
+  event.preventDefault();
+  if ($(".spec").index(this)==$(".spec").length - 1) {
+    $("#epsubmit").click();
+  }
+}
+});
 
   $("#epsubmit").click(function(event) {
     event.preventDefault();
