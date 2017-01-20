@@ -71,7 +71,7 @@
           </th>
         </tr>
         <tr>
-          <th style="width:6.3%">{% trans %}Date{% endtrans %}</th>
+          <th style="width:6.3%" class="calign">{% trans %}Date{% endtrans %}</th>
           <th style="width:5.2%" class="calign">{% trans %}V. No.{% endtrans %}</th>
           <th class=" hidden-print"  style="width:49.7%">{% trans %}Particulars{% endtrans %}</th>
           <th class=" visible-print"  style="width:58.0%">{% trans %}Particulars{% endtrans %}</th>
@@ -85,7 +85,7 @@
       <tbody>
         {% for record in recongrid %}
         <tr value="{{record['reconcode']}}">
-          <td style="width:6.3%">
+          <td style="width:6.3%" class="calign">
             {{record['date']}}
           </td>
           <td style="width:5.2%" class="calign">
