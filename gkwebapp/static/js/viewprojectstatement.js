@@ -33,8 +33,9 @@ $(document).ready(function() {
   else {
     $("#failure-alert1").alert();
     $("#failure-alert1").fadeTo(2250, 500)
-    $("#viewprjstate_reset").prop('disabled', true);
-    $("#viewprjstate_submit").prop('disabled',true);
+    $("#viewprjstate_reset").hide();
+    $("#viewprjstate_submit").hide();
+    $("#prj_period").hide(); // to hide div when project is not found
   }
   $('.modal-backdrop').remove();
   $("#viewprjstate_todate").focus();
