@@ -38,7 +38,8 @@ from odslib import ODS
 @view_config(route_name="product",request_param="type=tab", renderer="gkwebapp:templates/producttab.jinja2")
 def showproducttab(request):
 	header={"gktoken":request.headers["gktoken"]}
-	return{"gkresult":0}
+	result = requests.get("http://127.0.0.1:6543/products",headers=header)
+	return{"numberofproducts":len(result.json()["gkresult"]),"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="product",request_param="type=addtab", renderer="gkwebapp:templates/addproduct.jinja2")
 def addproducttab(request):

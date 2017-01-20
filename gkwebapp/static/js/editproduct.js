@@ -919,7 +919,7 @@ if (event.which ==13) {
 }
 });
 
-  $("#epsubmit").click(function(event) {
+  $(document).off("click","#epsubmit").on("click", "#epsubmit", function(event) {
     event.preventDefault();
     /* Act on the event */
     if ($("#editproddesc").val()=="")
@@ -1028,7 +1028,12 @@ if (event.which ==13) {
       .done(function(resp) {
         if (resp["gkstatus"] ==0) {
           $('.modal-backdrop').remove();
-          $("#editproduct").click();
+          if ($("#prodselect option").length < 3) {
+          $("#product").click();
+          }
+          else {
+            $("#editproduct").click();
+          }
           $("#deletesuccess-alert").alert();
           $("#deletesuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#deletesuccess-alert").hide();

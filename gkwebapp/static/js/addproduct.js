@@ -750,7 +750,7 @@ $(document).ready(function() {
   });
   /* -----------------------Godown Key events end here----------------------------------------- */
 
-  $(document).on('click', '#apsubmit', function(event) {
+  $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
     event.preventDefault();
     /* Act on the event */
     if ($("#addproddesc").val()=="")
@@ -851,7 +851,7 @@ $(document).ready(function() {
         console.log(resp["gkstatus"]);
         if (resp["gkstatus"] ==0) {
 
-          $("#addproduct").click();
+          $("#product").click();
           $('.modal-backdrop').remove();
           $("#addsuccess-alert").alert();
           $("#addsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
