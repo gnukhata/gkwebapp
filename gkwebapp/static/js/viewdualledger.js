@@ -114,6 +114,22 @@ $(document).ready(function() {
         }
       }
     });
+    $("#viewdualledger_nar").keydown(function(e){
+      if(e.which==13){
+        if (  $('#viewdualledger_prjname').val()== undefined) {
+        $('#viewdualledger_submit').click();
+        event.preventDefault();
+        }
+        else {
+          $('#viewdualledger_prjname').focus();
+          event.preventDefault();
+        }
+      }
+      if(e.which==38){
+        $("#viewdualledger_toyear").focus();
+      event.preventDefault();
+      }
+    });
   $("#viewdualledger_prjname").keydown(function(event) {
     if (event.which==13) {
       $("#viewdualledger_submit").click();
@@ -188,6 +204,13 @@ $(document).ready(function() {
       $('#viewdualledger_todate').focus().select();
       return false;
     }
+    var prj;
+    if ($('#viewdualledger_prjname').length) {
+      prj=$('#viewdualledger_prjname').val();
+    } // returns 1
+    else {
+    prj ="";
+    }
     $.ajax(
       {
         type: "POST",
@@ -195,7 +218,7 @@ $(document).ready(function() {
         global: false,
         async: false,
         datatype: "text/html",
-        data: {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode").val(),"calculatefrom2":$("#calculatefrom").val(),"calculateto2":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode2":$("#projectcode").val(),"monthlyflag2":"false" ,"narrationflag2":$("#narrationflag").val(),"accountcode1":$("#viewdualledger_accname").val(),"calculatefrom1":$("#viewdualledger_fromyear").val()+"-"+$("#viewdualledger_frommonth").val()+"-"+$("#viewdualledger_fromdate").val(),"calculateto1":$("#viewdualledger_toyear").val()+"-"+$("#viewdualledger_tomonth").val()+"-"+$("#viewdualledger_todate").val(),"projectcode1":$("#viewdualledger_prjname").val(),"monthlyflag1":"false","narrationflag1":$("#viewdualledger_nar").is(":checked")},
+        data: {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode").val(),"calculatefrom2":$("#calculatefrom").val(),"calculateto2":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode2":$("#projectcode").val(),"monthlyflag2":"false" ,"narrationflag2":$("#narrationflag").val(),"accountcode1":$("#viewdualledger_accname").val(),"calculatefrom1":$("#viewdualledger_fromyear").val()+"-"+$("#viewdualledger_frommonth").val()+"-"+$("#viewdualledger_fromdate").val(),"calculateto1":$("#viewdualledger_toyear").val()+"-"+$("#viewdualledger_tomonth").val()+"-"+$("#viewdualledger_todate").val(),"projectcode1":prj,"monthlyflag1":"false","narrationflag1":$("#viewdualledger_nar").is(":checked")},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

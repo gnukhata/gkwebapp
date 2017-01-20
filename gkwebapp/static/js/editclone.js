@@ -631,10 +631,17 @@ $(document).ready(function()
     }
   });
 
-  $('#narr').keyup(function(event) {
+  $('#narr').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-      $('#project').focus().select();
-      event.preventDefault();
+        if (  $('#project').val()== undefined) {
+        $('#vctable tbody tr:last input:enabled').focus().select();
+        event.preventDefault();
+        }
+        else {
+          $('#project').focus().select();
+          event.preventDefault();
+        }
+
     }
     if (event.which==190 && event.ctrlKey) {
       $('#save').focus();
@@ -833,7 +840,14 @@ $(document).ready(function()
       $('#vctable tbody tr:eq('+nextindex+') select:enabled:first').focus();
       event.preventDefault();
       if (curindex==lastindex) {
-        $("#project").focus();
+        if (  $('#project').val()== undefined) {
+        $('#narr').focus();
+        event.preventDefault();
+        }
+        else {
+          $('#project').focus();
+          event.preventDefault();
+        }
       }
     }
   });
@@ -862,7 +876,14 @@ $(document).ready(function()
       $('#vctable tbody tr:eq('+nextindex+') select:enabled:first').focus();
       event.preventDefault();
       if (curindex==lastindex) {
-        $("#project").focus();
+        if (  $('#project').val()== undefined) {
+        $('#narr').focus();
+        event.preventDefault();
+        }
+        else {
+          $('#project').focus();
+          event.preventDefault();
+        }
       }
     }
   });
@@ -909,8 +930,14 @@ $(document).ready(function()
         }
         else {
           if((diff).toFixed(2)==0){
-            $("#project").focus();
+            if (  $('#project').val()== undefined) {
+            $('#narr').focus();
             return false;
+            }
+            else {
+              $('#project').focus();
+              return false;
+            }
           }
           $.ajax({
             url: '/getcjaccounts',
@@ -1032,7 +1059,14 @@ $(document).ready(function()
         }
         else
         {
-          $("#project").focus();
+          if (  $('#project').val()== undefined) {
+          $('#narr').focus();
+          return false;
+          }
+          else {
+            $('#project').focus();
+            return false;
+          }
         }
       }
       curindex=null;
@@ -1070,8 +1104,14 @@ $(document).ready(function()
         }
         else {
           if((diff).toFixed(2)==0){
-            $("#project").focus();
+            if (  $('#project').val()== undefined) {
+            $('#narr').focus();
             return false;
+            }
+            else {
+              $('#project').focus();
+              return false;
+            }
           }
           $.ajax({
             url: '/getcjaccounts',
@@ -1197,7 +1237,14 @@ $(document).ready(function()
         }
         else
         {
-          $("#project").focus();
+          if (  $('#project').val()== undefined) {
+          $('#narr').focus();
+          return false;
+          }
+          else {
+            $('#project').focus();
+            return false;
+          }
         }
       }
     }
@@ -1331,6 +1378,13 @@ $(document).ready(function()
     details.vno=$('#vno').val();
     details.vdate=$('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
     details.projectcode=$('#project').val();
+
+      if ($('#project').length) {
+          details.projectcode=$('#project').val();
+      } // returns 1
+      else {
+        details.projectcode=""
+      }
     details.narration=$('#narr').val();
     details.vtype=$('#m_vtype').val();
     var form_data = new FormData();

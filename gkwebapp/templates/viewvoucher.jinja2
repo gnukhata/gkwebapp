@@ -419,6 +419,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
             </div>
 
             <div class="col-xs-1">
+                {% if  projects %}
               <label for="project">{% trans %}Pro<u>j</u>ect{% endtrans %} :</label>
             </div>
             <div class="col-xs-3">
@@ -426,9 +427,8 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
 
                 {% for project in projects %}
                 {% if project['projectcode']==voucher["project"] %}
-
                 <option value="{{project['projectcode']}}" selected>{{project['projectname']}}</option>
-                <option value="">{% trans %}None{% endtrans %}</option>
+                <option value="" >{% trans %}None{% endtrans %}</option>
                 {% else %}
                 <option value="{{project['projectcode']}}">{{project['projectname']}}</option>
                 {% endif %}
@@ -438,11 +438,13 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                 <option value="" selected>{% trans %}None{% endtrans %}</option>
                 {% endif %}
               </select>
+                {% endif %}
             </div>
-            <div class="col-xs-1">
+            <div class="col-xs-1 pull-left">
               <label for="narration">{% trans %}N<u>a</u>rration{% endtrans %} :</label>
             </div>
-            <div class="pull-right">
+            <br>
+            <div class=" pull-left">
               <textarea class="form-control" name="narration" id="narr" rows="2" cols="50" accesskey="a">{{voucher["narration"]}}</textarea>
             </div>
             <input type="hidden" id="m_vtype" name="m_vtype" value="{{vtype}}">

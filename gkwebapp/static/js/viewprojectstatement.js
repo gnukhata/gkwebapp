@@ -25,6 +25,15 @@ Contributors:
 */
 
 $(document).ready(function() {
+  if ($('#viewprjstate_prjname').length) {
+    $("#viewprjstate_todate").focus();
+  }
+  else {
+    $("#failure-alert1").alert();
+    $("#failure-alert1").fadeTo(2250, 500)
+    $("#viewprjstate_reset").prop('disabled', true);
+    $("#viewprjstate_submit").prop('disabled',true);
+  }
   $('.modal-backdrop').remove();
   $("#viewprjstate_todate").focus();
   $('.viewprjstate_date').autotab('number');
@@ -39,6 +48,7 @@ $(document).ready(function() {
     $("#prjhead").html("Cost Center");
     $("#prjalert").html("Please select a cost center");
     $("#prjnamelbl").html("Cost Center: ");
+    $("#failure-alert1").html("No cost center Found");
   }
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");

@@ -27,6 +27,10 @@
 
           <label for="viewprjstate_todate">{% trans %}Please enter date within the financial year!{% endtrans %}</label>
         </div>
+        <div class="alert alert-danger" id="failure-alert1" aria-live="rude" role="alert" hidden>
+
+          {% trans %}No Projects Found.{% endtrans %}
+        </div>
         <div class="alert alert-danger" id="account-blank-alert" aria-live="rude" role="alert" hidden>
 
           <label id="prjalert" for="viewprjstate_prjname">{% trans %}Please select a project!{% endtrans %}</label>
@@ -55,6 +59,7 @@
             </div>
           </div>
           <br>
+          {% if  projects %}
           <label id = "prjnamelbl" for="viewprjstate_prjname">{% trans %}Pro<u>j</u>ect Name{% endtrans %} :</label>
           <select class = "form-control input-sm dis" id="viewprjstate_prjname"  name = "viewprjstate_prjname" accesskey="j">
             <option value="" disabled hidden selected>{% trans %}Please select{% endtrans %}</option>
@@ -62,7 +67,7 @@
             <option value="{{prj['projectcode']}}">{{prj["projectname"]}}</option>
             {% endfor %}
           </select>
-
+          {% endif %}
         </div>
       </div>
       <div class="panel-footer">
