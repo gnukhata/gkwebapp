@@ -124,7 +124,7 @@ $(document).ready(function() {
       var taxcount = $('#product_edit_tax_table tbody tr').length;
       if (taxdisabled || taxcount<1) {
         if ($("#editspecifications").contents(".form-group").length == 0) {
-          $('#epsubmit').focus();
+          $('#epsubmit').click();
         }
         else {
           $("#editspecifications").contents(".form-group:first").find("input:first").focus().select();
@@ -844,7 +844,7 @@ $(document).ready(function() {
           var taxcount = $('#product_edit_tax_table tbody tr').length;
           if (taxdisabled || taxcount<1) {
             if ($("#editspecifications").contents(".form-group").length == 0) {
-              $('#epsubmit').focus();
+              $('#epsubmit').click();
             }
             else {
               $("#editspecifications").contents(".form-group:first").find("input:first").focus().select();
