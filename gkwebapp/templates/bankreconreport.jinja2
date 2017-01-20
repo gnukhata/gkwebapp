@@ -21,7 +21,7 @@
   }
   .fixed-table tbody {
       display:block;
-      height: calc(100vh - 25em);
+      height: calc(100vh - 15em);
       overflow-y:scroll;
   }
 
@@ -71,53 +71,53 @@
           </th>
         </tr>
         <tr>
-          <th class="col-xs-1">{% trans %}Date{% endtrans %}</th>
-          <th class="col-xs-1">{% trans %}V. No.{% endtrans %}</th>
-          <th class="col-xs-2 hidden-print">{% trans %}Particulars{% endtrans %}</th>
-          <th class="col-xs-4 visible-print">{% trans %}Particulars{% endtrans %}</th>
-          <th class="col-xs-2 ralign">{% trans %}Debit{% endtrans %}</th>
-          <th class="col-xs-2 ralign">{% trans %}Credit{% endtrans %}</th>
-          <th class="col-xs-2">{% trans %}Clearance Date{% endtrans %}</th>
-          <th class="col-xs-2 hidden-print">{% trans %}Memo{% endtrans %}</th>
+          <th style="width:6.3%">{% trans %}Date{% endtrans %}</th>
+          <th style="width:5.2%" class="calign">{% trans %}V. No.{% endtrans %}</th>
+          <th class=" hidden-print"  style="width:49.7%">{% trans %}Particulars{% endtrans %}</th>
+          <th class=" visible-print"  style="width:58.0%">{% trans %}Particulars{% endtrans %}</th>
+          <th class="ralign" style="width:9.2%">{% trans %}Debit{% endtrans %}</th>
+          <th class="ralign"style="width:9.2%">{% trans %}Credit{% endtrans %}</th>
+          <th  style="width:10.2%">{% trans %}Clearance Date{% endtrans %}</th>
+          <th class=" hidden-print" style="width:10.2%">{% trans %}Memo{% endtrans %}</th>
 
         </tr>
       </thead>
       <tbody>
         {% for record in recongrid %}
         <tr value="{{record['reconcode']}}">
-          <td class="col-xs-1">
+          <td style="width:6.3%">
             {{record['date']}}
           </td>
-          <td class="col-xs-1" >
+          <td style="width:5.2%" class="calign">
             {{record['vno']}}
           </td>
-          <td class="col-xs-2 hidden-print">
+          <td class=" hidden-print"  style="width:49.8%">
             {{record['particulars']}}
             {% if record['narration']!="" and narrationflag==true %}
             <br>
             ({{record['narration']}})
             {% endif %}
           </td>
-          <td class="col-xs-4 visible-print">
+          <td class=" visible-print"  style="width:58.0%">
             {{record['particulars']}}
             {% if record['narration']!="" and narrationflag==true %}
             <br>
             ({{record['narration']}})
             {% endif %}
           </td>
-          <td class="col-xs-2 ralign">
+          <td class="ralign" style="width:9.2%">
             {{record["dr"]}}
           </td>
-          <td class="col-xs-2 ralign">
+          <td class="ralign" style="width:9.2%">
             {{record["cr"]}}
           </td>
-          <td class="col-xs-2 hidden-print">
+          <td class="hidden-print" style="width:10.2%">
             <input class="form-control input-sm clrdate" type="text"  maxlength="10" placeholder="DD-MM-YYYY" value="{{record["clearancedate"]}}">
           </td>
-          <td class="col-xs-2 hidden-print">
+          <td class=" hidden-print"  style="width:10.2%">
             <input class="form-control input-sm memo " type="text" value="{{record["memo"]}}">
           </td>
-          <td class="col-xs-2 visible-print">
+          <td class=" visible-print" style="width:12.1%">
             {{record["clearancedate"]}}
           </td>
         </tr>
@@ -125,7 +125,7 @@
       </tbody>
     </table>
   </div>
-  <div id = "recostmtdiv" class="container">
+  <div id = "recostmtdiv" class="container hides">
     <div class="table-responsive col-xs-8 col-xs-offset-2">
       <table id="stmttable" class=" shadow table table-striped table-condensed">
         <tbody id="stmttablebody">
@@ -146,6 +146,7 @@
     <span class="hidden-print" style="margin:auto; display:table;">
       <button class="btn btn-sm btn-danger" type="button" id="bankrecon_back" accesskey="e">{% trans %}R<u>e</u>conciliation Menu{% endtrans %}</button>
       <button class="btn btn-sm btn-primary" type="button" id="clrditems" accesskey="a">{% trans %}Cle<u>a</u>red Items{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="viewstatement">{% trans %}View Statement{% endtrans %}</button>
       <button class="btn btn-sm btn-primary" type="button"  id="printstatement" accesskey="s">{% trans %}<u>S</u>tatement's Printable Version{% endtrans %}</button>
       <button class="btn btn-sm btn-primary" type="button"  id="printtransactions" accesskey="t">{% trans %}<u>T</u>ransaction's Printable Version{% endtrans %}</button>
       <button class="btn btn-sm btn-primary" type="button"  id="realprintbank" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
