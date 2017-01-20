@@ -4,11 +4,43 @@
   <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Monthly Ledger{% endtrans %}</title>
 <style type="text/css">
 .shadow {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 td {
   font-size: 80%;
 }
+
+.calign{
+    text-align:center;
+
+}
+  .ralign{
+    text-align:right;
+
+  }
+.mdwrap{
+	width:6%
+}
+
+.smwrap{
+	width:10%
+}
+.shortwrap{
+	width:4%
+}
+
+
+.cred{
+    color:red;
+  }
+  .tabledesign{
+  	 width: 90%;
+  	 margin-top:1%;
+  margin-left :5%;
+  margin-right:5%;
+  margin-bottom:1%;
+   }
+
 </style>
 </head>
 <body>
@@ -20,47 +52,47 @@ td {
       </div>
       <div class="panel-body">
         <div class="table-responsive">
-          <table id="mthltable" class="shadow table table-bordered table-condensed">
+          <table id="mthltable" class="shadow table table-bordered table-condensed tabledesign">
             <thead class="bg-primary">
               <tr>
-                <th class="col-xs-3">{% trans %}Month{% endtrans %}</th>
-                <th style="text-align:right" class="col-xs-3">{% trans %}Debit{% endtrans %}</th>
-                <th style="text-align:right" class="col-xs-3">{% trans %}Credit{% endtrans %}</th>
-                <th style="text-align:center" class="col-xs-3">{% trans %}No. of Vouchers{% endtrans %}</th>
+                <th class="mdwrap calign">{% trans %}Month{% endtrans %}</th>
+                <th class="smwrap ralign">{% trans %}Debit{% endtrans %}</th>
+                <th class="smwrap ralign">{% trans %}Credit{% endtrans %}</th>
+                <th class="shortwrap calign">{% trans %}No. of Vouchers{% endtrans %}</th>
               </tr>
             </thead>
             <tbody>
               {% for record in records %}
               <tr  value="{{record['period']}}">
-                <td class="col-xs-3">
+                <td class="mdwrap calign">
                   <a class="monthname" href="#">{{record['month']}}</a>
                 </td>
                 {%if record["advflag"]==1%}
-                <td class="col-xs-3 hidden-print" style="text-align:right; color:red;">
+                <td class="smwrap ralign cred">
                   <b>{{record["Dr"]}}</b>
                 </td>
-                <td class="col-xs-3 hidden-print" style="text-align:right; color:red;">
+                <td class="smwrap ralign cred">
                   <b>{{record["Cr"]}}</b>
                 </td>
-                <td class="col-xs-3 visible-print" style="text-align:right; color:red;">
+                <td class="smwrap visible-print ralign cred">
                   {% if record.Dr %}
                     <b>({{record["Dr"]}})</b>
                   {% endif %}
                 </td>
-                <td class="col-xs-3 visible-print" style="text-align:right; color:red;">
+                <td class="smwrap visible-print ralign cred">
                   {% if record.Cr %}
                     <b>({{record["Cr"]}})</b>
                   {% endif %}
                 </td>
                 {%else%}
-                <td class="col-xs-3" style="text-align:right">
+                <td class="smwrap ralign">
                   {{record["Dr"]}}
                 </td>
-                <td class="col-xs-3" style="text-align:right">
+                <td class="smwrap ralign">
                   {{record["Cr"]}}
                 </td>
                 {%endif%}
-                <td class="col-xs-3" style="text-align:center">
+                <td class="shortwrap calign">
                   {{record["vcount"]}}
                 </td>
               </tr>
