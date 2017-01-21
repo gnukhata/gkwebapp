@@ -24,26 +24,27 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Dinesh Sutar" <dinesh.sutar@openmailbox.org>
 */
-
+// This script is for the first page of GNUKhata i.e index page.
 $(document).ready(function(){;
 $("#selectorg").load("/existingorg");
 $("#createorg").load("/createorg");
   $(document).keydown(function(event) {
+    // setting shortcut keys for menu items.
     if(event.ctrlKey && event.keyCode == 69) {
       $("#selectnav").click();
       setTimeout( function() { $("select:first, input:first").focus(); }, 500 );
-      /*console.log("Hey! Ctrl+S event captured!");*/
+
       event.preventDefault();
       }
     if(event.ctrlKey && event.keyCode == 82) {
       $("#createnav").click();
       setTimeout( function() { $("#orgname").focus(); }, 500 );
-      /*console.log("Hey! Ctrl+S event captured!");*/
+
       event.preventDefault();
       }
     });
 
-  $.ajax({
+  $.ajax({// this ajax function checks whether any organisations already exists. If the number of organisations is 0 then select organisation tab is hidden.
     url: '/orgexists',
     type: 'POST',
     datatype: 'json',
@@ -67,14 +68,16 @@ $("#createorg").load("/createorg");
 
 
   $("#selectnav").click(function(event){
-  setTimeout( function() { $("select:first, input:first").focus(); }, 500 );
+  setTimeout( function() { $("select:first, input:first").focus(); }, 500 );// Set focus after a timeout of 500 milliseconds.
 });
 
 $("#createnav").click(function(event){
-setTimeout( function() { $("#orgname").focus(); }, 500 );
+setTimeout( function() { $("#orgname").focus(); }, 500 );// Set focus after a timeout of 500 milliseconds.
 });
 
 $("#restorebutton").click(function(event){
+  // Function to restore data from a backup file.
+  // Gets the backup file and sends it as formdata.
   event.preventDefault();
   if ($("#openrecovery")[0].files.length > 0) {
     var form_data = new FormData();
