@@ -1,23 +1,47 @@
-$(document).ready(function() {
+$/*
+Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+  This file is part of GNUKhata:A modular,robust and Free Accounting System.
+
+  GNUKhata is Free Software; you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation; either version 3 of
+  the License, or (at your option) any later version.and old.stockflag = 's'
+
+  GNUKhata is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public
+  License along with GNUKhata (COPYING); if not, write to the
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+  Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+
+
+Contributors:
+"Krishnakant Mane" <kk@gmail.com>
+"Ishan Masdekar " <imasdekar@dff.org.in>
+"Navin Karkera" <navin@dff.org.in>
+"Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
+*/
+/*
+  This script is for the search category modal.  
+*/(document).ready(function() {
 
   $(document).off('keydown', '.catsearch').on('keydown', '.catsearch', function(event) {
-    /* Act on the event */
+    /* Disable soace keydown on category combo box. */
     if (event.which==32)
     {
       event.preventDefault();
-
     }
   });
 
 $(document).off('keyup', '.catsearch').on('keyup', '.catsearch', function(event) {
-
-  /* Act on the event */
   var rindex = $(this).closest('tr').index();
   if (event.which==32)
   {
     event.preventDefault();
     $("#catsearchtab tbody tr:eq("+rindex+") td:eq(2) button").click();
-
   }
 });
 
@@ -25,7 +49,7 @@ $(document).off('change', '.catsearch').on('change', '.catsearch', function(even
   event.preventDefault();
   var rindex = $(this).closest('tr').index();
   catid = $("#catsearchtab tbody tr:eq("+rindex+") td:first-child select option:selected").attr('data-value');
-  /* Act on the event */
+  /* Get products of the selected category on change. */
   $.ajax({
     url: '/product?by=category',
     type: 'POST',
@@ -66,9 +90,11 @@ $(document).off('change', '.catsearch').on('change', '.catsearch', function(even
 
 $(document).off('keydown', '.catsearch').on('keydown', '.catsearch', function(event) {
   event.preventDefault();
-  /* Act on the event */
+  /* Navigation function 
+    Ctrl key and angle bracket keys are used to navigate between all elements in the row.
+   */
   var curindex = $(this).closest('tr').index();
-  var nextindex = curindex+1;
+  +1;
   var previndex = curindex-1;
   if (event.which==13)
   {
@@ -110,7 +136,10 @@ $(document).off('keydown', '.catsearch').on('keydown', '.catsearch', function(ev
 
 $(document).off('keydown', '.catprod').on('keydown', '.catprod', function(event) {
   event.preventDefault();
-  /* Act on the event */
+  /* Navigation function 
+    Ctrl key and angle bracket keys are used to navigate between all elements in the row.
+   */
+
   var curindex = $(this).closest('tr').index();
   var nextindex = curindex+1;
   var previndex = curindex-1;
@@ -146,7 +175,7 @@ $(document).off('keydown', '.catprod').on('keydown', '.catprod', function(event)
 
 $(document).off('click', '.showcat').on('click', '.showcat', function(event) {
   event.preventDefault();
-  /* Act on the event */
+  /* On click of show sub category button, the sub categories of the selected category are shown. */
   var rindex = $(this).closest('tr').index();
   var nextindex = rindex+1;
   var lastindex = $('#catsearchtab tbody tr:last-child').index();
@@ -176,6 +205,7 @@ $(document).off('click', '.showcat').on('click', '.showcat', function(event) {
     {
       for (var i = nextindex; i < lastindex+1; i++)
       {
+        // Remove all rows below the selected row.
         $("#catsearchtab tbody tr:eq("+nextindex+")").remove();
       };
       if (resp["gkresult"]=="")
@@ -188,6 +218,7 @@ $(document).off('click', '.showcat').on('click', '.showcat', function(event) {
         return false;
 
       }
+      // append sub categories of the selected category below the category row.
       $("#catsearchtab tbody").append('<tr>'+
       '<td class = "cols-md-6">'+
         '<select class = "form-control input-sm catsearch"  name = "categoryname" >'+

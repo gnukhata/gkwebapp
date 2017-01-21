@@ -23,7 +23,9 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 */
-
+/*
+This script is for the view page of trialbalance report.
+*/
 $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
@@ -31,7 +33,7 @@ $(document).ready(function() {
   $('.trialbal_autotab').autotab('number');
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
-  var sel1 = 0;
+  var sel1 = 0; // flag for focus on trialbal type
   $("#trialbal_type").focus(function(){
     sel1 = 1;
   });
@@ -47,7 +49,7 @@ $(document).ready(function() {
       return str
     }
   }
-  function yearpad (str, max) {
+  function yearpad (str, max) { //to add leading 20 or 200 to year
     str = str.toString();
     if (str.length==1) {
       return str.length < max ? pad("200" + str, max) : str;
@@ -60,17 +62,17 @@ $(document).ready(function() {
     }
   }
 
-  $("#trialbal_todate").blur(function(event) {
+  $("#trialbal_todate").blur(function(event) { // padding 0's on blur
     $(this).val(pad($(this).val(),2));
   });
-  $("#trialbal_tomonth").blur(function(event) {
+  $("#trialbal_tomonth").blur(function(event) { // padding 0's on blur
     $(this).val(pad($(this).val(),2));
   });
-  $("#trialbal_toyear").blur(function(event) {
+  $("#trialbal_toyear").blur(function(event) { // padding 20 or 200 on blur
     $(this).val(yearpad($(this).val(),4));
   });
 
-  $('input:text:enabled,select').keydown( function(e) {
+  $('input:text:enabled,select').keydown( function(e) { // function for shifting focus on enter and up arrow key.
     var n = $("input:text:enabled,select").length;
     var f = $('input:text:enabled,select');
       if (e.which == 13)
@@ -94,6 +96,7 @@ $(document).ready(function() {
       }
     });
 
+// Setting default date to financialstart and end.
   var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
   $("#trialbal_fromdate").val(fromdatearray[2])
   $("#trialbal_frommonth").val(fromdatearray[1])
@@ -111,6 +114,8 @@ $(document).ready(function() {
   });
 
   $("#trialbal_view").click(function(event) {
+
+    // --------------------starting validations------------------
     if ($("#trialbal_toyear").val() ==0||$("#trialbal_tomonth").val()==0||$("#trialbal_todate").val()==0) {
       $("#date-alert").alert();
       $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
@@ -137,6 +142,9 @@ $(document).ready(function() {
       $('#trialbal_todate').focus().select();
       return false;
     }
+    // -----------------------end of validations---------------------
+
+    // ajax function to get trail balance report for given period.
     $.ajax(
       {
         type: "POST",
@@ -161,6 +169,8 @@ $(document).ready(function() {
       });
 
   });
+
+  // reset function.
   $("#trialbal_reset").click(function(event) {
     $("#showtrialbalance").click();
   });

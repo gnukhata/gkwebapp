@@ -24,11 +24,14 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
 */
-
+/*
+  This script is for the remove user page.  
+*/
 $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
   if($("#username option").size()==1){
+// If no users other than admin is present, hide all options and show a msg to add new users.
     $("#removeUserform").hide();
     $("#remove").hide();
     $("#nousers").show();
@@ -45,8 +48,9 @@ $(document).ready(function() {
   });
   $(document).off("click","#remove").on("click", "#remove", function(event)
   {
+  // This function removes the selected user by sending the user ID through ajax.
     event.preventDefault();
-    if ($.trim($("#username").val())=="") {
+    if ($.trim($("#username").val())=="") {// Validation to check if a user is selected.
       $("#remove-blank-alert").alert();
       $("#remove-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#remove-blank-alert").hide();
@@ -56,7 +60,7 @@ $(document).ready(function() {
     }
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
-    $('#m_confirmdel').modal('show').one('click', '#m_yes', function (e)
+    $('#m_confirmdel').modal('show').one('click', '#m_yes', function (e)// Opens a confirmation dialog box.
     {
 
         var code = $("#username option:selected").val();
@@ -74,6 +78,7 @@ $(document).ready(function() {
           },
           success: function(resp)
           {
+            // show alert depending on the return status.
             if (resp["gkstatus"]==0){
               $("#REMOVEuser").click();
               $("#remsuccess-alert").alert();

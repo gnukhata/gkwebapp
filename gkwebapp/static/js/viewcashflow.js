@@ -23,7 +23,9 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 */
-
+/*
+This script is for the view page of Cash Flow report.
+*/
 $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
@@ -35,7 +37,7 @@ $(document).ready(function() {
     $(".panel-title").text("View Receipt & Payment");
   }
 
-
+	// Setting default date to financialstart and end.
   var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
   $("#cashfl_fromdate").val(fromdatearray[2])
   $("#cashfl_frommonth").val(fromdatearray[1])
@@ -57,7 +59,7 @@ $(document).ready(function() {
       return str
     }
   }
-  function yearpad (str, max) {
+  function yearpad (str, max) { //to add leading 20 or 200 to year
     str = str.toString();
     if (str.length==1) {
       return str.length < max ? pad("200" + str, max) : str;
@@ -96,7 +98,7 @@ $(document).ready(function() {
       $("#cashfl_view").click();
     }
   });
-  $('input:text:enabled').keydown( function(e) {
+  $('input:text:enabled').keydown( function(e) { // function for shifting focus on enter and up arrow key.
     var n = $("input:text:enabled").length;
     var f = $('input:text:enabled');
       if (e.which == 13)
@@ -121,6 +123,7 @@ $(document).ready(function() {
     });
 
   $("#cashfl_view").click(function(event) {
+    // --------------------starting validations------------------
     if ($("#cashfl_fromyear").val()==0 ||$("#cashfl_frommonth").val()==0 ||$("#cashfl_fromdate").val()==0 ) {
       $("#date-alert").alert();
       $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
@@ -179,6 +182,7 @@ $(document).ready(function() {
       $('#cashfl_todate').focus().select();
       return false;
     }
+    // -----------------------end of validations---------------------
     $.ajax(
       {
         type: "POST",

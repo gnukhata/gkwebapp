@@ -24,7 +24,7 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
 */
-
+// this script is for monthly ledger report.
 $(document).ready(function() {
 
   oninvoice = 0;
@@ -38,11 +38,13 @@ $(document).ready(function() {
 
 
   $(document).off('focus' ,'.monthname').on('focus' ,'.monthname',function() {
+  // Change color of row on focus.
     $('#mthltable tr').removeClass('selected');
     $(this).closest('tr').addClass('selected');
   });
 
   $(document).off('blur' ,'.monthname').on('blur' ,'.monthname',function() {
+  // Revert to default color on blur.
     $('#mthltable tr').removeClass('selected');
 
   });
@@ -51,6 +53,7 @@ $(document).ready(function() {
   var previndex;
 
   $(document).off('keydown' ,'.monthname').on('keydown' ,'.monthname',function(event) {
+  // Function to navigate between tables rows.
     curindex = $(this).closest('tr').index();
     nextindex = curindex+1;
     previndex = curindex-1;
@@ -73,6 +76,7 @@ $(document).ready(function() {
 
 
   $("#mthltable").off('click','tr').on('click','tr',function(e){
+// Change color of row on click.
     e.preventDefault();
     var id = $(this).attr('value');
     var currindex = $(this).index();
@@ -88,14 +92,15 @@ $(document).ready(function() {
 
     if(e.which==13)
     {
-
+    // calling dblclick on enter key
     $('#mthltable tbody tr:eq('+rindex+')').dblclick() ;
     }
 });
 
   $("#mthltable").off('dblclick','tr').on('dblclick','tr',function(e){
+  // Function to drill down to the selected month and show the ledger of that month.
     e.preventDefault();
-     var date = $(this).attr('value').split(":");
+     var date = $(this).attr('value').split(":");// value attribute of that row contains the period of that month, for eg. 2015-04-01:2015-04-30.
      var newfromdate = date[0];
      var newtodate = date[1];
     $.ajax(
@@ -119,7 +124,7 @@ $(document).ready(function() {
   });
 
   $("#print").click(function(event) {
-
+  // Function to serve the client a spreadsheet of the report.
     event.preventDefault();
     var orgname = sessionStorage.getItem('orgn');
     var orgtype = sessionStorage.getItem('orgt');

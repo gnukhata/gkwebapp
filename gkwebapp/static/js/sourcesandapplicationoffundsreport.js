@@ -25,15 +25,18 @@ Contributors:
 "Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
 */
-
+/*
+ This file is for report page of sources and application of funds report.
+ */
 $(document).ready(function() {
 
-  oninvoice = 0;
+  oninvoice = 0; // Global variable declared in mainshell is used to remove organisation name in printing of invoice.
 
   $("#msspinmodal").modal("hide");
-
+// Hide group view button and print button, because group view si displayed by default.
   $("#grpbtn").hide();
   $("#realprintbalance").hide();
+// Calculating width depending on the screen size.
   var percentwid = 100*(($("table").width()-12)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   var percentheigth = 100*(($("body").height()-$(".navbar").height()-148)/$("body").height());
@@ -64,6 +67,7 @@ $(document).ready(function() {
   var sbgrpflag=0
 
 $("#grpbtn").click(function(event){
+// This function only shows group balances, hides subgroup and accounts balances.
   event.preventDefault();
   $(".subgroupacc").css("display", "none");
   $(".groupacc").css("display", "none");
@@ -80,6 +84,7 @@ $("#grpbtn").click(function(event){
 });
 
   $("#sbgbtn").click(function(event){
+// this function hides all accounts balances and displays only subgroup and group balances.
     event.preventDefault();
       $(".groupacc").removeAttr('style');
       $(".subgroupacc").css("display", "none");
@@ -91,6 +96,7 @@ $("#grpbtn").click(function(event){
   });
 
   $("#accbtn").click(function(event){
+// This function shows all group, subgroups and accounts balances.
     event.preventDefault();
       $(".groupacc").removeAttr('style');
       $(".subgroupacc").removeAttr('style');
@@ -102,6 +108,7 @@ $("#grpbtn").click(function(event){
   });
 
   $(document).off('keydown' ,'.libgname').on('keydown' ,'.libgname',function(event) {
+// This function navigates between rows of the table by getting the next and previous index of visible rows.
     curindex = $(this).closest('tr');
 		nextindex = $(curindex).nextAll("tr:visible:first").index();
 		previndex = $(curindex).prevAll("tr:visible:first").index();;
@@ -132,12 +139,16 @@ $("#grpbtn").click(function(event){
   });
 
   $(".cbalsheettable tbody tr").dblclick(function(event) {
+// Drill down function.
       event.preventDefault();
       var grpcode = $(this).attr('value');
       if(grpcode==""){
+      // If value of this row is blank then do nothing.
         return false;
       }
       else if (grpcode.indexOf("g") != -1) {
+    // If value contains 'g' character then it must be a group code. So children of this group is displayed.
+    // Class name of the hidden rows are same as the group code.
         $("."+grpcode).slideToggle(1);
         $("."+grpcode).removeAttr('style');
         $("."+grpcode).each(function(index) {
@@ -149,6 +160,8 @@ $("#grpbtn").click(function(event){
         });
       }
       else {
+// If value is purely in numbers i.e no character 'g' is present then the value must be an account code.
+// Ledger of the given account code is display.
     		var newfromdate = sessionStorage.yyyymmddyear1;
     		$.ajax(
     			{
@@ -172,6 +185,7 @@ $("#grpbtn").click(function(event){
   });
 
   $("#satable").off('click','tr').on('click','tr',function(e){
+// Function to add selected class on click.
     e.preventDefault();
     var id = $(this).attr('value');
     var currindex = $(this).index();
@@ -183,6 +197,7 @@ $("#grpbtn").click(function(event){
 
 
   $("#saback").click(function(event) {
+// BAck function to display balancesheet report from the print screen.
     if ($("#realprintbalance").is(":visible")) {
       $.ajax(
         {
@@ -232,7 +247,7 @@ $("#cbalbutn").click(function(event) {
 
 
 $("#print").click(function(event) {
-
+// Function to serve a spreadsheet to the client of the balance sheet report.
   event.preventDefault();
   var orgname = sessionStorage.getItem('orgn');
   var orgtype = sessionStorage.getItem('orgt');
@@ -256,6 +271,7 @@ xhr.send();
 });
 
 $("#printbalance").click(function(event) {
+// function to display a printable version of the balance sheet report.
   $(".cbalsheettable").removeClass('fixed-table').addClass('table-striped');;
   $(".cbalsheettable").unbind('dblclick');
   $('.cbalsheettable tbody a').contents().unwrap();

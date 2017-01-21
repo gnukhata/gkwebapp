@@ -1,7 +1,36 @@
-$(document).ready(function() {
+$/*
+Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+  This file is part of GNUKhata:A modular,robust and Free Accounting System.
+
+  GNUKhata is Free Software; you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation; either version 3 of
+  the License, or (at your option) any later version.and old.stockflag = 's'
+
+  GNUKhata is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public
+  License along with GNUKhata (COPYING); if not, write to the
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+  Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+
+
+Contributors:
+"Krishnakant Mane" <kk@gmail.com>
+"Ishan Masdekar " <imasdekar@dff.org.in>
+"Navin Karkera" <navin@dff.org.in>
+"Vaibhav Kurhe" <vaibspidy@openmailbox.org>
+*/
+/*
+This script is for the Received transfer note page.
+*/
+(document).ready(function() {
   $('.modal-backdrop').remove();
       $("#rec_tn_list").focus();
-      $(".hidden-load").hide();
+      $(".hidden-load").hide();// Hide all widgets on load except the select transfernote box.
       $("#rec_received").hide();
       $(".disable").prop("disabled", true);
       $("#tn_editprint").hide();
@@ -10,6 +39,7 @@ $(document).ready(function() {
       var togodownid;
 
       $("#rec_tn_list").change(function(event) {
+      // Get complete transfer note details on change(of the selected note).
         tnid = $("#rec_tn_list option:selected").val();
         if (tnid != "") {
 
@@ -27,9 +57,9 @@ $(document).ready(function() {
         .done(function(resp) {
           var result = resp["gkresult"];
 
-          $(".hidden-load").show();
+          $(".hidden-load").show();// Show all the details.
           $("#tn_editprint").show();
-          if (result["cancelflag"]==1) {
+          if (result["cancelflag"]==1) {// If the TN is cancelled then show a message indicating cancellation.
             $("#cancelmsg").show();
             $("#alertstrong").html("Transfer Note cancelled on "+result.canceldate);
             $("#rec_cancel").prop("disabled",true);
@@ -41,6 +71,7 @@ $(document).ready(function() {
             $("#rec_cancel").prop("disabled",false);
             $("#rec_cancel").show();
           }
+        // Show all details in its corresponding labels.
           $("#rec_transfernote_no").html(result["transfernoteno"]);
 
           $("#rec_transport_mode").html(result["transportationmode"]);
@@ -53,6 +84,7 @@ $(document).ready(function() {
           $("#rec_designation").html(result["designation"]);
           $("#rec_transfernote_date").html(result["transfernotedate"]);
 
+          // Empty the table and show the product details of the TN
           $('#transfernote_product_table tbody').empty();
           $.each(result.productdetails, function(key, value) {
             $('#transfernote_product_table tbody').append('<tr>'+
@@ -89,7 +121,7 @@ $(document).ready(function() {
       }
 
       });
-
+// Navigation events,
       $("#rec_tn_list").keydown(function(event) {
         if (event.which==13) {
           event.preventDefault();
@@ -104,6 +136,7 @@ $(document).ready(function() {
           }
 
       });
+  // This function will set the TN as received.
       $("#rec_received").click(function(event) {
         event.preventDefault();
         $('.modal-backdrop').remove();
@@ -149,8 +182,10 @@ $(document).ready(function() {
           $("#rec_tn_list").focus();
         });
        });
+
        $("#rec_cancel").click(function(event) {
          event.preventDefault();
+        // Cancels the selected TN
          $('.modal-backdrop').remove();
          $('.modal').modal('hide');
          $('#confirm_del').modal('show').one('click', '#accdel', function (e)
@@ -194,7 +229,9 @@ $(document).ready(function() {
            $("#rec_tn_list").focus();
          });
         });
+
         $("#tn_editprint").click(function(event) {
+        // Prints the selected TN. Selects all the details from selected TN
           printset = [];
           for (var i = 0; i < $("#transfernote_product_table tbody tr").length; i++) {
             var obj = {};

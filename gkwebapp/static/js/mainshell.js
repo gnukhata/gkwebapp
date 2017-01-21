@@ -25,19 +25,20 @@ Contributors:
 "Dinesh Sutar" <dinesh.sutar@openmailbox.org>
 "Abhijith Balan" <abhijithb21@openmailbox.org>
 */
-
+// This script is for the mainshell page and loads when the main page of GNUKhata is loaded.
+// Also all the external js libraries we have used is loaded along with the mainshell.
 $(document).ready(function(){
 
   $('.modal-backdrop').remove();
 
-  if (sessionStorage.reload == 1)
+  if (sessionStorage.reload == 1)// The mainshell when loads for the first time its reloaded so that the javascript file can be fully loaded.
   {
       sessionStorage.reload = 0;
       location.reload();
   }
-  var oninvoice = 0;
+  var oninvoice = 0;// This variable is set to 1 only when its in the print page of invoice, cashmemo or deliverychallan or transfernote. Reason: The organisation details that appear in all print pages of GNUKhata is not required in the pages where its set to 1. 
   $("#msspinmodal").modal("hide");
-  if (sessionStorage.invflag ==1)
+  if (sessionStorage.invflag ==1)// If inventory is already activated for this organisation than the option to activate inventory is removed.
   {
     $("#act_inv").remove();
   }
@@ -46,10 +47,11 @@ $(document).ready(function(){
 
     $(".inventory_hide").remove();
   }
-  $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');
+  $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');// set the theme depending on users previous choice.
   $("#"+sessionStorage.gktheme+"span").show();
 
   $(document).keydown(function(event) {
+        // Shortcuts
         if(event.ctrlKey && event.keyCode == 83) {
           $("#signout").click();
           event.preventDefault();
@@ -217,21 +219,23 @@ $(document).ready(function(){
         }
       });
       $(".mastermenu").keydown(function(event){
+      // Navigation between menu items.
         if(event.which == 39){
-          if (sessionStorage.invflag ==1)
+          if (sessionStorage.invflag ==1)// if inventory is activated then on right arrow key inventory menu is selected.
           {
             $("#inventory").click();
           }
-          else
+          else// else transaction menu is selected.
           {
           $("#transaction").click();
           }
         }
-        if(event.which == 37){
+        if(event.which == 37){// left arrow will select toolbar.
           $("#toolbar").click();
         }
       });
       $(".inventorymenu").keydown(function(event){
+      // As mentioned above left right arrow navigation for menu items.
         if(event.which == 39){
           $("#transaction").click();
         }
@@ -294,19 +298,6 @@ $(document).ready(function(){
           $("#signout").click();
         }
       });
-      $('#godown').click(function (e) {
-         $.ajax({
-           url: '/godown',
-           type: 'POST',
-           global: false,
-           async: false,
-           datatype: 'text/html',
-
-         })
-         .done(function(resp) {
-           $("#info").html(resp);
-         })
-       });
       $("#themes").keydown(function(event){
         if(event.which == 39){
           $("#toolbar").click();
@@ -324,6 +315,7 @@ $(document).ready(function(){
         }
       });
       $("#toolbar").click(function(){
+      // Expands the toolbar on click to the height slightly less than the windowheight.
         var windowheight = window.innerHeight;
         var scrollerheight = windowheight - 40;
         $(".scrollable").css("max-height", scrollerheight);
@@ -332,6 +324,7 @@ $(document).ready(function(){
         }
       });
       $("#themes").click(function(){
+      // Same as toolbar.
         var windowheight = window.innerHeight;
         var scrollerheight = windowheight - 40;
         $(".scrollable").css("max-height", scrollerheight);
@@ -340,6 +333,7 @@ $(document).ready(function(){
         }
       });
       if (sessionStorage.orgt=="Not For Profit") {
+      // If orgtype is Not for Profit than some heading and menu items text is changed.
         $("#showprofitloss").text("Income & Expenditure");
         $("#showbalancesheet").text("Statement of Affairs");
         $("#showcashflow").text("Receipt & Payment");
@@ -350,6 +344,12 @@ $(document).ready(function(){
         $("#projectstatementtb").text("Project Statement - CTRL+5");
       }
 
+    // Following ajax will fetch organisation data and user data and make changes accordingly.
+    // if user is an operator than all items with hideoperator class are removed.
+    // if user is an manager than all items with hidemanager class are removed.
+    // if organisation books have been closed than all items with closebooks class are removed.
+    // if organisation has been rolled over than all items with rollover class are removed.
+    // also booksclosedflag and roflag are stored in sessionstorage.
       $.ajax({
         url: '/orgdata',
         type: 'POST',
@@ -378,16 +378,19 @@ $(document).ready(function(){
          sessionStorage.setItem('roflag', resp["gkresult"]["roflag"]);
       });
 
+  // organisation name, type and financial year are stored in sessionstorage.
   var orname = sessionStorage.getItem('orgn');
   var ortype = sessionStorage.getItem('orgt');
   var styear = sessionStorage.getItem('year1');
   var enyear = sessionStorage.getItem('year2');
   var orgdata = orname + " (" + ortype + ")";
   var yeardata = "Financial Year : " + styear + " to " + enyear;
+// organisation details are stored in items that are only visible in print.
 $("title").append(orname);
 $("#printorgname").append(orname);
 $("#printyears").append(styear + " to " + enyear);
 $("#showedituser").click(function(e){
+// calls edit user form.
 $("#msspinmodal").modal("show");
 $.ajax({
   url: '/showedituser',
@@ -406,9 +409,24 @@ $.ajax({
 });
 });
 
+$('#godown').click(function (e) {
+// Loads godown page in the main div.
+ $.ajax({
+     url: '/godown',
+       type: 'POST',
+       global: false,
+       async: false,
+       datatype: 'text/html',
+
+     })
+     .done(function(resp) {
+       $("#info").html(resp);
+     })
+   });
 
 
 $("#backuporg").click(function(e){
+  // This function serves the client with a backup tar file.
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '/backupfile', true);
     xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -427,17 +445,19 @@ $("#backuporg").click(function(e){
 
 
   $("#act_inv").click(function (e){
+  // creates a modal(dialog box) asking user to activate inventory or not.
     $("#inventorymodal").on('shown.bs.modal', function(event) {
       $("#inv_no").focus();
 
     });
     $('#inventorymodal').modal('show').one('click', '#inv_no', function (e)
     {
+      // If users selects no option then the modal is closed.
       $('#inventorymodal').modal("hide");
     });
     $('#inventorymodal').modal('show').one('click', '#inv_yes', function (e)
     {
-
+    // if yes then inventory is activated.
       $.ajax({
         url: '/editorganisation?edit=inventoryactivate',
         type: "POST",
@@ -457,7 +477,7 @@ $("#backuporg").click(function(e){
           $("#inventory_activate_success-alert").alert();
           $("#inventory_activate_success-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#inventory_activate_success-alert").hide();
-            location.reload();
+            location.reload();// page is reloaded is inventory is successfully activated, so that inventory menu shows up.
           });
           return false;
         }
@@ -474,6 +494,7 @@ $("#backuporg").click(function(e){
 
 
 $("#product").click(function (e){
+// calls product page.
 $.ajax({
   url: '/product?type=tab',
   type: "POST",
@@ -497,6 +518,7 @@ $.ajax({
 });
 
 $("#searchcategory").click(function (e){
+// opens a modal showing the topmost categories.
 $.ajax({
   url: '/catsearch?type=topcat',
   type: "POST",
@@ -527,6 +549,7 @@ $.ajax({
 
 
   $("#showeditorg").click(function (e){
+  // calls edit organisation page.
     $("#msspinmodal").modal("show");
     $.ajax({
       type:"POST",
@@ -547,6 +570,7 @@ $.ajax({
 
 
   $('#REMOVEuser').click(function (e) {
+  // calls remove user page.
     $("#msspinmodal").modal("show");
       $.ajax(
       {
@@ -569,6 +593,7 @@ $.ajax({
     });
 
   $('#editaccount').click(function (e) {
+  // calls edit account page.
     $("#msspinmodal").modal("show");
       $.ajax(
       {
@@ -590,6 +615,7 @@ $.ajax({
     });
 
     $('#changeorg').click(function (e) {
+      // clears sessionstorage and logs the user out to show select organisation page.
       sessionStorage.clear();
       $("#msspinmodal").modal();
       window.location.replace("/");
@@ -597,6 +623,7 @@ $.ajax({
       });
 
       $("#logout").click(function(event) {
+      // clears token in  sessionstorage and logs the user out to show login page.
         flag = 1;
         $("#msspinmodal").modal();
         $.ajax({
@@ -619,6 +646,7 @@ $.ajax({
       });
       $(document).off("click","#deleteorg").on("click", "#deleteorg", function(event)
       {
+      // opens a dialog box asking for confirmation to delete the organisation.
         event.preventDefault();
         $('.modal-backdrop').remove();
         $('.modal').modal('hide');
@@ -658,6 +686,7 @@ $.ajax({
 
 
     $('#listofaccounts').click(function (e) {
+  // calls list of accounts report.
       $("#msspinmodal").modal("show");
       $.ajax(
         {
@@ -680,6 +709,7 @@ $.ajax({
       });
 
       $('#listofgodowns').click(function (e) {
+        //calls list of godowns report.
         $.ajax(
           {
 
@@ -701,6 +731,7 @@ $.ajax({
         });
 
         $('#listofcategories').click(function (e) {
+        // calls list of categories report.
           $.ajax(
             {
 
@@ -722,6 +753,7 @@ $.ajax({
           });
 
           $('#listofstockitems').click(function (e) {
+          // calls list of stock items report.
             $.ajax(
               {
 
@@ -743,6 +775,7 @@ $.ajax({
             });
 
             $('#showstockreport').click(function (e) {
+            // calls view page for stock report.
               $.ajax(
                 {
 
@@ -764,6 +797,7 @@ $.ajax({
               });
 
   $('#fevoucher').click(function (e) {
+    // calls find and edit voucher page.
     $("#msspinmodal").modal("show");
       $.ajax(
       {
@@ -786,12 +820,13 @@ $.ajax({
     });
 
 
-  if(orgdata!=""||yeardata!="")
+  if(orgdata!=""||yeardata!="")// sets the organisation name, type and year in the status bar below navbar.
   {
   $("#orgdata").html(orgdata);
   $("#yeardata").html(yeardata);
   }
   $('#addaccount').click(function (e) {
+  // calls add account page.
     $("#msspinmodal").modal("show");
     $.ajax(
     {
@@ -814,6 +849,7 @@ $.ajax({
   });
 
   $('#createuser').click(function (e) {
+  // calls create user page.
     $("#msspinmodal").modal("show");
     $.ajax({
       url: '/showuser',
@@ -829,6 +865,7 @@ $.ajax({
 
 
     $("#showdeletedvoucher").click(function (e){
+      // shows deleted vouchers report.
       $("#msspinmodal").modal("show");
       $.ajax({
         url: '/showdeletedvoucher',
@@ -849,6 +886,7 @@ $.ajax({
 
 
   $('#showviewledger').click(function (e) {
+  // calls view page for ledger report.
     $("#msspinmodal").modal();
       $.ajax(
       {
@@ -871,6 +909,7 @@ $.ajax({
     });
 
     $('#BRS').click(function (e) {
+    // calls view page for bank reconcialation.
       $("#msspinmodal").modal("show");
         $.ajax(
         {
@@ -891,6 +930,7 @@ $.ajax({
       });
 
     $('#showprjstate').click(function (e) {
+    // calls view page for project statement report.
       $("#msspinmodal").modal("show");
         $.ajax(
         {
@@ -913,6 +953,7 @@ $.ajax({
       });
 
   $('#showproject').click(function (e) {
+  // calls add project page.
     $("#msspinmodal").modal("show");
     $.ajax(
     {
@@ -934,54 +975,55 @@ $.ajax({
   );
   });
 
-  $('#addcategory').click(function (e) {
+  $('#addcategory').click(function (e) {// calls base category page.
     $("#info").load("/category");
   });
-  $('#invoice').click(function (e) {
+  $('#invoice').click(function (e) {// calls base invoice page.
     $("#info").load("/invoice");
   });
-  $('#customersupplier').click(function (e) {
+  $('#customersupplier').click(function (e) {// calls base customersupplier page.
     $("#info").load("/customersuppliers");
   });
-  $('#addunit').click(function (e) {
+  $('#addunit').click(function (e) {// calls base unitofmeasurements page.
     $("#info").load("/unitofmeasurements");
   });
-  $('#addcashmemo').click(function (e) {
+  $('#addcashmemo').click(function (e) {// calls base cash memo page.
     $("#info").load("/cashmemos");
   });
-  $('#createtransfernote').click(function (e) {
+  $('#createtransfernote').click(function (e) {// calls base transfer note page.
     $("#info").load("/transfernotes");
   });
 
-  $('#deliverychallan').click(function (e) {
+  $('#deliverychallan').click(function (e) {// calls base deliverychallan page.
     $("#info").load("/deliverychallan");
   });
 
-  $("#showtrialbalance").click(function(event){
+  $("#showtrialbalance").click(function(event){// calls view page for trial balance report.
     $("#msspinmodal").modal("show");
     $("#info").load("/showtrialbalance");
   });
 
-  $("#showcashflow").click(function(event){
+  $("#showcashflow").click(function(event){// calls cashflow report.
     $("#msspinmodal").modal("show");
     $("#info").load("/showcashflow");
   });
-  $("#showprofitloss").click(function(event){
+  $("#showprofitloss").click(function(event){// calls profit and loss report. 
     var orgtype = sessionStorage.orgt.replace(/\s/g, "+");
     $("#msspinmodal").modal("show");
     $("#info").load("/showprofitloss?orgtype="+orgtype);
   });
 
-    $("#showbalancesheet").click(function(event){
+    $("#showbalancesheet").click(function(event){// calls view page for balance sheet report.
       $("#msspinmodal").modal("show");
       $("#info").load("/showbalancesheet");
     });
 
-  $("#showclosebooks").click(function(event){
+  $("#showclosebooks").click(function(event){// calls close books and rollover page.
     $("#msspinmodal").modal("show");
     $("#info").load("/showclosebooks");
   });
 
+  // following functions bind toolbar items to its corresponding menu items.
   $('#addaccounttb').click(function(){
     $('#addaccount').click();
   });
@@ -1063,13 +1105,14 @@ $.ajax({
   $('#changeogtb').click(function(){
     $('#changeorg').click();
   });*/
-  $('#orgdata').click(function(){
+  $('#orgdata').click(function(){// clicking on organisation name and type in status bar will call edit organisation details page.
     $('#showeditorg').click();
   });
   $('#yeardata').click(function(){
     return false;
   });
   $('.themesmenu').click(function(){
+  // sets the theme for the current user.
     var selectedtheme= $(this).attr('id');
     $("#msspinmodal").modal("show");
     $.ajax({
@@ -1090,7 +1133,7 @@ $.ajax({
       }
     });
   });
-  $('#tallyimport').click(function (e) {
+  $('#tallyimport').click(function (e) {// calls tally import page.
     $("#info").load("/import?action=show");
   });
 });

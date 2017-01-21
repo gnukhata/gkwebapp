@@ -23,20 +23,23 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 */
-
+// This script is for the project create edit and delete page.
 $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
   $("#prjname").focus();
+// Calculate width and height of the table depending on the screen.
   var percentwid = 100*(($("table").width()-9)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   var percentheigth = 100*(($("body").height()-$(".navbar").height()-170)/$("body").height());
   $('.table-fixedheader tbody').height(percentheigth+"%");
   if (sessionStorage.orgt=="Not For Profit") {
+// Change headings and labels is orgtype is Not for Profit.
     $("#addid").text("Add Project");
     $("#listid").text("Project List");
   }
   else {
+// Change alert msgs if orgtype is Profit Making.
     $("#success-alert").html("Cost Center Saved!");
     $("#failure-alert").html("Cost Center could not be saved!");
     $("#blank-alert").html("Please enter Cost Center name!");
@@ -51,6 +54,7 @@ $(document).ready(function() {
   $("#prjamount").numeric({ negative: false });
   $("#m_prjamount").numeric({ negative: false });
   if($("#prjtable tbody tr").length==0){
+// Hide the table if there are no projects.
     $("#prjtable").hide();
     $("#prjlist").hide();
     $("#prjlistpanel").hide();
@@ -80,6 +84,7 @@ $(document).ready(function() {
   });
 
   $(document).off("click",".delprj").on("click", ".delprj", function() {
+// Deletes the selected project.
     var prjcode = $(this).closest('tr').attr('value');
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
@@ -119,6 +124,7 @@ $(document).ready(function() {
   });
 
   $(document).off("click",".editprj").on("click", ".editprj", function() {
+// Function to edit project, updates the project name and sanctionedamount.
     var prjcode = $(this).closest('tr').attr('value');
     var closesttr = $(this).closest('tr')
     $('.modal-backdrop').remove();
@@ -157,6 +163,7 @@ $(document).ready(function() {
     });;
     $('#m_editprj').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
     {
+// Shows the project details in a modal.
       $.ajax(
         {
           type: "POST",
@@ -185,6 +192,7 @@ $(document).ready(function() {
   $("#prjform").submit(function(e)
   {
     $("#msspinmodal").modal("show");
+// Validations.
     if ($.trim($("#prjname").val())=="") {
       $("#blank-alert").alert();
       $("#blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -196,7 +204,7 @@ $(document).ready(function() {
     if ($.trim($("#prjamount").val())=="") {
       $("#prjamount").val("0.00");
     }
-
+// Function to save project.
     $.ajax(
       {
         type: "POST",

@@ -23,7 +23,9 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 */
-
+/*
+This script is for the view page of Ledger report.
+*/
 $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
@@ -37,7 +39,7 @@ $(document).ready(function() {
       return str
     }
   }
-  function yearpad (str, max) {
+  function yearpad (str, max) { //to add leading 20 or 200 to year
     str = str.toString();
     if (str.length==1) {
       return str.length < max ? pad("200" + str, max) : str;
@@ -61,8 +63,9 @@ $(document).ready(function() {
     $(this).val(yearpad($(this).val(),4));
   });
 
-  var sel1 = 0;
+  var sel1 = 0; // flag for focus on combo box
   var s1 ;
+  // Changing titles according to org type.
   if (sessionStorage.orgt=="Profit Making")
   {
     $(".panel-title").append(" Balance Sheet");
@@ -93,12 +96,12 @@ $(document).ready(function() {
   }
 
 
-  $("#viewbalsht_today").focus();
+  $("#viewbalsht_today").focus(); // set focus on to date on load.
   $('.viewbalsht_date').autotab('number');
 
 
 
-
+// Setting default date to financialstart and end.
   var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
   $("#viewbalsht_fromday").val(fromdatearray[2])
   $("#viewbalsht_frommonth").val(fromdatearray[1])
@@ -108,7 +111,7 @@ $(document).ready(function() {
   $("#viewbalsht_tomonth").val(todatearray[1])
   $("#viewbalsht_toyear").val(todatearray[0])
   $("#viewbalsht_today").select();
-  $('input:text:enabled,select:visible').keydown( function(e) {
+  $('input:text:enabled,select:visible').keydown( function(e) { // function for shifting focus on enter and up arrow key.
     var n = $("input:text:enabled,select:visible").length;
     var f = $('input:text:enabled,select:visible');
     if (e.which == 13)
@@ -150,6 +153,7 @@ $(document).ready(function() {
 
 
   $("#viewbalsht_submit").click(function(event) {
+    // --------------------starting validations------------------
     if ($("#viewbalsht_toyear").val() ==0||$("#viewbalsht_tomonth").val()==0||$("#viewbalsht_today").val()==0) {
       $("#improperdate-alert").alert();
       $("#improperdate-alert").fadeTo(2250, 400).slideUp(500, function(){
@@ -207,6 +211,7 @@ $(document).ready(function() {
     if (($("#viewbalsht_viewbalsht_fromday").val()=="" || $("#viewbalsht_frommonth").val()=="" || $("#viewbalsht_fromyear").val()=="" || $("#viewbalsht_today").val()=="" || $("#viewbalsht_tomonth").val()=="" || $("#viewbalsht_toyear").val()=="")) {
       return false;
     }
+    // -----------------------end of validations---------------------
     $("#msspinmodal").modal("show");
     $.ajax(
       {
