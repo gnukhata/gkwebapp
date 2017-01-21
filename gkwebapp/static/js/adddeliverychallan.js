@@ -747,7 +747,7 @@ $(document).ready(function() {
             dataType: 'html',
             data: {"dcno": $("#deliverychallan_challanno").val(),
             "custid":$("#deliverychallan_customer option:selected").val(),
-            "dcdate":$("#deliverychallan_month").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_year").val(),
+            "dcdate":$("#deliverychallan_date").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_year").val(),
             "printset":JSON.stringify(printset),
             "issuername":$("#deliverychallan_issuername").val(),
             "designation":$("#deliverychallan_designation").val(),
