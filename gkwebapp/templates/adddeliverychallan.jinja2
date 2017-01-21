@@ -80,9 +80,14 @@
                   <option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
                   {% endfor %}
               </select>
+              {% if gkstatus != "in" %}
+                <br>
+                <label for="deliverychallan_customeraddr">
+                  {% trans %}Customer Address{% endtrans %} :
+                </label>
+                <input class="form-control input-sm" id="deliverychallan_customeraddr" placeholder="{% trans %}Select Customer to see Address{% endtrans %}" accesskey="" disabled>
+              {% endif %}
             </div>
-
-
             <div class="form-group">
               <label for="deliverychallan_godown">
                 {% if gkstatus=="in" %}
