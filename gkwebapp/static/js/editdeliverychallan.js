@@ -78,6 +78,29 @@ $(document).ready(function() {
         $('#deliverychallan_edit_designation').val(resp.delchaldata.delchaldata.designation);
       }
       $('#deliverychallan_edit_customer').val(resp.delchaldata.delchaldata.custid);
+      $.ajax({
+        url: '/customersuppliers?action=get',
+        type: 'POST',
+        dataType: 'json',
+        async : false,
+        data: {"custid":resp.delchaldata.delchaldata.custid},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+      .done(function(resp) {
+        console.log("success");
+        if (resp["gkstatus"]==0) {
+          $("#deliverychallan_customeraddr").val(resp["gkresult"]["custaddr"]);
+        }
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
       $('#deliverychallan_edit_challanno').val(resp.delchaldata.delchaldata.dcno);
       $('#deliverychallan_edit_godown').val(resp.delchaldata.delchaldata.goid);
       $('#deliverychallan_edit_consignment').val(resp.delchaldata.delchaldata.dcflag);
