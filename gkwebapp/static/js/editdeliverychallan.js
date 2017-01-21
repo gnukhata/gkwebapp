@@ -592,7 +592,7 @@ $("#deliverychallan_editprint").click(function(event) {
     dataType: 'html',
     data: {"dcno": $("#deliverychallan_edit_challanno").val(),
     "custid":$("#deliverychallan_edit_customer option:selected").val(),
-    "dcdate":$("#deliverychallan_edit_month").val()+'-'+$("#deliverychallan_edit_month").val()+'-'+$("#deliverychallan_edit_year").val(),
+    "dcdate":$("#deliverychallan_edit_date").val()+'-'+$("#deliverychallan_edit_month").val()+'-'+$("#deliverychallan_edit_year").val(),
     "printset":JSON.stringify(printset),
     "issuername":$("#deliverychallan_edit_issuername").val(),
     "designation":$("#deliverychallan_edit_designation").val(),
