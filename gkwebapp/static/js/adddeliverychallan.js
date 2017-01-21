@@ -152,6 +152,31 @@ $(document).ready(function() {
     }
   });
 
+  $("#deliverychallan_customer").change(function(event) {
+    $.ajax({
+      url: '/customersuppliers?action=get',
+      type: 'POST',
+      dataType: 'json',
+      async : false,
+      data: {"custid":$("#deliverychallan_customer option:selected").val()},
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+    })
+    .done(function(resp) {
+      console.log("success");
+      if (resp["gkstatus"]==0) {
+        $("#deliverychallan_customeraddr").val(resp["gkresult"]["custaddr"]);
+      }
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
+  });
 
   $("#deliverychallan_purchaseorder").change(function(event) {
     if ($("#deliverychallan_purchaseorder option:selected").val()!='') {
