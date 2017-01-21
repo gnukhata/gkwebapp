@@ -38,7 +38,8 @@ from odslib import ODS
 @view_config(route_name="product",request_param="type=tab", renderer="gkwebapp:templates/producttab.jinja2")
 def showproducttab(request):
 	header={"gktoken":request.headers["gktoken"]}
-	return{"gkresult":0}
+	result = requests.get("http://127.0.0.1:6543/products",headers=header)
+	return{"numberofproducts":len(result.json()["gkresult"]),"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="product",request_param="type=addtab", renderer="gkwebapp:templates/addproduct.jinja2")
 def addproducttab(request):
@@ -76,7 +77,7 @@ def getprodbycat(request):
 @view_config(route_name="product",request_param="by=godown", renderer="json")
 def getgodownproduct(request):
 	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/products?by=godown&productcode=%d&goid=%d"%(int(request.params["productcode"]), int(request.params["goid"])), headers=header)
+	result = requests.get("http://127.0.0.1:6543/products?by=godown&productcode=%d"%int(request.params["productcode"]), headers=header)
 	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="product",request_param="type=prodtax", renderer="json")
@@ -133,7 +134,7 @@ def saveproduct(request):
 		else:
 			prdspecs[prd]= request.params[prd]
 
-		proddetails["specs"] = prdspecs
+	proddetails["specs"] = prdspecs
 	productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
 	result = requests.post("http://127.0.0.1:6543/products", data=json.dumps(productdetails),headers=header)
 	if len(taxes)>0:
@@ -182,8 +183,8 @@ def editproduct(request):
 			godowns = json.loads(request.params["godowns"])
 		else:
 			prdspecs[prd]= request.params[prd]
-		proddetails["specs"] = prdspecs
-		productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
+	proddetails["specs"] = prdspecs
+	productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
 	result = requests.put("http://127.0.0.1:6543/products", data=json.dumps(productdetails),headers=header)
 
 	for tax in taxes:
@@ -225,7 +226,8 @@ def productdetails(request):
 	result2 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
 	result3 = requests.get("http://127.0.0.1:6543/categories", headers=header)
 	result4 = requests.get("http://127.0.0.1:6543/godown", headers=header)
-	return{"proddesc":result.json()["gkresult"],"prodspecs":prodspecs,"uom":result2.json()["gkresult"],"category":result3.json()["gkresult"],"godown":result4.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
+	numberofgodowns = int(result.json()["numberofgodowns"])
+	return{"proddesc":result.json()["gkresult"],"prodspecs":prodspecs,"uom":result2.json()["gkresult"],"category":result3.json()["gkresult"],"godown":result4.json()["gkresult"],"numberofgodowns":numberofgodowns,"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="product",request_param="type=list", renderer="gkwebapp:templates/listofstockitems.jinja2")
 def listofstockitems(request):
@@ -252,20 +254,20 @@ def listofstockitemsspreadsheet(request):
 	orgname += " (FY: " + fystart+" to "+fyend +")"
 	ods = ODS()
 	sheet = ods.content.getSheet(0)
-	sheet.setSheetName("List of Stock Items")
+	sheet.setSheetName("List of Products")
 	sheet.getRow(0).setHeight("23pt")
 
 	sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("16pt")
 	ods.content.mergeCells(0,0,5,1)
 	sheet.getRow(1).setHeight("18pt")
-	sheet.getCell(0,1).stringValue("List Of Stock Items").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+	sheet.getCell(0,1).stringValue("List Of Products").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
 	ods.content.mergeCells(0,1,5,1)
-	sheet.getColumn(1).setWidth("4cm")
-	sheet.getColumn(2).setWidth("5cm")
+	sheet.getColumn(1).setWidth("9cm")
+	sheet.getColumn(2).setWidth("4cm")
 	sheet.getColumn(3).setWidth("4cm")
 	sheet.getColumn(4).setWidth("3cm")
 	sheet.getCell(0,2).stringValue("Sr. No.").setBold(True)
-	sheet.getCell(1,2).stringValue("Stock Item").setBold(True)
+	sheet.getCell(1,2).stringValue("Product").setBold(True)
 	sheet.getCell(2,2).stringValue("Category").setBold(True)
 	sheet.getCell(3,2).stringValue("Unit Of Measurement").setBold(True)
 	sheet.getCell(4,2).stringValue("Stock").setBold(True).setAlignHorizontal("right")

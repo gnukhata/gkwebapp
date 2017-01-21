@@ -98,11 +98,13 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="deliverychallan_edit_consignment">Note Type:</label>
-                <select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_consignment" accesskey="">
-                  <option value="4"  selected>{% trans %}Sale{% endtrans %}</option>
-                  <option value="3">{% trans %}Consignment{% endtrans %}</option>
-                  <option value="19">{% trans %}Sample{% endtrans %}</option>
+              <label for="deliverychallan_edit_consignment">Type of Transaction:</label>
+              <select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_consignment" accesskey="">
+                <option value="16">{% trans %}Purchase{% endtrans %}</option>
+                <option value="4">{% trans %}Sale{% endtrans %}</option>
+                <option value="1">{% trans %}Approval{% endtrans %}</option>
+                <option value="3">{% trans %}Consignment{% endtrans %}</option>
+                <option value="19">{% trans %}Sample{% endtrans %}</option>
                 </select>
               </label>
             </div>

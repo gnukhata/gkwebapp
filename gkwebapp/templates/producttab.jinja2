@@ -38,7 +38,9 @@
 
         <ul class="nav nav-pills nav-tabs " role="tablist">
           <li class="active nopadding" id="addproduct" role="presentation"><a data-toggle="pill" href="" >{% trans %}Create Product{% endtrans %}</a></li>
-          <li class="nopadding" id="editproduct" role="presentation"><a data-toggle="pill" href="">{% trans %}Edit Product{% endtrans %}</a></li>
+          {% if numberofproducts > 0 %}
+            <li class="nopadding" id="editproduct" role="presentation"><a data-toggle="pill" href="">{% trans %}Edit Product{% endtrans %}</a></li>
+          {% endif %}
         </ul>
         <div class='tab-content '>
           <div class="alert alert-success" id="addsuccess-alert"  aria-live="rude" role="alert" hidden>
