@@ -332,8 +332,8 @@ $(document).ready(function() {
       })
       .done(function(resp) {
         console.log("success");
-        $('#product_tax_table tbody tr').remove();
         if (resp["gkresult"].length>0) {
+          $('#product_tax_table tbody tr').remove();
           for (tax of resp["gkresult"]) {
             $('#product_tax_table tbody').append('<tr value="'+tax["taxid"]+'">'+
             '<td class="col-xs-4">'+
@@ -359,9 +359,6 @@ $(document).ready(function() {
           }
 
         }
-
-        $(".product_cat_tax_disable").prop('disabled',true);
-
       })
       .fail(function() {
         console.log("error");
@@ -811,11 +808,11 @@ $(document).ready(function() {
     var taxes = [];
     $("#product_tax_table tbody tr").each(function(){
       var obj = {};
-      if ($.trim($(".product_new_name",this).val())!="" || $.trim($(".product_new_rate",this).val())!="" ) {
+      if ($.trim($(".tax_name",this).val())!="" || $.trim($(".tax_rate",this).val())!="" ) {
 
-        obj.taxname = $(".product_new_name",this).val();
-        obj.state = $(".product_new_state",this).val();
-        obj.taxrate = $(".product_new_rate",this).val();
+        obj.taxname = $(".tax_name",this).val();
+        obj.state = $(".tax_state",this).val();
+        obj.taxrate = $(".tax_rate",this).val();
         taxes.push(obj);
       }
 
