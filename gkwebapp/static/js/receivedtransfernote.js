@@ -48,7 +48,7 @@ This script is for the Received transfer note page.
           type: 'POST',
           dataType: 'json',
           async : false,
-          data: {"transfernoteid": tnid },
+          data: {"transfernoteid": tnid},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -150,7 +150,7 @@ This script is for the Received transfer note page.
               url: '/transfernotes?action=received',
               async: false,
               datatype: "json",
-              data:{"transfernoteid": tnid},
+              data:{"transfernoteid": tnid, "receiveddate":$("#received_tn_year").val()+'-'+$("#received_tn_month").val()+'-'+$("#received_tn_date").val()},
               beforeSend: function(xhr)
               {
                 xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
