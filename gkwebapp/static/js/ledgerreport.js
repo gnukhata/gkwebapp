@@ -292,6 +292,7 @@ $("#dualledger").click(function(event) {
     $('.modal').modal('hide');
     $("#viewvc").html(resp);
     $('#m_dualledger').modal('show');
+    $( "#m_dualledger" ).draggable();
     $('#m_dualledger').on('shown.bs.modal', function (e)
     {
       $("#viewdualledger_accname").focus();

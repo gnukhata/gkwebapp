@@ -49,7 +49,12 @@ span
 	.calign{
 		text-align:center;
 	}
-
+  .mdwrap{
+    width: 13%;
+  }
+  .mdmwrap{
+    width:11%;
+  }
   </style>
 </head>
 <body>
@@ -91,10 +96,10 @@ span
       <table id="ledgertable1" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
         <thead class="bg-primary">
           <tr>
-            <th class="col-xs-2">{% trans %}Date{% endtrans %}</th>
-            <th class="col-xs-1" style="word-wrap: break-word;">{% trans %}V. No.{% endtrans %}</th>
+            <th  class="calign mdwrap">{% trans %}Date{% endtrans %}</th>
+            <th class="calign mdmwrap">{% trans %}V. No.{% endtrans %}</th>
             {% if ledgerheader1["projectname"]=="" %}
-            <th class="col-xs-3">{% trans %}Particulars{% endtrans %}</th>
+            <th class="col-xs-3 calign" >{% trans %}Particulars{% endtrans %}</th>
             <th class="col-xs-2 ralign">{% trans %}Debit{% endtrans %}</th>
             <th class="col-xs-2 ralign">{% trans %}Credit{% endtrans %}</th>
             <th class="col-xs-2 ralign">{% trans %}Balance{% endtrans %}</th>
@@ -108,15 +113,15 @@ span
         <tbody>
           {% for record in records1 %}
           <tr  data-value="{{record['vouchercode']}}">
-            <td class="col-xs-2">
+            <td class="calign mdwrap">
               {{record['voucherdate']}}
             </td>
             {% if record['vouchernumber']=="" %}
-            <td class="col-xs-1">
+            <td class="calign mdmwrap">
               <a class="vno1" href="#">&nbsp</a>
             </td>
             {% else %}
-            <td class="col-xs-1">
+            <td class="calign mdmwrap">
               <a class="vno1" href="#">{{record['vouchernumber']}}</a>
             </td>
             {% endif %}
@@ -173,15 +178,15 @@ span
       <table id="ledgertable2" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
         <thead class="bg-primary">
           <tr>
-            <th class="col-xs-2">{% trans %}Date{% endtrans %}</th>
-            <th class="col-xs-1" style="word-wrap: break-word;">{% trans %}V. No.{% endtrans %}</th>
+            <th  class="calign mdwrap">{% trans %}Date{% endtrans %}</th>
+            <th class="calign mdmwrap">{% trans %}V. No.{% endtrans %}</th>
             {% if ledgerheader2["projectname"]=="" %}
-            <th class="col-xs-3">{% trans %}Particulars{% endtrans %}</th>
+            <th class="col-xs-3 calign">{% trans %}Particulars{% endtrans %}</th>
             <th class="col-xs-2 ralign">{% trans %}Debit{% endtrans %}</th>
             <th class="col-xs-2 ralign">{% trans %}Credit{% endtrans %}</th>
             <th class="col-xs-2 ralign">{% trans %}Balance{% endtrans %}</th>
             {% else %}
-            <th class="col-xs-5">{% trans %}Particulars{% endtrans %}</th>
+            <th class="col-xs-5 calign">{% trans %}Particulars{% endtrans %}</th>
             <th class="col-xs-2 ralign">{% trans %}Debit{% endtrans %}</th>
             <th class="col-xs-2 ralign">{% trans %}Credit{% endtrans %}</th>
             {% endif %}
@@ -190,15 +195,15 @@ span
         <tbody>
           {% for record in records2 %}
           <tr  data-value="{{record['vouchercode']}}">
-            <td class="col-xs-2">
+            <td class="calign mdwrap">
               {{record['voucherdate']}}
             </td>
             {% if record['vouchernumber']=="" %}
-            <td class="col-xs-1">
+            <td class="calign mdmwrap">
               <a class="vno2" href="#">&nbsp</a>
             </td>
             {% else %}
-            <td class="col-xs-1">
+            <td class="calign mdmwrap">
               <a class="vno2" href="#">{{record['vouchernumber']}}</a>
             </td>
             {% endif %}
