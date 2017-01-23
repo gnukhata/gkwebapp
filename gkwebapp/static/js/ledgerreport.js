@@ -355,7 +355,13 @@ $("#printledger").click(function(event) {
       {
         $("#info").html("");
         $("#info").html(resp);
+        $('th:nth-child(7)').hide();
+        $('th:nth-child(8)').hide();
+        $('td:nth-child(7)').hide();
+        $('td:nth-child(8)').hide();
+
       }
+
     );
   });
 
@@ -377,6 +383,10 @@ $("#printledger").click(function(event) {
       {
         $("#info").html("");
         $("#info").html(resp);
+        $('th:nth-child(6)').hide();
+        $('th:nth-child(8)').hide();
+        $('td:nth-child(6)').hide();
+        $('td:nth-child(8)').hide();
       }
     );
   });
