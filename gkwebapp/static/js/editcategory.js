@@ -417,6 +417,7 @@ $(document).ready(function() {
     $("#category_edit_savespecs").show();
     $("#category_edit_edit").hide();
     $("#category_edit_under").focus().select();
+    
   });
 
   $(document).off("keydown",".spec_name").on("keydown",".spec_name",function(event)
@@ -524,7 +525,7 @@ $(document).ready(function() {
       $("#category-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#category-blank-alert").hide();
       });
-      $('#category_edit_under').focus().select();
+      $('#category_edit_name').focus().select();
       return false;
     }
     var specs = [];
