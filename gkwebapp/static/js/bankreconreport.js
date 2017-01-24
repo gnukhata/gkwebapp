@@ -248,6 +248,9 @@ $(document).ready(function() {
     $("#bankrecontable").removeClass('fixed-table');
     $("#printhead").show();
   });
+  $("#clrditems").click(function(event) {
+  $("#recostmtdiv").hide();
+  });
   $("#realprintbank").click(function(event) {
     window.print();
   });

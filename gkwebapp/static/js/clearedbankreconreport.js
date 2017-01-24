@@ -26,6 +26,7 @@ Contributors:
 $(document).ready(function() {
   $("#realprintbank").hide();
   $("#back").hide();
+  $("#printstatement").hide();
   var percentwid = 100*(($(".table-fixedheader").width()-12)/$(".table-fixedheader").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   var percentheigth = 100*(($("body").height()-$(".navbar").height()-420)/$("body").height());
@@ -221,8 +222,19 @@ $(document).ready(function() {
     $("#realprintbank").show();
     $("#clrtrans").hide();
     $("#back").show();
+    $("#unclrditems").hide();
     $("#recostmtdiv").removeClass('container');
     $(".table-responsive").removeClass('col-xs-8 col-xs-offset-2');
+  });
+  $("#viewstatement").click(function(event) {
+    $('.hides').show();
+    $("#printstatement").show();
+    $("#printtransactions").hide();
+    $("#viewstatement").hide();
+    $("#realprintbank").show();
+    $("#clrtrans").hide();
+    $("#unclrditems").show();
+    $("#back").show();
   });
   $("#printtransactions").click(function(event) {
     $("#printstatement").hide();
@@ -235,6 +247,9 @@ $(document).ready(function() {
     $("#recostmtdiv").hide();
     $("#clrbankrecontable").removeClass('fixed-table');
     $("#printhead").show();
+  });
+  $("#back").click(function(event) {
+    $(".hides").hide();
   });
   $("#realprintbank").click(function(event) {
     window.print();
