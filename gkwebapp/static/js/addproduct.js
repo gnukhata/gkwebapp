@@ -693,6 +693,7 @@ $(document).ready(function() {
           return false;
         }
         $('#godown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+        $("#godown_ob_table tbody tr:last td:last").append('<a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
         $(".godown_ob").numeric();
         $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }

@@ -8,7 +8,7 @@
         <form id="addprodform">
           <div class="col-sm-6" >
             <div class="form-group ">
-              <label class="" for="addcatselect">{% trans %}Category{% endtrans %} :</label>
+              <label class="" for="addcatselect">{% trans %}Select Category{% endtrans %} :</label>
               <select class = "form-control input-sm"  name = "catselect" id="addcatselect" >
                 <option value="" selected >{% trans %}None{% endtrans %}</option>
                 {% for cat in gkresult["category"] %}
@@ -85,7 +85,6 @@
                       <input class="form-control input-sm godown_ob text-right numtype" value="0.00">
                     </td>
                     <td class="col-xs-1">
-                      <a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                     </td>
                   </tr>
                 </tbody>

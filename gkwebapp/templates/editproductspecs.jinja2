@@ -6,7 +6,7 @@
 
   </div>
   <div class="form-group">
-    <label for="editcatselect" class="">{% trans %}Category{% endtrans %} :</label>
+    <label for="editcatselect" class="">{% trans %}Select Category{% endtrans %} :</label>
     <select class = "form-control input-sm "  name = "catselect" id="editcatselect" >
       {% if proddesc["categorycode"]== None %}
       <option value="" selected>{% trans %}None{% endtrans %}</option>
@@ -52,13 +52,14 @@
     <span class="input-group-addon input-sm" id="unitaddon"></span>
   </div>
 </div>
-<div  id="editopeningstockdiv" class="form-group">
+<div  id="editopeningstockdiv" class="form-group" hidden>
   <div class="panel">
     <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">
       <thead class="bg-primary input-sm">
         <tr>
           <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
-          <th class="col-xs-4 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+          <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+          <th class="col-xs-1 text-center"></th>
         </tr>
       </thead>
       <tbody>
@@ -75,7 +76,6 @@
               <input class="form-control input-sm editgodown_ob text-right numtype" value="0.00">
             </td>
             <td class="col-xs-1">
-              <a href="#" class="editgodown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
             </td>
           </tr>
       </tbody>
@@ -92,6 +92,7 @@
         <tr>
           <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
           <th class="col-xs-4 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+          <th class="col-xs-1 text-center"></th>
         </tr>
       </thead>
       <tbody>
@@ -108,7 +109,6 @@
               <input class="form-control input-sm editgodown_ob text-right numtype" value="0.00">
             </td>
             <td class="col-xs-1">
-              <a href="#" class="editgodown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
             </td>
           </tr>
         {% endfor %}

@@ -856,6 +856,7 @@ $(document).ready(function() {
           return false;
         }
         $('#editgodown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+        $("#editgodown_ob_table tbody tr:last td:last").append('<a href="#" class="editgodown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
         $(".editgodown_ob").numeric();
         $('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
