@@ -73,10 +73,10 @@
         <th class="col-xs-2" >
           {% trans %}Trn Type{% endtrans %}
         </th>
-        <th class="col-xs-2" >
+        <th class="col-xs-1" >
           {% trans %}DC No{% endtrans %}
         </th>
-        <th class="col-xs-2" >
+        <th class="col-xs-1" >
           {% trans %}INV No{% endtrans %}
         </th>
         <th class="col-xs-1 rightlist" >
@@ -101,7 +101,9 @@
         </td>
         <td class="col-xs-2" >
         </td>
-        <td class="col-xs-2" >
+        <td class="col-xs-1" >
+        </td>
+        <td class="col-xs-1" >
         </td>
         <td class="col-xs-1 rightlist">
           {{record["inward"]}}
@@ -132,7 +134,7 @@
           {% endif %}
 
         </td>
-        <td value="{{record["dcid"]}}" class="col-xs-2" >
+        <td value="{{record["dcid"]}}" class="col-xs-1" >
           {% if record["dcno"]!="" %}
             {{record["dcno"]}}
           {% endif %}
@@ -140,7 +142,7 @@
             {{record["dcinvtnno"]}}
           {% endif %}
         </td>
-        <td value="{{record["invid"]}}" class="col-xs-2" >
+        <td value="{{record["invid"]}}" class="col-xs-1" >
           {% if record["invno"]!="" %}
             {{record["invno"]}}
           {% endif %}
@@ -148,7 +150,7 @@
             {{record["dcinvtnno"]}}
           {% endif %}
         </td>
-        
+
         <td class="col-xs-1 rightlist">
           {{record["inwardqty"]}}
         </td>
@@ -169,7 +171,9 @@
         </td>
         <td class="col-xs-2" >
         </td>
-        <td class="col-xs-2" >
+        <td class="col-xs-1" >
+        </td>
+        <td class="col-xs-1" >
         </td>
         <td class="col-xs-1 rightlist">
           {{record["totalinwardqty"]}}
