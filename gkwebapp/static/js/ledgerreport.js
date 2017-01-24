@@ -25,7 +25,8 @@ Contributors:
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
 "Sachin Patil" <sachpatil@openmailbox.org>
 */
-
+// This script is for ledger report.
+// refer listofstockitems.js file for documentation.
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#msspinmodal").modal("hide");
@@ -83,6 +84,10 @@ $(document).ready(function() {
 
     if(e.which==32)
     {
+      // On space key press the following code checks user's role
+      // if user is an admin or a manager then it checks whether the text in the third coloumn(index 2) is blank or '***'
+      // If its '***' then the selected voucher was locked so pressing space means user wants to unlock it, so vstatus variable is set to False and vice versa.
+      // In short the following code toggles the lock status of the selected voucher.
       e.preventDefault();
 
       if($(this).find('td:eq(2)').val()=="na")
@@ -161,6 +166,8 @@ $(document).ready(function() {
   });
 
   $("#ledgertable ").off('dblclick','tr').on('dblclick','tr',function(e){
+  // This function opens a modal of the selected voucher.
+  // It shows the complete details of the selected voucher along with option to edit, delete and clone.
     e.preventDefault();
     var id = $(this).attr('data-value');
     if (id=="")
@@ -198,7 +205,9 @@ $(document).ready(function() {
       $('#myModal').on('hidden.bs.modal', function (e)
       {
         $("#viewvc").html("");
-        if ($("#side").val()=="dr") {
+        // A variable is set to indicate from which report this modal is loaded.
+        // Depending on the value of #side item, the report is displayed.
+        if ($("#side").val()=="dr") {// if its dr then only drs report is shown after modal is closed.
           $.ajax(
             {
               type: "POST",
@@ -219,7 +228,7 @@ $(document).ready(function() {
             }
           );
         }
-        else if ($("#side").val()=="cr") {
+        else if ($("#side").val()=="cr") {// if its cr then only crs report is shown after modal is closed.
           $.ajax(
             {
               type: "POST",
@@ -240,7 +249,7 @@ $(document).ready(function() {
             }
           );
         }
-        else {
+        else {// else the complete ledger is shown.
           $.ajax(
             {
               type: "POST",
@@ -267,7 +276,7 @@ $(document).ready(function() {
   });
 
 $("#dualledger").click(function(event) {
-  /* Act on the event */
+  /* shows an option to open another ledger in the same page. i.e dual ledger. */
   $.ajax({
     url: '/viewdualledger',
     type: 'POST',
@@ -309,6 +318,7 @@ $(".search").children(".form-control").keyup(function(event){
 });
 
 $("#printledger").click(function(event) {
+  // shows printable version of the report.
   var printdata = {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"monthlyflag":false,"narrationflag":$("#narrationflag").val()}
   if ($("#side").val()!="") {
     printdata.side=$("#side").val();
@@ -338,6 +348,7 @@ $("#printledger").click(function(event) {
 });
 
   $("#drsonly").click(function(event) {
+  // shows only debit side of the ledger.
     $.ajax(
       {
         type: "POST",
@@ -366,6 +377,7 @@ $("#printledger").click(function(event) {
   });
 
   $("#crsonly").click(function(event) {
+  // shows only credit side of the ledger.
     $.ajax(
       {
         type: "POST",
@@ -392,7 +404,9 @@ $("#printledger").click(function(event) {
   });
 
   $("#back").click(function(event) {
+    // this button only appears if this ledger is called from some other page rather than the ledger view page.
     if ($("#side").val()!="") {
+    // if side items value is not blank then the complete ledger is called on back button.
       $.ajax(
         {
           type: "POST",
@@ -414,7 +428,7 @@ $("#printledger").click(function(event) {
       );
     }
     else{
-      if ($("#backflag").val()<=3) {
+      if ($("#backflag").val()<=3) {// is backflag value is 1 or 2 or 3 then trial balance report is called.
       $.ajax(
         {
           type: "POST",
@@ -422,7 +436,7 @@ $("#printledger").click(function(event) {
           global: false,
           async: false,
           datatype: "text/html",
-          data: {"financialstart":sessionStorage.yyyymmddyear1,"calculateto":$("#calculateto").val(),"trialbalancetype":$("#backflag").val()},
+          data: {"financialstart":sessionStorage.yyyymmddyear1,"calculateto":$("#calculateto").val(),"trialbalancetype":$("#backflag").val()},// net = 1, gross = 2, extended = 3
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -438,7 +452,7 @@ $("#printledger").click(function(event) {
           console.log("complete");
         });
     }
-    else if ($("#backflag").val()==4) {
+    else if ($("#backflag").val()==4) {// if value is 4 then cash flow report is called.
       $.ajax(
         {
           type: "POST",
@@ -463,7 +477,7 @@ $("#printledger").click(function(event) {
         });
 
     }
-    else if ($("#backflag").val()==5){
+    else if ($("#backflag").val()==5){// if value is 5 then ledger report is called.
       $.ajax(
         {
           type: "POST",
@@ -483,7 +497,7 @@ $("#printledger").click(function(event) {
           }
         );
     }
-    else if ($("#backflag").val()==6) {
+    else if ($("#backflag").val()==6) {// for 6 project statement report is called.
       $.ajax(
         {
           type: "POST",
@@ -503,7 +517,7 @@ $("#printledger").click(function(event) {
           }
         );
     }
-    else if ($("#backflag").val()==7) {
+    else if ($("#backflag").val()==7) {// for 7 profit and loss report is called.
       $.ajax(
         {
           type: "POST",
@@ -527,7 +541,7 @@ $("#printledger").click(function(event) {
           console.log("complete");
         });
     }
-    else if ($("#backflag").val()==8) {
+    else if ($("#backflag").val()==8) {// for 8 vertical balance sheet report i.e sources and applications of funds reports is called.
       $.ajax(
         {
           type: "POST",
@@ -547,7 +561,7 @@ $("#printledger").click(function(event) {
         }
       );
     }
-    else if ($("#backflag").val()==9) {
+    else if ($("#backflag").val()==9) {// for 9 conventionalbalancesheet report is called.
       $.ajax(
         {
           type: "POST",

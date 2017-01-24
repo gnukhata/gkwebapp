@@ -24,7 +24,8 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Abhijith Balan" <abhijithb21@openmailbox.org>
 */
-
+// This script is for list of godowns report.
+// refer listofstockitems.js file for documentation.
 $(document).ready(function() {
   $(".modal-backdrop").remove();
   $(".fixed-table-loading").remove();
