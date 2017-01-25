@@ -77,3 +77,15 @@ def deletecustomersupplier(request):
 	dataset={"custid":int(request.params["custid"])}
 	result = requests.delete("http://127.0.0.1:6543/customersupplier",data =json.dumps(dataset), headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name='customersuppliers', request_param='action=getallcusts',renderer ='json')
+def getallcusts(request):
+    header={"gktoken":request.headers["gktoken"]}
+    customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall",headers=header)
+    return {"customers":customers.json()["gkresult"]}
+
+@view_config(route_name='customersuppliers', request_param='action=getallsups',renderer ='json')
+def getallsups(request):
+    header={"gktoken":request.headers["gktoken"]}
+    suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall",headers=header)
+    return {"suppliers":suppliers.json()["gkresult"]}

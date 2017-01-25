@@ -28,9 +28,12 @@ th {
 </head>
 
 <body >
-  <div id="m_accmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div id="custsupmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create Customer/Supplier</h5>
+       </div>
         <div class="container">
           <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
     <div class="alert alert-success" id="sup-success-alert"  aria-live="rude" role="alert" hidden>
@@ -166,7 +169,7 @@ th {
       </div>
     </div>
   </div>
-<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addcustomersupplier.js')}}"></script>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/createcustsuppopup.js')}}"></script>
 
 </body>
 </html>

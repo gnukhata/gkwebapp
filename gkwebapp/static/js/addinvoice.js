@@ -1399,14 +1399,45 @@ $(document).ready(function() {
           $('.modal-backdrop').remove();
           $('.modal').modal('hide');
           $("#viewcustsup").html(resp);
-          $('#m_accmodal').modal('show');
-          $('#m_accmodal').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
+          $('#custsupmodal').modal('show');
+          $('#custsupmodal').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
           {
             $('#add_cussup').focus();
           });
+          $('#custsupmodal').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is opened
+          {
+          $.ajax({
+            type:"POST",
+            url: "/customersuppliers?action=getallcusts",
+            global:false,
+            async:false,
+            datatype: "text/json",
+            beforeSend: function(xhr){
+            xhr.setRequestHeader("gktoken",sessionStorage.gktoken);
+            },
+          })
+          .done(function(resp) {
+            var custs = resp["customers"];
+            console.log("inside ajax done.");
+            $("#invoice_customer").empty();
+            console.log($('#invoice_customer').length);
+            for (i in custs){
+              $("#invoice_customer").append('<option value="'+custs[i].custid+'" >'+custs[i].custname+'</option>');
+            }
+          });
+          console.log($('#selectedcustsup').val());
+          var text1 = $('#selectedcustsup').val();
+           $("#invoice_customer option").filter(function() {
+                return this.text == text1;
+              }).attr('selected', true);
+            $("#selectedcustsup").val("");
+            $("#invoice_customer").focus(); 
+          });
 
+
+    
     }
-    }
+}
   );
   });
 
