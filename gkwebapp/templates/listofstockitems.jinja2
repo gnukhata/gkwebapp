@@ -44,16 +44,13 @@
     width: 6%;
  }
  .prdct{
-    width: 35%;
+    width: 40%;
  }
  .categrs{
-    width: 32%;
+    width: 39%;
  }
  .um{
     width: 15%;
- }
- .qty{
-    width: 12%;
  }
   </style>
 </head>
@@ -75,9 +72,6 @@
         <th class="col-xs-2 um" >
           {% trans %}UOM{% endtrans %}
         </th>
-        <th class="col-xs-1 qty rightlist" >
-          {% trans %}Quantity{% endtrans %}
-        </th>
       </tr>
     </thead>
     <tbody>
@@ -96,15 +90,6 @@
         <td class="col-xs-2 um" >
           {{record["unitname"]}}
         </td>
-        {% if record["productquantity"] == "0.00" %}
-        <td class="col-xs-1 qty text-danger rightlist">
-          {{record["productquantity"]}}
-        </td>
-        {% else %}
-        <td class="col-xs-1 qty text-success rightlist">
-          {{record["productquantity"]}}
-        </td>
-        {% endif %}
       </tr>
       {% endfor %}
 
