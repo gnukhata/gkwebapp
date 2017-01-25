@@ -101,7 +101,7 @@ def deltransfernotes(request):
 @view_config(route_name="transfernotes",request_param="action=received",renderer="json")
 def recieved(request):
 		header={"gktoken":request.headers["gktoken"]}
-		dataset={"transfernoteid":int(request.params["transfernoteid"]),"receiveddate":request.params["receiveddate"]}
+		dataset={"transfernoteid":int(request.params["transfernoteid"]),"recieveddate":request.params["receiveddate"]}
 		result=requests.put("http://127.0.0.1:6543/transfernote?received=true",data=json.dumps(dataset),headers=header)
 		return {"gkstatus":result.json()["gkstatus"]}
 

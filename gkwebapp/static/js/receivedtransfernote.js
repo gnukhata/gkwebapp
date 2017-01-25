@@ -34,10 +34,17 @@ This script is for the Received transfer note page.
       $("#rec_received").hide();
       $(".disable").prop("disabled", true);
       $("#tn_editprint").hide();
+      $(".tndate").autotab('number');
       var tnid ="";
       var fromgodownid;
       var togodownid;
-
+      var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
+      var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
+      
+      
+      
+      
+      
       $("#rec_tn_list").change(function(event) {
       // Get complete transfer note details on change(of the selected note).
         tnid = $("#rec_tn_list option:selected").val();
@@ -83,7 +90,9 @@ This script is for the Received transfer note page.
           $("#rec_name_issuer").html(result["issuername"]);
           $("#rec_designation").html(result["designation"]);
           $("#rec_transfernote_date").html(result["transfernotedate"]);
+         
 
+          
           // Empty the table and show the product details of the TN
           $('#transfernote_product_table tbody').empty();
           $.each(result.productdetails, function(key, value) {
@@ -143,6 +152,79 @@ This script is for the Received transfer note page.
         $('.modal').modal('hide');
         $('#confirm_yes').modal('show').one('click', '#tn_yes', function (e)
         {
+        	 if ($.trim($('#received_tn_date').val())=="") {
+        	      $("#date-blank-alert").alert();
+        	      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        	        $("#date-blank-alert").hide();
+        	      });
+        	      $('#received_tn_date').focus();
+        	      return false;
+        	    }
+        	    if ($.trim($('#received_tn_month').val())=="") {
+        	      $("#date-blank-alert").alert();
+        	      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        	        $("#date-blank-alert").hide();
+        	      });
+        	      $('#received_tn_month').focus();
+        	      return false;
+        	    }
+        	    if ($.trim($('#received_tn_year').val())=="") {
+        	      $("#date-blank-alert").alert();
+        	      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        	        $("#date-blank-alert").hide();
+        	      });
+        	      $('#received_tn_year').focus();
+        	      return false;
+        	    }
+        	    if(!Date.parseExact($("#received_tn_date").val()+$("#received_tn_month").val()+$("#received_tn_year").val(), "ddMMyyyy")){
+        	      $("#date-alert").alert();
+        	      $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
+        	        $("#date-alert").hide();
+        	      });
+        	      $('#received_tn_date').focus().select();
+        	      return false;
+        	    }
+        	    
+        	    
+        	    var curdate = Date.parseExact($("#received_tn_year").val()+$("#received_tn_month").val()+$("#received_tn_date").val(), "yyyyMMdd")
+        	    
+        	    
+          var receiveddate1 =$("#received_tn_year").val()+'-'+$("#received_tn_month").val()+'-'+$("#received_tn_date").val();
+          console.log("rec"+receiveddate1);
+         
+          if(Date.parseExact(receiveddate1,"yyyy-MM-dd").compareTo(financialend)==1){
+         
+         
+           $("#between-date-alert").alert();
+	       $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+	        $("#between-date-alert").hide();
+	       });
+	       $('#received_tn_date').focus().select();
+	       return false;
+	    
+          }
+          var createdate=$('#rec_transfernote_date').text();
+          var createdateyyyymmdd=createdate[6]+createdate[7]+createdate[8]+createdate[9]+createdate[5]+createdate[3]+createdate[4]+createdate[2]+createdate[0]+createdate[1]
+                                                                                                                                                                                 
+          
+           if(Date.parseExact(receiveddate1,"yyyy-MM-dd").compareTo(Date.parseExact(createdateyyyymmdd,"yyyy-MM-dd"))==-1)
+          {
+        	  $("#between-date-alert").alert();
+	      $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+  	        $("#between-date-alert").hide();
+  	      });
+  	      $('#received_tn_date').focus().select();
+  	      return false;
+  	    
+          }
+          
+          
+          
+        	    	
+        	  
+        	    	
+        	
+        	   
           $.ajax(
             {
 
@@ -166,6 +248,10 @@ This script is for the Received transfer note page.
 
                   });
                   $("#rec_received").hide();
+                  $("#received_tn_date").prop("disabled", true);
+                  $("#received_tn_month").prop("disabled", true);
+                  $("#received_tn_year").prop("disabled", true);
+                  
                 }
 
 

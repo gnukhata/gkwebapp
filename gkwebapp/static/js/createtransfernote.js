@@ -441,6 +441,7 @@ $(document).ready(function() {
       "transfernoteno":$("#transfernote_no").val(),
       "transfernotedate":$("#tn_year").val()+'-'+$("#tn_month").val()+'-'+$("#tn_date").val(),
       "fromgodown":$("#tn_from_godown option:selected").val(),
+      
       "togodown":$("#tn_to_godown option:selected").val(),
       "transportationmode":$("#transport_mode").val(),
       "nopkt":$("#no_of_packet").val(),
