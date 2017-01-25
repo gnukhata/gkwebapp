@@ -40,7 +40,21 @@
   .rightlist {
     text-align: right;
   }
-
+ .srno{
+    width: 6%;
+ }
+ .prdct{
+    width: 35%;
+ }
+ .categrs{
+    width: 32%;
+ }
+ .um{
+    width: 15%;
+ }
+ .qty{
+    width: 12%;
+ }
   </style>
 </head>
 <body>
@@ -49,20 +63,20 @@
   <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
     <thead class="bg-primary">
       <tr>
-        <th class="col-xs-1" >
+        <th class="col-xs-1 srno" >
           {% trans %}Sr. No.{% endtrans %}
         </th>
-        <th class="col-xs-5" >
+        <th class="col-xs-5 prdct" >
           {% trans %}Product{% endtrans %}
         </th>
-        <th class="col-xs-3" >
+        <th class="col-xs-3 categrs" >
           {% trans %}Category{% endtrans %}
         </th>
-        <th class="col-xs-2" >
-          {% trans %}Unit of Measurement{% endtrans %}
+        <th class="col-xs-2 um" >
+          {% trans %}UOM{% endtrans %}
         </th>
-        <th class="col-xs-1 rightlist" >
-          {% trans %}Stock{% endtrans %}
+        <th class="col-xs-1 qty rightlist" >
+          {% trans %}Quantity{% endtrans %}
         </th>
       </tr>
     </thead>
@@ -70,24 +84,24 @@
 
       {% for record in gkresult %}
       <tr	value="{{record["productcode"]}}">
-        <td class="col-xs-1 " >
+        <td class="col-xs-1 srno " >
           {{record["srno"]}}
         </td>
-        <td class="col-xs-5">
+        <td class="col-xs-5 prdct">
           <a class="libgname" href="">{{record["productdesc"]}}</a>
         </td>
-        <td class="col-xs-3" >
+        <td class="col-xs-3 categrs" >
           {{record["categoryname"]}}
         </td>
-        <td class="col-xs-2" >
+        <td class="col-xs-2 um" >
           {{record["unitname"]}}
         </td>
         {% if record["productquantity"] == "0.00" %}
-        <td class="col-xs-1 text-danger rightlist">
+        <td class="col-xs-1 qty text-danger rightlist">
           {{record["productquantity"]}}
         </td>
         {% else %}
-        <td class="col-xs-1 text-success rightlist">
+        <td class="col-xs-1 qty text-success rightlist">
           {{record["productquantity"]}}
         </td>
         {% endif %}
