@@ -36,7 +36,7 @@ $(document).ready(function(){
       sessionStorage.reload = 0;
       location.reload();
   }
-  var oninvoice = 0;// This variable is set to 1 only when its in the print page of invoice, cashmemo or deliverychallan or transfernote. Reason: The organisation details that appear in all print pages of GNUKhata is not required in the pages where its set to 1. 
+  var oninvoice = 0;// This variable is set to 1 only when its in the print page of invoice, cashmemo or deliverychallan or transfernote. Reason: The organisation details that appear in all print pages of GNUKhata is not required in the pages where its set to 1.
   $("#msspinmodal").modal("hide");
   if (sessionStorage.invflag ==1)// If inventory is already activated for this organisation than the option to activate inventory is removed.
   {
@@ -976,7 +976,23 @@ $.ajax({
   });
 
   $('#addcategory').click(function (e) {// calls base category page.
-    $("#info").load("/category");
+    $.ajax(
+		{
+		type: "POST",
+		url: "/category",
+		global: false,
+		async: false,
+		datatype: "text/html",
+		beforeSend: function(xhr)
+			{
+				xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+			},
+		success: function(resp)
+		{
+			$("#info").html(resp);
+		}
+		}
+	);
   });
   $('#invoice').click(function (e) {// calls base invoice page.
     $("#info").load("/invoice");
@@ -1007,7 +1023,7 @@ $.ajax({
     $("#msspinmodal").modal("show");
     $("#info").load("/showcashflow");
   });
-  $("#showprofitloss").click(function(event){// calls profit and loss report. 
+  $("#showprofitloss").click(function(event){// calls profit and loss report.
     var orgtype = sessionStorage.orgt.replace(/\s/g, "+");
     $("#msspinmodal").modal("show");
     $("#info").load("/showprofitloss?orgtype="+orgtype);
