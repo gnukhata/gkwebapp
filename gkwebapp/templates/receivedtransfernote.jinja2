@@ -50,7 +50,7 @@
           </div>
           <div class="alert alert-danger" id="date-blank-alert"  aria-live="rude" role="alert" hidden>
 
-            <label >{% trans %}Please enter date!{% endtrans %}</label>
+            <label >{% trans %}Please enter Received Date!{% endtrans %}</label>
           </div>
           <div class="alert alert-danger" id="tnno-blank-alert"  aria-live="rude" role="alert" hidden>
 
@@ -64,6 +64,12 @@
 
             <label >{% trans %}Godown Must be Selected!{% endtrans %}</label>
           </div>
+          
+           <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please enter date between transfer note creation and End of financial year!{% endtrans %}
+          </div>
+          
           <div class="alert alert-danger" id="product-blank-alert"  aria-live="rude" role="alert" hidden>
 
             <label >{% trans %}Please select a product!{% endtrans %}</label>
@@ -103,8 +109,28 @@
             </div>
             <div class="form-group hidden-load" hidden>
               <label >{% trans %}Date:{% endtrans %}</label> <label id="rec_transfernote_date"></label>
-
+              </br>
+         
+           
+      <div class="form-group">
+              <label for="received_transfernote_date">{% trans %}Received Date:{% endtrans %}</label>
+              <div class="form-inline">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="DD" id="received_tn_date" accesskey="v">
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="MM" id="received_tn_month" accesskey="v">
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control input-sm tndate" size="4" maxlength="4" placeholder="YYYY" id="received_tn_year" accesskey="v">
+                  </div>
+                </form>
+              </div>
             </div>
+            
+              </div>
+            
             <div class="form-group hidden-load" hidden>
               <div class="panel">
                 <table id="transfernote_product_table" class="table table-condensed table-borderd fixed-table">
@@ -124,7 +150,7 @@
           </div>
             <div class="col-md-6" id="rec_transfernote_godown_div">
               <div class="form-group hidden-load" hidden>
-                <label>{% trans %} Number Of Packets:{% endtrans %}</label> <label  id="rec_no_of_packet"></label>
+                <label>{% trans %} Number of Packets:{% endtrans %}</label> <label  id="rec_no_of_packet"></label>
               </div>
 
             <div class="form-group hidden-load" hidden>
@@ -134,11 +160,11 @@
               <label >{% trans %} To Godown:{% endtrans %}</label> <label id="rec_tn_to_godown"></label>
             </div>
             <div class="form-group hidden-load" hidden>
-              <label>{% trans %} Mode Of Transport:{% endtrans %}</label> <label  id="rec_transport_mode"></label>
+              <label>{% trans %} Mode of Transport:{% endtrans %}</label> <label  id="rec_transport_mode"></label>
             </div>
 
           <div class="form-group hidden-load" hidden>
-            <label>{% trans %} Name Of Issuer:{% endtrans %}</label> <label  id="rec_name_issuer"></label>
+            <label>{% trans %} Name of Issuer:{% endtrans %}</label> <label  id="rec_name_issuer"></label>
           </div>
         <div class="form-group hidden-load" hidden>
           <label >{% trans %} Designation:{% endtrans %}</label> <label id="rec_designation"></label>
