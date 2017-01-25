@@ -1,3 +1,32 @@
+/*
+Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+This file is part of GNUKhata:A modular,robust and Free Accounting System.
+
+GNUKhata is Free Software; you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation; either version 3 of
+the License, or (at your option) any later version.and old.stockflag = 's'
+
+GNUKhata is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public
+License along with GNUKhata (COPYING); if not, write to the
+Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+
+
+Contributors:
+"Krishnakant Mane" <kk@gmail.com>
+"Ishan Masdekar " <imasdekar@dff.org.in>
+"Navin Karkera" <navin@dff.org.in>
+*/
+
+// This script is for the add adddeliverychallan.jinja2
+
+
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $('.delchaldate').autotab('number');
@@ -17,7 +46,7 @@ $(document).ready(function() {
       return str
     }
   }
-  function yearpad (str, max) {
+  function yearpad (str, max) { //to add leading 20 or 200 in the year
     str = str.toString();
     if (str.length==1) {
       return str.length < max ? pad("200" + str, max) : str;
@@ -39,6 +68,7 @@ $(document).ready(function() {
   $("#deliverychallan_year").blur(function(event) {
     $(this).val(yearpad($(this).val(),4));
   });
+  // events for shifting focus. Enter shifts to next element and up arrow shifts to previous
   $("#deliverychallan_purchaseorder").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
@@ -178,83 +208,9 @@ $(document).ready(function() {
     });
   });
 
-  $("#deliverychallan_purchaseorder").change(function(event) {
-    if ($("#deliverychallan_purchaseorder option:selected").val()!='') {
-      $.ajax({
-        url: '/deliverychallan?action=getpurchaseorder',
-        type: 'POST',
-        dataType: 'json',
-        async : false,
-        data : {"orderid":$("#deliverychallan_purchaseorder option:selected").val()},
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-        }
-      })
-      .done(function(resp) {
-        if (resp["gkstatus"]==0) {
-          var podata = resp["podata"];
-          $("#deliverychallan_customer").val(podata.csid);
-          if ($('#deliverychallan_product_table tbody tr').length==1) {
-            $('#deliverychallan_product_table tbody tr').remove();
-            $.each(podata["productdetails"], function(key, value) {
-              $.ajax({
-                url: '/deliverychallan?action=getproducts',
-                type: 'POST',
-                dataType: 'json',
-                async : false,
-                beforeSend: function(xhr)
-                {
-                  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                }
-              })
-              .done(function(resp) {
-                console.log("success");
-                if (resp["gkstatus"]==0) {
-                  $('#deliverychallan_product_table tbody').append('<tr>'+
-                  '<td class="col-xs-7">'+
-                  '<select class="form-control input-sm product_name"></select>'+
-                  '</td>'+
-                  '<td class="col-xs-4">'+
-                  '<div class="input-group">'+
-                  '<input type="text" class="deliverychallan_product_quantity form-control input-sm text-right" value="">'+
-                    '<span class="input-group-addon input-sm" id="unitaddon"></span>'+
-                  '</div>'+
-                  '</td>'+
-                  '<td class="col-xs-1">'+
-                  '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-                  '</td>'+
-                  '</tr>');
-                  for (product of resp["products"]) {
-                    $('#deliverychallan_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
-                  }
-                  $('#deliverychallan_product_table tbody tr:last td:eq(0) select').val(key);
-                  $('#deliverychallan_product_table tbody tr:last td:eq(1) input').val(value.qty);
-                  $(".product_name").change();
-                }
-              })
-              .fail(function() {
-                console.log("error");
-              })
-              .always(function() {
-                console.log("complete");
-              });
-              $('.deliverychallan_product_quantity').numeric({ negative: false});
-            });
-          }
-        }
-      })
-      .fail(function() {
-        console.log("error");
-      })
-      .always(function() {
-        console.log("complete");
-      });
 
-    }
-  });
   $(document).off("change",".product_name").on("change",".product_name",function(event)
-  {
+  { // depending on the productcode its unit of measurement is retrieved from te database and displayed to the user
     var productcode = $(this).find('option:selected').val();
     var curindex = $(this).closest('tbody tr').index();
   $.ajax({
@@ -271,6 +227,7 @@ $(document).ready(function() {
   .done(function(resp) {
     console.log("success");
     if (resp["gkstatus"]==0) {
+        // retrieved unit name is displayed as a span element
       $('#deliverychallan_product_table tbody tr:eq('+curindex+') td:eq(1) span').text(resp["unitname"]);
     }
 
@@ -286,6 +243,7 @@ $(document).ready(function() {
 
   $(document).off("keydown",".product_name").on("keydown",".product_name",function(event)
   {
+      // focus shifting events based on ctrl and shift keys
     var curindex = $(this).closest('tr').index();
     var nextindex = curindex+1;
     var previndex = curindex-1;
@@ -327,6 +285,9 @@ $(document).ready(function() {
   });
   $(document).off("keydown",".deliverychallan_product_quantity").on("keydown",".deliverychallan_product_quantity",function(event)
   {
+      /* enter key event. If enter key is pressed on product quaantity and
+      all the details f this and all the details of previous rows of product table and the current row are filled
+      then a new row is added aong with the availbable products filled in the product name select box*/
     var curindex1 = $(this).closest('tr').index();
     var nextindex1 = curindex1+1;
     var previndex1 = curindex1-1;
@@ -344,6 +305,7 @@ $(document).ready(function() {
           $('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
           return false;
         }
+        //ajax call for getting all the available products in the database
         $.ajax({
           url: '/deliverychallan?action=getproducts',
           type: 'POST',
@@ -357,6 +319,7 @@ $(document).ready(function() {
         .done(function(resp) {
           console.log("success");
           if (resp["gkstatus"]==0) {
+              // new row is appended to the product table and the product name select box is populated with the retrieved products
             $('#deliverychallan_product_table tbody').append('<tr>'+
             '<td class="col-xs-7">'+
             '<select class="form-control input-sm product_name"></select>'+
@@ -372,6 +335,7 @@ $(document).ready(function() {
             '</td>'+
             '</tr>');
             for (product of resp["products"]) {
+                // for loop to populate product in product name select box
               $('#deliverychallan_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
             }
             $('#deliverychallan_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
@@ -422,6 +386,7 @@ $(document).ready(function() {
 
 
   $(document).off("click",".product_del").on("click", ".product_del", function() {
+      // removing the row where the del is clicked
     $(this).closest('tr').fadeOut(200, function(){
       $(this).closest('tr').remove();	 //closest method gives the closest element productified
       $('#deliverychallan_product_table tbody tr:last td:eq(0) input').focus().select();
@@ -429,7 +394,9 @@ $(document).ready(function() {
     $('#deliverychallan_product_table tbody tr:last td:eq(0) input').select();
   });
   $("#deliverychallan_save").click(function(event) {
+      // save event for saving the delivery note
     event.stopPropagation();
+    // below are all the validation checks
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     if ($.trim($('#deliverychallan_challanno').val())=="") {
       $("#challanno-blank-alert").alert();
@@ -490,8 +457,9 @@ $(document).ready(function() {
     }
 
 
-    var products = [];
+    var products = []; // list to store dictionaries containing product details
     for (var i = 0; i < $("#deliverychallan_product_table tbody tr").length; i++) {
+        // loop for getting details from each row at a time
       if ($("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()=="") {
         $("#product-blank-alert").alert();
         $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -508,10 +476,10 @@ $(document).ready(function() {
         $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(1) input").focus();
         return false;
       }
-      var obj = {};
+      var obj = {}; //dict with keys as productcode and qty
       obj.productcode = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val();
       obj.qty = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(1) input").val();
-      products.push(obj);
+      products.push(obj); // a list named products is populated with the dictionaries obj
     }
     if ($.trim($('#deliverychallan_issuername').val())=="" && $("#status").val()=='15') {
       $("#issuername-blank-alert").alert();
@@ -534,7 +502,8 @@ $(document).ready(function() {
     $('.modal').modal('hide');
     $('#confirm_yes').modal('show').one('click', '#dc_save_yes', function (e)
     {
-    $.ajax({
+        // modal opened for save confirmation as delivery note once created cannot be edited later
+    $.ajax({ //ajax call for saving the delivery note
       url: '/deliverychallan?action=save',
       type: 'POST',
       dataType: 'json',
@@ -546,7 +515,7 @@ $(document).ready(function() {
       "issuername":$("#deliverychallan_issuername").val(),
       "designation":$("#deliverychallan_designation").val(),
       "goid":$("#deliverychallan_godown option:selected").val(),
-      "products":JSON.stringify(products),
+      "products":JSON.stringify(products),// a list always needs to be stringified into json before sending it ahead
       "dcflag":$("#deliverychallan_consignment option:selected").val()},
       beforeSend: function(xhr)
       {
@@ -555,7 +524,9 @@ $(document).ready(function() {
     })
     .done(function(resp) {
       if(resp["gkstatus"] == 0){
+
         if ($("#status").val()=='9') {
+            //9 is for delivery in
           $("#deliverychallan_record").click();
         }
         else {
@@ -595,14 +566,19 @@ $(document).ready(function() {
   });
   });
   $("#confirm_yes").on('shown.bs.modal', function(event) {
+      // on opening of modal the focus should be by efault on the no option so this event
     $("#dc_save_no").focus();
 
   });
   $("#confirm_yes").on('hidden.bs.modal', function(event) {
+      // after te modal is closed the focus should be on the delivery note number so this event
     $("#deliverychallan_challanno").focus();
   });
 
   $("#deliverychallan_saveprint").click(function(event) {
+      /* event is same as save event just that the data is collected and
+       the delivery note is saved and the same data is passed on
+       to a page displaying the print preview ready to be printed */
     event.stopPropagation();
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     if ($.trim($('#deliverychallan_challanno').val())=="") {
@@ -708,7 +684,7 @@ $(document).ready(function() {
     $('.modal').modal('hide');
     $('#confirm_yes_dc').modal('show').one('click', '#dc_save_yesprint', function (e)
     {
-    $.ajax({
+    $.ajax({ // ajax for saving the delivery note
       url: '/deliverychallan?action=save',
       type: 'POST',
       dataType: 'json',
@@ -730,18 +706,19 @@ $(document).ready(function() {
     .done(function(resp) {
       if(resp["gkstatus"] == 0){
         if ($("#status").val()=='15') {
-          printset = [];
+          printset = []; // list containing dict of product details
           qtytotal =0;
           for (var i = 0; i < $("#deliverychallan_product_table tbody tr").length; i++) {
-            var obj = {};
+            var obj = {};// dict containing product details
 
             obj.productdesc = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").text();
             obj.qty = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(1) input").val();
             obj.unitname = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(1) span").text();
+            /* total of product quantities to be displayed in the delivery note at the very end of product details*/
             qtytotal += +obj.qty;
             printset.push(obj);
           }
-          $.ajax({
+          $.ajax({ // passing the delivery note details to a page displaying it as a print preview
             url: '/deliverychallan?action=print',
             type: 'POST',
             dataType: 'html',
@@ -809,6 +786,7 @@ $("#confirm_yes_dc").on('hidden.bs.modal', function(event) {
 
 
   $("#deliverychallan_reset").click(function(event) {
+      // function for resetting the entered delivery note details
     if ($("#status").val()=='9') {
       $("#deliverychallan_record").click();
     }

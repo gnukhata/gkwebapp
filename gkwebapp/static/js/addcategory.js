@@ -1,3 +1,31 @@
+/*
+Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+This file is part of GNUKhata:A modular,robust and Free Accounting System.
+
+GNUKhata is Free Software; you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation; either version 3 of
+the License, or (at your option) any later version.and old.stockflag = 's'
+
+GNUKhata is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public
+License along with GNUKhata (COPYING); if not, write to the
+Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+
+
+Contributors:
+"Krishnakant Mane" <kk@gmail.com>
+"Ishan Masdekar " <imasdekar@dff.org.in>
+"Navin Karkera" <navin@dff.org.in>
+*/
+
+// This script is for the add category page
+
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $(".tax_rate").numeric();
@@ -31,6 +59,7 @@ $(document).ready(function() {
 
   });
   /* -----------------------Tax key events start----------------------------------------- */
+  // Focus events with shit key and ctrl key
   $(document).off("keydown",".tax_name").on("keydown",".tax_name",function(event)
   {
     var curindex = $(this).closest('tr').index();
@@ -118,9 +147,13 @@ $(document).ready(function() {
       $('#category_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
     }
   });
+/* on presing enter key in tax rate field if the either CVAT or VAT is selected and depending on that
+ the respective State is selected and also the tax rate is specified
+ then a new row is displayed to the user to add another tax to the category*/
 
   $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
   {
+
     var curindex1 = $(this).closest('tr').index();
     var nextindex1 = curindex1+1;
     var previndex1 = curindex1-1;
@@ -130,6 +163,7 @@ $(document).ready(function() {
         $('#category_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
       else {
+          //validations for blank tax(CVAT or VAT) and and blank tax rate
         if ($('#category_tax_table tbody tr:eq('+curindex1+') td:eq(0) select').val()=="") {
           $("#tax-name-blank-alert").alert();
           $("#tax-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -146,6 +180,8 @@ $(document).ready(function() {
           $('#category_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').focus();
           return false;
         }
+        // appending a new row for adding another tax to category
+
         $('#category_tax_table tbody').append('<tr>'+
         '<td class="col-xs-4">'+
         '<select class="form-control input-sm tax_name">'+
@@ -204,6 +240,8 @@ $(document).ready(function() {
   /* -----------------------Tax key events end----------------------------------------- */
 
   /* -----------------------Spec key events start----------------------------------------- */
+  //All the navigation events where pressing enter shifts focus to the next element and pressing the up arrow key focuses the previous element
+
   $(document).off("keydown",".spec_name").on("keydown",".spec_name",function(event)
   {
     var curindex = $(this).closest('tr').index();
@@ -243,8 +281,6 @@ $(document).ready(function() {
   });
 
 
-
-
   $(document).off("keydown",".spec_type").on("keydown",".spec_type",function(event)
   {
     var curindex1 = $(this).closest('tr').index();
@@ -264,6 +300,7 @@ $(document).ready(function() {
           $('#category_spec_table tbody tr:eq('+curindex1+') td:eq(0) input').focus();
           return false;
         }
+        // appending a new row for adding another spec to category
         $('#category_spec_table tbody').append('<tr>'+
         '<td class="col-xs-8">'+
         '<input type="text" class="form-control input-sm spec_name" placeholder="Spec Name">'+
@@ -310,8 +347,10 @@ $(document).ready(function() {
     }
   });
 
+/* If a parent category is selected then its specs are automatically inhereted by its child category and the specs are displayed */
   $("#category_under").change(function(event) {
 
+// a blank spec roe is added as the last row to enter new specs for this category
     if ($('#category_spec_table tbody tr').length==0) {
       $('#category_spec_table tbody').append('<tr>'+
       '<td class="col-xs-8">'+
@@ -330,9 +369,14 @@ $(document).ready(function() {
       '</td>'+
       '</tr>');
     }
+    /* when a (parent)category is changed by the user except the last blank row all the other category spec rows are removed
+    and replaced with the spec rows of the newly selected (parent)category
+    */
+
     var category_code = $("#category_under option:selected").val();
     $("#category_spec_table > tbody >tr:not(:last)").remove();
     $("#category_spec_table tbody tr:last td:eq(0) input").val("");
+    // ajax for getting the specs of the newly selected (parent)category
     $.ajax({
       url: '/category?action=getspecs',
       type: 'POST',
@@ -396,6 +440,7 @@ $(document).ready(function() {
   });
 
   $(document).off("click",".spec_del").on("click", ".spec_del", function() {
+      //removing the spec row on clicking of the remove x mark glyphicon
     if($('#category_spec_table tbody tr').length>1){
       $(this).closest('tr').fadeOut(200, function(){
         $(this).closest('tr').remove();	 //closest method gives the closest element specified
@@ -410,6 +455,7 @@ $(document).ready(function() {
     }
     $('#category_spec_table tbody tr:last td:eq(0) input').select();
   });
+  //save events for category
   $("#category_savespecs").click(function(event) {
     if ($.trim($('#category_name').val())=="") {
       $("#category-blank-alert").alert();
@@ -422,6 +468,7 @@ $(document).ready(function() {
     var specs = [];
     for (var i = 0; i < $("#category_spec_table tbody tr").length; i++) {
       var obj = {};
+      //dict for specs
       if ($.trim($("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").val())!="") {
         obj.attrname = $("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").val();
         obj.attrtype = $("#category_spec_table tbody tr:eq("+i+") td:eq(1) select").val();
@@ -448,7 +495,8 @@ $(document).ready(function() {
         }
       });
       if (ccount>1) {
-        allow= false;
+          //for checking if same tax is applied more than once
+        allow= false; // allow=true only if a same tax is found more than once an this value is used for vurther validation
         return false;
       }
     });
@@ -463,13 +511,14 @@ $(document).ready(function() {
     }
     for (var i = 0; i < $("#category_tax_table tbody tr").length; i++) {
       if ($.trim($("#category_tax_table tbody tr:eq("+i+") td:eq(0) select").val())!="" && $.trim($("#category_tax_table tbody tr:eq("+i+") td:eq(2) input").val())!="") {
-      var obj = {};
+      var obj = {}; // dict for storing tax details
       obj.taxname = $("#category_tax_table tbody tr:eq("+i+") td:eq(0) select").val();
       obj.state = $("#category_tax_table tbody tr:eq("+i+") td:eq(1) select option:selected").val();
       obj.taxrate = $("#category_tax_table tbody tr:eq("+i+") td:eq(2) input").val();
       taxes.push(obj);
     }
     }
+    // ajax call for saving the category
     $.ajax({
       url: '/category?action=save',
       type: 'POST',

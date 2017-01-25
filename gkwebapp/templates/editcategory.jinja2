@@ -22,11 +22,11 @@
       <div class="panel-body">
         <div class="alert alert-danger" id="category-blank-alert"  aria-live="rude" role="alert" hidden>
 
-          <label for="vno">{% trans %}Please enter category name!{% endtrans %}</label>
+          <label for="vno">{% trans %}Please enter child category name!{% endtrans %}</label>
         </div>
         <form>
           <div class="container-fluid row">
-            <div class="col-md-6">
+            <div class="col-md-6 selcat">
               <div class="form-group">
                 <label for="category_edit_list">{% trans %}Category :{% endtrans %}</label>
                 <select class="form-control input-sm" id="category_edit_list">
@@ -84,9 +84,7 @@
                 <small id="navigation" class="form-text text-muted">{% trans %}Press 'Ctrl + <' and 'Ctrl + >' to navigate through fields of specification and tax.{% endtrans %}</small>
               </div>
           <div class="col-md-6">
-            <div class="alert alert-danger" id="category-blank-alert"  aria-live="rude" role="alert" hidden>
-              <label for="vno">{% trans %}Please enter category name!{% endtrans %}</label>
-            </div>
+
             <div class="alert alert-danger" id="tax-name-blank-alert"  aria-live="rude" role="alert" hidden>
 
               {% trans %}Select tax name!{% endtrans %}

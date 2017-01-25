@@ -1,3 +1,31 @@
+/*
+Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+This file is part of GNUKhata:A modular,robust and Free Accounting System.
+
+GNUKhata is Free Software; you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation; either version 3 of
+the License, or (at your option) any later version.and old.stockflag = 's'
+
+GNUKhata is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public
+License along with GNUKhata (COPYING); if not, write to the
+Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+
+
+Contributors:
+"Krishnakant Mane" <kk@gmail.com>
+"Ishan Masdekar " <imasdekar@dff.org.in>
+"Navin Karkera" <navin@dff.org.in>
+*/
+
+// This script is for the add cashmemo page
+
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $('.invoicedate').autotab('number');
@@ -11,14 +39,13 @@ $(document).ready(function() {
   var perprice=0.00;
   var ptotal=0.00;
   var taxrate=0.00;
-  if ($("#status").val()=='15')
-  {
+
     $(".invoice_issuer").show();
     $(".invstate").show();
     $(".fixed-table").removeClass('fixed-tablepurchase');
     $(".fixed-table").addClass('fixed-tablesale');
 
-  }
+
 
   $("#invoice_date").numeric();
   $("#invoice_month").numeric();
@@ -50,7 +77,7 @@ $(document).ready(function() {
         return str
       }
     }
-    function yearpad (str, max) {
+    function yearpad (str, max) { //to add leading 20 or 200 to the year
       str = str.toString();
       if (str.length==1) {
         return str.length < max ? pad("200" + str, max) : str;
@@ -129,6 +156,7 @@ $("#invoice_reset").click(function(event) {
   $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
     event.preventDefault();
     /* Act on the event */
+    //being a dynamic generated field the numeric property is added on their focus
     $(".numtype").numeric();
   });
   $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
@@ -158,6 +186,9 @@ $("#invoice_reset").click(function(event) {
     }
   });
 
+// following is a function to fil tax rate depending on the state choosen, against the respective products
+//if state selected is none then zero is added in the tax rate fields of product rows
+// else the tax rate is retrieved from the database with the combination of state and product code
   $(document).off('change', '#invoice_state').on('change', '#invoice_state', function(event) {
     event.preventDefault();
     /* Act on the event */
@@ -205,14 +236,12 @@ $("#invoice_reset").click(function(event) {
   });
 
 
-
+// if the selected product is changed the tax rate is again retrieved from the database, again using the combination of product code and state
   $(document).off('change', '.product_name').on('change', '.product_name', function(event) {
     event.preventDefault();
     /* Act on the event */
     var productcode = $(this).find('option:selected').val();
     var curindex = $(this).closest('tbody tr').index();
-    if ($("#status").val()=='15')
-    {
 
       var state = $("#invoice_state option:selected").val();
       if (state == "none")
@@ -246,7 +275,7 @@ $("#invoice_reset").click(function(event) {
           console.log("complete");
         });
       }
-    }
+// the unit of measurement name that is associted with the product is retrieved by pasing the product code and is displayed in the span element against the respective produt
     $.ajax({
       url: '/invoice?action=getproduct',
       type: 'POST',
@@ -304,183 +333,7 @@ $("#invoice_reset").click(function(event) {
 
 
 
-  $("#invoice_deliverynote").change(function(event) {
-    if ($("#invoice_deliverynote option:selected").val()!='') {
-      $.ajax({
-        url: '/invoice?action=getdeliverynote',
-        type: 'POST',
-        dataType: 'json',
-        async : false,
-        data : {"dcid":$("#invoice_deliverynote option:selected").val()},
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-        }
-      })
-      .done(function(resp) {
-        if (resp["gkstatus"]==0) {
-          $("#invoice_customer").val(resp["delchal"]["delchaldata"]["custid"]);
-          $('#invoice_product_table tbody').empty();
-          var totqty = 0;
-          $.each(resp.delchal.stockdata.items, function(key, value) {
-            $('#invoice_product_table tbody').append('<tr>'+
-            '<td class="col-xs-3">'+
-            '<select class="form-control deliverychallan_edit_disable input-sm product_name">'+
-            '<option value="'+key+'">'+value.productdesc+'</option>'+
-            '</select>'+
-            '</td>'+
-            '<td class="col-xs-2">'+
-            '<input type="text" class="invoice_product_quantity form-control deliverychallan_edit_disable input-sm text-right" value="'+value.qty+'">'+
-            '</td>'+
-            '<td class="col-xs-2">'+
-            '<input type="text" class="invoice_product_per_price form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00">'+
-            '</td>'+
-            '<td class="col-xs-1">'+
-            '<input type="text" class="invoice_product_tax_rate form-control input-sm numtype text-right" value="0.00">'+
-            '</td>'+
-            '<td class="col-xs-1">'+
-            '<input type="text" class="invoice_product_tax_amount form-control input-sm numtype text-right" value="0.00" disabled>'+
-            '</td>'+
-            '<td class="col-xs-2">'+
-            '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00" disabled>'+
-            '</td>'+
-            '<td class="col-xs-1">'+
-            '<a href="#" class="product_del deliverychallan_edit_disable"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-            '</td>'+
-            '</tr>');
-            totqty += +value.qty;
-            if ($("#status").val()=='15')
-            {
-              $(".invoice_product_tax_rate").prop("disabled",true);
-
-            }
-            else
-            {
-              $(".invoice_product_tax_rate").prop("disabled",false);
-            }
-          });
-
-          var state = $("#invoice_state option:selected").val();
-          var productcode;
-          $(".product_name").each(function()
-          {
-            var curindex = $(this).closest('tbody tr').index();
-            productcode = $(this).find('option:selected').val();
-            if (state == "none")
-            {
-              $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').val(parseFloat(0).toFixed(2));
-            }
-            else {
-
-
-              $.ajax({
-                url: '/invoice?action=gettax',
-                type: 'POST',
-                dataType: 'json',
-                async : false,
-                data : {"productcode":productcode, "state":state},
-                beforeSend: function(xhr)
-                {
-                  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                }
-              })
-              .done(function(resp) {
-                console.log("success");
-                if (resp["gkstatus"]==0) {
-                  $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').val(parseFloat(resp['taxdata']).toFixed(2));
-                }
-
-              })
-              .fail(function() {
-                console.log("error");
-              })
-              .always(function() {
-                console.log("complete");
-              });
-            }
-          });
-
-          $('#invoice_product_table tfoot tr:last td:eq(1) input').val(parseFloat(totqty).toFixed(2));
-
-        }
-      })
-      .fail(function() {
-        console.log("error");
-      })
-      .always(function() {
-        console.log("complete");
-      });
-
-    }
-    else
-    {
-      $.ajax({
-        url: '/invoice?action=getproducts',
-        type: 'POST',
-        dataType: 'json',
-        async : false,
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-        }
-      })
-      .done(function(resp) {
-        console.log("success");
-        if (resp["gkstatus"]==0) {
-          $('#invoice_product_table tbody').empty();
-          $('#invoice_product_table tbody').append('<tr>'+
-          '<td class="col-xs-3">'+
-          '<select class="form-control input-sm product_name"></select>'+
-          '</td>'+
-          '<td class="col-xs-2">'+
-          '<input type="text" class="invoice_product_quantity form-control input-sm text-right" value="0">'+
-          '</td>'+
-          '<td class="col-xs-2">'+
-          '<input type="text" class="invoice_product_per_price form-control input-sm numtype text-right" value="0.00">'+
-          '</td>'+
-          '<td class="col-xs-1">'+
-          '<input type="text" class="invoice_product_tax_rate form-control input-sm numtype text-right" value="0.00">'+
-          '</td>'+
-          '<td class="col-xs-1">'+
-          '<input type="text" class="invoice_product_tax_amount form-control input-sm numtype text-right" value="0.00" disabled>'+
-          '</td>'+
-          '<td class="col-xs-2">'+
-          '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00" disabled>'+
-          '</td>'+
-          '<td class="col-xs-1">'+
-
-          '</td>'+
-          '</tr>');
-          if ($("#status").val()=='15')
-          {
-            $(".invoice_product_tax_rate").prop("disabled",true);
-
-          }
-          else
-          {
-            $(".invoice_product_tax_rate").prop("disabled",false);
-          }
-          for (product of resp["products"]) {
-            $('#invoice_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
-          }
-          $('#invoice_product_table tbody tr:last td:eq(0) select').prepend(('<option value="" selected>None</option>'));
-          $('#invoice_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
-          $('.invoice_product_quantity').numeric({ negative: false});
-          $('.invoice_product_per_price').numeric({ negative: false});
-        }
-        $('#invoice_product_table tfoot tr:last td:eq(1) input').val(parseFloat(0).toFixed(2));
-      })
-      .fail(function() {
-        console.log("error");
-      })
-      .always(function() {
-        console.log("complete");
-      });
-    }
-
-  });
-
-
+// navigation using ctrl key and shift key
   $(document).off("keydown",".product_name").on("keydown",".product_name",function(event)
   {
     var curindex = $(this).closest('tr').index();
@@ -521,7 +374,7 @@ $("#invoice_reset").click(function(event) {
       event.preventDefault();
     }
   });
-
+//being dynamic generated fields the numeric property is added on their focus
   $(document).off('focus', '.invoice_product_quantity').on('focus', '.invoice_product_quantity', function(event) {
     event.preventDefault();
     /* Act on the event */
@@ -540,7 +393,7 @@ $("#invoice_reset").click(function(event) {
     $(".invoice_product_per_price").numeric();
   });
 
-
+// to add trailing ".00"
   $(document).off('blur', '.invoice_product_per_price').on('blur', '.invoice_product_per_price', function(event) {
     event.preventDefault();
     /* Act on the event */
@@ -585,7 +438,10 @@ $("#invoice_reset").click(function(event) {
       $(this).val(parseFloat(0).toFixed(2));
     }
   });
-
+// all the column totals are directly calculated dynamically on the change of any of the related fields in the column
+// the following values are also calculated
+//Tax Amount = Quantity * Price Per Unit *(tax rate/100)
+// Row Total = (Quantity * Price Per Unit) + Tax Amount
   $(document).off('change', '.invoice_product_quantity').on('change', '.invoice_product_quantity', function(event) {
     event.preventDefault();
     /* Act on the event */
@@ -639,6 +495,10 @@ $("#invoice_reset").click(function(event) {
       $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(1) input').val(0);
     }
     if (event.which==13) {
+        // all the column totals are directly calculated dynamically on the change of any of the related fields in the column
+        // the following values are also calculated
+        //Tax Amount = Quantity * Price Per Unit *(tax rate/100)
+        // Row Total = (Quantity * Price Per Unit) + Tax Amount
       event.preventDefault();
       var curindex = $(this).closest('#invoice_product_table tbody tr').index();
       var rowqty = parseFloat($('#invoice_product_table tbody tr:eq('+curindex+') td:eq(1) input').val()).toFixed(2);
@@ -707,6 +567,10 @@ $("#invoice_reset").click(function(event) {
     }
   });
 
+  // all the column totals are directly calculated dynamically on the change of any of the related fields in the column
+  // the following values are also calculated
+  //Tax Amount = Quantity * Price Per Unit *(tax rate/100)
+  // Row Total = (Quantity * Price Per Unit) + Tax Amount
   $(document).off('change', '.invoice_product_per_price').on('change', '.invoice_product_per_price', function(event) {
     event.preventDefault();
     /* Act on the event */
@@ -752,6 +616,10 @@ $("#invoice_reset").click(function(event) {
     var nextindex = curindex+1;
     var previndex = curindex-1;
     if (event.which==13) {
+        // all the column totals are directly calculated dynamically on the change of any of the related fields in the column
+        // the following values are also calculated
+        //Tax Amount = Quantity * Price Per Unit *(tax rate/100)
+        // Row Total = (Quantity * Price Per Unit) + Tax Amount
       event.preventDefault();
       var curindex = $(this).closest('#invoice_product_table tbody tr').index();
       var rowqty = parseFloat($('#invoice_product_table tbody tr:eq('+curindex+') td:eq(1) input').val()).toFixed(2);
@@ -786,12 +654,7 @@ $("#invoice_reset").click(function(event) {
         // jquery enables us to select specific elements inside a table easily like below.
         $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
       });
-      if ($("#status").val()=='9')
-      {
-        $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').focus().select();
-      }
-      else
-      {
+
         if (curindex != ($("#invoice_product_table tbody tr").length-1)) {
           $('#invoice_product_table tbody tr:eq('+nextindex+') td:eq(0) select').focus();
         }
@@ -804,6 +667,7 @@ $("#invoice_reset").click(function(event) {
             $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(0) select').focus();
             return false;
           }
+          //a new row is added on pressing enter key and the list of products are appended in the select box of the 1st column of the newly generated row
           $.ajax({
             url: '/invoice?action=getproducts',
             type: 'POST',
@@ -843,21 +707,16 @@ $("#invoice_reset").click(function(event) {
               '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
               '</td>'+
               '</tr>');
-              if ($("#status").val()=='15')
-              {
+
                 $(".invoice_product_tax_rate").prop("disabled",true);
 
-              }
-              else
-              {
-                $(".invoice_product_tax_rate").prop("disabled",false);
-              }
+
               for (product of resp["products"]) {
                 $('#invoice_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
               }
               $('#invoice_product_table tbody tr:eq('+nextindex+') td:eq(0) select').focus();
 
-              if ($("#status").val()=='15') {
+
 
 
                 var state = $("#invoice_state option:selected").val();
@@ -870,6 +729,7 @@ $("#invoice_reset").click(function(event) {
                 }
                 else {
 
+                    //tax rate is retrieved from the database with the combination of state and product code
 
                   $.ajax({
                     url: '/invoice?action=gettax',
@@ -896,7 +756,7 @@ $("#invoice_reset").click(function(event) {
                     console.log("complete");
                   });
                 }
-              }
+
 
               taxrate=0.00;
               ptaxamt=0.00;
@@ -938,7 +798,7 @@ $("#invoice_reset").click(function(event) {
 
         }
 
-      }
+
     }
     else if(event.which==190 && event.shiftKey)
     {
@@ -968,7 +828,10 @@ $("#invoice_reset").click(function(event) {
       event.preventDefault();
     }
   });
-
+  // all the column totals are directly calculated dynamically on the change of any of the related fields in the column
+  // the following values are also calculated
+  //Tax Amount = Quantity * Price Per Unit *(tax rate/100)
+  // Row Total = (Quantity * Price Per Unit) + Tax Amount
   $(document).off('change', '.invoice_product_tax_rate').on('change', '.invoice_product_tax_rate', function(event) {
     event.preventDefault();
     /* Act on the event */
@@ -1016,8 +879,13 @@ $("#invoice_reset").click(function(event) {
     var nextindex1 = curindex1+1;
     var previndex1 = curindex1-1;
 
-    if (event.which==35 && $("#status").val()=='15')
+    if (event.which==35 )
     {
+        // all the column totals are directly calculated dynamically on the change of any of the related fields in the column
+        // the following values are also calculated
+        //Tax Amount = Quantity * Price Per Unit *(tax rate/100)
+        // Row Total = (Quantity * Price Per Unit) + Tax Amount
+
       event.preventDefault();
       var curindex = $(this).closest('#invoice_product_table tbody tr').index();
       var rowqty = parseFloat($('#invoice_product_table tbody tr:eq('+curindex+') td:eq(1) input').val()).toFixed(2);
@@ -1039,6 +907,11 @@ $("#invoice_reset").click(function(event) {
         $('#invoice_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
       }
       else {
+          // all the column totals are directly calculated dynamically on the change of any of the related fields in the column
+          // the following values are also calculated
+          //Tax Amount = Quantity * Price Per Unit *(tax rate/100)
+          // Row Total = (Quantity * Price Per Unit) + Tax Amount
+
         if ($('#invoice_product_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="") {
           $("#product-blank-alert").alert();
           $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -1086,21 +959,15 @@ $("#invoice_reset").click(function(event) {
             '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
             '</td>'+
             '</tr>');
-            if ($("#status").val()=='15')
-            {
+
               $(".invoice_product_tax_rate").prop("disabled",true);
 
-            }
-            else
-            {
-              $(".invoice_product_tax_rate").prop("disabled",false);
-            }
+
 
             for (product of resp["products"]) {
               $('#invoice_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
             }
 
-            if ($("#status").val()=='15') {
 
 
               var state = $("#invoice_state option:selected").val();
@@ -1112,7 +979,7 @@ $("#invoice_reset").click(function(event) {
                 $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').val(parseFloat(0).toFixed(2));
               }
               else {
-
+                  //tax rate is retrieved from the database with the combination of state and product code
 
               $.ajax({
                 url: '/invoice?action=gettax',
@@ -1139,7 +1006,7 @@ $("#invoice_reset").click(function(event) {
                 console.log("complete");
               });
             }
-            }
+
 
             taxrate=0.00;
             ptaxamt=0.00;
@@ -1209,11 +1076,9 @@ $("#invoice_reset").click(function(event) {
     }
     else
     {
-      if ($("#status").val()=='15')
-      {
+
         event.preventDefault();
 
-      }
 
     }
   });
@@ -1227,6 +1092,7 @@ $("#invoice_reset").click(function(event) {
     $('#invoice_product_table tbody tr:last td:eq(0) input').select();
   });
   $("#invoice_save").click(function(event) {
+      // validations start below
     event.stopPropagation();
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     if ($.trim($('#invoice_challanno').val())=="") {
@@ -1311,39 +1177,28 @@ $("#invoice_reset").click(function(event) {
       }
       var obj = {};
       var productcode = $("#invoice_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val();
+      // data is saved as dict where key is priceperunit and value is the product quantity so the below two lines of code
       var ppu = $("#invoice_product_table tbody tr:eq("+i+") td:eq(2) input").val();
       obj[ppu] = $("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val();
+      //tax is stored as a dict with key as productcode and value as the tax rate
       tax[productcode] = $("#invoice_product_table tbody tr:eq("+i+") td:eq(3) input").val();
+// nested dictionary with key as product code and value is another dict with key as priceperunit and value is the product quantity
       contents[productcode] = obj;
       items[productcode] = $("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val();
 
     }
     stock["items"] = items;
 
-    if ($("#status").val()=='9') {
-      stock["inout"] = 9;
-      issuername="";
-      designation="";
-    }
-    else {
+
       stock["inout"] = 15;
-      issuername=$("#invoice_issuer_name").val();
-      designation=$("#invoice_issuer_designation").val();
-      if (issuername=="")
-      {
-        $("#invoice_issuer_name").focus();
-        $("#issuer-blank-alert").alert();
-        $("#issuer-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#issuer-blank-alert").hide();
-        });
-        return false;
-      }
-    }
+
+
     event.preventDefault();
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
     $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function (e)
     {
+        //ajax call to save the cash memo
     $.ajax({
       url: '/cashmemos?action=save',
       type: 'POST',
@@ -1364,12 +1219,9 @@ $("#invoice_reset").click(function(event) {
     })
     .done(function(resp) {
       if(resp["gkstatus"] == 0){
-        if ($("#status").val()=='9') {
-          $("#invoice_record").click();
-        }
-        else {
+
           $("#cashmemo_create").click();
-        }
+
         $("#success-alert").alert();
         $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#success-alert").hide();
@@ -1410,6 +1262,8 @@ $("#invoice_reset").click(function(event) {
   $("#confirm_yes").on('hidden.bs.modal', function(event) {
     $("#invoice_challanno").focus();
 });
+// Function to save and print the cash memo
+// All details from the current page is sent to the print view in server
 $("#invoice_saveprint").click(function(event) {
   event.stopPropagation();
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
@@ -1503,25 +1357,10 @@ $("#invoice_saveprint").click(function(event) {
   }
   stock["items"] = items;
 
-  if ($("#status").val()=='9') {
-    stock["inout"] = 9;
-    issuername="";
-    designation="";
-  }
-  else {
+
     stock["inout"] = 15;
-    issuername=$("#invoice_issuer_name").val();
-    designation=$("#invoice_issuer_designation").val();
-    if (issuername=="")
-    {
-      $("#invoice_issuer_name").focus();
-      $("#issuer-blank-alert").alert();
-      $("#issuer-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#issuer-blank-alert").hide();
-      });
-      return false;
-    }
-  }
+
+
   event.preventDefault();
   $('.modal-backdrop').remove();
   $('.modal').modal('hide');
@@ -1551,7 +1390,7 @@ $("#invoice_saveprint").click(function(event) {
       subtotal = 0;
       for (var i = 0; i < $("#invoice_product_table tbody tr").length; i++) {
         var obj = {};
-
+//List of dictionaries with the table details to be sent to the print page
         obj.productdesc = $("#invoice_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").text();
         obj.qty = $("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val();
         obj.ppu = $("#invoice_product_table tbody tr:eq("+i+") td:eq(2) input").val();
