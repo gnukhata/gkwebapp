@@ -37,6 +37,7 @@ def showcustomersupplier(request):
 	return {"status":True}
 
 @view_config(route_name="customersuppliers",request_param="action=showadd",renderer="gkwebapp:templates/addcustomersupplier.jinja2")
+@view_config(route_name="customersuppliers",request_param="action=showaddpopup",renderer="gkwebapp:templates/createcustsuppopup.jinja2")
 def showaddcustomersupplier(request):
 	header={"gktoken":request.headers["gktoken"]}
 	customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)

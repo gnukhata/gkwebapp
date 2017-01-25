@@ -1378,6 +1378,39 @@ $(document).ready(function() {
 
     $('#invoice_product_table tbody tr:last td:eq(0) select').select();
   });
+
+ $("#invoice_addcust").click(function() {
+    $.ajax(
+    {
+
+    type: "POST",
+    url: "/customersuppliers?action=showaddpopup",
+    global: false,
+    async: false,
+    datatype: "text/html",
+    beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+    success: function(resp)
+    {
+
+          $("#viewcustsup").html("");
+          $('.modal-backdrop').remove();
+          $('.modal').modal('hide');
+          $("#viewcustsup").html(resp);
+          $('#m_accmodal').modal('show');
+          $('#m_accmodal').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
+          {
+            $('#add_cussup').focus();
+          });
+
+    }
+    }
+  );
+  });
+
+
   $("#invoice_save").click(function(event) {
     event.stopPropagation();
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
