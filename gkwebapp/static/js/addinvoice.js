@@ -169,6 +169,10 @@ $(document).ready(function() {
 
 
     }
+    if (event.which==32){
+      event.preventDefault();
+      $('#invoice_addcust').click();
+    }
   });
 
   $("#invoice_state").keydown(function(event) {
@@ -1406,9 +1410,23 @@ $(document).ready(function() {
           });
           $('#custsupmodal').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is opened
           {
+           var text1 = $('#selectedcustsup').val();         
+          if(text1==''){
+            $('#invoice_customer').focus();
+            return false;
+          }
+          console.log($('#status').val());
+          if ($("#status").val()=='9') {
+            var urlcustsup = "/customersuppliers?action=getallsups"
+            console.log("inside in");
+          }
+          if($("#status").val()=='15'){
+            var urlcustsup = "/customersuppliers?action=getallcusts"
+            console.log("inside out");
+          }
           $.ajax({
             type:"POST",
-            url: "/customersuppliers?action=getallcusts",
+            url: urlcustsup,
             global:false,
             async:false,
             datatype: "text/json",
@@ -1426,7 +1444,7 @@ $(document).ready(function() {
             }
           });
           console.log($('#selectedcustsup').val());
-          var text1 = $('#selectedcustsup').val();
+
            $("#invoice_customer option").filter(function() {
                 return this.text == text1;
               }).attr('selected', true);

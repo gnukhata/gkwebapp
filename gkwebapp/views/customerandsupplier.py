@@ -29,8 +29,6 @@ Contributors:
 
 from pyramid.view import view_config
 import requests, json
-from datetime import datetime
-from pyramid.renderers import render_to_response
 
 @view_config(route_name="customersuppliers",renderer="gkwebapp:templates/customersupplier.jinja2")
 def showcustomersupplier(request):
@@ -88,4 +86,4 @@ def getallcusts(request):
 def getallsups(request):
     header={"gktoken":request.headers["gktoken"]}
     suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall",headers=header)
-    return {"suppliers":suppliers.json()["gkresult"]}
+    return {"customers":suppliers.json()["gkresult"]}
