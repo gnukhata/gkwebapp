@@ -35,6 +35,7 @@ This script is for the Received transfer note page.
       $(".disable").prop("disabled", true);
       $("#tn_editprint").hide();
       $(".tndate").autotab('number');
+      $("#rec_transfernote_godown_div").hide();
       var tnid ="";
       var fromgodownid;
       var togodownid;
@@ -82,17 +83,42 @@ This script is for the Received transfer note page.
             $("#rec_cancel").show();
           }
         // Show all details in its corresponding labels.
+          $("#rec_transfernote_godown_div").show();
           $("#rec_transfernote_no").html(result["transfernoteno"]);
-
+          
+          
           $("#rec_transport_mode").html(result["transportationmode"]);
           $("#rec_tn_from_godown").html(result["fromgodown"]);
           fromgodownid = result.fromgodownid;
           togodownid = result.togodownid;
           $("#rec_tn_to_godown").html(result["togodown"]);
           $("#rec_no_of_packet").html(result["nopkt"]);
+   
           $("#rec_name_issuer").html(result["issuername"]);
           $("#rec_designation").html(result["designation"]);
           $("#rec_transfernote_date").html(result["transfernotedate"]);
+          
+          if($("#rec_no_of_packet").text()=='')
+          {
+        	  console.log("hii na"+$("#rec_no_of_packet").text());
+        	  $("#rec_no_of_packet").text('n/a');
+          }
+          if($("#rec_transport_mode").text()=='')
+          {
+        	  console.log("hii na"+$("#rec_no_of_packet").text());
+        	  $("#rec_transport_mode").text('n/a');
+          }
+          if($("#rec_name_issuer").text()=='')
+          {
+        	  console.log("hii na"+$("#rec_no_of_packet").text());
+        	  $("#rec_name_issuer").text('n/a');
+          }
+          if($("#rec_designation").text()=='')
+          {
+        	  console.log("hii na"+$("#rec_no_of_packet").text());
+        	  $("#rec_designation").text('n/a');
+          }
+          
           
           // Empty the table and show the product details of the TN
           $('#transfernote_product_table tbody').empty();
@@ -111,18 +137,7 @@ This script is for the Received transfer note page.
           if (result["recieved"] ==false) {
             $("#recstatus").html("Pending");
             
-            var rec_status=$("#recstatus").text();
             
-            
-           
-            if (rec_status == 'Received')
-            {
-
-                $("#rec_received").hide();
-                $("#received_tn_date").prop("disabled", true);
-                $("#received_tn_month").prop("disabled", true);
-                $("#received_tn_year").prop("disabled", true);
-            }   
             
             $("#rec_received").show();
             $("#rec_received").prop("disabled", false);
