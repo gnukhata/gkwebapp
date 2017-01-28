@@ -35,15 +35,68 @@ This script is for the Received transfer note page.
       $(".disable").prop("disabled", true);
       $("#tn_editprint").hide();
       $(".tndate").autotab('number');
+      $("#rec_transfernote_godown_div").hide();
       var tnid ="";
       var fromgodownid;
       var togodownid;
       var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
       var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
+    
       
-      
-      
-      
+      function pad (str, max) { //to add leading zeros in date
+    	    str = str.toString();
+    	    if (str.length==1) {
+    	      return str.length < max ? pad("0" + str, max) : str;
+    	    }
+    	    else{
+    	      return str
+    	    }
+    	  }
+      function yearpad (str, max) {
+    	    str = str.toString();
+    	    if (str.length==1) {
+    	      return str.length < max ? pad("200" + str, max) : str;
+    	    }
+    	    else if (str.length==2) {
+    	      return str.length < max ? pad("20" + str, max) : str;
+    	    }
+    	    else{
+    	      return str
+    	    }
+    	  }
+      $("#received_tn_month").blur(function(event) {
+  	    $(this).val(pad($(this).val(),2));
+  	  });
+      $("#received_tn_date").blur(function(event) {
+    	    $(this).val(pad($(this).val(),2));
+    	  });
+      $("#received_tn_year").blur(function(event) {
+    	    $(this).val(yearpad($(this).val(),4));
+    	  });
+      //
+      $("#received_tn_date").keydown(function(event) {
+    	    if (event.which==13) {
+    	      event.preventDefault();
+    	      $("#received_tn_month").focus().select();
+    	    }
+    	    
+    	  });
+
+    	  $("#received_tn_month").keydown(function(event) {
+    	    if (event.which==13) {
+    	      event.preventDefault();
+    	      $("#received_tn_year").focus().select();
+    	    }
+    	   
+    	  });
+    	  $("#received_tn_year").keydown(function(event) {
+    	    if (event.which==13) {
+    	      event.preventDefault();
+    	      $('#rec_received').focus();
+    	    }
+    	    
+    	    });
+      //
       
       $("#rec_tn_list").change(function(event) {
       // Get complete transfer note details on change(of the selected note).
@@ -63,6 +116,10 @@ This script is for the Received transfer note page.
         })
         .done(function(resp) {
           var result = resp["gkresult"];
+        
+          
+        
+          
 
           $(".hidden-load").show();// Show all the details.
           $("#tn_editprint").show();
@@ -79,19 +136,42 @@ This script is for the Received transfer note page.
             $("#rec_cancel").show();
           }
         // Show all details in its corresponding labels.
+          $("#rec_transfernote_godown_div").show();
           $("#rec_transfernote_no").html(result["transfernoteno"]);
-
+          
+          
           $("#rec_transport_mode").html(result["transportationmode"]);
           $("#rec_tn_from_godown").html(result["fromgodown"]);
           fromgodownid = result.fromgodownid;
           togodownid = result.togodownid;
           $("#rec_tn_to_godown").html(result["togodown"]);
           $("#rec_no_of_packet").html(result["nopkt"]);
+   
           $("#rec_name_issuer").html(result["issuername"]);
           $("#rec_designation").html(result["designation"]);
           $("#rec_transfernote_date").html(result["transfernotedate"]);
-         
-
+          
+          if($("#rec_no_of_packet").text()=='')
+          {
+        	  console.log("hii na"+$("#rec_no_of_packet").text());
+        	  $("#rec_no_of_packet").text('n/a');
+          }
+          if($("#rec_transport_mode").text()=='')
+          {
+        	  console.log("hii na"+$("#rec_no_of_packet").text());
+        	  $("#rec_transport_mode").text('n/a');
+          }
+          if($("#rec_name_issuer").text()=='')
+          {
+        	  console.log("hii na"+$("#rec_no_of_packet").text());
+        	  $("#rec_name_issuer").text('n/a');
+          }
+          if($("#rec_designation").text()=='')
+          {
+        	  console.log("hii na"+$("#rec_no_of_packet").text());
+        	  $("#rec_designation").text('n/a');
+          }
+          
           
           // Empty the table and show the product details of the TN
           $('#transfernote_product_table tbody').empty();
@@ -106,17 +186,36 @@ This script is for the Received transfer note page.
 
            '</tr>');
           });
+          
           if (result["recieved"] ==false) {
             $("#recstatus").html("Pending");
+            
+            
+            
             $("#rec_received").show();
             $("#rec_received").prop("disabled", false);
           }
+          
           else  {
 
             $("#recstatus").html("Received");
               $("#rec_received").hide();
             $("#rec_received").prop("disabled", true);
           }
+          
+          var rec_status=$("#recstatus").text();
+          
+          
+          
+          if (rec_status == 'Received')
+          {
+
+              $("#rec_received").hide();
+              $("#received_tn_date").prop("disabled", true);
+              $("#received_tn_month").prop("disabled", true);
+              $("#received_tn_year").prop("disabled", true);
+          }   
+
 
 
 
@@ -134,7 +233,7 @@ This script is for the Received transfer note page.
       $("#rec_tn_list").keydown(function(event) {
         if (event.which==13) {
           event.preventDefault();
-          $("#rec_received").focus();
+          $("#received_tn_date").focus();
           }
 
       });
@@ -184,7 +283,7 @@ This script is for the Received transfer note page.
         	      $('#received_tn_date').focus().select();
         	      return false;
         	    }
-        	    
+        	  
         	    
         	    var curdate = Date.parseExact($("#received_tn_year").val()+$("#received_tn_month").val()+$("#received_tn_date").val(), "yyyyMMdd")
         	    
@@ -247,6 +346,7 @@ This script is for the Received transfer note page.
                     $("#rec-confirm-alert").hide();
 
                   });
+                  
                   $("#rec_received").hide();
                   $("#received_tn_date").prop("disabled", true);
                   $("#received_tn_month").prop("disabled", true);
