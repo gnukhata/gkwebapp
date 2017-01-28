@@ -1,33 +1,4 @@
-/*
-Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-This file is part of GNUKhata:A modular,robust and Free Accounting System.
-
-GNUKhata is Free Software; you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as
-published by the Free Software Foundation; either version 3 of
-the License, or (at your option) any later version.and old.stockflag = 's'
-
-GNUKhata is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
-
-You should have received a copy of the GNU Affero General Public
-License along with GNUKhata (COPYING); if not, write to the
-Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
-
-
-Contributors:
-"Krishnakant Mane" <kk@gmail.com>
-"Ishan Masdekar " <imasdekar@dff.org.in>
-"Navin Karkera" <navin@dff.org.in>
-*/
-
-// This script is for the addcustomer/supplier.jinja2
-
 $(document).ready(function() {
-//All the navigation events where pressing enter shifts focus to the next element and pressing the up arrow key focuses the previous element
   $("#add_cussup").focus().select();
   $("#add_cussup").keydown(function(event) {
     if (event.which==13) {
@@ -77,9 +48,6 @@ $(document).ready(function() {
   });
   var delta = 500;
   var lastKeypressTime = 0;
-  /*Customer/Supplier address field being a textarea pressing enter will shift the cursor on the new line
-   instead of the next element. So the below function will detect the event where enter key is pressed twice
-   and if so then shift the focus to the next element */
   $("#add_cussup_address").keydown(function(event) {
     if (event.which==13)
     {
@@ -129,7 +97,6 @@ $(document).ready(function() {
     }
   });
   $("#add_cussup_reset").click(function(event) {
-      // click the customer/supplier create tab to reload the current page in tab creating a reset effect
     $("#customersupplier_create").click();
   });
   $(document).keyup(function(event) {
@@ -140,11 +107,8 @@ $(document).ready(function() {
     }
   });
   $("#cussup_save").click(function(event) {
-      //save event for saving the customer/supplier
     event.preventDefault();
-    var custsupdata=$("#add_cussup option:selected").val(); //select with option either customer or supplier
-    // custsupdata = 3 if customer or 19 if supplier
-    //validations to check if none of the required fields are left blank
+    var custsupdata=$("#add_cussup option:selected").val();
     if ($.trim($("#add_cussup option:selected").val())=="") {
       $("#cussup-blank-alert").alert();
       $("#cussup-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -162,7 +126,7 @@ $(document).ready(function() {
       $("#add_cussup_name").focus();
       return false;
     }
-// ajax call for saving the customer/supplier
+
     $.ajax({
       url: '/customersuppliers?action=save',
       type: 'POST',
@@ -179,7 +143,7 @@ $(document).ready(function() {
       "csflag": $("#add_cussup option:selected").val()},
       beforeSend: function(xhr)
       {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken); //attaching the jwt token in the header
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
       }
     })
     .done(function(resp) {
@@ -199,12 +163,13 @@ $(document).ready(function() {
           });
           
         }
+      $("#selectedcustsup").val($('#add_cussup_name').val());
+      console.log($("#selectedcustsup").val());
       $('#custsupmodal').modal('hide');
       $('.modal-backdrop').remove();
       return false;
       }
       if(resp["gkstatus"] ==1){
-          // gkstatus 1 implies its a duplicate entry.
         if (custsupdata == '3') {
           $("#add_cussup_name").focus();
           $("#cus-duplicate-alert").alert();
@@ -238,6 +203,6 @@ $(document).ready(function() {
     .always(function() {
       console.log("complete");
     });
-    event.stopPropagation(); // stoopping the event for unnecessarily repeating itself
+    event.stopPropagation();
   });
 });

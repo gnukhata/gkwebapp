@@ -308,7 +308,10 @@
           <button id="invoice_reset" class="btn btn-warning btn-sm">{% trans %}Reset{% endtrans %}</button>
           {% if gkstatus=="out" %}
           <button id="invoice_saveprint" class="btn btn-primary btn-sm" >{% trans %}Save & Print{% endtrans %}</button>
-          {% endif %}
+          <button id="invoice_addcust" class="btn btn-info btn-sm">{% trans %}Add Customer{% endtrans %}</button>
+            {% else %}
+            <button id="invoice_addcust" class="btn btn-info btn-sm">{% trans %}Add Supplier{% endtrans %}</button>        
+         {% endif %}
         </div>
       </div>
       <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
@@ -353,6 +356,6 @@
 
 
   </div>
-
+  <div id="viewcustsup"></div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addinvoice.js')}}"></script>
 </body>

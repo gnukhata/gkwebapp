@@ -29,14 +29,13 @@ Contributors:
 
 from pyramid.view import view_config
 import requests, json
-from datetime import datetime
-from pyramid.renderers import render_to_response
 
 @view_config(route_name="customersuppliers",renderer="gkwebapp:templates/customersupplier.jinja2")
 def showcustomersupplier(request):
 	return {"status":True}
 
 @view_config(route_name="customersuppliers",request_param="action=showadd",renderer="gkwebapp:templates/addcustomersupplier.jinja2")
+@view_config(route_name="customersuppliers",request_param="action=showaddpopup",renderer="gkwebapp:templates/createcustsuppopup.jinja2")
 def showaddcustomersupplier(request):
 	header={"gktoken":request.headers["gktoken"]}
 	customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
@@ -76,3 +75,15 @@ def deletecustomersupplier(request):
 	dataset={"custid":int(request.params["custid"])}
 	result = requests.delete("http://127.0.0.1:6543/customersupplier",data =json.dumps(dataset), headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name='customersuppliers', request_param='action=getallcusts',renderer ='json')
+def getallcusts(request):
+    header={"gktoken":request.headers["gktoken"]}
+    customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall",headers=header)
+    return {"customers":customers.json()["gkresult"]}
+
+@view_config(route_name='customersuppliers', request_param='action=getallsups',renderer ='json')
+def getallsups(request):
+    header={"gktoken":request.headers["gktoken"]}
+    suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall",headers=header)
+    return {"customers":suppliers.json()["gkresult"]}
