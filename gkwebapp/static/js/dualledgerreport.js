@@ -30,7 +30,10 @@ $(document).ready(function() {
   $('#ledgertable1 tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
   var rcindex = 0
   var pyindex = 0
-
+  if (sessionStorage.orgt=="Profit Making") { // changing headings and messages depending on type of organisation.
+    $("#prjnamelbl2").html("Cost Center: ");
+    $("#prjnamelbl3").html("Cost Center: ");
+  }
   $(document).off('focus' ,'.vno1').on('focus' ,'.vno1',function() {
     $('#ledgertable1 tr').removeClass('selected');
     $(this).closest('tr').addClass('selected');

@@ -35,7 +35,9 @@ $(document).ready(function() {
   $(' #ledgertable tbody tr:first-child td:eq(1) a').focus();
   $('#ledgertable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 
-
+  if (sessionStorage.orgt=="Profit Making") { // changing headings and messages depending on type of organisation.
+    $("#prjnamelbl").html("Cost Center: ");
+  }
   $(document).off('focus' ,'.vno').on('focus' ,'.vno',function() {
     $('#ledgertable tr').removeClass('selected');
     $(this).closest('tr').addClass('selected');
@@ -589,7 +591,7 @@ $("#printledger").click(function(event) {
   		var orgtype = sessionStorage.getItem('orgt');
   		var xhr = new XMLHttpRequest();
 
-  		xhr.open('GET', '/printledgerreport?orgname='+ orgname+'&fystart='+sessionStorage.yyyymmddyear1+'&fyend='+sessionStorage.getItem('year2')+'&accountcode='+$("#accountcode").val()+'&calculatefrom='+$("#calculatefrom").val()+'&calculateto='+$("#calculateto").val()+'&projectcode='+$("#projectcode").val(), true);
+  		xhr.open('GET', '/printledgerreport?orgname='+ orgname+'&fystart='+sessionStorage.yyyymmddyear1+'&fyend='+sessionStorage.getItem('year2')+'&orgtype='+sessionStorage.getItem('orgt')+'&accountcode='+$("#accountcode").val()+'&calculatefrom='+$("#calculatefrom").val()+'&calculateto='+$("#calculateto").val()+'&projectcode='+$("#projectcode").val(), true);
   		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
   		xhr.responseType = 'blob';
 
