@@ -276,7 +276,7 @@ $(document).ready(function(){
       });
       $(".helpmenu").keydown(function(event){
         if(event.which == 39){
-          $("#ntab").click();
+          $("#newt").focus();
         }
         if(event.which == 37){
           $("#administration").click();
@@ -286,8 +286,11 @@ $(document).ready(function(){
         if(event.which == 39){
           $("#signout").click();
         }
+        if(event.which == 13){
+          $("#newt").click();
+        }
         if(event.which == 37){
-          $("#ntab").click();
+          $("#newt").focus();
         }
       });
       $(".signoutmenu").keydown(function(event){
@@ -295,7 +298,10 @@ $(document).ready(function(){
           $("#themes").click();
         }
         if(event.which == 37){
-          $("#ntab").click();
+          $("#newt").focus();
+        }
+        if(event.which == 13){
+          $("#newt").click();
         }
       });
       $(".themesmenu").keydown(function(event){
