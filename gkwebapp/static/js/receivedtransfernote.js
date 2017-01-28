@@ -43,7 +43,60 @@ This script is for the Received transfer note page.
       var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
     
       
-      
+      function pad (str, max) { //to add leading zeros in date
+    	    str = str.toString();
+    	    if (str.length==1) {
+    	      return str.length < max ? pad("0" + str, max) : str;
+    	    }
+    	    else{
+    	      return str
+    	    }
+    	  }
+      function yearpad (str, max) {
+    	    str = str.toString();
+    	    if (str.length==1) {
+    	      return str.length < max ? pad("200" + str, max) : str;
+    	    }
+    	    else if (str.length==2) {
+    	      return str.length < max ? pad("20" + str, max) : str;
+    	    }
+    	    else{
+    	      return str
+    	    }
+    	  }
+      $("#received_tn_month").blur(function(event) {
+  	    $(this).val(pad($(this).val(),2));
+  	  });
+      $("#received_tn_date").blur(function(event) {
+    	    $(this).val(pad($(this).val(),2));
+    	  });
+      $("#received_tn_year").blur(function(event) {
+    	    $(this).val(yearpad($(this).val(),4));
+    	  });
+      //
+      $("#received_tn_date").keydown(function(event) {
+    	    if (event.which==13) {
+    	      event.preventDefault();
+    	      $("#received_tn_month").focus().select();
+    	    }
+    	    
+    	  });
+
+    	  $("#received_tn_month").keydown(function(event) {
+    	    if (event.which==13) {
+    	      event.preventDefault();
+    	      $("#received_tn_year").focus().select();
+    	    }
+    	   
+    	  });
+    	  $("#received_tn_year").keydown(function(event) {
+    	    if (event.which==13) {
+    	      event.preventDefault();
+    	      $('#rec_received').focus();
+    	    }
+    	    
+    	    });
+      //
       
       $("#rec_tn_list").change(function(event) {
       // Get complete transfer note details on change(of the selected note).
@@ -180,7 +233,7 @@ This script is for the Received transfer note page.
       $("#rec_tn_list").keydown(function(event) {
         if (event.which==13) {
           event.preventDefault();
-          $("#rec_received").focus();
+          $("#received_tn_date").focus();
           }
 
       });
