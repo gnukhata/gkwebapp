@@ -56,6 +56,7 @@ $(document).ready(function(){
           $("#signout").click();
           event.preventDefault();
           }
+
         if(event.ctrlKey && event.keyCode == 77) {
           $("#master").click();
           event.preventDefault();
@@ -192,6 +193,13 @@ $(document).ready(function(){
           $("#showpurchase").click();
           event.preventDefault();
           }
+          if(event.ctrlKey &&  event.keyCode == 66) {
+              event.preventDefault();
+              $("#newt").focus();
+              var e = jQuery.Event("keydown");
+              e.which = 13; // # Some key code value
+              $("#newt").trigger(e);
+          }
         if(event.ctrlKey && (event.keyCode == 51 || event.keyCode == 99)) {
           $("#showcreditnote").click();
           event.preventDefault();
@@ -290,7 +298,7 @@ $(document).ready(function(){
           $("#newt").click();
         }
         if(event.which == 37){
-          $("#newt").focus();
+          $("#help").click();
         }
       });
       $(".signoutmenu").keydown(function(event){
@@ -300,32 +308,44 @@ $(document).ready(function(){
         if(event.which == 37){
           $("#newt").focus();
         }
-        if(event.which == 13){
-          $("#newt").click();
-        }
       });
       $(".themesmenu").keydown(function(event){
         if(event.which == 39){
-          $("#toolbar").click();
+
+          $("#lang").click();
         }
         if(event.which == 37){
+
           $("#signout").click();
         }
       });
       $("#themes").keydown(function(event){
         if(event.which == 39){
-          $("#toolbar").click();
+
+          $("#lang").click();
         }
         if(event.which == 37){
           $("#signout").click();
         }
       });
+      $(".langmenu").keydown(function(event){
+        if(event.which == 39){
+
+          $("#toolbar").click();
+        }
+        if(event.which == 37){
+
+          $("#themes").click();
+        }
+      });
+
+
       $(".toolbarmenu").keydown(function(event){
         if(event.which == 39){
           $("#master").click();
         }
         if(event.which == 37){
-          $("#themes").click();
+          $("#lang").click();
         }
       });
       $("#toolbar").click(function(){

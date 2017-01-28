@@ -108,7 +108,7 @@
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-        <li><a class="newtabmenu" id="newt" target="_blank" href="/">New Tab</a></li>
+        <li id="nt"><a class="newtabmenu" id="newt" target="_blank" href="/">{% trans %}New Ta<u>b</u>{% endtrans%}</a></li>
           <li class="dropdown">
             <a href="" id="signout" class="dropdown-toggle signoutmenu"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>S</u>ign Out{% endtrans %}</a>
             <ul class="dropdown-menu">
@@ -139,7 +139,7 @@
             </ul>
           </li>
           <li class="dropdown">
-            <a href="" id="lang" class="dropdown-toggle mastermenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>L</u>anguage{% endtrans %}</a>
+            <a href="" id="lang" class="dropdown-toggle langmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>L</u>anguage{% endtrans %}</a>
             <ul class="dropdown-menu">
               <li><a  class="langmenu" id="mar" href="/locale?language=en">{% trans %}English{% endtrans %}</a></li>
               <li><a  class="langmenu" id="mar" href="/locale?language=mr">{% trans %}मराठी{% endtrans %}</a></li>
