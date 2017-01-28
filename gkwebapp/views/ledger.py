@@ -24,6 +24,7 @@ Contributors:
 "Arun Kelkar" <arunkelkar@dff.org.in>
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
+"Sachin Patil"  <sachpatil@openmailbox.org>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
 """
 
@@ -93,6 +94,7 @@ def printLedgerReport(request):
 	fystart = request.params["fystart"]
 	fyend = request.params["fyend"]
 	orgname = str(request.params["orgname"])
+	orgtype = str(request.params["orgtype"])
 	projectcode = request.params["projectcode"]
 	header={"gktoken":request.headers["gktoken"]}
 	if projectcode=="":
@@ -116,10 +118,16 @@ def printLedgerReport(request):
 	ods.content.mergeCells(0,1,8,1)
 	row = 2
 	if headerrow["projectname"]!="":
-		sheet.getRow(row).setHeight("16pt")
-		sheet.getCell(0,row).stringValue("Project: "+headerrow["projectname"]).setBold(True).setAlignHorizontal("center").setFontSize("12pt")
-		ods.content.mergeCells(0,row,8,1)
-		row += 1
+		if orgtype == "Profit Making":
+			sheet.getRow(row).setHeight("16pt")
+			sheet.getCell(0,row).stringValue("Cost Center: "+headerrow["projectname"]).setBold(True).setAlignHorizontal("center").setFontSize("12pt")
+			ods.content.mergeCells(0,row,8,1)
+			row += 1
+		else :
+			sheet.getRow(row).setHeight("16pt")
+			sheet.getCell(0,row).stringValue("Project: "+headerrow["projectname"]).setBold(True).setAlignHorizontal("center").setFontSize("12pt")
+			ods.content.mergeCells(0,row,8,1)
+			row += 1
 	sheet.getColumn(0).setWidth("2cm")
 	sheet.getColumn(1).setWidth("1cm")
 	sheet.getColumn(2).setWidth("3cm")
