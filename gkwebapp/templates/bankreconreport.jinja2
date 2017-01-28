@@ -127,7 +127,15 @@
   </div>
   <div id = "recostmtdiv" class="container hides">
     <div class="table-responsive col-xs-8 col-xs-offset-2">
+    <span style="margin:auto; display:table;" class="hidden-print header"><i>{% trans %}Bank Reconciliation Statement of{% endtrans %}</i> : <b>{{ledgerheader["accountname"]}}</b></span>
+    <span class=" hidden-print header"  style="margin:auto; display:table; padding-right:12px"><i>{% trans %}Period{% endtrans %}</i> : <b>{{ledgerheader["calculatefrom"]}}</b> {% trans %}to{% endtrans %} <b>{{ledgerheader["calculateto"]}}</b></span>
       <table id="stmttable" class=" shadow table table-striped table-condensed">
+        <tr id="printhead2" style="display:none">
+          <th class="text-center visible-print" style="font-size:80%" colspan="6">
+            <i>{% trans %}Bank Reconciliation Statement of{% endtrans %}</i> : <b>{{ledgerheader["accountname"]}}</b><br>
+            <i>{% trans %}Period{% endtrans %}</i> : <b>{{ledgerheader["calculatefrom"]}}</b> {% trans %}to{% endtrans %} <b>{{ledgerheader["calculateto"]}}</b>
+          </th>
+        </tr>
         <tbody id="stmttablebody">
           {% for record in reconstmt %}
           <tr>

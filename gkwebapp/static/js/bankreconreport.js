@@ -226,6 +226,7 @@ $(document).ready(function() {
     $("#back").show();
     $("#recostmtdiv").removeClass('container');
     $(".table-responsive").removeClass('col-xs-8 col-xs-offset-2');
+    $("#printhead2").show();
   });
   $("#viewstatement").click(function(event) {
     $('.hides').show();
