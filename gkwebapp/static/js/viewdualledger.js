@@ -30,6 +30,9 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#viewdualledger_accname").focus();
   $('.viewdualledger_date').autotab('number');
+  if (sessionStorage.orgt=="Profit Making") { // changing headings and messages depending on type of organisation.
+    $("#prjnamelbl1").html("Cost Center: ");
+  }
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   var sel1 = 0; // flag for focus on combo box

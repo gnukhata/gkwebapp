@@ -34,7 +34,9 @@ $(document).ready(function() {
   $('.viewledger_date').autotab('number');
 $("#viewledger_monthly").attr('checked', true);
 $(".dis").attr('disabled', true);
-
+if (sessionStorage.orgt=="Profit Making") { // changing headings and messages depending on type of organisation.
+  $("#prjnamelbl").html("Cost Center: ");
+}
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   var sel1 = 0; // flag for focus on combo box
@@ -76,7 +78,7 @@ $(".dis").attr('disabled', true);
       return str
     }
   }
-  
+
   $("#viewledger_fromdate").blur(function(event) {
     $(this).val(pad($(this).val(),2));
   });
