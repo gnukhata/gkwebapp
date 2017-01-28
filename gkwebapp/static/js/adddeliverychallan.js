@@ -85,6 +85,10 @@ $(document).ready(function() {
       event.preventDefault();
       $("#deliverychallan_year").focus().select();
     }
+    if (event.which==32){
+      event.preventDefault();
+      $('#deliverychallan_addcust').click();
+    }
   });
 
   $("#deliverychallan_date").keydown(function(event) {
@@ -393,6 +397,84 @@ $(document).ready(function() {
     });
     $('#deliverychallan_product_table tbody tr:last td:eq(0) input').select();
   });
+
+  $("#deliverychallan_addcust").click(function() {
+     $.ajax(
+     {
+
+     type: "POST",
+     url: "/customersuppliers?action=showaddpopup",
+     global: false,
+     async: false,
+     datatype: "text/html",
+     beforeSend: function(xhr)
+       {
+         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+       },
+     success: function(resp)
+     {
+
+           $("#viewcustsup").html("");
+           $('.modal-backdrop').remove();
+           $('.modal').modal('hide');
+           $("#viewcustsup").html(resp);
+           $('#custsupmodal').modal('show');
+           $('#custsupmodal').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
+           {
+             $('#add_cussup').focus();
+           });
+           $('#custsupmodal').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is opened
+           {
+            var text1 = $('#selectedcustsup').val();
+           if(text1==''){
+             $('#deliverychallan_customer').focus();
+             return false;
+           }
+           console.log($('#status').val());
+           if ($("#status").val()=='9') {
+             var urlcustsup = "/customersuppliers?action=getallsups"
+             console.log("inside in");
+           }
+           if($("#status").val()=='15'){
+             var urlcustsup = "/customersuppliers?action=getallcusts"
+             console.log("inside out");
+           }
+           $.ajax({
+             type:"POST",
+             url: urlcustsup,
+             global:false,
+             async:false,
+             datatype: "text/json",
+             beforeSend: function(xhr){
+             xhr.setRequestHeader("gktoken",sessionStorage.gktoken);
+             },
+           })
+           .done(function(resp) {
+             var custs = resp["customers"];
+             console.log("inside ajax done.");
+             $("#deliverychallan_customer").empty();
+             console.log($('#deliverychallan_customer').length);
+             for (i in custs){
+               $("#deliverychallan_customer").append('<option value="'+custs[i].custid+'" >'+custs[i].custname+'</option>');
+             }
+           });
+           console.log($('#selectedcustsup').val());
+
+            $("#deliverychallan_customer option").filter(function() {
+                 return this.text == text1;
+               }).attr('selected', true);
+             $("#selectedcustsup").val("");
+             $("#deliverychallan_customer").focus();
+           });
+
+
+
+     }
+  }
+   );
+   });
+
+
   $("#deliverychallan_save").click(function(event) {
       // save event for saving the delivery note
     event.stopPropagation();
