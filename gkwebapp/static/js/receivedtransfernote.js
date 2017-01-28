@@ -40,8 +40,7 @@ This script is for the Received transfer note page.
       var togodownid;
       var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
       var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
-      
-      
+    
       
       
       
@@ -63,6 +62,10 @@ This script is for the Received transfer note page.
         })
         .done(function(resp) {
           var result = resp["gkresult"];
+        
+          
+        
+          
 
           $(".hidden-load").show();// Show all the details.
           $("#tn_editprint").show();
@@ -90,8 +93,6 @@ This script is for the Received transfer note page.
           $("#rec_name_issuer").html(result["issuername"]);
           $("#rec_designation").html(result["designation"]);
           $("#rec_transfernote_date").html(result["transfernotedate"]);
-         
-
           
           // Empty the table and show the product details of the TN
           $('#transfernote_product_table tbody').empty();
@@ -108,9 +109,23 @@ This script is for the Received transfer note page.
           });
           if (result["recieved"] ==false) {
             $("#recstatus").html("Pending");
+            var rec_status=$("#recstatus").text();
+            
+            
+           
+            if (rec_status == 'Received')
+            {
+
+                $("#rec_received").hide();
+                $("#received_tn_date").prop("disabled", true);
+                $("#received_tn_month").prop("disabled", true);
+                $("#received_tn_year").prop("disabled", true);
+            }   
+            
             $("#rec_received").show();
             $("#rec_received").prop("disabled", false);
           }
+          
           else  {
 
             $("#recstatus").html("Received");
@@ -184,7 +199,7 @@ This script is for the Received transfer note page.
         	      $('#received_tn_date').focus().select();
         	      return false;
         	    }
-        	    
+        	  
         	    
         	    var curdate = Date.parseExact($("#received_tn_year").val()+$("#received_tn_month").val()+$("#received_tn_date").val(), "yyyyMMdd")
         	    
@@ -247,6 +262,7 @@ This script is for the Received transfer note page.
                     $("#rec-confirm-alert").hide();
 
                   });
+                  
                   $("#rec_received").hide();
                   $("#received_tn_date").prop("disabled", true);
                   $("#received_tn_month").prop("disabled", true);
