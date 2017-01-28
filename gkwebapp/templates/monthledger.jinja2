@@ -56,9 +56,11 @@ td {
             <thead class="bg-primary">
               <tr>
                 <th class="mdwrap calign">{% trans %}Month{% endtrans %}</th>
-                <th class="smwrap ralign">{% trans %}Debit{% endtrans %}</th>
-                <th class="smwrap ralign">{% trans %}Credit{% endtrans %}</th>
-                <th class="shortwrap calign">{% trans %}No. of Vouchers{% endtrans %}</th>
+                <th class="smwrap ralign">{% trans %}Debit Amount{% endtrans %}</th>
+                <th class="smwrap ralign">{% trans %}No. of Debit Vouchers{% endtrans %}</th>
+                <th class="smwrap ralign">{% trans %}Credit Amount{% endtrans %}</th>
+                <th class="smwrap ralign">{% trans %}No. of Credit Vouchers{% endtrans %}</th>
+                <th class="shortwrap calign">{% trans %}No. of Locked Transactions{% endtrans %}</th>
               </tr>
             </thead>
             <tbody>
@@ -72,7 +74,16 @@ td {
                   <b>{{record["Dr"]}}</b>
                 </td>
                 <td class="smwrap ralign cred">
+                  <b>{{record["vcountDr"]}}</b>
+                </td>
+                <td class="smwrap ralign cred">
                   <b>{{record["Cr"]}}</b>
+                </td>
+                <td class="smwrap ralign cred">
+                  <b>{{record["vcountCr"]}}</b>
+                </td>
+                <td class="smwrap ralign cred">
+                  <b>{{record["vcountLock"]}}</b>
                 </td>
                 <td class="smwrap visible-print ralign cred">
                   {% if record.Dr %}
@@ -88,13 +99,19 @@ td {
                 <td class="smwrap ralign">
                   {{record["Dr"]}}
                 </td>
+                <td class="smwrap ralign ">
+                  <b>{{record["vcountDr"]}}</b>
+                </td>
                 <td class="smwrap ralign">
                   {{record["Cr"]}}
                 </td>
-                {%endif%}
-                <td class="shortwrap calign">
-                  {{record["vcount"]}}
+                <td class="smwrap ralign ">
+                  <b>{{record["vcountCr"]}}</b>
                 </td>
+                <td class="smwrap ralign ">
+                  <b>{{record["vcountLock"]}}</b>
+                </td>
+                {%endif%}
               </tr>
               {% endfor %}
             </tbody>
