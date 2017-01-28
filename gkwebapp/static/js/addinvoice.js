@@ -1406,7 +1406,14 @@ $(document).ready(function() {
           $('#custsupmodal').modal('show');
           $('#custsupmodal').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
           {
-            $('#add_cussup').focus();
+            if ($("#status").val()=='9'){
+              $("#add_cussup").val('19');
+            }
+            else{
+              $('#add_cussup').val('3'); 
+            }
+           
+            $('#add_cussup_name').focus();
           });
           $('#custsupmodal').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is opened
           {
