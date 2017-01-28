@@ -107,8 +107,10 @@ This script is for the Received transfer note page.
 
            '</tr>');
           });
+          
           if (result["recieved"] ==false) {
             $("#recstatus").html("Pending");
+            
             var rec_status=$("#recstatus").text();
             
             
@@ -132,6 +134,20 @@ This script is for the Received transfer note page.
               $("#rec_received").hide();
             $("#rec_received").prop("disabled", true);
           }
+          
+          var rec_status=$("#recstatus").text();
+          
+          
+          
+          if (rec_status == 'Received')
+          {
+
+              $("#rec_received").hide();
+              $("#received_tn_date").prop("disabled", true);
+              $("#received_tn_month").prop("disabled", true);
+              $("#received_tn_year").prop("disabled", true);
+          }   
+
 
 
 
