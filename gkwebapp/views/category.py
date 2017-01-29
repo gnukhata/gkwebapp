@@ -37,7 +37,12 @@ from odslib import ODS
 
 @view_config(route_name="category",renderer="gkwebapp:templates/category.jinja2")
 def showcategory(request):
-	return {"status":True}
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/categories", headers=header)
+	categories = result.json()["gkresult"]
+	gkresult = len(categories)
+	""" gkresult used to decide whether to show Edit Category button or not """
+	return {"status":True, "gkresult": gkresult}
 
 @view_config(route_name="category",request_param="action=showadd",renderer="gkwebapp:templates/addcategory.jinja2")
 def showaddcategory(request):

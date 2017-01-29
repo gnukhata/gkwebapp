@@ -417,7 +417,7 @@ $(document).ready(function() {
     $("#category_edit_savespecs").show();
     $("#category_edit_edit").hide();
     $("#category_edit_under").focus().select();
-    
+
   });
 
   $(document).off("keydown",".spec_name").on("keydown",".spec_name",function(event)
@@ -637,10 +637,11 @@ $(document).ready(function() {
     })
     .done(function(resp) {
       if(resp["gkstatus"] == 0){
-        $("a[href='#category_edit']").click();
         $("#success-delete-alert").alert();
         $("#success-delete-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#success-delete-alert").hide();
+          $("#addcategory").click();
+          $("a[href='#category_edit']").click();
         });
         return false;
       }

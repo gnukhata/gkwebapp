@@ -1010,7 +1010,23 @@ $.ajax({
   });
 
   $('#addcategory').click(function (e) {// calls base category page.
-    $("#info").load("/category");
+    $.ajax(
+		{
+		type: "POST",
+		url: "/category",
+		global: false,
+		async: false,
+		datatype: "text/html",
+		beforeSend: function(xhr)
+			{
+				xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+			},
+		success: function(resp)
+		{
+			$("#info").html(resp);
+		}
+		}
+	);
   });
   $('#invoice').click(function (e) {// calls base invoice page.
     $("#info").load("/invoice");

@@ -532,11 +532,11 @@ $(document).ready(function() {
     })
     .done(function(resp) {
       if(resp["gkstatus"] == 0){
-        $("a[href='#category_create']").click();
         $("#success-alert").alert();
         $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#success-alert").hide();
-        });
+          $("#addcategory").click();
+          });
         return false;
       }
       else if(resp["gkstatus"] == 1){
