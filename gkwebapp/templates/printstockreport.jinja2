@@ -56,7 +56,11 @@
             <th class="col-xs-1" >
               {% trans %}Date{% endtrans %}
             </th>
-            <th class="col-xs-4" >
+						{% if godown == "" %}
+		        <th class="col-xs-4" >
+		        {% else %}
+		        <th class="col-xs-3" >
+		        {% endif %}
               {% trans %}Particulars{% endtrans %}
             </th>
             <th class="col-xs-2" >
@@ -68,6 +72,11 @@
 						<th class="col-xs-1" >
               {% trans %}INV No{% endtrans %}
             </th>
+						{% if godown != "" %}
+						<th class="col-xs-1" >
+							{% trans %}TN No{% endtrans %}
+						</th>
+						{% endif %}
             <th class="col-xs-1 rightlist" >
               {% trans %}Inward{% endtrans %}
             </th>
@@ -80,17 +89,27 @@
 					</tr>
 				</thead>
         {% for record in gkresult %}
-				{% if record["particulars"] =="opening stock" and ((record["dcno"]=="" and record["invno"]=="") or record["dcinvtnno"]=="") and record["date"]=="" %}
+				{% if record["particulars"] =="opening stock" and record["dcno"]=="" and record["invno"]=="" and record["date"]=="" %}
 	      <tr>
 	        <td class="col-xs-1 " >
 	        </td>
+					{% if godown == "" %}
 	        <td class="col-xs-4">
+	        {% else %}
+	        <td class="col-xs-3">
+	        {% endif %}
 	          {{record["particulars"]}}
 	        </td>
 	        <td class="col-xs-2" >
 	        </td>
-	        <td class="col-xs-2" >
+	        <td class="col-xs-1" >
 	        </td>
+					<td class="col-xs-1" >
+	        </td>
+					{% if godown != "" %}
+	        <td class="col-xs-1" >
+	        </td>
+	        {% endif %}
 	        <td class="col-xs-1 rightlist">
 	          {{record["inward"]}}
 	        </td>
@@ -100,12 +119,22 @@
 	        </td>
 	      </tr>
 	      {% endif %}
-				{% if record["particulars"] !="Total" and (record["dcno"]!="" or record["invno"]!="" or record["dcinvtnno"]!="") and record["date"]!="" %}
-	      <tr value="{{record["invdcid"]}}">
+				{% if record["particulars"] !="Total" and (record["dcno"]!="" or record["invno"]!="" or record["tnno"]!="") and record["date"]!="" %}
+				{% if record["dcno"]!= "" %}
+	      <tr value="{{record["dcid"]}}">
+	      {% elif record["invno"]!= "" %}
+	      <tr value="{{record["invid"]}}">
+	      {% else %}
+	      <tr value="{{record["tnid"]}}"> <!-- check once-->
+	      {% endif %}
 	        <td class="col-xs-1 " >
 	          {{record["date"]}}
 	        </td>
+					{% if godown == "" %}
 	        <td class="col-xs-4">
+	        {% else %}
+	        <td class="col-xs-3">
+	        {% endif %}
 	          {{record["particulars"]}}
 	        </td>
 	        <td class="col-xs-2" >
@@ -118,23 +147,27 @@
 						{% if record["trntype"] == "delchal&invoice" %}
 	              Delivery Note & Invoice
 	          {% endif %}
+						{% if record["trntype"] == "transfer note" %}
+	              Transfer Note
+	          {% endif %}
 	        </td>
 	        <td value="{{record["dcid"]}}" class="col-xs-1" >
 					{% if record["dcno"]!="" %}
 						{{record["dcno"]}}
-					{% endif %}
-					{% if record["dcinvtnno"]!="" %}
-						{{record["dcinvtnno"]}}
 					{% endif %}
 	        </td>
 					<td value="{{record["invid"]}}" class="col-xs-1" >
 					{% if record["invno"]!="" %}
 						{{record["invno"]}}
 					{% endif %}
-					{% if record["dcinvtnno"]!="" %}
-						{{record["dcinvtnno"]}}
-					{% endif %}
 	        </td>
+					{% if godown != "" %}
+	        <td value="{{record["tnid"]}}" class="col-xs-1" >
+	          {% if record["tnno"] != "" %}
+	            {{record["tnno"]}}
+	          {% endif %}
+	        </td>
+	        {% endif %}
 	        <td class="col-xs-1 rightlist">
 	          {{record["inwardqty"]}}
 	        </td>
@@ -146,17 +179,27 @@
 	        </td>
 	      </tr>
 	      {% endif %}
-	      {% if record["particulars"] =="Total" and ((record["dcno"]=="" and record["invno"]=="") or record["dcinvtnno"]=="") and record["date"]=="" %}
+	      {% if record["particulars"] =="Total" and record["dcno"]=="" and record["invno"]=="" and record["date"]=="" %}
 	      <tr>
 	        <td class="col-xs-1 " >
 	        </td>
+					{% if godown == "" %}
 	        <td class="col-xs-4">
+	        {% else %}
+	        <td class="col-xs-3">
+	        {% endif %}
 	          {{record["particulars"]}}
 	        </td>
 	        <td class="col-xs-2" >
 	        </td>
-	        <td class="col-xs-2" >
+	        <td class="col-xs-1" >
 	        </td>
+					<td class="col-xs-1" >
+	        </td>
+					{% if godown != "" %}
+	        <td class="col-xs-1" >
+	        </td>
+	        {% endif %}
 	        <td class="col-xs-1 rightlist">
 	          {{record["totalinwardqty"]}}
 	        </td>
