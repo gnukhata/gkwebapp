@@ -92,7 +92,7 @@
     </thead>
     <tbody>
       {% for record in gkresult %}
-      {% if record["particulars"] =="opening stock" and (record["invno"]=="" or record["dcno"]=="" or record["dcinvtnno"]=="") and record["date"]=="" %}
+      {% if record["particulars"] =="opening stock" and ((record["invno"]=="" and record["dcno"]=="") or record["dcinvtnno"]=="") and record["date"]=="" %}
       <tr>
         <td class="col-xs-1 " >
         </td>
@@ -162,7 +162,7 @@
         </td>
       </tr>
       {% endif %}
-      {% if record["particulars"] =="Total" and (record["dcno"]=="" or record["invno"]=="" or record["dcinvtnno"]=="") and record["date"]=="" %}
+      {% if record["particulars"] =="Total" and ((record["dcno"]=="" and record["invno"]=="") or record["dcinvtnno"]=="") and record["date"]=="" %}
       <tr>
         <td class="col-xs-1 " >
         </td>
