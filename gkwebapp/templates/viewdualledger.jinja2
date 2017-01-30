@@ -74,7 +74,7 @@
           <label> <input type="checkbox" class="dis" id="viewdualledger_nar" >{% trans %}Narration{% endtrans %}</label>
           <br>
           {% if projects %}
-          <label for="viewdualledger_prjname">{% trans %}Project Name{% endtrans %} :</label>
+          <label id="prjnamelbl1" for="viewdualledger_prjname">{% trans %}Project Name{% endtrans %} :</label>
           <select class = "form-control input-sm dis" id="viewdualledger_prjname"  name = "viewdualledger_prjname">
             <option value="" selected>{% trans %}None{% endtrans %}</option>
             {% for prj in projects %}

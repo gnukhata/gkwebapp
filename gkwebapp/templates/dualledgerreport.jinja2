@@ -49,7 +49,12 @@ span
 	.calign{
 		text-align:center;
 	}
-
+  .mdwrap{
+    width: 13%;
+  }
+  .mdmwrap{
+    width:11%;
+  }
   </style>
 </head>
 <body>
@@ -83,18 +88,18 @@ span
       <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{ledgerheader1["calculatefrom"]}}</strong> <i>{% trans %}to{% endtrans %}</i> <strong>{{ledgerheader1["calculateto"]}}</strong></span>
       <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Account{% endtrans %}</i> : <strong>{{ledgerheader1["accountname"]}}</strong></span><br>
       {% if ledgerheader1["projectname"]!="" %}
-      <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Project{% endtrans %}</i> : <strong>{{ledgerheader1["projectname"]}}</strong></span><br>
+      <span  class="pull-left" style="margin:auto; display:table;"><i id="prjnamelbl2">{% trans %}Project{% endtrans %}</i> : <strong>{{ledgerheader1["projectname"]}}</strong></span><br>
       {% elif ledgerheader2["projectname"]!="" %}
-      <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Project{% endtrans %}</i> : <strong>None</strong></span><br>
+      <span  class="pull-left" style="margin:auto; display:table;"><i id="prjnamelbl2">{% trans %}Project{% endtrans %}</i> : <strong>None</strong></span><br>
       {% endif %}
       <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="llclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
       <table id="ledgertable1" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
         <thead class="bg-primary">
           <tr>
-            <th class="col-xs-2">{% trans %}Date{% endtrans %}</th>
-            <th class="col-xs-1" style="word-wrap: break-word;">{% trans %}V. No.{% endtrans %}</th>
+            <th  class="calign mdwrap">{% trans %}Date{% endtrans %}</th>
+            <th class="calign mdmwrap">{% trans %}V. No.{% endtrans %}</th>
             {% if ledgerheader1["projectname"]=="" %}
-            <th class="col-xs-3">{% trans %}Particulars{% endtrans %}</th>
+            <th class="col-xs-3 calign" >{% trans %}Particulars{% endtrans %}</th>
             <th class="col-xs-2 ralign">{% trans %}Debit{% endtrans %}</th>
             <th class="col-xs-2 ralign">{% trans %}Credit{% endtrans %}</th>
             <th class="col-xs-2 ralign">{% trans %}Balance{% endtrans %}</th>
@@ -108,15 +113,15 @@ span
         <tbody>
           {% for record in records1 %}
           <tr  data-value="{{record['vouchercode']}}">
-            <td class="col-xs-2">
+            <td class="calign mdwrap">
               {{record['voucherdate']}}
             </td>
             {% if record['vouchernumber']=="" %}
-            <td class="col-xs-1">
+            <td class="calign mdmwrap">
               <a class="vno1" href="#">&nbsp</a>
             </td>
             {% else %}
-            <td class="col-xs-1">
+            <td class="calign mdmwrap">
               <a class="vno1" href="#">{{record['vouchernumber']}}</a>
             </td>
             {% endif %}
@@ -165,23 +170,23 @@ span
       <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{ledgerheader2["calculatefrom"]}}</strong> <i>{% trans %}to{% endtrans %}</i> <strong>{{ledgerheader2["calculateto"]}}</strong></span>
       <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Account{% endtrans %}</i> : <strong>{{ledgerheader2["accountname"]}}</strong></span><br>
       {% if ledgerheader2["projectname"]!="" %}
-      <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Project{% endtrans %}</i> : <strong>{{ledgerheader2["projectname"]}}</strong></span><br>
+      <span class="pull-left" style="margin:auto; display:table;"><i id="prjnamelbl3">{% trans %}Project{% endtrans %}</i> : <strong>{{ledgerheader2["projectname"]}}</strong></span><br>
       {% elif ledgerheader1["projectname"]!="" %}
-      <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Project{% endtrans %}</i> : <strong>None</strong></span><br>
+      <span class="pull-left" style="margin:auto; display:table;"><i id="prjnamelbl3">{% trans %}Project{% endtrans %}</i> : <strong>None</strong></span><br>
       {% endif %}
       <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="lrclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
       <table id="ledgertable2" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
         <thead class="bg-primary">
           <tr>
-            <th class="col-xs-2">{% trans %}Date{% endtrans %}</th>
-            <th class="col-xs-1" style="word-wrap: break-word;">{% trans %}V. No.{% endtrans %}</th>
+            <th  class="calign mdwrap">{% trans %}Date{% endtrans %}</th>
+            <th class="calign mdmwrap">{% trans %}V. No.{% endtrans %}</th>
             {% if ledgerheader2["projectname"]=="" %}
-            <th class="col-xs-3">{% trans %}Particulars{% endtrans %}</th>
+            <th class="col-xs-3 calign">{% trans %}Particulars{% endtrans %}</th>
             <th class="col-xs-2 ralign">{% trans %}Debit{% endtrans %}</th>
             <th class="col-xs-2 ralign">{% trans %}Credit{% endtrans %}</th>
             <th class="col-xs-2 ralign">{% trans %}Balance{% endtrans %}</th>
             {% else %}
-            <th class="col-xs-5">{% trans %}Particulars{% endtrans %}</th>
+            <th class="col-xs-5 calign">{% trans %}Particulars{% endtrans %}</th>
             <th class="col-xs-2 ralign">{% trans %}Debit{% endtrans %}</th>
             <th class="col-xs-2 ralign">{% trans %}Credit{% endtrans %}</th>
             {% endif %}
@@ -190,15 +195,15 @@ span
         <tbody>
           {% for record in records2 %}
           <tr  data-value="{{record['vouchercode']}}">
-            <td class="col-xs-2">
+            <td class="calign mdwrap">
               {{record['voucherdate']}}
             </td>
             {% if record['vouchernumber']=="" %}
-            <td class="col-xs-1">
+            <td class="calign mdmwrap">
               <a class="vno2" href="#">&nbsp</a>
             </td>
             {% else %}
-            <td class="col-xs-1">
+            <td class="calign mdmwrap">
               <a class="vno2" href="#">{{record['vouchernumber']}}</a>
             </td>
             {% endif %}

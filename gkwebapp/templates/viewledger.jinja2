@@ -72,7 +72,7 @@
           <label> <input type="checkbox" class="dis" id="viewledger_nar" >{% trans %}Narration{% endtrans %}</label>
           <br>
           {% if projects %}
-          <label for="viewledger_prjname">{% trans %}Project Name{% endtrans %} :</label>
+          <label id="prjnamelbl" for="viewledger_prjname">{% trans %}Project Name{% endtrans %} :</label>
           <select class = "form-control input-sm dis" id="viewledger_prjname"  name = "viewledger_prjname" >
             <option value="" selected>{% trans %}None{% endtrans %}</option>
             {% for prj in projects %}

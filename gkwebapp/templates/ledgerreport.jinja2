@@ -14,8 +14,8 @@
 
   #ledgertable th {
     font-size: 85%;
-   
-    
+
+
   }
   .card-view .title {
       font-weight: bold;
@@ -51,7 +51,7 @@
   	 }
  .smwrap{
  	width:4%
- }	
+ }
  .lngwrap{
  	width:20%
  }
@@ -59,7 +59,7 @@
  	width:8%
  }
 
- 
+
   </style>
 </head>
 <body>
@@ -80,7 +80,7 @@
   <input type="hidden" id="side" name="side" value="{{ledgerrefresh["side"]}}"></input>
   <input type="hidden" id="modalindex" value=""></input>
   {% if ledgerheader["projectname"]!="" %}
-  <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Project{% endtrans %}</i> : <strong>{{ledgerheader["projectname"]}}</strong></span>
+  <span  class="pull-left" style="margin:auto; display:table;"><i id="prjnamelbl">{% trans %}Project{% endtrans %}</i> : <strong>{{ledgerheader["projectname"]}}</strong></span>
   {% endif %}
   <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{ledgerheader["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{ledgerheader["calculateto"]}}</strong></span>
   <span style="margin:auto; display:table;"><i>{% trans %}Ledger Account{% endtrans %}</i> : <strong>{{ledgerheader["accountname"]}}</strong></span>
@@ -147,7 +147,7 @@
           {% endif %}
 
           {% if ledgerheader["projectname"]=="" %}
-          
+
           <td class="lngwrap">
             {% for pr in record['particulars'] %}
             {{pr}} <br>

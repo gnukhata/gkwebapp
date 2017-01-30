@@ -27,6 +27,8 @@ $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $("#realprintbank").hide();
   $("#back").hide();
+  $("#printstatement").hide();
+  $('.hides').hide(); //to display bank recon statement seperately
   var percentwid = 100*(($(".table-fixedheader").width()-12)/$(".table-fixedheader").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   var percentheigth = 100*(($("body").height()-$(".navbar").height()-420)/$("body").height());
@@ -216,6 +218,7 @@ $(document).ready(function() {
   });
 
   $("#printstatement").click(function(event) {
+    $('.hides').show();
     $("#printstatement").hide();
     $("#printtransactions").hide();
     $("#realprintbank").show();
@@ -223,6 +226,16 @@ $(document).ready(function() {
     $("#back").show();
     $("#recostmtdiv").removeClass('container');
     $(".table-responsive").removeClass('col-xs-8 col-xs-offset-2');
+    $("#printhead2").show();
+  });
+  $("#viewstatement").click(function(event) {
+    $('.hides').show();
+    $("#printstatement").show();
+    $("#printtransactions").hide();
+    $("#viewstatement").hide();
+    $("#realprintbank").show();
+    $("#unclrdtrs").hide();
+    $("#back").show();
   });
   $("#printtransactions").click(function(event) {
     $("#printstatement").hide();
@@ -235,6 +248,9 @@ $(document).ready(function() {
     $("#recostmtdiv").hide();
     $("#bankrecontable").removeClass('fixed-table');
     $("#printhead").show();
+  });
+  $("#clrditems").click(function(event) {
+  $("#recostmtdiv").hide();
   });
   $("#realprintbank").click(function(event) {
     window.print();
