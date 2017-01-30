@@ -111,14 +111,7 @@
         </table>
       </div>
     </div>
-    <div class="row">
-      <div class="form-inline col-xs-12">
-        <div class="form-group">
-          <label for="subject" id="sublabel">Subject :</label>
-          <input type="text" class="form-control hidden-print" id="subject" placeholder="">
-        </div>
-      </div>
-    </div>
+  
 
 
     <div class="row">
@@ -154,7 +147,7 @@
                 {{set["productdesc"]}}
               </td>
               <td class="text-right">
-                {{set["qty"]}} {{set["unitname"]}}
+                {{set["qty"]}}
               </td>
               <td class="text-right">
                 {{set["ppu"]}}
@@ -184,36 +177,7 @@
         <p class="visible-print" id = "notespara">
         </p>
       </div>
-      <div class="col-xs-5 ">
-        <table class="table table-bordered">
-          <tbody>
-            <tr>
-              <td>
-                Subtotal
-              </td>
-              <td class="text-right">
-                {{subtotal}}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Tax amount
-              </td>
-              <td class="text-right">
-                {{taxtotal}}
-              </td>
-            </tr>
-            <tr>
-              <th>
-                TOTAL
-              </th>
-              <td class="text-right">
-                {{gtotal}}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+
       </div>
       <br>
       <div class="row">

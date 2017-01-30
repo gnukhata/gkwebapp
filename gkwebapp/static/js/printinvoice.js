@@ -27,14 +27,15 @@ Contributors:
 
 $(document).ready(function() {
   oninvoice = 1;
-  $("#subject").focus();// Focus is set to subject field on load.
   $("title").html("GNUKhata")
+  /*$("#subject").focus();// Focus is set to subject field on load.
+
   $("#subject").keydown(function(event) {
     if (event.which==13) {
       $("#notes").focus().select();
     }
-  });
-
+  });*/
+  $("#notes").focus().select();
   $("#invprint").click(function(event) {
     window.print();
   });
@@ -49,13 +50,14 @@ var beforePrint = function() {
   if (oninvoice==1) {
     $("#printorgnameyear").removeClass('visible-print').addClass('hidden-print');
   }
-    $("#subject").hide();
-    $("#notes").hide();
+  $("#notes").hide();
+    /*$("#subject").hide();
+
     if ($("#subject").val()!='') {// if subject is not blank then print it in a label.
       $("#sublabel").html("Subject : "+$("#subject").val());
     } else {
       $("#sublabel").html("");
-    }
+    }*/
 
     if ($("#notes").val()!='') {// same as subject
       $("#notespara").html("<strong>Notes :</strong> "+$("#notes").val());
@@ -70,7 +72,7 @@ var afterPrint = function() {
     $("#printyears").removeClass('hidden-print');
     $("#sublabel").html("Subject :");
     $("#notespara").html("Notes : ");
-    $("#subject").show();
+    //$("#subject").show();
     $("#notes").show();
 };
 
