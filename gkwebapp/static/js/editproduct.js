@@ -337,6 +337,8 @@ $(document).ready(function() {
       })
       .done(function(resp) {
         console.log("success");
+        if (resp["gkresult"].length > 0) {
+          $('#product_edit_tax_table tbody tr').remove();
         for (tax of resp["gkresult"]) {
           $('#product_edit_tax_table tbody').append('<tr class="product_row_val" value="'+tax["taxid"]+'">'+
           '<td class="col-xs-4">'+
@@ -360,6 +362,7 @@ $(document).ready(function() {
           $('#product_edit_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
           $('#product_edit_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
         }
+      }
         $(".product_tax_disable").prop('disabled',true);
         existingnonetax = resp["gkresult"];
       })
@@ -706,7 +709,7 @@ $(document).ready(function() {
           $('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').focus();
           return false;
         }
-        $('#product_edit_tax_table tbody').append('<tr>'+
+        $('#product_edit_tax_table tbody').append('<tr value="new">'+
         '<td class="col-xs-4">'+
         '<select class="form-control input-sm tax_name product_new_name">'+
           '<option value="" selected>Select Tax</option>'+
