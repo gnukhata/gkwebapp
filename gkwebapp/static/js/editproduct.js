@@ -309,6 +309,7 @@ $(document).ready(function() {
               '<input class="form-control product_cat_tax_disable input-sm tax_rate text-right"  placeholder="Rate" value="'+tax["taxrate"]+'">'+
               '</td>'+
               '<td class="col-xs-1">'+
+              '<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
               '</td>'+
               '</tr>');
               $('#product_edit_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
@@ -357,6 +358,7 @@ $(document).ready(function() {
           '<input class="form-control product_tax_disable input-sm tax_rate text-right numtype"  placeholder="Rate" value="'+tax["taxrate"]+'">'+
           '</td>'+
           '<td class="col-xs-1">'+
+          '<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
           '</td>'+
           '</tr>');
           $('#product_edit_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
@@ -521,6 +523,7 @@ $(document).ready(function() {
         '<input class="form-control product_tax_disable input-sm tax_rate text-right numtype"  placeholder="Rate" value="'+tax["taxrate"]+'">'+
         '</td>'+
         '<td class="col-xs-1">'+
+        '<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
         '</td>'+
         '</tr>');
         $('#product_edit_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
