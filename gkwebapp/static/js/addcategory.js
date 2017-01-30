@@ -333,7 +333,7 @@ $(document).ready(function() {
       event.preventDefault();
       $('#category_spec_table tbody tr:eq('+nextindex1+') td:eq(0) input').focus().select();
     }
-    else if (event.which==35) {
+    else if (event.which==27) {
       event.preventDefault();
       $(".tax_name:first").focus();
     }

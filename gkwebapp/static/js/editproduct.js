@@ -628,7 +628,7 @@ $(document).ready(function() {
       if(previndex1>-1)
       {
         event.preventDefault();
-        $('#product_edit_tax_table tbody tr:eq('+previndex1+') td:eq(2) input').focus().select();
+        $('#product_edit_tax_table tbody tr:eq('+previndex1+') td:eq(2) input').focus();
       }
     }
     else if (event.ctrlKey && event.which==188) {
@@ -639,9 +639,9 @@ $(document).ready(function() {
       event.preventDefault();
       $('#product_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
     }
-    else if (event.which==35) {
+    else if (event.which==27) {
       event.preventDefault();
-      $('#specifications').contents(".form-group:first").find("input:first").focus().select();
+      $('#editspecifications').contents(".form-group:first").find("input:first").focus().select();
     }
 
   });
@@ -769,7 +769,7 @@ $(document).ready(function() {
       event.preventDefault();
       $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(1) input').focus().select();
     }
-    else if (event.which==35) {
+    else if (event.which==27) {
       event.preventDefault();
       var taxdisabled = $('#product_edit_tax_table tbody tr:first td:eq(0) select').is(":disabled");
       var taxcount = $('#product_edit_tax_table tbody tr').length;

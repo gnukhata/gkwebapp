@@ -505,7 +505,7 @@ $(document).ready(function() {
         event.preventDefault();
         $('#category_edit_spec_table tbody tr:eq('+nextindex1+') td:eq(0) input').focus().select();
       }
-      if (event.which == 35) {
+      if (event.which == 27) {
         event.preventDefault();
         $("#category_edit_tax_table tbody tr:first td:first select").focus();
       }
