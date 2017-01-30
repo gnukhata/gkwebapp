@@ -202,6 +202,7 @@ $(document).ready(function() {
       console.log("success");
       if (resp["gkstatus"]==0) {
         $("#deliverychallan_customeraddr").val(resp["gkresult"]["custaddr"]);
+        $("#deliverychallan_supplieraddr").val(resp["gkresult"]["custaddr"]);
       }
     })
     .fail(function() {
