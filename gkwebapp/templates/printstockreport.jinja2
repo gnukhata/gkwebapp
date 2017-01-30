@@ -62,8 +62,11 @@
             <th class="col-xs-2" >
               {% trans %}Trn Type{% endtrans %}
             </th>
-            <th class="col-xs-2" >
-              {% trans %}INV/DC No{% endtrans %}
+            <th class="col-xs-1" >
+              {% trans %}DC No{% endtrans %}
+            </th>
+						<th class="col-xs-1" >
+              {% trans %}INV No{% endtrans %}
             </th>
             <th class="col-xs-1 rightlist" >
               {% trans %}Inward{% endtrans %}
@@ -77,7 +80,7 @@
 					</tr>
 				</thead>
         {% for record in gkresult %}
-				{% if record["particulars"] =="opening stock" and (record["invdcno"]=="" or record["dcinvtnno"]=="") and record["date"]=="" %}
+				{% if record["particulars"] =="opening stock" and (record["dcno"]=="" or record["invno"]=="" or record["dcinvtnno"]=="") and record["date"]=="" %}
 	      <tr>
 	        <td class="col-xs-1 " >
 	        </td>
@@ -97,7 +100,7 @@
 	        </td>
 	      </tr>
 	      {% endif %}
-				{% if record["particulars"] !="Total" and (record["invdcno"]!="" or record["dcinvtnno"]!="") and record["date"]!="" %}
+				{% if record["particulars"] !="Total" and (record["dcno"]!="" or record["invno"]!="" or record["dcinvtnno"]!="") and record["date"]!="" %}
 	      <tr value="{{record["invdcid"]}}">
 	        <td class="col-xs-1 " >
 	          {{record["date"]}}
@@ -112,10 +115,21 @@
 	          {% if record["trntype"] == "invoice" %}
 	              Invoice
 	          {% endif %}
+						{% if record["trntype"] == "delchal&invoice" %}
+	              Delivery Note & Invoice
+	          {% endif %}
 	        </td>
-	        <td value="{{record["invdcid"]}}" class="col-xs-2" >
-					{% if record["invdcno"]!="" %}
-						{{record["invdcno"]}}
+	        <td value="{{record["dcid"]}}" class="col-xs-1" >
+					{% if record["dcno"]!="" %}
+						{{record["dcno"]}}
+					{% endif %}
+					{% if record["dcinvtnno"]!="" %}
+						{{record["dcinvtnno"]}}
+					{% endif %}
+	        </td>
+					<td value="{{record["invid"]}}" class="col-xs-1" >
+					{% if record["invno"]!="" %}
+						{{record["invno"]}}
 					{% endif %}
 					{% if record["dcinvtnno"]!="" %}
 						{{record["dcinvtnno"]}}
@@ -132,7 +146,7 @@
 	        </td>
 	      </tr>
 	      {% endif %}
-	      {% if record["particulars"] =="Total" and (record["invdcno"]=="" or record["dcinvtnno"]=="") and record["date"]=="" %}
+	      {% if record["particulars"] =="Total" and (record["dcno"]=="" or record["invno"]=="" or record["dcinvtnno"]=="") and record["date"]=="" %}
 	      <tr>
 	        <td class="col-xs-1 " >
 	        </td>
