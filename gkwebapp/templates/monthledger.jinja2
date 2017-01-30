@@ -23,7 +23,7 @@ td {
 }
 
 .smwrap{
-	width:10%
+	width:15%
 }
 .shortwrap{
 	width:4%
@@ -33,13 +33,7 @@ td {
 .cred{
     color:red;
   }
-  .tabledesign{
-  	 width: 90%;
-  	 margin-top:1%;
-  margin-left :5%;
-  margin-right:5%;
-  margin-bottom:1%;
-   }
+
 
 </style>
 </head>
@@ -56,11 +50,11 @@ td {
             <thead class="bg-primary">
               <tr>
                 <th class="mdwrap calign">{% trans %}Month{% endtrans %}</th>
-                <th class="smwrap ralign">{% trans %}Debit Amount{% endtrans %}</th>
-                <th class="smwrap ralign">{% trans %}No. of Debit Vouchers{% endtrans %}</th>
-                <th class="smwrap ralign">{% trans %}Credit Amount{% endtrans %}</th>
-                <th class="smwrap ralign">{% trans %}No. of Credit Vouchers{% endtrans %}</th>
-                <th class="shortwrap calign">{% trans %}No. of Locked Transactions{% endtrans %}</th>
+                <th class="ralign">{% trans %}Debit Amount{% endtrans %}</th>
+                <th class="calign">{% trans %}No. of Debit Vouchers{% endtrans %}</th>
+                <th class="ralign">{% trans %}Credit Amount{% endtrans %}</th>
+                <th class="calign">{% trans %}No. of Credit Vouchers{% endtrans %}</th>
+                <th class="calign">{% trans %}No. of Locked Transactions{% endtrans %}</th>
               </tr>
             </thead>
             <tbody>
@@ -73,16 +67,16 @@ td {
                 <td class="smwrap ralign cred">
                   <b>{{record["Dr"]}}</b>
                 </td>
-                <td class="smwrap ralign cred">
+                <td class="calign cred">
                   <b>{{record["vcountDr"]}}</b>
                 </td>
                 <td class="smwrap ralign cred">
                   <b>{{record["Cr"]}}</b>
                 </td>
-                <td class="smwrap ralign cred">
+                <td class="calign cred">
                   <b>{{record["vcountCr"]}}</b>
                 </td>
-                <td class="smwrap ralign cred">
+                <td class="calign cred">
                   <b>{{record["vcountLock"]}}</b>
                 </td>
                 <td class="smwrap visible-print ralign cred">
@@ -99,16 +93,16 @@ td {
                 <td class="smwrap ralign">
                   {{record["Dr"]}}
                 </td>
-                <td class="smwrap ralign ">
+                <td class="calign ">
                   <b>{{record["vcountDr"]}}</b>
                 </td>
                 <td class="smwrap ralign">
                   {{record["Cr"]}}
                 </td>
-                <td class="smwrap ralign ">
+                <td class="calign ">
                   <b>{{record["vcountCr"]}}</b>
                 </td>
-                <td class="smwrap ralign ">
+                <td class="calign ">
                   <b>{{record["vcountLock"]}}</b>
                 </td>
                 {%endif%}
