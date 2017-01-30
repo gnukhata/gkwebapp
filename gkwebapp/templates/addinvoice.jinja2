@@ -161,6 +161,22 @@
             </div>
           </div>
 
+					<div class="col-md-2">
+            <div class="form-group">
+              {% if gkstatus == "in" %}
+              <label for="invoice_suppliertin">
+                {% trans %}Supplier TIN{% endtrans %} :
+              </label>
+              <input class="form-control input-sm" id="invoice_suppliertin" accesskey="" disabled>
+              {% else %}
+                <label for="invoice_customertin">
+                  {% trans %}Customer TIN{% endtrans %} :
+                </label>
+                <input class="form-control input-sm" id="invoice_customertin" accesskey="" disabled>
+              {% endif %}
+            </div>
+          </div>
+
           <div class="col-md-2 invstate" hidden>
 
             <div class="form-group">
