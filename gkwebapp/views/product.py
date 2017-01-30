@@ -188,17 +188,16 @@ def editproduct(request):
 	result = requests.put("http://127.0.0.1:6543/products", data=json.dumps(productdetails),headers=header)
 
 	for tax in taxes:
-
 		if len(tax)!=0:
 
 			taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":proddetails["productcode"]}
 			if tax["state"]!='':
 				taxdata["state"]=tax["state"]
-			if tax["taxrowid"]=="new":
-				taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
-			else:
+			if tax["taxrowid"]!="new":
 				taxdata["taxid"] = tax["taxrowid"]
-				taxresult = requests.put("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
+				taxresult = requests.delete("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
+			else:
+				taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
 	return {"gkstatus": result.json()["gkstatus"]}
 
 @view_config(route_name="product",request_param="type=delete", renderer="json")

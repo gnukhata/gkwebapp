@@ -145,7 +145,6 @@ $(document).ready(function() {
     if (event.which == 13) {
       var n = $(".editgodown_ob").index(this);
       var m = n+1;
-      console.log(n+','+m);
       if (m < $(".editgodown_ob").length) {
         $(".editgodown_ob").eq(m).focus().select();
       }
@@ -292,7 +291,7 @@ $(document).ready(function() {
             $('#product_edit_tax_table tbody tr').remove();
 
             for (tax of resp["gkresult"]) {
-              $('#product_edit_tax_table tbody').append('<tr class="catsp" value="'+tax["taxid"]+'">'+
+              $('#product_edit_tax_table tbody').append('<tr class="catsp" value="new">'+
               '<td class="col-xs-4">'+
               '<select class="form-control input-sm product_cat_tax_disable tax_name">'+
                 '<option value="" selected>Select Tax</option>'+
@@ -324,8 +323,7 @@ $(document).ready(function() {
           console.log("complete");
         });
       }
-      else
-      {$.ajax({
+      $.ajax({
         url: '/product?type=prodtax',
         type: 'POST',
         dataType: 'json',
@@ -341,7 +339,7 @@ $(document).ready(function() {
         if (resp["gkresult"].length > 0) {
           $('#product_edit_tax_table tbody tr').remove();
         for (tax of resp["gkresult"]) {
-          $('#product_edit_tax_table tbody').append('<tr class="product_row_val" value="'+tax["taxid"]+'">'+
+          $('#product_edit_tax_table tbody').append('<tr class="product_row_val" value="new">'+
           '<td class="col-xs-4">'+
           '<select class="form-control input-sm product_tax_disable tax_name">'+
             '<option value="" selected>Select Tax</option>'+
@@ -372,7 +370,7 @@ $(document).ready(function() {
       })
       .always(function() {
         console.log("complete");
-      });}
+      });
       category = $("#editcatselect option:selected").val();
       existingcatspecs = $("#extsp").clone();
 
@@ -722,7 +720,6 @@ $(document).ready(function() {
     var previndex = curindex-1;
     if (event.which==188 && event.shiftKey)
     {
-      console.log(previndex+', '+curindex+', '+nextindex);
       if (curindex==0) {
       $("#edituom").focus().select();
       }
@@ -894,6 +891,14 @@ if (event.which ==13) {
         taxes.push(obj);
       }
     });
+    for (tax of existingnonetax) {
+      var obj = {};
+      obj.taxrowid = tax["taxid"];
+      obj.taxname = tax["taxname"];
+      obj.state = tax["state"];
+      obj.taxrate = tax["taxrate"];
+      taxes.push(obj);
+    }
     var obj = {};
     $("#editgodown_ob_table tbody tr").each(function(){
       if ($.trim($(".editgodown_name",this).val())!="") {
@@ -907,7 +912,6 @@ if (event.which ==13) {
     if ($("#editgodownflag").val() == 1) {
       editformdata.push({name: 'godowns', value: JSON.stringify(obj)});
     }
-    console.log(editformdata);
     $.ajax({
       url: '/product?type=edit',
       type: 'POST',
