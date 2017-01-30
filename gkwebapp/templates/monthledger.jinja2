@@ -22,13 +22,17 @@ td {
 	width:6%
 }
 
-.smwrap{
+.smwrap1{
 	width:15%
 }
-.shortwrap{
-	width:4%
+
+.smwrap2{
+  width:18%
 }
 
+.smwrap3{
+  width:20%
+}
 
 .cred{
     color:red;
@@ -50,11 +54,11 @@ td {
             <thead class="bg-primary">
               <tr>
                 <th class="mdwrap calign">{% trans %}Month{% endtrans %}</th>
-                <th class="ralign">{% trans %}Debit Amount{% endtrans %}</th>
-                <th class="calign">{% trans %}No. of Debit Vouchers{% endtrans %}</th>
-                <th class="ralign">{% trans %}Credit Amount{% endtrans %}</th>
-                <th class="calign">{% trans %}No. of Credit Vouchers{% endtrans %}</th>
-                <th class="calign">{% trans %}No. of Locked Transactions{% endtrans %}</th>
+                <th class="smwrap1 ralign">{% trans %}Debit Amount{% endtrans %}</th>
+                <th class="smwrap2 calign">{% trans %}No. of Debit Vouchers{% endtrans %}</th>
+                <th class="smwrap1 ralign">{% trans %}Credit Amount{% endtrans %}</th>
+                <th class="smwrap2 calign">{% trans %}No. of Credit Vouchers{% endtrans %}</th>
+                <th class="smwrap3 calign">{% trans %}No. of Locked Transactions{% endtrans %}</th>
               </tr>
             </thead>
             <tbody>
@@ -64,45 +68,45 @@ td {
                   <a class="monthname" href="#">{{record['month']}}</a>
                 </td>
                 {%if record["advflag"]==1%}
-                <td class="smwrap ralign cred">
+                <td class="smwrap1 ralign cred">
                   <b>{{record["Dr"]}}</b>
                 </td>
-                <td class="calign cred">
+                <td class="smwrap2 calign cred">
                   <b>{{record["vcountDr"]}}</b>
                 </td>
-                <td class="smwrap ralign cred">
+                <td class="smwrap1 ralign cred">
                   <b>{{record["Cr"]}}</b>
                 </td>
-                <td class="calign cred">
+                <td class="smwrap2 calign cred">
                   <b>{{record["vcountCr"]}}</b>
                 </td>
-                <td class="calign cred">
+                <td class="smwrap3 calign cred">
                   <b>{{record["vcountLock"]}}</b>
                 </td>
-                <td class="smwrap visible-print ralign cred">
+                <td class="smwrap1 visible-print ralign cred">
                   {% if record.Dr %}
                     <b>({{record["Dr"]}})</b>
                   {% endif %}
                 </td>
-                <td class="smwrap visible-print ralign cred">
+                <td class="smwrap1 visible-print ralign cred">
                   {% if record.Cr %}
                     <b>({{record["Cr"]}})</b>
                   {% endif %}
                 </td>
                 {%else%}
-                <td class="smwrap ralign">
+                <td class="smwrap1 ralign">
                   {{record["Dr"]}}
                 </td>
-                <td class="calign ">
+                <td class="smwrap2 calign">
                   <b>{{record["vcountDr"]}}</b>
                 </td>
-                <td class="smwrap ralign">
+                <td class="smwrap1 ralign">
                   {{record["Cr"]}}
                 </td>
-                <td class="calign ">
+                <td class="smwrap2 calign">
                   <b>{{record["vcountCr"]}}</b>
                 </td>
-                <td class="calign ">
+                <td class="smwrap3 calign">
                   <b>{{record["vcountLock"]}}</b>
                 </td>
                 {%endif%}
