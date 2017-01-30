@@ -212,6 +212,8 @@ $(document).ready(function() {
       if (resp["gkstatus"]==0) {
         $("#invoice_customeraddr").val(resp["gkresult"]["custaddr"]);
         $("#invoice_supplieraddr").val(resp["gkresult"]["custaddr"]);
+        $("#invoice_customertin").val(resp["gkresult"]["custtan"]);
+        $("#invoice_suppliertin").val(resp["gkresult"]["custtan"]);
       }
     })
     .fail(function() {
