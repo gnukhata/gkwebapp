@@ -422,36 +422,40 @@ def stockreportspreadsheet(request):
 		sheet.getCell(0,2).stringValue("Date").setBold(True)
 		sheet.getCell(1,2).stringValue("Particulars").setBold(True)
 		sheet.getCell(2,2).stringValue("Trn Type").setBold(True)
-		sheet.getCell(3,2).stringValue("INV/DC No").setBold(True)
-		sheet.getCell(4,2).stringValue("Inward").setBold(True).setAlignHorizontal("right")
-		sheet.getCell(5,2).stringValue("Outward").setBold(True).setAlignHorizontal("right")
-		sheet.getCell(6,2).stringValue("Balance").setBold(True).setAlignHorizontal("right")
+		sheet.getCell(3,2).stringValue("DC No").setBold(True)
+		sheet.getCell(4,2).stringValue("INV No").setBold(True)
+		sheet.getCell(5,2).stringValue("Inward").setBold(True).setAlignHorizontal("right")
+		sheet.getCell(6,2).stringValue("Outward").setBold(True).setAlignHorizontal("right")
+		sheet.getCell(7,2).stringValue("Balance").setBold(True).setAlignHorizontal("right")
 		row = 3
 		for stock in result:
-			if stock["particulars"]=="opening stock" and stock["invdcno"]=="" and stock["date"]=="":
+			if stock["particulars"]=="opening stock" and stock["dcno"]=="" and stock["invno"]=="" and stock["date"]=="":
 				sheet.getCell(0, row).stringValue("")
 				sheet.getCell(1, row).stringValue(stock["particulars"].title())
 				sheet.getCell(2, row).stringValue("")
 				sheet.getCell(3, row).stringValue("")
-				sheet.getCell(4, row).stringValue(stock["inward"]).setAlignHorizontal("right")
-				sheet.getCell(5, row).stringValue("")
+				sheet.getCell(4, row).stringValue("")
+				sheet.getCell(5, row).stringValue(stock["inward"]).setAlignHorizontal("right")
 				sheet.getCell(6, row).stringValue("")
-			if stock["particulars"]!="opening stock" and stock["invdcno"]!="" and stock["date"]!="":
+				sheet.getCell(7, row).stringValue("")
+			if stock["particulars"]!="opening stock" and (stock["dcno"]!="" or stock["invno"]!="") and stock["date"]!="":
 				sheet.getCell(0, row).stringValue(stock["date"])
 				sheet.getCell(1, row).stringValue(stock["particulars"])
 				sheet.getCell(2, row).stringValue(stock["trntype"])
-				sheet.getCell(3, row).stringValue(stock["invdcno"])
-				sheet.getCell(4, row).stringValue(stock["inwardqty"]).setAlignHorizontal("right")
-				sheet.getCell(5, row).stringValue(stock["outwardqty"]).setAlignHorizontal("right")
-				sheet.getCell(6, row).stringValue(stock["balance"]).setAlignHorizontal("right")
-			if stock["particulars"]=="Total" and stock["invdcno"]=="" and stock["date"]=="":
+				sheet.getCell(3, row).stringValue(stock["dcno"])
+				sheet.getCell(4, row).stringValue(stock["invno"])
+				sheet.getCell(5, row).stringValue(stock["inwardqty"]).setAlignHorizontal("right")
+				sheet.getCell(6, row).stringValue(stock["outwardqty"]).setAlignHorizontal("right")
+				sheet.getCell(7, row).stringValue(stock["balance"]).setAlignHorizontal("right")
+			if stock["particulars"]=="Total" and stock["dcno"]=="" and stock["invno"]=="" and stock["date"]=="":
 				sheet.getCell(0, row).stringValue("")
 				sheet.getCell(1, row).stringValue(stock["particulars"])
 				sheet.getCell(2, row).stringValue("")
 				sheet.getCell(3, row).stringValue("")
-				sheet.getCell(4, row).stringValue(stock["totalinwardqty"]).setAlignHorizontal("right")
-				sheet.getCell(5, row).stringValue(stock["totaloutwardqty"]).setAlignHorizontal("right")
-				sheet.getCell(6, row).stringValue("")
+				sheet.getCell(4, row).stringValue("")
+				sheet.getCell(5, row).stringValue(stock["totalinwardqty"]).setAlignHorizontal("right")
+				sheet.getCell(6, row).stringValue(stock["totaloutwardqty"]).setAlignHorizontal("right")
+				sheet.getCell(7, row).stringValue("")
 			row += 1
 
 	ods.save("response.ods")
