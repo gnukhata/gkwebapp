@@ -116,6 +116,10 @@
 
           </div>
 
+          <div class=" col-md-12">
+            <div class="form-group">
+            </div>
+          </div>
           <div class="col-md-3">
 
             <div class="form-group">
@@ -138,6 +142,22 @@
                 <option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
                 {% endfor %}
               </select>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group">
+              {% if gkstatus == "in" %}
+              <label for="invoice_supplieraddr">
+                {% trans %}Supplier Address{% endtrans %} :
+              </label>
+              <input class="form-control input-sm" id="invoice_supplieraddr" placeholder="{% trans %}Select Supplier to see Address{% endtrans %}" accesskey="" disabled>
+              {% else %}
+                <label for="invoice_customeraddr">
+                  {% trans %}Customer Address{% endtrans %} :
+                </label>
+                <input class="form-control input-sm" id="invoice_customeraddr" placeholder="{% trans %}Select Customer to see Address{% endtrans %}" accesskey="" disabled>
+              {% endif %}
             </div>
           </div>
 
@@ -310,7 +330,7 @@
           <button id="invoice_saveprint" class="btn btn-primary btn-sm" >{% trans %}Save & Print{% endtrans %}</button>
           <button id="invoice_addcust" class="btn btn-info btn-sm">{% trans %}Add Customer{% endtrans %}</button>
             {% else %}
-            <button id="invoice_addcust" class="btn btn-info btn-sm">{% trans %}Add Supplier{% endtrans %}</button>        
+            <button id="invoice_addcust" class="btn btn-info btn-sm">{% trans %}Add Supplier{% endtrans %}</button>
          {% endif %}
         </div>
       </div>
