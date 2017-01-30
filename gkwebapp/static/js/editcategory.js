@@ -512,7 +512,9 @@ $(document).ready(function() {
     });
 
   $(document).off("click",".spec_del").on("click", ".spec_del", function() {
-    deletedspecs.push($(this).closest('tr').attr('value'));
+    if ($(this).closest('tr').attr('value')!="New") {
+      deletedspecs.push($(this).closest('tr').attr('value'));
+    }
     $(this).closest('tr').fadeOut(200, function(){
       $(this).closest('tr').remove();	 //closest method gives the closest element specified
       $('#category_edit_spec_table tbody tr:last td:eq(0) input').focus().select();
