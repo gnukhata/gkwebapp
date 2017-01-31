@@ -200,29 +200,6 @@ def backupOrg(request):
     os.remove("backup.xlsx")
     return Response(bf, headerlist=headerList.items())
 
-@view_config(route_name="recoveryfile", renderer="json")
-def recover(request):
-	try:
-		recovery = request.POST["file"].file
-		file_path = os.path.join('/tmp', 'recoverydata.tar')
-		temp_file_path = file_path + '~'
-		recovery.seek(0)
-		with open(temp_file_path, 'wb') as recoverydata:
-			shutil.copyfileobj(recovery, recoverydata)
-		os.rename(temp_file_path, file_path)
-		recoveryfile = open("/tmp/recoverydata.tar","r")
-		recovery_str = base64.b64encode(recoveryfile.read())
-		recoveryfile.close()
-		gkdata = {"datasource":recovery_str}
-		result = requests.post("http://127.0.0.1:6543/backuprestore",data=json.dumps(gkdata))
-		if result.json()["gkstatus"]==0:
-			return {"gkstatus":result.json()["gkstatus"]}
-			os.remove("recovery.tar")
-		else:
-			return {"gkstatus":result.json()["gkstatus"]}
-	except:
-		print "file not found"
-		return {"gkstatus":False}
         
         
 @view_config(route_name="recoveryfile", renderer="json")
