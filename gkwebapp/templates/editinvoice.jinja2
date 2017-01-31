@@ -112,6 +112,11 @@
 
           </div>
 
+          <div class=" col-md-12 invdetails">
+            <div class="form-group">
+            </div>
+          </div>
+
           <div class="col-md-3 invdetails"  hidden>
 
             <div class="form-group">
@@ -125,6 +130,24 @@
               <select class="form-control input-sm" id="invoice_customer" accesskey="">
 
               </select>
+            </div>
+          </div>
+
+          <div class="col-md-3 invdetails" hidden>
+            <div class="form-group">
+                <label for="invoice_customeraddr" class = "addr" hidden>
+                  {% trans %}Address{% endtrans %} :
+                </label>
+                <input class="form-control input-sm" id="invoice_customeraddr"  accesskey="" disabled>
+            </div>
+          </div>
+
+					<div class="col-md-2 invdetails" hidden>
+            <div class="form-group">
+                <label for="invoice_customertin" class = "tin" hidden>
+                  {% trans %}TIN{% endtrans %} :
+                </label>
+                <input class="form-control input-sm" id="invoice_customertin" accesskey="" disabled>
             </div>
           </div>
 
