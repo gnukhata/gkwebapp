@@ -71,6 +71,8 @@ $(document).ready(function() {
           $(".invstate").show();
           $(".cust").show();
           $(".supp").hide();
+          $(".addr").show();
+          $(".tin").show();
           $(".invoice_issuer").show();
           $("#invoice_issuer_name").val(resp["invoicedata"]["issuername"]);
           $("#invoice_issuer_designation").val(resp["invoicedata"]["designation"]);
@@ -85,6 +87,8 @@ $(document).ready(function() {
           $(".fixed-table").addClass('viewfixed-tablepurchase');
           $(".cust").hide();
           $(".supp").show();
+          $(".addr").show();
+          $(".tin").show();
           $(".invstate").hide();
           $(".invoice_issuer").hide();
           $("#invoice_editprint").hide();
@@ -93,6 +97,30 @@ $(document).ready(function() {
         $("#invoice_customer").append('<option value="'+resp["invoicedata"]["custid"]+'">'+resp["invoicedata"]["custname"]+'</option>');
         $("#invoice_state").val(resp["invoicedata"]["taxstate"]);
         $('#edit_invoice_product_table tbody').empty();
+        $.ajax({
+          url: '/customersuppliers?action=get',
+          type: 'POST',
+          dataType: 'json',
+          async : false,
+          data: {"custid":resp["invoicedata"]["custid"]},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          }
+        })
+        .done(function(resp) {
+          console.log("success");
+          if (resp["gkstatus"]==0) {
+            $("#invoice_customeraddr").val(resp["gkresult"]["custaddr"]);
+            $("#invoice_customertin").val(resp["gkresult"]["custtan"]);
+          }
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
         for (content in resp["invoicedata"]["contents"])
         {
 
