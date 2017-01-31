@@ -796,7 +796,7 @@ msgstr "ഗോഡൗണ്‍"
 
 #: gkwebapp/templates/addproduct.jinja2:94
 msgid "Press 'Shift + Down arrow Key' from godown opening stock to shift focus to tax or specifications."
-msgstr ""
+msgstr "(ഷിഫ്റ്റ് + ഡൌൺ ആരോ) അമർത്തുക"
 
 #: gkwebapp/templates/addproduct.jinja2:187
 #: gkwebapp/templates/addvoucher.jinja2:338
@@ -833,33 +833,33 @@ msgstr ""
 #: gkwebapp/templates/addunitofmeasurement.jinja2:6
 #: gkwebapp/templates/editunitofmeasurement.jinja2:6
 msgid "Unit saved."
-msgstr ""
+msgstr "അളവ് സേവ് ചെയ്തു"
 
 #: gkwebapp/templates/addunitofmeasurement.jinja2:14
 #: gkwebapp/templates/editunitofmeasurement.jinja2:18
 msgid "Unit Already Exist!"
-msgstr ""
+msgstr "അളവ് ഉൾപ്പെട്ടിട്ടുണ്ട് "
 
 #: gkwebapp/templates/addunitofmeasurement.jinja2:18
 #: gkwebapp/templates/editunitofmeasurement.jinja2:26
 msgid "Please enter Unit  name!"
-msgstr ""
+msgstr "ദയവായി അളവിന്റെ പേര് എന്റർ ചെയ്യുക"
 
 #: gkwebapp/templates/addunitofmeasurement.jinja2:25
 msgid " Unit Name :"
-msgstr ""
+msgstr "അളവിന്റെ പേര് "
 
 #: gkwebapp/templates/addunitofmeasurement.jinja2:26
 msgid "Enter Unit name"
-msgstr ""
+msgstr "അളവിന്റെ പേര് എന്റർ ചെയ്യുക"
 
 #: gkwebapp/templates/addunitofmeasurement.jinja2:29
 msgid "Sub Unit Of"
-msgstr ""
+msgstr "ഉപ അളവിന്റെ പേര് "
 
 #: gkwebapp/templates/addunitofmeasurement.jinja2:38
 msgid "Conversion Rate :"
-msgstr ""
+msgstr "പരിവൃത്തി  ചെയ്യേണ്ട അളവ് "
 
 #: gkwebapp/templates/addvoucher.jinja2:7
 #: gkwebapp/templates/bankreconreport.jinja2:4
@@ -921,72 +921,72 @@ msgstr ""
 #: gkwebapp/templates/viewstockreport.jinja2:5
 #: gkwebapp/templates/viewtrialbalance.jinja2:5
 msgid "GNUKhata"
-msgstr ""
+msgstr "ജി എൻ യു ഘാട്ട  "
 
 #: gkwebapp/templates/addvoucher.jinja2:7
 msgid "Voucher"
-msgstr ""
+msgstr "വൗച്ചർ"
 
 #: gkwebapp/templates/addvoucher.jinja2:112
 msgid "Voucher saved."
-msgstr ""
+msgstr "വൗച്ചർ സേവ്  ചെയ്തു "
 
 #: gkwebapp/templates/addvoucher.jinja2:116
 #: gkwebapp/templates/viewbankrecon.jinja2:36
 #: gkwebapp/templates/viewdualledger.jinja2:38
 #: gkwebapp/templates/viewledger.jinja2:35
 msgid "Please select an account!"
-msgstr ""
+msgstr "ദയവായി ഒരു അക്കൗണ്ട്  തിരഞ്ഞെടുക്കുക"
 
 #: gkwebapp/templates/addvoucher.jinja2:120
 msgid "Voucher could not be saved. "
-msgstr ""
+msgstr "വൗച്ചർ സേവ്  ചെയ്യാൻ കഴിയില്ല "
 
 #: gkwebapp/templates/addvoucher.jinja2:124
 #: gkwebapp/templates/viewvoucher.jinja2:116
 msgid "Totals misbalance!"
-msgstr ""
+msgstr "തുകയിൽ വ്യത്യാസമുണ്ട് "
 
 #: gkwebapp/templates/addvoucher.jinja2:128
 #: gkwebapp/templates/viewvoucher.jinja2:120
 msgid "Voucher total cannot be greater than Invoice total!"
-msgstr ""
+msgstr "ഇൻവോയ്‌സ്‌ തുകയേക്കാൾ വൗച്ചർ തുക കൂടുതലാകാൻ പാടില്ല "
 
 #: gkwebapp/templates/addvoucher.jinja2:132
 #: gkwebapp/templates/viewvoucher.jinja2:124
 msgid "Voucher amount cannot be zero!"
-msgstr ""
+msgstr "വൗച്ചർ തുക പൂജ്യമാകാൻ പാടില്ല "
 
 #: gkwebapp/templates/addvoucher.jinja2:136
 #: gkwebapp/templates/viewvoucher.jinja2:128
 msgid "Voucher with zero amount cannot be saved!"
-msgstr ""
+msgstr "വൗച്ചർ തുക പൂജ്യമാ പാടില്ല "
 
 #: gkwebapp/templates/addvoucher.jinja2:140
 #: gkwebapp/templates/viewvoucher.jinja2:132
 msgid "An account can be selected only once!"
-msgstr ""
+msgstr "ഒരു അക്കൗണ്ട് ഒരു പ്രാവിശ്യം മാത്രെമേ തിരഞ്ഞെടുക്കാൻ സാധിക്കുകയുള്ളു"
 
 #: gkwebapp/templates/addvoucher.jinja2:144
 #: gkwebapp/templates/findeditvoucher.jinja2:46
 #: gkwebapp/templates/viewvoucher.jinja2:136
 msgid "Please enter voucher number!"
-msgstr ""
+msgstr "ദയവായി വൗച്ചർ നമ്പർ എന്റർ ചെയ്യുക"
 
 #: gkwebapp/templates/addvoucher.jinja2:148
 #: gkwebapp/templates/viewvoucher.jinja2:140
 msgid "Please enter voucher date in proper format!"
-msgstr ""
+msgstr "ദയവായി വൗച്ചർ തീയതി കൃത്യമായ ഫോർമാറ്റിൽ എന്റർ ചെയ്യുക"
 
 #: gkwebapp/templates/addvoucher.jinja2:151
 #: gkwebapp/templates/viewvoucher.jinja2:151
 msgid "You are entering a post-dated transaction!"
-msgstr ""
+msgstr "നിങ്ങൾ എന്റർ ചെയ്തത്  ഒരു പോസ്റ്റ് ഡേറ്റഡ്  ഇടപാടാണ് "
 
 #: gkwebapp/templates/addvoucher.jinja2:155
 #: gkwebapp/templates/viewvoucher.jinja2:148
 msgid "Please enter voucher date within the financial year!"
-msgstr ""
+msgstr "ദയവായി ഈ ഫിനാൻഷ്യൽ  ഇയറിലുള്ള വൗച്ചർ തീയതി എന്റർ ചെയ്യുക"
 
 #: gkwebapp/templates/addvoucher.jinja2:163
 msgid "<u>V</u>oucher No."
@@ -1001,7 +1001,7 @@ msgstr ""
 #: gkwebapp/templates/printtransactions.jinja2:62
 #: gkwebapp/templates/viewvoucher.jinja2:161
 msgid "Contra"
-msgstr ""
+msgstr "കോൺട്രാ "
 
 #: gkwebapp/templates/addvoucher.jinja2:170
 #: gkwebapp/templates/findeditvoucher.jinja2:96
@@ -1012,7 +1012,7 @@ msgstr ""
 #: gkwebapp/templates/printtransactions.jinja2:66
 #: gkwebapp/templates/viewvoucher.jinja2:163
 msgid "Payment"
-msgstr ""
+msgstr "പേയ്‌മെന്റ് "
 
 #: gkwebapp/templates/addvoucher.jinja2:172
 #: gkwebapp/templates/findeditvoucher.jinja2:97
@@ -1023,7 +1023,7 @@ msgstr ""
 #: gkwebapp/templates/printtransactions.jinja2:70
 #: gkwebapp/templates/viewvoucher.jinja2:165
 msgid "Receipt"
-msgstr ""
+msgstr "റെസിപ്ട് "
 
 #: gkwebapp/templates/addvoucher.jinja2:174
 #: gkwebapp/templates/findeditvoucher.jinja2:98
@@ -1035,7 +1035,7 @@ msgstr ""
 #: gkwebapp/templates/printtransactions.jinja2:74
 #: gkwebapp/templates/viewvoucher.jinja2:167
 msgid "Journal"
-msgstr ""
+msgstr "ജേർണൽ"
 
 #: gkwebapp/templates/addvoucher.jinja2:176
 #: gkwebapp/templates/findeditvoucher.jinja2:99
@@ -1043,7 +1043,7 @@ msgstr ""
 #: gkwebapp/templates/printtransactions.jinja2:78
 #: gkwebapp/templates/viewvoucher.jinja2:169
 msgid "Sales"
-msgstr ""
+msgstr "സെയിൽസ് "
 
 #: gkwebapp/templates/addvoucher.jinja2:178
 #: gkwebapp/templates/findeditvoucher.jinja2:100
@@ -1054,7 +1054,7 @@ msgstr ""
 #: gkwebapp/templates/printtransactions.jinja2:82
 #: gkwebapp/templates/viewvoucher.jinja2:171
 msgid "Purchase"
-msgstr ""
+msgstr "പർച്ചയ്സ് "
 
 #: gkwebapp/templates/addvoucher.jinja2:180
 #: gkwebapp/templates/deletedvoucher.jinja2:88
@@ -1068,7 +1068,7 @@ msgstr ""
 #: gkwebapp/templates/printtransactions.jinja2:86
 #: gkwebapp/templates/viewvoucher.jinja2:173
 msgid "Credit Note"
-msgstr ""
+msgstr "ക്രെഡിറ്റ് നോട്ട് "
 
 #: gkwebapp/templates/addvoucher.jinja2:182
 #: gkwebapp/templates/deletedvoucher.jinja2:90
@@ -1082,7 +1082,7 @@ msgstr ""
 #: gkwebapp/templates/printtransactions.jinja2:90
 #: gkwebapp/templates/viewvoucher.jinja2:175
 msgid "Debit Note"
-msgstr ""
+msgstr "ഡെബിറ്റ് നോട്ട് "
 
 #: gkwebapp/templates/addvoucher.jinja2:184
 #: gkwebapp/templates/deletedvoucher.jinja2:86
@@ -1096,7 +1096,7 @@ msgstr ""
 #: gkwebapp/templates/printtransactions.jinja2:94
 #: gkwebapp/templates/viewvoucher.jinja2:177
 msgid "Sale Return"
-msgstr ""
+msgstr "സെയിൽസ് റിട്ടേൺ"
 
 #: gkwebapp/templates/addvoucher.jinja2:186
 #: gkwebapp/templates/deletedvoucher.jinja2:84
@@ -1110,28 +1110,28 @@ msgstr ""
 #: gkwebapp/templates/printtransactions.jinja2:98
 #: gkwebapp/templates/viewvoucher.jinja2:179
 msgid "Purchase Return"
-msgstr ""
+msgstr " പർച്ചയ്സ്  റിട്ടേൺ  "
 
 #: gkwebapp/templates/addvoucher.jinja2:190
 #: gkwebapp/templates/viewvoucher.jinja2:184
 msgid "<u>D</u>ate"
-msgstr ""
+msgstr "<u>D</u>ate "
 
 #: gkwebapp/templates/addvoucher.jinja2:201
 #: gkwebapp/templates/viewvoucher.jinja2:195
 msgid "Select Invoice "
-msgstr ""
+msgstr "ഇൻവോയ്‌സ്‌ തിരഞ്ഞെടുക്കുക"
 
 #: gkwebapp/templates/addvoucher.jinja2:215
 #: gkwebapp/templates/viewvoucher.jinja2:217
 msgid "Invoice Total Amount "
-msgstr ""
+msgstr "ഇൻവോയ്‌സിന്റെ ആകെ തുക"
 
 #: gkwebapp/templates/addvoucher.jinja2:226
 #: gkwebapp/templates/viewvoucher.jinja2:228
 #: gkwebapp/templates/viewvoucher.jinja2:323
 msgid "Cr/Dr"
-msgstr ""
+msgstr "Cr/Dr"
 
 #: gkwebapp/templates/addvoucher.jinja2:229
 #: gkwebapp/templates/editaccount.jinja2:65
@@ -1151,19 +1151,19 @@ msgstr ""
 #: gkwebapp/templates/viewvoucher.jinja2:231
 #: gkwebapp/templates/viewvoucher.jinja2:326
 msgid "Account Name"
-msgstr ""
+msgstr "അക്കൗണ്ടിന്റെ പേര്"
 
 #: gkwebapp/templates/addvoucher.jinja2:232
 #: gkwebapp/templates/viewvoucher.jinja2:234
 #: gkwebapp/templates/viewvoucher.jinja2:329
 msgid "Dr Amount"
-msgstr ""
+msgstr "Dr. അമൗണ്ട്"
 
 #: gkwebapp/templates/addvoucher.jinja2:235
 #: gkwebapp/templates/viewvoucher.jinja2:237
 #: gkwebapp/templates/viewvoucher.jinja2:332
 msgid "Cr Amount"
-msgstr ""
+msgstr "Cr. അമൗണ്ട്"
 
 #: gkwebapp/templates/addvoucher.jinja2:238
 #: gkwebapp/templates/multipleaccounts.jinja2:164
@@ -1171,7 +1171,7 @@ msgstr ""
 #: gkwebapp/templates/removeUser.jinja2:68
 #: gkwebapp/templates/viewvoucher.jinja2:335
 msgid "Remove"
-msgstr ""
+msgstr "മാറ്റുക"
 
 #: gkwebapp/templates/addvoucher.jinja2:250
 #: gkwebapp/templates/addvoucher.jinja2:275
@@ -1180,7 +1180,7 @@ msgstr ""
 #: gkwebapp/templates/viewvoucher.jinja2:344
 #: gkwebapp/templates/viewvoucher.jinja2:377
 msgid "Dr"
-msgstr ""
+msgstr "Dr"
 
 #: gkwebapp/templates/addvoucher.jinja2:251
 #: gkwebapp/templates/addvoucher.jinja2:274
@@ -1189,40 +1189,41 @@ msgstr ""
 #: gkwebapp/templates/viewvoucher.jinja2:345
 #: gkwebapp/templates/viewvoucher.jinja2:376
 msgid "Cr"
-msgstr ""
+msgstr "Cr"
 
 #: gkwebapp/templates/addvoucher.jinja2:317
 #: gkwebapp/templates/viewvoucher.jinja2:422
 msgid "Pro<u>j</u>ect"
-msgstr ""
+msgstr "Pro<u>j</u>ect "
 
 #: gkwebapp/templates/addvoucher.jinja2:327
 msgid "Narra<u>t</u>ion"
-msgstr ""
+msgstr "Narra<u>t</u>ion"
 
 #: gkwebapp/templates/addvoucher.jinja2:348
 msgid "Add Acc<u>o</u>unt"
-msgstr ""
+msgstr "Add Acc<u>o</u>unt\n"
+""
 
 #: gkwebapp/templates/addvoucher.jinja2:353
 msgid "Attac<u>h</u>"
-msgstr ""
+msgstr "Attac<u>h</u> "
 
 #: gkwebapp/templates/bankreconreport.jinja2:4
 #: gkwebapp/templates/clearedbankreconreport.jinja2:4
 #: gkwebapp/templates/viewbankrecon.jinja2:5
 #: gkwebapp/templates/viewbankrecon.jinja2:19
 msgid "Bank Reconciliation"
-msgstr ""
+msgstr "ബാങ്ക് റെകോൺസിലിയേഷൻ"
 
 #: gkwebapp/templates/bankreconreport.jinja2:4
 msgid "Uncleared Transactions"
-msgstr ""
+msgstr "ക്ലീയറാവാത്ത ഇടപാടുകൾ"
 
 #: gkwebapp/templates/bankreconreport.jinja2:55
 #: gkwebapp/templates/clearedbankreconreport.jinja2:57
 msgid "Clearance date cannot be before the voucher date!"
-msgstr ""
+msgstr "ക്ലീയറനസ്  തീയതി വൗച്ചർ തീയതി കഴിഞ്ഞിട്ടുള്ളവരുത് "
 
 #: gkwebapp/templates/bankreconreport.jinja2:63
 #: gkwebapp/templates/bankreconreport.jinja2:70
@@ -1241,7 +1242,7 @@ msgstr ""
 #: gkwebapp/templates/projectstatementreport.jinja2:58
 #: gkwebapp/templates/showstockreport.jinja2:57
 msgid "Period"
-msgstr ""
+msgstr "കാലാവധി"
 
 #: gkwebapp/templates/bankreconreport.jinja2:63
 #: gkwebapp/templates/bankreconreport.jinja2:70
@@ -1276,12 +1277,12 @@ msgstr ""
 #: gkwebapp/templates/projectstatementreport.jinja2:58
 #: gkwebapp/templates/showstockreport.jinja2:57
 msgid "to"
-msgstr ""
+msgstr "വരെ"
 
 #: gkwebapp/templates/bankreconreport.jinja2:64
 #: gkwebapp/templates/bankreconreport.jinja2:69
 msgid "Uncleared Transactions of"
-msgstr ""
+msgstr "ക്ലീയറാവാത്ത ഇടപാടുകൾ"
 
 #: gkwebapp/templates/bankreconreport.jinja2:75
 #: gkwebapp/templates/clearedbankreconreport.jinja2:77
@@ -1290,7 +1291,7 @@ msgstr ""
 #: gkwebapp/templates/findvouchertable.jinja2:77
 #: gkwebapp/templates/ledgerreport.jinja2:79
 msgid "V. No."
-msgstr ""
+msgstr "വൗച്ചർ നമ്പർ"
 
 #: gkwebapp/templates/bankreconreport.jinja2:76
 #: gkwebapp/templates/bankreconreport.jinja2:77
@@ -1313,7 +1314,7 @@ msgstr ""
 #: gkwebapp/templates/profitlossreport.jinja2:125
 #: gkwebapp/templates/showstockreport.jinja2:71
 msgid "Particulars"
-msgstr ""
+msgstr "വിശദാംശം"
 
 #: gkwebapp/templates/bankreconreport.jinja2:78
 #: gkwebapp/templates/clearedbankreconreport.jinja2:80
@@ -1330,7 +1331,7 @@ msgstr ""
 #: gkwebapp/templates/printledger.jinja2:55
 #: gkwebapp/templates/printnettrialbalance.jinja2:42
 msgid "Debit"
-msgstr ""
+msgstr "ഡെബിറ്റ് "
 
 #: gkwebapp/templates/bankreconreport.jinja2:79
 #: gkwebapp/templates/clearedbankreconreport.jinja2:81
@@ -1347,17 +1348,17 @@ msgstr ""
 #: gkwebapp/templates/printledger.jinja2:56
 #: gkwebapp/templates/printnettrialbalance.jinja2:43
 msgid "Credit"
-msgstr ""
+msgstr "ക്രെഡിറ്റ് "
 
 #: gkwebapp/templates/bankreconreport.jinja2:80
 #: gkwebapp/templates/clearedbankreconreport.jinja2:82
 msgid "Clearance Date"
-msgstr ""
+msgstr "ക്ലീയറായ തിയതി"
 
 #: gkwebapp/templates/bankreconreport.jinja2:81
 #: gkwebapp/templates/clearedbankreconreport.jinja2:83
 msgid "Memo"
-msgstr ""
+msgstr "കുറിപ്പ്‌"
 
 #: gkwebapp/templates/bankreconreport.jinja2:147
 #: gkwebapp/templates/clearedbankreconreport.jinja2:151
@@ -1436,13 +1437,13 @@ msgstr ""
 #: gkwebapp/templates/mainshell.jinja2:166
 #: gkwebapp/templates/printcashflowreport.jinja2:4
 msgid "Cash Flow"
-msgstr ""
+msgstr "കാശ്  പ്രവാഹം"
 
 #: gkwebapp/templates/cashflowreport.jinja2:61
 #: gkwebapp/templates/printcashflowreport.jinja2:37
 #: gkwebapp/templates/printcashflowreport.jinja2:49
 msgid "Cash Flow Account"
-msgstr ""
+msgstr "കാശ്  പ്രവാഹം  അക്കൗണ്ട് "
 
 #: gkwebapp/templates/cashflowreport.jinja2:61
 #: gkwebapp/templates/cashflowreport.jinja2:63
@@ -1451,13 +1452,13 @@ msgstr ""
 #: gkwebapp/templates/profitlossreport.jinja2:64
 #: gkwebapp/templates/profitlossreport.jinja2:67
 msgid "for the period"
-msgstr ""
+msgstr "കാലാവധിക്കു വേണ്ടി "
 
 #: gkwebapp/templates/cashflowreport.jinja2:63
 #: gkwebapp/templates/printcashflowreport.jinja2:39
 #: gkwebapp/templates/printcashflowreport.jinja2:51
 msgid "Receipt & Payment Account"
-msgstr ""
+msgstr "റെസിപ്ട് ആൻഡ് പേയ്‌മെന്റ് അക്കൗണ്ട് "
 
 #: gkwebapp/templates/cashflowreport.jinja2:67
 #: gkwebapp/templates/cashflowreport.jinja2:102
@@ -1477,7 +1478,7 @@ msgstr ""
 #: gkwebapp/templates/profitlossreport.jinja2:115
 #: gkwebapp/templates/projectstatementreport.jinja2:62
 msgid "Clear Search"
-msgstr ""
+msgstr "അന്വേഷണം"
 
 #: gkwebapp/templates/cashflowreport.jinja2:73
 #: gkwebapp/templates/cashflowreport.jinja2:108
@@ -1491,7 +1492,7 @@ msgstr ""
 #: gkwebapp/templates/profitlossreport.jinja2:86
 #: gkwebapp/templates/profitlossreport.jinja2:126
 msgid "Amount"
-msgstr ""
+msgstr "തുക"
 
 #: gkwebapp/templates/cashflowreport.jinja2:140
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:247
@@ -1530,32 +1531,32 @@ msgstr ""
 
 #: gkwebapp/templates/cashmemo.jinja2:52
 msgid "Add Cash Memo"
-msgstr ""
+msgstr "കാശ്  മെമ്മോ കൂട്ടിച്ചേർക്കുക"
 
 #: gkwebapp/templates/cashmemo.jinja2:53
 msgid "View Cash Memo"
-msgstr ""
+msgstr "കാശ്  മെമ്മോ കാണുക"
 
 #: gkwebapp/templates/category.jinja2:5
 msgid "GNUKhata | Category"
-msgstr ""
+msgstr "ജി എൻ യു ഘാട്ട / വിഭാഗം"
 
 #: gkwebapp/templates/category.jinja2:52
 msgid "Create Category"
-msgstr ""
+msgstr "വിഭാഗം കാണിക്കുക"
 
 #: gkwebapp/templates/category.jinja2:53
 msgid "Edit Category"
-msgstr ""
+msgstr "വിഭാഗം തിരുത്തുക"
 
 #: gkwebapp/templates/clearedbankreconreport.jinja2:4
 msgid "Cleared Transactions"
-msgstr ""
+msgstr "ക്ലീയറായ ഇടപാടുകൾ"
 
 #: gkwebapp/templates/clearedbankreconreport.jinja2:66
 #: gkwebapp/templates/clearedbankreconreport.jinja2:71
 msgid "Cleared Transactions of"
-msgstr ""
+msgstr "ക്ലീയറായ ഇടപാടുകൾ"
 
 #: gkwebapp/templates/clearedbankreconreport.jinja2:152
 msgid "Uncle<u>a</u>red Items"
@@ -1582,108 +1583,110 @@ msgstr ""
 #: gkwebapp/templates/closebooks.jinja2:13
 #: gkwebapp/templates/createorg.jinja2:39
 msgid "Improper Date!"
-msgstr ""
+msgstr "കൃത്യമല്ലാത്ത തീയതി"
 
 #: gkwebapp/templates/closebooks.jinja2:16
 msgid "There are transactions beyond the closure date. Books cannot be closed."
-msgstr ""
+msgstr "ചില ഇടപാടുകൾ ഈ ഫിനാൻഷ്യൽ കാലാവധിക്കുള്ളിൽ വരുന്നതല്ല. അതിനാൽ ബുക്ക് ക്ലോസ് ചെയ്യാൻ സാധിക്കുന്നതല്ല."
 
 #: gkwebapp/templates/closebooks.jinja2:20
 msgid "Books have been closed for the current Financial Year."
-msgstr ""
+msgstr "\n"
+"നിലവിലുള്ള ഫിനാൻഷ്യൽ കാലാവതിയിലുള്ള ബുക്ക് ക്ലോസ് ചെയ്യപ്പെട്ടിരിക്കുന്നു"
 
 #: gkwebapp/templates/closebooks.jinja2:24
 #: gkwebapp/templates/createorg.jinja2:35
 msgid "Please enter Date!"
-msgstr ""
+msgstr "ദയവായി തിയതി എന്റർ ചെയ്യുക"
 
 #: gkwebapp/templates/closebooks.jinja2:28
 msgid "Books cannot be closed!"
-msgstr ""
+msgstr "ബുക്ക്സ് ക്ലോസ് ചെയ്യാൻ സാധിക്കില്ല."
 
 #: gkwebapp/templates/closebooks.jinja2:32
 msgid "Rollover cannot be done!"
-msgstr ""
+msgstr "\n"
+"റോളോവർ ചെയ്യാൻ സാധിക്കില്ല"
 
 #: gkwebapp/templates/closebooks.jinja2:36
 msgid "Financial year end should be greater or equal to start date!"
-msgstr ""
+msgstr "ഫിനാൻഷ്യൽ ഇയറിന്റെ അവസാനം തുടങ്ങുന്ന തിയതിക്ക് തുല്യമോ കൂടുതലോ ആകാൻ പാടില്ല"
 
 #: gkwebapp/templates/closebooks.jinja2:42
 msgid "Close Books and Rollover"
-msgstr ""
+msgstr "ക്ലോസ്  ബുക്‌സും റോളോവെറും"
 
 #: gkwebapp/templates/closebooks.jinja2:47
 #: gkwebapp/templates/closebooks.jinja2:49
 #: gkwebapp/templates/closebooks.jinja2:56
 msgid "CLOSE BOOKS"
-msgstr ""
+msgstr "ബുക്ക് ക്ലോസ് ചെയ്യുക"
 
 #: gkwebapp/templates/closebooks.jinja2:48
 msgid "After Close Books, balances in all expense and income accounts are transferred to Profit & Loss or Income & Expenditure account and these accounts are closed."
-msgstr ""
+msgstr "ബുക്ക്  ക്ലോസ് ചെയ്ത ശേഷം ചിലവിന്റെയും വരുമാനത്തിനെയും ബാക്കി തുകകൾ ചിലവ് വരവ്  അക്കൗണ്ടിലേക്കും ലാഭ നഷ്ട അക്കൗണ്ടിലേക്കും മാറ്റുന്നു.  അതോടപ്പം ഈ അക്കൗണ്ടുകൾ ക്ലോസ് ചെയ്യുന്നു."
 
 #: gkwebapp/templates/closebooks.jinja2:49
 msgid "After"
-msgstr ""
+msgstr "ശേഷം"
 
 #: gkwebapp/templates/closebooks.jinja2:49
 msgid "is done, transactions cannot be recorded but ledger accounts can be viewed."
-msgstr ""
+msgstr "ഇടപാടുകൾ രേഖപ്പെടുത്താൻ സാധിക്കില്ല, എന്നാൽ അക്കൗണ്ടുകൾ കാണാൻ സാധിക്കും."
 
 #: gkwebapp/templates/closebooks.jinja2:51
 msgid "ROLL OVER"
-msgstr ""
+msgstr "റോളോവർ"
 
 #: gkwebapp/templates/closebooks.jinja2:52
 msgid "a new organization with the same name and type is created for the next accounting year,"
-msgstr ""
+msgstr " അടുത്ത വർഷത്തേക്ക് ഇതേ പേരിലുള്ളതും സ്വഭാവത്തിലും ഉള്ളതുമായ ഒരു പുതിയ സംരഭം ഉണ്ടാക്കുന്നു"
 
 #: gkwebapp/templates/closebooks.jinja2:53
 msgid "every existing asset and liability account is automatically opened under its respective Group and Sub-Group and correct opening balance is brought down,"
-msgstr ""
+msgstr "നിലവിലുള്ള എല്ലാ അസ്സെറ്റിന്റെയും ലൈബിലിറ്റിയുടെയും അക്കൗണ്ട് അതാത്  ഗ്രൂപ്പിന്റെയും സബ്  ഗ്രൂപ്പിന്റെയും കീഴിൽ കൃത്യമായ ഓപ്പണിങ് ബാലൻസോടപ്പം  സ്വയം തുടങ്ങുകയും ചെയ്യുന്നു."
 
 #: gkwebapp/templates/closebooks.jinja2:54
 msgid "in case of expense and income accounts these are also opened under their respective Groups and Sub-Groups, of course, without opening balances,"
-msgstr ""
+msgstr "ഓപ്പണിങ് ബാലൻസ് ഇല്ലാത്ത ചിലവ് വരവ് അക്കൗണ്ടുകളും അതാത്  ഗ്രൂപ്പിന്റെയും സബ്  ഗ്രൂപ്പിന്റെയും കീഴിൽ സ്വയം തുടങ്ങുകയും ചെയ്യുന്നു"
 
 #: gkwebapp/templates/closebooks.jinja2:55
 msgid "The Closing Stock of the earlier year gets transferred to the next year as Opening Stock.\n"
 "            This module can only be activated after"
-msgstr ""
+msgstr "കഴിഞ്ഞ വർഷത്തെ ക്ലോസിങ് സ്റ്റോക്ക് അടുത്ത വർഷത്തെ ഓപ്പണിങ് സ്റ്റോക്കായി ട്രാൻസ്ഫർ ചെയ്യപ്പെടുന്നു."
 
 #: gkwebapp/templates/closebooks.jinja2:56
 msgid "is done."
-msgstr ""
+msgstr "ചെയ്തു കഴിഞ്ഞു."
 
 #: gkwebapp/templates/closebooks.jinja2:64
 msgid "Close Books"
-msgstr ""
+msgstr "ക്ലോസ് ബുക്ക്സ് "
 
 #: gkwebapp/templates/closebooks.jinja2:67
 msgid "Current Financial Year"
-msgstr ""
+msgstr "നിലവിലുള്ള ഫിനാൻഷ്യൽ ഇയർ"
 
 #: gkwebapp/templates/closebooks.jinja2:70
 #: gkwebapp/templates/closebooks.jinja2:109
 #: gkwebapp/templates/closebooks.jinja2:132
 #: gkwebapp/templates/createorg.jinja2:77
 msgid "Enter From Day"
-msgstr ""
+msgstr "തുടങ്ങുന്ന തിയതി എന്റർ ചെയ്യുക"
 
 #: gkwebapp/templates/closebooks.jinja2:73
 #: gkwebapp/templates/closebooks.jinja2:112
 #: gkwebapp/templates/closebooks.jinja2:135
 #: gkwebapp/templates/createorg.jinja2:80
 msgid "Enter From Month"
-msgstr ""
+msgstr "തുടങ്ങുന്ന മാസം എന്റർ ചെയ്യുക"
 
 #: gkwebapp/templates/closebooks.jinja2:76
 #: gkwebapp/templates/closebooks.jinja2:115
 #: gkwebapp/templates/closebooks.jinja2:138
 #: gkwebapp/templates/createorg.jinja2:83
 msgid "Enter From Year"
-msgstr ""
+msgstr "തുടങ്ങുന്ന വർഷം എന്റർ ചെയ്യുക"
 
 #: gkwebapp/templates/closebooks.jinja2:80
 #: gkwebapp/templates/closebooks.jinja2:118
@@ -1693,28 +1696,28 @@ msgstr ""
 #: gkwebapp/templates/viewprofitloss.jinja2:48
 #: gkwebapp/templates/viewtrialbalance.jinja2:40
 msgid "To"
-msgstr ""
+msgstr "വരെ"
 
 #: gkwebapp/templates/closebooks.jinja2:82
 #: gkwebapp/templates/closebooks.jinja2:120
 #: gkwebapp/templates/closebooks.jinja2:143
 #: gkwebapp/templates/createorg.jinja2:88
 msgid "Enter To Day"
-msgstr ""
+msgstr " ഏത് തിയതി വരെ  എന്റർ ചെയ്യുക"
 
 #: gkwebapp/templates/closebooks.jinja2:85
 #: gkwebapp/templates/closebooks.jinja2:123
 #: gkwebapp/templates/closebooks.jinja2:146
 #: gkwebapp/templates/createorg.jinja2:91
 msgid "Enter To Month"
-msgstr ""
+msgstr "ഏത്  മാസം വരെ എന്റർ ചെയ്യുക"
 
 #: gkwebapp/templates/closebooks.jinja2:88
 #: gkwebapp/templates/closebooks.jinja2:126
 #: gkwebapp/templates/closebooks.jinja2:149
 #: gkwebapp/templates/createorg.jinja2:94
 msgid "Enter To Year"
-msgstr ""
+msgstr "ഏത്  വർഷം വരെ എന്റർ ചെയ്യുക "
 
 #: gkwebapp/templates/closebooks.jinja2:92
 msgid "Clo<u>s</u>e Books"
@@ -1722,19 +1725,19 @@ msgstr ""
 
 #: gkwebapp/templates/closebooks.jinja2:103
 msgid "Roll Over"
-msgstr ""
+msgstr "റോൾ ഓവർ"
 
 #: gkwebapp/templates/closebooks.jinja2:106
 msgid "Roll Over for the Period"
-msgstr ""
+msgstr "റോൾ ഓവർ ചെയ്യേണ്ട കാലാവധി"
 
 #: gkwebapp/templates/closebooks.jinja2:107
 msgid "Current Financial Year From"
-msgstr ""
+msgstr "നിലവിലുള്ള ഫിനാൻഷ്യൽ ഇയർ തുടങ്ങുന്നത് "
 
 #: gkwebapp/templates/closebooks.jinja2:130
 msgid "New Financial Year From"
-msgstr ""
+msgstr "പുതിയ ഫിനാൻഷ്യൽ ഇയർ തുടങ്ങുന്നത് "
 
 #: gkwebapp/templates/closebooks.jinja2:153
 msgid "Roll O<u>v</u>er"
@@ -1742,31 +1745,31 @@ msgstr ""
 
 #: gkwebapp/templates/closebooks.jinja2:173
 msgid "Confirm"
-msgstr ""
+msgstr "സ്ഥിരീകരിചു"
 
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:50
 #: gkwebapp/templates/viewbalancesheet.jinja2:61
 msgid "Conventional Balance Sheet"
-msgstr ""
+msgstr "കൺവെൻഷണൽ ബാലൻസ് ഷീറ്റ് "
 
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:50
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:52
 #: gkwebapp/templates/sourcesandapplicationoffundsreport.jinja2:58
 msgid "as on"
-msgstr ""
+msgstr "വരെ"
 
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:52
 #: gkwebapp/templates/viewbalancesheet.jinja2:68
 msgid "Conventional Statement of Affairs"
-msgstr ""
+msgstr "കൺവെൻഷണൽ സ്റ്റെമെന്റ്റ് ഓഫ് അഫേഴ്‌സ് "
 
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:60
 msgid "Capital and Liabilities"
-msgstr ""
+msgstr "ക്യാപിറ്റൽ ആൻഡ്  ലയബിലിറ്റീസ് "
 
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:62
 msgid "Corpus and Liabilities"
-msgstr ""
+msgstr " കോർപ്പസ്  ആൻഡ്  ലയബിലിറ്റീസ് "
 
 #: gkwebapp/templates/conventionalbalancesheetreport.jinja2:153
 msgid "Property and Assets"
