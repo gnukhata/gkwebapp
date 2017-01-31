@@ -195,6 +195,35 @@ $(document).ready(function() {
     }
   });
 
+  $("#invoice_customer").change(function(event) {
+    $.ajax({
+      url: '/customersuppliers?action=get',
+      type: 'POST',
+      dataType: 'json',
+      async : false,
+      data: {"custid":$("#invoice_customer option:selected").val()},
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+    })
+    .done(function(resp) {
+      console.log("success");
+      if (resp["gkstatus"]==0) {
+        $("#invoice_customeraddr").val(resp["gkresult"]["custaddr"]);
+        $("#invoice_supplieraddr").val(resp["gkresult"]["custaddr"]);
+        $("#invoice_customertin").val(resp["gkresult"]["custtan"]);
+        $("#invoice_suppliertin").val(resp["gkresult"]["custtan"]);
+      }
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
+  });
+
   $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
     event.preventDefault();
     /* Act on the event */
@@ -1410,14 +1439,14 @@ $(document).ready(function() {
               $("#add_cussup").val('19');
             }
             else{
-              $('#add_cussup').val('3'); 
+              $('#add_cussup').val('3');
             }
-           
+
             $('#add_cussup_name').focus();
           });
           $('#custsupmodal').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is opened
           {
-           var text1 = $('#selectedcustsup').val();         
+           var text1 = $('#selectedcustsup').val();
           if(text1==''){
             $('#invoice_customer').focus();
             return false;
@@ -1456,11 +1485,11 @@ $(document).ready(function() {
                 return this.text == text1;
               }).attr('selected', true);
             $("#selectedcustsup").val("");
-            $("#invoice_customer").focus(); 
+            $("#invoice_customer").focus();
           });
 
 
-    
+
     }
 }
   );
