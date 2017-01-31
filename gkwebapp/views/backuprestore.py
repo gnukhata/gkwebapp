@@ -178,20 +178,27 @@ def tallyImport(request):
 		return {"gkstatus":3}
 
 @view_config(route_name="backupfile", renderer="")
-def backup(request):
-	header={"gktoken":request.headers["gktoken"]}
-	backupdata = requests.get("http://127.0.0.1:6543/backuprestore?fulldb=1", headers=header)
-	backup = backupdata.json()["gkdata"]
-	backup_str = base64.b64decode(backup)
-	backupfile = open("backup.tar","w")
-	backupfile.write(backup_str)
-	backupfile.close()
-	backupfile = open("backup.tar","r")
-	bf = backupfile.read()
-	backupfile.close()
-	headerList = {'Content-Type':'application/x-tar' ,'Content-Length': len(bf),'Content-Disposition': 'attachment; filename=backup.tar', 'Set-Cookie':'fileDownload=true; path=/'}
-	os.remove("backup.tar")
-	return Response(bf, headerlist=headerList.items())
+def backupOrg(request):
+    """
+    This function calls up the REST api of backup functionality ,
+    gets the value sent from json () , value is encoded string of xlsx file.
+    firstly decode the string , & open the xlsx file in write mode.
+    write the decoded string to opened xlsx file ,
+    set the MIMIE type for xlsx file.
+    """
+    header={"gktoken":request.headers["gktoken"]}
+    backupdata = requests.get("http://127.0.0.1:6543/backuprestore?fulldb=0", headers=header)
+    backup = backupdata.json()["gkdata"]
+    backup_str = base64.b64decode(backup)
+    backupfile = open("backup.xlsx","w")
+    backupfile.write(backup_str)
+    backupfile.close()
+    backupfile = open("backup.xlsx","r")
+    bf = backupfile.read()
+    backupfile.close()
+    headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(bf),'Content-Disposition': 'attachment; filename=backup.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+    os.remove("backup.xlsx")
+    return Response(bf, headerlist=headerList.items())
 
 @view_config(route_name="recoveryfile", renderer="json")
 def recover(request):
