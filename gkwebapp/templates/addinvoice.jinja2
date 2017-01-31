@@ -167,12 +167,12 @@
               <label for="invoice_suppliertin">
                 {% trans %}Supplier TIN{% endtrans %} :
               </label>
-              <input class="form-control input-sm" id="invoice_suppliertin" accesskey="" disabled>
+              <input class="form-control input-sm" id="invoice_suppliertin" placeholder="{% trans %}Select Supplier to see TIN{% endtrans %}" accesskey="" disabled>
               {% else %}
                 <label for="invoice_customertin">
                   {% trans %}Customer TIN{% endtrans %} :
                 </label>
-                <input class="form-control input-sm" id="invoice_customertin" accesskey="" disabled>
+                <input class="form-control input-sm" id="invoice_customertin" placeholder="{% trans %}Select Customer to see TIN{% endtrans %}" accesskey="" disabled>
               {% endif %}
             </div>
           </div>
