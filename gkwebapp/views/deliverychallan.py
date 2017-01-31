@@ -105,7 +105,7 @@ def savedelchal(request):
 @view_config(route_name="deliverychallan",request_param="action=edit",renderer="json")
 def editdelchal(request):
 	header={"gktoken":request.headers["gktoken"]}
-	delchaldata = {"custid":int(request.params["custid"]),"dcno":request.params["dcno"],"dcid":request.params["dcid"],"dcdate":request.params["dcdate"],"dcflag":request.params["dcflag"], , "noofpackages":request.params["noofpackages"], "modeoftransport":request.params["modeoftransport"]}
+	delchaldata = {"custid":int(request.params["custid"]),"dcno":request.params["dcno"],"dcid":request.params["dcid"],"dcdate":request.params["dcdate"],"dcflag":request.params["dcflag"], "noofpackages":request.params["noofpackages"], "modeoftransport":request.params["modeoftransport"]}
 	products = {}
 	for  row in json.loads(request.params["products"]):
 		products[row["productcode"]] = row["qty"]
