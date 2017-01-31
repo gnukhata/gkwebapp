@@ -35,14 +35,23 @@
 		<input type="hidden" id="godownflag" name="godownflag" value="{{stockrefresh["godownflag"]}}"></input>
 		<input type="hidden" id="goid" name="goid" value="{{stockrefresh["goid"]}}"></input>
 		<input type="hidden" id="goname" name="goname" value="{{godown}}"></input>
+
 		<div class="printorgdetails hidden-print" style="text-align:center;">
     {% if godown=="" %}
-    	<i>{% trans %}Product Report{% endtrans %} for </i><strong>{{stockrefresh["productdesc"]}}</strong>
+		<strong><i>{% trans %}Product Report{% endtrans %}</i></strong>
 		{% else %}
-			<i>{% trans %}Godown Wise Product Report{% endtrans %} for </i><strong>{{stockrefresh["productdesc"]}}</strong><i> in </i><strong>{{godown}}</strong>
+		<strong><i>{% trans %}Godown Wise Product Report{% endtrans %}</i></strong>
+		{% endif %}
+		</div>
+
+		<div class="printorgdetails hidden-print" style="text-align:center;">
+    {% if godown=="" %}
+		<i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong>
+		{% else %}
+		<i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong><i>  {% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong>
     {% endif %}
 		<i>{% trans %}Period{% endtrans %}</i> : <strong>{{stockrefresh["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{stockrefresh["calculateto"]}}</strong>
-  </div>
+	</div>
 		<div class="table-responsive printorgdetails">
 			<table id="ledgertable" class="table shadow table-striped table-condensed table-bordered">
 				<thead class="bg-primary">
