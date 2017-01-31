@@ -167,12 +167,12 @@
               <label for="invoice_suppliertin">
                 {% trans %}Supplier TIN{% endtrans %} :
               </label>
-              <input class="form-control input-sm" id="invoice_suppliertin" accesskey="" disabled>
+              <input class="form-control input-sm" id="invoice_suppliertin" placeholder="{% trans %}Select Supplier to see TIN{% endtrans %}" accesskey="" disabled>
               {% else %}
                 <label for="invoice_customertin">
                   {% trans %}Customer TIN{% endtrans %} :
                 </label>
-                <input class="form-control input-sm" id="invoice_customertin" accesskey="" disabled>
+                <input class="form-control input-sm" id="invoice_customertin" placeholder="{% trans %}Select Customer to see TIN{% endtrans %}" accesskey="" disabled>
               {% endif %}
             </div>
           </div>
@@ -289,19 +289,19 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <td class="col-xs-3 text-right">
+                  <td class="col-xs-9 text-right">
                     <input type="text" class=" form-control input-sm text-right" value="{% trans %}Total{% endtrans %}" placeholder="" disabled>
                   </td>
-                  <td class="col-xs-2">
+                  <td class="col-xs-2" style="display:none;">
                     <input type="text" class=" form-control input-sm text-right" value="0" placeholder="" disabled>
                   </td>
-                  <td class="col-xs-2">
+                  <td class="col-xs-2" style="display:none;">
                     <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
                   </td>
-                  <td class="col-xs-1">
+                  <td class="col-xs-1" style="display:none;">
                     <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
                   </td>
-                  <td class="col-xs-1">
+                  <td class="col-xs-1" style="display:none;">
                     <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
                   </td>
                   <td class="col-xs-2">
