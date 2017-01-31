@@ -35,6 +35,7 @@ $(document).ready(function() {
   $("#deliverychallan_month").numeric();
   $("#deliverychallan_year").numeric();
   $('.deliverychallan_product_quantity').numeric({ negative: false});
+  $('#deliverychallan_noofpackages').numeric({ negative: false});
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   function pad (str, max) { //to add leading zeros in date
