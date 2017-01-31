@@ -104,6 +104,8 @@ $(document).ready(function() {
       $('#deliverychallan_edit_challanno').val(resp.delchaldata.delchaldata.dcno);
       $('#deliverychallan_edit_godown').val(resp.delchaldata.delchaldata.goid);
       $('#deliverychallan_edit_consignment').val(resp.delchaldata.delchaldata.dcflag);
+      $('#deliverychallan_edit_noofpackages').val(resp.delchaldata.delchaldata.noofpackages);
+      $('#deliverychallan_edit_modeoftransport').val(resp.delchaldata.delchaldata.modeoftransport);
       $('#deliverychallan_edit_product_table tbody').empty();
       $.each(resp.delchaldata.stockdata.items, function(key, value) {
         $('#deliverychallan_edit_product_table tbody').append('<tr>'+
