@@ -178,13 +178,23 @@
               </tbody>
             </table>
             </div>
-            {% if gkstatus=='out' %}
+            <div class="col-md-6">
+              <label for="deliverychallan_noofpackages">{% trans %}Number of Packages{% endtrans %} :</label>
+              <input type="text" class="form-control input-sm text-right" id="deliverychallan_noofpackages" value="">
+            </div>
+            <div class="col-md-6">
+              <label for="deliverychallan_modeoftransport">{% trans %}Mode of Transport{% endtrans %} :</label>
+              <input type="text" class="form-control input-sm" id="deliverychallan_modeoftransport" placeholder="eg. By Road, By Rail, By Air, By Sea, By Hand delivery, By Courier, etc.">
+            </div>
 
-            <div class="form-group">
+            {% if gkstatus=='out' %}
+            <div class="col-md-6">
+              <br>
               <label for="deliverychallan_issuername">{% trans %}Issuer's Name{% endtrans %} :</label>
               <input type="text" class="form-control input-sm" id="deliverychallan_issuername" placeholder="Enter name">
             </div>
-            <div class="form-group">
+            <div class="col-md-6">
+              <br>
               <label for="deliverychallan_designation">{% trans %}Designation{% endtrans %} :</label>
               <input type="text" class="form-control input-sm" id="deliverychallan_designation" placeholder="Enter designation">
             </div>
