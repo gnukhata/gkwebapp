@@ -155,6 +155,26 @@ $(document).ready(function() {
       $("#deliverychallan_godown").focus().select();
     }
   });
+  $("#deliverychallan_noofpackages").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $('#deliverychallan_modeoftransport').focus();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $('#deliverychallan_product_table tbody tr:last td:eq(0) select').focus();
+    }
+  });
+  $("#deliverychallan_modeoftransport").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $('#deliverychallan_issuername').focus();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $('#deliverychallan_noofpackages').focus();
+    }
+  });
   $("#deliverychallan_issuername").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
@@ -162,7 +182,7 @@ $(document).ready(function() {
     }
     if (event.which==38) {
       event.preventDefault();
-      $('#deliverychallan_product_table tbody tr:last td:eq(0) select').focus();
+      $('#deliverychallan_modeoftransport').focus();
     }
   });
   $("#deliverychallan_designation").keydown(function(event) {
@@ -385,7 +405,7 @@ $(document).ready(function() {
     }
     else if (event.which==35) {
       event.preventDefault();
-      $("#deliverychallan_issuername").focus().select();
+      $("#deliverychallan_noofpackages").focus().select();
     }
   });
 
