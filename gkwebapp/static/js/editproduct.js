@@ -515,6 +515,25 @@ $(document).ready(function() {
     }
     else if (($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='CVAT') && event.which==13 ) {
         event.preventDefault();
+        var types = [];
+        $('#product_edit_tax_table tbody tr').each(function(){
+          types.push($('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(0) select').val());
+        });
+        types.sort();
+        var duplicatetypes = [];
+        for (var i = 0; i < types.length - 1; i++) {
+          if (types[i + 1] == types[i]) {
+            duplicatetypes.push(types[i]);
+          }
+        }
+        console.log(duplicatetypes);
+        if (duplicatetypes.length > 0) {
+          $("#cvat-alert").alert();
+          $("#cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#cvat-alert").hide();
+          });
+          return false;
+        }
         $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
     }
     else if (event.which==13) {
@@ -563,6 +582,29 @@ $(document).ready(function() {
     }
     else if (event.which==13) {
       event.preventDefault();
+      var states = [];
+      $('#product_edit_tax_table tbody tr').each(function(){
+        states.push($('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').val());
+      });
+      console.log(states);
+      if (states.length>1) {
+        states.sort();
+        var duplicatestates = [];
+        for (var i = 1; i < states.length - 1; i++) {
+          if (states[i] == states[i-1]) {
+            duplicatestates.push(states[i]);
+            console.log(i+'+'+(i-1)+states[i]+'+'+states[i-1]);
+          }
+        }
+        console.log(duplicatestates);
+        if (duplicatestates.length > 0) {
+          $("#tax-same-alert").alert();
+          $("#tax-same-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#tax-same-alert").hide();
+          });
+          return false;
+        }
+      }
       $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
     }
   });
