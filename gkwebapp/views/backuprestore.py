@@ -207,15 +207,42 @@ def backupOrg(request):
 		gkwb = Workbook()
 		accountList = gkwb.active
 		accountList.title = "Account List"
+		
 		gsResult = requests.get("http://127.0.0.1:6543/groupsubgroups",headers=header)
 		groupList = gsResult.json()["gkresult"]
 		cellCounter = 1
-		for group in groupLIst:
+		for group in groupList:
 			g = accountList.cell(row=cellCounter,column=1,value=group["groupname"])
 			g.font = Font(name=g.font.name,bold=True)
 			cellCounter = cellCounter + 1
 			accResult = requests.get("http://127.0.0.1:6543/accounts?accbygrp&groupcode=%s"%group["groupcode"],headers=header)
+			accList = accResult.json()["gkresult"]
+			for acc in accList:
+				a = accountList.cell(row=cellCounter,column=1,value=acc["accountname"])
+				a.font = Font(name=g.font.name,italic=True)
+				ob = accountList.cell(row=cellCounter,column=2,value=acc["openingbal"])
+				cellCounter = cellCounter + 1
+			sgResult = requests.get("http://127.0.0.1:6543/groupDetails/%s"%(group["groupcode"]),headers=header)
+			subgrpList = sgResult.json()["gkresult"]
+			for sg in subgrpList:
+				sbg = accountList.cell(row=cellCounter,column=1,value=sg["subgroupname"])
+				cellCounter = cellCounter + 1
+				accsgResult = requests.get("http://127.0.0.1:6543/accounts?accbygrp&groupcode=%s"%sg["groupcode"],headers=header)
+				accListsg = accsgResult.json()["gkresult"]
+				for accsg in accListsg:
+					a = accountList.cell(row=cellCounter,column=1,value=accsg["accountname"])
+					a.font = Font(name=g.font.name,italic=True)
+					ob = accountList.cell(row=cellCounter,column=2,value=accsg["openingbal"])
+					cellCounter = cellCounter + 1
+							
+			cellCounter = cellCounter + 1
 			
+				
+				
+				 
+			
+
+				
 	except:
 		print "file not found"
 		return {"gkstatus":3}
