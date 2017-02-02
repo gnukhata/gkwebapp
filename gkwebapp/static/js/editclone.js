@@ -1251,10 +1251,51 @@ $(document).ready(function()
   });
 
   $("#delete").click(function(event) {
-    /* Act on the event */
-	 
-	  
-	  $('confirm_del').model.('show');
+    // Act on the event 
+
+	  $("#hideinp").val(1);
+	  $('#myModal').modal('hide');
+	  $('#confirm_del').modal('show');
+	  $('#vcdel1').click(function(event){
+		  $.ajax({
+		        url: '/deletevoucher',
+		        type: 'POST',
+		        datatype: 'json',
+		        data: {vcode: $("#vcode").val()},
+		        beforeSend: function(xhr)
+		        {
+		          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+		        },
+		      })
+		      .done(function(jsonobj) {
+		        if(jsonobj["gkstatus"]==0){
+		          $('#confirm_del').modal('hide');
+		          $('#confirm_del').on('hidden.bs.modal', function (e)
+		                  {
+		                    $('.modal-backdrop').remove();
+		                    $("#success-alert").alert();
+		  		          $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  		            $("#success-alert").hide();
+		  		          $("#viewvc").html("");
+		                    $("#submit").click();
+		  		          });
+		  		          });
+		    
+
+		        }
+		        
+		        else {
+		          $("#notran-del-alert").alert();
+		          $("#notran-del-alert").fadeTo(2250, 500).slideUp(500, function(){
+		            $("#notran-del-alert").hide();
+		          });
+		        }
+		      });
+  
+	  });
+ 
+   // var cnf = confirm("Are you sure?");
+   /* if (cnf) {
 
       $.ajax({
         url: '/deletevoucher',
@@ -1269,7 +1310,6 @@ $(document).ready(function()
       .done(function(jsonobj) {
         if(jsonobj["gkstatus"]==0){
           $('#myModal').modal('hide');
-          
 
         }
         else {
@@ -1280,8 +1320,14 @@ $(document).ready(function()
         }
       });
 
-  });
+    }
+    else {
+      $("#delete").focus();
+    }
+    */
 
+
+  });
   $('#save').click(function(event) {
     var allow = true;
     if ($('#vno').val()=="") {

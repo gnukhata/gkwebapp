@@ -218,15 +218,17 @@ $(".search").children(".form-control").keyup(function(event){
             $(".btnfocus:enabled:first").focus();
 
           });
+        
           $('#myModal').on('hidden.bs.modal', function (e)
           {
+        	  if($("#hideinp").val==0)
+        	  {
             $('.modal-backdrop').remove();
             $("#viewvc").html("");
             $("#submit").click();
-
+        	  }
 
           });
-
 
         }
       }
