@@ -6,7 +6,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -179,119 +179,141 @@ def tallyImport(request):
 
 @view_config(route_name="backupfile", renderer="")
 def backupOrg(request):
-    """
-    This function calls up the REST api of backup functionality ,
-    gets the value sent from json () , value is encoded string of xlsx file.
-    firstly decode the string , & open the xlsx file in write mode.
-    write the decoded string to opened xlsx file ,
-    set the MIMIE type for xlsx file.
-    """
-    header={"gktoken":request.headers["gktoken"]}
-    backupdata = requests.get("http://127.0.0.1:6543/backuprestore?fulldb=0", headers=header)
-    backup = backupdata.json()["gkdata"]
-    backup_str = base64.b64decode(backup)
-    backupfile = open("backup.xlsx","w")
-    backupfile.write(backup_str)
-    backupfile.close()
-    backupfile = open("backup.xlsx","r")
-    bf = backupfile.read()
-    backupfile.close()
-    headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(bf),'Content-Disposition': 'attachment; filename=backup.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
-    os.remove("backup.xlsx")
-    return Response(bf, headerlist=headerList.items())
+	"""
+	This function calls up the REST api of backup functionality ,
+	gets the value sent from json () , value is encoded string of xlsx file.
+	firstly decode the string , & open the xlsx file in write mode.
+	write the decoded string to opened xlsx file ,
+	set the MIMIE type for xlsx file.
+	"""
+	header={"gktoken":request.headers["gktoken"]}
+	backupdata = requests.get("http://127.0.0.1:6543/backuprestore?fulldb=0", headers=header)
+	backup = backupdata.json()["gkdata"]
+	backup_str = base64.b64decode(backup)
+	backupfile = open("backup.xlsx","w")
+	backupfile.write(backup_str)
+	backupfile.close()
+	backupfile = open("backup.xlsx","r")
+	bf = backupfile.read()
+	backupfile.close()
+	headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(bf),'Content-Disposition': 'attachment; filename=backup.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+	os.remove("backup.xlsx")
+	return Response(bf, headerlist=headerList.items())
 
-        
-        
+@view_config(route_name="exportledger", renderer="")
+def backupOrg(request):
+	try:
+		header={"gktoken":request.headers["gktoken"]}
+		gkwb = Workbook()
+		accountList = gkwb.active
+		accountList.title = "Account List"
+		gsResult = requests.get("http://127.0.0.1:6543/groupsubgroups",headers=header)
+		groupList = gsResult.json()["gkresult"]
+		cellCounter = 1
+		for group in groupLIst:
+			g = accountList.cell(row=cellCounter,column=1,value=group["groupname"])
+			g.font = Font(name=g.font.name,bold=True)
+			cellCounter = cellCounter + 1
+			accResult = requests.get("http://127.0.0.1:6543/accounts?accbygrp&groupcode=%s"%group["groupcode"],headers=header)
+			
+	except:
+		print "file not found"
+		return {"gkstatus":3}
+
+		
+		
+	
+	
+		
+		
 @view_config(route_name="recoveryfile", renderer="json")
 def restoreOrg(request):
-#    try:
-        header={"gktoken":request.headers["gktoken"]}
-        ogResult = requests.get("http://127.0.0.1:6543/organisation",headers=header)
-        ogDet = ogResult.json()["gkdata"]
-        xlsxfile = request.POST['xlsxfile'].file
-        wbRest = load_workbook(xlsxfile)
-        wbRest._active_sheet_index = 0
-        accountSheet = wbRest.active
+#	try:
+		header={"gktoken":request.headers["gktoken"]}
+		ogResult = requests.get("http://127.0.0.1:6543/organisation",headers=header)
+		ogDet = ogResult.json()["gkdata"]
+		xlsxfile = request.POST['xlsxfile'].file
+		wbRest = load_workbook(xlsxfile)
+		wbRest._active_sheet_index = 0
+		accountSheet = wbRest.active
 
-        if str(accountSheet['A1'].value) == str(ogDet["orgname"]) and str(accountSheet['B1'].value) == str(ogDet["orgtype"]) and (accountSheet['C1'].value) == str(ogDet["yearstart"]) and (accountSheet['D1'].value) == str(ogDet["yearend"]):
-            accountList = tuple(accountSheet.rows)
-            gsResult = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist",headers=header)
-            groups = gsResult.json()["gkresult"]
-            curgrpid = None
-            parentgroupid = None
-            for accRow in accountList:
-                if accRow[0].value == str(ogDet["orgname"]) or accRow[0].value == None :
-                    continue
-                if accRow[0].font.b:
-                    curgrpid = groups[accRow[0].value.strip()]
-                    parentgroupid = groups[accRow[0].value.strip()]
-                    continue
-                if accRow[0].font.b == False and accRow[0].font.i == False:
-                      if groups.has_key(accRow[0].value):
-                          curgrpid = groups[accRow[0].value.strip()]
-                      else:
-                          newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers = header)
-                          curgrpid = newsub.json()["gkresult"]
-                if accRow[0].font.i:
-                    newacc = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
-                    continue
-          
-            sheets = wbRest.worksheets
-            for Wsheet in sheets:
-                if wbRest.index(Wsheet) == 0:
-                    continue
-                if Wsheet.title.strip() == "Projects":
-                    projectList = tuple(Wsheet.rows)
-                    for proj in projectList:
-                        if proj[0].value == "ProjectName":
-                            continue
-                        newproj = requests.post("http://127.0.0.1:6543/projects",data = json.dumps({"projectname":proj[0].value,"sanctionedamount":proj[1].value}),headers = header)
+		if str(accountSheet['A1'].value) == str(ogDet["orgname"]) and str(accountSheet['B1'].value) == str(ogDet["orgtype"]) and (accountSheet['C1'].value) == str(ogDet["yearstart"]) and (accountSheet['D1'].value) == str(ogDet["yearend"]):
+			accountList = tuple(accountSheet.rows)
+			gsResult = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist",headers=header)
+			groups = gsResult.json()["gkresult"]
+			curgrpid = None
+			parentgroupid = None
+			for accRow in accountList:
+				if accRow[0].value == str(ogDet["orgname"]) or accRow[0].value == None :
+					continue
+				if accRow[0].font.b:
+					curgrpid = groups[accRow[0].value.strip()]
+					parentgroupid = groups[accRow[0].value.strip()]
+					continue
+				if accRow[0].font.b == False and accRow[0].font.i == False:
+					  if groups.has_key(accRow[0].value):
+						  curgrpid = groups[accRow[0].value.strip()]
+					  else:
+						  newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers = header)
+						  curgrpid = newsub.json()["gkresult"]
+				if accRow[0].font.i:
+					newacc = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
+					continue
+		  
+			sheets = wbRest.worksheets
+			for Wsheet in sheets:
+				if wbRest.index(Wsheet) == 0:
+					continue
+				if Wsheet.title.strip() == "Projects":
+					projectList = tuple(Wsheet.rows)
+					for proj in projectList:
+						if proj[0].value == "ProjectName":
+							continue
+						newproj = requests.post("http://127.0.0.1:6543/projects",data = json.dumps({"projectname":proj[0].value,"sanctionedamount":proj[1].value}),headers = header)
 
-                if Wsheet.title.strip() == "Vouchers":
-                    acclist = requests.get("http://127.0.0.1:6543/accounts?acclist",headers= header)
-                    accounts = acclist.json()["gkresult"]
-                    projlist = requests.get("http://127.0.0.1:6543/projects?projlist",headers = header)
-                    projects = acclist.json()["gkresult"]
-                    vchList = tuple(Wsheet.rows)
-                    for vch in vchList:
-                        if vch[0].value == "VchNo" or vch[0].value == None:
-                            continue
-                        voucherno = vch[0].value
-                        voucherdt = vch[1].value
-                        vouchertype = vch[2].value
-                        drs = {}
-                        crs = {}
-                        Vindex = vchList.index(vch) 
-                        while vchList[Vindex][3].value != None: 
-                            drs[accounts[vchList[Vindex][3].value]] = vchList[Vindex][4].value
-                            Vindex = Vindex + 1
-                        while vchList[Vindex][5].value != None: 
-                            crs[accounts[vchList[Vindex][5].value]] = vchList[Vindex][6].value
-                            Vindex = Vindex + 1
-                        narration = vch[7].value
-                        lckflag = vch[8].value
-                        try:
-                            if vch[9].value != None:
-                                projcode = projects[vch[9].value]
-                        except:
-                            continue                        
-                        newvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps({"voucherdate":voucherdt,"vouchernumber":voucherno,"vouchertype":vouchertype,"drs":drs,"crs":crs,"narration":narration,"lockflag":lckflag,"projectcode":projcode}),headers=header)
+				if Wsheet.title.strip() == "Vouchers":
+					acclist = requests.get("http://127.0.0.1:6543/accounts?acclist",headers= header)
+					accounts = acclist.json()["gkresult"]
+					projlist = requests.get("http://127.0.0.1:6543/projects?projlist",headers = header)
+					projects = acclist.json()["gkresult"]
+					vchList = tuple(Wsheet.rows)
+					for vch in vchList:
+						if vch[0].value == "VchNo" or vch[0].value == None:
+							continue
+						voucherno = vch[0].value
+						voucherdt = vch[1].value
+						vouchertype = vch[2].value
+						drs = {}
+						crs = {}
+						Vindex = vchList.index(vch) 
+						while vchList[Vindex][3].value != None: 
+							drs[accounts[vchList[Vindex][3].value]] = vchList[Vindex][4].value
+							Vindex = Vindex + 1
+						while vchList[Vindex][5].value != None: 
+							crs[accounts[vchList[Vindex][5].value]] = vchList[Vindex][6].value
+							Vindex = Vindex + 1
+						narration = vch[7].value
+						lckflag = vch[8].value
+						try:
+							if vch[9].value != None:
+								projcode = projects[vch[9].value]
+						except:
+							continue						
+						newvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps({"voucherdate":voucherdt,"vouchernumber":voucherno,"vouchertype":vouchertype,"drs":drs,"crs":crs,"narration":narration,"lockflag":lckflag,"projectcode":projcode}),headers=header)
 
-                if Wsheet.title.strip() == "Users":
-                    userList = tuple(Wsheet.rows)
-                    for user in userList:
-                        if user[0].value.strip() == "UserName":
-                            continue
-                        if user[2].value.strip() == "Manager" :
-                            newuser = requests.post("http://127.0.0.1:6543/users",data = json.dumps({"username":user[0].value,"userpassword":user[1].value,"userrole":0,"userquestion":user[3].value,"useranswer":user[4].value}),headers=header)
-                        else:
-                            newuser = requests.post("http://127.0.0.1:6543/users",data = json.dumps({"username":user[0].value,"userpassword":user[1].value,"userrole":1,"userquestion":user[3].value,"useranswer":user[4].value}),headers=header)    
+				if Wsheet.title.strip() == "Users":
+					userList = tuple(Wsheet.rows)
+					for user in userList:
+						if user[0].value.strip() == "UserName":
+							continue
+						if user[2].value.strip() == "Manager" :
+							newuser = requests.post("http://127.0.0.1:6543/users",data = json.dumps({"username":user[0].value,"userpassword":user[1].value,"userrole":0,"userquestion":user[3].value,"useranswer":user[4].value}),headers=header)
+						else:
+							newuser = requests.post("http://127.0.0.1:6543/users",data = json.dumps({"username":user[0].value,"userpassword":user[1].value,"userrole":1,"userquestion":user[3].value,"useranswer":user[4].value}),headers=header)	
 
-#            return {"gkstatus":0}
-#        else :
-#            return {"gkstatus":5}
-#    except:
-#        print "file not found"
-#        return {"gkstatus":3}
-
-
+#			return {"gkstatus":0}
+#		else :
+#			return {"gkstatus":5}
+#	except:
+#		print "file not found"
+#		return {"gkstatus":3}
