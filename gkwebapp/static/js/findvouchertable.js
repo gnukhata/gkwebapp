@@ -221,7 +221,7 @@ $(".search").children(".form-control").keyup(function(event){
         
           $('#myModal').on('hidden.bs.modal', function (e)
           {
-        	  if($("#hideinp").val==0)
+        	  if($("#hideinp").val()==0)
         	  {
             $('.modal-backdrop').remove();
             $("#viewvc").html("");
