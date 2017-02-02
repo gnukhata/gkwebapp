@@ -1256,6 +1256,11 @@ $(document).ready(function()
 	  $("#hideinp").val(1);
 	  $('#myModal').modal('hide');
 	  $('#confirm_del').modal('show');
+      $('#confirm_del').on('shown.bs.modal', function (e)
+              {
+                $("#m_cancel").focus();
+
+              });
 	  $('#vcdel1').click(function(event){
 		  $.ajax({
 		        url: '/deletevoucher',
