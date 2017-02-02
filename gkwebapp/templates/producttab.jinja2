@@ -79,6 +79,14 @@
 
             {% trans %}Please select a different godown.{% endtrans %}
           </div>
+          <div class="alert alert-danger" id="tax-same-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}This tax has already been applied.{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="cvat-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}CVAT can be applied only once.{% endtrans %}
+          </div>
           <div class="alert alert-danger" id="uomblank-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}Please select the unit of measurement.{% endtrans %}
