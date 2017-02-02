@@ -41,7 +41,14 @@
 
             {% trans %}Please enter date within the financial year!{% endtrans %}
           </div>
+          <div class="alert alert-danger" id="noofpackages-blank-alert"  aria-live="rude" role="alert" hidden>
 
+            <label for="vno">{% trans %}Please enter Number of Packages!{% endtrans %}</label>
+          </div>
+          <div class="alert alert-danger" id="modeoftransport-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}Please enter mode of transport!{% endtrans %}</label>
+          </div>
             <div class="form-group">
               <label for="deliverychallan_challanno">{% trans %}Note No{% endtrans %} :</label>
               <input class="form-control input-sm" id="deliverychallan_challanno" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a">
