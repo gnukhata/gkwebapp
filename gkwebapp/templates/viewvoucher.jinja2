@@ -95,6 +95,27 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
 </head>
 <body>
   <!-- Modal -->
+  
+  <div id="confirm_del" class="modal fade" tabindex="-1" role="dialog">
+      <div class="vertical-alignment-helper">
+        <div class="modal-dialog modal-sm vertical-align-center">
+          <div class="modal-content">
+            <div class="modal-header">
+
+              <h4 class="modal-title">{% trans %}Delete this voucher ?{% endtrans %}</h4>
+            </div>
+            <div class="modal-body">
+              <p>{% trans %}Are you sure?{% endtrans %}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
+              <button type="button" id="vcdel1" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div>
+    </div><!-- /.modal -->
+
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
