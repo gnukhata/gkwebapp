@@ -513,6 +513,20 @@ $(document).ready(function() {
     }
     else if (event.which==13) {
       event.preventDefault();
+      var states = [];
+      $('#product_tax_table tbody tr').each(function(){
+        states.push($('#product_tax_table tbody tr:eq('+curindex+') td:eq(1) select').val());
+      });
+      states.sort();
+      var reportRecipientsDuplicate = [];
+      for (var i = 0; i < states.length - 1; i++) {
+        if (states[i + 1] == states[i]) {
+          reportRecipientsDuplicate.push(states[i]);
+        }
+      }
+      if (reportRecipientsDuplicate.length > 0) {
+        alert("Hi");
+      }
       $('#product_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
     }
   });
