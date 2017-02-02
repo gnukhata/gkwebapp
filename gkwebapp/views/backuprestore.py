@@ -36,6 +36,8 @@ from pyramid.response import Response
 import base64
 import os, shutil
 from openpyxl import load_workbook
+from openpyxl import Workbook
+from openpyxl.styles import Font
 from openpyxl.drawing.graphic import GroupShape
 
 @view_config(route_name='import',request_param='action=show',renderer='gkwebapp:templates/tallyimport.jinja2')
@@ -201,13 +203,14 @@ def backupOrg(request):
 	return Response(bf, headerlist=headerList.items())
 
 @view_config(route_name="exportledger", renderer="")
-def backupOrg(request):
+def exportLedger(request):
 	try:
 		header={"gktoken":request.headers["gktoken"]}
 		gkwb = Workbook()
 		accountList = gkwb.active
 		accountList.title = "Account List"
-		
+		accountList.column_dimensions["A"].width = 80
+		accountList.column_dimensions["B"].width = 30
 		gsResult = requests.get("http://127.0.0.1:6543/groupsubgroups",headers=header)
 		groupList = gsResult.json()["gkresult"]
 		cellCounter = 1
@@ -218,7 +221,7 @@ def backupOrg(request):
 			accResult = requests.get("http://127.0.0.1:6543/accounts?accbygrp&groupcode=%s"%group["groupcode"],headers=header)
 			accList = accResult.json()["gkresult"]
 			for acc in accList:
-				a = accountList.cell(row=cellCounter,column=1,value=acc["accountname"])
+				a = accountList.cell(row=cellCounter,column=1,value=(acc["accountname"]).replace("/",""))
 				a.font = Font(name=g.font.name,italic=True)
 				ob = accountList.cell(row=cellCounter,column=2,value=acc["openingbal"])
 				cellCounter = cellCounter + 1
@@ -230,12 +233,26 @@ def backupOrg(request):
 				accsgResult = requests.get("http://127.0.0.1:6543/accounts?accbygrp&groupcode=%s"%sg["groupcode"],headers=header)
 				accListsg = accsgResult.json()["gkresult"]
 				for accsg in accListsg:
-					a = accountList.cell(row=cellCounter,column=1,value=accsg["accountname"])
+					a = accountList.cell(row=cellCounter,column=1,value=(accsg["accountname"]).replace("/",""))
 					a.font = Font(name=g.font.name,italic=True)
 					ob = accountList.cell(row=cellCounter,column=2,value=accsg["openingbal"])
 					cellCounter = cellCounter + 1
 							
-			cellCounter = cellCounter + 1
+			acclist = requests.get("http://127.0.0.1:6543/accounts?acclist",headers=header)
+			accounts = acclist.json()["gkresult"]
+			
+			for acct in accounts:
+				accname = str(acct)
+				Ledger = gkwb.create_sheet()
+				Ledger.title = accname.replace("/","")
+                
+	
+				 
+		gkwb.save(filename = "AllLedger.xlsx")
+		
+
+							
+			
 			
 				
 				
