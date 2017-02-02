@@ -1252,8 +1252,9 @@ $(document).ready(function()
 
   $("#delete").click(function(event) {
     /* Act on the event */
-    var cnf = confirm("Are you sure?");
-    if (cnf) {
+	 
+	  
+	  $('confirm_del').model.('show');
 
       $.ajax({
         url: '/deletevoucher',
@@ -1268,6 +1269,7 @@ $(document).ready(function()
       .done(function(jsonobj) {
         if(jsonobj["gkstatus"]==0){
           $('#myModal').modal('hide');
+          
 
         }
         else {
@@ -1277,11 +1279,6 @@ $(document).ready(function()
           });
         }
       });
-
-    }
-    else {
-      $("#delete").focus();
-    }
 
   });
 
