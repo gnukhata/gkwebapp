@@ -86,7 +86,7 @@ def getdelchal(request):
 @view_config(route_name="deliverychallan",request_param="action=save",renderer="json")
 def savedelchal(request):
 	header={"gktoken":request.headers["gktoken"]}
-	delchaldata = {"custid":int(request.params["custid"]),"dcno":request.params["dcno"],"dcdate":request.params["dcdate"],"dcflag":request.params["dcflag"]}
+	delchaldata = {"custid":int(request.params["custid"]),"dcno":request.params["dcno"],"dcdate":request.params["dcdate"],"dcflag":request.params["dcflag"], "noofpackages":request.params["noofpackages"], "modeoftransport":request.params["modeoftransport"]}
 	products = {}
 	for  row in json.loads(request.params["products"]):
 		products[row["productcode"]] = row["qty"]
@@ -105,7 +105,7 @@ def savedelchal(request):
 @view_config(route_name="deliverychallan",request_param="action=edit",renderer="json")
 def editdelchal(request):
 	header={"gktoken":request.headers["gktoken"]}
-	delchaldata = {"custid":int(request.params["custid"]),"dcno":request.params["dcno"],"dcid":request.params["dcid"],"dcdate":request.params["dcdate"],"dcflag":request.params["dcflag"]}
+	delchaldata = {"custid":int(request.params["custid"]),"dcno":request.params["dcno"],"dcid":request.params["dcid"],"dcdate":request.params["dcdate"],"dcflag":request.params["dcflag"], "noofpackages":request.params["noofpackages"], "modeoftransport":request.params["modeoftransport"]}
 	products = {}
 	for  row in json.loads(request.params["products"]):
 		products[row["productcode"]] = row["qty"]
@@ -130,7 +130,6 @@ def deletedelchal(request):
 @view_config(route_name="deliverychallan",request_param="action=print",renderer="gkwebapp:templates/printdeliverychallan.jinja2")
 def deliveryprint(request):
 	header={"gktoken":request.headers["gktoken"]}
-	print request.params
 	org = requests.get("http://127.0.0.1:6543/organisation", headers=header)
 	cust = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(request.params["custid"])), headers=header)
 	if request.params["goid"] != '':

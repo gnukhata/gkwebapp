@@ -35,6 +35,7 @@ $(document).ready(function() {
   $("#deliverychallan_month").numeric();
   $("#deliverychallan_year").numeric();
   $('.deliverychallan_product_quantity').numeric({ negative: false});
+  $('#deliverychallan_noofpackages').numeric({ negative: false});
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   function pad (str, max) { //to add leading zeros in date
@@ -155,6 +156,26 @@ $(document).ready(function() {
       $("#deliverychallan_godown").focus().select();
     }
   });
+  $("#deliverychallan_noofpackages").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $('#deliverychallan_modeoftransport').focus();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $('#deliverychallan_product_table tbody tr:last td:eq(0) select').focus();
+    }
+  });
+  $("#deliverychallan_modeoftransport").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $('#deliverychallan_issuername').focus();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $('#deliverychallan_noofpackages').focus();
+    }
+  });
   $("#deliverychallan_issuername").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
@@ -162,7 +183,7 @@ $(document).ready(function() {
     }
     if (event.which==38) {
       event.preventDefault();
-      $('#deliverychallan_product_table tbody tr:last td:eq(0) select').focus();
+      $('#deliverychallan_modeoftransport').focus();
     }
   });
   $("#deliverychallan_designation").keydown(function(event) {
@@ -385,7 +406,7 @@ $(document).ready(function() {
     }
     else if (event.which==35) {
       event.preventDefault();
-      $("#deliverychallan_issuername").focus().select();
+      $("#deliverychallan_noofpackages").focus().select();
     }
   });
 
@@ -564,6 +585,22 @@ $(document).ready(function() {
       obj.qty = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(1) input").val();
       products.push(obj); // a list named products is populated with the dictionaries obj
     }
+    if ($.trim($('#deliverychallan_noofpackages').val())=="") {
+      $("#noofpackages-blank-alert").alert();
+      $("#noofpackages-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#noofpackages-blank-alert").hide();
+      });
+      $('#deliverychallan_noofpackages').focus();
+      return false;
+    }
+    if ($.trim($('#deliverychallan_modeoftransport').val())=="") {
+      $("#modeoftransport-blank-alert").alert();
+      $("#modeoftransport-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#modeoftransport-blank-alert").hide();
+      });
+      $('#deliverychallan_modeoftransport').focus();
+      return false;
+    }
     if ($.trim($('#deliverychallan_issuername').val())=="" && $("#status").val()=='15') {
       $("#issuername-blank-alert").alert();
       $("#issuername-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -595,6 +632,8 @@ $(document).ready(function() {
       "dcno":$("#deliverychallan_challanno").val(),
       "dcdate":$("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val(),
       "inout":$("#status").val(),
+      "noofpackages":$('#deliverychallan_noofpackages').val(),
+      "modeoftransport":$('#deliverychallan_modeoftransport').val(),
       "issuername":$("#deliverychallan_issuername").val(),
       "designation":$("#deliverychallan_designation").val(),
       "goid":$("#deliverychallan_godown option:selected").val(),
@@ -746,6 +785,22 @@ $(document).ready(function() {
       obj.qty = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(1) input").val();
       products.push(obj);
     }
+    if ($.trim($('#deliverychallan_noofpackages').val())=="") {
+      $("#noofpackages-blank-alert").alert();
+      $("#noofpackages-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#noofpackages-blank-alert").hide();
+      });
+      $('#deliverychallan_noofpackages').focus();
+      return false;
+    }
+    if ($.trim($('#deliverychallan_modeoftransport').val())=="") {
+      $("#modeoftransport-blank-alert").alert();
+      $("#modeoftransport-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#modeoftransport-blank-alert").hide();
+      });
+      $('#deliverychallan_modeoftransport').focus();
+      return false;
+    }
     if ($.trim($('#deliverychallan_issuername').val())=="" && $("#status").val()=='15') {
       $("#issuername-blank-alert").alert();
       $("#issuername-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -776,6 +831,8 @@ $(document).ready(function() {
       "dcno":$("#deliverychallan_challanno").val(),
       "dcdate":$("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val(),
       "inout":$("#status").val(),
+      "noofpackages":$('#deliverychallan_noofpackages').val(),
+      "modeoftransport":$('#deliverychallan_modeoftransport').val(),
       "issuername":$("#deliverychallan_issuername").val(),
       "designation":$("#deliverychallan_designation").val(),
       "goid":$("#deliverychallan_godown option:selected").val(),
