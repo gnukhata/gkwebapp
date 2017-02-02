@@ -785,6 +785,22 @@ $(document).ready(function() {
       obj.qty = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(1) input").val();
       products.push(obj);
     }
+    if ($.trim($('#deliverychallan_noofpackages').val())=="") {
+      $("#noofpackages-blank-alert").alert();
+      $("#noofpackages-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#noofpackages-blank-alert").hide();
+      });
+      $('#deliverychallan_noofpackages').focus();
+      return false;
+    }
+    if ($.trim($('#deliverychallan_modeoftransport').val())=="") {
+      $("#modeoftransport-blank-alert").alert();
+      $("#modeoftransport-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#modeoftransport-blank-alert").hide();
+      });
+      $('#deliverychallan_modeoftransport').focus();
+      return false;
+    }
     if ($.trim($('#deliverychallan_issuername').val())=="" && $("#status").val()=='15') {
       $("#issuername-blank-alert").alert();
       $("#issuername-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
