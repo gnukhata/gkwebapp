@@ -478,7 +478,8 @@ $("#backuporg").click(function(e){
 $("#exportbutton").click(function(e){
 	  // This function serves the client with a spreadsheet file having ledgers.
 	    var xhr = new XMLHttpRequest();
-	    xhr.open('GET', '/exportledger', true);
+	    var url = '/exportledger?yearstart='+sessionStorage.yyyymmddyear1+'&yearend='+sessionStorage.yyyymmddyear2;
+	    xhr.open('GET', url, true);
 	    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
 	    xhr.responseType = 'blob';
 	    xhr.onload = function(e) {

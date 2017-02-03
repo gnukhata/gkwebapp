@@ -206,6 +206,7 @@ def backupOrg(request):
 def exportLedger(request):
 	try:
 		header={"gktoken":request.headers["gktoken"]}
+		print request.params
 		gkwb = Workbook()
 		accountList = gkwb.active
 		accountList.title = "Account List"
@@ -245,9 +246,13 @@ def exportLedger(request):
 				accname = str(acct)
 				Ledger = gkwb.create_sheet()
 				Ledger.title = accname.replace("/","")
-                ogResult = requests.get("http://127.0.0.1:6543/organisation",headers=header)
-                ogDet = ogResult.json()["gkdata"]
-                
+				accountcode = accounts[acct]
+				calculatefrom = request.params["yearstart"]
+				calculateto = request.params["yearend"]
+				financialstart = request.params["yearstart"]
+				result = requests.get("http://127.0.0.1:6543/report?type=ledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode="%(accountcode,calculatefrom,calculateto,financialstart), headers=header)
+   				ledgerResult = result.json()["gkresult"]
+				print ledgerResult
 				
 	
 				 
