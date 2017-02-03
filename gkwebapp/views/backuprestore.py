@@ -242,36 +242,36 @@ def exportLedger(request):
 			acclist = requests.get("http://127.0.0.1:6543/accounts?acclist",headers=header)
 			accounts = acclist.json()["gkresult"]
 			
-			for acct in accounts:
-				accname = str(acct)
-				Ledger = gkwb.create_sheet()
-				Ledger.title = accname.replace("/","")
-				accountcode = accounts[acct]
-				calculatefrom = request.params["yearstart"]
-				calculateto = request.params["yearend"]
-				financialstart = request.params["yearstart"]
-				result = requests.get("http://127.0.0.1:6543/report?type=ledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode="%(accountcode,calculatefrom,calculateto,financialstart), headers=header)
-				ledgerResult = result.json()["gkresult"]
-				ledgerRowCounter = 1
-				for row in ledgerResult:
-					Ledger.cell(row=ledgerRowCounter, column=1, value=row["voucherdate"])
-					particulars = row["particulars"]
-					particularCounter = ledgerRowCounter
-					if len(particulars) == 1:
-						Ledger.cell(row=ledgerRowCounter, column=3, value=particulars[0])
-						Ledger.cell(row=ledgerRowCounter+1 , column=3, value=row["narration"])
-						particularCounter = ledgerRowCounter +1
-					if len(particulars) > 1:
-						Ledger.cell(row=ledgerRowCounter, column=3, value="(as per details)")
-						for p in particulars:
-							particularCounter = particularCounter +1
-							Ledger.cell(row=particularCounter, column=3, value=p)
-						Ledger.cell(row=particularCounter, column=3, value=row["narration"])
-					Ledger.cell(row=ledgerRowCounter, column=4, value=row["vouchertype"])
-					Ledger.cell(row=ledgerRowCounter, column=5, value=row["vouchernumber"])
-					Ledger.cell(row=ledgerRowCounter, column=6, value=row["Dr"])
-					Ledger.cell(row=ledgerRowCounter, column=7, value=row["Cr"])
-					ledgerRowCounter = particularCounter +1
+		for acct in accounts:
+			accname = str(acct)
+			Ledger = gkwb.create_sheet()
+			Ledger.title = accname.replace("/","")
+			accountcode = accounts[acct]
+			calculatefrom = request.params["yearstart"]
+			calculateto = request.params["yearend"]
+			financialstart = request.params["yearstart"]
+			result = requests.get("http://127.0.0.1:6543/report?type=ledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode="%(accountcode,calculatefrom,calculateto,financialstart), headers=header)
+			ledgerResult = result.json()["gkresult"]
+			ledgerRowCounter = 1
+			for row in ledgerResult:
+				Ledger.cell(row=ledgerRowCounter, column=1, value=row["voucherdate"])
+				particulars = row["particulars"]
+				particularCounter = ledgerRowCounter
+				if len(particulars) == 1:
+					Ledger.cell(row=ledgerRowCounter, column=3, value=particulars[0])
+					Ledger.cell(row=ledgerRowCounter+1 , column=3, value=row["narration"])
+					particularCounter = ledgerRowCounter +1
+				if len(particulars) > 1:
+					Ledger.cell(row=ledgerRowCounter, column=3, value="(as per details)")
+					for p in particulars:
+						particularCounter = particularCounter +1
+						Ledger.cell(row=particularCounter, column=3, value=p)
+					Ledger.cell(row=particularCounter, column=3, value=row["narration"])
+				Ledger.cell(row=ledgerRowCounter, column=4, value=row["vouchertype"])
+				Ledger.cell(row=ledgerRowCounter, column=5, value=row["vouchernumber"])
+				Ledger.cell(row=ledgerRowCounter, column=6, value=row["Dr"])
+				Ledger.cell(row=ledgerRowCounter, column=7, value=row["Cr"])
+				ledgerRowCounter = particularCounter +1
 
 		gkwb.save(filename = "AllLedger.xlsx")
 		AllLedgerfile = open("AllLedger.xlsx","r")
