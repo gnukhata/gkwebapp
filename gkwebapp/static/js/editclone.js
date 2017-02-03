@@ -453,6 +453,7 @@ $(document).ready(function()
       $("#date-alert").alert();
       $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#date-alert").hide();
+        $('#vdate').focus().select();
       });
       $("#postdate-alert").hide();
       $('#vdate').focus().select();
@@ -463,6 +464,7 @@ $(document).ready(function()
       $("#between-date-alert").alert();
       $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#between-date-alert").hide();
+        $('#vdate').focus().select();
       });
       $("#postdate-alert").hide();
       $('#vdate').focus().select();
