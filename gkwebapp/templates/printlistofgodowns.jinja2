@@ -33,7 +33,7 @@
     <table class="table table-condensed table-bordered table-striped shadow">
       <thead class="bg-primary">
         <tr class="visible-print">
-          <th colspan="4" style="text-align:center; font-size:80%;">
+          <th colspan="7" style="text-align:center; font-size:80%;">
             {% trans %}List of Godowns{% endtrans %}
           </th>
         </tr>
@@ -47,6 +47,16 @@
           <th class="col-xs-6">
             {% trans %}Address{% endtrans %}
           </th>
+          <th class="col-xs-3">
+            {% trans %}Contact Name{% endtrans %}
+          </th>
+          <th class="col-xs-3">
+            {% trans %}Designation{% endtrans %}
+          </th>
+          <th class="col-xs-3">
+            {% trans %}Contact Number{% endtrans %}
+          </th>
+
           <th class="col-xs-2">
             {% trans %}Status{% endtrans %}
           </th>
@@ -64,6 +74,15 @@
           </td>
           <td class="col-xs-6" >
             {{record["godownaddress"]}}, {{record["godownstate"]}}
+          </td>
+          <td class="col-xs-3" >
+            {{record["godowncontactname"]}}
+          </td>
+          <td class="col-xs-3" >
+            {{record["godowndesignation"]}}
+          </td>
+          <td class="col-xs-3" >
+            {{record["godowncontact"]}}
           </td>
           <td class="col-xs-2">
             {{record["godownstatus"]}}

@@ -47,13 +47,22 @@
     <thead class="bg-primary">
       <tr>
         <th class="col-xs-1" >
-          {% trans %}Sr. No.{% endtrans %}
+          {% trans %}Sr.No.{% endtrans %}
         </th>
-        <th class="col-xs-3" >
+        <th class="col-xs-2" >
           {% trans %}Godown Name{% endtrans %}
         </th>
         <th class="col-xs-6" >
           {% trans %}Address{% endtrans %}
+        </th>
+        <th class="col-xs-3" >
+          {% trans %}Contact Name{% endtrans %}
+        </th>
+        <th class="col-xs-3" >
+          {% trans %}Designation{% endtrans %}
+        </th>
+        <th class="col-xs-3" >
+          {% trans %}Contact Number{% endtrans %}
         </th>
         <th class="col-xs-2" >
           {% trans %}Status{% endtrans %}
@@ -64,14 +73,23 @@
 
       {% for record in gkresult %}
       <tr	value="{{record["godownid"]}}">
-        <td class="col-xs-1 " >
+        <td class="col-xs-1" >
           {{record["srno"]}}
         </td>
-        <td class="col-xs-3">
+        <td class="col-xs-2">
           <a class="libgname" href="">{{record["godownname"]}}</a>
         </td>
         <td class="col-xs-6" >
           {{record["godownaddress"]}}, {{record["godownstate"]}}
+        </td>
+        <td class="col-xs-3" >
+          {{record["godowncontactname"]}}
+        </td>
+        <td class="col-xs-3" >
+          {{record["godowndesignation"]}}
+        </td>
+        <td class="col-xs-3" >
+          {{record["godowncontact"]}}
         </td>
         {% if record["godownstatus"] == "Active" %}
         <td class="col-xs-2 text-success">
