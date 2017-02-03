@@ -246,6 +246,11 @@ def exportLedger(request):
 			accname = str(acct)
 			Ledger = gkwb.create_sheet()
 			Ledger.title = accname.replace("/","")
+			Ledger.column_dimensions["A"].width =10
+			Ledger.column_dimensions["C"].width = 50
+			Ledger.column_dimensions["F"].width = 10
+			Ledger.column_dimensions["G"].width = 10
+
 			accountcode = accounts[acct]
 			calculatefrom = request.params["yearstart"]
 			calculateto = request.params["yearend"]
@@ -254,8 +259,10 @@ def exportLedger(request):
 			ledgerResult = result.json()["gkresult"]
 			ledgerRowCounter = 1
 			for row in ledgerResult:
-				Ledger.cell(row=ledgerRowCounter, column=1, value=row["voucherdate"])
 				particulars = row["particulars"]
+				if particulars[0] == "Opening Balance" or particulars[0] == "Total of Transactions" or particulars[0] == "Closing Balance C/F" or particulars[0] == "Grand Total":
+					continue
+				Ledger.cell(row=ledgerRowCounter, column=1, value=row["voucherdate"])
 				particularCounter = ledgerRowCounter
 				if len(particulars) == 1:
 					Ledger.cell(row=ledgerRowCounter, column=3, value=particulars[0])
