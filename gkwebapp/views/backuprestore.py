@@ -245,6 +245,9 @@ def exportLedger(request):
 				accname = str(acct)
 				Ledger = gkwb.create_sheet()
 				Ledger.title = accname.replace("/","")
+                ogResult = requests.get("http://127.0.0.1:6543/organisation",headers=header)
+                ogDet = ogResult.json()["gkdata"]
+                
 				
 	
 				 
