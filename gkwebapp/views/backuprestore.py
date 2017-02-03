@@ -249,6 +249,12 @@ def exportLedger(request):
 	
 				 
 		gkwb.save(filename = "AllLedger.xlsx")
+		AllLedgerfile = open("AllLedger.xlsx","r")
+		bf = AllLedgerfile.read()
+		AllLedgerfile.close()
+		headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(bf),'Content-Disposition': 'attachment; filename=AllLedger.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+		os.remove("AllLedger.xlsx")
+		return Response(bf, headerlist=headerList.items())
 		
 
 							
