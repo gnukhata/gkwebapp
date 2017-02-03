@@ -273,6 +273,7 @@ def exportLedger(request):
 					for p in particulars:
 						particularCounter = particularCounter +1
 						Ledger.cell(row=particularCounter, column=3, value=p)
+					particularCounter = particularCounter +1
 					Ledger.cell(row=particularCounter, column=3, value=row["narration"])
 				Ledger.cell(row=ledgerRowCounter, column=4, value=row["vouchertype"])
 				Ledger.cell(row=ledgerRowCounter, column=5, value=row["vouchernumber"])
