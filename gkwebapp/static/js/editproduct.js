@@ -517,7 +517,9 @@ $(document).ready(function() {
         event.preventDefault();
         var types = [];
         $('#product_edit_tax_table tbody tr').each(function(){
-          types.push($('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(0) select').val());
+          if ($(".tax_name",this).val()=='CVAT') {
+          types.push($(".tax_name",this).val());
+          }
         });
         types.sort();
         var duplicatetypes = [];
@@ -526,7 +528,6 @@ $(document).ready(function() {
             duplicatetypes.push(types[i]);
           }
         }
-        console.log(duplicatetypes);
         if (duplicatetypes.length > 0) {
           $("#cvat-alert").alert();
           $("#cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -582,21 +583,18 @@ $(document).ready(function() {
     }
     else if (event.which==13) {
       event.preventDefault();
-      var states = [];
+      var edittaxstates = [];
       $('#product_edit_tax_table tbody tr').each(function(){
-        states.push($('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').val());
+        edittaxstates.push($(".tax_state",this).val());
       });
-      console.log(states);
-      if (states.length>1) {
-        states.sort();
+      if (edittaxstates.length>1) {
+        edittaxstates.sort();
         var duplicatestates = [];
-        for (var i = 1; i < states.length - 1; i++) {
-          if (states[i] == states[i-1]) {
-            duplicatestates.push(states[i]);
-            console.log(i+'+'+(i-1)+states[i]+'+'+states[i-1]);
+        for (var i = 0; i < edittaxstates.length - 1; i++) {
+          if (edittaxstates[i+1] == edittaxstates[i]) {
+            duplicatestates.push(edittaxstates[i]);
           }
         }
-        console.log(duplicatestates);
         if (duplicatestates.length > 0) {
           $("#tax-same-alert").alert();
           $("#tax-same-alert").fadeTo(2250, 500).slideUp(500, function(){

@@ -467,9 +467,12 @@ $(document).ready(function() {
         event.preventDefault();
         var types = [];
         $('#product_tax_table tbody tr').each(function(){
-          types.push($('#product_tax_table tbody tr:eq('+curindex+') td:eq(0) select').val());
+          if ($(".tax_name",this).val()=='CVAT') {
+          types.push($(".tax_name",this).val());
+          }
         });
         types.sort();
+        console.log(types);
         var duplicatetypes = [];
         for (var i = 0; i < types.length - 1; i++) {
           if (types[i + 1] == types[i]) {
@@ -534,7 +537,7 @@ $(document).ready(function() {
       event.preventDefault();
       var states = [];
       $('#product_tax_table tbody tr').each(function(){
-        states.push($('#product_tax_table tbody tr:eq('+curindex+') td:eq(1) select').val());
+        states.push($(".tax_state",this).val());
       });
       states.sort();
       var duplicatestates = [];
