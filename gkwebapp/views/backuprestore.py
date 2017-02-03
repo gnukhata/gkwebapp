@@ -262,7 +262,12 @@ def exportLedger(request):
 			print ledgerResult[0]
 			if len(ledgerResult) == 1:
 				continue
-
+			firstVal = ledgerResult[0]["particulars"][0]
+			print firstVal
+			secondVal = ledgerResult[1]["particulars"][0]
+			print secondVal
+			if firstVal == "Opening Balance" and secondVal == "Total of Transactions":
+				continue
 			Ledger = gkwb.create_sheet()
 			Ledger.title = accname.replace("/","")
 			Ledger.column_dimensions["A"].width =10
