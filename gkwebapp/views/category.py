@@ -184,7 +184,7 @@ def listofgodownssspreadsheet(request):
 	sheet.getCell(0,2).stringValue("Sr. No.").setBold(True)
 	sheet.getCell(1,2).stringValue("Child Category").setBold(True)
 	sheet.getCell(2,2).stringValue("Parent Category").setBold(True)
-	sheet.getCell(3,2).stringValue("Stock").setBold(True)
+	sheet.getCell(3,2).stringValue("Status").setBold(True)
 	row = 3
 	for category in result:
 		sheet.getCell(0, row).stringValue(category["srno"])
