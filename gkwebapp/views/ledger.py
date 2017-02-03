@@ -121,10 +121,10 @@ def printLedgerReport(request):
 	sheet = ods.content.getSheet(0)
 	sheet.getRow(0).setHeight("23pt")
 	sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("16pt")
-	ods.content.mergeCells(0,0,8,1)
+	ods.content.mergeCells(0,0,7,1)
 	sheet.getRow(1).setHeight("18pt")
 	sheet.getCell(0,1).stringValue("Account: "+headerrow["accountname"] +" (Period: "+calculatefrom+" to "+calculateto+")").setBold(True).setAlignHorizontal("center").setFontSize("14pt")
-	ods.content.mergeCells(0,1,8,1)
+	ods.content.mergeCells(0,1,7,1)
 	row = 2
 	if headerrow["projectname"]!="":
 		if orgtype == "Profit Making":
