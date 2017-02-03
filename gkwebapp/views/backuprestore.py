@@ -245,7 +245,7 @@ def exportLedger(request):
 				accname = str(acct)
 				Ledger = gkwb.create_sheet()
 				Ledger.title = accname.replace("/","")
-                
+				
 	
 				 
 		gkwb.save(filename = "AllLedger.xlsx")
