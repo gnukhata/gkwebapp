@@ -745,7 +745,7 @@ $(document).ready(function() {
     var nextindex1 = curindex1+1;
     var previndex1 = curindex1-1;
     var selectindex = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').index();
-    var numberofgodowns = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:not(:disabled)').length;
+    var numberofgodowns = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length;
     var selectedgodown = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').val();
     console.log(selectedgodown);
     if (event.which==13) {
@@ -791,7 +791,7 @@ $(document).ready(function() {
           $("#editgodown_ob_table tbody tr:last td:last").append('<a href="#" class="editgodown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
         }
         $(".editgodown_ob").numeric();
-        $('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('disabled', true);
+        $('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true);
         $('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
     }

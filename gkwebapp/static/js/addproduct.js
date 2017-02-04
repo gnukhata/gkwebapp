@@ -695,7 +695,7 @@ $(document).ready(function() {
     var previndex1 = curindex1-1;
     var selectindex = $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').index();
     var selectedgodown = $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').val();
-    var numberofgodowns = $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:not(:disabled)').length-1;
+    var numberofgodowns = $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
     if (event.which==13) {
       event.preventDefault();
       if (curindex1 != ($("#godown_ob_table tbody tr").length-1)) {
@@ -737,7 +737,7 @@ $(document).ready(function() {
         $('#godown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
         $("#godown_ob_table tbody tr:last td:last").append('<a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
         $(".godown_ob").numeric();
-        $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('disabled', true);
+        $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true);
         $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
     }
