@@ -88,6 +88,7 @@ def tallyImport(request):
 	wbTally._active_sheet_index = 0
 	accountSheet = wbTally.active
 	accountList = tuple(accountSheet.rows)
+	print len(accountList)
 	gsResult = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist",headers=header)
 	groups = gsResult.json()["gkresult"]
 	curgrpid = None
@@ -96,25 +97,33 @@ def tallyImport(request):
 		if accRow[0].value == None:
 			continue
 		if accRow[0].font.b:
+			print "found group " + accRow[0].value
 			curgrpid = groups[accRow[0].value.strip()]
 			parentgroupid = groups[accRow[0].value.strip()]
 			continue
 		if accRow[0].font.b == False and accRow[0].font.i == False:
 			if groups.has_key(accRow[0].value):
+				print "found existing subgroup " + accRow[0].value
 				curgrpid = groups[accRow[0].value.strip()]
 			else:
+				print "creating new subgroup " + accRow[0].value
 				newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
 				curgrpid = newsub.json()["gkresult"]
+				print "new subgroup created with id %d "%(curgrpid)
 		if accRow[0].font.i:
+			print "found account " + accRow[0].value
 			if accRow[1].value==None and accRow[2].value==None:
 				newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
+				print "account created with 0 opening"
 				continue
 			if accRow[1].value==None:
 				newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[2].value}),headers=header)
+				print "account created with Cr opening"
 				continue
 			try:
 				if accRow[2].value==None:
 					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
+					print "account created with Dr opening"
 					continue
 			except IndexError:
 				pass
@@ -233,6 +242,7 @@ def exportLedger(request):
 				a = accountList.cell(row=cellCounter,column=1,value=(acc["accountname"]).replace("/",""))
 				a.font = Font(name=g.font.name,italic=True)
 				ob = accountList.cell(row=cellCounter,column=2,value=acc["openingbal"])
+				ob2 = accountList.cell(row=cellCounter,column=3,value="")
 				cellCounter = cellCounter + 1
 			sgResult = requests.get("http://127.0.0.1:6543/groupDetails/%s"%(group["groupcode"]),headers=header)
 			subgrpList = sgResult.json()["gkresult"]
@@ -245,6 +255,7 @@ def exportLedger(request):
 					a = accountList.cell(row=cellCounter,column=1,value=(accsg["accountname"]).replace("/",""))
 					a.font = Font(name=g.font.name,italic=True)
 					ob = accountList.cell(row=cellCounter,column=2,value=accsg["openingbal"])
+					ob2 = accountList.cell(row=cellCounter,column=3,value="")
 					cellCounter = cellCounter + 1
 							
 			acclist = requests.get("http://127.0.0.1:6543/accounts?acclist",headers=header)
