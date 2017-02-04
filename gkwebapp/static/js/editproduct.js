@@ -883,14 +883,14 @@ if (event.which ==13) {
         taxes.push(obj);
       }
     });
-    /*for (tax of existingnonetax) {
+    for (tax of existingnonetax) {
       var obj = {};
       obj.taxrowid = tax["taxid"];
       obj.taxname = tax["taxname"];
       obj.state = tax["state"];
       obj.taxrate = tax["taxrate"];
       taxes.push(obj);
-    }*/
+    }
     var obj = {};
     $("#editgodown_ob_table tbody tr").each(function(){
       if ($.trim($(".editgodown_name",this).val())!="") {
