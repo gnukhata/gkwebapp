@@ -135,14 +135,14 @@
       <tbody>
         <tr class="blank" value="new">
           <td class="col-xs-4">
-            <select class="form-control input-sm tax_name product_new_name">
+            <select class="form-control input-sm product_tax_disable tax_name product_new_name">
               <option value="" selected>Select Tax</option>
               <option value="VAT">VAT</option>
               <option value="CVAT">CVAT</option>
             </select>
           </td>
           <td class="col-xs-4">
-            <select class="form-control input-sm tax_state product_new_state" >
+            <select class="form-control input-sm tax_state product_new_state product_tax_disable" >
               <option value="">None</option>
               <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
               <option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>
@@ -183,9 +183,9 @@
             </select>
           </td>
           <td class="col-xs-3">
-            <input class="form-control input-sm tax_rate text-right product_new_rate numtype" placeholder="Rate">
+            <input class="form-control input-sm tax_rate text-right product_new_rate numtype product_tax_disable" placeholder="Rate">
           </td>
-          <td class="col-xs-1">
+          <td class="col-xs-1 product_tax_disable">
 
           </td>
         </tr>

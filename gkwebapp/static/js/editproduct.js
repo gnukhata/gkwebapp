@@ -1,6 +1,8 @@
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#prodselect").focus();
+  $(".product_tax_disable").prop('disabled',true);
+  $(".product_cat_tax_disable").prop('disabled',true);
   $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
     event.preventDefault();
     /* Act on the event */
@@ -259,7 +261,8 @@ $(document).ready(function() {
         $("#epsubmit").hide();
         $("#epedit").show();
         $('#proddetails').find('input, textarea, button, select').prop('disabled',true);
-        $('#taxdiv').contents('input, textarea, button, select').prop('disabled',true);
+        $(".product_tax_disable").prop('disabled',true);
+        $(".product_cat_tax_disable").prop('disabled',true);
         catcode= $("#editcatselect option:selected").val();
         console.log("success");
       })
@@ -302,9 +305,10 @@ $(document).ready(function() {
           '<input class="form-control product_tax_disable input-sm tax_rate text-right numtype"  placeholder="Rate" value="'+tax["taxrate"]+'">'+
           '</td>'+
           '<td class="col-xs-1">'+
-          '<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+          '<a href="#" class="tax_del product_tax_disable"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
           '</td>'+
           '</tr>');
+          $(".product_tax_disable").prop('disabled',true);
           $('#product_edit_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
           $('#product_edit_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
         }
@@ -396,7 +400,6 @@ $(document).ready(function() {
     event.preventDefault();
     /* Act on the event */
     $('#proddetails').find('input, textarea, button, select').prop('disabled',false);
-    $('#taxdiv').contents('input, textarea, button, select').prop('disabled',false);
     $("#epsubmit").show();
     $("#epedit").hide();
     $("#editproddesc").focus();
@@ -880,14 +883,14 @@ if (event.which ==13) {
         taxes.push(obj);
       }
     });
-    for (tax of existingnonetax) {
+    /*for (tax of existingnonetax) {
       var obj = {};
       obj.taxrowid = tax["taxid"];
       obj.taxname = tax["taxname"];
       obj.state = tax["state"];
       obj.taxrate = tax["taxrate"];
       taxes.push(obj);
-    }
+    }*/
     var obj = {};
     $("#editgodown_ob_table tbody tr").each(function(){
       if ($.trim($(".editgodown_name",this).val())!="") {
