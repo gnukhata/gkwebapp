@@ -169,7 +169,12 @@ $(document).ready(function() {
   $("#deliverychallan_modeoftransport").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $('#deliverychallan_issuername').focus();
+      if($("#deliverychallan_issuername").length) {
+        $('#deliverychallan_issuername').focus();
+      }
+      else {
+        $('#deliverychallan_save').click();
+      }
     }
     if (event.which==38) {
       event.preventDefault();
