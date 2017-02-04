@@ -259,7 +259,7 @@ $(document).ready(function() {
         $("#epsubmit").hide();
         $("#epedit").show();
         $('#proddetails').find('input, textarea, button, select').prop('disabled',true);
-        $('#taxdiv').contemts('input, textarea, button, select').prop('disabled',true);
+        $('#taxdiv').contents('input, textarea, button, select').prop('disabled',true);
         catcode= $("#editcatselect option:selected").val();
         console.log("success");
       })
@@ -396,7 +396,7 @@ $(document).ready(function() {
     event.preventDefault();
     /* Act on the event */
     $('#proddetails').find('input, textarea, button, select').prop('disabled',false);
-    $('#taxdiv').contemts('input, textarea, button, select').prop('disabled',false);
+    $('#taxdiv').contents('input, textarea, button, select').prop('disabled',false);
     $("#epsubmit").show();
     $("#epedit").hide();
     $("#editproddesc").focus();
