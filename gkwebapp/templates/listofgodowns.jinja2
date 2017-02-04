@@ -26,7 +26,7 @@
 
   #latable tbody {
       display:block;
-      height: calc(100vh - 16em);
+      height: calc(100vh - 17em);
       overflow-y:scroll;
   }
   #latable thead,#latable tbody tr {
@@ -38,6 +38,26 @@
       width: calc( 100% - 0.65em );
   }
 
+  .calign{
+    text-align:center;
+  }
+  .lalign{
+    text-align:left;
+  }
+  .dtwrap{
+    width :5%
+     }
+ .smwrap{
+  width:3%
+ }
+
+ .lngwrap{
+  width:16%
+ }
+ .mdwrap{
+  width:8%
+ }
+
   </style>
 </head>
 <body>
@@ -46,16 +66,25 @@
   <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
     <thead class="bg-primary">
       <tr>
-        <th class="col-xs-1" >
-          {% trans %}Sr. No.{% endtrans %}
+        <th class="smwrap lalign" >
+          {% trans %}Sr.No.{% endtrans %}
         </th>
-        <th class="col-xs-3" >
+        <th class="mdwrap lalign">
           {% trans %}Godown Name{% endtrans %}
         </th>
-        <th class="col-xs-6" >
+        <th class="lngwrap lalign">
           {% trans %}Address{% endtrans %}
         </th>
-        <th class="col-xs-2" >
+        <th class="dtwrap lalign">
+          {% trans %}Contact Name{% endtrans %}
+        </th>
+        <th class="dtwrap lalign" >
+          {% trans %}Designation{% endtrans %}
+        </th>
+        <th class="dtwrap lalign">
+          {% trans %}Contact Number{% endtrans %}
+        </th>
+        <th class="smwrap lalign">
           {% trans %}Status{% endtrans %}
         </th>
       </tr>
@@ -64,21 +93,30 @@
 
       {% for record in gkresult %}
       <tr	value="{{record["godownid"]}}">
-        <td class="col-xs-1 " >
+        <td class="smwrap lalign" >
           {{record["srno"]}}
         </td>
-        <td class="col-xs-3">
+        <td class="mdwrap lalign">
           <a class="libgname" href="">{{record["godownname"]}}</a>
         </td>
-        <td class="col-xs-6" >
+        <td class="lngwrap lalign" >
           {{record["godownaddress"]}}, {{record["godownstate"]}}
         </td>
+        <td class="dtwrap lalign" >
+          {{record["godowncontactname"]}}
+        </td>
+        <td class="dtwrap lalign" >
+          {{record["godowndesignation"]}}
+        </td>
+        <td class="dtwrap lalign" >
+          {{record["godowncontact"]}}
+        </td>
         {% if record["godownstatus"] == "Active" %}
-        <td class="col-xs-2 text-success">
+        <td class="smwrap lalign text-success">
           {{record["godownstatus"]}}
         </td>
         {% else %}
-        <td class="col-xs-2 text-danger">
+        <td class="smwrap lalign text-danger">
           {{record["godownstatus"]}}
         </td>
         {% endif %}

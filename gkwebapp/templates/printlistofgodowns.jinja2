@@ -23,6 +23,25 @@
   tfoot{
     display: table-footer-group;
   }
+  .calign{
+    text-align:center;
+  }
+  .lalign{
+    text-align:left;
+  }
+  .dtwrap{
+    width :5%
+     }
+ .smwrap{
+  width:3%
+ }
+
+ .lngwrap{
+  width:16%
+ }
+ .mdwrap{
+  width:8%
+ }
 
   </style>
 </head>
@@ -33,21 +52,31 @@
     <table class="table table-condensed table-bordered table-striped shadow">
       <thead class="bg-primary">
         <tr class="visible-print">
-          <th colspan="4" style="text-align:center; font-size:80%;">
+          <th colspan="7" style="text-align:center; font-size:80%;">
             {% trans %}List of Godowns{% endtrans %}
           </th>
         </tr>
         <tr>
-          <th class="col-xs-1">
-            {% trans %}Sr. No.{% endtrans %}
+          <th class="smwrap lalign">
+            {% trans %}Sr.No.{% endtrans %}
           </th>
-          <th class="col-xs-3">
+          <th class="mdwrap lalign">
             {% trans %}Godown Name{% endtrans %}
           </th>
-          <th class="col-xs-6">
+          <th class="lngwrap lalign">
             {% trans %}Address{% endtrans %}
           </th>
-          <th class="col-xs-2">
+          <th class="dtwrap lalign">
+            {% trans %}Contact Name{% endtrans %}
+          </th>
+          <th class="dtwrap lalign">
+            {% trans %}Designation{% endtrans %}
+          </th>
+          <th class="dtwrap lalign">
+            {% trans %}Contact Number{% endtrans %}
+          </th>
+
+          <th class="smwrap lalign">
             {% trans %}Status{% endtrans %}
           </th>
         </tr>
@@ -56,16 +85,25 @@
 
         {% for record in gkresult %}
         <tr	value="{{record["accountcode"]}}">
-          <td class="col-xs-1" >
+          <td class="smwrap lalign" >
             {{record["srno"]}}
           </td>
-          <td class="col-xs-3">
+          <td class="mdwrap lalign">
             {{record["godownname"]}}
           </td>
-          <td class="col-xs-6" >
+          <td class="lngwrap lalign" >
             {{record["godownaddress"]}}, {{record["godownstate"]}}
           </td>
-          <td class="col-xs-2">
+          <td class="dtwrap lalign" >
+            {{record["godowncontactname"]}}
+          </td>
+          <td class="dtwrap lalign" >
+            {{record["godowndesignation"]}}
+          </td>
+          <td class="dtwrap lalign" >
+            {{record["godowncontact"]}}
+          </td>
+          <td class="smwrap lalign">
             {{record["godownstatus"]}}
           </td>
         </tr>
