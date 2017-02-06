@@ -117,8 +117,8 @@ def tallyImport(request):
 					continue
 			except IndexError:
 				pass
-				
-			
+
+
 	#the dictionary thus returned will have
 	#accountname as key and accountcode as value.
 	acclist = requests.get("http://127.0.0.1:6543/accounts?acclist",headers=header)
@@ -145,6 +145,9 @@ def tallyImport(request):
 				continue
 			if v[0].value != None:
 				voucherDate = str(v[0].value)
+				if voucherDate[2]=='-':
+					vdates = voucherDate.split('-')
+					voucherDate = vdates[2]+'/'+vdates[1]+'/'+vdates[0]
 			vouchernumber = v[4].value
 			voucherCodes.append(numType)
 			vouchertype = v[3].value.strip().lower()
@@ -183,7 +186,7 @@ def tallyImport(request):
 					except IndexError:
 						pass
 			newvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps({"voucherdate":voucherDate,"vouchernumber":vouchernumber,"vouchertype":vouchertype,"drs":drs,"crs":crs,"narration":narration}),headers=header)
-	
+
 	return {"gkstatus":0}
 #	except:
 #		print "file not found"
@@ -227,10 +230,10 @@ def exportLedger(request):
 					ob = accountList.cell(row=cellCounter,column=2,value=accsg["openingbal"])
 					ob2 = accountList.cell(row=cellCounter,column=3,value="")
 					cellCounter = cellCounter + 1
-							
+
 			acclist = requests.get("http://127.0.0.1:6543/accounts?acclist",headers=header)
 			accounts = acclist.json()["gkresult"]
-			
+
 		for acct in accounts:
 			accname = str(acct)
 			accountcode = accounts[acct]
@@ -285,6 +288,3 @@ def exportLedger(request):
 	except:
 		print "file not found"
 		return {"gkstatus":3}
-
-
-	
