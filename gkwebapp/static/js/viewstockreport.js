@@ -157,7 +157,7 @@ $(document).ready(function() {
 			$("#viewstock_todate").focus();
 		}
 	});
-	if ($("#godowpresent").val()==0) {
+	if ($("#godownpresent").val()==0) {
 		$("#viewstock_toyear").keydown(function(e){
 			if(e.which==13){
 				e.preventDefault();

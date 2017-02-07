@@ -1,3 +1,17 @@
+[7-February-2017 Release 3.5.2]
+* Fixed alignment and lables in UI.
+* Removed references to cost-center / project when they are not created.
+* Fixed delete voucher module.
+* Enhanced functionality of list of godown report.
+* Now tax can be apply to product.
+* Perfected functionality of credit only and debit only in ledgers.
+* Export all ledgers of logged-in organisation within financial year in spreadhseet(XSLX) format.
+* Productwise inventory report added seperate collumns for delivery note no , invoice no and transfer note no.
+* Enhanced functionality of monthly ledger report , added new collumns for no. of credit vouchers and debit vouchers.
+* Removed unnecessary total fields from invoice and cash memo.
+* Enhanced functionality transfer note , invoice and cash memo.
+
+
 [13-December-2016 Release 3.5.1]
 * Stock Report
 * Godown wise stock report
