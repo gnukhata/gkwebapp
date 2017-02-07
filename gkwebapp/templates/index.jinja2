@@ -159,7 +159,6 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="active"><a data-toggle="tab" id="selectnav" href="#selectorg"> <span class="sr-only">{% trans %}Select Existing Organisation{% endtrans %}</span>{% trans %}Select <u>E</u>xisting Organisation{% endtrans %}</a></li>
         <li><a data-toggle="tab" id="createnav" href="#createorg">{% trans %}C<u>r</u>eate Organisation{% endtrans %}</a></li>
-        <li><a data-toggle="modal" id="restore" href="" data-target="#restoredialog">{% trans %}Restore <u>D</u>ata{% endtrans %}</a></li>
         <li class="dropdown">
           <a href="" id="lang" class="dropdown-toggle mastermenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>L</u>anguage{% endtrans %}</a>
           <ul class="dropdown-menu">
@@ -201,53 +200,6 @@
     <div class="panel-footer" style="background-color: rgb(87,93,99); color: white;">
       <p>{% trans %}GNUKhata is developed by{% endtrans %} <b>{% trans %}Digital Freedom Foundation(DFF){% endtrans %}</b> {% trans %}and is currently funded by{% endtrans %} <b>{% trans %}International Centre for Free and Open Source Software(ICFOSS).{% endtrans %}</b></p>
     </div>
-</div>
-
-<div id="restoredialog" class="modal fade" tabindex="-1" role="dialog">
-  <div class="vertical-alignment-helper">
-    <div class="modal-dialog vertical-align-center">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" style="color: white; opacity:2;">&times;</button>
-          <h4 class="modal-title">{% trans %}Restore Data{% endtrans %}</h4>
-        </div>
-        <div class="modal-body">
-          <div class="alert alert-warning" id="no-backup-alert"  aria-live="rude" role="alert" hidden>
-
-            {% trans %}Please upload a backup file.{% endtrans %}
-          </div>
-          <div class="alert alert-success" id="recovery-success-alert"  aria-live="rude" role="alert" hidden>
-
-            {% trans %}Restoring is complete.{% endtrans %}
-          </div>
-          <div class="alert alert-danger" id="recovery-failure-alert"  aria-live="rude" role="alert" hidden>
-
-            {% trans %}Restoring failed.{% endtrans %}
-          </div>
-          <div class="alert alert-danger" id="data-exist-alert"  aria-live="rude" role="alert" hidden>
-
-            {% trans %}Restoring failed. You already have some data.{% endtrans %}
-          </div>
-          <dl>
-            <dt style="margin-bottom: 10px;">This feature allows you to restore your data that you have as backup.</dt>
-            <dd>Click on the "Upload Backup File" button.</dd>
-            <dd>Select your back up file and open it.</dd>
-            <dd>Click "Start Restore" to start restoring data from backup.</dd>
-            <dd>An alert will be displayed and the page will reload once restoring is complete.</dd>
-            <dd style="margin-top: 10px;"><b>Please do not reload or close the window while recovery is in going on.</b></dd>
-          </dl>
-        </div>
-        <div class="modal-footer">
-          <label class="btn btn-success" for="openrecovery">
-            <input name="img" accesskey="b" class="input-sm" id="openrecovery" type="file" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
-            <span class="glyphicon glyphicon-open" style="margin-right: 5px;"></span>{% trans %}Upload <u>B</u>ackup File{% endtrans %}
-          </label>
-          <span class='label label-success' id="upload-file-success"></span>
-          <button type="button" id="restorebutton" class="btn btn-warning" accesskey="r">Start <u>R</u>estore</button>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div>
 </div>
 
 <div class="tab-content col-sm-6">
