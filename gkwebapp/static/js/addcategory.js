@@ -333,7 +333,7 @@ $(document).ready(function() {
       event.preventDefault();
       $('#category_spec_table tbody tr:eq('+nextindex1+') td:eq(0) input').focus().select();
     }
-    else if (event.which==35) {
+    else if (event.which==27) {
       event.preventDefault();
       $(".tax_name:first").focus();
     }
@@ -350,7 +350,7 @@ $(document).ready(function() {
 /* If a parent category is selected then its specs are automatically inhereted by its child category and the specs are displayed */
   $("#category_under").change(function(event) {
 
-// a blank spec roe is added as the last row to enter new specs for this category
+// a blank spec row is added as the last row to enter new specs for this category
     if ($('#category_spec_table tbody tr').length==0) {
       $('#category_spec_table tbody').append('<tr>'+
       '<td class="col-xs-8">'+
@@ -374,6 +374,54 @@ $(document).ready(function() {
     */
 
     var category_code = $("#category_under option:selected").val();
+    $.ajax({
+      url: '/category?action=gettax',
+      type: 'POST',
+      dataType: 'json',
+      async : false,
+      data: {"categorycode": category_code},
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+    })
+    .done(function(resp) {
+      console.log("success");
+      if (resp["gkresult"].length>0) {
+        $('#category_tax_table tbody tr').remove();
+        for (tax of resp["gkresult"]) {
+          $('#category_tax_table tbody').append('<tr value="'+tax["taxid"]+'">'+
+          '<td class="col-xs-4">'+
+          '<select class="form-control input-sm tax_name">'+
+          '<option value="" selected>Select Tax</option>'+
+          '<option value="VAT">VAT</option>'+
+          '<option value="CVAT">CVAT</option>'+
+          '</select>'+
+          '</td>'+
+          '<td class="col-xs-4">'+
+          '<select class="form-control input-sm tax_state" >'+
+          '<option value="">None</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>'+
+          '</select>'+
+          '</td>'+
+          '<td class="col-xs-3">'+
+          '<input class="form-control input-sm tax_rate text-right numtype"  placeholder="Rate" value="'+tax["taxrate"]+'">'+
+          '</td>'+
+          '<td class="col-xs-1">'+
+          '<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+          '</td>'+
+          '</tr>');
+          $('#category_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
+          $('#category_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
+        }
+
+      }
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
     $("#category_spec_table > tbody >tr:not(:last)").remove();
     $("#category_spec_table tbody tr:last td:eq(0) input").val("");
     // ajax for getting the specs of the newly selected (parent)category

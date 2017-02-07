@@ -332,8 +332,8 @@ $(document).ready(function() {
       })
       .done(function(resp) {
         console.log("success");
-        $('#product_tax_table tbody tr').remove();
         if (resp["gkresult"].length>0) {
+          $('#product_tax_table tbody tr').remove();
           for (tax of resp["gkresult"]) {
             $('#product_tax_table tbody').append('<tr value="'+tax["taxid"]+'">'+
             '<td class="col-xs-4">'+
@@ -352,6 +352,7 @@ $(document).ready(function() {
             '<input class="form-control product_cat_tax_disable input-sm tax_rate text-right numtype"  placeholder="Rate" value="'+tax["taxrate"]+'">'+
             '</td>'+
             '<td class="col-xs-1">'+
+            '<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
             '</td>'+
             '</tr>');
             $('#product_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
@@ -359,9 +360,6 @@ $(document).ready(function() {
           }
 
         }
-
-        $(".product_cat_tax_disable").prop('disabled',true);
-
       })
       .fail(function() {
         console.log("error");
@@ -467,6 +465,28 @@ $(document).ready(function() {
     }
     else if (($("#product_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='CVAT') && event.which==13 ) {
         event.preventDefault();
+        var types = [];
+        $('#product_tax_table tbody tr').each(function(){
+          if ($(".tax_name",this).val()=='CVAT') {
+          types.push($(".tax_name",this).val());
+          }
+        });
+        types.sort();
+        console.log(types);
+        var duplicatetypes = [];
+        for (var i = 0; i < types.length - 1; i++) {
+          if (types[i + 1] == types[i]) {
+            duplicatetypes.push(types[i]);
+          }
+        }
+        console.log(duplicatetypes);
+        if (duplicatetypes.length > 0) {
+          $("#cvat-alert").alert();
+          $("#cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#cvat-alert").hide();
+          });
+          return false;
+        }
         $('#product_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
     }
     else if (event.which==13) {
@@ -515,6 +535,24 @@ $(document).ready(function() {
     }
     else if (event.which==13) {
       event.preventDefault();
+      var states = [];
+      $('#product_tax_table tbody tr').each(function(){
+        states.push($(".tax_state",this).val());
+      });
+      states.sort();
+      var duplicatestates = [];
+      for (var i = 0; i < states.length - 1; i++) {
+        if (states[i + 1] == states[i]) {
+          duplicatestates.push(states[i]);
+        }
+      }
+      if (duplicatestates.length > 0) {
+        $("#tax-same-alert").alert();
+        $("#tax-same-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#tax-same-alert").hide();
+        });
+        return false;
+      }
       $('#product_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
     }
   });
@@ -591,7 +629,7 @@ $(document).ready(function() {
       event.preventDefault();
       $('#product_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
     }
-    else if (event.which==35) {
+    else if (event.which==27) {
       event.preventDefault();
       $('#specifications').contents(".form-group:first").find("input:first").focus();
     }
@@ -656,7 +694,8 @@ $(document).ready(function() {
     var nextindex1 = curindex1+1;
     var previndex1 = curindex1-1;
     var selectindex = $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').index();
-    var numberofgodowns = $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option').length-1;
+    var selectedgodown = $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').val();
+    var numberofgodowns = $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
     if (event.which==13) {
       event.preventDefault();
       if (curindex1 != ($("#godown_ob_table tbody tr").length-1)) {
@@ -696,7 +735,9 @@ $(document).ready(function() {
           return false;
         }
         $('#godown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+        $("#godown_ob_table tbody tr:last td:last").append('<a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
         $(".godown_ob").numeric();
+        $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true);
         $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
     }
@@ -721,7 +762,7 @@ $(document).ready(function() {
       event.preventDefault();
       $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(1) input').focus().select();
     }
-    else if (event.which==35) {
+    else if (event.which==27) {
       event.preventDefault();
       var taxdisabled = $('#product_tax_table tbody tr:first td:eq(0) select').is(":disabled");
       var taxcount = $('#product_tax_table tbody tr').length;
@@ -811,11 +852,11 @@ $(document).ready(function() {
     var taxes = [];
     $("#product_tax_table tbody tr").each(function(){
       var obj = {};
-      if ($.trim($(".product_new_name",this).val())!="" || $.trim($(".product_new_rate",this).val())!="" ) {
+      if ($.trim($(".tax_name",this).val())!="" || $.trim($(".tax_rate",this).val())!="" ) {
 
-        obj.taxname = $(".product_new_name",this).val();
-        obj.state = $(".product_new_state",this).val();
-        obj.taxrate = $(".product_new_rate",this).val();
+        obj.taxname = $(".tax_name",this).val();
+        obj.state = $(".tax_state",this).val();
+        obj.taxrate = $(".tax_rate",this).val();
         taxes.push(obj);
       }
 

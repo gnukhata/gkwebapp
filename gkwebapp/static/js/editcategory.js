@@ -505,14 +505,16 @@ $(document).ready(function() {
         event.preventDefault();
         $('#category_edit_spec_table tbody tr:eq('+nextindex1+') td:eq(0) input').focus().select();
       }
-      if (event.which == 35) {
+      if (event.which == 27) {
         event.preventDefault();
         $("#category_edit_tax_table tbody tr:first td:first select").focus();
       }
     });
 
   $(document).off("click",".spec_del").on("click", ".spec_del", function() {
-    deletedspecs.push($(this).closest('tr').attr('value'));
+    if ($(this).closest('tr').attr('value')!="New") {
+      deletedspecs.push($(this).closest('tr').attr('value'));
+    }
     $(this).closest('tr').fadeOut(200, function(){
       $(this).closest('tr').remove();	 //closest method gives the closest element specified
       $('#category_edit_spec_table tbody tr:last td:eq(0) input').focus().select();
