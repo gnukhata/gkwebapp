@@ -69,6 +69,15 @@ $(document).ready(function()
       $("#delete").show();
       $("#edit").show();
     }
+    var grpname= $("#groupname").val();
+    if (grpname=="Direct Expense"|| grpname=="Direct Income"||grpname=="Indirect Expense"|| grpname=="Indirect Income") {
+      $("#openingbal").hide();
+      $("#openbal").hide();
+    }
+    else {
+      $("#openingbal").show();
+      $("#openbal").show()
+    };
     $.ajax({
       type: "POST",
       url: "/getaccdetails",
