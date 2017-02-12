@@ -384,6 +384,12 @@ $(document).ready(function() {
       {
         $("#specifications").html("");
         $("#specifications").html(resp);
+        if ($(".spec").length < 4) {
+          $("#specifications").removeClass("specsdiv");
+        }
+        else {
+          $("#specifications").addClass("specsdiv");
+        }
         console.log("success");
       })
       .fail(function() {
