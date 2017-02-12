@@ -1,7 +1,7 @@
 $(document).ready(function() {
   var godownflag = 0;
   $('.modal-backdrop').remove();
-  $("#addcatselect").focus();
+  $("#addproddesc").focus();
   $('.proddate').autotab('number');
   $("#openingstock").numeric();
   $(document).off('focus', '.proddate').on('focus', '.proddate', function(event) {
@@ -111,19 +111,9 @@ $(document).ready(function() {
     /* Act on the event */
     newuom =0;
   });
-  $("#addcatselect").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#addproddesc").focus().select();
-    }
-  });
 
   $("#addproddesc").keydown(function(event) {
-    if (event.which==38) {
-      event.preventDefault();
-      $("#addcatselect").focus().select();
-    }
-    else if (event.which==13) {
+    if (event.which==13) {
       event.preventDefault();
       $("#adduom").focus();
     }
@@ -143,15 +133,8 @@ $(document).ready(function() {
   });
 
   $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
-    if (event.which == 13 && $("#godownpresence").val()==0) {
-      $("#openingstock").focus().select();
-    }
-    if (event.which==13 && $("#godownpresence").val()==1)
-    {
-      event.preventDefault();
-
-      $("#godownflag").focus().select();
-
+    if (event.which == 13) {
+    $("#addcatselect").focus();
     }
     else if (event.which==32)
     {
@@ -180,29 +163,12 @@ $(document).ready(function() {
       $("#adduom").focus();
     }
   });
-  $("#openingstock").keydown(function(event) {
+  $(document).off('keydown', '#addcatselect').on('keydown', '#addcatselect',function(event) {
     if (event.which==13) {
       event.preventDefault();
-      if ($("#product_tax_table tbody tr:first td:eq(0) select").is(":disabled")||$("#product_tax_table tbody tr").length==0) {
-        $('#specifications').contents(".form-group:first").find("input:first").focus();
-        if ($('#specifications').contents(".form-group").length == 0) {
-          $("#apsubmit").focus();
-        }
-      }
-      else {
         $("#product_tax_table tbody tr:first td:eq(0) select").focus();
-      }
     }
-    else if (event.which==38 && $("#godownpresence").val()==1) {
-      $("#godownflag").focus().select();
-    }
-    else if (event.which==38 && $("#godownpresence").val()==0) {
-      $("#adduom").focus().select();
-    }
-    else if (event.which==173) {
-      event.preventDefault();
-    }
-  });
+    });
   $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
     /* Act on the event */
     if (event.which==27)
@@ -279,6 +245,7 @@ $(document).ready(function() {
 
     if (e.which == 13)
     {
+      e.preventDefault();
       var nextIndex = f.index(this) + 1;
 
       if(nextIndex < n)
@@ -288,8 +255,13 @@ $(document).ready(function() {
         f[nextIndex].select();
       }
       else {
-        e.preventDefault();
-        $("#apsubmit").click();
+        if ($("#godownpresence").val()==0) {
+          $("#openingstock").focus().select();
+        }
+        if ($("#godownpresence").val()==1)
+        {
+          $("#godownflag").focus().select();
+        }
       }
     }
     if (e.which == 38)
@@ -390,6 +362,7 @@ $(document).ready(function() {
         else {
           $("#specifications").addClass("specsdiv");
         }
+        $("#product_tax_table tbody tr:first td:eq(0) select").focus();
         console.log("success");
       })
       .fail(function() {
@@ -637,7 +610,18 @@ $(document).ready(function() {
     }
     else if (event.which==27) {
       event.preventDefault();
-      $('#specifications').contents(".form-group:first").find("input:first").focus();
+      if ($(".spec").length > 0) {
+        $('#specifications').contents(".form-group:first").find("input:first").focus();
+      }
+      else {
+        if ($("#godownpresence").val()==0) {
+          $("#openingstock").focus().select();
+        }
+        if ($("#godownpresence").val()==1)
+        {
+          $("#godownflag").focus().select();
+        }
+      }
     }
 
   });
@@ -649,7 +633,15 @@ $(document).ready(function() {
     $('#product_tax_table tbody tr:last td:eq(0) select').select();
   });
   /* -----------------------Tax key events end----------------------------------------- */
-
+$(document).off('keydown', '#openingstock').on('keydown', '#openingstock', function(event) {
+  if (event.which == 13) {
+    event.preventDefault();
+    $("#apsubmit").click();
+  }
+  else if (event.which == 38) {
+    $("#godownflag").focus().select();
+  }
+});
   /* -----------------------Godown Key events start here----------------------------------------- */
 
   $(document).off("keyup",".godown_name").on("keyup",".godown_name",function(event)
@@ -724,29 +716,13 @@ $(document).ready(function() {
           $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(1) input').focus();
           return false;
         }
-        if ($("#godown_ob_table tbody tr").length == numberofgodowns || $("#godown_ob_table tbody tr").length > numberofgodowns) {
-          var taxdisabled = $('#product_tax_table tbody tr:first td:eq(0) select').is(":disabled");
-          var taxcount = $('#product_tax_table tbody tr').length;
-          if (taxdisabled || taxcount<1) {
-            if ($("#specifications").contents(".form-group").length==0) {
-              $("#apsubmit").focus();
-            }
-            else {
-              $("#specifications").contents(".form-group:first").find("input:first").focus();
-            }
-          }
-          else {
-            $('#product_tax_table tbody tr:first td:eq(0) select').focus().select();
-          }
-          return false;
-        }
         $('#godown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
         $("#godown_ob_table tbody tr:last td:last").append('<a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
         $(".godown_ob").numeric();
         $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true);
         $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+        }
       }
-    }
     else if(event.which==190 && event.shiftKey)
     {
       event.preventDefault();
@@ -770,19 +746,7 @@ $(document).ready(function() {
     }
     else if (event.which==27) {
       event.preventDefault();
-      var taxdisabled = $('#product_tax_table tbody tr:first td:eq(0) select').is(":disabled");
-      var taxcount = $('#product_tax_table tbody tr').length;
-      if (taxdisabled || taxcount<1) {
-        if ($("#specifications").contents(".form-group").length == 0) {
-          $("apsubmit").focus();
-        }
-        else {
-          $("#specifications").contents(".form-group:first").find("input:first").focus();
-        }
-      }
-      else {
-        $('#product_tax_table tbody tr:first td:eq(0) select').focus().select();
-      }
+      $("#apsubmit").focus();
     }
     else if (event.which==173) {
       event.preventDefault();
