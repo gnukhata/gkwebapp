@@ -40,7 +40,7 @@ $(document).ready(function() {
   $("#tn_year").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $('#transfernote_product_table tbody tr:first td:eq(0) select').focus();
+      $("#tn_from_godown").focus().select();
     }
     if (event.which==38) {
       event.preventDefault();
@@ -55,7 +55,7 @@ $(document).ready(function() {
     }
     if (event.which==38) {
       event.preventDefault();
-      $("#tn_to_godown").focus().select();
+      $("#no_of_packet").focus().select();
     }
   });
 
@@ -77,14 +77,14 @@ $(document).ready(function() {
     }
     if (event.which==38 && (document.getElementById('tn_from_godown').selectedIndex==1||document.getElementById('tn_from_godown').selectedIndex==0)) {
       event.preventDefault();
-      $("#no_of_packet").focus().select();
+      $("#tn_year").focus().select();
     }
   });
 
   $("#tn_to_godown").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#transport_mode").focus();
+      $('#transfernote_product_table tbody tr:first td:eq(0) select').focus();
     }
     if (event.which==38 && (document.getElementById('tn_to_godown').selectedIndex==1||document.getElementById('tn_to_godown').selectedIndex==0)) {
       event.preventDefault();
@@ -96,7 +96,7 @@ $(document).ready(function() {
   $("#no_of_packet").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#tn_from_godown").focus().select();
+      $("#transport_mode").focus();
     }
   });
   $("#name_issuer").keydown(function(event) {
