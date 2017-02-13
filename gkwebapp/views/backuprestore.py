@@ -137,7 +137,8 @@ def tallyImport(request):
 	for accSheet in sheets:
 		if wbTally.index(accSheet) == 0:
 			continue
-		ledgerAccount = accSheet.title.split()
+		ledgerAccount = str(accSheet.title.split())
+		print type(ledgerAccount)
 		print ledgerAccount
 		ledgerCode = accounts[ledgerAccount]
 		voucherRows = tuple(accSheet.rows)
