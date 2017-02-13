@@ -62,7 +62,18 @@ $(document).ready(function() {
   $("#tn_from_godown").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#tn_to_godown").focus().select();
+      if ($.trim($('#tn_from_godown').val())=="") {
+        $("#godown-blank-alert").alert();
+        $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#godown-blank-alert").hide();
+        });
+        $('#tn_from_godown').focus();
+        return false;
+      }
+      else {
+        $("#tn_to_godown option[value=" + $("#tn_from_godown option:selected").val() + "]").remove();
+        $("#tn_to_godown").focus().select();
+      }
     }
     if (event.which==38 && (document.getElementById('tn_from_godown').selectedIndex==1||document.getElementById('tn_from_godown').selectedIndex==0)) {
       event.preventDefault();
@@ -77,6 +88,7 @@ $(document).ready(function() {
     }
     if (event.which==38 && (document.getElementById('tn_to_godown').selectedIndex==1||document.getElementById('tn_to_godown').selectedIndex==0)) {
       event.preventDefault();
+      $("#tn_to_godown").append("<option value=" + $("#tn_from_godown option:selected").val() + ">" + $("#tn_from_godown option:selected").text() + "</option>");
       $("#tn_from_godown").focus().select();
     }
   });
@@ -84,7 +96,7 @@ $(document).ready(function() {
   $("#no_of_packet").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#tn_from_godown").focus().select
+      $("#tn_from_godown").focus().select();
     }
   });
   $("#name_issuer").keydown(function(event) {
@@ -441,7 +453,7 @@ $(document).ready(function() {
       "transfernoteno":$("#transfernote_no").val(),
       "transfernotedate":$("#tn_year").val()+'-'+$("#tn_month").val()+'-'+$("#tn_date").val(),
       "fromgodown":$("#tn_from_godown option:selected").val(),
-      
+
       "togodown":$("#tn_to_godown option:selected").val(),
       "transportationmode":$("#transport_mode").val(),
       "nopkt":$("#no_of_packet").val(),
