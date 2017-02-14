@@ -263,6 +263,12 @@ $(document).ready(function() {
         $('#proddetails').find('input, textarea, button, select').prop('disabled',true);
         $(".product_tax_disable").prop('disabled',true);
         $(".product_cat_tax_disable").prop('disabled',true);
+        if ($(".spec").length < 3) {
+          $("#editspecifications").removeClass("specsdiv");
+        }
+        else {
+          $("#editspecifications").addClass("specsdiv");
+        }
         catcode= $("#editcatselect option:selected").val();
         console.log("success");
       })
@@ -439,6 +445,9 @@ $(document).ready(function() {
       {
         $("#editspecifications").html("");
         $("#editspecifications").html(resp);
+        if ($(".spec").length > 2) {
+          $("#editspecifications").addClass("specsdiv");
+        }
         console.log("success");
       })
       .fail(function() {
