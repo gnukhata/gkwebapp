@@ -107,25 +107,25 @@
       </tbody>
     </table>
     </div>
-    <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' from tax name to shift focus to opening stock.</small>
+    <small id="taxhelp3" class="form-text text-muted">Press 'Esc' Key from tax rate to shift focus to specs.</small><br>
+    <small id="taxhelp4" class="form-text text-muted">Press 'Insert' Key from anywhere on the screen to save changes.</small>
     <a data-toggle="collapse" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
     <div class="collapse" id="moresmall">
       <small id="taxhelp2" class="form-text text-muted">Press 'Ctrl + >' or 'Ctrl + <' to navigate within tax name, state and tax rate.</small><br>
-      <small id="taxhelp3" class="form-text text-muted">Press 'Esc' Key from tax rate to shift focus to specs.</small><br>
-      <small id="taxhelp4" class="form-text text-muted">Press 'Insert' Key from anywhere on the screen to save changes.</small>
+      <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' from tax name to shift focus to opening stock.</small>
     </div>
   </div>
 </div>
 <div class="col-sm-6">
   <div id="extsp" class="row">
 
-  <div id = "editspecifications" class="editpr">
+  <div id = "editspecifications" class="editpr specsdiv">
       {% if proddesc["categorycode"]!= None %}
 
           {% for spec in prodspecs %}
           {% for pdesc in proddesc["specs"] %}
           {% if spec['spcode']|int == pdesc|int %}
-          <div class="form-group  col-sm-3">
+          <div class="form-group  col-sm-6">
 
             <label for="{{spec['spcode']}}" class="">{{spec["attrname"]}} :</label>
             {% if spec["attrtype"]==0 %}
