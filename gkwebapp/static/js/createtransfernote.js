@@ -71,7 +71,6 @@ $(document).ready(function() {
         return false;
       }
       else {
-        $("#tn_to_godown option[value=" + $("#tn_from_godown option:selected").val() + "]").remove();
         $("#tn_to_godown").focus().select();
       }
     }
@@ -88,7 +87,6 @@ $(document).ready(function() {
     }
     if (event.which==38 && (document.getElementById('tn_to_godown').selectedIndex==1||document.getElementById('tn_to_godown').selectedIndex==0)) {
       event.preventDefault();
-      $("#tn_to_godown").append("<option value=" + $("#tn_from_godown option:selected").val() + ">" + $("#tn_from_godown option:selected").text() + "</option>");
       $("#tn_from_godown").focus().select();
     }
   });
@@ -157,6 +155,78 @@ $(document).ready(function() {
       event.preventDefault();
       return false;
     }
+  });
+
+  $("#tn_from_godown").change(function(event) {
+    $.ajax({
+      url: '/transfernotes?action=getgodowns',
+      type: 'POST',
+      dataType: 'json',
+      async : false,
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+    })
+    .done(function(resp) {
+      if (resp["gkstatus"]==0) {
+        $("#tn_to_godown").html('');
+        $("#tn_to_godown").append('<option value=""  disabled  hidden selected>Select Godown</option>');
+        for (godown of resp["godowns"]) {
+          if(godown.goid != $("#tn_from_godown option:selected").val()){
+            $("#tn_to_godown").append('<option value="' + godown.goid + '">' +godown.goname+ '('+ godown.goaddr +')' + '</option>');
+          }
+        }
+        $.ajax({
+          url: '/transfernotes?action=getprod',
+          type: 'POST',
+          dataType: 'json',
+          async : false,
+          data: {"godownid":$("#tn_from_godown option:selected").val()},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          }
+        })
+        .done(function(resp) {
+          if (resp["gkstatus"]==0) {
+            $('#transfernote_product_table tbody').html('');
+            $('#transfernote_product_table tbody').append('' +
+            '<tr>' +
+            '<td class="col-xs-7">' +
+              '<select class="form-control input-sm product_name">' +
+                '<option value="" disabled hidden selected>Select Product</option>' +
+              '</select>' +
+            '</td>' +
+            '<td class="col-xs-4">' +
+              '<div class="input-group">' +
+                '<input type="text" class="transfernote_product_quantity form-control input-sm text-right" value="">' +
+                '<span class="input-group-addon input-sm" id="unitaddon"></span>' +
+              '</div>' +
+            '</td>' +
+            '<td class="col-xs-1">' +
+            '</td>' +
+            '</tr>');
+            for (product of resp["products"]) {
+              $('#transfernote_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
+            }
+            $('.transfernote_product_quantity').numeric({ negative: false});
+          }
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+      }
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
   });
 
   $("#transfernote_reset").click(function(event) {
@@ -254,10 +324,11 @@ $(document).ready(function() {
           return false;
         }
         $.ajax({
-          url: '/deliverychallan?action=getproducts',
+          url: '/transfernotes?action=getprod',
           type: 'POST',
           dataType: 'json',
           async : false,
+          data: {"godownid":$("#tn_from_godown option:selected").val()},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
