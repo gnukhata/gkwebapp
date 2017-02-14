@@ -158,17 +158,25 @@
           </td>
           {%if record["advflag"]==1%}
           <td class="dtwrap ralign cred">
-            <b>{{record["Dr"]}}</b>
+            {% for dr in record['Dr'] %}
+            <b>{{dr}}</b> <br>
+            {% endfor %}
           </td>
           <td class="dtwrap ralign cred">
-            <b>{{record["Cr"]}}</b>
+            {% for cr in record['Cr'] %}
+            <b>{{cr}}</b> <br>
+            {% endfor %}
           </td>
           {%else%}
           <td class="dtwrap ralign">
-            {{record["Dr"]}}
+            {% for dr in record['Dr'] %}
+            <b>{{dr}}</b> <br>
+            {% endfor %}
           </td>
           <td class="dtwrap ralign">
-            {{record["Cr"]}}
+            {% for cr in record['Cr'] %}
+            <b>{{cr}}</b> <br>
+            {% endfor %}
           </td>
           {%endif%}
           <td class="dtwrap ralign">
@@ -184,10 +192,14 @@
             {% endif %}
           </td>
           <td class="dtwrap ralign">
-            {{record["Dr"]}}
+            {% for dr in record['Dr'] %}
+            <b>{{dr}}</b> <br>
+            {% endfor %}
           </td>
           <td class="dtwrap ralign">
-            {{record["Cr"]}}
+            {% for cr in record['Cr'] %}
+            <b>{{cr}}</b> <br>
+            {% endfor %}
           </td>
           {% endif %}
         </tr>
