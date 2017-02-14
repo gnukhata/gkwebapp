@@ -116,3 +116,14 @@ def tnprint(request):
 	"tableset":tableset,"transfernoteno":request.params["transfernoteno"],"transfernotedate":request.params["transfernotedate"],
 	"togodown":togodown.json()["gkresult"],"transportationmode":request.params["transportationmode"],"issuername":request.params["issuername"],
 	"designation":request.params["designation"],"nopkt":request.params["nopkt"],"fromgodown":fromgodown.json()["gkresult"]}
+
+@view_config(route_name="transfernotes",request_param="action=getprod",renderer="json")
+def getproductsFromGodown(request):
+		header={"gktoken":request.headers["gktoken"]}
+		result = requests.get("http://127.0.0.1:6543/products?from=godown&godownid=%d"%int(request.params["godownid"]),headers=header)
+		proddata = []
+		for record in result.json()["gkresult"]:
+			product = requests.get("http://127.0.0.1:6543/products?qty=single&productcode=%d"%(int(record["productcode"])), headers=header)
+			pdata= {"productcode":str(product.json()["gkresult"]["productcode"]),"productdesc":str(product.json()["gkresult"]["productdesc"])}
+			proddata.append(pdata)
+		return {"gkstatus": result.json()["gkstatus"], "products": proddata}
