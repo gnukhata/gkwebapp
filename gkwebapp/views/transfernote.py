@@ -127,3 +127,13 @@ def getproductsFromGodown(request):
 			pdata= {"productcode":str(product.json()["gkresult"]["productcode"]),"productdesc":str(product.json()["gkresult"]["productdesc"])}
 			proddata.append(pdata)
 		return {"gkstatus": result.json()["gkstatus"], "products": proddata}
+
+@view_config(route_name="transfernotes",request_param="action=getgodowns", renderer="json")
+def listofgodowns(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	goddata=[]
+	for record in result.json()["gkresult"]:
+		gdata= {"goid": str(record["goid"]), "goname" : str(record["goname"]), "goaddr": str(record["goaddr"])}
+		goddata.append(gdata)
+	return {"gkstatus": result.json()["gkstatus"], "godowns":goddata}
