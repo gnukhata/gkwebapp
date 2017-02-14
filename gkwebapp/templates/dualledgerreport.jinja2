@@ -3,52 +3,52 @@
 <head>
   <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Ledger{% endtrans %}</title>
   <style type="text/css">
-span
-{
-  font-size: 95%;
-}
+  span
+  {
+    font-size: 95%;
+  }
 
   .shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
   #ledgertable1 td,#ledgertable2 td {
-      font-size: 75%;
-      padding: 4 !important;
-      margin: 4 !important;
-    }
+    font-size: 75%;
+    padding: 4 !important;
+    margin: 4 !important;
+  }
   #ledgertable1 th,#ledgertable2 th {
-      font-size: 85%;
-    }
+    font-size: 85%;
+  }
 
   .card-view .title {
-      font-weight: bold;
-      display: inline-block;
-      min-width: 30%;
-      text-align: left !important;
+    font-weight: bold;
+    display: inline-block;
+    min-width: 30%;
+    text-align: left !important;
   }
   #ledgertable1 tbody, #ledgertable2 tbody {
-      display:block;
-      height: calc(100vh - 16em);
-      overflow-y:scroll;
+    display:block;
+    height: calc(100vh - 16em);
+    overflow-y:scroll;
   }
   #ledgertable1 thead ,#ledgertable1 tbody tr,#ledgertable2 thead ,#ledgertable2 tbody tr {
-      display:table;
-      width:100%;
-      table-layout:fixed;
+    display:table;
+    width:100%;
+    table-layout:fixed;
   }
   #ledgertable1 thead,#ledgertable2 thead {
-      width: calc( 100% - 0.65em )
+    width: calc( 100% - 0.65em )
   }
   .ralign{
-		text-align:right;
+    text-align:right;
 
-	}
-	.cred{
-		color:red;
-	}
-	.calign{
-		text-align:center;
-	}
+  }
+  .cred{
+    color:red;
+  }
+  .calign{
+    text-align:center;
+  }
   .mdwrap{
     width: 13%;
   }
@@ -135,10 +135,14 @@ span
               {% endif %}
             </td>
             <td class="col-xs-2 ralign">
-              {{record["Dr"]}}
+              {% for dr in record['Dr'] %}
+              <b>{{dr}}</b> <br>
+              {% endfor %}
             </td>
             <td class="col-xs-2 ralign">
-              {{record["Cr"]}}
+              {% for cr in record['Cr'] %}
+              <b>{{cr}}</b> <br>
+              {% endfor %}
             </td>
             <td class="col-xs-2 ralign">
               {{record["balance"]}}
@@ -153,10 +157,14 @@ span
               {% endif %}
             </td>
             <td class="col-xs-2 ralign">
-              {{record["Dr"]}}
+              {% for dr in record['Dr'] %}
+              <b>{{dr}}</b> <br>
+              {% endfor %}
             </td>
             <td class="col-xs-2 ralign">
-              {{record["Cr"]}}
+              {% for cr in record['Cr'] %}
+              <b>{{cr}}</b> <br>
+              {% endfor %}
             </td>
             {% endif %}
           </tr>
@@ -217,10 +225,14 @@ span
               {% endif %}
             </td>
             <td class="col-xs-2 ralign">
-              {{record["Dr"]}}
+              {% for dr in record['Dr'] %}
+              <b>{{dr}}</b> <br>
+              {% endfor %}
             </td>
             <td class="col-xs-2 ralign">
-              {{record["Cr"]}}
+              {% for cr in record['Cr'] %}
+              <b>{{cr}}</b> <br>
+              {% endfor %}
             </td>
             <td class="col-xs-2 ralign">
               {{record["balance"]}}
@@ -235,10 +247,14 @@ span
               {% endif %}
             </td>
             <td class="col-xs-2 ralign">
-              {{record["Dr"]}}
+              {% for dr in record['Dr'] %}
+              <b>{{dr}}</b> <br>
+              {% endfor %}
             </td>
             <td class="col-xs-2 ralign">
-              {{record["Cr"]}}
+              {% for cr in record['Cr'] %}
+              <b>{{cr}}</b> <br>
+              {% endfor %}
             </td>
             {% endif %}
           </tr>
@@ -250,13 +266,13 @@ span
 
   </div>
   <span style="margin:auto; display:table;">
-      <button class="btn btn-sm btn-danger" type="button" id="dlback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
-    </span>
-  </div>
+    <button class="btn btn-sm btn-danger" type="button" id="dlback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+  </span>
+</div>
 
-  <div id="viewvc">
-  </div>
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/dualledgerreport.js')}}"></script>
+<div id="viewvc">
+</div>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/dualledgerreport.js')}}"></script>
 </body>
 </html>

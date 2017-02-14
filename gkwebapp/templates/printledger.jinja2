@@ -101,23 +101,27 @@
 						{%if record["advflag"]==1%}
 	          <td class="col-xs-2" style="text-align:right; color:red;">
 	            {% if record.Dr %}
-								<b>({{record["Dr"]}})</b>
+							{% for dr in record['Dr'] %}
+							<b>{{dr}}</b> <br>
+							{% endfor %}
 	            {% endif %}
 	          </td>
 	          <td class="col-xs-2" style="text-align:right; color:red;">
 							{% if record.Cr %}
-								<b>({{record["Cr"]}})</b>
+							{% for cr in record['Cr'] %}
+							<b>{{cr}}</b> <br>
+							{% endfor %}
 	            {% endif %}
 	          </td>
 	          {%else%}
 						<td class="col-xs-2" style="text-align:right">
-							{{record["Dr"]}}{% for pr in record['particulars'] %}
-								<br>
+							{% for dr in record['Dr'] %}
+							{{dr}}<br>
 							{% endfor %}<i><u>{{record["ttlRunDr"]}}</u></i>
 						</td>
 						<td class="col-xs-2" style="text-align:right">
-							{{record["Cr"]}}{% for pr in record['particulars'] %}
-								<br>
+							{% for cr in record['Cr'] %}
+							{{cr}}<br>
 							{% endfor %}<i><u>{{record["ttlRunCr"]}}</u></i>
 						</td>
 						{% endif %}
