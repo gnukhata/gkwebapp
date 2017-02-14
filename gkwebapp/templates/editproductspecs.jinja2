@@ -107,19 +107,19 @@
       </tbody>
     </table>
     </div>
-    <small id="taxhelp3" class="form-text text-muted">Press 'Esc' Key from tax rate to shift focus to specs.</small><br>
+    <small id="taxhelp3" class="form-text text-muted">Press 'Esc' Key from tax rate to shift focus to specs or from godown opening stock to 'Save' button.</small><br>
     <small id="taxhelp4" class="form-text text-muted">Press 'Insert' Key from anywhere on the screen to save changes.</small>
     <a data-toggle="collapse" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
     <div class="collapse" id="moresmall">
-      <small id="taxhelp2" class="form-text text-muted">Press 'Ctrl + >' or 'Ctrl + <' to navigate within tax name, state and tax rate.</small><br>
-      <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' from tax name to shift focus to opening stock.</small>
+      <small id="taxhelp2" class="form-text text-muted">Press 'Ctrl + >' or 'Ctrl + <' to navigate within fields in tax or godown table.</small><br>
+      <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' from tax name to shift focus to opening stock or from godown name to specs or checkbox.</small>
     </div>
   </div>
 </div>
 <div class="col-sm-6">
   <div id="extsp" class="row">
 
-  <div id = "editspecifications" class="editpr">
+  <div id = "editspecifications">
       {% if proddesc["categorycode"]!= None %}
 
           {% for spec in prodspecs %}

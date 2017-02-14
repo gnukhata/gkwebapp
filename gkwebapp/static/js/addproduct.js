@@ -641,6 +641,9 @@ $(document).off('keydown', '#openingstock').on('keydown', '#openingstock', funct
   else if (event.which == 38) {
     $("#godownflag").focus().select();
   }
+  else if (event.which == 173) {
+    event.preventDefault();
+  }
 });
   /* -----------------------Godown Key events start here----------------------------------------- */
 
