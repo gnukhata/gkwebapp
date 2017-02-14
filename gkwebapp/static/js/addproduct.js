@@ -719,7 +719,7 @@ $(document).off('keydown', '#openingstock').on('keydown', '#openingstock', funct
         $('#godown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
         $("#godown_ob_table tbody tr:last td:last").append('<a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
         $(".godown_ob").numeric();
-        $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true);
+        $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
         $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
         }
       }
