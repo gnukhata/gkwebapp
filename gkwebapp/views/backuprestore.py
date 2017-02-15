@@ -211,7 +211,7 @@ def tallyImport(request):
 
 @view_config(route_name="exportledger", renderer="")
 def exportLedger(request):
-	try:
+#	try:
 		header={"gktoken":request.headers["gktoken"]}
 		gkwb = Workbook()
 		accountList = gkwb.active
@@ -273,6 +273,8 @@ def exportLedger(request):
 			ledgerRowCounter = 1
 			for row in ledgerResult:
 				particulars = row["particulars"]
+				crs=row["Cr"]
+				drs =row["Dr"]
 				if particulars[0] == "Opening Balance" or particulars[0] == "Total of Transactions" or particulars[0] == "Closing Balance C/F" or particulars[0] == "Grand Total":
 					continue
 				Ledger.cell(row=ledgerRowCounter, column=1, value=row["voucherdate"])
@@ -283,15 +285,20 @@ def exportLedger(request):
 					particularCounter = ledgerRowCounter +1
 				if len(particulars) > 1:
 					Ledger.cell(row=ledgerRowCounter, column=3, value="(as per details)")
+					i = 0
 					for p in particulars:
 						particularCounter = particularCounter +1
 						Ledger.cell(row=particularCounter, column=3, value=p)
+						Ledger.cell(row=particularCounter, column=6, value=crs[i])
+						Ledger.cell(row=particularCounter, column=7, value=drs[i])
+						i = i + 1
+						
 					particularCounter = particularCounter +1
 					Ledger.cell(row=particularCounter, column=3, value=row["narration"])
 				Ledger.cell(row=ledgerRowCounter, column=4, value=row["vouchertype"])
 				Ledger.cell(row=ledgerRowCounter, column=5, value=row["vouchernumber"])
-				Ledger.cell(row=ledgerRowCounter, column=6, value=row["Dr"])
-				Ledger.cell(row=ledgerRowCounter, column=7, value=row["Cr"])
+				Ledger.cell(row=ledgerRowCounter, column=6, value=crs[0])
+				Ledger.cell(row=ledgerRowCounter, column=7, value=drs[0])
 				ledgerRowCounter = particularCounter +1
 
 		gkwb.save(filename = "AllLedger.xlsx")
@@ -301,6 +308,6 @@ def exportLedger(request):
 		headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(bf),'Content-Disposition': 'attachment; filename=AllLedger.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
 		os.remove("AllLedger.xlsx")
 		return Response(bf, headerlist=headerList.items())
-	except:
-		print "file not found"
-		return {"gkstatus":3}
+#	except:
+#		print "file not found"
+#		return {"gkstatus":3}
