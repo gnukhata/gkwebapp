@@ -330,6 +330,8 @@ $("#closebooks").click(function(event)
         $("#success-alert").hide();
       });
       $(".closebooks").remove();
+      $("#fevoucher").text("Find Voucher");
+      $("#findvouchertb").text("Find Voucher - F10");
       sessionStorage.booksclosedflag=1;
       sessionStorage.roflag=0;
       $(".dis").attr("disabled", false);

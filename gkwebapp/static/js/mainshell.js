@@ -404,6 +404,8 @@ $(document).ready(function(){
         }
          if (resp["gkresult"]["booksclosedflag"]==1) {
            $(".closebooks").remove();
+           $("#fevoucher").text("Find Voucher");
+           $("#findvouchertb").text("Find Voucher - F10");
          }
          if (resp["gkresult"]["roflag"]==1) {
            $(".rollover").remove();
