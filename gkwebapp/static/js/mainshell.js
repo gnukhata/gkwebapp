@@ -44,7 +44,7 @@ $(document).ready(function(){
   }
   else
   {
-
+    $(".inventorymenu").remove();
     $(".inventory_hide").remove();
   }
   $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');// set the theme depending on users previous choice.
