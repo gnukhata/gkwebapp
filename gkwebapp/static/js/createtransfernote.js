@@ -40,7 +40,7 @@ $(document).ready(function() {
   $("#tn_year").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $('#transfernote_product_table tbody tr:first td:eq(0) select').focus();
+      $("#tn_from_godown").focus().select();
     }
     if (event.which==38) {
       event.preventDefault();
@@ -55,25 +55,35 @@ $(document).ready(function() {
     }
     if (event.which==38) {
       event.preventDefault();
-      $("#tn_to_godown").focus().select();
+      $("#no_of_packet").focus().select();
     }
   });
 
   $("#tn_from_godown").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#tn_to_godown").focus().select();
+      if ($.trim($('#tn_from_godown').val())=="") {
+        $("#godown-blank-alert").alert();
+        $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#godown-blank-alert").hide();
+        });
+        $('#tn_from_godown').focus();
+        return false;
+      }
+      else {
+        $("#tn_to_godown").focus().select();
+      }
     }
     if (event.which==38 && (document.getElementById('tn_from_godown').selectedIndex==1||document.getElementById('tn_from_godown').selectedIndex==0)) {
       event.preventDefault();
-      $("#no_of_packet").focus().select();
+      $("#tn_year").focus().select();
     }
   });
 
   $("#tn_to_godown").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#transport_mode").focus();
+      $('#transfernote_product_table tbody tr:first td:eq(0) select').focus();
     }
     if (event.which==38 && (document.getElementById('tn_to_godown').selectedIndex==1||document.getElementById('tn_to_godown').selectedIndex==0)) {
       event.preventDefault();
@@ -84,7 +94,7 @@ $(document).ready(function() {
   $("#no_of_packet").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#tn_from_godown").focus().select
+      $("#transport_mode").focus();
     }
   });
   $("#name_issuer").keydown(function(event) {
@@ -145,6 +155,78 @@ $(document).ready(function() {
       event.preventDefault();
       return false;
     }
+  });
+
+  $("#tn_from_godown").change(function(event) {
+    $.ajax({
+      url: '/transfernotes?action=getgodowns',
+      type: 'POST',
+      dataType: 'json',
+      async : false,
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+    })
+    .done(function(resp) {
+      if (resp["gkstatus"]==0) {
+        $("#tn_to_godown").html('');
+        $("#tn_to_godown").append('<option value=""  disabled  hidden selected>Select Godown</option>');
+        for (godown of resp["godowns"]) {
+          if(godown.goid != $("#tn_from_godown option:selected").val()){
+            $("#tn_to_godown").append('<option value="' + godown.goid + '">' +godown.goname+ '('+ godown.goaddr +')' + '</option>');
+          }
+        }
+        $.ajax({
+          url: '/transfernotes?action=getprod',
+          type: 'POST',
+          dataType: 'json',
+          async : false,
+          data: {"godownid":$("#tn_from_godown option:selected").val()},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          }
+        })
+        .done(function(resp) {
+          if (resp["gkstatus"]==0) {
+            $('#transfernote_product_table tbody').html('');
+            $('#transfernote_product_table tbody').append('' +
+            '<tr>' +
+            '<td class="col-xs-7">' +
+              '<select class="form-control input-sm product_name">' +
+                '<option value="" disabled hidden selected>Select Product</option>' +
+              '</select>' +
+            '</td>' +
+            '<td class="col-xs-4">' +
+              '<div class="input-group">' +
+                '<input type="text" class="transfernote_product_quantity form-control input-sm text-right" value="">' +
+                '<span class="input-group-addon input-sm" id="unitaddon"></span>' +
+              '</div>' +
+            '</td>' +
+            '<td class="col-xs-1">' +
+            '</td>' +
+            '</tr>');
+            for (product of resp["products"]) {
+              $('#transfernote_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
+            }
+            $('.transfernote_product_quantity').numeric({ negative: false});
+          }
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+      }
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
   });
 
   $("#transfernote_reset").click(function(event) {
@@ -242,10 +324,11 @@ $(document).ready(function() {
           return false;
         }
         $.ajax({
-          url: '/deliverychallan?action=getproducts',
+          url: '/transfernotes?action=getprod',
           type: 'POST',
           dataType: 'json',
           async : false,
+          data: {"godownid":$("#tn_from_godown option:selected").val()},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -441,7 +524,7 @@ $(document).ready(function() {
       "transfernoteno":$("#transfernote_no").val(),
       "transfernotedate":$("#tn_year").val()+'-'+$("#tn_month").val()+'-'+$("#tn_date").val(),
       "fromgodown":$("#tn_from_godown option:selected").val(),
-      
+
       "togodown":$("#tn_to_godown option:selected").val(),
       "transportationmode":$("#transport_mode").val(),
       "nopkt":$("#no_of_packet").val(),
