@@ -65,7 +65,7 @@ $(document).ready(function(){
             $("#inventory").click();
             event.preventDefault();
             }
-        if(event.ctrlKey && event.keyCode == 84) {
+        if(event.ctrlKey && event.keyCode == 86) {
           $("#transaction").click();
           event.preventDefault();
           }
