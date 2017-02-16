@@ -1174,7 +1174,7 @@
                 '<div class="pull-' + this.options.searchAlign + ' search">',
                 sprintf('<input class="form-control' +
                     sprintf(' input-%s', this.options.iconSize) +
-                    '" type="text" placeholder="%s">',
+                    '" type="text" placeholder="Quick Search">',
                     this.options.formatSearch()),
                 '</div>');
 
