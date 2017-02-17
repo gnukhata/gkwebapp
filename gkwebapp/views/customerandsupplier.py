@@ -40,7 +40,10 @@ def showaddcustomersupplier(request):
 	header={"gktoken":request.headers["gktoken"]}
 	customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
 	suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
-	return {"customers": customers.json()["gkresult"], "suppliers": suppliers.json()["gkresult"]}
+	groups = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist", headers=header)
+	debtgroupcode = groups.json()["gkresult"]["Sundry Debtors"]
+	credgroupcode = groups.json()["gkresult"]["Sundry Creditors for Purchase"]
+	return {"customers": customers.json()["gkresult"], "suppliers": suppliers.json()["gkresult"], "debtgroupcode":debtgroupcode, "credgroupcode":credgroupcode}
 
 @view_config(route_name="customersuppliers",request_param="action=showedit",renderer="gkwebapp:templates/editcustomersupplier.jinja2")
 def showeditcustomersupplier(request):
@@ -78,12 +81,12 @@ def deletecustomersupplier(request):
 
 @view_config(route_name='customersuppliers', request_param='action=getallcusts',renderer ='json')
 def getallcusts(request):
-    header={"gktoken":request.headers["gktoken"]}
-    customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall",headers=header)
-    return {"customers":customers.json()["gkresult"]}
+	header={"gktoken":request.headers["gktoken"]}
+	customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall",headers=header)
+	return {"customers":customers.json()["gkresult"]}
 
 @view_config(route_name='customersuppliers', request_param='action=getallsups',renderer ='json')
 def getallsups(request):
-    header={"gktoken":request.headers["gktoken"]}
-    suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall",headers=header)
-    return {"customers":suppliers.json()["gkresult"]}
+	header={"gktoken":request.headers["gktoken"]}
+	suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall",headers=header)
+	return {"customers":suppliers.json()["gkresult"]}
