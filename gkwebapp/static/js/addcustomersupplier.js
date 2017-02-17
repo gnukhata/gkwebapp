@@ -190,14 +190,14 @@ $(document).ready(function() {
           $("#cus-success-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#cus-success-alert").hide();
           });
-         
+
         }
         else  {
           $("#sup-success-alert").alert();
           $("#sup-success-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#sup-success-alert").hide();
           });
-          
+
         }
       $('#custsupmodal').modal('hide');
       $('.modal-backdrop').remove();
@@ -215,9 +215,9 @@ $(document).ready(function() {
         }
         else  {
           $("#add_cussup_name").focus();
-          $("#sup-duplicate-alert").alert();
-          $("#sup-duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#sup-duplicate-alert").hide();
+          $("#cus-duplicate-alert").alert();
+          $("#cus-duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#cus-duplicate-alert").hide();
           });
           return false;
         }
