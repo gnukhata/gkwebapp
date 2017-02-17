@@ -124,14 +124,12 @@
           </div>
           <div class="row">
             {% if not godown %}
-            <div class="form-group pds">
-              <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
-              <div class="input-group">
-                <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
-                <span class="input-group-addon input-sm" id="unitaddon"></span>
-                <input type="text" id="godownpresence" value="0" hidden="">
-              </div>
-            </div>
+            <div class="form-group" id="newgodownadded" hidden>
+              <input type="checkbox" name="godownflag" id="godownflag" value=0>
+            </input>
+            <input type="text" id="godownpresence" value="1" hidden="">
+            <label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
+          </div>
             {% else %}
             <div class="form-group">
               <input type="checkbox" name="godownflag" id="godownflag" value=0>
@@ -188,12 +186,16 @@
 
         <button class="btn btn-success btn-sm" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save">{% trans %}<u>S</u>ave{% endtrans %}</button>
         <button id="apreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+        <button id="addgodown" class="btn btn-info btn-sm" accesskey="a">{% trans %}<u>A</u>dd Godown{% endtrans %}</button>
       </div>
 
     </div>
 
 
   </div>
+</div>
+<div id="addgodownpopup">
+
 </div>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addproduct.js')}}"></script>
 </body>

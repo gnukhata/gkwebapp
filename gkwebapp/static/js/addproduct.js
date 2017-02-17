@@ -218,7 +218,7 @@ $(document).ready(function() {
             }
 
             $("#adduom option").filter(function(i,e){return $(e).text()==unitname}).prop('selected', true);
-            $('#openingstock').focus().select();
+            $("#addcatselect").focus();
           }
         })
         .fail(function() {
@@ -763,6 +763,41 @@ $(document).off('keydown', '#openingstock').on('keydown', '#openingstock', funct
     $('#godown_ob_table tbody tr:last td:eq(0) select').select();
   });
   /* -----------------------Godown Key events end here----------------------------------------- */
+/*
+  Adding godown.
+*/
+$("#addgodown").click(function() {
+   $.ajax(
+   {
+   type: "POST",
+   url: "/godown?type=addpopup",
+   global: false,
+   async: false,
+   datatype: "text/html",
+   beforeSend: function(xhr)
+     {
+       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+     },
+   success: function(resp)
+   {
+         $("#addgodownpopup").html("");
+         $('.modal-backdrop').remove();
+         $('.modal').modal('hide');
+         $("#addgodownpopup").html(resp);
+         $('#addgodownmodal').modal('show');
+         $('#addgodownmodal').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
+         {
+           $("#godownname").focus();
+         });
+         $('#addgodownmodal').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is opened
+         {
+          $("#newgodownadded").show();
+         });
+   }
+}
+ );
+ });
+
 
   $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
     event.preventDefault();
