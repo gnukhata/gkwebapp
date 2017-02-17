@@ -106,7 +106,8 @@ def tallyImport(request):
 				curgrpid = newsub.json()["gkresult"]
 		if accRow[0].font.i:
 			print len(accRow)
-			if len(accRow)== 4:
+			print accRow
+			if len(accRow)>3:
 				if accRow[1].value==None and accRow[2].value==None:
 					print "opening balance of ",accRow[0]
 					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
@@ -120,7 +121,7 @@ def tallyImport(request):
 					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
 					continue
 	
-			if len(accRow)==2:
+			if len(accRow)==3:
 				newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
 				
 
@@ -266,6 +267,7 @@ def exportLedger(request):
 				continue
 			Ledger = gkwb.create_sheet()
 			Ledger.title = accname.replace("/","")
+			print Ledger.title
 			Ledger.column_dimensions["A"].width =10
 			Ledger.column_dimensions["C"].width = 50
 			Ledger.column_dimensions["F"].width = 10
@@ -282,23 +284,35 @@ def exportLedger(request):
 				if len(particulars) == 1:
 					Ledger.cell(row=ledgerRowCounter, column=3, value=particulars[0])
 					Ledger.cell(row=ledgerRowCounter+1 , column=3, value=row["narration"])
+					Ledger.cell(row=ledgerRowCounter, column=6, value=drs[0])
+					Ledger.cell(row=ledgerRowCounter, column=7, value=crs[0])
+
 					particularCounter = ledgerRowCounter +1
+					
 				if len(particulars) > 1:
 					Ledger.cell(row=ledgerRowCounter, column=3, value="(as per details)")
 					i = 0
+					crsSum = 0.00
+					drsSum = 0.00
 					for p in particulars:
 						particularCounter = particularCounter +1
 						Ledger.cell(row=particularCounter, column=3, value=p)
-						Ledger.cell(row=particularCounter, column=6, value=crs[i])
-						Ledger.cell(row=particularCounter, column=7, value=drs[i])
-						i = i + 1
-						
+						print p
+						if crs[i] == "":
+							print "This is loop for null crs list"
+							Ledger.cell(row=particularCounter, column=6, value=drs[i])
+							crsSum = crsSum + float(drs[i])
+							Ledger.cell(row=ledgerRowCounter, column=7, value="%.2f"%crsSum)
+						if drs[i] == "":
+							print "This is loop for null drs list"
+							Ledger.cell(row=particularCounter, column=7, value=crs[i])
+							drsSum = drsSum + float(crs[i])
+							Ledger.cell(row=ledgerRowCounter, column=6, value="%.2f"%drsSum)
+						i = i+1
 					particularCounter = particularCounter +1
 					Ledger.cell(row=particularCounter, column=3, value=row["narration"])
 				Ledger.cell(row=ledgerRowCounter, column=4, value=row["vouchertype"])
 				Ledger.cell(row=ledgerRowCounter, column=5, value=row["vouchernumber"])
-				Ledger.cell(row=ledgerRowCounter, column=6, value=crs[0])
-				Ledger.cell(row=ledgerRowCounter, column=7, value=drs[0])
 				ledgerRowCounter = particularCounter +1
 
 		gkwb.save(filename = "AllLedger.xlsx")
