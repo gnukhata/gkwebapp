@@ -144,6 +144,13 @@ $(document).ready(function() {
     event.preventDefault();
     var custsupdata=$("#add_cussup option:selected").val(); //select with option either customer or supplier
     // custsupdata = 3 if customer or 19 if supplier
+    var groupcode = -1;
+    if (custsupdata == '3'){
+      groupcode = $("#debtgroupcode").val();
+    }
+    else {
+      groupcode = $("#credgroupcode").val();
+    }
     //validations to check if none of the required fields are left blank
     if ($.trim($("#add_cussup option:selected").val())=="") {
       $("#cussup-blank-alert").alert();
@@ -184,44 +191,55 @@ $(document).ready(function() {
     })
     .done(function(resp) {
       if(resp["gkstatus"] == 0){
-        $("#customersupplier_create").click();
-        if (custsupdata == '3') {
-          $("#cus-success-alert").alert();
-          $("#cus-success-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#cus-success-alert").hide();
-          });
-         
-        }
-        else  {
-          $("#sup-success-alert").alert();
-          $("#sup-success-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#sup-success-alert").hide();
-          });
-          
-        }
-      $('#custsupmodal').modal('hide');
-      $('.modal-backdrop').remove();
-      return false;
+        $.ajax(
+          {
+
+            type: "POST",
+            url: "/addaccount",
+            global: false,
+            async: false,
+            datatype: "json",
+            data: {"accountname":$("#add_cussup_name").val(),"openbal":0,"subgroupname":groupcode},
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            },
+            success: function(resp)
+            {
+              if(resp["gkstatus"]==0)
+              {
+                $("#customersupplier_create").click();
+                if (custsupdata == '3') {
+                  $("#cus-success-alert").alert();
+                  $("#cus-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#cus-success-alert").hide();
+                  });
+
+                }
+                else  {
+                  $("#sup-success-alert").alert();
+                  $("#sup-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#sup-success-alert").hide();
+                  });
+
+                }
+                $('#custsupmodal').modal('hide');
+                $('.modal-backdrop').remove();
+                return false;
+              }
+            }
+          }
+        );
+        return false;
       }
       if(resp["gkstatus"] ==1){
           // gkstatus 1 implies its a duplicate entry.
-        if (custsupdata == '3') {
           $("#add_cussup_name").focus();
           $("#cus-duplicate-alert").alert();
           $("#cus-duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#cus-duplicate-alert").hide();
           });
           return false;
-        }
-        else  {
-          $("#add_cussup_name").focus();
-          $("#sup-duplicate-alert").alert();
-          $("#sup-duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#sup-duplicate-alert").hide();
-          });
-          return false;
-        }
-
       }
       else {
         $("#add_cussup").focus();

@@ -44,7 +44,7 @@ $(document).ready(function(){
   }
   else
   {
-
+    $(".inventorymenu").remove();
     $(".inventory_hide").remove();
   }
   $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');// set the theme depending on users previous choice.
@@ -65,7 +65,7 @@ $(document).ready(function(){
             $("#inventory").click();
             event.preventDefault();
             }
-        if(event.ctrlKey && event.keyCode == 84) {
+        if(event.ctrlKey && event.keyCode == 86) {
           $("#transaction").click();
           event.preventDefault();
           }
@@ -404,6 +404,8 @@ $(document).ready(function(){
         }
          if (resp["gkresult"]["booksclosedflag"]==1) {
            $(".closebooks").remove();
+           $("#fevoucher").text("Find Voucher");
+           $("#findvouchertb").text("Find Voucher - F10");
          }
          if (resp["gkresult"]["roflag"]==1) {
            $(".rollover").remove();

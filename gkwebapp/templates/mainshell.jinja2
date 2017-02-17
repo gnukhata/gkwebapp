@@ -50,19 +50,20 @@
               <li><a class="inventorymenu" data-toggle="tab" id="createtransfernote" href="">{% trans %}Transfer Note{% endtrans %}</a></li>
             </ul>
           </li>
-          <li class="dropdown closebooks">
-            <a href="" id="transaction" class="dropdown-toggle transactionmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>T</u>ransaction{% endtrans %}</a>
+          <li class="dropdown">
+            <a href="" id="transaction" class="dropdown-toggle transactionmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>V</u>oucher{% endtrans %}</a>
             <ul class="dropdown-menu">
-              <li><a class="transactionmenu" data-toggle="tab" id="showreceipt" href="">{% trans %}Receipt{% endtrans %}</a></li>
-              <li><a class="transactionmenu" data-toggle="tab" id="showpayment" href="">{% trans %}Payment{% endtrans %}</a></li>
-              <li><a class="transactionmenu" data-toggle="tab" id="showsales" href="">{% trans %}Sale{% endtrans %}</a></li>
-              <li><a class="transactionmenu" data-toggle="tab" id="showpurchase" href="">{% trans %}Purchase{% endtrans %}</a></li>
-              <li><a class="transactionmenu" data-toggle="tab" id="showcontra" href="">{% trans %}Contra{% endtrans %}</a></li>
-              <li><a class="transactionmenu" data-toggle="tab" id="showjournal" href="">{% trans %}Journal{% endtrans %}</a></li>
-              <li><a class="transactionmenu" data-toggle="tab" id="showsalesreturn" href="">{% trans %}Sale Return{% endtrans %}</a></li>
-              <li><a class="transactionmenu" data-toggle="tab" id="showpurchasereturn" href="">{% trans %}Purchase Return{% endtrans %}</a></li>
-              <li><a class="transactionmenu" data-toggle="tab" id="showcreditnote" href="">{% trans %}Credit Note{% endtrans %}</a></li>
-              <li><a class="transactionmenu" data-toggle="tab" id="showdebitnote" href="">{% trans %}Debit Note{% endtrans %}</a></li>
+              <li><a class="transactionmenu closebooks" data-toggle="tab" id="showreceipt" href="">{% trans %}Receipt{% endtrans %}</a></li>
+              <li><a class="transactionmenu closebooks" data-toggle="tab" id="showpayment" href="">{% trans %}Payment{% endtrans %}</a></li>
+              <li><a class="transactionmenu closebooks" data-toggle="tab" id="showsales" href="">{% trans %}Sale{% endtrans %}</a></li>
+              <li><a class="transactionmenu closebooks" data-toggle="tab" id="showpurchase" href="">{% trans %}Purchase{% endtrans %}</a></li>
+              <li><a class="transactionmenu closebooks" data-toggle="tab" id="showcontra" href="">{% trans %}Contra{% endtrans %}</a></li>
+              <li><a class="transactionmenu closebooks" data-toggle="tab" id="showjournal" href="">{% trans %}Journal{% endtrans %}</a></li>
+              <li><a class="transactionmenu closebooks" data-toggle="tab" id="showsalesreturn" href="">{% trans %}Sale Return{% endtrans %}</a></li>
+              <li><a class="transactionmenu closebooks" data-toggle="tab" id="showpurchasereturn" href="">{% trans %}Purchase Return{% endtrans %}</a></li>
+              <li><a class="transactionmenu closebooks" data-toggle="tab" id="showcreditnote" href="">{% trans %}Credit Note{% endtrans %}</a></li>
+              <li><a class="transactionmenu closebooks" data-toggle="tab" id="showdebitnote" href="">{% trans %}Debit Note{% endtrans %}</a></li>
+              <li><a class="transactionmenu" href="" data-toggle="tab" id="fevoucher">{% trans %}Find/Edit Voucher{% endtrans %}</a></li>
             </ul>
           </li>
           <li class="dropdown">
@@ -74,7 +75,6 @@
               <li><a class="reportmenu" href="" data-toggle="tab" id="showcashflow">{% trans %}Cash Flow{% endtrans %}</a></li>
               <li class="hideoperator"><a class="reportmenu" href="" id="showbalancesheet" data-toggle="tab">{% trans %}Balance Sheet{% endtrans %}</a></li>
               <li class="hideoperator"><a class="reportmenu" href="" data-toggle="tab" id="showprofitloss">{% trans %}Profit & Loss{% endtrans %}</a></li>
-              <li><a class="reportmenu" href="" data-toggle="tab" id="fevoucher">{% trans %}Find/Edit Voucher{% endtrans %}</a></li>
               <li><a class="reportmenu" href="" data-toggle="tab" id="listofaccounts">{% trans %}List of Accounts{% endtrans %}</a></li>
               <li><a class="hideoperator hidemanager reportmenu" href="" data-toggle="tab" id="showdeletedvoucher">{% trans %}List of Deleted Vouchers{% endtrans %}</a></li>
               <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="showstockreport">{% trans %}Product Report{% endtrans %}</a></li>
@@ -253,7 +253,7 @@
           {% trans %}Master{% endtrans %} - CTRL + SHIFT + M
         </p>
         <p>
-          {% trans %}Transaction{% endtrans %} - CTRL + SHIFT + T
+          {% trans %}Voucher{% endtrans %} - CTRL + SHIFT + V
         </p>
         <p>
           {% trans %}Report{% endtrans %} - CTRL + SHIFT + R

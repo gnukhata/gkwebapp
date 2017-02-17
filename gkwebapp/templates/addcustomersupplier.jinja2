@@ -2,19 +2,15 @@
   <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
     <div class="alert alert-success" id="sup-success-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Supplier saved.{% endtrans %}
+      {% trans %}Supplier Created with its Account in Sundry Debtors!{% endtrans %}
     </div>
     <div class="alert alert-success" id="cus-success-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Customer saved.{% endtrans %}
+      {% trans %}Customer Created with its Account in Sundry Creditors for Purchase!{% endtrans %}
     </div>
     <div class="alert alert-danger" id="cus-duplicate-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Customer Already Exist!{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="sup-duplicate-alert"  aria-live="rude" role="alert" hidden>
-
-      {% trans %}Supplier Already Exist!{% endtrans %}
+      {% trans %}Customer/Supplier Already Exist!(Please check Name, FAX, PAN or TIN){% endtrans %}
     </div>
 
     <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
@@ -25,7 +21,8 @@
 
       {% trans %}Please Enter name!{% endtrans %}
     </div>
-
+    <input type="hidden" id="debtgroupcode" value="{{debtgroupcode}}">
+    <input type="hidden" id="credgroupcode" value="{{credgroupcode}}">
     <div class="panel shadow customersupplier_panel">
       <div class="panel-body ">
         <div class="col-md-6">
