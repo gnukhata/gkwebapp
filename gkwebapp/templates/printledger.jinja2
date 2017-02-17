@@ -89,7 +89,7 @@
 
 						<td class="col-xs-4">
 							{% for pr in record['particulars'] %}
-							{{pr}} <br>
+							{{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
 							{% endfor %}
 							{% if record.ttlRunDr %}
 								&nbsp&nbsp&nbsp&nbsp <i>{% trans %}Running Total{% endtrans %} :</i><br>
@@ -101,27 +101,23 @@
 						{%if record["advflag"]==1%}
 	          <td class="col-xs-2" style="text-align:right; color:red;">
 	            {% if record.Dr %}
-							{% for dr in record['Dr'] %}
-							<b>{{dr}}</b> <br>
-							{% endfor %}
+								<b>({{record["Dr"]}})</b>
 	            {% endif %}
 	          </td>
 	          <td class="col-xs-2" style="text-align:right; color:red;">
 							{% if record.Cr %}
-							{% for cr in record['Cr'] %}
-							<b>{{cr}}</b> <br>
-							{% endfor %}
+								<b>({{record["Cr"]}})</b>
 	            {% endif %}
 	          </td>
 	          {%else%}
 						<td class="col-xs-2" style="text-align:right">
-							{% for dr in record['Dr'] %}
-							{{dr}}<br>
+							{{record["Dr"]}}{% for pr in record['particulars'] %}
+								<br>
 							{% endfor %}<i><u>{{record["ttlRunDr"]}}</u></i>
 						</td>
 						<td class="col-xs-2" style="text-align:right">
-							{% for cr in record['Cr'] %}
-							{{cr}}<br>
+							{{record["Cr"]}}{% for pr in record['particulars'] %}
+								<br>
 							{% endfor %}<i><u>{{record["ttlRunCr"]}}</u></i>
 						</td>
 						{% endif %}
