@@ -70,6 +70,9 @@ $(document).ready(function()
     $("#clone").remove();
     $("#delete").remove();
   }
+  if (sessionStorage.orgt=="Profit Making") {
+    $("label[for='project']").text("Cost Center:");
+  }
   $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     event.preventDefault();
     /* Act on the event */
@@ -1253,7 +1256,7 @@ $(document).ready(function()
   });
 
   $("#delete").click(function(event) {
-    // Act on the event 
+    // Act on the event
 
 	  $("#hideinp").val(1);
 	  $('#myModal').modal('hide');
@@ -1287,10 +1290,10 @@ $(document).ready(function()
 		                    $("#submit").click();
 		  		          });
 		  		          });
-		    
+
 
 		        }
-		        
+
 		        else {
 		          $("#notran-del-alert").alert();
 		          $("#notran-del-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -1298,9 +1301,9 @@ $(document).ready(function()
 		          });
 		        }
 		      });
-  
+
 	  });
- 
+
    // var cnf = confirm("Are you sure?");
    /* if (cnf) {
 

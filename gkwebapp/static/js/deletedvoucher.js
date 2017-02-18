@@ -26,6 +26,9 @@ Contributors:
 */
 
 $(document).ready(function() {
+  if (sessionStorage.orgt=="Profit Making") {
+    $(".projecth").text("Cost Center");
+  }
   $("#msspinmodal").modal("hide");
 $(".fixed-table-loading").remove();
 
