@@ -155,6 +155,13 @@ def printLedgerReport(request):
 		row += 1
 		sheet.getCell(0,row).stringValue(transaction["voucherdate"])
 		sheet.getCell(1,row).stringValue(transaction["vouchernumber"])
+		if transaction["advflag"]==1:
+			sheet.getCell(4,row).stringValue(transaction["Dr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+			sheet.getCell(5,row).stringValue(transaction["Cr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+		else:
+			sheet.getCell(4,row).stringValue(transaction["Dr"]).setAlignHorizontal("right")
+			sheet.getCell(5,row).stringValue(transaction["Cr"]).setAlignHorizontal("right")
+
 		sheet.getCell(6,row).stringValue(transaction["balance"]).setAlignHorizontal("right")
 
 		if transaction["vouchertype"]=="contra" or transaction["vouchertype"]=="purchase" or transaction["vouchertype"]=="sales" or transaction["vouchertype"]=="receipt" or transaction["vouchertype"]=="payment" or transaction["vouchertype"]=="journal":
@@ -171,17 +178,13 @@ def printLedgerReport(request):
 			sheet.getCell(2,row).stringValue(transaction["vouchertype"])
 		particulars=""
 		length = len(transaction["particulars"])
-		for i in range(0,length):
-			sheet.getCell(3,row).stringValue(transaction["particulars"][i])
-			if transaction["advflag"]==1:
-				sheet.getCell(4,row).stringValue(transaction["Dr"][i]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
-				sheet.getCell(5,row).stringValue(transaction["Cr"][i]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+		for i,k in enumerate(transaction['particulars']):
+			if k.has_key('amount'):
+				sheet.getCell(3,row).stringValue(k['accountname']+' ('+k['amount']+')')
 			else:
-				sheet.getCell(4,row).stringValue(transaction["Dr"][i]).setAlignHorizontal("right")
-				sheet.getCell(5,row).stringValue(transaction["Cr"][i]).setAlignHorizontal("right")
+				sheet.getCell(3,row).stringValue(k['accountname'])
 			if(i<length-1):
 				row += 1
-
 		narration = transaction["narration"]
 		if narration!="":
 			row += 1

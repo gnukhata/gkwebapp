@@ -150,7 +150,7 @@
 
           <td class="lngwrap">
             {% for pr in record['particulars'] %}
-            {{pr}} <br>
+            {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
             {% endfor %}
            {% if record['narration']!="" and narrationflag==true %}
          <span style="font-size:0.9em">   ({{record['narration']}}) </span>
@@ -158,25 +158,17 @@
           </td>
           {%if record["advflag"]==1%}
           <td class="dtwrap ralign cred">
-            {% for dr in record['Dr'] %}
-            <b>{{dr}}</b> <br>
-            {% endfor %}
+            <b>{{record["Dr"]}}</b>
           </td>
           <td class="dtwrap ralign cred">
-            {% for cr in record['Cr'] %}
-            <b>{{cr}}</b> <br>
-            {% endfor %}
+            <b>{{record["Cr"]}}</b>
           </td>
           {%else%}
           <td class="dtwrap ralign">
-            {% for dr in record['Dr'] %}
-            <b>{{dr}}</b> <br>
-            {% endfor %}
+            {{record["Dr"]}}
           </td>
           <td class="dtwrap ralign">
-            {% for cr in record['Cr'] %}
-            <b>{{cr}}</b> <br>
-            {% endfor %}
+            {{record["Cr"]}}
           </td>
           {%endif%}
           <td class="dtwrap ralign">
@@ -185,21 +177,17 @@
           {% else %}
           <td class ="lngwrap">
             {% for pr in record['particulars'] %}
-            {{pr}} <br>
+            {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
             {% endfor %}
             {% if record['narration']!="" and narrationflag==true %}
            <span style="font-size:0.9em" > ({{record['narration']}}) </span>
             {% endif %}
           </td>
           <td class="dtwrap ralign">
-            {% for dr in record['Dr'] %}
-            <b>{{dr}}</b> <br>
-            {% endfor %}
+            {{record["Dr"]}}
           </td>
           <td class="dtwrap ralign">
-            {% for cr in record['Cr'] %}
-            <b>{{cr}}</b> <br>
-            {% endfor %}
+            {{record["Cr"]}}
           </td>
           {% endif %}
         </tr>
