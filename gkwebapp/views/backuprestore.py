@@ -261,8 +261,8 @@ def exportLedger(request):
 			ledgerResult = result.json()["gkresult"]
 			if len(ledgerResult) == 1:
 				continue
-			firstVal = ledgerResult[0]["particulars"][0]
-			secondVal = ledgerResult[1]["particulars"][0]
+			firstVal = ledgerResult[0]["particulars"]["accoutname"]
+			secondVal = ledgerResult[1]["particulars"]["accoutname"]
 			if firstVal == "Opening Balance" and secondVal == "Total of Transactions":
 				continue
 			Ledger = gkwb.create_sheet()
@@ -275,41 +275,33 @@ def exportLedger(request):
 			ledgerRowCounter = 1
 			for row in ledgerResult:
 				particulars = row["particulars"]
-				crs=row["Cr"]
-				drs =row["Dr"]
-				if particulars[0] == "Opening Balance" or particulars[0] == "Total of Transactions" or particulars[0] == "Closing Balance C/F" or particulars[0] == "Grand Total":
+				acct = particulars[0]
+				print acct
+				if acc["accountname"] == "Opening Balance" or acc["accountname"] == "Total of Transactions" or acc["accountname"] == "Closing Balance C/F" or acc["accountname"] == "Grand Total":
 					continue
 				Ledger.cell(row=ledgerRowCounter, column=1, value=row["voucherdate"])
 				particularCounter = ledgerRowCounter
 				if len(particulars) == 1:
-					Ledger.cell(row=ledgerRowCounter, column=3, value=particulars[0])
+					
+					Ledger.cell(row=ledgerRowCounter, column=3, value=acc["accountname"])
 					Ledger.cell(row=ledgerRowCounter+1 , column=3, value=row["narration"])
-					Ledger.cell(row=ledgerRowCounter, column=6, value=drs[0])
-					Ledger.cell(row=ledgerRowCounter, column=7, value=crs[0])
+					Ledger.cell(row=ledgerRowCounter, column=6, value=row["Dr"])
+					Ledger.cell(row=ledgerRowCounter, column=7, value=row["Cr"])
 
 					particularCounter = ledgerRowCounter +1
 					
 				if len(particulars) > 1:
 					Ledger.cell(row=ledgerRowCounter, column=3, value="(as per details)")
-					i = 0
-					crsSum = 0.00
-					drsSum = 0.00
 					for p in particulars:
+						print p["accountname"]
+						Ledger.cell(row=particularCounter, column=3, value=p["accountname"])
+						if row["Cr"] == "":
+							Ledger.cell(row=particularCounter, column=7, value=str(p["amount"])+" Cr")
+							Ledger.cell(row=ledgerRowCounter, column=6, value=row["Cr"])
+						if row["Dr"] == "":
+							Ledger.cell(row=particularCounter, column=6, value=str(p["amount"])+" Dr")
+							Ledger.cell(row=ledgerRowCounter, column=7, value=row["Cr"])
 						particularCounter = particularCounter +1
-						Ledger.cell(row=particularCounter, column=3, value=p)
-						print p
-						if crs[i] == "":
-							print "This is loop for null crs list"
-							Ledger.cell(row=particularCounter, column=6, value=drs[i])
-							crsSum = crsSum + float(drs[i])
-							Ledger.cell(row=ledgerRowCounter, column=7, value="%.2f"%crsSum)
-						if drs[i] == "":
-							print "This is loop for null drs list"
-							Ledger.cell(row=particularCounter, column=7, value=crs[i])
-							drsSum = drsSum + float(crs[i])
-							Ledger.cell(row=ledgerRowCounter, column=6, value="%.2f"%drsSum)
-						i = i+1
-					particularCounter = particularCounter +1
 					Ledger.cell(row=particularCounter, column=3, value=row["narration"])
 				Ledger.cell(row=ledgerRowCounter, column=4, value=row["vouchertype"])
 				Ledger.cell(row=ledgerRowCounter, column=5, value=row["vouchernumber"])
