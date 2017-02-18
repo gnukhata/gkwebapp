@@ -27,6 +27,7 @@ Contributors:
 
 $(document).ready(function()
 {
+  $("#baltbl").hide();
   $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
   $("#editaccountname").focus();
@@ -73,10 +74,12 @@ $(document).ready(function()
     if (grpname=="Direct Expense"|| grpname=="Direct Income"||grpname=="Indirect Expense"|| grpname=="Indirect Income") {
       $("#openingbal").hide();
       $("#openbal").hide();
+      $("#baltbl").hide();
     }
     else {
       $("#openingbal").show();
       $("#openbal").show()
+      $("#baltbl").show();
     };
     $.ajax({
       type: "POST",
