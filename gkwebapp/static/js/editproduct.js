@@ -275,6 +275,7 @@ $(document).ready(function() {
         $("#unitaddon").html($("#edituom option:selected").text());
         $(".pbutn").show();
         $("#epsubmit").hide();
+        $("#addgodown").hide();
         $("#epedit").show();
         $('#proddetails').find('input, textarea, button, select').prop('disabled',true);
         $(".product_tax_disable").prop('disabled',true);
@@ -456,6 +457,7 @@ $(document).ready(function() {
     $('#proddetails').find('input, textarea, button, select').prop('disabled',false);
     $("#epsubmit").show();
     $("#epedit").hide();
+    $("#addgodown").show();
     $("#editproddesc").focus();
     $("#editproddesc").select();
     $(".godownflag").show();
@@ -905,9 +907,87 @@ $(document).ready(function() {
       $(this).closest('tr').remove();	 //closest method gives the closest element specified
       $('#editgodown_ob_table tbody tr:last td:eq(0) select').focus().select();
     });
-    $('#editgodown_ob_table tbody tr:last td:eq(0) select').select();
+    $('#editgodown_ob_table tbody tr:last td:eq(0) select').focus().select();
   });
   /* -----------------------Godown Key events end here----------------------------------------- */
+
+  $("#addgodown").click(function() {
+     $.ajax(
+     {
+     type: "POST",
+     url: "/godown?type=addpopup",
+     global: false,
+     async: false,
+     datatype: "text/html",
+     beforeSend: function(xhr)
+       {
+         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+       },
+     success: function(resp)
+     {
+           $("#addgodownpopup").html("");
+           $('.modal-backdrop').remove();
+           $('.modal').modal('hide');
+           $("#addgodownpopup").html(resp);
+           $('#addgodownmodal').modal('show');
+           $('#addgodownmodal').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
+           {
+             $("#godownname").focus();
+           });
+           $('#addgodownmodal').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is opened
+           {
+            $("#addgodownpopup").html("");
+            $(document).off('keyup').on('keyup',function(event)
+            {
+              /* Act on the event */
+              if (event.which == 45)
+              {
+                event.preventDefault();
+                $("#epsubmit").click();
+              }
+            });
+            $.ajax({
+              url: 'godown?type=getallgodowns',
+              type: 'POST',
+              dataType: 'json',
+              beforeSend: function(xhr)
+              {
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+              }
+            })
+            .done(function(resp) {
+              var newgodowns = resp["gkresult"];
+              if (newgodowns.length > 0) {
+                $("#newgodownadded").show();
+                $('#editgodown_ob_table tbody tr').each(function(){
+                  var curindex2 = $(this).closest('tr').index();
+                for (i in newgodowns ) {
+                  if (newgodowns[i].godownname == sessionStorage.newgodownname && newgodowns[i].godownaddress == sessionStorage.newgodownaddress) {
+                    $('#godown_ob_table tbody tr:eq('+curindex2+') td:eq(0) select').append('<option value="' + newgodowns[i].godownid + '">' + newgodowns[i].godownname + ' ' + newgodowns[i].godownaddress + '</option>');
+                  }
+                }
+                });
+                if ($("#editgodownflag").val()==0) {
+                  $("#editgodownflag").focus().select();
+                }
+                else if ($("#editgodownflag").val()==1) {
+                  $('#editgodown_ob_table tbody tr:last td:eq(0) select').focus().select();
+                }
+              }
+              console.log("success");
+            })
+            .fail(function() {
+              console.log("error");
+            })
+            .always(function() {
+              console.log("complete");
+            });
+
+           });
+     }
+  }
+   );
+   });
 
   $(document).off("click","#epsubmit").on("click", "#epsubmit", function(event) {
     event.preventDefault();
