@@ -133,7 +133,8 @@ def showeditaccount(request):
 	for record in result.json()["gkresult"]:
 		adata= {"accountname":str(record["accountname"]),"accountcode":str(record["accountcode"])}
 		accdata.append(adata)
-	return {"gkresult":accdata}
+	result = requests.get("http://127.0.0.1:6543/groupsubgroups", headers=header)
+	return {"gkresult":accdata, "baltbl":result.json()["baltbl"]}
 
 
 @view_config(route_name="deleteaccount", renderer="json")

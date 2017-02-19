@@ -110,7 +110,7 @@ $(document).ready(function(){
           event.preventDefault();
           }
         if(event.altKey && event.keyCode == 67) {
-          $("#showedituser").click();
+          $("#showproject").click();
           event.preventDefault();
           }
         if(event.altKey && event.keyCode == 76) {

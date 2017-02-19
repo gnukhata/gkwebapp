@@ -4,6 +4,9 @@
 	<meta charset="UTF-8">
 	<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Edit Account{% endtrans %}</title>
 <style media="screen">
+.rightJustified {
+	text-align: right;
+}
 .shadow {
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -53,7 +56,7 @@ th {
 			{% trans %}Transactions might be remaining for this account.{% endtrans %}
 		</div>
 
-		<div style="padding-top:15px" class="mainbox col-md-6">
+		<div style="padding-top:5px" class="mainbox col-md-6">
 			<div class="panel shadow" >
 				<div class="panel-heading">
 					<div class="panel-title">{% trans %}Edit Account{% endtrans %}</div>
@@ -119,12 +122,69 @@ th {
 							</div><!-- /.modal-dialog -->
 						</div>
 					</div><!-- /.modal -->
-
 				</div>
 			</div>
 		</div>
 
-
+		<div style="padding-top:5px" class="col-md-6 shadow" id="baltbl" >
+			<table class="table table-condensed">
+				<thead>
+					<tr>
+						<th class="col-xs-6">{{baltbl[0]}}</th>
+					</tr>
+					<tr class="thead">
+						<th class="col-xs-6">{% trans %}Group Name{% endtrans %}</th>
+						<th class="rightJustified col-xs-3">{% trans %}No. of Accounts{% endtrans %}</th>
+						<th class="rightJustified col-xs-3">{% trans %}Group Balance{% endtrans %}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for i in range(1,5) %}
+					<tr>
+						<td class="col-xs-6">{{baltbl[i]["groupname"]}}</td>
+						<td class="col-xs-3" align="right">{{baltbl[i]["numberofaccounts"]}}</td>
+						<td class="col-xs-3" align="right">{{baltbl[i]["groupbalance"]}}</td>
+					</tr>
+					{% endfor %}
+					<tr>
+						<th class="col-xs-6">{% trans %}Total{% endtrans %}</th>
+						<th class="col-xs-3"></th>
+						<td class="col-xs-3" align="right"><b>{{baltbl[5]["Total"]}}</b></td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="table table-condensed">
+				<thead>
+					<tr>
+						<th class="col-xs-6">{{baltbl[6]}}</th>
+					</tr>
+					<tr class="thead">
+						<th class="col-xs-6">{% trans %}Group Name{% endtrans %}</th>
+						<th class="rightJustified col-xs-3">{% trans %}No. of Accounts{% endtrans %}</th>
+						<th class="rightJustified col-xs-3">{% trans %}Group Balance{% endtrans %}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for i in range(7,((baltbl|length)-2)) %}
+					<tr>
+						<td class="col-xs-6">{{baltbl[i]["groupname"]}}</td>
+						<td class="col-xs-3" align="right">{{baltbl[i]["numberofaccounts"]}}</td>
+						<td class="col-xs-3" align="right">{{baltbl[i]["groupbalance"]}}</td>
+					</tr>
+					{% endfor %}
+					<tr>
+						<th class="col-xs-6">{% trans %}Total{% endtrans %}</th>
+						<th class="col-xs-3" ></th>
+						<td class="col-xs-3" align="right"><b>{{baltbl[((baltbl|length)-2)]["Total"]}}</b></td>
+					</tr>
+					<tr>
+						<th class="col-xs-6">{% trans %}Difference in Balance{% endtrans %}</th>
+						<th class="col-xs-3"></th>
+						<td class="col-xs-3" align="right"><b>{{baltbl[((baltbl|length)-1)]["Difference in balance"]}}</b></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 
 	</div>
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
