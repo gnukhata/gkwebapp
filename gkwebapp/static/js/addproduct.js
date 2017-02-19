@@ -1,7 +1,7 @@
 $(document).ready(function() {
   var godownflag = 0;
   $('.modal-backdrop').remove();
-  $("#addproddesc").focus();
+  $("#addcatselect").focus();
   $('.proddate').autotab('number');
   $("#openingstock").numeric();
   $(document).off('focus', '.proddate').on('focus', '.proddate', function(event) {
@@ -117,6 +117,10 @@ $(document).ready(function() {
       event.preventDefault();
       $("#adduom").focus();
     }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#addcatselect").focus();
+    }
   });
 
 
@@ -134,7 +138,7 @@ $(document).ready(function() {
 
   $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
     if (event.which == 13) {
-    $("#addcatselect").focus();
+    $("#product_tax_table tbody tr:first td:eq(0) select").focus();
     }
     else if (event.which==32)
     {
@@ -166,7 +170,7 @@ $(document).ready(function() {
   $(document).off('keydown', '#addcatselect').on('keydown', '#addcatselect',function(event) {
     if (event.which==13) {
       event.preventDefault();
-        $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+      $("#addproddesc").focus().select();
     }
     });
   $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
@@ -218,7 +222,7 @@ $(document).ready(function() {
             }
 
             $("#adduom option").filter(function(i,e){return $(e).text()==unitname}).prop('selected', true);
-            $("#addcatselect").focus();
+            $("#product_tax_table tbody tr:first td:eq(0) select").focus();
           }
         })
         .fail(function() {
@@ -412,7 +416,7 @@ $(document).ready(function() {
     if (event.which==188 && event.shiftKey)
     {
       if (curindex==0 && $("#godownflag").val()==0) {
-      $("#openingstock").focus().select();
+      $("#adduom").focus();
       }
       if (curindex==0 && $("#godownflag").val()==1) {
       $(".godown_ob:last").focus().select();
