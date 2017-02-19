@@ -30,7 +30,7 @@ Contributors:
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $('.delchaldate').autotab('number');
-  $("#deliverychallan_challanno").focus();
+  $("#deliverychallan_challanno").focus().select();
   $("#deliverychallan_date").numeric();
   $("#deliverychallan_month").numeric();
   $("#deliverychallan_year").numeric();
@@ -163,7 +163,7 @@ $(document).ready(function() {
     }
     if (event.which==38) {
       event.preventDefault();
-      $('#deliverychallan_product_table tbody tr:last td:eq(0) select').focus();
+      $('#deliverychallan_product_table tbody tr:last td:eq(1) input').focus();
     }
   });
   $("#deliverychallan_modeoftransport").keydown(function(event) {
