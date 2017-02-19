@@ -280,7 +280,17 @@ $(document).ready(function() {
     var previndex = curindex-1;
     if (event.which==13) {
       event.preventDefault();
-      $('#deliverychallan_product_table tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
+      if ($('#deliverychallan_product_table tbody tr:eq('+curindex+') td:eq(0) select option:selected').val()=="") {
+        $("#product-blank-alert").alert();
+        $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#product-blank-alert").hide();
+        });
+        $('#deliverychallan_product_table tbody tr:eq('+curindex+') td:eq(0) select').focus();
+        return false;
+      }
+      else {
+        $('#deliverychallan_product_table tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
+      }
     }
     else if(event.which==190 && event.shiftKey)
     {
