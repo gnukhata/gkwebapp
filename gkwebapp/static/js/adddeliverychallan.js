@@ -295,14 +295,14 @@ $(document).ready(function() {
       }
       if (curindex==0) {
         event.preventDefault();
-        $("#deliverychallan_schedule").focus().select();
+        $("#deliverychallan_consignment").focus().select();
       }
     }
     else if (event.which==188 && event.ctrlKey) {
       event.preventDefault();
       if (curindex==0) {
         event.preventDefault();
-        $("#deliverychallan_schedule").focus().select();
+        $("#deliverychallan_consignment").focus().select();
       }
       else {
         $('#deliverychallan_product_table tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
@@ -312,7 +312,6 @@ $(document).ready(function() {
       $('#deliverychallan_product_table tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
       event.preventDefault();
     }
-
   });
   $(document).off("keydown",".deliverychallan_product_quantity").on("keydown",".deliverychallan_product_quantity",function(event)
   {
@@ -398,7 +397,7 @@ $(document).ready(function() {
       }
       if (curindex1==0) {
         event.preventDefault();
-        $("#deliverychallan_schedule").focus().select();
+        $("#deliverychallan_consignment").focus().select();
       }
     }
     else if (event.which==190 && event.ctrlKey) {
