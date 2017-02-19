@@ -356,6 +356,7 @@ $(document).ready(function() {
       {
         $("#specifications").html("");
         $("#specifications").html(resp);
+        $("#specshelp").hide();
         if ($(".spec").length < 3) {
           $("#specifications").removeClass("specsdiv");
         }
@@ -376,7 +377,7 @@ $(document).ready(function() {
     else
     {
       $("#specifications").html("");
-
+      $("#specshelp").show();
       $('#product_tax_table tbody tr').remove();
       $('#product_tax_table tbody').append('<tr value="New">'+
       '<td class="col-xs-4">'+

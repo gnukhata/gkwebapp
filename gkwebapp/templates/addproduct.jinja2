@@ -120,7 +120,15 @@
 
 
         <div class="col-sm-6" id="rightdiv">
+          <div class="row">
+            <div class="col-sm-12" id="specshelp">
+              <small class="form-text text-muted">Fields for entering specifications appear here when a category with specifications is selected.</small><br>
+              <small class="form-text text-muted">If you do not have such a category you can create one.</small><br>
+              <small class="form-text text-muted">You can also edit an existing category to add specifications to it.</small><br><br>
+            </div>
+          </div>
           <div class="row" id="specifications">
+
           </div>
           <div class="row">
             {% if not godown %}
@@ -162,11 +170,13 @@
                 </div>
               </div>
             </div>
-          <div id="nogodown" class="form-group pds">
-            <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
-            <div class="input-group">
-              <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
-              <span class="input-group-addon input-sm" id="unitaddon"></span>
+          <div id="nogodown">
+            <div class="form-group pds col-sm-6">
+              <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+              <div class="input-group">
+                <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
+                <span class="input-group-addon input-sm" id="unitaddon"></span>
+              </div>
             </div>
           </div>
             {% else %}
@@ -176,7 +186,7 @@
             <input type="text" id="godownpresence" value="1" hidden="">
             <label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
           </div>
-          <div id="nogodown" class="form-group pds">
+          <div id="nogodown" class="form-group pds col-sm-6">
             <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
             <div class="input-group">
               <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
