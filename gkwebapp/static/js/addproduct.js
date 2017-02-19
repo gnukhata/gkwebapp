@@ -706,27 +706,34 @@ $(document).off('keydown', '#openingstock').on('keydown', '#openingstock', funct
         $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
       else {
-        if ($('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').val()=="") {
-          $("#godown-blank-alert").alert();
-          $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#godown-blank-alert").hide();
-          });
-          $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
-          return false;
-        }
-        if ($('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(1) input').val()=="") {
-          $("#os-blank-alert").alert();
-          $("#os-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#os-blank-alert").hide();
-          });
-          $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(1) input').focus();
-          return false;
-        }
-        $('#godown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-        $("#godown_ob_table tbody tr:last td:last").append('<a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-        $(".godown_ob").numeric();
-        $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
-        $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+        if (numberofgodowns > 1) {
+          if ($('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').val()=="") {
+            $("#godown-blank-alert").alert();
+            $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#godown-blank-alert").hide();
+            });
+            $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
+            return false;
+          }
+          if ($('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(1) input').val()=="") {
+            $("#os-blank-alert").alert();
+            $("#os-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#os-blank-alert").hide();
+            });
+            $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(1) input').focus();
+            return false;
+          }
+          $('#godown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+          if (curindex1 == 0) {
+            $("#godown_ob_table tbody tr:last td:last").append('<a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+          }
+          $(".godown_ob").numeric();
+          $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
+          $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+          }
+          else {
+            $("#addgodown").focus();
+          }
         }
       }
     else if(event.which==190 && event.shiftKey)

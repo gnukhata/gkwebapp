@@ -493,6 +493,7 @@ $(document).ready(function() {
       {
         $("#editspecifications").html("");
         $("#editspecifications").html(resp);
+        $("#specshelp").hide();
         if ($(".spec").length > 2) {
           $("#editspecifications").addClass("specsdiv");
         }
@@ -506,6 +507,7 @@ $(document).ready(function() {
       });
     }
     else {
+      $("#specshelp").show();
       $('#product_edit_tax_table tbody').empty();
       for (tax of existingnonetax) {
         $('#product_edit_tax_table tbody').append('<tr class="product_row_val" value="new">'+

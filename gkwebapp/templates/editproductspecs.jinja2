@@ -117,6 +117,13 @@
   </div>
 </div>
 <div class="col-sm-6">
+  <div class="row">
+    <div class="col-sm-12" id="specshelp">
+      <small class="form-text text-muted">Fields for entering specifications appear here when a category with specifications is selected.</small><br>
+      <small class="form-text text-muted">If you do not have such a category you can create one.</small><br>
+      <small class="form-text text-muted">You can also edit an existing category to add specifications to it.</small><br><br>
+    </div>
+  </div>
   <div id="extsp" class="row">
 
   <div id = "editspecifications">
@@ -156,7 +163,7 @@
   </div>
   <div class="row">
     {% if not godown %}
-    <div class="form-group pds">
+    <div class="form-group col-sm-6 pds">
       <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
       <div class="input-group">
         <input type='text' class="form-control text-right input-sm" name="openingstock"  id="editopeningstock" value="{{proddesc['openingstock']}}" aria-describedby="unitaddon">
@@ -168,7 +175,7 @@
   {% if numberofgodowns==0 %}
   <input type="checkbox" name="godownflag" id="editgodownflag" value="0">
   <label class="" for="editgodownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
-  <div id="editnogodown" class="form-group pds">
+  <div id="editnogodown" class="form-group col-sm-6 pds">
     <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
     <div class="input-group">
       <input type='text' class="form-control text-right input-sm" name="openingstock"  id="editopeningstock" value="{{proddesc['openingstock']}}" aria-describedby="unitaddon">
