@@ -261,13 +261,15 @@ def exportLedger(request):
 			ledgerResult = result.json()["gkresult"]
 			if len(ledgerResult) == 1:
 				continue
-			firstVal = ledgerResult[0]["particulars"]["accoutname"]
-			secondVal = ledgerResult[1]["particulars"]["accoutname"]
-			if firstVal == "Opening Balance" and secondVal == "Total of Transactions":
+			firstVal = ledgerResult[0]["particulars"][0]
+			secondVal = ledgerResult[1]["particulars"][0]
+#			print firstVal["accountname"]
+#			print secondVal["accountname"]
+			if firstVal["accountname"] == "Opening Balance" and secondVal["accountname"] == "Total of Transactions":
 				continue
 			Ledger = gkwb.create_sheet()
 			Ledger.title = accname.replace("/","")
-			print Ledger.title
+			
 			Ledger.column_dimensions["A"].width =10
 			Ledger.column_dimensions["C"].width = 50
 			Ledger.column_dimensions["F"].width = 10
@@ -275,25 +277,26 @@ def exportLedger(request):
 			ledgerRowCounter = 1
 			for row in ledgerResult:
 				particulars = row["particulars"]
-				acct = particulars[0]
-				print acct
-				if acc["accountname"] == "Opening Balance" or acc["accountname"] == "Total of Transactions" or acc["accountname"] == "Closing Balance C/F" or acc["accountname"] == "Grand Total":
+				accN = particulars[0]
+				if accN["accountname"] == "Opening Balance" or accN["accountname"] == "Total of Transactions" or accN["accountname"] == "Closing Balance C/F" or accN["accountname"] == "Grand Total":
 					continue
 				Ledger.cell(row=ledgerRowCounter, column=1, value=row["voucherdate"])
 				particularCounter = ledgerRowCounter
+                
 				if len(particulars) == 1:
-					
-					Ledger.cell(row=ledgerRowCounter, column=3, value=acc["accountname"])
+					Ledger.cell(row=ledgerRowCounter, column=3, value=accN["accountname"])
 					Ledger.cell(row=ledgerRowCounter+1 , column=3, value=row["narration"])
 					Ledger.cell(row=ledgerRowCounter, column=6, value=row["Dr"])
 					Ledger.cell(row=ledgerRowCounter, column=7, value=row["Cr"])
-
-					particularCounter = ledgerRowCounter +1
-					
+                    
+				particularCounter = ledgerRowCounter +1
 				if len(particulars) > 1:
+					print"Length greater than 1",len(particulars)
+					print "THis is ledgerRowCounter", ledgerRowCounter
+					
 					Ledger.cell(row=ledgerRowCounter, column=3, value="(as per details)")
 					for p in particulars:
-						print p["accountname"]
+						print "In for loop particularcounter",particularCounter
 						Ledger.cell(row=particularCounter, column=3, value=p["accountname"])
 						if row["Cr"] == "":
 							Ledger.cell(row=particularCounter, column=7, value=str(p["amount"])+" Cr")
