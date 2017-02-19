@@ -545,11 +545,8 @@ $(document).ready(function() {
     var previndex = curindex-1;
     if (event.which==188 && event.shiftKey)
     {
-      if (curindex==0 && $("#editgodownflag").val()==0) {
-      $("#editopeningstock").focus().select();
-      }
-      if (curindex==0 && $("#editgodownflag").val()==1) {
-      $(".editgodown_ob:last").focus().select();
+      if (curindex==0) {
+      $("#edituom").focus().select();
       }
       if(previndex>-1 && curindex != 0)
       {

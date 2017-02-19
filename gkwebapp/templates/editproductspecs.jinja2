@@ -173,8 +173,10 @@
     <input type="text" name="godownflag" id="editgodownflag" value="0" hidden>
     {% else %}
   {% if numberofgodowns==0 %}
-  <input type="checkbox" name="godownflag" id="editgodownflag" value="0">
-  <label class="" for="editgodownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
+  <div class="form-group col-sm-12">
+    <input type="checkbox" name="godownflag" id="editgodownflag" value="0">
+    <label class="" for="editgodownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
+  </div>
   <div id="editnogodown" class="form-group col-sm-6 pds">
     <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
     <div class="input-group">
@@ -182,7 +184,7 @@
       <span class="input-group-addon input-sm" id="unitaddon"></span>
     </div>
   </div>
-  <div  id="editopeningstockdiv" class="form-group" hidden>
+  <div  id="editopeningstockdiv" class="form-group col-sm-12" hidden>
     <div class="panel">
       <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">
         <thead class="bg-primary input-sm">
