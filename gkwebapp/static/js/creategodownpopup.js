@@ -28,9 +28,11 @@ Contributors:
 
 $(document).ready(function()
 {
+  $('.modal-backdrop').remove();
   $('#godowname').focus();
   $("#godowncontact").numeric();
-
+  sessionStorage.newgodownname = "";
+  sessionStorage.newgodownaddress = "";
   $(document).off("keydown","#godownname").on("keydown", "#godownname",function(e){
     if (e.which == 13) {
       e.preventDefault();
@@ -96,7 +98,7 @@ $(document).ready(function()
           return false;
         }
       });
-      $("#gdnsubmit").click(function(e)
+      $(document).off("click","#gdnsubmit").on("click", '#gdnsubmit',function(e)
       {
         e.preventDefault();
         if ($.trim($("#godownname").val())=="") {
@@ -143,6 +145,8 @@ $(document).ready(function()
                 $("#success-alert").alert();
                 $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
                   $("#success-alert").hide();
+                  sessionStorage.newgodownname = $("#godownname").val();
+                  sessionStorage.newgodownaddress = $.trim($("#godownaddress").val());
                   $('#addgodownmodal').modal('hide');
                   $('.modal-backdrop').remove();
                 });

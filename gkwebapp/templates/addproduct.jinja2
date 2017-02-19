@@ -119,16 +119,55 @@
         </div>
 
 
-        <div class="col-sm-6">
+        <div class="col-sm-6" id="rightdiv">
           <div class="row" id="specifications">
           </div>
           <div class="row">
             {% if not godown %}
-            <div class="form-group" id="newgodownadded" hidden>
-              <input type="checkbox" name="godownflag" id="godownflag" value=0>
-            </input>
-            <input type="text" id="godownpresence" value="1" hidden="">
-            <label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
+            <div id="newgodownadded" hidden>
+              <div class="form-group">
+                <input type="checkbox" name="godownflag" id="godownflag" value=0>
+              </input>
+              <input type="text" id="godownpresence" value="1" hidden>
+              <label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
+            </div>
+              <div  id="openingstockdiv" class="form-group" hidden>
+                <div class="panel">
+                  <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
+                    <thead class="bg-primary input-sm">
+                      <tr>
+                        <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
+                        <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+                        <th class="col-xs-1"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="col-xs-8">
+                          <select class="form-control input-sm godown_name">
+                            <option value="" selected>Select Godown</option>
+                            {% for record in godown %}
+                            <option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
+                            {% endfor %}
+                          </select>
+                        </td>
+                        <td class="col-xs-3">
+                          <input class="form-control input-sm godown_ob text-right numtype" value="0.00">
+                        </td>
+                        <td class="col-xs-1">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          <div id="nogodown" class="form-group pds">
+            <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+            <div class="input-group">
+              <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
+              <span class="input-group-addon input-sm" id="unitaddon"></span>
+            </div>
           </div>
             {% else %}
             <div class="form-group">

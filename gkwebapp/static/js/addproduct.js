@@ -451,14 +451,12 @@ $(document).ready(function() {
           }
         });
         types.sort();
-        console.log(types);
         var duplicatetypes = [];
         for (var i = 0; i < types.length - 1; i++) {
           if (types[i + 1] == types[i]) {
             duplicatetypes.push(types[i]);
           }
         }
-        console.log(duplicatetypes);
         if (duplicatetypes.length > 0) {
           $("#cvat-alert").alert();
           $("#cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -791,7 +789,48 @@ $("#addgodown").click(function() {
          });
          $('#addgodownmodal').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is opened
          {
-          $("#newgodownadded").show();
+          $("#addgodownpopup").html("");
+          $(document).off('keyup').on('keyup',function(event)
+          {
+            /* Act on the event */
+            if (event.which == 45)
+            {
+              event.preventDefault();
+              $("#apsubmit").click();
+            }
+          });
+          $.ajax({
+            url: 'godown?type=getallgodowns',
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+          })
+          .done(function(resp) {
+            var newgodowns = resp["gkresult"];
+            if (newgodowns.length > 0) {
+              $("#newgodownadded").show();
+              $('#godown_ob_table tbody tr').each(function(){
+                var curindex2 = $(this).closest('tr').index();
+              for (i in newgodowns ) {
+                if (newgodowns[i].godownname == sessionStorage.newgodownname && newgodowns[i].godownaddress == sessionStorage.newgodownaddress) {
+                  $('#godown_ob_table tbody tr:eq('+curindex2+') td:eq(0) select').append('<option value="' + newgodowns[i].godownid + '">' + newgodowns[i].godownname + ' ' + newgodowns[i].godownaddress + '</option>');
+                }
+              }
+              });
+              $("#godownflag").focus().select();
+            }
+            console.log("success");
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          .always(function() {
+            console.log("complete");
+          });
+
          });
    }
 }
@@ -897,7 +936,6 @@ $("#addgodown").click(function() {
         }
       })
       .done(function(resp) {
-        console.log(resp["gkstatus"]);
         if (resp["gkstatus"] ==0) {
 
           $("#product").click();
