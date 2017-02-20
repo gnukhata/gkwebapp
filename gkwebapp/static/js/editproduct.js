@@ -34,6 +34,22 @@ $(document).ready(function() {
     }
   });
 
+  $(document).off('keydown', '#edituom').on('keydown', '#edituom', function(e){
+    if (e.which == 13) {
+      e.preventDefault();
+      $('#product_edit_tax_table tbody tr:first td:eq(0) select').focus();
+    }
+  });
+  $(document).off('keydown', '#editgodownflag').on('keydown', '#editgodownflag', function(e){
+    if (e.which == 13) {
+      e.preventDefault();
+      $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus();
+    }
+    if (e.which == 38) {
+      $('#product_edit_tax_table tbody tr:last td:eq(2) input').focus();
+    }
+  });
+
   var sel1=0;
   var sel2=0;
   var sindex=0;
@@ -259,10 +275,17 @@ $(document).ready(function() {
         $("#unitaddon").html($("#edituom option:selected").text());
         $(".pbutn").show();
         $("#epsubmit").hide();
+        $("#addgodown").hide();
         $("#epedit").show();
         $('#proddetails').find('input, textarea, button, select').prop('disabled',true);
         $(".product_tax_disable").prop('disabled',true);
         $(".product_cat_tax_disable").prop('disabled',true);
+        if ($(".spec").length < 3) {
+          $("#editspecifications").removeClass("specsdiv");
+        }
+        else {
+          $("#editspecifications").addClass("specsdiv");
+        }
         catcode= $("#editcatselect option:selected").val();
         console.log("success");
       })
@@ -384,7 +407,39 @@ $(document).ready(function() {
       }
     }
   });
+  $(document).on("keydown",'.spec', function(e) {
+    var n = $(".spec").length;
+    var f = $('.spec');
+    if (e.which == 13)
+    {
+      var nextIndex = f.index(this) + 1;
 
+      if(nextIndex < n)
+      {
+        e.preventDefault();
+        f[nextIndex].focus();
+        f[nextIndex].select();
+      }
+      else {
+        $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
+      }
+
+    }
+    if (e.which == 38)
+    {
+      var prevIndex = f.index(this) - 1;
+      if(prevIndex > -1)
+      {
+          e.preventDefault();
+          f[prevIndex].focus();
+          f[prevIndex].select();
+
+        }
+        else {
+          $('#product_edit_tax_table tbody tr:last td:eq(2) input').focus().select();
+        }
+      }
+  });
   $(document).on('change', '#edituom',function(event) {
     if ($("#edituom option:selected").val()!='') {
       $("#unitaddon").html($("#edituom option:selected").text());
@@ -402,6 +457,7 @@ $(document).ready(function() {
     $('#proddetails').find('input, textarea, button, select').prop('disabled',false);
     $("#epsubmit").show();
     $("#epedit").hide();
+    $("#addgodown").show();
     $("#editproddesc").focus();
     $("#editproddesc").select();
     $(".godownflag").show();
@@ -439,6 +495,10 @@ $(document).ready(function() {
       {
         $("#editspecifications").html("");
         $("#editspecifications").html(resp);
+        $("#specshelp").hide();
+        if ($(".spec").length > 2) {
+          $("#editspecifications").addClass("specsdiv");
+        }
         console.log("success");
       })
       .fail(function() {
@@ -449,6 +509,7 @@ $(document).ready(function() {
       });
     }
     else {
+      $("#specshelp").show();
       $('#product_edit_tax_table tbody').empty();
       for (tax of existingnonetax) {
         $('#product_edit_tax_table tbody').append('<tr class="product_row_val" value="new">'+
@@ -486,11 +547,8 @@ $(document).ready(function() {
     var previndex = curindex-1;
     if (event.which==188 && event.shiftKey)
     {
-      if (curindex==0 && $("#editgodownflag").val()==0) {
-      $("#editopeningstock").focus().select();
-      }
-      if (curindex==0 && $("#editgodownflag").val()==1) {
-      $(".editgodown_ob:last").focus().select();
+      if (curindex==0) {
+      $("#edituom").focus().select();
       }
       if(previndex>-1 && curindex != 0)
       {
@@ -686,7 +744,15 @@ $(document).ready(function() {
     }
     else if (event.which==27) {
       event.preventDefault();
-      $('#editspecifications').contents(".form-group:first").find("input:first").focus().select();
+      if ($('.spec').length > 0) {
+        $('#editspecifications').contents(".form-group:first").find("input:first").focus().select();
+      }
+      else if ($("#editgodownflag").val() == 1) {
+        $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
+      }
+      else if ($("#editgodownflag").val() == 0) {
+        $("#editgodownflag").focus().select();
+      }
     }
 
   });
@@ -708,7 +774,17 @@ $(document).ready(function() {
     if (event.which==188 && event.shiftKey)
     {
       if (curindex==0) {
-      $("#edituom").focus().select();
+        if ($("#editgodownflag").is(':visible')) {
+            $("#editgodownflag").focus().select();
+        }
+      else {
+        if ($('.spec').length < 1) {
+          $('#product_edit_tax_table tbody tr:last td:eq(2) input').focus().select();
+        }
+        else {
+          $('.spec:last').focus().select();
+        }
+      }
       }
       if(previndex>-1 && curindex != 0)
       {
@@ -821,20 +897,7 @@ $(document).ready(function() {
     }
     else if (event.which==27) {
       event.preventDefault();
-      var taxdisabled = $('#product_edit_tax_table tbody tr:first td:eq(0) select').is(":disabled");
-      var taxcount = $('#product_edit_tax_table tbody tr').length;
-      if (taxdisabled || taxcount<1) {
-        if ($("#editspecifications").contents(".form-group").length == 0) {
-          $('#epsubmit').focus();
-        }
-        else {
-          $("#editspecifications").contents(".form-group:first").find("input:first").focus().select();
-        }
-      }
-      else {
-        $('#product_edit_tax_table tbody tr:first td:eq(0) select').focus().select();
-      }
-    }
+      $('#epsubmit').focus();    }
     else if (event.which==173) {
       event.preventDefault();
     }
@@ -844,18 +907,87 @@ $(document).ready(function() {
       $(this).closest('tr').remove();	 //closest method gives the closest element specified
       $('#editgodown_ob_table tbody tr:last td:eq(0) select').focus().select();
     });
-    $('#editgodown_ob_table tbody tr:last td:eq(0) select').select();
+    $('#editgodown_ob_table tbody tr:last td:eq(0) select').focus().select();
   });
   /* -----------------------Godown Key events end here----------------------------------------- */
 
-$(document).off("keyup", ".spec").on("keyup", ".spec", function(event) {
-if (event.which ==13) {
-  event.preventDefault();
-  if ($(".spec").index(this)==$(".spec").length - 1) {
-    $("#epsubmit").click();
+  $("#addgodown").click(function() {
+     $.ajax(
+     {
+     type: "POST",
+     url: "/godown?type=addpopup",
+     global: false,
+     async: false,
+     datatype: "text/html",
+     beforeSend: function(xhr)
+       {
+         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+       },
+     success: function(resp)
+     {
+           $("#addgodownpopup").html("");
+           $('.modal-backdrop').remove();
+           $('.modal').modal('hide');
+           $("#addgodownpopup").html(resp);
+           $('#addgodownmodal').modal('show');
+           $('#addgodownmodal').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
+           {
+             $("#godownname").focus();
+           });
+           $('#addgodownmodal').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is opened
+           {
+            $("#addgodownpopup").html("");
+            $(document).off('keyup').on('keyup',function(event)
+            {
+              /* Act on the event */
+              if (event.which == 45)
+              {
+                event.preventDefault();
+                $("#epsubmit").click();
+              }
+            });
+            $.ajax({
+              url: 'godown?type=getallgodowns',
+              type: 'POST',
+              dataType: 'json',
+              beforeSend: function(xhr)
+              {
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+              }
+            })
+            .done(function(resp) {
+              var newgodowns = resp["gkresult"];
+              if (newgodowns.length > 0) {
+                $("#newgodownadded").show();
+                $('#editgodown_ob_table tbody tr').each(function(){
+                  var curindex2 = $(this).closest('tr').index();
+                for (i in newgodowns ) {
+                  if (newgodowns[i].godownname == sessionStorage.newgodownname && newgodowns[i].godownaddress == sessionStorage.newgodownaddress) {
+                    $('#godown_ob_table tbody tr:eq('+curindex2+') td:eq(0) select').append('<option value="' + newgodowns[i].godownid + '">' + newgodowns[i].godownname + ' ' + newgodowns[i].godownaddress + '</option>');
+                  }
+                }
+                });
+                if ($("#editgodownflag").val()==0) {
+                  $("#editgodownflag").focus().select();
+                }
+                else if ($("#editgodownflag").val()==1) {
+                  $('#editgodown_ob_table tbody tr:last td:eq(0) select').focus().select();
+                }
+              }
+              console.log("success");
+            })
+            .fail(function() {
+              console.log("error");
+            })
+            .always(function() {
+              console.log("complete");
+            });
+
+           });
+     }
   }
-}
-});
+   );
+   });
 
   $(document).off("click","#epsubmit").on("click", "#epsubmit", function(event) {
     event.preventDefault();

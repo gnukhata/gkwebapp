@@ -111,21 +111,15 @@ $(document).ready(function() {
     /* Act on the event */
     newuom =0;
   });
-  $("#addcatselect").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#addproddesc").focus().select();
-    }
-  });
 
   $("#addproddesc").keydown(function(event) {
-    if (event.which==38) {
-      event.preventDefault();
-      $("#addcatselect").focus().select();
-    }
-    else if (event.which==13) {
+    if (event.which==13) {
       event.preventDefault();
       $("#adduom").focus();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#addcatselect").focus();
     }
   });
 
@@ -143,15 +137,8 @@ $(document).ready(function() {
   });
 
   $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
-    if (event.which == 13 && $("#godownpresence").val()==0) {
-      $("#openingstock").focus().select();
-    }
-    if (event.which==13 && $("#godownpresence").val()==1)
-    {
-      event.preventDefault();
-
-      $("#godownflag").focus().select();
-
+    if (event.which == 13) {
+    $("#product_tax_table tbody tr:first td:eq(0) select").focus();
     }
     else if (event.which==32)
     {
@@ -180,29 +167,12 @@ $(document).ready(function() {
       $("#adduom").focus();
     }
   });
-  $("#openingstock").keydown(function(event) {
+  $(document).off('keydown', '#addcatselect').on('keydown', '#addcatselect',function(event) {
     if (event.which==13) {
       event.preventDefault();
-      if ($("#product_tax_table tbody tr:first td:eq(0) select").is(":disabled")||$("#product_tax_table tbody tr").length==0) {
-        $('#specifications').contents(".form-group:first").find("input:first").focus();
-        if ($('#specifications').contents(".form-group").length == 0) {
-          $("#apsubmit").focus();
-        }
-      }
-      else {
-        $("#product_tax_table tbody tr:first td:eq(0) select").focus();
-      }
+      $("#addproddesc").focus().select();
     }
-    else if (event.which==38 && $("#godownpresence").val()==1) {
-      $("#godownflag").focus().select();
-    }
-    else if (event.which==38 && $("#godownpresence").val()==0) {
-      $("#adduom").focus().select();
-    }
-    else if (event.which==173) {
-      event.preventDefault();
-    }
-  });
+    });
   $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
     /* Act on the event */
     if (event.which==27)
@@ -252,7 +222,7 @@ $(document).ready(function() {
             }
 
             $("#adduom option").filter(function(i,e){return $(e).text()==unitname}).prop('selected', true);
-            $('#openingstock').focus().select();
+            $("#product_tax_table tbody tr:first td:eq(0) select").focus();
           }
         })
         .fail(function() {
@@ -279,6 +249,7 @@ $(document).ready(function() {
 
     if (e.which == 13)
     {
+      e.preventDefault();
       var nextIndex = f.index(this) + 1;
 
       if(nextIndex < n)
@@ -288,8 +259,13 @@ $(document).ready(function() {
         f[nextIndex].select();
       }
       else {
-        e.preventDefault();
-        $("#apsubmit").click();
+        if ($("#godownpresence").val()==0) {
+          $("#openingstock").focus().select();
+        }
+        if ($("#godownpresence").val()==1)
+        {
+          $("#godownflag").focus().select();
+        }
       }
     }
     if (e.which == 38)
@@ -384,6 +360,14 @@ $(document).ready(function() {
       {
         $("#specifications").html("");
         $("#specifications").html(resp);
+        $("#specshelp").hide();
+        if ($(".spec").length < 3) {
+          $("#specifications").removeClass("specsdiv");
+        }
+        else {
+          $("#specifications").addClass("specsdiv");
+        }
+        $("#product_tax_table tbody tr:first td:eq(0) select").focus();
         console.log("success");
       })
       .fail(function() {
@@ -397,7 +381,7 @@ $(document).ready(function() {
     else
     {
       $("#specifications").html("");
-
+      $("#specshelp").show();
       $('#product_tax_table tbody tr').remove();
       $('#product_tax_table tbody').append('<tr value="New">'+
       '<td class="col-xs-4">'+
@@ -432,7 +416,7 @@ $(document).ready(function() {
     if (event.which==188 && event.shiftKey)
     {
       if (curindex==0 && $("#godownflag").val()==0) {
-      $("#openingstock").focus().select();
+      $("#adduom").focus();
       }
       if (curindex==0 && $("#godownflag").val()==1) {
       $(".godown_ob:last").focus().select();
@@ -472,14 +456,12 @@ $(document).ready(function() {
           }
         });
         types.sort();
-        console.log(types);
         var duplicatetypes = [];
         for (var i = 0; i < types.length - 1; i++) {
           if (types[i + 1] == types[i]) {
             duplicatetypes.push(types[i]);
           }
         }
-        console.log(duplicatetypes);
         if (duplicatetypes.length > 0) {
           $("#cvat-alert").alert();
           $("#cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -631,7 +613,18 @@ $(document).ready(function() {
     }
     else if (event.which==27) {
       event.preventDefault();
-      $('#specifications').contents(".form-group:first").find("input:first").focus();
+      if ($(".spec").length > 0) {
+        $('#specifications').contents(".form-group:first").find("input:first").focus();
+      }
+      else {
+        if ($("#godownpresence").val()==0) {
+          $("#openingstock").focus().select();
+        }
+        if ($("#godownpresence").val()==1)
+        {
+          $("#godownflag").focus().select();
+        }
+      }
     }
 
   });
@@ -643,7 +636,18 @@ $(document).ready(function() {
     $('#product_tax_table tbody tr:last td:eq(0) select').select();
   });
   /* -----------------------Tax key events end----------------------------------------- */
-
+$(document).off('keydown', '#openingstock').on('keydown', '#openingstock', function(event) {
+  if (event.which == 13) {
+    event.preventDefault();
+    $("#apsubmit").click();
+  }
+  else if (event.which == 38) {
+    $("#godownflag").focus().select();
+  }
+  else if (event.which == 173) {
+    event.preventDefault();
+  }
+});
   /* -----------------------Godown Key events start here----------------------------------------- */
 
   $(document).off("keyup",".godown_name").on("keyup",".godown_name",function(event)
@@ -702,45 +706,36 @@ $(document).ready(function() {
         $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
       else {
-        if ($('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').val()=="") {
-          $("#godown-blank-alert").alert();
-          $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#godown-blank-alert").hide();
-          });
-          $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
-          return false;
-        }
-        if ($('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(1) input').val()=="") {
-          $("#os-blank-alert").alert();
-          $("#os-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#os-blank-alert").hide();
-          });
-          $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(1) input').focus();
-          return false;
-        }
-        if ($("#godown_ob_table tbody tr").length == numberofgodowns || $("#godown_ob_table tbody tr").length > numberofgodowns) {
-          var taxdisabled = $('#product_tax_table tbody tr:first td:eq(0) select').is(":disabled");
-          var taxcount = $('#product_tax_table tbody tr').length;
-          if (taxdisabled || taxcount<1) {
-            if ($("#specifications").contents(".form-group").length==0) {
-              $("#apsubmit").focus();
-            }
-            else {
-              $("#specifications").contents(".form-group:first").find("input:first").focus();
-            }
+        if (numberofgodowns > 1) {
+          if ($('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').val()=="") {
+            $("#godown-blank-alert").alert();
+            $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#godown-blank-alert").hide();
+            });
+            $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
+            return false;
+          }
+          if ($('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(1) input').val()=="") {
+            $("#os-blank-alert").alert();
+            $("#os-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#os-blank-alert").hide();
+            });
+            $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(1) input').focus();
+            return false;
+          }
+          $('#godown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+          if (curindex1 == 0) {
+            $("#godown_ob_table tbody tr:last td:last").append('<a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+          }
+          $(".godown_ob").numeric();
+          $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
+          $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
           }
           else {
-            $('#product_tax_table tbody tr:first td:eq(0) select').focus().select();
+            $("#addgodown").focus();
           }
-          return false;
         }
-        $('#godown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-        $("#godown_ob_table tbody tr:last td:last").append('<a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-        $(".godown_ob").numeric();
-        $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true);
-        $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
-    }
     else if(event.which==190 && event.shiftKey)
     {
       event.preventDefault();
@@ -764,19 +759,7 @@ $(document).ready(function() {
     }
     else if (event.which==27) {
       event.preventDefault();
-      var taxdisabled = $('#product_tax_table tbody tr:first td:eq(0) select').is(":disabled");
-      var taxcount = $('#product_tax_table tbody tr').length;
-      if (taxdisabled || taxcount<1) {
-        if ($("#specifications").contents(".form-group").length == 0) {
-          $("apsubmit").focus();
-        }
-        else {
-          $("#specifications").contents(".form-group:first").find("input:first").focus();
-        }
-      }
-      else {
-        $('#product_tax_table tbody tr:first td:eq(0) select').focus().select();
-      }
+      $("#apsubmit").focus();
     }
     else if (event.which==173) {
       event.preventDefault();
@@ -790,6 +773,82 @@ $(document).ready(function() {
     $('#godown_ob_table tbody tr:last td:eq(0) select').select();
   });
   /* -----------------------Godown Key events end here----------------------------------------- */
+/*
+  Adding godown.
+*/
+$("#addgodown").click(function() {
+   $.ajax(
+   {
+   type: "POST",
+   url: "/godown?type=addpopup",
+   global: false,
+   async: false,
+   datatype: "text/html",
+   beforeSend: function(xhr)
+     {
+       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+     },
+   success: function(resp)
+   {
+         $("#addgodownpopup").html("");
+         $('.modal-backdrop').remove();
+         $('.modal').modal('hide');
+         $("#addgodownpopup").html(resp);
+         $('#addgodownmodal').modal('show');
+         $('#addgodownmodal').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
+         {
+           $("#godownname").focus();
+         });
+         $('#addgodownmodal').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is opened
+         {
+          $("#addgodownpopup").html("");
+          $(document).off('keyup').on('keyup',function(event)
+          {
+            /* Act on the event */
+            if (event.which == 45)
+            {
+              event.preventDefault();
+              $("#apsubmit").click();
+            }
+          });
+          $.ajax({
+            url: 'godown?type=getallgodowns',
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+          })
+          .done(function(resp) {
+            var newgodowns = resp["gkresult"];
+            if (newgodowns.length > 0) {
+              $("#newgodownadded").show();
+              $('#godown_ob_table tbody tr').each(function(){
+                var curindex2 = $(this).closest('tr').index();
+              for (i in newgodowns ) {
+                if (newgodowns[i].godownname == sessionStorage.newgodownname && newgodowns[i].godownaddress == sessionStorage.newgodownaddress) {
+                  $('#godown_ob_table tbody tr:eq('+curindex2+') td:eq(0) select').append('<option value="' + newgodowns[i].godownid + '">' + newgodowns[i].godownname + ' ' + newgodowns[i].godownaddress + '</option>');
+                }
+              }
+              });
+              $("#godownflag").focus().select();
+            }
+            console.log("success");
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          .always(function() {
+            console.log("complete");
+          });
+
+         });
+   }
+}
+ );
+ });
+
 
   $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
     event.preventDefault();
@@ -889,7 +948,6 @@ $(document).ready(function() {
         }
       })
       .done(function(resp) {
-        console.log(resp["gkstatus"]);
         if (resp["gkstatus"] ==0) {
 
           $("#product").click();

@@ -6,14 +6,14 @@
 
   <div class="panel-body">
     <form id="editprodform">
-      <div class="container-fluid row">
+      <div class="container-fluid row nopadding">
 
-    <div class="form-group  col-sm-12">
+    <div class="form-group  col-sm-6">
 
 
 
       <label for="prodselect">{% trans %}Select Product{% endtrans %} :</label>
-        <select class = "form-control"  name = "productcode" id="prodselect" >
+        <select class = "form-control input-sm"  name = "productcode" id="prodselect" >
           <option value="" disabled selected hidden>{% trans %}Select Product{% endtrans %}</option>
           {% for prod in gkresult %}
           <option value="{{prod['productcode']}}">{{prod["productdesc"]}}</option>
@@ -35,6 +35,7 @@
         <button id="epedit" class="btn btn-primary btn-sm">{% trans %}Edit{% endtrans %}</button>
         <button id="epdelete" class="btn btn-danger btn-sm">{% trans %}Delete{% endtrans %}</button>
         <button id="epreset" class="btn btn-warning btn-sm">{% trans %}Reset{% endtrans %}</button>
+        <button id="addgodown" class="btn btn-info btn-sm" accesskey="a">{% trans %}<u>A</u>dd Godown{% endtrans %}</button>
       </div>
 
       </div>
@@ -57,7 +58,9 @@
           </div><!-- /.modal-dialog -->
         </div>
       </div><!-- /.modal -->
+      <div id="addgodownpopup">
 
+      </div>
     </div>
   </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editproduct.js')}}"></script>
