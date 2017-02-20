@@ -106,8 +106,8 @@ def tallyImport(request):
 				curgrpid = newsub.json()["gkresult"]
 		if accRow[0].font.i:
 			print len(accRow)
-			print accRow
-			if len(accRow)>3:
+			
+			if len(accRow)>2:
 				if accRow[1].value==None and accRow[2].value==None:
 					print "opening balance of ",accRow[0]
 					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
@@ -121,7 +121,7 @@ def tallyImport(request):
 					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
 					continue
 	
-			if len(accRow)==3:
+			if len(accRow)==2:
 				newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
 				
 
@@ -141,7 +141,6 @@ def tallyImport(request):
 		if wbTally.index(accSheet) == 0:
 			continue
 		ledgerAccount = str(accSheet.title.strip())
-		print type(ledgerAccount)
 		print ledgerAccount
 		ledgerCode = accounts[ledgerAccount]
 		voucherRows = tuple(accSheet.rows)
@@ -161,9 +160,9 @@ def tallyImport(request):
 			vouchertype = v[3].value.strip().lower()
 			
 			if v[5].value != None:
-				print "value of debit" ,v[5].value
 				drs = {ledgerCode: v[5].value}
 				if v[2].value == "(as per details)":
+					print "In multiple crs row"
 					accIndex = voucherRows.index(v )+1
 					CurAccount = voucherRows[voucherRows.index(v)+1 ][2].value.strip()
 					crs = {}
@@ -181,9 +180,10 @@ def tallyImport(request):
 			
 			try:
 				if v[6].value != None:
-					print"value of v[6]" ,v[6].value
+					print "Value of V[6]",v[6].value
 					crs = {ledgerCode: v[6].value}
 					if v[2].value == "(as per details)":
+						print "In multiple drs row"
 						accIndex = voucherRows.index(v)+1
 						CurAccount = voucherRows[voucherRows.index(v)+1 ][2].value.strip()
 						drs = {}
@@ -201,7 +201,6 @@ def tallyImport(request):
 			except IndexError:
 				pass
 
-			
 			newvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps({"voucherdate":voucherDate,"vouchernumber":vouchernumber,"vouchertype":vouchertype,"drs":drs,"crs":crs,"narration":narration}),headers=header)
 
 	return {"gkstatus":0}
@@ -282,13 +281,13 @@ def exportLedger(request):
 					continue
 				Ledger.cell(row=ledgerRowCounter, column=1, value=row["voucherdate"])
 				particularCounter = ledgerRowCounter
-                
+				
 				if len(particulars) == 1:
 					Ledger.cell(row=ledgerRowCounter, column=3, value=accN["accountname"])
 					Ledger.cell(row=ledgerRowCounter+1 , column=3, value=row["narration"])
 					Ledger.cell(row=ledgerRowCounter, column=6, value=row["Dr"])
 					Ledger.cell(row=ledgerRowCounter, column=7, value=row["Cr"])
-                    
+					
 				particularCounter = ledgerRowCounter +1
 				if len(particulars) > 1:
 					print"Length greater than 1",len(particulars)
