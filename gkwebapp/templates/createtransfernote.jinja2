@@ -12,7 +12,7 @@
   }
   .fixed-table tbody {
       display:block;
-      height: 225px;
+      height: calc(115vh - 38em);
       overflow-y:scroll;
   }
 
@@ -24,10 +24,14 @@
   .fixed-table thead {
       width: calc( 100% - 0.7em )
   }
+  .nopadding{
+    margin:0 !important;
+    padding:0 !important;
+  }
   </style>
 </head>
 <body>
-  <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
+  <div class="container-fluid " style="padding: 1 !important; margin: 0 !important;">
     <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
 
       {% trans %}Transfer Note saved.{% endtrans %}
@@ -37,9 +41,9 @@
       {% trans %}Something went wrong!{% endtrans %}
     </div>
 
-    <div class="panel shadow transfernote_panel">
-      <div class="panel-body">
-        <div class="col-md-6">
+    <div class="panel shadow transfernote_panel ">
+      <div class="panel-body"> 
+        <div class="col-md-6 nopadding">
           <div class="alert alert-danger" id="custsup-blank-alert"  aria-live="rude" role="alert" hidden>
 
             <label for="vno">{% trans %}Please Enter Date{% endtrans %}</label>
@@ -87,12 +91,12 @@
             </div>
             <div class="form-group">
               <label for="transfernote_date">{% trans %}Date:{% endtrans %}</label>
-              <div class="form-inline">
+              <div class="form-inline nopadding">
                 <form class="form-inline">
-                  <div class="form-group">
+                  <div class="form-group ">
                     <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="DD" id="tn_date" accesskey="v">
                   </div>
-                  <div class="form-group">
+                  <div class="form-group ">
                     <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="MM" id="tn_month" accesskey="v">
                   </div>
                   <div class="form-group">
@@ -100,10 +104,12 @@
                   </div>
                 </form>
               </div>
-              <br>
+             
             </div>
-            <div class="row">
-              <div class="form-group col-sm-6">
+         <form>
+            <div class="form-group ">
+            <div class="row ">
+              <div class="form-group col-sm-6 ">
                 <label for="tn_from_godown">{% trans %} From Godown:{% endtrans %}</label>
                 <select class="form-control input-sm" id="tn_from_godown" accesskey="">
                   <option value=""  disabled hidden selected>{% trans %}Select Godown{% endtrans %}</option>
@@ -111,7 +117,7 @@
                   <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
                   {% endfor %}
                 </select>
-                <br>
+               
               </div>
               <div class="form-group col-sm-6">
                 <label for="tn_to_godown">{% trans %} To Godown:{% endtrans %}</label>
@@ -121,10 +127,12 @@
                   <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
                   {% endfor %}
                 </select>
-                <br>
+               
               </div>
             </div>
-            <div class="form-group">
+          </div>
+                </form>
+            <div class="form-group nopadding">
               <div class="panel">
                 <table id="transfernote_product_table" class="table table-condensed shadow table-borderd fixed-table">
                   <thead class="bg-primary">
