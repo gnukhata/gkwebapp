@@ -409,7 +409,7 @@ $(document).ready(function() {
       $('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
       event.preventDefault();
     }
-    else if (event.which==35) {
+    else if (event.which==27) {
       event.preventDefault();
       $("#deliverychallan_noofpackages").focus().select();
     }
