@@ -51,19 +51,19 @@
           </div>
             <div class="form-group">
               <label for="deliverychallan_challanno">{% trans %}Note No{% endtrans %} :</label>
-              <input class="form-control input-sm" id="deliverychallan_challanno" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a">
+              <input class="form-control input-sm" id="deliverychallan_challanno" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a" value = "{{lastdelchaldata['dcno']}}">
             </div>
             <div class="form-group">
               <label for="deliverychallan_date">{% trans %}Note Date{% endtrans %} :</label>
               <div class="form-inline">
                   <div class="form-group ">
-                    <input type="text" class="form-control input-sm delchaldate" size="2" maxlength="2" placeholder="DD" id="deliverychallan_date" accesskey="v">
+                    <input type="text" class="form-control input-sm delchaldate" size="2" maxlength="2" placeholder="DD" id="deliverychallan_date" accesskey="v" value = "{{lastdelchaldata['dcdate'][0:2]}}">
                   </div>
                   <div class="form-group">
-                    <input type="text" class="form-control input-sm delchaldate" size="2" maxlength="2" placeholder="MM" id="deliverychallan_month" accesskey="v">
+                    <input type="text" class="form-control input-sm delchaldate" size="2" maxlength="2" placeholder="MM" id="deliverychallan_month" accesskey="v" value = "{{lastdelchaldata['dcdate'][3:5]}}">
                   </div>
                   <div class="form-group">
-                    <input type="text" class="form-control input-sm delchaldate" size="4" maxlength="4" placeholder="YYYY" id="deliverychallan_year" accesskey="v">
+                    <input type="text" class="form-control input-sm delchaldate" size="4" maxlength="4" placeholder="YYYY" id="deliverychallan_year" accesskey="v" value = "{{lastdelchaldata['dcdate'][6:]}}">
                   </div>
               </div>
             </div>
