@@ -394,7 +394,7 @@ $(document).ready(function() {
       $('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
       event.preventDefault();
     }
-    else if (event.which==35) {
+    else if (event.which==27) {
       event.preventDefault();
       $('#no_of_packet').focus().select();
     }
