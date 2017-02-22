@@ -296,6 +296,9 @@ def exportLedger(request):
 					Ledger.cell(row=ledgerRowCounter, column=3, value="(as per details)")
 					for p in particulars:
 						print "In for loop particularcounter",particularCounter
+						print ('A%d:B%d')%(particularCounter,particularCounter)
+						accountList.merge_cells(('A%d:B%d')%(particularCounter,particularCounter))
+#						accountList.merge_cells(start_row=particularCounter,start_column=1,end_row=particularCounter,end_column=2)
 						Ledger.cell(row=particularCounter, column=3, value=p["accountname"])
 						if row["Cr"] == "":
 							Ledger.cell(row=particularCounter, column=7, value=str(p["amount"])+" Cr")
