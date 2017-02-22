@@ -249,7 +249,11 @@ def exportLedger(request):
 
 			acclist = requests.get("http://127.0.0.1:6543/accounts?acclist",headers=header)
 			accounts = acclist.json()["gkresult"]
+            
 
+		
+		
+		"""
 		for acct in accounts:
 			accname = str(acct)
 			accountcode = accounts[acct]
@@ -311,6 +315,7 @@ def exportLedger(request):
 				Ledger.cell(row=ledgerRowCounter, column=4, value=row["vouchertype"])
 				Ledger.cell(row=ledgerRowCounter, column=5, value=row["vouchernumber"])
 				ledgerRowCounter = particularCounter +1
+		"""		
 
 		gkwb.save(filename = "AllLedger.xlsx")
 		AllLedgerfile = open("AllLedger.xlsx","r")
