@@ -8,7 +8,8 @@
         <form id="addprodform">
           <div class="col-sm-6" >
             <div class="row">
-              <div class="form-group col-sm-4">
+              {% if not gkresult["category"] %}
+              <div class="form-group col-sm-4" id="categorydiv" hidden>
                 <label class="" for="addcatselect">{% trans %}Select Category{% endtrans %} :</label>
                 <select class = "form-control input-sm"  name = "catselect" id="addcatselect" >
                   <option value="" selected >{% trans %}None{% endtrans %}</option>
@@ -17,6 +18,17 @@
                   {% endfor %}
                 </select>
               </div>
+              {% else %}
+              <div class="form-group col-sm-4" id="categorydiv">
+                <label class="" for="addcatselect">{% trans %}Select Category{% endtrans %} :</label>
+                <select class = "form-control input-sm"  name = "catselect" id="addcatselect" >
+                  <option value="" selected >{% trans %}None{% endtrans %}</option>
+                  {% for cat in gkresult["category"] %}
+                  <option value="{{cat['categorycode']}}">{{cat["categoryname"]}}({{cat["subcount"]}})</option>
+                  {% endfor %}
+                </select>
+              </div>
+              {% endif %}
               <div class="form-group col-sm-4 pds">
                 <label for="addproddesc" class="">{% trans %}Product Description{% endtrans %} :</label>
                 <input type='text' class="form-control input-sm" name="addproddesc"  id="addproddesc" placeholder="Alphanumeric">
@@ -110,7 +122,7 @@
             </div>
             <small id="taxhelp3" class="form-text text-muted">Press 'Esc' Key from tax rate to shift focus to specs or from godown openingstock to 'Save' button.</small><br>
             <small id="taxhelp4" class="form-text text-muted">Press 'Insert' Key from anywhere on the screen to save changes.</small>
-            <a data-toggle="collapse" href="#moresmall">See more<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+            <a data-toggle="collapse" href="#moresmall">More<span class="glyphicon glyphicon-triangle-bottom"></span></a>
             <div class="collapse" id="moresmall">
               <small id="taxhelp2" class="form-text text-muted">Press 'Ctrl + >' or 'Ctrl + <' to navigate within tax or godown tables.</small><br>
               <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' from tax name to shift focus to opening stock or from godown name to checkbox.</small>
