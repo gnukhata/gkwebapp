@@ -38,8 +38,11 @@ $(document).ready(function()
   });
 
   $("#org-name").bind("change keyup focusin", function(){
-    var org = $("#org-name option:selected").val();
-    var orgobj = eval('('+org+')');
+    //Creating an object to store organisation name and type
+    var orgobj = {};
+    orgobj.orgname = $("#org-name option:selected").attr("data-orgname");
+    orgobj.orgtype = $("#org-name option:selected").attr("data-orgtype");
+    console.log(orgobj);
     $.ajax({
       type: "POST",
       url: "/yearcode",
