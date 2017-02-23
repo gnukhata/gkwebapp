@@ -247,9 +247,12 @@ def exportLedger(request):
 					ob2 = accountList.cell(row=cellCounter,column=3,value="")
 					cellCounter = cellCounter + 1
 
-			acclist = requests.get("http://127.0.0.1:6543/accounts?acclist",headers=header)
-			accounts = acclist.json()["gkresult"]
-            
+					
+		Voucher = gkwb.create_sheet()
+		Voucher.title = "Vochers List"
+        
+        
+			
 
 		
 		
