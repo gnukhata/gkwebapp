@@ -212,3 +212,9 @@ def childrenofcategories(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/categories?type=children&categorycode=%d"%(int(request.params["categorycode"])), headers=header)
 	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
+
+@view_config(route_name="category",request_param="type=countcategory",renderer="json")
+def countcategory(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/categories", headers=header)
+	return {"gkstatus": result.json()["gkstatus"], "categorycount": len(result.json()["gkresult"])}
