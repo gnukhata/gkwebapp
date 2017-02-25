@@ -641,13 +641,14 @@ $(document).ready(function() {
       if(resp["gkstatus"] == 0){
         $("#success-delete-alert").alert();
         $("#success-delete-alert").fadeTo(2250, 500).slideUp(500, function(){
-          console.log($("#category_edit_list").length);
-          if($("#category_edit_list").length==1){
-            $("#searchcategory").hide();
-          }
           $("#success-delete-alert").hide();
-          $("#addcategory").click();
-          $("a[href='#category_edit']").click();
+          if($("#category_edit_list option").length==2){
+            $("#searchcategory").hide();
+            $("#addcategory").click();
+          }
+          else {
+            $("a[href='#category_edit']").click();
+          }
         });
         return false;
       }
