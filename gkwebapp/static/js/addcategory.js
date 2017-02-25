@@ -583,6 +583,7 @@ $(document).ready(function() {
         $("#success-alert").alert();
         $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#success-alert").hide();
+          $("#searchcategory").show();
           $("#addcategory").click();
           });
         return false;
