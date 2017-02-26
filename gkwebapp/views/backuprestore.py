@@ -250,8 +250,13 @@ def exportLedger(request):
 					
 		Voucher = gkwb.create_sheet()
 		Voucher.title = "Vochers List"
-        
-        
+		yearStart = int(request.params["yearstart"])
+		yearEnd = int(request.params["yearend"])
+		print type(yearStart) , yearEnd
+		vchResult = requests.get("http://127.0.0.1:6543/transaction?searchby=date&from=%d&to=%d"%(yearStart,yearEnd),headers=header)
+		vchList = vchResult.json()["gkresult"] 
+		print vchList
+		
 			
 
 		
