@@ -259,9 +259,9 @@ def exportLedger(request):
 		rowCounter = 1
 		Voucher.column_dimensions["A"].width =10
 		Voucher.column_dimensions["B"].width = 10
-		Voucher.column_dimensions["C"].width = 10
-		Voucher.column_dimensions["F"].width = 10
-		Voucher.column_dimensions["G"].width = 10
+		Voucher.column_dimensions["D"].width = 20
+		Voucher.column_dimensions["F"].width = 20
+		Voucher.column_dimensions["H"].width = 40
 		for v in vchList:
 			Voucher.cell(row=rowCounter,column=1,value=v["vouchernumber"])
 			Voucher.cell(row=rowCounter,column=2,value=v["voucherdate"])
@@ -270,9 +270,39 @@ def exportLedger(request):
 			Crs = v["crs"]
 			Drs = v["drs"]
 #			print Crs.keys()
-			drAcc = Drs.keys()
-			
-			
+			for k in Drs.keys():
+				if k.find("+") == -1:
+					Voucher.cell(row=rowCounter,column=4,value=k)
+					Voucher.cell(row=rowCounter,column=5,value="%.2f"%float(Drs[k]))
+				else:
+					drMulResult = requests.get("http://127.0.0.1:6543/transaction?code=%d"%(v["vouchercode"]),headers=header)
+					drList = drMulResult.json()["gkresult"]
+					mDrs = drList["drs"]
+					Voucher.cell(row=rowCounter,column=4,value="(as per details)")
+			#		print mDrs
+					Voucher.cell(row=rowCounter,column=6,value=key)
+					Voucher.cell(row=rowCounter,column=7,value="%.2f"%float(Crs[key]))
+
+					counter = rowCounter+1
+					for dr in mDrs.keys():
+					#	print dr
+						Voucher.cell(row=counter,column=4,value=dr)
+						Voucher.cell(row=counter,column=5,value="%.2f"%float(mDrs[dr]))
+						counter = counter + 1
+						print "Counter ",counter
+					rowCounter = counter
+					
+			print "Rowcounter ",rowCounter			
+			for key in Crs.keys():
+				if key.find("+") == -1:
+					Voucher.cell(row=rowCounter,column=6,value=key)
+					Voucher.cell(row=rowCounter,column=7,value="%.2f"%float(Crs[key]))
+				else:
+					crMulResult = requests.get("http://127.0.0.1:6543/transaction?code=%d"%(v["vouchercode"]),headers=header)
+					crList = crMulResult.json()["gkresult"]
+					print "THis is multiple dr list url result  ", crList
+
+			Voucher.cell(row=rowCounter,column=8,value=v["narration"])
 			rowCounter = rowCounter + 1
 			
 		
