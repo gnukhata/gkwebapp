@@ -250,81 +250,33 @@ def exportLedger(request):
 					
 		Voucher = gkwb.create_sheet()
 		Voucher.title = "Vochers List"
-		yearStart = int(request.params["yearstart"])
-		yearEnd = int(request.params["yearend"])
-		print type(yearStart) , yearEnd
-		vchResult = requests.get("http://127.0.0.1:6543/transaction?searchby=date&from=%d&to=%d"%(yearStart,yearEnd),headers=header)
+		yearStart = str(request.params["yearstart"])
+		yearEnd = str(request.params["yearend"])
+#		print type(yearStart) , yearEnd
+		vchResult = requests.get("http://127.0.0.1:6543/transaction?searchby=date&from=%s&to=%s"%(yearStart,yearEnd),headers=header)
 		vchList = vchResult.json()["gkresult"] 
-		print vchList
-		
+#		print vchList
+		rowCounter = 1
+		Voucher.column_dimensions["A"].width =10
+		Voucher.column_dimensions["B"].width = 10
+		Voucher.column_dimensions["C"].width = 10
+		Voucher.column_dimensions["F"].width = 10
+		Voucher.column_dimensions["G"].width = 10
+		for v in vchList:
+			Voucher.cell(row=rowCounter,column=1,value=v["vouchernumber"])
+			Voucher.cell(row=rowCounter,column=2,value=v["voucherdate"])
+			Voucher.cell(row=rowCounter,column=3,value=v["vouchertype"])
 			
-
-		
-		
-		"""
-		for acct in accounts:
-			accname = str(acct)
-			accountcode = accounts[acct]
-			calculatefrom = request.params["yearstart"]
-			calculateto = request.params["yearend"]
-			financialstart = request.params["yearstart"]
-			result = requests.get("http://127.0.0.1:6543/report?type=ledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode="%(accountcode,calculatefrom,calculateto,financialstart), headers=header)
-			ledgerResult = result.json()["gkresult"]
-			if len(ledgerResult) == 1:
-				continue
-			firstVal = ledgerResult[0]["particulars"][0]
-			secondVal = ledgerResult[1]["particulars"][0]
-#			print firstVal["accountname"]
-#			print secondVal["accountname"]
-			if firstVal["accountname"] == "Opening Balance" and secondVal["accountname"] == "Total of Transactions":
-				continue
-			Ledger = gkwb.create_sheet()
-			Ledger.title = accname.replace("/","")
+			Crs = v["crs"]
+			Drs = v["drs"]
+#			print Crs.keys()
+			drAcc = Drs.keys()
 			
-			Ledger.column_dimensions["A"].width =10
-			Ledger.column_dimensions["C"].width = 50
-			Ledger.column_dimensions["F"].width = 10
-			Ledger.column_dimensions["G"].width = 10
-			ledgerRowCounter = 1
-			for row in ledgerResult:
-				particulars = row["particulars"]
-				accN = particulars[0]
-				if accN["accountname"] == "Opening Balance" or accN["accountname"] == "Total of Transactions" or accN["accountname"] == "Closing Balance C/F" or accN["accountname"] == "Grand Total":
-					continue
-				Ledger.cell(row=ledgerRowCounter, column=1, value=row["voucherdate"])
-				particularCounter = ledgerRowCounter
-				
-				if len(particulars) == 1:
-					Ledger.cell(row=ledgerRowCounter, column=3, value=accN["accountname"])
-					Ledger.cell(row=ledgerRowCounter+1 , column=3, value=row["narration"])
-					Ledger.cell(row=ledgerRowCounter, column=6, value=row["Dr"])
-					Ledger.cell(row=ledgerRowCounter, column=7, value=row["Cr"])
-					
-				particularCounter = ledgerRowCounter +1
-				if len(particulars) > 1:
-					print"Length greater than 1",len(particulars)
-					print "THis is ledgerRowCounter", ledgerRowCounter
-					
-					Ledger.cell(row=ledgerRowCounter, column=3, value="(as per details)")
-					for p in particulars:
-						print "In for loop particularcounter",particularCounter
-						print ('A%d:B%d')%(particularCounter,particularCounter)
-						accountList.merge_cells(('A%d:B%d')%(particularCounter,particularCounter))
-#						accountList.merge_cells(start_row=particularCounter,start_column=1,end_row=particularCounter,end_column=2)
-						Ledger.cell(row=particularCounter, column=3, value=p["accountname"])
-						if row["Cr"] == "":
-							Ledger.cell(row=particularCounter, column=7, value=str(p["amount"])+" Cr")
-							Ledger.cell(row=ledgerRowCounter, column=6, value=row["Cr"])
-						if row["Dr"] == "":
-							Ledger.cell(row=particularCounter, column=6, value=str(p["amount"])+" Dr")
-							Ledger.cell(row=ledgerRowCounter, column=7, value=row["Cr"])
-						particularCounter = particularCounter +1
-					Ledger.cell(row=particularCounter, column=3, value=row["narration"])
-				Ledger.cell(row=ledgerRowCounter, column=4, value=row["vouchertype"])
-				Ledger.cell(row=ledgerRowCounter, column=5, value=row["vouchernumber"])
-				ledgerRowCounter = particularCounter +1
-		"""		
-
+			
+			rowCounter = rowCounter + 1
+			
+		
+		
 		gkwb.save(filename = "AllLedger.xlsx")
 		AllLedgerfile = open("AllLedger.xlsx","r")
 		bf = AllLedgerfile.read()
