@@ -282,8 +282,8 @@ def exportLedger(request):
 					mDrs = drList["drs"]
 				#	print drList
 					Voucher.cell(row=rowCounter,column=4,value="(as per details)")
-					crAcc = drList["crs"].keys()[0]
-					print drList["crs"][crAcc]
+#					crAcc = drList["crs"].keys()[0]
+#					print drList["crs"][crAcc]
 #					Voucher.cell(row=rowCounter,column=6,value=crAcc)
 #					Voucher.cell(row=rowCounter,column=7,value="%.2f"%float(drList["crs"][crAcc]))
 					counter = rowCounter+1
@@ -292,7 +292,7 @@ def exportLedger(request):
 						Voucher.cell(row=counter,column=4,value=dr)
 						Voucher.cell(row=counter,column=5,value="%.2f"%float(mDrs[dr]))
 						counter = counter + 1
-						print "Counter ",counter
+					#	print "Counter ",counter
 					rowCounter = counter
 #			continue
 					
@@ -310,6 +310,7 @@ def exportLedger(request):
 					mCrs = crList["crs"]
 					print mCrs
 					Voucher.cell(row=crRowCounter,column=6,value="(as per details)")
+					mCounter = crRowCounter + 1
 					for cr in mCrs.keys():
 						print cr
 						Voucher.cell(row=mCounter,column=6,value=cr)
@@ -318,8 +319,12 @@ def exportLedger(request):
 					#	print "Counter ",counter
 					crRowCounter = mCounter
 					
+			if rowCounter > crRowCounter:
+				crRowCounter = rowCounter
+			else:
+				rowCounter = crRowCounter
+				
 			
-			crRowCounter = rowCounter
 
 					
 		
