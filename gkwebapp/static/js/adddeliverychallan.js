@@ -280,6 +280,7 @@ $(document).ready(function() {
     var previndex = curindex-1;
     if (event.which==13) {
       event.preventDefault();
+      
       if ($('#deliverychallan_product_table tbody tr:eq('+curindex+') td:eq(0) select option:selected').val()=="") {
         $("#product-blank-alert").alert();
         $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -291,6 +292,8 @@ $(document).ready(function() {
       else {
         $('#deliverychallan_product_table tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
       }
+     
+  	
     }
     else if(event.which==190 && event.shiftKey)
     {
@@ -333,6 +336,24 @@ $(document).ready(function() {
     var previndex1 = curindex1-1;
     if (event.which==13) {
       event.preventDefault();
+      
+      if ($('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(1) input').val()=="") {
+  	   
+  	    	 $("#quantity-blank-alert").alert();
+  	         $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+  	         $("#quantity-blank-alert").hide();
+  	       
+  	    
+  	    });
+$('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(1) input').focus();
+      return false;
+      }
+else {
+      $('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(1) input').focus().select();
+    }
+
+     
+      
       if (curindex1 != ($("#deliverychallan_product_table tbody tr").length-1)) {
         $('#deliverychallan_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
       }
@@ -422,6 +443,7 @@ $(document).ready(function() {
       event.preventDefault();
       $("#deliverychallan_noofpackages").focus().select();
     }
+   
   });
 
 
