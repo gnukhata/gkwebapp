@@ -256,7 +256,7 @@ def exportLedger(request):
 		vchResult = requests.get("http://127.0.0.1:6543/transaction?searchby=date&from=%s&to=%s"%(yearStart,yearEnd),headers=header)
 		vchList = vchResult.json()["gkresult"] 
 #		print vchList
-		rowCounter = crRowCounter = counter = 1
+		rowCounter = crRowCounter = counter = mCounter= 1
 		
 		Voucher.column_dimensions["A"].width =10
 		Voucher.column_dimensions["B"].width = 10
@@ -314,12 +314,12 @@ def exportLedger(request):
 						print cr
 						Voucher.cell(row=mCounter,column=6,value=cr)
 						Voucher.cell(row=mCounter,column=7,value="%.2f"%float(mCrs[cr]))
-						counter = counter + 1
+						mCounter = mCounter + 1
 					#	print "Counter ",counter
 					crRowCounter = mCounter
 					
 			
-		#	crRowCounter = rowCounter
+			crRowCounter = rowCounter
 
 					
 		
