@@ -311,6 +311,25 @@ $(document).ready(function() {
     var previndex1 = curindex1-1;
     if (event.which==13) {
       event.preventDefault();
+     
+      
+      if ($('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(1) input').val()=="") {
+  	   
+  	    	 $("#quantity-blank-alert").alert();
+  	         $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+  	         $("#quantity-blank-alert").hide();
+  	       
+  	    
+  	    });
+$('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(1) input').focus();
+      return false;
+      }
+else {
+      $('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(1) input').focus().select();
+    }
+
+     
+     
       if (curindex1 != ($("#transfernote_product_table tbody tr").length-1)) {
         $('#transfernote_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
       }
