@@ -252,16 +252,14 @@ def exportLedger(request):
 		Voucher.title = "Vochers List"
 		yearStart = str(request.params["yearstart"])
 		yearEnd = str(request.params["yearend"])
-#		print type(yearStart) , yearEnd
 		vchResult = requests.get("http://127.0.0.1:6543/transaction?searchby=date&from=%s&to=%s"%(yearStart,yearEnd),headers=header)
 		vchList = vchResult.json()["gkresult"] 
-#		print vchList
 		rowCounter = crRowCounter = counter = mCounter= 1
-		
-		Voucher.column_dimensions["A"].width =10
-		Voucher.column_dimensions["B"].width = 10
-		Voucher.column_dimensions["D"].width = 20
-		Voucher.column_dimensions["F"].width = 20
+		Voucher.column_dimensions["B"].width =10
+		Voucher.column_dimensions["D"].width = 30
+		Voucher.column_dimensions["E"].width = 10
+		Voucher.column_dimensions["F"].width = 30
+		Voucher.column_dimensions["G"].width = 10
 		Voucher.column_dimensions["H"].width = 40
 		for v in vchList:
 			Voucher.cell(row=rowCounter,column=1,value=v["vouchernumber"])
@@ -270,7 +268,6 @@ def exportLedger(request):
 			Voucher.cell(row=rowCounter,column=8,value=v["narration"])
 			Crs = v["crs"]
 			Drs = v["drs"]
-#			print Crs.keys()
 			for k in Drs.keys():
 				if k.find("+") == -1:
 					Voucher.cell(row=rowCounter,column=4,value=k)
@@ -280,24 +277,13 @@ def exportLedger(request):
 					drMulResult = requests.get("http://127.0.0.1:6543/transaction?code=%d"%(v["vouchercode"]),headers=header)
 					drList = drMulResult.json()["gkresult"]
 					mDrs = drList["drs"]
-				#	print drList
 					Voucher.cell(row=rowCounter,column=4,value="(as per details)")
-#					crAcc = drList["crs"].keys()[0]
-#					print drList["crs"][crAcc]
-#					Voucher.cell(row=rowCounter,column=6,value=crAcc)
-#					Voucher.cell(row=rowCounter,column=7,value="%.2f"%float(drList["crs"][crAcc]))
 					counter = rowCounter+1
 					for dr in mDrs.keys():
-					#	print dr
 						Voucher.cell(row=counter,column=4,value=dr)
 						Voucher.cell(row=counter,column=5,value="%.2f"%float(mDrs[dr]))
 						counter = counter + 1
-					#	print "Counter ",counter
 					rowCounter = counter
-#			continue
-					
-			#print "Rowcounter ",rowCounter	
-#			crRowCounter = rowCounter		
 			for key in Crs.keys():
 				if key.find("+") == -1:
 					Voucher.cell(row=crRowCounter,column=6,value=key)
@@ -306,31 +292,19 @@ def exportLedger(request):
 				else:
 					crMulResult = requests.get("http://127.0.0.1:6543/transaction?code=%d"%(v["vouchercode"]),headers=header)
 					crList = crMulResult.json()["gkresult"]
-				#	print "THis is multiple cr list url result  ", crList
 					mCrs = crList["crs"]
-					print mCrs
 					Voucher.cell(row=crRowCounter,column=6,value="(as per details)")
 					mCounter = crRowCounter + 1
 					for cr in mCrs.keys():
-						print cr
 						Voucher.cell(row=mCounter,column=6,value=cr)
 						Voucher.cell(row=mCounter,column=7,value="%.2f"%float(mCrs[cr]))
 						mCounter = mCounter + 1
-					#	print "Counter ",counter
 					crRowCounter = mCounter
-					
 			if rowCounter > crRowCounter:
 				crRowCounter = rowCounter
 			else:
 				rowCounter = crRowCounter
-				
-			
 
-					
-		
-							
-		
-		
 		gkwb.save(filename = "AllLedger.xlsx")
 		AllLedgerfile = open("AllLedger.xlsx","r")
 		bf = AllLedgerfile.read()
