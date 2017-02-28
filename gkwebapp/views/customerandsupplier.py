@@ -6,7 +6,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -63,6 +63,12 @@ def savecustomersupplier(request):
 	header={"gktoken":request.headers["gktoken"]}
 	dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"state":request.params["state"],"custpan":request.params["custpan"],"custtan":request.params["custtan"],"csflag":int(request.params["csflag"])}
 	result=requests.post("http://127.0.0.1:6543/customersupplier",data=json.dumps(dataset),headers=header)
+	if result.json()["gkstatus"] == 0:
+		if dataset["csflag"] == 3:
+				  gkdata = {"activity":dataset["custname"] + " customer created"}
+		else:
+			gkdata = {"activity":dataset["custname"] + " supplier created"}
+		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
 	return {"gkstatus": result.json()["gkstatus"]}
 
 @view_config(route_name="customersuppliers",request_param="action=edit",renderer="json")
@@ -75,8 +81,16 @@ def editcustomersupplier(request):
 @view_config(route_name="customersuppliers", request_param="action=delete",renderer="json")
 def deletecustomersupplier(request):
 	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(request.params["custid"])), headers=header)
+	custdetails = {"csflag": result.json()["gkresult"]["csflag"], "custname":result.json()["gkresult"]["custname"]}
 	dataset={"custid":int(request.params["custid"])}
 	result = requests.delete("http://127.0.0.1:6543/customersupplier",data =json.dumps(dataset), headers=header)
+	if result.json()["gkstatus"] == 0:
+		if custdetails["csflag"] == 3:
+				  gkdata = {"activity":custdetails["custname"] + " customer deleted"}
+		else:
+			gkdata = {"activity":custdetails["custname"] + " supplier deleted"}
+		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name='customersuppliers', request_param='action=getallcusts',renderer ='json')
