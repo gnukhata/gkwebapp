@@ -211,7 +211,7 @@ def tallyImport(request):
 
 @view_config(route_name="exportledger", renderer="")
 def exportLedger(request):
-#	try:
+	try:
 		header={"gktoken":request.headers["gktoken"]}
 		gkwb = Workbook()
 		accountList = gkwb.active
@@ -312,6 +312,6 @@ def exportLedger(request):
 		headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(bf),'Content-Disposition': 'attachment; filename=AllLedger.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
 		os.remove("AllLedger.xlsx")
 		return Response(bf, headerlist=headerList.items())
-#	except:
-#		print "file not found"
-#		return {"gkstatus":3}
+	except:
+		print "file not found"
+		return {"gkstatus":3}
