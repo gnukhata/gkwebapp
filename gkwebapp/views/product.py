@@ -6,7 +6,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -137,6 +137,9 @@ def saveproduct(request):
 	proddetails["specs"] = prdspecs
 	productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
 	result = requests.post("http://127.0.0.1:6543/products", data=json.dumps(productdetails),headers=header)
+	if result.json()["gkstatus"] == 0:
+		gkdata = {"activity":proddetails["productdesc"] + " product created"}
+		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
 	if len(taxes)>0:
 		for tax in taxes:
 			if len(tax)!=0:
@@ -205,7 +208,11 @@ def editproduct(request):
 @view_config(route_name="product",request_param="type=delete", renderer="json")
 def deleteproduct(request):
 	header={"gktoken":request.headers["gktoken"]}
+	resultprod = requests.get("http://127.0.0.1:6543/products?qty=single&productcode=%d"%(int(request.params['productcode'])),headers=header)
 	result = requests.delete("http://127.0.0.1:6543/products", data=json.dumps({"productcode":request.params["productcode"]}),headers=header)
+	if result.json()["gkstatus"] == 0:
+		gkdata = {"activity":resultprod.json()["gkresult"]["productdesc"] + " product deleted"}
+		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
 	return{"gkstatus":result.json()["gkstatus"]}
 
 
