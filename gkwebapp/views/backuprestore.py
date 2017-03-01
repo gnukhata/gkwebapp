@@ -133,7 +133,7 @@ def tallyImport(request):
 	if Wsheets[1].title == "Vouchers List":
 		gVchList =tuple(Wsheets[1].rows) 
 		for gVch in gVchList:
-			if gVch[1].value == None and gVch[2] == None:
+			if gVch[1].value == None and gVch[2].value == None:
 				continue
 			voucherno = gVch[0].value
 			voucherdt = gVch[1].value
@@ -144,8 +144,10 @@ def tallyImport(request):
 
 			if (gVch[3].value) == "(as per details)":
 				while gVchList[Vindex][3].value != None:
-					print gVchList[Vindex][3].value 
+					print gVchList[Vindex][3].value
+					Vindex = Vindex + 1 
 					drs[accounts[gVchList[Vindex][3].value]] = gVchList[Vindex][4].value
+					
 					print drs
 			else:
 				print "This is gVch[4].value",gVch[4].value
