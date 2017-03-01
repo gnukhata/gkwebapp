@@ -128,13 +128,10 @@ def tallyImport(request):
 	#accountname as key and accountcode as value.
 	acclist = requests.get("http://127.0.0.1:6543/accounts?acclist",headers=header)
 	accounts = acclist.json()["gkresult"]
-	print accounts
+#	print accounts
 	Wsheets = wbTally.worksheets
-#	print Wsheets	
-#	print Wsheets[1].title		
 	if Wsheets[1].title == "Vouchers List":
 		gVchList =tuple(Wsheets[1].rows) 
-#		print gVch
 		for gVch in gVchList:
 			if gVch[1].value == None and gVch[2] == None:
 				continue
@@ -151,7 +148,10 @@ def tallyImport(request):
 					drs[accounts[gVchList[Vindex][3].value]] = gVchList[Vindex][4].value
 					print drs
 			else:
-				drs[accounts[gVch[3].value]] = gVch[3].value
+				print "This is gVch[4].value",gVch[4].value
+				print "This is accounts[gVch[3].value]",accounts[gVch[3].value]
+				print "This is gVch[3].value", gVch[3].value
+				drs[accounts[gVch[3].value]] = gVch[4].value
 				
 			if (gVch[5].value) == "(as per details)":
 				while gVchList[Vindex][5].value != None: 
