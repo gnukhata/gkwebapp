@@ -140,13 +140,15 @@ def tallyImport(request):
 			vouchertype = gVch[2].value
 			drs = {}
 			crs = {}
-			Vindex = gVchList.index(gVch)
+			
 
 			if (gVch[3].value) == "(as per details)":
+				Vindex = gVchList.index(gVch) + 1
 				while gVchList[Vindex][3].value != None:
 					print gVchList[Vindex][3].value
-					Vindex = Vindex + 1 
 					drs[accounts[gVchList[Vindex][3].value]] = gVchList[Vindex][4].value
+					Vindex = Vindex + 1 
+					
 					
 					print drs
 			else:
@@ -156,8 +158,10 @@ def tallyImport(request):
 				drs[accounts[gVch[3].value]] = gVch[4].value
 				
 			if (gVch[5].value) == "(as per details)":
+				Vindex = gVchList.index(gVch) + 1
 				while gVchList[Vindex][5].value != None: 
-					drs[accounts[gVchList[Vindex][5].value]] = gVchList[Vindex][6].value
+					crs[accounts[gVchList[Vindex][5].value]] = gVchList[Vindex][6].value
+					Vindex = Vindex + 1
 					print drs
 			else:
 				drs[accounts[gVch[5].value]] = gVch[6].value
