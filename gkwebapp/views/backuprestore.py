@@ -105,7 +105,7 @@ def tallyImport(request):
 				newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
 				curgrpid = newsub.json()["gkresult"]
 		if accRow[0].font.i:
-			print len(accRow)
+#			print len(accRow)
 			
 			if len(accRow)>2:
 				if accRow[1].value==None and accRow[2].value==None:
@@ -125,9 +125,9 @@ def tallyImport(request):
 				newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
 	
 	Wsheets = wbTally.worksheets
-	print Wsheets	
-	print Wsheets[1].title		
-	if Wsheets[1].title == "Vochers List":
+#	print Wsheets	
+#	print Wsheets[1].title		
+	if Wsheets[1].title == "Vouchers List":
 		gVchList =tuple(Wsheets[1].rows) 
 #		print gVch
 		for gVch in gVchList:
@@ -136,9 +136,15 @@ def tallyImport(request):
 			vouchertype = gVch[2].value
 			drs = {}
 			crs = {}
-			Vindex = vchList.index(gVch)
+			Vindex = gVchList.index(gVch)
+
 			if (gVch[3].value) == "(as per details)":
-				Vindex = Vindex + 1
+#				Vindex = Vindex + 1
+				print "in multiple drs"
+				drs[gVch[Vindex+1][3].value] = gVch[Vindex + 1][3].value
+				print drs
+				
+				
 				
 				
 				
@@ -273,7 +279,7 @@ def exportLedger(request):
 
 					
 		Voucher = gkwb.create_sheet()
-		Voucher.title = "Vochers List"
+		Voucher.title = "Vouchers List"
 		yearStart = str(request.params["yearstart"])
 		yearEnd = str(request.params["yearend"])
 		vchResult = requests.get("http://127.0.0.1:6543/transaction?searchby=date&from=%s&to=%s"%(yearStart,yearEnd),headers=header)
