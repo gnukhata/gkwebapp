@@ -127,10 +127,25 @@ def tallyImport(request):
 	Wsheets = wbTally.worksheets
 	print Wsheets	
 	print Wsheets[1].title		
-	if Wsheets[1].title == "Vouchers List":
-		gVch =tuple(Wsheets[1].rows) 
-		print gVch
-	 
+	if Wsheets[1].title == "Vochers List":
+		gVchList =tuple(Wsheets[1].rows) 
+#		print gVch
+		for gVch in gVchList:
+			voucherno = gVch[0].value
+			voucherdt = gVch[1].value
+			vouchertype = gVch[2].value
+			drs = {}
+			crs = {}
+			Vindex = vchList.index(gVch)
+			if (gVch[3].value) == "(as per details)":
+				Vindex = Vindex + 1
+				
+				
+				
+				
+#			Vindex = vchList.index(gVch)
+			
+		
 			
 	else:
 			
@@ -150,7 +165,7 @@ def tallyImport(request):
 			if wbTally.index(accSheet) == 0:
 				continue
 			ledgerAccount = str(accSheet.title.strip())
-			print ledgerAccount
+#			print ledgerAccount
 			ledgerCode = accounts[ledgerAccount]
 			voucherRows = tuple(accSheet.rows)
 			voucherDate = ""
