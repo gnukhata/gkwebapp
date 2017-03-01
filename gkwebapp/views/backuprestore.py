@@ -124,6 +124,10 @@ def tallyImport(request):
 			if len(accRow)==2:
 				newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
 	
+	#the dictionary thus returned will have
+	#accountname as key and accountcode as value.
+	acclist = requests.get("http://127.0.0.1:6543/accounts?acclist",headers=header)
+	accounts = acclist.json()["gkresult"]
 	Wsheets = wbTally.worksheets
 #	print Wsheets	
 #	print Wsheets[1].title		
@@ -131,6 +135,8 @@ def tallyImport(request):
 		gVchList =tuple(Wsheets[1].rows) 
 #		print gVch
 		for gVch in gVchList:
+			if gVch[1].value == None and gVch[2] == None:
+				continue
 			voucherno = gVch[0].value
 			voucherdt = gVch[1].value
 			vouchertype = gVch[2].value
@@ -139,20 +145,22 @@ def tallyImport(request):
 			Vindex = gVchList.index(gVch)
 
 			if (gVch[3].value) == "(as per details)":
-#				Vindex = Vindex + 1
-				print "in multiple drs"
-				drs[gVch[Vindex+1][3].value] = gVch[Vindex + 1][3].value
-				print drs
+				while gVchList[Vindex][3].value != None: 
+					drs[accounts[gVchList[Vindex][3].value]] = gVchList[Vindex][4].value
+					print drs
+			else:
+				drs[accounts[gVch[3].value]] = gVch[3].value
 				
-				
-				
-				
-				
-				
-#			Vindex = vchList.index(gVch)
+			if (gVch[5].value) == "(as per details)":
+				while gVchList[Vindex][5].value != None: 
+					drs[accounts[gVchList[Vindex][5].value]] = gVchList[Vindex][6].value
+					print drs
+			else:
+				drs[accounts[gVch[5].value]] = gVch[6].value
+			narration = gVch[7].value
 			
-		
-			
+				
+
 	else:
 			
 		#the dictionary thus returned will have
@@ -302,7 +310,7 @@ def exportLedger(request):
 				if k.find("+") == -1:
 					Voucher.cell(row=rowCounter,column=4,value=k)
 					Voucher.cell(row=rowCounter,column=5,value="%.2f"%float(Drs[k]))
-					rowCounter = rowCounter + 1
+					rowCounter = rowCounter + 2
 				else:
 					drMulResult = requests.get("http://127.0.0.1:6543/transaction?code=%d"%(v["vouchercode"]),headers=header)
 					drList = drMulResult.json()["gkresult"]
@@ -313,12 +321,12 @@ def exportLedger(request):
 						Voucher.cell(row=counter,column=4,value=dr)
 						Voucher.cell(row=counter,column=5,value="%.2f"%float(mDrs[dr]))
 						counter = counter + 1
-					rowCounter = counter
+					rowCounter = counter + 1
 			for key in Crs.keys():
 				if key.find("+") == -1:
 					Voucher.cell(row=crRowCounter,column=6,value=key)
 					Voucher.cell(row=crRowCounter,column=7,value="%.2f"%float(Crs[key]))
-					crRowCounter = crRowCounter + 1
+					crRowCounter = crRowCounter + 2
 				else:
 					crMulResult = requests.get("http://127.0.0.1:6543/transaction?code=%d"%(v["vouchercode"]),headers=header)
 					crList = crMulResult.json()["gkresult"]
@@ -329,7 +337,7 @@ def exportLedger(request):
 						Voucher.cell(row=mCounter,column=6,value=cr)
 						Voucher.cell(row=mCounter,column=7,value="%.2f"%float(mCrs[cr]))
 						mCounter = mCounter + 1
-					crRowCounter = mCounter
+					crRowCounter = mCounter +1
 			if rowCounter > crRowCounter:
 				crRowCounter = rowCounter
 			else:
