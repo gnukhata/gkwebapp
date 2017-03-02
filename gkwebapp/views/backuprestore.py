@@ -161,11 +161,7 @@ def tallyImport(request):
 			return {"gkstatus":0}	
 	
 		else:
-				
-			#the dictionary thus returned will have
-			#accountname as key and accountcode as value.
-			acclist = requests.get("http://127.0.0.1:6543/accounts?acclist",headers=header)
-			accounts = acclist.json()["gkresult"]
+		
 			#getting all sheets from workbook.
 			#first sheet with index 0 will be skipped.
 			sheets = wbTally.worksheets
