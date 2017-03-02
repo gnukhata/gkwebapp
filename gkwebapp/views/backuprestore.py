@@ -80,189 +80,164 @@ def tallyImport(request):
 	"""
 	#First we will get list of existing groups and subgroups for this organisation.
 	#we will of course lead the workbook from the request.
-#	try:
-	header={"gktoken":request.headers["gktoken"]}
-	xlsxfile = request.POST['xlsxfile'].file
-	wbTally = load_workbook(xlsxfile)
-	wbTally._active_sheet_index = 0
-	accountSheet = wbTally.active
-	accountList = tuple(accountSheet.rows)
-	gsResult = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist",headers=header)
-	groups = gsResult.json()["gkresult"]
-	curgrpid = None
-	parentgroupid = None
-	for accRow in accountList:
-		if accRow[0].value == None:
-			continue
-		if accRow[0].font.b:
-			curgrpid = groups[accRow[0].value.strip()]
-			parentgroupid = groups[accRow[0].value.strip()]
-			continue
-		if accRow[0].font.b == False and accRow[0].font.i == False:
-			if groups.has_key(accRow[0].value):
-				curgrpid = groups[accRow[0].value.strip()]
-			else:
-				newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
-				curgrpid = newsub.json()["gkresult"]
-		if accRow[0].font.i:
-#			print len(accRow)
-			
-			if len(accRow)>2:
-				if accRow[1].value==None and accRow[2].value==None:
-					print "opening balance of ",accRow[0]
-					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
-					continue
-				if accRow[1].value==None:
-					print "opening balance of " ,accRow[0]
-					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[2].value}),headers=header)
-					continue
-				if accRow[2].value==None:
-					print "opening balance"
-					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
-					continue
-	
-			if len(accRow)==2:
-				newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
-	
-	#the dictionary thus returned will have
-	#accountname as key and accountcode as value.
-	acclist = requests.get("http://127.0.0.1:6543/accounts?acclist",headers=header)
-	accounts = acclist.json()["gkresult"]
-#	print accounts
-	Wsheets = wbTally.worksheets
-	if Wsheets[1].title == "Vouchers List":
-		gVchList =tuple(Wsheets[1].rows) 
-		for gVch in gVchList:
-			if gVch[1].value == None and gVch[2].value == None:
+	try:
+		header={"gktoken":request.headers["gktoken"]}
+		xlsxfile = request.POST['xlsxfile'].file
+		wbTally = load_workbook(xlsxfile)
+		wbTally._active_sheet_index = 0
+		accountSheet = wbTally.active
+		accountList = tuple(accountSheet.rows)
+		gsResult = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist",headers=header)
+		groups = gsResult.json()["gkresult"]
+		curgrpid = None
+		parentgroupid = None
+		for accRow in accountList:
+			if accRow[0].value == None:
 				continue
-			voucherno = gVch[0].value
-			voucherdt = gVch[1].value
-			vdates = voucherdt.split('-')
-			voucherDt = vdates[2]+'/'+vdates[1]+'/'+vdates[0]
-			
-			vouchertype = gVch[2].value
-			drs = {}
-			crs = {}
-			
-
-			if (gVch[3].value) == "(as per details)":
-				try:
-					Vindex = gVchList.index(gVch) + 1
-					while gVchList[Vindex][3].value != None:
-						print gVchList[Vindex][3].value
-						drs[accounts[gVchList[Vindex][3].value]] = gVchList[Vindex][4].value
-						Vindex = Vindex + 1 
-						print drs
-				except IndexError:
-					pass	   
-			else:
-#				print "This is gVch[4].value",gVch[4].value
-#				print "This is accounts[gVch[3].value]",accounts[gVch[3].value]
-#				print "This is gVch[3].value", gVch[3].value
-				drs[accounts[gVch[3].value]] = gVch[4].value
-				print "This is single drs",drs
+			if accRow[0].font.b:
+				curgrpid = groups[accRow[0].value.strip()]
+				parentgroupid = groups[accRow[0].value.strip()]
+				continue
+			if accRow[0].font.b == False and accRow[0].font.i == False:
+				if groups.has_key(accRow[0].value):
+					curgrpid = groups[accRow[0].value.strip()]
+				else:
+					newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
+					curgrpid = newsub.json()["gkresult"]
+			if accRow[0].font.i:
 				
-				
-			if (gVch[5].value) == "(as per details)":
-				Vindex = gVchList.index(gVch) + 1
-				while gVchList[Vindex][5].value != None: 
-					crs[accounts[gVchList[Vindex][5].value]] = gVchList[Vindex][6].value
-					Vindex = Vindex + 1
-					print "THis is Multiple crs" ,crs
-			else:
-				crs[accounts[gVch[5].value]] = gVch[6].value
-				print "This is Normal crs",crs
-			narration = gVch[7].value
-			result = {"voucherdate":voucherDt,"vouchernumber":gVch[0].value,"vouchertype":gVch[2].value,"drs":drs,"crs":crs,"narration":gVch[7].value}
-#			print gVch[0].value
-			print result
-			gNewvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps(result),headers=header)
-			print gNewvch.json()["gkstatus"]	
-
-	else:
-			
+				if len(accRow)>2:
+					if accRow[1].value==None and accRow[2].value==None:
+						newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
+						continue
+					if accRow[1].value==None:
+						newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[2].value}),headers=header)
+						continue
+					if accRow[2].value==None:
+						newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
+						continue
+		
+				if len(accRow)==2:
+					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
+		
 		#the dictionary thus returned will have
 		#accountname as key and accountcode as value.
 		acclist = requests.get("http://127.0.0.1:6543/accounts?acclist",headers=header)
 		accounts = acclist.json()["gkresult"]
-		#getting all sheets from workbook.
-		#first sheet with index 0 will be skipped.
-		sheets = wbTally.worksheets
-		#we need two variables for accountname and accountcode.
-		#the name and code will be changed when main for loop iterates.
-		ledgerAccount = ""
-		ledgerCode = None
-		voucherCodes = []
-		for accSheet in sheets:
-			if wbTally.index(accSheet) == 0:
-				continue
-			ledgerAccount = str(accSheet.title.strip())
-#			print ledgerAccount
-			ledgerCode = accounts[ledgerAccount]
-			voucherRows = tuple(accSheet.rows)
-			voucherDate = ""
-			for v in voucherRows:
-				if v[3].value !=  None and v[4].value != None:
-					numType = {v[4].value:v[3].value.strip().lower()}
-				if (v[3].value == None) or numType in voucherCodes:
+		Wsheets = wbTally.worksheets
+		if Wsheets[1].title == "Vouchers List":
+			gVchList =tuple(Wsheets[1].rows) 
+			for gVch in gVchList:
+				if gVch[1].value == None and gVch[2].value == None:
 					continue
-				if v[0].value != None:
-					voucherDate = str(v[0].value)
-					if voucherDate[2]=='-':
-						vdates = voucherDate.split('-')
-						voucherDate = vdates[2]+'/'+vdates[1]+'/'+vdates[0]
-				vouchernumber = v[4].value
-				voucherCodes.append(numType)
-				vouchertype = v[3].value.strip().lower()
+				voucherno = gVch[0].value
+				voucherdt = gVch[1].value
+				vdates = voucherdt.split('-')
+				voucherDt = vdates[2]+'/'+vdates[1]+'/'+vdates[0]
+				vouchertype = gVch[2].value
+				drs = {}
+				crs = {}
+				if (gVch[3].value) == "(as per details)":
+					try:
+						Vindex = gVchList.index(gVch) + 1
+						while gVchList[Vindex][3].value != None:
+							drs[accounts[gVchList[Vindex][3].value]] = gVchList[Vindex][4].value
+							Vindex = Vindex + 1 
+					except IndexError:
+						pass	   
+				else:
+					drs[accounts[gVch[3].value]] = gVch[4].value
+										
+				if (gVch[5].value) == "(as per details)":
+					Vindex = gVchList.index(gVch) + 1
+					while gVchList[Vindex][5].value != None: 
+						crs[accounts[gVchList[Vindex][5].value]] = gVchList[Vindex][6].value
+						Vindex = Vindex + 1
+				else:
+					crs[accounts[gVch[5].value]] = gVch[6].value
+				narration = gVch[7].value
+				result = {"voucherdate":voucherDt,"vouchernumber":gVch[0].value,"vouchertype":gVch[2].value,"drs":drs,"crs":crs,"narration":gVch[7].value}
+				gNewvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps(result),headers=header)
+			return {"gkstatus":0}	
+	
+		else:
 				
-				if v[5].value != None:
-					drs = {ledgerCode: v[5].value}
-					if v[2].value == "(as per details)":
-						print "In multiple crs row"
-						accIndex = voucherRows.index(v )+1
-						CurAccount = voucherRows[voucherRows.index(v)+1 ][2].value.strip()
-						crs = {}
-						while accounts.has_key(CurAccount):
-							crs  [accounts[CurAccount.strip()]] = voucherRows[accIndex][6].value
-							accIndex = accIndex +1
-							CurAccount = voucherRows[accIndex][2].value
-						narration = voucherRows[accIndex][2].value
-					else:
-						crs = {accounts[v[2].value]:v[5].value}
-						try:
-							narration = voucherRows[voucherRows.index(v)+1 ][2].value.strip()
-						except:
-							pass
-				
-				try:
-					if v[6].value != None:
-						print "Value of V[6]",v[6].value
-						crs = {ledgerCode: v[6].value}
+			#the dictionary thus returned will have
+			#accountname as key and accountcode as value.
+			acclist = requests.get("http://127.0.0.1:6543/accounts?acclist",headers=header)
+			accounts = acclist.json()["gkresult"]
+			#getting all sheets from workbook.
+			#first sheet with index 0 will be skipped.
+			sheets = wbTally.worksheets
+			#we need two variables for accountname and accountcode.
+			#the name and code will be changed when main for loop iterates.
+			ledgerAccount = ""
+			ledgerCode = None
+			voucherCodes = []
+			for accSheet in sheets:
+				if wbTally.index(accSheet) == 0:
+					continue
+				ledgerAccount = str(accSheet.title.strip())
+				ledgerCode = accounts[ledgerAccount]
+				voucherRows = tuple(accSheet.rows)
+				voucherDate = ""
+				for v in voucherRows:
+					if v[3].value !=  None and v[4].value != None:
+						numType = {v[4].value:v[3].value.strip().lower()}
+					if (v[3].value == None) or numType in voucherCodes:
+						continue
+					if v[0].value != None:
+						voucherDate = str(v[0].value)
+						if voucherDate[2]=='-':
+							vdates = voucherDate.split('-')
+							voucherDate = vdates[2]+'/'+vdates[1]+'/'+vdates[0]
+					vouchernumber = v[4].value
+					voucherCodes.append(numType)
+					vouchertype = v[3].value.strip().lower()
+					if v[5].value != None:
+						drs = {ledgerCode: v[5].value}
 						if v[2].value == "(as per details)":
-							print "In multiple drs row"
-							accIndex = voucherRows.index(v)+1
+							accIndex = voucherRows.index(v )+1
 							CurAccount = voucherRows[voucherRows.index(v)+1 ][2].value.strip()
-							drs = {}
+							crs = {}
 							while accounts.has_key(CurAccount):
-								drs[accounts[CurAccount.strip()]] = voucherRows[accIndex][5].value
+								crs  [accounts[CurAccount.strip()]] = voucherRows[accIndex][6].value
 								accIndex = accIndex +1
 								CurAccount = voucherRows[accIndex][2].value
 							narration = voucherRows[accIndex][2].value
 						else:
-							drs = {accounts[v[2].value]:v[6].value}
+							crs = {accounts[v[2].value]:v[5].value}
 							try:
-								narration = voucherRows[voucherRows.index(v )+1 ][2].value.strip()
-							except IndexError:
+								narration = voucherRows[voucherRows.index(v)+1 ][2].value.strip()
+							except:
 								pass
-				except IndexError:
-					pass
-	
-				newvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps({"voucherdate":voucherDate,"vouchernumber":vouchernumber,"vouchertype":vouchertype,"drs":drs,"crs":crs,"narration":narration}),headers=header)
-	
-		return {"gkstatus":0}
-#	except:
-#		print "file not found"
-#		return {"gkstatus":3}
+					try:
+						if v[6].value != None:
+							crs = {ledgerCode: v[6].value}
+							if v[2].value == "(as per details)":
+								accIndex = voucherRows.index(v)+1
+								CurAccount = voucherRows[voucherRows.index(v)+1 ][2].value.strip()
+								drs = {}
+								while accounts.has_key(CurAccount):
+									drs[accounts[CurAccount.strip()]] = voucherRows[accIndex][5].value
+									accIndex = accIndex +1
+									CurAccount = voucherRows[accIndex][2].value
+								narration = voucherRows[accIndex][2].value
+							else:
+								drs = {accounts[v[2].value]:v[6].value}
+								try:
+									narration = voucherRows[voucherRows.index(v )+1 ][2].value.strip()
+								except IndexError:
+									pass
+					except IndexError:
+						pass
+		
+					newvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps({"voucherdate":voucherDate,"vouchernumber":vouchernumber,"vouchertype":vouchertype,"drs":drs,"crs":crs,"narration":narration}),headers=header)
+		
+			return {"gkstatus":0}
+	except:
+		print "file not found"
+		return {"gkstatus":3}
 
 
 @view_config(route_name="exportledger", renderer="")
