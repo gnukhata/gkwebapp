@@ -105,89 +105,132 @@ def tallyImport(request):
 					newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
 					curgrpid = newsub.json()["gkresult"]
 			if accRow[0].font.i:
-				if accRow[1].value==None and accRow[2].value==None:
-					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
-					continue
-				if accRow[1].value==None:
-					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[2].value}),headers=header)
-					continue
-				try:
+				
+				if len(accRow)>2:
+					if accRow[1].value==None and accRow[2].value==None:
+						newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
+						continue
+					if accRow[1].value==None:
+						newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[2].value}),headers=header)
+						continue
 					if accRow[2].value==None:
 						newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
 						continue
-				except IndexError:
-					pass
-
-
+		
+				if len(accRow)==2:
+					newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
+		
 		#the dictionary thus returned will have
 		#accountname as key and accountcode as value.
 		acclist = requests.get("http://127.0.0.1:6543/accounts?acclist",headers=header)
 		accounts = acclist.json()["gkresult"]
-		#getting all sheets from workbook.
-		#first sheet with index 0 will be skipped.
-		sheets = wbTally.worksheets
-		#we need two variables for accountname and accountcode.
-		#the name and code will be changed when main for loop iterates.
-		ledgerAccount = ""
-		ledgerCode = None
-		voucherCodes = []
-		for accSheet in sheets:
-			if wbTally.index(accSheet) == 0:
-				continue
-			ledgerAccount = accSheet.title.strip()
-			ledgerCode = accounts[ledgerAccount]
-			voucherRows = tuple(accSheet.rows)
-			voucherDate = ""
-			for v in voucherRows:
-				if v[3].value !=  None and v[4].value != None:
-					numType = {v[4].value:v[3].value.strip().lower()}
-				if (v[3].value == None) or numType in voucherCodes:
+		Wsheets = wbTally.worksheets
+		if Wsheets[1].title == "Vouchers List":
+			gVchList =tuple(Wsheets[1].rows) 
+			for gVch in gVchList:
+				if gVch[1].value == None and gVch[2].value == None:
 					continue
-				if v[0].value != None:
-					voucherDate = str(v[0].value)
-					if voucherDate[2]=='-':
-						vdates = voucherDate.split('-')
-						voucherDate = vdates[2]+'/'+vdates[1]+'/'+vdates[0]
-				vouchernumber = v[4].value
-				voucherCodes.append(numType)
-				vouchertype = v[3].value.strip().lower()
-				if v[5].value != None:
-					drs = {ledgerCode: v[5].value}
-					if v[2].value == "(as per details)":
-						accIndex = voucherRows.index(v )+1
-						CurAccount = voucherRows[voucherRows.index(v)+1 ][2].value.strip()
-						crs = {}
-						while accounts.has_key(CurAccount):
-							crs  [accounts[CurAccount.strip()]] = voucherRows[accIndex][6].value
-							accIndex = accIndex +1
-							CurAccount = voucherRows[accIndex][2].value
-						narration = voucherRows[accIndex][2].value
-					else:
-						crs = {accounts[v[2].value]:v[5].value}
-						try:
-							narration = voucherRows[voucherRows.index(v)+1 ][2].value
-						except IndexError:
-							pass
-	 			if v[6].value != None:
-					crs = {ledgerCode: v[6].value}
-					if v[2].value == "(as per details)":
-						accIndex = voucherRows.index(v)+1
-						CurAccount = voucherRows[voucherRows.index(v)+1 ][2].value.strip()
-						drs = {}
-						while accounts.has_key(CurAccount):
-							drs[accounts[CurAccount.strip()]] = voucherRows[accIndex][5].value
-							accIndex = accIndex +1
-							CurAccount = voucherRows[accIndex][2].value
-						narration = voucherRows[accIndex][2].value
-					else:
-						drs = {accounts[v[2].value]:v[6].value}
-						try:
-							narration = voucherRows[voucherRows.index(v )+1 ][2].value
-						except IndexError:
-							pass
-				newvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps({"voucherdate":voucherDate,"vouchernumber":vouchernumber,"vouchertype":vouchertype,"drs":drs,"crs":crs,"narration":narration}),headers=header)
-
-		return {"gkstatus":0}
+				voucherno = gVch[0].value
+				voucherdt = gVch[1].value
+				vdates = voucherdt.split('-')
+				voucherDt = vdates[2]+'/'+vdates[1]+'/'+vdates[0]
+				vouchertype = gVch[2].value
+				drs = {}
+				crs = {}
+				if (gVch[3].value) == "(as per details)":
+					try:
+						Vindex = gVchList.index(gVch) + 1
+						while gVchList[Vindex][3].value != None:
+							drs[accounts[gVchList[Vindex][3].value]] = gVchList[Vindex][4].value
+							Vindex = Vindex + 1 
+					except IndexError:
+						pass	   
+				else:
+					drs[accounts[gVch[3].value]] = gVch[4].value
+										
+				if (gVch[5].value) == "(as per details)":
+					Vindex = gVchList.index(gVch) + 1
+					while gVchList[Vindex][5].value != None: 
+						crs[accounts[gVchList[Vindex][5].value]] = gVchList[Vindex][6].value
+						Vindex = Vindex + 1
+				else:
+					crs[accounts[gVch[5].value]] = gVch[6].value
+				narration = gVch[7].value
+				result = {"voucherdate":voucherDt,"vouchernumber":gVch[0].value,"vouchertype":gVch[2].value,"drs":drs,"crs":crs,"narration":gVch[7].value}
+				gNewvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps(result),headers=header)
+			return {"gkstatus":0}	
+	
+		else:
+		
+			#getting all sheets from workbook.
+			#first sheet with index 0 will be skipped.
+			sheets = wbTally.worksheets
+			#we need two variables for accountname and accountcode.
+			#the name and code will be changed when main for loop iterates.
+			ledgerAccount = ""
+			ledgerCode = None
+			voucherCodes = []
+			for accSheet in sheets:
+				if wbTally.index(accSheet) == 0:
+					continue
+				ledgerAccount = str(accSheet.title.strip())
+				ledgerCode = accounts[ledgerAccount]
+				voucherRows = tuple(accSheet.rows)
+				voucherDate = ""
+				for v in voucherRows:
+					if v[3].value !=  None and v[4].value != None:
+						numType = {v[4].value:v[3].value.strip().lower()}
+					if (v[3].value == None) or numType in voucherCodes:
+						continue
+					if v[0].value != None:
+						voucherDate = str(v[0].value)
+						if voucherDate[2]=='-':
+							vdates = voucherDate.split('-')
+							voucherDate = vdates[2]+'/'+vdates[1]+'/'+vdates[0]
+					vouchernumber = v[4].value
+					voucherCodes.append(numType)
+					vouchertype = v[3].value.strip().lower()
+					if v[5].value != None:
+						drs = {ledgerCode: v[5].value}
+						if v[2].value == "(as per details)":
+							accIndex = voucherRows.index(v )+1
+							CurAccount = voucherRows[voucherRows.index(v)+1 ][2].value.strip()
+							crs = {}
+							while accounts.has_key(CurAccount):
+								crs  [accounts[CurAccount.strip()]] = voucherRows[accIndex][6].value
+								accIndex = accIndex +1
+								CurAccount = voucherRows[accIndex][2].value
+							narration = voucherRows[accIndex][2].value
+						else:
+							crs = {accounts[v[2].value]:v[5].value}
+							try:
+								narration = voucherRows[voucherRows.index(v)+1 ][2].value.strip()
+							except:
+								pass
+					try:
+						if v[6].value != None:
+							crs = {ledgerCode: v[6].value}
+							if v[2].value == "(as per details)":
+								accIndex = voucherRows.index(v)+1
+								CurAccount = voucherRows[voucherRows.index(v)+1 ][2].value.strip()
+								drs = {}
+								while accounts.has_key(CurAccount):
+									drs[accounts[CurAccount.strip()]] = voucherRows[accIndex][5].value
+									accIndex = accIndex +1
+									CurAccount = voucherRows[accIndex][2].value
+								narration = voucherRows[accIndex][2].value
+							else:
+								drs = {accounts[v[2].value]:v[6].value}
+								try:
+									narration = voucherRows[voucherRows.index(v )+1 ][2].value.strip()
+								except IndexError:
+									pass
+					except IndexError:
+						pass
+		
+					newvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps({"voucherdate":voucherDate,"vouchernumber":vouchernumber,"vouchertype":vouchertype,"drs":drs,"crs":crs,"narration":narration}),headers=header)
+		
+			return {"gkstatus":0}
 	except:
 		print "file not found"
 		return {"gkstatus":3}
@@ -231,52 +274,63 @@ def exportLedger(request):
 					ob2 = accountList.cell(row=cellCounter,column=3,value="")
 					cellCounter = cellCounter + 1
 
-			acclist = requests.get("http://127.0.0.1:6543/accounts?acclist",headers=header)
-			accounts = acclist.json()["gkresult"]
-
-		for acct in accounts:
-			accname = str(acct)
-			accountcode = accounts[acct]
-			calculatefrom = request.params["yearstart"]
-			calculateto = request.params["yearend"]
-			financialstart = request.params["yearstart"]
-			result = requests.get("http://127.0.0.1:6543/report?type=ledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode="%(accountcode,calculatefrom,calculateto,financialstart), headers=header)
-			ledgerResult = result.json()["gkresult"]
-			if len(ledgerResult) == 1:
-				continue
-			firstVal = ledgerResult[0]["particulars"][0]
-			secondVal = ledgerResult[1]["particulars"][0]
-			if firstVal == "Opening Balance" and secondVal == "Total of Transactions":
-				continue
-			Ledger = gkwb.create_sheet()
-			Ledger.title = accname.replace("/","")
-			Ledger.column_dimensions["A"].width =10
-			Ledger.column_dimensions["C"].width = 50
-			Ledger.column_dimensions["F"].width = 10
-			Ledger.column_dimensions["G"].width = 10
-			ledgerRowCounter = 1
-			for row in ledgerResult:
-				particulars = row["particulars"]
-				if particulars[0] == "Opening Balance" or particulars[0] == "Total of Transactions" or particulars[0] == "Closing Balance C/F" or particulars[0] == "Grand Total":
-					continue
-				Ledger.cell(row=ledgerRowCounter, column=1, value=row["voucherdate"])
-				particularCounter = ledgerRowCounter
-				if len(particulars) == 1:
-					Ledger.cell(row=ledgerRowCounter, column=3, value=particulars[0])
-					Ledger.cell(row=ledgerRowCounter+1 , column=3, value=row["narration"])
-					particularCounter = ledgerRowCounter +1
-				if len(particulars) > 1:
-					Ledger.cell(row=ledgerRowCounter, column=3, value="(as per details)")
-					for p in particulars:
-						particularCounter = particularCounter +1
-						Ledger.cell(row=particularCounter, column=3, value=p)
-					particularCounter = particularCounter +1
-					Ledger.cell(row=particularCounter, column=3, value=row["narration"])
-				Ledger.cell(row=ledgerRowCounter, column=4, value=row["vouchertype"])
-				Ledger.cell(row=ledgerRowCounter, column=5, value=row["vouchernumber"])
-				Ledger.cell(row=ledgerRowCounter, column=6, value=row["Dr"])
-				Ledger.cell(row=ledgerRowCounter, column=7, value=row["Cr"])
-				ledgerRowCounter = particularCounter +1
+					
+		Voucher = gkwb.create_sheet()
+		Voucher.title = "Vouchers List"
+		yearStart = str(request.params["yearstart"])
+		yearEnd = str(request.params["yearend"])
+		vchResult = requests.get("http://127.0.0.1:6543/transaction?searchby=date&from=%s&to=%s"%(yearStart,yearEnd),headers=header)
+		vchList = vchResult.json()["gkresult"] 
+		rowCounter = crRowCounter = counter = mCounter= 1
+		Voucher.column_dimensions["B"].width =10
+		Voucher.column_dimensions["D"].width = 30
+		Voucher.column_dimensions["E"].width = 10
+		Voucher.column_dimensions["F"].width = 30
+		Voucher.column_dimensions["G"].width = 10
+		Voucher.column_dimensions["H"].width = 40
+		for v in vchList:
+			Voucher.cell(row=rowCounter,column=1,value=v["vouchernumber"])
+			Voucher.cell(row=rowCounter,column=2,value=v["voucherdate"])
+			Voucher.cell(row=rowCounter,column=3,value=v["vouchertype"])
+			Voucher.cell(row=rowCounter,column=8,value=v["narration"])
+			Crs = v["crs"]
+			Drs = v["drs"]
+			for k in Drs.keys():
+				if k.find("+") == -1:
+					Voucher.cell(row=rowCounter,column=4,value=k)
+					Voucher.cell(row=rowCounter,column=5,value="%.2f"%float(Drs[k]))
+					rowCounter = rowCounter + 2
+				else:
+					drMulResult = requests.get("http://127.0.0.1:6543/transaction?code=%d"%(v["vouchercode"]),headers=header)
+					drList = drMulResult.json()["gkresult"]
+					mDrs = drList["drs"]
+					Voucher.cell(row=rowCounter,column=4,value="(as per details)")
+					counter = rowCounter+1
+					for dr in mDrs.keys():
+						Voucher.cell(row=counter,column=4,value=dr)
+						Voucher.cell(row=counter,column=5,value="%.2f"%float(mDrs[dr]))
+						counter = counter + 1
+					rowCounter = counter + 1
+			for key in Crs.keys():
+				if key.find("+") == -1:
+					Voucher.cell(row=crRowCounter,column=6,value=key)
+					Voucher.cell(row=crRowCounter,column=7,value="%.2f"%float(Crs[key]))
+					crRowCounter = crRowCounter + 2
+				else:
+					crMulResult = requests.get("http://127.0.0.1:6543/transaction?code=%d"%(v["vouchercode"]),headers=header)
+					crList = crMulResult.json()["gkresult"]
+					mCrs = crList["crs"]
+					Voucher.cell(row=crRowCounter,column=6,value="(as per details)")
+					mCounter = crRowCounter + 1
+					for cr in mCrs.keys():
+						Voucher.cell(row=mCounter,column=6,value=cr)
+						Voucher.cell(row=mCounter,column=7,value="%.2f"%float(mCrs[cr]))
+						mCounter = mCounter + 1
+					crRowCounter = mCounter +1
+			if rowCounter > crRowCounter:
+				crRowCounter = rowCounter
+			else:
+				rowCounter = crRowCounter
 
 		gkwb.save(filename = "AllLedger.xlsx")
 		AllLedgerfile = open("AllLedger.xlsx","r")

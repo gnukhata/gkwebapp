@@ -91,9 +91,9 @@
               <li><a class="administrationmenu" data-toggle="tab" id="showedituser" href="">{% trans %}Change Password{% endtrans %}</a></li>
               <li class="hideoperator hidemanager rollover"><a class="administrationmenu" data-toggle="tab" id="showclosebooks" href="">{% trans %}Close Books/Roll Over{% endtrans %}</a></li>
               <li class="hideoperator hidemanager rollover"><a class="administrationmenu" data-toggle="tab" id="act_inv" href="">{% trans %}Activate Inventory{% endtrans %}</a></li>
-              <li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="modal" data-target="#exportledgerdialog" id="exportledger" href="">{% trans %}Export Ledgers{% endtrans %}</a></li>
+              <li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="modal" data-target="#exportledgerdialog" id="exportledger" href="">{% trans %}Export Data{% endtrans %}</a></li>
               <li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="tab" id="deleteorg" href="">{% trans %}Delete Organisation{% endtrans %}</a></li>
-              <li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="tab" id="tallyimport" href="">{% trans %}Import Ledgers{% endtrans %}</a></li>
+              <li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="tab" id="tallyimport" href="">{% trans %}Import Data{% endtrans %}</a></li>
             </ul>
           </li>
           <li class="dropdown">
@@ -482,7 +482,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" style="color: white; opacity:2;">&times;</button>
-          <h4 class="modal-title">{% trans %}Export All Ledgers{% endtrans %}</h4>
+          <h4 class="modal-title">{% trans %}Export GNUKhata Data{% endtrans %}</h4>
         </div>
         <div class="modal-body">
           <div class="alert alert-success" id="export-success-alert"  aria-live="rude" role="alert" hidden>
@@ -490,7 +490,7 @@
             {% trans %}Export is complete.{% endtrans %}
           </div>
           <dl>
-            <dt style="margin-bottom: 10px;">This feature allows you to export all ledgers of this organisation within this financial year in spreadhseet(XSLX) format.</dt>
+            <dt style="margin-bottom: 10px;">This feature allows you to export all accounts and transactions (vouchers) of this organisation within this financial year in spreadhseet(XSLX) format.</dt>
             <dd>Click on the "Export" button to start the export.</dd>
             <dd>A download window will pop up when export is done. You can save the spreadsheet or open it for editing.</dd>
             <dd style="margin-top: 10px;"><b>Please do not reload or close the window while export is in going on.</b></dd>
