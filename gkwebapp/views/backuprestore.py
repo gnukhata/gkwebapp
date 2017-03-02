@@ -137,18 +137,24 @@ def tallyImport(request):
 				continue
 			voucherno = gVch[0].value
 			voucherdt = gVch[1].value
+			vdates = voucherdt.split('-')
+			voucherDt = vdates[2]+'/'+vdates[1]+'/'+vdates[0]
+			
 			vouchertype = gVch[2].value
 			drs = {}
 			crs = {}
 			
 
 			if (gVch[3].value) == "(as per details)":
-				Vindex = gVchList.index(gVch) + 1
-				while gVchList[Vindex][3].value != None:
-					print gVchList[Vindex][3].value
-					drs[accounts[gVchList[Vindex][3].value]] = gVchList[Vindex][4].value
-					Vindex = Vindex + 1 
-					print drs
+				try:
+					Vindex = gVchList.index(gVch) + 1
+					while gVchList[Vindex][3].value != None:
+						print gVchList[Vindex][3].value
+						drs[accounts[gVchList[Vindex][3].value]] = gVchList[Vindex][4].value
+						Vindex = Vindex + 1 
+						print drs
+				except IndexError:
+					pass	   
 			else:
 #				print "This is gVch[4].value",gVch[4].value
 #				print "This is accounts[gVch[3].value]",accounts[gVch[3].value]
@@ -167,9 +173,11 @@ def tallyImport(request):
 				crs[accounts[gVch[5].value]] = gVch[6].value
 				print "This is Normal crs",crs
 			narration = gVch[7].value
-#            print gVch[0].value
-			gNewvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps({"voucherdate":gVch[1].value,"vouchernumber":gVch[0].value,"vouchertype":gVch[2].value,"drs":drs,"crs":crs,"narration":gVch[7].value}),headers=header)
-				
+			result = {"voucherdate":voucherDt,"vouchernumber":gVch[0].value,"vouchertype":gVch[2].value,"drs":drs,"crs":crs,"narration":gVch[7].value}
+#			print gVch[0].value
+			print result
+			gNewvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps(result),headers=header)
+			print gNewvch.json()["gkstatus"]	
 
 	else:
 			
