@@ -50,7 +50,9 @@
             <label for="viewlog_username">{% trans %}User Name{% endtrans %} :</label>
             <select class = "form-control input-sm" id="viewlog_username"  name = "viewlog_username" >
               <option value="" disabled selected hidden>{% trans %}Select User{% endtrans %}</option>
-              
+              {% for user in gkresult %}
+              <option value="{{user['userid']}}">{{user["username"]}}</option>
+              {% endfor %}
             </select>
           </div>
           <label for="viewlog_fromdate">{% trans %}From Date{% endtrans %} :</label>
