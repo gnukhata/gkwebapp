@@ -84,5 +84,78 @@ $(document).ready(function() {
     $(this).val(yearpad($(this).val(),4));
   });
 
+  // navigation functions for enter key and up arrow keys.
+  $("#viewlog_type").keydown(function(e){
+    if(e.which==13){
+      if ($("#viewlog_type option:selected").val() == 2) {
+        $("#viewlog_username").focus();
+      }
+      else{
+        $("#viewlog_fromdate").focus().select();
+      }
+    }
+  });
+  $("#viewlog_username").keydown(function(e){
+    if(e.which==13){
+      $("#viewlog_fromdate").focus().select();
+    }
+    if(e.which == 38 && (document.getElementById('viewlog_username').selectedIndex==1||document.getElementById('viewlog_username').selectedIndex==0)) {
+      e.preventDefault();
+      $("#viewlog_type").focus();
+    }
+  });
+  $("#viewlog_fromdate").keydown(function(e){
+    if(e.which==13){
+      $("#viewlog_frommonth").focus().select();
+    }
+    if(e.which==38){
+      if ($("#viewlog_type option:selected").val() == 2) {
+        $("#viewlog_username").focus();
+      }
+      else{
+        $("#viewlog_type").focus();
+      }
+    }
+  });
+  $("#viewlog_frommonth").keydown(function(e){
+    if(e.which==13){
+      $("#viewlog_fromyear").focus().select();
+    }
+    if(e.which==38){
+      $("#viewlog_fromdate").focus().select();
+    }
+  });
+  $("#viewlog_fromyear").keydown(function(e){
+    if(e.which==13){
+      $("#viewlog_todate").focus().select();
+    }
+    if(e.which==38){
+      $("#viewlog_frommonth").focus().select();
+    }
+  });
+  $("#viewlog_todate").keydown(function(e){
+    if(e.which==13){
+      $("#viewlog_tomonth").focus().select();
+    }
+    if(e.which==38){
+      $("#viewlog_fromyear").focus().select();
+    }
+  });
+  $("#viewlog_tomonth").keydown(function(e){
+    if(e.which==13){
+      $("#viewlog_toyear").focus().select();
+    }
+    if(e.which==38){
+      $("#viewlog_todate").focus().select();
+    }
+  });
+  $("#viewlog_toyear").keydown(function(e){
+    if(e.which==13){
+      $('#viewlog_submit').click();
+    }
+    if(e.which==38){
+      $("#viewlog_tomonth").focus().select();
+    }
+  });
   
 });
