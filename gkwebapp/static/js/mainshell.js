@@ -486,6 +486,25 @@ $('#godown').click(function (e) {
      .done(function(resp) {
        $("#info").html(resp);
      })
+     $.ajax(
+       {
+
+       type: "POST",
+       url: "/lastfivegodowns?type=godownslist",
+       global: false,
+       async: false,
+       datatype: "text/html",
+       beforeSend: function(xhr)
+         {
+           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+         },
+       success: function(resp)
+       {
+         console.log("success");
+         $("#info").html(resp);
+       }
+       }
+     );
    });
 
 $("#exportbutton").click(function(e){

@@ -24,7 +24,6 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
 */
-
 $(document).ready(function()
 {
   $("#godownname").focus();
@@ -146,8 +145,27 @@ $(document).ready(function()
                 $("#gdnreset").click();
                 $("#success-alert").alert();
                 $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
-                  $("#success-alert").hide();
+                $("#success-alert").hide();
                 });
+                $.ajax(
+                  {
+
+                  type: "POST",
+                  url: "/lastfivegodowns?type=godownslist",
+                  global: false,
+                  async: false,
+                  datatype: "text/html",
+                  beforeSend: function(xhr)
+                    {
+                      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+                    },
+                  success: function(resp)
+                  {
+                    console.log("success");
+                    $("#info").html(resp);
+                  }
+                  }
+                );
               }
               else if(resp["gkstatus"]==1)
               {
