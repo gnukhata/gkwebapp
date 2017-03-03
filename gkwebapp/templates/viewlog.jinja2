@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Log{% endtrans %}</title>
+  <style media="screen">
+  .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  label {
+		font-size: 90%;
+	}
+  </style>
+</head>
+<body>
+  <div style="padding-top:5px" class="container-fluid mainbox col-md-6 col-md-offset-3">
+    <div class="panel shadow">
+      <div class="panel-heading">
+        <h3 class="panel-title">{% trans %}View Log{% endtrans %}</h3>
+      </div>
+      <div class="panel-body" style="padding-top:5px">
+        <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
+          <label for="viewlog_fromdate">{% trans %}Please enter date in proper format!{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
+
+          <label for="viewlog_fromdate">{% trans %}Please enter date within the financial year!{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="compare-date-alert" aria-live="rude" role="alert" hidden>
+
+          <label for="viewlog_todate">{% trans %}From date should be smaller or equal to to date !{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="type-blank-alert" aria-live="rude" role="alert" hidden>
+
+          <label for="viewlog_type">{% trans %}Please select a type!{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="user-blank-alert" aria-live="rude" role="alert" hidden>
+
+          <label for="viewlog_user">{% trans %}Please select an User!{% endtrans %}</label>
+        </div>
+        <div style="margin-bottom: 5px" class="col-xs-12 from-group">
+          <label for="viewlog_type">{% trans %}Type{% endtrans %} :</label>
+          <select class = "form-control input-sm" id="viewlog_type"  name = "viewlog_type" >
+            <option value="" disabled selected hidden>{% trans %}Select Type of Log{% endtrans %}</option>
+            <option value="1">By Organization</option>
+            <option value="2">By User</option>
+          </select>
+          <br>
+          <div class = "form-group" id = "viewlog_users" hidden>
+            <label for="viewlog_username">{% trans %}User Name{% endtrans %} :</label>
+            <select class = "form-control input-sm" id="viewlog_username"  name = "viewlog_username" >
+              <option value="" disabled selected hidden>{% trans %}Select User{% endtrans %}</option>
+              
+            </select>
+          </div>
+          <label for="viewlog_fromdate">{% trans %}From Date{% endtrans %} :</label>
+          <div class="form-inline" >
+
+            <div class="form-group">
+
+              <input type="text" class="viewlog_date form-control input-sm" id="viewlog_fromdate" value="" size="2" maxlength="2" placeholder="DD" accesskey="d" >
+              <input type="text" id="viewlog_frommonth" class="viewlog_date form-control input-sm" value="" size="2" maxlength="2" placeholder="MM" >
+              <input type="text" id="viewlog_fromyear" class="viewlog_date form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY" >
+            </div>
+
+          </div>
+          <br>
+          <label for="viewlog_todate">{% trans %}To Date{% endtrans %} :</label>
+          <div class="form-inline" >
+
+            <div class="form-group">
+
+              <input type="text" class="viewlog_date form-control input-sm" id="viewlog_todate" value="" size="2" maxlength="2" placeholder="DD" >
+              <input type="text" id="viewlog_tomonth" class="viewlog_date form-control input-sm" value="" size="2" maxlength="2" placeholder="MM" >
+              <input type="text" id="viewlog_toyear" class="viewlog_date form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY" >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button class="btn btn-primary btn-sm" id="viewlog_submit" name="view" accesskey="v">{% trans %}<u>V</u>iew{% endtrans %}</button>
+        <button id="viewlog_reset" class="btn btn-danger btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewlog.js')}}"></script>
+</body>
+</html>
