@@ -165,5 +165,91 @@ $(document).ready(function() {
       $("#viewlog_users").hide();
     }
   });
-  
+  $("#viewlog_submit").click(function(event) {
+    // --------------------starting validations------------------
+    if ($("#viewlog_type").val()==null) {
+      $("#type-blank-alert").alert();
+      $("#type-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#type-blank-alert").hide();
+      });
+      $('#viewlog_type').focus()
+      return false;
+    }
+    if($("#viewlog_type option:selected").val() == 2){
+      if ($("#viewlog_username").val()==null) {
+        $("#user-blank-alert").alert();
+        $("#user-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#user-blank-alert").hide();
+        });
+        $('#viewlog_username').focus()
+        return false;
+      }
+    }
+    if ($("#viewlog_fromyear").val()==0 ||$("#viewlog_frommonth").val()==0 ||$("#viewlog_fromdate").val()==0 ) {
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#viewlog_fromdate').focus().select();
+      return false;
+    }
+    if ($("#viewlog_toyear").val() ==0||$("#viewlog_tomonth").val()==0||$("#viewlog_todate").val()==0) {
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#viewlog_todate').focus().select();
+      return false;
+    }
+    var todate = $("#viewlog_toyear").val()+$("#viewlog_tomonth").val()+$("#viewlog_todate").val();
+    var fromdate = $("#viewlog_fromyear").val()+$("#viewlog_frommonth").val()+$("#viewlog_fromdate").val();
+    if(!Date.parseExact(fromdate,"yyyyMMdd")){
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#viewlog_fromdate').focus().select();
+      return false;
+    }
+    if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,financialend)) {
+      $("#between-date-alert").alert();
+      $("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#between-date-alert").hide();
+      });
+      $('#viewlog_fromdate').focus().select();
+      return false;
+    }
+    if(!Date.parseExact(todate, "yyyyMMdd")){
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#viewlog_todate').focus().select();
+      return false;
+    }
+    if (!Date.parseExact(todate,"yyyyMMdd").between(financialstart,financialend)) {
+      $("#between-date-alert").alert();
+      $("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#between-date-alert").hide();
+      });
+      $('#viewlog_todate').focus().select();
+      return false;
+    }
+    if (Date.parseExact(fromdate,"yyyyMMdd").compareTo(Date.parseExact(todate,"yyyyMMdd"))==1) {
+      $("#compare-date-alert").alert();
+      $("#compare-date-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#compare-date-alert").hide();
+      });
+      $('#viewlog_todate').focus().select();
+      return false;
+    }
+    // -----------------------end of validations---------------------
+    $("#msspinmodal").modal("show");
+
+    
+  });
+
+  $("#viewlog_reset").click(function(event) {
+    $("#showviewlog").click();
+  });
 });
