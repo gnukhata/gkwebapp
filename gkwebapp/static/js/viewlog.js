@@ -157,5 +157,13 @@ $(document).ready(function() {
       $("#viewlog_tomonth").focus().select();
     }
   });
+  $("#viewlog_type").change(function(event) {
+    if($("#viewlog_type option:selected").val() == 2){
+      $("#viewlog_users").show();
+    }
+    else{
+      $("#viewlog_users").hide();
+    }
+  });
   
 });
