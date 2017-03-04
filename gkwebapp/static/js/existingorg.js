@@ -27,7 +27,7 @@ Contributors:
 $(document).ready(function()
 {
   $("#org-name").focus();
-
+  var orgobj = {};
   $("#finalyears").keydown( function(e) {
 
     if (e.which == 13)
@@ -39,26 +39,26 @@ $(document).ready(function()
 
   $("#org-name").bind("change keyup focusin", function(){
     //Creating an object to store organisation name and type
-    var orgobj = {};
-    orgobj.orgname = $("#org-name option:selected").attr("data-orgname");
-    orgobj.orgtype = $("#org-name option:selected").attr("data-orgtype");
-    console.log(orgobj);
-    $.ajax({
-      type: "POST",
-      url: "/yearcode",
-      data: orgobj,
-      global: false,
-      async: false,
-      dataType: "json",
-      success: function(jsonObj) {
-        ListofYears = jsonObj["gkresult"],
-        $('#finalyears').empty();
-        for (i in ListofYears ) {
-          $('#finalyears').append('<option value="' + ListofYears[i].orgcode + '">' + ListofYears[i].yearstart+' to '+ListofYears[i].yearend + '</option>');
+    orgobj.orgname = $("#org-name option:selected").data("orgname");
+    orgobj.orgtype = $("#org-name option:selected").data("orgtype");
+    if (orgobj.orgname!=""&&orgobj.orgtype!="") {
+      $.ajax({
+        type: "POST",
+        url: "/yearcode",
+        data: orgobj,
+        global: false,
+        async: false,
+        dataType: "json",
+        success: function(jsonObj) {
+          ListofYears = jsonObj["gkresult"],
+          $('#finalyears').empty();
+          for (i in ListofYears ) {
+            $('#finalyears').append('<option value="' + ListofYears[i].orgcode + '">' + ListofYears[i].yearstart+' to '+ListofYears[i].yearend + '</option>');
+          }
         }
-      }
 
-    });
+      });
+    }
   });
   $("#callLogin").click(function(event){
     event.preventDefault();
@@ -75,8 +75,6 @@ $(document).ready(function()
           $("#selectorg").load("/login?orgcode="+ orgcode+"&flag=0", setTimeout( function() { $("#login_username").focus(); }, 500 ));
 
     var financialyears = $("#finalyears option:selected").html();
-    var org = $("#org-name option:selected").val();
-    var orgobj = eval('('+org+')');
     var oname = orgobj.orgname;
     var otype = orgobj.orgtype;
     var syear = financialyears[6]+financialyears[7]+financialyears[8]+financialyears[9]+"-"+financialyears[3]+financialyears[4]+"-"+financialyears[0]+financialyears[1];
