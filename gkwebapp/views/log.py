@@ -42,13 +42,15 @@ def showviewlog(request):
 
 @view_config(route_name="log",request_param="action=showlogreport")
 def showlogreport(request):
-    header={"gktoken":request.headers["gktoken"]}
-	userid = int(request.params["userid"])
+	header={"gktoken":request.headers["gktoken"]}
+	userid = request.params["userid"]
 	calculatefrom = request.params["calculatefrom"]
 	calculateto = request.params["calculateto"]
-	if request.params["typeflag"] == 1:
-		result = requests.get("http://127.0.0.1:6543/report?type=logbyorg&calculatefrom=%scalculateto=%s"%(calculatefrom, calculateto), headers=header)
-		return render_to_response("gkwebapp:templates/logreport.jinja2",{"records":result.json()["gkresult"]},request=request)
+	print calculatefrom
+	''' typeflag = 1 means log by organisation and 2 means log by user'''
+	if request.params["typeflag"] == "1":
+		result = requests.get("http://127.0.0.1:6543/report?type=logbyorg&calculatefrom=%s&calculateto=%s"%(calculatefrom, calculateto), headers=header)
+		return render_to_response("gkwebapp:templates/logreport.jinja2",{"records":result.json()["gkresult"], "logheader": {"calculatefrom": calculatefrom, "calculateto": calculateto}, "typeflag": "1"},request=request)
 	else:
-		result = requests.get("http://127.0.0.1:6543/report?type=logbyuser&userid=%dcalculatefrom=%scalculateto=%s"%(userid, calculatefrom, calculateto), headers=header)
-		return render_to_response("gkwebapp:templates/logreport.jinja2",{"records":result.json()["gkresult"]},request=request)
+		result = requests.get("http://127.0.0.1:6543/report?type=logbyuser&userid=%s&calculatefrom=%s&calculateto=%s"%(userid, calculatefrom, calculateto), headers=header)
+		return render_to_response("gkwebapp:templates/logreport.jinja2",{"records":result.json()["gkresult"], "logheader": {"calculatefrom": calculatefrom, "calculateto": calculateto, "username": request.params["username"]}, "typeflag": "2"},request=request)
