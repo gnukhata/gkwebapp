@@ -130,7 +130,7 @@ height:35px;
 				{% for record in gkresult %}
 				<tr	value="{{record["godownid"]}}">
 					<td class="smwrap lalign">
-						<a class="libgname" href="">{{record["godownname"]}}</a>
+						{{record["godownname"]}}
 					</td>
 					<td class="smwrap lalign" >
 						{{record["godownstate"]}}
