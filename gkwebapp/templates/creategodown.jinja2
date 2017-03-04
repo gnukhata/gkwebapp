@@ -1,58 +1,12 @@
 <style type="text/css">
+
 .shadow {
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-#latable td {
-	font-size: 75%;
-	padding: 4 !important;
-	margin: 4 !important;
-}
 
-#latable th {
-	font-size: 85%;
+tr{
+height:35px;
 }
-
-.card-view .title {
-		font-weight: bold;
-		display: inline-block;
-		min-width: 30%;
-		text-align: left !important;
-}
-
-#latable tbody {
-		display:block;
-		height: calc(100vh - 17em);
-		overflow-y:scroll;
-}
-#latable thead,#latable tbody tr {
-		display:table;
-		width:100%;
-		table-layout:fixed;
-}
-#latable thead {
-		width: calc( 100% - 0.65em );
-}
-
-.calign{
-	text-align:center;
-}
-.lalign{
-	text-align:left;
-}
-.dtwrap{
-	width :5%
-	 }
-.smwrap{
-width:3%
-}
-
-.lngwrap{
-width:16%
-}
-.mdwrap{
-width:8%
-}
-
 </style>
 <body>
 	<div class="panel shadow">
@@ -133,9 +87,7 @@ width:8%
 					<label for="godownaddress" id="godnaddress">{% trans %}Address{% endtrans %} : </label>
 					<textarea type="text" id="godownaddress" class="form-control" name="godownaddress"></textarea>
 				</div>
-				<small id="gdtextareahelp" class="form-text text-muted">Press Enter Key twice to shift focus to Contact Name.</small>
 					<div>
-					</br>
 					<label for="godowncontactname" id="godnname">{% trans %}Contact Name{% endtrans %} : </label>
 					<input type="text" id="godowncontactname" class="form-control input-sm" name="godownname"></input>
 				</div></br>
@@ -149,23 +101,23 @@ width:8%
 				</div>
 		</div>
 		<div class="col-sm-6">
-		<div class="row">
+		<div class="form-group">
 				<label>{% trans %}List of last 5 created Godowns{% endtrans %} : </label>
-		<table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
-	      <thead class="bg-primary">
+		<table id="latable" class="table shadow table-bordered">
+	      <thead>
 	        <tr>
-	          <th class="lngwrap lalign">
+	          <th class="lalign">
 						{% trans %}Godown Name{% endtrans %}
 						</th>
-	          <th class="lngwrap lalign" >
+	          <th class="lalign" >
 						{% trans %}State{% endtrans %}
 						</th>
-	          <th class="lngwrap lalign" >
+	          <th class="lalign" >
 						{% trans %}Address{% endtrans %}
 						</th>
 	        </tr>
 	      </thead>
-	      <tbody>
+	      <tbody style="height: auto;">
 				{% for record in gkresult %}
 				<tr	value="{{record["godownid"]}}">
 					<td class="smwrap lalign">
@@ -187,7 +139,7 @@ width:8%
 		<div class="panel-footer">
 			<div class="container-fluid">
 				<button type="submit" class="btn btn-success btn-sm" id="gdnsubmit" name="submit">{% trans %}Save{% endtrans %}</button>
-				<button id="gdnreset" class="btn btn-warning btn-sm">{% trans %}Reset{% endtrans %}</button>
+				<button id="gdnreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
 			</div>
 		</div>
 	</div>

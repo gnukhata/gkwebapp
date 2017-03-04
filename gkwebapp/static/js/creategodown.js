@@ -97,6 +97,12 @@ $(document).ready(function()
           $("#gdnsubmit").click();
           return false;
         }
+          /* Act on the event */
+        if (event.which == 45)
+          {
+            event.preventDefault();
+            $("#gdnsubmit").click();
+          }
       });
       $("#gdnsubmit").click(function(e)
       {
@@ -147,25 +153,7 @@ $(document).ready(function()
                 $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#success-alert").hide();
                 });
-                $.ajax(
-                  {
 
-                  type: "POST",
-                  url: "/lastfivegodowns?type=godownslist",
-                  global: false,
-                  async: false,
-                  datatype: "text/html",
-                  beforeSend: function(xhr)
-                    {
-                      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-                    },
-                  success: function(resp)
-                  {
-                    console.log("success");
-                    $("#info").html(resp);
-                  }
-                  }
-                );
               }
               else if(resp["gkstatus"]==1)
               {

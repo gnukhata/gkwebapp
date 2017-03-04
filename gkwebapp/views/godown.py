@@ -42,7 +42,13 @@ def godown(request):
 
 @view_config(route_name="godown",request_param="type=addtab", renderer="gkwebapp:templates/creategodown.jinja2")
 def showgodown(request):
-	return {"status":True}
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/godown?type=lastfivegodown", headers=header)
+	goddata=[]
+	for record in result.json()["gkresult"]:
+		gdata= {"godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"])}
+		goddata.append(gdata)
+	return {"gkresult":goddata}
 
 @view_config(route_name="godown",request_param="type=addpopup", renderer="gkwebapp:templates/creategodownpopup.jinja2")
 def showgodownpopup(request):
