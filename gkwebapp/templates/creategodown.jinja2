@@ -4,6 +4,15 @@
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.panel{
+margin-bottom: 20px;
+background-color: #fff;
+border: 1px solid transparent;
+border-radius: 4px;
+-webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
 tr{
 height:35px;
 }
@@ -37,7 +46,7 @@ height:35px;
 
 					{% trans %}Please select state!{% endtrans %}
 				</div>
-				<div class="form-group">
+				<div class="form-group" style="margin-top: -1%;">
 					<label for="godownstate" id="godnstate">{% trans %}State{% endtrans %} : </label>
 					<select id="godownstate" class="form-control input-sm tax_state">
 						<option value="" disabled selected hidden>Select a State</option>
@@ -80,22 +89,21 @@ height:35px;
 					</select>
 				</div>
 				<div class="alert alert-danger" id="addressblank-alert"  aria-live="rude" role="alert" hidden>
-
 					{% trans %}Please enter address!{% endtrans %}
 				</div>
-				<div class="form-group">
+				<div class="form-group" style="margin-top: -1%;">
 					<label for="godownaddress" id="godnaddress">{% trans %}Address{% endtrans %} : </label>
 					<textarea type="text" id="godownaddress" class="form-control" name="godownaddress"></textarea>
 				</div>
-					<div>
+					<div style="margin-top: -1%;">
 					<label for="godowncontactname" id="godnname">{% trans %}Contact Name{% endtrans %} : </label>
 					<input type="text" id="godowncontactname" class="form-control input-sm" name="godownname"></input>
 				</div></br>
-				<div class="form-group">
+				<div class="form-group" style="margin-top: -1%;">
 					<label for="godowndesignation" id="godndesignation">{% trans %}Designation{% endtrans %} : </label>
 					<input type="text" id="godowndesignation" class="form-control input-sm" name="godowndesignation"></input>
 				</div>
-				<div class="form-group">
+				<div class="form-group" style="margin-top: -1%;">
 					<label for="godowncontact" id="godncontact">{% trans %}Contact Number{% endtrans %} : </label>
 					<input type="text" id="godowncontact" class="form-control input-sm" name="godowncontact"></input>
 				</div>
@@ -103,6 +111,7 @@ height:35px;
 		<div class="col-sm-6">
 		<div class="form-group">
 				<label>{% trans %}List of last 5 created Godowns{% endtrans %} : </label>
+				<div class="panel">
 		<table id="latable" class="table shadow table-bordered">
 	      <thead>
 	        <tr>
@@ -133,6 +142,7 @@ height:35px;
 				{% endfor %}
 	      </tbody>
 	    </table>
+			</div>
 	  </div>
 		</div>
 		</div>
