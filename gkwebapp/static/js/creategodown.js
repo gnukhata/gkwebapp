@@ -24,7 +24,6 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
 */
-
 $(document).ready(function()
 {
   $("#godownname").focus();
@@ -98,6 +97,12 @@ $(document).ready(function()
           $("#gdnsubmit").click();
           return false;
         }
+          /* Act on the event */
+        if (event.which == 45)
+          {
+            event.preventDefault();
+            $("#gdnsubmit").click();
+          }
       });
       $("#gdnsubmit").click(function(e)
       {
@@ -146,8 +151,9 @@ $(document).ready(function()
                 $("#gdnreset").click();
                 $("#success-alert").alert();
                 $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
-                  $("#success-alert").hide();
+                $("#success-alert").hide();
                 });
+
               }
               else if(resp["gkstatus"]==1)
               {

@@ -1,3 +1,22 @@
+<style type="text/css">
+
+.shadow {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.panel{
+margin-bottom: 20px;
+background-color: #fff;
+border: 1px solid transparent;
+border-radius: 4px;
+-webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+tr{
+height:35px;
+}
+</style>
 <body>
 	<div class="panel shadow">
 		<div class="panel-body">
@@ -27,7 +46,7 @@
 
 					{% trans %}Please select state!{% endtrans %}
 				</div>
-				<div class="form-group">
+				<div class="form-group" style="margin-top: -1%;">
 					<label for="godownstate" id="godnstate">{% trans %}State{% endtrans %} : </label>
 					<select id="godownstate" class="form-control input-sm tax_state">
 						<option value="" disabled selected hidden>Select a State</option>
@@ -70,38 +89,70 @@
 					</select>
 				</div>
 				<div class="alert alert-danger" id="addressblank-alert"  aria-live="rude" role="alert" hidden>
-
 					{% trans %}Please enter address!{% endtrans %}
 				</div>
-				<div class="form-group">
+				<div class="form-group" style="margin-top: -1%;">
 					<label for="godownaddress" id="godnaddress">{% trans %}Address{% endtrans %} : </label>
 					<textarea type="text" id="godownaddress" class="form-control" name="godownaddress"></textarea>
 				</div>
-				<small id="gdtextareahelp" class="form-text text-muted">Press Enter Key twice to shift focus to Contact Name.</small>
-			</div>
-			<div class="col-sm-6">
-				<div class="form-group">
+					<div style="margin-top: -1%;">
 					<label for="godowncontactname" id="godnname">{% trans %}Contact Name{% endtrans %} : </label>
 					<input type="text" id="godowncontactname" class="form-control input-sm" name="godownname"></input>
-				</div>
-				<div class="form-group">
+				</div></br>
+				<div class="form-group" style="margin-top: -1%;">
 					<label for="godowndesignation" id="godndesignation">{% trans %}Designation{% endtrans %} : </label>
 					<input type="text" id="godowndesignation" class="form-control input-sm" name="godowndesignation"></input>
 				</div>
-				<div class="form-group">
+				<div class="form-group" style="margin-top: -1%;">
 					<label for="godowncontact" id="godncontact">{% trans %}Contact Number{% endtrans %} : </label>
 					<input type="text" id="godowncontact" class="form-control input-sm" name="godowncontact"></input>
 				</div>
+		</div>
+		<div class="col-sm-6">
+		<div class="form-group">
+				<label>{% trans %}List of last 5 created Godowns{% endtrans %} : </label>
+				<div class="panel">
+		<table id="latable" class="table shadow table-bordered">
+	      <thead>
+	        <tr>
+	          <th class="lalign">
+						{% trans %}Godown Name{% endtrans %}
+						</th>
+	          <th class="lalign" >
+						{% trans %}State{% endtrans %}
+						</th>
+	          <th class="lalign" >
+						{% trans %}Address{% endtrans %}
+						</th>
+	        </tr>
+	      </thead>
+	      <tbody style="height: auto;">
+				{% for record in gkresult %}
+				<tr	value="{{record["godownid"]}}">
+					<td class="smwrap lalign">
+						{{record["godownname"]}}
+					</td>
+					<td class="smwrap lalign" >
+						{{record["godownstate"]}}
+					</td>
+					<td class="smwrap lalign">
+						{{record["godownaddress"]}}
+					</td>
+				</tr>
+				{% endfor %}
+	      </tbody>
+	    </table>
 			</div>
+	  </div>
+		</div>
 		</div>
 		<div class="panel-footer">
 			<div class="container-fluid">
 				<button type="submit" class="btn btn-success btn-sm" id="gdnsubmit" name="submit">{% trans %}Save{% endtrans %}</button>
-				<button id="gdnreset" class="btn btn-warning btn-sm">{% trans %}Reset{% endtrans %}</button>
+				<button id="gdnreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
 			</div>
 		</div>
 	</div>
 
-</div>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/creategodown.js')}}"></script>
 </body>

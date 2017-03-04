@@ -159,6 +159,7 @@ def main(global_config, **settings):
 	config.add_route('cashmemos','/cashmemos')
 	config.add_route('import','/import')
 	config.add_route('exportledger','/exportledger')
-	
+	config.add_route('lastfivegodowns', '/lastfivegodowns')
+
 	config.scan('gkwebapp')
 	return config.make_wsgi_app()
