@@ -193,15 +193,3 @@ def updateattachment(request):
 		gkdata = {"attachment":None,"attachmentcount":0,"vouchercode":request.params["vouchercode"]}
 	result1 = requests.put("http://127.0.0.1:6543/transaction",data=json.dumps(gkdata) , headers=header)
 	return {"attachment":docs,"vouchercode":request.params["vouchercode"],"vno":request.params["vno"],"lockflag":result.json()["lockflag"],"vtype":request.params["vtype"],"userrole":result.json()["userrole"]}
-
-@view_config(route_name="getcjaccounts", request_param='getbalance=voucher', renderer='json')
-def getBalance(request):
-	header={"gktoken":request.headers["gktoken"]}
-	accountcode = request.params["accountcode"]
-	calculateto = request.params["calculateto"]
-	financialstart = request.params["financialstart"]
-	result = requests.get("http://127.0.0.1:6543/report?type=closingbalance&accountcode=%d&calculateto=%s&financialstart=%s"%(int(accountcode),calculateto,financialstart), headers=header)
-	if result.json()['gkstatus'] == 0:
-		return {'balance' : result.json()['gkresult'], 'gkstatus' : result.json()['gkstatus']}
-	else:
-		return {'gkstatus' : result.json()['gkstatus']}
