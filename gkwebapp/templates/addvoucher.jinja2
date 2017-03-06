@@ -230,12 +230,9 @@
                 <th class="col-xs-1">
                   {% trans %}Cr/Dr{% endtrans %}
                 </th>
-                <th class="col-xs-3">
+                <th class="col-xs-4">
                   {% trans %}Account Name{% endtrans %}
                 </th>
-            		<th class="col-xs-1 rightJustified">
-            		  {% trans %}Balance{% endtrans %}
-            		</th>
                 <th class="col-xs-3 rightJustified">
                   {% trans %}Dr Amount{% endtrans %}
                 </th>
@@ -259,15 +256,12 @@
                     <option value="Cr">{% trans %}Cr{% endtrans %}</option>
                   </select>
                 </td>
-                <td class="col-xs-3">
+                <td class="col-xs-4">
                   <select class="form-control input-sm accs">
                     {% for acc in draccounts %}
                     <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
                     {% endfor %}
                   </select>
-                </td>
-                <td class="col-xs-1">
-                  <input type="text" class="form-control input-sm rightJustified accbal" name="name" value="" disabled>
                 </td>
                 <td class="col-xs-3">
                   <input class="form-control input-sm dramt rightJustified" type="text" value="0.00">
@@ -286,15 +280,12 @@
                     <option value="Dr">{% trans %}Dr{% endtrans %}</option>
                   </select>
                 </td>
-                <td class="col-xs-3">
+                <td class="col-xs-4">
                   <select class="form-control input-sm accs">
                     {% for acc in craccounts %}
                     <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
                     {% endfor %}
                   </select>
-                </td>
-                <td class="col-xs-1">
-                  <input type="text" class="form-control input-sm rightJustified accbal" name="name" value="" disabled>
                 </td>
                 <td class="col-xs-3">
                   <input class="form-control input-sm dramt rightJustified" type="text" value="" disabled>

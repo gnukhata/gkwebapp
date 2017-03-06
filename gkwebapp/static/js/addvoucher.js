@@ -102,7 +102,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     crsum=0;
     $(".cramt").each(function(){
       crsum += +$(this).val();
-      $('#vtable tfoot tr:last td:eq(3) input').val(parseFloat(crsum).toFixed(2));
+      $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
     });
   });
 
@@ -119,7 +119,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       });
       $(".cramt").each(function(){
         crsum += +$(this).val();
-        $('#vtable tfoot tr:last td:eq(3) input').val(parseFloat(crsum).toFixed(2));
+        $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
       });
       $('tbody tr:last input:enabled').focus().select();
     });
@@ -517,39 +517,9 @@ $("#invsel").keyup(function(event) {
     crsum=0;
     $(".cramt").each(function(){
       crsum += +$(this).val();
-      $('#vtable tfoot tr:last td:eq(3) input').val(parseFloat(crsum).toFixed(2));
+      $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
     });
   });
-
-  function getBalance( accountcode, calculateTo ){
-    var bal = '';
-    $.ajax({
-      url: '/getcjaccounts?getbalance=voucher',
-      type: 'POST',
-      dataType: 'json',
-      async : false,
-      data: {"accountcode": accountcode, "calculateto" : calculateTo, "financialstart" : sessionStorage.yyyymmddyear1},
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      }
-    })
-    .done(function(resp) {
-      if (resp["gkstatus"]==0) {
-        bal= resp["balance"];
-      }
-      else {
-        bal= '';
-      }
-    })
-    .fail(function() {
-      console.log("error");
-    })
-    .always(function() {
-      console.log("complete");
-    });
-    return bal;
-  };
 
   $(document).off("keyup",".accs").on("keyup",".accs",function(event){
     if(event.which==13 && !outfocus)
@@ -558,9 +528,6 @@ $("#invsel").keyup(function(event) {
         return false;
       }
       var curindex = $(this).closest('tr').index();
-      var curacccode = $('#vtable tbody tr:eq('+curindex+') td:eq(1) select option:selected').val();
-      var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
-      $('#vtable tbody tr:eq('+curindex+') td:eq(2) input').val(getBalance(curacccode, caldata));
       $('#vtable tbody tr:eq('+curindex+') input:enabled').select().focus(); // focus shifts to the enabled amount box when one hits enter on the accounts select box.
     }
     if (event.which==32) {
@@ -747,10 +714,10 @@ $("#invsel").keyup(function(event) {
       crsum=0;
       $(".cramt").each(function(){
         crsum += +$(this).val();
-        $('#vtable tfoot tr:last td:eq(3) input').val(parseFloat(crsum).toFixed(2));
+        $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
       });
       var curindex = $(this).closest('tr').index();
-      if($('#vtable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()=="" || $('#vtable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()==0){
+      if($('#vtable tbody tr:eq('+curindex+') td:eq(2) input:enabled').val()=="" || $('#vtable tbody tr:eq('+curindex+') td:eq(2) input:enabled').val()==0){
         return false;
       }
       var lastindex = $('#vtable tbody tr:last').index();
@@ -760,12 +727,12 @@ $("#invsel").keyup(function(event) {
         if(curindex<lastindex)
         {
           var nxtindex = curindex+1
-          if($('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="" || $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()==0 || $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="NaN"){
-            $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
+          if($('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0 || $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
+            $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
             crsum=0;
             $(".cramt").each(function(){
               crsum += +$(this).val();
-              $('#vtable tfoot tr:last td:eq(3) input').val(parseFloat(crsum).toFixed(2));
+              $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
             });
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
           }
@@ -796,12 +763,9 @@ $("#invsel").keyup(function(event) {
               '<option value="Dr">Dr</option>'+
               '</select>'+
               '</td>'+
-              '<td class="col-xs-3">'+
+              '<td class="col-xs-4">'+
               '<select class="form-control input-sm accs">'+
               '</select>'+
-              '</td>'+
-              '<td class="col-xs-1">'+
-              '<input class="form-control input-sm accbal rightJustified" type="text" value="" disabled>'+
               '</td>'+
               '<td class="col-xs-3">'+
               '<input class="form-control input-sm dramt rightJustified" type="text" value="" disabled>'+
@@ -815,11 +779,11 @@ $("#invsel").keyup(function(event) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
               $('#vtable tbody tr:last td:eq(1) select').focus();
-              $('#vtable tbody tr:last td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
+              $('#vtable tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
               crsum=0; // cr total is recalculated since a cr row is added.
               $(".cramt").each(function(){
                 crsum += +$(this).val();
-                $('#vtable tfoot tr:last td:eq(3) input').val(parseFloat(crsum).toFixed(2));
+                $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
               });
             }
           });
@@ -833,8 +797,8 @@ $("#invsel").keyup(function(event) {
         if(curindex<lastindex)
         {
           var nxtindex = curindex+1
-          if($('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0 || $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="NaN"){
-            $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
+          if($('#vtable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()=="" || $('#vtable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()==0 || $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
+            $('#vtable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val(parseFloat(diff).toFixed(2));
             drsum=0;
             $(".dramt").each(function(){
               drsum += +$(this).val();
@@ -869,12 +833,9 @@ $("#invsel").keyup(function(event) {
               '<option value="Dr" selected>Dr</option>'+
               '</select>'+
               '</td>'+
-              '<td class="col-xs-3">'+
+              '<td class="col-xs-4">'+
               '<select class="form-control input-sm accs">'+
               '</select>'+
-              '</td>'+
-              '<td class="col-xs-1">'+
-              '<input class="form-control input-sm accbal rightJustified" type="text" value="" disabled>'+
               '</td>'+
               '<td class="col-xs-3">'+
               '<input class="form-control input-sm dramt rightJustified" type="text" value="0.00">'+
@@ -888,7 +849,7 @@ $("#invsel").keyup(function(event) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
               $('#vtable tbody tr:last td:eq(1) select').focus();
-              $('#vtable tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
+              $('#vtable tbody tr:last td:eq(2) input:enabled').val(parseFloat(diff).toFixed(2));
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
@@ -939,10 +900,10 @@ $("#invsel").keyup(function(event) {
       crsum=0;
       $(".cramt").each(function(){
         crsum += +$(this).val();
-        $('#vtable tfoot tr:last td:eq(3) input').val(parseFloat(crsum).toFixed(2));
+        $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
       });
       var curindex = $(this).closest('tr').index();
-      if($('#vtable tbody tr:eq('+curindex+') td:eq(4) input:enabled').val()=="" || $('#vtable tbody tr:eq('+curindex+') td:eq(4) input:enabled').val()==0){
+      if($('#vtable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()=="" || $('#vtable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()==0){
         return false;
       }
       var lastindex = $('#vtable tbody tr:last').index();
@@ -952,12 +913,12 @@ $("#invsel").keyup(function(event) {
         if(curindex<lastindex)
         {
           var nxtindex = curindex+1
-          if($('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="" || $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()==0){
-            $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
+          if($('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0){
+            $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
             crsum=0;
             $(".cramt").each(function(){
               crsum += +$(this).val();
-              $('#vtable tfoot tr:last td:eq(3) input').val(parseFloat(crsum).toFixed(2));
+              $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
             });
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
           }
@@ -988,12 +949,9 @@ $("#invsel").keyup(function(event) {
               '<option value="Dr">Dr</option>'+
               '</select>'+
               '</td>'+
-              '<td class="col-xs-3">'+
+              '<td class="col-xs-4">'+
               '<select class="form-control input-sm accs">'+
               '</select>'+
-              '</td>'+
-              '<td class="col-xs-1">'+
-              '<input class="form-control input-sm accbal rightJustified" type="text" value="" disabled>'+
               '</td>'+
               '<td class="col-xs-3">'+
               '<input class="form-control input-sm dramt rightJustified" type="text" value="" disabled>'+
@@ -1007,11 +965,11 @@ $("#invsel").keyup(function(event) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
               $('#vtable tbody tr:last td:eq(1) select').focus();
-              $('#vtable tbody tr:last td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
+              $('#vtable tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
               crsum=0;
               $(".cramt").each(function(){
                 crsum += +$(this).val();
-                $('#vtable tfoot tr:last td:eq(3) input').val(parseFloat(crsum).toFixed(2));
+                $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
               });
               drsum=0;
               $(".dramt").each(function(){
@@ -1030,8 +988,8 @@ $("#invsel").keyup(function(event) {
         if(curindex<lastindex)
         {
           var nxtindex = curindex+1
-          if($('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0 || $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="NaN"){
-            $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(diff.toFixed(2));
+          if($('#vtable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()=="" || $('#vtable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()==0 || $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
+            $('#vtable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val(diff.toFixed(2));
             drsum=0;
             $(".dramt").each(function(){
               drsum += +$(this).val();
@@ -1066,12 +1024,9 @@ $("#invsel").keyup(function(event) {
               '<option value="Dr" selected>Dr</option>'+
               '</select>'+
               '</td>'+
-              '<td class="col-xs-3">'+
+              '<td class="col-xs-4">'+
               '<select class="form-control input-sm accs">'+
               '</select>'+
-              '</td>'+
-              '<td class="col-xs-1">'+
-              '<input class="form-control input-sm accbal rightJustified" type="text" value="" disabled>'+
               '</td>'+
               '<td class="col-xs-3">'+
               '<input class="form-control input-sm dramt rightJustified" type="text" value="0.00">'+
@@ -1085,7 +1040,7 @@ $("#invsel").keyup(function(event) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
               $('#vtable tbody tr:last td:eq(1) select').focus();
-              $('#vtable tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
+              $('#vtable tbody tr:last td:eq(2) input:enabled').val(parseFloat(diff).toFixed(2));
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
