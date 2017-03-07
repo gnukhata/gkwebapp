@@ -3,6 +3,13 @@
 <head>
   <meta charset="utf-8">
   <title>{% trans %}GNUKhata | Import Ledgers{% endtrans %}</title>
+   <style type="text/css">
+    .mygrid-wrapper {
+    border: solid gray 0.5px;
+     overflow-y:scroll;
+    height: 300px;
+}
+</style>
 </head>
 <body>
   <div class='container-fluid'>
@@ -11,13 +18,14 @@
         <div class="panel-heading">
           Data Import Wizard
         </div>
-        <div class="panel-body">
+        <div class="panel-body ">
             <p>Welcome to the Data import wizard of GNUKhata.  It will assist you to import data from any software that exports data to XLSX spreadsheets.  Such software includes  Tally ERP 9 (and GNUKhata itself), which exports list of accounts and ledgers in a structured spreadsheet.
               Note however that a spreadsheet containing data exported from GNUKhata precisely contains list of accounts and vouchers in two separate sheets.  However if the proper specifications are followed, you can get data from other programs too.
               <br>
               As an example, all you need is to export data from Tally ERP 9 to a spreadsheet in xlsx format.  This can be done through the gateway function of Tally.  For more details on how to export, please refer Tally documentation.<br>
               Once data is exported to the spreadsheet,  it however has to comply with the import specification given below, which need minor adjustment in the sheets. 
               <br>
+              <div class = "mygrid-wrapper ">
               <ul>
                 <li>
                   First sheet must have list of groups, subgroups and accounts.<br>
@@ -75,11 +83,12 @@
                 <li>
                   Unique incremental voucher numbers are asumed to be present.<br>
                 </li>
+                <br>
+                  	You can export data from Tally 9 ERP which exports list of accounts and ledgers in a single workbook, Please note that you will have to include <i>narration</i> field for smooth data transfer.<br>
+                  	After you export the said data, please make the slight changes mentioned above.<br>
+                  	Note that First sheet will require maximum changes, because ledgers are exported by Tally ERP 9 in a definite structure.</p>
               </ul>
-
-                  You can export data from Tally 9 ERP which exports list of accounts and ledgers in a single workbook, Please note that you will have to include <i>narration</i> field for smooth data transfer.<br>
-                  After you export the said data, please make the slight changes mentioned above.<br>
-                  Note that First sheet will require maximum changes, because ledgers are exported by Tally ERP 9 in a definite structure.</p>
+                </div>
                 <div class="alert alert-success" id="import-success-alert"  aria-live="rude" role="alert" hidden>
 
                   {% trans %}Data imported successfully{% endtrans %} <b id='filename'></b>.
@@ -101,7 +110,7 @@
                   </label>
                   <span class='label label-info' id="upload-file-info"></span>
                   <div class="form-group">
-                    <button type="button" name="button" class="btn btn-sm btn-primary" id="import">Import</button>
+                    <button type="button" name="button" class="btn btn-sm btn-primary" id="import" accesskey="o">Imp<u>o</u>rt</button>
                   </div>
                 </div>
               </div>
