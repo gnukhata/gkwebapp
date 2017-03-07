@@ -7,7 +7,7 @@
     .mygrid-wrapper {
     border: solid gray 0.5px;
      overflow-y:scroll;
-    height: 280px;
+    height: 300px;
 }
 </style>
 </head>
@@ -102,7 +102,7 @@
                   {% trans %}File not found.{% endtrans %}
                 </div>
               </div>
-              <div class="panel-footer">
+              <div height:8px; class="panel-footer">
                 <div class="form-inline">
                   <label class="btn btn-primary btn-sm" for="my-file-selector">
                     <input name="spreadsheet" accesskey="w" class="input-sm" id="my-file-selector" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" / style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
