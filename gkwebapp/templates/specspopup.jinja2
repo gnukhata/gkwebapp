@@ -54,14 +54,21 @@
               </table>
 
 
-            <small id="spectotaxhelp" class="form-text text-muted">{% trans %}Press Esc key on specification type to switch to tax name.{% endtrans %}</small><br>
-            <small id="navigation" class="form-text text-muted">{% trans %}Press 'Ctrl + <' and 'Ctrl + >' to navigate through fields of specification and tax.{% endtrans %}</small>
-</div>
+            </div>
           </div>
 </div>
 </div>
+
+      <div class="panel-footer">
+        <div class="container-fluid">
+          <button class="btn btn-success btn-sm" id="savespecs" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert key anywhere on the current screen to save{% endtrans %}">{% trans %}Save{% endtrans %}</button>
+          <button class="btn btn-warning btn-sm" id="category_reset">{% trans %}Reset{% endtrans %}</button>
+        </div>
+      </div>
 </div>
+
 </div>
+
 </div>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/specspopup.js')}}"></script>
 </body>

@@ -1,8 +1,14 @@
 /* -----------------------Spec key events start----------------------------------------- */
   //All the navigation events where pressing enter shifts focus to the next element and pressing the up arrow key focuses the previous element
-     $('#category_spec_name').focus();
-$('#addspecmodal').on('shown', function () {
-          $('#category_spec_name').focus();
+  $(document).ready(function()
+  {
+    $('.modal-backdrop').remove();
+    $('#category_spec_name').focus();
+
+
+    });
+$('#category_spec_name').focus();
+
  });
   $(document).off("keydown",".spec_name").on("keydown",".spec_name",function(event)
   {
@@ -50,6 +56,10 @@ $('#addspecmodal').on('shown', function () {
     var previndex1 = curindex1-1;
     if (event.which==13) {
       event.preventDefault();
+
+
+
+
       if (curindex1 != ($("#category_spec_table tbody tr").length-1)) {
         $('#category_spec_table tbody tr:eq('+nextindex1+') td:eq(0) input').focus().select();
       }
@@ -82,22 +92,75 @@ $('#addspecmodal').on('shown', function () {
         $('#category_spec_table tbody tr:eq('+nextindex1+') td:eq(0) input').focus().select();
       }
     }
-    else if (event.ctrlKey && event.which==188) {
-      event.preventDefault();
-      if (previndex1>-1) {
-        $('#category_spec_table tbody tr:eq('+previndex1+') td:eq(0) input').focus().select();
+
+
+  });
+  /*-----------------------------Rohini------------------------*/
+  $("#savespecs").click(function(event) {
+    var specs = [];
+    for (var i = 0; i < $("#category_spec_table tbody tr").length; i++) {
+      var obj = {};
+      //dict for specs
+      if ($.trim($("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").val())!="") {
+        obj.attrname = $("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").val();
+        obj.attrtype = $("#category_spec_table tbody tr:eq("+i+") td:eq(1) select").val();
+        specs.push(obj);
       }
-      else {
-        $('#category_spec_table tbody tr:eq('+curindex1+') td:eq(0) input').focus().select();
+      else if ($("#category_spec_table tbody tr").length == 1) {
+        $("#spec-blank-alert").alert();
+        $("#spec-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#spec-blank-alert").hide();
+        });
+        $("#category_spec_table tbody tr:eq("+i+") td:eq(0) input").focus().select();
+        return false;
       }
     }
-    else if (event.ctrlKey && event.which==190) {
-      event.preventDefault();
-      $('#category_spec_table tbody tr:eq('+nextindex1+') td:eq(0) input').focus().select();
-    }
-    else if (event.which==27) {
-      event.preventDefault();
-      $(".tax_name:first").focus();
-    }
+    $.ajax({
+          url: '/category?action=save',
+          type: 'POST',
+          dataType: 'json',
+          async : false,
+          data: {"categoryname": $("#category_name").val(),"subcategoryof":$("#category_under").val(),"specs":JSON.stringify(specs),"taxes":JSON.stringify(taxes)},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          }
+        })
+        .done(function(resp) {
+          if(resp["gkstatus"] == 0){
+            $("#success-alert").alert();
+            $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#success-alert").hide();
+              $("#searchcategory").show();
+              $("#addcategory").click();
+              });
+            return false;
+          }
+          else if(resp["gkstatus"] == 1){
+            $("#category_name").focus().select();
+            $("#duplicate-alert").alert();
+            $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#duplicate-alert").hide();
+            });
+            return false;
+          }
+          else {
+            $("#category_name").focus();
+            $("#failure-alert").alert();
+            $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#failure-alert").hide();
+            });
+            return false;
+          }
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+
   });
   /* -----------------------Spec key events end----------------------------------------- */
+/*
+*/
