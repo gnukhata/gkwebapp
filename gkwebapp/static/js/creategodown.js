@@ -122,7 +122,9 @@ $(document).ready(function()
          },
        success: function(resp)
        {
-         console.log("Hello");
+         $("#listofgodownspopup").html("");
+         $('.modal-backdrop').remove();
+         $('.modal').modal('hide');
          $("#listofgodownspopup").html(resp);
          $('#allgodownmodal').modal('show');
          $('#allgodownmodal').on('shown.bs.modal', function(e){
