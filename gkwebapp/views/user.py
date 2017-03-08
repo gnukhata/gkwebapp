@@ -55,7 +55,17 @@ def createuser(request):
 	gkdata = {"username":request.params["username"],"userpassword":request.params["userpassword"],"userrole":int(request.params["userrole"]),"userquestion":request.params["userquestion"],"useranswer":request.params["useranswer"]}
 	result = requests.post("http://127.0.0.1:6543/users", data =json.dumps(gkdata), headers=headers)
 	if result.json()["gkstatus"] == 0:
-		gkdata = {"activity":gkdata["username"] + " user created"}
+		if request.params["userrole"] == "-1":
+			userrole = "Admin"
+		elif request.params["userrole"] == "0":
+			userrole = "Manager"
+		elif request.params["userrole"] == "1":
+			userrole = "Operator"
+		elif request.params["userrole"] == "2":
+			userrole = "Internal Auditor"
+		else:
+			userrole = "Godown Keeper"
+		gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user created"}
 		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=headers)
 	return {"gkstatus":result.json()["gkstatus"]}
 
@@ -71,13 +81,26 @@ def deleteuser(request):
 	headers={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/users", headers=headers)
 	uname = ""
+	urole = ""
+	userrole = ""
 	for user in result.json()["gkresult"]:
 		if user["userid"] == int(request.params["username"]):
 			uname = user["username"]
+			urole = user["userrole"]
+	if urole == "-1":
+		userrole = "Admin"
+	elif urole == "0":
+		userrole = "Manager"
+	elif urole == "1":
+		userrole = "Operator"
+	elif urole == "2":
+		userrole = "Internal Auditor"
+	else:
+		userrole = "Godown Keeper"
 	gkdata={"userid":request.params["username"] }
 	result = requests.delete("http://127.0.0.1:6543/users", data=json.dumps(gkdata), headers=headers)
 	if result.json()["gkstatus"] == 0:
-		gkdata = {"activity":uname + " user deleted"}
+		gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted"}
 		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=headers)
 	return {"gkstatus":result.json()["gkstatus"]}
 
