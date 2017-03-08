@@ -193,3 +193,10 @@ def updateattachment(request):
 		gkdata = {"attachment":None,"attachmentcount":0,"vouchercode":request.params["vouchercode"]}
 	result1 = requests.put("http://127.0.0.1:6543/transaction",data=json.dumps(gkdata) , headers=header)
 	return {"attachment":docs,"vouchercode":request.params["vouchercode"],"vno":request.params["vno"],"lockflag":result.json()["lockflag"],"vtype":request.params["vtype"],"userrole":result.json()["userrole"]}
+
+@view_config(route_name="showvoucher", request_param = "type=getclosingbal", renderer="json")
+def getClosingBal(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/report?type=closingbalance&accountcode=%d&financialstart=%s&calculateto=%s"%(int(request.params["accountcode"]), request.params["financialstart"], request.params["calculateto"]), headers=header)
+	if result.json()["gkstatus"] == 0:
+		return {"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"]}
