@@ -1239,3 +1239,40 @@ $.ajax({
     $("#info").load("/import?action=show");
   });
 });
+
+$('#show_unbilled_deliveries').click(function (e) {
+//
+  $.ajax(
+    {
+    type: "POST",
+    url: "/del_unbilled?action=view",
+    global: false,
+    async: false,
+    datatype: "json",
+    beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+    success: function(resp)
+    {
+      //alert(sessionStorage.gktoken);
+      //alert(Date());
+      //var financialstart = Date.parse(Date(), "yyyy-MM-dd");
+      //alert(financialstart);
+      //var temp_str = Date().getYear() + "-" + Date().getMonth() + "-" + Date().getDate();
+      /*
+      today = new Date();
+      year = today.getFullYear();
+      month = today.getMonth();
+      month += 1;
+      date = today.getDate();
+      wholedate = year + "-" + month + "-" + date
+      */
+      //var del_unbilled_array = temp_str.split(/\s*\-\s*/g)
+      //alert(wholedate);
+      $("#info").html(resp);
+      console.log("unbilled deliveries: ajax call success");
+    }
+    }
+  );
+  });
