@@ -108,25 +108,26 @@ height:35px;
 					<input type="text" id="godowncontact" class="form-control input-sm" name="godowncontact"></input>
 				</div>
 		</div>
-		<div class="col-sm-6">
+		{%if not gkresult%}
+		<div id="listtable" class="col-sm-6" hidden>
 		<div class="form-group">
 				<label>{% trans %}List of last 5 created Godowns{% endtrans %} : </label>
 				<div class="panel">
 		<table id="latable" class="table shadow table-bordered">
-	      <thead>
-	        <tr>
-	          <th class="lalign">
+				<thead>
+					<tr>
+						<th class="lalign">
 						{% trans %}Godown Name{% endtrans %}
 						</th>
-	          <th class="lalign" >
+						<th class="lalign" >
 						{% trans %}State{% endtrans %}
 						</th>
-	          <th class="lalign" >
+						<th class="lalign" >
 						{% trans %}Address{% endtrans %}
 						</th>
-	        </tr>
-	      </thead>
-	      <tbody style="height: auto;">
+					</tr>
+				</thead>
+				<tbody style="height: auto;">
 				{% for record in gkresult %}
 				<tr	value="{{record["godownid"]}}">
 					<td class="smwrap lalign">
@@ -140,11 +141,50 @@ height:35px;
 					</td>
 				</tr>
 				{% endfor %}
-	      </tbody>
-	    </table>
+				</tbody>
+			</table>
 			</div>
-	  </div>
 		</div>
+		</div>
+		{%else%}
+		<div id="listtable" class="col-sm-6">
+		<div class="form-group">
+				<label>{% trans %}List of last 5 created Godowns{% endtrans %} : </label>
+				<div class="panel">
+		<table id="latable" class="table shadow table-bordered">
+				<thead>
+					<tr>
+						<th class="lalign">
+						{% trans %}Godown Name{% endtrans %}
+						</th>
+						<th class="lalign" >
+						{% trans %}State{% endtrans %}
+						</th>
+						<th class="lalign" >
+						{% trans %}Address{% endtrans %}
+						</th>
+					</tr>
+				</thead>
+				<tbody style="height: auto;">
+				{% for record in gkresult %}
+				<tr	value="{{record["godownid"]}}">
+					<td class="smwrap lalign">
+						{{record["godownname"]}}
+					</td>
+					<td class="smwrap lalign" >
+						{{record["godownstate"]}}
+					</td>
+					<td class="smwrap lalign">
+						{{record["godownaddress"]}}
+					</td>
+				</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+			</div>
+		</div>
+		</div>
+		{%endif%}
 		</div>
 		<div class="panel-footer">
 			<div class="container-fluid">
