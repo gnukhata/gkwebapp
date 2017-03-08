@@ -38,54 +38,97 @@
 
     <div class="panel shadow category_panel">
       <div class="panel-body">
-          {% if categorycount > 0 %}
-        <div class="alert alert-danger" id="category-blank-alert"  aria-live="rude" role="alert" hidden>
-          <label for="vno">{% trans %}Please enter child category name!{% endtrans %}</label>
-        </div>
-        {% else %}
-        <div class="alert alert-danger" id="category-blank-alert"  aria-live="rude" role="alert" hidden>
-          <label for="vno">{% trans %}Please enter parent category name!{% endtrans %}</label>
-        </div>
-        {% endif %}
-        <div class="alert alert-danger" id="tax-name-blank-alert"  aria-live="rude" role="alert" hidden>
 
-          {% trans %}Select tax name!{% endtrans %}
-        </div>
-        <div class="alert alert-danger" id="tax-rate-blank-alert"  aria-live="rude" role="alert" hidden>
-
-          {% trans %}Enter tax rate!{% endtrans %}
-        </div>
-        <div class="alert alert-danger" id="tax-duplicate-alert"  aria-live="rude" role="alert" hidden>
-
-          {% trans %}Duplicate Tax!{% endtrans %}
-        </div>
         <input type="hidden" id="catcount" value="{{categorycount}}">
         <div class="">
 
           {% if categorycount > 0 %}
           <div class="form-group row">
-            <div class="col-md-6">
+          <div id="oldparentdiv">
+            <div class="col-md-6" >
+            <div>
               <label for="category_under">{% trans %}Parent Category:{% endtrans %}</label>
               <select class="form-control input-sm" id="category_under">
-                <option value="" selected>{% trans %}Primary{% endtrans %}</option>
+                <option value="" selected>{% trans %}Select Parent Category{% endtrans %}</option>
                 {% for categories in gkresult %}
                 <option value="{{categories['categorycode']}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
                 {% endfor %}
               </select>
+               <small id="txtareahelp" class="form-text text-muted">{% trans %}Press space to add new Parent Category.{% endtrans %}</small>
             </div>
+            </div>
+
+            </div>
+
+<div>
+
+
+
+<div class="panel-body form-group row" id="new_parent_div1" hidden>
+
+<div class="col-md-6">
+
+           <label for="category_name">{% trans %}New Parent Category Details:{% endtrans %}</label>
+  <table id="new_parent_category_table">
+  <tbody>
+                    <tr>
+                      <td class="col-xs-8">
+                        <input type="text" id="new_parent_name" class="form-control input-sm spec_name" placeholder="New Parent category Name">
+                      </td>
+                      <td class="col-xs-3">
+                       <button class="btn form-control btn-primary btn-sm" id="parent_spec"  >{% trans %}Add Specs{% endtrans %}</button>
+
+                      </td>
+                      <td class="col-xs-3">
+                       <button class="btn form-control btn-primary btn-sm" id="parent_tax"  >{% trans %}Add Tax{% endtrans %}</button>
+                      </td>
+                      <td class="col-xs-1">
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+
+            </div>
+            </div>
+</div>
           </div>
-          <div class="form-group row">
+
+                   <div class="form-group row">
             <div class="col-md-6">
               <label for="category_name">{% trans %}Child Category:{% endtrans %}</label>
-              <input class="form-control input-sm" id="category_name" placeholder="{% trans %}Enter child category name{% endtrans %}">
-            </div>
+              </div>
           </div>
+
           {% else %}
-          <div class="form-group row">
-            <div class="col-md-6">
-              <label for="category_name">{% trans %}Parent Category:{% endtrans %}</label>
-              <input class="form-control input-sm" id="category_name" placeholder="{% trans %}Enter category name{% endtrans %}">
+
+          <div class="form-group row" id="new_parent_div">
+<div>
+     <div class="col-md-6">
+
+	<label for="category_name">{% trans %}New Parent Category Details:{% endtrans %}</label>
+<table id="new_parent_category_table">
+<tbody>
+                  <tr>
+                    <td class="col-xs-8">
+                      <input type="text" id="new_parent_name" class="form-control input-sm spec_name" placeholder="New Parent category Name">
+                    </td>
+                    <td class="col-xs-3">
+                     <button class="btn form-control btn-primary btn-sm" id="parent_spec"  >{% trans %}Add Specs{% endtrans %}</button>
+
+                    </td>
+                    <td class="col-xs-3">
+                     <button class="btn form-control btn-primary btn-sm" id="parent_tax"  >{% trans %}Add Tax{% endtrans %}</button>
+                    </td>
+                    <td class="col-xs-1">
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
             </div>
+
+          </div>
           </div>
           <input type="text" id="category_under" value="" hidden>
           {% endif %}
@@ -93,34 +136,28 @@
         </div>
         <div class="row">
           <div class="form-group col-md-6">
-            <div class="alert alert-danger" id="spec-blank-alert"  aria-live="rude" role="alert" hidden>
 
-              <label for="vno">{% trans %}Please enter specification name!{% endtrans %}</label>
-            </div>
-            <div class="alert alert-danger" id="category-lastspec-alert"  aria-live="rude" role="alert" hidden>
-              <label for="vno">{% trans %}Minimum one spec required!{% endtrans %}</label>
-            </div>
             <div class="panel">
-              <table id="category_spec_table" class="table table-condensed table-bordered fixed-table">
+              <table id="child_category_table" class="table table-condensed table-bordered fixed-table">
                 <thead class="bg-primary input-sm">
                   <tr>
-                    <th class="col-xs-8">{% trans %}Spec Name{% endtrans %}</th>
-                    <th class="col-xs-3">{% trans %}Type{% endtrans %}</th>
+                    <th class="col-xs-8">{% trans %}Child Category Name{% endtrans %}</th>
+                    <th class="col-xs-3">{% trans %}Specifications{% endtrans %}</th>
+                    <th class="col-xs-3">{% trans %}Tax{% endtrans %}</th>
                     <th class="col-xs-1"></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td class="col-xs-8">
-                      <input type="text" id="category_spec_name" class="form-control input-sm spec_name" placeholder="Spec Name">
+                      <input type="text" id="child_category_name" class="form-control input-sm spec_name" placeholder="Child category Name">
                     </td>
                     <td class="col-xs-3">
-                      <select id="category_spec_type" class="form-control input-sm spec_type" name="">
-                        <option value="0">Text</option>
-                        <option value="1">Number</option>
-                        <option value="2">Date</option>
-                        <option value="3">Option</option>
-                      </select>
+                     <button class="btn form-control btn-primary btn-sm" id="child_spec"  >{% trans %}Add Specs{% endtrans %}</button>
+
+                    </td>
+                    <td class="col-xs-3">
+                     <button class="btn form-control btn-primary btn-sm" id="child_tax"  >{% trans %}Add Tax{% endtrans %}</button>
                     </td>
                     <td class="col-xs-1">
                       <a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
@@ -134,84 +171,16 @@
             <small id="navigation" class="form-text text-muted">{% trans %}Press 'Ctrl + <' and 'Ctrl + >' to navigate through fields of specification and tax.{% endtrans %}</small>
 
           </div>
-          <div class="form-group col-md-6">
-            <div class="panel">
-              <table id="category_tax_table" class="table table-condensed table-bordered fixed-table">
-                <thead class="bg-primary input-sm">
-                  <tr>
-                    <th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
-                    <th class="col-xs-4 text-center">{% trans %}State{% endtrans %}</th>
-                    <th class="col-xs-3 text-center">{% trans %}Rate%{% endtrans %}</th>
-                    <th class="col-xs-1 text-center"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="col-xs-4">
-                      <select class="form-control input-sm tax_name">
-                        <option value="" selected>Select Tax</option>
-                        <option value="VAT">VAT</option>
-                        <option value="CVAT">CVAT</option>
-                      </select>
-                    </td>
-                    <td class="col-xs-4">
-                      <select class="form-control input-sm tax_state" >
-                        <option value="">None</option>
-                        <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
-                        <option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>
-                        <option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option>
-                        <option value="Assam" stateid="4">Assam</option>
-                        <option value="Bihar" stateid="5">Bihar</option>
-                        <option value="Chandigarh" stateid="6">Chandigarh</option>
-                        <option value="Chhattisgarh" stateid="7">Chhattisgarh</option>
-                        <option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option>
-                        <option value="Daman and Diu" stateid="9">Daman and Diu</option>
-                        <option value="Delhi" stateid="10">Delhi</option>
-                        <option value="Goa" stateid="11">Goa</option>
-                        <option value="Gujarat" stateid="12">Gujarat</option>
-                        <option value="Haryana" stateid="13">Haryana</option>
-                        <option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option>
-                        <option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option>
-                        <option value="Jharkhand" stateid="16">Jharkhand</option>
-                        <option value="Karnataka" stateid="17">Karnataka</option>
-                        <option value="Kerala" stateid="19">Kerala</option>
-                        <option value="Lakshadweep" stateid="20">Lakshadweep</option>
-                        <option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option>
-                        <option value="Maharashtra" stateid="22">Maharashtra</option>
-                        <option value="Manipur" stateid="23">Manipur</option>
-                        <option value="Meghalaya" stateid="24">Meghalaya</option>
-                        <option value="Mizoram" stateid="25">Mizoram</option>
-                        <option value="Nagaland" stateid="26">Nagaland</option>
-                        <option value="Odisha" stateid="29">Odisha</option>
-                        <option value="Pondicherry" stateid="31">Pondicherry</option>
-                        <option value="Punjab" stateid="32">Punjab</option>
-                        <option value="Rajasthan" stateid="33">Rajasthan</option>
-                        <option value="Sikkim" stateid="34">Sikkim</option>
-                        <option value="Tamil Nadu" stateid="35">Tamil Nadu</option>
-                        <option value="Telangana" stateid="36">Telangana</option>
-                        <option value="Tripura" stateid="37">Tripura</option>
-                        <option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option>
-                        <option value="Uttarakhand" stateid="39">Uttarakhand</option>
-                        <option value="West Bengal" stateid="41">West Bengal</option>
-                      </select>
-                    </td>
-                    <td class="col-xs-3">
-                      <input class="form-control input-sm tax_rate text-right"  placeholder="Rate">
-                    </td>
-                    <td class="col-xs-1">
-
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <small id="taxtospechelp" class="form-text text-muted">{% trans %}Press 'Ctrl + <' on tax name to switch to specification name. {% endtrans %}</small>
-
-          </div>
-
         </div>
+      </div>
+      <div id="addspecspopup">
 
       </div>
+
+      <div id="addtaxpopup">
+
+      </div>
+
       <div class="panel-footer">
         <div class="container-fluid">
           <button class="btn btn-success btn-sm" id="category_savespecs" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert key anywhere on the current screen to save{% endtrans %}">{% trans %}Save{% endtrans %}</button>
@@ -220,7 +189,6 @@
       </div>
     </div>
   </div>
-
 </div>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addcategory.js')}}"></script>
 </body>
