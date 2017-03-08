@@ -131,17 +131,7 @@ def listofgodowns(request):
 		gdata= {"godownstatus":str(record["godownstatus"]), "srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
 		goddata.append(gdata)
 	return {"gkresult":goddata}
-"""............................"""
-@view_config(route_name="lastfivegodowns",request_param="type=godownslist", renderer="gkwebapp:templates/creategodown.jinja2")
-def lastgodowns(request):
-	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/godown?type=lastfivegodown", headers=header)
-	goddata=[]
-	for record in result.json()["gkresult"]:
-		gdata= {"godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"])}
-		goddata.append(gdata)
-	return {"gkresult":goddata}
-"""............................"""
+
 @view_config(route_name="godown",request_param="type=printable", renderer="gkwebapp:templates/printlistofgodowns.jinja2")
 def printlistofgodowns(request):
 	header={"gktoken":request.headers["gktoken"]}
