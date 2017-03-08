@@ -118,7 +118,11 @@
     <div class="col-md-4">
       <div class="panel shadow">
         <div class="panel-heading">
-          <h3 id = "addid" class="panel-title">{% trans %}Add Cost Center{% endtrans %}</h3>
+          {% if not projects %}
+            <h3 id = "addid" class="panel-title">{% trans %}Create Cost Center{% endtrans %}</h3>
+          {% else %}
+            <h3 id = "addid" class="panel-title">{% trans %}Add Cost Center{% endtrans %}</h3>
+          {% endif %}
         </div>
         <div class="panel-body">
           <form class="form-horizontal" id="prjform">
