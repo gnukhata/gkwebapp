@@ -146,3 +146,36 @@ def deliveryprint(request):
 	"tableset":tableset,"dcno":request.params["dcno"],"dcdate":request.params["dcdate"],"dcno":request.params["dcno"],
 	"issuername":request.params["issuername"],"designation":request.params["designation"],"godown":godowndata,
 	"notetype":request.params["notetype"],"qtytotal":request.params["qtytotal"]}
+
+@view_config(route_name="show_del_unbilled_report",renderer="gkwebapp:templates/unbilled_deliveries_report.jinja2")
+def show_unbilled_deliveries_report(request):
+	header={"gktoken":request.headers["gktoken"]}
+	#inputdate = "07-05-2017"
+	inputdate = request.params["inputdate"];
+	print "Inputdate: In gkwebapp"
+	print inputdate
+	gkdata = {"inputdate": inputdate}
+	result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled_for_entire_org", data = json.dumps(gkdata), headers=header)
+	print "result : "
+	for row in result.json()["gkresult"]:
+		print row
+	return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "inputdate":inputdate}
+
+@view_config(route_name="del_unbilled", request_param="action=view", renderer="gkwebapp:templates/view_unbilled_deliveries.jinja2")
+def view_unbilled_deliveries(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	goddata=[]
+	for record in result.json()["gkresult"]:
+		gdata= {"godownid": str(record["goid"]), "godownname" : str(record["goname"])}
+		goddata.append(gdata)
+	print goddata
+	return {"gkstatus":result.json()["gkstatus"], "gkresult": goddata}
+
+@view_config(route_name="print_unbilled_deliveries_report",renderer="gkwebapp:templates/print_unbilled_deliveries.jinja2")
+def print_del_unbilled(request):
+	header={"gktoken":request.headers["gktoken"]}
+	inputdate = request.params["inputdate"];
+	gkdata = {"inputdate": inputdate}
+	result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled_for_entire_org", data = json.dumps(gkdata), headers=header)
+	return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "inputdate":inputdate}
