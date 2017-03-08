@@ -107,10 +107,8 @@ $(document).ready(function()
       });
 
       $("#lists").click(function(event) {
-        /* Act on the event */
         $.ajax(
        {
-
        type: "POST",
        url: "/godown?type=lists",
        global: false,
@@ -128,18 +126,11 @@ $(document).ready(function()
          $("#listofgodownspopup").html(resp);
          $('#allgodownmodal').modal('show');
          $('#allgodownmodal').on('shown.bs.modal', function(e){
-           console.log("Hiii");
-           alert("chala");
-
          });
-
        }
-       }
-     );
+       });
 
       });
-
-
 
       $("#gdnsubmit").click(function(e)
       {
