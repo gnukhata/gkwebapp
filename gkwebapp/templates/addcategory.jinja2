@@ -11,6 +11,7 @@
     overflow-y:scroll;
 }
 
+
 .fixed-table thead ,.fixed-table tbody tr {
     display:table;
     width:100%;
@@ -165,11 +166,11 @@
                       <input type="text" id="child_category_name" class="form-control input-sm spec_name" placeholder="Child category Name">
                     </td>
                     <td class="col-xs-3">
-                     <button class="btn form-control btn-primary btn-sm" id="child_spec"  >{% trans %}Specs{% endtrans %}</button>
+                     <button class="btn form-control btn-primary btn-sm child_spec_class" id="child_spec" data-toggle="modal" data-target="#addspecmodal" >{% trans %}Specs{% endtrans %}</button>
 
                     </td>
                     <td class="col-xs-3">
-                     <button class="btn form-control btn-primary btn-sm" id="child_tax"  >{% trans %}Tax{% endtrans %}</button>
+                     <button class="btn form-control btn-primary btn-sm child_tax_class" id="child_tax" data-toggle="modal" data-target="#addtaxmodal"   >{% trans %}Tax{% endtrans %}</button>
                     </td>
                     <td class="col-xs-1">
                       <a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
@@ -364,11 +365,11 @@
 <div>
   <div style="padding-top:5px" class="col-md-6 shadow " id="spectbl" >
     <table class="table table-condensed fixed-table ">
-      <thead class="table-fixedheader">
+      <thead class="table-fixedheader " style="font-size: 75%;">
         <tr>
-          <th class="col-xs-6"> </th>
+          <th class="col-xs-6">#category_under </th>
         </tr>
-        <tr class="thead  table-fixedheader">
+        <tr class="thead  table-fixedheader" >
           <th class="col-xs-6  table-fixedheader">{% trans %}Specification Name{% endtrans %}</th>
           <th class="col-xs-6  table-fixedheader">{% trans %}Specification Type{% endtrans %}</th>
 

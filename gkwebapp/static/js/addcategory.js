@@ -40,32 +40,14 @@ $(document).ready(function() {
   }
 
 //
-$("#category_under").change(function(event) {
-  $.ajax({
-    url: '/customersuppliers?action=get',
-    type: 'POST',
-    dataType: 'json',
-    async : false,
-    data: {"custid":$("#deliverychallan_customer option:selected").val()},
-    beforeSend: function(xhr)
-    {
-      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-    }
-  })
-  .done(function(resp) {
-    console.log("success");
-    if (resp["gkstatus"]==0) {
-      $("#deliverychallan_customeraddr").val(resp["gkresult"]["custaddr"]);
-      $("#deliverychallan_supplieraddr").val(resp["gkresult"]["custaddr"]);
-    }
-  })
-  .fail(function() {
-    console.log("error");
-  })
-  .always(function() {
-    console.log("complete");
-  });
+$("#new_parent_name").keydown(function(event) {
+  if (event.which==13) {
+    event.preventDefault();
+    $("#parent_spec").focus();
+  }
 });
+
+
 
 
   $("#category_under").keydown(function(event) {
@@ -73,6 +55,7 @@ $("#category_under").change(function(event) {
     if (event.which==13) {
         event.preventDefault();
         $("#child_category_name").focus();
+
     //    $("#category_name").select();
     }
 
@@ -112,61 +95,12 @@ $("#child_category_name").keydown(function(event) {
   });*/
 
 
-$("#child_spec").click(function() {
-
-  $("#addspecspopup").html("");
-  $('.modal-backdrop').remove();
-
-  $('.modal').modal('hide');
-
-
-  $('#addspecmodal').show();
-  $('#addspecmodal').modal('show');
-  console.log("success rohini11");
-  $('#addspecmodal').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
-  {
-    //$("#godownname").focus();
-  });
-
-});
 
 
 
 
 
 
-$("#child_tax").click(function() {
- $.ajax(
- {
- type: "POST",
- url: "/category?type=addtaxpopup",
- global: false,
- async: false,
- datatype: "text/html",
- beforeSend: function(xhr)
-   {
-     xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-   },
- success: function(resp)
- {
-
-	     $("#addtaxpopup").html("");
-	     $('.modal-backdrop').remove();
-
-       $('.modal').modal('hide');
-
-       $("#addtaxpopup").html(resp);
-
-       $('#addtaxmodal').modal('show');
-       console.log("success rohini");
-       $('#addtaxmodal').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
-       {
-
-       });
-
-}
- });
-});
 
 
 /* If a parent category is selected then its specs are automatically inhereted by its child category and the specs are displayed */
@@ -177,6 +111,8 @@ $("#child_tax").click(function() {
     */
 
     var category_code = $("#category_under option:selected").val();
+
+
 
     // ajax for getting the specs of the newly selected (parent)category
     $.ajax({
@@ -192,8 +128,6 @@ $("#child_tax").click(function() {
     })
     .done(function(resp) {
       console.log("success rohini  ");
-
-
       for (spec of resp["gkresult"].reverse()) {
         console.log(" "+spec["attrtype"]);
         var trs;
@@ -210,6 +144,7 @@ $("#child_tax").click(function() {
         else if (spec["attrtype"]==3) {
           trs="Option"
         }
+        $('#spectbl td').remove();
         $('#spectbl tbody').prepend('<tr>'+
         '<td class="col-xs-8">'+
         spec["attrname"]+
@@ -220,6 +155,27 @@ $("#child_tax").click(function() {
 
         '</tr>');
       }
+    /*  if ($('#category_spec_table tbody tr').length==0) {
+            $('#category_spec_table tbody').append('<tr>'+
+            '<td class="col-xs-8">'+
+            '<input type="text" class="form-control input-sm spec_name" value="" placeholder="Spec Name">'+
+            '</td>'+
+            '<td class="col-xs-3">'+
+            '<select id="category_spec_type" class="form-control input-sm spec_type">'+
+            '<option value="0">Text</option>'+
+            '<option value="1">Number</option>'+
+            '<option value="2">Date</option>'+
+            '<option value="3">Option</option>'+
+            '</select>'+
+            '</td>'+
+            '<td class="col-xs-1">'+
+            '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+            '</td>'+
+            '</tr>');
+          }
+          console.log("child spec inherited");
+*/
+
     })
     .fail(function() {
       console.log("error");
@@ -229,6 +185,7 @@ $("#child_tax").click(function() {
     });
 
   });
+
 var specs = [];
 var taxes = [];
 $(document).off("keydown",".spec_type").on("keydown",".spec_type",function(event)
@@ -410,7 +367,7 @@ console.log("roooo");
             $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#duplicate-alert").hide();
             });
-            return false;0
+            return false;
           }
           else {
             $("#category_name").focus();
