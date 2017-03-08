@@ -6,7 +6,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -63,6 +63,9 @@ def addgodown(request):
 	header={"gktoken":request.headers["gktoken"]}
 	gkdata = {"goname":request.params["godownname"], "goaddr":request.params["godownaddress"], "state":request.params["godownstate"], "gocontact":request.params["godowncontact"], "contactname":request.params["godowncontactname"], "designation":request.params["godowndesignation"]}
 	result = requests.post("http://127.0.0.1:6543/godown", data =json.dumps(gkdata),headers=header)
+	if result.json()["gkstatus"] == 0:
+		gkdata = {"activity":request.params["godownname"] + " godown created"}
+		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="godown",request_param="type=addmulti", renderer="json")
@@ -75,6 +78,9 @@ def addmultigodowns(request):
 		gkdata["goaddr"] = godown["godownaddress"]
 		gkdata["gocontact"] = godown["godowncontact"]
 		result = requests.post("http://127.0.0.1:6543/godown", data =json.dumps(gkdata),headers=header)
+		if result.json()["gkstatus"] == 0:
+			gkdata = {"activity":godown["godownname"] + " godown created"}
+			resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="godown",request_param="type=edittab", renderer="gkwebapp:templates/editgodown.jinja2")
@@ -111,8 +117,13 @@ def getgoddetails(request):
 @view_config(route_name="godown",request_param="type=delete", renderer="json")
 def deletegodown(request):
 	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
+	goname = result.json()["gkresult"]["goname"]
 	gkdata={"goid":request.params["goid"]}
 	result = requests.delete("http://127.0.0.1:6543/godown",data =json.dumps(gkdata), headers=header)
+	if result.json()["gkstatus"] == 0:
+		gkdata = {"activity":goname + " godown deleted"}
+		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="godown",request_param="type=edit", renderer="json")

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Log{% endtrans %}</title>
+  <style type="text/css">
+  .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  #logtable td {
+    font-size: 75%;
+    padding: 4 !important;
+    margin: 4 !important;
+  }
+
+  #logtable th {
+    font-size: 85%;
+
+
+  }
+  .card-view .title {
+      font-weight: bold;
+      display: inline-block;
+      min-width: 20%;
+      text-align: left !important;
+  }
+  #logtable tbody {
+      display:block;
+      height: calc(100vh - 17em);
+      overflow-y:scroll;
+  }
+  #logtable thead,#logtable tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  #logtable thead {
+      width: calc( 100% - 0.65em )
+  }
+  .ralign{
+    text-align:right;
+
+  }
+  .cred{
+    color:red;
+  }
+  .calign{
+    text-align:center;
+  }
+  .dtwrap{
+  	width :6%
+  	 }
+ .smwrap{
+ 	width:4%
+ }
+ .lngwrap{
+ 	width:20%
+ }
+ .mdwrap{
+ 	width:8%
+ }
+
+
+  </style>
+</head>
+<body>
+  <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{logheader["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{logheader["calculateto"]}}</strong></span>
+  {% if typeflag == "1" %}
+  <span style="margin:auto; display:table;"><i>{% trans %}Log of an Organisation{% endtrans %}</i></span>
+  {% else %}
+  <span style="margin:auto; display:table;"><i>{% trans %}Log of an User{% endtrans %}</i> : <strong>{{logheader["username"]}}</strong></span>
+  {% endif %}
+  <div class="row">
+    <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="lclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+    <table id="logtable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
+      <thead class="bg-primary">
+        <tr>
+          <th class="dtwrap calign" >{% trans %}Date{% endtrans %}</th>
+          {% if typeflag == "1" %}
+          <th class="mdwrap calign">{% trans %}User Name{% endtrans %}</th>
+          {% endif %}
+          <th class="lngwrap calign">{% trans %}Activity{% endtrans %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in records %}
+        <tr  data-value="{{record['logid']}}">
+          <td class="dtwrap calign">
+            {{record['time']}}
+          </td>
+          {% if typeflag == "1" %}
+          <td class="mdwrap calign">
+            {{record['username']}}
+          </td>
+          {% endif %}
+          <td class="lngwrap">
+            {{record['activity']}}
+          </td>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+    <span style="margin:auto; display:table;">
+      <button class="btn btn-sm btn-primary" type="button" id="anotherlog" accesskey="v">{% trans %}<u>V</u>iew Another log{% endtrans %}</button>
+    </span>
+
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/logreport.js')}}"></script>
+</body>
+</html>

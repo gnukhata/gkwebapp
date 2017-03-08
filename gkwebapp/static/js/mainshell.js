@@ -5,7 +5,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -970,6 +970,29 @@ $.ajax({
       }
     );
     });
+
+    $('#showviewlog').click(function (e) {
+    // calls view page for ledger report.
+      $("#msspinmodal").modal();
+        $.ajax(
+        {
+
+        type: "POST",
+        url: "/log?action=showviewlog",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+        }
+      );
+      });
 
     $('#BRS').click(function (e) {
     // calls view page for bank reconcialation.

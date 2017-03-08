@@ -6,7 +6,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -83,6 +83,8 @@ def savespecs(request):
 		categorydata={"categoryname":request.params["categoryname"]}
 	result = requests.post("http://127.0.0.1:6543/categories",data=json.dumps(categorydata) ,headers=header)
 	if result.json()["gkstatus"]==0:
+		gkdata = {"activity":request.params["categoryname"] + " category created"}
+		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
 		specs = json.loads(request.params["specs"])
 		for spec in specs:
 			specdata= {"attrname":spec["attrname"],"attrtype":int(spec["attrtype"]),"categorycode":result.json()["gkresult"]}
@@ -143,8 +145,13 @@ def editspecs(request):
 @view_config(route_name="category",request_param="action=delete",renderer="json")
 def deletecategory(request):
 	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/categories?type=single&categorycode=%d"%(int(request.params["categorycode"])), headers=header)
+	categoryname = result.json()["gkresult"]["categoryname"]
 	categorydata = {"categorycode":int(request.params["categorycode"])}
 	result = requests.delete("http://127.0.0.1:6543/categories",data=json.dumps(categorydata), headers=header)
+	if result.json()["gkstatus"] == 0:
+		gkdata = {"activity":categoryname + " category deleted"}
+		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
 	return {"gkstatus": result.json()["gkstatus"]}
 
 @view_config(route_name="category",request_param="action=list",renderer="gkwebapp:templates/listofcategories.jinja2")
