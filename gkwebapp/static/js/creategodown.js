@@ -27,6 +27,7 @@ Contributors:
 $(document).ready(function()
 {
   $("#godownname").focus();
+  $('.modal-backdrop').remove();
   $("#godowncontact").numeric();
   $("#gdnreset").click(function()
   {
@@ -104,6 +105,40 @@ $(document).ready(function()
             $("#gdnsubmit").click();
           }
       });
+
+      $("#lists").click(function(event) {
+        /* Act on the event */
+        $.ajax(
+       {
+
+       type: "POST",
+       url: "/godown?type=lists",
+       global: false,
+       async: false,
+       datatype: "text/html",
+       beforeSend: function(xhr)
+         {
+           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+         },
+       success: function(resp)
+       {
+         console.log("Hello");
+         $("#listofgodownspopup").html(resp);
+         $('#allgodownmodal').modal('show');
+         $('#allgodownmodal').on('shown.bs.modal', function(e){
+           console.log("Hiii");
+           alert("chala");
+
+         });
+
+       }
+       }
+     );
+
+      });
+
+
+
       $("#gdnsubmit").click(function(e)
       {
         e.preventDefault();
