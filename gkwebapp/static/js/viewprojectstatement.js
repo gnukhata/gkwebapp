@@ -88,13 +88,13 @@ $(document).ready(function() {
   });
 // Setting default date to financialstart and end.
   var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
-  $("#viewprjstate_fromdate").val(fromdatearray[2])
-  $("#viewprjstate_frommonth").val(fromdatearray[1])
-  $("#viewprjstate_fromyear").val(fromdatearray[0])
-  var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g)
-  $("#viewprjstate_todate").val(todatearray[2])
-  $("#viewprjstate_tomonth").val(todatearray[1])
-  $("#viewprjstate_toyear").val(todatearray[0])
+  $("#viewprjstate_fromdate").val(fromdatearray[2]);
+  $("#viewprjstate_frommonth").val(fromdatearray[1]);
+  $("#viewprjstate_fromyear").val(fromdatearray[0]);
+  var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g);
+  $("#viewprjstate_todate").val(todatearray[2]);
+  $("#viewprjstate_tomonth").val(todatearray[1]);
+  $("#viewprjstate_toyear").val(todatearray[0]);
   $("#viewprjstate_todate").select();
   $('input:text:enabled,select:enabled').keydown( function(e) { // function for shifting focus on enter and up arrow key.
     var n = $("input:text:enabled,select:enabled").length;

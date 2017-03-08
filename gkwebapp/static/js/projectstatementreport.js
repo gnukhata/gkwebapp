@@ -46,7 +46,7 @@ $(document).ready(function() {
     $('#prjsttable tr').removeClass('selected');
 
   });
-  var curindex ;
+  var curindex;
   var nextindex;
   var previndex;
 
@@ -154,7 +154,7 @@ $(document).ready(function() {
       // get binary data as a response
       	var blob = this.response;
   	 		var url = window.URL.createObjectURL(blob);
-  			window.location.assign(url)
+  			window.location.assign(url);
     	}
   	};
 
