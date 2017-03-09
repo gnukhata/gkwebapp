@@ -65,7 +65,7 @@
               <select class="form-control input-sm" id="category_under">
                 <option value="" selected>{% trans %}Select Parent Category{% endtrans %}</option>
                 {% for categories in gkresult %}
-                <option value="{{categories['categorycode']}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
+<option value="{{categories['categorycode']}}" data-categoryname="{{categories["categoryname"]}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
                 {% endfor %}
               </select>
                <small id="txtareahelp" class="form-text text-muted">{% trans %}Press space to add new Parent Category.{% endtrans %}</small>
@@ -78,9 +78,6 @@
 
 
 <div class="panel-body form-group row" id="new_parent_div1" hidden>
-
-
-
            <label for="category_name">{% trans %}New Parent Category:{% endtrans %}</label>
   <table id="new_parent_category_table" class="table-condensed ">
   <tbody>
@@ -89,13 +86,13 @@
                         <input type="text" id="new_parent_name" class="form-control input-sm spec_name" placeholder="New Parent category Name">
                       </td>
                       <td class="col-xs-3">
-                       <button class="btn form-control btn-primary btn-sm" id="parent_spec" data-toggle="modal" data-target="#addspecmodal" >{% trans %}Specs{% endtrans %}</button>
+                       <button class="btn form-control btn-primary btn-sm" id="parent_spec1" data-toggle="modal" data-target="#addspecmodal" >{% trans %}Specs{% endtrans %}</button>
                       </td>
                       <td class="col-xs-3">
-                       <button class="btn form-control btn-primary btn-sm" id="parent_tax" data-toggle="modal" data-target="#addtaxmodal"  >{% trans %}Tax{% endtrans %}</button>
+                       <button class="btn form-control btn-primary btn-sm" id="parent_tax1" data-toggle="modal" data-target="#addtaxmodal"  >{% trans %}Tax{% endtrans %}</button>
                       </td>
                       <td class="col-xs-3">
-                      <button class="btn form-control btn-primary btn-sm" id="parent_save"  >{% trans %}Save{% endtrans %}</button>
+                      <button class="btn form-control btn-primary btn-sm" id="parent_save1"  >{% trans %}Save{% endtrans %}</button>
                       </td>
                     </tr>
                   </tbody>
@@ -117,8 +114,6 @@
 
           <div class="form-group row" id="new_parent_div">
 <div>
-
-
 	<label for="category_name">{% trans %}New Parent Category :{% endtrans %}</label>
 <table id="new_parent_category_table">
 <tbody>
@@ -143,7 +138,7 @@
 
           </div>
           </div>
-          <input type="text" id="category_under" value="" hidden>
+          <input type="text" id="category_under1" value="" hidden>
           {% endif %}
 
         </div>
@@ -367,7 +362,7 @@
     <table class="table table-condensed fixed-table ">
       <thead class="table-fixedheader " style="font-size: 75%;">
         <tr>
-          <th class="col-xs-6">#category_under </th>
+          <th id="parent_heading" class="col-xs-6" > </th>
         </tr>
         <tr class="thead  table-fixedheader" >
           <th class="col-xs-6  table-fixedheader">{% trans %}Specification Name{% endtrans %}</th>

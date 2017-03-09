@@ -28,6 +28,11 @@ Contributors:
 
 $(document).ready(function() {
   $('.modal-backdrop').remove();
+  $("#spectbl").hide();
+
+  var specs = [];
+  var taxes = [];
+
   if ($("#catcount").val()==0)
   {
       $("#new_parent_name").focus();
@@ -36,7 +41,12 @@ $(document).ready(function() {
   {
       $("#category_under").focus();
   }
-
+  var categorycode;
+  /*$("#category_under").change(function(event) {
+    console.log("ttttt"+$("#category_under select option:selected").text());
+    $("table tr>th:first").html($("#category_under select option:selected").text());
+  });
+*/
 //
 $("#new_parent_name").keydown(function(event) {
   if (event.which==13) {
@@ -58,12 +68,11 @@ $(".spec_name").keydown(function(event) {
 
 
   $("#category_under").keydown(function(event) {
-
+      $("#spectbl").show();
     if (event.which==13) {
         event.preventDefault();
         $("#child_category_name").focus();
 
-    //    $("#category_name").select();
     }
 
      if (event.which==32)
@@ -71,12 +80,13 @@ $(".spec_name").keydown(function(event) {
       event.preventDefault();
       $("#oldparentdiv").hide();
       $("#new_parent_div1").show();
+      $("#spectbl").hide();
 
       $("#new_parent_name").focus();
     }
 
   });
-});
+
 $("#child_category_name").keydown(function(event) {
 
   if (event.which==13) {
@@ -88,46 +98,49 @@ $("#child_category_name").keydown(function(event) {
 
 /* If a parent category is selected then its specs are automatically inhereted by its child category and the specs are displayed */
   $("#category_under").change(function(event) {
-
+    $("#spectbl").show();
     /* when a (parent)category is changed by the user except the last blank row all the other category spec rows are removed
     and replaced with the spec rows of the newly selected (parent)category
     */
 
-    var category_code = $("#category_under option:selected").val();
-
-
-
+    categorycode = $("#category_under option:selected").val();
+    $("#parent_heading").text($("#category_under option[value="+categorycode+"]").text());
+    console.log("categorycode"+categorycode);
+    $('#spectbl td').remove();
     // ajax for getting the specs of the newly selected (parent)category
+
     $.ajax({
       url: '/category?action=getspecs',
       type: 'POST',
       dataType: 'json',
       async : false,
-      data: {"categorycode": category_code},
+      data: {"categorycode": categorycode},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
       }
     })
     .done(function(resp) {
+
       console.log("success rohini  ");
       for (spec of resp["gkresult"].reverse()) {
         console.log(" "+spec["attrtype"]);
         var trs;
         if (spec["attrtype"]==0) {
-          trs ="Text"
+
+          trs ='<option value="0">Text</option>'
           }
         else if (spec["attrtype"]==1) {
           trs =
-          "Number"
+          '<option value="1">Number</option>'
                   }
         else if (spec["attrtype"]==2) {
-          trs ="Date"
+          trs ='<option value="2">Date</option>'
         }
         else if (spec["attrtype"]==3) {
-          trs="Option"
+          trs='<option value="3">Option</option>'
         }
-        $('#spectbl td').remove();
+
         $('#spectbl tbody').prepend('<tr>'+
         '<td class="col-xs-8">'+
         spec["attrname"]+
@@ -137,7 +150,67 @@ $("#child_category_name").keydown(function(event) {
         '</td>'+
 
         '</tr>');
+
       }
+      for (spec of resp["gkresult"].reverse()) {
+        var trs;
+        if (spec["attrtype"]==0) {
+
+          trs ='<option value="0">Text</option>'
+          }
+        else if (spec["attrtype"]==1) {
+          trs =
+          '<option value="1">Number</option>'
+                  }
+        else if (spec["attrtype"]==2) {
+          trs ='<option value="2">Date</option>'
+        }
+        else if (spec["attrtype"]==3) {
+          trs='<option value="3">Option</option>'
+        }
+
+          $('#category_spec_table tbody').prepend('<tr>'+
+          '<td class="col-xs-8">'+
+          '<input type="text" class="form-control input-sm spec_name" value="'+spec["attrname"]+'" placeholder="Spec Name">'+
+          '</td>'+
+          '<td class="col-xs-3">'+
+          '<select id="category_spec_type" class="form-control input-sm spec_type">'+trs+
+          '</select>'+
+          '</td>'+
+          '<td class="col-xs-1">'+
+          '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+          '</td>'+
+          '</tr>');
+
+          var obj = {};
+
+          //dict for specs
+            obj.attrname = spec["attrname"];
+            obj.attrtype = trs;
+            specs.push(obj);
+          console.log(" specsssssss"+specs);
+
+        }
+      if ($('#category_spec_table tbody tr').length==0) {
+      $('#category_spec_table tbody').append('<tr>'+
+      '<td class="col-xs-8">'+
+      '<input type="text" class="form-control input-sm spec_name" value="" placeholder="Spec Name">'+
+      '</td>'+
+      '<td class="col-xs-3">'+
+      '<select id="category_spec_type" class="form-control input-sm spec_type">'+
+      '<option value="0">Text</option>'+
+      '<option value="1">Number</option>'+
+      '<option value="2">Date</option>'+
+      '<option value="3">Option</option>'+
+      '</select>'+
+      '</td>'+
+      '<td class="col-xs-1">'+
+      '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+      '</td>'+
+      '</tr>');
+    }
+    
+
       })
     .fail(function() {
       console.log("error");
@@ -147,9 +220,6 @@ $("#child_category_name").keydown(function(event) {
     });
 
   });
-
-var specs = [];
-var taxes = [];
 $(document).off("keydown",".spec_type").on("keydown",".spec_type",function(event)
 {
   var curindex1 = $(this).closest('tr').index();
@@ -157,9 +227,6 @@ $(document).off("keydown",".spec_type").on("keydown",".spec_type",function(event
   var previndex1 = curindex1-1;
   if (event.which==13) {
     event.preventDefault();
-
-
-
 
     if (curindex1 != ($("#category_spec_table tbody tr").length-1)) {
       $('#category_spec_table tbody tr:eq('+nextindex1+') td:eq(0) input').focus().select();
@@ -263,6 +330,7 @@ $(document).off("keydown",".spec_type").on("keydown",".spec_type",function(event
          '</tr>');
          $(".tax_rate").numeric();
          $('#category_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+
        }
      }
      else if(event.which==190 && event.shiftKey)
@@ -367,12 +435,14 @@ $(document).off("keydown","#child_category_table").on("keydown","#child_category
   if (event.which==45) {
     event.preventDefault();
     console.log("insert clicked");
+    console.log( $('#child_category_table tbody tr:last input').val());
+    var curindex1 = $(this).closest('tr').index()+1;
     $.ajax({
           url: '/category?action=save',
           type: 'POST',
           dataType: 'json',
           async : false,
-          data: {"categoryname": $("#child_category_name").val(),"subcategoryof":$("#category_under").val(),"specs":JSON.stringify(specs),"taxes":JSON.stringify(taxes)},
+          data: {"categoryname":   $('#child_category_table tbody tr:last input').val() ,"subcategoryof":categorycode,"specs":JSON.stringify(specs),"taxes":JSON.stringify(taxes)},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -384,15 +454,26 @@ $(document).off("keydown","#child_category_table").on("keydown","#child_category
 console.log("roooo");
             $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#success-alert").hide();
+            });
 
-              $("#new_parent_div1").hide();
-              $("#oldparentdiv").show();
-              categorycode=resp.gkresult
-              //$("#category_under select").val(categorycode).attr("selected", "selected");
-              $("#category_under").val(categorycode);
-              console.log("rrrrr"+categorycode);
-              });
+              // appending a new row for adding another spec to category
 
+              $('#child_category_table tbody').append('<tr>'+
+              '<td class="col-xs-8">'+
+              '<input type="text" id="child_category_name" class="form-control input-sm spec_name" placeholder="Child category Name">'+
+              '</td>'+
+              '<td class="col-xs-3">'+
+              '<button class="btn form-control btn-primary btn-sm child_spec_class" id="child_spec" data-toggle="modal" data-target="#addspecmodal" >Specs</button>'+
+
+              '</td>'+
+              '<td class="col-xs-3">'+
+              '<button class="btn form-control btn-primary btn-sm child_tax_class" id="child_tax" data-toggle="modal" data-target="#addtaxmodal"   >Tax</button>'+
+              '</td>'+
+              '<td class="col-xs-1">'+
+              '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+              '</td>'+
+              '</tr>');
+              $('#child_category_table tbody tr:last td:eq(0) input').focus().select();
             return false;
           }
           else if(resp["gkstatus"] == 1){
@@ -421,4 +502,5 @@ console.log("roooo");
 
   }
 
+});
 });
