@@ -99,6 +99,38 @@ $(document).ready(function() {
       });
       return bal;
     };
+    if($('#vtable tbody tr:first td:eq(1) select option:selected').val()){
+      var curacccode = $('#vtable tbody tr:first td:eq(1) select option:selected').val();
+      var d = new Date();
+      var month = d.getMonth()+1;
+      var day = d.getDate();
+      var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+      $('#vtable tbody tr:first td:eq(2) input').val(getBalance(curacccode, caldata));
+    }
+    if($('#vtable tbody tr:eq(1) td:eq(1) select option:selected').val()){
+      var curacccode = $('#vtable tbody tr:eq(1) td:eq(1) select option:selected').val();
+      var d = new Date();
+      var month = d.getMonth()+1;
+      var day = d.getDate();
+      var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+      $('#vtable tbody tr:eq(1) td:eq(2) input').val(getBalance(curacccode, caldata));
+    }
+    $('#vtable tbody tr:first td:eq(1) select').change(function(event) {
+      var curacccode = $('#vtable tbody tr:first td:eq(1) select option:selected').val();
+      var d = new Date();
+      var month = d.getMonth()+1;
+      var day = d.getDate();
+      var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+      $('#vtable tbody tr:first td:eq(2) input').val(getBalance(curacccode, caldata));
+    });
+    $('#vtable tbody tr:eq(1) td:eq(1) select').change(function(event) {
+      var curacccode = $('#vtable tbody tr:eq(1) td:eq(1) select option:selected').val();
+      var d = new Date();
+      var month = d.getMonth()+1;
+      var day = d.getDate();
+      var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+      $('#vtable tbody tr:eq(1) td:eq(2) input').val(getBalance(curacccode, caldata));
+    });
 $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   event.preventDefault();
   /* Act on the event */
