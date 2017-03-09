@@ -70,6 +70,35 @@ $(document).ready(function() {
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
 
+  function getBalance( accountcode, calculateTo ){
+      var bal = '';
+      $.ajax({
+        url: '/showvoucher?type=getclosingbal',
+        type: 'POST',
+        dataType: 'json',
+        async : false,
+        data: {"accountcode": accountcode, "calculateto" : calculateTo, "financialstart" : sessionStorage.yyyymmddyear1},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+      .done(function(resp) {
+        if (resp["gkstatus"]==0) {
+          bal= resp["gkresult"];
+        }
+        else {
+          bal= '';
+        }
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+      return bal;
+    };
 
 $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   event.preventDefault();

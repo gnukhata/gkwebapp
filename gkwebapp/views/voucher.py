@@ -200,3 +200,5 @@ def getClosingBal(request):
 	result = requests.get("http://127.0.0.1:6543/report?type=closingbalance&accountcode=%d&financialstart=%s&calculateto=%s"%(int(request.params["accountcode"]), request.params["financialstart"], request.params["calculateto"]), headers=header)
 	if result.json()["gkstatus"] == 0:
 		return {"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"]}
+	else:
+		return {"gkstatus":result.json()["gkstatus"]}
