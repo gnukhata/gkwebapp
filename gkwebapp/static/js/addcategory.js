@@ -28,12 +28,6 @@ Contributors:
 
 $(document).ready(function() {
   $('.modal-backdrop').remove();
-/*
-var categorycode=-1;
-if(categorycode!=-1)
-{
-$("#category_under select").val(categorycode);
-}*/
   if ($("#catcount").val()==0)
   {
       $("#new_parent_name").focus();
@@ -91,30 +85,6 @@ $("#child_category_name").keydown(function(event) {
     }
   });
 
-/*  $("#parent_spec").click(function() {
-    $("#addspecspopup").html("");
-    $('.modal-backdrop').remove();
-
-    $('.modal').modal('hide');
-
-
-    //$('#addspecmodal').show();
-    $('#addspecmodal').modal('show');
-    console.log("success baraskar");
-    $('#addspecmodal').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
-    {
-      //$("#godownname").focus();
-    });
-  });*/
-
-
-
-
-
-
-
-
-
 
 /* If a parent category is selected then its specs are automatically inhereted by its child category and the specs are displayed */
   $("#category_under").change(function(event) {
@@ -168,28 +138,7 @@ $("#child_category_name").keydown(function(event) {
 
         '</tr>');
       }
-    /*  if ($('#category_spec_table tbody tr').length==0) {
-            $('#category_spec_table tbody').append('<tr>'+
-            '<td class="col-xs-8">'+
-            '<input type="text" class="form-control input-sm spec_name" value="" placeholder="Spec Name">'+
-            '</td>'+
-            '<td class="col-xs-3">'+
-            '<select id="category_spec_type" class="form-control input-sm spec_type">'+
-            '<option value="0">Text</option>'+
-            '<option value="1">Number</option>'+
-            '<option value="2">Date</option>'+
-            '<option value="3">Option</option>'+
-            '</select>'+
-            '</td>'+
-            '<td class="col-xs-1">'+
-            '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-            '</td>'+
-            '</tr>');
-          }
-          console.log("child spec inherited");
-*/
-
-    })
+      })
     .fail(function() {
       console.log("error");
     })
@@ -373,8 +322,8 @@ console.log("roooo");
               $("#new_parent_div1").hide();
               $("#oldparentdiv").show();
               categorycode=resp.gkresult
-              $("#category_under select").val(categorycode).attr("selected", "selected");
-
+              //$("#category_under select").val(categorycode).attr("selected", "selected");
+              $("#category_under").val(categorycode);
               console.log("rrrrr"+categorycode);
               });
 
@@ -403,4 +352,73 @@ console.log("roooo");
         .always(function() {
           console.log("complete");
         });
+});
+ $(".child_spec_class").click(function() {
+    console.log("child_spec_class");
+    console.log(specs);
+  });
+  $(".child_tax_class").click(function() {
+     console.log("child_tax_class");
+     console.log(taxes);
+   });
+
+$(document).off("keydown","#child_category_table").on("keydown","#child_category_table",function(event)
+{
+  if (event.which==45) {
+    event.preventDefault();
+    console.log("insert clicked");
+    $.ajax({
+          url: '/category?action=save',
+          type: 'POST',
+          dataType: 'json',
+          async : false,
+          data: {"categoryname": $("#child_category_name").val(),"subcategoryof":$("#category_under").val(),"specs":JSON.stringify(specs),"taxes":JSON.stringify(taxes)},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          }
+        })
+        .done(function(resp) {
+          if(resp["gkstatus"] == 0){
+            $("#success-alert").alert();
+console.log("roooo");
+            $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#success-alert").hide();
+
+              $("#new_parent_div1").hide();
+              $("#oldparentdiv").show();
+              categorycode=resp.gkresult
+              //$("#category_under select").val(categorycode).attr("selected", "selected");
+              $("#category_under").val(categorycode);
+              console.log("rrrrr"+categorycode);
+              });
+
+            return false;
+          }
+          else if(resp["gkstatus"] == 1){
+            $("#category_name").focus().select();
+            $("#duplicate-alert").alert();
+            $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#duplicate-alert").hide();
+            });
+            return false;
+          }
+          else {
+            $("#category_name").focus();
+            $("#failure-alert").alert();
+            $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#failure-alert").hide();
+            });
+            return false;
+          }
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+
+  }
+
 });
