@@ -99,7 +99,6 @@ $(document).ready(function() {
       });
       return bal;
     };
-
 $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   event.preventDefault();
   /* Act on the event */
@@ -551,6 +550,10 @@ $("#invsel").keyup(function(event) {
   });
 
   $(document).off("keyup",".accs").on("keyup",".accs",function(event){
+    var curindex = $(this).closest('tr').index();
+    var curacccode = $('#vtable tbody tr:eq('+curindex+') td:eq(1) select option:selected').val();
+    var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+    $('#vtable tbody tr:eq('+curindex+') td:eq(2) input').val(getBalance(curacccode, caldata));
     if(event.which==13 && !outfocus)
     {
       if ($(this).val()==null) {
