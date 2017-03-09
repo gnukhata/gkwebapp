@@ -28,8 +28,12 @@ Contributors:
 
 $(document).ready(function() {
   $('.modal-backdrop').remove();
-
-
+/*
+var categorycode=-1;
+if(categorycode!=-1)
+{
+$("#category_under select").val(categorycode);
+}*/
   if ($("#catcount").val()==0)
   {
       $("#new_parent_name").focus();
@@ -47,7 +51,16 @@ $("#new_parent_name").keydown(function(event) {
   }
 });
 
-
+$(".spec_name").keydown(function(event) {
+  if (event.which==13) {
+    event.preventDefault();
+    $(".spec_type").focus();
+  }
+  if (event.which==38) {
+    event.preventDefault();
+    $("#new_parent_name").focus();
+  }
+});
 
 
   $("#category_under").keydown(function(event) {
@@ -356,9 +369,15 @@ $(document).off("keydown",".spec_type").on("keydown",".spec_type",function(event
 console.log("roooo");
             $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#success-alert").hide();
-              $("#searchcategory").show();
-              $("#addcategory").click();
+
+              $("#new_parent_div1").hide();
+              $("#oldparentdiv").show();
+              categorycode=resp.gkresult
+              $("#category_under select").val(categorycode).attr("selected", "selected");;
+
+              console.log("rrrrr"+categorycode);
               });
+
             return false;
           }
           else if(resp["gkstatus"] == 1){

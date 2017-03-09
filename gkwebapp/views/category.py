@@ -95,7 +95,8 @@ def savespecs(request):
 			if tax["state"]!='':
 				taxdata["state"]=tax["state"]
 			taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
-		return {"gkstatus": result.json()["gkstatus"]}
+		print result.json()
+		return {"gkstatus": result.json()["gkstatus"], "gkresult":result.json()["gkresult"]}
 	else:
 		return {"gkstatus": result.json()["gkstatus"]}
 
@@ -228,8 +229,8 @@ def countcategory(request):
 
 @view_config(route_name="category",request_param="type=addspecspopup", renderer="gkwebapp:templates/specspopup.jinja2")
 def specspopup(request):
-    return {"status":True}
+	return {"status":True}
 
 @view_config(route_name="category",request_param="type=addtaxpopup", renderer="gkwebapp:templates/taxpopup.jinja2")
 def taxpopup(request):
-    return {"status":True}
+	return {"status":True}
