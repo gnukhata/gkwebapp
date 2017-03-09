@@ -25,7 +25,7 @@ Contributors:
 "Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
 */
 /*
-  This script is for the search category modal.  
+  This script is for the search category modal.
 */(document).ready(function() {
 
   $(document).off('keydown', '.catsearch').on('keydown', '.catsearch', function(event) {
@@ -90,7 +90,7 @@ $(document).off('change', '.catsearch').on('change', '.catsearch', function(even
 
 $(document).off('keydown', '.catsearch').on('keydown', '.catsearch', function(event) {
   event.preventDefault();
-  /* Navigation function 
+  /* Navigation function
     Ctrl key and angle bracket keys are used to navigate between all elements in the row.
    */
   var curindex = $(this).closest('tr').index();
@@ -136,7 +136,7 @@ $(document).off('keydown', '.catsearch').on('keydown', '.catsearch', function(ev
 
 $(document).off('keydown', '.catprod').on('keydown', '.catprod', function(event) {
   event.preventDefault();
-  /* Navigation function 
+  /* Navigation function
     Ctrl key and angle bracket keys are used to navigate between all elements in the row.
    */
 
@@ -163,7 +163,7 @@ $(document).off('keydown', '.catprod').on('keydown', '.catprod', function(event)
   else if (event.which==188 && event.ctrlKey) {
     event.preventDefault();
     $('#catsearchtab tbody tr:eq('+curindex+') td:eq(0) select').focus().select();
-    
+
   }
   else if (event.which==190 && event.ctrlKey) {
     event.preventDefault();
@@ -229,7 +229,7 @@ $(document).off('click', '.showcat').on('click', '.showcat', function(event) {
       '</select>'+
       '</td>'+
       '<td class = "cols-md-3">'+
-      '<button id="sub-cat" class="btn-primary btn-sm showcat">Show Sub-Category</button>'+
+      '<button id="sub-cat" class="btn-primary btn-sm showcat">Show Child Category</button>'+
       '</td>'+
       '</tr>');
       for (child of resp["gkresult"]) {
