@@ -142,7 +142,7 @@ $(document).ready(function() {
 
   $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
     if (event.which == 13) {
-    $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+    $("#spec_table tbody tr:first td:eq(1) input").focus();
     }
     else if (event.which==32)
     {
@@ -584,7 +584,7 @@ $(document).ready(function() {
         '</select>'+
         '</td>'+
         '<td class="col-xs-3">'+
-        '<input class="form-control input-sm tax_rate text-right product_new_rate numtype"  placeholder="Rate">'+
+        '<input class="form-control input-sm tax_rate text-right product_new_rate 3pe"  placeholder="Rate">'+
         '</td>'+
         '<td class="col-xs-1">'+
         '<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
@@ -618,7 +618,7 @@ $(document).ready(function() {
     else if (event.which==27) {
       event.preventDefault();
       if ($(".spec").length > 0) {
-        $('#specifications').contents(".form-group:first").find("input:first").focus();
+        $('#godownflag').focus().select();
       }
       else {
         if ($("#godownpresence").val()==0) {
