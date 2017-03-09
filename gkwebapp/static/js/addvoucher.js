@@ -714,10 +714,10 @@ $("#invsel").keyup(function(event) {
       crsum=0;
       $(".cramt").each(function(){
         crsum += +$(this).val();
-        $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+        $('#vtable tfoot tr:last td:eq(3) input').val(parseFloat(crsum).toFixed(2));
       });
       var curindex = $(this).closest('tr').index();
-      if($('#vtable tbody tr:eq('+curindex+') td:eq(2) input:enabled').val()=="" || $('#vtable tbody tr:eq('+curindex+') td:eq(2) input:enabled').val()==0){
+      if($('#vtable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()=="" || $('#vtable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()==0){
         return false;
       }
       var lastindex = $('#vtable tbody tr:last').index();
@@ -727,12 +727,12 @@ $("#invsel").keyup(function(event) {
         if(curindex<lastindex)
         {
           var nxtindex = curindex+1
-          if($('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0 || $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
-            $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
+          if($('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="" || $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()==0 || $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="NaN"){
+            $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
             crsum=0;
             $(".cramt").each(function(){
               crsum += +$(this).val();
-              $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+              $('#vtable tfoot tr:last td:eq(3) input').val(parseFloat(crsum).toFixed(2));
             });
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
           }
@@ -767,10 +767,13 @@ $("#invsel").keyup(function(event) {
               '<select class="form-control input-sm accs">'+
               '</select>'+
               '</td>'+
-              '<td class="col-xs-3">'+
+              '<td class="col-xs-2">'+
+              '<input class="form-control input-sm clbal rightJustified" type="text" value="0.00" disabled>'+
+              '</td>'+
+              '<td class="col-xs-2">'+
               '<input class="form-control input-sm dramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
-              '<td class="col-xs-3">'+
+              '<td class="col-xs-2">'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="0.00">'+
               '</td class="col-xs-1">'+
               '<td><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
@@ -779,7 +782,7 @@ $("#invsel").keyup(function(event) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
               $('#vtable tbody tr:last td:eq(1) select').focus();
-              $('#vtable tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
+              $('#vtable tbody tr:last td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
               crsum=0; // cr total is recalculated since a cr row is added.
               $(".cramt").each(function(){
                 crsum += +$(this).val();
@@ -797,8 +800,8 @@ $("#invsel").keyup(function(event) {
         if(curindex<lastindex)
         {
           var nxtindex = curindex+1
-          if($('#vtable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()=="" || $('#vtable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()==0 || $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
-            $('#vtable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val(parseFloat(diff).toFixed(2));
+          if($('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0 || $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="NaN"){
+            $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
             drsum=0;
             $(".dramt").each(function(){
               drsum += +$(this).val();
@@ -837,10 +840,13 @@ $("#invsel").keyup(function(event) {
               '<select class="form-control input-sm accs">'+
               '</select>'+
               '</td>'+
-              '<td class="col-xs-3">'+
+              '<td class="col-xs-2">'+
+              '<input class="form-control input-sm clbal rightJustified" type="text" value="0.00" disabled>'+
+              '</td>'+
+              '<td class="col-xs-2">'+
               '<input class="form-control input-sm dramt rightJustified" type="text" value="0.00">'+
               '</td>'+
-              '<td class="col-xs-3">'+
+              '<td class="col-xs-2">'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
               '<td class="col-xs-1"><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
@@ -849,7 +855,7 @@ $("#invsel").keyup(function(event) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
               $('#vtable tbody tr:last td:eq(1) select').focus();
-              $('#vtable tbody tr:last td:eq(2) input:enabled').val(parseFloat(diff).toFixed(2));
+              $('#vtable tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
@@ -903,7 +909,7 @@ $("#invsel").keyup(function(event) {
         $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
       });
       var curindex = $(this).closest('tr').index();
-      if($('#vtable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()=="" || $('#vtable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()==0){
+      if($('#vtable tbody tr:eq('+curindex+') td:eq(4) input:enabled').val()=="" || $('#vtable tbody tr:eq('+curindex+') td:eq(4) input:enabled').val()==0){
         return false;
       }
       var lastindex = $('#vtable tbody tr:last').index();
@@ -913,8 +919,8 @@ $("#invsel").keyup(function(event) {
         if(curindex<lastindex)
         {
           var nxtindex = curindex+1
-          if($('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0){
-            $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
+          if($('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="" || $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()==0){
+            $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
             crsum=0;
             $(".cramt").each(function(){
               crsum += +$(this).val();
@@ -953,10 +959,13 @@ $("#invsel").keyup(function(event) {
               '<select class="form-control input-sm accs">'+
               '</select>'+
               '</td>'+
-              '<td class="col-xs-3">'+
+              '<td class="col-xs-2">'+
+              '<input class="form-control input-sm clbal rightJustified" type="text" value="0.00" disabled>'+
+              '</td>'+
+              '<td class="col-xs-2">'+
               '<input class="form-control input-sm dramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
-              '<td class="col-xs-3">'+
+              '<td class="col-xs-2">'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="0.00">'+
               '</td>'+
               '<td class="col-xs-1"><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
@@ -965,7 +974,7 @@ $("#invsel").keyup(function(event) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
               $('#vtable tbody tr:last td:eq(1) select').focus();
-              $('#vtable tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
+              $('#vtable tbody tr:last td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
               crsum=0;
               $(".cramt").each(function(){
                 crsum += +$(this).val();
@@ -988,8 +997,8 @@ $("#invsel").keyup(function(event) {
         if(curindex<lastindex)
         {
           var nxtindex = curindex+1
-          if($('#vtable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()=="" || $('#vtable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()==0 || $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
-            $('#vtable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val(diff.toFixed(2));
+          if($('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0 || $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="NaN"){
+            $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(diff.toFixed(2));
             drsum=0;
             $(".dramt").each(function(){
               drsum += +$(this).val();
@@ -1028,10 +1037,13 @@ $("#invsel").keyup(function(event) {
               '<select class="form-control input-sm accs">'+
               '</select>'+
               '</td>'+
-              '<td class="col-xs-3">'+
+              '<td class="col-xs-2">'+
+              '<input class="form-control input-sm clbal rightJustified" type="text" value="0.00" disabled>'+
+              '</td>'+
+              '<td class="col-xs-2">'+
               '<input class="form-control input-sm dramt rightJustified" type="text" value="0.00">'+
               '</td>'+
-              '<td class="col-xs-3">'+
+              '<td class="col-xs-2">'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
               '<td class="col-xs-1"><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
@@ -1040,7 +1052,7 @@ $("#invsel").keyup(function(event) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
               $('#vtable tbody tr:last td:eq(1) select').focus();
-              $('#vtable tbody tr:last td:eq(2) input:enabled').val(parseFloat(diff).toFixed(2));
+              $('#vtable tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
