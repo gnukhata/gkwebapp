@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>{% trans %}GNUKhata{% endtrans %} | {{projectname}} {% trans %}Statement{% endtrans %}</title>
+    <style type="text/css">
+    .modal-dialog{
+  		position: relative;
+  		display: table; //This is important
+  		overflow-y: auto;
+  		overflow-x: auto;
+  		width: 92%;
+  		min-width: 300px;
+  	}
+
+  .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  #latable td {
+    font-size: 75%;
+    padding: 4 !important;
+    margin: 4 !important;
+  }
+
+  #latable th {
+    font-size: 85%;
+  }
+
+  .card-view .title {
+      font-weight: bold;
+      display: inline-block;
+      min-width: 30%;
+      text-align: left !important;
+  }
+
+  #latable tbody {
+      display:block;
+      height: calc(100vh - 17em);
+      overflow-y:scroll;
+  }
+  #latable thead,#latable tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  #latable thead {
+      width: calc( 100% - 0.65em );
+  }
+
+  .calign{
+    text-align:center;
+  }
+  .lalign{
+    text-align:left;
+  }
+  .dtwrap{
+    width :5%
+     }
+ .smwrap{
+  width:3%
+ }
+
+ .lngwrap{
+  width:10%
+ }
+ .mdwrap{
+  width:5%
+ }
+
+  </style>
+	</head>
+	<body>
+		<div id="allgodownmodal" class="modal fade" tabindex="-1" role="dialog">
+			<div class="modal-dialog" style="height: 91%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<div class="modal-title">
+            <strong>{% trans %}List of all Godowns{% endtrans %}</strong>
+          </div>
+					</div>
+					<div class="modal-body">
+							<div class="panel-body" style="margin-top: -2%;" >
+								<button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="laclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+								<table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
+									<thead class="bg-primary">
+										<tr>
+											<th class="smwrap calign" >
+          {% trans %}Sr.No.{% endtrans %}
+        </th>
+											<th class="mdwrap lalign">
+          {% trans %}Godown Name{% endtrans %}
+        </th>
+											<th class="lngwrap lalign">
+          {% trans %}Address{% endtrans %}
+        </th>
+											<th class="dtwrap lalign">
+          {% trans %}Contact Name{% endtrans %}
+        </th>
+											<th class="dtwrap lalign" >
+          {% trans %}Designation{% endtrans %}
+        </th>
+											<th class="dtwrap lalign">
+          {% trans %}Contact Number{% endtrans %}
+        </th>
+											<th class="smwrap lalign">
+          {% trans %}Status{% endtrans %}
+        </th>
+										</tr>
+									</thead>
+									<tbody>
+      {% for record in gkresult %}
+
+										<tr	value="{{record["godownid"]}}">
+											<td class="smwrap calign" >
+          {{record["srno"]}}
+        </td>
+											<td class="mdwrap lalign">
+												{{record["godownname"]}}
+											</td>
+											<td class="lngwrap lalign" >
+          {{record["godownaddress"]}}, {{record["godownstate"]}}
+        </td>
+											<td class="dtwrap lalign" >
+          {{record["godowncontactname"]}}
+        </td>
+											<td class="dtwrap lalign" >
+          {{record["godowndesignation"]}}
+        </td>
+											<td class="dtwrap lalign" >
+          {{record["godowncontact"]}}
+        </td>
+        {% if record["godownstatus"] == "Active" %}
+
+											<td class="smwrap lalign text-success">
+          {{record["godownstatus"]}}
+        </td>
+        {% else %}
+
+											<td class="smwrap lalign text-danger">
+          {{record["godownstatus"]}}
+        </td>
+        {% endif %}
+
+										</tr>
+      {% endfor %}
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+        </div>
+      </div>
+    </div>
+		<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
+		<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/listofgodownspopup.js')}}"></script>
+	</body>
+</html>
