@@ -373,7 +373,7 @@ console.log("roooo");
               $("#new_parent_div1").hide();
               $("#oldparentdiv").show();
               categorycode=resp.gkresult
-              $("#category_under select").val(categorycode).attr("selected", "selected");;
+              $("#category_under select").val(categorycode).attr("selected", "selected");
 
               console.log("rrrrr"+categorycode);
               });
