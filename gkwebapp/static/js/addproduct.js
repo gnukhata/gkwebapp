@@ -2,6 +2,10 @@ $(document).ready(function() {
   var godownflag = 0;
   $('.modal-backdrop').remove();
   $("#addcatselect").focus();
+  if($("#addcatselect").is(':hidden'))
+   {
+   $("#addproddesc").focus();
+   }
   $('.proddate').autotab('number');
   $("#openingstock").numeric();
   $(document).off('focus', '.proddate').on('focus', '.proddate', function(event) {
