@@ -8,7 +8,7 @@
   		display: table; //This is important
   		overflow-y: auto;
   		overflow-x: auto;
-  		width: auto;
+  		width: 92%;
   		min-width: 300px;
   	}
 
@@ -60,29 +60,30 @@
  }
 
  .lngwrap{
-  width:16%
+  width:10%
  }
  .mdwrap{
-  width:8%
+  width:5%
  }
 
   </style>
 	</head>
 	<body>
 		<div id="allgodownmodal" class="modal fade" tabindex="-1" role="dialog">
-			<div class="modal-dialog">
+			<div class="modal-dialog" style="height: 91%;">
 				<div class="modal-content">
 					<div class="modal-header">
 						<div class="modal-title">
-            {% trans %}List of all Godowns{% endtrans %}
+            <strong>{% trans %}List of all Godowns{% endtrans %}</strong>
           </div>
 					</div>
 					<div class="modal-body">
-							<div class="panel-body">
+							<div class="panel-body" style="margin-top: -2%;" >
+								<button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="laclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
 								<table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
 									<thead class="bg-primary">
 										<tr>
-											<th class="smwrap lalign" >
+											<th class="smwrap calign" >
           {% trans %}Sr.No.{% endtrans %}
         </th>
 											<th class="mdwrap lalign">
@@ -109,11 +110,11 @@
       {% for record in gkresult %}
 
 										<tr	value="{{record["godownid"]}}">
-											<td class="smwrap lalign" >
+											<td class="smwrap calign" >
           {{record["srno"]}}
         </td>
 											<td class="mdwrap lalign">
-												<a class="libgname" href="">{{record["godownname"]}}</a>
+												{{record["godownname"]}}
 											</td>
 											<td class="lngwrap lalign" >
           {{record["godownaddress"]}}, {{record["godownstate"]}}
