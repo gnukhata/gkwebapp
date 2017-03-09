@@ -3,7 +3,7 @@
     <div class="modal-content">
       <div class="modal-body">
         <div class="alert alert-danger" id="cat-blank-alert"  aria-live="rude" role="alert" hidden>
-          <label >{% trans %}No sub-categories under the selected category{% endtrans %}</label>
+          <label >{% trans %}No Child Categories under the selected Category{% endtrans %}</label>
 
         </div>
         <div class="panel shadow" >
@@ -21,7 +21,7 @@
                     {% trans %}Products Under{% endtrans %}
                   </th>
                   <th>
-                    {% trans %}Show Sub-Category{% endtrans %}
+                    {% trans %}Show Child Category{% endtrans %}
                   </th>
                 </tr>
               </thead>
@@ -43,7 +43,7 @@
                     </select>
                   </td>
                   <td class = "cols-md-3">
-                    <button id="sub-cat" class="btn-primary btn-sm showcat">{% trans %}Show Sub-Category{% endtrans %}</button>
+                    <button id="sub-cat" class="btn-primary btn-sm showcat">{% trans %}Show Child Category{% endtrans %}</button>
                   </td>
                 </tr>
               </tbody>
