@@ -353,7 +353,7 @@ $(document).ready(function() {
         type: 'POST',
         global: false,
         async: false,
-        datatype: 'text/html',
+        datatype: 'json',
         data: {"categorycode": catcode},
         beforeSend: function(xhr)
         {
@@ -361,15 +361,16 @@ $(document).ready(function() {
         }
       })
       .done(function(resp)
-      {console.log(resp["gkresult"]);
+      {   console.log(resp["gkresult"]);
           $('#spec_table tbody tr').remove();
           for (specname of resp["gkresult"]) {
             $('#spec_table tbody').append('<tr>'+
             '<td class="col-xs-2">'+
-            '<label>'+specname["attrname"]+'</label>'+
+            '<select id="spec_name" class="spec_name form-control input-sm" disabled >'+
+            '<option value="'+specname["spcode"]+'" selected>'+specname["attrname"]+'</option>'+
             '</td>'+
             '<td class="col-xs-2">'+
-            '<input class="form-control input-sm tax_rate text-right product_new_rate numtype"  placeholder="Numeric">'+
+            '<input class="form-control spec_obj input-sm "  placeholder="Numeric" type="text">'+
             '</td>'+
             '</tr>');
           }
@@ -912,6 +913,18 @@ $("#addgodown").click(function() {
       });
         return false;
     }
+/*.....................*/
+var specs = {};
+$("#spec_table tbody tr").each(function(){
+  if ($.trim($("#spec_name",this).val())!=""){
+  if ($.trim($("#spec_name",this).val())!="" && $.trim($(".spec_obj",this).val())!="" ) {
+    specs[$("#spec_name",this).val()] = $(".spec_obj",this).val();
+  }
+}
+});
+console.log(specs);
+/*.....................*/
+
     var taxes = [];
     $("#product_tax_table tbody tr").each(function(){
       var obj = {};
@@ -936,9 +949,12 @@ $("#addgodown").click(function() {
     var addformdata = $("#addprodform").serializeArray();
 
     addformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
+    addformdata.push({name: 'specs', value: JSON.stringify(specs)});
     if ($("#godownflag").val() == 1) {
       addformdata.push({name: 'godowns', value: JSON.stringify(gobj)});
+
     }
+    console.log(addformdata);
       $.ajax({
         url: '/product?type=save',
         type: 'POST',
