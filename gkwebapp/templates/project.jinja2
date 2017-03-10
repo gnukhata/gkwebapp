@@ -120,8 +120,10 @@
         <div class="panel-heading">
           {% if not projects %}
             <h3 id = "addid" class="panel-title">{% trans %}Create Cost Center{% endtrans %}</h3>
+            <input id="projects" type="text" name="" value="0" hidden>
           {% else %}
             <h3 id = "addid" class="panel-title">{% trans %}Add Cost Center{% endtrans %}</h3>
+            <input id="projects" type="text" name="" value="1" hidden>
           {% endif %}
         </div>
         <div class="panel-body">
@@ -132,7 +134,11 @@
             <label id="amtlbl" for="prjamount">{% trans %}Sanc<u>t</u>ioned Amount{% endtrans %} : </label>
             <input class="form-control rightJustified" id="prjamount" name="sanctionedamount" placeholder="0.00" accesskey="t">
             <br>
-            <button type="submit" class="btn btn-success" accesskey="a">{% trans %}<u>A</u>dd{% endtrans %}</button>
+            {% if not projects %}
+              <button type="submit" class="btn btn-success" accesskey="a">{% trans %}Cre<u>a</u>te{% endtrans %}</button>
+            {% else %}
+              <button type="submit" class="btn btn-success" accesskey="a">{% trans %}<u>A</u>dd{% endtrans %}</button>
+            {% endif %}
           </form>
         </div>
       </div>

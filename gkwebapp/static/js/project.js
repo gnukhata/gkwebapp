@@ -35,8 +35,14 @@ $(document).ready(function() {
   $('.table-fixedheader tbody').height(percentheigth+"%");
   if (sessionStorage.orgt=="Not For Profit") {
 // Change headings and labels is orgtype is Not for Profit.
+  if ($("#projects").val()==0) {
+    $("#addid").text("Create Project");
+    $("#listid").text("Project List");
+  }
+  else {
     $("#addid").text("Add Project");
     $("#listid").text("Project List");
+  }
   }
   else {
 // Change alert msgs if orgtype is Profit Making.

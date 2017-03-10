@@ -27,6 +27,7 @@ Contributors:
 This script is for the view page of project statement report.
 */
 $(document).ready(function() {
+  $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
   if ($('#viewprjstate_prjname').length) {
     $("#viewprjstate_todate").focus();
