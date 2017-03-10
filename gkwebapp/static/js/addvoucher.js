@@ -145,8 +145,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   }
 });
 
-
-
+  var putcr = true;
   //Calculates the total dr and cr amout when a change event is fired.
   $(document).off("change",".dramt").on("change", ".dramt", function() {
     drsum=0;
@@ -156,8 +155,11 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       // jquery enables us to select specific elements inside a table easily like below.
       $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
     });
+    if(putcr){
+      $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(drsum).toFixed(2));
+      putcr = false;
+    }
   });
-
   $(document).off("change",".cramt").on("change", ".cramt", function() {
     crsum=0;
     $(".cramt").each(function(){
@@ -847,6 +849,9 @@ $("#invsel").keyup(function(event) {
               }
               $('#vtable tbody tr:last td:eq(1) select').focus();
               $('#vtable tbody tr:last td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
+              var curacccode = $('#vtable tbody tr:last td:eq(1) select option:selected').val();
+              var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+              $('#vtable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
               crsum=0; // cr total is recalculated since a cr row is added.
               $(".cramt").each(function(){
                 crsum += +$(this).val();
@@ -920,6 +925,9 @@ $("#invsel").keyup(function(event) {
               }
               $('#vtable tbody tr:last td:eq(1) select').focus();
               $('#vtable tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
+              var curacccode = $('#vtable tbody tr:last td:eq(1) select option:selected').val();
+              var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+              $('#vtable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
@@ -1039,6 +1047,9 @@ $("#invsel").keyup(function(event) {
               }
               $('#vtable tbody tr:last td:eq(1) select').focus();
               $('#vtable tbody tr:last td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
+              var curacccode = $('#vtable tbody tr:last td:eq(1) select option:selected').val();
+              var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+              $('#vtable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
               crsum=0;
               $(".cramt").each(function(){
                 crsum += +$(this).val();
@@ -1117,6 +1128,9 @@ $("#invsel").keyup(function(event) {
               }
               $('#vtable tbody tr:last td:eq(1) select').focus();
               $('#vtable tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
+              var curacccode = $('#vtable tbody tr:last td:eq(1) select option:selected').val();
+              var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+              $('#vtable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
