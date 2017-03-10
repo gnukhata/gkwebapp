@@ -36,6 +36,8 @@ $(document).ready(function() {
   if ($("#catcount").val()==0)
   {
       $("#new_parent_name").focus();
+      $("#new_parent_div1").show();
+      $("#oldparentdiv").hide();
   }
   else
   {
@@ -209,7 +211,7 @@ $("#child_category_name").keydown(function(event) {
       '</td>'+
       '</tr>');
     }
-    
+
 
       })
     .fail(function() {
@@ -421,6 +423,7 @@ console.log("roooo");
           console.log("complete");
         });
 });
+
  $(".child_spec_class").click(function() {
     console.log("child_spec_class");
     console.log(specs);
