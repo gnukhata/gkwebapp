@@ -27,6 +27,7 @@ Contributors:
 This script is for the view page of project statement report.
 */
 $(document).ready(function() {
+  $('.modal-backdrop').remove();
   if ($('#viewprjstate_prjname').length) {
     $("#viewprjstate_todate").focus();
   }
@@ -37,7 +38,6 @@ $(document).ready(function() {
     $("#viewprjstate_submit").hide();
     $("#prj_period").hide(); // to hide div when project is not found
   }
-  $('.modal-backdrop').remove();
   $("#viewprjstate_todate").focus();
   $('.viewprjstate_date').autotab('number');
   var sel1 = 0; // flag for focus on combo box
