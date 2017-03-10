@@ -361,18 +361,18 @@ $(document).ready(function() {
         }
       })
       .done(function(resp)
-      {
-        $("#specifications").html("");
-        $("#specifications").html(resp);
-        $("#specshelp").hide();
-        if ($(".spec").length < 3) {
-          $("#specifications").removeClass("specsdiv");
-        }
-        else {
-          $("#specifications").addClass("specsdiv");
-        }
-        $("#product_tax_table tbody tr:first td:eq(0) select").focus();
-        console.log("success");
+      {console.log(resp["gkresult"]);
+          $('#spec_table tbody tr').remove();
+          for (specname of resp["gkresult"]) {
+            $('#spec_table tbody').append('<tr>'+
+            '<td class="col-xs-2">'+
+            '<label>'+specname["attrname"]+'</label>'+
+            '</td>'+
+            '<td class="col-xs-2">'+
+            '<input class="form-control input-sm tax_rate text-right product_new_rate numtype"  placeholder="Numeric">'+
+            '</td>'+
+            '</tr>');
+          }
       })
       .fail(function() {
         console.log("error");
