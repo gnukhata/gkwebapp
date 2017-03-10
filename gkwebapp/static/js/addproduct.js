@@ -360,8 +360,8 @@ $(document).ready(function() {
           xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
         }
       })
-      .done(function(resp)
-      {   console.log(resp["gkresult"]);
+      .done(function(resp)   /*This function will return spec name of the product*/
+      {
           $('#spec_table tbody tr').remove();
           for (specname of resp["gkresult"]) {
             $('#spec_table tbody').append('<tr>'+
@@ -914,7 +914,7 @@ $("#addgodown").click(function() {
         return false;
     }
 /*.....................*/
-var specs = {};
+var specs = {};      /*This is spec dictioary having spcode as a key and specval as its value*/
 $("#spec_table tbody tr").each(function(){
   if ($.trim($("#spec_name",this).val())!=""){
   if ($.trim($("#spec_name",this).val())!="" && $.trim($(".spec_obj",this).val())!="" ) {
@@ -922,7 +922,7 @@ $("#spec_table tbody tr").each(function(){
   }
 }
 });
-console.log(specs);
+
 /*.....................*/
 
     var taxes = [];

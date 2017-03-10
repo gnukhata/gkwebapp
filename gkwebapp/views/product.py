@@ -136,7 +136,6 @@ def saveproduct(request):
 
 
 	productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
-	print productdetails
 	result = requests.post("http://127.0.0.1:6543/products", data=json.dumps(productdetails),headers=header)
 	if result.json()["gkstatus"] == 0:
 		gkdata = {"activity":proddetails["productdesc"] + " product created"}
