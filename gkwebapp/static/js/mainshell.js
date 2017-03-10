@@ -400,7 +400,7 @@ $(document).ready(function(){
         $("#showbalancesheet").text("Statement of Affairs");
         $("#showcashflow").text("Receipt & Payment");
         $("#cashflowtb").text("Receipt & Payment - CTRL+6");
-        $("#showproject").text("Project");
+        $("#showproject").text("Create & Edit Project");
         $("#projecttb").text("Create & Edit Project - ALT+P");
         $("#showprjstate").text("Project Statement");
         $("#projectstatementtb").text("Project Statement - CTRL+5");
