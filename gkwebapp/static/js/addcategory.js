@@ -123,23 +123,26 @@ $("#child_category_name").keydown(function(event) {
       }
     })
     .done(function(resp) {
-
+      var type = "";
       console.log("success rohini  ");
       for (spec of resp["gkresult"].reverse()) {
         console.log(" "+spec["attrtype"]);
         var trs;
         if (spec["attrtype"]==0) {
-
+          type = "Text";
           trs ='<option value="0">Text</option>'
           }
         else if (spec["attrtype"]==1) {
+          type = "Number";
           trs =
           '<option value="1">Number</option>'
                   }
         else if (spec["attrtype"]==2) {
+          type = "Date";
           trs ='<option value="2">Date</option>'
         }
         else if (spec["attrtype"]==3) {
+          type = "Option";
           trs='<option value="3">Option</option>'
         }
 
@@ -157,17 +160,20 @@ $("#child_category_name").keydown(function(event) {
       for (spec of resp["gkresult"].reverse()) {
         var trs;
         if (spec["attrtype"]==0) {
-
+          type = "Text";
           trs ='<option value="0">Text</option>'
           }
         else if (spec["attrtype"]==1) {
+          type = "Number";
           trs =
           '<option value="1">Number</option>'
                   }
         else if (spec["attrtype"]==2) {
+          type = "Date";
           trs ='<option value="2">Date</option>'
         }
         else if (spec["attrtype"]==3) {
+          type = "Option";
           trs='<option value="3">Option</option>'
         }
 
@@ -188,7 +194,7 @@ $("#child_category_name").keydown(function(event) {
 
           //dict for specs
             obj.attrname = spec["attrname"];
-            obj.attrtype = trs;
+            obj.attrtype = type;
             specs.push(obj);
           console.log(" specsssssss"+specs);
 
@@ -246,7 +252,7 @@ $(document).off("keydown",".spec_type").on("keydown",".spec_type",function(event
       //dict for specs
       if ($.trim($("#category_spec_table tbody tr:eq("+curindex1+") td:eq(0) input").val())!="") {
         obj.attrname = $("#category_spec_table tbody tr:eq("+curindex1+") td:eq(0) input").val();
-        obj.attrtype = $("#category_spec_table tbody tr:eq("+curindex1+") td:eq(1) select").val();
+        obj.attrtype = $.trim($("#category_spec_table tbody tr:eq("+curindex1+") td:eq(1) select option:selected").text());
         specs.push(obj);
       }
       // appending a new row for adding another spec to category
