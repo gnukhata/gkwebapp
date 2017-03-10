@@ -110,7 +110,7 @@ $("#child_category_name").keydown(function(event) {
     console.log("categorycode"+categorycode);
     $('#spectbl td').remove();
     // ajax for getting the specs of the newly selected (parent)category
-
+    specs = [];
     $.ajax({
       url: '/category?action=getspecs',
       type: 'POST',
@@ -124,39 +124,7 @@ $("#child_category_name").keydown(function(event) {
     })
     .done(function(resp) {
       var type = "";
-      console.log("success rohini  ");
-      for (spec of resp["gkresult"].reverse()) {
-        console.log(" "+spec["attrtype"]);
-        var trs;
-        if (spec["attrtype"]==0) {
-          type = "Text";
-          trs ='<option value="0">Text</option>'
-          }
-        else if (spec["attrtype"]==1) {
-          type = "Number";
-          trs =
-          '<option value="1">Number</option>'
-                  }
-        else if (spec["attrtype"]==2) {
-          type = "Date";
-          trs ='<option value="2">Date</option>'
-        }
-        else if (spec["attrtype"]==3) {
-          type = "Option";
-          trs='<option value="3">Option</option>'
-        }
-
-        $('#spectbl tbody').prepend('<tr>'+
-        '<td class="col-xs-8">'+
-        spec["attrname"]+
-        '</td>'+
-        '<td class="col-xs-3">'+
-        trs+
-        '</td>'+
-
-        '</tr>');
-
-      }
+      $('#category_spec_table tbody').html("");
       for (spec of resp["gkresult"].reverse()) {
         var trs;
         if (spec["attrtype"]==0) {
@@ -176,7 +144,10 @@ $("#child_category_name").keydown(function(event) {
           type = "Option";
           trs='<option value="3">Option</option>'
         }
-
+          $('#spectbl tbody').prepend('<tr>'+
+          '<td class="col-xs-8">'+spec["attrname"]+'</td>'+
+          '<td class="col-xs-3">'+trs+'</td>'+
+          '</tr>');
           $('#category_spec_table tbody').prepend('<tr>'+
           '<td class="col-xs-8">'+
           '<input type="text" class="form-control input-sm spec_name" value="'+spec["attrname"]+'" placeholder="Spec Name">'+
