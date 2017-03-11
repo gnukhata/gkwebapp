@@ -1,19 +1,9 @@
 $(document).ready(function() {
-  $("#add_cussup").focus().select();
-  $("#add_cussup").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#add_cussup_name").focus().select();
-    }
-  });
+  $("#add_cussup_name").focus().select();
   $("#add_cussup_name").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
       $("#add_cussup_email").focus().select();
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#add_cussup").focus().select();
     }
   });
   $("#add_cussup_email").keydown(function(event) {
@@ -108,16 +98,14 @@ $(document).ready(function() {
   });
   $("#cussup_save").click(function(event) {
     event.preventDefault();
-    var custsupdata=$("#add_cussup option:selected").val();
-    if ($.trim($("#add_cussup option:selected").val())=="") {
-      $("#cussup-blank-alert").alert();
-      $("#cussup-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#cussup-blank-alert").hide();
-      });
-      $("#add_cussup").focus();
-      return false;
-    }
 
+    var custsupval;
+    if ($("#deliverychallan_gkstatus").val()=='in') {
+         custsupval= 19;
+    }
+    else {
+         custsupval= 3 ;
+    }
     if ($.trim($("#add_cussup_name").val())=="") {
       $("#name-blank-alert").alert();
       $("#name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -140,7 +128,7 @@ $(document).ready(function() {
       "custpan": $("#add_cussup_pan").val(),
       "custtan": $("#add_cussup_tan").val(),
       "state" : $("#add_state").val(),
-      "csflag": $("#add_cussup option:selected").val()},
+      "csflag": custsupval},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -149,19 +137,19 @@ $(document).ready(function() {
     .done(function(resp) {
       if(resp["gkstatus"] == 0){
         $("#customersupplier_create").click();
-        if (custsupdata == '3') {
+        if (custsupval == '3') {
           $("#cus-success-alert").alert();
           $("#cus-success-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#cus-success-alert").hide();
           });
-         
+
         }
         else  {
-          $("#sup-success-alert").alert();
-          $("#sup-success-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#sup-success-alert").hide();
+          $("#cus-success-alert").alert();
+          $("#cus-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#cus-success-alert").hide();
           });
-          
+
         }
       $("#selectedcustsup").val($('#add_cussup_name').val());
       console.log($("#selectedcustsup").val());
@@ -170,15 +158,15 @@ $(document).ready(function() {
       return false;
       }
       if(resp["gkstatus"] ==1){
-        if (custsupdata == '3') {
+        if (custsupval == '3') {
           $("#add_cussup_name").focus();
-          $("#cus-duplicate-alert").alert();
-          $("#cus-duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#cus-duplicate-alert").hide();
+          $("#sup-duplicate-alert").alert();
+          $("#sup-duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#sup-duplicate-alert").hide();
           });
           return false;
         }
-        else  {
+        else if (custsupval == '19') {
           $("#add_cussup_name").focus();
           $("#sup-duplicate-alert").alert();
           $("#sup-duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -189,7 +177,7 @@ $(document).ready(function() {
 
       }
       else {
-        $("#add_cussup").focus();
+        $("#add_cussup_name").focus();
         $("#failure-alert").alert();
         $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#failure-alert").hide();
