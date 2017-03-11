@@ -95,7 +95,6 @@ def savespecs(request):
 			if tax["state"]!='':
 				taxdata["state"]=tax["state"]
 			taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
-		print result.json()
 		return {"gkstatus": result.json()["gkstatus"], "gkresult":result.json()["gkresult"]}
 	else:
 		return {"gkstatus": result.json()["gkstatus"]}

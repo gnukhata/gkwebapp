@@ -39,8 +39,7 @@ $(document).ready(function() {
     } else {
         $("#category_under").focus();
     }
-    var categorycode;
-
+    var categorycode = "";
     $("#new_parent_name").keydown(function(event) {
         if (event.which == 13) {
             event.preventDefault();
@@ -65,7 +64,7 @@ $(document).ready(function() {
         }
     });
     $('#child_addspecmodal').on('shown.bs.modal', function() {
-        $('#child_category_spec_name').focus();
+        $("#child_category_spec_table tbody tr:last td:eq(0) input").focus();
     });
     $('#parent_addspecmodal').on('shown.bs.modal', function() {
         $('#parent_category_spec_name').focus();
@@ -79,10 +78,12 @@ $(document).ready(function() {
         }
 
         if (event.which == 32) {
+            parentspecs = [];
             event.preventDefault();
             $("#oldparentdiv").hide();
             $("#new_parent_div1").show();
             $("#spectbl").hide();
+            $(".childcat").hide();
             $("#new_parent_name").val("");
             $('#parent_category_spec_table tbody').html("");
             $('#parent_category_spec_table tbody').append('<tr>' +
@@ -117,92 +118,100 @@ $(document).ready(function() {
 
     /* If a parent category is selected then its specs are automatically inhereted by its child category and the specs are displayed */
     $("#category_under").change(function(event) {
-        $("#spectbl").show();
         /* when a (parent)category is changed by the user except the last blank row all the other category spec rows are removed
         and replaced with the spec rows of the newly selected (parent)category
         */
 
         categorycode = $("#category_under option:selected").val();
-        $("#parent_heading").text($("#category_under option[value=" + categorycode + "]").text());
-        $('#spectbl td').remove();
-        // ajax for getting the specs of the newly selected (parent)category
-        parentspecs = [];
-        $.ajax({
-                url: '/category?action=getspecs',
-                type: 'POST',
-                dataType: 'json',
-                async: false,
-                data: {
-                    "categorycode": categorycode
-                },
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                }
-            })
-            .done(function(resp) {
-                var type = "";
-                $('#child_category_spec_table tbody').html("");
-                for (spec of resp["gkresult"].reverse()) {
-                    var trs;
-                    if (spec["attrtype"] == 0) {
-                        trs = '<option value="0">Text</option>'
-                    } else if (spec["attrtype"] == 1) {
-                        trs =
-                            '<option value="1">Number</option>'
-                    } else if (spec["attrtype"] == 2) {
-                        trs = '<option value="2">Date</option>'
-                    } else if (spec["attrtype"] == 3) {
-                        trs = '<option value="3">Option</option>'
-                    }
-                    $('#spectbl tbody').prepend('<tr>' +
-                        '<td class="col-xs-8">' + spec["attrname"] + '</td>' +
-                        '<td class="col-xs-3">' + trs + '</td>' +
-                        '</tr>');
+        console.log("changed"+categorycode)
+        if(categorycode != ""){
+          $("#spectbl").show();
+          $("#parent_heading").text($("#category_under option[value=" + categorycode + "]").text());
+          $('#spectbl td').remove();
+          $(".childcat").show();
+          parentspecs = [];
+          // ajax for getting the specs of the newly selected (parent)category
+          $.ajax({
+                  url: '/category?action=getspecs',
+                  type: 'POST',
+                  dataType: 'json',
+                  async: false,
+                  data: {
+                      "categorycode": categorycode
+                  },
+                  beforeSend: function(xhr) {
+                      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                  }
+              })
+              .done(function(resp) {
+                  $('#child_category_spec_table tbody').html("");
+                  for (spec of resp["gkresult"].reverse()) {
+                      var trs;
+                      if (spec["attrtype"] == 0) {
+                          trs = '<option value="0">Text</option>'
+                      } else if (spec["attrtype"] == 1) {
+                          trs =
+                              '<option value="1">Number</option>'
+                      } else if (spec["attrtype"] == 2) {
+                          trs = '<option value="2">Date</option>'
+                      } else if (spec["attrtype"] == 3) {
+                          trs = '<option value="3">Option</option>'
+                      }
+                      $('#spectbl tbody').prepend('<tr>' +
+                          '<td class="col-xs-8">' + spec["attrname"] + '</td>' +
+                          '<td class="col-xs-3">' + trs + '</td>' +
+                          '</tr>');
 
-                    $('#child_category_spec_table tbody').prepend('<tr>' +
-                        '<td class="col-xs-8">' +
-                        '<input type="text" class="form-control input-sm spec_name" value="' + spec["attrname"] + '" placeholder="Spec Name">' +
-                        '</td>' +
-                        '<td class="col-xs-3">' +
-                        '<select id="child_category_spec_type" class="form-control input-sm spec_type">' + trs +
-                        '</select>' +
-                        '</td>' +
-                        '<td class="col-xs-1">' +
-                        '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
-                        '</td>' +
-                        '</tr>');
+                      $('#child_category_spec_table tbody').prepend('<tr>' +
+                          '<td class="col-xs-8">' +
+                          '<input type="text" class="form-control input-sm spec_name" value="' + spec["attrname"] + '" placeholder="Spec Name">' +
+                          '</td>' +
+                          '<td class="col-xs-3">' +
+                          '<select id="child_category_spec_type" class="form-control input-sm spec_type">' + trs +
+                          '</select>' +
+                          '</td>' +
+                          '<td class="col-xs-1">' +
+                          '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
+                          '</td>' +
+                          '</tr>');
 
-                    var obj = {};
+                      var obj = {};
 
-                    //dict for specs
-                    obj.attrname = spec["attrname"];
-                    obj.attrtype = spec["attrtype"];
-                    parentspecs.push(obj);
-                }
-                $('#child_category_spec_table tbody').append('<tr>' +
-                    '<td class="col-xs-8">' +
-                    '<input type="text" class="form-control input-sm spec_name" value="" placeholder="Spec Name" autofocus>' +
-                    '</td>' +
-                    '<td class="col-xs-3">' +
-                    '<select id="child_category_spec_type" class="form-control input-sm spec_type">' +
-                    '<option value="0">Text</option>' +
-                    '<option value="1">Number</option>' +
-                    '<option value="2">Date</option>' +
-                    '<option value="3">Option</option>' +
-                    '</select>' +
-                    '</td>' +
-                    '<td class="col-xs-1">' +
-                    '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
-                    '</td>' +
-                    '</tr>');
+                      //dict for specs
+                      obj.attrname = spec["attrname"];
+                      obj.attrtype = spec["attrtype"];
+                      parentspecs.push(obj);
+                  }
+                  $('#child_category_spec_table tbody').append('<tr>' +
+                      '<td class="col-xs-8">' +
+                      '<input type="text" class="form-control input-sm spec_name" value="" placeholder="Spec Name" autofocus>' +
+                      '</td>' +
+                      '<td class="col-xs-3">' +
+                      '<select id="child_category_spec_type" class="form-control input-sm spec_type">' +
+                      '<option value="0">Text</option>' +
+                      '<option value="1">Number</option>' +
+                      '<option value="2">Date</option>' +
+                      '<option value="3">Option</option>' +
+                      '</select>' +
+                      '</td>' +
+                      '<td class="col-xs-1">' +
+                      '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
+                      '</td>' +
+                      '</tr>');
 
-            })
-            .fail(function() {
-                console.log("error");
-            })
-            .always(function() {
-                console.log("complete");
-            });
+              })
+              .fail(function() {
+                  console.log("error");
+              })
+              .always(function() {
+                  console.log("complete");
+              });
+        }
+        else{
+          categorycode = "";
+          $("#spectbl").hide();
+          $(".childcat").hide();
+        }
 
     });
     $(document).off("keydown", "#child_category_spec_type").on("keydown", "#child_category_spec_type", function(event) {
@@ -415,6 +424,59 @@ $(document).ready(function() {
                         $("#oldparentdiv").show();
                         categorycode = resp.gkresult
                         $("#category_under").append('<option val="' + categorycode + '" selected>' + parentname + '</option>');
+                        $(".childcat").show();
+                        $("#spectbl").show();
+                        $("#parent_heading").text($("#new_parent_name").val());
+                        $("#spectbl tbody").html("");
+                        $('#child_category_spec_table tbody').html("");
+                        for (spec of parentspecs) {
+                            var trs;
+                            if (spec["attrtype"] == 0) {
+                                trs = '<option value="0">Text</option>'
+                            } else if (spec["attrtype"] == 1) {
+                                trs =
+                                    '<option value="1">Number</option>'
+                            } else if (spec["attrtype"] == 2) {
+                                trs = '<option value="2">Date</option>'
+                            } else if (spec["attrtype"] == 3) {
+                                trs = '<option value="3">Option</option>'
+                            }
+                            $('#spectbl tbody').append('<tr>' +
+                                '<td class="col-xs-8">' + spec["attrname"] + '</td>' +
+                                '<td class="col-xs-3">' + trs + '</td>' +
+                                '</tr>');
+                            $('#child_category_spec_table tbody').append('<tr>' +
+                                '<td class="col-xs-8">' +
+                                '<input type="text" class="form-control input-sm spec_name" value="' + spec["attrname"] + '" placeholder="Spec Name">' +
+                                '</td>' +
+                                '<td class="col-xs-3">' +
+                                '<select id="child_category_spec_type" class="form-control input-sm spec_type">' + trs +
+                                '</select>' +
+                                '</td>' +
+                                '<td class="col-xs-1">' +
+                                '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
+                                '</td>' +
+                                '</tr>');
+                              }
+
+                              $('#child_category_spec_table tbody').append('<tr>' +
+                                  '<td class="col-xs-8">' +
+                                  '<input type="text" class="form-control input-sm spec_name" value="" placeholder="Spec Name" autofocus>' +
+                                  '</td>' +
+                                  '<td class="col-xs-3">' +
+                                  '<select id="child_category_spec_type" class="form-control input-sm spec_type">' +
+                                  '<option value="0">Text</option>' +
+                                  '<option value="1">Number</option>' +
+                                  '<option value="2">Date</option>' +
+                                  '<option value="3">Option</option>' +
+                                  '</select>' +
+                                  '</td>' +
+                                  '<td class="col-xs-1">' +
+                                  '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
+                                  '</td>' +
+                                  '</tr>');
+
+
                     });
 
                     return false;

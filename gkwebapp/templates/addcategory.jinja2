@@ -84,14 +84,14 @@
                      </div>
                   </div>
                </div>
-               <div class="form-group row">
+               <div class="form-group row childcat" hidden>
                   <label for="category_name">{% trans %}Child Category:{% endtrans %}</label>
                </div>
                {% else %}
                <input type="text" id="category_under1" value="" hidden>
                {% endif %}
             </div>
-            <div class="row form-group">
+            <div class="row form-group childcat" hidden>
                <div class="panel">
                   <table id="child_category_table" class="table table-condensed table-bordered fixed-table">
                      <thead class="bg-primary input-sm">
@@ -120,8 +120,7 @@
                      </tbody>
                   </table>
                </div>
-               <small id="spectotaxhelp" class="form-text text-muted">{% trans %}Press Esc key on specification type to switch to tax name.{% endtrans %}</small><br>
-               <small id="navigation" class="form-text text-muted">{% trans %}Press 'Ctrl + <' and 'Ctrl + >' to navigate through fields of specification and tax.{% endtrans %}</small>
+               <small id="navigation" class="form-text text-muted">Press 'Tab' and 'Shift + Tab' to navigate through fields</small>
             </div>
          </div>
          <div id="child_addspecmodal" class="modal fade" tabindex="-1" role="dialog">
