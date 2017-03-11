@@ -81,6 +81,7 @@
                               </tr>
                            </tbody>
                         </table>
+                        <small id="backhelp" class="form-text text-muted">Press 'Esc' key to go back</small>
                      </div>
                   </div>
                </div>
@@ -334,6 +335,58 @@
                      </div>
                   </div>
                </div>
+            </div>
+         </div>
+         <div id="child_showspecmodal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog ">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <div class="modal-title">
+                        {% trans %}Specification{% endtrans %}
+                     </div>
+                  </div>
+                  <div class="modal-body">
+                     <div class="panel shadow">
+                        <div class="panel-body">
+                           <div class="panel">
+                              <table id="child_showcategory_spec_table" class="table table-condensed table-bordered fixed-table">
+                                 <thead class="bg-primary input-sm">
+                                    <tr>
+                                       <th class="col-xs-8">{% trans %}Spec Name{% endtrans %}</th>
+                                       <th class="col-xs-3">{% trans %}Type{% endtrans %}</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <tr>
+                                       <td class="col-xs-8">
+                                          <input type="text" id="child_showcategory_spec_name" class="form-control input-sm" placeholder="Spec Name" disabled>
+                                       </td>
+                                       <td class="col-xs-4">
+                                          <select id="child_showcategory_spec_type" class="form-control input-sm" name="" disabled>
+                                             <option value="0">Text</option>
+                                             <option value="1">Number</option>
+                                             <option value="2">Date</option>
+                                             <option value="3">Option</option>
+                                          </select>
+                                       </td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="panel-footer">
+                     <div class="container-fluid">
+                        <button class="btn btn-success btn-sm" id="child_showdone" data-toggle="tooltip" data-placement="top" >{% trans %}Done{% endtrans %}</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="panel-footer">
+            <div class="container-fluid">
+               <button class="btn btn-success btn-sm" id="done" data-toggle="tooltip" data-placement="top" >{% trans %}Done{% endtrans %}</button>
             </div>
          </div>
       </div>

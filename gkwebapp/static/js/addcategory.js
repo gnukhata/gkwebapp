@@ -514,6 +514,7 @@ $(document).ready(function() {
     });
 
     $(document).off("keydown", "#child_category_table").on("keydown", "#child_category_table", function(event) {
+        //on Insert key press
         if (event.which == 45) {
             event.preventDefault();
             var curindex1 = $(this).closest('tr').index() + 1;
@@ -541,7 +542,8 @@ $(document).ready(function() {
                         $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
                             $("#success-alert").hide();
                         });
-
+                        $("#child_category_table tbody tr:last td:eq(1) button").attr('id', resp.gkresult);
+                        $("#child_category_table tbody tr:last td:eq(1) button").attr('data-target', "#child_showspecmodal");
                         // appending a new row for adding another spec to category
                         $('#child_category_spec_table tbody').html("");
                         for (spec of parentspecs) {
@@ -630,9 +632,14 @@ $(document).ready(function() {
         }
 
     });
+    $("#done").click(function(event) {
+      $("#addcategory").click();
+    });
     //when home key is pressed parent category selection is focused
     $(document).on('keypress', function(e) {
-        if ( e.which == 36)
-            $("#category_under").focus();
+        if(e.which == 36){
+          e.preventDefault();
+          $("#category_under").focus();
+        }
     });
 });
