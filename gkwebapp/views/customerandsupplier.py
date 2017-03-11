@@ -35,7 +35,6 @@ def showcustomersupplier(request):
 	return {"status":True}
 
 @view_config(route_name="customersuppliers",request_param="action=showadd",renderer="gkwebapp:templates/addcustomersupplier.jinja2")
-@view_config(route_name="customersuppliers",request_param="action=showaddpopup",renderer="gkwebapp:templates/createcustsuppopup.jinja2")
 def showaddcustomersupplier(request):
 	header={"gktoken":request.headers["gktoken"]}
 	customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
@@ -44,6 +43,16 @@ def showaddcustomersupplier(request):
 	debtgroupcode = groups.json()["gkresult"]["Sundry Debtors"]
 	credgroupcode = groups.json()["gkresult"]["Sundry Creditors for Purchase"]
 	return {"customers": customers.json()["gkresult"], "suppliers": suppliers.json()["gkresult"], "debtgroupcode":debtgroupcode, "credgroupcode":credgroupcode}
+
+@view_config(route_name="customersuppliers",request_param="action=showaddpopup",renderer="gkwebapp:templates/createcustsuppopup.jinja2")
+def showaddcustomersupplierpopup(request):
+	header={"gktoken":request.headers["gktoken"]}
+	customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
+	suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
+	groups = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist", headers=header)
+	debtgroupcode = groups.json()["gkresult"]["Sundry Debtors"]
+	credgroupcode = groups.json()["gkresult"]["Sundry Creditors for Purchase"]
+	return {"gkstatus" : request.params["status"], "customers": customers.json()["gkresult"], "suppliers": suppliers.json()["gkresult"], "debtgroupcode":debtgroupcode, "credgroupcode":credgroupcode}
 
 @view_config(route_name="customersuppliers",request_param="action=showedit",renderer="gkwebapp:templates/editcustomersupplier.jinja2")
 def showeditcustomersupplier(request):

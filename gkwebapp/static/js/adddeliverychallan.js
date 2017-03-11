@@ -280,7 +280,7 @@ $(document).ready(function() {
     var previndex = curindex-1;
     if (event.which==13) {
       event.preventDefault();
-      
+
       if ($('#deliverychallan_product_table tbody tr:eq('+curindex+') td:eq(0) select option:selected').val()=="") {
         $("#product-blank-alert").alert();
         $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -292,8 +292,8 @@ $(document).ready(function() {
       else {
         $('#deliverychallan_product_table tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
       }
-     
-  	
+
+
     }
     else if(event.which==190 && event.shiftKey)
     {
@@ -336,14 +336,14 @@ $(document).ready(function() {
     var previndex1 = curindex1-1;
     if (event.which==13) {
       event.preventDefault();
-      
+
       if ($('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(1) input').val()=="") {
-  	   
+
   	    	 $("#quantity-blank-alert").alert();
   	         $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
   	         $("#quantity-blank-alert").hide();
-  	       
-  	    
+
+
   	    });
 $('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(1) input').focus();
       return false;
@@ -352,8 +352,8 @@ else {
       $('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(1) input').focus().select();
     }
 
-     
-      
+
+
       if (curindex1 != ($("#deliverychallan_product_table tbody tr").length-1)) {
         $('#deliverychallan_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
       }
@@ -443,7 +443,7 @@ else {
       event.preventDefault();
       $("#deliverychallan_noofpackages").focus().select();
     }
-   
+
   });
 
 
@@ -457,11 +457,21 @@ else {
   });
 
   $("#deliverychallan_addcust").click(function() {
+       console.log($('#deliverychallan_gkstatus').val());
+        if ($("#deliverychallan_gkstatus").val()=='out') {
+          var custsup = "/customersuppliers?action=showaddpopup&status=out"
+         console.log("inside out mine");
+        }
+        if($("#deliverychallan_gkstatus").val()=='in'){
+          var custsup = "/customersuppliers?action=showaddpopup&status=in"
+          console.log("inside in mine");
+        }
+
      $.ajax(
      {
 
      type: "POST",
-     url: "/customersuppliers?action=showaddpopup",
+     url: custsup,
      global: false,
      async: false,
      datatype: "text/html",
@@ -479,7 +489,7 @@ else {
            $('#custsupmodal').modal('show');
            $('#custsupmodal').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
            {
-             $('#add_cussup').focus();
+             $('#add_cussup_name').focus();
            });
            $('#custsupmodal').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is opened
            {
