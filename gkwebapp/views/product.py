@@ -522,7 +522,9 @@ def showstockonhandreport(request):
 #		url="http://127.0.0.1:6543/report?godownwisestockonhand&type=pg&productcode=4&enddate=2017-03-31"
 		result = requests.get("http://127.0.0.1:6543/report?godownwisestockonhand&type=pg&goid=%d&productcode=%d&enddate=%s"%(goid, productcode, scalculateto),headers=header)
 	else:
+		
  #	   url="http://127.0.0.1:6543/report?stockonhandreport&productcode=4&enddate=2016-03-31"
 		result = requests.get("http://127.0.0.1:6543/report?stockonhandreport&productcode=%d&enddate=%s"%(productcode,scalculateto),headers=header)
-	return render_to_response("gkwebapp:templates/showstockreport.jinja2",{"gkresult":result.json()["gkresult"],"stockrefresh":stockrefresh,"godown":goname},request=request)
-   
+	print result.json()["gkresult"]
+	return render_to_response("gkwebapp:templates/showstockonhandreport.jinja2",{"gkresult":result.json()["gkresult"],"stockrefresh":stockrefresh,"godown":goname},request=request)
+	
