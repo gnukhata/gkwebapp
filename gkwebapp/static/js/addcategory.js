@@ -79,6 +79,8 @@ $(document).ready(function() {
 
         if (event.which == 32) {
             parentspecs = [];
+            taxes = [];
+            $("#category_tax_table tbody tr").not(":last").remove();
             event.preventDefault();
             $("#oldparentdiv").hide();
             $("#new_parent_div1").show();
@@ -416,6 +418,8 @@ $(document).ready(function() {
             })
             .done(function(resp) {
                 if (resp["gkstatus"] == 0) {
+                    taxes = [];
+                    $("#category_tax_table tbody tr").not(":last").remove();
                     $("#success-alert").alert();
                     $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
                         $("#success-alert").hide();
@@ -525,6 +529,8 @@ $(document).ready(function() {
                 })
                 .done(function(resp) {
                     if (resp["gkstatus"] == 0) {
+                        taxes = [];
+                        $("#category_tax_table tbody tr").not(":last").remove();
                         childspecs = [];
                         $("#success-alert").alert();
                         $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
