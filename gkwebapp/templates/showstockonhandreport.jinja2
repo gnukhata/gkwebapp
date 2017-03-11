@@ -7,6 +7,7 @@
   .shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
+  
   #latable td {
     font-size: 75%;
     padding: 4 !important;
@@ -41,7 +42,9 @@
   .rightlist {
     text-align: right;
   }
-
+.size{
+	width: 400px;
+}
   </style>
 </head>
 <body>
@@ -63,10 +66,34 @@
   <span style="margin:auto; display:table;"><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong><i>  {% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong></span>
   {% endif %}
 
-  <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
+	<div data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" ></div>
+  <table id="latable"  class="table shadow table-bordered size" data-toggle="table" >
+    
     <thead class="bg-primary">
+    
+    <tr>
+        <th class="col-xs-1" >
+          {% trans %}Product Name{% endtrans %}
+        </th>
+  
+        <th class="col-xs-1 rightlist" >
+          {% trans %}Balance{% endtrans %}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for record in gkresult %}
+    <td class="col-xs-1 " >
+          {{record["productname"]}}
+        </td>
+     <td class="col-xs-1 " >
+          {{record["balance"]}}
+        </td>
+        {% endfor %}
+
           </tbody>
   </table>
+  
   <span style="margin:auto; display:table;">
     <nbsp><nbsp>
       <button type="button" class="btn btn-sm btn-danger" id="viewanotherstock" accesskey="w">{% trans %}Vie<u>w</u> Another Stock{% endtrans %}</button>
