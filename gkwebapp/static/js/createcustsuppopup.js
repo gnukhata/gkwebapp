@@ -142,7 +142,6 @@ $(document).ready(function() {
           $("#cus-success-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#cus-success-alert").hide();
           });
-
         }
         else  {
           $("#cus-success-alert").alert();
@@ -152,6 +151,8 @@ $(document).ready(function() {
 
         }
       $("#selectedcustsup").val($('#add_cussup_name').val());
+      $("#deliverychallan_customeraddr").val($('#add_cussup_address').val());
+      $("#deliverychallan_supplieraddr").val($('#add_cussup_address').val());
       console.log($("#selectedcustsup").val());
       $('#custsupmodal').modal('hide');
       $('.modal-backdrop').remove();
