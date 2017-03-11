@@ -40,9 +40,10 @@ $(document).ready(function() {
 
 	// Setting default date to financialstart and end.
 	var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
-	$("#viewstock_fromdate").val(fromdatearray[2])
-	$("#viewstock_frommonth").val(fromdatearray[1])
-	$("#viewstock_fromyear").val(fromdatearray[0])
+	$("#viewstock_fromdate").val(fromdatearray[2]);
+	console.log(fromdatearray[2]);
+	$("#viewstock_frommonth").val(fromdatearray[1]);
+	$("#viewstock_fromyear").val(fromdatearray[0]);
 	var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g)
 	$("#viewstock_todate").val(todatearray[2])
 	$("#viewstock_tomonth").val(todatearray[1])

@@ -489,6 +489,7 @@ def stockreportspreadsheet(request):
 
 @view_config(route_name="product",request_param="type=viewstockonhandreport", renderer="gkwebapp:templates/viewstockonhandreport.jinja2")
 def viewStockOnHandReport(request):
+	print "View stock on hand report"
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/products",headers=header)
 	result1 = requests.get("http://127.0.0.1:6543/godown",headers=header)
@@ -506,6 +507,7 @@ def showstockonhandreport(request):
 	goname = request.params["goname"]
 	print goname
 	productcode = int(request.params["productcode"])
+	print productcode
 	calculateto = request.params["calculateto"]
 #	scalculatefrom = request.params["calculatefrom"]
 	scalculateto = request.params["calculateto"]
