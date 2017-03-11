@@ -6,12 +6,12 @@
 
   <div class="panel-body">
     <form id="editprodform">
-      <div class="container-fluid row nopadding">
+      <div class="container-fluid row nopadding" style="width: 48%;">
 
     <div class="form-group  col-sm-6">
 
 
-
+      <div class="form-group col-sm-11" style="margin-left: -6%; width: 212%;">
       <label for="prodselect">{% trans %}Select Product{% endtrans %} :</label>
         <select class = "form-control input-sm"  name = "productcode" id="prodselect" >
           <option value="" disabled selected hidden>{% trans %}Select Product{% endtrans %}</option>
@@ -19,7 +19,7 @@
           <option value="{{prod['productcode']}}">{{prod["productdesc"]}}</option>
           {% endfor %}
         </select>
-
+</div>
 
     </div>
   </div>

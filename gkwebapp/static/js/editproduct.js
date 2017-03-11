@@ -493,13 +493,18 @@ $(document).ready(function() {
       })
       .done(function(resp)
       {
-        $("#editspecifications").html("");
-        $("#editspecifications").html(resp);
-        $("#specshelp").hide();
-        if ($(".spec").length > 2) {
-          $("#editspecifications").addClass("specsdiv");
-        }
-        console.log("success");
+        $('#spec_table tbody tr').remove();
+         for (specname of resp["gkresult"]) {
+           $('#spec_table tbody').append('<tr>'+
+           '<td class="col-xs-2">'+
+           '<select id="spec_name" class="spec_name form-control input-sm" disabled >'+
+           '<option value="'+specname["spcode"]+'" selected>'+specname["attrname"]+'</option>'+
+           '</td>'+
+           '<td class="col-xs-2">'+
+           '<input class="form-control spec_obj input-sm "  placeholder="Numeric" type="text">'+
+           '</td>'+
+           '</tr>');
+         }
       })
       .fail(function() {
         console.log("error");
