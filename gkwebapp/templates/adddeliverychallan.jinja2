@@ -209,6 +209,13 @@
             {% endif %}
         </div>
       </div>
+      <div>
+     {% if gkstatus=='out' %}
+       <input type="hidden"  id="deliverychallan_gkstatus" value="out">
+     {%else%}
+       <input type="hidden" id="deliverychallan_gkstatus" value="in">
+     {% endif %}
+     </div>
       <div class="panel-footer">
         <div class="container-fluid">
 
