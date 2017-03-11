@@ -155,7 +155,7 @@ def show_unbilled_deliveries_report(request):
 	print "Inputdate: In gkwebapp"
 	print inputdate
 	gkdata = {"inputdate": inputdate}
-	result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled_for_entire_org", data = json.dumps(gkdata), headers=header)
+	result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled_for_entire_org&inout=o", data = json.dumps(gkdata), headers=header)
 	print "result : "
 	for row in result.json()["gkresult"]:
 		print row
@@ -177,5 +177,5 @@ def print_del_unbilled(request):
 	header={"gktoken":request.headers["gktoken"]}
 	inputdate = request.params["inputdate"];
 	gkdata = {"inputdate": inputdate}
-	result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled_for_entire_org", data = json.dumps(gkdata), headers=header)
+	result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled_for_entire_org&inout=o", data = json.dumps(gkdata), headers=header)
 	return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "inputdate":inputdate}
