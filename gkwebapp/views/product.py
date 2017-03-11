@@ -49,7 +49,7 @@ def addproducttab(request):
 	result2 = requests.get("http://127.0.0.1:6543/godown", headers=header)
 	return{"gkresult":{"category":result.json()["gkresult"],"uom":result1.json()["gkresult"]},"godown":result2.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
-@view_config(route_name="product",request_param="type=specs", renderer="gkwebapp:templates/addproductspecs.jinja2")
+@view_config(route_name="product",request_param="type=specs", renderer="json")
 def getcatspecs(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/categoryspecs?categorycode=%d"%(int(request.params["categorycode"])), headers=header)
@@ -132,9 +132,9 @@ def saveproduct(request):
 		elif prd == "newuom":
 			continue
 		else:
-			prdspecs[prd]= request.params[prd]
+			proddetails["specs"]= json.loads(request.params["specs"])
 
-	proddetails["specs"] = prdspecs
+
 	productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
 	result = requests.post("http://127.0.0.1:6543/products", data=json.dumps(productdetails),headers=header)
 	if result.json()["gkstatus"] == 0:

@@ -142,7 +142,7 @@ $(document).ready(function() {
 
   $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
     if (event.which == 13) {
-    $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+    $("#spec_table tbody tr:first td:eq(1) input").focus();
     }
     else if (event.which==32)
     {
@@ -353,26 +353,27 @@ $(document).ready(function() {
         type: 'POST',
         global: false,
         async: false,
-        datatype: 'text/html',
+        datatype: 'json',
         data: {"categorycode": catcode},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
         }
       })
-      .done(function(resp)
+      .done(function(resp)   /*This function will return spec name of the product*/
       {
-        $("#specifications").html("");
-        $("#specifications").html(resp);
-        $("#specshelp").hide();
-        if ($(".spec").length < 3) {
-          $("#specifications").removeClass("specsdiv");
-        }
-        else {
-          $("#specifications").addClass("specsdiv");
-        }
-        $("#product_tax_table tbody tr:first td:eq(0) select").focus();
-        console.log("success");
+          $('#spec_table tbody tr').remove();
+          for (specname of resp["gkresult"]) {
+            $('#spec_table tbody').append('<tr>'+
+            '<td class="col-xs-2">'+
+            '<select id="spec_name" class="spec_name form-control input-sm" disabled >'+
+            '<option value="'+specname["spcode"]+'" selected>'+specname["attrname"]+'</option>'+
+            '</td>'+
+            '<td class="col-xs-2">'+
+            '<input class="form-control spec_obj input-sm "  placeholder="Numeric" type="text">'+
+            '</td>'+
+            '</tr>');
+          }
       })
       .fail(function() {
         console.log("error");
@@ -584,7 +585,7 @@ $(document).ready(function() {
         '</select>'+
         '</td>'+
         '<td class="col-xs-3">'+
-        '<input class="form-control input-sm tax_rate text-right product_new_rate numtype"  placeholder="Rate">'+
+        '<input class="form-control input-sm tax_rate text-right product_new_rate 3pe"  placeholder="Rate">'+
         '</td>'+
         '<td class="col-xs-1">'+
         '<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
@@ -618,7 +619,7 @@ $(document).ready(function() {
     else if (event.which==27) {
       event.preventDefault();
       if ($(".spec").length > 0) {
-        $('#specifications').contents(".form-group:first").find("input:first").focus();
+        $('#godownflag').focus().select();
       }
       else {
         if ($("#godownpresence").val()==0) {
@@ -912,6 +913,18 @@ $("#addgodown").click(function() {
       });
         return false;
     }
+/*.....................*/
+var specs = {};      /*This is spec dictioary having spcode as a key and specval as its value*/
+$("#spec_table tbody tr").each(function(){
+  if ($.trim($("#spec_name",this).val())!=""){
+  if ($.trim($("#spec_name",this).val())!="" && $.trim($(".spec_obj",this).val())!="" ) {
+    specs[$("#spec_name",this).val()] = $(".spec_obj",this).val();
+  }
+}
+});
+
+/*.....................*/
+
     var taxes = [];
     $("#product_tax_table tbody tr").each(function(){
       var obj = {};
@@ -936,9 +949,12 @@ $("#addgodown").click(function() {
     var addformdata = $("#addprodform").serializeArray();
 
     addformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
+    addformdata.push({name: 'specs', value: JSON.stringify(specs)});
     if ($("#godownflag").val() == 1) {
       addformdata.push({name: 'godowns', value: JSON.stringify(gobj)});
+
     }
+    console.log(addformdata);
       $.ajax({
         url: '/product?type=save',
         type: 'POST',
