@@ -486,11 +486,35 @@ def stockreportspreadsheet(request):
 	return Response(rep, headerlist=headerList.items())
     
 
-@view_config(route_name="product",request_param="type=viewstockonhandreport", renderer="gkwebapp:templates/viewstockreport.jinja2")
+@view_config(route_name="product",request_param="type=viewstockonhandreport", renderer="gkwebapp:templates/viewstockonhandreport.jinja2")
 def viewstockreport(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/products",headers=header)
     result1 = requests.get("http://127.0.0.1:6543/godown",headers=header)
     return{"gkresult":result.json()["gkresult"], "godown":result1.json()["gkresult"], "gkstatus":result.json()["gkstatus"]}
     
-    
+
+@view_config(route_name="product",request_param="type=showstockonhandreport")
+def showstockonhandreport(request):
+    print "Yayy"
+    header={"gktoken":request.headers["gktoken"]}
+    godownflag = int(request.params["godownflag"])
+    goid = int(request.params["goid"])
+    goname = request.params["goname"]
+    productcode = int(request.params["productcode"])
+    calculateto = request.params["calculateto"]
+#    scalculatefrom = request.params["calculatefrom"]
+    scalculateto = request.params["calculateto"]
+    productdesc = request.params["productdesc"]
+    if int(request.params["backflag"]) > 0:
+ #       scalculatefrom = datetime.strptime(calculatefrom, '%d-%m-%Y').strftime('%Y-%m-%d')
+        scalculateto = datetime.strptime(calculateto, '%d-%m-%Y').strftime('%Y-%m-%d')
+        stockrefresh = {"productcode":productcode,"calculateto":calculateto,"productdesc":productdesc,"godownflag":godownflag,"goid":goid }
+    else:
+        stockrefresh = {"productcode":productcode,"calculateto":datetime.strptime(calculateto, '%Y-%m-%d').strftime('%d-%m-%Y'),"productdesc":productdesc,"godownflag":godownflag,"goid":goid}
+    if godownflag>0:
+        result = requests.get("http://127.0.0.1:6543/report?type=godownstockreport&goid=%d&productcode=%d&enddate=%s"%(goid, productcode, scalculateto),headers=header)
+    else:
+        result = requests.get("http://127.0.0.1:6543/report?type=stockreport&productcode=%d&enddate=%s"%(productcode,scalculateto),headers=header)
+    return render_to_response("gkwebapp:templates/showstockreport.jinja2",{"gkresult":result.json()["gkresult"],"stockrefresh":stockrefresh,"godown":goname},request=request)
+   

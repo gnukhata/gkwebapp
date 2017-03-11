@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}stock{% endtrans %}</title>
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}stock on hand report{% endtrans %}</title>
   <style media="screen">
   .shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -16,7 +16,7 @@
   <div style="padding-top:5px" class="container-fluid mainbox col-md-6 col-md-offset-3">
     <div class="panel shadow">
       <div class="panel-heading">
-        <h3 class="panel-title">{% trans %}View Product{% endtrans %}</h3>
+        <h3 class="panel-title">{% trans %}Select Product{% endtrans %}</h3>
       </div>
       <div class="panel-body" style="padding-top:5px">
         <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
@@ -48,21 +48,8 @@
           </select>
 
           <div class="col-xs-12" style="margin-top: 10px;">
-            <div class="col-xs-6">
-              <label for="viewstock_fromdate">{% trans %}From Date{% endtrans %} :</label>
-              <div class="form-inline" >
-
-                <div class="form-group">
-
-                  <input type="text" class="viewstock_date form-control input-sm dis" id="viewstock_fromdate" value="" size="2" maxlength="2" placeholder="DD" accesskey="d" >
-                  <input type="text" id="viewstock_frommonth" class="viewstock_date dis form-control input-sm" value="" size="2" maxlength="2" placeholder="MM" >
-                  <input type="text" id="viewstock_fromyear" class="viewstock_date dis form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY" >
-                </div>
-
-              </div>
-            </div>
-            <div class="col-xs-6">
-              <label for="viewstock_todate">{% trans %}To Date{% endtrans %} :</label>
+              <div class="col-xs-6">
+              <label for="viewstock_todate">{% trans %}As on{% endtrans %} :</label>
               <div class="form-inline" >
 
                 <div class="form-group">
