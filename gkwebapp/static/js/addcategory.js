@@ -19,9 +19,8 @@ Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
 
 
 Contributors:
-"Krishnakant Mane" <kk@gmail.com>
-"Ishan Masdekar " <imasdekar@dff.org.in>
-"Navin Karkera" <navin@dff.org.in>
+"Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+"Rohini Baraskar"
 */
 // This script is for the add category page
 $(document).ready(function() {
@@ -44,6 +43,12 @@ $(document).ready(function() {
         if (event.which == 13) {
             event.preventDefault();
             $("#parent_spec").focus();
+        }
+        else if(event.which == 27){
+          event.preventDefault();
+          $("#new_parent_div1").hide();
+          $("#oldparentdiv").show();
+          $("#category_under").focus();
         }
     });
 
@@ -70,10 +75,11 @@ $(document).ready(function() {
         $('#parent_category_spec_name').focus();
     });
     $("#category_under").keydown(function(event) {
-        $("#spectbl").show();
-        if (event.which == 13) {
-            event.preventDefault();
-            $("#child_category_name").focus();
+        if (event.which == 13 && categorycode != "") {
+          event.preventDefault();
+          $("#spectbl").show();
+          $(".childcat").show();
+          $("#child_category_name").focus();
 
         }
 
@@ -125,7 +131,6 @@ $(document).ready(function() {
         */
 
         categorycode = $("#category_under option:selected").val();
-        console.log("changed"+categorycode)
         if(categorycode != ""){
           $("#spectbl").show();
           $("#parent_heading").text($("#category_under option[value=" + categorycode + "]").text());
@@ -624,5 +629,10 @@ $(document).ready(function() {
 
         }
 
+    });
+    //when home key is pressed parent category selection is focused
+    $(document).on('keypress', function(e) {
+        if ( e.which == 36)
+            $("#category_under").focus();
     });
 });

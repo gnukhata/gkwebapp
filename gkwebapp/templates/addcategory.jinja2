@@ -57,7 +57,7 @@
                            <option value="{{categories['categorycode']}}" data-categoryname="{{categories["categoryname"]}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
                            {% endfor %}
                         </select>
-                        <small id="txtareahelp" class="form-text text-muted">{% trans %}Press space to add new Parent Category.{% endtrans %}</small>
+                        <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'SpaceBar' to add new Parent Category.{% endtrans %}</small>
                      </div>
                   </div>
                   <div>
@@ -120,6 +120,8 @@
                      </tbody>
                   </table>
                </div>
+               <small id="txtareahelp" class="form-text text-muted">Press 'Insert key' to save Child Category.</small><br>
+               <small id="navigation" class="form-text text-muted">Press 'Home' to select Parent Category </small><br>
                <small id="navigation" class="form-text text-muted">Press 'Tab' and 'Shift + Tab' to navigate through fields</small>
             </div>
          </div>
@@ -332,12 +334,6 @@
                      </div>
                   </div>
                </div>
-            </div>
-         </div>
-         <div class="panel-footer">
-            <div class="container-fluid">
-               <button class="btn btn-success btn-sm" id="category_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert key anywhere on the current screen to save{% endtrans %}">{% trans %}Save{% endtrans %}</button>
-               <button class="btn btn-warning btn-sm" id="category_reset">{% trans %}Reset{% endtrans %}</button>
             </div>
          </div>
       </div>
