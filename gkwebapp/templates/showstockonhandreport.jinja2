@@ -44,6 +44,7 @@
   }
 .size{
 	width: 400px;
+	height: 20px;
 }
   </style>
 </head>
@@ -66,33 +67,47 @@
   <span style="margin:auto; display:table;"><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong><i>  {% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong></span>
   {% endif %}
 
-	<div data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" ></div>
-  <table id="latable"  class="table shadow table-bordered size" data-toggle="table" >
+	<div class="row">
+    <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="lclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>	
+ <div class="row">
+  <table id="latable"  class="table shadow table-bordered size" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
     
     <thead class="bg-primary">
-    
+  
     <tr>
+     <th class="col-xs-1" >
+            {% trans %}Sr. No.{% endtrans %}
+          </th>
+
         <th class="col-xs-1" >
           {% trans %}Product Name{% endtrans %}
         </th>
-  
+         
         <th class="col-xs-1 rightlist" >
           {% trans %}Balance{% endtrans %}
         </th>
       </tr>
     </thead>
     <tbody>
+    
     {% for record in gkresult %}
+     <td class="col-xs-1 " >
+          {{record["srno"]}}
+        </td>
     <td class="col-xs-1 " >
           {{record["productname"]}}
         </td>
      <td class="col-xs-1 " >
           {{record["balance"]}}
         </td>
+        
         {% endfor %}
 
-          </tbody>
+          </tbody> 
+          
   </table>
+  </div>
+  </div>
   
   <span style="margin:auto; display:table;">
     <nbsp><nbsp>
