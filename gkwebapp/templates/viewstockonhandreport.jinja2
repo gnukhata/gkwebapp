@@ -38,6 +38,11 @@
 
           <label>{% trans %}Please select a Godown!{% endtrans %}</label>
         </div>
+        <div class="alert alert-danger" id="godprod-all-alert" aria-live="rude" role="alert" hidden>
+
+          <label>{% trans %}Please select a Product or A Godown!{% endtrans %}</label>
+        </div>
+
         <div style="margin-bottom: 5px" class="col-xs-12 from-group">
           <label for="viewstock_productname" style="margin-top: 10px;">{% trans %}Product{% endtrans %} :</label>
           <select class = "form-control input-sm" id="viewstock_productname"  name = "productname" >
@@ -45,7 +50,7 @@
             {% for product in gkresult %}
             <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
             {% endfor %}
-            <option value="" >{% trans %}All Products{% endtrans %}</option>
+            <option value="allprod" >{% trans %}All Products{% endtrans %}</option>
           </select>
 
           <div class="col-xs-12" style="margin-top: 10px;">
@@ -74,11 +79,12 @@
           <div class="form-group" id="goselect" hidden>
             <label for="editgoddet">{% trans %}Godown{% endtrans %} :</label>
             <select class = "form-control input-sm" id="editgoddet">
-              <option value="" disabled selected hidden>{% trans %}Select Godown{% endtrans %}</option>
+              <option value="disabled=""" disabled selected hidden>{% trans %}Select Godown{% endtrans %}</option>
               {% for gods in godown %}
               <option value="{{gods['goid']}}">{{gods["goname"]}}</option>
-              <option value="" >{% trans %}All godowns{% endtrans %}</option>
+             
               {% endfor %}
+               <option value="allgod" >{% trans %}All godowns{% endtrans %}</option>
             </select>
           </div>
           {% endif %}
