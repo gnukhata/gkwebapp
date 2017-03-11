@@ -499,8 +499,11 @@ def showstockonhandreport(request):
     print "Yayy"
     header={"gktoken":request.headers["gktoken"]}
     godownflag = int(request.params["godownflag"])
+    print godownflag
     goid = int(request.params["goid"])
+    print goid
     goname = request.params["goname"]
+    print goname
     productcode = int(request.params["productcode"])
     calculateto = request.params["calculateto"]
 #    scalculatefrom = request.params["calculatefrom"]
@@ -513,7 +516,8 @@ def showstockonhandreport(request):
     else:
         stockrefresh = {"productcode":productcode,"calculateto":datetime.strptime(calculateto, '%Y-%m-%d').strftime('%d-%m-%Y'),"productdesc":productdesc,"godownflag":godownflag,"goid":goid}
     if godownflag>0:
-        result = requests.get("http://127.0.0.1:6543/report?type=godownstockreport&goid=%d&productcode=%d&enddate=%s"%(goid, productcode, scalculateto),headers=header)
+#        url="http://127.0.0.1:6543/report?godownwisestockonhand&type=pg&productcode=4&enddate=2017-03-31"
+        result = requests.get("http://127.0.0.1:6543/report?godownwisestockonhand&type=pg&goid=%d&productcode=%d&enddate=%s"%(goid, productcode, scalculateto),headers=header)
     else:
         result = requests.get("http://127.0.0.1:6543/report?type=stockreport&productcode=%d&enddate=%s"%(productcode,scalculateto),headers=header)
     return render_to_response("gkwebapp:templates/showstockreport.jinja2",{"gkresult":result.json()["gkresult"],"stockrefresh":stockrefresh,"godown":goname},request=request)
