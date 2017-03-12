@@ -58,12 +58,12 @@
                            <option value="{{categories['categorycode']}}" data-categoryname="{{categories["categoryname"]}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
                            {% endfor %}
                         </select>
-                        <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'SpaceBar' to add new Category.{% endtrans %}</small>
+                        <div>
+                          <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'SpaceBar' to add new Category.{% endtrans %}</small>
+                        </div>
                      </div>
                   </div>
-                  {% else %}
-                  <div>
-                     <div class="panel-body form-group row" id="new_parent_div1">
+                     <div id="new_parent_div1" hidden>
                         <label for="category_name">{% trans %}New Category:{% endtrans %}</label>
                         <table id="new_parent_category_table" class="table-condensed ">
                            <tbody>
@@ -85,15 +85,36 @@
                         </table>
                         <small id="backhelp" class="form-text text-muted">Press 'Esc' key to go back</small>
                      </div>
-                  </div>
-                  {% endif %}
+                     {% else %}
+                     <div id="new_parent_div1" >
+                        <label for="category_name">{% trans %}New Category:{% endtrans %}</label>
+                        <table id="new_parent_category_table" class="table-condensed ">
+                           <tbody>
+                              <tr>
+                                 <td class="col-xs-8">
+                                    <input type="text" id="new_parent_name" class="form-control input-sm" placeholder="New Category Name">
+                                 </td>
+                                 <td class="col-xs-3">
+                                    <button class="btn form-control btn-primary btn-sm" id="parent_spec" data-toggle="modal" data-target="#parent_addspecmodal" >{% trans %}Specs{% endtrans %}</button>
+                                 </td>
+                                 <td class="col-xs-3">
+                                    <button class="btn form-control btn-primary btn-sm" id="parent_tax" data-toggle="modal" data-target="#addtaxmodal"  >{% trans %}Tax{% endtrans %}</button>
+                                 </td>
+                                 <td class="col-xs-3">
+                                    <button class="btn form-control btn-primary btn-sm" id="parent_save"  >{% trans %}Save{% endtrans %}</button>
+                                  </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <small id="backhelp" class="form-text text-muted">Press 'Esc' key to go back</small>
+                     </div>
+                     {% endif %}
                </div>
-               <div class="form-group row childcat" hidden>
-                  <label for="category_name">{% trans %}Sub Category:{% endtrans %}</label>
-               </div>
-
             </div>
             <div class="row form-group childcat" hidden>
+              <div class="form-group">
+                 <label for="category_name">{% trans %}Sub Category:{% endtrans %}</label>
+              </div>
                <div class="panel">
                   <table id="child_category_table" class="table table-condensed table-bordered fixed-table">
                      <thead class="bg-primary input-sm">
@@ -136,22 +157,17 @@
                      </div>
                   </div>
                   <div class="modal-body">
-                     <div class="panel shadow">
                         <div class="panel-body">
                            <div class="row">
-                              <div class="form-group col-md-6">
                                  <div class="alert alert-danger" id="child_spec-blank-alert"  aria-live="rude" role="alert" hidden>
                                     <label for="vno">{% trans %}Please enter specification name!{% endtrans %}</label>
                                  </div>
-                              </div>
                            </div>
-                           <div class="panel">
                               <table id="child_category_spec_table" class="table table-condensed table-bordered fixed-table">
                                  <thead class="bg-primary input-sm">
                                     <tr>
                                        <th class="col-xs-8">{% trans %}Spec Name{% endtrans %}</th>
-                                       <th class="col-xs-3">{% trans %}Type{% endtrans %}</th>
-                                       <th class="col-xs-1"></th>
+                                       <th class="col-xs-4">{% trans %}Type{% endtrans %}</th>
                                     </tr>
                                  </thead>
                                  <tbody>
@@ -159,7 +175,7 @@
                                        <td class="col-xs-8">
                                           <input type="text" id="child_category_spec_name" class="form-control input-sm child_spec_name" placeholder="Spec Name">
                                        </td>
-                                       <td class="col-xs-3">
+                                       <td class="col-xs-4">
                                           <select id="child_category_spec_type" class="form-control input-sm child_spec_type" name="">
                                              <option value="0">Text</option>
                                              <option value="1">Number</option>
@@ -167,18 +183,13 @@
                                              <option value="3">Option</option>
                                           </select>
                                        </td>
-                                       <td class="col-xs-1">
-                                          <a href="#" class="child_spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-                                       </td>
                                     </tr>
                                  </tbody>
                               </table>
                               <div>
                                 <small id="donehelp" class="form-text text-muted">Press 'Esc' key Whenever you are done</small>
                               </div>
-                           </div>
                         </div>
-                     </div>
                   </div>
                   <div class="panel-footer">
                      <div class="container-fluid">
@@ -197,22 +208,17 @@
                      </div>
                   </div>
                   <div class="modal-body">
-                     <div class="panel shadow">
                         <div class="panel-body">
                            <div class="row">
-                              <div class="form-group col-md-6">
                                  <div class="alert alert-danger" id="parent_spec-blank-alert"  aria-live="rude" role="alert" hidden>
                                     <label for="vno">{% trans %}Please enter specification name!{% endtrans %}</label>
                                  </div>
-                              </div>
                            </div>
-                           <div class="panel">
                               <table id="parent_category_spec_table" class="table table-condensed table-bordered fixed-table">
                                  <thead class="bg-primary input-sm">
                                     <tr>
                                        <th class="col-xs-8">{% trans %}Spec Name{% endtrans %}</th>
-                                       <th class="col-xs-3">{% trans %}Type{% endtrans %}</th>
-                                       <th class="col-xs-1"></th>
+                                       <th class="col-xs-4">{% trans %}Type{% endtrans %}</th>
                                     </tr>
                                  </thead>
                                  <tbody>
@@ -220,7 +226,7 @@
                                        <td class="col-xs-8">
                                           <input type="text" id="parent_category_spec_name" class="form-control input-sm parent_spec_name" placeholder="Spec Name">
                                        </td>
-                                       <td class="col-xs-3">
+                                       <td class="col-xs-4">
                                           <select id="parent_category_spec_type" class="form-control input-sm parent_spec_type" name="">
                                              <option value="0">Text</option>
                                              <option value="1">Number</option>
@@ -228,18 +234,13 @@
                                              <option value="3">Option</option>
                                           </select>
                                        </td>
-                                       <td class="col-xs-1">
-                                          <a href="#" class="parent_spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-                                       </td>
                                     </tr>
                                  </tbody>
                               </table>
-                           </div>
+                              <div>
+                                <small id="donehelp1" class="form-text text-muted">Press 'Esc' key Whenever you are done</small>
+                              </div>
                         </div>
-                     </div>
-                  </div>
-                  <div>
-                    <small id="donehelp1" class="form-text text-muted">Press 'Esc' key Whenever you are done</small>
                   </div>
                   <div class="panel-footer">
                      <div class="container-fluid">
@@ -258,7 +259,6 @@
                      </div>
                   </div>
                   <div class="modal-body">
-                     <div class="panel shadow">
                         <div class="alert alert-danger" id="tax-name-blank-alert"  aria-live="rude" role="alert" hidden>
                            {% trans %}Select tax name!{% endtrans %}
                         </div>
@@ -269,15 +269,12 @@
                            {% trans %}Duplicate Tax!{% endtrans %}
                         </div>
                         <div class="panel-body">
-                           <div class="panel">
                               <table id="category_tax_table" class="table table-condensed table-bordered fixed-table">
                                  <thead class="bg-primary input-sm">
                                     <tr>
                                        <th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
                                        <th class="col-xs-4 text-center">{% trans %}State{% endtrans %}</th>
-                                       <th class="col-xs-3 text-center">{% trans %}Rate%{% endtrans %}</th>
-                                       <th class="col-xs-1 text-center"></th>
-                                    </tr>
+                                       <th class="col-xs-4 text-center">{% trans %}Rate%{% endtrans %}</th>                                    </tr>
                                  </thead>
                                  <tbody>
                                     <tr>
@@ -329,21 +326,18 @@
                                              <option value="West Bengal" stateid="41">West Bengal</option>
                                           </select>
                                        </td>
-                                       <td class="col-xs-3">
+                                       <td class="col-xs-4">
                                           <input class="form-control input-sm tax_rate text-right"  placeholder="Rate">
-                                       </td>
-                                       <td class="col-xs-1">
                                        </td>
                                     </tr>
                                  </tbody>
                               </table>
+                              <div>
+                                <small id="donehelp" class="form-text text-muted">Press 'Esc' key Whenever you are done</small>
+                              </div>
                            </div>
-                        </div>
-                     </div>
                   </div>
-                  <div>
-                    <small id="donehelp" class="form-text text-muted">Press 'Esc' key Whenever you are done</small>
-                  </div>
+
                </div>
             </div>
          </div>
@@ -356,14 +350,12 @@
                      </div>
                   </div>
                   <div class="modal-body">
-                     <div class="panel shadow">
                         <div class="panel-body">
-                           <div class="panel">
                               <table id="child_showcategory_spec_table" class="table table-condensed table-bordered fixed-table">
                                  <thead class="bg-primary input-sm">
                                     <tr>
                                        <th class="col-xs-8">{% trans %}Spec Name{% endtrans %}</th>
-                                       <th class="col-xs-3">{% trans %}Type{% endtrans %}</th>
+                                       <th class="col-xs-4">{% trans %}Type{% endtrans %}</th>
                                     </tr>
                                  </thead>
                                  <tbody>
@@ -382,12 +374,10 @@
                                     </tr>
                                  </tbody>
                               </table>
-                           </div>
+                              <div>
+                                <small id="donehelp" class="form-text text-muted">Press 'Esc' key Whenever you are done</small>
+                              </div>
                         </div>
-                     </div>
-                  </div>
-                  <div>
-                    <small id="donehelp" class="form-text text-muted">Press 'Esc' key Whenever you are done</small>
                   </div>
                   <div class="panel-footer">
                      <div class="container-fluid">
@@ -404,7 +394,7 @@
          </div>
       </div>
       <div>
-         <div style="padding-top:5px" class="col-md-6 shadow " id="spectbl" >
+         <div style="padding-top:5px" class="col-md-6 shadow " id="spectbl" hidden>
             <table class="table table-condensed fixed-table ">
                <thead class="table-fixedheader " style="font-size: 75%;">
                   <tr>

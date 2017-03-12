@@ -25,7 +25,6 @@ Contributors:
 // This script is for the add category page
 $(document).ready(function() {
     $('.modal-backdrop').remove();
-    $("#spectbl").hide();
     //when home key is pressed parent category selection is focused
     //when alt +shift+ D pressed Done is clicked
     $(document).keydown(function(event) {
@@ -89,7 +88,7 @@ $(document).ready(function() {
           $("#child_category_name").focus();
 
         }
-
+        //when spacebar is pressed
         if (event.which == 32) {
             parentspecs = [];
             taxes = [];
@@ -105,16 +104,13 @@ $(document).ready(function() {
                 '<td class="col-xs-8">' +
                 '<input type="text" id="parent_category_spec_name" class="form-control input-sm parent_spec_name" placeholder="Spec Name">' +
                 '</td>' +
-                '<td class="col-xs-3">' +
+                '<td class="col-xs-4">' +
                 '<select id="parent_category_spec_type" class="form-control input-sm parent_spec_type" name="">' +
                 '<option value="0">Text</option>' +
                 '<option value="1">Number</option>' +
                 '<option value="2">Date</option>' +
                 '<option value="3">Option</option>' +
                 '</select>' +
-                '</td>' +
-                '<td class="col-xs-1">' +
-                '<a href="#" class="parent_spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
                 '</td>' +
                 '</tr>');
             $("#new_parent_name").focus();
@@ -180,12 +176,9 @@ $(document).ready(function() {
                           '<td class="col-xs-8">' +
                           '<input type="text" class="form-control input-sm spec_name" value="' + spec["attrname"] + '" placeholder="Spec Name">' +
                           '</td>' +
-                          '<td class="col-xs-3">' +
+                          '<td class="col-xs-4">' +
                           '<select id="child_category_spec_type" class="form-control input-sm spec_type">' + trs +
                           '</select>' +
-                          '</td>' +
-                          '<td class="col-xs-1">' +
-                          '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
                           '</td>' +
                           '</tr>');
 
@@ -200,16 +193,13 @@ $(document).ready(function() {
                       '<td class="col-xs-8">' +
                       '<input type="text" class="form-control input-sm spec_name" value="" placeholder="Spec Name">' +
                       '</td>' +
-                      '<td class="col-xs-3">' +
+                      '<td class="col-xs-4">' +
                       '<select id="child_category_spec_type" class="form-control input-sm spec_type">' +
                       '<option value="0">Text</option>' +
                       '<option value="1">Number</option>' +
                       '<option value="2">Date</option>' +
                       '<option value="3">Option</option>' +
                       '</select>' +
-                      '</td>' +
-                      '<td class="col-xs-1">' +
-                      '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
                       '</td>' +
                       '</tr>');
 
@@ -258,16 +248,13 @@ $(document).ready(function() {
                     '<td class="col-xs-8">' +
                     '<input type="text" id="child_category_spec_name" class="form-control input-sm spec_name" placeholder="Spec Name">' +
                     '</td>' +
-                    '<td class="col-xs-3">' +
+                    '<td class="col-xs-4">' +
                     '<select id="child_category_spec_type" class="form-control input-sm spec_type">' +
                     '<option value="0">Text</option>' +
                     '<option value="1">Number</option>' +
                     '<option value="2">Date</option>' +
                     '<option value="3">Option</option>' +
                     '</select>' +
-                    '</td>' +
-                    '<td class="col-xs-1">' +
-                    '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
                     '</td>' +
                     '</tr>');
                 $('#child_category_spec_table tbody tr:last td:eq(0) input').focus().select();
@@ -306,16 +293,13 @@ $(document).ready(function() {
                     '<td class="col-xs-8">' +
                     '<input type="text" id="parent_category_spec_name" class="form-control input-sm spec_name" placeholder="Spec Name">' +
                     '</td>' +
-                    '<td class="col-xs-3">' +
+                    '<td class="col-xs-4">' +
                     '<select id="parent_category_spec_type" class="form-control input-sm spec_type">' +
                     '<option value="0">Text</option>' +
                     '<option value="1">Number</option>' +
                     '<option value="2">Date</option>' +
                     '<option value="3">Option</option>' +
                     '</select>' +
-                    '</td>' +
-                    '<td class="col-xs-1">' +
-                    '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
                     '</td>' +
                     '</tr>');
                 $('#parent_category_spec_table tbody tr:eq(' + nextindex1 + ') td:eq(0) input').focus().select();
@@ -373,11 +357,8 @@ $(document).ready(function() {
                     '<option value="">None</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>' +
                     '</select>' +
                     '</td>' +
-                    '<td class="col-xs-3">' +
+                    '<td class="col-xs-4">' +
                     '<input class="form-control input-sm tax_rate text-right"  placeholder="Rate">' +
-                    '</td>' +
-                    '<td class="col-xs-1">' +
-                    '<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
                     '</td>' +
                     '</tr>');
                 $(".tax_rate").numeric();
@@ -465,12 +446,9 @@ $(document).ready(function() {
                                 '<td class="col-xs-8">' +
                                 '<input type="text" class="form-control input-sm spec_name" value="' + spec["attrname"] + '" placeholder="Spec Name">' +
                                 '</td>' +
-                                '<td class="col-xs-3">' +
+                                '<td class="col-xs-4">' +
                                 '<select id="child_category_spec_type" class="form-control input-sm spec_type">' + trs +
                                 '</select>' +
-                                '</td>' +
-                                '<td class="col-xs-1">' +
-                                '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
                                 '</td>' +
                                 '</tr>');
                               }
@@ -479,16 +457,13 @@ $(document).ready(function() {
                                   '<td class="col-xs-8">' +
                                   '<input type="text" class="form-control input-sm spec_name" value="" placeholder="Spec Name">' +
                                   '</td>' +
-                                  '<td class="col-xs-3">' +
+                                  '<td class="col-xs-4">' +
                                   '<select id="child_category_spec_type" class="form-control input-sm spec_type">' +
                                   '<option value="0">Text</option>' +
                                   '<option value="1">Number</option>' +
                                   '<option value="2">Date</option>' +
                                   '<option value="3">Option</option>' +
                                   '</select>' +
-                                  '</td>' +
-                                  '<td class="col-xs-1">' +
-                                  '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
                                   '</td>' +
                                   '</tr>');
 
@@ -573,12 +548,9 @@ $(document).ready(function() {
                                 '<td class="col-xs-8">' +
                                 '<input type="text" class="form-control input-sm spec_name" value="' + spec["attrname"] + '" placeholder="Spec Name">' +
                                 '</td>' +
-                                '<td class="col-xs-3">' +
+                                '<td class="col-xs-4">' +
                                 '<select id="child_category_spec_type" class="form-control input-sm spec_type">' + trs +
                                 '</select>' +
-                                '</td>' +
-                                '<td class="col-xs-1">' +
-                                '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
                                 '</td>' +
                                 '</tr>');
                         }
@@ -586,7 +558,7 @@ $(document).ready(function() {
                             '<td class="col-xs-8">' +
                             '<input type="text" id="child_category_spec_name" class="form-control input-sm child_spec_name" placeholder="Spec Name">' +
                             '</td>' +
-                            '<td class="col-xs-3">' +
+                            '<td class="col-xs-4">' +
                             '<select id="child_category_spec_type" class="form-control input-sm child_spec_type" name="">' +
                             '<option value="0">Text</option>' +
                             '<option value="1">Number</option>' +
@@ -594,13 +566,10 @@ $(document).ready(function() {
                             '<option value="3">Option</option>' +
                             '</select>' +
                             '</td>' +
-                            '<td class="col-xs-1">' +
-                            '<a href="#" class="child_spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
-                            '</td>' +
                             '</tr>');
 
                         $('#child_category_table tbody').append('<tr>' +
-                            '<td class="col-xs-8">' +
+                            '<td class="col-xs-6">' +
                             '<input type="text" id="child_category_name" class="form-control input-sm mchild_spec_name" placeholder="Sub Category Name">' +
                             '</td>' +
                             '<td class="col-xs-3">' +
@@ -609,9 +578,6 @@ $(document).ready(function() {
                             '</td>' +
                             '<td class="col-xs-3">' +
                             '<button class="btn form-control btn-primary btn-sm child_tax_class" id="child_tax" data-toggle="modal" data-target="#addtaxmodal"   >Tax</button>' +
-                            '</td>' +
-                            '<td class="col-xs-1">' +
-                            '<a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
                             '</td>' +
                             '</tr>');
                         $('#child_category_table tbody tr:last td:eq(0) input').focus();
