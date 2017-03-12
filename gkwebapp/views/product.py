@@ -501,37 +501,44 @@ def showstockonhandreport(request):
 	print "Yayy"
 	header={"gktoken":request.headers["gktoken"]}
 	godownflag = int(request.params["godownflag"])
-	print godownflag
+	print "godown flag ",godownflag
 	goid = int(request.params["goid"])
-	print goid
+	print "goid", goid
 	goname = request.params["goname"]
-	print goname
+	print "goname",goname
 	productcode = int(request.params["productcode"])
-	print productcode
+	print "product code ",productcode
 	calculateto = request.params["calculateto"]
-	print calculateto
+	print "claculateto",calculateto
 #	scalculatefrom = request.params["calculatefrom"]
 	scalculateto = request.params["calculateto"]
-	print scalculateto
+	print"backflag", request.params["backflag"] 
 	
 	productdesc = request.params["productdesc"]
-	if int(request.params["backflag"]) == 1:
-		
+	if int(request.params["backflag"]) == 1 :
+		scalculateto = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%Y-%m-%d')
 		stockrefresh = {"productcode":productcode,"calculateto":calculateto,"productdesc":"all","godownflag":godownflag,"goid":goid }
 		result = requests.get("http://127.0.0.1:6543/report?stockonhandreport&productcode=all&enddate=%s"%(scalculateto),headers=header)
 		
-	elif int(request.params["backflag"]) == 0:
+	
+	if int(request.params["backflag"]) == 0:
+		scalculateto = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%Y-%m-%d')
 		stockrefresh = {"productcode":productcode,"calculateto":calculateto,"productdesc":productdesc,"godownflag":godownflag,"goid":goid}
 		result = requests.get("http://127.0.0.1:6543/report?stockonhandreport&productcode=%d&enddate=%s"%(productcode,scalculateto),headers=header)
 		
-	if godownflag>0 & goid != 0:
+	if godownflag == 1 and int(request.params["backflag"]) == 3 :
+		print "single prod single godown"
+		scalculateto = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%Y-%m-%d')
 		stockrefresh = {"productcode":productcode,"calculateto":calculateto,"productdesc":productdesc,"godownflag":godownflag,"goid":goid}
 #		url="http://127.0.0.1:6543/report?godownwisestockonhand&type=pg&productcode=4&enddate=2017-03-31"
 		result = requests.get("http://127.0.0.1:6543/report?godownwisestockonhand&type=pg&goid=%d&productcode=%d&enddate=%s"%(goid, productcode, scalculateto),headers=header)
 		
-	else:
+	if godownflag == 1 and int(request.params["backflag"]) == 2 and goid == 0:
+		print "single product all godowns"
+		scalculateto = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%Y-%m-%d')
 		stockrefresh = {"productcode":productcode,"calculateto":calculateto,"productdesc":productdesc,"godownflag":godownflag,"goid":goid}
-		result = requests.get("http://127.0.0.1:6543/report?godownwisestockonhand&type=pag&productcode=%d&enddate=%s"%(goid, productcode, scalculateto),headers=header)		
+		result = requests.get("http://127.0.0.1:6543/report?godownwisestockonhand&type=pag&productcode=%d&enddate=%s"%(productcode, scalculateto),headers=header)		
+	
 	print result.json()["gkresult"]
 	return render_to_response("gkwebapp:templates/showstockonhandreport.jinja2",{"gkresult":result.json()["gkresult"],"stockrefresh":stockrefresh,"godown":goname},request=request)
 	

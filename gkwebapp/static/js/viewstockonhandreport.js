@@ -248,7 +248,7 @@ $(document).ready(function() {
 		var dataset = {}
 		if ($("#godownflag").val()==0) {
 			if ($("#viewstock_productname").val()=="allprod"){
-			dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": 0,"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":1,"godownflag":$("#godownflag").val(),"goid":-1,"goname":""}
+			dataset = {"productcode":0, "productdesc": 0,"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":1,"godownflag":$("#godownflag").val(),"goid":-1,"goname":""}
 		}
 			else {
 				dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":0,"godownflag":$("#godownflag").val(),"goid":-1,"goname":""}

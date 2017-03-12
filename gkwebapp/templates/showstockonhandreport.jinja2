@@ -78,7 +78,7 @@
      <th class="col-xs-1" >
             {% trans %}Sr. No.{% endtrans %}
           </th>
-
+		{% if godown == "" %}
         <th class="col-xs-1" >
           {% trans %}Product Name{% endtrans %}
         </th>
@@ -86,6 +86,8 @@
         <th class="col-xs-1 rightlist" >
           {% trans %}Balance{% endtrans %}
         </th>
+        {% endif %}
+        {% if godown == "allgodown" %}
       </tr>
     </thead>
     <tbody>
