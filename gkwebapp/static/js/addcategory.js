@@ -80,6 +80,9 @@ $(document).ready(function() {
     $('#parent_addspecmodal').on('shown.bs.modal', function() {
         $('#parent_category_spec_name').focus();
     });
+    $('#addtaxmodal').on('shown.bs.modal', function() {
+        $("#category_tax_table tbody tr:last td:eq(0) select").focus();
+    });
     $("#category_under").keydown(function(event) {
         if (event.which == 13 && categorycode != "") {
           event.preventDefault();
