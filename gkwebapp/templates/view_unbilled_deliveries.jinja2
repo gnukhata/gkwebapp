@@ -58,9 +58,9 @@
           <select class="form-control input-sm" name="" id="del_unbilled_type">
             <!--<option value="" disabled hidden selected>{% trans %}Select Delivery Type{% endtrans %}</option>-->
             <option value="1">{% trans %}All{% endtrans %}</option>
-            <option value="2">{% trans %}Sales{% endtrans %}</option>
+            <!--<option value="2">{% trans %}Sales{% endtrans %}</option>
             <option value="3">{% trans %}Approval{% endtrans %}</option>
-            <option value="4">{% trans %}Consignment{% endtrans %}</option>
+            <option value="4">{% trans %}Consignment{% endtrans %}</option>-->
             <!--<option value="5">{% trans %}Sample{% endtrans %}</option>-->
           </select>
         </div>
@@ -70,9 +70,9 @@
           <select class="form-control input-sm" name="" id="godown_name">
             <!--<option value="" disabled hidden selected>{% trans %}Select Godown Name{% endtrans %}</option>-->
             <option value="All"> All </option>
-            {% for godown in gkresult %}
+            <!--{% for godown in gkresult %}
             <option value="{{godown['godownname']}}"> {{godown['godownname']}} </option>
-            {% endfor %}
+            {% endfor %}-->
           </select>
         </div>
       </div>
