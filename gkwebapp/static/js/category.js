@@ -46,7 +46,7 @@ $(document).ready(function() {
 
   $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     if(e.target.attributes.href.value=="#category_create"){
-      $("#category_name").focus();
+      $("#category_under").focus();
     }
     else if(e.target.attributes.href.value=="#category_edit"){
       $("#category_edit_list").focus();

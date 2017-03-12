@@ -39,13 +39,11 @@ $(document).ready(function() {
     var parentspecs = [];
     var childspecs = [];
     var taxes = [];
-
-    if ($("#catcount").val() == 0) {
-        $("#new_parent_name").focus();
-        $("#new_parent_div1").show();
-        $("#oldparentdiv").hide();
-    } else {
-        $("#category_under").focus();
+    if($("#catcount").val() > 0){
+      $("#category_under").focus();
+    }
+    else{
+      $("#new_parent_name").focus();
     }
     var categorycode = "";
     $("#new_parent_name").keydown(function(event) {
@@ -105,7 +103,7 @@ $(document).ready(function() {
             $('#parent_category_spec_table tbody').html("");
             $('#parent_category_spec_table tbody').append('<tr>' +
                 '<td class="col-xs-8">' +
-                '<input type="text" id="parent_category_spec_name" class="form-control input-sm parent_spec_name" placeholder="Spec Name" autofocus>' +
+                '<input type="text" id="parent_category_spec_name" class="form-control input-sm parent_spec_name" placeholder="Spec Name">' +
                 '</td>' +
                 '<td class="col-xs-3">' +
                 '<select id="parent_category_spec_type" class="form-control input-sm parent_spec_type" name="">' +
@@ -200,7 +198,7 @@ $(document).ready(function() {
                   }
                   $('#child_category_spec_table tbody').append('<tr>' +
                       '<td class="col-xs-8">' +
-                      '<input type="text" class="form-control input-sm spec_name" value="" placeholder="Spec Name" autofocus>' +
+                      '<input type="text" class="form-control input-sm spec_name" value="" placeholder="Spec Name">' +
                       '</td>' +
                       '<td class="col-xs-3">' +
                       '<select id="child_category_spec_type" class="form-control input-sm spec_type">' +
@@ -258,7 +256,7 @@ $(document).ready(function() {
                 // appending a new row for adding another spec to category
                 $('#child_category_spec_table tbody').append('<tr>' +
                     '<td class="col-xs-8">' +
-                    '<input type="text" id="child_category_spec_name" class="form-control input-sm spec_name" placeholder="Spec Name" autofocus>' +
+                    '<input type="text" id="child_category_spec_name" class="form-control input-sm spec_name" placeholder="Spec Name">' +
                     '</td>' +
                     '<td class="col-xs-3">' +
                     '<select id="child_category_spec_type" class="form-control input-sm spec_type">' +
@@ -306,7 +304,7 @@ $(document).ready(function() {
                 // appending a new row for adding another spec to category
                 $('#parent_category_spec_table tbody').append('<tr>' +
                     '<td class="col-xs-8">' +
-                    '<input type="text" id="parent_category_spec_name" class="form-control input-sm spec_name" placeholder="Spec Name" autofocus>' +
+                    '<input type="text" id="parent_category_spec_name" class="form-control input-sm spec_name" placeholder="Spec Name">' +
                     '</td>' +
                     '<td class="col-xs-3">' +
                     '<select id="parent_category_spec_type" class="form-control input-sm spec_type">' +
@@ -364,7 +362,7 @@ $(document).ready(function() {
 
                 $('#category_tax_table tbody').append('<tr>' +
                     '<td class="col-xs-4">' +
-                    '<select class="form-control input-sm tax_name" autofocus>' +
+                    '<select class="form-control input-sm tax_name">' +
                     '<option value="" selected>Select Tax</option>' +
                     '<option value="VAT">VAT</option>' +
                     '<option value="CVAT">CVAT</option>' +
@@ -479,7 +477,7 @@ $(document).ready(function() {
 
                               $('#child_category_spec_table tbody').append('<tr>' +
                                   '<td class="col-xs-8">' +
-                                  '<input type="text" class="form-control input-sm spec_name" value="" placeholder="Spec Name" autofocus>' +
+                                  '<input type="text" class="form-control input-sm spec_name" value="" placeholder="Spec Name">' +
                                   '</td>' +
                                   '<td class="col-xs-3">' +
                                   '<select id="child_category_spec_type" class="form-control input-sm spec_type">' +
@@ -586,7 +584,7 @@ $(document).ready(function() {
                         }
                         $('#child_category_spec_table tbody').append('<tr>' +
                             '<td class="col-xs-8">' +
-                            '<input type="text" id="child_category_spec_name" class="form-control input-sm child_spec_name" placeholder="Spec Name" autofocus>' +
+                            '<input type="text" id="child_category_spec_name" class="form-control input-sm child_spec_name" placeholder="Spec Name">' +
                             '</td>' +
                             '<td class="col-xs-3">' +
                             '<select id="child_category_spec_type" class="form-control input-sm child_spec_type" name="">' +
@@ -603,7 +601,7 @@ $(document).ready(function() {
 
                         $('#child_category_table tbody').append('<tr>' +
                             '<td class="col-xs-8">' +
-                            '<input type="text" id="child_category_name" class="form-control input-sm mchild_spec_name" placeholder="Sub Category Name" autofocus>' +
+                            '<input type="text" id="child_category_name" class="form-control input-sm mchild_spec_name" placeholder="Sub Category Name">' +
                             '</td>' +
                             '<td class="col-xs-3">' +
                             '<button class="btn form-control btn-primary btn-sm child_spec_class" id="child_spec" data-toggle="modal" data-target="#child_addspecmodal" >Specs</button>' +

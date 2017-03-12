@@ -46,8 +46,9 @@
          <div class="panel-body">
             <input type="hidden" id="catcount" value="{{categorycount}}">
             <div class="">
-               {% if categorycount > 0 %}
+
                <div class="form-group row">
+                 {% if categorycount > 0 %}
                   <div id="oldparentdiv">
                      <div>
                         <label for="category_under">{% trans %}Category:{% endtrans %}</label>
@@ -60,8 +61,9 @@
                         <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'SpaceBar' to add new Category.{% endtrans %}</small>
                      </div>
                   </div>
+                  {% else %}
                   <div>
-                     <div class="panel-body form-group row" id="new_parent_div1" hidden>
+                     <div class="panel-body form-group row" id="new_parent_div1">
                         <label for="category_name">{% trans %}New Category:{% endtrans %}</label>
                         <table id="new_parent_category_table" class="table-condensed ">
                            <tbody>
@@ -84,13 +86,12 @@
                         <small id="backhelp" class="form-text text-muted">Press 'Esc' key to go back</small>
                      </div>
                   </div>
+                  {% endif %}
                </div>
                <div class="form-group row childcat" hidden>
                   <label for="category_name">{% trans %}Sub Category:{% endtrans %}</label>
                </div>
-               {% else %}
-               <input type="text" id="category_under1" value="" hidden>
-               {% endif %}
+
             </div>
             <div class="row form-group childcat" hidden>
                <div class="panel">
@@ -156,7 +157,7 @@
                                  <tbody>
                                     <tr>
                                        <td class="col-xs-8">
-                                          <input type="text" id="child_category_spec_name" class="form-control input-sm child_spec_name" placeholder="Spec Name" autofocus>
+                                          <input type="text" id="child_category_spec_name" class="form-control input-sm child_spec_name" placeholder="Spec Name">
                                        </td>
                                        <td class="col-xs-3">
                                           <select id="child_category_spec_type" class="form-control input-sm child_spec_type" name="">
@@ -217,7 +218,7 @@
                                  <tbody>
                                     <tr>
                                        <td class="col-xs-8">
-                                          <input type="text" id="parent_category_spec_name" class="form-control input-sm parent_spec_name" placeholder="Spec Name" autofocus>
+                                          <input type="text" id="parent_category_spec_name" class="form-control input-sm parent_spec_name" placeholder="Spec Name">
                                        </td>
                                        <td class="col-xs-3">
                                           <select id="parent_category_spec_type" class="form-control input-sm parent_spec_type" name="">
