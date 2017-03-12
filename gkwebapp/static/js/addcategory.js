@@ -397,6 +397,14 @@ $(document).ready(function() {
     //////////////////////////
     $("#parent_save").click(function(event) {
         var parentname = $("#new_parent_name").val();
+        if(parentname == ""){
+          $("#blank-alert").alert();
+          $("#blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#blank-alert").hide();
+            });
+            $('#new_parent_name').focus();
+            return false;
+        }
         $.ajax({
                 url: '/category?action=save',
                 type: 'POST',
@@ -419,7 +427,7 @@ $(document).ready(function() {
                     $("#success-alert").alert();
                     $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
                         $("#success-alert").hide();
-
+                      });
                         $("#new_parent_div1").hide();
                         $("#oldparentdiv").show();
                         categorycode = resp.gkresult
@@ -470,9 +478,6 @@ $(document).ready(function() {
                                   '</td>' +
                                   '</tr>');
 
-
-                    });
-
                     return false;
                 } else if (resp["gkstatus"] == 1) {
                     $("#category_name").focus().select();
@@ -503,13 +508,22 @@ $(document).ready(function() {
         if (event.which == 45) {
             event.preventDefault();
             var curindex1 = $(this).closest('tr').index() + 1;
+            var catname = $('#child_category_table tbody tr:last input').val();
+            if(catname == ""){
+              $("#blank-alert").alert();
+              $("#blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+                  $("#blank-alert").hide();
+                });
+                $('#child_category_table tbody tr:last td:eq(0) input').focus();
+                return false;
+            }
             $.ajax({
                     url: '/category?action=save',
                     type: 'POST',
                     dataType: 'json',
                     async: false,
                     data: {
-                        "categoryname": $('#child_category_table tbody tr:last input').val(),
+                        "categoryname": catname,
                         "subcategoryof": categorycode,
                         "specs": JSON.stringify(parentspecs.concat(childspecs)),
                         "taxes": JSON.stringify(taxes)

@@ -42,6 +42,9 @@
       <div class="alert alert-danger" id="duplicate-alert"  aria-live="rude" role="alert" hidden>
          {% trans %}Category already exists!{% endtrans %}
       </div>
+      <div class="alert alert-danger" id="blank-alert"  aria-live="rude" role="alert" hidden>
+         {% trans %}Please Enter Category Name!{% endtrans %}
+      </div>
       <div class="panel shadow category_panel col-md-6">
          <div class="panel-body">
             <input type="hidden" id="catcount" value="{{categorycount}}">
