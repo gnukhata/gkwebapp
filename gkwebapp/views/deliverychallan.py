@@ -152,14 +152,25 @@ def show_unbilled_deliveries_report(request):
 	header={"gktoken":request.headers["gktoken"]}
 	#inputdate = "07-05-2017"
 	inputdate = request.params["inputdate"];
+	inout = request.params["inout"]
+	print "inout"
+	print inout
+	#if inout == "9":
+	#	inout = "i"
+	#elif inout == "15":
+	#	inout = "o"
 	print "Inputdate: In gkwebapp"
 	print inputdate
 	gkdata = {"inputdate": inputdate}
-	result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled_for_entire_org&inout=o", data = json.dumps(gkdata), headers=header)
+	#result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled_for_entire_org&inout=%s"%(inout), data = json.dumps(gkdata), headers=header)
+	if inout == "9":
+		result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled_for_entire_org&inout=i", data = json.dumps(gkdata), headers=header)
+	elif inout == "15":
+		result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled_for_entire_org&inout=o", data = json.dumps(gkdata), headers=header)
 	print "result : "
 	for row in result.json()["gkresult"]:
 		print row
-	return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "inputdate":inputdate}
+	return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "inputdate":inputdate, "inout":inout}
 
 @view_config(route_name="del_unbilled", request_param="action=view", renderer="gkwebapp:templates/view_unbilled_deliveries.jinja2")
 def view_unbilled_deliveries(request):
