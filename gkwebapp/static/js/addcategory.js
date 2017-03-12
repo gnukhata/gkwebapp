@@ -436,6 +436,7 @@ $(document).ready(function() {
                         categorycode = resp.gkresult
                         $("#category_under").append('<option val="' + categorycode + '" selected>' + parentname + '</option>');
                         $(".childcat").show();
+                        $("#child_category_table tbody tr:first td:eq(0) input").focus();
                         $("#spectbl").show();
                         $("#parent_heading").text($("#new_parent_name").val());
                         $("#spectbl tbody").html("");
