@@ -35,6 +35,13 @@
 
           <label for="del_unbilled_date">{% trans %}Please enter date before today!{% endtrans %}</label>
         </div>
+        <div class="form-group">
+          <label for="report_type" accesskey="r">{% trans %}<u>R</u>eport Type {% endtrans %} :</label>
+          <select class="form-control input-sm" name="" id="report_type">
+            <option value="9">{% trans %}In{% endtrans %}</option>
+            <option value="15">{% trans %}Out{% endtrans %}</option>
+          </select>
+        </div>
 
         <label for="del_unbilled_date">{% trans %}Date{% endtrans %} :</label>
         <div class="form-inline">
