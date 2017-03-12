@@ -96,6 +96,7 @@ $(document).ready(function() {
             event.preventDefault();
             $("#oldparentdiv").hide();
             $("#new_parent_div1").show();
+            $("#doneid").hide();
             $("#spectbl").hide();
             $(".childcat").hide();
             $("#new_parent_name").val("");
@@ -135,6 +136,7 @@ $(document).ready(function() {
 
         categorycode = $("#category_under option:selected").val();
         if(categorycode != ""){
+          $("#doneid").show();
           $("#spectbl").show();
           $("#parent_heading").text($("#category_under option[value=" + categorycode + "]").text());
           $('#spectbl td').remove();
@@ -215,6 +217,7 @@ $(document).ready(function() {
           categorycode = "";
           $("#spectbl").hide();
           $(".childcat").hide();
+          $("#doneid").hide();
         }
 
     });
@@ -661,6 +664,9 @@ $(document).ready(function() {
     });
     $("#child_done").click(function(event) {
       $('#child_addspecmodal').modal('hide');
+    });
+    $("#tax_done").click(function(event) {
+      $('#addtaxmodal').modal('hide');
     });
     $("#child_showdone").click(function(event) {
       $('#child_showspecmodal').modal('hide');

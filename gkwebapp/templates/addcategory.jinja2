@@ -71,13 +71,13 @@
                                  <td class="col-xs-8">
                                     <input type="text" id="new_parent_name" class="form-control input-sm" placeholder="New Category Name">
                                  </td>
-                                 <td class="col-xs-3">
+                                 <td class="col-xs-2">
                                     <button class="btn form-control btn-primary btn-sm" id="parent_spec" data-toggle="modal" data-target="#parent_addspecmodal" >{% trans %}Specs{% endtrans %}</button>
                                  </td>
-                                 <td class="col-xs-3">
+                                 <td class="col-xs-2">
                                     <button class="btn form-control btn-primary btn-sm" id="parent_tax" data-toggle="modal" data-target="#addtaxmodal"  >{% trans %}Tax{% endtrans %}</button>
                                  </td>
-                                 <td class="col-xs-3">
+                                 <td class="col-xs-2">
                                     <button class="btn form-control btn-primary btn-sm" id="parent_save"  >{% trans %}Save{% endtrans %}</button>
                                   </td>
                               </tr>
@@ -94,13 +94,13 @@
                                  <td class="col-xs-8">
                                     <input type="text" id="new_parent_name" class="form-control input-sm" placeholder="New Category Name">
                                  </td>
-                                 <td class="col-xs-3">
+                                 <td class="col-xs-2">
                                     <button class="btn form-control btn-primary btn-sm" id="parent_spec" data-toggle="modal" data-target="#parent_addspecmodal" >{% trans %}Specs{% endtrans %}</button>
                                  </td>
-                                 <td class="col-xs-3">
+                                 <td class="col-xs-2">
                                     <button class="btn form-control btn-primary btn-sm" id="parent_tax" data-toggle="modal" data-target="#addtaxmodal"  >{% trans %}Tax{% endtrans %}</button>
                                  </td>
-                                 <td class="col-xs-3">
+                                 <td class="col-xs-2">
                                     <button class="btn form-control btn-primary btn-sm" id="parent_save"  >{% trans %}Save{% endtrans %}</button>
                                   </td>
                               </tr>
@@ -119,15 +119,14 @@
                   <table id="child_category_table" class="table table-condensed table-bordered fixed-table">
                      <thead class="bg-primary input-sm">
                         <tr>
-                           <th class="col-xs-8">{% trans %}Sub Category Name{% endtrans %}</th>
+                           <th class="col-xs-6">{% trans %}Sub Category Name{% endtrans %}</th>
                            <th class="col-xs-3">{% trans %}Specifications{% endtrans %}</th>
                            <th class="col-xs-3">{% trans %}Tax{% endtrans %}</th>
-                           <th class="col-xs-1"></th>
                         </tr>
                      </thead>
                      <tbody>
                         <tr>
-                           <td class="col-xs-8">
+                           <td class="col-xs-6">
                               <input type="text" id="child_category_name" class="form-control input-sm mchild_spec_name" placeholder="Sub Category Name">
                            </td>
                            <td class="col-xs-3">
@@ -135,9 +134,6 @@
                            </td>
                            <td class="col-xs-3">
                               <button class="btn form-control btn-primary btn-sm child_tax_class" id="child_tax" data-toggle="modal" data-target="#addtaxmodal"   >{% trans %}Tax{% endtrans %}</button>
-                           </td>
-                           <td class="col-xs-1">
-                              <a href="#" class="spec_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                            </td>
                         </tr>
                      </tbody>
@@ -337,7 +333,11 @@
                               </div>
                            </div>
                   </div>
-
+                  <div class="panel-footer">
+                     <div class="container-fluid">
+                        <button class="btn btn-success btn-sm" id="tax_done" data-toggle="tooltip" data-placement="top" >{% trans %}Done{% endtrans %}</button>
+                     </div>
+                  </div>
                </div>
             </div>
          </div>
@@ -388,7 +388,7 @@
             </div>
          </div>
          <div class="panel-footer">
-            <div class="container-fluid">
+            <div class="container-fluid" id="doneid" hidden>
                <button class="btn btn-success btn-sm" id="done" data-toggle="tooltip" data-placement="top" >{% trans %}Done{% endtrans %}</button>
             </div>
          </div>
