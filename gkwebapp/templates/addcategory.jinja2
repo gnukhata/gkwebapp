@@ -50,24 +50,24 @@
                <div class="form-group row">
                   <div id="oldparentdiv">
                      <div>
-                        <label for="category_under">{% trans %}Parent Category:{% endtrans %}</label>
+                        <label for="category_under">{% trans %}Category:{% endtrans %}</label>
                         <select class="form-control input-sm" id="category_under">
-                           <option value="" selected>{% trans %}Select Parent Category{% endtrans %}</option>
+                           <option value="" selected>{% trans %}Select Category{% endtrans %}</option>
                            {% for categories in gkresult %}
                            <option value="{{categories['categorycode']}}" data-categoryname="{{categories["categoryname"]}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
                            {% endfor %}
                         </select>
-                        <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'SpaceBar' to add new Parent Category.{% endtrans %}</small>
+                        <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'SpaceBar' to add new Category.{% endtrans %}</small>
                      </div>
                   </div>
                   <div>
                      <div class="panel-body form-group row" id="new_parent_div1" hidden>
-                        <label for="category_name">{% trans %}New Parent Category:{% endtrans %}</label>
+                        <label for="category_name">{% trans %}New Category:{% endtrans %}</label>
                         <table id="new_parent_category_table" class="table-condensed ">
                            <tbody>
                               <tr>
                                  <td class="col-xs-8">
-                                    <input type="text" id="new_parent_name" class="form-control input-sm" placeholder="New Parent category Name">
+                                    <input type="text" id="new_parent_name" class="form-control input-sm" placeholder="New Category Name">
                                  </td>
                                  <td class="col-xs-3">
                                     <button class="btn form-control btn-primary btn-sm" id="parent_spec" data-toggle="modal" data-target="#parent_addspecmodal" >{% trans %}Specs{% endtrans %}</button>
@@ -77,7 +77,7 @@
                                  </td>
                                  <td class="col-xs-3">
                                     <button class="btn form-control btn-primary btn-sm" id="parent_save"  >{% trans %}Save{% endtrans %}</button>
-                                    </td
+                                  </td>
                               </tr>
                            </tbody>
                         </table>
@@ -86,7 +86,7 @@
                   </div>
                </div>
                <div class="form-group row childcat" hidden>
-                  <label for="category_name">{% trans %}Child Category:{% endtrans %}</label>
+                  <label for="category_name">{% trans %}Sub Category:{% endtrans %}</label>
                </div>
                {% else %}
                <input type="text" id="category_under1" value="" hidden>
@@ -97,7 +97,7 @@
                   <table id="child_category_table" class="table table-condensed table-bordered fixed-table">
                      <thead class="bg-primary input-sm">
                         <tr>
-                           <th class="col-xs-8">{% trans %}Child Category Name{% endtrans %}</th>
+                           <th class="col-xs-8">{% trans %}Sub Category Name{% endtrans %}</th>
                            <th class="col-xs-3">{% trans %}Specifications{% endtrans %}</th>
                            <th class="col-xs-3">{% trans %}Tax{% endtrans %}</th>
                            <th class="col-xs-1"></th>
@@ -106,7 +106,7 @@
                      <tbody>
                         <tr>
                            <td class="col-xs-8">
-                              <input type="text" id="child_category_name" class="form-control input-sm mchild_spec_name" placeholder="Child category Name">
+                              <input type="text" id="child_category_name" class="form-control input-sm mchild_spec_name" placeholder="Sub Category Name">
                            </td>
                            <td class="col-xs-3">
                               <button class="btn form-control btn-primary btn-sm child_spec_class" id="child_spec" data-toggle="modal" data-target="#child_addspecmodal" >{% trans %}Specs{% endtrans %}</button>
@@ -121,8 +121,8 @@
                      </tbody>
                   </table>
                </div>
-               <small id="txtareahelp" class="form-text text-muted">Press 'Insert key' to save Child Category.</small><br>
-               <small id="navigation" class="form-text text-muted">Press 'Home' to select Parent Category </small><br>
+               <small id="txtareahelp" class="form-text text-muted">Press 'Insert key' to save Sub Category.</small><br>
+               <small id="navigation" class="form-text text-muted">Press 'Home' to select Category </small><br>
                <small id="navigation" class="form-text text-muted">Press 'Tab' and 'Shift + Tab' to navigate through fields</small>
             </div>
          </div>
@@ -407,7 +407,6 @@
             </table>
          </div>
       </div>
-   </div>
    </div>
    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addcategory.js')}}"></script>
 </body>

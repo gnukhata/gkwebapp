@@ -26,7 +26,16 @@ Contributors:
 $(document).ready(function() {
     $('.modal-backdrop').remove();
     $("#spectbl").hide();
-
+    //when home key is pressed parent category selection is focused
+    //when alt +shift+ D pressed Done is clicked
+    $(document).keydown(function(event) {
+      if(event.altKey && event.shiftKey && event.keyCode == 68){
+        $("#addcategory").click();
+      }
+        if(event.which == 36){
+          $("#category_under").focus();
+        }
+    });
     var parentspecs = [];
     var childspecs = [];
     var taxes = [];
@@ -543,6 +552,9 @@ $(document).ready(function() {
                             $("#success-alert").hide();
                         });
                         $("#child_category_table tbody tr:last td:eq(1) button").attr('id', resp.gkresult);
+                        $("#child_category_table tbody tr:last td:eq(2) button").remove();
+                        $("#child_category_table tbody tr:last td:eq(0) input").prop('disabled', true);
+                        $("#child_category_table tbody tr:last td:eq(1) button").attr('class', "btn form-control btn-primary btn-sm showspecs");
                         $("#child_category_table tbody tr:last td:eq(1) button").attr('data-target', "#child_showspecmodal");
                         // appending a new row for adding another spec to category
                         $('#child_category_spec_table tbody').html("");
@@ -591,7 +603,7 @@ $(document).ready(function() {
 
                         $('#child_category_table tbody').append('<tr>' +
                             '<td class="col-xs-8">' +
-                            '<input type="text" id="child_category_name" class="form-control input-sm mchild_spec_name" placeholder="Child category Name" autofocus>' +
+                            '<input type="text" id="child_category_name" class="form-control input-sm mchild_spec_name" placeholder="Sub Category Name" autofocus>' +
                             '</td>' +
                             '<td class="col-xs-3">' +
                             '<button class="btn form-control btn-primary btn-sm child_spec_class" id="child_spec" data-toggle="modal" data-target="#child_addspecmodal" >Specs</button>' +
@@ -632,14 +644,65 @@ $(document).ready(function() {
         }
 
     });
+    $(document).on('click', '.showspecs', function () {
+      var curindex1 = $(this).closest('tr').index();
+      var ccode = $("#child_category_table tbody tr:eq(" + curindex1 + ") td:eq(1) button").attr('id');
+      $.ajax({
+              url: '/category?action=getspecs',
+              type: 'POST',
+              dataType: 'json',
+              async: false,
+              data: {
+                  "categorycode": ccode
+              },
+              beforeSend: function(xhr) {
+                  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+              }
+          })
+          .done(function(resp) {
+              $('#child_showcategory_spec_table tbody').html("");
+              for (spec of resp["gkresult"].reverse()) {
+                  var trs;
+                  if (spec["attrtype"] == 0) {
+                      trs = '<option value="0">Text</option>'
+                  } else if (spec["attrtype"] == 1) {
+                      trs =
+                          '<option value="1">Number</option>'
+                  } else if (spec["attrtype"] == 2) {
+                      trs = '<option value="2">Date</option>'
+                  } else if (spec["attrtype"] == 3) {
+                      trs = '<option value="3">Option</option>'
+                  }
+                  $('#child_showcategory_spec_table tbody').prepend('<tr>' +
+                      '<td class="col-xs-8">' +
+                      '<input type="text" id="child_showcategory_spec_name" class="form-control input-sm" value="'+spec["attrname"]+'" disabled>' +
+                      '</td>' +
+                      '<td class="col-xs-4">' +
+                      '<select id="child_showcategory_spec_type" class="form-control input-sm" name="" disabled>' + trs +
+                      '</select>' +
+                      '</td>' +
+                      '</tr>');
+              }
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+
+    });
+    $("#parent_done").click(function(event) {
+      $('#parent_addspecmodal').modal('hide');
+    });
+    $("#child_done").click(function(event) {
+      $('#child_addspecmodal').modal('hide');
+    });
+    $("#child_showdone").click(function(event) {
+      $('#child_showspecmodal').modal('hide');
+    });
     $("#done").click(function(event) {
       $("#addcategory").click();
     });
-    //when home key is pressed parent category selection is focused
-    $(document).on('keypress', function(e) {
-        if(e.which == 36){
-          e.preventDefault();
-          $("#category_under").focus();
-        }
-    });
+
 });
