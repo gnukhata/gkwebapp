@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	{% if inout == "i" %}
+	<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</title>
+	{% elif inout == "o" %}
 	<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</title>
+	{% endif %}
 <style type="text/css">
 .shadow {
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -62,7 +66,11 @@ width:22%
 </style>
 </head>
 <body>
+	{% if inout == "i" %}
+	<span style="margin:auto; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{inputdate}}</strong></span>
+	{% elif inout == "o" %}
 	<span style="margin:auto; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{inputdate}}</strong></span>
+	{% endif %}
 	<div class="row">
 		<table id="unbill_del_table" class="table shadow table-bordered del_unbilled_table" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
 			<button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="del_unbilled_clearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
