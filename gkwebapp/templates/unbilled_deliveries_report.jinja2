@@ -62,14 +62,29 @@ width:22%
 .ewrap{
 	width:8%
 }
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
 
 </style>
 </head>
 <body>
 	{% if inout == "9" %}
-	<span style="margin:auto; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{inputdate}}</strong> {% trans %}| All Types | All Godowns{% endtrans %}</span>
+	<span style="margin:auto; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Types | All Godowns{% endtrans %}</span>
 	{% elif inout == "15" %}
-	<span style="margin:auto; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{inputdate}}</strong>{% trans %}| All Types | All Godowns{% endtrans %}</span>
+	<span style="margin:auto; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Types | All Godowns{% endtrans %}</span>
 	{% endif %}
 	<div class="row">
 		<table id="unbill_del_table" class="table shadow table-bordered del_unbilled_table" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
@@ -100,8 +115,8 @@ width:22%
 						<a class="accname" href="" style="text-decoration: none;">{{record['accountname']}}</a>
 						{% endif %}
 						{% endif %}-->
-						<!--<a class="dcno" href="">{{record['dcno']}}</a>-->
-						{{record['dcno']}}
+						<a class="dcno" href="">{{record['dcno']}}</a>
+						<!--{{record['dcno']}}-->
 					</td>
 
 					<!--{%if record["advflag"]==1%}

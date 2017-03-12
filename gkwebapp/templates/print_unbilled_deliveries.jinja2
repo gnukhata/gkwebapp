@@ -28,9 +28,9 @@ tfoot{
 </head>
 <body>
 	{% if inout == "9" %}
-	<span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{inputdate}}</strong>{% trans %}| All Types | All Godowns{% endtrans %}</span>
+	<span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Types | All Godowns{% endtrans %}</span>
 	{% elif inout == "15" %}
-	<span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{inputdate}}</strong>{% trans %}| All Types | All Godowns{% endtrans %}</span>
+	<span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Types | All Godowns{% endtrans %}</span>
 	{% endif %}
 	<div class="table-responsive printorgdetails">
 		<table class="table table-condensed  table-bordered table-striped shadow">
@@ -38,11 +38,11 @@ tfoot{
         <tr class="visible-print">
 					{% if inout == "9" %}
           <th colspan="5" style="text-align:center; font-size:80%;">
-            {% trans %}Inward Deliveries - Invoices Not Received as on date{% endtrans %} {{inputdate}}{% trans %}| All Types | All Godowns{% endtrans %}
+            {% trans %}Inward Deliveries - Invoices Not Received as on date{% endtrans %} {{new_inputdate}}{% trans %}| All Types | All Godowns{% endtrans %}
           </th>
 					{% elif inout == "15" %}
 					<th colspan="5" style="text-align:center; font-size:80%;">
-            {% trans %}Outward Deliveries - Invoices Not Prepared as on date{% endtrans %} {{inputdate}}{% trans %}| All Types | All Godowns{% endtrans %}
+            {% trans %}Outward Deliveries - Invoices Not Prepared as on date{% endtrans %} {{new_inputdate}}{% trans %}| All Types | All Godowns{% endtrans %}
           </th>
 					{% endif %}
         </tr>
