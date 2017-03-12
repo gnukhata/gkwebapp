@@ -29,7 +29,7 @@ This script is for the view page of unbilled deliveries report.
 $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
-  $("#del_unbilled_date").focus();
+  $("#report_type").focus();
   $('.del_unbilled_autotab').autotab('number');
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
@@ -128,7 +128,7 @@ $(document).ready(function() {
   $("#del_unbilled_date").val(del_unbilled_array[2]);
   $("#del_unbilled_month").val(del_unbilled_array[1]);
   $("#del_unbilled_year").val(del_unbilled_array[0]);
-  $("#del_unbilled_date").select();
+  $("#report_type").select();
 
   $("#godown_name").keydown(function(event) {
     if (event.which==13) {
@@ -196,13 +196,14 @@ $(document).ready(function() {
     // -----------------------end of validations---------------------
 
     // ajax function to get unbilled delivery report for given period.
+
     $.ajax(
       {
         type: "POST",
         url: "/show_del_unbilled_report",
         global: false,
         async: false,
-        data: {"inputdate": date_input},
+        data: {"inputdate": date_input, "inout":$("#report_type option:selected").val()},
         datatype: "text/html",
         beforeSend: function(xhr)
         {
