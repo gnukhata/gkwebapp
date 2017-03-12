@@ -13,7 +13,10 @@
     padding: 4 !important;
     margin: 4 !important;
   }
-
+#latable{
+   margin: 0 auto
+     
+}
   #latable th {
     font-size: 85%;
   }
@@ -42,13 +45,30 @@
       
   }
 
-  .rightlist {
-    text-align: right;
-  }
-.size{
-	width: 400px;
+ .size{
+	width: 800px;
 	
 }
+
+  .cred{
+    color:red;
+  }
+  .calign{
+    text-align:center;
+  }
+  .dtwrap{
+  	width :2%
+  	 }
+ .smwrap{
+ 	width:4%
+ }
+ .lngwrap{
+ 	width:20%
+ }
+ .mdwrap{
+ 	width:8%
+ }
+
 
 
   </style>
@@ -63,60 +83,60 @@
   <input type="hidden" id="goid" name="goid" value="{{stockrefresh["goid"]}}"></input>
   <input type="hidden" id="goname" name="goname" value="{{godown}}"></input>
 
-  <span class="pull-right" style="padding-right:15px"><i>{% trans %}Stock as on{% endtrans %}</i> : {% trans %}to{% endtrans %} <strong>{{stockrefresh["calculateto"]}}</strong></span>
-  {% if godown == "" %}
-  <span style="margin:auto; display:block; width:100px"><i>{% trans %}Stock on Hand Report{% endtrans %}</i></span>
-  <span style="margin:auto; display:table;"><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
-  {% else %}
-  <span style="margin:auto; display:block; width:200px"><i>{% trans %}Godown Wise Stock on Hand Report{% endtrans %}</i></span>
-  <span style="margin:auto; display:table;"><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong><i>  {% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong></span>
-  {% endif %}
+  <span class="pull-right" style="padding-right:15px"><i>{% trans %}Stock as on{% endtrans %}</i> : <strong>{{stockrefresh["calculateto"]}}</strong></span>
 
-	<div class="row">
-    <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="lclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>	
- <div class="row">
-  <table id="latable"  class="table shadow table-bordered size" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
+  
+
+  {% if godown == "" %}
+  <span style="margin:auto; display:block; width:300px; "><i>{% trans %}Stock on Hand Report{% endtrans %}</i></span>
+  <span style="margin:auto; display:table  "><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
+  {% else %}
+  <span style="margin:auto; display:block; width:300px;"><i>{% trans %}Godown Wise Stock on Hand Report{% endtrans %}</i></span>
+  <span style="margin:auto; display:table;width:300px;"><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong><i>  {% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong></span>
+  {% endif %}
+	
+	
+  <table id="latable"  class="table shadow table-bordered size mx-auto" data-toggle="table" data-show-toggle="true"   >
     
     <thead class="bg-primary">
   
     <tr>
-     <th class="col-xs-1" >
+     <th class="dtwrap calign" >
             {% trans %}Sr. No.{% endtrans %}
           </th>
-		{% if godown == "" and stockrefresh["productdesc"]== "all" %}
-        <th class="col-xs-1" >
+		{% if godown == "" and stockrefresh["productdesc"]!= "all" %}
+        <th class="mdwrap calign" >
           {% trans %}Product Name{% endtrans %}
         </th>
          
-        <th class="col-xs-1 rightlist" >
+        <th class="smwrap calign" >
           {% trans %}Balance{% endtrans %}
         </th>
         {% endif %}
         {% if godown == "" and stockrefresh["productdesc"]== "all"%}
-        <th class="col-xs-1" >
+        <th class="mdwrap calign" >
           {% trans %}Product Name{% endtrans %}
         </th>
-         
-        <th class="col-xs-1 rightlist" >
+        <th class="smwrap calign" >
           {% trans %}Balance{% endtrans %}
         </th>
         {% endif %}
         {% if godown == "All godowns" and stockrefresh["productdesc"] != "all"%}
-        <th class="col-xs-1" >
+        <th class="mdwrap calign" >
           {% trans %}Product Name{% endtrans %}
         </th>
-         <th class="col-xs-1" >
+         <th class="mdwrap calign" >
           {% trans %}Godown Name{% endtrans %}
         </th>
-        <th class="col-xs-1 rightlist" >
+        <th class="smwrap calign" >
           {% trans %}Balance{% endtrans %}
         </th>
          {% endif %}
-        {% if godown != "allgod" and godown != "" and stockrefresh["productdesc"] == "all" %}
-        <th class="col-xs-1" >
+        {% if godown != "All godowns" and godown != "" and stockrefresh["productdesc"] != "all" %}
+        <th class="mdwrap calign" >
           {% trans %}Product Name{% endtrans %}
         </th>
-         <th class="col-xs-1 rightlist" >
+         <th class="smwrap calign" >
           {% trans %}Balance{% endtrans %}
         </th>
 		 {% endif %}
@@ -127,53 +147,57 @@
 
     {% for record in gkresult %}
     <tr>
-    <td class="col-xs-1 " >
+    <td class="dtwrap calign" >
           {{record["srno"]}}
         </td>
-        {% if godown == "" %}
-    <td class="col-xs-1 " >
+       {% if godown == "" and stockrefresh["productdesc"]!= "all" %}
+    <td class="mdwrap calign" >
           {{record["productname"]}}
         </td>
-     <td class="col-xs-1 " >
+       
+     <td class="smwrap calign" >
           {{record["balance"]}}
+        
         </td>
+
         {% endif %}
         {% if godown == "" and stockrefresh["productdesc"]== "all"%}
-        <td class="col-xs-1 " >
+        <td class="mdwrap calign " >
           {{record["productname"]}}
         </td>
-     <td class="col-xs-1 " >
+     <td class="smwrap calign " >
           {{record["balance"]}}
         </td>
         {% endif %}
-        {% if godown == "All godowns" %}
+        {% if godown == "All godowns" and stockrefresh["productdesc"] != "all"%}
         
-         <td class="col-xs-1 " >
+         <td class="mdwrap calign" >
           {{record["productname"]}}
         </td>
-         <td class="col-xs-1 " >
+         <td class="mdwrap calign" >
           {{record["godown"]}}
         </td>
-     <td class="col-xs-1 " >
+     <td class="smwrap calign" >
           {{record["balance"]}}
         </td>
         
         {% endif %}
-         {% if godown != "All godowns" and godown != "" %}
+        {% if godown != "All godowns" and godown != "" and stockrefresh["productdesc"] != "all" %}
 
-         <td class="col-xs-1 " >
+         <td class="mdwrap calign " >
           {{stockrefresh["productdesc"]}}
         </td>
-     <td class="col-xs-1 " >
+     <td class="smwrap calign" >
           {{record["balance"]}}
         </td>
         {% endif %}
-</tr>
+	</tr>
         {% endfor %}
 
           </tbody> 
           
   </table>
+  
   </div>
   </div>
   
