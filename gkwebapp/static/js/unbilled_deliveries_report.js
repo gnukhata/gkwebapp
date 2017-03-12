@@ -80,7 +80,7 @@ $(document).ready(function() {
 					global: false,
 					async: false,
 					datatype: "text",
-          data: {"inputdate": $("#inputdate").val()},
+          data: {"inputdate": $("#inputdate").val(), "inout":$("#inout").val()},
           beforeSend: function(xhr)
 					{
 						xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

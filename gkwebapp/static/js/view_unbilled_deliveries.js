@@ -149,6 +149,7 @@ $(document).ready(function() {
     }
     var inputdate = $("#del_unbilled_year").val()+$("#del_unbilled_month").val()+$("#del_unbilled_date").val();
     var date_input = $("#del_unbilled_date").val()+"-"+$("#del_unbilled_month").val()+"-"+$("#del_unbilled_year").val();
+    var new_date_input = $("#del_unbilled_year").val()+"-"+$("#del_unbilled_month").val()+"-"+$("#del_unbilled_date").val();
     if(!Date.parseExact(inputdate, "yyyyMMdd")){
       $("#date-alert").alert();
       $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -203,7 +204,7 @@ $(document).ready(function() {
         url: "/show_del_unbilled_report",
         global: false,
         async: false,
-        data: {"inputdate": date_input, "inout":$("#report_type option:selected").val()},
+        data: {"inputdate": new_date_input, "inout":$("#report_type option:selected").val()},
         datatype: "text/html",
         beforeSend: function(xhr)
         {
