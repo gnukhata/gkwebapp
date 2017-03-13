@@ -61,9 +61,10 @@
                            <option value="{{categories['categorycode']}}" data-categoryname="{{categories["categoryname"]}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
                            {% endfor %}
                         </select>
-                        <div>
-                          <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'SpaceBar' to add new Category.{% endtrans %}</small>
-                        </div>
+                     </div>
+                     <div>
+                       <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'SpaceBar' to add new Category.{% endtrans %}</small><br>
+                       <small id="txtareahelp" class="form-text text-muted">Note:All specifications of category you select will be applicable to its Subcategory</small>
                      </div>
                   </div>
                      <div id="new_parent_div1" hidden>

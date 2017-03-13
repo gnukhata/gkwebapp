@@ -27,7 +27,7 @@ $(document).ready(function() {
     $('.modal-backdrop').remove();
     //when home key is pressed parent category selection is focused
     //when alt +shift+ D pressed Done is clicked
-    $(document).keydown(function(event) {
+    $(document).off('keydown').on('keydown', function(event) {
       if(event.altKey && event.shiftKey && event.keyCode == 68){
         event.preventDefault();
         $("#addcategory").click();
@@ -84,6 +84,9 @@ $(document).ready(function() {
     });
     $('#child_addspecmodal').on('shown.bs.modal', function() {
         $("#child_category_spec_table tbody tr:last td:eq(0) input").focus();
+    });
+    $('#child_showspecmodal').on('shown.bs.modal', function() {
+        $("#child_showcategory_spec_table tbody tr:first td:eq(0) input").focus();
     });
     $('#parent_addspecmodal').on('shown.bs.modal', function() {
         $('#parent_category_spec_name').focus();
@@ -195,10 +198,10 @@ $(document).ready(function() {
 
                       $('#child_category_spec_table tbody').prepend('<tr>' +
                           '<td class="col-xs-8">' +
-                          '<input type="text" class="form-control input-sm spec_name" value="' + spec["attrname"] + '" placeholder="Spec Name">' +
+                          '<input type="text" class="form-control input-sm spec_name" value="' + spec["attrname"] + '" placeholder="Spec Name" disabled>' +
                           '</td>' +
                           '<td class="col-xs-4">' +
-                          '<select id="child_category_spec_type" class="form-control input-sm spec_type">' + trs +
+                          '<select id="child_category_spec_type" class="form-control input-sm spec_type" disabled>' + trs +
                           '</select>' +
                           '</td>' +
                           '</tr>');
@@ -485,10 +488,10 @@ $(document).ready(function() {
                                 '</tr>');
                             $('#child_category_spec_table tbody').append('<tr>' +
                                 '<td class="col-xs-8">' +
-                                '<input type="text" class="form-control input-sm spec_name" value="' + spec["attrname"] + '" placeholder="Spec Name">' +
+                                '<input type="text" class="form-control input-sm spec_name" value="' + spec["attrname"] + '" placeholder="Spec Name" disabled>' +
                                 '</td>' +
                                 '<td class="col-xs-4">' +
-                                '<select id="child_category_spec_type" class="form-control input-sm spec_type">' + trs +
+                                '<select id="child_category_spec_type" class="form-control input-sm spec_type" disabled>' + trs +
                                 '</select>' +
                                 '</td>' +
                                 '</tr>');
@@ -572,6 +575,7 @@ $(document).ready(function() {
                             $("#success-alert").hide();
                         });
                         $("#child_category_table tbody tr:last td:eq(1) button").attr('id', resp.gkresult);
+                        $("#child_category_table tbody tr:last td:eq(1) button").text("Show Specs");
                         $("#child_category_table tbody tr:last td:eq(2) button").remove();
                         $("#child_category_table tbody tr:last td:eq(0) input").prop('disabled', true);
                         $("#child_category_table tbody tr:last td:eq(1) button").attr('class', "btn form-control btn-primary btn-sm showspecs");
@@ -593,10 +597,10 @@ $(document).ready(function() {
 
                             $('#child_category_spec_table tbody').append('<tr>' +
                                 '<td class="col-xs-8">' +
-                                '<input type="text" class="form-control input-sm spec_name" value="' + spec["attrname"] + '" placeholder="Spec Name">' +
+                                '<input type="text" class="form-control input-sm spec_name" value="' + spec["attrname"] + '" placeholder="Spec Name" disabled>' +
                                 '</td>' +
                                 '<td class="col-xs-4">' +
-                                '<select id="child_category_spec_type" class="form-control input-sm spec_type">' + trs +
+                                '<select id="child_category_spec_type" class="form-control input-sm spec_type" disabled>' + trs +
                                 '</select>' +
                                 '</td>' +
                                 '</tr>');
