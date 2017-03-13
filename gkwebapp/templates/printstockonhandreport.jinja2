@@ -24,6 +24,72 @@
 		.rightlist {
 	    text-align: right;
 	  }
+	    .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  
+  #latable td {
+    font-size: 75%;
+    padding: 4 !important;
+    margin: 4 !important;
+  }
+#latable{
+   margin: 0 auto
+     
+}
+  #latable th {
+    font-size: 85%;
+  }
+
+  .card-view .title {
+      font-weight: bold;
+      display: inline-block;
+      min-width: 30%;
+      text-align: left !important;
+  }
+
+  #latable tbody {
+      display:block;
+      height: calc(100vh - 18em);
+      overflow-y:scroll;
+      height: auto !important;
+  }
+  #latable thead,#latable tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+      height: auto !important;
+  }
+  #latable thead {
+      width: calc( 100% - 0.65em );
+      
+  }
+
+ .size{
+	width: 800px;
+	
+}
+
+  .cred{
+    color:red;
+  }
+  .calign{
+    text-align:center;
+  }
+  .dtwrap{
+  	width :4%
+  	 }
+ .smwrap{
+ 	width:4%
+ }
+ .lngwrap{
+ 	width:20%
+ }
+ .mdwrap{
+ 	width:8%
+ }
+
+
     </style>
 	</head>
 	<body>
@@ -62,11 +128,11 @@
 						</th>
 					</tr>
 					<tr>
-            <th class="col-xs-1" >
-<th class="dtwrap calign" >
+                <tr>
+     <th class="dtwrap calign" >
             {% trans %}Sr. No.{% endtrans %}
           </th>
-		{% if godown == "" and stockrefresh["productdesc"]!= "all" %}
+		{% if godown == "" and stockrefresh["productdesc"]!= "All Products" %}
         <th class="mdwrap calign" >
           {% trans %}Product Name{% endtrans %}
         </th>
@@ -75,7 +141,7 @@
           {% trans %}Balance{% endtrans %}
         </th>
         {% endif %}
-        {% if godown == "" and stockrefresh["productdesc"]== "all"%}
+        {% if godown == "" and stockrefresh["productdesc"]== "All Products"%}
         <th class="mdwrap calign" >
           {% trans %}Product Name{% endtrans %}
         </th>
@@ -83,7 +149,7 @@
           {% trans %}Balance{% endtrans %}
         </th>
         {% endif %}
-        {% if godown == "All godowns" and stockrefresh["productdesc"] != "all"%}
+        {% if godown == "All godowns" and stockrefresh["productdesc"] != "All Products"%}
         <th class="mdwrap calign" >
           {% trans %}Product Name{% endtrans %}
         </th>
@@ -94,7 +160,7 @@
           {% trans %}Balance{% endtrans %}
         </th>
          {% endif %}
-        {% if godown != "All godowns" and godown != "" and stockrefresh["productdesc"] != "all" %}
+        {% if godown != "All godowns" and godown != "" and stockrefresh["productdesc"] != "All Products" %}
         <th class="mdwrap calign" >
           {% trans %}Product Name{% endtrans %}
         </th>
@@ -112,7 +178,7 @@
     <td class="dtwrap calign" >
           {{record["srno"]}}
         </td>
-       {% if godown == "" and stockrefresh["productdesc"]!= "all" %}
+       {% if godown == "" and stockrefresh["productdesc"]!= "All Products" %}
     <td class="mdwrap calign" >
           {{record["productname"]}}
         </td>
@@ -123,7 +189,7 @@
         </td>
 
         {% endif %}
-        {% if godown == "" and stockrefresh["productdesc"]== "all"%}
+        {% if godown == "" and stockrefresh["productdesc"]== "All Products"%}
         <td class="mdwrap calign " >
           {{record["productname"]}}
         </td>
@@ -131,7 +197,7 @@
           {{record["balance"]}}
         </td>
         {% endif %}
-        {% if godown == "All godowns" and stockrefresh["productdesc"] != "all"%}
+        {% if godown == "All godowns" and stockrefresh["productdesc"] != "All Products"%}
         
          <td class="mdwrap calign" >
           {{record["productname"]}}
@@ -144,7 +210,7 @@
         </td>
         
         {% endif %}
-        {% if godown != "All godowns" and godown != "" and stockrefresh["productdesc"] != "all" %}
+        {% if godown != "All godowns" and godown != "" and stockrefresh["productdesc"] != "All Products" %}
 
          <td class="mdwrap calign " >
           {{stockrefresh["productdesc"]}}
@@ -156,6 +222,8 @@
 	</tr>
         {% endfor %}
 
+  
+ 
 				</tbody>
 			</table>
 			<span style="margin:auto; display:table;">
@@ -169,7 +237,7 @@
 				$("#printback").click(function(event) {
 					var backdata = {}
 					if ($("#godownflag").val()==0) {
-					if ($("#productdesc").val()=="allprod"){
+					if ($("#productdesc").val()=="All Products"){
 			backdata = {"productcode":"0", "productdesc": $("#productdesc").val(),"calculateto":$("#calculateto").val(),"backflag":"1","godownflag":$("#godownflag").val(),"goid":"-1","goname":""}
 }
 else {

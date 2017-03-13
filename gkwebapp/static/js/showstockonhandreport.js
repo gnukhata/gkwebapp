@@ -91,7 +91,7 @@ $(document).ready(function() {
   $('#viewprintableversion').click(function (e) {
 	  var backdata = {}
 		if ($("#godownflag").val()==0) {
-			if ($("#productdesc").val()=="allprod"){
+			if ($("#productdesc").val()=="All Products"){
 			backdata = {"productcode":"0", "productdesc": $("#productdesc").val(),"calculateto":$("#calculateto").val(),"backflag":"1","godownflag":$("#godownflag").val(),"goid":"-1","goname":""}
 		}
 		else {
