@@ -110,7 +110,7 @@
         </th>
          
         <th class="smwrap calign" >
-          {% trans %}Balance{% endtrans %}
+          {% trans %}Quantity{% endtrans %}
         </th>
         {% endif %}
         {% if godown == "" and stockrefresh["productdesc"]== "All Products"%}
@@ -118,7 +118,7 @@
           {% trans %}Product Name{% endtrans %}
         </th>
         <th class="smwrap calign" >
-          {% trans %}Balance{% endtrans %}
+          {% trans %}Quantity{% endtrans %}
         </th>
         {% endif %}
         {% if godown == "All godowns" and stockrefresh["productdesc"] != "All Products"%}
@@ -129,7 +129,7 @@
           {% trans %}Godown Name{% endtrans %}
         </th>
         <th class="smwrap calign" >
-          {% trans %}Balance{% endtrans %}
+          {% trans %}Quantity{% endtrans %}
         </th>
          {% endif %}
         {% if godown != "All godowns" and godown != "" and stockrefresh["productdesc"] != "All Products" %}
@@ -137,7 +137,7 @@
           {% trans %}Product Name{% endtrans %}
         </th>
          <th class="smwrap calign" >
-          {% trans %}Balance{% endtrans %}
+          {% trans %}Quantity{% endtrans %}
         </th>
 		 {% endif %}
 
