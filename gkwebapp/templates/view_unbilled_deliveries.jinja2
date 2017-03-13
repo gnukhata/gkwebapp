@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Unbilled Deliveries Report{% endtrans %}</title>
+    <style media="screen">
+    .shadow {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    label {
+  		font-size: 90%;
+  	}
+    </style>
+  </head>
+  <body>
+    <div style="padding-top:5px" class="container-fluid mainbox col-md-4 col-md-offset-4">
+    <div class="panel shadow">
+      <div class="panel-heading">
+        <h3 class="panel-title">{% trans %}View Unbilled Deliveries{% endtrans %}</h3>
+      </div>
+      <div class="panel-body">
+        <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
+
+          <label for="del_unbilled_date">{% trans %}Please enter date in proper format!{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="financial-date-alert" aria-live="rude" role="alert" hidden>
+
+          <label for="del_unbilled_date">{% trans %}The Financial Year is ahead of Today!{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
+
+          <label for="del_unbilled_date">{% trans %}Please enter date within the financial year!{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="valid-date-alert" aria-live="rude" role="alert" hidden>
+
+          <label for="del_unbilled_date">{% trans %}Please enter date before today!{% endtrans %}</label>
+        </div>
+        <div class="form-group">
+          <label for="report_type" accesskey="r">{% trans %}<u>R</u>eport Type {% endtrans %} :</label>
+          <select class="form-control input-sm" name="" id="report_type">
+            <option value="9">{% trans %}In{% endtrans %}</option>
+            <option value="15">{% trans %}Out{% endtrans %}</option>
+          </select>
+        </div>
+
+        <label for="del_unbilled_date">{% trans %}Date{% endtrans %} :</label>
+        <div class="form-inline">
+          <div class="form-group">
+
+          <input type="text" class="form-control input-sm del_unbilled_autotab" id="del_unbilled_date" value=""  size="2" maxlength="2" placeholder="DD" accesskey="d">
+          <input type="text" class="form-control input-sm del_unbilled_autotab" id="del_unbilled_month" value="" size="2" maxlength="2" placeholder="MM">
+          <input type="text" class="form-control input-sm del_unbilled_autotab" id="del_unbilled_year" value="" size="4" maxlength="4" placeholder="YYYY">
+        </div>
+        </div>
+        <br>
+        <div class="form-group">
+          <label for="del_unbilled_type" accesskey="u">{% trans %}<u>U</u>nbilled Delivery Type {% endtrans %} :</label>
+          <select class="form-control input-sm" name="" id="del_unbilled_type">
+            <!--<option value="" disabled hidden selected>{% trans %}Select Delivery Type{% endtrans %}</option>-->
+            <option value="1">{% trans %}All{% endtrans %}</option>
+            <!--<option value="2">{% trans %}Sales{% endtrans %}</option>
+            <option value="3">{% trans %}Approval{% endtrans %}</option>
+            <option value="4">{% trans %}Consignment{% endtrans %}</option>-->
+            <!--<option value="5">{% trans %}Sample{% endtrans %}</option>-->
+          </select>
+        </div>
+        <br>
+        <div class="form-group">
+          <label for="godown_name" accesskey="g">{% trans %}<u>G</u>odown Name{% endtrans %} :</label>
+          <select class="form-control input-sm" name="" id="godown_name">
+            <!--<option value="" disabled hidden selected>{% trans %}Select Godown Name{% endtrans %}</option>-->
+            <option value="All"> All </option>
+            <!--{% for godown in gkresult %}
+            <option value="{{godown['godownname']}}"> {{godown['godownname']}} </option>
+            {% endfor %}-->
+          </select>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button type="button" class="btn btn-sm btn-success" name="button" id="unbilled_deliveries_view" accesskey="v">{% trans %}<u>V</u>iew{% endtrans %}</button>
+        <button type="button" name="button" class="btn btn-sm btn-danger" id="unbilled_deliveries_reset" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/view_unbilled_deliveries.js')}}"></script>
+  </body>
+</html>

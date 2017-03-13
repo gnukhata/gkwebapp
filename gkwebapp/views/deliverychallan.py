@@ -146,3 +146,43 @@ def deliveryprint(request):
 	"tableset":tableset,"dcno":request.params["dcno"],"dcdate":request.params["dcdate"],"dcno":request.params["dcno"],
 	"issuername":request.params["issuername"],"designation":request.params["designation"],"godown":godowndata,
 	"notetype":request.params["notetype"],"qtytotal":request.params["qtytotal"]}
+
+@view_config(route_name="show_del_unbilled_report",renderer="gkwebapp:templates/unbilled_deliveries_report.jinja2")
+def show_unbilled_deliveries_report(request):
+	header={"gktoken":request.headers["gktoken"]}
+	inputdate = request.params["inputdate"];
+	inout = request.params["inout"]
+	gkdata = {"inputdate": inputdate}
+	new_inputdate = datetime.strftime(datetime.strptime(str(inputdate),"%Y-%m-%d").date(),'%d-%m-%Y')
+	if inout == "9":
+		result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled_for_entire_org&inout=i", data = json.dumps(gkdata), headers=header)
+	elif inout == "15":
+		result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled_for_entire_org&inout=o", data = json.dumps(gkdata), headers=header)
+	#print "result : "
+	#for row in result.json()["gkresult"]:
+	#	print row
+	return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "inputdate":inputdate, "new_inputdate":new_inputdate, "inout":inout}
+
+@view_config(route_name="del_unbilled", request_param="action=view", renderer="gkwebapp:templates/view_unbilled_deliveries.jinja2")
+def view_unbilled_deliveries(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	goddata=[]
+	for record in result.json()["gkresult"]:
+		gdata= {"godownid": str(record["goid"]), "godownname" : str(record["goname"])}
+		goddata.append(gdata)
+	print goddata
+	return {"gkstatus":result.json()["gkstatus"], "gkresult": goddata}
+
+@view_config(route_name="print_unbilled_deliveries_report",renderer="gkwebapp:templates/print_unbilled_deliveries.jinja2")
+def print_del_unbilled(request):
+	header={"gktoken":request.headers["gktoken"]}
+	inputdate = request.params["inputdate"];
+	gkdata = {"inputdate": inputdate}
+	new_inputdate = datetime.strftime(datetime.strptime(str(inputdate),"%Y-%m-%d").date(),'%d-%m-%Y')
+	inout = request.params["inout"]
+	if inout == "9":
+		result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled_for_entire_org&inout=i", data = json.dumps(gkdata), headers=header)
+	elif inout == "15":
+		result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled_for_entire_org&inout=o", data = json.dumps(gkdata), headers=header)
+	return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "inputdate":inputdate, "new_inputdate":new_inputdate, "inout":inout}
