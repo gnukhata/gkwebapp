@@ -538,22 +538,14 @@ def printablestockonhandreport(request):
     
     header={"gktoken":request.headers["gktoken"]}
     godownflag = int(request.params["godownflag"])
-    print "godown flag ",godownflag
     goid = int(request.params["goid"])
-    print "goid", goid
     goname = request.params["goname"]
-    print "goname",goname
     productcode = int(request.params["productcode"])
-    print "product code ",productcode
     calculateto = request.params["calculateto"]
-    print "claculateto",calculateto
     productdesc = request.params["productdesc"]
-    print productdesc
-
     scalculateto = request.params["calculateto"]
-    print"backflag", request.params["backflag"]
     if int(request.params["backflag"]) == 1 :
-        print "all products condition"
+       
         scalculateto = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%Y-%m-%d')
         stockrefresh = {"productcode":productcode,"calculateto":calculateto,"productdesc":"all","godownflag":godownflag,"goid":goid }
                 

@@ -158,9 +158,7 @@ def show_unbilled_deliveries_report(request):
 		result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled_for_entire_org&inout=i", data = json.dumps(gkdata), headers=header)
 	elif inout == "15":
 		result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled_for_entire_org&inout=o", data = json.dumps(gkdata), headers=header)
-	#print "result : "
-	#for row in result.json()["gkresult"]:
-	#	print row
+	
 	return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "inputdate":inputdate, "new_inputdate":new_inputdate, "inout":inout}
 
 @view_config(route_name="del_unbilled", request_param="action=view", renderer="gkwebapp:templates/view_unbilled_deliveries.jinja2")
@@ -171,7 +169,7 @@ def view_unbilled_deliveries(request):
 	for record in result.json()["gkresult"]:
 		gdata= {"godownid": str(record["goid"]), "godownname" : str(record["goname"])}
 		goddata.append(gdata)
-	print goddata
+	
 	return {"gkstatus":result.json()["gkstatus"], "gkresult": goddata}
 
 @view_config(route_name="print_unbilled_deliveries_report",renderer="gkwebapp:templates/print_unbilled_deliveries.jinja2")
