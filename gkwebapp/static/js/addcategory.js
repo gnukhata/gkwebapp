@@ -48,16 +48,23 @@ $(document).ready(function() {
     $("#new_parent_name").keydown(function(event) {
         if (event.which == 13) {
             event.preventDefault();
+            if($("#parent_spec").val() == ""){
+              $("#blank-alert").alert();
+              $("#blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+                  $("#blank-alert").hide();
+                });
+                $("#new_parent_name").focus();
+                return false;
+            }
             $("#parent_spec").focus();
         }
-        else if(event.which == 27){
-          event.preventDefault();
-          $("#new_parent_div1").hide();
-          $("#oldparentdiv").show();
-          $("#category_under").focus();
-        }
     });
-
+    $("#new_parent_div1").keydown(function(event) {
+      //when esc key is pressed
+      if(event.which == 27){
+        $("#addcategory").click();
+      }
+    });
     $(".child_spec_name").keydown(function(event) {
         cosole.log("child spec name");
         if (event.which == 13) {
@@ -126,6 +133,14 @@ $(document).ready(function() {
 
         if (event.which == 13) {
             event.preventDefault();
+            if($("#child_category_name").val() == ""){
+              $("#child-cat-blank-alert").alert();
+              $("#child-cat-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+                  $("#child-cat-blank-alert").hide();
+                });
+                $("#child_category_name").focus();
+                return false;
+            }
             $("#child_spec").focus();
         }
     });
