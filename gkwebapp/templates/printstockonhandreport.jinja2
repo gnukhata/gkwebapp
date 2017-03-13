@@ -170,26 +170,26 @@
 					var backdata = {}
 					if ($("#godownflag").val()==0) {
 					if ($("#productdesc").val()=="allprod"){
-			backdata = {"productcode":0, "productdesc": $("#productdesc").val(),"calculateto":$("#calculateto").val(),"backflag":1,"godownflag":$("#godownflag").val(),"goid":-1,"goname":""}
+			backdata = {"productcode":"0", "productdesc": $("#productdesc").val(),"calculateto":$("#calculateto").val(),"backflag":"1","godownflag":$("#godownflag").val(),"goid":"-1","goname":""}
 }
 else {
-	backdata = {"productcode":$("#productcode").val(), "productdesc":$("#productdesc").val(),"calculateto":$("#calculateto").val(),"backflag":0,"godownflag":$("#godownflag").val(),"goid":-1,"goname":""}
+	backdata = {"productcode":$("#productcode").val(), "productdesc":$("#productdesc").val(),"calculateto":$("#calculateto").val(),"backflag":"0","godownflag":$("#godownflag").val(),"goid":"-1","goname":""}
 }
 }		
 else if ($("#godownflag").val()==1) {
 if ($("#editgoddet").val()=="allgod"){
 
-backdata = {"productcode":$("#productcode").val(), "productdesc": $("#productdesc").value(),"calculateto":$("#calculateto").val(),"backflag":2,"godownflag":$("#godownflag").val(), "goid":0 , "goname":$("#goname").value()}
+backdata = {"productcode":$("#productcode").val(), "productdesc": $("#productdesc").value(),"calculateto":$("#calculateto").val(),"backflag":"2","godownflag":$("#godownflag").val(), "goid":"0" , "goname":$("#goname").value()}
 }
 else{
-backdata = {"productcode":$("#productcode").val(), "productdesc":$("#productdesc").value,"calculateto":$("#calculateto").val(),"backflag":3,"godownflag":$("#godownflag").val(), "goid":$("#goid").val(), "goname":$("#goname").value()}
+backdata = {"productcode":$("#productcode").val(), "productdesc":$("#productdesc").value,"calculateto":$("#calculateto").val(),"backflag":"3","godownflag":$("#godownflag").val(), "goid":$("#goid").val(), "goname":$("#goname").value()}
 }
 }
 			console.log(backdata);
 					$.ajax(
 						{
 							type: "POST",
-							url: "/product?type=printablestockonhandreport",
+							url: "/product?type=showstockonhandreport",
 							global: false,
 							async: false,
 							datatype: "text/html",

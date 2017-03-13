@@ -544,23 +544,32 @@ def showstockonhandreport(request):
     
 @view_config(route_name="product",request_param="type=printablestockonhandreport")
 def printablestockonhandreport(request):
+    
     header={"gktoken":request.headers["gktoken"]}
     godownflag = int(request.params["godownflag"])
+    print "godown flag ",godownflag
     goid = int(request.params["goid"])
+    print "goid", goid
     goname = request.params["goname"]
+    print "goname",goname
     productcode = int(request.params["productcode"])
+    print "product code ",productcode
+    calculateto = request.params["calculateto"]
+    print "claculateto",calculateto
+    productdesc = request.params["productdesc"]
+    print productdesc
 #    scalculatefrom = request.params["calculatefrom"]
     scalculateto = request.params["calculateto"]
-#    calculatefrom = datetime.strptime(scalculatefrom, '%d-%m-%Y').strftime('%Y-%m-%d')
-    calculateto = datetime.strptime(scalculateto, '%d-%m-%Y').strftime('%Y-%m-%d')
-    productdesc = request.params["productdesc"]
-    if int(request.params["backflag"]) == 1 :
+    print"backflag", request.params["backflag"]
+    if goid == -1 and productdesc == "all" :
+        print "all products condition"
         scalculateto = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%Y-%m-%d')
         stockrefresh = {"productcode":productcode,"calculateto":calculateto,"productdesc":"all","godownflag":godownflag,"goid":goid }
+        print "this is stockrefresh", stockrefresh
+        print result.json()["gkresult"]
         result = requests.get("http://127.0.0.1:6543/report?stockonhandreport&productcode=all&enddate=%s"%(scalculateto),headers=header)
         
-    
-    if int(request.params["backflag"]) == 0:
+    if int(request.params["backflag"]) == 0 :
         scalculateto = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%Y-%m-%d')
         stockrefresh = {"productcode":productcode,"calculateto":calculateto,"productdesc":productdesc,"godownflag":godownflag,"goid":goid}
         result = requests.get("http://127.0.0.1:6543/report?stockonhandreport&productcode=%d&enddate=%s"%(productcode,scalculateto),headers=header)
