@@ -472,7 +472,19 @@ $.ajax({
   }
 });
 });
+$('#purchaseorder').click(function (e) {
 
+             $.ajax({
+               url: '/purchaseorder',
+               type: 'POST',
+               global: false,
+               async: false,
+               datatype: 'text/html',
+             })
+             .done(function(resp) {
+               $("#info").html(resp);
+             })
+     });
 $('#godown').click(function (e) {
 // Loads godown page in the main div.
  $.ajax({
