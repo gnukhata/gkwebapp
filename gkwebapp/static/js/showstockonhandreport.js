@@ -20,9 +20,8 @@ Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
 
 Contributors:
 "Krishnakant Mane" <kk@gmail.com>
-"Ishan Masdekar " <imasdekar@dff.org.in>
-"Navin Karkera" <navin@dff.org.in>
 "Abhijith Balan" <abhijithb21@openmailbox.org>
+"Prajkta Patkar" <prajkta.patkar007@gmail.com>
 */
 
 $(document).ready(function() {
@@ -90,20 +89,30 @@ $(document).ready(function() {
   });
 
   $('#viewprintableversion').click(function (e) {
-    var printdata ={}
-    if ($("#godownflag").val()==0) {
-      printdata = {"productcode":$("#productcode").val(),"productdesc":$("#productdesc").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(), "godownflag":$("#godownflag").val(), "goid":"-1", "goname":""}
-    }
-    else {
-      printdata = {"productcode":$("#productcode").val(),"productdesc":$("#productdesc").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(), "godownflag":$("#godownflag").val(), "goid":$("#goid").val(), "goname":$("#goname").val()}
-    }
-    console.log(printdata);
+	  var backdata = {}
+		if ($("#godownflag").val()==0) {
+if ($("#viewstock_productname").val()=="allprod"){
+backdata = {"productcode":0, "productdesc": $("#productdesc").val(),"calculateto":$("#calculateto").val(),"backflag":1,"godownflag":$("#godownflag").val(),"goid":-1,"goname":""}
+}
+else {
+	backdata = {"productcode":$("productcode").val(), "productdesc":$("#productdesc").val(),"calculateto":$("#calculateto").val(),"backflag":0,"godownflag":$("#godownflag").val(),"goid":-1,"goname":""}
+}
+}		
+else if ($("#godownflag").val()==1) {
+if ($("#editgoddet").val()=="allgod"){
+
+backdata = {"productcode":$("#productcode").val(), "productdesc": $("#productdesc").value(),"calculateto":$("calculateto").val(),"backflag":2,"godownflag":$("#godownflag").val(), "goid":0 , "goname":$("#goname").value()}
+}
+else{
+backdata = {"productcode":$("#productcode").val(), "productdesc":$("#productdesc").value,"calculateto":$("#calculateto").val(),"backflag":3,"godownflag":$("#godownflag").val(), "goid":$("goid").val(), "goname":$("goname").value()}
+}
+}    console.log(backdata);
     $.ajax({
       type: "POST",
-      url: "/product?type=printablestockreport",
+      url: "/product?type=printablestockonhandreport",
       global: false,
       async: false,
-      data: printdata,
+      data: backdata,
       datatype: "text/html",
       beforeSend: function(xhr)
       {

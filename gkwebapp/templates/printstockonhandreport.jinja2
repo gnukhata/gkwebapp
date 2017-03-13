@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Stock on Hand Report{% endtrans %} | {{stockrefresh["productdesc"]}}</title>
+    <style>
+    @page {
+      size: 21cm 29.7cm;
+      margin: 10mm 10mm 20mm 10mm; /* change the margins as you want them to be. */
+    }
+    td {
+      font-size: 71%;
+    }
+
+    th {
+      font-size: 75%;
+    }
+		table { page-break-inside:auto }
+		tr    { page-break-inside:avoid; page-break-after:auto }
+    thead { display: table-header-group; }
+    tfoot { display: table-footer-group; }
+		.rightlist {
+	    text-align: right;
+	  }
+    </style>
+	</head>
+	<body>
+    <input type="hidden" id="productcode" name="productcode" value="{{stockrefresh["productcode"]}}"></input>
+    <input type="hidden" id="productdesc" name="productdesc" value="{{stockrefresh["productdesc"]}}"></input>
+    
+    <input type="hidden" id="calculateto" name="calculateto" value="{{stockrefresh["calculateto"]}}"></input>
+    <input type="hidden" id="financialstart" name="financialstart" value="{{stockrefresh["financialstart"]}}"></input>
+		<input type="hidden" id="godownflag" name="godownflag" value="{{stockrefresh["godownflag"]}}"></input>
+		<input type="hidden" id="goid" name="goid" value="{{stockrefresh["goid"]}}"></input>
+		<input type="hidden" id="goname" name="goname" value="{{godown}}"></input>
+
+		<div class="printorgdetails hidden-print" style="text-align:center;">
+    {% if godown=="" %}
+		<strong><i>{% trans %}Product Report{% endtrans %}</i></strong>
+		{% else %}
+		<strong><i>{% trans %}Godown Wise Product Report{% endtrans %}</i></strong>
+		{% endif %}
+		</div>
+
+		<div class="printorgdetails hidden-print" style="text-align:center;">
+    {% if godown=="" %}
+		<i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong>
+		{% else %}
+		<i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong><i>  {% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong>
+    {% endif %}
+		<i>{% trans %}Period{% endtrans %}</i> : <strong>{{stockrefresh["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{stockrefresh["calculateto"]}}</strong>
+	</div>
+		<div class="table-responsive printorgdetails">
+			<table id="ledgertable" class="table shadow table-striped table-condensed table-bordered">
+				<thead class="bg-primary">
+					<tr class="visible-print">
+						<th colspan="7" style="text-align:center; font-size:80%">
+							<i>{% trans %}Stock on Hand Report for{% endtrans %}</i> <strong>{{stockrefresh["productdesc"]}}</strong>
+							<i>{% trans %}Stock as on{% endtrans %}</i> : <strong> <strong>{{stockrefresh["calculateto"]}}</strong>
+						</th>
+					</tr>
+					<tr>
+            <th class="col-xs-1" >
+<th class="dtwrap calign" >
+            {% trans %}Sr. No.{% endtrans %}
+          </th>
+		{% if godown == "" and stockrefresh["productdesc"]!= "all" %}
+        <th class="mdwrap calign" >
+          {% trans %}Product Name{% endtrans %}
+        </th>
+         
+        <th class="smwrap calign" >
+          {% trans %}Balance{% endtrans %}
+        </th>
+        {% endif %}
+        {% if godown == "" and stockrefresh["productdesc"]== "all"%}
+        <th class="mdwrap calign" >
+          {% trans %}Product Name{% endtrans %}
+        </th>
+        <th class="smwrap calign" >
+          {% trans %}Balance{% endtrans %}
+        </th>
+        {% endif %}
+        {% if godown == "All godowns" and stockrefresh["productdesc"] != "all"%}
+        <th class="mdwrap calign" >
+          {% trans %}Product Name{% endtrans %}
+        </th>
+         <th class="mdwrap calign" >
+          {% trans %}Godown Name{% endtrans %}
+        </th>
+        <th class="smwrap calign" >
+          {% trans %}Balance{% endtrans %}
+        </th>
+         {% endif %}
+        {% if godown != "All godowns" and godown != "" and stockrefresh["productdesc"] != "all" %}
+        <th class="mdwrap calign" >
+          {% trans %}Product Name{% endtrans %}
+        </th>
+         <th class="smwrap calign" >
+          {% trans %}Balance{% endtrans %}
+        </th>
+		 {% endif %}
+
+      </tr>
+    </thead>
+    <tbody>
+
+    {% for record in gkresult %}
+    <tr>
+    <td class="dtwrap calign" >
+          {{record["srno"]}}
+        </td>
+       {% if godown == "" and stockrefresh["productdesc"]!= "all" %}
+    <td class="mdwrap calign" >
+          {{record["productname"]}}
+        </td>
+       
+     <td class="smwrap calign" >
+          {{record["balance"]}}
+        
+        </td>
+
+        {% endif %}
+        {% if godown == "" and stockrefresh["productdesc"]== "all"%}
+        <td class="mdwrap calign " >
+          {{record["productname"]}}
+        </td>
+     <td class="smwrap calign " >
+          {{record["balance"]}}
+        </td>
+        {% endif %}
+        {% if godown == "All godowns" and stockrefresh["productdesc"] != "all"%}
+        
+         <td class="mdwrap calign" >
+          {{record["productname"]}}
+        </td>
+         <td class="mdwrap calign" >
+          {{record["godown"]}}
+        </td>
+     <td class="smwrap calign" >
+          {{record["balance"]}}
+        </td>
+        
+        {% endif %}
+        {% if godown != "All godowns" and godown != "" and stockrefresh["productdesc"] != "all" %}
+
+         <td class="mdwrap calign " >
+          {{stockrefresh["productdesc"]}}
+        </td>
+     <td class="smwrap calign" >
+          {{record["balance"]}}
+        </td>
+        {% endif %}
+	</tr>
+        {% endfor %}
+
+				</tbody>
+			</table>
+			<span style="margin:auto; display:table;">
+				<button class="btn btn-sm btn-primary hidden-print" type="button" id="printback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+				<button class="btn btn-sm btn-primary hidden-print" type="button"	id="realprint" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
+			</span>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("title").html("GNUKhata");
+				$("#printback").click(function(event) {
+					var backdata = {}
+					if ($("#godownflag").val()==0) {
+			backdata = {"productcode":0, "productdesc": $("#productdesc").val(),"calculateto":$("#calculateto").val(),"backflag":1,"godownflag":$("#godownflag").val(),"goid":-1,"goname":""}
+}
+else {
+	backdata = {"productcode":$("productcode").val(), "productdesc":$("#productdesc").val(),"calculateto":$("#calculateto").val(),"backflag":0,"godownflag":$("#godownflag").val(),"goid":-1,"goname":""}
+}
+}		
+else if ($("#godownflag").val()==1) {
+if ($("#editgoddet").val()=="allgod"){
+
+backdata = {"productcode":$("#productcode").val(), "productdesc": $("#productdesc").value(),"calculateto":$("calculateto").val(),"backflag":2,"godownflag":$("#godownflag").val(), "goid":0 , "goname":$("#goname").value()}
+}
+else{
+backdata = {"productcode":$("#productcode").val(), "productdesc":$("#productdesc").value,"calculateto":$("#calculateto").val(),"backflag":3,"godownflag":$("#godownflag").val(), "goid":$("goid").val(), "goname":$("goname").value()}
+}
+}
+			console.log(backdata);
+					$.ajax(
+						{
+							type: "POST",
+							url: "/product?type=printablestockonhandreport",
+							global: false,
+							async: false,
+							datatype: "text/html",
+							data: backdata,
+							beforeSend: function(xhr)
+							{
+								xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+							}
+						})
+						.done(function(resp)
+						{
+							$("#info").html("");
+							$("#info").html(resp);
+						}
+					);
+				});
+				$("#realprint").click(function(event) {
+					window.print();
+				});
+			});
+		</script>
+	</body>
+</html>

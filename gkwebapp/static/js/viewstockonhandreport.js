@@ -20,8 +20,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
 
 Contributors:
 "Krishnakant Mane" <kk@gmail.com>
-"Ishan Masdekar " <imasdekar@dff.org.in>
-"Navin Karkera" <navin@dff.org.in>
+"Prajkta Patkar"<prajkta.patkar007@gmail.com>
 "Abhijith Balan" <abhijithb21@openmailbox.org>
 */
 /*
