@@ -474,7 +474,7 @@ $(document).ready(function() {
     {
       $("#extsp").html(existingcatspecs);
       existingcatspecs = $("#extsp").clone();
-      $('#editspecifications').find('input, textarea, button, select').prop('disabled',false);
+      $('.spec_obj').prop('disabled',false);
 
     }
     if (catcode!="")
@@ -493,11 +493,13 @@ $(document).ready(function() {
       })
       .done(function(resp)
       {
+        console.log("Hello");
+        if (resp["gkresult"].length > 0) {
         $('#spec_table tbody tr').remove();
          for (specname of resp["gkresult"]) {
            $('#spec_table tbody').append('<tr>'+
            '<td class="col-xs-2">'+
-           '<select id="spec_name" class="spec_name form-control input-sm" disabled >'+
+           '<select class="spec_name form-control input-sm" disabled >'+
            '<option value="'+specname["spcode"]+'" selected>'+specname["attrname"]+'</option>'+
            '</td>'+
            '<td class="col-xs-2">'+
@@ -505,6 +507,7 @@ $(document).ready(function() {
            '</td>'+
            '</tr>');
          }
+       }
       })
       .fail(function() {
         console.log("error");
