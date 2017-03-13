@@ -29,6 +29,7 @@ $(document).ready(function() {
     //when alt +shift+ D pressed Done is clicked
     $(document).keydown(function(event) {
       if(event.altKey && event.shiftKey && event.keyCode == 68){
+        event.preventDefault();
         $("#addcategory").click();
       }
         if(event.which == 36){
@@ -329,7 +330,17 @@ $(document).ready(function() {
 
 
     });
-    /*-----------------------------Rohini------------------------*/
+    $(document).off("change", ".tax_name").on("change", ".tax_name", function(event) {
+      if($('#category_tax_table tbody tr:last td:eq(0) select').val() == "VAT"){
+        $('#category_tax_table tbody tr:last td:eq(1) select').prop('disabled', false);
+        $('#category_tax_table tbody tr:last td:eq(1) select option[value=""]').prop('disabled', true);
+        $('#category_tax_table tbody tr:last td:eq(1) select').val('Andaman and Nicobar Islands');
+      }
+      else if($('#category_tax_table tbody tr:last td:eq(0) select').val() == "CVAT"){
+        $('#category_tax_table tbody tr:last td:eq(1) select').val('');
+        $('#category_tax_table tbody tr:last td:eq(1) select').prop('disabled', true);
+      }
+    });
     $(document).off("keydown", ".tax_rate").on("keydown", ".tax_rate", function(event) {
 
         var curindex1 = $(this).closest('tr').index();
