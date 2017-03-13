@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}stock on hand report{% endtrans %}</title>
+  <style media="screen">
+  .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  label {
+		font-size: 90%;
+	}
+  </style>
+</head>
+<body>
+  <div style="padding-top:5px" class="container-fluid mainbox col-md-6 col-md-offset-3">
+    <div class="panel shadow">
+      <div class="panel-heading">
+        <h3 class="panel-title">{% trans %}Select Product{% endtrans %}</h3>
+      </div>
+      <div class="panel-body" style="padding-top:5px">
+        <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
+          <label for="viewstock_fromdate">{% trans %}Please enter date in proper format!{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
+
+          <label for="viewstock_fromdate">{% trans %}Please enter date within the financial year!{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="compare-date-alert" aria-live="rude" role="alert" hidden>
+
+          <label for="viewstock_todate">{% trans %}From date should be smaller or equal to to date !{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="account-blank-alert" aria-live="rude" role="alert" hidden>
+
+          <label for="viewstock_accname">{% trans %}Please select a Product!{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="godown-blank-alert" aria-live="rude" role="alert" hidden>
+
+          <label>{% trans %}Please select a Godown!{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="godprod-all-alert" aria-live="rude" role="alert" hidden>
+
+          <label>{% trans %}Please select a Product or A Godown!{% endtrans %}</label>
+        </div>
+
+        <div style="margin-bottom: 5px" class="col-xs-12 from-group">
+          <label for="viewstock_productname" style="margin-top: 10px;">{% trans %}Product{% endtrans %} :</label>
+          <select class = "form-control input-sm" id="viewstock_productname"  name = "productname" >
+            <option value="" disabled selected hidden>{% trans %}Select Product{% endtrans %}</option>
+            {% for product in gkresult %}
+            <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
+            {% endfor %}
+            <option value="allprod" >{% trans %}All Products{% endtrans %}</option>
+          </select>
+
+          <div class="col-xs-12" style="margin-top: 10px;">
+              <div class="col-xs-6">
+              <label for="viewstock_todate">{% trans %}As on{% endtrans %} :</label>
+              <div class="form-inline" >
+
+                <div class="form-group">
+
+                  <input type="text" class="viewstock_date form-control input-sm dis" id="viewstock_todate" value="" size="2" maxlength="2" placeholder="DD" >
+                  <input type="text" id="viewstock_tomonth" class="viewstock_date form-control input-sm dis" value="" size="2" maxlength="2" placeholder="MM" >
+                  <input type="text" id="viewstock_toyear" class="viewstock_date form-control input-sm dis" value="" size="4" maxlength="4" placeholder="YYYY" >
+                </div>
+              </div>
+            </div>
+          </div>
+          {% if not godown %}
+          <input type="text" id="godownpresent" value="0" hidden>
+          <input type="checkbox" id="godownflag" value="0" hidden>
+          {% else %}
+          <div class="form-group">
+            <input type="text" id="godownpresent" value="1" hidden>
+            <input type="checkbox" id="godownflag" style="margin-top: 20px;" value="0">
+            <label for="godownflag">Godown Wise Stock on Hand Report</label>
+          </div>
+          <div class="form-group" id="goselect" hidden>
+            <label for="editgoddet">{% trans %}Godown{% endtrans %} :</label>
+            <select class = "form-control input-sm" id="editgoddet">
+              <option value="disabled=""" disabled selected hidden>{% trans %}Select Godown{% endtrans %}</option>
+              {% for gods in godown %}
+              <option value="{{gods['goid']}}">{{gods["goname"]}}</option>
+             
+              {% endfor %}
+               <option value="allgod" >{% trans %}All godowns{% endtrans %}</option>
+            </select>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button class="btn btn-primary btn-sm" id="viewstock_submit" name="view" accesskey="v">{% trans %}<u>V</u>iew{% endtrans %}</button>
+        <button id="viewstock_reset" class="btn btn-danger btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewstockonhandreport.js')}}"></script>
+</body>
+</html>

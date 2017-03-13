@@ -5,7 +5,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
 	GNUKhata is Free Software; you can redistribute it and/or modify
 	it under the terms of the GNU Affero General Public License as
 	published by the Free Software Foundation; either version 3 of
-	the License, or (at your option) any later version.
+	the License, or (at your option) any later version.and old.stockflag = 's'
 
 	GNUKhata is distributed in the hope that it will be useful, but
 	WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -34,16 +34,14 @@ $(document).ready(function() {
 	$(".dis").attr('disabled', true);
 
 	var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
-	
 	var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
 	var sel1 = 0; // flag for focus on combo box
 
 	// Setting default date to financialstart and end.
 	var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
-	$("#viewstock_fromdate").val(fromdatearray[2]);
-	console.log(fromdatearray[2]);
-	$("#viewstock_frommonth").val(fromdatearray[1]);
-	$("#viewstock_fromyear").val(fromdatearray[0]);
+	$("#viewstock_fromdate").val(fromdatearray[2])
+	$("#viewstock_frommonth").val(fromdatearray[1])
+	$("#viewstock_fromyear").val(fromdatearray[0])
 	var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g)
 	$("#viewstock_todate").val(todatearray[2])
 	$("#viewstock_tomonth").val(todatearray[1])

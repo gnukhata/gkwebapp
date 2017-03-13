@@ -106,34 +106,12 @@ a:active {
 						{{record['srno']}}
 					</td>
 					<td class="smwrap calign">
-						<!--{% if record['srno']!="" %}
-							<a class="accname" href="">{{record['accountname']}}</a>
-						{% else %}
-						{% if record['accountname']=="" %}
-						<a class="accname" href="">&nbsp</a>
-						{% else %}
-						<a class="accname" href="" style="text-decoration: none;">{{record['accountname']}}</a>
-						{% endif %}
-						{% endif %}-->
-						<a class="dcno" href="">{{record['dcno']}}</a>
-						<!--{{record['dcno']}}-->
+						
+						{{record['dcno']}}
+						
 					</td>
 
-					<!--{%if record["advflag"]==1%}
-					<td class="mdwrap  ralign cred">
-						<b>{{record["Dr"]}}</b>
-					</td>
-					<td class="mdwrap ralign cred" >
-						<b>{{record["Cr"]}}</b>
-					</td>
-					{%else%}
-					<td class="mdwrap ralign" >
-						{{record["Dr"]}}
-					</td>
-					<td class="mdwrap ralign">
-						{{record["Cr"]}}
-					</td>
-					{%endif%}-->
+					
 					<td class="mdwrap calign">
 						{{record["dcdate"]}}
 					</td>
@@ -157,7 +135,7 @@ a:active {
 	</span>
 	<input type="hidden" id="inputdate" value="{{inputdate}}">
 	<input type="hidden" id="inout" value="{{inout}}">
-	<!--<input type="hidden" id="trialbaltype" value="{{trialbalancetype}}">-->
+	
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/unbilled_deliveries_report.js')}}"></script>
 </body>

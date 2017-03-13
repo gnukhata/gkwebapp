@@ -858,6 +858,28 @@ $.ajax({
                 }
               );
               });
+            $('#stockonhandreport').click(function (e) {
+                // calls view page for stock report.
+                  $.ajax(
+                    {
+
+                    type: "POST",
+                    url: "/product?type=viewstockonhandreport",
+                    global: false,
+                    async: false,
+                    datatype: "text/html",
+                    beforeSend: function(xhr)
+                      {
+                        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+                      },
+                    success: function(resp)
+                    {
+                      $("#info").html(resp);
+                    }
+                    }
+                  );
+                  });
+
 
   $('#fevoucher').click(function (e) {
     // calls find and edit voucher page.

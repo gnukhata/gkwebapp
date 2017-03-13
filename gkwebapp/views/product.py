@@ -295,6 +295,7 @@ def listofstockitemsspreadsheet(request):
 
 @view_config(route_name="product",request_param="type=viewstockreport", renderer="gkwebapp:templates/viewstockreport.jinja2")
 def viewstockreport(request):
+	
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/products",headers=header)
 	result1 = requests.get("http://127.0.0.1:6543/godown",headers=header)
@@ -484,3 +485,88 @@ def stockreportspreadsheet(request):
 	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
 	os.remove("response.ods")
 	return Response(rep, headerlist=headerList.items())
+	
+
+@view_config(route_name="product",request_param="type=viewstockonhandreport", renderer="gkwebapp:templates/viewstockonhandreport.jinja2")
+def viewStockOnHandReport(request):
+	
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/products",headers=header)
+	result1 = requests.get("http://127.0.0.1:6543/godown",headers=header)
+	return{"gkresult":result.json()["gkresult"], "godown":result1.json()["gkresult"], "gkstatus":result.json()["gkstatus"]}
+	
+
+@view_config(route_name="product",request_param="type=showstockonhandreport")
+def showstockonhandreport(request):
+	header={"gktoken":request.headers["gktoken"]}
+	godownflag = int(request.params["godownflag"])
+	goid = int(request.params["goid"])
+	goname = request.params["goname"]
+	productcode = int(request.params["productcode"])
+	calculateto = request.params["calculateto"]
+	scalculateto = request.params["calculateto"]
+	 
+	
+	productdesc = request.params["productdesc"]
+	if int(request.params["backflag"]) == 1 :
+		scalculateto = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%Y-%m-%d')
+		stockrefresh = {"productcode":productcode,"calculateto":calculateto,"productdesc":"All Products","godownflag":godownflag,"goid":goid }
+		result = requests.get("http://127.0.0.1:6543/report?stockonhandreport&productcode=all&enddate=%s"%(scalculateto),headers=header)
+		
+	
+	if int(request.params["backflag"]) == 0:
+		scalculateto = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%Y-%m-%d')
+		stockrefresh = {"productcode":productcode,"calculateto":datetime.strptime(calculateto, '%Y-%m-%d').strftime('%Y-%m-%d'),"productdesc":productdesc,"godownflag":godownflag,"goid":goid}
+		result = requests.get("http://127.0.0.1:6543/report?stockonhandreport&productcode=%d&enddate=%s"%(productcode,scalculateto),headers=header)
+		
+	if godownflag == 1 and int(request.params["backflag"]) == 3 :
+		scalculateto = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%Y-%m-%d')
+		stockrefresh = {"productcode":productcode,"calculateto":calculateto,"productdesc":productdesc,"godownflag":godownflag,"goid":goid}
+		result = requests.get("http://127.0.0.1:6543/report?godownwisestockonhand&type=pg&goid=%d&productcode=%d&enddate=%s"%(goid, productcode, scalculateto),headers=header)
+		
+	if godownflag == 1 and int(request.params["backflag"]) == 2 and goid == 0:
+		
+		scalculateto = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%Y-%m-%d')
+		stockrefresh = {"productcode":productcode,"calculateto":calculateto,"productdesc":productdesc,"godownflag":godownflag,"goid":goid}
+		result = requests.get("http://127.0.0.1:6543/report?godownwisestockonhand&type=pag&productcode=%d&enddate=%s"%(productcode, scalculateto),headers=header)		
+	
+	return render_to_response("gkwebapp:templates/showstockonhandreport.jinja2",{"gkresult":result.json()["gkresult"],"stockrefresh":stockrefresh,"godown":goname},request=request)
+	
+    
+@view_config(route_name="product",request_param="type=printablestockonhandreport")
+def printablestockonhandreport(request):
+    
+    header={"gktoken":request.headers["gktoken"]}
+    godownflag = int(request.params["godownflag"])
+    goid = int(request.params["goid"])
+    goname = request.params["goname"]
+    productcode = int(request.params["productcode"])
+    calculateto = request.params["calculateto"]
+    productdesc = request.params["productdesc"]
+    scalculateto = request.params["calculateto"]
+    if int(request.params["backflag"]) == 1 :
+       
+        scalculateto = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%Y-%m-%d')
+        stockrefresh = {"productcode":productcode,"calculateto":calculateto,"productdesc":"all","godownflag":godownflag,"goid":goid }
+                
+        result = requests.get("http://127.0.0.1:6543/report?stockonhandreport&productcode=all&enddate=%s"%(scalculateto),headers=header)
+        
+    if int(request.params["backflag"]) == 0 :
+        scalculateto = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%Y-%m-%d')
+        stockrefresh = {"productcode":productcode,"calculateto":calculateto,"productdesc":productdesc,"godownflag":godownflag,"goid":goid}
+        result = requests.get("http://127.0.0.1:6543/report?stockonhandreport&productcode=%d&enddate=%s"%(productcode,scalculateto),headers=header)
+        
+    if godownflag == 1 and int(request.params["backflag"]) == 3 :
+        print "single prod single godown"
+        scalculateto = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%Y-%m-%d')
+        stockrefresh = {"productcode":productcode,"calculateto":calculateto,"productdesc":productdesc,"godownflag":godownflag,"goid":goid}
+        result = requests.get("http://127.0.0.1:6543/report?godownwisestockonhand&type=pg&goid=%d&productcode=%d&enddate=%s"%(goid, productcode, scalculateto),headers=header)
+        
+    if godownflag == 1 and int(request.params["backflag"]) == 2 and goid == 0:
+        print "single product all godowns"
+        scalculateto = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%Y-%m-%d')
+        stockrefresh = {"productcode":productcode,"calculateto":calculateto,"productdesc":productdesc,"godownflag":godownflag,"goid":goid}
+        result = requests.get("http://127.0.0.1:6543/report?godownwisestockonhand&type=pag&productcode=%d&enddate=%s"%(productcode, scalculateto),headers=header)        
+
+    return render_to_response("gkwebapp:templates/printstockonhandreport.jinja2",{"gkresult":result.json()["gkresult"],"stockrefresh":stockrefresh,"godown":goname},request=request)
+

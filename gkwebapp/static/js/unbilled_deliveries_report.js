@@ -115,39 +115,6 @@ $(document).ready(function() {
 		}
 });
 
-	/*$(".del_unbilled_table").off('dblclick','tr').on('dblclick','tr',function(e){ // This function will drill down to ledger of the selected account.
-		e.preventDefault();
-		var acccode = $(this).attr('data-value');
-		if (acccode=="")
-		{
-				return false;
-		}
-		 var date = $("#ledtodate").val().split("-");
-		 var newtodate = date[2]+"-"+date[1]+"-"+date[0];
-
-		 //Back flag is sent so that the ledger page will know from where it has been called.
-		 //accountcode of the selected account along with the report period is also sent.
-
-		$.ajax(
-			{
-				type: "POST",
-				url: "/showledgerreport",
-				global: false,
-				async: false,
-				datatype: "text/html",
-				data: {"backflag":$("#trialbaltype").val(),"accountcode":acccode,"calculatefrom":sessionStorage.yyyymmddyear1,"calculateto":newtodate,"financialstart":sessionStorage.yyyymmddyear1,"projectcode":"","monthlyflag":false,"narrationflag":false},
-				beforeSend: function(xhr)
-				{
-					xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-				},
-			})
-				.done(function(resp)
-				{
-					$("#info").html(resp);
-				}
-			);
-	});
-  */
 
 // Not used. For future reference.
 	function open_in_newtab(filename, text) {
@@ -164,46 +131,6 @@ $(document).ready(function() {
 		$("#show_unbilled_deliveries").click();
 	});
 
-	/*$('#gtbclearfields').click(function(){
-    $(this).siblings(".bootstrap-table").find(".form-control").val("");
-  });
-	$('#etbclearfields').click(function(){
-    $(this).siblings(".bootstrap-table").find(".form-control").val("");
-  });
-	$('#ntbclearfields').click(function(){
-    $(this).siblings(".bootstrap-table").find(".form-control").val("");
-  });
-  */
-/*  $(".search").children(".form-control").keyup(function(event){
-    if (event.keyCode == 27) {
-      $(this).val("");
-    }
-  });
 
-		$("#printbutton").click(function(event) {
-			// this function creates a spreadsheet of the report.
-		event.preventDefault();
-		var orgname = sessionStorage.getItem('orgn');
-		var orgtype = sessionStorage.getItem('orgt');
-		var xhr = new XMLHttpRequest();
-		trialbalancetype = $("#trialbaltype").val();
-
-		xhr.open('GET', '/printtrialbalance?financialstart='+sessionStorage.yyyymmddyear1+'&orgname='+orgname+'&calculateto='+newtodate+'&orgtype='+orgtype+'&trialbalancetype='+trialbalancetype+'&fyend='+sessionStorage.getItem('year2'), true);
-		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-		xhr.responseType = 'blob';
-
-		xhr.onload = function(e) {
-  	if (this.status == 200) {
-		// if successfull a file will be served to the client.
-    // get binary data as a response
-    	var blob = this.response;
-	 		var url = window.URL.createObjectURL(blob);
-			window.location.assign(url)
-  	}
-	};
-
-	xhr.send();
-
-});*/
 
 });

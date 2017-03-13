@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Stock on Hand Report{% endtrans %}</title>
+
+  <style type="text/css">
+  .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  
+  #latable td {
+    font-size: 75%;
+    padding: 4 !important;
+    margin: 4 !important;
+  }
+#latable{
+   margin: 0 auto
+     
+}
+  #latable th {
+    font-size: 85%;
+  }
+
+  .card-view .title {
+      font-weight: bold;
+      display: inline-block;
+      min-width: 30%;
+      text-align: left !important;
+  }
+
+  #latable tbody {
+      display:block;
+      height: calc(100vh - 18em);
+      overflow-y:scroll;
+      height: auto !important;
+  }
+  #latable thead,#latable tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+      height: auto !important;
+  }
+  #latable thead {
+      width: calc( 100% - 0.65em );
+      
+  }
+
+ .size{
+	width: 800px;
+	
+}
+
+  .cred{
+    color:red;
+  }
+  .calign{
+    text-align:center;
+  }
+  .dtwrap{
+  	width :4%
+  	 }
+ .smwrap{
+ 	width:4%
+ }
+ .lngwrap{
+ 	width:20%
+ }
+ .mdwrap{
+ 	width:8%
+ }
+
+
+
+  </style>
+</head>
+<body>
+  <input type="hidden" id="productcode" name="productcode" value="{{stockrefresh["productcode"]}}"></input>
+  <input type="hidden" id="productdesc" name="productdesc" value="{{stockrefresh["productdesc"]}}"></input>
+ 
+  <input type="hidden" id="calculateto" name="calculateto" value="{{stockrefresh["calculateto"]}}"></input>
+  
+  <input type="hidden" id="godownflag" name="godownflag" value="{{stockrefresh["godownflag"]}}"></input>
+  <input type="hidden" id="goid" name="goid" value="{{stockrefresh["goid"]}}"></input>
+  <input type="hidden" id="goname" name="goname" value="{{godown}}"></input>
+
+  <span class="pull-right" style="padding-right:15px"><i>{% trans %}Stock as on{% endtrans %}</i> : <strong>{{stockrefresh["calculateto"]}}</strong></span>
+
+  
+
+  {% if godown == "" %}
+  <span style="margin:auto; display:table;  "><strong><i>{% trans %}Stock on Hand Report{% endtrans %}</i></strong></span>
+  <span style="margin:auto; display:table;   "><i>{% trans %}Name of the Product {% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
+  {% else %}
+  <span style="margin:auto; display:table;  "><strong><i>{% trans %}Godown Wise Stock on Hand Report{% endtrans %}</i></strong></span>
+  <span style="margin:auto; display:table;  "><i>{% trans %}Name of the Product {% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong><i>  {% trans %} &nbsp Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong></span>
+  {% endif %}
+	
+	
+  <table id="latable"  style="margin-top:75px;" class="table shadow table-bordered size mx-auto "   >
+    
+    <thead class="bg-primary">
+  
+    <tr>
+     <th class="dtwrap calign" >
+            {% trans %}Sr. No.{% endtrans %}
+          </th>
+		{% if godown == "" and stockrefresh["productdesc"]!= "All Products" %}
+        <th class="mdwrap calign" >
+          {% trans %}Product Name{% endtrans %}
+        </th>
+         
+        <th class="smwrap calign" >
+          {% trans %}Quantity{% endtrans %}
+        </th>
+        {% endif %}
+        {% if godown == "" and stockrefresh["productdesc"]== "All Products"%}
+        <th class="mdwrap calign" >
+          {% trans %}Product Name{% endtrans %}
+        </th>
+        <th class="smwrap calign" >
+          {% trans %}Quantity{% endtrans %}
+        </th>
+        {% endif %}
+        {% if godown == "All godowns" and stockrefresh["productdesc"] != "All Products"%}
+        <th class="mdwrap calign" >
+          {% trans %}Product Name{% endtrans %}
+        </th>
+         <th class="mdwrap calign" >
+          {% trans %}Godown Name{% endtrans %}
+        </th>
+        <th class="smwrap calign" >
+          {% trans %}Quantity{% endtrans %}
+        </th>
+         {% endif %}
+        {% if godown != "All godowns" and godown != "" and stockrefresh["productdesc"] != "All Products" %}
+        <th class="mdwrap calign" >
+          {% trans %}Product Name{% endtrans %}
+        </th>
+         <th class="smwrap calign" >
+          {% trans %}Quantity{% endtrans %}
+        </th>
+		 {% endif %}
+
+      </tr>
+    </thead>
+    <tbody>
+
+    {% for record in gkresult %}
+    <tr>
+    <td class="dtwrap calign" >
+          {{record["srno"]}}
+        </td>
+       {% if godown == "" and stockrefresh["productdesc"]!= "All Products" %}
+    <td class="mdwrap calign" >
+          {{record["productname"]}}
+        </td>
+       
+     <td class="smwrap calign" >
+          {{record["balance"]}}
+
+        </td>
+
+        {% endif %}
+        {% if godown == "" and stockrefresh["productdesc"]== "All Products"%}
+        <td class="mdwrap calign " >
+          {{record["productname"]}}
+        </td>
+     <td class="smwrap calign " >
+          {{record["balance"]}}
+        </td>
+        {% endif %}
+        {% if godown == "All godowns" and stockrefresh["productdesc"] != "All Products"%}
+        
+         <td class="mdwrap calign" >
+          {{record["productname"]}}
+        </td>
+         <td class="mdwrap calign" >
+          {{record["godown"]}}
+        </td>
+     <td class="smwrap calign" >
+          {{record["balance"]}}
+        </td>
+        
+        {% endif %}
+        {% if godown != "All godowns" and godown != "" and stockrefresh["productdesc"] != "All Products" %}
+
+         <td class="mdwrap calign " >
+          {{stockrefresh["productdesc"]}}
+        </td>
+     <td class="smwrap calign" >
+          {{record["balance"]}}
+        </td>
+        {% endif %}
+	</tr>
+        {% endfor %}
+
+          </tbody> 
+          
+  </table>
+  
+  {% if godown == "" %}
+  <span style="margin-top:100px; margin-left:35%; display:table; ">
+    <nbsp><nbsp>
+      <button type="button" class="btn btn-sm btn-danger" id="viewanotherstock" accesskey="w">{% trans %}Vie<u>w</u> Another Stock{% endtrans %}</button>
+    <button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="t">{% trans %}View Prin<u>t</u>able Version{% endtrans %}</button> 
+ {%else%}
+  <span style="margin-top:100px; margin-left:45%; display:table; ">
+    <nbsp><nbsp>
+      <button type="button" class="btn btn-sm btn-danger" id="viewanotherstock" accesskey="w">{% trans %}Vie<u>w</u> Another Stock{% endtrans %}</button>
+ 
+ {%endif%}
+  </span>
+  </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/showstockonhandreport.js')}}"></script>
+</body>
+</html>
