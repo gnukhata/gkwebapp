@@ -49,7 +49,7 @@ $(document).ready(function() {
     $("#new_parent_name").keydown(function(event) {
         if (event.which == 13) {
             event.preventDefault();
-            if($("#parent_spec").val() == ""){
+            if($("#new_parent_name").val() == ""){
               $("#blank-alert").alert();
               $("#blank-alert").fadeTo(2250, 500).slideUp(500, function() {
                   $("#blank-alert").hide();
