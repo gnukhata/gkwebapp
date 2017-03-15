@@ -135,6 +135,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   event.preventDefault();
   /* Act on the event */
   var inv = $("#invsel option:selected").attr("total");
+
   if ($.trim(inv)!="")
   {
   $("#invtotal").val(parseFloat(inv).toFixed(2));
@@ -143,6 +144,11 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   {
   $("#invtotal").val(parseFloat(0).toFixed(2));
   }
+  var value = $('#invsel option:selected').attr("customername");
+  console.log(value);
+  $(".accs:first option").filter(function() {return this.text == value;}).attr('selected', true);
+  $(".dramt:first").val(parseFloat(inv).toFixed(2));
+  $(".cramt:eq(1)").val(parseFloat(inv).toFixed(2));
 });
 
   var putcr = true;
