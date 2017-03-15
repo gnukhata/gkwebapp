@@ -46,42 +46,14 @@ $(document).ready(function() {
       $("#new_parent_name").focus();
     }
     var categorycode = "";
-    $("#new_parent_name").keydown(function(event) {
-        if (event.which == 13) {
-            event.preventDefault();
-            if($("#new_parent_name").val() == ""){
-              $("#blank-alert").alert();
-              $("#blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                  $("#blank-alert").hide();
-                });
-                $("#new_parent_name").focus();
-                return false;
-            }
-            $("#parent_spec").focus();
-        }
-    });
     $("#new_parent_div1").keydown(function(event) {
       //when esc key is pressed
       if(event.which == 27){
         $("#addcategory").click();
       }
     });
-    $(".child_spec_name").keydown(function(event) {
-        cosole.log("child spec name");
-        if (event.which == 13) {
-            event.preventDefault();
-            var curindex1 = $(this).closest('tr').index();
-            $("#child_category_spec_table tbody tr:eq(" + curindex1 + ") td:eq(1) select").focus();
-        }
-    });
 
-    $(".parent_spec_name").keydown(function(event) {
-        if (event.which == 13) {
-            event.preventDefault();
-            var curindex1 = $(this).closest('tr').index();
-            $(".parent_spec_type tbody tr:eq(" + curindex1 + ")").focus();
-        }
-    });
+
     $('#child_addspecmodal').on('shown.bs.modal', function() {
         $("#child_category_spec_table tbody tr:last td:eq(0) input").focus();
     });
@@ -132,23 +104,6 @@ $(document).ready(function() {
         }
 
     });
-
-    $("#child_category_name").keydown(function(event) {
-
-        if (event.which == 13) {
-            event.preventDefault();
-            if($("#child_category_name").val() == ""){
-              $("#child-cat-blank-alert").alert();
-              $("#child-cat-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                  $("#child-cat-blank-alert").hide();
-                });
-                $("#child_category_name").focus();
-                return false;
-            }
-            $("#child_spec").focus();
-        }
-    });
-
 
     /* If a parent category is selected then its specs are automatically inhereted by its child category and the specs are displayed */
     $("#category_under").change(function(event) {
@@ -417,13 +372,6 @@ $(document).ready(function() {
         }
 
 
-    });
-    $(document).off("click", ".tax_del").on("click", ".tax_del", function() {
-        $(this).closest('tr').fadeOut(200, function() {
-            $(this).closest('tr').remove(); //closest method gives the closest element specified
-            $('#category_tax_table tbody tr:last td:eq(0) select').focus().select();
-        });
-        $('#category_tax_table tbody tr:last td:eq(0) select').select();
     });
 
     //////////////////////////
