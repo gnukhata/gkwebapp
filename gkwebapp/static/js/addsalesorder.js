@@ -57,17 +57,18 @@ $(document).ready(function() {
 
         }
       });
-     $(".soyear").keydown(function(event) {
+      $(".soday").keydown(function(event) {
 
-       if (event.which==38) {  // Up arrow key event
-         event.preventDefault();
-         $("#salesorder_orderno").focus().select();
-       }
-       if (event.which==13) {
-         event.preventDefault();
-         $(".somonth").focus().select();
-       }
-     });
+        if (event.which==38) {  // Up arrow key event
+          event.preventDefault();
+          $("#salesorder_orderno").focus().select();
+        }
+        if (event.which==13) {
+          event.preventDefault();
+          $(".somonth").focus().select();
+        }
+      });
+
      $(".somonth").keydown(function(event) {
        if (event.which==13) {
          event.preventDefault();
@@ -75,7 +76,7 @@ $(document).ready(function() {
        }
        if (event.which==38) {
          event.preventDefault();
-         $(".sodate").focus().select();
+         $(".soday").focus().select();
        }
      });
      $(".soyear").keydown(function(event) {
@@ -142,21 +143,46 @@ $(document).ready(function() {
          $("#creditperiod").focus().select();
        }
      });
+      var taxstate;
      $("#salesorder_state").keydown(function(event) {
        if (event.which==13) {
          event.preventDefault();
-         if ($("#salesorder_product_table tbody tr:first td:eq(0) select").is(":disabled")||$("#salesorder_product_table tbody tr").length==0) {
-
-         }
-         else {
-           $("#salesorder_product_table tbody tr:first td:eq(0) select").focus();
-         }
+           $("#so_togodown").focus();
+           taxstate = $("#salesorder_state").val();
+           console.log(taxstate);
+           if(taxstate=="none"){
+            $(".salesorder_product_tax_rate").prop("disabled",true);
+           }
+           else{
+             $(".salesorder_product_tax_rate").prop("disabled",false);
+           }
        }
        if (event.which==38) {
          event.preventDefault();
          $("#salesorder_customer").focus().select();
        }
      });
+
+
+
+   $("#so_togodown").keydown(function(event) {
+     if (event.which==13) {
+       var togodown = $("#so_togodown option:selected").val();
+       console.log(togodown);
+       event.preventDefault();
+       if ($("#salesorder_product_table tbody tr:first td:eq(0) select").is(":disabled")||$("#salesorder_product_table tbody tr").length==0) {
+       }
+       else {
+         $("#salesorder_product_table tbody tr:first td:eq(0) select").focus();
+       }
+
+
+     }
+     if (event.which==38) {
+       event.preventDefault();
+       $("#salesorder_state").focus().select();
+     }
+   });
 
      /*Table key events */
      $(document).off("keydown",".product_name").on("keydown",".product_name",function(event)
@@ -181,6 +207,22 @@ $(document).ready(function() {
        }
      });
 
+     $(document).off('focus', '.salesorder_product_packages').on('focus', '.salesorder_product_packages', function(event) {
+     event.preventDefault();
+     /* Act on the event */
+     $(".salesorder_product_packages").numeric();
+   });
+
+   $(document).off("keydown",".salesorder_product_packages").on("keydown",".salesorder_product_packages",function(event)
+   {
+     var curindex = $(this).closest('tr').index();
+       if (event.which==13) {
+         event.preventDefault();
+         $('#salesorder_product_table tbody tr:eq('+curindex+') td:eq(3) input').focus().select();
+       }
+
+   });
+
      $(document).off('focus', '.salesorder_product_per_price').on('focus', '.salesorder_product_per_price', function(event) {
        event.preventDefault();
        /* Act on the event */
@@ -196,31 +238,7 @@ $(document).ready(function() {
        }
      });
 
-       $(document).off('focus', '.salesorder_product_packages').on('focus', '.salesorder_product_packages', function(event) {
-       event.preventDefault();
-       /* Act on the event */
-       $(".salesorder_product_packages").numeric();
-     });
 
-     $(document).off("keydown",".salesorder_product_packages").on("keydown",".salesorder_product_packages",function(event)
-     {
-       var curindex = $(this).closest('tr').index();
-         if (event.which==13) {
-           event.preventDefault();
-           $('#salesorder_product_table tbody tr:eq('+curindex+') td:eq(4) input').focus();
-         }
-
-
-
-         if ($("#salesorder_product_table tbody tr:eq("+curindex+") td:eq(0) select option:selected").val()=="") {
-           $("#product-blank-alert").alert();
-           $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-             $("#product-blank-alert").hide();
-           });
-           $("#salesorder_product_table tbody tr:eq("+curindex+") td:eq(0) select").focus();
-           return false;
-         }
-     });
 
      $(document).off('blur', '.salesorder_product_per_price').on('blur', '.salesorder_product_per_price', function(event) {
        event.preventDefault();
@@ -263,50 +281,18 @@ $(document).ready(function() {
           }
         });
 
-
-
-        if($("#salesorder_state").val() == "none"){
-          $(document).off("keydown",".salesorder_product_packages").on("keydown",".salesorder_product_packages",function(event)
-          {
-            var curindex1 = $(this).closest('tr').index();
-            var nextindex1 = curindex1+1;
-            var previndex1 = curindex1-1;
-            if (event.which==13) {
-
-              event.preventDefault();
-              if (curindex1 != ($("#salesorder_product_table tbody tr").length-1)) {
-                $('#salesorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
-              }
-              else {
-                if ($('#salesorder_product_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="") {
-                  $("#product-blank-alert").alert();
-                  $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-                    $("#product-blank-alert").hide();
-                  });
-                  $('#salesorder_product_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
-                  return false;
-                }
-                $('#salesorder_product_table tbody').append('<tr>'+$("#salesorder_product_table tbody tr:first").closest('tr').html()+'</tr>');
-                $("#salesorder_product_table tbody tr:last td:last").append('<a href="#" class="schedule_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-                $(".salesorder_product_tax_rate").numeric();
-                $('#salesorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
-
-              }
-            }
-
-        });
-
-      }//if ends
-
-      else{
-
-     $(document).off("keydown",".salesorder_product_tax_rate").on("keydown",".salesorder_product_tax_rate",function(event)
+     $(document).off("keydown",".salesorder_product_per_price").on("keydown",".salesorder_product_per_price",function(event)
      {
        var curindex1 = $(this).closest('tr').index();
        var nextindex1 = curindex1+1;
        var previndex1 = curindex1-1;
-       if (event.which==13) {
 
+       if (event.which==13) {
+         if($("#salesorder_state").val()!="none"){
+           console.log($("#purchaseorder_state").val());
+             $('#salesorder_product_table tbody tr:eq('+curindex1+') td:eq(4) input').focus().select();
+         }
+         else{
 
          event.preventDefault();
          if (curindex1 != ($("#salesorder_product_table tbody tr").length-1)) {
@@ -329,10 +315,45 @@ $(document).ready(function() {
 
          }
        }
+       }
 
    });
+   $(document).off("keydown",".salesorder_product_tax_rate").on("keydown",".salesorder_product_tax_rate",function(event)
+   {
+     var curindex1 = $(this).closest('tr').index();
+     var nextindex1 = curindex1+1;
+     var previndex1 = curindex1-1;
 
-}
+     if (event.which==13) {
+
+
+       event.preventDefault();
+       if (curindex1 != ($("#salesorder_product_table tbody tr").length-1)) {
+         $('#salesorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+       }
+       else {
+
+         if ($('#salesorder_product_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="") {
+           $("#product-blank-alert").alert();
+           $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+             $("#product-blank-alert").hide();
+           });
+           $('#salesorder_product_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
+           return false;
+         }
+         $('#salesorder_product_table tbody').append('<tr>'+$("#salesorder_product_table tbody tr:first").closest('tr').html()+'</tr>');
+         $("#salesorder_product_table tbody tr:last td:last").append('<a href="#" class="schedule_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+         $(".salesorder_product_tax_rate").numeric();
+         $('#salesorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+
+       }
+
+     }
+
+ });
+
+
+
 
        $(document).off("click",".schedule_del").on("click", ".schedule_del", function() {
          $(this).closest('tr').fadeOut(200, function(){
@@ -456,27 +477,7 @@ $(document).ready(function() {
         console.log("complete");
       });
     });
-    $("#salesorder_state").keydown(function(event) {
-      if (event.which==13) {
-        event.preventDefault();
-        if ($("#salesorder_product_table tbody tr:first td:eq(0) select").is(":disabled")||$("#salesorder_product_table tbody tr").length==0) {
-
-        }
-        else {
-          $("#salesorder_product_table tbody tr:first td:eq(0) select").focus();
-        }
-        var taxstate = $("#salesorder_state").val();
-        console.log(taxstate);
-        if(taxstate=="none"){
-         $(".salesorder_product_tax_rate").prop("disabled",true);
-        }
-        else{
-          $(".salesorder_product_tax_rate").prop("disabled",false);
-        }
-
-      }
-    });
-
+    
     $("#sosubmit").click(function(event) {
       event.preventDefault();
       console.log("sdjg");
@@ -599,8 +600,9 @@ $(document).ready(function() {
            pcode = $("#salesorder_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val();
            obj.productname = $.trim($("#salesorder_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").text());
            obj.quantity = $("#salesorder_product_table tbody tr:eq("+i+") td:eq(1) input").val();
-           obj.rateperunit = $("#salesorder_product_table tbody tr:eq("+i+") td:eq(2) input").val();
-           obj.packages = $("#salesorder_product_table tbody tr:eq("+i+") td:eq(3) input").val();
+            obj.packages = $("#salesorder_product_table tbody tr:eq("+i+") td:eq(2) input").val();
+           obj.rateperunit = $("#salesorder_product_table tbody tr:eq("+i+") td:eq(3) input").val();
+
            obj.taxrate = parseFloat($("#salesorder_product_table tbody tr:eq("+i+") td:eq(4) input").val()).toFixed(2);
            obj.staggered = [];
            obj.reorderlimit = null;

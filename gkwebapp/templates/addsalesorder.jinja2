@@ -36,7 +36,7 @@
          {% trans %}Please enter product quantity!{% endtrans %}
        </div>
       <div class="alert alert-danger" id="duplicate-alert"  aria-live="rude" role="alert" hidden>
-        {% trans %}Purchase order already exists!{% endtrans %}
+        {% trans %}Sales order already exists!{% endtrans %}
       </div>
       <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
         {% trans %}Something went wrong!{% endtrans %}
@@ -200,8 +200,8 @@
 
          </div>
          <div class="col-md-2">
-         <label for="so_to_godown">{% trans %} To Godown:{% endtrans %}</label>
-         <select class="form-control input-sm" id="so_to_godown" accesskey="">
+         <label for="so_togodown">{% trans %} To Godown:{% endtrans %}</label>
+         <select class="form-control input-sm" id="so_togodown" accesskey="">
            <option value=""  disabled  hidden selected>{% trans %}Select Godown{% endtrans %}</option>
            {% for godown in godowns %}
            <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
@@ -237,15 +237,12 @@
                    <span class="input-group-addon input-sm" id="unitaddon"></span>
                  </div>
                </td>
-
+               <td class="col-md-2">
+         					<input type="text" class="form-control input-sm text-right salesorder_product_packages "  value="0.00">
+         			</td>
                <td class="col-md-2">
                  <input type="text" class=" form-control input-sm text-right numtype salesorder_product_per_price"  value="0.00" placeholder="0.00">
                </td>
-               <td class="col-md-2">
-
-         					<input type="text" class="form-control input-sm text-right salesorder_product_packages "  value="0.00">
-
-         			</td>
                <td class="col-md-2">
                  <input type="text" class="form-control input-sm text-right numtype salesorder_product_tax_rate"  value="0.00" placeholder="0.00" disabled>
                </td>
