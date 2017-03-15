@@ -42,7 +42,7 @@ def existingorg(request):
     result = requests.get("http://127.0.0.1:6543/organisations")
     strData = []
     for records in result.json()["gkdata"]:
-        sdata = {"orgname":str(records["orgname"]),"orgtype":str(records["orgtype"])}
+        sdata = {"orgname":records["orgname"],"orgtype":records["orgtype"]}
         strData.append(sdata)
     return {"gkresult":strData}
 
@@ -51,7 +51,7 @@ def orgexists(request):
     result = s.get("http://127.0.0.1:6543/organisations")
     strData = []
     for records in result.json()["gkdata"]:
-        sdata = {"orgname":str(records["orgname"]),"orgtype":str(records["orgtype"])}
+        sdata = {"orgname":records["orgname"],"orgtype":records["orgtype"]}
         strData.append(sdata)
 
     if len(strData) ==0:
