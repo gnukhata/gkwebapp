@@ -477,7 +477,7 @@ $(document).ready(function() {
         console.log("complete");
       });
     });
-    
+
     $("#sosubmit").click(function(event) {
       event.preventDefault();
       console.log("sdjg");
@@ -498,6 +498,7 @@ $(document).ready(function() {
        var soDay = $(".soday").val();
        var soMonth = $(".somonth").val();
        var soYear = $(".soyear").val();
+      var togodown = $("#so_togodown option:selected").val();
        var soDate = soDay+soMonth+soYear;
        var soDateFormatted = soYear + "-" + soMonth + "-" + soDay;
        if (soDay==0)
@@ -639,7 +640,9 @@ $(document).ready(function() {
                  "schedule":JSON.stringify(scheduledata),
                  "taxstate":salesorder_state,
                   "psflag":20,
-                  "csid":csid},
+                  "csid":csid,
+                  "togodown":togodown
+                },
                  beforeSend: function(xhr)
                  {
                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
