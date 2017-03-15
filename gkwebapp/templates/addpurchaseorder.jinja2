@@ -99,6 +99,7 @@
          		<input style="border-radius: 4px" id="modeoftransport" type="text" class="form-control input-sm" name="modeoftransport" placeholder="eg. By Road, By Rail, By Air, By Sea, By Hand delivery, By Courier, etc."></input>
          		</div>
            </div>
+
          </div>
          <div class="row">
              <div class="col-md-2">
@@ -107,13 +108,13 @@
              			<input style="border-radius: 4px" id="creditperiod" type="text" class="form-control input-sm" name="creditperiod"></input>
              		</div>
                </div>
-               <div class="col-md-2">
+               <div class="col-md-1">
          					<label for="purchaseorder_supplier">
          						{% trans %}Supplier{% endtrans %} :
          					</label>
          					<select class="form-control input-sm" id="purchaseorder_supplier" accesskey="">
          						<option value="" disabled hidden selected>
-         							{% trans %}Select Supplier{% endtrans %}
+         							{% trans %}Select{% endtrans %}
          							</option>
          							{% for supplier in suppliers %}
          							<option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
@@ -136,7 +137,7 @@
                      <input class="form-control input-sm" id="purchaseorder_suppliertin" placeholder="{% trans %}Select Supplier to see TIN{% endtrans %}" accesskey="" disabled>
                    </div>
          </div>
-                 <div class="col-md-3 purchaseorder_state" >
+                 <div class="col-md-2 purchaseorderstate" >
                    <div class="form-group">
                      <label for="purchaseorder_state">{% trans %}VAT Applicable to{% endtrans %} :</label>
                      <select class="form-control input-sm tax_state product_new_state" id="purchaseorder_state">
@@ -180,8 +181,16 @@
                        <option value="West Bengal" stateid="41">West Bengal</option>
                      </select>
                    </div>
-
-         </div>
+             </div>
+             <div class="col-md-2">
+               <label for="po_to_godown">{% trans %} To Godown:{% endtrans %}</label>
+               <select class="form-control input-sm" id="po_to_godown" accesskey="">
+                 <option value=""  disabled  hidden selected>{% trans %}Select Godown{% endtrans %}</option>
+                 {% for godown in godowns %}
+                 <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
+                 {% endfor %}
+               </select>
+               </div>
          </div>
          <div class="row" >
          <table id="purchaseorder_product_table" class="shadow table table-condensed table-bordered fixed-table fixed-tablepurchase">
@@ -189,11 +198,10 @@
              <tr>
                <th class="col-md-3 text-center">{% trans %}Product{% endtrans %}</th>
                <th class="col-md-2 text-center">{% trans %}Quantity{% endtrans %}</th>
+                <th class="col-md-2 text-center">{% trans %}Number of Packages{% endtrans %}</th>
                <th class="col-md-2 text-center">{% trans %}Price Per Unit{% endtrans %}</th>
-               <th class="col-md-2 text-center">{% trans %}Number of Packages{% endtrans %}</th>
-               <th class="col-md-2 text-center">{% trans %}Tax Rate{% endtrans %}</th>
                <th class="col-md-2 text-center">{% trans %}Staggered Delivery{% endtrans %}</th>
-               <th class="col-md-2 text-center">{% trans %}Reorder limit{% endtrans %}</th>
+               <th class="col-md-2 text-center">{% trans %}Tax Rate{% endtrans %}</th>
                <th class="col-md-1"></th>
              </tr>
            </thead>
@@ -214,20 +222,17 @@
                  </div>
                </td>
                <td class="col-md-2">
-                 <input type="text" class=" form-control input-sm text-right numtype purchaseorder_product_per_price" value="0.00" placeholder="0.00">
-               </td>
-               <td class="col-md-2">
          					<input type="text" class="form-control input-sm text-right purchaseorder_product_packages" value="0.00">
          			</td>
-               <td class="col-md-2">
-                 <input type="text" class="form-control input-sm text-right numtype purchaseorder_product_tax_rate" value="0.00" placeholder="0.00" disabled>
-               </td>
+              <td class="col-md-2">
+                <input type="text" class=" form-control input-sm text-right numtype purchaseorder_product_per_price" value="0.00" placeholder="0.00">
+              </td>
                <td class="col-md-2">
                  <button class="btn btn-info btn-sm purchaseorder_product_schedule" id="addschedule" data-toggle="modal" data-target="#addpomodal" disabled>{% trans %}Add Schedule{% endtrans %}</button>
                </td>
                <td class="col-md-2">
-                  <input type="text" class="form-control input-sm text-right purchaseorder_product_reorderlimit" id="reorder_limit" value="0.00">
-              </td>
+                 <input type="text" class="form-control input-sm text-right numtype purchaseorder_product_tax_rate" value="0.00" placeholder="0.00" disabled>
+               </td>
                <td class="col-md-1">
                </td>
              </tr>
@@ -310,7 +315,7 @@
                    </div>
                 </td>
                 <td class="col-sm-4">
-                    <input type="text" id="spackages" class="form-control input-sm text-right purchaseorder_schedule_packages" value="0.00">
+                    <input type="text" class="form-control input-sm text-right purchaseorder_schedule_packages" value="0.00">
                 </td>
                 <td class="col-sm-2"></td>
               </tr>

@@ -121,25 +121,25 @@
         </td>
         <td class="col-md-2">
           <div class="input-group">
-            <input type="text" class="form-control input-sm text-right purchaseorder_product_quantity " id="quantity" value="{{schedule[key]["quantity"]}}"  aria-describedby="unitaddon" disabled>
+            <input type="text" class="form-control input-sm text-right purchaseorder_product_quantity " value="{{schedule[key]["quantity"]}}"  aria-describedby="unitaddon" disabled>
             <span class="input-group-addon input-sm" id="unitaddon"></span>
           </div>
         </td>
         <td class="col-md-2">
-          <input type="text" class=" form-control input-sm text-right numtype purchaseorder_product_per_price" id="price" value="{{schedule[key]["rateperunit"]}}" disabled>
+          <input type="text" class=" form-control input-sm text-right numtype purchaseorder_product_per_price"  value="{{schedule[key]["rateperunit"]}}" disabled>
         </td>
         <td class="col-md-2">
-            <input type="text" class="form-control input-sm text-right purchaseorder_product_packages " id="packages" value="{{schedule[key]["packages"]}}" disabled>
+            <input type="text" class="form-control input-sm text-right purchaseorder_product_packages "  value="{{schedule[key]["packages"]}}" disabled>
         </td>
         <td class="col-md-2">
-          <input type="text" class="form-control input-sm text-right numtype purchaseorder_product_tax_rate" id="taxrate" value="{{schedule[key]["taxrate"]}}" disabled>
+          <input type="text" class="form-control input-sm text-right numtype purchaseorder_product_tax_rate"  value="{{schedule[key]["taxrate"]}}" disabled>
         </td>
         <td class="col-md-2">
 
           <button type="button" class="btn btn-info btn-sm purchaseorder_schedule"  data-toggle="modal" data-target="#viewpomodal">{% trans %}View Schedule{% endtrans %}</button>
         </td>
         <td class="col-md-2">
-          <input type="text" class="form-control input-sm text-right numtype purchaseorder_product_reorderlimit" id="reorderlimit" value="{{schedule[key]["reorderlimit"]}}" disabled>
+          <input type="text" class="form-control input-sm text-right numtype purchaseorder_product_reorderlimit"  value="{{schedule[key]["reorderlimit"]}}" disabled>
         </td>
 
       </tr>

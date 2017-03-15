@@ -123,13 +123,13 @@
                </div>
 
 
-         <div class="col-md-2">
+         <div class="col-md-1">
          					<label for="salesorder_customer">
          						{% trans %}Customer{% endtrans %} :
          					</label>
          					<select class="form-control input-sm" id="salesorder_customer" accesskey="">
          						<option value="" disabled hidden selected>
-         							{% trans %}Select Customer{% endtrans %}
+         							{% trans %}Select{% endtrans %}
          							</option>
 
          							{% for customer in customers %}
@@ -153,9 +153,7 @@
                      <input class="form-control input-sm" id="salesorder_customertin" placeholder="{% trans %}Select Customer to see TIN{% endtrans %}" accesskey="" disabled>
                    </div>
          </div>
-
-
-                 <div class="col-md-3 salesorder_state" >
+                 <div class="col-md-2 salesorder_state" >
                    <div class="form-group">
                      <label for="salesorder_state">{% trans %}VAT Applicable to{% endtrans %} :</label>
                      <select class="form-control input-sm tax_state product_new_state" id="salesorder_state">
@@ -201,6 +199,15 @@
                    </div>
 
          </div>
+         <div class="col-md-2">
+         <label for="so_to_godown">{% trans %} To Godown:{% endtrans %}</label>
+         <select class="form-control input-sm" id="so_to_godown" accesskey="">
+           <option value=""  disabled  hidden selected>{% trans %}Select Godown{% endtrans %}</option>
+           {% for godown in godowns %}
+           <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
+           {% endfor %}
+         </select>
+       </div>
          </div>
          <div class="row" >
          <table id="salesorder_product_table" class="shadow table table-condensed table-bordered fixed-table fixed-tablesales">
@@ -208,8 +215,8 @@
              <tr>
                <th class="col-md-3 text-center">{% trans %}Product{% endtrans %}</th>
                <th class="col-md-2 text-center">{% trans %}Quantity{% endtrans %}</th>
-               <th class="col-md-2 text-center">{% trans %}Price Per Unit{% endtrans %}</th>
                <th class="col-md-2 text-center">{% trans %}Number of Packages{% endtrans %}</th>
+               <th class="col-md-2 text-center">{% trans %}Price Per Unit{% endtrans %}</th>
                <th class="col-md-2 text-center">{% trans %}Tax Rate{% endtrans %}</th>
                <th class="col-md-1"></th>
              </tr>
@@ -226,21 +233,21 @@
                </td>
                <td class="col-md-2">
                  <div class="input-group">
-                   <input type="text" class="form-control input-sm text-right salesorder_product_quantity " id="quantity" value="0" placeholder="0" aria-describedby="unitaddon">
+                   <input type="text" class="form-control input-sm text-right salesorder_product_quantity "  value="0" placeholder="0" aria-describedby="unitaddon">
                    <span class="input-group-addon input-sm" id="unitaddon"></span>
                  </div>
                </td>
 
                <td class="col-md-2">
-                 <input type="text" class=" form-control input-sm text-right numtype salesorder_product_per_price" id="price" value="0.00" placeholder="0.00">
+                 <input type="text" class=" form-control input-sm text-right numtype salesorder_product_per_price"  value="0.00" placeholder="0.00">
                </td>
                <td class="col-md-2">
 
-         					<input type="text" class="form-control input-sm text-right salesorder_product_packages " id="packages" value="0.00">
+         					<input type="text" class="form-control input-sm text-right salesorder_product_packages "  value="0.00">
 
          			</td>
                <td class="col-md-2">
-                 <input type="text" class="form-control input-sm text-right numtype salesorder_product_tax_rate" id="taxrate" value="0.00" placeholder="0.00" disabled>
+                 <input type="text" class="form-control input-sm text-right numtype salesorder_product_tax_rate"  value="0.00" placeholder="0.00" disabled>
                </td>
                <td class="col-md-1">
                </td>

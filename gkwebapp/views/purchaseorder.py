@@ -72,7 +72,8 @@ def showaddpurchaseorder(request):
 	header={"gktoken":request.headers["gktoken"]}
 	suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
 	products = requests.get("http://127.0.0.1:6543/products", headers=header)
-	return {"status":True,"suppliers": suppliers.json()["gkresult"],"products": products.json()["gkresult"]}
+	godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	return {"status":True,"suppliers": suppliers.json()["gkresult"],"products": products.json()["gkresult"],"godowns":godowns.json()["gkresult"]}
 
 
 
@@ -81,13 +82,14 @@ def showaddsalesorder(request):
 	header={"gktoken":request.headers["gktoken"]}
 	customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
 	products = requests.get("http://127.0.0.1:6543/products", headers=header)
-	return {"status":True,"customers": customers.json()["gkresult"],"products": products.json()["gkresult"]}
+	godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	return {"status":True,"customers": customers.json()["gkresult"],"products": products.json()["gkresult"],"godowns":godowns.json()["gkresult"]}
 
 @view_config(route_name="purchaseorder",request_param="action=save",renderer="json")
 def savepurchaseorder(request):
 	header={"gktoken":request.headers["gktoken"]}
 	purchaseorderdata = {"orderno":request.params["orderno"],"orderdate":request.params["orderdate"],"creditperiod":request.params["creditperiod"],"payterms":request.params["payterms"],
-		"modeoftransport":request.params["modeoftransport"],"designation":request.params["designation"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"]
+		"modeoftransport":request.params["modeoftransport"],"designation":request.params["designation"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"],"togodown":request.params["togodown"]
 		}
 	result=requests.post("http://127.0.0.1:6543/purchaseorder",data=json.dumps(purchaseorderdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
@@ -96,7 +98,7 @@ def savepurchaseorder(request):
 def savesalesorder(request):
 	header={"gktoken":request.headers["gktoken"]}
 	salesorderdata = {"orderno":request.params["orderno"],"orderdate":request.params["orderdate"],"creditperiod":request.params["creditperiod"],"payterms":request.params["payterms"],
-		"modeoftransport":request.params["modeoftransport"],"designation":request.params["designation"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"]
+		"modeoftransport":request.params["modeoftransport"],"designation":request.params["designation"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"],"togodown":request.params["togodown"]
 		}
 	print salesorderdata
 	result=requests.post("http://127.0.0.1:6543/purchaseorder",data=json.dumps(salesorderdata),headers=header)
@@ -123,17 +125,3 @@ def getproducts(request):
 	header={"gktoken":request.headers["gktoken"]}
 	products = requests.get("http://127.0.0.1:6543/products", headers=header)
 	return {"gkstatus": products.json()["gkstatus"],"products": products.json()["gkresult"]}
-
-
-@view_config(route_name="purchaseorder",request_param="action=gettax",renderer="json")
-def getstatetax(request):
-	header={"gktoken":request.headers["gktoken"]}
-	if request.params["state"]=="":
-		taxdata = requests.get("http://127.0.0.1:6543/tax?pscflag=i&productcode=%d"%(int(request.params["productcode"])), headers=header)
-		print taxdata
-	else:
-		taxdata = requests.get("http://127.0.0.1:6543/tax?pscflag=i&productcode=%d&state=%s"%(int(request.params["productcode"]),request.params["state"]), headers=header)
-		print taxdata
-	result = requests.get("http://127.0.0.1:6543/products?qty=single&productcode=%d"%(int(request.params['productcode'])),headers=header)
-	unit = result.json()["gkresult"]
-	return {"gkstatus": taxdata.json()["gkstatus"],"taxdata": taxdata.json()["gkresult"],"unitname":unit["unitname"]}
