@@ -410,6 +410,7 @@ $(document).ready(function() {
                       });
                         $("#new_parent_div1").hide();
                         $("#oldparentdiv").show();
+                        $("#doneid").show();
                         categorycode = resp.gkresult
                         $("#category_under").append('<option val="' + categorycode + '" selected>' + parentname + '</option>');
                         $(".childcat").show();
