@@ -61,19 +61,15 @@
     		</div>
       </div>
 
-
-
-
-
 <div class="col-md-2">
-					<label for="salesorder_supplier">
+					<label for="salesorder_customer">
 						{% trans %}Customer{% endtrans %} :
 					</label>
 					<select class="form-control input-sm" id="salesorder_customer" accesskey="" disabled>
 							<option value="{{customer['csid']}}">{{customer["custname"]}}</option>
 					</select>
 </div>
-<div class="col-md-3">
+<div class="col-md-2">
           <div class="form-group">
             <label for="salesorder_customeraddr">
               {% trans %}Customer Address{% endtrans %} :
@@ -83,7 +79,7 @@
 </div>
           <div class="col-md-2">
           <div class="form-group">
-            <label for="salesorder_suppliertin">
+            <label for="salesorder_customertin">
               {% trans %}Customer TIN{% endtrans %} :
             </label>
             <input class="form-control input-sm" id="salesorder_suppliertin" value="{{customer["custtan"]}}" accesskey="" disabled>
@@ -91,7 +87,7 @@
 </div>
 
 
-        <div class="col-md-3 salesorder_state" >
+        <div class="col-md-2 salesorder_state" >
           <div class="form-group">
             <label for="salesorder_state">{% trans %}VAT Applicable to{% endtrans %} :</label>
             <select class="form-control input-sm tax_state product_new_state" id="salesorder_state" disabled>
@@ -100,6 +96,14 @@
           </div>
 
         </div>
+        <div class="col-md-2">
+          <label for="po_to_godown">{% trans %}From Godown:{% endtrans %}</label>
+          <select class="form-control input-sm togodown" id="po_togodown" accesskey="" disabled>
+
+            <option value="">{{togodown["goname"]}} ({{togodown["goaddr"]}})</option>
+
+          </select>
+          </div>
 </div>
   </div>
 
@@ -109,10 +113,9 @@
         <tr>
           <th class="col-md-3 text-center">{% trans %}Product{% endtrans %}</th>
           <th class="col-md-2 text-center">{% trans %}Quantity{% endtrans %}</th>
-          <th class="col-md-2 text-center">{% trans %}Price Per Unit{% endtrans %}</th>
           <th class="col-md-2 text-center">{% trans %}Number of Packages{% endtrans %}</th>
+          <th class="col-md-2 text-center">{% trans %}Price Per Unit{% endtrans %}</th>
           <th class="col-md-2 text-center">{% trans %}Tax Rate{% endtrans %}</th>
-
         </tr>
       </thead>
       <tbody>
@@ -125,19 +128,20 @@
           </td>
           <td class="col-md-2">
             <div class="input-group">
-              <input type="text" class="form-control input-sm text-right salesorder_product_quantity " id="quantity" value="{{schedule[key]["quantity"]}}"  aria-describedby="unitaddon" disabled>
+              <input type="text" class="form-control input-sm text-right salesorder_product_quantity "  value="{{schedule[key]["quantity"]}}"  aria-describedby="unitaddon" disabled>
               <span class="input-group-addon input-sm" id="unitaddon"></span>
             </div>
           </td>
+          <td class="col-md-2">
+              <input type="text" class="form-control input-sm text-right salesorder_product_packages "  value="{{schedule[key]["packages"]}}" disabled>
+          </td>
 
           <td class="col-md-2">
-            <input type="text" class=" form-control input-sm text-right numtype salesorder_product_per_price" id="price" value="{{schedule[key]["rateperunit"]}}" disabled>
+            <input type="text" class=" form-control input-sm text-right numtype salesorder_product_per_price" value="{{schedule[key]["rateperunit"]}}" disabled>
           </td>
+
           <td class="col-md-2">
-              <input type="text" class="form-control input-sm text-right salesorder_product_packages " id="packages" value="{{schedule[key]["packages"]}}" disabled>
-          </td>
-          <td class="col-md-2">
-            <input type="text" class="form-control input-sm text-right numtype salesorder_product_tax_rate"  id="taxrate" value="{{schedule[key]["taxrate"]}}" disabled>
+            <input type="text" class="form-control input-sm text-right numtype salesorder_product_tax_rate"   value="{{schedule[key]["taxrate"]}}" disabled>
           </td>
 
         </tr>
