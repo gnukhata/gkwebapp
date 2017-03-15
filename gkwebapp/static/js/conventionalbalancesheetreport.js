@@ -383,4 +383,120 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
     window.print();
   });
 
-});
+
+    $("#consolidatebalance").click(function(){
+        $("#holdingorg").modal();
+        $.ajax({              //To retreive orgcode of current organisation.
+            type:"POST",
+            url:"/getorgcode",
+            global:false,
+            async:false,
+            datatype:"json",
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            },
+            success: function(resp)
+            {
+                if(resp["gkstatus"]==0)
+                {
+                  console.log("success");
+                  orgdetails = resp["gkdata"];  //orgcode of organisation.
+                  console.log(orgdetails);
+                }
+                else if(resp["gkstatus"]==2)
+                {
+                  console.log("failure");
+                }
+            }
+        });
+    });
+
+    $("#yes").click(function(){
+        $("#listoforg").modal();
+        $.ajax({    //used to retreive organisations deatils [orgcode , orgname , orgtype]
+          type: "POST",
+          url: "/allorgcode?type=orgcodelist",
+          global: false,
+          async: false,
+          dataType: "json",
+          beforeSend: function(xhr) {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          },
+          success: function(resp) {
+            console.log("Success");
+            ListofOrgs = resp["gkresult"];
+            $('#list').empty();
+            $('#list').append('<option value="0" disabled selected hidden>List Of Organisations</option>');
+            $('#selected').append('<option value=" " disabled selected hidden>Selected Organisation</option>');
+            for (i in ListofOrgs ) {
+              if(orgdetails == ListofOrgs[i].orgcode) //To remove logged in organisation from dropdown list.
+              {
+                  console.log("Do Nothing");
+              }
+              else
+              {
+                  $('#list').append('<option value="' + ListofOrgs[i].orgcode + '">'+ ListofOrgs[i].orgname +'</option>');
+              }
+            }
+          }
+        });
+        });
+      var listofselectedorg = new Array();
+
+      $(document).off("change","#list").on('change', '#list', function(event) {
+      var selectedorg = $(this).find(':selected').text();//this will give the selected option's organisation
+      console.log(selectedorg);
+      console.log($("#list option:selected").val()); //gives the orgcode of selected organisation.
+      $("#authenticate").modal();
+      $(document).off("click","#submit").on('click', '#submit', function(event) {
+      $.ajax({  //used to authenticate the selected subsidiary organisation.
+            type: "POST",
+            url: "/userlogin",
+            global: false,
+            async: false,
+            datatype: "json",
+            data: {"username":$("#user").val(), "userpassword":$("#pwd").val(), "orgcode":$("#list option:selected").val()},
+            success: function(resp)
+            {
+              if(resp["gkstatus"]==0)
+              {
+                  $('#selected').append('<option value="" disabled>'+ $("#list option:selected").text() +'</option>'); //add selected organisation in the selected organisation dropdown.
+                  //$('#list').val(0);
+                  if($('#list').val() != 0)
+                  {
+                  listofselectedorg.push($('#list option:selected').val());
+                  $('#list option:selected').remove(); //to remove authenticated organisation from the list of organisation.
+                  }
+                  $('#list').val(0);
+                  console.log(listofselectedorg);
+                  alert("Organisation Authentication Successful");
+              }
+              else if (resp["gkstatus"]==2)
+              {
+                  alert("Organisation Authentication UnSuccessful");
+              }
+            }
+          });
+        });
+      });
+
+    $("#confirm").click(function(){
+      console.log($("#calculateto").val());
+      var selectedorg = {"ds" : JSON.stringify(listofselectedorg),"calculateto": $('#calculateto').val()};
+      $.ajax({
+        type: "POST",
+        url: "/listoforgselected?type=orgselected",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data: selectedorg,
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        },
+        })
+        .done(function(resp){
+          $("#info").html(resp);
+        });
+    });
+
+  });

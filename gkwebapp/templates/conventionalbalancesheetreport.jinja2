@@ -51,6 +51,7 @@
   {% else %}
   <span style="margin:auto; display:table;"><strong>{% trans %}Conventional Statement of Affairs{% endtrans %} </strong>{% trans %}as on{% endtrans %} <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
   {% endif %}
+  <input type="text" id="calculateto" value="{{to}}" hidden>
   <div class="row">
     <div class="table-responsive col-xs-6 nopadding" >
       <table id="liabtable" class="shadow table fixed-table table-condensed cbalsheettable">
@@ -247,7 +248,75 @@
      <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">{% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
      <button class="btn btn-sm btn-primary" type="button"  id="printconvbalance" accesskey="t">{% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
      <button class="btn btn-sm btn-primary" type="button"  id="realprintbalance" accesskey="t">{% trans %}Prin<u>t{% endtrans %}</u></button>
+     <button class="btn btn-sm btn-primary" type="button"  id="consolidatebalance">{% trans %}Consolidate Balance Sheet{% endtrans %}</u></button>
   </span>
+
+  <div id="holdingorg" class="modal fade" tabindex="-1" role="dialog">
+    <div class="vertical-alignment-helper">
+      <div class="modal-dialog modal-lg vertical-align-center">
+        <div class="modal-content">
+          <div class="modal-header">
+
+            <h4 class="modal-title">{% trans %}Are you a holding organization?{% endtrans %}</h4>
+          </div>
+          <div class="modal-body">
+            <p>{% trans %}{% endtrans %}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id ="yes" class="btn" data-dismiss="modal">{% trans %}Yes{% endtrans %}</button>
+            <button type="button" id="no" data-dismiss="modal" class="btn">{% trans %}No{% endtrans %}</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+  </div><!-- /.modal -->
+</div>
+
+<div id="listoforg" class="modal fade" tabindex="-1" role="dialog">
+  <div class="vertical-alignment-helper">
+    <div class="modal-dialog modal-lg vertical-align-center">
+      <div class="modal-content">
+        <div class="modal-header">
+
+          <h4 class="modal-title">{% trans %}Select subsidiary organization{% endtrans %}</h4>
+        </div>
+        <div class="modal-body">
+          <select id="list" name="test[]" style="width:350px">
+          </select>
+          <select id="selected" name="selectedorg" style="width:350px">
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id ="confirm" class="btn" data-dismiss="modal">{% trans %}Confirm{% endtrans %}</button>
+          <button type="button" id="cancel" data-dismiss="modal" class="btn">{% trans %}Cancel{% endtrans %}</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div>
+</div><!-- /.modal -->
+</div>
+
+<div id="authenticate" class="modal fade" tabindex="-1" role="dialog">
+  <div class="vertical-alignment-helper">
+    <div class="modal-dialog modal-sm vertical-align-center">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">{% trans %}Authentication for the selected organisation{% endtrans %}</h4>
+        </div>
+        <div class="modal-body">
+          <label>UserName:</label><input type="textbox" id="user"/>
+          <label>Password:</label><input type="password" id="pwd"/>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id ="submit" class="btn" data-dismiss="modal">{% trans %}Submit{% endtrans %}</button>
+          <button type="submit" id="cancel" data-dismiss="modal" class="btn">{% trans %}Cancel{% endtrans %}</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div>
+</div><!-- /.modal -->
+</div>
+
   <input type="hidden" id="ledtodate" value="{{to}}">
   <input type="hidden" id="ledfromdate" value="{{from}}">
   <input type="hidden" id="backflag" value="{{backflag}}">

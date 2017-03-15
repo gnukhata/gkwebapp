@@ -255,3 +255,22 @@ def showbalancesheetreport(request):
 	if balancesheettype == "verticalbalancesheet":
 		result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=2"%(calculateto), headers=header)
 		return render_to_response("gkwebapp:templates/sourcesandapplicationoffundsreport.jinja2",{"records":result.json()["gkresult"],"balancesheettype":"conventionalbalancesheet","to":calculateto,"orgtype":orgtype},request=request)
+
+@view_config(route_name="allorgcode",request_param="type=orgcodelist", renderer="json")
+def listoforg(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/organisations?type=orgcodelist", headers=header)
+	orgdata=[]
+	for record in result.json()["gkdata"]:
+		gdata= {"orgname":str(record["orgname"]),"orgtype":str(record["orgtype"]),"orgcode":str(record["orgcode"])}
+		orgdata.append(gdata)
+	return {"gkresult":orgdata}
+
+@view_config(route_name="listoforgselected",request_param="type=orgselected")
+def selectedorg(request):
+	header={"gktoken":request.headers["gktoken"]}
+	print "hello"
+	listofselectedorg = request.params["ds"]
+	calculateto = request.params["calculateto"]
+	print listofselectedorg
+	return render_to_response("gkwebapp:templates/consolidatedbalancesheet.jinja2",{"gkresult":listofselectedorg,"to":calculateto},request=request)
