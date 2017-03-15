@@ -45,6 +45,9 @@
       <div class="alert alert-danger" id="blank-alert"  aria-live="rude" role="alert" hidden>
          {% trans %}Please Enter Category Name!{% endtrans %}
       </div>
+      <div class="alert alert-danger" id="navigation-alert"  aria-live="rude" role="alert" hidden>
+         Press 'Tab' to shift cursor to specs field.
+      </div>
       <div class="panel shadow category_panel col-md-6">
          <div class="panel-body">
             <input type="hidden" id="catcount" value="{{categorycount}}">
@@ -124,6 +127,9 @@
                <div class="panel">
                  <div class="alert alert-danger" id="child-cat-blank-alert"  aria-live="rude" role="alert" hidden>
                     Please Enter Sub Category Name!
+                 </div>
+                 <div class="alert alert-danger" id="child-navigation-alert"  aria-live="rude" role="alert" hidden>
+                    Press 'Tab' to shift cursor to specs field.
                  </div>
                   <table id="child_category_table" class="table table-condensed table-bordered fixed-table">
                      <thead class="bg-primary input-sm">
