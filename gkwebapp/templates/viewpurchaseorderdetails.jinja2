@@ -68,7 +68,7 @@
   							<option value="{{supplier['csid']}}">{{supplier["custname"]}}</option>
   					</select>
   </div>
-  <div class="col-md-3">
+  <div class="col-md-2">
             <div class="form-group">
               <label for="purchaseorder_supplieraddr">
                 {% trans %}Supplier Address{% endtrans %} :
@@ -84,7 +84,7 @@
               <input class="form-control input-sm" id="purchaseorder_suppliertin" value="{{supplier["custtan"]}}" accesskey="" disabled>
             </div>
   </div>
-          <div class="col-md-3 purchaseorder_state" >
+          <div class="col-md-2 purchaseorder_state" >
             <div class="form-group">
               <label for="purchaseorder_state">{% trans %}VAT Applicable to{% endtrans %} :</label>
               <select class="form-control input-sm tax_state product_new_state" id="purchaseorder_state" disabled>
@@ -92,7 +92,16 @@
               </select>
             </div>
 
-  </div>
+          </div>
+          <div class="col-md-2">
+            <label for="po_to_godown">{% trans %} To Godown:{% endtrans %}</label>
+            <select class="form-control input-sm togodown" id="po_togodown" accesskey="" disabled>
+
+              <option value="">{{togodown["goname"]}} ({{togodown["goaddr"]}})</option>
+
+            </select>
+            </div>
+
   </div>
 
   <div class="row" >
@@ -104,9 +113,9 @@
         <th class="col-md-2 text-center">{% trans %}Quantity{% endtrans %}</th>
         <th class="col-md-2 text-center">{% trans %}Price Per Unit{% endtrans %}</th>
         <th class="col-md-2 text-center">{% trans %}Number of Packages{% endtrans %}</th>
-        <th class="col-md-2 text-center">{% trans %}Tax Rate{% endtrans %}</th>
         <th class="col-md-2 text-center">{% trans %}Staggered Delivery{% endtrans %}</th>
-        <th class="col-md-2 text-center">{% trans %}Reorder limit{% endtrans %}</th>
+        <th class="col-md-2 text-center">{% trans %}Tax Rate{% endtrans %}</th>
+
 
       </tr>
     </thead>
@@ -122,7 +131,7 @@
         <td class="col-md-2">
           <div class="input-group">
             <input type="text" class="form-control input-sm text-right purchaseorder_product_quantity " value="{{schedule[key]["quantity"]}}"  aria-describedby="unitaddon" disabled>
-            <span class="input-group-addon input-sm" id="unitaddon"></span>
+
           </div>
         </td>
         <td class="col-md-2">
@@ -131,15 +140,13 @@
         <td class="col-md-2">
             <input type="text" class="form-control input-sm text-right purchaseorder_product_packages "  value="{{schedule[key]["packages"]}}" disabled>
         </td>
-        <td class="col-md-2">
-          <input type="text" class="form-control input-sm text-right numtype purchaseorder_product_tax_rate"  value="{{schedule[key]["taxrate"]}}" disabled>
-        </td>
+
         <td class="col-md-2">
 
           <button type="button" class="btn btn-info btn-sm purchaseorder_schedule"  data-toggle="modal" data-target="#viewpomodal">{% trans %}View Schedule{% endtrans %}</button>
         </td>
         <td class="col-md-2">
-          <input type="text" class="form-control input-sm text-right numtype purchaseorder_product_reorderlimit"  value="{{schedule[key]["reorderlimit"]}}" disabled>
+          <input type="text" class="form-control input-sm text-right numtype purchaseorder_product_tax_rate"  value="{{schedule[key]["taxrate"]}}" disabled>
         </td>
 
       </tr>
@@ -202,6 +209,7 @@
           </div>
 
       </div>
+      <small id="spectotaxhelp" class="form-text text-muted">{% trans %}Press Esc key to exit {% endtrans %}</small>
     </div>
   </div>
 </div>
