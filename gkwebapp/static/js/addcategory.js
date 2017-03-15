@@ -147,8 +147,8 @@ $(document).ready(function() {
                           trs = '<option value="3">Option</option>'
                       }
                       $('#spectbl tbody').prepend('<tr>' +
-                          '<td class="col-xs-8">' + spec["attrname"] + '</td>' +
-                          '<td class="col-xs-3">' + trs + '</td>' +
+                          '<td class="col-xs-6">' + spec["attrname"] + '</td>' +
+                          '<td class="col-xs-6">' + trs + '</td>' +
                           '</tr>');
 
                       $('#child_category_spec_table tbody').prepend('<tr>' +
@@ -432,8 +432,8 @@ $(document).ready(function() {
                                 trs = '<option value="3">Option</option>'
                             }
                             $('#spectbl tbody').append('<tr>' +
-                                '<td class="col-xs-8">' + spec["attrname"] + '</td>' +
-                                '<td class="col-xs-3">' + trs + '</td>' +
+                                '<td class="col-xs-6">' + spec["attrname"] + '</td>' +
+                                '<td class="col-xs-6">' + trs + '</td>' +
                                 '</tr>');
                             $('#child_category_spec_table tbody').append('<tr>' +
                                 '<td class="col-xs-8">' +
