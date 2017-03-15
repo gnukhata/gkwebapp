@@ -54,9 +54,9 @@
                  {% if categorycount > 0 %}
                   <div id="oldparentdiv">
                      <div>
-                        <label for="category_under">{% trans %}Category:{% endtrans %}</label>
+                        <label for="category_under">{% trans %}Category Name:{% endtrans %}</label>
                         <select class="form-control input-sm" id="category_under">
-                           <option value="" selected>{% trans %}Select Category{% endtrans %}</option>
+                           <option value="" selected>{% trans %}Select Category Name{% endtrans %}</option>
                            {% for categories in gkresult %}
                            <option value="{{categories['categorycode']}}" data-categoryname="{{categories["categoryname"]}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
                            {% endfor %}
@@ -68,7 +68,7 @@
                      </div>
                   </div>
                      <div id="new_parent_div1" hidden>
-                        <label for="category_name">{% trans %}Category:{% endtrans %}</label>
+                        <label for="category_name">{% trans %}Category Name:{% endtrans %}</label>
                         <table id="new_parent_category_table" class="table-condensed ">
                            <tbody>
                               <tr>
@@ -92,7 +92,7 @@
                      </div>
                      {% else %}
                      <div id="new_parent_div1" >
-                        <label for="category_name">{% trans %}Category:{% endtrans %}</label>
+                        <label for="category_name">{% trans %}Category Name:{% endtrans %}</label>
                         <table id="new_parent_category_table" class="table-condensed ">
                            <tbody>
                               <tr>
