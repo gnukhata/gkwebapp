@@ -362,17 +362,20 @@ $(document).ready(function() {
       })
       .done(function(resp)   /*This function will return spec name of the product*/
       {
-          $('#spec_table tbody tr').remove();
-          for (specname of resp["gkresult"]) {
-            $('#spec_table tbody').append('<tr>'+
-            '<td class="col-xs-2">'+
-            '<select id="spec_name" class="spec_name form-control input-sm" disabled >'+
-            '<option value="'+specname["spcode"]+'" selected>'+specname["attrname"]+'</option>'+
-            '</td>'+
-            '<td class="col-xs-2">'+
-            '<input class="form-control spec_obj input-sm "  placeholder="Numeric" type="text">'+
-            '</td>'+
-            '</tr>');
+          if (resp["gkresult"].length > 0) {
+            $("#specdiv").show();
+            $('#spec_table tbody tr').remove();
+            for (specname of resp["gkresult"]) {
+              $('#spec_table tbody').append('<tr>'+
+              '<td class="col-xs-2">'+
+              '<select id="spec_name" class="spec_name form-control input-sm" disabled >'+
+              '<option value="'+specname["spcode"]+'" selected>'+specname["attrname"]+'</option>'+
+              '</td>'+
+              '<td class="col-xs-2">'+
+              '<input class="form-control spec_obj input-sm "  placeholder="Numeric" type="text">'+
+              '</td>'+
+              '</tr>');
+            }  
           }
       })
       .fail(function() {
