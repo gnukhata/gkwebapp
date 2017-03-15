@@ -59,7 +59,9 @@ def salesorderdetails(request):
 	customerid = sodetails["csid"]
 	customer = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(customerid)), headers=header)
 	print sodetails
-	return{"gkresult":result.json()["gkresult"], "customer":customer.json()["gkresult"], "schedule":sodetails["schedule"]}
+	togoid = sodetails["togodown"]
+	togodown=requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(togoid)), headers=header)
+	return{"gkresult":result.json()["gkresult"], "customer":customer.json()["gkresult"], "schedule":sodetails["schedule"],"togodown":togodown.json()["gkresult"]}
 
 
 
