@@ -491,9 +491,9 @@ $(document).ready(function() {
             var curindex1 = $(this).closest('tr').index() + 1;
             var catname = $('#child_category_table tbody tr:last input').val();
             if(catname == ""){
-              $("#blank-alert").alert();
-              $("#blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                  $("#blank-alert").hide();
+              $("#child-cat-blank-alert").alert();
+              $("#child-cat-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+                  $("#child-cat-blank-alert").hide();
                 });
                 $('#child_category_table tbody tr:last td:eq(0) input').focus();
                 return false;
