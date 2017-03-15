@@ -170,7 +170,7 @@ $(document).ready(function() {
     $("#purchaseorder_state").keydown(function(event) {
       if (event.which==13) {
         event.preventDefault();
-        $("#po_to_godown").focus();
+        $("#po_togodown").focus();
 
         taxstate = $("#purchaseorder_state").val();
         console.log(taxstate);
@@ -189,8 +189,10 @@ $(document).ready(function() {
     });
 
 
-   $("#po_to_godown").keydown(function(event) {
+   $("#po_togodown").keydown(function(event) {
      if (event.which==13) {
+       var togodown = $("#po_togodown option:selected").val();
+       console.log(togodown);
        event.preventDefault();
        if ($("#purchaseorder_product_table tbody tr:first td:eq(0) select").is(":disabled")||$("#purchaseorder_product_table tbody tr").length==0) {
        }
@@ -442,7 +444,8 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
     var previndex1 = curindex1-1;
     if (event.which==13) {
       event.preventDefault();
-      if($(".purchaseorder_state").val()!="none"){
+      if($("#purchaseorder_state").val()!="none"){
+        console.log($("#purchaseorder_state").val());
           $('#purchaseorder_product_table tbody tr:eq('+curindex1+') td:eq(5) input').focus().select();
       }
       else{
@@ -667,8 +670,8 @@ console.log("yay");
        var payterms = $("#payterms").val();
        var modeoftransport = $("#modeoftransport").val();
        var creditperiod = $("#creditperiod").val();
-       var purchaseorder_state = $(".purchaseorder_state option:selected").val();
-       var togodown = $("#po_to_godown option:selected").val();
+       var purchaseorder_state = $("#purchaseorder_state option:selected").val();
+       var togodown = $("#po_togodown option:selected").val();
        console.log(togodown);
        console.log(purchaseorder_state);
 
