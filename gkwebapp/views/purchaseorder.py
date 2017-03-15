@@ -46,7 +46,10 @@ def purchaseorderdetails(request):
 	supplierid = podetails["csid"]
 	supplier = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(supplierid)), headers=header)
 	print podetails["schedule"]
-	return{"gkresult":result.json()["gkresult"], "supplier":supplier.json()["gkresult"], "schedule":podetails["schedule"]}
+	togoid = podetails["togodown"]
+	print togoid
+	togodown=requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(togoid)), headers=header)        
+	return{"gkresult":result.json()["gkresult"], "supplier":supplier.json()["gkresult"], "schedule":podetails["schedule"],"togodown":togodown.json()["gkresult"]}
 
 @view_config(route_name="salesorder",request_param="type=details", renderer="gkwebapp:templates/viewsalesorderdetails.jinja2")
 def salesorderdetails(request):
