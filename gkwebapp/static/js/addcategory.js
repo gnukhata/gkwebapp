@@ -55,14 +55,23 @@ $(document).ready(function() {
     $("#new_parent_name").keydown(function(event) {
         if (event.which == 13) {
             event.preventDefault();
-            if($("#new_parent_name").val() == ""){
-              $("#navigation-alert").alert();
-              $("#navigation-alert").fadeTo(2250, 500).slideUp(500, function() {
-                  $("#navigation-alert").hide();
-                });
-                $("#new_parent_name").focus();
-                return false;
-            }
+            $("#navigation-alert").alert();
+            $("#navigation-alert").fadeTo(2250, 500).slideUp(500, function() {
+                $("#navigation-alert").hide();
+            });
+            $("#new_parent_name").focus();
+            return false;
+        }
+    });
+    $("#child_category_name").keydown(function(event) {
+        if (event.which == 13) {
+            event.preventDefault();
+            $("#child-navigation-alert").alert();
+            $("#child-navigation-alert").fadeTo(2250, 500).slideUp(500, function() {
+                $("#child-navigation-alert").hide();
+            });
+            $("#child_category_name").focus();
+            return false;
         }
     });
 
