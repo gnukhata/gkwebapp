@@ -46,42 +46,35 @@ $(document).ready(function() {
       $("#new_parent_name").focus();
     }
     var categorycode = "";
-    $("#new_parent_name").keydown(function(event) {
-        if (event.which == 13) {
-            event.preventDefault();
-            if($("#parent_spec").val() == ""){
-              $("#blank-alert").alert();
-              $("#blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                  $("#blank-alert").hide();
-                });
-                $("#new_parent_name").focus();
-                return false;
-            }
-            $("#parent_spec").focus();
-        }
-    });
     $("#new_parent_div1").keydown(function(event) {
       //when esc key is pressed
       if(event.which == 27){
         $("#addcategory").click();
       }
     });
-    $(".child_spec_name").keydown(function(event) {
-        cosole.log("child spec name");
+    $("#new_parent_name").keydown(function(event) {
         if (event.which == 13) {
             event.preventDefault();
-            var curindex1 = $(this).closest('tr').index();
-            $("#child_category_spec_table tbody tr:eq(" + curindex1 + ") td:eq(1) select").focus();
+            $("#navigation-alert").alert();
+            $("#navigation-alert").fadeTo(2250, 500).slideUp(500, function() {
+                $("#navigation-alert").hide();
+            });
+            $("#new_parent_name").focus();
+            return false;
+        }
+    });
+    $("#child_category_name").keydown(function(event) {
+        if (event.which == 13) {
+            event.preventDefault();
+            $("#child-navigation-alert").alert();
+            $("#child-navigation-alert").fadeTo(2250, 500).slideUp(500, function() {
+                $("#child-navigation-alert").hide();
+            });
+            $("#child_category_name").focus();
+            return false;
         }
     });
 
-    $(".parent_spec_name").keydown(function(event) {
-        if (event.which == 13) {
-            event.preventDefault();
-            var curindex1 = $(this).closest('tr').index();
-            $(".parent_spec_type tbody tr:eq(" + curindex1 + ")").focus();
-        }
-    });
     $('#child_addspecmodal').on('shown.bs.modal', function() {
         $("#child_category_spec_table tbody tr:last td:eq(0) input").focus();
     });
@@ -133,23 +126,6 @@ $(document).ready(function() {
 
     });
 
-    $("#child_category_name").keydown(function(event) {
-
-        if (event.which == 13) {
-            event.preventDefault();
-            if($("#child_category_name").val() == ""){
-              $("#child-cat-blank-alert").alert();
-              $("#child-cat-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                  $("#child-cat-blank-alert").hide();
-                });
-                $("#child_category_name").focus();
-                return false;
-            }
-            $("#child_spec").focus();
-        }
-    });
-
-
     /* If a parent category is selected then its specs are automatically inhereted by its child category and the specs are displayed */
     $("#category_under").change(function(event) {
         /* when a (parent)category is changed by the user except the last blank row all the other category spec rows are removed
@@ -192,8 +168,8 @@ $(document).ready(function() {
                           trs = '<option value="3">Option</option>'
                       }
                       $('#spectbl tbody').prepend('<tr>' +
-                          '<td class="col-xs-8">' + spec["attrname"] + '</td>' +
-                          '<td class="col-xs-3">' + trs + '</td>' +
+                          '<td class="col-xs-6">' + spec["attrname"] + '</td>' +
+                          '<td class="col-xs-6">' + trs + '</td>' +
                           '</tr>');
 
                       $('#child_category_spec_table tbody').prepend('<tr>' +
@@ -418,13 +394,6 @@ $(document).ready(function() {
 
 
     });
-    $(document).off("click", ".tax_del").on("click", ".tax_del", function() {
-        $(this).closest('tr').fadeOut(200, function() {
-            $(this).closest('tr').remove(); //closest method gives the closest element specified
-            $('#category_tax_table tbody tr:last td:eq(0) select').focus().select();
-        });
-        $('#category_tax_table tbody tr:last td:eq(0) select').select();
-    });
 
     //////////////////////////
     $("#parent_save").click(function(event) {
@@ -462,6 +431,7 @@ $(document).ready(function() {
                       });
                         $("#new_parent_div1").hide();
                         $("#oldparentdiv").show();
+                        $("#doneid").show();
                         categorycode = resp.gkresult
                         $("#category_under").append('<option val="' + categorycode + '" selected>' + parentname + '</option>');
                         $(".childcat").show();
@@ -483,8 +453,8 @@ $(document).ready(function() {
                                 trs = '<option value="3">Option</option>'
                             }
                             $('#spectbl tbody').append('<tr>' +
-                                '<td class="col-xs-8">' + spec["attrname"] + '</td>' +
-                                '<td class="col-xs-3">' + trs + '</td>' +
+                                '<td class="col-xs-6">' + spec["attrname"] + '</td>' +
+                                '<td class="col-xs-6">' + trs + '</td>' +
                                 '</tr>');
                             $('#child_category_spec_table tbody').append('<tr>' +
                                 '<td class="col-xs-8">' +
@@ -543,9 +513,9 @@ $(document).ready(function() {
             var curindex1 = $(this).closest('tr').index() + 1;
             var catname = $('#child_category_table tbody tr:last input').val();
             if(catname == ""){
-              $("#blank-alert").alert();
-              $("#blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                  $("#blank-alert").hide();
+              $("#child-cat-blank-alert").alert();
+              $("#child-cat-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+                  $("#child-cat-blank-alert").hide();
                 });
                 $('#child_category_table tbody tr:last td:eq(0) input').focus();
                 return false;

@@ -45,6 +45,9 @@
       <div class="alert alert-danger" id="blank-alert"  aria-live="rude" role="alert" hidden>
          {% trans %}Please Enter Category Name!{% endtrans %}
       </div>
+      <div class="alert alert-danger" id="navigation-alert"  aria-live="rude" role="alert" hidden>
+         Press 'Tab' to shift cursor to specs field.
+      </div>
       <div class="panel shadow category_panel col-md-6">
          <div class="panel-body">
             <input type="hidden" id="catcount" value="{{categorycount}}">
@@ -54,9 +57,9 @@
                  {% if categorycount > 0 %}
                   <div id="oldparentdiv">
                      <div>
-                        <label for="category_under">{% trans %}Category:{% endtrans %}</label>
+                        <label for="category_under">{% trans %}Category Name:{% endtrans %}</label>
                         <select class="form-control input-sm" id="category_under">
-                           <option value="" selected>{% trans %}Select Category{% endtrans %}</option>
+                           <option value="" selected>{% trans %}Select Category Name{% endtrans %}</option>
                            {% for categories in gkresult %}
                            <option value="{{categories['categorycode']}}" data-categoryname="{{categories["categoryname"]}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
                            {% endfor %}
@@ -68,12 +71,12 @@
                      </div>
                   </div>
                      <div id="new_parent_div1" hidden>
-                        <label for="category_name">{% trans %}New Category:{% endtrans %}</label>
+                        <label for="category_name">{% trans %}Category Name:{% endtrans %}</label>
                         <table id="new_parent_category_table" class="table-condensed ">
                            <tbody>
                               <tr>
                                  <td class="col-xs-8">
-                                    <input type="text" id="new_parent_name" class="form-control input-sm" placeholder="New Category Name">
+                                    <input type="text" id="new_parent_name" class="form-control input-sm" placeholder="Category Name">
                                  </td>
                                  <td class="col-xs-2">
                                     <button class="btn form-control btn-primary btn-sm" id="parent_spec" data-toggle="modal" data-target="#parent_addspecmodal" >{% trans %}Specs{% endtrans %}</button>
@@ -87,16 +90,17 @@
                               </tr>
                            </tbody>
                         </table>
-                        <small id="backhelp" class="form-text text-muted">Press 'Esc' key to go back</small>
+                        <small id="backhelp" class="form-text text-muted">Press 'Esc' key to go back.</small><br>
+                        <small id="navigationnewparent" class="form-text text-muted">Press 'Tab' and 'Shift + Tab' to navigate through fields.</small>
                      </div>
                      {% else %}
                      <div id="new_parent_div1" >
-                        <label for="category_name">{% trans %}New Category:{% endtrans %}</label>
+                        <label for="category_name">{% trans %}Category Name:{% endtrans %}</label>
                         <table id="new_parent_category_table" class="table-condensed ">
                            <tbody>
                               <tr>
                                  <td class="col-xs-8">
-                                    <input type="text" id="new_parent_name" class="form-control input-sm" placeholder="New Category Name">
+                                    <input type="text" id="new_parent_name" class="form-control input-sm" placeholder="Category Name">
                                  </td>
                                  <td class="col-xs-2">
                                     <button class="btn form-control btn-primary btn-sm" id="parent_spec" data-toggle="modal" data-target="#parent_addspecmodal" >{% trans %}Specs{% endtrans %}</button>
@@ -110,7 +114,8 @@
                               </tr>
                            </tbody>
                         </table>
-                        <small id="backhelp" class="form-text text-muted">Press 'Esc' key to go back</small>
+                        <small id="backhelp" class="form-text text-muted">Press 'Esc' key to go back.</small><br>
+                        <small id="navigationnewparent" class="form-text text-muted">Press 'Tab' and 'Shift + Tab' to navigate through fields.</small>
                      </div>
                      {% endif %}
                </div>
@@ -122,6 +127,9 @@
                <div class="panel">
                  <div class="alert alert-danger" id="child-cat-blank-alert"  aria-live="rude" role="alert" hidden>
                     Please Enter Sub Category Name!
+                 </div>
+                 <div class="alert alert-danger" id="child-navigation-alert"  aria-live="rude" role="alert" hidden>
+                    Press 'Tab' to shift cursor to specs field.
                  </div>
                   <table id="child_category_table" class="table table-condensed table-bordered fixed-table">
                      <thead class="bg-primary input-sm">
@@ -146,7 +154,7 @@
                      </tbody>
                   </table>
                </div>
-               <small id="txtareahelp" class="form-text text-muted">Press 'Insert key' to save Sub Category.</small><br>
+               <small id="txtareahelp" class="form-text text-muted">Press 'Insert key' to save current Sub Category & add new Sub Category.</small><br>
                <small id="navigation" class="form-text text-muted">Press 'Home' to select Category. </small><br>
                <small id="navigation" class="form-text text-muted">Press 'Tab' and 'Shift + Tab' to navigate through fields.</small>
             </div>
