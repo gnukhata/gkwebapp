@@ -117,6 +117,21 @@
                         <small id="backhelp" class="form-text text-muted">Press 'Esc' key to go back.</small><br>
                         <small id="navigationnewparent" class="form-text text-muted">Press 'Tab' and 'Shift + Tab' to navigate through fields.</small>
                      </div>
+                     <div id="oldparentdiv" hidden>
+                        <div>
+                           <label for="category_under">{% trans %}Category Name:{% endtrans %}</label>
+                           <select class="form-control input-sm" id="category_under">
+                              <option value="" selected>{% trans %}Select Category Name{% endtrans %}</option>
+                              {% for categories in gkresult %}
+                              <option value="{{categories['categorycode']}}" data-categoryname="{{categories["categoryname"]}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
+                              {% endfor %}
+                           </select>
+                        </div>
+                        <div>
+                          <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'SpaceBar' to add new Category.{% endtrans %}</small><br>
+                          <small id="txtareahelp" class="form-text text-muted" style="color: rgb(255,0,0);">Note:All specifications of category you select will be applicable to its Subcategory.</small>
+                        </div>
+                     </div>
                      {% endif %}
                </div>
             </div>
