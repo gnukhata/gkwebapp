@@ -45,6 +45,14 @@ $(document).ready(function() {
     else{
       $("#new_parent_name").focus();
     }
+
+    if (sessionStorage.latestcategory) {
+      $("#category_under").val(sessionStorage.latestcategory);
+      $(".childcat").show('fast', function() {
+        $(".mchild_spec_name:first").focus();
+      });
+      sessionStorage.latestcategory = "";
+    }
     var categorycode = "";
     $("#new_parent_div1").keydown(function(event) {
       //when esc key is pressed
@@ -63,14 +71,14 @@ $(document).ready(function() {
             return false;
         }
     });
-    $("#child_category_name").keydown(function(event) {
+    $(".mchild_spec_name").keydown(function(event) {
         if (event.which == 13) {
             event.preventDefault();
             $("#child-navigation-alert").alert();
             $("#child-navigation-alert").fadeTo(2250, 500).slideUp(500, function() {
                 $("#child-navigation-alert").hide();
             });
-            $("#child_category_name").focus();
+            $(".mchild_spec_name", this).focus();
             return false;
         }
     });
@@ -91,8 +99,9 @@ $(document).ready(function() {
         if (event.which == 13 && categorycode != "") {
           event.preventDefault();
           $("#spectbl").show();
-          $(".childcat").show();
-          $("#child_category_name").focus();
+          $(".childcat").show('fast', function() {
+            $(".mchild_spec_name:first").focus();
+          });
 
         }
         //when spacebar is pressed
@@ -138,7 +147,9 @@ $(document).ready(function() {
           $("#spectbl").show();
           $("#parent_heading").text($("#category_under option[value=" + categorycode + "]").text());
           $('#spectbl td').remove();
-          $(".childcat").show();
+          $(".childcat").show('fast', function() {
+            $(".mchild_spec_name:first").focus();
+          });
           parentspecs = [];
           // ajax for getting the specs of the newly selected (parent)category
           $.ajax({
@@ -427,6 +438,7 @@ $(document).ready(function() {
                     $("#category_tax_table tbody tr").not(":last").remove();
                     $("#success-alert").alert();
                     $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
+                        sessionStorage.latestcategory = resp["gkresult"];
                         $("#addcategory").click();
                         $("#success-alert").hide();
                       });
@@ -539,7 +551,7 @@ $(document).ready(function() {
 
                         $('#child_category_table tbody').append('<tr>' +
                             '<td class="col-xs-6">' +
-                            '<input type="text" id="child_category_name" class="form-control input-sm mchild_spec_name" placeholder="Sub Category Name">' +
+                            '<input type="text" class="form-control input-sm mchild_spec_name" placeholder="Sub Category Name">' +
                             '</td>' +
                             '<td class="col-xs-3">' +
                             '<button class="btn form-control btn-primary btn-sm child_spec_class" id="child_spec" data-toggle="modal" data-target="#child_addspecmodal" >Specs</button>' +
