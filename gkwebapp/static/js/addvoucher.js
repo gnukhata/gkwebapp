@@ -146,9 +146,18 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   }
   var value = $('#invsel option:selected').attr("customername");
   console.log(value);
-  $(".accs:first option").filter(function() {return this.text == value;}).attr('selected', true);
+
   $(".dramt:first").val(parseFloat(inv).toFixed(2));
   $(".cramt:eq(1)").val(parseFloat(inv).toFixed(2));
+  if (($('#vtype').val()=="sales") && sessionStorage.invflag ==1)
+  {
+  $(".accs:first option").filter(function() {return this.text == value;}).attr('selected', true);
+  }
+  if (($('#vtype').val()=="purchase") && sessionStorage.invflag ==1)
+ {
+      $(".accs:eq(1) option").filter(function() {return this.text == value;}).attr('selected', true);
+  }
+
 });
 
   var putcr = true;
