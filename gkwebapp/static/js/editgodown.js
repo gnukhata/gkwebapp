@@ -77,16 +77,16 @@ $(document).ready(function() {
         $("#godesignation").prop("disabled", false);
         $("#gocontactname").prop("disabled", false);
         $("#edit").hide();
-        $("#goname").focus();
+        $("#goname").focus().select();
     });
 
     $("#goname").keydown(function(e){
       if (e.which == 13) {
         e.preventDefault();
-        $("#gostate").focus();
+        $("#gostate").focus().select();
       }
       if (e.which == 38) {
-          $("#editgoddet").focus();
+          $("#editgoddet").focus().select();
       }
     });
     $("#gostate").keydown(function(e){
