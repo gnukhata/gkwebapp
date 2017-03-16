@@ -71,51 +71,53 @@
                      </div>
                   </div>
                      <div id="new_parent_div1" hidden>
-                        <label for="category_name">{% trans %}Category Name:{% endtrans %}</label>
-                        <table id="new_parent_category_table" class="table-condensed ">
-                           <tbody>
-                              <tr>
-                                 <td class="col-xs-8">
-                                    <input type="text" id="new_parent_name" class="form-control input-sm" placeholder="Category Name">
-                                 </td>
-                                 <td class="col-xs-2">
-                                    <button class="btn form-control btn-primary btn-sm" id="parent_spec" data-toggle="modal" data-target="#parent_addspecmodal" >{% trans %}Specs{% endtrans %}</button>
-                                 </td>
-                                 <td class="col-xs-2">
-                                    <button class="btn form-control btn-primary btn-sm" id="parent_tax" data-toggle="modal" data-target="#addtaxmodal"  >{% trans %}Tax{% endtrans %}</button>
-                                 </td>
-                                 <td class="col-xs-2">
-                                    <button class="btn form-control btn-primary btn-sm" id="parent_save"  >{% trans %}Save{% endtrans %}</button>
-                                  </td>
-                              </tr>
-                           </tbody>
-                        </table>
-                        <small id="backhelp" class="form-text text-muted">Press 'Esc' key to go back.</small><br>
-                        <small id="navigationnewparent" class="form-text text-muted">Press 'Tab' and 'Shift + Tab' to navigate through fields.</small>
+                       <div class="row">
+                         <div class="form-group col-sm-6">
+                           <label for="category_name">{% trans %}Category Name:{% endtrans %}</label>
+                           <input type="text" id="new_parent_name" class="form-control input-sm" placeholder="Category Name">
+                         </div>
+                       <br>
+                         <div class="form-group col-sm-2">
+                           <button class="btn form-control btn-primary btn-sm" id="parent_spec" data-toggle="modal" data-target="#parent_addspecmodal" >{% trans %}Specs{% endtrans %}</button>
+                         </div>
+                         <div class="form-group col-sm-2">
+                           <button class="btn form-control btn-primary btn-sm" id="parent_tax" data-toggle="modal" data-target="#addtaxmodal"  >{% trans %}Tax{% endtrans %}</button>
+                         </div>
+                         <div class="form-group col-sm-2">
+                           <button class="btn form-control btn-primary btn-sm" id="parent_save"  >{% trans %}Save{% endtrans %}</button>
+                         </div>
+                       </div>
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <small id="backhelp" class="form-text text-muted">Press 'Esc' key to go back.</small><br>
+                            <small id="navigationnewparent" class="form-text text-muted">Press 'Tab' and 'Shift + Tab' to navigate through fields.</small>
+                          </div>
+                        </div>
                      </div>
                      {% else %}
-                     <div id="new_parent_div1" >
-                        <label for="category_name">{% trans %}Category Name:{% endtrans %}</label>
-                        <table id="new_parent_category_table" class="table-condensed ">
-                           <tbody>
-                              <tr>
-                                 <td class="col-xs-8">
-                                    <input type="text" id="new_parent_name" class="form-control input-sm" placeholder="Category Name">
-                                 </td>
-                                 <td class="col-xs-2">
-                                    <button class="btn form-control btn-primary btn-sm" id="parent_spec" data-toggle="modal" data-target="#parent_addspecmodal" >{% trans %}Specs{% endtrans %}</button>
-                                 </td>
-                                 <td class="col-xs-2">
-                                    <button class="btn form-control btn-primary btn-sm" id="parent_tax" data-toggle="modal" data-target="#addtaxmodal"  >{% trans %}Tax{% endtrans %}</button>
-                                 </td>
-                                 <td class="col-xs-2">
-                                    <button class="btn form-control btn-primary btn-sm" id="parent_save"  >{% trans %}Save{% endtrans %}</button>
-                                  </td>
-                              </tr>
-                           </tbody>
-                        </table>
-                        <small id="backhelp" class="form-text text-muted">Press 'Esc' key to go back.</small><br>
-                        <small id="navigationnewparent" class="form-text text-muted">Press 'Tab' and 'Shift + Tab' to navigate through fields.</small>
+                     <div id="new_parent_div1">
+                       <div class="row">
+                         <div class="form-group col-sm-6">
+                           <label for="category_name">{% trans %}Category Name:{% endtrans %}</label>
+                           <input type="text" id="new_parent_name" class="form-control input-sm" placeholder="Category Name">
+                         </div>
+                       <br>
+                         <div class="form-group col-sm-2">
+                           <button class="btn form-control btn-primary btn-sm" id="parent_spec" data-toggle="modal" data-target="#parent_addspecmodal" >{% trans %}Specs{% endtrans %}</button>
+                         </div>
+                         <div class="form-group col-sm-2">
+                           <button class="btn form-control btn-primary btn-sm" id="parent_tax" data-toggle="modal" data-target="#addtaxmodal"  >{% trans %}Tax{% endtrans %}</button>
+                         </div>
+                         <div class="form-group col-sm-2">
+                           <button class="btn form-control btn-primary btn-sm" id="parent_save"  >{% trans %}Save{% endtrans %}</button>
+                         </div>
+                       </div>
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <small id="backhelp" class="form-text text-muted">Press 'Esc' key to go back.</small><br>
+                            <small id="navigationnewparent" class="form-text text-muted">Press 'Tab' and 'Shift + Tab' to navigate through fields.</small>
+                          </div>
+                        </div>
                      </div>
                      <div id="oldparentdiv" hidden>
                         <div>
