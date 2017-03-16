@@ -249,7 +249,7 @@ $(document).ready(function() {
       $(".category_edit_disable").prop("disabled",false);
       $("#category_edit_savespecs").show();
       $("#category_edit_edit").hide();
-      $("#category_edit_under").focus().select();
+      $("#category_edit_name").focus();
     }
     if (event.which==46) {
       event.preventDefault();
@@ -510,11 +510,6 @@ $(document).ready(function() {
       }
       else {
         if ($('#category_edit_spec_table tbody tr:eq('+curindex1+') td:eq(0) input').val()=="") {
-          $("#spec-blank-alert").alert();
-          $("#spec-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#spec-blank-alert").hide();
-          });
-          $('#category_edit_spec_table tbody tr:eq('+curindex1+') td:eq(0) input').focus();
           return false;
         }
         $('#category_edit_spec_table tbody').append('<tr value="New">'+
@@ -572,19 +567,19 @@ $(document).ready(function() {
     var specs = [];
     for (var i = 0; i < $("#category_edit_spec_table tbody tr").length; i++) {
       if ($.trim($("#category_edit_spec_table tbody tr:eq("+i+") td:eq(0) input").val())=="") {
-        $("#spec-blank-alert").alert();
-        $("#spec-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#spec-blank-alert").hide();
-        });
-        $("#category_edit_spec_table tbody tr:eq("+i+") td:eq(0) input").focus().select();
-        return false;
+        //$("#category_edit_spec_table tbody tr:eq("+i+") td:eq(0) input").focus().select();
+        //return false;
       }
+      else {
+
+
       var obj = {};
       obj.spcode = $("#category_edit_spec_table tbody tr:eq("+i+")").attr('value');
       obj.attrname = $("#category_edit_spec_table tbody tr:eq("+i+") td:eq(0) input").val();
       obj.attrtype = $("#category_edit_spec_table tbody tr:eq("+i+") td:eq(1) select").val();
       specs.push(obj);
-    }
+         }
+     }
 
     var taxes = [];
     var allow = true;
