@@ -101,6 +101,10 @@ margin-bottom: 0px;
 
             {% trans %}Please select a different godown.{% endtrans %}
           </div>
+          <div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
+          </div>
           <div class="alert alert-danger" id="tax-same-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}This tax has already been applied.{% endtrans %}

@@ -1,6 +1,10 @@
 $(document).ready(function() {
   var godownflag = 0;
   $('.modal-backdrop').remove();
+  var specday;
+  var specmonth;
+  var specyear;
+  var specdate;
   $("#addcatselect").focus();
   if($("#addcatselect").is(':hidden'))
   {
@@ -429,13 +433,24 @@ function yearpad (str, max) {
 }
 $(document).off("blur",".specday").on("blur",".specday",function(event) {
   $(this).val(pad($(this).val(),2));
+  specday = $(this).val();
 });
 $(document).off("blur",".specmonth").on("blur",".specmonth",function(event) {
   $(this).val(pad($(this).val(),2));
+  specmonth = $(this).val();
 });
 
 $(document).off("blur",".specyear").on("blur",".specyear",function(event) {
+  var curindex = $(this).closest('tr').index();
   $(this).val(yearpad($(this).val(),4));
+  specyear = $(this).val();
+  if(!Date.parseExact(specday+specmonth+specyear, "ddMMyyyy")){
+    $("#date-alert").alert();
+    $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $('#spec_table tbody tr:eq('+curindex+') td:eq(1) input:first').focus().select();
+      $("#date-alert").hide();
+    });
+  }
   });
 /* -----------------------Spec Key Events End------------------------------------------ */
 /* -----------------------Tax key events start----------------------------------------- */
