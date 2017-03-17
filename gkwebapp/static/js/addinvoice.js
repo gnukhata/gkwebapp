@@ -1413,6 +1413,16 @@ $(document).ready(function() {
   });
 
  $("#invoice_addcust").click(function() {
+   console.log("Status : "+$("#status").val());
+   var statusinout;
+   if ($("#status").val()=='9') {
+     statusinout="in"
+     console.log("inside in");
+   }
+   if($("#status").val()=='15'){
+     statusinout="out"
+     console.log("inside out");
+   }
     $.ajax(
     {
 
@@ -1420,7 +1430,7 @@ $(document).ready(function() {
     url: "/customersuppliers?action=showaddpopup",
     global: false,
     async: false,
-    data: {"status":$("#status").val()},
+    data: {"status":statusinout},
     datatype: "text/html",
     beforeSend: function(xhr)
       {

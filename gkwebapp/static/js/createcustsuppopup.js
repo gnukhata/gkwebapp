@@ -98,9 +98,8 @@ $(document).ready(function() {
   });
   $("#cussup_save").click(function(event) {
     event.preventDefault();
-
     var custsupval;
-    if ($("#deliverychallan_gkstatus").val()=='in') {
+    if ($("#deliverychallan_gkstatus").val()=='in' || $('#status').val()=='9') {
          custsupval= 19;
     }
     else {
