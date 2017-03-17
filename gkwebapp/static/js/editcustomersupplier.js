@@ -19,6 +19,13 @@ $(document).ready(function() {
       var result = resp["gkresult"];
       $(".hidden-load").show();
       $("#edit_cussup").val(result["csflag"]);
+      if(result["csflag"] == 3){
+    	  
+    	  $("#edit_cussup").val("Customer");
+      }
+      else {
+    	  $("#edit_cussup").val("Supplier");
+      }
       $("#edit_cussup").prop("disabled", true);
       $("#edit_cussup_name").val(result["custname"]);
       $("#edit_cussup_name").prop("disabled", true);
@@ -70,7 +77,7 @@ $(document).ready(function() {
     }
 
   });
-  $("#edit_cussup").keydown(function(event) {
+  $("#edit_cussup_list").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
       $("#edit_cussup_name").focus().select();
@@ -85,10 +92,7 @@ $(document).ready(function() {
       event.preventDefault();
       $("#edit_cussup_email").focus().select();
     }
-    if (event.which==38){
-      event.preventDefault();
-      $("#edit_cussup").focus().select();
-    }
+  
   });
   $("#edit_cussup_email").keydown(function(event) {
     if (event.which==13) {
@@ -218,7 +222,7 @@ $(document).ready(function() {
       "custpan": $("#edit_cussup_pan").val(),
       "custtan": $("#edit_cussup_tan").val(),
       "state"  : $("#edit_state").val(),
-      "csflag": $("#edit_cussup option:selected").val()},
+    /*  "csflag": $("#edit_cussup option:selected").val()*/},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
