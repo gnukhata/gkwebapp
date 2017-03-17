@@ -152,6 +152,9 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   if (($('#vtype').val()=="sales") && sessionStorage.invflag ==1)
   {
   $(".accs:first option").filter(function() {return this.text == value;}).attr('selected', true);
+  var e = jQuery.Event("keydown");
+  e.which = 13; // # Some key code value
+  $(".dramt").trigger(e);
   }
   if (($('#vtype').val()=="purchase") && sessionStorage.invflag ==1)
  {
