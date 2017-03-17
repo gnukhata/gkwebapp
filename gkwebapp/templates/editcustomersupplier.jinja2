@@ -68,17 +68,14 @@
 
             <div class="col-md-6">
               <div class="form-group hidden-load " hidden>
-              <label for="edit_cussup">{% trans %}Role:{% endtrans %}</label>
-              <select class="form-control input-sm" id="edit_cussup" >
-                <option value="3" >Customer</option>
-                <option value="19" >Supplier</option>
-              </select>
+              <label id="edit_cussuplabel" for="edit_cussup">{% trans %}Role:{% endtrans %}</label>
+              <input class="form-control input-sm" type="text" id="edit_cussup" disabled >
               </div> 
               
                         
             <div class="form-group hidden-load " hidden>
               <label for="edit_cussup_name">{% trans %}Name:{% endtrans %}</label>
-              <input class="form-control input-sm" id="edit_cussup_name" placeholder="{% trans %}Enter Name{% endtrans %}" accesskey="">
+              <input class="form-control input-sm" id="edit_cussup_name" placeholder="{% trans %}Enter Name{% endtrans %}" >
             </div>
             <div class="form-group hidden-load " hidden>
               <label for="edit_cussup_email">{% trans %}Email:{% endtrans %}</label>
