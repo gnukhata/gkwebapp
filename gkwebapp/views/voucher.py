@@ -59,7 +59,7 @@ def showvoucher(request):
 		if drresult.json()["gkstatus"]==0 and crresult.json()["gkstatus"]==0:
 			if invflag == 1 and (type =="purchase" or type =="sales"):
 				invdata = requests.get("http://127.0.0.1:6543/invoice?inv=all", headers=header)
-				print len(invdata.json()["gkresult"])
+				
 				if invdata.json()["gkstatus"]==0:
 					return render_to_response("gkwebapp:templates/addvoucher.jinja2",{"lastdetails":lastdetails,"draccounts":drresult.json()["gkresult"],"craccounts":crresult.json()["gkresult"],"projects":projects.json()["gkresult"],"vtype":type,"invoicedata":invdata.json()["gkresult"],"invoicecount":len(invdata.json()["gkresult"])},request=request)
 			else:
