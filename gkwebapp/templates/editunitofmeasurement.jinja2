@@ -31,7 +31,7 @@
       <div class="panel-body">
         <form>
           <div class="form-group">
-            <label for="unit_edit_list" id="edit_list">{% trans %}Unit :{% endtrans %}</label>
+            <label for="unit_edit_list" id="edit_list">{% trans %}Unit name :{% endtrans %}</label>
             <select class="form-control input-sm" id="unit_edit_list">
               <option value="" disabled selected hidden>{% trans %}Select unit{% endtrans %}</option>
               {% for unitofmeasurement in gkresult %}
@@ -41,11 +41,11 @@
           </div>
           <div id="unit_edit_innerdiv" style="padding-left:10px;padding-right:10px;" hidden>
           <div class="form-group">
-            <label for="unit_edit_name">{% trans %}Name :{% endtrans %}</label>
+            <label for="unit_edit_name">{% trans %}New Unit Name :{% endtrans %}</label>
             <input class="form-control input-sm" id="unit_edit_name" placeholder="{% trans %}Enter unit name{% endtrans %}">
           </div>
           <div class="form-group">
-            <label for="sub_unit_edit">{% trans %}Sub Unit Of :{% endtrans %}</label>
+            <label for="sub_unit_edit">{% trans %}Sub Unit of :{% endtrans %}</label>
             <select class="form-control input-sm" id="sub_unit_edit">
               <option value="" selected>None</option>
               {% for unitofmeasurement in gkresult %}
