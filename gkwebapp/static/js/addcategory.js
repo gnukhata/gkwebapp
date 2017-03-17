@@ -126,7 +126,6 @@ $(document).ready(function() {
                 '<option value="0">Text</option>' +
                 '<option value="1">Number</option>' +
                 '<option value="2">Date</option>' +
-                '<option value="3">Option</option>' +
                 '</select>' +
                 '</td>' +
                 '</tr>');
@@ -175,8 +174,6 @@ $(document).ready(function() {
                               '<option value="1">Number</option>'
                       } else if (spec["attrtype"] == 2) {
                           trs = '<option value="2">Date</option>'
-                      } else if (spec["attrtype"] == 3) {
-                          trs = '<option value="3">Option</option>'
                       }
                       $('#spectbl tbody').prepend('<tr>' +
                           '<td class="col-xs-6">' + spec["attrname"] + '</td>' +
@@ -209,7 +206,6 @@ $(document).ready(function() {
                       '<option value="0">Text</option>' +
                       '<option value="1">Number</option>' +
                       '<option value="2">Date</option>' +
-                      '<option value="3">Option</option>' +
                       '</select>' +
                       '</td>' +
                       '</tr>');
@@ -265,7 +261,6 @@ $(document).ready(function() {
                     '<option value="0">Text</option>' +
                     '<option value="1">Number</option>' +
                     '<option value="2">Date</option>' +
-                    '<option value="3">Option</option>' +
                     '</select>' +
                     '</td>' +
                     '</tr>');
@@ -310,7 +305,6 @@ $(document).ready(function() {
                     '<option value="0">Text</option>' +
                     '<option value="1">Number</option>' +
                     '<option value="2">Date</option>' +
-                    '<option value="3">Option</option>' +
                     '</select>' +
                     '</td>' +
                     '</tr>');
@@ -521,8 +515,6 @@ $(document).ready(function() {
                                     '<option value="1">Number</option>'
                             } else if (spec["attrtype"] == 2) {
                                 trs = '<option value="2">Date</option>'
-                            } else if (spec["attrtype"] == 3) {
-                                trs = '<option value="3">Option</option>'
                             }
 
                             $('#child_category_spec_table tbody').append('<tr>' +
@@ -544,7 +536,6 @@ $(document).ready(function() {
                             '<option value="0">Text</option>' +
                             '<option value="1">Number</option>' +
                             '<option value="2">Date</option>' +
-                            '<option value="3">Option</option>' +
                             '</select>' +
                             '</td>' +
                             '</tr>');
@@ -615,8 +606,6 @@ $(document).ready(function() {
                           '<option value="1">Number</option>'
                   } else if (spec["attrtype"] == 2) {
                       trs = '<option value="2">Date</option>'
-                  } else if (spec["attrtype"] == 3) {
-                      trs = '<option value="3">Option</option>'
                   }
                   $('#child_showcategory_spec_table tbody').prepend('<tr>' +
                       '<td class="col-xs-8">' +

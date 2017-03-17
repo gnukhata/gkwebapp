@@ -182,7 +182,6 @@ $(document).ready(function() {
             '<option value="0">Text</option>'+
             '<option value="1">Number</option>'+
             '<option value="2">Date</option>'+
-            '<option value="3">Option</option>'+
             '</select>'+
           '</td>'+
           '<td class="col-xs-1">'+
@@ -195,26 +194,23 @@ $(document).ready(function() {
         if (spec["attrtype"]==0) {
           trs ='<option value="0" selected>Text</option>'+
           '<option value="1">Number</option>'+
-          '<option value="2">Date</option>'+
-          '<option value="3">Option</option>'
-        }
+          '<option value="2">Date</option>'
+          }
         else if (spec["attrtype"]==1) {
           trs ='<option value="0">Text</option>'+
           '<option value="1" selected>Number</option>'+
-          '<option value="2">Date</option>'+
-          '<option value="3">Option</option>'
+          '<option value="2">Date</option>'
         }
         else if (spec["attrtype"]==2) {
           trs ='<option value="0">Text</option>'+
           '<option value="1">Number</option>'+
-          '<option value="2" selected>Date</option>'+
-          '<option value="3">Option</option>'
+          '<option value="2" selected>Date</option>'
         }
         else if (spec["attrtype"]==3) {
           trs ='<option value="0">Text</option>'+
           '<option value="1">Number</option>'+
-          '<option value="2">Date</option>'+
-          '<option value="3" selected>Option</option>'
+          '<option value="2">Date</option>'
+
         }
         $('#category_edit_spec_table tbody').prepend('<tr value="'+spec["spcode"]+'">'+
           '<td class="col-xs-8">'+
@@ -521,7 +517,6 @@ $(document).ready(function() {
             '<option value="0">Text</option>'+
             '<option value="1">Number</option>'+
             '<option value="2">Date</option>'+
-            '<option value="3">Option</option>'+
             '</select>'+
           '</td>'+
           '<td class="col-xs-1">'+
