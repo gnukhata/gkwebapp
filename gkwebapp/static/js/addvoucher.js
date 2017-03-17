@@ -616,7 +616,7 @@ $("#invsel").keyup(function(event) {
       curselectlength = $(this).length
       $("#popup").click();
     }
-    if (event.which==13 && outfocus) {
+   if (event.which==13 && outfocus) {
       outfocus = false;
     }
   });
@@ -746,12 +746,12 @@ $("#invsel").keyup(function(event) {
     curindex = $(this).closest('tr').index();
     nextindex = curindex+1;
     previndex = curindex-1;
+//rohini
 
     if (event.which==13 && !outfocus) {
 
       $('#vtable tbody tr:eq('+nextindex+') td:eq(1) select').focus();
       event.preventDefault();
-      
 
     }
     if(event.which==190 && event.shiftKey)
@@ -774,9 +774,9 @@ $("#invsel").keyup(function(event) {
     if (event.which==190 && event.ctrlKey) {
       $('#vtable tbody tr:eq('+nextindex+') select:enabled:first').focus();
       event.preventDefault();
-      if (curindex==lastindex) {
+      /*if (curindex==lastindex) {
         $("#narration").focus();
-      }
+      }*/
     }
   });
 
