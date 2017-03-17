@@ -1420,6 +1420,7 @@ $(document).ready(function() {
     url: "/customersuppliers?action=showaddpopup",
     global: false,
     async: false,
+    data: {"status":$("#status").val()},
     datatype: "text/html",
     beforeSend: function(xhr)
       {
