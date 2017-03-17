@@ -372,27 +372,38 @@ $("#addcatselect").change(function(event) {
 
 });
 /* -----------------------Spec Key Events---------------------------------------------- */
-$(document).off("keydown",".specdate").on("keydown",".specdate",function(event) {
-  if (event.which==13) {
-    event.preventDefault();
-    $(this).parent().next().children('.specdate').focus().select();
-  }
-  if (event.which==38) {
-    event.preventDefault();
-    $(this).parent().prev().children('.specdate').focus().select();
-  }
-});
 $(document).off("keydown",".spec").on("keydown",".spec",function(event) {
   var curindex = $(this).closest('tr').index();
   var nextindex = curindex+1;
   var previndex = curindex-1;
+  n = $('#spec_table tbody tr').length -1;
   if (event.which==13) {
     event.preventDefault();
-    $('#spec_table tbody tr:eq('+nextindex+') td:eq(1) input').focus().select();
+      if ($(this).hasClass("specday") || $(this).hasClass("specmonth")) {
+        $(this).parent().next().children('.specdate').focus().select();
+      }
+      else {
+        if (curindex == n) {
+          $('#product_tax_table tbody tr:eq(0) td:eq(0) select').focus().select();
+        }
+        else {
+          $('#spec_table tbody tr:eq('+nextindex+') td:eq(1) input').focus().select();
+        }
+      }
   }
   if (event.which==38) {
     event.preventDefault();
-    $('#spec_table tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
+      if ($(this).hasClass("specyear") || $(this).hasClass("specmonth")) {
+        $(this).parent().prev().children('.specdate').focus().select();
+      }
+      else {
+        if (curindex == 0) {
+          $("#adduom").focus();
+        }
+        else {
+          $('#spec_table tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
+        }
+      }
   }
 });
 /* -----------------------Spec Key Events End------------------------------------------ */
