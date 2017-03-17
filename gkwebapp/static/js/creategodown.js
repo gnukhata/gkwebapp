@@ -37,7 +37,17 @@ $(document).ready(function()
   $("#godownname").keydown(function(e){
     if (e.which == 13) {
       e.preventDefault();
-      $("#godownstate").focus();
+      if ($.trim($("#godownname").val())=="") {
+          $("#blank-alert").alert();
+          $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
+            $("#blank-alert").hide();
+          });
+          $("#godownname").focus();
+          return false;
+        }
+      else {
+      $("#godownstate").focus(); 
+      }
     }
   });
   $("#godownstate").keydown(function(e){
