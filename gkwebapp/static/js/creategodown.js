@@ -5,7 +5,7 @@ This file is part of GNUKhata:A modular,robust and Free Accounting System.
 GNUKhata is Free Software; you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
 published by the Free Software Foundation; either version 3 of
-the License, or (at your option) any later version.and old.stockflag = 's'
+the License, or (at your option) any later version.
 
 GNUKhata is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -37,12 +37,28 @@ $(document).ready(function()
   $("#godownname").keydown(function(e){
     if (e.which == 13) {
       e.preventDefault();
-      $("#godownstate").focus();
+      if ($.trim($("#godownname").val())=="") {
+          $("#blank-alert").alert();
+          $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
+            $("#blank-alert").hide();
+          });
+      }
+          else{
+        	  $("#godownstate").focus();}
     }
   });
   $("#godownstate").keydown(function(e){
     if (e.which == 13) {
       e.preventDefault();
+      if ($.trim($("#godownname").val())=="") {
+          $("#blank-alert").alert();
+          $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
+            $("#blank-alert").hide();
+          });
+      }
+          else{
+        	  $("#godownstate").focus();}
+    }
       $("#godownaddress").focus();
     }
     if (e.which == 38 && ($("#godownstate option:selected").index()==1 || $("#godownstate option:selected").index()==0)) {
