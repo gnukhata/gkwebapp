@@ -406,6 +406,37 @@ $(document).off("keydown",".spec").on("keydown",".spec",function(event) {
       }
   }
 });
+function pad (str, max) { //to add leading zeros in date
+  str = str.toString();
+  if (str.length==1) {
+    return str.length < max ? pad("0" + str, max) : str;
+  }
+  else{
+    return str;
+  }
+}
+function yearpad (str, max) {
+  str = str.toString();
+  if (str.length==1) {
+    return str.length < max ? pad("200" + str, max) : str;
+  }
+  else if (str.length==2) {
+    return str.length < max ? pad("20" + str, max) : str;
+  }
+  else{
+    return str;
+  }
+}
+$(document).off("blur",".specday").on("blur",".specday",function(event) {
+  $(this).val(pad($(this).val(),2));
+});
+$(document).off("blur",".specmonth").on("blur",".specmonth",function(event) {
+  $(this).val(pad($(this).val(),2));
+});
+
+$(document).off("blur",".specyear").on("blur",".specyear",function(event) {
+  $(this).val(yearpad($(this).val(),4));
+  });
 /* -----------------------Spec Key Events End------------------------------------------ */
 /* -----------------------Tax key events start----------------------------------------- */
 
@@ -909,7 +940,7 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
     });
     return false;
   }
-  /*.....................*/
+
   var specs = {};      /*This is spec dictioary having spcode as a key and specval as its value*/
   $("#spec_table tbody tr").each(function(){
     if ($.trim($("#spec_name",this).val())!=""){
@@ -919,7 +950,6 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
     }
   });
 
-  /*.....................*/
 
   var taxes = [];
   $("#product_tax_table tbody tr").each(function(){
