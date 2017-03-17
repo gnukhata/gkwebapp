@@ -746,6 +746,7 @@ $("#invsel").keyup(function(event) {
     curindex = $(this).closest('tr').index();
     nextindex = curindex+1;
     previndex = curindex-1;
+
     if(event.which==190 && event.shiftKey)
     {
       event.preventDefault();
@@ -769,6 +770,10 @@ $("#invsel").keyup(function(event) {
       if (curindex==lastindex) {
         $("#narration").focus();
       }
+    }
+    if (event.which==13) {
+      event.preventDefault();
+      $('#vtable tbody tr:eq('+nextindex+') select:enabled').focus();
     }
   });
 
