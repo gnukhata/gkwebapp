@@ -38,32 +38,54 @@
   </div>
   </div>
   <div id="extsp" class="row">
-  <div id = "editspecifications">
-      {% if proddesc["categorycode"]!= None %}
+        {% if proddesc["categorycode"]!= None %}
+        <div class="col-sm-11">
+      <div class="panel">
+        <table id="spec_table" class="table table-condensed table-bordered fixed-table">
+          <thead class="bg-primary input-sm">
+            <tr>
+              <th class="col-xs-2 text-center">{% trans %}Specifications{% endtrans %}</th>
+              <th class="col-xs-2 text-center">{% trans %}Value{% endtrans %}</th>
+            </tr>
+          </thead>
+          <tbody>
           {% for spec in prodspecs %}
           {% for pdesc in proddesc["specs"] %}
           {% if spec['spcode']|int == pdesc|int %}
-          <div class="form-group  col-sm-6">
-            <label for="{{spec['spcode']}}" class="">{{spec["attrname"]}} :</label>
+        <tr>
+          <td>
+            <label for="{{spec['spcode']}}" class="">{{spec["attrname"]}}</label>
+            <input type="text" class="spec_name" value="{{spec['spcode']}}" hidden>
+          </td>
+          <td>
             {% if spec["attrtype"]==0 %}
-            <input type="text" class="form-control input-sm spec" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" value="{{proddesc['specs'][pdesc]}}" placeholder="Alphanumeric">
+
+            <input type="text" class="form-control spec_value spec input-sm" id="{{spec['spcode']}}" placeholder="Alphanumeric" value="{{proddesc['specs'][pdesc]}}">
             {% elif spec["attrtype"]==1 %}
-            <input type="text" class="form-control input-sm numtype spec" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" value="{{proddesc['specs'][pdesc]}}" placeholder="Numeric">
+            <input type="text" class="form-control spec_value spec input-sm numtype" id="{{spec['spcode']}}" placeholder="Numeric" value="{{proddesc['specs'][pdesc]}}">
             {% elif spec["attrtype"]==2 %}
-            <input type="text" class="form-control input-sm specdate spec" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" value="{{proddesc['specs'][pdesc]}}" placeholder="DD-MM-YYYY">
-            {% elif spec["attrtype"]==3 %}
-            {% if proddesc['specs'][pdesc]|int ==1 %}
-            <label class="radio-inline"><input value = "1" class="radtype input-sm spec" type="radio" name="{{spec['spcode']}}" checked>{% trans %}Yes{% endtrans %}</label>
-            <label class="radio-inline"><input value = "0" class=" radtype input-sm spec" type="radio" name="{{spec['spcode']}}">{% trans %}No{% endtrans %}</label>
-            {% else %}
-            <label class="radio-inline"><input value = "1" class="radtype input-sm spec" type="radio" name="{{spec['spcode']}}">{% trans %}Yes{% endtrans %}</label>
-            <label class="radio-inline"><input value = "0" class=" radtype input-sm spec" type="radio" name="{{spec['spcode']}}" checked>{% trans %}No{% endtrans %}</label>
+            <div class="form-inline">
+            <input type="text" class="spec_value datevalue" value="{{proddesc['specs'][pdesc]}}" hidden>
+              <div class="form-group ">
+                <input type="text" class="form-control input-sm spec specday specdate" size="2" maxlength="2" placeholder="DD" value="{{proddesc['specs'][pdesc][8]+proddesc['specs'][pdesc][9]}}">
+              </div>
+              <div class="form-group ">
+                <input type="text" class="form-control input-sm spec specmonth specdate" size="2" maxlength="2" placeholder="MM" value="{{proddesc['specs'][pdesc][5]+proddesc['specs'][pdesc][6]}}">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control input-sm spec specyear specdate" size="4" maxlength="4" placeholder="YYYY" value="{{proddesc['specs'][pdesc][0]+proddesc['specs'][pdesc][1]+proddesc['specs'][pdesc][2]+proddesc['specs'][pdesc][3]}}">
+              </div>
+            </div>
             {% endif %}
-            {% endif %}
-          </div>
-          {% endif %}
-          {% endfor %}
-          {% endfor %}
+          </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+      </tbody>
+      </table>
+      </div>
+      </div>
         {% endif %}
   </div>
   </div>
@@ -240,5 +262,4 @@
   </div>
   {% endif %}
     {% endif %}
-  </div>
 </div>

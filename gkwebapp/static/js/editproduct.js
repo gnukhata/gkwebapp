@@ -138,19 +138,7 @@ $(document).ready(function() {
     if (event.which==13)
     {
       event.preventDefault();
-      var taxdisabled = $('#product_edit_tax_table tbody tr:first td:eq(0) select').is(":disabled");
-      var taxcount = $('#product_edit_tax_table tbody tr').length;
-      if (taxdisabled || taxcount<1) {
-        if ($("#editspecifications").contents(".form-group").length == 0) {
-          $('#epsubmit').click();
-        }
-        else {
-          $("#editspecifications").contents(".form-group:first").find("input:first").focus().select();
-        }
-      }
-      else {
-        $('#product_edit_tax_table tbody tr:first td:eq(0) select').focus().select();
-      }
+      $('#epsubmit').click();
 
     }
     else if (event.which==173) {
@@ -280,12 +268,6 @@ $(document).ready(function() {
         $('#proddetails').find('input, textarea, button, select').prop('disabled',true);
         $(".product_tax_disable").prop('disabled',true);
         $(".product_cat_tax_disable").prop('disabled',true);
-        if ($(".spec").length < 3) {
-          $("#editspecifications").removeClass("specsdiv");
-        }
-        else {
-          $("#editspecifications").addClass("specsdiv");
-        }
         catcode= $("#editcatselect option:selected").val();
         console.log("success");
       })
@@ -753,7 +735,7 @@ $(document).ready(function() {
     else if (event.which==27) {
       event.preventDefault();
       if ($('.spec').length > 0) {
-        $('#editspecifications').contents(".form-group:first").find("input:first").focus().select();
+        $("#spec_table tbody tr:first td:eq(1) input:first").focus().select();
       }
       else if ($("#editgodownflag").val() == 1) {
         $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
@@ -858,19 +840,7 @@ $(document).ready(function() {
           return false;
         }
         if ($("#editgodown_ob_table tbody tr").length == numberofgodowns || $("#editgodown_ob_table tbody tr").length > numberofgodowns) {
-          var taxdisabled = $('#product_edit_tax_table tbody tr:first td:eq(0) select').is(":disabled");
-          var taxcount = $('#product_edit_tax_table tbody tr').length;
-          if (taxdisabled || taxcount<1) {
-            if ($("#editspecifications").contents(".form-group").length == 0) {
-              $('#epsubmit').click();
-            }
-            else {
-              $("#editspecifications").contents(".form-group:first").find("input:first").focus().select();
-            }
-          }
-          else {
-            $('#product_edit_tax_table tbody tr:first td:eq(0) select').focus().select();
-          }
+          $('#epsubmit').click();
           return false;
         }
         $('#editgodown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
