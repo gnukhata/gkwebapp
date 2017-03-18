@@ -215,50 +215,6 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
 
 });
 
-
-$(document).on("keydown",'#specifications input:not(:hidden),#specifications textarea, #specifications select', function(e) {
-  var n = $("#specifications input:not(:hidden),#specifications textarea,#specifications select").length;
-  var f = $('#specifications input:not(:hidden),#specifications textarea,#specifications select');
-
-  if (e.which == 13)
-  {
-    e.preventDefault();
-    var nextIndex = f.index(this) + 1;
-
-    if(nextIndex < n)
-    {
-      e.preventDefault();
-      f[nextIndex].focus();
-      f[nextIndex].select();
-    }
-    else {
-      if ($("#godownpresence").val()==0) {
-        $("#openingstock").focus().select();
-      }
-      if ($("#godownpresence").val()==1)
-      {
-        $("#godownflag").focus().select();
-      }
-    }
-  }
-  if (e.which == 38)
-  {
-    var sindex=0;
-    var prevIndex = f.index(this) - 1;
-    if(prevIndex > -1)
-    {
-
-
-      e.preventDefault();
-      f[prevIndex].focus();
-      f[nextIndex].select();
-
-    }
-
-  }
-
-});
-
 $("#addcatselect").change(function(event) {
   /* Act on the event */
 
@@ -444,7 +400,7 @@ $(document).off("blur",".specyear").on("blur",".specyear",function(event) {
   var curindex = $(this).closest('tr').index();
   $(this).val(yearpad($(this).val(),4));
   specyear = $(this).val();
-  if(!Date.parseExact(specday+specmonth+specyear, "ddMMyyyy")){
+  if(!Date.parseExact(specday+specmonth+specyear, "ddMMyyyy")){ // Validation for date
     $("#date-alert").alert();
     $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
       $('#spec_table tbody tr:eq('+curindex+') td:eq(1) input:first').focus().select();
@@ -958,19 +914,23 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
 
   var specs = {};      /*This is spec dictioary having spcode as a key and specval as its value*/
   $("#spec_table tbody tr").each(function(){
-    if ($.trim($("#spec_name",this).val())!=""){
-      if ($.trim($("#spec_name",this).val())!="" && $.trim($(".spec_obj",this).val())!="" ) {
-        specs[$("#spec_name",this).val()] = $(".spec_obj",this).val();
+    if ($(".spec_value",this).hasClass('datevalue')) {
+      specdate = specyear+"-"+specmonth+"-"+specday;
+      $(".spec_value",this).val(specdate); // Storing spec date
+    }
+    if ($.trim($(".spec_name",this).val())!=""){
+      if ($.trim($(".spec_name",this).val())!="" && $.trim($(".spec_value",this).val())!="" ) {
+        specs[$(".spec_name",this).val()] = $(".spec_value",this).val();
       }
     }
   });
 
 
-  var taxes = [];
+  var taxes = []; //Taxes list to store dictionaries created
   $("#product_tax_table tbody tr").each(function(){
-    var obj = {};
+    var obj = {}; //A dictionary created
     if ($.trim($(".tax_name",this).val())!="" || $.trim($(".tax_rate",this).val())!="" ) {
-
+      //For each tax its details are being stored in a dictionary
       obj.taxname = $(".tax_name",this).val();
       obj.state = $(".tax_state",this).val();
       obj.taxrate = $(".tax_rate",this).val();
@@ -979,11 +939,11 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
 
 
   });
-  var gobj = {};
+  var gobj = {}; // Creating a dictionary for storing godown wise opening stock
   $("#godown_ob_table tbody tr").each(function(){
     if ($.trim($(".godown_name",this).val())!="") {
       if ($.trim($(".godown_ob",this).val())!="" &&  $.trim($(".godown_ob",this).val())!= "0.00") {
-        gobj[$(".godown_name",this).val()] = $(".godown_ob",this).val();
+        gobj[$(".godown_name",this).val()] = $(".godown_ob",this).val(); //Godown id is key and opening stock is value
       }
     }
   });
@@ -992,10 +952,9 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
   addformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
   addformdata.push({name: 'specs', value: JSON.stringify(specs)});
   if ($("#godownflag").val() == 1) {
-    addformdata.push({name: 'godowns', value: JSON.stringify(gobj)});
+    addformdata.push({name: 'godowns', value: JSON.stringify(gobj)}); //Pushing taxes and specs into addformdata
 
   }
-  console.log(addformdata);
   $.ajax({
     url: '/product?type=save',
     type: 'POST',
