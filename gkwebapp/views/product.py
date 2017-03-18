@@ -153,7 +153,6 @@ def saveproduct(request):
 @view_config(route_name="product",request_param="type=edit", renderer="json")
 def editproduct(request):
 	header={"gktoken":request.headers["gktoken"]}
-	prdspecs = {}
 	proddetails={}
 	productdetails={}
 	taxes =0
@@ -186,8 +185,7 @@ def editproduct(request):
 		elif prd == "godowns":
 			godowns = json.loads(request.params["godowns"])
 		else:
-			prdspecs[prd]= request.params[prd]
-	proddetails["specs"] = prdspecs
+			proddetails["specs"]= json.loads(request.params["specs"])
 	productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
 	result = requests.put("http://127.0.0.1:6543/products", data=json.dumps(productdetails),headers=header)
 

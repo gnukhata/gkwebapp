@@ -1,5 +1,9 @@
 $(document).ready(function() {
   $('.modal-backdrop').remove();
+  var specday;
+  var specmonth;
+  var specyear;
+  var specdate;
   $("#prodselect").focus();
   $(".product_tax_disable").prop('disabled',true);
   $(".product_cat_tax_disable").prop('disabled',true);
@@ -89,36 +93,6 @@ $(document).ready(function() {
     {
       event.preventDefault();
       $("#epsubmit").click();
-    }
-  });
-
-
-
-  $(document).off('keyup', '.specdate').on('keyup', '.specdate',function (e) {
-    var textSoFar = $(this).val();
-    if (e.keyCode != 173 && e.keyCode != 109) {
-      if (e.keyCode != 8) {
-        if (textSoFar.length == 2 || textSoFar.length == 5) {
-          $(this).val(textSoFar + "-");
-        }
-        //to handle copy & paste of 8 digit
-        else if (e.keyCode == 86 && textSoFar.length == 8) {
-          $(this).val(textSoFar.substr(0, 2) + "-" + textSoFar.substr(2, 2) + "-" + textSoFar.substr(4, 4));
-        }
-      }
-      else {
-        //backspace would skip the slashes and just remove the numbers
-        if (textSoFar.length == 5) {
-          $(this).val(textSoFar.substring(0, 4));
-        }
-        else if (textSoFar.length == 2) {
-          $(this).val(textSoFar.substring(0, 1));
-        }
-      }
-    }
-    else {
-      //remove slashes to avoid 12//01/2014
-      $(this).val(textSoFar.substring(0, textSoFar.length - 1));
     }
   });
 
@@ -269,6 +243,8 @@ $(document).ready(function() {
         $(".product_tax_disable").prop('disabled',true);
         $(".product_cat_tax_disable").prop('disabled',true);
         catcode= $("#editcatselect option:selected").val();
+        $(".specdate").autotab('number');
+        $(".specdate").numeric();
         console.log("success");
       })
       .fail(function() {
@@ -528,6 +504,85 @@ $(document).ready(function() {
     }
 
   });
+
+  /* -----------------------Spec Key Events---------------------------------------------- */
+  $(document).off("keydown",".spec").on("keydown",".spec",function(event) {
+    var curindex = $(this).closest('tr').index();
+    var nextindex = curindex+1;
+    var previndex = curindex-1;
+    n = $('#spec_table tbody tr').length -1;
+    if (event.which==13) {
+      event.preventDefault();
+        if ($(this).hasClass("specday") || $(this).hasClass("specmonth")) {
+          $(this).parent().next().children('.specdate').focus().select();
+        }
+        else {
+          if (curindex == n) {
+            $('#product_tax_table tbody tr:eq(0) td:eq(0) select').focus().select();
+          }
+          else {
+            $('#spec_table tbody tr:eq('+nextindex+') td:eq(1) input').focus().select();
+          }
+        }
+    }
+    if (event.which==38) {
+      event.preventDefault();
+        if ($(this).hasClass("specyear") || $(this).hasClass("specmonth")) {
+          $(this).parent().prev().children('.specdate').focus().select();
+        }
+        else {
+          if (curindex == 0) {
+            $("#adduom").focus();
+          }
+          else {
+            $('#spec_table tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
+          }
+        }
+    }
+  });
+  function pad (str, max) { //to add leading zeros in date
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("0" + str, max) : str;
+    }
+    else{
+      return str;
+    }
+  }
+  function yearpad (str, max) {
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("200" + str, max) : str;
+    }
+    else if (str.length==2) {
+      return str.length < max ? pad("20" + str, max) : str;
+    }
+    else{
+      return str;
+    }
+  }
+  $(document).off("blur",".specday").on("blur",".specday",function(event) {
+    $(this).val(pad($(this).val(),2));
+    specday = $(this).val();
+  });
+  $(document).off("blur",".specmonth").on("blur",".specmonth",function(event) {
+    $(this).val(pad($(this).val(),2));
+    specmonth = $(this).val();
+  });
+
+  $(document).off("blur",".specyear").on("blur",".specyear",function(event) {
+    var curindex = $(this).closest('tr').index();
+    $(this).val(yearpad($(this).val(),4));
+    specyear = $(this).val();
+    if(!Date.parseExact(specday+specmonth+specyear, "ddMMyyyy")){ // Validation for date
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $('#spec_table tbody tr:eq('+curindex+') td:eq(1) input:first').focus().select();
+        $("#date-alert").hide();
+      });
+    }
+    });
+  /* -----------------------Spec Key Events End------------------------------------------ */
 
   /* -----------------------Tax key events start----------------------------------------- */
   $(document).off("keyup",".tax_name").on("keyup",".tax_name",function(event)
@@ -981,6 +1036,29 @@ $(document).ready(function() {
       $("#editproddesc").select();
       return false;
     }
+    var specs = {};      /*This is spec dictionary having spcode as a key and specval as its value*/
+    $("#spec_table tbody tr").each(function(){
+      if ($(".spec_value",this).hasClass('datevalue')) {
+        $(".specdate").each(function() {
+          if ($(this).hasClass('specday')) {
+            specday = $(this).val(); //Storing specday
+          }
+          if ($(this).hasClass('specmonth')) {
+            specmonth = $(this).val(); //Storing specmonth
+          }
+          if ($(this).hasClass('specyear')) {
+            specyear = $(this).val(); //Storing specyear
+          }
+        });
+        specdate = specyear+"-"+specmonth+"-"+specday; //Storing date in yyyyMMdd format
+        $(".spec_value",this).val(specdate); // Storing spec date in hidden filed
+      }
+      if ($.trim($(".spec_name",this).val())!=""){
+        if ($.trim($(".spec_name",this).val())!="" && $.trim($(".spec_value",this).val())!="" ) {
+          specs[$(".spec_name",this).val()] = $(".spec_value",this).val();
+        }
+      }
+    });
     var taxes = [];
     $("#product_edit_tax_table tbody tr").each(function(){
       var obj = {};
@@ -1011,6 +1089,7 @@ $(document).ready(function() {
     });
     var editformdata = $("#editprodform").serializeArray();
     editformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
+    editformdata.push({name: 'specs', value: JSON.stringify(specs)});
     if ($("#editgodownflag").val() == 1) {
       editformdata.push({name: 'godowns', value: JSON.stringify(obj)});
     }

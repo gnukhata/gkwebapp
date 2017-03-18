@@ -915,8 +915,19 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
   var specs = {};      /*This is spec dictioary having spcode as a key and specval as its value*/
   $("#spec_table tbody tr").each(function(){
     if ($(".spec_value",this).hasClass('datevalue')) {
-      specdate = specyear+"-"+specmonth+"-"+specday;
-      $(".spec_value",this).val(specdate); // Storing spec date
+      $(".specdate").each(function() {
+        if ($(this).hasClass('specday')) {
+          specday = $(this).val(); //Storing specday
+        }
+        if ($(this).hasClass('specmonth')) {
+          specmonth = $(this).val(); //SToring specmonth
+        }
+        if ($(this).hasClass('specyear')) {
+          specyear = $(this).val(); //Storing specyear
+        }
+      });
+      specdate = specyear+"-"+specmonth+"-"+specday; //Storing date in yyyyMMdd format
+      $(".spec_value",this).val(specdate); // Storing spec date in hdden field
     }
     if ($.trim($(".spec_name",this).val())!=""){
       if ($.trim($(".spec_name",this).val())!="" && $.trim($(".spec_value",this).val())!="" ) {
