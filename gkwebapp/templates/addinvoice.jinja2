@@ -148,6 +148,22 @@
           <div class="col-md-3">
             <div class="form-group">
               {% if gkstatus == "in" %}
+              <label for="invoice_supplierstate">
+                {% trans %}Supplier State{% endtrans %} :
+              </label>
+              <input class="form-control input-sm" id="invoice_supplierstate" placeholder="{% trans %}Select Supplier to see State{% endtrans %}" accesskey="" disabled>
+              {% else %}
+                <label for="invoice_customerstate">
+                  {% trans %}Customer State{% endtrans %} :
+                </label>
+                <input class="form-control input-sm" id="invoice_customerstate" placeholder="{% trans %}Select Customer to see State{% endtrans %}" accesskey="" disabled>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group">
+              {% if gkstatus == "in" %}
               <label for="invoice_supplieraddr">
                 {% trans %}Supplier Address{% endtrans %} :
               </label>
@@ -160,6 +176,7 @@
               {% endif %}
             </div>
           </div>
+
 
 					<div class="col-md-2">
             <div class="form-group">
