@@ -2,6 +2,14 @@ $(document).ready(function() {
   $("#add_cussup_name").focus().select();
   $("#add_cussup_name").keydown(function(event) {
     if (event.which==13) {
+      if ($.trim($("#add_cussup_name").val())=="") {
+        $("#name-blank-alert").alert();
+        $("#name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#name-blank-alert").hide();
+        });
+        $("#add_cussup_name").focus();
+        return false;
+      }
       event.preventDefault();
       $("#add_cussup_email").focus().select();
     }
@@ -28,6 +36,14 @@ $(document).ready(function() {
   });
   $("#add_state").keydown(function(event) {
     if (event.which==13) {
+      if ($.trim($("#add_state").val())=="") {
+        $("#state-blank-alert").alert();
+        $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#state-blank-alert").hide();
+        });
+        $("#add_state").focus();
+        return false;
+      }
       event.preventDefault();
       $("#add_cussup_address").focus().select();
     }
@@ -44,6 +60,14 @@ $(document).ready(function() {
       var thisKeypressTime = new Date();
       if ( thisKeypressTime - lastKeypressTime <= delta )
       {
+        if ($.trim($("#add_cussup_address").val())=="") {
+          $("#address-blank-alert").alert();
+          $("#address-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#address-blank-alert").hide();
+          });
+          $("#add_cussup_address").focus();
+          return false;
+        }
         $("#add_cussup_fax").focus();
         // optional - if we'd rather not detect a triple-press
         // as a second double-press, reset the timestamp
@@ -78,6 +102,14 @@ $(document).ready(function() {
   });
   $("#add_cussup_tan").keydown(function(event) {
     if (event.which==13) {
+      if ($.trim($("#add_cussup_tan").val())=="") {
+        $("#tin-blank-alert").alert();
+        $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#tin-blank-alert").hide();
+        });
+        $("#add_cussup_tan").focus();
+        return false;
+      }
       event.preventDefault();
       $("#cussup_save").click();
     }
@@ -98,9 +130,8 @@ $(document).ready(function() {
   });
   $("#cussup_save").click(function(event) {
     event.preventDefault();
-
     var custsupval;
-    if ($("#deliverychallan_gkstatus").val()=='in') {
+    if ($("#deliverychallan_gkstatus").val()=='in' || $('#status').val()=='9') {
          custsupval= 19;
     }
     else {

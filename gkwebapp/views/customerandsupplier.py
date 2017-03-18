@@ -47,6 +47,7 @@ def showaddcustomersupplier(request):
 @view_config(route_name="customersuppliers",request_param="action=showaddpopup",renderer="gkwebapp:templates/createcustsuppopup.jinja2")
 def showaddcustomersupplierpopup(request):
 	header={"gktoken":request.headers["gktoken"]}
+	
 	customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
 	suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
 	groups = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist", headers=header)
@@ -74,7 +75,7 @@ def savecustomersupplier(request):
 	result=requests.post("http://127.0.0.1:6543/customersupplier",data=json.dumps(dataset),headers=header)
 	if result.json()["gkstatus"] == 0:
 		if dataset["csflag"] == 3:
-				  gkdata = {"activity":dataset["custname"] + " customer created"}
+			gkdata = {"activity":dataset["custname"] + " customer created"}
 		else:
 			gkdata = {"activity":dataset["custname"] + " supplier created"}
 		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
