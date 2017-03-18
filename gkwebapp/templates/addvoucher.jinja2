@@ -200,6 +200,7 @@
 
       </div>
       {% if invoicedata!=0 %}
+      {% if invoicecount!=0 %}
       <div class="form-inline well well-sm invhide">
         <div class="form-group ">
 
@@ -208,19 +209,20 @@
             <option value="" selected total="">{% trans %}None{% endtrans %}</option>
             {% for invoice in invoicedata %}
             {% if vtype == "purchase" and invoice["csflag"]|int == 19 %}
-              <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" invdate={{invoice["invoicedate"]}} >{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
+              <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}" invdate={{invoice["invoicedate"]}} >{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
             {% elif vtype == "sales" and invoice["csflag"]|int == 3 %}
-              <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" invdate={{invoice["invoicedate"]}}>{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
+              <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}" invdate={{invoice["invoicedate"]}}>{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
             {% endif %}
             {% endfor %}
 
           </select>
         </div>
         <div class="form-group pull-right" >
-          <label for="invtotal">{% trans %}Invoice Total Amount {% endtrans %} :</label>
+          <label for="invtotal">{% trans %}Total Invoice Amount {% endtrans %} :</label>
           <input type="text" id="invtotal" class="form-control input-sm" value="0.00" placeholder="" disabled>
         </div>
       </div>
+      {% endif %}
       {% endif %}
       <div class="panel flow shadow ">
         <div class="table-responsive">

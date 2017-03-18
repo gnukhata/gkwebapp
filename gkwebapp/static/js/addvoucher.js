@@ -135,6 +135,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   event.preventDefault();
   /* Act on the event */
   var inv = $("#invsel option:selected").attr("total");
+
   if ($.trim(inv)!="")
   {
   $("#invtotal").val(parseFloat(inv).toFixed(2));
@@ -143,6 +144,23 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   {
   $("#invtotal").val(parseFloat(0).toFixed(2));
   }
+  var value = $('#invsel option:selected').attr("customername");
+  console.log(value);
+
+  $(".dramt:first").val(parseFloat(inv).toFixed(2));
+  $(".cramt:eq(1)").val(parseFloat(inv).toFixed(2));
+  if (($('#vtype').val()=="sales") && sessionStorage.invflag ==1)
+  {
+  $(".accs:first option").filter(function() {return this.text == value;}).attr('selected', true);
+  var e = jQuery.Event("keydown");
+  e.which = 13; // # Some key code value
+  $(".dramt").trigger(e);
+  }
+  if (($('#vtype').val()=="purchase") && sessionStorage.invflag ==1)
+ {
+      $(".accs:eq(1) option").filter(function() {return this.text == value;}).attr('selected', true);
+  }
+
 });
 
   var putcr = true;
@@ -601,7 +619,7 @@ $("#invsel").keyup(function(event) {
       curselectlength = $(this).length
       $("#popup").click();
     }
-    if (event.which==13 && outfocus) {
+   if (event.which==13 && outfocus) {
       outfocus = false;
     }
   });
@@ -731,6 +749,14 @@ $("#invsel").keyup(function(event) {
     curindex = $(this).closest('tr').index();
     nextindex = curindex+1;
     previndex = curindex-1;
+//rohini
+
+    if (event.which==13 && !outfocus) {
+
+      $('#vtable tbody tr:eq('+nextindex+') td:eq(1) select').focus();
+      event.preventDefault();
+
+    }
     if(event.which==190 && event.shiftKey)
     {
       event.preventDefault();
@@ -751,9 +777,9 @@ $("#invsel").keyup(function(event) {
     if (event.which==190 && event.ctrlKey) {
       $('#vtable tbody tr:eq('+nextindex+') select:enabled:first').focus();
       event.preventDefault();
-      if (curindex==lastindex) {
+      /*if (curindex==lastindex) {
         $("#narration").focus();
-      }
+      }*/
     }
   });
 
