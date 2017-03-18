@@ -564,6 +564,19 @@ $(document).ready(function() {
       if ($.trim($("#category_edit_spec_table tbody tr:eq("+i+") td:eq(0) input").val())=="") {
         //$("#category_edit_spec_table tbody tr:eq("+i+") td:eq(0) input").focus().select();
         //return false;
+        if(i=0)
+        {
+          console.log("delete clicked");
+          $("#category_edit_spec_table tbody tr:eq("+i+") td:eq(2) a").click();
+
+        }
+        console.log("Nil");
+        $("#spec-blank-alert").alert();
+        $("#spec-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#spec-blank-alert").hide();
+        });
+        $("#category_edit_spec_table tbody tr:eq("+i+") td:eq(0) input").focus().select();
+       return false;
       }
       else {
 
@@ -575,6 +588,7 @@ $(document).ready(function() {
       specs.push(obj);
          }
      }
+
 
     var taxes = [];
     var allow = true;
