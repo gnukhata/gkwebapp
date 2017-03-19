@@ -7,6 +7,14 @@ $(document).ready(function() {
   $("#prodselect").focus();
   $(".product_tax_disable").prop('disabled',true);
   $(".product_cat_tax_disable").prop('disabled',true);
+  $("#moresmall").on('shown.bs.collapse', function(event) {
+    event.preventDefault();
+    $("#smalllink").html('See less. <span class="glyphicon glyphicon-triangle-top"></span>');
+  });
+  $("#moresmall").on('hidden.bs.collapse', function(event) {
+    event.preventDefault();
+    $("#smalllink").html('See more. <span class="glyphicon glyphicon-triangle-bottom"></span>');
+  });
   $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
     event.preventDefault();
     /* Act on the event */
@@ -41,7 +49,12 @@ $(document).ready(function() {
   $(document).off('keydown', '#edituom').on('keydown', '#edituom', function(e){
     if (e.which == 13) {
       e.preventDefault();
-      $('#product_edit_tax_table tbody tr:first td:eq(0) select').focus();
+      if ($("#numberofspecs").val() > 0) {
+        $("#spec_table tbody tr:first td:eq(1) input:first").focus();
+      }
+      else {
+        $('#product_edit_tax_table tbody tr:first td:eq(0) select').focus();
+      }
     }
   });
   $(document).off('keydown', '#editgodownflag').on('keydown', '#editgodownflag', function(e){
@@ -102,6 +115,10 @@ $(document).ready(function() {
     }
   });
   $(document).on('keydown', '#editproddesc', function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#edituom").focus();
+    }
     if (event.which==38) {
       event.preventDefault();
       $("#prodselect").focus();
@@ -152,69 +169,6 @@ $(document).ready(function() {
     }
   });
 
-  var txst=0;
-  $(document).off('focus', '.tax_state').on('focus', '.tax_state', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    txst =1;
-  });
-
-  $(document).off('blur', '.tax_state').on('blur', '.tax_state', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    txst =0;
-  });
-  $(document).on("keydown",'.editpr input:not(:hidden),.editpr textarea,.editpr select', function(e) {
-    var n = $(".editpr input:not(:hidden),.editpr textarea,.editpr select").length;
-    var f = $('.editpr input:not(:hidden),.editpr textarea,.editpr select');
-    if (e.which == 13)
-    {
-      var nextIndex = f.index(this) + 1;
-
-      if(nextIndex < n)
-      {
-        e.preventDefault();
-        f[nextIndex].focus();
-        f[nextIndex].select();
-      }
-
-    }
-    if (e.which == 38)
-    {
-      var prevIndex = f.index(this) - 1;
-      var elementType = $(this).prop('nodeName');
-      if(prevIndex > -1)
-      {
-        if (elementType=="SELECT")
-        {
-          if (sel1 == 1 && sel2 == 0)
-          {
-
-            sindex= $("#edituom option:selected").index();
-          }
-          else if (sel1 == 0 && sel2 == 1)
-          {
-
-            sindex= $("#editcatselect option:selected").index();
-          }
-
-          if (sindex ==0 && txst ==0)
-          {
-            e.preventDefault();
-            f[prevIndex].focus();
-          }
-        }
-        else
-        {
-          e.preventDefault();
-          f[prevIndex].focus();
-          f[nextIndex].select();
-
-        }
-      }
-
-    }
-  });
   $("#prodselect").change(function(event) {
     /* Act on the event */
     prodcode= $("#prodselect option:selected").val();
@@ -437,7 +391,7 @@ $(document).ready(function() {
         }
         else {
           if (curindex == n) {
-            $('#product_tax_table tbody tr:eq(0) td:eq(0) select').focus().select();
+            $('#product_edit_tax_table tbody tr:eq(0) td:eq(0) select').focus();
           }
           else {
             $('#spec_table tbody tr:eq('+nextindex+') td:eq(1) input').focus().select();
@@ -512,7 +466,12 @@ $(document).ready(function() {
     if (event.which==188 && event.shiftKey)
     {
       if (curindex==0) {
-      $("#edituom").focus().select();
+        if ($("#numberofspecs").val() > 0) {
+          $('#spec_table tbody tr:last td:eq(1) input:first').focus().select();
+        }
+        else {
+          $("#edituom").focus();
+        }
       }
       if(previndex>-1 && curindex != 0)
       {
@@ -567,6 +526,20 @@ $(document).ready(function() {
     else if (event.which==13) {
       event.preventDefault();
       $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
+    }
+    else if (event.which==27) {
+      event.preventDefault();
+      if ($("#editgodownpresence").val() == 0) {
+        $("#editopeningstock").focus().select();
+      }
+      else {
+        if ($("#editgodownflag").val() == 1) {
+          $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
+        }
+        else if ($("#editgodownflag").val() == 0) {
+          $("#editgodownflag").focus().select();
+        }
+      }
     }
   });
 
@@ -708,14 +681,16 @@ $(document).ready(function() {
     }
     else if (event.which==27) {
       event.preventDefault();
-      if ($('.spec').length > 0) {
-        $("#spec_table tbody tr:first td:eq(1) input:first").focus().select();
+      if ($("#editgodownpresence").val() == 0) {
+        $("#editopeningstock").focus().select();
       }
-      else if ($("#editgodownflag").val() == 1) {
-        $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
-      }
-      else if ($("#editgodownflag").val() == 0) {
-        $("#editgodownflag").focus().select();
+      else {
+        if ($("#editgodownflag").val() == 1) {
+          $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
+        }
+        else if ($("#editgodownflag").val() == 0) {
+          $("#editgodownflag").focus().select();
+        }
       }
     }
 
@@ -742,12 +717,7 @@ $(document).ready(function() {
             $("#editgodownflag").focus().select();
         }
       else {
-        if ($('.spec').length < 1) {
-          $('#product_edit_tax_table tbody tr:last td:eq(2) input').focus().select();
-        }
-        else {
-          $('.spec:last').focus().select();
-        }
+        $('#product_edit_tax_table tbody tr:last td:eq(2) input').focus().select();
       }
       }
       if(previndex>-1 && curindex != 0)

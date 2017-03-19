@@ -6,6 +6,14 @@ $(document).ready(function() {
   var specyear;
   var specdate;
   var specspresent = 0;
+  $("#moresmall").on('shown.bs.collapse', function(event) {
+    event.preventDefault();
+    $("#smalllink").html('See less. <span class="glyphicon glyphicon-triangle-top"></span>');
+  });
+  $("#moresmall").on('hidden.bs.collapse', function(event) {
+    event.preventDefault();
+    $("#smalllink").html('See more. <span class="glyphicon glyphicon-triangle-bottom"></span>');
+  });
   $("#addcatselect").focus();
   if($("#addcatselect").is(':hidden'))
   {
@@ -488,6 +496,16 @@ $(document).off("keydown",".tax_name").on("keydown",".tax_name",function(event)
     event.preventDefault();
     $('#product_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
   }
+  else if (event.which==27) {
+    event.preventDefault();
+      if ($("#godownpresence").val()==0) {
+        $("#openingstock").focus().select();
+      }
+      if ($("#godownpresence").val()==1)
+      {
+        $("#godownflag").focus().select();
+      }
+  }
 });
 
 $(document).off("change",".tax_name").on("change",".tax_name",function(event)
@@ -626,10 +644,6 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
   }
   else if (event.which==27) {
     event.preventDefault();
-    if ($(".spec").length > 0) {
-      $('#godownflag').focus().select();
-    }
-    else {
       if ($("#godownpresence").val()==0) {
         $("#openingstock").focus().select();
       }
@@ -637,7 +651,6 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
       {
         $("#godownflag").focus().select();
       }
-    }
   }
 
 });

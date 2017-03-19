@@ -38,6 +38,7 @@
   </div>
   </div>
   <div id="extsp" class="row">
+    <input type="text" id="numberofspecs" value="{{proddesc["specs"]|length}}" hidden>
         {% if proddesc["specs"]|length > 0 %}
         <div class="col-sm-11">
       <div class="panel">
@@ -65,7 +66,6 @@
             <input type="text" class="form-control spec_value spec input-sm numtype" id="{{spec['spcode']}}" placeholder="Numeric" value="{{proddesc['specs'][pdesc]}}">
             {% elif spec["attrtype"]==2 %}
             <div class="form-inline">
-            <input type="text" class="spec_value datevalue" value="{{proddesc['specs'][pdesc]}}" hidden>
               <div class="form-group ">
                 <input type="text" class="form-control input-sm spec specday specdate" size="2" maxlength="2" placeholder="DD" value="{{proddesc['specs'][pdesc][8]+proddesc['specs'][pdesc][9]}}">
               </div>
@@ -75,6 +75,7 @@
               <div class="form-group">
                 <input type="text" class="form-control input-sm spec specyear specdate" size="4" maxlength="4" placeholder="YYYY" value="{{proddesc['specs'][pdesc][0]+proddesc['specs'][pdesc][1]+proddesc['specs'][pdesc][2]+proddesc['specs'][pdesc][3]}}">
               </div>
+              <input type="text" class="spec_value datevalue" value="{{proddesc['specs'][pdesc]}}" hidden>
             </div>
             {% endif %}
           </td>
@@ -165,13 +166,13 @@
       </tbody>
     </table>
     </div>
-    <small id="taxhelp3" class="form-text text-muted">Press 'Esc' Key from tax rate to shift focus to specs or from godown opening stock to 'Save' button.</small><br>
+    <small id="taxhelp3" class="form-text text-muted">Press 'Esc' Key from tax rate or tax name to shift focus to godown name or from godown opening stock to 'Save' button.</small><br>
     <small id="taxhelp4" class="form-text text-muted">Press 'Insert' Key from anywhere on the screen to save changes.</small>
-    <a data-toggle="collapse" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
     <div class="collapse" id="moresmall">
-      <small id="taxhelp2" class="form-text text-muted">Press 'Ctrl + >' or 'Ctrl + <' to navigate within fields in tax or godown table.</small><br>
-      <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' from tax name to shift focus to opening stock or from godown name to specs or checkbox.</small>
+      <small id="taxhelp2" class="form-text text-muted">Press 'Ctrl + >' or 'Ctrl + <' to navigate within a row in tax or godown table.</small><br>
+      <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to navigate within a column in tax or godown table.</small>
     </div>
+    <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
   </div>
   </div>
   <div class="row">
@@ -184,7 +185,9 @@
       </div>
     </div>
     <input type="text" name="godownflag" id="editgodownflag" value="0" hidden>
+    <input type="text" id="editgodownpresence" value="0" hidden>
     {% else %}
+    <input type="text" id="editgodownpresence" value="1" hidden>
   {% if numberofgodowns==0 %}
   <div class="form-group col-sm-12">
     <input type="checkbox" name="godownflag" id="editgodownflag" value="0">
