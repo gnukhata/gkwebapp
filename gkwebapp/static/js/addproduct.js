@@ -5,6 +5,7 @@ $(document).ready(function() {
   var specmonth;
   var specyear;
   var specdate;
+  var specspresent = 0;
   $("#addcatselect").focus();
   if($("#addcatselect").is(':hidden'))
   {
@@ -111,7 +112,12 @@ $("#openingstock").focus(function(event) {
 
 $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
   if (event.which == 13) {
-    $("#spec_table tbody tr:first td:eq(1) input:first").focus();
+    if (specspresent == 1) {
+      $("#spec_table tbody tr:first td:eq(1) input:first").focus();
+    }
+    else {
+      $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+    }
   }
   else if (event.which==32)
   {
@@ -137,7 +143,7 @@ $("#godownflag").keydown(function(event){
     $(".godown_name").first().focus().select();
   }
   if (event.which == 38) {
-    $("#adduom").focus();
+    $("#product_tax_table tbody tr:last td:eq(2) input").focus();
   }
 });
 $(document).off('keydown', '#addcatselect').on('keydown', '#addcatselect',function(event) {
@@ -293,6 +299,10 @@ $("#addcatselect").change(function(event) {
         $("#specdiv").show();
         $(".specdate").autotab('number');
         $(".specdate").numeric();
+        specspresent = 1;
+      }
+      else {
+        specspresent = 0;
       }
     })
     .fail(function() {
@@ -418,11 +428,11 @@ $(document).off("keyup",".tax_name").on("keyup",".tax_name",function(event)
   var previndex = curindex-1;
   if (event.which==188 && event.shiftKey)
   {
-    if (curindex==0 && $("#godownflag").val()==0) {
+    if (curindex==0 && specspresent==0) {
       $("#adduom").focus();
     }
-    if (curindex==0 && $("#godownflag").val()==1) {
-      $(".godown_ob:last").focus().select();
+    if (curindex==0 && specspresent==1) {
+      $('#spec_table tbody tr:last td:eq(1) input:first').focus().select();
     }
     if(previndex>-1 && curindex != 0)
     {
