@@ -67,7 +67,7 @@
                      </div>
                      <div>
                        <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'SpaceBar' to add new Category.{% endtrans %}</small><br>
-                       <small id="txtareahelp" class="form-text text-muted" style="color: rgb(255,0,0);">Note:All specifications of category you select will be applicable to its Subcategory.</small>
+                       <small id="txtareahelp" class="form-text text-muted" style="color: rgb(255,0,0);">Note:All specifications of category you select will be applicable to its Sub-Category.</small>
                      </div>
                   </div>
                      <div id="new_parent_div1" hidden>
@@ -131,7 +131,7 @@
                         </div>
                         <div>
                           <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'SpaceBar' to add new Category.{% endtrans %}</small><br>
-                          <small id="txtareahelp" class="form-text text-muted" style="color: rgb(255,0,0);">Note:All specifications of category you select will be applicable to its Subcategory.</small>
+                          <small id="txtareahelp" class="form-text text-muted" style="color: rgb(255,0,0);">Note:All specifications of category you select will be applicable to its Sub-Category.</small>
                         </div>
                      </div>
                      {% endif %}
@@ -139,11 +139,11 @@
             </div>
             <div class="row form-group childcat" hidden>
               <div class="form-group">
-                 <label for="category_name">{% trans %}Subcategory:{% endtrans %}</label>
+                 <label for="category_name">{% trans %}Sub-Category:{% endtrans %}</label>
               </div>
                <div class="panel">
                  <div class="alert alert-danger" id="child-cat-blank-alert"  aria-live="rude" role="alert" hidden>
-                    Please Enter Subcategory Name!
+                    Please Enter Sub-Category Name!
                  </div>
                  <div class="alert alert-danger" id="child-navigation-alert"  aria-live="rude" role="alert" hidden>
                     Press 'Tab' to shift cursor to specs field.
@@ -151,7 +151,7 @@
                   <table id="child_category_table" class="table table-condensed table-bordered fixed-table">
                      <thead class="bg-primary input-sm">
                         <tr>
-                           <th class="col-xs-6">{% trans %}Subcategory Name{% endtrans %}</th>
+                           <th class="col-xs-6">{% trans %}Sub-Category Name{% endtrans %}</th>
                            <th class="col-xs-3">{% trans %}Specifications{% endtrans %}</th>
                            <th class="col-xs-3">{% trans %}Tax{% endtrans %}</th>
                         </tr>
@@ -159,7 +159,7 @@
                      <tbody>
                         <tr>
                            <td class="col-xs-6">
-                              <input type="text" id="child_category_name" class="form-control input-sm mchild_spec_name" placeholder="Subcategory Name">
+                              <input type="text" id="child_category_name" class="form-control input-sm mchild_spec_name" placeholder="Sub-Category Name">
                            </td>
                            <td class="col-xs-3">
                               <button class="btn form-control btn-primary btn-sm child_spec_class" id="child_spec" data-toggle="modal" data-target="#child_addspecmodal" >{% trans %}Specs{% endtrans %}</button>
@@ -171,7 +171,7 @@
                      </tbody>
                   </table>
                </div>
-               <small id="txtareahelp" class="form-text text-muted">Press 'Insert key' to save current Subcategory & add new Subcategory.</small><br>
+               <small id="txtareahelp" class="form-text text-muted">Press 'Insert key' to save current Sub-Category & add new Sub-Category.</small><br>
                <small id="navigation" class="form-text text-muted">Press 'Home' to select Category. </small><br>
                <small id="navigation" class="form-text text-muted">Press 'Tab' and 'Shift + Tab' to navigate through fields.</small>
             </div>
