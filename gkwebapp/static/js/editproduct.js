@@ -59,6 +59,15 @@ $(document).ready(function() {
         $('#product_edit_tax_table tbody tr:first td:eq(0) select').focus();
       }
     }
+    if (e.which == 38) {
+      e.preventDefault();
+      if ($("#editcatselect").is(':disabled')) {
+        $("#editproddesc").focus().select();
+      }
+      else {
+        $("#editcatselect").focus();
+      }
+    }
   });
   $(document).off('keydown', '#editgodownflag').on('keydown', '#editgodownflag', function(e){
     if (e.which == 13) {
@@ -304,6 +313,44 @@ $(document).ready(function() {
       });
   });
 
+  $(document).on("change","#editcatselect",function(event) {
+    /* Act on the event */
+
+    catcode= $("#editcatselect option:selected").val();
+    if (catcode!="")
+    {
+      $.ajax({
+        url: '/product?type=specs',
+        type: 'POST',
+        global: false,
+        async: false,
+        datatype: 'text/html',
+        data: {"categorycode": catcode},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+      .done(function(resp)
+      {
+        $('#extsp').html(resp);
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+    }
+    else {
+      $("#nocategory-alert").alert();
+      $("#nocategory-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#nocategory-alert").hide();
+      });
+    }
+
+  });
+
   $("#prodselect").keyup(function(event) {
     /* Act on the event */
     if (event.which == 13)
@@ -326,6 +373,7 @@ $(document).ready(function() {
       }
     }
   });
+
   $(document).on("keydown",'.spec', function(e) {
     var n = $(".spec").length;
     var f = $('.spec');
@@ -385,6 +433,23 @@ $(document).ready(function() {
     $(".product_tax_disable").prop('disabled',false);
     if ($("#editcatselect").val()!="") {
       $("#editcatselect").prop('disabled',true);
+    }
+  });
+
+  $(document).off("keydown","#editcatselect").on("keydown","#editcatselect",function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      if (catcode == "") {
+        $("#nocategory-alert").alert();
+        $("#nocategory-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#nocategory-alert").hide();
+        });
+      }
+      $("#edituom").focus();
+    }
+    if (event.which == 38) {
+      event.preventDefault();
+      $("#editproddesc").focus().select();
     }
   });
 

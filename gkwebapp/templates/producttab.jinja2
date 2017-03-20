@@ -85,6 +85,10 @@ margin-bottom: 0px;
 
             {% trans %}Duplicate product under same category.{% endtrans %}
           </div>
+          <div class="alert alert-info" id="nocategory-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}You can create products under categories.{% endtrans %}
+          </div>
           <div class="alert alert-danger" id="blank-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}Product name cannot be blank.{% endtrans %}
