@@ -91,7 +91,6 @@
   </div>
   </div>
   </div>
-</div>
 <div class="col-sm-6" style="margin-top: -67;">
   <div class="row">
     <div class="form-group taxdiv">
@@ -177,7 +176,7 @@
   </div>
   <div class="row">
     {% if not godown %}
-    <div class="form-group col-sm-6 pds">
+    <div class="form-group pds">
       <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
       <div class="input-group">
         <input type='text' class="form-control text-right input-sm" name="openingstock"  id="editopeningstock" value="{{proddesc['openingstock']}}" aria-describedby="unitaddon">
@@ -189,18 +188,18 @@
     {% else %}
     <input type="text" id="editgodownpresence" value="1" hidden>
   {% if numberofgodowns==0 %}
-  <div class="form-group col-sm-12">
+  <div class="form-group">
     <input type="checkbox" name="godownflag" id="editgodownflag" value="0">
     <label class="" for="editgodownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
   </div>
-  <div id="editnogodown" class="form-group col-sm-6 pds">
+  <div id="editnogodown" class="form-group pds">
     <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
-    <div class="input-group">
+    <div class="input-group col-sm-6">
       <input type='text' class="form-control text-right input-sm" name="openingstock"  id="editopeningstock" value="{{proddesc['openingstock']}}" aria-describedby="unitaddon">
       <span class="input-group-addon input-sm" id="unitaddon"></span>
     </div>
   </div>
-  <div  id="editopeningstockdiv" class="form-group col-sm-12" hidden>
+  <div  id="editopeningstockdiv" class="form-group" hidden>
     <div class="panel">
       <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">
         <thead class="bg-primary input-sm">
@@ -265,4 +264,5 @@
   </div>
   {% endif %}
     {% endif %}
+</div>
 </div>
