@@ -4,6 +4,9 @@ $(document).ready(function() {
   var specmonth;
   var specyear;
   var specdate;
+  var selectedgodown;
+  var selectedtaxname;
+  var selectedtaxstate;
   $("#prodselect").focus();
   $(".product_tax_disable").prop('disabled',true);
   $(".product_cat_tax_disable").prop('disabled',true);
@@ -705,6 +708,14 @@ $(document).ready(function() {
   /* -----------------------Tax key events end----------------------------------------- */
   /* -----------------------Godown Key events start here----------------------------------------- */
 
+  $(document).off("change",".editgodown_name").on("change",".editgodown_name",function(event)
+  {
+    var curindex = $(this).closest('tr').index();
+    var nextindex = curindex+1;
+    var previndex = curindex-1;
+    selectedgodown = $('#editgodown_ob_table tbody tr:eq('+curindex+') td:eq(0) select').val();
+  });
+
   $(document).off("keyup",".editgodown_name").on("keyup",".editgodown_name",function(event)
   {
     var curindex = $(this).closest('tr').index();
@@ -759,8 +770,7 @@ $(document).ready(function() {
     var previndex1 = curindex1-1;
     var selectindex = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').index();
     var numberofgodowns = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length;
-    var selectedgodown = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').val();
-    console.log(selectedgodown);
+    selectedgodown = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').val();
     if (event.which==13) {
       event.preventDefault();
       if (curindex1 != ($("#editgodown_ob_table tbody tr").length-1)) {
@@ -783,16 +793,16 @@ $(document).ready(function() {
           $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(1) input').focus();
           return false;
         }
-        if ($("#editgodown_ob_table tbody tr").length == numberofgodowns || $("#editgodown_ob_table tbody tr").length > numberofgodowns) {
+        if (numberofgodowns == 1) {
           $('#epsubmit').click();
           return false;
         }
         $('#editgodown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+        $('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
         if (curindex1 == 0) {
           $("#editgodown_ob_table tbody tr:last td:last").append('<a href="#" class="editgodown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
         }
         $(".editgodown_ob").numeric();
-        $('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true);
         $('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
     }
