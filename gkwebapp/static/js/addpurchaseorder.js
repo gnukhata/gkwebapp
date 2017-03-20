@@ -118,7 +118,7 @@ $(document).ready(function() {
          event.preventDefault();
          $("#payterms").focus().select();
        }
-        if (event.which==38) {
+       if (event.which==38) {
          event.preventDefault();
          $("#purchaseorder_date").focus().select();
        }
@@ -266,9 +266,6 @@ $(document).off("keydown",".purchaseorder_schedule_packages").on("keydown",".pur
         $('.soday').focus().select();
         return false;
       }
-
-
-
           var obj = {};
           var date = [];
          if ($.trim($("#schedule_table tbody tr:eq("+curindex1+") td:eq(0) input").val())!="") {
@@ -349,16 +346,11 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
     });
 });
 
-
   $(document).off('focus', '.purchaseorder_product_per_price').on('focus', '.purchaseorder_product_per_price', function(event) {
     event.preventDefault();
     /* Act on the event */
     $(".purchaseorder_product_per_price").numeric();
   });
-
-
-
-
 
   $(document).off('blur', '.purchaseorder_product_per_price').on('blur', '.purchaseorder_product_per_price', function(event) {
     event.preventDefault();
@@ -376,6 +368,8 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
     var curindex1 = $(this).closest('tr').index();
     var nextindex1 = curindex1+1;
     var previndex1 = curindex1-1;
+    var selectindex = $('#purchaseorder_product_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').index();
+    var selectedpo = $('#purchaseorder_product_table tbody tr:eq('+curindex1+') td:eq(0) select').val();
     if (event.which==13) {
       event.preventDefault();
       $("#schedule_table tbody").html("");
@@ -429,19 +423,23 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
         }
 
         $('#purchaseorder_product_table tbody').append('<tr>'+$("#purchaseorder_product_table tbody tr:first").closest('tr').html()+'</tr>');
-        $("#purchaseorder_product_table tbody tr:last td:last").append('<a href="#" class="schedule_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+        if (curindex1 == 0) {
+          $("#purchaseorder_product_table tbody tr:last td:last").append('<a href="#" class="schedule_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+        }
         $(".purchaseorder_product_tax_rate").numeric();
+        $('#purchaseorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedpo+']').prop('hidden', true).prop('disabled', true);
         $('#purchaseorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
-
       }
     }
-
   });
 
   $(document).off("keydown",".purchaseorder_product_per_price").on("keydown",".purchaseorder_product_per_price",function(event){
     var curindex1 = $(this).closest('tr').index();
     var nextindex1 = curindex1+1;
     var previndex1 = curindex1-1;
+    var selectindex = $('#purchaseorder_product_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').index();
+    var selectedpo = $('#purchaseorder_product_table tbody tr:eq('+curindex1+') td:eq(0) select').val();
+
     if (event.which==13) {
       event.preventDefault();
       if($("#purchaseorder_state").val()!="none"){
@@ -498,14 +496,14 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
             $("#purchaseorder_product_table tbody tr:eq("+curindex1+") td:eq(1) input").focus();
             return false;
           }
-
           $('#purchaseorder_product_table tbody').append('<tr>'+$("#purchaseorder_product_table tbody tr:first").closest('tr').html()+'</tr>');
-          $("#purchaseorder_product_table tbody tr:last td:last").append('<a href="#" class="schedule_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+          if (curindex1 == 0) {
+            $("#purchaseorder_product_table tbody tr:last td:last").append('<a href="#" class="schedule_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+          }
           $(".purchaseorder_product_tax_rate").numeric();
+          $('#purchaseorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedpo+']').prop('hidden', true).prop('disabled', true);
           $('#purchaseorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
-
       }
-
       }
     }
 
@@ -771,8 +769,6 @@ console.log("yay");
          $("#creditperiod").focus();
          return false;
        }
-
-
        var scheduledata = {};
        console.log(scheduleall);
        $("#purchaseorder_product_table  tbody tr").each(function(){
@@ -782,7 +778,7 @@ console.log("yay");
            pcode = $("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val();
 
            var obj = {};
-            obj.productname = $.trim($("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").text());
+           obj.productname = $.trim($("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").text());
            obj.quantity = $("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(1) input").val();
            obj.packages = $("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(2) input").val();
            obj.rateperunit = $("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(3) input").val();

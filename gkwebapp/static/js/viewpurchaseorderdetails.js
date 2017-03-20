@@ -5,7 +5,6 @@ $(document).ready(function() {
   $("#viewpomodal").on('hidden.bs.modal', function(event) {
 
   });
-
     $(document).off('click', '.purchaseorder_schedule').on('click', '.purchaseorder_schedule', function(event) {
       var curindex1 = $(this).closest('tr').index();
       pcode1 = $("#purchaseorder_product_table tbody tr:eq("+curindex1+") td:eq(0) select option:selected").val();
@@ -17,7 +16,5 @@ $(document).ready(function() {
             $(this).show();
           }
        });
-
     });
-
 });
