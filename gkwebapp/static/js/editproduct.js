@@ -120,7 +120,12 @@ $(document).ready(function() {
   $(document).on('keydown', '#editproddesc', function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#edituom").focus();
+      if ($("#editcatselect").is(':disabled')) {
+        $("#edituom").focus();
+      }
+      else {
+        $("#editcatselect").focus();
+      }
     }
     if (event.which==38) {
       event.preventDefault();
@@ -378,7 +383,9 @@ $(document).ready(function() {
     catcode= $("#editcatselect option:selected").val();
     $(".product_cat_tax_disable").prop('disabled',false);
     $(".product_tax_disable").prop('disabled',false);
-    $("#editcatselect").prop('disabled',true);
+    if ($("#editcatselect").val()!="") {
+      $("#editcatselect").prop('disabled',true);
+    }
   });
 
   /* -----------------------Spec Key Events---------------------------------------------- */
