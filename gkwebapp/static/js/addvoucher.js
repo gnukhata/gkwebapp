@@ -749,14 +749,9 @@ $("#invsel").keyup(function(event) {
     curindex = $(this).closest('tr').index();
     nextindex = curindex+1;
     previndex = curindex-1;
-//rohini
+    //
 
-    if (event.which==13 && !outfocus) {
 
-      $('#vtable tbody tr:eq('+nextindex+') td:eq(1) select').focus();
-      event.preventDefault();
-
-    }
     if(event.which==190 && event.shiftKey)
     {
       event.preventDefault();
@@ -798,6 +793,15 @@ $("#invsel").keyup(function(event) {
   {
     if(event.which==13 && !outfocus)
     {
+
+
+
+
+
+                    event.preventDefault();
+
+
+
       drsum=0;
       $(".dramt").each(function(){
         drsum += +$(this).val();
@@ -986,6 +990,7 @@ $("#invsel").keyup(function(event) {
       }
       curindex=null;
       lastindex=null;
+       $('#vtable tbody tr:eq('+nextindex+') td:eq(1) select').focus();
     }
     if (event.which==13 && outfocus) {
       outfocus=false;
