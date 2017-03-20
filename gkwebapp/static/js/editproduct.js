@@ -434,6 +434,9 @@ $(document).ready(function() {
     if ($("#editcatselect").val()!="") {
       $("#editcatselect").prop('disabled',true);
     }
+    else {
+      $("#editcatselectlabel").text('Select Category');
+    }
   });
 
   $(document).off("keydown","#editcatselect").on("keydown","#editcatselect",function(event) {
