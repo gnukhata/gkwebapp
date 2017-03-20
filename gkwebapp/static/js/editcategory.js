@@ -37,7 +37,7 @@ $(document).ready(function() {
             {
               $("#category_edit_innerdiv").hide();
                 $(".panel-footer").hide();
-              console.log("u cant edit");
+              
               $("#cant-edit-alert").alert();
               $("#cant-edit-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#cant-edit-alert").hide();
@@ -47,7 +47,7 @@ $(document).ready(function() {
             else {
               $("#category_edit_innerdiv").show();
               $(".panel-footer").show();
-              console.log("u can edit");
+              
             }
           })
           .fail(function() {
