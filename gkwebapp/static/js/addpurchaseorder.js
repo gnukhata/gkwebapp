@@ -296,6 +296,7 @@ $(document).off("click",".scheduledel").on("click", ".scheduledel", function() {
   });
   $('#schedule_table tbody tr:last td:eq(0) select').select();
 });
+
 /* End here  */
   /*Table key events */
   $(document).off("keydown",".product_name").on("keydown",".product_name",function(event)
@@ -345,6 +346,8 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
        }
     });
 });
+
+
 
   $(document).off('focus', '.purchaseorder_product_per_price').on('focus', '.purchaseorder_product_per_price', function(event) {
     event.preventDefault();

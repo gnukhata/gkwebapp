@@ -364,10 +364,7 @@ $(document).ready(function() {
 
  });
 
-
-
-
-       $(document).off("click",".schedule_del").on("click", ".schedule_del", function() {
+     $(document).off("click",".schedule_del").on("click", ".schedule_del", function() {
          $(this).closest('tr').fadeOut(200, function(){
            $(this).closest('tr').remove();	 //closest method gives the closest element productified
            $('#salesorder_product_table tbody tr:last td:eq(0) input').focus().select();
