@@ -334,6 +334,8 @@ $(document).ready(function() {
       .done(function(resp)
       {
         $('#extsp').html(resp);
+        $(".specdate").autotab('number');
+        $(".specdate").numeric();
       })
       .fail(function() {
         console.log("error");
@@ -442,7 +444,7 @@ $(document).ready(function() {
   $(document).off("keydown","#editcatselect").on("keydown","#editcatselect",function(event) {
     if (event.which == 13) {
       event.preventDefault();
-      if (catcode == "") {
+      if ($("#editcatselect option:selected").val() == "") {
         $("#nocategory-alert").alert();
         $("#nocategory-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#nocategory-alert").hide();
@@ -483,7 +485,7 @@ $(document).ready(function() {
         }
         else {
           if (curindex == 0) {
-            $("#adduom").focus();
+            $("#edituom").focus();
           }
           else {
             $('#spec_table tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
