@@ -286,6 +286,8 @@ $(document).ready(function() {
        var curindex1 = $(this).closest('tr').index();
        var nextindex1 = curindex1+1;
        var previndex1 = curindex1-1;
+       var selectindex = $('#salesorder_product_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').index();
+       var selectedso = $('#salesorder_product_table tbody tr:eq('+curindex1+') td:eq(0) select').val();
 
        if (event.which==13) {
          if($("#salesorder_state").val()!="none"){
@@ -308,9 +310,14 @@ $(document).ready(function() {
              $('#salesorder_product_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
              return false;
            }
+
+
            $('#salesorder_product_table tbody').append('<tr>'+$("#salesorder_product_table tbody tr:first").closest('tr').html()+'</tr>');
-           $("#salesorder_product_table tbody tr:last td:last").append('<a href="#" class="schedule_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+            if (curindex1 == 0) {
+              $("#salesorder_product_table tbody tr:last td:last").append('<a href="#" class="schedule_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+            }
            $(".salesorder_product_tax_rate").numeric();
+           $('#salesorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedso+']').prop('hidden', true).prop('disabled', true);
            $('#salesorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
 
          }
@@ -323,6 +330,8 @@ $(document).ready(function() {
      var curindex1 = $(this).closest('tr').index();
      var nextindex1 = curindex1+1;
      var previndex1 = curindex1-1;
+     var selectindex = $('#salesorder_product_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').index();
+     var selectedso = $('#salesorder_product_table tbody tr:eq('+curindex1+') td:eq(0) select').val();
 
      if (event.which==13) {
 
@@ -342,8 +351,11 @@ $(document).ready(function() {
            return false;
          }
          $('#salesorder_product_table tbody').append('<tr>'+$("#salesorder_product_table tbody tr:first").closest('tr').html()+'</tr>');
-         $("#salesorder_product_table tbody tr:last td:last").append('<a href="#" class="schedule_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+         if (curindex1 == 0) {
+           $("#salesorder_product_table tbody tr:last td:last").append('<a href="#" class="schedule_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+         }
          $(".salesorder_product_tax_rate").numeric();
+         $('#salesorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedso+']').prop('hidden', true).prop('disabled', true);
          $('#salesorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
 
        }
@@ -606,7 +618,7 @@ $(document).ready(function() {
 
            obj.taxrate = parseFloat($("#salesorder_product_table tbody tr:eq("+i+") td:eq(4) input").val()).toFixed(2);
            obj.staggered = [];
-          
+
               scheduledata[pcode] = obj;
              console.log("scheduledata"+scheduledata[pcode]);
 
