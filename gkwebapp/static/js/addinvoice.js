@@ -210,6 +210,9 @@ $(document).ready(function() {
     .done(function(resp) {
       console.log("success");
       if (resp["gkstatus"]==0) {
+        console.log("successsssssss");
+        $("#invoice_customerstate").val(resp["gkresult"]["state"]);
+        $("#invoice_supplierstate").val(resp["gkresult"]["state"]);
         $("#invoice_customeraddr").val(resp["gkresult"]["custaddr"]);
         $("#invoice_supplieraddr").val(resp["gkresult"]["custaddr"]);
         $("#invoice_customertin").val(resp["gkresult"]["custtan"]);
@@ -422,7 +425,38 @@ $(document).ready(function() {
       .done(function(resp) {
         if (resp["gkstatus"]==0) {
           $("#invoice_customer").val(resp["delchal"]["delchaldata"]["custid"]);
+          //$("#invoice_supplieraddr").val(resp[])
           $("#invoice_customer").prop("disabled",true);
+          //yaha
+          $.ajax({
+            url: '/customersuppliers?action=get',
+            type: 'POST',
+            dataType: 'json',
+            async : false,
+            data: {"custid":$("#invoice_customer option:selected").val()},
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+          })
+          .done(function(resp) {
+            console.log("success");
+            if (resp["gkstatus"]==0) {
+              console.log(resp["gkresult"]["custstate"]);
+              $("#invoice_customerstate").val(resp["gkresult"]["state"]);
+              $("#invoice_supplierstate").val(resp["gkresult"]["state"]);
+              $("#invoice_customeraddr").val(resp["gkresult"]["custaddr"]);
+              $("#invoice_supplieraddr").val(resp["gkresult"]["custaddr"]);
+              $("#invoice_customertin").val(resp["gkresult"]["custtan"]);
+              $("#invoice_suppliertin").val(resp["gkresult"]["custtan"]);
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          .always(function() {
+            console.log("complete");
+          });
           $('#invoice_product_table tbody').empty();
           var totqty = 0;
           $.each(resp.delchal.stockdata.items, function(key, value) {
@@ -573,7 +607,7 @@ $(document).ready(function() {
             $('#invoice_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
           }
           $('#invoice_product_table tbody tr:last td:eq(0) select').prepend(('<option value="" selected>None</option>'));
-          $('#invoice_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
+
           $('.invoice_product_quantity').numeric({ negative: false});
           $('.invoice_product_per_price').numeric({ negative: false});
         }
