@@ -6,6 +6,9 @@ $(document).ready(function() {
   var specyear;
   var specdate;
   var specspresent = 0;
+  var selectedgodown;
+  var selectedtaxname;
+  var selectedtaxstate;
   $("#moresmall").on('shown.bs.collapse', function(event) {
     event.preventDefault();
     $("#smalllink").html('See less. <span class="glyphicon glyphicon-triangle-top"></span>');
@@ -675,6 +678,13 @@ $(document).off('keydown', '#openingstock').on('keydown', '#openingstock', funct
   }
 });
 /* -----------------------Godown Key events start here----------------------------------------- */
+$(document).off("change",".godown_name").on("change",".godown_name",function(event)
+{
+  var curindex = $(this).closest('tr').index();
+  var nextindex = curindex+1;
+  var previndex = curindex-1;
+  selectedgodown = $('#godown_ob_table tbody tr:eq('+curindex+') td:eq(0) select').val();
+});
 
 $(document).off("keyup",".godown_name").on("keyup",".godown_name",function(event)
 {
@@ -724,7 +734,6 @@ $(document).off("keydown",".godown_ob").on("keydown",".godown_ob",function(event
   var nextindex1 = curindex1+1;
   var previndex1 = curindex1-1;
   var selectindex = $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').index();
-  var selectedgodown = $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').val();
   var numberofgodowns = $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
   if (event.which==13) {
     event.preventDefault();
@@ -732,7 +741,7 @@ $(document).off("keydown",".godown_ob").on("keydown",".godown_ob",function(event
       $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
     }
     else {
-      if (numberofgodowns > 1) {
+      if (numberofgodowns > 0) {
         if ($('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').val()=="") {
           $("#godown-blank-alert").alert();
           $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -758,7 +767,7 @@ $(document).off("keydown",".godown_ob").on("keydown",".godown_ob",function(event
         $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
       else {
-        $("#addgodown").focus();
+        $("#apsubmit").focus();
       }
     }
   }
