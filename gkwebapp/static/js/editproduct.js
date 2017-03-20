@@ -10,14 +10,6 @@ $(document).ready(function() {
   $("#prodselect").focus();
   $(".product_tax_disable").prop('disabled',true);
   $(".product_cat_tax_disable").prop('disabled',true);
-  $("#moresmall").on('shown.bs.collapse', function(event) {
-    event.preventDefault();
-    $("#smalllink").html('See less. <span class="glyphicon glyphicon-triangle-top"></span>');
-  });
-  $("#moresmall").on('hidden.bs.collapse', function(event) {
-    event.preventDefault();
-    $("#smalllink").html('See more. <span class="glyphicon glyphicon-triangle-bottom"></span>');
-  });
   $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
     event.preventDefault();
     /* Act on the event */
@@ -311,6 +303,15 @@ $(document).ready(function() {
       .always(function() {
         console.log("complete");
       });
+  });
+
+  $(document).off("shown.bs.collapse","#moresmall").on("shown.bs.collapse","#moresmall",function(event) {
+    event.preventDefault();
+    $("#smalllink").html('See less. <span class="glyphicon glyphicon-triangle-top"></span>');
+  });
+  $(document).off("hidden.bs.collapse","#moresmall").on("hidden.bs.collapse","#moresmall",function(event) {
+    event.preventDefault();
+    $("#smalllink").html('See more. <span class="glyphicon glyphicon-triangle-bottom"></span>');
   });
 
   $(document).on("change","#editcatselect",function(event) {
@@ -707,6 +708,13 @@ $(document).ready(function() {
     var previndex1 = curindex1-1;
     if (event.which==13) {
       event.preventDefault();
+      if ($('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(1) select option:selected').attr("stateid") < 1 && selectedtaxname == "VAT") {
+        $("#tax_state-blank-alert").alert();
+        $("#tax_state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#tax_state-blank-alert").hide();
+        });
+        return false;
+      }
       if (curindex1 != ($("#product_edit_tax_table tbody tr").length-1)) {
         $('#product_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
