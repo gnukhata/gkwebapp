@@ -36,10 +36,20 @@
 
       {% trans %}Supplier can not be deleted{% endtrans %}
     </div>
+   
     <div class="alert alert-danger" id="name-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Please Enter name!{% endtrans %}
+	{% trans %}Please Enter name!{% endtrans %}
     </div>
+    <div class="alert alert-danger" id="address-blank-alert"  aria-live="rude" role="alert" hidden>
+
+	{% trans %}Please Enter address!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="tin-blank-alert"  aria-live="rude" role="alert" hidden>
+
+	{% trans %}Please Enter TIN!{% endtrans %}
+    </div>
+
 
     <div class="panel shadow customersupplier_panel">
       <div class="panel-body ">
@@ -50,7 +60,7 @@
           <div class="container-fluid row">
             <div class="form-group col-md-6">
               <label for="edit_cussup_list">{% trans %}Customers & Suppliers List:{% endtrans %}</label>
-              <select class="form-control input-sm" id="edit_cussup_list" accesskey="">
+              <select class="form-control input-sm" id="edit_cussup_list" >
                 <option value="" disabled hidden selected>Select Customer/Supplier</option>
                 <optgroup label="Customers" id="custgroup">
                   {% for customer in customers %}
