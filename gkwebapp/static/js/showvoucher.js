@@ -40,7 +40,7 @@ $(document).ready(function(){
           global: false,
           async: false,
           datatype: "json",
-          data : {"type":vtype,"invflag":sessionStorage.invflag},
+          data : {"type":vtype,"invflag":sessionStorage.invflag, "financialstart": sessionStorage.yyyymmddyear1},
           beforeSend: function(xhr)
             {
               xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
