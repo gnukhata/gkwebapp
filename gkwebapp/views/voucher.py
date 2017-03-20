@@ -46,6 +46,8 @@ def showvoucher(request):
 		lastdetails["vno"] = int(lastdetails["vno"]) + 1
 	else:
 		lastdetails["vno"] = 1
+		vdate = str(request.params["financialstart"])
+		lastdetails["vdate"] = vdate[8:] + "-" + vdate[5:7] + "-" + vdate[0:4]
 	if type=="contra" or type=="journal":
 		result = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s"%(type), headers=header)
 		projects = requests.get("http://127.0.0.1:6543/projects", headers=header)
