@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Log{% endtrans %}</title>
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Activity Log{% endtrans %}</title>
   <style type="text/css">
   .shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -65,9 +65,9 @@
 <body>
   <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{logheader["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{logheader["calculateto"]}}</strong></span>
   {% if typeflag == "1" %}
-  <span style="margin:auto; display:table;"><i>{% trans %}Log of an Organisation{% endtrans %}</i></span>
+  <span style="margin:auto; display:table;"><i>{% trans %}Activity Log of an Organisation{% endtrans %}</i></span>
   {% else %}
-  <span style="margin:auto; display:table;"><i>{% trans %}Log of an User{% endtrans %}</i> : <strong>{{logheader["username"]}}</strong></span>
+  <span style="margin:auto; display:table;"><i>{% trans %}Activity Log of an User{% endtrans %}</i> : <strong>{{logheader["username"]}}</strong></span>
   {% endif %}
   <div class="row">
     <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="lclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
@@ -76,26 +76,39 @@
         <tr>
           <th class="dtwrap calign" >{% trans %}Date{% endtrans %}</th>
           {% if typeflag == "1" %}
-          <th class="mdwrap calign">{% trans %}User Name{% endtrans %}</th>
+          <th class="mdwrap calign">{% trans %}User Name(Role){% endtrans %}</th>
           {% endif %}
-          <th class="lngwrap calign">{% trans %}Activity{% endtrans %}</th>
+          <th class="lngwrap">{% trans %}Activity{% endtrans %}</th>
         </tr>
       </thead>
       <tbody>
-        {% for record in records %}
-        <tr  data-value="{{record['logid']}}">
-          <td class="dtwrap calign">
-            {{record['time']}}
-          </td>
-          {% if typeflag == "1" %}
-          <td class="mdwrap calign">
-            {{record['username']}}
-          </td>
-          {% endif %}
-          <td class="lngwrap">
-            {{record['activity']}}
-          </td>
-        {% endfor %}
+        {% if typeflag == "1" %}
+          {% for record in records %}
+          <tr  data-value="{{record['logid']}}">
+            <td class="dtwrap calign">
+              {{record['time']}}
+            </td>
+
+            <td class="mdwrap calign">
+              {{record['username']}}
+            </td>
+
+            <td class="lngwrap">
+              {{record['activity']}}
+            </td>
+          {% endfor %}
+          {% else %}
+          {% for record in records %}
+          <tr  data-value="{{record['logid']}}">
+            <td class="dtwrap calign">
+              {{record['time']}}
+            </td>
+
+            <td class="lngwrap">
+              {{record['activity']}}
+            </td>
+          {% endfor %}
+        {% endif %}
       </tbody>
     </table>
   </div>
