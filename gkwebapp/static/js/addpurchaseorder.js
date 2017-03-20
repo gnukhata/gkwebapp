@@ -118,7 +118,7 @@ $(document).ready(function() {
          event.preventDefault();
          $("#payterms").focus().select();
        }
-       if (event.which==38) {
+        if (event.which==38) {
          event.preventDefault();
          $("#purchaseorder_date").focus().select();
        }

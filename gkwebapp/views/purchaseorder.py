@@ -24,9 +24,12 @@ import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
 
-@view_config(route_name="purchaseorder",renderer="gkwebapp:templates/purchaseorder.jinja2")
+@view_config(route_name="purchaseorder",request_param="type=tab",renderer="gkwebapp:templates/purchaseorder.jinja2")
 def purchaseorder(request):
-	return {"status":True}
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=16",headers=header)
+	result1 = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=20",headers=header)
+	return{"numberofpurchaseorders":len(result.json()["gkresult"]),"numberofsalesorders":len(result1.json()["gkresult"]),"gkstatus":result.json()["gkstatus"]}
 
 
 @view_config(route_name="purchaseorder",request_param="type=showview",renderer="gkwebapp:templates/viewpurchaseorder.jinja2")
@@ -96,6 +99,7 @@ def savepurchaseorder(request):
 	purchaseorderdata = {"orderno":request.params["orderno"],"orderdate":request.params["orderdate"],"creditperiod":request.params["creditperiod"],"payterms":request.params["payterms"],
 		"modeoftransport":request.params["modeoftransport"],"designation":request.params["designation"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"],"togodown":request.params["togodown"]
 		}
+	print purchaseorderdata
 	result=requests.post("http://127.0.0.1:6543/purchaseorder",data=json.dumps(purchaseorderdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 

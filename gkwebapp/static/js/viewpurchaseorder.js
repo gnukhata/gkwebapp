@@ -63,7 +63,7 @@ $(document).ready(function() {
       })
       .done(function(resp)
       {
-        $("#purchaseorderdetails").html("");
+        //$("#purchaseorderdetails").html("");
         $("#purchaseorderdetails").html(resp);
         console.log("success");
       })

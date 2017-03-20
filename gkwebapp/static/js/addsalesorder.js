@@ -606,7 +606,7 @@ $(document).ready(function() {
 
            obj.taxrate = parseFloat($("#salesorder_product_table tbody tr:eq("+i+") td:eq(4) input").val()).toFixed(2);
            obj.staggered = [];
-           obj.reorderlimit = null;
+          
               scheduledata[pcode] = obj;
              console.log("scheduledata"+scheduledata[pcode]);
 

@@ -15,6 +15,7 @@ $(document).ready(function() {
       },
     success: function(resp)
     {
+        $("#purchaseorder_div").html("");
         $("#purchaseorder_div").html(resp);
 
     }
@@ -37,6 +38,7 @@ $(document).ready(function() {
       },
     success: function(resp)
     {
+          $("#purchaseorder_div").html("");
           $("#purchaseorder_div").html(resp);
     }
     }
@@ -57,6 +59,7 @@ $(document).ready(function() {
       },
     success: function(resp)
     {
+          $("#purchaseorder_div").html("");
           $("#purchaseorder_div").html(resp);
     }
     }
@@ -77,13 +80,11 @@ $(document).ready(function() {
       },
     success: function(resp)
     {
+          $("#purchaseorder_div").html("");
           $("#purchaseorder_div").html(resp);
     }
     }
   );
   });
   $("#purchaseorder_create").click();
-  $("#purchaseorder_orderno").focus();
-
-
   });
