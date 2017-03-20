@@ -499,7 +499,7 @@ $(document).ready(function() {
                             $("#success-alert").hide();
                         });
                         $("#child_category_table tbody tr:last td:eq(1) button").attr('id', resp.gkresult);
-                        $("#child_category_table tbody tr:last td:eq(1) button").text("Show Specs");
+                        $("#child_category_table tbody tr:last td:eq(1) button").text("View Specs");
                         $("#child_category_table tbody tr:last td:eq(2) button").remove();
                         $("#child_category_table tbody tr:last td:eq(0) input").prop('disabled', true);
                         $("#child_category_table tbody tr:last td:eq(1) button").attr('class', "btn form-control btn-primary btn-sm showspecs");
