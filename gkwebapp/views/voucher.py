@@ -42,6 +42,10 @@ def showvoucher(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/transaction?details=last&type=%s"%(type), headers=header)
 	lastdetails = result.json()["gkresult"]
+	if(lastdetails["vno"] != ""):
+		lastdetails["vno"] = int(lastdetails["vno"]) + 1
+	else:
+		lastdetails["vno"] = 1
 	if type=="contra" or type=="journal":
 		result = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s"%(type), headers=header)
 		projects = requests.get("http://127.0.0.1:6543/projects", headers=header)
@@ -59,7 +63,7 @@ def showvoucher(request):
 		if drresult.json()["gkstatus"]==0 and crresult.json()["gkstatus"]==0:
 			if invflag == 1 and (type =="purchase" or type =="sales"):
 				invdata = requests.get("http://127.0.0.1:6543/invoice?inv=all", headers=header)
-				
+
 				if invdata.json()["gkstatus"]==0:
 					return render_to_response("gkwebapp:templates/addvoucher.jinja2",{"lastdetails":lastdetails,"draccounts":drresult.json()["gkresult"],"craccounts":crresult.json()["gkresult"],"projects":projects.json()["gkresult"],"vtype":type,"invoicedata":invdata.json()["gkresult"],"invoicecount":len(invdata.json()["gkresult"])},request=request)
 			else:
