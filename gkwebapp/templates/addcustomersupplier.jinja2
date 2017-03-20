@@ -21,6 +21,24 @@
 
       {% trans %}Please Enter name!{% endtrans %}
     </div>
+    
+     <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Please select state!{% endtrans %}
+      
+    </div>
+    
+    <div class="alert alert-danger" id="address-blank-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Please enter address!{% endtrans %}
+      
+    </div>
+    <div class="alert alert-danger" id="tin-blank-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Please enter TIN!{% endtrans %}
+      
+    </div>
+    
     <input type="hidden" id="debtgroupcode" value="{{debtgroupcode}}">
     <input type="hidden" id="credgroupcode" value="{{credgroupcode}}">
     <div class="panel shadow customersupplier_panel">
