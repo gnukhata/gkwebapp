@@ -143,7 +143,7 @@ $(document).ready(function() {
           $("#parent_heading").text($("#category_under option[value=" + categorycode + "]").text());
           $('#spectbl td').remove();
           $(".childcat").show('fast', function() {
-            $(".mchild_spec_name:first").focus();
+      //      $(".mchild_spec_name:first").focus();
           });
           parentspecs = [];
           // ajax for getting the specs of the newly selected (parent)category
