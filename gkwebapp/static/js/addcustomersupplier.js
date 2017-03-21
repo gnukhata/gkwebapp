@@ -34,9 +34,9 @@ $(document).ready(function() {
     if (event.which==13) {
 
 	if ($.trim($("#add_cussup").val())=="") {
-            $("#name-blank-alert").alert();
-            $("#name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-              $("#name-blank-alert").hide();
+            $("#role-blank-alert").alert();
+            $("#role-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#role-blank-alert").hide();
             });
             $("#add_cussup").focus();
             return false;
