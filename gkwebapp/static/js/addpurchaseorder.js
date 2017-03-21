@@ -278,7 +278,7 @@ $(document).off("keydown",".purchaseorder_schedule_packages").on("keydown",".pur
   var curindex1 = $(this).closest('tr:visible').index();
   var nextindex1 = curindex1+1;
   var previndex1 = curindex1-1;
-  $('.sodate').autotab('number');
+
   if (event.which==13) {
     event.preventDefault();
     //Gets productcode from click event and stores in table row value
@@ -310,6 +310,7 @@ $(document).off("keydown",".purchaseorder_schedule_packages").on("keydown",".pur
         $('.soday').focus().select();
         return false;
       }
+      
           var obj = {};
           var date = [];
          if ($.trim($("#schedule_table tbody tr:eq("+curindex1+") td:eq(0) input").val())!="") {
