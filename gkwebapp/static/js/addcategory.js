@@ -98,7 +98,7 @@ $(document).ready(function() {
         if (event.which == 13 && categorycode != "") {
           event.preventDefault();
           $("#category_under").trigger('change');
-
+            $(".mchild_spec_name:last").focus();
         }
         //when spacebar is pressed
         if (event.which == 32) {
