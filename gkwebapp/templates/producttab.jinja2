@@ -15,8 +15,8 @@
     }
   .fixed-table tbody {
       display:block;
-      height: calc(100vh - 38em);
-      min-height: 125px;
+      height: calc(100vh - 39em);
+      min-height: 100px;
       overflow-y:scroll;
   }
 
@@ -85,9 +85,13 @@ margin-bottom: 0px;
 
             {% trans %}Duplicate product under same category.{% endtrans %}
           </div>
+          <div class="alert alert-info" id="nocategory-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}You can create products under categories.{% endtrans %}
+          </div>
           <div class="alert alert-danger" id="blank-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Product description cannot be blank.{% endtrans %}
+            {% trans %}Product name cannot be blank.{% endtrans %}
           </div>
           <div class="alert alert-danger" id="os-blank-alert"  aria-live="rude" role="alert" hidden>
 
@@ -97,9 +101,17 @@ margin-bottom: 0px;
 
             {% trans %}Please select a godown.{% endtrans %}
           </div>
+          <div class="alert alert-danger" id="tax_state-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please select a state.{% endtrans %}
+          </div>
           <div class="alert alert-warning" id="godown-same-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}Please select a different godown.{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
           </div>
           <div class="alert alert-danger" id="tax-same-alert"  aria-live="rude" role="alert" hidden>
 

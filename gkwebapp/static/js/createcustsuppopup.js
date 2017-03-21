@@ -128,6 +128,7 @@ $(document).ready(function() {
       return false;
     }
   });
+
   $("#cussup_save").click(function(event) {
     event.preventDefault();
     var custsupval;
@@ -136,6 +137,14 @@ $(document).ready(function() {
     }
     else {
          custsupval= 3 ;
+    }
+    // custsupdata = 3 if customer or 19 if supplier
+    var groupcode = -1;
+    if (custsupval == '3'){
+      groupcode = $("#debtgroupcode").val();
+    }
+    else {
+      groupcode = $("#credgroupcode").val();
     }
     if ($.trim($("#add_cussup_name").val())=="") {
       $("#name-blank-alert").alert();
@@ -166,36 +175,60 @@ $(document).ready(function() {
       }
     })
     .done(function(resp) {
-      if(resp["gkstatus"] == 0){
-        $("#customersupplier_create").click();
-        if (custsupval == '3') {
-          $("#cus-success-alert").alert();
-          $("#cus-success-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#cus-success-alert").hide();
-          });
-        }
-        else  {
-          $("#cus-success-alert").alert();
-          $("#cus-success-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#cus-success-alert").hide();
-          });
 
+      if(resp["gkstatus"] == 0){
+        $.ajax(
+          {
+
+            type: "POST",
+            url: "/addaccount",
+            global: false,
+            async: false,
+            datatype: "json",
+            data: {"accountname":$("#add_cussup_name").val(),"openbal":0,"subgroupname":groupcode},
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            },
+            success: function(resp)
+            {
+              if(resp["gkstatus"]==0)
+              {
+              //  $("#customersupplier_create").click();
+                if (custsupval == '3') {
+                  $("#cus-success-alert").alert();
+                  $("#cus-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $('#custsupmodal').modal('hide');
+                    $('.modal-backdrop').remove();
+                    $("#cus-success-alert").hide();
+                  });
+
+                }
+                else  {
+                  $("#sup-success-alert").alert();
+                  $("#sup-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $('#custsupmodal').modal('hide');
+                    $('.modal-backdrop').remove();
+                    $("#sup-success-alert").hide();
+                  });
+
+                }
+              return false;
+              }
+            }
+          });
+          return false;
         }
-      $("#selectedcustsup").val($('#add_cussup_name').val());
-      $("#deliverychallan_customeraddr").val($('#add_cussup_address').val());
-      $("#deliverychallan_supplieraddr").val($('#add_cussup_address').val());
-      console.log($("#selectedcustsup").val());
-      $('#custsupmodal').modal('hide');
-      $('.modal-backdrop').remove();
-      return false;
-      }
-      if(resp["gkstatus"] ==1){
-        if (custsupval == '3') {
+        if(resp["gkstatus"] ==1){
+
+          // gkstatus 1 implies its a duplicate entry.
+          if (custsupval == '3') {
           $("#add_cussup_name").focus();
           $("#sup-duplicate-alert").alert();
           $("#sup-duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#sup-duplicate-alert").hide();
           });
+          console.log("duplicate supplier");
           return false;
         }
         else if (custsupval == '19') {
@@ -206,16 +239,19 @@ $(document).ready(function() {
           });
           return false;
         }
+    return false;
+  }
+else {
+  $("#add_cussup").focus();
+  $("#failure-alert").alert();
+  $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
+    $("#failure-alert").hide();
+  });
+  return false;
+}
 
-      }
-      else {
-        $("#add_cussup_name").focus();
-        $("#failure-alert").alert();
-        $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#failure-alert").hide();
-        });
-        return false;
-      }
+
+
     })
     .fail(function() {
       console.log("error");

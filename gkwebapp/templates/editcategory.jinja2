@@ -22,6 +22,10 @@
 </style>
 <body>
   <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
+  <div class="alert alert-danger" id="cant-edit-alert"  aria-live="rude" role="alert" hidden>
+
+    {% trans %}This category cannot be edited as there are products under it.{% endtrans %}
+  </div>
     <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
 
       {% trans %}Category saved.{% endtrans %}

@@ -1,5 +1,12 @@
 $(document).ready(function() {
   $('.modal-backdrop').remove();
+  var specday;
+  var specmonth;
+  var specyear;
+  var specdate;
+  var selectedgodown;
+  var selectedtaxname;
+  var selectedtaxstate;
   $("#prodselect").focus();
   $(".product_tax_disable").prop('disabled',true);
   $(".product_cat_tax_disable").prop('disabled',true);
@@ -37,7 +44,21 @@ $(document).ready(function() {
   $(document).off('keydown', '#edituom').on('keydown', '#edituom', function(e){
     if (e.which == 13) {
       e.preventDefault();
-      $('#product_edit_tax_table tbody tr:first td:eq(0) select').focus();
+      if ($("#numberofspecs").val() > 0) {
+        $("#spec_table tbody tr:first td:eq(1) input:first").focus();
+      }
+      else {
+        $('#product_edit_tax_table tbody tr:first td:eq(0) select').focus();
+      }
+    }
+    if (e.which == 38) {
+      e.preventDefault();
+      if ($("#editcatselect").is(':disabled')) {
+        $("#editproddesc").focus().select();
+      }
+      else {
+        $("#editcatselect").focus();
+      }
     }
   });
   $(document).off('keydown', '#editgodownflag').on('keydown', '#editgodownflag', function(e){
@@ -92,42 +113,21 @@ $(document).ready(function() {
     }
   });
 
-
-
-  $(document).off('keyup', '.specdate').on('keyup', '.specdate',function (e) {
-    var textSoFar = $(this).val();
-    if (e.keyCode != 173 && e.keyCode != 109) {
-      if (e.keyCode != 8) {
-        if (textSoFar.length == 2 || textSoFar.length == 5) {
-          $(this).val(textSoFar + "-");
-        }
-        //to handle copy & paste of 8 digit
-        else if (e.keyCode == 86 && textSoFar.length == 8) {
-          $(this).val(textSoFar.substr(0, 2) + "-" + textSoFar.substr(2, 2) + "-" + textSoFar.substr(4, 4));
-        }
-      }
-      else {
-        //backspace would skip the slashes and just remove the numbers
-        if (textSoFar.length == 5) {
-          $(this).val(textSoFar.substring(0, 4));
-        }
-        else if (textSoFar.length == 2) {
-          $(this).val(textSoFar.substring(0, 1));
-        }
-      }
-    }
-    else {
-      //remove slashes to avoid 12//01/2014
-      $(this).val(textSoFar.substring(0, textSoFar.length - 1));
-    }
-  });
-
   $("#prodselect").keydown(function(event) {
     if (event.which==13) {
       $("#editproddesc").focus().select();
     }
   });
   $(document).on('keydown', '#editproddesc', function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      if ($("#editcatselect").is(':disabled')) {
+        $("#edituom").focus();
+      }
+      else {
+        $("#editcatselect").focus();
+      }
+    }
     if (event.which==38) {
       event.preventDefault();
       $("#prodselect").focus();
@@ -138,19 +138,7 @@ $(document).ready(function() {
     if (event.which==13)
     {
       event.preventDefault();
-      var taxdisabled = $('#product_edit_tax_table tbody tr:first td:eq(0) select').is(":disabled");
-      var taxcount = $('#product_edit_tax_table tbody tr').length;
-      if (taxdisabled || taxcount<1) {
-        if ($("#editspecifications").contents(".form-group").length == 0) {
-          $('#epsubmit').click();
-        }
-        else {
-          $("#editspecifications").contents(".form-group:first").find("input:first").focus().select();
-        }
-      }
-      else {
-        $('#product_edit_tax_table tbody tr:first td:eq(0) select').focus().select();
-      }
+      $('#epsubmit').click();
 
     }
     else if (event.which==173) {
@@ -190,69 +178,6 @@ $(document).ready(function() {
     }
   });
 
-  var txst=0;
-  $(document).off('focus', '.tax_state').on('focus', '.tax_state', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    txst =1;
-  });
-
-  $(document).off('blur', '.tax_state').on('blur', '.tax_state', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    txst =0;
-  });
-  $(document).on("keydown",'.editpr input:not(:hidden),.editpr textarea,.editpr select', function(e) {
-    var n = $(".editpr input:not(:hidden),.editpr textarea,.editpr select").length;
-    var f = $('.editpr input:not(:hidden),.editpr textarea,.editpr select');
-    if (e.which == 13)
-    {
-      var nextIndex = f.index(this) + 1;
-
-      if(nextIndex < n)
-      {
-        e.preventDefault();
-        f[nextIndex].focus();
-        f[nextIndex].select();
-      }
-
-    }
-    if (e.which == 38)
-    {
-      var prevIndex = f.index(this) - 1;
-      var elementType = $(this).prop('nodeName');
-      if(prevIndex > -1)
-      {
-        if (elementType=="SELECT")
-        {
-          if (sel1 == 1 && sel2 == 0)
-          {
-
-            sindex= $("#edituom option:selected").index();
-          }
-          else if (sel1 == 0 && sel2 == 1)
-          {
-
-            sindex= $("#editcatselect option:selected").index();
-          }
-
-          if (sindex ==0 && txst ==0)
-          {
-            e.preventDefault();
-            f[prevIndex].focus();
-          }
-        }
-        else
-        {
-          e.preventDefault();
-          f[prevIndex].focus();
-          f[nextIndex].select();
-
-        }
-      }
-
-    }
-  });
   $("#prodselect").change(function(event) {
     /* Act on the event */
     prodcode= $("#prodselect option:selected").val();
@@ -280,13 +205,9 @@ $(document).ready(function() {
         $('#proddetails').find('input, textarea, button, select').prop('disabled',true);
         $(".product_tax_disable").prop('disabled',true);
         $(".product_cat_tax_disable").prop('disabled',true);
-        if ($(".spec").length < 3) {
-          $("#editspecifications").removeClass("specsdiv");
-        }
-        else {
-          $("#editspecifications").addClass("specsdiv");
-        }
         catcode= $("#editcatselect option:selected").val();
+        $(".specdate").autotab('number');
+        $(".specdate").numeric();
         console.log("success");
       })
       .fail(function() {
@@ -345,7 +266,6 @@ $(document).ready(function() {
         console.log("complete");
       });
       category = $("#editcatselect option:selected").val();
-      existingcatspecs = $("#extsp").clone();
       var indexgp = $(".editgodownid").index(this);
       $.ajax({
         url: '/product?by=godown',
@@ -385,6 +305,55 @@ $(document).ready(function() {
       });
   });
 
+  $(document).off("shown.bs.collapse","#moresmall").on("shown.bs.collapse","#moresmall",function(event) {
+    event.preventDefault();
+    $("#smalllink").html('See less. <span class="glyphicon glyphicon-triangle-top"></span>');
+  });
+  $(document).off("hidden.bs.collapse","#moresmall").on("hidden.bs.collapse","#moresmall",function(event) {
+    event.preventDefault();
+    $("#smalllink").html('See more. <span class="glyphicon glyphicon-triangle-bottom"></span>');
+  });
+
+  $(document).on("change","#editcatselect",function(event) {
+    /* Act on the event */
+
+    catcode= $("#editcatselect option:selected").val();
+    if (catcode!="")
+    {
+      $.ajax({
+        url: '/product?type=specs',
+        type: 'POST',
+        global: false,
+        async: false,
+        datatype: 'text/html',
+        data: {"categorycode": catcode},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+      .done(function(resp)
+      {
+        $('#extsp').html(resp);
+        $(".specdate").autotab('number');
+        $(".specdate").numeric();
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+    }
+    else {
+      $("#nocategory-alert").alert();
+      $("#nocategory-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#nocategory-alert").hide();
+      });
+    }
+
+  });
+
   $("#prodselect").keyup(function(event) {
     /* Act on the event */
     if (event.which == 13)
@@ -407,6 +376,7 @@ $(document).ready(function() {
       }
     }
   });
+
   $(document).on("keydown",'.spec', function(e) {
     var n = $(".spec").length;
     var f = $('.spec');
@@ -464,80 +434,109 @@ $(document).ready(function() {
     catcode= $("#editcatselect option:selected").val();
     $(".product_cat_tax_disable").prop('disabled',false);
     $(".product_tax_disable").prop('disabled',false);
-  });
-
-  $(document).on("change","#editcatselect",function(event) {
-    /* Act on the event */
-
-    catcode= $("#editcatselect option:selected").val();
-    if (catcode == category)
-    {
-      $("#extsp").html(existingcatspecs);
-      existingcatspecs = $("#extsp").clone();
-      $('#editspecifications').find('input, textarea, button, select').prop('disabled',false);
-
-    }
-    if (catcode!="")
-    {
-      $.ajax({
-        url: '/product?type=specs',
-        type: 'POST',
-        global: false,
-        async: false,
-        datatype: 'text/html',
-        data: {"categorycode": catcode},
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-        }
-      })
-      .done(function(resp)
-      {
-        $("#editspecifications").html("");
-        $("#editspecifications").html(resp);
-        $("#specshelp").hide();
-        if ($(".spec").length > 2) {
-          $("#editspecifications").addClass("specsdiv");
-        }
-        console.log("success");
-      })
-      .fail(function() {
-        console.log("error");
-      })
-      .always(function() {
-        console.log("complete");
-      });
+    if ($("#editcatselect").val()!="") {
+      $("#editcatselect").prop('disabled',true);
     }
     else {
-      $("#specshelp").show();
-      $('#product_edit_tax_table tbody').empty();
-      for (tax of existingnonetax) {
-        $('#product_edit_tax_table tbody').append('<tr class="product_row_val" value="new">'+
-        '<td class="col-xs-4">'+
-        '<select class="form-control input-sm product_tax_disable tax_name">'+
-          '<option value="" selected>Select Tax</option>'+
-          '<option value="VAT">VAT</option>'+
-          '<option value="CVAT">CVAT</option>'+
-        '</select>'+
-        '</td>'+
-        '<td class="col-xs-4">'+
-        '<select class="form-control product_tax_disable input-sm tax_state" >'+
-        '<option value="">None</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>'+
-        '</select>'+
-        '</td>'+
-        '<td class="col-xs-3">'+
-        '<input class="form-control product_tax_disable input-sm tax_rate text-right numtype"  placeholder="Rate" value="'+tax["taxrate"]+'">'+
-        '</td>'+
-        '<td class="col-xs-1">'+
-        '<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-        '</td>'+
-        '</tr>');
-        $('#product_edit_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
-        $('#product_edit_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
-      }
+      $("#editcatselectlabel").text('Select Category');
     }
-
   });
+
+  $(document).off("keydown","#editcatselect").on("keydown","#editcatselect",function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      if ($("#editcatselect option:selected").val() == "") {
+        $("#nocategory-alert").alert();
+        $("#nocategory-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#nocategory-alert").hide();
+        });
+      }
+      $("#edituom").focus();
+    }
+    if (event.which == 38) {
+      event.preventDefault();
+      $("#editproddesc").focus().select();
+    }
+  });
+
+  /* -----------------------Spec Key Events---------------------------------------------- */
+  $(document).off("keydown",".spec").on("keydown",".spec",function(event) {
+    var curindex = $(this).closest('tr').index();
+    var nextindex = curindex+1;
+    var previndex = curindex-1;
+    n = $('#spec_table tbody tr').length -1;
+    if (event.which==13) {
+      event.preventDefault();
+        if ($(this).hasClass("specday") || $(this).hasClass("specmonth")) {
+          $(this).parent().next().children('.specdate').focus().select();
+        }
+        else {
+          if (curindex == n) {
+            $('#product_edit_tax_table tbody tr:eq(0) td:eq(0) select').focus();
+          }
+          else {
+            $('#spec_table tbody tr:eq('+nextindex+') td:eq(1) input').focus().select();
+          }
+        }
+    }
+    if (event.which==38) {
+      event.preventDefault();
+        if ($(this).hasClass("specyear") || $(this).hasClass("specmonth")) {
+          $(this).parent().prev().children('.specdate').focus().select();
+        }
+        else {
+          if (curindex == 0) {
+            $("#edituom").focus();
+          }
+          else {
+            $('#spec_table tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
+          }
+        }
+    }
+  });
+  function pad (str, max) { //to add leading zeros in date
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("0" + str, max) : str;
+    }
+    else{
+      return str;
+    }
+  }
+  function yearpad (str, max) {
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("200" + str, max) : str;
+    }
+    else if (str.length==2) {
+      return str.length < max ? pad("20" + str, max) : str;
+    }
+    else{
+      return str;
+    }
+  }
+  $(document).off("blur",".specday").on("blur",".specday",function(event) {
+    $(this).val(pad($(this).val(),2));
+    specday = $(this).val();
+  });
+  $(document).off("blur",".specmonth").on("blur",".specmonth",function(event) {
+    $(this).val(pad($(this).val(),2));
+    specmonth = $(this).val();
+  });
+
+  $(document).off("blur",".specyear").on("blur",".specyear",function(event) {
+    var curindex = $(this).closest('tr').index();
+    $(this).val(yearpad($(this).val(),4));
+    specyear = $(this).val();
+    if(!Date.parseExact(specday+specmonth+specyear, "ddMMyyyy")){ // Validation for date
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $('#spec_table tbody tr:eq('+curindex+') td:eq(1) input:first').focus().select();
+        $("#date-alert").hide();
+      });
+    }
+    });
+  /* -----------------------Spec Key Events End------------------------------------------ */
 
   /* -----------------------Tax key events start----------------------------------------- */
   $(document).off("keyup",".tax_name").on("keyup",".tax_name",function(event)
@@ -548,7 +547,12 @@ $(document).ready(function() {
     if (event.which==188 && event.shiftKey)
     {
       if (curindex==0) {
-      $("#edituom").focus().select();
+        if ($("#numberofspecs").val() > 0) {
+          $('#spec_table tbody tr:last td:eq(1) input:first').focus().select();
+        }
+        else {
+          $("#edituom").focus();
+        }
       }
       if(previndex>-1 && curindex != 0)
       {
@@ -604,19 +608,46 @@ $(document).ready(function() {
       event.preventDefault();
       $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
     }
+    else if (event.which==27) {
+      event.preventDefault();
+      if ($("#editgodownpresence").val() == 0) {
+        $("#editopeningstock").focus().select();
+      }
+      else {
+        if ($("#editgodownflag").val() == 1) {
+          $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
+        }
+        else if ($("#editgodownflag").val() == 0) {
+          $("#editgodownflag").focus().select();
+        }
+      }
+    }
   });
 
   $(document).off("change",".tax_name").on("change",".tax_name",function(event)
   {
     var curindex = $(this).closest('tr').index();
+    var previndex = curindex -1;
     if ($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='VAT') {
       $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select").empty();
-      $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select").append('<option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>');
+      $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select").append('<option value="" stateid="">Select State</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>');
+      if (curindex > 0) {
+        for (var i = 1; i < curindex+1; i++) {
+          for (var j = 0; j < curindex; j++) {
+            if ($("#product_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "CVAT") {
+              i = i + 1;
+            }
+            selectedtaxstate = $("#product_edit_tax_table tbody tr:eq("+j+") td:eq(1) select option:selected").attr("stateid");
+            $('#product_edit_tax_table tbody tr:eq('+i+') td:eq(1) select option[stateid='+selectedtaxstate+']').prop('hidden', true).prop('disabled', true);
+          }
+        }
+      }
     }
     else {
       $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select").empty();
       $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select").append('<option value="">None</option>');
     }
+    selectedtaxname = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val();
   });
 
   $(document).off("keydown",".tax_state").on("keydown",".tax_state",function(event)
@@ -677,6 +708,13 @@ $(document).ready(function() {
     var previndex1 = curindex1-1;
     if (event.which==13) {
       event.preventDefault();
+      if ($('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(1) select option:selected').attr("stateid") < 1 && selectedtaxname == "VAT") {
+        $("#tax_state-blank-alert").alert();
+        $("#tax_state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#tax_state-blank-alert").hide();
+        });
+        return false;
+      }
       if (curindex1 != ($("#product_edit_tax_table tbody tr").length-1)) {
         $('#product_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
@@ -718,6 +756,9 @@ $(document).ready(function() {
         '</td>'+
         '</tr>');
         $(".tax_rate").numeric();
+        if (selectedtaxname == "CVAT") {
+          $('#product_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedtaxname+']').prop('hidden', true).prop('disabled', true);
+        }
         $('#product_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
     }
@@ -744,14 +785,16 @@ $(document).ready(function() {
     }
     else if (event.which==27) {
       event.preventDefault();
-      if ($('.spec').length > 0) {
-        $('#editspecifications').contents(".form-group:first").find("input:first").focus().select();
+      if ($("#editgodownpresence").val() == 0) {
+        $("#editopeningstock").focus().select();
       }
-      else if ($("#editgodownflag").val() == 1) {
-        $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
-      }
-      else if ($("#editgodownflag").val() == 0) {
-        $("#editgodownflag").focus().select();
+      else {
+        if ($("#editgodownflag").val() == 1) {
+          $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
+        }
+        else if ($("#editgodownflag").val() == 0) {
+          $("#editgodownflag").focus().select();
+        }
       }
     }
 
@@ -766,6 +809,14 @@ $(document).ready(function() {
   /* -----------------------Tax key events end----------------------------------------- */
   /* -----------------------Godown Key events start here----------------------------------------- */
 
+  $(document).off("change",".editgodown_name").on("change",".editgodown_name",function(event)
+  {
+    var curindex = $(this).closest('tr').index();
+    var nextindex = curindex+1;
+    var previndex = curindex-1;
+    selectedgodown = $('#editgodown_ob_table tbody tr:eq('+curindex+') td:eq(0) select').val();
+  });
+
   $(document).off("keyup",".editgodown_name").on("keyup",".editgodown_name",function(event)
   {
     var curindex = $(this).closest('tr').index();
@@ -778,12 +829,7 @@ $(document).ready(function() {
             $("#editgodownflag").focus().select();
         }
       else {
-        if ($('.spec').length < 1) {
-          $('#product_edit_tax_table tbody tr:last td:eq(2) input').focus().select();
-        }
-        else {
-          $('.spec:last').focus().select();
-        }
+        $('#product_edit_tax_table tbody tr:last td:eq(2) input').focus().select();
       }
       }
       if(previndex>-1 && curindex != 0)
@@ -825,8 +871,7 @@ $(document).ready(function() {
     var previndex1 = curindex1-1;
     var selectindex = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').index();
     var numberofgodowns = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length;
-    var selectedgodown = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').val();
-    console.log(selectedgodown);
+    selectedgodown = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').val();
     if (event.which==13) {
       event.preventDefault();
       if (curindex1 != ($("#editgodown_ob_table tbody tr").length-1)) {
@@ -849,28 +894,16 @@ $(document).ready(function() {
           $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(1) input').focus();
           return false;
         }
-        if ($("#editgodown_ob_table tbody tr").length == numberofgodowns || $("#editgodown_ob_table tbody tr").length > numberofgodowns) {
-          var taxdisabled = $('#product_edit_tax_table tbody tr:first td:eq(0) select').is(":disabled");
-          var taxcount = $('#product_edit_tax_table tbody tr').length;
-          if (taxdisabled || taxcount<1) {
-            if ($("#editspecifications").contents(".form-group").length == 0) {
-              $('#epsubmit').click();
-            }
-            else {
-              $("#editspecifications").contents(".form-group:first").find("input:first").focus().select();
-            }
-          }
-          else {
-            $('#product_edit_tax_table tbody tr:first td:eq(0) select').focus().select();
-          }
+        if (numberofgodowns == 1) {
+          $('#epsubmit').click();
           return false;
         }
         $('#editgodown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+        $('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
         if (curindex1 == 0) {
           $("#editgodown_ob_table tbody tr:last td:last").append('<a href="#" class="editgodown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
         }
         $(".editgodown_ob").numeric();
-        $('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true);
         $('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
     }
@@ -1003,6 +1036,29 @@ $(document).ready(function() {
       $("#editproddesc").select();
       return false;
     }
+    var specs = {};      /*This is spec dictionary having spcode as a key and specval as its value*/
+    $("#spec_table tbody tr").each(function(){
+      if ($(".spec_value",this).hasClass('datevalue')) {
+        $(".specdate").each(function() {
+          if ($(this).hasClass('specday')) {
+            specday = $(this).val(); //Storing specday
+          }
+          if ($(this).hasClass('specmonth')) {
+            specmonth = $(this).val(); //Storing specmonth
+          }
+          if ($(this).hasClass('specyear')) {
+            specyear = $(this).val(); //Storing specyear
+          }
+        });
+        specdate = specyear+"-"+specmonth+"-"+specday; //Storing date in yyyyMMdd format
+        $(".spec_value",this).val(specdate); // Storing spec date in hidden filed
+      }
+      if ($.trim($(".spec_name",this).val())!=""){
+        if ($.trim($(".spec_name",this).val())!="" && $.trim($(".spec_value",this).val())!="" ) {
+          specs[$(".spec_name",this).val()] = $(".spec_value",this).val();
+        }
+      }
+    });
     var taxes = [];
     $("#product_edit_tax_table tbody tr").each(function(){
       var obj = {};
@@ -1033,6 +1089,7 @@ $(document).ready(function() {
     });
     var editformdata = $("#editprodform").serializeArray();
     editformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
+    editformdata.push({name: 'specs', value: JSON.stringify(specs)});
     if ($("#editgodownflag").val() == 1) {
       editformdata.push({name: 'godowns', value: JSON.stringify(obj)});
     }
