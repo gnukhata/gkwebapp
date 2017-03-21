@@ -53,12 +53,14 @@ def edituser(request):
 def createuser(request):
 	headers={"gktoken":request.headers["gktoken"]}
 	goflag = False
-	if int(request.params["userrole"]) == 0:
+	if int(request.params["userrole"]) == 3:
 		goflag = True
 	else:
 		goflag = False
-	gkdata = {"username":request.params["username"],"userpassword":request.params["userpassword"],"userrole":int(request.params["userrole"]),"userquestion":request.params["userquestion"],"useranswer":request.params["useranswer"],"goflag":goflag,"goids":json.loads(request.params["godowns"])}
+	gkdata = {"username":request.params["username"],"userpassword":request.params["userpassword"],"userrole":int(request.params["userrole"]),"userquestion":request.params["userquestion"],"useranswer":request.params["useranswer"],"goflag":goflag,"golist":json.loads(request.params["godowns"])}
+	print gkdata
 	result = requests.post("http://127.0.0.1:6543/users", data =json.dumps(gkdata), headers=headers)
+	print result.json()["gkstatus"]
 	if result.json()["gkstatus"] == 0:
 		if request.params["userrole"] == "-1":
 			userrole = "Admin"
