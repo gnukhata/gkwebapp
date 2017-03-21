@@ -89,11 +89,18 @@ $(document).ready(function() {
   });
   $("#edit_cussup_name").keydown(function(event) {
     if (event.which==13) {
-      event.preventDefault();
-      $("#edit_cussup_email").focus().select();
-    }
-  
-  });
+    	if ($.trim($("#edit_cussup_name").val())=="") {
+            $("#name-blank-alert").alert();
+            $("#name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#name-blank-alert").hide();
+            });
+            $("#edit_cussup_name").focus();
+            return false;
+          }
+          event.preventDefault();
+          $("#edit_cussup_email").focus().select();
+        }
+      });
   $("#edit_cussup_email").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
@@ -131,7 +138,14 @@ $(document).ready(function() {
     {
       var thisKeypressTime = new Date();
       if ( thisKeypressTime - lastKeypressTime <= delta )
-      {
+      {if ($.trim($("#edit_cussup_address").val())=="") {
+          $("#address-blank-alert").alert();
+          $("#address-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#address-blank-alert").hide();
+          });
+          $("#edit_cussup_address").focus();
+          return false;
+        }
         $("#edit_cussup_fax").focus();
         // optional - if we'd rather not detect a triple-press
         // as a second double-press, reset the timestamp
@@ -166,14 +180,22 @@ $(document).ready(function() {
   });
   $("#edit_cussup_tan").keydown(function(event) {
     if (event.which==13) {
-      event.preventDefault();
-      $("#cussup_edit_save").click();
-    }
-    if (event.which==38){
-      event.preventDefault();
-      $("#edit_cussup_pan").focus().select();
-    }
-  });
+    	if ($.trim($("#edit_cussup_tan").val())=="") {
+            $("#tin-blank-alert").alert();
+            $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#tin-blank-alert").hide();
+            });
+            $("#edit_cussup_tan").focus();
+            return false;
+          }
+          event.preventDefault();
+          $("#cussup_edit_save").click();
+        }
+        if (event.which==38) {
+          event.preventDefault();
+          $("#edit_cussup_pan").focus().select();
+        }
+      });
   $("#edit_cussup_reset").click(function(event) {
     $("#customersupplier_edit").click();
   });

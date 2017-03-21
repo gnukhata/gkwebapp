@@ -5,7 +5,7 @@ This file is part of GNUKhata:A modular,robust and Free Accounting System.
 GNUKhata is Free Software; you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
 published by the Free Software Foundation; either version 3 of
-the License, or (at your option) any later version.and old.stockflag = 's'
+the License, or (at your option) any later version.
 
 GNUKhata is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -22,6 +22,7 @@ Contributors:
 "Krishnakant Mane" <kk@gmail.com>
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
+"Prajkta Patkar"<prajkta.patkar007@gmail.com>
 */
 
 // This script is for the addcustomer/supplier.jinja2
@@ -31,20 +32,33 @@ $(document).ready(function() {
   $("#add_cussup").focus().select();
   $("#add_cussup").keydown(function(event) {
     if (event.which==13) {
-      event.preventDefault();
-      $("#add_cussup_name").focus().select();
-    }
-  });
+
+	if ($.trim($("#add_cussup").val())=="") {
+            $("#role-blank-alert").alert();
+            $("#role-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#role-blank-alert").hide();
+            });
+            $("#add_cussup").focus();
+            return false;
+          }
+          event.preventDefault();
+          $("#add_cussup_name").focus().select();
+        }
+      });
   $("#add_cussup_name").keydown(function(event) {
     if (event.which==13) {
-      event.preventDefault();
-      $("#add_cussup_email").focus().select();
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#add_cussup").focus().select();
-    }
-  });
+    	if ($.trim($("#add_cussup_name").val())=="") {
+            $("#name-blank-alert").alert();
+            $("#name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#name-blank-alert").hide();
+            });
+            $("#add_cussup_name").focus();
+            return false;
+          }
+          event.preventDefault();
+          $("#add_cussup_email").focus().select();
+        }
+      });
   $("#add_cussup_email").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
@@ -67,14 +81,23 @@ $(document).ready(function() {
   });
   $("#add_state").keydown(function(event) {
     if (event.which==13) {
-      event.preventDefault();
-      $("#add_cussup_address").focus().select();
-    }
-    if (event.which==38 && $("#add_state option:selected").index()==0)  {
-      event.preventDefault();
-      $("#add_cussup_phone").focus().select();
-    }
-  });
+    	event.preventDefault();
+    	if ($.trim($("#add_state").val())=="") {
+            $("#state-blank-alert").alert();
+            $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#state-blank-alert").hide();
+            });
+            $("#add_state").focus();
+            return false;
+          }
+          event.preventDefault();
+          $("#add_cussup_address").focus().select();
+        }
+        if (event.which==38 && $("#add_state option:selected").index()==0)  {
+          event.preventDefault();
+          $("#add_cussup_phone").focus().select();
+        }
+      });
   var delta = 500;
   var lastKeypressTime = 0;
   /*Customer/Supplier address field being a textarea pressing enter will shift the cursor on the new line
@@ -86,6 +109,14 @@ $(document).ready(function() {
       var thisKeypressTime = new Date();
       if ( thisKeypressTime - lastKeypressTime <= delta )
       {
+          if ($.trim($("#add_cussup_address").val())=="") {
+            $("#address-blank-alert").alert();
+            $("#address-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#address-blank-alert").hide();
+            });
+            $("#add_cussup_address").focus();
+            return false;
+          }
         $("#add_cussup_fax").focus();
         // optional - if we'd rather not detect a triple-press
         // as a second double-press, reset the timestamp
@@ -120,14 +151,22 @@ $(document).ready(function() {
   });
   $("#add_cussup_tan").keydown(function(event) {
     if (event.which==13) {
-      event.preventDefault();
-      $("#cussup_save").click();
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#add_cussup_pan").focus().select();
-    }
-  });
+    	if ($.trim($("#add_cussup_tan").val())=="") {
+            $("#tin-blank-alert").alert();
+            $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#tin-blank-alert").hide();
+            });
+            $("#add_cussup_tan").focus();
+            return false;
+          }
+          event.preventDefault();
+          $("#cussup_save").click();
+        }
+        if (event.which==38) {
+          event.preventDefault();
+          $("#add_cussup_pan").focus().select();
+        }
+      });
   $("#add_cussup_reset").click(function(event) {
       // click the customer/supplier create tab to reload the current page in tab creating a reset effect
     $("#customersupplier_create").click();
