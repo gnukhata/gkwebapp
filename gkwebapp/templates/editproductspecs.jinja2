@@ -6,6 +6,7 @@
 <input type='text' class="form-control input-sm" name="editproddesc"  id="editproddesc" value="{{proddesc['productdesc']}}" placeholder="Alphanumeric">
 </div>
   </div>
+  {% if category|length > 0 %}
   <div class="row">
     <div class="form-group col-sm-11" id="categorydiv">
     <label id="editcatselectlabel" for="editcatselect" class="">{% trans %}Category{% endtrans %} :</label>
@@ -23,6 +24,7 @@
 </select>
 </div>
   </div>
+  {% endif %}
   <div class="row">
     <div class="form-group col-sm-11 pds olduom">
     <label for="edituom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label>
