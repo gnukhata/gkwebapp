@@ -182,7 +182,6 @@ $(document).ready(function() {
             '<option value="0">Text</option>'+
             '<option value="1">Number</option>'+
             '<option value="2">Date</option>'+
-            '<option value="3">Option</option>'+
             '</select>'+
           '</td>'+
           '<td class="col-xs-1">'+
@@ -195,26 +194,23 @@ $(document).ready(function() {
         if (spec["attrtype"]==0) {
           trs ='<option value="0" selected>Text</option>'+
           '<option value="1">Number</option>'+
-          '<option value="2">Date</option>'+
-          '<option value="3">Option</option>'
-        }
+          '<option value="2">Date</option>'
+          }
         else if (spec["attrtype"]==1) {
           trs ='<option value="0">Text</option>'+
           '<option value="1" selected>Number</option>'+
-          '<option value="2">Date</option>'+
-          '<option value="3">Option</option>'
+          '<option value="2">Date</option>'
         }
         else if (spec["attrtype"]==2) {
           trs ='<option value="0">Text</option>'+
           '<option value="1">Number</option>'+
-          '<option value="2" selected>Date</option>'+
-          '<option value="3">Option</option>'
+          '<option value="2" selected>Date</option>'
         }
         else if (spec["attrtype"]==3) {
           trs ='<option value="0">Text</option>'+
           '<option value="1">Number</option>'+
-          '<option value="2">Date</option>'+
-          '<option value="3" selected>Option</option>'
+          '<option value="2">Date</option>'
+
         }
         $('#category_edit_spec_table tbody').prepend('<tr value="'+spec["spcode"]+'">'+
           '<td class="col-xs-8">'+
@@ -249,7 +245,7 @@ $(document).ready(function() {
       $(".category_edit_disable").prop("disabled",false);
       $("#category_edit_savespecs").show();
       $("#category_edit_edit").hide();
-      $("#category_edit_under").focus().select();
+      $("#category_edit_name").focus();
     }
     if (event.which==46) {
       event.preventDefault();
@@ -510,11 +506,6 @@ $(document).ready(function() {
       }
       else {
         if ($('#category_edit_spec_table tbody tr:eq('+curindex1+') td:eq(0) input').val()=="") {
-          $("#spec-blank-alert").alert();
-          $("#spec-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#spec-blank-alert").hide();
-          });
-          $('#category_edit_spec_table tbody tr:eq('+curindex1+') td:eq(0) input').focus();
           return false;
         }
         $('#category_edit_spec_table tbody').append('<tr value="New">'+
@@ -526,7 +517,6 @@ $(document).ready(function() {
             '<option value="0">Text</option>'+
             '<option value="1">Number</option>'+
             '<option value="2">Date</option>'+
-            '<option value="3">Option</option>'+
             '</select>'+
           '</td>'+
           '<td class="col-xs-1">'+
@@ -572,19 +562,26 @@ $(document).ready(function() {
     var specs = [];
     for (var i = 0; i < $("#category_edit_spec_table tbody tr").length; i++) {
       if ($.trim($("#category_edit_spec_table tbody tr:eq("+i+") td:eq(0) input").val())=="") {
-        $("#spec-blank-alert").alert();
-        $("#spec-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#spec-blank-alert").hide();
-        });
-        $("#category_edit_spec_table tbody tr:eq("+i+") td:eq(0) input").focus().select();
-        return false;
+        //$("#category_edit_spec_table tbody tr:eq("+i+") td:eq(0) input").focus().select();
+        //return false;
+        if(i==0)
+        {
+          console.log("delete clicked");
+          $("#category_edit_spec_table tbody tr:eq("+i+") td:eq(2) a").click();
+
+        }
       }
+      else {
+
+
       var obj = {};
       obj.spcode = $("#category_edit_spec_table tbody tr:eq("+i+")").attr('value');
       obj.attrname = $("#category_edit_spec_table tbody tr:eq("+i+") td:eq(0) input").val();
       obj.attrtype = $("#category_edit_spec_table tbody tr:eq("+i+") td:eq(1) select").val();
       specs.push(obj);
-    }
+         }
+     }
+
 
     var taxes = [];
     var allow = true;

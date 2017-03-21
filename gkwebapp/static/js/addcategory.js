@@ -45,6 +45,12 @@ $(document).ready(function() {
     else{
       $("#new_parent_name").focus();
     }
+
+    if (sessionStorage.latestcategory) {
+      $("#category_under").val(sessionStorage.latestcategory);
+      $("#category_under").focus();
+      sessionStorage.latestcategory = "";
+    }
     var categorycode = "";
     $("#new_parent_div1").keydown(function(event) {
       //when esc key is pressed
@@ -63,14 +69,14 @@ $(document).ready(function() {
             return false;
         }
     });
-    $("#child_category_name").keydown(function(event) {
+    $(".mchild_spec_name").keydown(function(event) {
         if (event.which == 13) {
             event.preventDefault();
             $("#child-navigation-alert").alert();
             $("#child-navigation-alert").fadeTo(2250, 500).slideUp(500, function() {
                 $("#child-navigation-alert").hide();
             });
-            $("#child_category_name").focus();
+            $(".mchild_spec_name", this).focus();
             return false;
         }
     });
@@ -87,13 +93,12 @@ $(document).ready(function() {
     $('#addtaxmodal').on('shown.bs.modal', function() {
         $("#category_tax_table tbody tr:last td:eq(0) select").focus();
     });
-    $("#category_under").keydown(function(event) {
+    $(document).off("keydown", "#category_under").on("keydown", "#category_under", function(event) {
+      categorycode = $("#category_under option:selected").val();
         if (event.which == 13 && categorycode != "") {
           event.preventDefault();
-          $("#spectbl").show();
-          $(".childcat").show();
-          $("#child_category_name").focus();
-
+          $("#category_under").trigger('change');
+            $(".mchild_spec_name:last").focus();
         }
         //when spacebar is pressed
         if (event.which == 32) {
@@ -117,7 +122,6 @@ $(document).ready(function() {
                 '<option value="0">Text</option>' +
                 '<option value="1">Number</option>' +
                 '<option value="2">Date</option>' +
-                '<option value="3">Option</option>' +
                 '</select>' +
                 '</td>' +
                 '</tr>');
@@ -138,7 +142,9 @@ $(document).ready(function() {
           $("#spectbl").show();
           $("#parent_heading").text($("#category_under option[value=" + categorycode + "]").text());
           $('#spectbl td').remove();
-          $(".childcat").show();
+          $(".childcat").show('fast', function() {
+      //      $(".mchild_spec_name:first").focus();
+          });
           parentspecs = [];
           // ajax for getting the specs of the newly selected (parent)category
           $.ajax({
@@ -164,8 +170,6 @@ $(document).ready(function() {
                               '<option value="1">Number</option>'
                       } else if (spec["attrtype"] == 2) {
                           trs = '<option value="2">Date</option>'
-                      } else if (spec["attrtype"] == 3) {
-                          trs = '<option value="3">Option</option>'
                       }
                       $('#spectbl tbody').prepend('<tr>' +
                           '<td class="col-xs-6">' + spec["attrname"] + '</td>' +
@@ -198,7 +202,6 @@ $(document).ready(function() {
                       '<option value="0">Text</option>' +
                       '<option value="1">Number</option>' +
                       '<option value="2">Date</option>' +
-                      '<option value="3">Option</option>' +
                       '</select>' +
                       '</td>' +
                       '</tr>');
@@ -254,7 +257,6 @@ $(document).ready(function() {
                     '<option value="0">Text</option>' +
                     '<option value="1">Number</option>' +
                     '<option value="2">Date</option>' +
-                    '<option value="3">Option</option>' +
                     '</select>' +
                     '</td>' +
                     '</tr>');
@@ -299,7 +301,6 @@ $(document).ready(function() {
                     '<option value="0">Text</option>' +
                     '<option value="1">Number</option>' +
                     '<option value="2">Date</option>' +
-                    '<option value="3">Option</option>' +
                     '</select>' +
                     '</td>' +
                     '</tr>');
@@ -427,61 +428,10 @@ $(document).ready(function() {
                     $("#category_tax_table tbody tr").not(":last").remove();
                     $("#success-alert").alert();
                     $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
+                        sessionStorage.latestcategory = resp["gkresult"];
+                        $("#addcategory").click();
                         $("#success-alert").hide();
                       });
-                        $("#new_parent_div1").hide();
-                        $("#oldparentdiv").show();
-                        $("#doneid").show();
-                        categorycode = resp.gkresult
-                        $("#category_under").append('<option val="' + categorycode + '" selected>' + parentname + '</option>');
-                        $(".childcat").show();
-                        $("#child_category_table tbody tr:first td:eq(0) input").focus();
-                        $("#spectbl").show();
-                        $("#parent_heading").text($("#new_parent_name").val());
-                        $("#spectbl tbody").html("");
-                        $('#child_category_spec_table tbody').html("");
-                        for (spec of parentspecs) {
-                            var trs;
-                            if (spec["attrtype"] == 0) {
-                                trs = '<option value="0">Text</option>'
-                            } else if (spec["attrtype"] == 1) {
-                                trs =
-                                    '<option value="1">Number</option>'
-                            } else if (spec["attrtype"] == 2) {
-                                trs = '<option value="2">Date</option>'
-                            } else if (spec["attrtype"] == 3) {
-                                trs = '<option value="3">Option</option>'
-                            }
-                            $('#spectbl tbody').append('<tr>' +
-                                '<td class="col-xs-6">' + spec["attrname"] + '</td>' +
-                                '<td class="col-xs-6">' + trs + '</td>' +
-                                '</tr>');
-                            $('#child_category_spec_table tbody').append('<tr>' +
-                                '<td class="col-xs-8">' +
-                                '<input type="text" class="form-control input-sm spec_name" value="' + spec["attrname"] + '" placeholder="Spec Name" disabled>' +
-                                '</td>' +
-                                '<td class="col-xs-4">' +
-                                '<select id="child_category_spec_type" class="form-control input-sm spec_type" disabled>' + trs +
-                                '</select>' +
-                                '</td>' +
-                                '</tr>');
-                              }
-
-                              $('#child_category_spec_table tbody').append('<tr>' +
-                                  '<td class="col-xs-8">' +
-                                  '<input type="text" class="form-control input-sm spec_name" value="" placeholder="Spec Name">' +
-                                  '</td>' +
-                                  '<td class="col-xs-4">' +
-                                  '<select id="child_category_spec_type" class="form-control input-sm spec_type">' +
-                                  '<option value="0">Text</option>' +
-                                  '<option value="1">Number</option>' +
-                                  '<option value="2">Date</option>' +
-                                  '<option value="3">Option</option>' +
-                                  '</select>' +
-                                  '</td>' +
-                                  '</tr>');
-
-                    return false;
                 } else if (resp["gkstatus"] == 1) {
                     $("#category_name").focus().select();
                     $("#duplicate-alert").alert();
@@ -545,7 +495,7 @@ $(document).ready(function() {
                             $("#success-alert").hide();
                         });
                         $("#child_category_table tbody tr:last td:eq(1) button").attr('id', resp.gkresult);
-                        $("#child_category_table tbody tr:last td:eq(1) button").text("Show Specs");
+                        $("#child_category_table tbody tr:last td:eq(1) button").text("View Specs");
                         $("#child_category_table tbody tr:last td:eq(2) button").remove();
                         $("#child_category_table tbody tr:last td:eq(0) input").prop('disabled', true);
                         $("#child_category_table tbody tr:last td:eq(1) button").attr('class', "btn form-control btn-primary btn-sm showspecs");
@@ -561,8 +511,6 @@ $(document).ready(function() {
                                     '<option value="1">Number</option>'
                             } else if (spec["attrtype"] == 2) {
                                 trs = '<option value="2">Date</option>'
-                            } else if (spec["attrtype"] == 3) {
-                                trs = '<option value="3">Option</option>'
                             }
 
                             $('#child_category_spec_table tbody').append('<tr>' +
@@ -584,14 +532,13 @@ $(document).ready(function() {
                             '<option value="0">Text</option>' +
                             '<option value="1">Number</option>' +
                             '<option value="2">Date</option>' +
-                            '<option value="3">Option</option>' +
                             '</select>' +
                             '</td>' +
                             '</tr>');
 
                         $('#child_category_table tbody').append('<tr>' +
                             '<td class="col-xs-6">' +
-                            '<input type="text" id="child_category_name" class="form-control input-sm mchild_spec_name" placeholder="Sub Category Name">' +
+                            '<input type="text" class="form-control input-sm mchild_spec_name" placeholder="Sub Category Name">' +
                             '</td>' +
                             '<td class="col-xs-3">' +
                             '<button class="btn form-control btn-primary btn-sm child_spec_class" id="child_spec" data-toggle="modal" data-target="#child_addspecmodal" >Specs</button>' +
@@ -655,8 +602,6 @@ $(document).ready(function() {
                           '<option value="1">Number</option>'
                   } else if (spec["attrtype"] == 2) {
                       trs = '<option value="2">Date</option>'
-                  } else if (spec["attrtype"] == 3) {
-                      trs = '<option value="3">Option</option>'
                   }
                   $('#child_showcategory_spec_table tbody').prepend('<tr>' +
                       '<td class="col-xs-8">' +

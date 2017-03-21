@@ -49,9 +49,11 @@
 <body>
   <div class="container-fluid row">
     <ul class="nav nav-pills nav-tabs" role="tablist">
-      <li role="presentation" class="active"><a href="#category_create" aria-controls="category_create" role="tab" data-toggle="tab">{% trans %}Create Category/Sub Category{% endtrans %}</a></li>
       {% if gkresult != 0 %}
-      <li role="presentation"><a href="#category_edit" aria-controls="category_edit" role="tab" data-toggle="tab">{% trans %}Edit Category/Sub Category{% endtrans %}</a></li>
+      <li role="presentation" class="active"><a href="#category_create" aria-controls="category_create" role="tab" data-toggle="tab">{% trans %}Create Category/Sub-Category{% endtrans %}</a></li>
+      <li role="presentation"><a href="#category_edit" aria-controls="category_edit" role="tab" data-toggle="tab">{% trans %}Edit Category/Sub-Category{% endtrans %}</a></li>
+      {% else %}
+      <li role="presentation" class="active"><a href="#category_create" aria-controls="category_create" role="tab" data-toggle="tab">{% trans %}Create Category{% endtrans %}</a></li>
       {% endif %}
     </ul>
     <div class="tab-content">
