@@ -100,7 +100,16 @@ $(document).off('blur', '#newuom').on('blur', '#newuom', function(event) {
 $("#addproddesc").keydown(function(event) {
   if (event.which==13) {
     event.preventDefault();
-    $("#adduom").focus();
+    if ($("#addcatselect option").length < 2) {
+      $("#nocategory-alert").alert();
+      $("#nocategory-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#adduom").focus();
+        $("#nocategory-alert").hide();
+      });
+    }
+    else {
+      $("#adduom").focus();
+    }
   }
   if (event.which==38) {
     event.preventDefault();

@@ -121,7 +121,13 @@ $(document).ready(function() {
   $(document).on('keydown', '#editproddesc', function(event) {
     if (event.which==13) {
       event.preventDefault();
-      if ($("#editcatselect").is(':disabled') || $("#editcatselect").length < 1) {
+      if ($("#editcatselect").length < 1) {
+        $("#nocategory-alert").alert();
+        $("#nocategory-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#nocategory-alert").hide();
+        });
+      }
+      if ($("#editcatselect").is(':disabled')) {
         $("#edituom").focus();
       }
       else {
