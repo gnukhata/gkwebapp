@@ -359,7 +359,7 @@ $(document).ready(function() {
                 $('#category_tax_table tbody').append('<tr>' +
                     '<td class="col-xs-4">' +
                     '<select class="form-control input-sm tax_name">' +
-                    '<option value="" selected disabled>Select Tax</option>' +
+                    '<option value="" selected disabled hidden>Select Tax</option>' +
                     '<option value="VAT">VAT</option>' +
                     '<option value="CVAT">CVAT</option>' +
                     '</select>' +
