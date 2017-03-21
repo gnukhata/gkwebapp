@@ -100,6 +100,13 @@ $(document).off('blur', '#newuom').on('blur', '#newuom', function(event) {
 $("#addproddesc").keydown(function(event) {
   if (event.which==13) {
     event.preventDefault();
+    if ($(this).val()=="") {
+      $("#blank-alert").alert();
+      $("#blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#blank-alert").hide();
+      });
+      return false;
+    }
     if ($("#addcatselect option").length < 2) {
       $("#nocategory-alert").alert();
       $("#nocategory-alert").fadeTo(2250, 500).slideUp(500, function(){

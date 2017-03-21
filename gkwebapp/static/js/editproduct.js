@@ -124,10 +124,11 @@ $(document).ready(function() {
       if ($("#editcatselect").length < 1) {
         $("#nocategory-alert").alert();
         $("#nocategory-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#edituom").focus();
           $("#nocategory-alert").hide();
         });
       }
-      if ($("#editcatselect").is(':disabled')) {
+      else if ($("#editcatselect").is(':disabled')) {
         $("#edituom").focus();
       }
       else {
