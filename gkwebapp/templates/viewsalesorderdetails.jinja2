@@ -122,9 +122,10 @@
         {% for key in schedule %}
         <tr>
           <td class="col-md-3">
-            <select class="form-control input-sm product_name" disabled>
-                <option value="{{schedule[key]['productname']}}">{{schedule[key]['productname']}}</option>
-            </select>
+            <select class="form-control input-sm product_name">
+              <option value="{{key}}">{{schedule[key]['productname']}}</option>
+
+          </select>
           </td>
           <td class="col-md-2">
             <div class="input-group">
@@ -157,4 +158,5 @@
 
 
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewsalesorder.js')}}"></script>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewsalesorderdetails.js')}}"></script>
 </body>
