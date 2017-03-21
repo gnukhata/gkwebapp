@@ -312,7 +312,7 @@ $(document).ready(function() {
            }
 
 
-           $('#salesorder_product_table tbody').append('<tr>'+$("#salesorder_product_table tbody tr:first").closest('tr').html()+'</tr>');
+           $('#salesorder_product_table tbody').append('<tr>'+$("#salesorder_product_table tbody tr:last").closest('tr').html()+'</tr>');
             if (curindex1 == 0) {
               $("#salesorder_product_table tbody tr:last td:last").append('<a href="#" class="schedule_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
             }
@@ -350,7 +350,7 @@ $(document).ready(function() {
            $('#salesorder_product_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
            return false;
          }
-         $('#salesorder_product_table tbody').append('<tr>'+$("#salesorder_product_table tbody tr:first").closest('tr').html()+'</tr>');
+         $('#salesorder_product_table tbody').append('<tr>'+$("#salesorder_product_table tbody tr:last").closest('tr').html()+'</tr>');
          if (curindex1 == 0) {
            $("#salesorder_product_table tbody tr:last td:last").append('<a href="#" class="schedule_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
          }

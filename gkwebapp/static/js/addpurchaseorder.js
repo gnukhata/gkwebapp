@@ -486,7 +486,7 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
           return false;
         }
 
-        $('#purchaseorder_product_table tbody').append('<tr>'+$("#purchaseorder_product_table tbody tr:first").closest('tr').html()+'</tr>');
+        $('#purchaseorder_product_table tbody').append('<tr>'+$("#purchaseorder_product_table tbody tr:last").closest('tr').html()+'</tr>');
         if (curindex1 == 0) {
           $("#purchaseorder_product_table tbody tr:last td:last").append('<a href="#" class="schedule_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
         }
@@ -536,7 +536,7 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
             $("#purchaseorder_product_table tbody tr:eq("+curindex1+") td:eq(1) input").focus();
             return false;
           }
-          $('#purchaseorder_product_table tbody').append('<tr>'+$("#purchaseorder_product_table tbody tr:first").closest('tr').html()+'</tr>');
+          $('#purchaseorder_product_table tbody').append('<tr>'+$("#purchaseorder_product_table tbody tr:last").closest('tr').html()+'</tr>');
           if (curindex1 == 0) {
             $("#purchaseorder_product_table tbody tr:last td:last").append('<a href="#" class="schedule_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
           }
