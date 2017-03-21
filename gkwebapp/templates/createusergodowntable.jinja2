@@ -1,0 +1,36 @@
+<table id="latable" class="table shadow table-bordered">
+    <thead>
+      <tr>
+        <th class="lngwrap">
+          {%trans%}Select{%endtrans%}
+        </th>
+        <th class="lalign">
+        {% trans %}Godown Name{% endtrans %}
+        </th>
+        <th class="lalign" >
+        {% trans %}State{% endtrans %}
+        </th>
+        <th class="lalign" >
+        {% trans %}Address{% endtrans %}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for record in gkresult %}
+    <tr	value="{{record["godownid"]}}">
+      <td class="smwrap1 calign">
+        <input id="user_role" accesskey="t" type="checkbox">
+      </td>
+      <td class="smwrap lalign">
+        {{record["godownname"]}}
+      </td>
+      <td class="smwrap lalign" >
+        {{record["godownstate"]}}
+      </td>
+      <td class="smwrap lalign">
+        {{record["godownaddress"]}}
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>

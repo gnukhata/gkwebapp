@@ -11,13 +11,66 @@
     background-color: rgba(220, 225,225,0.4);
   }
 
+  #latable td {
+    font-size: 75%;
+    padding: 4 !important;
+    margin: 4 !important;
+  }
+
+  #latable th {
+    font-size: 85%;
+  }
+
+  .card-view .title {
+      font-weight: bold;
+      display: inline-block;
+      min-width: 20%;
+      text-align: left !important;
+  }
+
+  #latable tbody {
+      display:block;
+      height: calc(100vh - 14.3em);
+      overflow-y:scroll;
+  }
+  #latable thead,#latable tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  #latable thead {
+      width: calc( 100% - 0.65em );
+  }
+
+  .calign{
+    text-align:center;
+  }
+  .lalign{
+    text-align:left;
+  }
+  .dtwrap{
+    width :5%
+     }
+ .smwrap{
+  width:3%
+ }
+
+ .smwrap1{
+   width: 1.34%
+ }
+
+ .lngwrap{
+  width:13%
+ }
+ .mdwrap{
+  width:8%
+ }
   </style>
 </head>
 <body>
-
   <div class="container-fluid">
-      <div id="loginbox" style="margin-top:10px;" class="mainbox col-md-6 col-md-offset-3">
-      <div class="panel shadow" >
+      <div id="loginbox" style="margin-top:10px;" class="mainbox col-md-6">
+      <div class="panel shadow" style="margin-right: 10%;">
         <div class="panel-heading">
           <div class="panel-title">{% trans %}Create New User{% endtrans %}</div>
         </div>
@@ -94,13 +147,15 @@
               <label for="answer" id="secanswer">{% trans %}<u>S</u>ecurity Answer{% endtrans %} :</label>
               <input name="useranswer" style="border-radius: 4px" type="text" class="form-control input-sm" placeholder="Security Answer" id="answer" accesskey="s"></input>
             </div>
-
-        </div>
+          </div>
       </form>
       <div class="panel-footer">
         <button type="submit" id="adduser_button" class="btn btn-success btn-sm" accesskey="a">{% trans %}Cre<u>a</u>te{% endtrans %}</button>
       </div>
       </div>
+    </div>
+    <div id="usertable" style="margin-top:10px;" class="mainbox col-md-6">
+
     </div>
   </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/createuser.js')}}"></script>

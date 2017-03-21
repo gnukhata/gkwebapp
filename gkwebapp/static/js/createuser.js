@@ -35,6 +35,35 @@ $(document).ready(function(){
   $("#userrole").focus(function(){
     inselect = 1;
   });
+
+  $("#userrole").change(function(event) {
+    /* Act on the event */
+    var role = $("#userrole option:selected").val();
+    console.log(role);
+    if (role==3){
+      $.ajax(
+         {
+
+         type: "POST",
+         url: "/godown?type=role_list",
+         global: false,
+         async: false,
+         datatype: "text/html",
+         beforeSend: function(xhr)
+           {
+             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+           },
+         success: function(resp)
+         {
+           $("#usertable").html(resp);
+         }
+         });
+         }
+         else {
+           $("#usertable").html("");
+         }
+  });
+
   $("input,select").keydown(function(e) {
     var n = $("input,select").length;
     var f = $('input,select');
