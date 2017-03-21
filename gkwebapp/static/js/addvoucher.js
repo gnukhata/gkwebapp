@@ -59,6 +59,7 @@ $(document).ready(function() {
   var crsum = 0;
   var diff = 0;     //diff containns the difference of drsum and crsum
   var outfocus = false;
+  var curfocusrow = -1;
   var accpopupindex = -1;
   var curselectlength = -1;
   var percentwid = 100*(($("table").width()-12)/$("table").width());
@@ -131,6 +132,9 @@ $(document).ready(function() {
       var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
       $('#vtable tbody tr:eq(1) td:eq(2) input').val(getBalance(curacccode, caldata));
     });
+$(document).off("focusout",".accs, .cramt, .dramt").on("focusout", ".accs, .cramt, .dramt", function() {
+    curfocusrow = $(this).closest('tr').index();
+});
 $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   event.preventDefault();
   /* Act on the event */
@@ -145,8 +149,6 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   $("#invtotal").val(parseFloat(0).toFixed(2));
   }
   var value = $('#invsel option:selected').attr("customername");
-  console.log(value);
-
   $(".dramt:first").val(parseFloat(inv).toFixed(2));
   $(".cramt:eq(1)").val(parseFloat(inv).toFixed(2));
   if (($('#vtype').val()=="sales") && sessionStorage.invflag ==1)
@@ -1468,6 +1470,12 @@ $("#invsel").keyup(function(event) {
         },
         success: function(resp)
         {
+          var prevmaxacc = 0;
+          $('#vtable tbody tr:eq('+curfocusrow+') td:eq(1) select option').each(function(){
+            if(this.value > prevmaxacc){
+              prevmaxacc = this.value;
+            }
+          });
           $("#viewacc").html("");
           $('.modal-backdrop').remove();
           $('.modal').modal('hide');
@@ -1483,6 +1491,8 @@ $("#invsel").keyup(function(event) {
             following lines will refresh only the accounts select boxes.
             so if a new account is added, it will be available in the select box for the users.
             */
+            var maxcracccode = 0;
+            var maxdracccode = 0;
             $('#viewacc').html(""); // clears the modal
             $(".accs").each(function(){
               var curindex = $(this).closest('tr').index();
@@ -1500,8 +1510,12 @@ $("#invsel").keyup(function(event) {
                   },
                   success: function(jsonObj) {
                     var accs = jsonObj["accounts"];
+                    maxcracccode = accs[0].accountcode;
                     $('#vtable tbody tr:eq('+curindex+') td:eq(1) select').empty();
                     for (i in accs ) {
+                      if(accs[i].accountcode > maxcracccode){
+                        maxcracccode = accs[i].accountcode;
+                      }
                       if(accs[i].accountcode==tmp){
                         $('#vtable tbody tr:eq('+curindex+') td:eq(1) select').append('<option value="' + accs[i].accountcode + '" selected>' +accs[i].accountname+ '</option>');
                       }
@@ -1512,7 +1526,7 @@ $("#invsel").keyup(function(event) {
                   }
                 });
               }
-              if($("#vtable tbody tr:eq("+curindex+") td:eq(0) select").val()==="Dr"){
+              else if($("#vtable tbody tr:eq("+curindex+") td:eq(0) select").val()==="Dr"){
                 $.ajax({
                   url: '/getcjaccounts',
                   type: 'POST',
@@ -1525,8 +1539,12 @@ $("#invsel").keyup(function(event) {
                   },
                   success: function(jsonObj) {
                     var accs = jsonObj["accounts"];
+                    maxdracccode = accs[0].accountcode;
                     $('#vtable tbody tr:eq('+curindex+') td:eq(1) select').empty();
                     for (i in accs ) {
+                      if(accs[i].accountcode > maxdracccode){
+                        maxdracccode = accs[i].accountcode;
+                      }
                       if(accs[i].accountcode==tmp){
                         $('#vtable tbody tr:eq('+curindex+') td:eq(1) select').append('<option value="' + accs[i].accountcode + '" selected>' +accs[i].accountname+ '</option>');
                       }
@@ -1537,7 +1555,6 @@ $("#invsel").keyup(function(event) {
                   }
                 });
               }
-
             });
             if (accpopupindex!=-1) {
               var text1 = $("#selpopupaccount").val();
@@ -1557,6 +1574,25 @@ $("#invsel").keyup(function(event) {
             else {
               $("#popup").focus();
               accpopupindex = -1;
+            }
+            if(curfocusrow == -1){
+              $('#vtable tbody tr:eq(0) td:eq(1) select').focus();
+            }
+            else{
+              if($("#vtable tbody tr:eq("+curfocusrow+") td:eq(0) select").val()==="Dr"){
+                if(maxdracccode != prevmaxacc){
+                  $('#vtable tbody tr:eq('+curfocusrow+') td:eq(1) select').val(maxdracccode);
+                  $('#vtable tbody tr:eq('+curfocusrow+') td:eq(1) select').trigger('change');
+                }
+                $('#vtable tbody tr:eq('+curfocusrow+') td:eq(3) input').focus().select();
+              }
+              else{
+                if(maxcracccode != prevmaxacc){
+                  $('#vtable tbody tr:eq('+curfocusrow+') td:eq(1) select').val(maxcracccode);
+                  $('#vtable tbody tr:eq('+curfocusrow+') td:eq(1) select').trigger('change');
+                }
+                $('#vtable tbody tr:eq('+curfocusrow+') td:eq(4) input').focus().select();
+              }
             }
           });
         }
