@@ -102,8 +102,8 @@ $(document).ready(function(){
         }
       });
 
-      $("#adduser_button").click(function(e)
-      {
+      $(document).off("click","#adduser_button").on("click", '#adduser_button', function(event) {
+        event.preventDefault();
         if ($.trim($("#name").val())=="") {
           $("#username-blank-alert").alert();
           $("#username-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -160,6 +160,15 @@ $(document).ready(function(){
           $("#answer").focus();
           return false;
         }
+        var selectedgodowns = [];
+        $('#latable tbody tr').each(function(){
+          if ($(".user_role",this).is(":checked")) {
+            selectedgodowns.push($(this).attr("value"));
+          }
+        });
+        var adduserformdata = $("#adduser").serializeArray();
+        adduserformdata.push({name: 'godowns', value: JSON.stringify(selectedgodowns)});
+
         $("#msspinmodal").modal("show");
         $.ajax(
           {
@@ -168,7 +177,7 @@ $(document).ready(function(){
             global: false,
             async: false,
             datatype: "json",
-            data: $("#adduser").serialize(),
+            data: adduserformdata,
             beforeSend: function(xhr)
             {
               xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

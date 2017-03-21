@@ -52,7 +52,12 @@ def edituser(request):
 @view_config(route_name="createuser", renderer="json")
 def createuser(request):
 	headers={"gktoken":request.headers["gktoken"]}
-	gkdata = {"username":request.params["username"],"userpassword":request.params["userpassword"],"userrole":int(request.params["userrole"]),"userquestion":request.params["userquestion"],"useranswer":request.params["useranswer"]}
+	goflag = False
+	if int(request.params["userrole"]) == 0:
+		goflag = True
+	else:
+		goflag = False
+	gkdata = {"username":request.params["username"],"userpassword":request.params["userpassword"],"userrole":int(request.params["userrole"]),"userquestion":request.params["userquestion"],"useranswer":request.params["useranswer"],"goflag":goflag,"goids":json.loads(request.params["godowns"])}
 	result = requests.post("http://127.0.0.1:6543/users", data =json.dumps(gkdata), headers=headers)
 	if result.json()["gkstatus"] == 0:
 		if request.params["userrole"] == "-1":
