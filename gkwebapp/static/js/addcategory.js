@@ -438,11 +438,11 @@ $(document).ready(function() {
                         $("#success-alert").hide();
                       });
                 } else if (resp["gkstatus"] == 1) {
-                    $("#category_name").focus().select();
                     $("#duplicate-alert").alert();
                     $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
                         $("#duplicate-alert").hide();
                     });
+                    $("#new_parent_name").focus().select();
                     return false;
                 } else {
                     $("#category_name").focus();
