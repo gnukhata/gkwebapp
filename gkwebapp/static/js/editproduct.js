@@ -53,7 +53,7 @@ $(document).ready(function() {
     }
     if (e.which == 38) {
       e.preventDefault();
-      if ($("#editcatselect").is(':disabled')) {
+      if ($("#editcatselect").is(':disabled') || $("#editcatselect").length < 1) {
         $("#editproddesc").focus().select();
       }
       else {
@@ -121,7 +121,7 @@ $(document).ready(function() {
   $(document).on('keydown', '#editproddesc', function(event) {
     if (event.which==13) {
       event.preventDefault();
-      if ($("#editcatselect").is(':disabled')) {
+      if ($("#editcatselect").is(':disabled') || $("#editcatselect").length < 1) {
         $("#edituom").focus();
       }
       else {
