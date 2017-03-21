@@ -48,9 +48,7 @@ $(document).ready(function() {
 
     if (sessionStorage.latestcategory) {
       $("#category_under").val(sessionStorage.latestcategory);
-      $(".childcat").show('fast', function() {
-        $(".mchild_spec_name:first").focus();
-      });
+      $("#category_under").focus();
       sessionStorage.latestcategory = "";
     }
     var categorycode = "";
@@ -95,13 +93,11 @@ $(document).ready(function() {
     $('#addtaxmodal').on('shown.bs.modal', function() {
         $("#category_tax_table tbody tr:last td:eq(0) select").focus();
     });
-    $("#category_under").keydown(function(event) {
+    $(document).off("keydown", "#category_under").on("keydown", "#category_under", function(event) {
+      categorycode = $("#category_under option:selected").val();
         if (event.which == 13 && categorycode != "") {
           event.preventDefault();
-          $("#spectbl").show();
-          $(".childcat").show('fast', function() {
-            $(".mchild_spec_name:first").focus();
-          });
+          $("#category_under").trigger('change');
 
         }
         //when spacebar is pressed
