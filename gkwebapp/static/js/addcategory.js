@@ -445,11 +445,11 @@ $(document).ready(function() {
                     $("#new_parent_name").focus().select();
                     return false;
                 } else {
-                    $("#category_name").focus();
                     $("#failure-alert").alert();
                     $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {
                         $("#failure-alert").hide();
                     });
+                    $("#new_parent_name").focus();
                     return false;
                 }
             })
@@ -556,18 +556,18 @@ $(document).ready(function() {
                         $('#child_category_table tbody tr:last td:eq(0) input').focus();
                         return false;
                     } else if (resp["gkstatus"] == 1) {
-                        $("#category_name").focus().select();
                         $("#duplicate-alert").alert();
                         $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
                             $("#duplicate-alert").hide();
                         });
+                        $('#child_category_table tbody tr:last td:eq(0) input').focus();
                         return false;
                     } else {
-                        $("#category_name").focus();
                         $("#failure-alert").alert();
                         $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {
                             $("#failure-alert").hide();
                         });
+                        $('#child_category_table tbody tr:last td:eq(0) input').focus();
                         return false;
                     }
                 })
