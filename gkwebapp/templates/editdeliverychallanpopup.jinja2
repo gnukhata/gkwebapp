@@ -2,6 +2,15 @@
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 <div class="modal-dialog modal-lg">
 <div class="modal-content">
+  <div class="modal-header">
+     <div class="modal-title">
+       {% if stockdata["inout"] == 9 %}
+       {% trans %}<strong>Delivery Note : IN</strong>{% endtrans %}
+       {% elif stockdata["inout"] == 15 %}
+       {% trans %}<strong>Delivery Note : OUT</strong>{% endtrans %}
+       {% endif %}
+     </div>
+  </div>
 <div class="modal-body">
   <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
 <!--  <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">-->

@@ -130,7 +130,7 @@ $(document).ready(function() {
   $("#del_unbilled_year").val(del_unbilled_array[0]);
   $("#report_type").select();
 
-  $("#godown_name").keydown(function(event) {
+  $("#del_unbilled_year").keydown(function(event) {
     if (event.which==13) {
       $("#unbilled_deliveries_view").click();
     }
