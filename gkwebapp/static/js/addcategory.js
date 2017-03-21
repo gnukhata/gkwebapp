@@ -289,13 +289,6 @@ $(document).ready(function() {
                     $('#parent_category_spec_table tbody tr:eq(' + curindex1 + ') td:eq(0) input').focus();
                     return false;
                 }
-                var obj = {};
-                //dict for specs
-                if ($.trim($("#parent_category_spec_table tbody tr:eq(" + curindex1 + ") td:eq(0) input").val()) != "") {
-                    obj.attrname = $("#parent_category_spec_table tbody tr:eq(" + curindex1 + ") td:eq(0) input").val();
-                    obj.attrtype = $.trim($("#parent_category_spec_table tbody tr:eq(" + curindex1 + ") td:eq(1) select option:selected").val());
-                    parentspecs.push(obj);
-                }
                 // appending a new row for adding another spec to category
                 $('#parent_category_spec_table tbody').append('<tr>' +
                     '<td class="col-xs-8">' +
@@ -412,6 +405,17 @@ $(document).ready(function() {
             $('#new_parent_name').focus();
             return false;
         }
+        parentspecs = [];
+        $("#parent_category_spec_table tbody tr").each(function() {
+          console.log($("input", this).val());
+          var obj = {};
+          //dict for specs
+          if ($.trim($("input", this).val()) != "") {
+              obj.attrname = $.trim($("input", this).val());
+              obj.attrtype = $.trim($("select option:selected", this).val());
+              parentspecs.push(obj);
+          }
+        });
         $.ajax({
                 url: '/category?action=save',
                 type: 'POST',
