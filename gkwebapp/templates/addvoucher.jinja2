@@ -203,7 +203,7 @@
       {% if invoicecount!=0 %}
       <div class="form-inline well well-sm invhide">
         <div class="form-group ">
-
+<input id="invhide" value="1" hidden="">
           <label for="invsel">{% trans %}Select Invoice {% endtrans %} :</label>
           <select id="invsel" class="form-control input-sm invoice_no" >
             <option value="" selected total="">{% trans %}None{% endtrans %}</option>
@@ -222,6 +222,8 @@
           <input type="text" id="invtotal" class="form-control input-sm" value="0.00" placeholder="" disabled>
         </div>
       </div>
+      {% else %}
+      <input id="invhide" value="0" hidden="">
       {% endif %}
       {% endif %}
       <div class="panel flow shadow ">
