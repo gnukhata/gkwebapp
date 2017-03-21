@@ -926,7 +926,7 @@ $(document).ready(function() {
     }
     else if (event.which==190 && event.ctrlKey) {
       event.preventDefault();
-      $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(1) input').focus().select();
+      $('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
     }
     else if (event.which==27) {
       event.preventDefault();

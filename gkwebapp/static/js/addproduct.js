@@ -662,7 +662,7 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
   }
   else if (event.ctrlKey && event.which==188) {
     event.preventDefault();
-    $('#product_tax_table tbody tr:eq('+curindex1+') td:eq(1) input').focus();
+    $('#product_tax_table tbody tr:eq('+curindex1+') td:eq(1) select').focus();
   }
   else if (event.which==190 && event.ctrlKey) {
     event.preventDefault();
@@ -813,7 +813,7 @@ $(document).off("keydown",".godown_ob").on("keydown",".godown_ob",function(event
   }
   else if (event.which==190 && event.ctrlKey) {
     event.preventDefault();
-    $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(1) input').focus().select();
+    $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
   }
   else if (event.which==27) {
     event.preventDefault();
