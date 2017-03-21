@@ -19,6 +19,44 @@ $(document).ready(function() {
   });
 
   $("#category_edit_list").change(function(event) {
+
+
+          $.ajax({
+            url: '/product?by=category',
+            type: 'POST',
+            dataType: 'json',
+            data: {"categorycode": $("#category_edit_list").val()},
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+          })
+          .done(function(resp) {
+            console.log(resp["gkresult"].length);
+            if (resp["gkresult"].length>0)
+            {
+              $("#category_edit_innerdiv").hide();
+                $(".panel-footer").hide();
+              
+              $("#cant-edit-alert").alert();
+              $("#cant-edit-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#cant-edit-alert").hide();
+              });
+
+            }
+            else {
+              $("#category_edit_innerdiv").show();
+              $(".panel-footer").show();
+              
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          .always(function() {
+            console.log("complete");
+          });
+
     $("#category_edit_spec_table > tbody >tr").remove();
     deletedspecs = [];
     $.ajax({
@@ -33,11 +71,12 @@ $(document).ready(function() {
       }
     })
     .done(function(resp) {
+
+
       var result = resp["gkresult"]
       $("#category_edit_name").val(result["categoryname"]);
       $("#category_edit_under").val(result["subcategoryof"]);
-      $(".panel-footer").show();
-      $("#category_edit_innerdiv").show();
+
     })
     .fail(function() {
       console.log("error");
