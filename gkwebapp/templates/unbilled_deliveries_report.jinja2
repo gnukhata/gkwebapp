@@ -62,21 +62,6 @@ width:22%
 .ewrap{
 	width:8%
 }
-a:link {
-    text-decoration: none;
-}
-
-a:visited {
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: none;
-}
-
-a:active {
-    text-decoration: none;
-}
 
 </style>
 </head>
@@ -106,12 +91,8 @@ a:active {
 						{{record['srno']}}
 					</td>
 					<td class="smwrap calign">
-						
-						{{record['dcno']}}
-						
+						<a class="dcno" href="">{{record['dcno']}}</a>
 					</td>
-
-					
 					<td class="mdwrap calign">
 						{{record["dcdate"]}}
 					</td>
@@ -135,7 +116,9 @@ a:active {
 	</span>
 	<input type="hidden" id="inputdate" value="{{inputdate}}">
 	<input type="hidden" id="inout" value="{{inout}}">
-	
+	<input type="hidden" id="modalindex" value=""></input>
+	<div id="viewdc">
+	</div>
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/unbilled_deliveries_report.js')}}"></script>
 </body>

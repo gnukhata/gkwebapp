@@ -5,7 +5,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -25,7 +25,7 @@ Contributors:
 "Vaibhav Kurhe" <vaibspidy@openmailbox.org>
 */
 /*
-This script is for the report page of Trial balance.
+This script is for the report page of Unbilled Deliveries.
 */
 $(document).ready(function() {
 	$(".fixed-table-loading").remove(); // Remove unwanted symbol of loading from bootstrap-table
@@ -45,9 +45,6 @@ $(document).ready(function() {
 	var curindex ;
 	var nextindex;
 	var previndex;
-	/*var date = $("#ledtodate").val().split("-");
-	var newtodate = date[2]+"-"+date[1]+"-"+date[0];
-  */
 	$(document).off('keydown' ,'.dcno').on('keydown' ,'.dcno',function(event) { // function for navigation in the table. i.e up and down arrow key.
 		curindex = $(this).closest('tr').index();
 		nextindex = curindex+1;
@@ -67,8 +64,6 @@ $(document).ready(function() {
 		}
 
 	});
-
-	/* var urole = $("#urole").val(); */
 
 	$("#viewprintableversion").click(function(event){
 	// Function to get a printable version of the report.
@@ -115,6 +110,44 @@ $(document).ready(function() {
 		}
 });
 
+$(".del_unbilled_table").off('dblclick','tr').on('dblclick','tr',function(e){
+	e.preventDefault();
+	var id = $(this).attr('data-value');
+	if (id=="")
+	{
+		return false;
+	}
+	$("#modalindex").val($(this).index());
+	console.log("double click");
+	$.ajax(
+		{
+			type: "POST",
+			url: "/deliverychallan?action=showeditpopup",
+			global: false,
+			async: false,
+			datatype: "text/html",
+			data : {"id":id},
+			beforeSend: function(xhr)
+			{
+				xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+			}
+		}
+	)
+	.done(function(resp)
+	{
+		console.log("response");
+		$("#viewdc").html("");
+		$('.modal-backdrop').remove();
+		$('.modal').modal('hide');
+		$("#viewdc").html(resp);
+		$('#myModal').modal('show');
+		$('#myModal').on('hidden.bs.modal', function (e)
+		{
+			$("#viewdc").html("");
+			$('.del_unbilled_table tbody tr:eq('+$("#modalindex").val()+') a').focus();
+		});
+	});
+});
 
 // Not used. For future reference.
 	function open_in_newtab(filename, text) {
@@ -131,6 +164,35 @@ $(document).ready(function() {
 		$("#show_unbilled_deliveries").click();
 	});
 
+/*  $(".search").children(".form-control").keyup(function(event){
+    if (event.keyCode == 27) {
+      $(this).val("");
+    }
+  });
 
+		$("#printbutton").click(function(event) {
+			// this function creates a spreadsheet of the report.
+		event.preventDefault();
+		var orgname = sessionStorage.getItem('orgn');
+		var orgtype = sessionStorage.getItem('orgt');
+		var xhr = new XMLHttpRequest();
+		trialbalancetype = $("#trialbaltype").val();
 
+		xhr.open('GET', '/printtrialbalance?financialstart='+sessionStorage.yyyymmddyear1+'&orgname='+orgname+'&calculateto='+newtodate+'&orgtype='+orgtype+'&trialbalancetype='+trialbalancetype+'&fyend='+sessionStorage.getItem('year2'), true);
+		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+		xhr.responseType = 'blob';
+
+		xhr.onload = function(e) {
+  	if (this.status == 200) {
+		// if successfull a file will be served to the client.
+    // get binary data as a response
+    	var blob = this.response;
+	 		var url = window.URL.createObjectURL(blob);
+			window.location.assign(url)
+  	}
+	};
+
+	xhr.send();
+
+});*/
 });

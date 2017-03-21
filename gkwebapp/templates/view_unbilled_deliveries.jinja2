@@ -52,29 +52,27 @@
           <input type="text" class="form-control input-sm del_unbilled_autotab" id="del_unbilled_year" value="" size="4" maxlength="4" placeholder="YYYY">
         </div>
         </div>
-        <br>
+<!--        <br>
         <div class="form-group">
           <label for="del_unbilled_type" accesskey="u">{% trans %}<u>U</u>nbilled Delivery Type {% endtrans %} :</label>
           <select class="form-control input-sm" name="" id="del_unbilled_type">
-            <!--<option value="" disabled hidden selected>{% trans %}Select Delivery Type{% endtrans %}</option>-->
             <option value="1">{% trans %}All{% endtrans %}</option>
-            <!--<option value="2">{% trans %}Sales{% endtrans %}</option>
+            <option value="2">{% trans %}Sales{% endtrans %}</option>
             <option value="3">{% trans %}Approval{% endtrans %}</option>
-            <option value="4">{% trans %}Consignment{% endtrans %}</option>-->
-            <!--<option value="5">{% trans %}Sample{% endtrans %}</option>-->
+            <option value="4">{% trans %}Consignment{% endtrans %}</option>
+            <option value="5">{% trans %}Sample{% endtrans %}</option>
           </select>
-        </div>
-        <br>
+        </div>-->
+<!--        <br>
         <div class="form-group">
           <label for="godown_name" accesskey="g">{% trans %}<u>G</u>odown Name{% endtrans %} :</label>
           <select class="form-control input-sm" name="" id="godown_name">
-            <!--<option value="" disabled hidden selected>{% trans %}Select Godown Name{% endtrans %}</option>-->
             <option value="All"> All </option>
-            <!--{% for godown in gkresult %}
+            {% for godown in gkresult %}
             <option value="{{godown['godownname']}}"> {{godown['godownname']}} </option>
-            {% endfor %}-->
+            {% endfor %}
           </select>
-        </div>
+        </div>-->
       </div>
       <div class="panel-footer">
         <button type="button" class="btn btn-sm btn-success" name="button" id="unbilled_deliveries_view" accesskey="v">{% trans %}<u>V</u>iew{% endtrans %}</button>
