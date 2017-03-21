@@ -508,7 +508,7 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
       event.preventDefault();
       if($("#purchaseorder_state").val()!="none"){
 
-          $('#purchaseorder_product_table tbody tr:eq('+curindex1+') td:eq(5) input').focus().select();
+          $('#purchaseorder_product_table tbody tr:eq('+curindex1+') td:eq(4) input').focus().select();
       }
       else{
         pcode = $("#purchaseorder_product_table tbody tr:eq("+curindex1+") td:eq(0) select option:selected").val();
