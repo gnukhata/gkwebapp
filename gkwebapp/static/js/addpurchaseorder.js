@@ -837,6 +837,13 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
 
          $('.modal-backdrop').remove();
          $('.modal').modal('hide');
+         $("#confirm_yes").on('shown.bs.modal', function(event) {
+           $('#po_save_no').focus();
+         });
+         $("#confirm_yes").on('hidden.bs.modal', function(event) {
+           $("#purchaseorder").click();
+
+         });
          $('#confirm_yes').modal('show').one('click', '#po_save_yes', function (event) {
                $.ajax({
                  url: '/purchaseorder?action=save',
@@ -863,7 +870,7 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
                .done(function(resp) {
                  if(resp["gkstatus"] == 0){
                    $('.modal-backdrop').remove();
-                   $("#purchaseorder_create").click();
+                   $("#purchaseorder").click();
                    $("#success-alert").alert();
                    $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
                      $("#success-alert").hide();
@@ -899,13 +906,7 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
                return false;
 
      });
-     $("#confirm_yes").on('shown.bs.modal', function(event) {
-       $('#po_save_no').focus();
-     });
-     $("#confirm_yes").on('hidden.bs.modal', function(event) {
-       $("#purchaseorder").click();
 
-     });
 
     }); /* save click */
 });

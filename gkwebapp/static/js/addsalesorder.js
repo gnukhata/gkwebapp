@@ -633,6 +633,13 @@ $(document).ready(function() {
 
          $('.modal-backdrop').remove();
          $('.modal').modal('hide');
+         $("#confirm_yes").on('shown.bs.modal', function(event) {
+           $('#so_save_no').focus();
+         });
+         $("#confirm_yes").on('hidden.bs.modal', function(event) {
+           $("#purchaseorder").click();
+
+         });
          $('#confirm_yes').modal('show').one('click', '#so_save_yes', function (event) {
 
                $.ajax({
@@ -695,13 +702,6 @@ $(document).ready(function() {
 
                return false;
 
-     });
-     $("#confirm_yes").on('shown.bs.modal', function(event) {
-       $('#so_save_no').focus();
-     });
-     $("#confirm_yes").on('hidden.bs.modal', function(event) {
-
-       $("#salesorder_orderno").focus();
      });
 
     }); /* save click */
