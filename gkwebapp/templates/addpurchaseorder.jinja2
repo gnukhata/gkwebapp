@@ -197,9 +197,10 @@
                <th class="col-md-3 text-center">{% trans %}Product{% endtrans %}</th>
                <th class="col-md-2 text-center">{% trans %}Quantity{% endtrans %}</th>
                 <th class="col-md-2 text-center">{% trans %}Number of Packages{% endtrans %}</th>
+                <th class="col-md-2 text-center">{% trans %}Staggered Delivery{% endtrans %}</th>
                <th class="col-md-2 text-center">{% trans %}Price Per Unit{% endtrans %}</th>
                <th class="col-md-2 text-center">{% trans %}Tax Rate{% endtrans %}</th>
-               <th class="col-md-2 text-center">{% trans %}Staggered Delivery{% endtrans %}</th>
+
                <th class="col-md-1"></th>
              </tr>
            </thead>
@@ -223,14 +224,15 @@
          					<input type="text" class="form-control input-sm text-right purchaseorder_product_packages" value="0.00">
          			</td>
               <td class="col-md-2">
+                <button class="btn btn-info btn-sm purchaseorder_product_schedule" id="addschedule" data-toggle="modal" data-target="#addpomodal" disabled>{% trans %}Add Schedule{% endtrans %}</button>
+              </td>
+              <td class="col-md-2">
                 <input type="text" class=" form-control input-sm text-right numtype purchaseorder_product_per_price" value="0.00" placeholder="0.00">
               </td>
                <td class="col-md-2">
                  <input type="text" class="form-control input-sm text-right numtype purchaseorder_product_tax_rate" value="0.00" placeholder="0.00" disabled>
                </td>
-               <td class="col-md-2">
-                 <button class="btn btn-info btn-sm purchaseorder_product_schedule" id="addschedule" data-toggle="modal" data-target="#addpomodal" disabled>{% trans %}Add Schedule{% endtrans %}</button>
-               </td>
+
                <td class="col-md-1">
                </td>
              </tr>

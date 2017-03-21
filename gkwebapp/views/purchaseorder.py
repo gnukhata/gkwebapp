@@ -44,13 +44,9 @@ def purchaseorderdetails(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/purchaseorder?poso=single&orderid=%d"%(int(request.params['orderid'])),headers=header)
 	podetails = result.json()["gkresult"]
-	print "heyyo"
-	print podetails
 	supplierid = podetails["csid"]
 	supplier = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(supplierid)), headers=header)
-	print podetails["schedule"]
 	togoid = podetails["togodown"]
-	print togoid
 	togodown=requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(togoid)), headers=header)
 	return{"gkresult":result.json()["gkresult"], "supplier":supplier.json()["gkresult"], "schedule":podetails["schedule"],"togodown":togodown.json()["gkresult"]}
 
@@ -61,7 +57,6 @@ def salesorderdetails(request):
 	sodetails = result.json()["gkresult"]
 	customerid = sodetails["csid"]
 	customer = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(customerid)), headers=header)
-	print sodetails
 	togoid = sodetails["togodown"]
 	togodown=requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(togoid)), headers=header)
 	return{"gkresult":result.json()["gkresult"], "customer":customer.json()["gkresult"], "schedule":sodetails["schedule"],"togodown":togodown.json()["gkresult"]}
@@ -99,7 +94,6 @@ def savepurchaseorder(request):
 	purchaseorderdata = {"orderno":request.params["orderno"],"orderdate":request.params["orderdate"],"creditperiod":request.params["creditperiod"],"payterms":request.params["payterms"],
 		"modeoftransport":request.params["modeoftransport"],"designation":request.params["designation"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"],"togodown":request.params["togodown"]
 		}
-	print purchaseorderdata
 	result=requests.post("http://127.0.0.1:6543/purchaseorder",data=json.dumps(purchaseorderdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 
@@ -109,7 +103,6 @@ def savesalesorder(request):
 	salesorderdata = {"orderno":request.params["orderno"],"orderdate":request.params["orderdate"],"creditperiod":request.params["creditperiod"],"payterms":request.params["payterms"],
 		"modeoftransport":request.params["modeoftransport"],"designation":request.params["designation"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"],"togodown":request.params["togodown"]
 		}
-	print salesorderdata
 	result=requests.post("http://127.0.0.1:6543/purchaseorder",data=json.dumps(salesorderdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 

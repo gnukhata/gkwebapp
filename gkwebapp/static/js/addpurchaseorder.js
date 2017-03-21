@@ -417,19 +417,18 @@ $(document).off("click",".scheduledel").on("click", ".scheduledel", function() {
 $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purchaseorder_product_packages",function(event)
 {
     var curindex = $(this).closest('tr').index();
-    if (event.which==13) {
-      event.preventDefault();
-      $('#purchaseorder_product_table tbody tr:eq('+curindex+') td:eq(3) input').focus().select();
-    }
     $(document).off("change",".purchaseorder_product_packages").on("change",".purchaseorder_product_packages",function(event)
     {
        var noofpackages = $(".purchaseorder_product_packages").val();
        if(noofpackages > 1){
          $(".purchaseorder_product_schedule").prop("disabled",false);
-        // $('#purchaseorder_product_table tbody tr:eq('+curindex+') td:eq(5) input').focus();
-
        }
     });
+    if (event.which==13) {
+      event.preventDefault();
+      $('#purchaseorder_product_table tbody tr:eq('+curindex+') td:eq(4) input').focus().select();
+    }
+
 });
 
 
@@ -508,7 +507,7 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
       event.preventDefault();
       if($("#purchaseorder_state").val()!="none"){
 
-          $('#purchaseorder_product_table tbody tr:eq('+curindex1+') td:eq(4) input').focus().select();
+          $('#purchaseorder_product_table tbody tr:eq('+curindex1+') td:eq(5) input').focus().select();
       }
       else{
         pcode = $("#purchaseorder_product_table tbody tr:eq("+curindex1+") td:eq(0) select option:selected").val();
@@ -817,7 +816,7 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
            obj.productname = $.trim($("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").text());
            obj.quantity = $("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(1) input").val();
            obj.packages = $("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(2) input").val();
-           obj.rateperunit = $("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(3) input").val();
+           obj.rateperunit = $("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(4) input").val();
            obj.staggered = scheduleall[pcode];
            obj.taxrate = parseFloat($("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(5) input").val()).toFixed(2);
            scheduledata[pcode] = obj;
@@ -905,7 +904,7 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
      });
      $("#confirm_yes").on('hidden.bs.modal', function(event) {
        $("#purchaseorder").click();
-       $("#purchaseorder_orderno").focus();
+
      });
 
     }); /* save click */
