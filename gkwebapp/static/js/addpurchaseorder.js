@@ -22,14 +22,19 @@ Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
 // This script is for the addpurchaseorder.jinja2
 
 $(document).ready(function() {
-  $('.modal-backdrop').remove();
+      $('.modal-backdrop').remove();
       $("#purchaseorder_orderno").focus();
+
       var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
       var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
+
       $('.podate').autotab('number');
       $('.sodate').autotab('number');
+
       var schedule=[];
       var scheduleall={};
+
+      // To get logged in user's name as issuer name in purchaseorder
       $.ajax({
         url: '/purchaseorder?action=getuser',
         type: 'POST',
@@ -73,7 +78,9 @@ $(document).ready(function() {
            return str
          }
        }
-      // Following are events to handle enter and up key navigations among fields
+
+      // Following are events to handle enter and up key navigations among form fields
+
       $("#purchaseorder_orderno").keydown(function(event) {
         if (event.which==13) {  //Enter key event
           event.preventDefault();
@@ -81,6 +88,7 @@ $(document).ready(function() {
 
         }
       });
+
      $("#purchaseorder_date").keydown(function(event) {
 
        if (event.which==38) {  // Up arrow key event
@@ -92,6 +100,7 @@ $(document).ready(function() {
          $("#purchaseorder_month").focus().select();
        }
      });
+
      $("#purchaseorder_month").keydown(function(event) {
        if (event.which==13) {
          event.preventDefault();
@@ -102,6 +111,7 @@ $(document).ready(function() {
          $("#purchaseorder_date").focus().select();
        }
      });
+
      $("#purchaseorder_year").keydown(function(event) {
        if (event.which==13) {
          event.preventDefault();
@@ -124,7 +134,6 @@ $(document).ready(function() {
        }
      });
 
-
      $("#payterms").keydown(function(event) {
        if (event.which==13) {
          event.preventDefault();
@@ -135,6 +144,7 @@ $(document).ready(function() {
          $("#designation").focus().select();
        }
      });
+
      $("#modeoftransport").keydown(function(event) {
        if (event.which==13) {
          event.preventDefault();
@@ -145,6 +155,7 @@ $(document).ready(function() {
          $("#payterms").focus().select();
        }
      });
+
      $("#creditperiod").keydown(function(event) {
        if (event.which==13) {
          event.preventDefault();
@@ -166,21 +177,20 @@ $(document).ready(function() {
          $("#creditperiod").focus().select();
        }
      });
-     var taxstate;
+
+    // If taxstate is not selected tax rate field will be disabled in product schedule table, otherwise it is enabled
+    var taxstate;
     $("#purchaseorder_state").keydown(function(event) {
       if (event.which==13) {
         event.preventDefault();
         $("#po_togodown").focus();
-
         taxstate = $("#purchaseorder_state").val();
-        console.log(taxstate);
         if(taxstate=="none"){
          $(".purchaseorder_product_tax_rate").prop("disabled",true);
         }
         else{
           $(".purchaseorder_product_tax_rate").prop("disabled",false);
         }
-
       }
       if (event.which==38) {
         event.preventDefault();
@@ -188,19 +198,15 @@ $(document).ready(function() {
       }
     });
 
-
    $("#po_togodown").keydown(function(event) {
      if (event.which==13) {
        var togodown = $("#po_togodown option:selected").val();
-       console.log(togodown);
        event.preventDefault();
        if ($("#purchaseorder_product_table tbody tr:first td:eq(0) select").is(":disabled")||$("#purchaseorder_product_table tbody tr").length==0) {
        }
        else {
          $("#purchaseorder_product_table tbody tr:first td:eq(0) select").focus();
        }
-
-
      }
      if (event.which==38) {
        event.preventDefault();
@@ -210,7 +216,6 @@ $(document).ready(function() {
 
 
 /*   Modal events */
-
 
 $("#addpomodal").on('shown.bs.modal', function(event) {
   $('.soday').focus();
@@ -224,9 +229,13 @@ $(document).off("keydown",".soyear").on("keydown",".soyear",function(event)
   var curindex = $(this).closest('tr').index();
   if (event.which==13) {
     event.preventDefault();
+    
     $('#schedule_table tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
   }
+
 });
+
+// On keydown for noofpackages schedule will be saved in schedule array
 
 $(document).off("keydown",".purchaseorder_schedule_packages").on("keydown",".purchaseorder_schedule_packages",function(event)
 {
@@ -249,6 +258,7 @@ $(document).off("keydown",".purchaseorder_schedule_packages").on("keydown",".pur
         $('#schedule_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
         return false;
       }
+
       if ($('#schedule_table tbody tr:eq('+curindex1+') td:eq(1) input').val()=="" || $("#schedule_table tbody tr:eq("+curindex1+") td:eq(1) input").val()==0) {
         $("#packages-blank-alert").alert();
         $("#packages-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -275,20 +285,21 @@ $(document).off("keydown",".purchaseorder_schedule_packages").on("keydown",".pur
               date.push($(".soyear",this).val());
             });
           }
-            console.log(date);
+
             var soDateFormatted = date[2] + "-" + date[1] + "-" + date[0];
             date = [];
-            console.log(soDateFormatted);
             obj.sdate = soDateFormatted;
             obj.noofpackages = $("#schedule_table tbody tr:eq("+curindex1+") td:eq(1) input").val();
             schedule.push(obj);
-      $('#schedule_table tbody').append('<tr>'+$("#schedule_table tbody tr:first").closest('tr').html()+'</tr>');
-        $('.sodate').autotab('number');
-      $("#schedule_table tbody tr:last td:last").append('<a href="#" class="scheduledel"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-      $('#schedule_table tbody tr:eq('+nextindex1+') td:eq(0) input:first').focus();
+
+            $('#schedule_table tbody').append('<tr>'+$("#schedule_table tbody tr:first").closest('tr').html()+'</tr>');
+            $('.sodate').autotab('number');
+            $("#schedule_table tbody tr:last td:last").append('<a href="#" class="scheduledel"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+            $('#schedule_table tbody tr:eq('+nextindex1+') td:eq(0) input:first').focus();
     }
   }
 });
+
 $(document).off("click",".scheduledel").on("click", ".scheduledel", function() {
   $(this).closest('tr').fadeOut(200, function(){
     $(this).closest('tr').remove();	 //closest method gives the closest element productified
@@ -298,7 +309,9 @@ $(document).off("click",".scheduledel").on("click", ".scheduledel", function() {
 });
 
 /* End here  */
-  /*Table key events */
+
+  /*Schedule Table key events */
+
   $(document).off("keydown",".product_name").on("keydown",".product_name",function(event)
   {
     var curindex = $(this).closest('tr').index();
@@ -314,6 +327,7 @@ $(document).off("click",".scheduledel").on("click", ".scheduledel", function() {
     /* Act on the event */
     $(".purchaseorder_product_quantity").numeric();
   });
+
   $(document).off("keydown",".purchaseorder_product_quantity").on("keydown",".purchaseorder_product_quantity",function(event)
   {
     var curindex = $(this).closest('tr').index();
@@ -327,8 +341,9 @@ $(document).off("click",".scheduledel").on("click", ".scheduledel", function() {
   event.preventDefault();
   /* Act on the event */
   $(".purchaseorder_product_packages").numeric();
-});
+  });
 
+//Enable Add schedule button only when noofpackages are more than 1
 $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purchaseorder_product_packages",function(event)
 {
     var curindex = $(this).closest('tr').index();
@@ -346,8 +361,6 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
        }
     });
 });
-
-
 
   $(document).off('focus', '.purchaseorder_product_per_price').on('focus', '.purchaseorder_product_per_price', function(event) {
     event.preventDefault();
@@ -368,6 +381,7 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
   });
 
   $(document).off("keydown",".purchaseorder_product_tax_rate").on("keydown",".purchaseorder_product_tax_rate",function(event){
+
     var curindex1 = $(this).closest('tr').index();
     var nextindex1 = curindex1+1;
     var previndex1 = curindex1-1;
@@ -406,7 +420,6 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
         $('#purchaseorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
       else {
-
         if ($('#purchaseorder_product_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="") {
           $("#product-blank-alert").alert();
           $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -415,7 +428,6 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
           $('#purchaseorder_product_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
           return false;
         }
-
         if ($("#purchaseorder_product_table tbody tr:eq("+curindex1+") td:eq(1) input").val()=="" || $("#purchaseorder_product_table tbody tr:eq("+curindex1+") td:eq(1) input").val()==0) {
           $("#quantity-blank-alert").alert();
           $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
