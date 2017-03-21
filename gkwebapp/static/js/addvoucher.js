@@ -1470,6 +1470,12 @@ $("#invsel").keyup(function(event) {
         },
         success: function(resp)
         {
+          var prevmaxacc = 0;
+          $('#vtable tbody tr:eq('+curfocusrow+') td:eq(1) select option').each(function(){
+            if(this.value > prevmaxacc){
+              prevmaxacc = this.value;
+            }
+          });
           $("#viewacc").html("");
           $('.modal-backdrop').remove();
           $('.modal').modal('hide');
@@ -1520,7 +1526,7 @@ $("#invsel").keyup(function(event) {
                   }
                 });
               }
-              if($("#vtable tbody tr:eq("+curindex+") td:eq(0) select").val()==="Dr"){
+              else if($("#vtable tbody tr:eq("+curindex+") td:eq(0) select").val()==="Dr"){
                 $.ajax({
                   url: '/getcjaccounts',
                   type: 'POST',
@@ -1574,13 +1580,17 @@ $("#invsel").keyup(function(event) {
             }
             else{
               if($("#vtable tbody tr:eq("+curfocusrow+") td:eq(0) select").val()==="Dr"){
-                $('#vtable tbody tr:eq('+curfocusrow+') td:eq(1) select').val(maxdracccode);
-                $('#vtable tbody tr:eq('+curfocusrow+') td:eq(1) select').trigger('change');
+                if(maxdracccode != prevmaxacc){
+                  $('#vtable tbody tr:eq('+curfocusrow+') td:eq(1) select').val(maxdracccode);
+                  $('#vtable tbody tr:eq('+curfocusrow+') td:eq(1) select').trigger('change');
+                }
                 $('#vtable tbody tr:eq('+curfocusrow+') td:eq(3) input').focus().select();
               }
               else{
-                $('#vtable tbody tr:eq('+curfocusrow+') td:eq(1) select').val(maxcracccode);
-                $('#vtable tbody tr:eq('+curfocusrow+') td:eq(1) select').trigger('change');
+                if(maxcracccode != prevmaxacc){
+                  $('#vtable tbody tr:eq('+curfocusrow+') td:eq(1) select').val(maxcracccode);
+                  $('#vtable tbody tr:eq('+curfocusrow+') td:eq(1) select').trigger('change');
+                }
                 $('#vtable tbody tr:eq('+curfocusrow+') td:eq(4) input').focus().select();
               }
             }
