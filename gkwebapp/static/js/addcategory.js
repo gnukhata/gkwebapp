@@ -245,13 +245,6 @@ $(document).ready(function() {
                     $('#child_category_spec_table tbody tr:eq(' + curindex1 + ') td:eq(0) input').focus();
                     return false;
                 }
-                var obj = {};
-                //dict for specs
-                if ($.trim($("#child_category_spec_table tbody tr:eq(" + curindex1 + ") td:eq(0) input").val()) != "") {
-                    obj.attrname = $("#child_category_spec_table tbody tr:eq(" + curindex1 + ") td:eq(0) input").val();
-                    obj.attrtype = $.trim($("#child_category_spec_table tbody tr:eq(" + curindex1 + ") td:eq(1) select option:selected").val());
-                    childspecs.push(obj);
-                }
                 // appending a new row for adding another spec to category
                 $('#child_category_spec_table tbody').append('<tr>' +
                     '<td class="col-xs-8">' +
@@ -479,6 +472,15 @@ $(document).ready(function() {
                 $('#child_category_table tbody tr:last td:eq(0) input').focus();
                 return false;
             }
+            childspecs = [];
+            $("#child_category_spec_table tbody tr").each(function() {
+              var obj = {};
+              if ($.trim($("input", this).val()) != "") {
+                  obj.attrname = $.trim($("input", this).val());
+                  obj.attrtype = $.trim($("select option:selected", this).val());
+                  childspecs.push(obj);
+              }
+            });
             $.ajax({
                     url: '/category?action=save',
                     type: 'POST',
@@ -487,7 +489,7 @@ $(document).ready(function() {
                     data: {
                         "categoryname": catname,
                         "subcategoryof": categorycode,
-                        "specs": JSON.stringify(parentspecs.concat(childspecs)),
+                        "specs": JSON.stringify(childspecs),
                         "taxes": JSON.stringify(taxes)
                     },
                     beforeSend: function(xhr) {
