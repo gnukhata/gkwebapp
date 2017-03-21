@@ -417,16 +417,18 @@ $(document).off("click",".scheduledel").on("click", ".scheduledel", function() {
 $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purchaseorder_product_packages",function(event)
 {
     var curindex = $(this).closest('tr').index();
-    $(document).off("change",".purchaseorder_product_packages").on("change",".purchaseorder_product_packages",function(event)
-    {
-       var noofpackages = $(".purchaseorder_product_packages").val();
-       if(noofpackages > 1){
-         $(".purchaseorder_product_schedule").prop("disabled",false);
-       }
-    });
+
     if (event.which==13) {
       event.preventDefault();
-      $('#purchaseorder_product_table tbody tr:eq('+curindex+') td:eq(4) input').focus().select();
+      var noofpackages = $(".purchaseorder_product_packages").val();
+      if(noofpackages > 1){
+        $(".purchaseorder_product_schedule").prop("disabled",false);
+        $('#purchaseorder_product_table tbody tr:eq('+curindex+') td:eq(3) button').focus();
+      }
+      else {
+          $('#purchaseorder_product_table tbody tr:eq('+curindex+') td:eq(4) input').focus().select();
+      }
+
     }
 
 });
