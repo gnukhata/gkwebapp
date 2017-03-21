@@ -81,14 +81,22 @@ $(document).ready(function() {
     });
 
     $("#goname").keydown(function(e){
-      if (e.which == 13) {
-        e.preventDefault();
-        $("#gostate").focus().select();
-      }
-      if (e.which == 38) {
-          $("#editgoddet").focus().select();
-      }
-    });
+    	if (e.which == 13) {
+    	      e.preventDefault();
+    	      if ($.trim($("#goname").val())=="") {
+    	          $("#blank-alert").alert();
+    	          $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
+    	            $("#blank-alert").hide();
+    	          });
+    	          $("#goname").focus();
+    	          return false;
+    	        }
+    	      else {
+    	      $("#gostate").focus(); 
+    	      }
+    	    }
+    	  });
+    	  
     $("#gostate").keydown(function(e){
       if (e.which == 13) {
         e.preventDefault();
@@ -104,8 +112,16 @@ $(document).ready(function() {
           if (e.which == 13) {
             var thisKeypressTime = new Date();
             if ( thisKeypressTime - lastKeypressTime <= delta )
-            {
-              $("#gocontactname").focus().select();
+            {if ($.trim($("#goaddress").val())=="") {
+                $("#addressblank-alert").alert();
+                $("#addressblank-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#addressblank-alert").hide();
+                });
+                $("goaddress").focus();
+                return false;
+            }
+          	  
+              $("#gocontactname").focus();
               thisKeypressTime = 0;
             }
             lastKeypressTime = thisKeypressTime;

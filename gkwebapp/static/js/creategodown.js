@@ -23,6 +23,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+"Prajkta Patkar" <prajkta.patkar007@gmail.com>
 */
 $(document).ready(function()
 {
@@ -50,8 +51,18 @@ $(document).ready(function()
       }
     }
   });
+  
+    
   $("#godownstate").keydown(function(e){
     if (e.which == 13) {
+    	if ($.trim($("#godownstate").val())=="") {
+	        $("#stateblank-alert").alert();
+	        $("#stateblank-alert").fadeTo(2250, 500).slideUp(500, function(){
+	          $("#stateblank-alert").hide();
+	        });
+	        $("#godownstate").focus();
+	        return false;
+	      }
       e.preventDefault();
       $("#godownaddress").focus();
     }
@@ -59,13 +70,24 @@ $(document).ready(function()
       $("#godownname").focus();
     }
   });
+  
+ 
+  
       var delta = 500;
       var lastKeypressTime = 0;
       $("#godownaddress").keydown(function(e){
         if (e.which == 13) {
           var thisKeypressTime = new Date();
           if ( thisKeypressTime - lastKeypressTime <= delta )
-          {
+          {if ($.trim($("#godownaddress").val())=="") {
+              $("#addressblank-alert").alert();
+              $("#addressblank-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#addressblank-alert").hide();
+              });
+              $("godownaddress").focus();
+              return false;
+          }
+        	  
             $("#godowncontactname").focus();
             thisKeypressTime = 0;
           }
