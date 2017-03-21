@@ -48,10 +48,13 @@ th {
 
               {% trans %}Customer account created under Sub-Group Sundry Debtors, Group Current Assets!{% endtrans %}
             </div>
-            <div class="alert alert-danger" id="cus-duplicate-alert"  aria-live="rude" role="alert" hidden>
-
-              {% trans %}Customer/Supplier Already Exist!(Please check Name, FAX, PAN or TIN){% endtrans %}
-            </div>
+            <div class="alert alert-danger" id="sup-duplicate-alert"  aria-live="rude" role="alert" hidden>
+   {% if gkstatus=="out" %}
+        {% trans %}Customer Already Exist!{% endtrans %}
+   {% else %}
+        {% trans %}Supplier Already Exist!{% endtrans %}
+   {% endif %}
+  </div>
 
     <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
 
