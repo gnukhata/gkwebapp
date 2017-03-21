@@ -1,20 +1,46 @@
-
+  <input type="text" id="numberofspecs" value="{{gkresult|length}}" hidden>
   {% if (gkresult|length)>0 %}
+  <div class="col-sm-11">
+<div class="panel">
+  <table id="spec_table" class="table table-condensed table-bordered fixed-table">
+    <thead class="bg-primary input-sm">
+      <tr>
+        <th class="col-xs-2 text-center">{% trans %}Specifications{% endtrans %}</th>
+        <th class="col-xs-2 text-center">{% trans %}Value{% endtrans %}</th>
+      </tr>
+    </thead>
+    <tbody>
   {% for spec in gkresult %}
-  <div class="form-group col-sm-6">
-    <label for="{{spec['spcode']}}" class="">{{spec["attrname"]}} :</label>
-    {% if spec["attrtype"]==0 %}
+  <tr>
+    <td>
+      <label for="{{spec['spcode']}}" class="">{{spec["attrname"]}}</label>
+      <input type="text" class="spec_name" value="{{spec['spcode']}}" hidden>
+    </td>
+    <td>
+      {% if spec["attrtype"]==0 %}
 
-    <input type="text" class="form-control spec input-sm" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" placeholder="Alphanumeric">
-    {% elif spec["attrtype"]==1 %}
-    <input type="text" class="form-control spec input-sm numtype" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" placeholder="Numeric">
-    {% elif spec["attrtype"]==2 %}
-    <input type="text" class="form-control spec input-sm specdate" name="{{spec['spcode']}}"  id="{{spec['spcode']}}" placeholder="DD-MM-YYYY">
-    {% elif spec["attrtype"]==3 %}
-    <label class="radio-inline"><input value = "1" class="radtype spec" type="radio" name="{{spec['spcode']}}">{% trans %}Yes{% endtrans %}</label>
-    <label class="radio-inline"><input value = "0" class=" radtype spec" type="radio" name="{{spec['spcode']}}" checked>{% trans %}No{% endtrans %}</label>
-    {% endif %}
-  </div>
+      <input type="text" class="form-control spec_value spec input-sm" id="{{spec['spcode']}}" placeholder="Alphanumeric">
+      {% elif spec["attrtype"]==1 %}
+      <input type="text" class="form-control spec_value spec input-sm numtype" id="{{spec['spcode']}}" placeholder="Numeric">
+      {% elif spec["attrtype"]==2 %}
+      <div class="form-inline">
+        <div class="form-group ">
+          <input type="text" class="form-control input-sm spec specday specdate" size="2" maxlength="2" placeholder="DD">
+        </div>
+        <div class="form-group ">
+          <input type="text" class="form-control input-sm spec specmonth specdate" size="2" maxlength="2" placeholder="MM">
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control input-sm spec specyear specdate" size="4" maxlength="4" placeholder="YYYY">
+        </div>
+      </div>
+      <input type="text" class="spec_value datevalue" value="" hidden>
+      {% endif %}
+    </td>
+  </tr>
   {% endfor %}
-
+</tbody>
+</table>
+</div>
+</div>
   {% endif %}

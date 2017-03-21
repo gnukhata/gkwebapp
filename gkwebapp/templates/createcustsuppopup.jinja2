@@ -40,20 +40,21 @@ th {
        </div>
         <div class="container">
           <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
-    <div class="alert alert-success" id="cus-success-alert"  aria-live="rude" role="alert" hidden>
-      {% if gkstatus=="in" %}
-            {% trans %}Supplier saved.{% endtrans %}
-      {% else %}
-            {% trans %}Customer saved.{% endtrans %}
-      {% endif %}
-    </div>
-    <div class="alert alert-danger" id="sup-duplicate-alert"  aria-live="rude" role="alert" hidden>
-     {% if gkstatus=="out" %}
-          {% trans %}Customer Already Exist!{% endtrans %}
-     {% else %}
-          {% trans %}Supplier Already Exist!{% endtrans %}
-     {% endif %}
-    </div>
+            <div class="alert alert-success" id="sup-success-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Supplier account created under Sub-Group Sundry Creditors for Purchase, Group Current Liabilities!{% endtrans %}
+            </div>
+            <div class="alert alert-success" id="cus-success-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Customer account created under Sub-Group Sundry Debtors, Group Current Assets!{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="sup-duplicate-alert"  aria-live="rude" role="alert" hidden>
+   {% if gkstatus=="out" %}
+        {% trans %}Customer Already Exist!{% endtrans %}
+   {% else %}
+        {% trans %}Supplier Already Exist!{% endtrans %}
+   {% endif %}
+  </div>
 
     <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
 
@@ -76,6 +77,9 @@ th {
       {% trans %}Please Enter TIN!{% endtrans %}
     </div>
     <div class="panel shadow customersupplier_panel">
+      <input type="hidden" id="debtgroupcode" value="{{debtgroupcode}}">
+      <input type="hidden" id="credgroupcode" value="{{credgroupcode}}">
+
       <div class="panel-body ">
         <div class="col-md-6">
 
