@@ -1,0 +1,168 @@
+<body>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-body">
+  <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
+<!--  <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">-->
+    <div class="panel shadow deliverychallan_edit_panel">
+      <div class="panel-body">
+        <div class="col-md-5 deliverychallan_edit_div">
+          <div class="form-group">
+            <label for="deliverychallan_edit_challanno">{% trans %}Note No{% endtrans %} :</label>
+            <input class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_challanno" value="{{delchaldata["dcno"]}}" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a" disabled>
+          </div>
+            <div class="form-group">
+              <label for="deliverychallan_edit_date">{% trans %}Date{% endtrans %} :</label>
+              <div class="form-inline">
+                  <div class="form-group">
+                    <input type="text" class="form-control deliverychallan_edit_disable input-sm delchaldate" size="2" maxlength="2" value="{{delchaldata["dcdate"][0-2]}}" placeholder="DD" id="deliverychallan_edit_date" accesskey="v" disabled>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control deliverychallan_edit_disable input-sm delchaldate" size="2" maxlength="2" value="{{delchaldata["dcdate"][3-5]}}" placeholder="MM" id="deliverychallan_edit_month" accesskey="v" disabled>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control deliverychallan_edit_disable input-sm delchaldate" size="4" maxlength="4" value="{{delchaldata["dcdate"][6-10]}}" placeholder="YYYY" id="deliverychallan_edit_year" accesskey="v" disabled>
+                  </div>
+              </div>
+            </div>
+            <div class="form-group">
+              {% if stockdata["inout"] == 9 %}
+              <label for="deliverychallan_edit_customer" id="slabel">{% trans %}Supplier{% endtrans %} :</label>
+              {% else %}
+              <label for="deliverychallan_edit_customer" id="clabel">{% trans %}Customer{% endtrans %} :</label>
+              {% endif %}
+              <select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_customer" accesskey="" disabled>
+                  <option value="{{delchaldata['custid']}}">{{delchaldata["custname"]}}</option>
+              </select>
+            </div>
+            <div class ="form-group">
+              <label for="deliverychallan_customeraddr">
+                {% trans %}Address{% endtrans %} :
+              </label>
+              <input class="form-control input-sm" id="deliverychallan_customeraddr" accesskey="" disabled>
+            </div>
+            <div class="form-group">
+              {% if stockdata["inout"] == 9 %}
+              <label for="deliverychallan_edit_godown" id="tgolabel">{% trans %}To Godown{% endtrans %} :</label>
+              {% else %}
+              <label for="deliverychallan_edit_godown" id="fgolabel">{% trans %}From Godown{% endtrans %} :</label>
+              {% endif %}
+              <select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_godown" accesskey="" disabled>
+                <!--{% if delchaldata["goid"] != "" %}
+                {% endif %}-->
+                {% if "goid" in delchaldata.keys() %}
+                <option value="{{delchaldata['goid']}}">{{delchaldata["goname"]}} ({{delchaldata["gostate"]}})</option>
+                {% else %}
+                <option value=""  selected>{% trans %}None{% endtrans %}</option>
+                {% endif %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="deliverychallan_edit_consignment">Type of Transaction:</label>
+              <select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_consignment" accesskey="" disabled>
+                {% if delchaldata["dcflag"] == 16 %}
+                <option value="16">{% trans %}Purchase{% endtrans %}</option>
+                {% elif delchaldata["dcflag"] == 4 %}
+                <option value="4">{% trans %}Sale{% endtrans %}</option>
+                {% elif delchaldata["dcflag"] == 1 %}
+                <option value="1">{% trans %}Approval{% endtrans %}</option>
+                {% elif delchaldata["dcflag"] == 3 %}
+                <option value="3">{% trans %}Consignment{% endtrans %}</option>
+                {% elif delchaldata["dcflag"] == 19 %}
+                <option value="19">{% trans %}Sample{% endtrans %}</option>
+                {% endif %}
+                </select>
+            </div>
+          </div>
+          <div class="col-md-7 deliverychallan_edit_div" id="deliverychallan_edit_product_div">
+            <div class="panel">
+            <table id="deliverychallan_edit_product_table" class="table shadow table-condensed table-bordered fixed-edit-table">
+              <thead class="bg-primary">
+                <tr>
+                  <th class="col-xs-7">{% trans %}Product{% endtrans %}</th>
+                  <th class="col-xs-4 text-center">{% trans %}Quantity{% endtrans %}</th>
+                  <th class="col-xs-1"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for key in stockdata["items"].keys() %}
+                <tr>
+                <td class="col-xs-7">
+                <select class="form-control deliverychallan_edit_disable input-sm product_name" disabled>
+                <option value="{{key}}">{{stockdata["items"][key]["productdesc"]}}</option>
+                </select>
+                </td>
+                <td class="col-xs-4">
+                <div class="input-group">
+                <input type="text" class="deliverychallan_edit_product_quantity form-control deliverychallan_edit_disable input-sm text-right" value="{{stockdata["items"][key]["qty"]}}" disabled>
+                  <span class="input-group-addon input-sm" id="unitaddon">{{stockdata["items"][key]["unitname"]}}</span>
+                </div>
+                </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            </div>
+            <div class="col-md-6">
+              <label for="deliverychallan_edit_noofpackages">{% trans %}Number of Packages{% endtrans %} :</label>
+              <input type="text" class="form-control deliverychallan_edit_disable input-sm text-right" id="deliverychallan_edit_noofpackages" value="{{delchaldata["noofpackages"]}}" disabled>
+            </div>
+            <div class="col-md-6">
+              <label for="deliverychallan_edit_modeoftransport">{% trans %}Mode of Transport{% endtrans %} :</label>
+              <input type="text" class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_modeoftransport" value="{{delchaldata["modeoftransport"]}}" disabled>
+            </div>
+            <div class="col-md-6">
+              <br>
+              <label for="deliverychallan_edit_issuername">{% trans %}Issuer's Name{% endtrans %} :</label>
+              <input type="text" class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_issuername" value="{{delchaldata["issuername"]}}" placeholder="Enter name" disabled>
+            </div>
+            <div class="col-md-6">
+              <br>
+              <label for="deliverychallan_edit_designation">{% trans %}Designation{% endtrans %} :</label>
+              <input type="text" class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_designation" value="{{delchaldata["designation"]}}" placeholder="Enter designation" disabled>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+  <input type=hidden id="dcdate" value="{{delchaldata["dcdate"]}}">
+  <input type=hidden id="inout" value="{{stockdata["inout"]}}">
+  <input type=hidden id="issuername" value="{{delchaldata["issuername"]}}">
+  <input type=hidden id="designation" value="{{delchaldata["designation"]}}">
+  <input type=hidden id="custid" value="{{delchaldata["custid"]}}">
+  <input type=hidden id="dcno" value="{{delchaldata["dcno"]}}">
+  <input type=hidden id="dcflag" value="{{delchaldata["dcflag"]}}">
+  <input type=hidden id="noofpackages" value="{{delchaldata["noofpackages"]}}">
+  <input type=hidden id="modeoftransport" value="{{delchaldata["modeoftransport"]}}">
+<script type="text/javascript">
+$.ajax({
+  url: '/customersuppliers?action=get',
+  type: 'POST',
+  dataType: 'json',
+  async : false,
+  data: {"custid":$("#custid").val()},
+  beforeSend: function(xhr)
+  {
+    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+  }
+})
+.done(function(resp) {
+  console.log("success");
+  if (resp["gkstatus"]==0) {
+    $("#deliverychallan_customeraddr").val(resp["gkresult"]["custaddr"]);
+  }
+})
+.fail(function() {
+  console.log("error");
+})
+.always(function() {
+  console.log("complete");
+});
+
+</script>
+</body>
