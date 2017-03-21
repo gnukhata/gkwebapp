@@ -139,7 +139,6 @@ $(document).ready(function() {
         categorycode = $("#category_under option:selected").val();
         if(categorycode != ""){
           $("#doneid").show();
-          $("#spectbl").show();
           $("#parent_heading").text($("#category_under option[value=" + categorycode + "]").text());
           $('#spectbl td').remove();
           $(".childcat").show();
@@ -159,8 +158,10 @@ $(document).ready(function() {
               })
               .done(function(resp) {
                   $('#child_category_spec_table tbody').html("");
+                  var noofspecs = 0;
                   for (spec of resp["gkresult"].reverse()) {
                       var trs;
+                      noofspecs++;
                       if (spec["attrtype"] == 0) {
                           trs = '<option value="0">Text</option>'
                       } else if (spec["attrtype"] == 1) {
@@ -190,6 +191,12 @@ $(document).ready(function() {
                       obj.attrname = spec["attrname"];
                       obj.attrtype = spec["attrtype"];
                       parentspecs.push(obj);
+                  }
+                  if(noofspecs == 0){
+                    $("#spectbl").hide();
+                  }
+                  else{
+                    $("#spectbl").show();
                   }
                   $('#child_category_spec_table tbody').append('<tr>' +
                       '<td class="col-xs-8">' +
