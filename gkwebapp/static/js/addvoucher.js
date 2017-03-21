@@ -59,6 +59,7 @@ $(document).ready(function() {
   var crsum = 0;
   var diff = 0;     //diff containns the difference of drsum and crsum
   var outfocus = false;
+  var curfocusrow = -1;
   var accpopupindex = -1;
   var curselectlength = -1;
   var percentwid = 100*(($("table").width()-12)/$("table").width());
@@ -131,6 +132,9 @@ $(document).ready(function() {
       var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
       $('#vtable tbody tr:eq(1) td:eq(2) input').val(getBalance(curacccode, caldata));
     });
+$(document).off("focusout",".accs, .cramt, .dramt").on("focusout", ".accs, .cramt, .dramt", function() {
+    curfocusrow = $(this).closest('tr').index();
+});
 $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   event.preventDefault();
   /* Act on the event */
@@ -1557,6 +1561,17 @@ $("#invsel").keyup(function(event) {
             else {
               $("#popup").focus();
               accpopupindex = -1;
+            }
+            if(curfocusrow == -1){
+              $('#vtable tbody tr:eq(0) td:eq(1) select').focus();
+            }
+            else{
+              if($("#vtable tbody tr:eq("+curfocusrow+") td:eq(0) select").val()==="Dr"){
+                $('#vtable tbody tr:eq('+curfocusrow+') td:eq(3) input').focus().select();
+              }
+              else{
+                $('#vtable tbody tr:eq('+curfocusrow+') td:eq(4) input').focus().select();
+              }
             }
           });
         }
