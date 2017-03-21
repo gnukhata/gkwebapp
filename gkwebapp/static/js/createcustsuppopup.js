@@ -194,10 +194,12 @@ $(document).ready(function() {
             {
               if(resp["gkstatus"]==0)
               {
-                $("#customersupplier_create").click();
+              //  $("#customersupplier_create").click();
                 if (custsupval == '3') {
                   $("#cus-success-alert").alert();
                   $("#cus-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $('#custsupmodal').modal('hide');
+                    $('.modal-backdrop').remove();
                     $("#cus-success-alert").hide();
                   });
 
@@ -205,13 +207,13 @@ $(document).ready(function() {
                 else  {
                   $("#sup-success-alert").alert();
                   $("#sup-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $('#custsupmodal').modal('hide');
+                    $('.modal-backdrop').remove();
                     $("#sup-success-alert").hide();
                   });
 
                 }
-                $('#custsupmodal').modal('hide');
-                $('.modal-backdrop').remove();
-                return false;
+              return false;
               }
             }
           });
