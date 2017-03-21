@@ -149,8 +149,6 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   $("#invtotal").val(parseFloat(0).toFixed(2));
   }
   var value = $('#invsel option:selected').attr("customername");
-  console.log(value);
-
   $(".dramt:first").val(parseFloat(inv).toFixed(2));
   $(".cramt:eq(1)").val(parseFloat(inv).toFixed(2));
   if (($('#vtype').val()=="sales") && sessionStorage.invflag ==1)
@@ -1487,6 +1485,8 @@ $("#invsel").keyup(function(event) {
             following lines will refresh only the accounts select boxes.
             so if a new account is added, it will be available in the select box for the users.
             */
+            var maxcracccode = 0;
+            var maxdracccode = 0;
             $('#viewacc').html(""); // clears the modal
             $(".accs").each(function(){
               var curindex = $(this).closest('tr').index();
@@ -1504,8 +1504,12 @@ $("#invsel").keyup(function(event) {
                   },
                   success: function(jsonObj) {
                     var accs = jsonObj["accounts"];
+                    maxcracccode = accs[0].accountcode;
                     $('#vtable tbody tr:eq('+curindex+') td:eq(1) select').empty();
                     for (i in accs ) {
+                      if(accs[i].accountcode > maxcracccode){
+                        maxcracccode = accs[i].accountcode;
+                      }
                       if(accs[i].accountcode==tmp){
                         $('#vtable tbody tr:eq('+curindex+') td:eq(1) select').append('<option value="' + accs[i].accountcode + '" selected>' +accs[i].accountname+ '</option>');
                       }
@@ -1529,8 +1533,12 @@ $("#invsel").keyup(function(event) {
                   },
                   success: function(jsonObj) {
                     var accs = jsonObj["accounts"];
+                    maxdracccode = accs[0].accountcode;
                     $('#vtable tbody tr:eq('+curindex+') td:eq(1) select').empty();
                     for (i in accs ) {
+                      if(accs[i].accountcode > maxdracccode){
+                        maxdracccode = accs[i].accountcode;
+                      }
                       if(accs[i].accountcode==tmp){
                         $('#vtable tbody tr:eq('+curindex+') td:eq(1) select').append('<option value="' + accs[i].accountcode + '" selected>' +accs[i].accountname+ '</option>');
                       }
@@ -1541,7 +1549,6 @@ $("#invsel").keyup(function(event) {
                   }
                 });
               }
-
             });
             if (accpopupindex!=-1) {
               var text1 = $("#selpopupaccount").val();
@@ -1567,9 +1574,13 @@ $("#invsel").keyup(function(event) {
             }
             else{
               if($("#vtable tbody tr:eq("+curfocusrow+") td:eq(0) select").val()==="Dr"){
+                $('#vtable tbody tr:eq('+curfocusrow+') td:eq(1) select').val(maxdracccode);
+                $('#vtable tbody tr:eq('+curfocusrow+') td:eq(1) select').trigger('change');
                 $('#vtable tbody tr:eq('+curfocusrow+') td:eq(3) input').focus().select();
               }
               else{
+                $('#vtable tbody tr:eq('+curfocusrow+') td:eq(1) select').val(maxcracccode);
+                $('#vtable tbody tr:eq('+curfocusrow+') td:eq(1) select').trigger('change');
                 $('#vtable tbody tr:eq('+curfocusrow+') td:eq(4) input').focus().select();
               }
             }
