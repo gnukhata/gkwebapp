@@ -31,6 +31,9 @@ from pyramid.view import view_config
 import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
+from PIL import Image
+import base64
+import cStringIO
 
 @view_config(route_name="deliverychallan",renderer="gkwebapp:templates/deliverychallan.jinja2")
 def showdeliverychallan(request):
@@ -109,6 +112,26 @@ def savedelchal(request):
 		delchaldata["issuername"]=request.params["issuername"]
 	if request.params.has_key("designation"):
 		delchaldata["designation"]=request.params["designation"]
+	try:
+		files = {}
+		count = 0
+		for i in request.POST.keys():
+			if "file" not in i:
+				continue
+			else:
+				img = request.POST[i].file
+				image = Image.open(img)
+				imgbuffer = cStringIO.StringIO()
+				image.save(imgbuffer, format="JPEG")
+				img_str = base64.b64encode(imgbuffer.getvalue())
+				image.close()
+				files[count] = img_str
+				count += 1
+		if len(files)>0:
+			delchaldata["attachment"] = files
+			delchaldata["attachmentcount"] = len(delchaldata["attachment"])
+	except:
+		print "no attachment found"
 	delchalwholedata = {"delchaldata":delchaldata,"stockdata":stockdata}
 	result=requests.post("http://127.0.0.1:6543/delchal",data=json.dumps(delchalwholedata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
