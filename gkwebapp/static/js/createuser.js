@@ -260,6 +260,7 @@ $(document).ready(function(){
                 $("#success-blank-alert").alert();
                 $("#success-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
                   $("#success-blank-alert").hide();
+                  $("#usertable").html("");
                 });
               }
               if(resp["gkstatus"]==1)
