@@ -117,6 +117,9 @@
 
               {% trans %}You don't have authentication to add new user!{% endtrans %}
             </div>
+            <div class="alert alert-danger" id="select-godowns-alert"  aria-live="rude" role="alert" hidden>
+              {% trans %}Please Select Godowns!{% endtrans %}
+            </div>
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
               <label for="name" id="usrname">{% trans %}Us<u>e</u>rname{% endtrans %} :</label>
               <input style="border-radius: 4px" id="name" type="text" class="form-control input-sm" name="username" accesskey="e"></input>

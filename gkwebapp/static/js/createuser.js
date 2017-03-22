@@ -39,7 +39,6 @@ $(document).ready(function(){
   $("#userrole").change(function(event) {
     /* Act on the event */
     var role = $("#userrole option:selected").val();
-    console.log(role);
     if (role==3){
       $.ajax(
          {
@@ -64,17 +63,90 @@ $(document).ready(function(){
          }
   });
 
-  $("input,select").keydown(function(e) {
+  $(document).off("keydown",".user_role").on("keydown",".user_role",function(e){
+    if (e.which == 27) {
+      e.preventDefault();
+      $("#question").focus();
+    }
+    if (e.which == 13) {
+      e.preventDefault();
+      var index = $('.user_role').index(this) + 1;
+         $('.user_role').eq(index).focus();
+    }
+  });
+
+  $(document).off("focus",".user_role").on("focus",".user_role",function(e){
+    $(this).closest('tr').addClass('selected');
+  });
+  $(document).off("blur",".user_role").on("blur",".user_role",function(e){
+    $(this).closest('tr').removeClass('selected');
+  });
+
+  $("#name").keydown(function(e){
+    if (e.which==13)
+    {
+      e.preventDefault();
+      $("#password").focus();
+    }
+    });
+
+    $("#password").keydown(function(e){
+      if (e.which==13)
+      {
+        e.preventDefault();
+        $("#confirm_password").focus();
+      }
+      if (e.which==38) {
+        e.preventDefault();
+        $("#name").focus();
+      }
+    });
+
+    $("#confirm_password").keydown(function(e){
+      if (e.which==13)
+      {
+        e.preventDefault();
+        $("#userrole").focus();
+      }
+      if (e.which==38) {
+        $("#password").focus();
+      }
+    });
+
+    $(document).off("keydown","#userrole").on("keydown", '#userrole', function(e) {
+
+        if (e.which === 13) {
+         if ($(this).val()==3) {
+           $("#latable tbody tr:first td:first input").focus().select();
+         }
+         else {
+           $("#question").focus().select();
+         }
+     }
+
+      if (e.which==38) {
+        $("#confirm_password").focus();
+      }
+    });
+
+  /*$("input,select").keydown(function(e) {
     var n = $("input,select").length;
     var f = $('input,select');
     var s1 = $("#userrole option:selected").index();
+    var s2 = $("#userrole option:selected").val();
     if (e.which == 13)
     {
       var nextIndex = f.index(this) + 1;
       if(nextIndex < n){
         e.preventDefault();
-        f[nextIndex].focus();}
+        if(inselect==1 && s2==3){
+          $("#latable tbody tr:first td:first input").focus().select();
+        }
+        else{
+        f[nextIndex].focus();
       }
+      }
+    }
       if (e.which == 38 && ((inselect == 1 && s1 == 1) || inselect == 0))
       {
         var prevIndex = f.index(this) - 1;
@@ -82,7 +154,8 @@ $(document).ready(function(){
           e.preventDefault();
           f[prevIndex].focus();}
         }
-      });
+
+      });*/
       $("#confirm_password").blur(function(event) {
         if ($.trim($("#password").val())!=$.trim($("#confirm_password").val())) {
           $("#checkpassuser-blank-alert").alert();
@@ -94,11 +167,27 @@ $(document).ready(function(){
         }
       });
 
+      $("#question").keydown(function(e){
+        if (e.which==13)
+        {
+          e.preventDefault();
+          $("#answer").focus();
+        }
+        if (e.which==38) {
+          e.preventDefault();
+          $("#userrole").focus();
+        }
+      });
+
       $("#answer").keydown(function(e){
         if (e.which==13)
         {
           e.preventDefault();
           $("#adduser_button").click();
+        }
+        if (e.which==38) {
+          e.preventDefault();
+          $("#question").focus();
         }
       });
 
@@ -160,12 +249,14 @@ $(document).ready(function(){
           $("#answer").focus();
           return false;
         }
+
         var selectedgodowns = [];
         $('#latable tbody tr').each(function(){
           if ($(".user_role",this).is(":checked")) {
             selectedgodowns.push($(this).attr("value"));
           }
         });
+
         var adduserformdata = $("#adduser").serializeArray();
         adduserformdata.push({name: 'godowns', value: JSON.stringify(selectedgodowns)});
 
