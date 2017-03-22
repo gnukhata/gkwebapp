@@ -320,6 +320,8 @@ $(document).ready(function() {
               $("#salesorder_product_table tbody tr:last td:last").append('<a href="#" class="schedule_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
             }
            $(".salesorder_product_tax_rate").numeric();
+           $(".salesorder_product_per_price").numeric();
+           $(".salesorder_product_quantity").numeric();
            $('#salesorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedso+']').prop('hidden', true).prop('disabled', true);
            $('#salesorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
 
@@ -358,6 +360,8 @@ $(document).ready(function() {
            $("#salesorder_product_table tbody tr:last td:last").append('<a href="#" class="schedule_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
          }
          $(".salesorder_product_tax_rate").numeric();
+         $(".salesorder_product_per_price").numeric();
+         $(".salesorder_product_quantity").numeric();
          $('#salesorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedso+']').prop('hidden', true).prop('disabled', true);
          $('#salesorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
 

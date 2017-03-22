@@ -524,6 +524,8 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
           $("#purchaseorder_product_table tbody tr:last td:last").append('<a href="#" class="schedule_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
         }
         $(".purchaseorder_product_tax_rate").numeric();
+        $(".purchaseorder_product_per_price").numeric();
+        $(".purchaseorder_product_quantity").numeric();
         $('#purchaseorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedpo+']').prop('hidden', true).prop('disabled', true);
         $('#purchaseorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
@@ -572,6 +574,8 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
             $("#purchaseorder_product_table tbody tr:last td:last").append('<a href="#" class="schedule_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
           }
           $(".purchaseorder_product_tax_rate").numeric();
+            $(".purchaseorder_product_per_price").numeric();
+            $(".purchaseorder_product_quantity").numeric();
           $('#purchaseorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedpo+']').prop('hidden', true).prop('disabled', true);
           $('#purchaseorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
