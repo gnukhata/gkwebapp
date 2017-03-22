@@ -28,7 +28,7 @@ $(document).ready(function() {
       var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
       $('.podate').autotab('number');
       $('.sodate').autotab('number');
-      $('.purchaseorder_product_quantity').numeric();
+      $('.purchaseorder_product_quantity').numeric({ negative : false });
       var scheduleall={};
       $.ajax({
         url: '/purchaseorder?action=getuser',
@@ -215,8 +215,8 @@ var noofpackages = 0;
 $(document).off("click","#addschedule").on("click","#addschedule",function(event)
 {
   var curindex = $(this).closest('tr').index();
-  schedulepcode = $("#purchaseorder_product_table tbody tr:eq("+curindex+") td:eq(0) select option:selected").val();
-  noofpackages = $("#purchaseorder_product_table tbody tr:eq("+curindex+") td:eq(2) input").val();
+  schedulepcode = $("#purchaseorder_product_table tbody tr:eq("+curindex+") td:eq(0) select option:selected").val(); //Productcode of product to which staggered delivery is added.
+  noofpackages = $("#purchaseorder_product_table tbody tr:eq("+curindex+") td:eq(2) input").val(); //Total number of packages.
 
   $('.sodate').autotab('number');
   var numberofschedulerows = 0;
@@ -313,7 +313,6 @@ $(document).off("keydown",".purchaseorder_schedule_packages").on("keydown",".pur
       schedulenumberofpackages = parseInt(parseInt(schedulenumberofpackages) +parseInt($('.purchaseorder_schedule_packages',this).val()));
       }
     });
-    console.log(schedulenumberofpackages);
     if (schedulenumberofpackages > parseInt(noofpackages)) {
       $("#packages-alert").alert();
       $("#packages-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -407,23 +406,14 @@ $("#addpomodal").on('hidden.bs.modal', function(event) {
 
               obj.sdate = soDateFormatted;
               obj.noofpackages = $("#schedule_table tbody tr:eq("+i+") td:eq(1) input").val();
-              console.log(obj);
               schedule.push(obj);
   }
 }
-  for (var i in schedule) {
-    console.log("Schedule Date: "+ schedule[i].sdate + "No Of Packages: "+ schedule[i].noofpackages);
-  }
   $('#schedule_table tbody tr').each(function(){
     if ($(this).attr("value")!=0 || $(this).attr("value")!="") {
     scheduleall[$(this).attr("value")] = schedule;
     }
   });
-  for (var j in scheduleall) {
-    for (var i in scheduleall.j) {
-      console.log("Schedule Date: "+ scheduleall.j[i].sdate + "No Of Packages: "+ scheduleall.j[i].noofpackages);
-    }
-  }
 });
 
 /* Modal Events End here  */
@@ -455,7 +445,7 @@ $("#addpomodal").on('hidden.bs.modal', function(event) {
   $(document).off('focus', '.purchaseorder_product_packages').on('focus', '.purchaseorder_product_packages', function(event) {
   event.preventDefault();
   /* Act on the event */
-  $(".purchaseorder_product_packages").numeric();
+  $(".purchaseorder_product_packages").numeric({ negative : false });
 });
 
 $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purchaseorder_product_packages",function(event)

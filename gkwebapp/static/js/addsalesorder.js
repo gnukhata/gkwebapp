@@ -27,6 +27,7 @@ $(document).ready(function() {
       var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
       var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
       $('.sodate').autotab('number');
+      $('.salesorder_product_quantity').numeric({ negative : false });
       $.ajax({
         url: '/purchaseorder?action=getuser',
         type: 'POST',
@@ -636,10 +637,6 @@ $(document).ready(function() {
          $("#confirm_yes").on('shown.bs.modal', function(event) {
            $('#so_save_no').focus();
          });
-         $("#confirm_yes").on('hidden.bs.modal', function(event) {
-           $("#purchaseorder").click();
-
-         });
          $('#confirm_yes').modal('show').one('click', '#so_save_yes', function (event) {
 
                $.ajax({
@@ -667,7 +664,12 @@ $(document).ready(function() {
                .done(function(resp) {
                  if(resp["gkstatus"] == 0){
                    $('.modal-backdrop').remove();
-                   $("#salesorder_create").click();
+                   if ($("#salesorder_view").length > 0) {
+                     $("#salesorder_create").click();
+                   }
+                   else {
+                     $("#purchaseorder").click();
+                   }
                    $("#success-alert").alert();
                    $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
                      $("#success-alert").hide();
@@ -676,10 +678,10 @@ $(document).ready(function() {
                  }
                  else if(resp["gkstatus"]==1) {
                    $('.modal-backdrop').remove();
-                   $("#duplicate-alert").alert();
-                   $("#salesorder_orderno").focus();
-                   $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
-                     $("#duplicate-alert").hide();
+                   $("#soduplicate-alert").alert();
+                   $("#soduplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+                     $("#salesorder_orderno").focus();
+                     $("#soduplicate-alert").hide();
                    });
                    return false;
                  }
