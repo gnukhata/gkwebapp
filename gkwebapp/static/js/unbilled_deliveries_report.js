@@ -75,7 +75,7 @@ $(document).ready(function() {
 					global: false,
 					async: false,
 					datatype: "text",
-          data: {"inputdate": $("#inputdate").val(), "inout":$("#inout").val()},
+          data: {"inputdate": $("#inputdate").val(), "inout":$("#inout").val(), "del_unbilled_type": $("#del_unbilled_type").val()},
           beforeSend: function(xhr)
 					{
 						xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

@@ -2,9 +2,17 @@
 <html lang="en">
 <head>
 	{% if inout == "9" %}
-	<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Inward Deliveries - Invoices Not Received | All Types | All Godowns{% endtrans %}</title>
+		{% if del_unbilled_type == "All" %}
+	<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Inward Deliveries - Invoices Not Received | All Godowns | All Types{% endtrans %}</title>
+		{% else %}
+	<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Inward Deliveries - Invoices Not Received | All Godowns | Delivery Type: {% endtrans %}{{del_unbilled_type}}</title>
+		{% endif %}
 	{% elif inout == "15" %}
+		{% if del_unbilled_type == "All" %}
 	<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Outward Deliveries - Invoices Not Prepared | All Types | All Godowns{% endtrans %}</title>
+		{% else %}
+		<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Outward Deliveries - Invoices Not Prepared | All Godowns | Delivery Type: {% endtrans %}{{del_unbilled_type}}</title>
+		{% endif %}
 	{% endif %}
 <style type="text/css">
 .shadow {
@@ -67,9 +75,17 @@ width:22%
 </head>
 <body>
 	{% if inout == "9" %}
-	<span style="margin:auto; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Types | All Godowns{% endtrans %}</span>
+		{% if del_unbilled_type == "All" %}
+	<span style="margin:auto; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | All Types{% endtrans %}</span>
+		{% else %}
+	<span style="margin:auto; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_unbilled_type}}</strong></span>
+		{% endif %}
 	{% elif inout == "15" %}
-	<span style="margin:auto; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Types | All Godowns{% endtrans %}</span>
+		{% if del_unbilled_type == "All" %}
+	<span style="margin:auto; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | All Types{% endtrans %}</span>
+		{% else %}
+	<span style="margin:auto; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_unbilled_type}}</strong></span>
+		{% endif %}
 	{% endif %}
 	<div class="row">
 		<table id="unbill_del_table" class="table shadow table-bordered del_unbilled_table" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
@@ -85,7 +101,9 @@ width:22%
 					<th class="ewrap calign">{% trans %}Customer Name{% endtrans %}</th>
 					{% endif %}
 					<th class="mdwrap calign">{% trans %}Godown Name{% endtrans %}</th>
+					{% if del_unbilled_type == "All" %}
 					<th class="mdwrap calign" >{% trans %}Delivery Type{% endtrans %}</th>
+					{% endif %}
 				</tr>
 			</thead>
 			<tbody>
@@ -105,9 +123,11 @@ width:22%
 					</td><td class="mdwrap calign">
 						{{record["goname"]}}
 					</td>
+					{% if del_unbilled_type == "All" %}
 					<td class="mdwrap calign">
 						{{record["dcflag"]}}
 					</td>
+					{% endif %}
 				</tr>
 				{% endfor %}
 			</tbody>
@@ -121,6 +141,7 @@ width:22%
 	<input type="hidden" id="inputdate" value="{{inputdate}}">
 	<input type="hidden" id="inout" value="{{inout}}">
 	<input type="hidden" id="modalindex" value=""></input>
+	<input type="hidden" id="del_unbilled_type" value="{{del_unbilled_type}}">
 	<div id="viewdc">
 	</div>
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
