@@ -73,6 +73,11 @@ $(document).ready(function(){
       var index = $('.user_role').index(this) + 1;
          $('.user_role').eq(index).focus();
     }
+    if (e.which==38) {
+      e.preventDefault();
+      var index = $('.user_role').index(this) - 1;
+         $('.user_role').eq(index).focus();
+    }
   });
 
   $(document).off("focus",".user_role").on("focus",".user_role",function(e){
