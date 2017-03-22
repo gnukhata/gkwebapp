@@ -27,7 +27,9 @@ $(document).ready(function() {
       var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
       var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
       $('.sodate').autotab('number');
+
       $('.salesorder_product_quantity').numeric({ negative : false });
+
       $.ajax({
         url: '/purchaseorder?action=getuser',
         type: 'POST',
