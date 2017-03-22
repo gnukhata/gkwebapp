@@ -389,10 +389,9 @@ $("#addpomodal").on('shown.bs.modal', function(event) {
 $("#addpomodal").on('hidden.bs.modal', function(event) {
   event.preventDefault();
   $(".purchaseorder_product_per_price").last().focus();
-  scheduleall = {};
   var schedule=[];
   for (var i = 0; i < $("#schedule_table tbody tr").length; i++) {
-    if ($("#schedule_table tbody tr:eq("+i+") td:eq(1) input").val() != 0) {
+    if ($("#schedule_table tbody tr:eq("+i+") td:eq(1) input").val() != 0 && $("#schedule_table tbody tr:eq("+i+")").attr("value")==schedulepcode) {
     var obj = {};
             var date = [];
               $("#schedule_table tbody tr:eq("+i+") td:eq(0)").each(function(){
@@ -409,14 +408,8 @@ $("#addpomodal").on('hidden.bs.modal', function(event) {
               schedule.push(obj);
   }
 }
-  $('#schedule_table tbody tr').each(function(){
-    if ($(this).attr("value")!=0 || $(this).attr("value")!="") {
-      console.log(schedulepcode);
-      if ($(this).attr("value") == schedulepcode) {
-          scheduleall[$(this).attr("value")] = schedule;
-      }
-    }
-  });
+          scheduleall[schedulepcode] = schedule;
+
 });
 
 /* Modal Events End here  */
@@ -850,7 +843,6 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
          for (var i = 0; i < $("#purchaseorder_product_table tbody tr").length; i++) {
 
            pcode = $("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val();
-
            var obj = {};
            obj.productname = $.trim($("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").text());
            obj.quantity = $("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(1) input").val();
@@ -859,7 +851,6 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
            obj.staggered = scheduleall[pcode];
            obj.taxrate = parseFloat($("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(5) input").val()).toFixed(2);
            scheduledata[pcode] = obj;
-
 
            if ($("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()=="") {
              $("#product-blank-alert").alert();
