@@ -370,7 +370,13 @@ $("#invsel").keyup(function(event) {
     if(event.which==13 && $('#vyear').val()!=""){
       if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invflag ==1)
       {
+        if($("#invhide").val()==1)
+       {
         $("#invsel").focus();
+      }
+      else {
+        $('#vtable tbody tr:first select:enabled').focus();
+      }
       }
       else
       {
