@@ -79,7 +79,11 @@ width:22%
 					<th class="smwrap calign">{% trans %}Sr. No.{% endtrans %}</th>
 					<th class="smwrap calign">{% trans %}DelChal No.{% endtrans %}</th>
 					<th class="mdwrap calign">{% trans %}Delchal Date{% endtrans %}</th>
+					{% if inout == "9" %}
+					<th class="ewrap calign">{% trans %}Supplier Name{% endtrans %}</th>
+					{% elif inout == "15" %}
 					<th class="ewrap calign">{% trans %}Customer Name{% endtrans %}</th>
+					{% endif %}
 					<th class="mdwrap calign">{% trans %}Godown Name{% endtrans %}</th>
 					<th class="mdwrap calign" >{% trans %}Delivery Type{% endtrans %}</th>
 				</tr>
