@@ -129,33 +129,6 @@ $(document).ready(function(){
       }
     });
 
-  /*$("input,select").keydown(function(e) {
-    var n = $("input,select").length;
-    var f = $('input,select');
-    var s1 = $("#userrole option:selected").index();
-    var s2 = $("#userrole option:selected").val();
-    if (e.which == 13)
-    {
-      var nextIndex = f.index(this) + 1;
-      if(nextIndex < n){
-        e.preventDefault();
-        if(inselect==1 && s2==3){
-          $("#latable tbody tr:first td:first input").focus().select();
-        }
-        else{
-        f[nextIndex].focus();
-      }
-      }
-    }
-      if (e.which == 38 && ((inselect == 1 && s1 == 1) || inselect == 0))
-      {
-        var prevIndex = f.index(this) - 1;
-        if(prevIndex < n){
-          e.preventDefault();
-          f[prevIndex].focus();}
-        }
-
-      });*/
       $("#confirm_password").blur(function(event) {
         if ($.trim($("#password").val())!=$.trim($("#confirm_password").val())) {
           $("#checkpassuser-blank-alert").alert();
