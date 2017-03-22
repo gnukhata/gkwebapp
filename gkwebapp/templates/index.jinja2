@@ -152,9 +152,7 @@
       </button>
       <a class="navbar-brand" href=""><img src="{{request.static_url('gkwebapp:static/images/icon.svg')}}" alt="GNUKhata Icon" style="width:42px;height:42px;margin-top: -11px" /></a>
       <a class="navbar-brand">{% trans %}GNUKhata <small><em>v4.0</em></small>{% endtrans %}</a>
-      
-
-    </div>
+      </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="gknavcollapse">
@@ -170,7 +168,8 @@
             <li><a  class="langmenu" id="mar" href="/locale?language=ml">{% trans %}മലയാളം{% endtrans %}</a></li>
           </ul>
         </li>
-         <li>  <i class="fa fa-question-circle pull-right" id="csh" style="font-size:16px;color:white; margin-top:20px;"></i> </li>
+        
+        <li><a class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" id="csh" data-target="#Mcsh"></a></li>
         <li><a data-toggle="tab" id="lang" href="" data-target=""></a></li>
       </ul>
      
@@ -179,12 +178,45 @@
   
 </nav>
   <br />
+  <div id="Mcsh" tabindex="-1" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+  
+      <button type="button" class="close" data-dismiss="modal">&times;</button> 
+      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+        <p>
+         
+          {% trans %}<strong>Help!</strong> <br></p>
+          <p style = "color:#545c61">
+
+<large>T</large>his screen provides you 3 options create organization, select organizations and choose language. <br>
+If you are running GNUKhata for the first time then the section for creating organization will be active.</br>
+You can choose language at any time.  Right now GNUKhata has English (default), Marathi and Malayalam.
+In create organization you can enter the organization name, choose it's type (profit making or Not for Profit ) and then select the case in which the data is stored and displayed.
+Then you enter the financial year start and end for the organization.  If you need inventory support then check the checkbox for inventory using space bar or click it using mouse.
+Note that you can use enter key to move to the next field and up arrow for previous field.
+Tab and Shift tab are also available by default for navigation.</br>
+Next screen will ask you for creating an admin user.
+If you choose select organization then the dropdown gives a list of organizations.
+choose one and press enter.
+Now choose financial year and press enter.
+
+Login screen will appear after you choose details.{% endtrans %}
+
+        </p>
+      </div>
+      
+    </div>
+  </div>
+</div>
   <div class="container-fluid" id="ticker">
     <ul class="shadow" style="list-style-type: none; margin-top: 30px; margin-bottom: -30px; padding: 0; overflow: hidden; background-color: rgb(248,248,248); height: 20px; border-radius: 5px;">
       <li style="float: left;"><a data-toggle="tab" style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="orgdata" href=""></a></li>
       <li style="float: right;"><a style="margin-right: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="yeardata" href=""></a></li>
     </ul>
       </div>
+      
+      
 
   <div class="container-fluid" style="margin-top:50px;">
 <div class="row">
