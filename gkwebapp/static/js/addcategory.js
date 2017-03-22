@@ -141,6 +141,52 @@ $(document).ready(function() {
           $("#doneid").show();
           $("#parent_heading").text($("#category_under option[value=" + categorycode + "]").text());
           $('#spectbl td').remove();
+          $('#child_category_table td').remove();
+          $.ajax({
+                  url: '/category?action=treechildren',
+                  type: 'POST',
+                  dataType: 'json',
+                  async: false,
+                  data: {
+                      "categorycode": categorycode
+                  },
+                  beforeSend: function(xhr) {
+                      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                  }
+              })
+              .done(function(resp) {
+                  for (category of resp["gkresult"]) {
+                    $('#child_category_table tbody').append('<tr>' +
+                        '<td class="col-xs-6">' +
+                        '<input type="text" class="form-control input-sm mchild_spec_name" placeholder="Sub Category Name" value="'+category["categoryname"]+'" disabled>' +
+                        '</td>' +
+                        '<td class="col-xs-3">' +
+                        '<button class="btn form-control btn-primary btn-sm showspecs" id="'+category["categorycode"]+'" data-toggle="modal" data-target="#child_showspecmodal" >View Specs</button>' +
+                        '</td>' +
+                        '<td class="col-xs-3">'+
+                        '<td>'+
+                        '</tr>');
+                  }
+                  $('#child_category_table tbody').append('<tr>' +
+                      '<td class="col-xs-6">' +
+                      '<input type="text" class="form-control input-sm mchild_spec_name" placeholder="Sub Category Name">' +
+                      '</td>' +
+                      '<td class="col-xs-3">' +
+                      '<button class="btn form-control btn-primary btn-sm child_spec_class" id="child_spec" data-toggle="modal" data-target="#child_addspecmodal" >Specs</button>' +
+
+                      '</td>' +
+                      '<td class="col-xs-3">' +
+                      '<button class="btn form-control btn-primary btn-sm child_tax_class" id="child_tax" data-toggle="modal" data-target="#addtaxmodal"   >Tax</button>' +
+                      '</td>' +
+                      '</tr>');
+
+              })
+              .fail(function() {
+                  console.log("error");
+              })
+              .always(function() {
+                  console.log("complete");
+              });
           $(".childcat").show();
           parentspecs = [];
           // ajax for getting the specs of the newly selected (parent)category
