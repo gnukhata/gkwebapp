@@ -105,6 +105,15 @@ $(document).ready(function() {
      $("#purchaseorder_year").keydown(function(event) {
        if (event.which==13) {
          event.preventDefault();
+         var curdate = Date.parseExact($("#purchaseorder_year").val()+$("#purchaseorder_month").val()+$("#purchaseorder_date").val(), "yyyyMMdd")
+         if (!curdate.between(financialstart,financialend)) {
+           $("#between-date-alert").alert();
+           $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+             $("#between-date-alert").hide();
+           });
+           $('#purchaseorder_date').focus().select();
+           return false;
+         }
          $("#designation").focus().select();
        }
        if (event.which==38) {
@@ -112,8 +121,8 @@ $(document).ready(function() {
          $("#purchaseorder_month").focus().select();
        }
      });
-
-     $(document).off("blur",".podate").on("blur",".podate",function(event) {
+/*
+     $(document).off("blur",".poyear").on("blur",".poyear",function(event) {
        var curdate = Date.parseExact($("#purchaseorder_year").val()+$("#purchaseorder_month").val()+$("#purchaseorder_date").val(), "yyyyMMdd")
        if (!curdate.between(financialstart,financialend)) {
          $("#between-date-alert").alert();
@@ -124,7 +133,7 @@ $(document).ready(function() {
          return false;
        }
      });
-
+*/
      $("#designation").keydown(function(event) {
        if (event.which==13) {
          event.preventDefault();
