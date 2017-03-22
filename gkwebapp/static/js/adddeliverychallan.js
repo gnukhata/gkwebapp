@@ -663,6 +663,23 @@ else {
       $('#deliverychallan_designation').focus();
       return false;
     }
+    var form_data = new FormData();
+    form_data.append("custid", $("#deliverychallan_customer option:selected").val());
+    form_data.append("dcno", $("#deliverychallan_challanno").val());
+    form_data.append("dcdate", $("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val());
+    form_data.append("inout", $("#status").val());
+    form_data.append("noofpackages", $('#deliverychallan_noofpackages').val());
+    form_data.append("modeoftransport", $('#deliverychallan_modeoftransport').val());
+    form_data.append("issuername", $("#deliverychallan_issuername").val());
+    form_data.append("designation", $("#deliverychallan_designation").val());
+    form_data.append("goid", $("#deliverychallan_godown option:selected").val());
+    form_data.append("products", JSON.stringify(products));// a list always needs to be stringified into json before sending it ahead
+    form_data.append("dcflag", $("#deliverychallan_consignment option:selected").val());
+    var files = $("#my-file-selector")[0].files
+    var filelist = [];
+    for (var i = 0; i < files.length; i++) {
+      form_data.append("file"+i,files[i])
+    }
     event.preventDefault();
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
@@ -672,19 +689,13 @@ else {
     $.ajax({ //ajax call for saving the delivery note
       url: '/deliverychallan?action=save',
       type: 'POST',
+      global: false,
+      contentType: false,
+      cache: false,
+      processData: false,
       dataType: 'json',
       async : false,
-      data: {"custid":$("#deliverychallan_customer option:selected").val(),
-      "dcno":$("#deliverychallan_challanno").val(),
-      "dcdate":$("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val(),
-      "inout":$("#status").val(),
-      "noofpackages":$('#deliverychallan_noofpackages').val(),
-      "modeoftransport":$('#deliverychallan_modeoftransport').val(),
-      "issuername":$("#deliverychallan_issuername").val(),
-      "designation":$("#deliverychallan_designation").val(),
-      "goid":$("#deliverychallan_godown option:selected").val(),
-      "products":JSON.stringify(products),// a list always needs to be stringified into json before sending it ahead
-      "dcflag":$("#deliverychallan_consignment option:selected").val()},
+      data: form_data,
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
