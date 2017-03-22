@@ -228,7 +228,7 @@ $(document).ready(function() {
         url: "/show_del_unbilled_report",
         global: false,
         async: false,
-        data: {"inputdate": new_date_input, "inout":$("#report_type option:selected").val()},
+        data: {"inputdate": new_date_input, "inout":$("#report_type option:selected").val(), "del_unbilled_type": $("#del_unbilled_type option:selected").val()},
         datatype: "text/html",
         beforeSend: function(xhr)
         {
