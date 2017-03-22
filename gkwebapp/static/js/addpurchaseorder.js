@@ -411,7 +411,10 @@ $("#addpomodal").on('hidden.bs.modal', function(event) {
 }
   $('#schedule_table tbody tr').each(function(){
     if ($(this).attr("value")!=0 || $(this).attr("value")!="") {
-    scheduleall[$(this).attr("value")] = schedule;
+      console.log(schedulepcode);
+      if ($(this).attr("value") == schedulepcode) {
+          scheduleall[$(this).attr("value")] = schedule;
+      }
     }
   });
 });
