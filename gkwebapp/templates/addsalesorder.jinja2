@@ -154,8 +154,8 @@
                    <div class="form-group">
                      <label for="salesorder_state">{% trans %}VAT Applicable to{% endtrans %} :</label>
                      <select class="form-control input-sm tax_state product_new_state" id="salesorder_state">
-                       <option value="none">None</option>
-                       <option value="">Central</option>
+                       <option value="">None</option>
+                       <option value="Central">Central</option>
                        <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
                        <option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>
                        <option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option>
@@ -200,7 +200,7 @@
          <label for="so_togodown">{% trans %} From Godown:{% endtrans %}</label>
          <select class="form-control input-sm" id="so_togodown" accesskey="">
 
-           <option value="">None</option>
+           <option value="0">None</option>
            {% for godown in godowns %}
            <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
            {% endfor %}
