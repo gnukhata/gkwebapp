@@ -102,7 +102,7 @@ $(document).ready(function() {
          $("#smonth").focus().select();
        }
      });
-     
+
 /*
      $(document).off("blur",".sodate").on("blur",".sodate",function(event) {
        var curdate = Date.parseExact($("#sdate").val()+$("#somonth").val()+$("#syear").val(), "yyyyMMdd")
@@ -176,7 +176,7 @@ $(document).ready(function() {
          event.preventDefault();
            $("#so_togodown").focus();
            taxstate = $("#salesorder_state").val();
-           console.log(taxstate);
+           
            if(taxstate=="none"){
             $(".salesorder_product_tax_rate").prop("disabled",true);
            }
@@ -318,7 +318,7 @@ $(document).ready(function() {
 
        if (event.which==13) {
          if($("#salesorder_state").val()!="none"){
-           console.log($("#purchaseorder_state").val());
+
              $('#salesorder_product_table tbody tr:eq('+curindex1+') td:eq(4) input').focus().select();
          }
          else{

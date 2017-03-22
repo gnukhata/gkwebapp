@@ -873,7 +873,12 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
            obj.quantity = $("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(1) input").val();
            obj.packages = $("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(2) input").val();
            obj.rateperunit = $("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(4) input").val();
-           obj.staggered = scheduleall[pcode];
+           if(scheduleall[pcode]){
+             obj.staggered = scheduleall[pcode];
+           }
+           else{
+             obj.staggered = [];
+           }
            obj.taxrate = parseFloat($("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(5) input").val()).toFixed(2);
            scheduledata[pcode] = obj;
 
@@ -900,65 +905,69 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
 
          });
          $('#confirm_yes').modal('show').one('click', '#po_save_yes', function (event) {
-               $.ajax({
-                 url: '/purchaseorder?action=save',
-                 type: 'POST',
-                 dataType: 'json',
-                 async : false,
-                 data: {"orderno": poOrderno,
-                 "orderdate":poDateFormatted,
-                 "creditperiod":creditperiod,
-                 "payterms":payterms,
-                 "modeoftransport":modeoftransport,
-                 "designation":designation,
-                 "schedule":JSON.stringify(scheduledata),
-                 "taxstate":purchaseorder_state,
-                  "psflag":16,
-                  "csid":csid,
-                  "togodown":togodown
-                },
-                 beforeSend: function(xhr)
-                 {
-                   xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                 }
-               })
-               .done(function(resp) {
-                 if(resp["gkstatus"] == 0){
-                   $('.modal-backdrop').remove();
-                   $("#purchaseorder").click();
-                   $("#success-alert").alert();
-                   $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
-                     $("#success-alert").hide();
-                   });
-                   return false;
-                 }
-                 else if(resp["gkstatus"]==1) {
-                   $('.modal-backdrop').remove();
-                   $("#duplicate-alert").alert();
-                   $("#purchaseorder_orderno").focus();
-                   $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
-                     $("#duplicate-alert").hide();
-                   });
-                   return false;
-                 }
-                 else{
-                   $('.modal-backdrop').remove();
-                   $("#purchaseorder_orderno").focus();
-                   $("#failure-alert").alert();
-                   $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
-                     $("#failure-alert").hide();
-                   });
-                 }
 
-               })
-               .fail(function() {
-                 console.log("error");
-               })
-               .always(function() {
-                 console.log("complete");
-               });
 
-               return false;
+             $.ajax({
+               url: '/purchaseorder?action=save',
+               type: 'POST',
+               dataType: 'json',
+               async : false,
+               data: {"orderno": poOrderno,
+               "orderdate":poDateFormatted,
+               "creditperiod":creditperiod,
+               "payterms":payterms,
+               "modeoftransport":modeoftransport,
+               "designation":designation,
+               "schedule":JSON.stringify(scheduledata),
+               "taxstate":purchaseorder_state,
+                "psflag":16,
+                "csid":csid,
+                "togodown":togodown
+              },
+               beforeSend: function(xhr)
+               {
+                 xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+               }
+             })
+             .done(function(resp) {
+               if(resp["gkstatus"] == 0){
+                 $('.modal-backdrop').remove();
+                 $("#purchaseorder").click();
+                 $("#success-alert").alert();
+                 $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
+                   $("#success-alert").hide();
+                 });
+                 return false;
+               }
+               else if(resp["gkstatus"]==1) {
+                 $('.modal-backdrop').remove();
+                 $("#duplicate-alert").alert();
+                 $("#purchaseorder_orderno").focus();
+                 $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+                   $("#duplicate-alert").hide();
+                 });
+                 return false;
+               }
+               else{
+                 $('.modal-backdrop').remove();
+                 $("#purchaseorder_orderno").focus();
+                 $("#failure-alert").alert();
+                 $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
+                   $("#failure-alert").hide();
+                 });
+               }
+
+             })
+             .fail(function() {
+               console.log("error");
+             })
+             .always(function() {
+               console.log("complete");
+             });
+
+             return false;
+          
+
 
      });
 

@@ -44,6 +44,7 @@ def purchaseorderdetails(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/purchaseorder?poso=single&orderid=%d"%(int(request.params['orderid'])),headers=header)
 	podetails = result.json()["gkresult"]
+	print podetails
 	supplierid = podetails["csid"]
 	supplier = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(supplierid)), headers=header)
 	if podetails.has_key("togodown"):
@@ -97,14 +98,10 @@ def showaddsalesorder(request):
 @view_config(route_name="purchaseorder",request_param="action=save",renderer="json")
 def savepurchaseorder(request):
 	header={"gktoken":request.headers["gktoken"]}
-	if int(request.params["togodown"]) == 0:
-		purchaseorderdata = {"orderno":request.params["orderno"],"orderdate":request.params["orderdate"],"creditperiod":request.params["creditperiod"],"payterms":request.params["payterms"],
-			"modeoftransport":request.params["modeoftransport"],"designation":request.params["designation"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"],
-			}
-	else:
-		purchaseorderdata = {"orderno":request.params["orderno"],"orderdate":request.params["orderdate"],"creditperiod":request.params["creditperiod"],"payterms":request.params["payterms"],
-			"modeoftransport":request.params["modeoftransport"],"designation":request.params["designation"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"],"togodown":request.params["togodown"]
-			}
+	purchaseorderdata = {"orderno":request.params["orderno"],"orderdate":request.params["orderdate"],"creditperiod":request.params["creditperiod"],"payterms":request.params["payterms"],
+		"modeoftransport":request.params["modeoftransport"],"designation":request.params["designation"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"],"togodown":request.params["togodown"]
+		}
+	print purchaseorderdata
 	result=requests.post("http://127.0.0.1:6543/purchaseorder",data=json.dumps(purchaseorderdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 
