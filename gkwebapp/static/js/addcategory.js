@@ -383,12 +383,6 @@ $(document).ready(function() {
                     $('#category_tax_table tbody tr:eq(' + curindex1 + ') td:eq(2) input').focus();
                     return false;
                 }
-                var obj = {}; // dict for storing tax details
-                obj.taxname = $("#category_tax_table tbody tr:eq(" + curindex1 + ") td:eq(0) select").val();
-                obj.state = $("#category_tax_table tbody tr:eq(" + curindex1 + ") td:eq(1) select option:selected").val();
-                obj.taxrate = $("#category_tax_table tbody tr:eq(" + curindex1 + ") td:eq(2) input").val();
-                taxes.push(obj);
-
                 // appending a new row for adding another tax to category
 
                 $('#category_tax_table tbody').append('<tr>' +
@@ -444,13 +438,22 @@ $(document).ready(function() {
         }
         parentspecs = [];
         $("#parent_category_spec_table tbody tr").each(function() {
-            console.log($("input", this).val());
             var obj = {};
             //dict for specs
             if ($.trim($("input", this).val()) != "") {
                 obj.attrname = $.trim($("input", this).val());
                 obj.attrtype = $.trim($("select option:selected", this).val());
                 parentspecs.push(obj);
+            }
+        });
+        taxes = [];
+        $("#category_tax_table tbody tr").each(function() {
+            var obj = {}; // dict for storing tax details
+            if ($.trim($("select option:selected", this).val()) != "") {
+                obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
+                obj.state = $.trim($("td:eq(1) select option:selected", this).val());
+                obj.taxrate = $.trim($("input", this).val());
+                taxes.push(obj);
             }
         });
         $.ajax({
@@ -523,6 +526,16 @@ $(document).ready(function() {
                     obj.attrname = $.trim($("input", this).val());
                     obj.attrtype = $.trim($("select option:selected", this).val());
                     childspecs.push(obj);
+                }
+            });
+            taxes = [];
+            $("#category_tax_table tbody tr").each(function() {
+                var obj = {}; // dict for storing tax details
+                if ($.trim($("select option:selected", this).val()) != "") {
+                    obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
+                    obj.state = $.trim($("td:eq(1) select option:selected", this).val());
+                    obj.taxrate = $.trim($("input", this).val());
+                    taxes.push(obj);
                 }
             });
             $.ajax({
