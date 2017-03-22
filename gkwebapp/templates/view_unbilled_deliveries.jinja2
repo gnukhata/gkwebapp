@@ -16,7 +16,7 @@
     <div style="padding-top:5px" class="container-fluid mainbox col-md-4 col-md-offset-4">
     <div class="panel shadow">
       <div class="panel-heading">
-        <h3 class="panel-title">{% trans %}View Unbilled Deliveries{% endtrans %}</h3>
+        <h3 class="panel-title">{% trans %}Unbilled Deliveries{% endtrans %}</h3>
       </div>
       <div class="panel-body">
         <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
@@ -38,8 +38,8 @@
         <div class="form-group">
           <label for="report_type" accesskey="r">{% trans %}<u>R</u>eport Type {% endtrans %} :</label>
           <select class="form-control input-sm" name="" id="report_type">
-            <option value="9">{% trans %}In{% endtrans %}</option>
-            <option value="15">{% trans %}Out{% endtrans %}</option>
+            <option value="9">{% trans %}Deliveries In{% endtrans %}</option>
+            <option value="15">{% trans %}Deliveries Out{% endtrans %}</option>
           </select>
         </div>
 
@@ -52,17 +52,17 @@
           <input type="text" class="form-control input-sm del_unbilled_autotab" id="del_unbilled_year" value="" size="4" maxlength="4" placeholder="YYYY">
         </div>
         </div>
-<!--        <br>
+        <br>
         <div class="form-group">
-          <label for="del_unbilled_type" accesskey="u">{% trans %}<u>U</u>nbilled Delivery Type {% endtrans %} :</label>
+          <label for="del_unbilled_type" accesskey="u">{% trans %}<u>D</u>elivery Type {% endtrans %} :</label>
           <select class="form-control input-sm" name="" id="del_unbilled_type">
-            <option value="1">{% trans %}All{% endtrans %}</option>
-            <option value="2">{% trans %}Sales{% endtrans %}</option>
-            <option value="3">{% trans %}Approval{% endtrans %}</option>
-            <option value="4">{% trans %}Consignment{% endtrans %}</option>
-            <option value="5">{% trans %}Sample{% endtrans %}</option>
+            <option value="0">{% trans %}All{% endtrans %}</option>
+            <option value="16" id="purchase" disabled>{% trans %}Purchase{% endtrans %}</option>
+            <option value="4" id="sales" disabled>{% trans %}Sale{% endtrans %}</option>
+            <option value="1">{% trans %}Approval{% endtrans %}</option>
+            <option value="3">{% trans %}Consignment{% endtrans %}</option>
           </select>
-        </div>-->
+        </div>
 <!--        <br>
         <div class="form-group">
           <label for="godown_name" accesskey="g">{% trans %}<u>G</u>odown Name{% endtrans %} :</label>
