@@ -85,13 +85,39 @@ $(document).ready(function() {
      $(".soyear").keydown(function(event) {
        if (event.which==13) {
          event.preventDefault();
-         $("#designation").focus().select();
+
+         var curdate = Date.parseExact($("#sdate").val()+$("#somonth").val()+$("#syear").val(), "yyyyMMdd")
+         if (!curdate.between(financialstart,financialend)) {
+           $("#between-date-alert").alert();
+           $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+             $("#between-date-alert").hide();
+           });
+           $('#sdate').focus().select();
+           return false;
+         }
+         else{
+          $("#designation").focus().select(); 
+         }
+
        }
        if (event.which==38) {
          event.preventDefault();
          $(".somonth").focus().select();
        }
      });
+
+     $(document).off("blur",".sodate").on("blur",".sodate",function(event) {
+       var curdate = Date.parseExact($("#sdate").val()+$("#somonth").val()+$("#syear").val(), "yyyyMMdd")
+       if (!curdate.between(financialstart,financialend)) {
+         $("#between-date-alert").alert();
+         $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+           $("#between-date-alert").hide();
+         });
+         $('#sdate').focus().select();
+         return false;
+       }
+     });
+
 
      $("#designation").keydown(function(event) {
        if (event.which==13) {
@@ -564,15 +590,8 @@ $(document).ready(function() {
          $(".soday").select();
          return false;
        }
-       var curdate = Date.parseExact($(".soyear").val()+$(".somonth").val()+$(".soday").val(), "yyyyMMdd")
-       if (!curdate.between(financialstart,financialend)) {
-         $("#between-date-alert").alert();
-         $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
-           $("#between-date-alert").hide();
-         });
-         $('.soday').focus().select();
-         return false;
-       }
+
+
        if ($.trim($("#designation").val())=="") {
          $("#designation-blank-alert").alert();
          $("#designation-blank-alert").fadeTo(2250, 500).slideUp(500, function(){

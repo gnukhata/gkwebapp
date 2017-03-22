@@ -113,6 +113,18 @@ $(document).ready(function() {
        }
      });
 
+     $(document).off("blur",".podate").on("blur",".podate",function(event) {
+       var curdate = Date.parseExact($("#purchaseorder_year").val()+$("#purchaseorder_month").val()+$("#purchaseorder_date").val(), "yyyyMMdd")
+       if (!curdate.between(financialstart,financialend)) {
+         $("#between-date-alert").alert();
+         $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+           $("#between-date-alert").hide();
+         });
+         $('#purchaseorder_date').focus().select();
+         return false;
+       }
+     });
+
      $("#designation").keydown(function(event) {
        if (event.which==13) {
          event.preventDefault();
@@ -207,6 +219,10 @@ $(document).ready(function() {
        $("#purchaseorder_state").focus().select();
      }
    });
+
+
+
+
 
 
 /*   Modal events */

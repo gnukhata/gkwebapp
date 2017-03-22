@@ -184,6 +184,7 @@
                <label for="po_to_godown">{% trans %} To Godown:{% endtrans %}</label>
                <select class="form-control input-sm togodown" id="po_togodown" accesskey="">
                  <option value="">{% trans %}Select Godown{% endtrans %}</option>
+                  <option value="none">None</option>
                  {% for godown in godowns %}
                  <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
                  {% endfor %}

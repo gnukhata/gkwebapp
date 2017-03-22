@@ -13,10 +13,7 @@
 
         {% trans %}Please enter date within the financial year!{% endtrans %}
       </div>
-      <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
 
-        {% trans %}Please enter date within the financial year!{% endtrans %}
-      </div>
       <div class="alert alert-success" id="packages-blank-alert"  aria-live="rude" role="alert" hidden>
       {% trans %}Please enter number of packages!{% endtrans %}
     </div>
@@ -73,13 +70,13 @@
                      <label for="salesorder_date">{% trans %}Order Date{% endtrans %} :</label>
                      <div class="form-inline ">
                        <div class="form-group">
-                         <input type="text" class="form-control input-sm sodate soday" size="2" maxlength="2" placeholder="DD" >
+                         <input type="text" class="form-control input-sm sodate soday" size="2" maxlength="2" placeholder="DD" id="sdate">
                        </div>
                        <div class="form-group">
-                         <input type="text" class="form-control input-sm sodate somonth" size="2" maxlength="2" placeholder="MM" >
+                         <input type="text" class="form-control input-sm sodate somonth" size="2" maxlength="2" placeholder="MM" id="smonth">
                        </div>
                        <div class="form-group">
-                         <input type="text" class="form-control input-sm sodate soyear" size="4" maxlength="4" placeholder="YYYY" >
+                         <input type="text" class="form-control input-sm sodate soyear" size="4" maxlength="4" placeholder="YYYY" id="syear" >
                        </div>
          		          </div>
                  </div>
@@ -203,6 +200,7 @@
          <label for="so_togodown">{% trans %} From Godown:{% endtrans %}</label>
          <select class="form-control input-sm" id="so_togodown" accesskey="">
            <option value=""  disabled  hidden selected>{% trans %}Select Godown{% endtrans %}</option>
+           <option value="none">None</option>
            {% for godown in godowns %}
            <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
            {% endfor %}
