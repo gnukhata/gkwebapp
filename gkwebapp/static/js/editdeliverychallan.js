@@ -41,6 +41,12 @@ $(document).ready(function() {
         $("#deliverychallan_edit_delete").prop("disabled",false);
         $("#deliverychallan_edit_delete").show();
       }
+      if(resp.delchaldata.delchaldata.attachmentcount > 0){
+        $("#viewattach").show();
+      }
+      else{
+        $("#viewattach").hide();
+      }
       $("#deliverychallan_edit_customer").html(custsup);
       var dcdatearray = resp.delchaldata.delchaldata.dcdate.split(/\s*\-\s*/g);
       $("#deliverychallan_edit_date").val(dcdatearray[0]);
