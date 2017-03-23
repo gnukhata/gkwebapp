@@ -121,8 +121,43 @@ $(document).ready(function() {
          $("#purchaseorder_month").focus().select();
        }
      });
-/*
-     $(document).off("blur",".poyear").on("blur",".poyear",function(event) {
+
+     $(document).off("blur","#purchaseorder_year").on("blur","#purchaseorder_year",function(event) {
+       var poDay = $("#purchaseorder_date").val();
+       var poMonth = $("#purchaseorder_month").val();
+       var poYear = $("#purchaseorder_year").val();
+       var poDate = poDay+poMonth+poYear;
+       var poDateFormatted = poYear + "-" + poMonth + "-" + poDay;
+       if (poDay==0)
+       {
+         $("#date-improper-alert").alert();
+         $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+           $("#date-improper-alert").hide();
+         });
+         $("#purchaseorder_date").focus();
+         $("#purchaseorder_date").select();
+         return false;
+       }
+       if (poMonth==0)
+       {
+         $("#date-improper-alert").alert();
+         $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+           $("#date-improper-alert").hide();
+         });
+         $("#purchaseorder_month").focus();
+         $("#purchaseorder_month").select();
+         return false;
+       }
+       if (poYear==0)
+       {
+         $("#date-improper-alert").alert();
+         $("#date-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+           $("#date-improper-alert").hide();
+         });
+         $("#purchaseorder_year").focus();
+         $("#purchaseorder_year").select();
+         return false;
+       }
        var curdate = Date.parseExact($("#purchaseorder_year").val()+$("#purchaseorder_month").val()+$("#purchaseorder_date").val(), "yyyyMMdd")
        if (!curdate.between(financialstart,financialend)) {
          $("#between-date-alert").alert();
@@ -133,7 +168,7 @@ $(document).ready(function() {
          return false;
        }
      });
-*/
+
      $("#designation").keydown(function(event) {
        if (event.which==13) {
          event.preventDefault();
@@ -900,10 +935,6 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
          $("#confirm_yes").on('shown.bs.modal', function(event) {
            $('#po_save_no').focus();
          });
-         $("#confirm_yes").on('hidden.bs.modal', function(event) {
-           $("#purchaseorder").click();
-
-         });
          $('#confirm_yes').modal('show').one('click', '#po_save_yes', function (event) {
 
 
@@ -966,7 +997,7 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
              });
 
              return false;
-          
+
 
 
      });
