@@ -579,6 +579,44 @@ else {
      $('#purchaseorderdiv').html("");
    });
 
+   $("#viewsalesorder").click(function(event) {
+     /* Act on the event */
+     event.stopPropagation();
+     $("#dcmain").toggleClass('collapse');
+     $("#salesordercollapsediv").toggleClass('collapse');
+     $.ajax({
+       url: '/salesorder?type=showview',
+       type: "POST",
+       datatype: 'text/html',
+       global: false,
+       async: false,
+       beforeSend: function(xhr)
+       {
+         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+       }
+     })
+     .done(function(resp) {
+       $('#salesorderdiv').html(resp);
+     })
+     .fail(function() {
+       console.log("error");
+     })
+     .always(function() {
+       console.log("complete");
+     });
+   });
+   $("#backtodcout").click(function(event) {
+     /* Act on the event */
+     $("#dcmain").toggleClass('collapse');
+     $("#salesordercollapsediv").toggleClass('collapse');
+   });
+
+   $("#dcmain").on('shown.bs.collapse', function(event) {
+     $("#deliverychallan_challanno").focus();
+     $('#salesorderdiv').html("");
+   });
+
+
   $("#deliverychallan_save").click(function(event) {
       // save event for saving the delivery note
     event.stopPropagation();
