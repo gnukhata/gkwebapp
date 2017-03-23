@@ -1675,6 +1675,23 @@ $(document).ready(function() {
         return false;
       }
     }
+    var form_data = new FormData();
+    form_data.append("dcid", $("#invoice_deliverynote option:selected").val());
+    form_data.append("custid", $("#invoice_customer option:selected").val());
+    form_data.append("invoiceno", $("#invoice_challanno").val());
+    form_data.append("invoicedate", $("#invoice_year").val()+'-'+$("#invoice_month").val()+'-'+$("#invoice_date").val());
+    form_data.append("contents", JSON.stringify(contents));
+    form_data.append("tax", JSON.stringify(tax));
+    form_data.append("stock", JSON.stringify(stock));
+    form_data.append("issuername", issuername);
+    form_data.append("designation", designation);
+    form_data.append("invtotal", $('#invoice_product_table tfoot tr:last td:eq(5) input').val());
+    form_data.append("taxstate", $("#invoice_state option:selected").val());
+    var files = $("#my-file-selector")[0].files
+    var filelist = [];
+    for (var i = 0; i < files.length; i++) {
+      form_data.append("file"+i,files[i])
+    }
     event.preventDefault();
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
@@ -1683,19 +1700,13 @@ $(document).ready(function() {
     $.ajax({
       url: '/invoice?action=save',
       type: 'POST',
+      global: false,
+      contentType: false,
+      cache: false,
+      processData: false,
       dataType: 'json',
       async : false,
-      data: {"dcid": $("#invoice_deliverynote option:selected").val(),
-      "custid":$("#invoice_customer option:selected").val(),
-      "invoiceno":$("#invoice_challanno").val(),
-      "invoicedate":$("#invoice_year").val()+'-'+$("#invoice_month").val()+'-'+$("#invoice_date").val(),
-      "contents":JSON.stringify(contents),
-      "tax":JSON.stringify(tax),
-      "stock":JSON.stringify(stock),
-        "issuername":issuername,
-      "designation":designation,
-      "invtotal": $('#invoice_product_table tfoot tr:last td:eq(5) input').val(),
-      "taxstate":$("#invoice_state option:selected").val()},
+      data: form_data,
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
