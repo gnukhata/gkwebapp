@@ -24,6 +24,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Abhijith Balan" <abhijithb21@openmailbox.org>
+"Prajkta Patkar" <prajkta.patkar007@gmail.com>
 """
 
 from pyramid.view import view_config
@@ -508,7 +509,9 @@ def showstockonhandreport(request):
 	productdesc = request.params["productdesc"]
 	if int(request.params["backflag"]) == 1 :
 		scalculateto = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%Y-%m-%d')
-		stockrefresh = {"productcode":productcode,"calculateto":calculateto,"productdesc":"All Products","godownflag":godownflag,"goid":goid }
+		date = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%d-%m-%Y')
+		print "date" ,date
+		stockrefresh = {"productcode":productcode,"calculateto":calculateto,"productdesc":"All Products","godownflag":godownflag,"goid":goid,"date":date }
 		result = requests.get("http://127.0.0.1:6543/report?stockonhandreport&productcode=all&enddate=%s"%(scalculateto),headers=header)
 
 
