@@ -221,7 +221,42 @@ $(document).ready(function() {
     }
 
   });
+  $("#viewattach").click(function(event)
+  {
+    $.ajax({
+      url: '/invoice?action=getattachment',
+      type: 'POST',
+      datatype: 'json',
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+      data: {"invid": $("#invoice_all_no option:selected").val()},
+    })
+    .done(function(resp) {
+      var x=window.open();
+      if (x) {
+        //Browser has allowed it to be opened
+        x.focus();
+        x.document.open();
+        x.document.write(resp);
+        x.document.close();
+      } else {
+        //Browser has blocked it
+        alert('Please allow popups and retry');
+        x.close();
+      }
 
+      console.log("success");
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
+
+  });
 $("#invoice_all_no").keydown(function(event) {
   /* Act on the event */
   if (event.which==13) {
