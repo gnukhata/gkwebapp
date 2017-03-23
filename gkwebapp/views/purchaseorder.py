@@ -44,7 +44,6 @@ def purchaseorderdetails(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/purchaseorder?poso=single&orderid=%d"%(int(request.params['orderid'])),headers=header)
 	podetails = result.json()["gkresult"]
-	print podetails
 	supplierid = podetails["csid"]
 	supplier = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(supplierid)), headers=header)
 	if podetails.has_key("togodown"):
