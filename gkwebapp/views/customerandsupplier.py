@@ -100,10 +100,19 @@ def editcustomersupplier(request):
 def deletecustomersupplier(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(request.params["custid"])), headers=header)
+	custname = result.json()["gkresult"]["custname"]
 	custdetails = {"csflag": result.json()["gkresult"]["csflag"], "custname":result.json()["gkresult"]["custname"]}
 	dataset={"custid":int(request.params["custid"])}
 	result = requests.delete("http://127.0.0.1:6543/customersupplier",data =json.dumps(dataset), headers=header)
 	if result.json()["gkstatus"] == 0:
+		accs = requests.get("http://127.0.0.1:6543/accounts", headers=header)
+		for acc in accs.json()["gkresult"]:
+			if acc["accountname"] == custname:
+				gkdata={"accountcode":acc["accountcode"]}
+				result = requests.delete("http://127.0.0.1:6543/accounts",data =json.dumps(gkdata), headers=header)
+				break
+		gkdata = {"activity":custname + " account deleted"}
+		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
 		if custdetails["csflag"] == 3:
 				  gkdata = {"activity":custdetails["custname"] + " customer deleted"}
 		else:
