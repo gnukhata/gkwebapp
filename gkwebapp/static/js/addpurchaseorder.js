@@ -936,8 +936,6 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
            $('#po_save_no').focus();
          });
          $('#confirm_yes').modal('show').one('click', '#po_save_yes', function (event) {
-
-
              $.ajax({
                url: '/purchaseorder?action=save',
                type: 'POST',
@@ -997,10 +995,7 @@ $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purc
              });
 
              return false;
-
-
-
-     });
+         });
 
 
     }); /* save click */

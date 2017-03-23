@@ -49,10 +49,13 @@ def purchaseorderdetails(request):
 	supplier = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(supplierid)), headers=header)
 	if podetails.has_key("togodown"):
 		togoid = podetails["togodown"]
-		togodown=requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(togoid)), headers=header)
-	else:
-		togodown={{"goname":"", "goaddr":""}}
-	return{"gkresult":result.json()["gkresult"], "supplier":supplier.json()["gkresult"], "schedule":podetails["schedule"],"togodown":togodown.json()["gkresult"]}
+		if togoid > 0:
+			  togodown=requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(togoid)), headers=header)
+			  return{"gkresult":result.json()["gkresult"], "supplier":supplier.json()["gkresult"], "schedule":podetails["schedule"],"togodown":togodown.json()["gkresult"]}
+		else:
+			togodown=""
+			return{"gkresult":result.json()["gkresult"], "supplier":supplier.json()["gkresult"], "schedule":podetails["schedule"],"togodown":togodown}
+
 
 @view_config(route_name="salesorder",request_param="type=details", renderer="gkwebapp:templates/viewsalesorderdetails.jinja2")
 def salesorderdetails(request):
@@ -63,10 +66,12 @@ def salesorderdetails(request):
 	customer = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(customerid)), headers=header)
 	if sodetails.has_key("togodown"):
 		togoid = sodetails["togodown"]
-		togodown=requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(togoid)), headers=header)
-	else:
-		togodown={{"goname":"", "goaddr":""}}
-	return{"gkresult":result.json()["gkresult"], "customer":customer.json()["gkresult"], "schedule":sodetails["schedule"],"togodown":togodown.json()["gkresult"]}
+		if togoid > 0:
+			togodown=requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(togoid)), headers=header)
+			return{"gkresult":result.json()["gkresult"], "customer":customer.json()["gkresult"], "schedule":sodetails["schedule"],"togodown":togodown.json()["gkresult"]}
+		else:
+			togodown=""
+			return{"gkresult":result.json()["gkresult"], "customer":customer.json()["gkresult"], "schedule":sodetails["schedule"],"togodown":togodown}
 
 
 
@@ -106,7 +111,7 @@ def savepurchaseorder(request):
 		purchaseorderdata = {"orderno":request.params["orderno"],"orderdate":request.params["orderdate"],"creditperiod":request.params["creditperiod"],"payterms":request.params["payterms"],
 		"modeoftransport":request.params["modeoftransport"],"designation":request.params["designation"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"]
 		}
-	result=requests.post("http://127self.0.0.1:6543/purchaseorder",data=json.dumps(purchaseorderdata),headers=header)
+	result=requests.post("http://127.0.0.1:6543/purchaseorder",data=json.dumps(purchaseorderdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="salesorder",request_param="action=save",renderer="json")

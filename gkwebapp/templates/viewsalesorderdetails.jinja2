@@ -89,7 +89,7 @@
 
         <div class="col-md-2 salesorder_state" >
           <div class="form-group">
-            <label for="salesorder_state">{% trans %}VAT Applicable to{% endtrans %} :</label>            
+            <label for="salesorder_state">{% trans %}VAT Applicable to{% endtrans %} :</label>
             <select class="form-control input-sm tax_state product_new_state"  disabled>
               <option value="{{gkresult["taxstate"]}}">{{gkresult["taxstate"]}}</option>
             </select>
@@ -99,8 +99,12 @@
         <div class="col-md-2">
           <label for="po_to_godown">{% trans %}From Godown:{% endtrans %}</label>
           <select class="form-control input-sm togodown" id="po_togodown" accesskey="" disabled>
-
+            {%if togodown == ""%}
+            <option value="">None</option>
+            {%else%}
             <option value="">{{togodown["goname"]}} ({{togodown["goaddr"]}})</option>
+            {%endif%}
+
 
           </select>
           </div>
