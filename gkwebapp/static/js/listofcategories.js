@@ -30,6 +30,29 @@ $(document).ready(function() {
   $(".modal-backdrop").remove();
   $(".fixed-table-loading").remove();
 
+  $("#latable tbody tr").each(function() {
+    var index = $(this).index();
+    var categorycode = $("#latable tbody tr:eq("+index+")").data("value");
+    $.ajax({
+      url: '/category?action=treechildren',
+      type: 'POST',
+      global: false,
+      async: false,
+      datatype: 'json',
+      data:{"categorycode":categorycode},
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+    })
+    .done(function(resp){
+      var childrenofparent = resp["gkresult"];
+      for (i in childrenofparent) {
+        $("#latable tbody tr:eq("+index+") td:eq(2)").append(childrenofparent[i].categoryname + '<br>');
+      }
+    });
+  });
+
   $('#latable tbody tr:first-child td:eq(1) a').focus();
   $('#latable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 
