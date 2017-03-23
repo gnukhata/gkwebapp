@@ -256,3 +256,9 @@ def print_del_unbilled(request):
 	elif del_unbilled_type == "16":
 		del_unbilled_type = "Purchase"
 	return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "inputdate":inputdate, "new_inputdate":new_inputdate, "inout":inout, "del_unbilled_type": del_unbilled_type}
+
+@view_config(route_name="deliverychallan", request_param="action=getattachment", renderer="gkwebapp:templates/viewdelchalattachment.jinja2")
+def getattachment(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/delchal?attach=image&dcid=%d"%(int(request.params["dcid"])), headers=header)
+	return {"attachment":result.json()["gkresult"],"dcid":request.params["dcid"], "cancelflag":result.json()["cancelflag"],"userrole":result.json()["userrole"],"dcno":result.json()["dcno"]}
