@@ -148,3 +148,9 @@ def Invoiceprint(request):
 	"tableset":tableset,"invoiceno":request.params["invoiceno"],"invoicedate":request.params["invoicedate"],"dcno":request.params["dc"],
 	"issuername":request.params["issuername"],"designation":request.params["designation"],"subtotal":request.params["subtotal"],
 	"taxtotal":request.params["taxtotal"],"gtotal":request.params["gtotal"]}
+
+@view_config(route_name="invoice", request_param="action=getattachment", renderer="gkwebapp:templates/viewinvoiceattachment.jinja2")
+def getattachment(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/invoice?attach=image&invid=%d"%(int(request.params["invid"])), headers=header)
+	return {"attachment":result.json()["gkresult"],"invid":request.params["invid"], "cancelflag":result.json()["cancelflag"],"userrole":result.json()["userrole"],"invoiceno":request.params["invoiceno"]}
