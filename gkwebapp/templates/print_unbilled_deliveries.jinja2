@@ -28,9 +28,17 @@ tfoot{
 </head>
 <body>
 	{% if inout == "9" %}
-	<span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Types | All Godowns{% endtrans %}</span>
+		{% if del_unbilled_type == "All" %}
+	<span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | All Types{% endtrans %}</span>
+		{% else %}
+	<span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_unbilled_type}}</strong></span>
+		{% endif %}
 	{% elif inout == "15" %}
-	<span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Types | All Godowns{% endtrans %}</span>
+		{% if del_unbilled_type == "All" %}
+	<span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | All Types{% endtrans %}</span>
+		{% else %}
+	<span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_unbilled_type}}</strong></span>
+		{% endif %}
 	{% endif %}
 	<div class="table-responsive printorgdetails">
 		<table class="table table-condensed  table-bordered table-striped shadow">
@@ -38,11 +46,19 @@ tfoot{
         <tr class="visible-print">
 					{% if inout == "9" %}
           <th colspan="5" style="text-align:center; font-size:80%;">
-            {% trans %}Inward Deliveries - Invoices Not Received as on date{% endtrans %} {{new_inputdate}}{% trans %}| All Types | All Godowns{% endtrans %}
-          </th>
+						{% if del_unbilled_type == "All" %}
+            {% trans %}Inward Deliveries - Invoices Not Received as on date{% endtrans %} {{new_inputdate}}{% trans %}| All Godowns | All Types{% endtrans %}
+						{% else %}
+						{% trans %}Inward Deliveries - Invoices Not Received as on date{% endtrans %} {{new_inputdate}}{% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_unbilled_type}}</strong>
+						{% endif %}
+					</th>
 					{% elif inout == "15" %}
 					<th colspan="5" style="text-align:center; font-size:80%;">
-            {% trans %}Outward Deliveries - Invoices Not Prepared as on date{% endtrans %} {{new_inputdate}}{% trans %}| All Types | All Godowns{% endtrans %}
+						{% if del_unbilled_type == "All" %}
+            {% trans %}Outward Deliveries - Invoices Not Prepared as on date{% endtrans %} {{new_inputdate}}{% trans %}| All Godowns | All Types{% endtrans %}
+						{% else %}
+						{% trans %}Outward Deliveries - Invoices Not Prepared as on date{% endtrans %} {{new_inputdate}}{% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_unbilled_type}}</strong>
+						{% endif %}
           </th>
 					{% endif %}
         </tr>
@@ -50,9 +66,15 @@ tfoot{
 					<th class="col-xs-1">{% trans %}Sr. No.{% endtrans %}</th>
 					<th class="col-xs-3">{% trans %}Delchal No.{% endtrans %}</th>
 					<th class="col-xs-2">{% trans %}Delchal Date{% endtrans %}</th>
+					{% if inout == "9" %}
+					<th class="col-xs-2">{% trans %}Supplier Name{% endtrans %}</th>
+					{% elif inout == "15" %}
 					<th class="col-xs-2">{% trans %}Customer Name{% endtrans %}</th>
+					{% endif %}
 					<th class="col-xs-2">{% trans %}Godown Name{% endtrans %}</th>
+					{% if del_unbilled_type == "All" %}
 					<th class="col-xs-2">{% trans %}Delivery Type{% endtrans %}</th>
+					{% endif %}
 				</tr>
 			</thead>
 			<tbody>
@@ -73,9 +95,11 @@ tfoot{
 					<td class="col-xs-2">
 						{{record["goname"]}}
 					</td>
+					{% if del_unbilled_type == "All" %}
 					<td class="col-xs-2">
 						{{record["dcflag"]}}
 					</td>
+					{% endif %}
 				</tr>
 				{% endfor %}
 			</tbody>
@@ -87,7 +111,7 @@ tfoot{
 	</span>
 	<input type="hidden" id="inputdate" value="{{inputdate}}">
 	<input type="hidden" id="inout" value="{{inout}}">
-<!--<input type="hidden" id="trialbaltype" value="{{trialbalancetype}}">-->
+	<input type="hidden" id="del_unbilled_type" value="{{del_unbilled_type}}">
 <script type="text/javascript">
   $(document).ready(function() {
 
@@ -109,7 +133,7 @@ tfoot{
          url: "/show_del_unbilled_report",
          global: false,
          async: false,
-         data: {"inputdate": $("#inputdate").val(), "inout":$("#inout").val()},
+         data: {"inputdate": $("#inputdate").val(), "inout":$("#inout").val(), "del_unbilled_type": $("#del_unbilled_type").val()},
          datatype: "text/html",
          beforeSend: function(xhr)
          {

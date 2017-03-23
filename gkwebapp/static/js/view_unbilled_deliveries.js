@@ -36,6 +36,17 @@ $(document).ready(function() {
   //alert(financialstart);
   var sel1 = 0; // flag for focus on unbilled delivery type
   var sel2 = 0; // flag for focus on godown name
+  $("#purchase").prop("disabled", false);
+  $("#sales").prop("disabled", true);
+
+/*  report_index = $("#report_type option:selected").index();
+  if (report_index == 0) {
+    $("#purchase").prop("disabled", false);
+  }
+  else if (report_index == 1) {
+    $("#sales").prop("disabled", false);
+  }
+*/
   $("#del_unbilled_type").focus(function(){
     sel1 = 1;
     //console.log("sel1 = 1");
@@ -49,6 +60,19 @@ $(document).ready(function() {
   });
   $("#godown_name").blur(function(){
     sel2 = 0;
+  });
+
+  $("#report_type").change(function(event) {
+    report_index = $("#report_type option:selected").index();
+    console.log("report index:"+ report_index);
+    if (report_index == 0) {
+      $("#purchase").prop("disabled", false);
+      $("#sales").prop("disabled", true);
+    }
+    else if (report_index == 1) {
+      $("#sales").prop("disabled", false);
+      $("#purchase").prop("disabled", true);
+    }
   });
 
   function pad (str, max) { //to add leading zeros in date
@@ -130,7 +154,7 @@ $(document).ready(function() {
   $("#del_unbilled_year").val(del_unbilled_array[0]);
   $("#report_type").select();
 
-  $("#del_unbilled_year").keydown(function(event) {
+  $("#del_unbilled_type").keydown(function(event) {
     if (event.which==13) {
       $("#unbilled_deliveries_view").click();
     }
@@ -204,7 +228,7 @@ $(document).ready(function() {
         url: "/show_del_unbilled_report",
         global: false,
         async: false,
-        data: {"inputdate": new_date_input, "inout":$("#report_type option:selected").val()},
+        data: {"inputdate": new_date_input, "inout":$("#report_type option:selected").val(), "del_unbilled_type": $("#del_unbilled_type option:selected").val()},
         datatype: "text/html",
         beforeSend: function(xhr)
         {

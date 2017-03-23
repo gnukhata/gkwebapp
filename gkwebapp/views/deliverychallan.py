@@ -157,16 +157,37 @@ def deliveryprint(request):
 @view_config(route_name="show_del_unbilled_report",renderer="gkwebapp:templates/unbilled_deliveries_report.jinja2")
 def show_unbilled_deliveries_report(request):
 	header={"gktoken":request.headers["gktoken"]}
-	inputdate = request.params["inputdate"];
+	inputdate = request.params["inputdate"]
 	inout = request.params["inout"]
-	gkdata = {"inputdate": inputdate}
+	del_unbilled_type = request.params["del_unbilled_type"]
+	if del_unbilled_type == "All":
+		del_unbilled_type = "0"
+	elif del_unbilled_type == "Approval":
+		del_unbilled_type = "1"
+	elif del_unbilled_type == "Consignment":
+		del_unbilled_type = "3"
+	elif del_unbilled_type == "Sale":
+		del_unbilled_type = "4"
+	elif del_unbilled_type == "Purchase":
+		del_unbilled_type = "16"
+	gkdata = {"inputdate": inputdate, "del_unbilled_type": del_unbilled_type}
 	new_inputdate = datetime.strftime(datetime.strptime(str(inputdate),"%Y-%m-%d").date(),'%d-%m-%Y')
 	if inout == "9":
-		result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled_for_entire_org&inout=i", data = json.dumps(gkdata), headers=header)
+		result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled&inout=i", data = json.dumps(gkdata), headers=header)
 	elif inout == "15":
-		result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled_for_entire_org&inout=o", data = json.dumps(gkdata), headers=header)
-	
-	return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "inputdate":inputdate, "new_inputdate":new_inputdate, "inout":inout}
+		result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled&inout=o", data = json.dumps(gkdata), headers=header)
+	if del_unbilled_type == "0":
+		del_unbilled_type = "All"
+	elif del_unbilled_type == "1":
+		del_unbilled_type = "Approval"
+	elif del_unbilled_type == "3":
+		del_unbilled_type = "Consignment"
+	elif del_unbilled_type == "4":
+		del_unbilled_type = "Sale"
+	elif del_unbilled_type == "16":
+		del_unbilled_type = "Purchase"
+
+	return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "inputdate":inputdate, "new_inputdate":new_inputdate, "inout":inout, "del_unbilled_type": del_unbilled_type}
 
 @view_config(route_name="del_unbilled", request_param="action=view", renderer="gkwebapp:templates/view_unbilled_deliveries.jinja2")
 def view_unbilled_deliveries(request):
@@ -176,18 +197,39 @@ def view_unbilled_deliveries(request):
 	for record in result.json()["gkresult"]:
 		gdata= {"godownid": str(record["goid"]), "godownname" : str(record["goname"])}
 		goddata.append(gdata)
-	
+
 	return {"gkstatus":result.json()["gkstatus"], "gkresult": goddata}
 
 @view_config(route_name="print_unbilled_deliveries_report",renderer="gkwebapp:templates/print_unbilled_deliveries.jinja2")
 def print_del_unbilled(request):
 	header={"gktoken":request.headers["gktoken"]}
 	inputdate = request.params["inputdate"];
-	gkdata = {"inputdate": inputdate}
+	del_unbilled_type = request.params["del_unbilled_type"];
+	if del_unbilled_type == "All":
+		del_unbilled_type = "0"
+	elif del_unbilled_type == "Approval":
+		del_unbilled_type = "1"
+	elif del_unbilled_type == "Consignment":
+		del_unbilled_type = "3"
+	elif del_unbilled_type == "Sale":
+		del_unbilled_type = "4"
+	elif del_unbilled_type == "Purchase":
+		del_unbilled_type = "16"
+	gkdata = {"inputdate": inputdate, "del_unbilled_type": del_unbilled_type}
 	new_inputdate = datetime.strftime(datetime.strptime(str(inputdate),"%Y-%m-%d").date(),'%d-%m-%Y')
 	inout = request.params["inout"]
 	if inout == "9":
-		result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled_for_entire_org&inout=i", data = json.dumps(gkdata), headers=header)
+		result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled&inout=i", data = json.dumps(gkdata), headers=header)
 	elif inout == "15":
-		result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled_for_entire_org&inout=o", data = json.dumps(gkdata), headers=header)
-	return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "inputdate":inputdate, "new_inputdate":new_inputdate, "inout":inout}
+		result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled&inout=o", data = json.dumps(gkdata), headers=header)
+	if del_unbilled_type == "0":
+		del_unbilled_type = "All"
+	elif del_unbilled_type == "1":
+		del_unbilled_type = "Approval"
+	elif del_unbilled_type == "3":
+		del_unbilled_type = "Consignment"
+	elif del_unbilled_type == "4":
+		del_unbilled_type = "Sale"
+	elif del_unbilled_type == "16":
+		del_unbilled_type = "Purchase"
+	return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "inputdate":inputdate, "new_inputdate":new_inputdate, "inout":inout, "del_unbilled_type": del_unbilled_type}

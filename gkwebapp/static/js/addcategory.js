@@ -28,35 +28,34 @@ $(document).ready(function() {
     //when home key is pressed parent category selection is focused
     //when alt +shift+ D pressed Done is clicked
     $(document).off('keydown').on('keydown', function(event) {
-      if(event.altKey && event.shiftKey && event.keyCode == 68){
-        event.preventDefault();
-        $("#addcategory").click();
-      }
-        if(event.which == 36){
-          $("#category_under").focus();
+        if (event.altKey && event.shiftKey && event.keyCode == 68) {
+            event.preventDefault();
+            $("#addcategory").click();
+        }
+        if (event.which == 36) {
+            $("#category_under").focus();
         }
     });
     var parentspecs = [];
     var childspecs = [];
     var taxes = [];
-    if($("#catcount").val() > 0){
-      $("#category_under").focus();
-    }
-    else{
-      $("#new_parent_name").focus();
+    if ($("#catcount").val() > 0) {
+        $("#category_under").focus();
+    } else {
+        $("#new_parent_name").focus();
     }
 
     if (sessionStorage.latestcategory) {
-      $("#category_under").val(sessionStorage.latestcategory);
-      $("#category_under").focus();
-      sessionStorage.latestcategory = "";
+        $("#category_under").val(sessionStorage.latestcategory);
+        $("#category_under").focus();
+        sessionStorage.latestcategory = "";
     }
     var categorycode = "";
     $("#new_parent_div1").keydown(function(event) {
-      //when esc key is pressed
-      if(event.which == 27){
-        $("#addcategory").click();
-      }
+        //when esc key is pressed
+        if (event.which == 27) {
+            $("#addcategory").click();
+        }
     });
     $("#new_parent_name").keydown(function(event) {
         if (event.which == 13) {
@@ -94,10 +93,12 @@ $(document).ready(function() {
         $("#category_tax_table tbody tr:last td:eq(0) select").focus();
     });
     $(document).off("keydown", "#category_under").on("keydown", "#category_under", function(event) {
-      categorycode = $("#category_under option:selected").val();
+        categorycode = $("#category_under option:selected").val();
         if (event.which == 13 && categorycode != "") {
-          event.preventDefault();
-          $("#category_under").trigger('change');
+            event.preventDefault();
+            if ($('.childcat').is(':visible') == false) {
+                $("#category_under").trigger('change');
+            }
             $(".mchild_spec_name:last").focus();
         }
         //when spacebar is pressed
@@ -137,88 +138,137 @@ $(document).ready(function() {
         */
 
         categorycode = $("#category_under option:selected").val();
-        if(categorycode != ""){
-          $("#doneid").show();
-          $("#spectbl").show();
-          $("#parent_heading").text($("#category_under option[value=" + categorycode + "]").text());
-          $('#spectbl td').remove();
-          $(".childcat").show('fast', function() {
-      //      $(".mchild_spec_name:first").focus();
-          });
-          parentspecs = [];
-          // ajax for getting the specs of the newly selected (parent)category
-          $.ajax({
-                  url: '/category?action=getspecs',
-                  type: 'POST',
-                  dataType: 'json',
-                  async: false,
-                  data: {
-                      "categorycode": categorycode
-                  },
-                  beforeSend: function(xhr) {
-                      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                  }
-              })
-              .done(function(resp) {
-                  $('#child_category_spec_table tbody').html("");
-                  for (spec of resp["gkresult"].reverse()) {
-                      var trs;
-                      if (spec["attrtype"] == 0) {
-                          trs = '<option value="0">Text</option>'
-                      } else if (spec["attrtype"] == 1) {
-                          trs =
-                              '<option value="1">Number</option>'
-                      } else if (spec["attrtype"] == 2) {
-                          trs = '<option value="2">Date</option>'
-                      }
-                      $('#spectbl tbody').prepend('<tr>' +
-                          '<td class="col-xs-6">' + spec["attrname"] + '</td>' +
-                          '<td class="col-xs-6">' + trs + '</td>' +
-                          '</tr>');
+        if (categorycode != "") {
+            $("#doneid").show();
+            $("#parent_heading").text($("#category_under option[value=" + categorycode + "]").text());
+            $('#spectbl td').remove();
+            $('#child_category_table td').remove();
+            $.ajax({
+                    url: '/category?action=treechildren',
+                    type: 'POST',
+                    dataType: 'json',
+                    async: false,
+                    data: {
+                        "categorycode": categorycode
+                    },
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                    }
+                })
+                .done(function(resp) {
+                    for (category of resp["gkresult"]) {
+                        $('#child_category_table tbody').append('<tr>' +
+                            '<td class="col-xs-6">' +
+                            '<input type="text" class="form-control input-sm mchild_spec_name" placeholder="Sub Category Name" value="' + category["categoryname"] + '" disabled>' +
+                            '</td>' +
+                            '<td class="col-xs-3">' +
+                            '<button class="btn form-control btn-primary btn-sm showspecs" id="' + category["categorycode"] + '" data-toggle="modal" data-target="#child_showspecmodal" >View Specs</button>' +
+                            '</td>' +
+                            '<td class="col-xs-3">' +
+                            '<td>' +
+                            '</tr>');
+                    }
+                    $('#child_category_table tbody').append('<tr>' +
+                        '<td class="col-xs-6">' +
+                        '<input type="text" class="form-control input-sm mchild_spec_name" placeholder="Sub Category Name">' +
+                        '</td>' +
+                        '<td class="col-xs-3">' +
+                        '<button class="btn form-control btn-primary btn-sm child_spec_class" id="child_spec" data-toggle="modal" data-target="#child_addspecmodal" >Specs</button>' +
 
-                      $('#child_category_spec_table tbody').prepend('<tr>' +
-                          '<td class="col-xs-8">' +
-                          '<input type="text" class="form-control input-sm spec_name" value="' + spec["attrname"] + '" placeholder="Spec Name" disabled>' +
-                          '</td>' +
-                          '<td class="col-xs-4">' +
-                          '<select id="child_category_spec_type" class="form-control input-sm spec_type" disabled>' + trs +
-                          '</select>' +
-                          '</td>' +
-                          '</tr>');
+                        '</td>' +
+                        '<td class="col-xs-3">' +
+                        '<button class="btn form-control btn-primary btn-sm child_tax_class" id="child_tax" data-toggle="modal" data-target="#addtaxmodal"   >Tax</button>' +
+                        '</td>' +
+                        '</tr>');
 
-                      var obj = {};
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
+            $(".childcat").show();
+            parentspecs = [];
+            // ajax for getting the specs of the newly selected (parent)category
+            $.ajax({
+                    url: '/category?action=getspecs',
+                    type: 'POST',
+                    dataType: 'json',
+                    async: false,
+                    data: {
+                        "categorycode": categorycode
+                    },
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                    }
+                })
+                .done(function(resp) {
+                    $('#child_category_spec_table tbody').html("");
+                    var noofspecs = 0;
+                    for (spec of resp["gkresult"].reverse()) {
+                        var trs;
+                        noofspecs++;
+                        if (spec["attrtype"] == 0) {
+                            trs = '<option value="0">Text</option>'
+                        } else if (spec["attrtype"] == 1) {
+                            trs =
+                                '<option value="1">Number</option>'
+                        } else if (spec["attrtype"] == 2) {
+                            trs = '<option value="2">Date</option>'
+                        }
+                        $('#spectbl tbody').prepend('<tr>' +
+                            '<td class="col-xs-6">' + spec["attrname"] + '</td>' +
+                            '<td class="col-xs-6">' + trs + '</td>' +
+                            '</tr>');
 
-                      //dict for specs
-                      obj.attrname = spec["attrname"];
-                      obj.attrtype = spec["attrtype"];
-                      parentspecs.push(obj);
-                  }
-                  $('#child_category_spec_table tbody').append('<tr>' +
-                      '<td class="col-xs-8">' +
-                      '<input type="text" class="form-control input-sm spec_name" value="" placeholder="Spec Name">' +
-                      '</td>' +
-                      '<td class="col-xs-4">' +
-                      '<select id="child_category_spec_type" class="form-control input-sm spec_type">' +
-                      '<option value="0">Text</option>' +
-                      '<option value="1">Number</option>' +
-                      '<option value="2">Date</option>' +
-                      '</select>' +
-                      '</td>' +
-                      '</tr>');
+                        $('#child_category_spec_table tbody').prepend('<tr>' +
+                            '<td class="col-xs-8">' +
+                            '<input type="text" class="form-control input-sm spec_name" value="' + spec["attrname"] + '" placeholder="Spec Name" disabled>' +
+                            '</td>' +
+                            '<td class="col-xs-4">' +
+                            '<select id="child_category_spec_type" class="form-control input-sm spec_type" disabled>' + trs +
+                            '</select>' +
+                            '</td>' +
+                            '</tr>');
 
-              })
-              .fail(function() {
-                  console.log("error");
-              })
-              .always(function() {
-                  console.log("complete");
-              });
-        }
-        else{
-          categorycode = "";
-          $("#spectbl").hide();
-          $(".childcat").hide();
-          $("#doneid").hide();
+                        var obj = {};
+
+                        //dict for specs
+                        obj.attrname = spec["attrname"];
+                        obj.attrtype = spec["attrtype"];
+                        parentspecs.push(obj);
+                    }
+                    if (noofspecs == 0) {
+                        $("#spectbl").hide();
+                    } else {
+                        $("#spectbl").show();
+                    }
+                    $('#child_category_spec_table tbody').append('<tr>' +
+                        '<td class="col-xs-8">' +
+                        '<input type="text" class="form-control input-sm spec_name" value="" placeholder="Spec Name">' +
+                        '</td>' +
+                        '<td class="col-xs-4">' +
+                        '<select id="child_category_spec_type" class="form-control input-sm spec_type">' +
+                        '<option value="0">Text</option>' +
+                        '<option value="1">Number</option>' +
+                        '<option value="2">Date</option>' +
+                        '</select>' +
+                        '</td>' +
+                        '</tr>');
+
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
+        } else {
+            categorycode = "";
+            $("#spectbl").hide();
+            $(".childcat").hide();
+            $("#doneid").hide();
         }
 
     });
@@ -239,13 +289,6 @@ $(document).ready(function() {
                     });
                     $('#child_category_spec_table tbody tr:eq(' + curindex1 + ') td:eq(0) input').focus();
                     return false;
-                }
-                var obj = {};
-                //dict for specs
-                if ($.trim($("#child_category_spec_table tbody tr:eq(" + curindex1 + ") td:eq(0) input").val()) != "") {
-                    obj.attrname = $("#child_category_spec_table tbody tr:eq(" + curindex1 + ") td:eq(0) input").val();
-                    obj.attrtype = $.trim($("#child_category_spec_table tbody tr:eq(" + curindex1 + ") td:eq(1) select option:selected").val());
-                    childspecs.push(obj);
                 }
                 // appending a new row for adding another spec to category
                 $('#child_category_spec_table tbody').append('<tr>' +
@@ -284,13 +327,6 @@ $(document).ready(function() {
                     $('#parent_category_spec_table tbody tr:eq(' + curindex1 + ') td:eq(0) input').focus();
                     return false;
                 }
-                var obj = {};
-                //dict for specs
-                if ($.trim($("#parent_category_spec_table tbody tr:eq(" + curindex1 + ") td:eq(0) input").val()) != "") {
-                    obj.attrname = $("#parent_category_spec_table tbody tr:eq(" + curindex1 + ") td:eq(0) input").val();
-                    obj.attrtype = $.trim($("#parent_category_spec_table tbody tr:eq(" + curindex1 + ") td:eq(1) select option:selected").val());
-                    parentspecs.push(obj);
-                }
                 // appending a new row for adding another spec to category
                 $('#parent_category_spec_table tbody').append('<tr>' +
                     '<td class="col-xs-8">' +
@@ -311,15 +347,14 @@ $(document).ready(function() {
 
     });
     $(document).off("change", ".tax_name").on("change", ".tax_name", function(event) {
-      if($('#category_tax_table tbody tr:last td:eq(0) select').val() == "VAT"){
-        $('#category_tax_table tbody tr:last td:eq(1) select').prop('disabled', false);
-        $('#category_tax_table tbody tr:last td:eq(1) select option[value=""]').prop('disabled', true);
-        $('#category_tax_table tbody tr:last td:eq(1) select').val('Andaman and Nicobar Islands');
-      }
-      else if($('#category_tax_table tbody tr:last td:eq(0) select').val() == "CVAT"){
-        $('#category_tax_table tbody tr:last td:eq(1) select').val('');
-        $('#category_tax_table tbody tr:last td:eq(1) select').prop('disabled', true);
-      }
+        if ($('#category_tax_table tbody tr:last td:eq(0) select').val() == "VAT") {
+            $('#category_tax_table tbody tr:last td:eq(1) select').prop('disabled', false);
+            $('#category_tax_table tbody tr:last td:eq(1) select option[value=""]').prop('disabled', true);
+            $('#category_tax_table tbody tr:last td:eq(1) select').val('Andaman and Nicobar Islands');
+        } else if ($('#category_tax_table tbody tr:last td:eq(0) select').val() == "CVAT") {
+            $('#category_tax_table tbody tr:last td:eq(1) select').val('');
+            $('#category_tax_table tbody tr:last td:eq(1) select').prop('disabled', true);
+        }
     });
     $(document).off("keydown", ".tax_rate").on("keydown", ".tax_rate", function(event) {
 
@@ -348,18 +383,12 @@ $(document).ready(function() {
                     $('#category_tax_table tbody tr:eq(' + curindex1 + ') td:eq(2) input').focus();
                     return false;
                 }
-                var obj = {}; // dict for storing tax details
-                obj.taxname = $("#category_tax_table tbody tr:eq(" + curindex1 + ") td:eq(0) select").val();
-                obj.state = $("#category_tax_table tbody tr:eq(" + curindex1 + ") td:eq(1) select option:selected").val();
-                obj.taxrate = $("#category_tax_table tbody tr:eq(" + curindex1 + ") td:eq(2) input").val();
-                taxes.push(obj);
-
                 // appending a new row for adding another tax to category
 
                 $('#category_tax_table tbody').append('<tr>' +
                     '<td class="col-xs-4">' +
                     '<select class="form-control input-sm tax_name">' +
-                    '<option value="" selected>Select Tax</option>' +
+                    '<option value="" selected disabled hidden>Select Tax</option>' +
                     '<option value="VAT">VAT</option>' +
                     '<option value="CVAT">CVAT</option>' +
                     '</select>' +
@@ -399,14 +428,34 @@ $(document).ready(function() {
     //////////////////////////
     $("#parent_save").click(function(event) {
         var parentname = $("#new_parent_name").val();
-        if(parentname == ""){
-          $("#blank-alert").alert();
-          $("#blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-              $("#blank-alert").hide();
+        if (parentname == "") {
+            $("#blank-alert").alert();
+            $("#blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+                $("#blank-alert").hide();
             });
             $('#new_parent_name').focus();
             return false;
         }
+        parentspecs = [];
+        $("#parent_category_spec_table tbody tr").each(function() {
+            var obj = {};
+            //dict for specs
+            if ($.trim($("input", this).val()) != "") {
+                obj.attrname = $.trim($("input", this).val());
+                obj.attrtype = $.trim($("select option:selected", this).val());
+                parentspecs.push(obj);
+            }
+        });
+        taxes = [];
+        $("#category_tax_table tbody tr").each(function() {
+            var obj = {}; // dict for storing tax details
+            if ($.trim($("select option:selected", this).val()) != "") {
+                obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
+                obj.state = $.trim($("td:eq(1) select option:selected", this).val());
+                obj.taxrate = $.trim($("input", this).val());
+                taxes.push(obj);
+            }
+        });
         $.ajax({
                 url: '/category?action=save',
                 type: 'POST',
@@ -431,20 +480,20 @@ $(document).ready(function() {
                         sessionStorage.latestcategory = resp["gkresult"];
                         $("#addcategory").click();
                         $("#success-alert").hide();
-                      });
+                    });
                 } else if (resp["gkstatus"] == 1) {
-                    $("#category_name").focus().select();
                     $("#duplicate-alert").alert();
                     $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
                         $("#duplicate-alert").hide();
                     });
+                    $("#new_parent_name").focus().select();
                     return false;
                 } else {
-                    $("#category_name").focus();
                     $("#failure-alert").alert();
                     $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {
                         $("#failure-alert").hide();
                     });
+                    $("#new_parent_name").focus();
                     return false;
                 }
             })
@@ -462,14 +511,33 @@ $(document).ready(function() {
             event.preventDefault();
             var curindex1 = $(this).closest('tr').index() + 1;
             var catname = $('#child_category_table tbody tr:last input').val();
-            if(catname == ""){
-              $("#child-cat-blank-alert").alert();
-              $("#child-cat-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                  $("#child-cat-blank-alert").hide();
+            if (catname == "") {
+                $("#child-cat-blank-alert").alert();
+                $("#child-cat-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+                    $("#child-cat-blank-alert").hide();
                 });
                 $('#child_category_table tbody tr:last td:eq(0) input').focus();
                 return false;
             }
+            childspecs = [];
+            $("#child_category_spec_table tbody tr").each(function() {
+                var obj = {};
+                if ($.trim($("input", this).val()) != "") {
+                    obj.attrname = $.trim($("input", this).val());
+                    obj.attrtype = $.trim($("select option:selected", this).val());
+                    childspecs.push(obj);
+                }
+            });
+            taxes = [];
+            $("#category_tax_table tbody tr").each(function() {
+                var obj = {}; // dict for storing tax details
+                if ($.trim($("select option:selected", this).val()) != "") {
+                    obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
+                    obj.state = $.trim($("td:eq(1) select option:selected", this).val());
+                    obj.taxrate = $.trim($("input", this).val());
+                    taxes.push(obj);
+                }
+            });
             $.ajax({
                     url: '/category?action=save',
                     type: 'POST',
@@ -478,7 +546,7 @@ $(document).ready(function() {
                     data: {
                         "categoryname": catname,
                         "subcategoryof": categorycode,
-                        "specs": JSON.stringify(parentspecs.concat(childspecs)),
+                        "specs": JSON.stringify(childspecs),
                         "taxes": JSON.stringify(taxes)
                     },
                     beforeSend: function(xhr) {
@@ -551,18 +619,18 @@ $(document).ready(function() {
                         $('#child_category_table tbody tr:last td:eq(0) input').focus();
                         return false;
                     } else if (resp["gkstatus"] == 1) {
-                        $("#category_name").focus().select();
                         $("#duplicate-alert").alert();
                         $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
                             $("#duplicate-alert").hide();
                         });
+                        $('#child_category_table tbody tr:last td:eq(0) input').focus();
                         return false;
                     } else {
-                        $("#category_name").focus();
                         $("#failure-alert").alert();
                         $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {
                             $("#failure-alert").hide();
                         });
+                        $('#child_category_table tbody tr:last td:eq(0) input').focus();
                         return false;
                     }
                 })
@@ -576,43 +644,43 @@ $(document).ready(function() {
         }
 
     });
-    $(document).on('click', '.showspecs', function () {
-      var curindex1 = $(this).closest('tr').index();
-      var ccode = $("#child_category_table tbody tr:eq(" + curindex1 + ") td:eq(1) button").attr('id');
-      $.ajax({
-              url: '/category?action=getspecs',
-              type: 'POST',
-              dataType: 'json',
-              async: false,
-              data: {
-                  "categorycode": ccode
-              },
-              beforeSend: function(xhr) {
-                  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-              }
-          })
-          .done(function(resp) {
-              $('#child_showcategory_spec_table tbody').html("");
-              for (spec of resp["gkresult"].reverse()) {
-                  var trs;
-                  if (spec["attrtype"] == 0) {
-                      trs = '<option value="0">Text</option>'
-                  } else if (spec["attrtype"] == 1) {
-                      trs =
-                          '<option value="1">Number</option>'
-                  } else if (spec["attrtype"] == 2) {
-                      trs = '<option value="2">Date</option>'
-                  }
-                  $('#child_showcategory_spec_table tbody').prepend('<tr>' +
-                      '<td class="col-xs-8">' +
-                      '<input type="text" id="child_showcategory_spec_name" class="form-control input-sm" value="'+spec["attrname"]+'" disabled>' +
-                      '</td>' +
-                      '<td class="col-xs-4">' +
-                      '<select id="child_showcategory_spec_type" class="form-control input-sm" name="" disabled>' + trs +
-                      '</select>' +
-                      '</td>' +
-                      '</tr>');
-              }
+    $(document).on('click', '.showspecs', function() {
+        var curindex1 = $(this).closest('tr').index();
+        var ccode = $("#child_category_table tbody tr:eq(" + curindex1 + ") td:eq(1) button").attr('id');
+        $.ajax({
+                url: '/category?action=getspecs',
+                type: 'POST',
+                dataType: 'json',
+                async: false,
+                data: {
+                    "categorycode": ccode
+                },
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+            })
+            .done(function(resp) {
+                $('#child_showcategory_spec_table tbody').html("");
+                for (spec of resp["gkresult"].reverse()) {
+                    var trs;
+                    if (spec["attrtype"] == 0) {
+                        trs = '<option value="0">Text</option>'
+                    } else if (spec["attrtype"] == 1) {
+                        trs =
+                            '<option value="1">Number</option>'
+                    } else if (spec["attrtype"] == 2) {
+                        trs = '<option value="2">Date</option>'
+                    }
+                    $('#child_showcategory_spec_table tbody').prepend('<tr>' +
+                        '<td class="col-xs-8">' +
+                        '<input type="text" id="child_showcategory_spec_name" class="form-control input-sm" value="' + spec["attrname"] + '" disabled>' +
+                        '</td>' +
+                        '<td class="col-xs-4">' +
+                        '<select id="child_showcategory_spec_type" class="form-control input-sm" name="" disabled>' + trs +
+                        '</select>' +
+                        '</td>' +
+                        '</tr>');
+                }
             })
             .fail(function() {
                 console.log("error");
@@ -623,19 +691,19 @@ $(document).ready(function() {
 
     });
     $("#parent_done").click(function(event) {
-      $('#parent_addspecmodal').modal('hide');
+        $('#parent_addspecmodal').modal('hide');
     });
     $("#child_done").click(function(event) {
-      $('#child_addspecmodal').modal('hide');
+        $('#child_addspecmodal').modal('hide');
     });
     $("#tax_done").click(function(event) {
-      $('#addtaxmodal').modal('hide');
+        $('#addtaxmodal').modal('hide');
     });
     $("#child_showdone").click(function(event) {
-      $('#child_showspecmodal').modal('hide');
+        $('#child_showspecmodal').modal('hide');
     });
     $("#done").click(function(event) {
-      $("#addcategory").click();
+        $("#addcategory").click();
     });
 
 });
