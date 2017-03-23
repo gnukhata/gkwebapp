@@ -30,7 +30,7 @@
   <span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>{% trans %}List of Categories{% endtrans %}</strong></span>
 
   <div class="table-responsive printorgdetails">
-    <table class="table table-condensed table-bordered table-striped shadow">
+    <table id="latable" class="table table-condensed table-bordered table-striped shadow">
       <thead class="bg-primary">
         <tr class="visible-print">
           <th colspan="4" style="text-align:center; font-size:80%;">
@@ -42,10 +42,10 @@
             {% trans %}Sr. No.{% endtrans %}
           </th>
           <th class="col-xs-5" >
-            {% trans %}Child Category{% endtrans %}
+            {% trans %}Category{% endtrans %}
           </th>
           <th class="col-xs-5" >
-            {% trans %}Parent Category{% endtrans %}
+            {% trans %}Sub-Category{% endtrans %}
           </th>
           <th class="col-xs-1" >
             {% trans %}Status{% endtrans %}
@@ -54,7 +54,7 @@
       <tbody>
 
         {% for record in gkresult %}
-        <tr	value="{{record["categorycode"]}}">
+        <tr	data-value="{{record["categorycode"]}}">
           <td class="col-xs-1 " >
             {{record["srno"]}}
           </td>
@@ -62,7 +62,6 @@
             {{record["categoryname"]}}
           </td>
           <td class="col-xs-5" >
-            {{record["parentcategory"]}}
           </td>
           <td class="col-xs-1">
             {{record["categorystatus"]}}
@@ -80,7 +79,29 @@
   <script type="text/javascript">
     $(document).ready(function() {
       oninvoice = 0;
-      $("title").html("GNUKhata")
+      $("title").html("GNUKhata");
+      $("#latable tbody tr").each(function() {
+        var index = $(this).index();
+        var categorycode = $("#latable tbody tr:eq("+index+")").data("value");
+        $.ajax({
+          url: '/category?action=treechildren',
+          type: 'POST',
+          global: false,
+          async: false,
+          datatype: 'json',
+          data:{"categorycode":categorycode},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          }
+        })
+        .done(function(resp){
+          var childrenofparent = resp["gkresult"];
+          for (i in childrenofparent) {
+            $("#latable tbody tr:eq("+index+") td:eq(2)").append(childrenofparent[i].categoryname + '<br>');
+          }
+        });
+      });
       $("#loaprint").click(function(event) {
         window.print();
       });
