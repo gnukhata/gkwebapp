@@ -32,6 +32,10 @@
     pointer-events: all;
 		background: inherit;
 }
+ .bgcolor{
+  	 background-color:#1b2631;
+  }
+
 	</style>
 
 </head>
@@ -39,8 +43,9 @@
 	<div id="loginbox"  class="mainbox">
 		<div class="panel" >
 			<div class="panel-heading">
-				<div class="panel-title">{% trans %}Create Admin{% endtrans %}</div>
-
+				<div class="panel-title">{% trans %}Create Admin{% endtrans %}
+<i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" id="csh" data-target="#csh"></i>
+			</div>
 			</div>
 
 			<div style="padding-top:30px" class="panel-body" >
@@ -99,7 +104,33 @@
 				</form>
 			</div>
 		</div>
+	<div id="csh" tabindex="-1" class="modal fade" role="dialog">
+  <div class="modal-dialog bgcolor">
+    <div class="modal-content ">
+    <div class="modal-header">
+      {% trans %}<strong>Help!</strong>{% endtrans %}
+   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> </div>
+      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+       
+       <p>   <font color=" #566573"> {%trans%}
+
+this screen lets you create an administrator user.
+YOu should enter username password and also a security question and answer.
+You can press enter to go ahead from one field to otehr and up arrow to go one field backwards.
+After this screen the main window will appear.{% endtrans %} </font>
+
+        </p>
+      </div>
+      
+    </div>
+  </div>
+</div>
 	</div>
+				
+
+	
 	<div id="spinmodal" tabindex="-1" class="modal text-center fade" role="dialog">
 		<div class="vertical-alignment-helper">
 				<div class="modal-content vertical-align-center">
