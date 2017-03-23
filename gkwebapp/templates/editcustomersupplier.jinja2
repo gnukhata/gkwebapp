@@ -2,11 +2,11 @@
   <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
     <div class="alert alert-success" id="sup-success-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Supplier saved.{% endtrans %}
+      {% trans %}Supplier details saved with its account.{% endtrans %}
     </div>
     <div class="alert alert-success" id="cus-success-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Customer saved.{% endtrans %}
+      {% trans %}Customer details saved with its account.{% endtrans %}
     </div>
     <div class="alert alert-danger" id="cus-duplicate-alert"  aria-live="rude" role="alert" hidden>
 
@@ -36,7 +36,7 @@
 
       {% trans %}Supplier can not be deleted{% endtrans %}
     </div>
-   
+
     <div class="alert alert-danger" id="name-blank-alert"  aria-live="rude" role="alert" hidden>
 
 	{% trans %}Please Enter name!{% endtrans %}
@@ -80,9 +80,9 @@
               <div class="form-group hidden-load " hidden>
               <label id="edit_cussuplabel" for="edit_cussup">{% trans %}Role:{% endtrans %}</label>
               <input class="form-control input-sm" type="text" id="edit_cussup" disabled >
-              </div> 
-              
-                        
+              </div>
+
+
             <div class="form-group hidden-load " hidden>
               <label for="edit_cussup_name">{% trans %}Name:{% endtrans %}</label>
               <input class="form-control input-sm" id="edit_cussup_name" placeholder="{% trans %}Enter Name{% endtrans %}" >
