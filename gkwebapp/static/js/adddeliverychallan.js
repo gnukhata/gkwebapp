@@ -542,6 +542,42 @@ else {
    );
    });
 
+   $("#viewpurchaseorder").click(function(event) {
+     /* Act on the event */
+     event.stopPropagation();
+     $("#dcmain").toggleClass('collapse');
+     $("#purchaseordercollapsediv").toggleClass('collapse');
+     $.ajax({
+       url: '/purchaseorder?type=showview',
+       type: "POST",
+       datatype: 'text/html',
+       global: false,
+       async: false,
+       beforeSend: function(xhr)
+       {
+         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+       }
+     })
+     .done(function(resp) {
+       $('#purchaseorderdiv').html(resp);
+     })
+     .fail(function() {
+       console.log("error");
+     })
+     .always(function() {
+       console.log("complete");
+     });
+   });
+   $("#backtodcin").click(function(event) {
+     /* Act on the event */
+     $("#dcmain").toggleClass('collapse');
+     $("#purchaseordercollapsediv").toggleClass('collapse');
+   });
+
+   $("#dcmain").on('shown.bs.collapse', function(event) {
+     $("#deliverychallan_challanno").focus();
+     $('#purchaseorderdiv').html("");
+   });
 
   $("#deliverychallan_save").click(function(event) {
       // save event for saving the delivery note

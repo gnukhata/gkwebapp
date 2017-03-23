@@ -12,7 +12,17 @@
 
       {% trans %}Duplicate Note no.!{% endtrans %}
     </div>
-    <div class="panel shadow deliverychallan_panel">
+    <div id="purchaseordercollapsediv" class="collapse">
+      <div id="purchaseorderdiv" class="row">
+
+      </div>
+      <div class="row">
+        <div class="col-sm-offset-6">
+          <button id="backtodcin" type="button" class="btn btn-sm btn-danger">Back</button>
+        </div>
+      </div>
+    </div>
+    <div class="panel shadow deliverychallan_panel" id="dcmain">
       <div class="panel-body">
         <div class="col-md-5">
           <div class="alert alert-danger" id="custsup-blank-alert"  aria-live="rude" role="alert" hidden>
@@ -232,6 +242,7 @@
          {% trans %}Attac<u>h</u>{% endtrans %}
        </label>
        <span class='label label-info' id="upload-file-info"></span>
+       <button class="btn btn-info btn-sm" id="viewpurchaseorder">{% trans %}View Purchase Order{% endtrans %}</button>
       </div>
       </div>
     </div>
@@ -278,5 +289,19 @@
   </div>
 </div>
 <div id="viewcustsup"></div>
+<div id="viewpomodal" class="modal" tabindex="-1" role="dialog">
+  <div class="vertical-alignment-helper">
+    <div id="viewpomodaldialog" class="modal-dialog vertical-align-center">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{% trans %}View Purchase Order{% endtrans %}<a href="#" style="color:white" data-dismiss="modal"><span class="glyphicon glyphicon-remove pull-right"><span class="sr-only">close</span></span></a></h5>
+        </div>
+        <div class="modal-body">
+
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div>
+</div><!-- /.modal -->
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/adddeliverychallan.js')}}"></script>
 </body>
