@@ -51,6 +51,12 @@ $(document).ready(function() {
           $("#invcl").prop("disabled",false);
           $("#invcl").show();
         }
+        if(resp.invoicedata.attachmentcount > 0){
+          $("#viewattach").show();
+        }
+        else{
+          $("#viewattach").hide();
+        }
         var invdatearray = resp.invoicedata.invoicedate.split(/\s*\-\s*/g);
         $("#invoice_date").val(invdatearray[0]);
         $("#invoice_month").val(invdatearray[1]);
