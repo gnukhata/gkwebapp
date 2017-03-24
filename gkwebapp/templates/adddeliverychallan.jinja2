@@ -227,6 +227,11 @@
           {% else %}
           <button id="deliverychallan_addcust" class="btn btn-info btn-sm">{% trans %}Add Supplier{% endtrans %}</button>
        {% endif %}
+       <label class="btn btn-primary btn-sm" for="my-file-selector">
+         <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
+         {% trans %}Attac<u>h</u>{% endtrans %}
+       </label>
+       <span class='label label-info' id="upload-file-info"></span>
       </div>
       </div>
     </div>

@@ -27,6 +27,9 @@ from pyramid.view import view_config
 import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
+from PIL import Image
+import base64
+import cStringIO
 
 @view_config(route_name="invoice",renderer="gkwebapp:templates/invoice.jinja2")
 def showinvoice(request):
@@ -60,6 +63,26 @@ def saveinvoice(request):
 		"contents":json.loads(request.params["contents"]),
 		"issuername":request.params["issuername"],"designation":request.params["designation"]}
 
+	try:
+		files = {}
+		count = 0
+		for i in request.POST.keys():
+			if "file" not in i:
+				continue
+			else:
+				img = request.POST[i].file
+				image = Image.open(img)
+				imgbuffer = cStringIO.StringIO()
+				image.save(imgbuffer, format="JPEG")
+				img_str = base64.b64encode(imgbuffer.getvalue())
+				image.close()
+				files[count] = img_str
+				count += 1
+		if len(files)>0:
+			invoicedata["attachment"] = files
+			invoicedata["attachmentcount"] = len(invoicedata["attachment"])
+	except:
+		print "no attachment found"
 	stock = json.loads(request.params["stock"])
 	if request.params["dcid"]!="":
 		invoicedata["dcid"] = request.params["dcid"]
@@ -125,3 +148,9 @@ def Invoiceprint(request):
 	"tableset":tableset,"invoiceno":request.params["invoiceno"],"invoicedate":request.params["invoicedate"],"dcno":request.params["dc"],
 	"issuername":request.params["issuername"],"designation":request.params["designation"],"subtotal":request.params["subtotal"],
 	"taxtotal":request.params["taxtotal"],"gtotal":request.params["gtotal"]}
+
+@view_config(route_name="invoice", request_param="action=getattachment", renderer="gkwebapp:templates/viewinvoiceattachment.jinja2")
+def getattachment(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/invoice?attach=image&invid=%d"%(int(request.params["invid"])), headers=header)
+	return {"attachment":result.json()["gkresult"],"invid":request.params["invid"], "cancelflag":result.json()["cancelflag"],"userrole":result.json()["userrole"],"invoiceno":result.json()["invoiceno"]}

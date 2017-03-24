@@ -41,6 +41,12 @@ $(document).ready(function() {
         $("#deliverychallan_edit_delete").prop("disabled",false);
         $("#deliverychallan_edit_delete").show();
       }
+      if(resp.delchaldata.delchaldata.attachmentcount > 0){
+        $("#viewattach").show();
+      }
+      else{
+        $("#viewattach").hide();
+      }
       $("#deliverychallan_edit_customer").html(custsup);
       var dcdatearray = resp.delchaldata.delchaldata.dcdate.split(/\s*\-\s*/g);
       $("#deliverychallan_edit_date").val(dcdatearray[0]);
@@ -138,6 +144,43 @@ $(document).ready(function() {
       console.log("complete");
     });
     $(".deliverychallan_edit_disable").prop("disabled",true);
+  });
+
+  $("#viewattach").click(function(event)
+  {
+    $.ajax({
+      url: '/deliverychallan?action=getattachment',
+      type: 'POST',
+      datatype: 'json',
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+      data: {"dcid": $("#deliverychallan_edit_list option:selected").val()},
+    })
+    .done(function(resp) {
+      var x=window.open();
+      if (x) {
+        //Browser has allowed it to be opened
+        x.focus();
+        x.document.open();
+        x.document.write(resp);
+        x.document.close();
+      } else {
+        //Browser has blocked it
+        alert('Please allow popups and retry');
+        x.close();
+      }
+
+      console.log("success");
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
+
   });
 
   $("#deliverychallan_edit_list").keydown(function(event) {
