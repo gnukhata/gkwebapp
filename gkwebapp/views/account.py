@@ -144,8 +144,35 @@ def deleteaccount(request):
 	gkdata={"accountcode":request.params["accountcode"]}
 	result = requests.get("http://127.0.0.1:6543/account/%s"%(request.params["accountcode"]), headers=header)
 	accountname = result.json()["gkresult"]["accountname"]
+	groupcode = result.json()["gkresult"]["groupcode"]
 	result = requests.delete("http://127.0.0.1:6543/accounts",data =json.dumps(gkdata), headers=header)
 	if result.json()["gkstatus"] == 0:
+		groups = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist", headers=header)
+		debtgroupcode = groups.json()["gkresult"]["Sundry Debtors"]
+		credgroupcode = groups.json()["gkresult"]["Sundry Creditors for Purchase"]
+		custid = -1
+		if debtgroupcode == groupcode:
+			resultcust = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
+			for cust in resultcust.json()["gkresult"]:
+				if cust["custname"] == accountname:
+					custid = cust["custid"]
+					break
+			if custid != -1:
+				gkdata = {"custid":custid}
+				resultdelc = requests.delete("http://127.0.0.1:6543/customersupplier", data =json.dumps(gkdata),headers=header)
+				gkdata = {"activity":accountname + " customer deleted"}
+				resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
+		elif credgroupcode == groupcode:
+			resultsup = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
+			for cust in resultsup.json()["gkresult"]:
+				if cust["custname"] == accountname:
+					custid = cust["custid"]
+					break
+			if custid != -1:
+				gkdata = {"custid":custid}
+				resultdels = requests.delete("http://127.0.0.1:6543/customersupplier", data =json.dumps(gkdata),headers=header)
+				gkdata = {"activity":accountname + " supplier deleted"}
+				resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
 		gkdata = {"activity":accountname + " account deleted"}
 		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
