@@ -87,16 +87,32 @@ def editcustomersupplier(request):
 #	dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"custpan":request.params["custpan"],"state":request.params["state"],"custtan":request.params["custtan"],"csflag":int(request.params["csflag"]),"custid":int(request.params["custid"])}
 	dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"custpan":request.params["custpan"],"state":request.params["state"],"custtan":request.params["custtan"],"custid":int(request.params["custid"])}
 	result=requests.put("http://127.0.0.1:6543/customersupplier",data=json.dumps(dataset),headers=header)
+	if result.json()["gkstatus"] == 0:
+		accs = requests.get("http://127.0.0.1:6543/accounts", headers=header)
+		for acc in accs.json()["gkresult"]:
+			if acc["accountname"] == request.params["oldcustname"]:
+				gkdata = {"accountname":request.params["custname"],"openingbal":acc["openingbal"],"accountcode":acc["accountcode"]}
+				resulteditacc = requests.put("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
+				break
 	return {"gkstatus": result.json()["gkstatus"]}
 
 @view_config(route_name="customersuppliers", request_param="action=delete",renderer="json")
 def deletecustomersupplier(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(request.params["custid"])), headers=header)
+	custname = result.json()["gkresult"]["custname"]
 	custdetails = {"csflag": result.json()["gkresult"]["csflag"], "custname":result.json()["gkresult"]["custname"]}
 	dataset={"custid":int(request.params["custid"])}
 	result = requests.delete("http://127.0.0.1:6543/customersupplier",data =json.dumps(dataset), headers=header)
 	if result.json()["gkstatus"] == 0:
+		accs = requests.get("http://127.0.0.1:6543/accounts", headers=header)
+		for acc in accs.json()["gkresult"]:
+			if acc["accountname"] == custname:
+				gkdata={"accountcode":acc["accountcode"]}
+				result = requests.delete("http://127.0.0.1:6543/accounts",data =json.dumps(gkdata), headers=header)
+				break
+		gkdata = {"activity":custname + " account deleted"}
+		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
 		if custdetails["csflag"] == 3:
 				  gkdata = {"activity":custdetails["custname"] + " customer deleted"}
 		else:
