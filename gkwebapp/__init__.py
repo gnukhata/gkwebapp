@@ -3,7 +3,7 @@
 Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
 This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
-GNUKhata is Free Software; you can redistribute it and/or modify
+GNUKhata is Free Software; you can redistribute it and/otyper modify
 it under the terms of the GNU Affero General Public License as
 published by the Free Software Foundation; either version 3 of
 the License, or (at your option) any later version.and old.stockflag = 's'
@@ -165,6 +165,10 @@ def main(global_config, **settings):
 	config.add_route('print_unbilled_deliveries_report','/print_unbilled_deliveries_report')
 	config.add_route('purchaseorder','/purchaseorder')
 	config.add_route('salesorder','/salesorder')
-	
+	config.add_route('lastfivegodowns', '/lastfivegodowns')
+	config.add_route('allorgcode','/allorgcode')
+	config.add_route('listoforgselected','/listoforgselected')
+	config.add_route('showconsolidationpopup','/showconsolidationpopup')
+
 	config.scan('gkwebapp')
 	return config.make_wsgi_app()
