@@ -25,14 +25,14 @@ Contributors:
 "Vaibhav Kurhe" <vaibspidy@openmailbox.org>
 */
 /*
-This script is for the tree view of categories. 
+This script is for the tree view of categories.
 */
 
 $(document).ready(function() {
   $("#tvback").click(function(event) {
     $("#listofcategories").click();
   });
-  $("#messagespan").append('Tree View of Categories'+'There are '+$(".list-group").length+' parent categories. They are ');
+  $("#messagespan").append('Tree View of Categories'+'There are '+$(".list-group").length+' categories. They are ');
   $(".categoryname").each(function() {
     var categoryname = $(this).html();
     $("#messagespan").append(categoryname);
