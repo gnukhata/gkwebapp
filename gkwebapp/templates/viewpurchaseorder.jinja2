@@ -1,0 +1,29 @@
+<body>
+<div class="container-fluid" style="padding:1 !important; margin:0 !important;">
+    <div class='panel '>
+
+  <div class="panel-body">
+    <form id="viewpurchaseorderform">
+      <div class="container-fluid row">
+    <div class="form-group  col-sm-12">
+
+      <label for="purchaseorderselect">{% trans %}Purchase order{% endtrans %} :</label>
+        <select class = "form-control input-sm"  name = "purchaseorderno" id="purchaseorder_select" >
+          <option value="" disabled selected hidden>{% trans %}Select Purchase order{% endtrans %}</option>
+          {% for po in gkresult %}
+          <option value="{{po['orderid']}}">{{po["orderno"]}}, {{po["orderdate"]}}, {{po["custname"]}}</option>
+          {% endfor %}
+        </select>
+
+
+    </div>
+  </div>
+      <div class="nopadding" id="purchaseorderdetails">
+      </div>
+    </form>
+      </div>
+    
+    </div>
+  </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewpurchaseorder.js')}}"></script>
+  </body>

@@ -163,5 +163,8 @@ def main(global_config, **settings):
 	config.add_route('del_unbilled','/del_unbilled')
 	config.add_route('show_del_unbilled_report','/show_del_unbilled_report')
 	config.add_route('print_unbilled_deliveries_report','/print_unbilled_deliveries_report')
+	config.add_route('purchaseorder','/purchaseorder')
+	config.add_route('salesorder','/salesorder')
+	
 	config.scan('gkwebapp')
 	return config.make_wsgi_app()

@@ -473,6 +473,8 @@ $.ajax({
 });
 });
 
+
+
 $('#godown').click(function (e) {
 // Loads godown page in the main div.
  $.ajax({
@@ -579,6 +581,31 @@ $.ajax({
   console.log("complete");
 });
 });
+
+$('#purchaseorder').click(function (e) {
+
+  console.log("jdh");
+             $.ajax({
+               url: '/purchaseorder?type=tab',
+               type: 'POST',
+               global: false,
+               async: false,
+               datatype: 'text/html',
+               beforeSend: function(xhr)
+               {
+                 xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+               }
+             })
+             .done(function(resp) {
+               $("#info").html(resp);
+             })
+             .fail(function() {
+               console.log("error");
+             })
+             .always(function() {
+               console.log("complete");
+             });
+     });
 
 $("#searchcategory").click(function (e){
 // opens a modal showing the topmost categories.
