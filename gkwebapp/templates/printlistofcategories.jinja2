@@ -62,6 +62,9 @@
             {{record["categoryname"]}}
           </td>
           <td class="col-xs-5" >
+          {% for child in record["children"] %}
+            {{child["categoryname"]}} <br>
+          {% endfor %}
           </td>
           <td class="col-xs-1">
             {{record["categorystatus"]}}
@@ -80,28 +83,6 @@
     $(document).ready(function() {
       oninvoice = 0;
       $("title").html("GNUKhata");
-      $("#latable tbody tr").each(function() {
-        var index = $(this).index();
-        var categorycode = $("#latable tbody tr:eq("+index+")").data("value");
-        $.ajax({
-          url: '/category?action=treechildren',
-          type: 'POST',
-          global: false,
-          async: false,
-          datatype: 'json',
-          data:{"categorycode":categorycode},
-          beforeSend: function(xhr)
-          {
-            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-          }
-        })
-        .done(function(resp){
-          var childrenofparent = resp["gkresult"];
-          for (i in childrenofparent) {
-            $("#latable tbody tr:eq("+index+") td:eq(2)").append(childrenofparent[i].categoryname + '<br>');
-          }
-        });
-      });
       $("#loaprint").click(function(event) {
         window.print();
       });

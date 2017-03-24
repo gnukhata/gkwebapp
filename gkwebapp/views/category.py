@@ -158,13 +158,31 @@ def deletecategory(request):
 def listofcategories(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/categories", headers=header)
-	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
+	categories = result.json()["gkresult"]
+	categorydata = []
+	for category in categories:
+		children = requests.get("http://127.0.0.1:6543/categories?type=children&categorycode=%d"%(int(category["categorycode"])), headers=header)
+		children = children.json()["gkresult"]
+		childcategories = []
+		for child in children:
+			childcategories.append({"categoryname":child["categoryname"]})
+		categorydata.append({"srno":category["srno"], "categorycode":category["categorycode"], "categoryname":category["categoryname"], "categorystatus":category["categorystatus"],"children":childcategories})
+	return {"gkstatus": result.json()["gkstatus"], "gkresult": categorydata}
 
 @view_config(route_name="category",request_param="action=printable", renderer="gkwebapp:templates/printlistofcategories.jinja2")
 def printlistofgodowns(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/categories", headers=header)
-	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
+	categories = result.json()["gkresult"]
+	categorydata = []
+	for category in categories:
+		children = requests.get("http://127.0.0.1:6543/categories?type=children&categorycode=%d"%(int(category["categorycode"])), headers=header)
+		children = children.json()["gkresult"]
+		childcategories = []
+		for child in children:
+			childcategories.append({"categoryname":child["categoryname"]})
+		categorydata.append({"srno":category["srno"], "categorycode":category["categorycode"], "categoryname":category["categoryname"], "categorystatus":category["categorystatus"],"children":childcategories})
+	return {"gkstatus": result.json()["gkstatus"], "gkresult": categorydata}
 
 @view_config(route_name="category",request_param="action=spreadsheet", renderer="")
 def listofgodownssspreadsheet(request):

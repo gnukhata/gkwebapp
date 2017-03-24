@@ -71,6 +71,9 @@
           {{record["categoryname"]}}
         </td>
         <td class="col-xs-5" >
+        {% for child in record["children"] %}
+          {{child["categoryname"]}} <br>
+        {% endfor %}
         </td>
         {% if record["categorystatus"] == "Active" %}
         <td class="col-xs-1 text-success">
