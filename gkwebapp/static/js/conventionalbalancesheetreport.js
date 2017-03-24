@@ -24,11 +24,14 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+"Parabjyot Singh" <parabjyot1996@gmail.com>
+"Rahul Chaurasiya" <crahul4133@gmail.com>
 */
 
 $(document).ready(function() {
 
   oninvoice = 0;
+  $(".modal-backdrop").remove();
 
   $("#msspinmodal").modal("hide");
 
@@ -290,7 +293,7 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
         global: false,
         async: false,
         datatype: "text/html",
-        data: {"balancesheettype":$("#balancesheettype").val(),"calculateto":$("#cto").val(),"orgtype":sessionStorage.orgt},
+        data: {"balancesheettype":$("#balancesheettype").val(),"calculateto":$("#cto").val(),"orgtype":sessionStorage.orgt,"flag":0},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -303,13 +306,15 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
     );
   });
   $("#print").click(function(event) {
-
-      event.preventDefault();
+    event.preventDefault();
+    console.log($("#flag").val());
+    if($("#flag").val() == 0)
+    {
+      console.log("conv");
       var orgname = sessionStorage.getItem('orgn');
       var orgtype = sessionStorage.getItem('orgt');
       var xhr = new XMLHttpRequest();
-
-      xhr.open('GET', '/printconvbalsheetreport?orgname='+ orgname+'&orgtype='+orgtype+'&fystart='+sessionStorage.getItem('year1')+'&fyend='+sessionStorage.getItem('year2')+'&calculateto='+$("#cto").val(), true);
+      xhr.open('GET', '/printconvbalsheetreport?type=conventionalbalancesheet&orgname='+ orgname+'&orgtype='+orgtype+'&fystart='+sessionStorage.getItem('year1')+'&fyend='+sessionStorage.getItem('year2')+'&calculateto='+$("#cto").val(), true);
       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
       xhr.responseType = 'blob';
 
@@ -323,27 +328,86 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
     };
 
     xhr.send();
+    }
+    else
+    {
+      console.log("cons");
+      var sorgname1 = [];
+      $("#sorgname > option").each(function() {
+            sorgname1.push(this.text);
+      });
+      var selectedorg1 = [];
+      $("#selectedorg > option").each(function() {
+            selectedorg1.push(this.value);
+      });
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', '/printconvbalsheetreport?type=consolidatedbalancesheet&orgname='+ $("#horgname").val()+'&sorgname='+JSON.stringify(sorgname1)+'&orgtype='+$("#orgtype").val()+'&fystart='+$("#yearstart").val()+'&fyend='+$("#calculateto").val()+'&calculateto='+$("#calculateto").val()+'&selectedorg='+JSON.stringify(selectedorg1), true);
+      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      xhr.responseType = 'blob';
+
+      xhr.onload = function(e) {
+      if (this.status == 200) {
+      // get binary data as a response
+        var blob = this.response;
+        var url = window.URL.createObjectURL(blob);
+        window.location.assign(url)
+      }
+    };
+
+    xhr.send();
+    }
     });
+
   $("#balback").click(function(event) {
     if ($("#realprintbalance").is(":visible")) {
-      $.ajax(
-        {
+      if($("#flag").val() == 0)
+      {
+        $.ajax(
+          {
+            type: "POST",
+            url: "/showbalancesheetreport",
+            global: false,
+            async: false,
+            datatype: "text/html",
+            data: {"balancesheettype":"conventionalbalancesheet","calculateto":$("#cto").val(),"orgtype":sessionStorage.orgt,"flag":$("#flag").val()},
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            },
+          })
+          .done(function(resp)
+          {
+            $("#info").html(resp);
+          }
+        );
+      }
+
+      else
+      {
+        var selectedorg1 = [];
+        $("#selectedorg > option").each(function() {
+              selectedorg1.push(this.value);
+        });
+        var sorgname1 = [];
+        $("#sorgname > option").each(function() {
+              sorgname1.push(this.text);
+        });
+        var selectedorg = {"ds" : JSON.stringify(selectedorg1),"calculateto":$("#calculateto").val(),"orgcode":$("#orgcode").val(),"financialStart":$("#yearstart").val(),"orgtype":$("#orgtype").val()};
+        $.ajax({
           type: "POST",
-          url: "/showbalancesheetreport",
+          url: "/listoforgselected?type=orgselected",
           global: false,
           async: false,
           datatype: "text/html",
-          data: {"balancesheettype":"conventionalbalancesheet","calculateto":$("#cto").val(),"orgtype":sessionStorage.orgt},
-          beforeSend: function(xhr)
-          {
-            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          data: {"selectedorg" : JSON.stringify(selectedorg),"flag" : 1,"horgname" : $("#horgname").val(),"sorgname" : JSON.stringify(sorgname1)},
+          beforeSend: function(xhr) {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
           },
-        })
-        .done(function(resp)
-        {
-          $("#info").html(resp);
-        }
-      );
+          })
+          .done(function(resp){
+            $("#info").html(resp);
+          });
+      }
     }
     else {
       $("#showbalancesheet").click();
@@ -383,120 +447,4 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
     window.print();
   });
 
-
-    $("#consolidatebalance").click(function(){
-        $("#holdingorg").modal();
-        $.ajax({              //To retreive orgcode of current organisation.
-            type:"POST",
-            url:"/getorgcode",
-            global:false,
-            async:false,
-            datatype:"json",
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-            },
-            success: function(resp)
-            {
-                if(resp["gkstatus"]==0)
-                {
-                  console.log("success");
-                  orgdetails = resp["gkdata"];  //orgcode of organisation.
-                  console.log(orgdetails);
-                }
-                else if(resp["gkstatus"]==2)
-                {
-                  console.log("failure");
-                }
-            }
-        });
-    });
-
-    $("#yes").click(function(){
-        $("#listoforg").modal();
-        $.ajax({    //used to retreive organisations deatils [orgcode , orgname , orgtype]
-          type: "POST",
-          url: "/allorgcode?type=orgcodelist",
-          global: false,
-          async: false,
-          dataType: "json",
-          beforeSend: function(xhr) {
-              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-          },
-          success: function(resp) {
-            console.log("Success");
-            ListofOrgs = resp["gkresult"];
-            $('#list').empty();
-            $('#list').append('<option value="0" disabled selected hidden>List Of Organisations</option>');
-            $('#selected').append('<option value=" " disabled selected hidden>Selected Organisation</option>');
-            for (i in ListofOrgs ) {
-              if(orgdetails == ListofOrgs[i].orgcode) //To remove logged in organisation from dropdown list.
-              {
-                  console.log("Do Nothing");
-              }
-              else
-              {
-                  $('#list').append('<option value="' + ListofOrgs[i].orgcode + '">'+ ListofOrgs[i].orgname +'</option>');
-              }
-            }
-          }
-        });
-        });
-      var listofselectedorg = new Array();
-
-      $(document).off("change","#list").on('change', '#list', function(event) {
-      var selectedorg = $(this).find(':selected').text();//this will give the selected option's organisation
-      console.log(selectedorg);
-      console.log($("#list option:selected").val()); //gives the orgcode of selected organisation.
-      $("#authenticate").modal();
-      $(document).off("click","#submit").on('click', '#submit', function(event) {
-      $.ajax({  //used to authenticate the selected subsidiary organisation.
-            type: "POST",
-            url: "/userlogin",
-            global: false,
-            async: false,
-            datatype: "json",
-            data: {"username":$("#user").val(), "userpassword":$("#pwd").val(), "orgcode":$("#list option:selected").val()},
-            success: function(resp)
-            {
-              if(resp["gkstatus"]==0)
-              {
-                  $('#selected').append('<option value="" disabled>'+ $("#list option:selected").text() +'</option>'); //add selected organisation in the selected organisation dropdown.
-                  //$('#list').val(0);
-                  if($('#list').val() != 0)
-                  {
-                  listofselectedorg.push($('#list option:selected').val());
-                  $('#list option:selected').remove(); //to remove authenticated organisation from the list of organisation.
-                  }
-                  $('#list').val(0);
-                  console.log(listofselectedorg);
-                  alert("Organisation Authentication Successful");
-              }
-              else if (resp["gkstatus"]==2)
-              {
-                  alert("Organisation Authentication UnSuccessful");
-              }
-            }
-          });
-        });
-      });
-
-    $("#confirm").click(function(){
-      console.log($("#calculateto").val());
-      var selectedorg = {"ds" : JSON.stringify(listofselectedorg),"calculateto": $('#calculateto').val()};
-      $.ajax({
-        type: "POST",
-        url: "/listoforgselected?type=orgselected",
-        global: false,
-        async: false,
-        datatype: "text/html",
-        data: selectedorg,
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-        },
-        })
-        .done(function(resp){
-          $("#info").html(resp);
-        });
-    });
-
-  });
+});

@@ -168,6 +168,7 @@ def main(global_config, **settings):
 	config.add_route('lastfivegodowns', '/lastfivegodowns')
 	config.add_route('allorgcode','/allorgcode')
 	config.add_route('listoforgselected','/listoforgselected')
+	config.add_route('showconsolidationpopup','/showconsolidationpopup')
 
 	config.scan('gkwebapp')
 	return config.make_wsgi_app()
