@@ -357,7 +357,8 @@ $(document).ready(function() {
         }
     });
     $(document).off("keydown", ".tax_rate").on("keydown", ".tax_rate", function(event) {
-
+        $(".tax_rate").numeric();
+        $(".tax_rate").numeric({negative:false});
         var curindex1 = $(this).closest('tr').index();
         var nextindex1 = curindex1 + 1;
         var previndex1 = curindex1 - 1;
@@ -402,7 +403,8 @@ $(document).ready(function() {
                     '<input class="form-control input-sm tax_rate text-right"  placeholder="Rate">' +
                     '</td>' +
                     '</tr>');
-                $(".tax_rate").numeric();
+
+
                 $('#category_tax_table tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus().select();
 
             }
