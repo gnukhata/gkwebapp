@@ -298,7 +298,9 @@ def viewstockreport(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/products",headers=header)
 	result1 = requests.get("http://127.0.0.1:6543/godown",headers=header)
-	return{"gkresult":result.json()["gkresult"], "godown":result1.json()["gkresult"], "gkstatus":result.json()["gkstatus"]}
+	result2 = requests.get("http://127.0.0.1:6543/login", headers=header)
+	userrole = result2.json()["gkresult"]["userrole"]
+	return{"gkresult":result.json()["gkresult"], "godown":result1.json()["gkresult"], "gkstatus":result.json()["gkstatus"], "userrole":userrole}
 
 @view_config(route_name="product",request_param="type=showstockreport")
 def showstockreport(request):
@@ -492,7 +494,9 @@ def viewStockOnHandReport(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/products",headers=header)
 	result1 = requests.get("http://127.0.0.1:6543/godown",headers=header)
-	return{"gkresult":result.json()["gkresult"], "godown":result1.json()["gkresult"], "gkstatus":result.json()["gkstatus"]}
+	result2 = requests.get("http://127.0.0.1:6543/login", headers=header)
+	userrole = result2.json()["gkresult"]["userrole"]
+	return{"gkresult":result.json()["gkresult"], "godown":result1.json()["gkresult"], "gkstatus":result.json()["gkstatus"], "userrole":userrole}
 
 
 @view_config(route_name="product",request_param="type=showstockonhandreport")
