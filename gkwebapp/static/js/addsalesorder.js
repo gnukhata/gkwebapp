@@ -281,9 +281,39 @@ $(document).ready(function() {
      $(document).off("keydown",".product_name").on("keydown",".product_name",function(event)
      {
        var curindex = $(this).closest('tr').index();
+       var nextindex = curindex+1;
+       var previndex = curindex-1;
        if (event.which==13) {
          event.preventDefault();
          $('#salesorder_product_table tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
+       }
+       if (event.which==188 && event.shiftKey)
+       {
+         event.preventDefault();
+         if (curindex==0) {
+           $("#so_togodown").focus();
+         }
+         else{
+           $('#salesorder_product_table tbody tr:eq('+previndex+') td:eq(0) select').focus().select();
+         }
+       }
+       if(event.which==190 && event.shiftKey)
+       {
+         event.preventDefault();
+         $('#salesorder_product_table tbody tr:eq('+nextindex+') td:eq(0) select').focus().select();
+       }
+       else if (event.which==188 && event.ctrlKey) {
+         event.preventDefault();
+         if ($('#salesorder_product_table tbody tr:eq('+previndex+') td:eq(4) input').is(':disabled')) {
+           $('#salesorder_product_table tbody tr:eq('+previndex+') td:eq(3) input').focus().select();
+         }
+         else {
+           $('#salesorder_product_table tbody tr:eq('+previndex+') td:eq(4) input').focus().select();
+         }
+       }
+       else if (event.which==190 && event.ctrlKey) {
+         $('#salesorder_product_table tbody tr:eq('+curindex+') td:eq(1) input').focus();
+         event.preventDefault();
        }
      });
      $(document).off('focus', '.salesorder_product_quantity').on('focus', '.salesorder_product_quantity', function(event) {
@@ -291,12 +321,33 @@ $(document).ready(function() {
        /* Act on the event */
        $(".salesorder_product_quantity").numeric({ negative : false });
      });
+
      $(document).off("keydown",".salesorder_product_quantity").on("keydown",".salesorder_product_quantity",function(event)
      {
        var curindex = $(this).closest('tr').index();
+       var nextindex = curindex+1;
+       var previndex = curindex-1;
        if (event.which==13) {
          event.preventDefault();
          $('#salesorder_product_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
+       }
+       if (event.which==188 && event.shiftKey)
+       {
+          event.preventDefault();
+           $('#salesorder_product_table tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
+       }
+       if(event.which==190 && event.shiftKey)
+       {
+         event.preventDefault();
+         $('#salesorder_product_table tbody tr:eq('+nextindex+') td:eq(1) input').focus().select();
+       }
+       else if (event.which==188 && event.ctrlKey) {
+         event.preventDefault();
+         $('#salesorder_product_table tbody tr:eq('+curindex+') td:eq(0) select').focus().select();
+       }
+       else if (event.which==190 && event.ctrlKey) {
+         $('#salesorder_product_table tbody tr:eq('+curindex+') td:eq(2) input').focus();
+         event.preventDefault();
        }
      });
 
@@ -309,9 +360,29 @@ $(document).ready(function() {
    $(document).off("keydown",".salesorder_product_packages").on("keydown",".salesorder_product_packages",function(event)
    {
      var curindex = $(this).closest('tr').index();
+     var nextindex = curindex+1;
+     var previndex = curindex-1;
        if (event.which==13) {
          event.preventDefault();
          $('#salesorder_product_table tbody tr:eq('+curindex+') td:eq(3) input').focus().select();
+       }
+       if (event.which==188 && event.shiftKey)
+       {
+          event.preventDefault();
+           $('#salesorder_product_table tbody tr:eq('+previndex+') td:eq(2) input').focus().select();
+       }
+       if(event.which==190 && event.shiftKey)
+       {
+         event.preventDefault();
+         $('#salesorder_product_table tbody tr:eq('+nextindex+') td:eq(2) input').focus().select();
+       }
+       else if (event.which==188 && event.ctrlKey) {
+         event.preventDefault();
+         $('#salesorder_product_table tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
+       }
+       else if (event.which==190 && event.ctrlKey) {
+         $('#salesorder_product_table tbody tr:eq('+curindex+') td:eq(3) input').focus();
+         event.preventDefault();
        }
 
    });
@@ -321,17 +392,6 @@ $(document).ready(function() {
        /* Act on the event */
        $(".salesorder_product_per_price").numeric({ negative : false });
      });
-
-     $(document).off("keydown",".salesorder_product_per_price").on("keydown",".salesorder_product_per_price",function(event)
-     {
-       var curindex = $(this).closest('tr').index();
-       if (event.which==13) {
-         event.preventDefault();
-         $('#salesorder_product_table tbody tr:eq('+curindex+') td:eq(3) input').focus().select();
-       }
-     });
-
-
 
      $(document).off('blur', '.salesorder_product_per_price').on('blur', '.salesorder_product_per_price', function(event) {
        event.preventDefault();
@@ -435,8 +495,32 @@ $(document).ready(function() {
          }
        }
        }
+       if (event.which==188 && event.shiftKey)
+       {
+          event.preventDefault();
+           $('#salesorder_product_table tbody tr:eq('+previndex+') td:eq(3) input').focus().select();
+       }
+       if(event.which==190 && event.shiftKey)
+       {
+         event.preventDefault();
+         $('#salesorder_product_table tbody tr:eq('+nextindex1+') td:eq(3) input').focus().select();
+       }
+       else if (event.which==188 && event.ctrlKey) {
+         event.preventDefault();
+         $('#salesorder_product_table tbody tr:eq('+curindex1+') td:eq(2) input').focus().select();
+       }
+       else if (event.which==190 && event.ctrlKey) {
+         if ($('#salesorder_product_table tbody tr:eq('+curindex1+') td:eq(4) input').is(':disabled')) {
+           $('#salesorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
+         }
+         else {
+           $('#salesorder_product_table tbody tr:eq('+curindex1+') td:eq(4) input').focus();
+         }
+         event.preventDefault();
+       }
 
    });
+
    $(document).off("keydown",".salesorder_product_tax_rate").on("keydown",".salesorder_product_tax_rate",function(event)
    {
      var curindex1 = $(this).closest('tr').index();
@@ -499,6 +583,25 @@ $(document).ready(function() {
        }
        }
 
+     }
+
+     if (event.which==188 && event.shiftKey)
+     {
+        event.preventDefault();
+         $('#salesorder_product_table tbody tr:eq('+previndex1+') td:eq(4) input').focus().select();
+     }
+     if(event.which==190 && event.shiftKey)
+     {
+       event.preventDefault();
+       $('#salesorder_product_table tbody tr:eq('+nextindex1+') td:eq(4) input').focus().select();
+     }
+     else if (event.which==188 && event.ctrlKey) {
+       event.preventDefault();
+       $('#salesorder_product_table tbody tr:eq('+curindex1+') td:eq(3) input').focus().select();
+     }
+     else if (event.which==190 && event.ctrlKey) {
+       event.preventDefault();
+       $('#salesorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
      }
 
  });
