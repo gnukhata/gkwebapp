@@ -491,11 +491,40 @@ $(document).ready(function() {
   $(document).off("keydown",".product_name").on("keydown",".product_name",function(event)
   {
     var curindex = $(this).closest('tr').index();
+    var nextindex = curindex+1;
+    var previndex = curindex-1;
     if (event.which==13) {
       event.preventDefault();
       $('#purchaseorder_product_table tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
     }
-
+    if (event.which==188 && event.shiftKey)
+    {
+      event.preventDefault();
+      if (curindex==0) {
+        $("#po_togodown").focus();
+      }
+      else{
+        $('#purchaseorder_product_table tbody tr:eq('+previndex+') td:eq(0) select').focus().select();
+      }
+    }
+    if(event.which==190 && event.shiftKey)
+    {
+      event.preventDefault();
+      $('#purchaseorder_product_table tbody tr:eq('+nextindex+') td:eq(0) select').focus().select();
+    }
+    else if (event.which==188 && event.ctrlKey) {
+      event.preventDefault();
+      if ($('#purchaseorder_product_table tbody tr:eq('+previndex+') td:eq(4) input').is(':disabled')) {
+        $('#purchaseorder_product_table tbody tr:eq('+previndex+') td:eq(3) input').focus().select();
+      }
+      else {
+        $('#purchaseorder_product_table tbody tr:eq('+previndex+') td:eq(4) input').focus().select();
+      }
+    }
+    else if (event.which==190 && event.ctrlKey) {
+      event.preventDefault();
+      $('#purchaseorder_product_table tbody tr:eq('+curindex+') td:eq(1) input').focus();
+    }
   });
 
   $(document).off('focus', '.purchaseorder_product_quantity').on('focus', '.purchaseorder_product_quantity', function(event) {
@@ -506,9 +535,29 @@ $(document).ready(function() {
   $(document).off("keydown",".purchaseorder_product_quantity").on("keydown",".purchaseorder_product_quantity",function(event)
   {
     var curindex = $(this).closest('tr').index();
+    var nextindex = curindex+1;
+    var previndex = curindex-1;
     if (event.which==13) {
       event.preventDefault();
       $('#purchaseorder_product_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
+    }
+    if (event.which==188 && event.shiftKey)
+    {
+       event.preventDefault();
+        $('#purchaseorder_product_table tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
+    }
+    if(event.which==190 && event.shiftKey)
+    {
+      event.preventDefault();
+      $('#purchaseorder_product_table tbody tr:eq('+nextindex+') td:eq(1) input').focus().select();
+    }
+    else if (event.which==188 && event.ctrlKey) {
+      event.preventDefault();
+      $('#purchaseorder_product_table tbody tr:eq('+curindex+') td:eq(0) select').focus().select();
+    }
+    else if (event.which==190 && event.ctrlKey) {
+      event.preventDefault();
+      $('#purchaseorder_product_table tbody tr:eq('+curindex+') td:eq(2) input').focus();
     }
   });
 
@@ -521,7 +570,8 @@ $(document).ready(function() {
   $(document).off("keydown",".purchaseorder_product_packages").on("keydown",".purchaseorder_product_packages",function(event)
   {
     var curindex = $(this).closest('tr').index();
-
+    var nextindex = curindex+1;
+    var previndex = curindex-1;
     if (event.which==13) {
       event.preventDefault();
       var noofproductpackages = $(".purchaseorder_product_packages").val();
@@ -533,6 +583,24 @@ $(document).ready(function() {
         $('#purchaseorder_product_table tbody tr:eq('+curindex+') td:eq(4) input').focus().select();
       }
 
+    }
+    if (event.which==188 && event.shiftKey)
+    {
+       event.preventDefault();
+        $('#purchaseorder_product_table tbody tr:eq('+previndex+') td:eq(2) input').focus().select();
+    }
+    if(event.which==190 && event.shiftKey)
+    {
+      event.preventDefault();
+      $('#purchaseorder_product_table tbody tr:eq('+nextindex+') td:eq(2) input').focus().select();
+    }
+    else if (event.which==188 && event.ctrlKey) {
+      event.preventDefault();
+      $('#purchaseorder_product_table tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
+    }
+    else if (event.which==190 && event.ctrlKey) {
+      event.preventDefault();
+      $('#purchaseorder_product_table tbody tr:eq('+curindex+') td:eq(4) input').focus();
     }
 
   });
@@ -619,6 +687,24 @@ $(document).ready(function() {
       }
     }
     }
+    if (event.which==188 && event.shiftKey)
+    {
+       event.preventDefault();
+        $('#purchaseorder_product_table tbody tr:eq('+previndex1+') td:eq(5) input').focus().select();
+    }
+    if(event.which==190 && event.shiftKey)
+    {
+      event.preventDefault();
+      $('#purchaseorder_product_table tbody tr:eq('+nextindex1+') td:eq(5) input').focus().select();
+    }
+    else if (event.which==188 && event.ctrlKey) {
+      event.preventDefault();
+      $('#purchaseorder_product_table tbody tr:eq('+curindex1+') td:eq(4) input').focus().select();
+    }
+    else if (event.which==190 && event.ctrlKey) {
+      event.preventDefault();
+      $('#purchaseorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
+    }
   });
 
   $(document).off("keydown",".purchaseorder_product_per_price").on("keydown",".purchaseorder_product_per_price",function(event){
@@ -690,7 +776,29 @@ $(document).ready(function() {
       }
       }
     }
-
+    if (event.which==188 && event.shiftKey)
+    {
+       event.preventDefault();
+        $('#purchaseorder_product_table tbody tr:eq('+previndex1+') td:eq(4) input').focus().select();
+    }
+    if(event.which==190 && event.shiftKey)
+    {
+      event.preventDefault();
+      $('#purchaseorder_product_table tbody tr:eq('+nextindex1+') td:eq(4) input').focus().select();
+    }
+    else if (event.which==188 && event.ctrlKey) {
+      event.preventDefault();
+      $('#purchaseorder_product_table tbody tr:eq('+curindex1+') td:eq(2) input').focus().select();
+    }
+    else if (event.which==190 && event.ctrlKey) {
+      event.preventDefault();
+      if ($('#purchaseorder_product_table tbody tr:eq('+curindex1+') td:eq(5) input').is(':disabled')) {
+        $('#purchaseorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
+      }
+      else {
+        $('#purchaseorder_product_table tbody tr:eq('+curindex1+') td:eq(5) input').focus();
+      }
+    }
   });
 
   $(document).off('blur', '.purchaseorder_product_tax_rate').on('blur', '.purchaseorder_product_tax_rate', function(event) {

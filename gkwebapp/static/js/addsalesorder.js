@@ -510,13 +510,13 @@ $(document).ready(function() {
          $('#salesorder_product_table tbody tr:eq('+curindex1+') td:eq(2) input').focus().select();
        }
        else if (event.which==190 && event.ctrlKey) {
+         event.preventDefault();
          if ($('#salesorder_product_table tbody tr:eq('+curindex1+') td:eq(4) input').is(':disabled')) {
            $('#salesorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
          }
          else {
            $('#salesorder_product_table tbody tr:eq('+curindex1+') td:eq(4) input').focus();
          }
-         event.preventDefault();
        }
 
    });
