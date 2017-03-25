@@ -35,15 +35,33 @@ $(document).ready(function()
   sessionStorage.newgodownaddress = "";
   $(document).off("keydown","#godownname").on("keydown", "#godownname",function(e){
     if (e.which == 13) {
-      e.preventDefault();
-      $("#godownstate").focus();
-    }
-  });
+    	 e.preventDefault();
+         if ($.trim($("#godownname").val())=="") {
+             $("#godownname-blank-alert").alert();
+             $("#godownname-blank-alert").fadeTo(2250, 200).slideUp(500, function(){
+               $("#godownname-blank-alert").hide();
+             });
+             $("#godownname").focus();
+             return false;
+           }
+         else {
+         $("#godownstate").focus(); 
+         }
+       }
+     });
   $(document).off("keydown","#godownstate").on("keydown", "#godownstate",function(e){
-    if (e.which == 13) {
-      e.preventDefault();
-      $("#godownaddress").focus();
-    }
+	  if (e.which == 13) {
+	    	if ($.trim($("#godownstate").val())=="") {
+		        $("#stateblank-alert").alert();
+		        $("#stateblank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		          $("#stateblank-alert").hide();
+		        });
+		        $("#godownstate").focus();
+		        return false;
+		      }
+	      e.preventDefault();
+	      $("#godownaddress").focus();
+	    }
     if (e.which == 38 && ($("#godownstate option:selected").index()==1 || $("#godownstate option:selected").index()==0)) {
       $("#godownname").focus();
     }
@@ -54,7 +72,15 @@ $(document).ready(function()
         if (e.which == 13) {
           var thisKeypressTime = new Date();
           if ( thisKeypressTime - lastKeypressTime <= delta )
-          {
+          {if ($.trim($("#godownaddress").val())=="") {
+              $("#addressblank-alert").alert();
+              $("#addressblank-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#addressblank-alert").hide();
+              });
+              $("godownaddress").focus();
+              return false;
+          }
+          
             $("#godowncontactname").focus();
             thisKeypressTime = 0;
           }

@@ -24,7 +24,7 @@
 
         				{% trans %}Godown could not be created.{% endtrans %}
         			</div>
-
+        			
         			<div class="alert alert-danger" id="duplicate-alert"  aria-live="rude" role="alert" hidden>
 
         				{% trans %}Godown already exists!{% endtrans %}
@@ -40,8 +40,10 @@
         				</div>
         				<div class="alert alert-danger" id="stateblank-alert"  aria-live="rude" role="alert" hidden>
 
-        					{% trans %}Please select state!{% endtrans %}
+        					{% trans %}Please Select State!{% endtrans %}
         				</div>
+        				
+        				
         				<div class="form-group">
         					<label for="godownstate" id="godnstate">{% trans %}State{% endtrans %} : </label>
         					<select id="godownstate" class="form-control input-sm">
