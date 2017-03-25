@@ -545,8 +545,8 @@ else {
    $("#viewpurchaseorder").click(function(event) {
      /* Act on the event */
      event.stopPropagation();
-     $("#dcmain").toggleClass('collapse');
-     $("#purchaseordercollapsediv").toggleClass('collapse');
+     $("#dcmain").toggle();
+     $("#purchaseordercollapsediv").toggle();
      $.ajax({
        url: '/purchaseorder?type=showview',
        type: "POST",
@@ -570,11 +570,8 @@ else {
    });
    $("#backtodcin").click(function(event) {
      /* Act on the event */
-     $("#dcmain").toggleClass('collapse');
-     $("#purchaseordercollapsediv").toggleClass('collapse');
-   });
-
-   $("#dcmain").on('shown.bs.collapse', function(event) {
+     $("#dcmain").toggle();
+     $("#purchaseordercollapsediv").toggle();
      $("#deliverychallan_challanno").focus();
      $('#purchaseorderdiv').html("");
    });
@@ -582,8 +579,8 @@ else {
    $("#viewsalesorder").click(function(event) {
      /* Act on the event */
      event.stopPropagation();
-     $("#dcmain").toggleClass('collapse');
-     $("#salesordercollapsediv").toggleClass('collapse');
+     $("#dcmain").toggle();
+     $("#salesordercollapsediv").toggle();
      $.ajax({
        url: '/salesorder?type=showview',
        type: "POST",
@@ -607,11 +604,8 @@ else {
    });
    $("#backtodcout").click(function(event) {
      /* Act on the event */
-     $("#dcmain").toggleClass('collapse');
-     $("#salesordercollapsediv").toggleClass('collapse');
-   });
-
-   $("#dcmain").on('shown.bs.collapse', function(event) {
+     $("#dcmain").toggle();
+     $("#salesordercollapsediv").toggle();
      $("#deliverychallan_challanno").focus();
      $('#salesorderdiv').html("");
    });

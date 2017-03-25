@@ -12,7 +12,7 @@
 
       {% trans %}Duplicate Note no.!{% endtrans %}
     </div>
-    <div id="purchaseordercollapsediv" class="collapse">
+    <div id="purchaseordercollapsediv" hidden>
       <div id="purchaseorderdiv" class="row">
 
       </div>
@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-    <div id="salesordercollapsediv" class="collapse">
+    <div id="salesordercollapsediv" hidden>
       <div id="salesorderdiv" class="row">
 
       </div>
@@ -252,7 +252,6 @@
          {% trans %}Attac<u>h</u>{% endtrans %}
        </label>
        <span class='label label-info' id="upload-file-info"></span>
-       <button class="btn btn-info btn-sm" id="viewpurchaseorder">{% trans %}View Purchase Order{% endtrans %}</button>
         {% if gkstatus=="out" %}
       <button class="btn btn-info btn-sm" id="viewsalesorder">{% trans %}View Sales Order{% endtrans %}</button>
       {% else %}
