@@ -23,6 +23,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Abhijith Balan" <abhijithb21@openmailbox.org>
+"Mohd. Talha Pawaty" <mtalha456@gmail.com>
 */
 /*
 This script is for the view page of stock report.

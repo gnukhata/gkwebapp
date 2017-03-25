@@ -26,6 +26,7 @@ Contributors:
 "Abhijith Balan" <abhijithb21@openmailbox.org>
 "Parabjyot Singh" <parabjyot1996@gmail.com>
 "Rahul Chaurasiya" <crahul4133@gmail.com>
+"Mohd. Talha Pawaty" <mtalha456@gmail.com>
 */
 // This script is for the mainshell page and loads when the main page of GNUKhata is loaded.
 // Also all the external js libraries we have used is loaded along with the mainshell.
