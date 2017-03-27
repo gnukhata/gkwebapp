@@ -64,12 +64,12 @@
 
             <label >{% trans %}Godown Must be Selected!{% endtrans %}</label>
           </div>
-          
+
            <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
 
             {% trans %}Please enter date between transfer note creation and end of financial year!{% endtrans %}
           </div>
-          
+
           <div class="alert alert-danger" id="product-blank-alert"  aria-live="rude" role="alert" hidden>
 
             <label >{% trans %}Please select a product!{% endtrans %}</label>
@@ -111,11 +111,11 @@
               <label >{% trans %}Date:{% endtrans %}</label> <label id="rec_transfernote_date"></label>
               </br>
             </br>
-           
+
       <div class="form-group">
        <div class="form-inline">
               <label for="received_transfernote_date">{% trans %}Received Date:{% endtrans %}</label>
-             
+
                 <form class="form-inline">
                   <div class="form-group">
                     <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="DD" id="received_tn_date" accesskey="v">
@@ -129,9 +129,9 @@
                 </form>
               </div>
             </div>
-            
+
               </div>
-            
+
             <div class="form-group hidden-load" hidden>
               <div class="panel">
                 <table id="transfernote_product_table" class="table table-condensed table-borderd fixed-table">
@@ -149,13 +149,13 @@
               </div>
             </div>
           </div>
-           
-           
+
+
             <div class="col-md-6" id="rec_transfernote_godown_div">
               </br>
          		<table class="table" border="0">
          		<tbody>
-             	
+
               		<div class="form-group hidden-load" hidden>
               <tr>
 					<td>
@@ -166,8 +166,8 @@
                 		 </td>
                 		   </tr>
               	</div>
-            
-            
+
+
             <div class="form-group hidden-load" hidden>
               <tr>
 			<td><label >{% trans %} From Godown : {% endtrans %}</label>
@@ -176,40 +176,40 @@
               </td>
             </div>
             </tr>
-            
+
             <div class="form-group hidden-load" hidden>
               <tr>
               <td><label >{% trans %} To Godown : {% endtrans %}</label>
               </td>
               <td> <label id="rec_tn_to_godown"></label>
               </td>
-            </tr>  
+            </tr>
             </div>
-            
+
             <div class="form-group hidden-load" hidden>
-            
+
             <tr>
                    <td><label>{% trans %} Mode of Transport : {% endtrans %}</label></td>
               <td> <label  id="rec_transport_mode"></label></td>
             </tr>
             </div>
-			
-			
+
+
           <div class="form-group hidden-load" hidden>
             <tr>
             <td><label>{% trans %} Name of Issuer :{% endtrans %}</label></td>
              <td> <label  id="rec_name_issuer"></label></td>
           </tr>
           </div>
-          
-          
+
+
         <div class="form-group hidden-load" hidden>
           <tr>
           <td><label >{% trans %} Designation : {% endtrans %}</label></td><td> <label id="rec_designation"></label></td>
         </tr>
         </div>
-        
-        
+
+
         <div class="form-group hidden-load" hidden>
         <tr>
           <td><label >{% trans %} Status : {% endtrans %}</label></td><td> <label id="recstatus"></label></td>
@@ -217,13 +217,13 @@
         </tr>
       </form>
       </div>
-      
+
     </div>
     </tbody>
       </table>
-      
+
       <div class="panel-footer hidden-load" hidden>
-    <button id="rec_received" class="btn btn-primary btn-sm" >{% trans %}Received{% endtrans %}</button>
+    <button id="rec_received" class="btn btn-success btn-sm" >{% trans %}Received{% endtrans %}</button>
     <button id="rec_cancel" class="btn btn-danger btn-sm" >{% trans %}Cancel{% endtrans %}</button>
     <button id="tn_editprint" class="btn btn-primary btn-sm" >{% trans %}Print{% endtrans %}</button>
       </div>
