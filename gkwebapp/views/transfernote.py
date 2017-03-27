@@ -24,6 +24,7 @@
 	"Ishan Masdekar " <imasdekar@dff.org.in>
 	"Navin Karkera" <navin@dff.org.in>
 	"Sachin Patil" <sachpatil@openmailbox.org>
+	"Mohd. Talha Pawaty" <mtalha456@gmail.com>
 """
 from pyramid.view import view_config
 import requests, json

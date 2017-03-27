@@ -439,6 +439,9 @@ $(document).ready(function(){
         if(resp["gkresult"]["userrole"]==3){
           $("#godown").remove();
         }
+        if (resp["gkresult"]["userrole"]==3) {
+          $("#purchaseorder").remove();
+        }
         if(resp["gkresult"]["userrole"]==3){
           $("#transaction").remove();
         }
