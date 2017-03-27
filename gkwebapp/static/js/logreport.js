@@ -33,3 +33,6 @@ $(document).ready(function() {
     $("#showviewlog").click();
   });
 });
+$("#printlogreport").click(function(event) {
+  window.print();
+});
