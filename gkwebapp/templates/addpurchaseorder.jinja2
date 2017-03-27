@@ -49,6 +49,12 @@
        <div class="alert alert-danger" id="designation-blank-alert"  aria-live="rude" role="alert" hidden>
        {% trans %}Please enter designation!{% endtrans %}
        </div>
+       <div class="alert alert-danger" id="packages-main-alert"  aria-live="rude" role="alert" hidden>
+       {% trans %}Please enter valid number of packages!{% endtrans %}
+       </div>
+       <div class="alert alert-danger" id="supplier-blank-alert"  aria-live="rude" role="alert" hidden>
+       {% trans %}Please select a supplier!{% endtrans %}
+       </div>
        <div class="container-fluid">
          <div class="row">
            <div class="col-md-2">
@@ -106,7 +112,7 @@
              			<input style="border-radius: 4px" id="creditperiod" type="text" class="form-control input-sm" name="creditperiod"></input>
              		</div>
                </div>
-               <div class="col-md-1">
+               <div class="col-md-2">
          					<label for="purchaseorder_supplier">
          						{% trans %}Supplier{% endtrans %} :
          					</label>
@@ -119,7 +125,7 @@
          							{% endfor %}
          					</select>
          </div>
-         <div class="col-md-3">
+         <div class="col-md-2">
                    <div class="form-group">
                      <label for="purchaseorder_supplieraddr">
                        {% trans %}Supplier Address{% endtrans %} :
@@ -225,7 +231,7 @@
          					<input type="text" class="form-control input-sm text-right purchaseorder_product_packages" value="0.00">
          			</td>
               <td class="col-md-2">
-                <button class="btn btn-info btn-sm purchaseorder_product_schedule" id="addschedule" data-toggle="modal" data-target="#addpomodal" disabled>{% trans %}Add Schedule{% endtrans %}</button>
+                <button class="btn btn-info btn-sm purchaseorder_product_schedule"  data-toggle="modal" data-target="#addpomodal" disabled>{% trans %}Add Schedule{% endtrans %}</button>
               </td>
               <td class="col-md-2">
                 <input type="text" class=" form-control input-sm text-right numtype purchaseorder_product_per_price" value="0.00" placeholder="0.00">
@@ -241,32 +247,35 @@
          </table>
          </div>
          </div>
+         <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Ctrl + < or Ctrl + >' to navigate within a row and 'Shift + <' or 'Shift + >' to navigate within a column. Press 'Shift + <' from Product of first row to switch focus to To Godown. Press 'Enter' key from last field for a new row.{% endtrans %}</small>
          		<div class="panel-footer">
          			<div class="container-fluid">
          				<button type="submit" class="btn btn-success btn-sm" id="posubmit" name="submit">{% trans %}Save{% endtrans %}</button>
          				<button id="poreset" class="btn btn-warning btn-sm">{% trans %}Reset{% endtrans %}</button>
          			</div>
-               <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
-                 <div class="vertical-alignment-helper">
-                   <div class="modal-dialog modal-sm vertical-align-center">
-                     <div class="modal-content">
-                       <div class="modal-header">
-                         <h4 class="modal-title">{% trans %}Save?{% endtrans %}</h4>
-                       </div>
-                       <div class="modal-body">
-                         <p>{% trans %}Are you sure?{% endtrans %}</p>
-                       </div>
-                       <div class="modal-footer">
-                         <button type="button" id ="po_save_no" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
-                         <button type="button" id="po_save_yes" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
-                       </div>
-                     </div><!-- /.modal-content -->
-                   </div><!-- /.modal-dialog -->
-                 </div>
-               </div><!-- /.modal -->
        </div>
 		</div>
 </div>
+<!-- Confirm Yes/No Modal -->
+<div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
+  <div class="vertical-alignment-helper">
+    <div class="modal-dialog modal-sm vertical-align-center">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">{% trans %}Save?{% endtrans %}</h4>
+        </div>
+        <div class="modal-body">
+          <p>{% trans %}Are you sure?{% endtrans %}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id ="po_save_no" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
+          <button type="button" id="po_save_yes" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div>
+</div><!-- /.modal -->
+
 <!-- Add schedule popup modal-->
 <div id="addpomodal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
@@ -290,7 +299,7 @@
 
              {% trans %}Please enter date within the financial year!{% endtrans %}
            </div>
-           <div class="alert alert-success" id="packages-alert"  aria-live="rude" role="alert" hidden>
+           <div class="alert alert-danger" id="packages-alert"  aria-live="rude" role="alert" hidden>
            {% trans %}Please enter valid number of packages!{% endtrans %}
            </div>
 
@@ -330,6 +339,7 @@
       </div>
     </div>
     <small id="exithelp" class="form-text text-muted">{% trans %}Press Esc key to save schedule. {% endtrans %}</small><br>
+    <small id="exithelp1" class="form-text text-muted">{% trans %}Press Enter key to add a new row. {% endtrans %}</small><br>
     <small id="navigate" class="form-text text-muted">Press 'Tab' and 'Shift + Tab' to navigate through fields.</small>
   </div>
   <div class="modal-footer">
