@@ -56,10 +56,10 @@
 
   <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{stockrefresh["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{stockrefresh["calculateto"]}}</strong></span>
   {% if godown == "" %}
-  <span style="margin:auto; display:block; width:100px"><i>{% trans %}Product Report{% endtrans %}</i></span>
+  <span style="margin:auto; display:table;"><i>{% trans %}Product Report{% endtrans %}</i></span>
   <span style="margin:auto; display:table;"><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
   {% else %}
-  <span style="margin:auto; display:block; width:200px"><i>{% trans %}Godown Wise Product Report{% endtrans %}</i></span>
+  <span style="margin:auto; display:table;"><i>{% trans %}Godown Wise Product Report{% endtrans %}</i></span>
   <span style="margin:auto; display:table;"><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong><i>  {% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong></span>
   {% endif %}
 
