@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>{% trans %}GNUKhata{% endtrans %}</title>
+</head>
+<body>
+<div id="holdingorg" class="modal fade" tabindex="-1" role="dialog">
+  <div class="vertical-alignment-helper">
+    <div class="modal-dialog modal-lg vertical-align-center">
+      <div class="modal-content">
+        <div class="modal-header">
+
+          <h4 class="modal-title">{% trans %}Select Holding Organisation{% endtrans %}</h4>
+        </div>
+        <div class="modal-body">
+          <div id="existingorg" class="mainbox">
+            <div class="alert alert-danger" id="selorg-blank-alert" hidden>
+
+              {% trans %}Please select organisation!{% endtrans %}
+            </div>
+        <select id="holdingorglist" style="width:350px">
+        </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id ="confirm1" class="btn">{% trans %}Confirm{% endtrans %}</button>
+          <button type="button" id="cancel1" data-dismiss="modal" class="btn">{% trans %}Cancel{% endtrans %}</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div>
+</div><!-- /.modal -->
+</div>
+
+<div id="listoforg" class="modal fade" tabindex="-1" role="dialog">
+<div class="vertical-alignment-helper">
+  <div class="modal-dialog modal-lg vertical-align-center">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title">{% trans %}Select subsidiary organization{% endtrans %}</h4>
+      </div>
+      <div class="modal-body">
+        <div id="existingorg1" class="mainbox">
+          <div class="alert alert-danger" id="selorg-blank-alert1" hidden>
+
+            {% trans %}Please select organisation!{% endtrans %}
+          </div>
+        <select id="list" name="test[]" style="width:350px">
+        </select>
+        <select id="selected" name="selectedorg" style="width:350px">
+        </select>
+       </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id ="confirm" class="btn">{% trans %}Confirm{% endtrans %}</button>
+        <button type="button" id="cancel" data-dismiss="modal" class="btn">{% trans %}Cancel{% endtrans %}</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+</div><!-- /.modal -->
+</div>
+
+<div id="authenticate" class="modal fade" tabindex="-1" role="dialog">
+<div class="vertical-alignment-helper">
+  <div class="modal-dialog modal-sm vertical-align-center">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{% trans %}Authentication for the selected organisation{% endtrans %}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
+            Organisation Authentication Successful.
+          </div>
+        </div>
+        <div class="container-fluid">
+          <div class="alert alert-danger" id="danger-alert"  aria-live="rude" role="alert" hidden>
+            Organisation Authentication UnSuccessful.
+          </div>
+        </div>
+        <label>UserName:</label><input type="textbox" id="user"/>
+        <label>Password:</label><input type="password" id="pwd"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id ="submit" class="btn">{% trans %}Submit{% endtrans %}</button>
+        <button type="button" id="cancel" data-dismiss="modal" class="btn">{% trans %}Cancel{% endtrans %}</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+</div><!-- /.modal -->
+
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/showconsolidationpopup.js')}}"></script>
+</body>
+</html>

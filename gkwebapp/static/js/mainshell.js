@@ -24,6 +24,8 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Dinesh Sutar" <dinesh.sutar@openmailbox.org>
 "Abhijith Balan" <abhijithb21@openmailbox.org>
+"Parabjyot Singh" <parabjyot1996@gmail.com>
+"Rahul Chaurasiya" <crahul4133@gmail.com>
 */
 // This script is for the mainshell page and loads when the main page of GNUKhata is loaded.
 // Also all the external js libraries we have used is loaded along with the mainshell.
@@ -473,6 +475,8 @@ $.ajax({
 });
 });
 
+
+
 $('#godown').click(function (e) {
 // Loads godown page in the main div.
  $.ajax({
@@ -579,6 +583,31 @@ $.ajax({
   console.log("complete");
 });
 });
+
+$('#purchaseorder').click(function (e) {
+
+  console.log("jdh");
+             $.ajax({
+               url: '/purchaseorder?type=tab',
+               type: 'POST',
+               global: false,
+               async: false,
+               datatype: 'text/html',
+               beforeSend: function(xhr)
+               {
+                 xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+               }
+             })
+             .done(function(resp) {
+               $("#info").html(resp);
+             })
+             .fail(function() {
+               console.log("error");
+             })
+             .always(function() {
+               console.log("complete");
+             });
+     });
 
 $("#searchcategory").click(function (e){
 // opens a modal showing the topmost categories.
@@ -745,8 +774,51 @@ $.ajax({
       }
       );
 
+      $('#consolidatedbalancesheet').click(function (e) {
+        console.log("click");
+        $.ajax(
+          {
+          type: "POST",
+          url: "/showconsolidationpopup",
+          global: false,
+          async: false,
+          datatype: "text/html",
+          beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            },
+          success: function(resp)
+          {
+            $("#info").html(resp);
+            $("#holdingorg").modal("show");
+          }
+          });
+          $('#holdingorg').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
+          {
+             console.log("modal");
+             $.ajax({              //To retreive org details.
+                type:"POST",
+                url:"/allorgcode?type=orgcodelist",
+                global:false,
+                async:false,
+                datatype:"json",
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                },
+                success: function(resp)
+                {
+                  ListofOrgs = resp["gkresult"];
+                  $('#holdingorglist').empty();
+                  $('#holdingorglist').append('<option value="0" disabled selected hidden>List Of Organisations</option>');
+                  for(i in ListofOrgs)
+                  {
+                  $('#holdingorglist').append('<option value="' + ListofOrgs[i].orgcode + '">'+ ListofOrgs[i].orgname +'</option>');
+                  }
+                }
+            })
+          })
 
-
+        });
 
     $('#listofaccounts').click(function (e) {
   // calls list of accounts report.

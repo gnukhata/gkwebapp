@@ -108,8 +108,8 @@ def orglogin(request):
 
 @view_config(route_name="userlogin",renderer="json")
 def selectorglogin(request):
-
     gkdata = {"username":request.params["username"], "userpassword":request.params["userpassword"],"orgcode":request.params["orgcode"]}
+#    print gkdata
     result = requests.post("http://127.0.0.1:6543/login", data =json.dumps(gkdata))
     if result.json()["gkstatus"]==0:
         header = result.json()["token"]

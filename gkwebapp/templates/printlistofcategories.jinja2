@@ -30,7 +30,7 @@
   <span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>{% trans %}List of Categories{% endtrans %}</strong></span>
 
   <div class="table-responsive printorgdetails">
-    <table class="table table-condensed table-bordered table-striped shadow">
+    <table id="latable" class="table table-condensed table-bordered table-striped shadow">
       <thead class="bg-primary">
         <tr class="visible-print">
           <th colspan="4" style="text-align:center; font-size:80%;">
@@ -42,10 +42,10 @@
             {% trans %}Sr. No.{% endtrans %}
           </th>
           <th class="col-xs-5" >
-            {% trans %}Child Category{% endtrans %}
+            {% trans %}Category{% endtrans %}
           </th>
           <th class="col-xs-5" >
-            {% trans %}Parent Category{% endtrans %}
+            {% trans %}Sub-Category{% endtrans %}
           </th>
           <th class="col-xs-1" >
             {% trans %}Status{% endtrans %}
@@ -54,7 +54,7 @@
       <tbody>
 
         {% for record in gkresult %}
-        <tr	value="{{record["categorycode"]}}">
+        <tr	data-value="{{record["categorycode"]}}">
           <td class="col-xs-1 " >
             {{record["srno"]}}
           </td>
@@ -62,7 +62,9 @@
             {{record["categoryname"]}}
           </td>
           <td class="col-xs-5" >
-            {{record["parentcategory"]}}
+          {% for child in record["children"] %}
+            {{child["categoryname"]}} <br>
+          {% endfor %}
           </td>
           <td class="col-xs-1">
             {{record["categorystatus"]}}
@@ -80,7 +82,7 @@
   <script type="text/javascript">
     $(document).ready(function() {
       oninvoice = 0;
-      $("title").html("GNUKhata")
+      $("title").html("GNUKhata");
       $("#loaprint").click(function(event) {
         window.print();
       });

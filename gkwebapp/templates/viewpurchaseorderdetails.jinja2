@@ -1,0 +1,227 @@
+<body>
+  <div class="panel shadow">
+    <div class="panel-body">
+<div class="container-fluid">
+  <div class="row">
+
+    <div class="col-md-2">
+  			<div class="form-group">
+            <label for="purchaseorder_orderno">{% trans %}Order No{% endtrans %} :</label>
+            <input class="form-control input-sm" id="purchaseorder_orderno"  value="{{gkresult["orderno"]}}" disabled>
+  			</div>
+      </div>
+
+  <div class="col-md-2">
+         <div class="form-group">
+              <label for="purchaseorder_date">{% trans %}Order Date{% endtrans %} :</label>
+                <div class="form-group">
+                  <input type="text" class="form-control input-sm podate" value="{{gkresult["orderdate"]}}" id="purchaseorder_date" disabled>
+                </div>
+        </div>
+        </div>
+
+  <div class="col-md-2">
+    <div class="form-group">
+         <label for="issuername">{% trans %}Issuer Name{% endtrans %} :</label>
+          <input class="form-control input-sm" id="purchaseorder_issuername" accesskey="" disabled></input>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+      <div class="form-group">
+        <label for="designation">{% trans %}Designation{% endtrans %} :</label>
+        <input style="border-radius: 4px" id="designation" type="text" class="form-control input-sm" name="desg" value="{{gkresult["designation"]}}" disabled></input>
+      </div>
+    </div>
+
+
+  <div class="col-md-2">
+  		<div class="form-group">
+  			 <label for="payterms">{% trans %}Mode of Payment{% endtrans %} :</label>
+  			<input style="border-radius: 4px" id="payterms" type="text" class="form-control input-sm" name="modeofpayment" value="{{gkresult["payterms"]}}" disabled></input>
+  		</div>
+    </div>
+
+  <div class="col-md-2">
+  		<div class="form-group">
+  		<label for="modeoftransport">{% trans %}Mode of Transport{% endtrans %} :</label>
+  		<input style="border-radius: 4px" id="modeoftransport" type="text" class="form-control input-sm" name="modeoftransport" value="{{gkresult["modeoftransport"]}}" disabled></input>
+  		</div>
+    </div>
+
+  </div>
+
+  <div class="row">
+      <div class="col-md-2">
+      		<div class="form-group">
+      			<label for="creditperiod">{% trans %}Credit Period{% endtrans %} :</label>
+      			<input style="border-radius: 4px" id="creditperiod" type="text" class="form-control input-sm" name="creditperiod" value="{{gkresult["creditperiod"]}}" disabled></input>
+      		</div>
+        </div>
+
+
+  <div class="col-md-2">
+  					<label for="purchaseorder_supplier">
+  						{% trans %}Supplier{% endtrans %} :
+  					</label>
+  					<select class="form-control input-sm" id="purchaseorder_supplier" accesskey="" disabled>
+  							<option value="{{supplier['csid']}}">{{supplier["custname"]}}</option>
+  					</select>
+  </div>
+  <div class="col-md-2">
+            <div class="form-group">
+              <label for="purchaseorder_supplieraddr">
+                {% trans %}Supplier Address{% endtrans %} :
+              </label>
+              <input class="form-control input-sm" id="purchaseorder_supplieraddr" value="{{supplier["custaddr"]}}" accesskey="" disabled>
+            </div>
+  </div>
+            <div class="col-md-2">
+            <div class="form-group">
+              <label for="purchaseorder_suppliertin">
+                {% trans %}Supplier TIN{% endtrans %} :
+              </label>
+              <input class="form-control input-sm" id="purchaseorder_suppliertin" value="{{supplier["custtan"]}}" accesskey="" disabled>
+            </div>
+  </div>
+          <div class="col-md-2 purchaseorder_state" >
+            <div class="form-group">
+              <label for="purchaseorder_state">{% trans %}VAT Applicable to{% endtrans %} :</label>
+              <select class="form-control input-sm tax_state product_new_state" id="purchaseorder_state" disabled>
+                <option value="{{gkresult["taxstate"]}}">{{gkresult["taxstate"]}}</option>
+              </select>
+            </div>
+
+          </div>
+          <div class="col-md-2">
+            <label for="po_to_godown">{% trans %} To Godown:{% endtrans %}</label>
+            <select class="form-control input-sm togodown" id="po_togodown" accesskey="" disabled>
+              {%if togodown == ""%}
+              <option value="">None</option>
+              {%else%}
+              <option value="">{{togodown["goname"]}} ({{togodown["goaddr"]}})</option>
+              {%endif%}
+
+            </select>
+            </div>
+
+  </div>
+
+  <div class="row" >
+
+  <table id="purchaseorder_product_table" class="shadow table table-condensed table-bordered fixed-table fixed-tablepurchase">
+    <thead class="bg-primary">
+      <tr>
+        <th class="col-md-3 text-center">{% trans %}Product{% endtrans %}</th>
+        <th class="col-md-2 text-center">{% trans %}Quantity{% endtrans %}</th>
+        <th class="col-md-2 text-center">{% trans %}Price Per Unit{% endtrans %}</th>
+        <th class="col-md-2 text-center">{% trans %}Number of Packages{% endtrans %}</th>
+        <th class="col-md-2 text-center">{% trans %}Staggered Delivery{% endtrans %}</th>
+        <th class="col-md-2 text-center">{% trans %}Tax Rate{% endtrans %}</th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for key in schedule %}
+      <tr>
+        <td class="col-md-3">
+          <select class="form-control input-sm product_name">
+            <option value="{{key}}">{{schedule[key]['productname']}}</option>
+
+        </select>
+        </td>
+        <td class="col-md-2">
+          <div class="input-group">
+            <input type="text" class="form-control input-sm text-right purchaseorder_product_quantity " value="{{schedule[key]["quantity"]}}"  aria-describedby="unitaddon" disabled>
+            <span class="input-group-addon input-sm" id="unitaddon"></span>
+          </div>
+        </td>
+        <td class="col-md-2">
+          <input type="text" class=" form-control input-sm text-right numtype purchaseorder_product_per_price"  value="{{schedule[key]["rateperunit"]}}" disabled>
+        </td>
+        <td class="col-md-2">
+            <input type="text" class="form-control input-sm text-right purchaseorder_product_packages "  value="{{schedule[key]["packages"]}}" disabled>
+        </td>
+
+        <td class="col-md-2">
+          {%if schedule[key]["staggered"]%}
+          <button type="button" class="btn btn-info btn-sm purchaseorder_schedule"  data-toggle="modal" data-target="#viewpomodal">{% trans %}View Schedule{% endtrans %}</button>
+          {%else%}
+          <button type="button" class="btn btn-info btn-sm purchaseorder_schedule"  data-toggle="modal" data-target="#viewpomodal" disabled>{% trans %}View Schedule{% endtrans %}</button>
+          {%endif%}
+        </td>
+        <td class="col-md-2">
+          <input type="text" class="form-control input-sm text-right numtype purchaseorder_product_tax_rate"  value="{{schedule[key]["taxrate"]}}" disabled>
+        </td>
+
+      </tr>
+      {% endfor %}
+    </tbody>
+
+  </table>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- modal starts -->
+<div id="viewpomodal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">
+        {% trans %}View Staggered Delivery Schedule{% endtrans %}
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="panel shadow">
+        <div class="panel-body">
+          <div class="row">
+          <table id="view_schedule_table" class="shadow table table-condensed table-bordered fixed-table fixed-tableschedule">
+            <thead class="bg-primary">
+              <tr>
+                <th class="col-sm-8 text-center">{% trans %}Delivery Date{% endtrans %}</th>
+                <th class="col-sm-4 text-center">{% trans %}Number of packages{% endtrans %}</th>
+
+              </tr>
+            </thead>
+            <tbody>
+
+
+{% for key in schedule %}
+{% for s in  schedule[key]["staggered"]%}
+            <tr>
+
+
+                <td class="col-sm-8">
+                    <input type="text"  value="{{s["sdate"]}}" class="form-control input-sm text-right purchaseorder_schedule_date"   disabled>
+                </td>
+                <td class="col-sm-4">
+                    <input type="text" value="{{s["noofpackages"]}}" class="form-control input-sm text-right purchaseorder_schedule_packages" disabled>
+
+                    <input type="text" name="name" value="{{key}}" class="procode" hidden>
+                </td>
+
+
+              </tr>
+{%endfor%}
+  {% endfor %}
+
+            </tbody>
+
+          </table>
+          </div>
+
+      </div>
+      <small id="spectotaxhelp" class="form-text text-muted">{% trans %}Press Esc key to exit {% endtrans %}</small>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<!-- modal ends -->
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewpurchaseorder.js')}}"></script>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewpurchaseorderdetails.js')}}"></script>
+</body>

@@ -158,13 +158,31 @@ def deletecategory(request):
 def listofcategories(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/categories", headers=header)
-	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
+	categories = result.json()["gkresult"]
+	categorydata = []
+	for category in categories:
+		children = requests.get("http://127.0.0.1:6543/categories?type=children&categorycode=%d"%(int(category["categorycode"])), headers=header)
+		children = children.json()["gkresult"]
+		childcategories = []
+		for child in children:
+			childcategories.append({"categoryname":child["categoryname"]})
+		categorydata.append({"srno":category["srno"], "categorycode":category["categorycode"], "categoryname":category["categoryname"], "categorystatus":category["categorystatus"],"children":childcategories})
+	return {"gkstatus": result.json()["gkstatus"], "gkresult": categorydata}
 
 @view_config(route_name="category",request_param="action=printable", renderer="gkwebapp:templates/printlistofcategories.jinja2")
 def printlistofgodowns(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/categories", headers=header)
-	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
+	categories = result.json()["gkresult"]
+	categorydata = []
+	for category in categories:
+		children = requests.get("http://127.0.0.1:6543/categories?type=children&categorycode=%d"%(int(category["categorycode"])), headers=header)
+		children = children.json()["gkresult"]
+		childcategories = []
+		for child in children:
+			childcategories.append({"categoryname":child["categoryname"]})
+		categorydata.append({"srno":category["srno"], "categorycode":category["categorycode"], "categoryname":category["categoryname"], "categorystatus":category["categorystatus"],"children":childcategories})
+	return {"gkstatus": result.json()["gkstatus"], "gkresult": categorydata}
 
 @view_config(route_name="category",request_param="action=spreadsheet", renderer="")
 def listofgodownssspreadsheet(request):
@@ -189,16 +207,24 @@ def listofgodownssspreadsheet(request):
 	sheet.getColumn(2).setWidth("7cm")
 	sheet.getColumn(3).setWidth("2cm")
 	sheet.getCell(0,2).stringValue("Sr. No.").setBold(True)
-	sheet.getCell(1,2).stringValue("Child Category").setBold(True)
-	sheet.getCell(2,2).stringValue("Parent Category").setBold(True)
+	sheet.getCell(1,2).stringValue("Category").setBold(True)
+	sheet.getCell(2,2).stringValue("Sub-Category").setBold(True)
 	sheet.getCell(3,2).stringValue("Status").setBold(True)
 	row = 3
 	for category in result:
 		sheet.getCell(0, row).stringValue(category["srno"])
 		sheet.getCell(1, row).stringValue(category["categoryname"])
-		sheet.getCell(2, row).stringValue(category["parentcategory"])
+		children = requests.get("http://127.0.0.1:6543/categories?type=children&categorycode=%d"%(int(category["categorycode"])), headers=header)
+		children = children.json()["gkresult"]
+		subrow = row
+		for child in children:
+			sheet.getCell(2, subrow).stringValue(child["categoryname"])
+			subrow +=1
 		sheet.getCell(3, row).stringValue(category["categorystatus"])
-		row += 1
+		if subrow == row:
+			row += 1
+		else:
+			row = subrow
 
 	ods.save("response.ods")
 	repFile = open("response.ods")

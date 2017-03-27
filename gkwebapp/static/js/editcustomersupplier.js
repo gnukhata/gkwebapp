@@ -20,7 +20,7 @@ $(document).ready(function() {
       $(".hidden-load").show();
       $("#edit_cussup").val(result["csflag"]);
       if(result["csflag"] == 3){
-    	  
+
     	  $("#edit_cussup").val("Customer");
       }
       else {
@@ -244,6 +244,7 @@ $(document).ready(function() {
       "custpan": $("#edit_cussup_pan").val(),
       "custtan": $("#edit_cussup_tan").val(),
       "state"  : $("#edit_state").val(),
+      "oldcustname" : $("#edit_cussup_list option:selected").text()
     /*  "csflag": $("#edit_cussup option:selected").val()*/},
       beforeSend: function(xhr)
       {

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% trans %}GNUKhata | Purchase Order{% endtrans %}</title>
+  <style media="screen">
+  .fixed-table td {
+      font-size: 75%;
+      padding: 4 !important;
+      margin: 4 !important;
+    }
+  .fixed-table th {
+      font-size: 85%;
+  }
+  .fixed-table tbody {
+      display:block;
+      height: calc(100vh - 28em);
+      overflow-y:scroll;
+  }
+
+  .fixed-table thead ,.fixed-table tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  .fixed-table thead {
+      width: calc( 100% - 0.75em )
+  }
+  .fixed-edit-table td {
+      font-size: 75%;
+      padding: 4 !important;
+      margin: 4 !important;
+    }
+  .fixed-edit-table th {
+      font-size: 85%;
+  }
+  .fixed-edit-table tbody {
+      display:block;
+      height: calc(100vh - 29em);
+      overflow-y:scroll;
+  }
+
+  .fixed-edit-table thead ,.fixed-edit-table tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  .fixed-edit-table thead {
+      width: calc( 100% - 0.75em )
+  }
+  .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  #latable td {
+    font-size: 75%;
+    padding: 4 !important;
+    margin: 4 !important;
+  }
+
+  #latable th {
+    font-size: 85%;
+  }
+
+  .card-view .title {
+      font-weight: bold;
+      display: inline-block;
+      min-width: 30%;
+      text-align: left !important;
+  }
+
+  #latable tbody {
+      display:block;
+      height: calc(100vh - 18em);
+      overflow-y:scroll;
+  }
+  #latable thead,#latable tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  #latable thead {
+      width: calc( 100% - 0.65em );
+  }
+  .nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+  </style>
+</head>
+<body>
+  <div class="container-fluid row">
+    <ul class="nav nav-pills nav-tabs " role="tablist">
+      <li role="presentation" class="active nopadding" role="presentation"><a href="" id="purchaseorder_create" role="tab" data-toggle="pill">{% trans %}Add Purchase Order{% endtrans %}</a></li>
+      <li role="presentation" class="nopadding" role="presentation"><a href="" id="salesorder_create"  data-toggle="pill">{% trans %}Add Sales Order{% endtrans %}</a></li>
+      {% if numberofpurchaseorders > 0 %}
+          <li role="presentation" class="nopadding" role="presentation"><a href="" id="purchaseorder_view"   data-toggle="pill">{% trans %}View Purchase Order{% endtrans %}</a></li>
+      {% endif %}
+      {% if numberofsalesorders > 0 %}
+        <li role="presentation" class="nopadding" role="presentation"><a href="" id="salesorder_view"   data-toggle="pill">{% trans %}View Sales Order{% endtrans %}</a></li>
+      {% endif %}
+
+    </ul>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="purchaseorder_div">
+
+      </div>
+    </div>
+</div>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/purchaseorder.js')}}"></script>
+</body>
+</html>

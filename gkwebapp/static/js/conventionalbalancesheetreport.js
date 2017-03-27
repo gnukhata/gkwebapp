@@ -24,11 +24,14 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+"Parabjyot Singh" <parabjyot1996@gmail.com>
+"Rahul Chaurasiya" <crahul4133@gmail.com>
 */
 
 $(document).ready(function() {
 
   oninvoice = 0;
+  $(".modal-backdrop").remove();
 
   $("#msspinmodal").modal("hide");
 
@@ -290,7 +293,7 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
         global: false,
         async: false,
         datatype: "text/html",
-        data: {"balancesheettype":$("#balancesheettype").val(),"calculateto":$("#cto").val(),"orgtype":sessionStorage.orgt},
+        data: {"balancesheettype":$("#balancesheettype").val(),"calculateto":$("#cto").val(),"orgtype":sessionStorage.orgt,"flag":0},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -303,13 +306,15 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
     );
   });
   $("#print").click(function(event) {
-
-      event.preventDefault();
+    event.preventDefault();
+    console.log($("#flag").val());
+    if($("#flag").val() == 0)
+    {
+      console.log("conv");
       var orgname = sessionStorage.getItem('orgn');
       var orgtype = sessionStorage.getItem('orgt');
       var xhr = new XMLHttpRequest();
-
-      xhr.open('GET', '/printconvbalsheetreport?orgname='+ orgname+'&orgtype='+orgtype+'&fystart='+sessionStorage.getItem('year1')+'&fyend='+sessionStorage.getItem('year2')+'&calculateto='+$("#cto").val(), true);
+      xhr.open('GET', '/printconvbalsheetreport?type=conventionalbalancesheet&orgname='+ orgname+'&orgtype='+orgtype+'&fystart='+sessionStorage.getItem('year1')+'&fyend='+sessionStorage.getItem('year2')+'&calculateto='+$("#cto").val(), true);
       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
       xhr.responseType = 'blob';
 
@@ -323,27 +328,86 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
     };
 
     xhr.send();
+    }
+    else
+    {
+      console.log("cons");
+      var sorgname1 = [];
+      $("#sorgname > option").each(function() {
+            sorgname1.push(this.text);
+      });
+      var selectedorg1 = [];
+      $("#selectedorg > option").each(function() {
+            selectedorg1.push(this.value);
+      });
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', '/printconvbalsheetreport?type=consolidatedbalancesheet&orgname='+ $("#horgname").val()+'&sorgname='+JSON.stringify(sorgname1)+'&orgtype='+$("#orgtype").val()+'&fystart='+$("#yearstart").val()+'&fyend='+$("#calculateto").val()+'&calculateto='+$("#calculateto").val()+'&selectedorg='+JSON.stringify(selectedorg1), true);
+      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      xhr.responseType = 'blob';
+
+      xhr.onload = function(e) {
+      if (this.status == 200) {
+      // get binary data as a response
+        var blob = this.response;
+        var url = window.URL.createObjectURL(blob);
+        window.location.assign(url)
+      }
+    };
+
+    xhr.send();
+    }
     });
+
   $("#balback").click(function(event) {
     if ($("#realprintbalance").is(":visible")) {
-      $.ajax(
-        {
+      if($("#flag").val() == 0)
+      {
+        $.ajax(
+          {
+            type: "POST",
+            url: "/showbalancesheetreport",
+            global: false,
+            async: false,
+            datatype: "text/html",
+            data: {"balancesheettype":"conventionalbalancesheet","calculateto":$("#cto").val(),"orgtype":sessionStorage.orgt,"flag":$("#flag").val()},
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            },
+          })
+          .done(function(resp)
+          {
+            $("#info").html(resp);
+          }
+        );
+      }
+
+      else
+      {
+        var selectedorg1 = [];
+        $("#selectedorg > option").each(function() {
+              selectedorg1.push(this.value);
+        });
+        var sorgname1 = [];
+        $("#sorgname > option").each(function() {
+              sorgname1.push(this.text);
+        });
+        var selectedorg = {"ds" : JSON.stringify(selectedorg1),"calculateto":$("#calculateto").val(),"orgcode":$("#orgcode").val(),"financialStart":$("#yearstart").val(),"orgtype":$("#orgtype").val()};
+        $.ajax({
           type: "POST",
-          url: "/showbalancesheetreport",
+          url: "/listoforgselected?type=orgselected",
           global: false,
           async: false,
           datatype: "text/html",
-          data: {"balancesheettype":"conventionalbalancesheet","calculateto":$("#cto").val(),"orgtype":sessionStorage.orgt},
-          beforeSend: function(xhr)
-          {
-            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          data: {"selectedorg" : JSON.stringify(selectedorg),"flag" : 1,"horgname" : $("#horgname").val(),"sorgname" : JSON.stringify(sorgname1)},
+          beforeSend: function(xhr) {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
           },
-        })
-        .done(function(resp)
-        {
-          $("#info").html(resp);
-        }
-      );
+          })
+          .done(function(resp){
+            $("#info").html(resp);
+          });
+      }
     }
     else {
       $("#showbalancesheet").click();

@@ -22,6 +22,7 @@ Contributors:
 "Krishnakant Mane" <kk@gmail.com>
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
+"Prajkta Patkar"<prajkta.patkar007@gmail.com>
 */
 
 // This script is for the addinvoice.jinja2
@@ -1629,7 +1630,7 @@ $(document).ready(function() {
         $("#invoice_product_table tbody tr:eq("+i+") td:eq(0) select").focus();
         return false;
       }
-      if ($("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val()=="" || $("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val()==0) {
+      if ($("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val()=="" || $("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val()<=0) {
         $("#quantity-blank-alert").alert();
         $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#quantity-blank-alert").hide();
@@ -1637,7 +1638,7 @@ $(document).ready(function() {
         $("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").focus();
         return false;
       }
-      if ($("#invoice_product_table tbody tr:eq("+i+") td:eq(2) input").val()=="" || $("#invoice_product_table tbody tr:eq("+i+") td:eq(2) input").val()==0) {
+      if ($("#invoice_product_table tbody tr:eq("+i+") td:eq(2) input").val()=="" || $("#invoice_product_table tbody tr:eq("+i+") td:eq(2) input").val()<=0) {
         $("#price-blank-alert").alert();
         $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#price-blank-alert").hide();
@@ -1862,7 +1863,7 @@ $("#confirm_yes").on('hidden.bs.modal', function(event) {
         $("#invoice_product_table tbody tr:eq("+i+") td:eq(0) select").focus();
         return false;
       }
-      if ($("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val()=="" || $("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val()==0) {
+      if ($("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val()=="" || $("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val()<=0) {
         $("#quantity-blank-alert").alert();
         $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#quantity-blank-alert").hide();
@@ -1870,7 +1871,7 @@ $("#confirm_yes").on('hidden.bs.modal', function(event) {
         $("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").focus();
         return false;
       }
-      if ($("#invoice_product_table tbody tr:eq("+i+") td:eq(2) input").val()=="" || $("#invoice_product_table tbody tr:eq("+i+") td:eq(2) input").val()==0) {
+      if ($("#invoice_product_table tbody tr:eq("+i+") td:eq(2) input").val()=="" || $("#invoice_product_table tbody tr:eq("+i+") td:eq(2) input").val()<=0) {
         $("#price-blank-alert").alert();
         $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#price-blank-alert").hide();
