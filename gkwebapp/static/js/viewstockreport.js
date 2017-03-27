@@ -23,6 +23,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Abhijith Balan" <abhijithb21@openmailbox.org>
+"Mohd. Talha Pawaty" <mtalha456@gmail.com>
 */
 /*
 This script is for the view page of stock report.
@@ -34,7 +35,7 @@ $(document).ready(function() {
 	$(".dis").attr('disabled', true);
 
 	var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
-	
+
 	var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
 	var sel1 = 0; // flag for focus on combo box
 

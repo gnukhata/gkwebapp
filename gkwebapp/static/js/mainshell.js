@@ -26,6 +26,7 @@ Contributors:
 "Abhijith Balan" <abhijithb21@openmailbox.org>
 "Parabjyot Singh" <parabjyot1996@gmail.com>
 "Rahul Chaurasiya" <crahul4133@gmail.com>
+"Mohd. Talha Pawaty" <mtalha456@gmail.com>
 */
 // This script is for the mainshell page and loads when the main page of GNUKhata is loaded.
 // Also all the external js libraries we have used is loaded along with the mainshell.
@@ -426,6 +427,69 @@ $(document).ready(function(){
         }
       })
       .done(function(resp){
+        if(resp["gkresult"]["userrole"]==3){
+          $("#master").remove();
+        }
+        if(resp["gkresult"]["userrole"]==3){
+          $("#invoice").remove();
+        }
+        if(resp["gkresult"]["userrole"]==3){
+          $("#addcashmemo").remove();
+        }
+        if(resp["gkresult"]["userrole"]==3){
+          $("#godown").remove();
+        }
+        if (resp["gkresult"]["userrole"]==3) {
+          $("#purchaseorder").remove();
+        }
+        if(resp["gkresult"]["userrole"]==3){
+          $("#transaction").remove();
+        }
+        if(resp["gkresult"]["userrole"]==3){
+          $("#showviewledger").remove();
+        }
+        if(resp["gkresult"]["userrole"]==3){
+          $("#showtrialbalance").remove();
+        }
+        if(resp["gkresult"]["userrole"]==3){
+          $("#showprjstate").remove();
+        }
+        if(resp["gkresult"]["userrole"]==3){
+          $("#showcashflow").remove();
+        }
+        if(resp["gkresult"]["userrole"]==3){
+          $("#showbalancesheet").remove();
+        }
+        if(resp["gkresult"]["userrole"]==3){
+          $("#consolidatedbalancesheet").remove();
+        }
+        if(resp["gkresult"]["userrole"]==3){
+          $("#showprofitloss").remove();
+        }
+        if(resp["gkresult"]["userrole"]==3){
+          $("#listofaccounts").remove();
+        }
+        if(resp["gkresult"]["userrole"]==3){
+          $("#showdeletedvoucher").remove();
+        }
+        if(resp["gkresult"]["userrole"]==3){
+          $("#createuser").remove();
+        }
+        if(resp["gkresult"]["userrole"]==3){
+          $("#REMOVEuser").remove();
+        }
+        if(resp["gkresult"]["userrole"]==3){
+          $("#showclosebooks").remove();
+        }
+        if(resp["gkresult"]["userrole"]==3){
+          $("#exportledger").remove();
+        }
+        if(resp["gkresult"]["userrole"]==3){
+          $("#deleteorg").remove();
+        }
+        if(resp["gkresult"]["userrole"]==3){
+          $("#tallyimport").remove();
+        }
         if(resp["gkresult"]["userrole"]==1){
           $(".hideoperator").remove();
         }

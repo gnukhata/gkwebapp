@@ -24,6 +24,7 @@
 	"Ishan Masdekar " <imasdekar@dff.org.in>
 	"Navin Karkera" <navin@dff.org.in>
 	"Sachin Patil" <sachpatil@openmailbox.org>
+	"Mohd. Talha Pawaty" <mtalha456@gmail.com>
 """
 from pyramid.view import view_config
 import requests, json
@@ -131,7 +132,7 @@ def getproductsFromGodown(request):
 @view_config(route_name="transfernotes",request_param="action=getgodowns", renderer="json")
 def listofgodowns(request):
 	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	result = requests.get("http://127.0.0.1:6543/godown?type=togodown", headers=header)
 	goddata=[]
 	for record in result.json()["gkresult"]:
 		gdata= {"goid": str(record["goid"]), "goname" : str(record["goname"]), "goaddr": str(record["goaddr"])}
