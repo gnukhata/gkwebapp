@@ -874,6 +874,81 @@ $(document).ready(function() {
            else {
              allow = 1;
            }
+           if (allow == 1) {
+             $('.modal-backdrop').remove();
+        $('.modal').modal('hide');
+        $("#confirm_yes").on('shown.bs.modal', function(event) {
+          $('#so_save_no').focus();
+        });
+        $('#confirm_yes').modal('show').one('click', '#so_save_yes', function (event) {
+
+              $.ajax({
+                url: '/salesorder?action=save',
+                type: 'POST',
+                dataType: 'json',
+                async : false,
+                data: {"orderno": soOrderno,
+                "orderdate":soDateFormatted,
+                "creditperiod":creditperiod,
+                "payterms":payterms,
+                "modeoftransport":modeoftransport,
+                "designation":designation,
+                "schedule":JSON.stringify(scheduledata),
+                "taxstate":salesorder_state,
+                 "psflag":20,
+                 "csid":csid,
+                 "togodown":togodown
+               },
+                beforeSend: function(xhr)
+                {
+                  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+              })
+              .done(function(resp) {
+                if(resp["gkstatus"] == 0){
+                  $('.modal-backdrop').remove();
+                  if ($("#salesorder_view").length > 0) {
+                    $("#salesorder_create").click();
+                  }
+                  else {
+                    $("#purchaseorder").click();
+                  }
+                  $("#success-alert").alert();
+                  $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#success-alert").hide();
+                  });
+                  return false;
+                }
+                else if(resp["gkstatus"]==1) {
+                  $('.modal-backdrop').remove();
+                  $("#soduplicate-alert").alert();
+                  $("#soduplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#salesorder_orderno").focus();
+                    $("#soduplicate-alert").hide();
+                  });
+                  return false;
+                }
+                else{
+                  $('.modal-backdrop').remove();
+                  $("#salesorder_orderno").focus();
+                  $("#failure-alert").alert();
+                  $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#failure-alert").hide();
+                  });
+                }
+
+              })
+              .fail(function() {
+                console.log("error");
+              })
+              .always(function() {
+                console.log("complete");
+              });
+
+              return false;
+
+    });
+           }
 
            }
        });

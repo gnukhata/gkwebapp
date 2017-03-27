@@ -253,9 +253,13 @@
        </label>
        <span class='label label-info' id="upload-file-info"></span>
         {% if gkstatus=="out" %}
-      <button class="btn btn-info btn-sm" id="viewsalesorder">{% trans %}View Sales Order{% endtrans %}</button>
+      {% if numberofsalesorders > 0 %}
+        <button class="btn btn-default btn-sm" id="viewsalesorder">{% trans %}View Sales Order{% endtrans %}</button>
+      {% endif %}
       {% else %}
-      <button class="btn btn-info btn-sm" id="viewpurchaseorder">{% trans %}View Purchase Order{% endtrans %}</button>
+      {% if numberofpurchaseorders > 0 %}
+      <button class="btn btn-default btn-sm" id="viewpurchaseorder">{% trans %}View Purchase Order{% endtrans %}</button>
+      {% endif %}
       {% endif %}
       </div>
       </div>
