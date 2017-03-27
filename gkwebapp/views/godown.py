@@ -26,6 +26,7 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
 "Abhijith Balan" <abhijithb21@openmailbox.org>
+"Moh. Talha Pawaty" <mtalha456@gmail.com>
 """
 
 from pyramid.view import view_config
@@ -142,7 +143,7 @@ def listofgodowns(request):
 		gdata= {"godownstatus":str(record["godownstatus"]), "srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
 		goddata.append(gdata)
 	return {"gkresult":goddata}
-"""................................."""
+
 @view_config(route_name="godown",request_param="type=role_list", renderer="gkwebapp:templates/createusergodowntable.jinja2")
 def godownsusers(request):
 	header={"gktoken":request.headers["gktoken"]}

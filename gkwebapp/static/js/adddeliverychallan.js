@@ -542,6 +542,74 @@ else {
    );
    });
 
+   $("#viewpurchaseorder").click(function(event) {
+     /* Act on the event */
+     event.stopPropagation();
+     $("#dcmain").toggle();
+     $("#purchaseordercollapsediv").toggle();
+     $.ajax({
+       url: '/purchaseorder?type=showview',
+       type: "POST",
+       datatype: 'text/html',
+       global: false,
+       async: false,
+       beforeSend: function(xhr)
+       {
+         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+       }
+     })
+     .done(function(resp) {
+       $('#purchaseorderdiv').html(resp);
+     })
+     .fail(function() {
+       console.log("error");
+     })
+     .always(function() {
+       console.log("complete");
+     });
+   });
+   $("#backtodcin").click(function(event) {
+     /* Act on the event */
+     $("#dcmain").toggle();
+     $("#purchaseordercollapsediv").toggle();
+     $("#deliverychallan_challanno").focus();
+     $('#purchaseorderdiv').html("");
+   });
+
+   $("#viewsalesorder").click(function(event) {
+     /* Act on the event */
+     event.stopPropagation();
+     $("#dcmain").toggle();
+     $("#salesordercollapsediv").toggle();
+     $.ajax({
+       url: '/salesorder?type=showview',
+       type: "POST",
+       datatype: 'text/html',
+       global: false,
+       async: false,
+       beforeSend: function(xhr)
+       {
+         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+       }
+     })
+     .done(function(resp) {
+       $('#salesorderdiv').html(resp);
+     })
+     .fail(function() {
+       console.log("error");
+     })
+     .always(function() {
+       console.log("complete");
+     });
+   });
+   $("#backtodcout").click(function(event) {
+     /* Act on the event */
+     $("#dcmain").toggle();
+     $("#salesordercollapsediv").toggle();
+     $("#deliverychallan_challanno").focus();
+     $('#salesorderdiv').html("");
+   });
+
 
   $("#deliverychallan_save").click(function(event) {
       // save event for saving the delivery note

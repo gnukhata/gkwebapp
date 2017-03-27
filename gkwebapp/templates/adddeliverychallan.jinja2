@@ -12,7 +12,27 @@
 
       {% trans %}Duplicate Note no.!{% endtrans %}
     </div>
-    <div class="panel shadow deliverychallan_panel">
+    <div id="purchaseordercollapsediv" hidden>
+      <div id="purchaseorderdiv" class="row">
+
+      </div>
+      <div class="row">
+        <div class="col-sm-offset-6">
+          <button id="backtodcin" type="button" class="btn btn-sm btn-danger">Back</button>
+        </div>
+      </div>
+    </div>
+    <div id="salesordercollapsediv" hidden>
+      <div id="salesorderdiv" class="row">
+
+      </div>
+      <div class="row">
+        <div class="col-sm-offset-6">
+          <button id="backtodcout" type="button" class="btn btn-sm btn-danger">Back</button>
+        </div>
+      </div>
+    </div>
+    <div class="panel shadow deliverychallan_panel" id="dcmain">
       <div class="panel-body">
         <div class="col-md-5">
           <div class="alert alert-danger" id="custsup-blank-alert"  aria-live="rude" role="alert" hidden>
@@ -232,6 +252,15 @@
          {% trans %}Attac<u>h</u>{% endtrans %}
        </label>
        <span class='label label-info' id="upload-file-info"></span>
+        {% if gkstatus=="out" %}
+      {% if numberofsalesorders > 0 %}
+        <button class="btn btn-default btn-sm" id="viewsalesorder">{% trans %}View Sales Order{% endtrans %}</button>
+      {% endif %}
+      {% else %}
+      {% if numberofpurchaseorders > 0 %}
+      <button class="btn btn-default btn-sm" id="viewpurchaseorder">{% trans %}View Purchase Order{% endtrans %}</button>
+      {% endif %}
+      {% endif %}
       </div>
       </div>
     </div>

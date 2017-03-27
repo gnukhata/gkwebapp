@@ -35,6 +35,9 @@
       <div class="alert alert-danger" id="soduplicate-alert"  aria-live="rude" role="alert" hidden>
         {% trans %}Sales order already exists!{% endtrans %}
       </div>
+      <div class="alert alert-danger" id="customer-blank-alert"  aria-live="rude" role="alert" hidden>
+        {% trans %}Please select a customer!{% endtrans %}
+      </div>
       <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
         {% trans %}Something went wrong!{% endtrans %}
       </div>
@@ -120,7 +123,7 @@
                </div>
 
 
-         <div class="col-md-1">
+         <div class="col-md-2">
          					<label for="salesorder_customer">
          						{% trans %}Customer{% endtrans %} :
          					</label>
@@ -134,7 +137,7 @@
          							{% endfor %}
          					</select>
          </div>
-         <div class="col-md-3">
+         <div class="col-md-2">
                    <div class="form-group">
                      <label for="salesorder_customeraddr">
                        {% trans %}Customer Address{% endtrans %} :
@@ -252,6 +255,7 @@
          </table>
          </div>
          </div>
+         <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Ctrl + < or Ctrl + >' to navigate within a row and 'Shift + <' or 'Shift + >' to navigate within a column. Press 'Shift + <' from Product of first row to switch focus to From Godown.  Press 'Enter' key from last field for a new row.{% endtrans %}</small>
          		<div class="panel-footer">
          			<div class="container-fluid">
          				<button type="submit" class="btn btn-success btn-sm" id="sosubmit" name="submit">{% trans %}Save{% endtrans %}</button>

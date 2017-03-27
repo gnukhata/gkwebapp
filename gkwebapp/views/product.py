@@ -25,6 +25,7 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Abhijith Balan" <abhijithb21@openmailbox.org>
 "Prajkta Patkar" <prajkta.patkar007@gmail.com>
+"Mohd. Talha Pawaty" <mtalha456@gmail.com>
 """
 
 from pyramid.view import view_config
@@ -298,7 +299,9 @@ def viewstockreport(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/products",headers=header)
 	result1 = requests.get("http://127.0.0.1:6543/godown",headers=header)
-	return{"gkresult":result.json()["gkresult"], "godown":result1.json()["gkresult"], "gkstatus":result.json()["gkstatus"]}
+	result2 = requests.get("http://127.0.0.1:6543/login", headers=header)
+	userrole = result2.json()["gkresult"]["userrole"]
+	return{"gkresult":result.json()["gkresult"], "godown":result1.json()["gkresult"], "gkstatus":result.json()["gkstatus"], "userrole":userrole}
 
 @view_config(route_name="product",request_param="type=showstockreport")
 def showstockreport(request):
@@ -492,7 +495,9 @@ def viewStockOnHandReport(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/products",headers=header)
 	result1 = requests.get("http://127.0.0.1:6543/godown",headers=header)
-	return{"gkresult":result.json()["gkresult"], "godown":result1.json()["gkresult"], "gkstatus":result.json()["gkstatus"]}
+	result2 = requests.get("http://127.0.0.1:6543/login", headers=header)
+	userrole = result2.json()["gkresult"]["userrole"]
+	return{"gkresult":result.json()["gkresult"], "godown":result1.json()["gkresult"], "gkstatus":result.json()["gkstatus"], "userrole":userrole}
 
 
 @view_config(route_name="product",request_param="type=showstockonhandreport")
@@ -560,13 +565,13 @@ def printablestockonhandreport(request):
 		result = requests.get("http://127.0.0.1:6543/report?stockonhandreport&productcode=%d&enddate=%s"%(productcode,scalculateto),headers=header)
 
 	if godownflag == 1 and int(request.params["backflag"]) == 3 :
-		
+
 		scalculateto = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%Y-%m-%d')
 		stockrefresh = {"productcode":productcode,"calculateto":calculateto,"productdesc":productdesc,"godownflag":godownflag,"goid":goid}
 		result = requests.get("http://127.0.0.1:6543/report?godownwisestockonhand&type=pg&goid=%d&productcode=%d&enddate=%s"%(goid, productcode, scalculateto),headers=header)
 
 	if godownflag == 1 and int(request.params["backflag"]) == 2 and goid == 0:
-		
+
 		scalculateto = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%Y-%m-%d')
 		stockrefresh = {"productcode":productcode,"calculateto":calculateto,"productdesc":productdesc,"godownflag":godownflag,"goid":goid}
 		result = requests.get("http://127.0.0.1:6543/report?godownwisestockonhand&type=pag&productcode=%d&enddate=%s"%(productcode, scalculateto),headers=header)
