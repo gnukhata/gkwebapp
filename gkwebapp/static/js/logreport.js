@@ -33,6 +33,31 @@ $(document).ready(function() {
     $("#showviewlog").click();
   });
 });
-$("#printlogreport").click(function(event) {
+/*$("#printlogreport").click(function(event) {
   window.print();
-});
+});*/
+
+
+$('#viewprintablelogreport').click(function (e) {
+
+  console.log("rohini  "+$('#user').val());
+  $.ajax(
+    {
+      type: "POST",
+      url: "/log?action=printableshowlogreport",
+      global: false,
+      async: false,
+      datatype: "text/html",
+      data: {"typeflag":$('#logof').val(),"userid":$('#user').val(), "calculatefrom":$('#calculatefrom').val(),"calculateto":$('#calculateto').val()},
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+    })
+      .done(function(resp)
+      {
+        $("#info").html(resp);
+      }
+    );
+
+  });
