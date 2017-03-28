@@ -33,7 +33,7 @@
 		background: inherit;
 }
  .bgcolor{
-  	 background-color:#1b2631;
+  	 background-color:#fcfcfc;
   }
 
 	</style>
@@ -44,7 +44,7 @@
 		<div class="panel" >
 			<div class="panel-heading">
 				<div class="panel-title">{% trans %}Create Admin{% endtrans %}
-<i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" id="csh" data-target="#csh"></i>
+<i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" id="csh" data-target="#adminModal"></i>
 			</div>
 			</div>
 
@@ -104,7 +104,7 @@
 				</form>
 			</div>
 		</div>
-	<div id="csh" tabindex="-1" class="modal fade" role="dialog">
+	<div id="adminModal" tabindex="-1" class="modal fade" role="dialog">
   <div class="modal-dialog bgcolor">
     <div class="modal-content ">
     <div class="modal-header">
@@ -116,9 +116,9 @@
        
        <p>   <font color=" #566573"> {%trans%}
 
-this screen lets you create an administrator user.
-YOu should enter username password and also a security question and answer.
-You can press enter to go ahead from one field to otehr and up arrow to go one field backwards.
+This screen lets you create an administrator user.
+You should enter username password and also a security question and answer.
+You can press enter to go ahead from one field to other and up arrow to go one field backwards.
 After this screen the main window will appear.{% endtrans %} </font>
 
         </p>
