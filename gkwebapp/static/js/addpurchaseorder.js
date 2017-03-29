@@ -327,6 +327,10 @@ $(document).ready(function() {
     }
   });
 
+  $(document).off("focus",".sodate").on("focus",".sodate",function(event) {
+    $('.sodate').autotab('number');
+  });
+
   $(document).off("change",".sodate").on("change",".sodate",function(event)
   {
     $('.sodate').autotab('number');
@@ -421,11 +425,16 @@ $(document).ready(function() {
         return false;
       }
 
-      var rowhtml = $("#schedule_table tbody tr:eq("+curindex1+")").html();
-      $('#schedule_table tbody').append('<tr value="'+schedulepcode+'">'+rowhtml+'</tr>');
-      $('.sodate').autotab('number');
-      $('#schedule_table tbody tr:last').show();
-      $('#schedule_table tbody tr:last td:eq(0) input:first').focus();
+      if (schedulenumberofpackages < parseInt(noofpackages)) {
+        var rowhtml = $("#schedule_table tbody tr:eq("+curindex1+")").html();
+        $('#schedule_table tbody').append('<tr value="'+schedulepcode+'">'+rowhtml+'</tr>');
+        $('.sodate').autotab('number');
+        $('#schedule_table tbody tr:last').show();
+        $('#schedule_table tbody tr:last td:eq(0) input:first').focus();
+      }
+      if (schedulenumberofpackages == parseInt(noofpackages)) {
+        $('#donebutton').focus();
+      }
 
     }
   });
@@ -960,6 +969,7 @@ $(document).ready(function() {
     var creditperiod = $("#creditperiod").val();
     var purchaseorder_state = $("#purchaseorder_state option:selected").val();
     var togodown = $("#po_togodown option:selected").val();
+    var issuername = $("#purchaseorder_issuername").attr("placeholder");
 
     var poDay = $("#purchaseorder_date").val();
     var poMonth = $("#purchaseorder_month").val();
@@ -1105,6 +1115,18 @@ $(document).ready(function() {
         else {
           allow =1;
       }
+        if ($("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(4) input").val()=="" || parseInt($("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(4) input").val())==0) {
+          allow = 0;
+          $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(4) select").focus();
+            $("#price-blank-alert").hide();
+          });
+          return false;
+        }
+        else {
+          allow =1;
+      }
       if (allow == 1) {
         $('.modal-backdrop').remove();
         $('.modal').modal('hide');
@@ -1122,6 +1144,7 @@ $(document).ready(function() {
             "creditperiod":creditperiod,
             "payterms":payterms,
             "modeoftransport":modeoftransport,
+            "issuername":issuername,
             "designation":designation,
             "schedule":JSON.stringify(scheduledata),
             "taxstate":purchaseorder_state,
@@ -1137,9 +1160,9 @@ $(document).ready(function() {
         .done(function(resp) {
           if(resp["gkstatus"] == 0){
             $('.modal-backdrop').remove();
-            $("#purchaseorder").click();
             $("#success-alert").alert();
             $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#purchaseorder").click();
               $("#success-alert").hide();
             });
             return false;
