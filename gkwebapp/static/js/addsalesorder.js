@@ -875,6 +875,18 @@ $(document).ready(function() {
            else {
              allow = 1;
            }
+           if ($("#salesorder_product_table tbody tr:eq("+i+") td:eq(3) input").val()=="" || parseInt($("#salesorder_product_table tbody tr:eq("+i+") td:eq(3) input").val())==0) {
+             allow = 0;
+             $("#price-blank-alert").alert();
+             $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+               $("#salesorder_product_table tbody tr:eq("+i+") td:eq(3) select").focus();
+               $("#price-blank-alert").hide();
+             });
+             return false;
+           }
+           else {
+             allow =1;
+         }
            if (allow == 1) {
              $('.modal-backdrop').remove();
         $('.modal').modal('hide');

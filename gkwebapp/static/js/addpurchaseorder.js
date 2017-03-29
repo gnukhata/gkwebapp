@@ -425,11 +425,16 @@ $(document).ready(function() {
         return false;
       }
 
-      var rowhtml = $("#schedule_table tbody tr:eq("+curindex1+")").html();
-      $('#schedule_table tbody').append('<tr value="'+schedulepcode+'">'+rowhtml+'</tr>');
-      $('.sodate').autotab('number');
-      $('#schedule_table tbody tr:last').show();
-      $('#schedule_table tbody tr:last td:eq(0) input:first').focus();
+      if (schedulenumberofpackages < parseInt(noofpackages)) {
+        var rowhtml = $("#schedule_table tbody tr:eq("+curindex1+")").html();
+        $('#schedule_table tbody').append('<tr value="'+schedulepcode+'">'+rowhtml+'</tr>');
+        $('.sodate').autotab('number');
+        $('#schedule_table tbody tr:last').show();
+        $('#schedule_table tbody tr:last td:eq(0) input:first').focus();
+      }
+      if (schedulenumberofpackages == parseInt(noofpackages)) {
+        $('#donebutton').focus();
+      }
 
     }
   });
@@ -1104,6 +1109,18 @@ $(document).ready(function() {
           $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(0) select").focus();
             $("#product-blank-alert").hide();
+          });
+          return false;
+        }
+        else {
+          allow =1;
+      }
+        if ($("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(4) input").val()=="" || parseInt($("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(4) input").val())==0) {
+          allow = 0;
+          $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#purchaseorder_product_table tbody tr:eq("+i+") td:eq(4) select").focus();
+            $("#price-blank-alert").hide();
           });
           return false;
         }
