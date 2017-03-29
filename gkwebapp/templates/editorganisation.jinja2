@@ -18,7 +18,8 @@
 
 			<div class="panel shadow" >
 				<div class="panel-heading">
-					<div class="panel-title" style="text-align:center;">{% trans %}Edit Organisation{% endtrans %}</div>
+					<div class="panel-title" style="text-align:center;">{% trans %}Edit Organisation{% endtrans %}
+					<i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" data-target="#OrgModal"></i></div>
 
 				</div>
 
@@ -198,6 +199,29 @@
 							</tbody>
 						</table>
 					</div>
+					  <div id="OrgModal" tabindex="-1" class="modal fade" role="dialog">
+  <div class="modal-dialog bgcolor">
+    <div class="modal-content ">
+    <div class="modal-header">
+      {% trans %}<strong>Help!</strong>{% endtrans %}
+   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> </div>
+      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+       
+       <p>   <font color=" #566573"> {%trans%}
+
+This screen helps you edit organisation details (particulars).
+You can use enter key to navigate forward and up arrow to navigate backword.
+Note that the default tab and shift + tab shortcuts are also available for navigation.
+{% endtrans %} </font>
+
+        </p>
+      </div>
+      
+    </div>
+  </div>
+</div>
 					<div class="container-fluid">
 						<div class="col-xs-2 col-xs-offset-5">
 							<button type="submit" class="btn btn-primary btn-sm" id="submit" name="submit" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
