@@ -35,7 +35,7 @@ $(document).ready(function() {
 
   $('#viewprintablelogreport').click(function (e) {
 
-  //console.log($('#userid').val()+$('#username').val());
+
     $.ajax(
       {
         type: "POST",
@@ -59,6 +59,3 @@ $(document).ready(function() {
     });
 
 });
-/*$("#printlogreport").click(function(event) {
-  window.print();
-});*/

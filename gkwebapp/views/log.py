@@ -48,11 +48,9 @@ def showlogreport(request):
 	calculateto = request.params["calculateto"]
 	logcalculatefrom = request.params["calculatefrom"]
 	logcalculateto = request.params["calculateto"]
-	print userid
-	print calculatefrom
-	print calculateto
+
 	''' typeflag = 1 means log by organisation and 2 means log by user'''
-	print request.params["typeflag"]
+	
 	if int(request.params["backflag"])==1:
 		logcalculatefrom = datetime.strptime(calculatefrom, '%d-%m-%Y').strftime('%Y-%m-%d')
 		logcalculateto = datetime.strptime(calculateto, '%d-%m-%Y').strftime('%Y-%m-%d')
