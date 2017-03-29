@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Activity Log Report{% endtrans %} | </title>
+    <style>
+    @page {
+      size: 21cm 29.7cm;
+      margin: 10mm 10mm 20mm 10mm; /* change the margins as you want them to be. */
+    }
+    td {
+      font-size: 71%;
+    }
+
+    th {
+      font-size: 75%;
+    }
+		table { page-break-inside:auto }
+		tr    { page-break-inside:avoid; page-break-after:auto }
+    thead { display: table-header-group; }
+    tfoot { display: table-footer-group; }
+		.rightlist {
+	    text-align: right;
+	  }
+    </style>
+	</head>
+
+	<body>
+		<input type="hidden" id="logof" value={{typeflag}}>
+	  <input type="hidden" id="username" value={{logheader["username"]}}>
+	  <input type="hidden" id="userid" value={{logheader["userid"]}}>
+	  <input type="hidden" id="calculatefrom" value={{logheader["calculatefrom"]}} >
+	  <input type="hidden" id="calculateto" value={{logheader["calculateto"]}}>
+
+		{% if typeflag == "1" %}
+	  <span style="margin:auto; display:table;"><i>{% trans %}Activity Log of an Organisation{% endtrans %}</i></span>
+	  {% else %}
+	  <span style="margin:auto; display:table;"><i>{% trans %}Activity Log of an User{% endtrans %}</i> : <strong>{{logheader["username"]}}</strong></span>
+	  {% endif %}
+		<div class="row">
+			<table id="logtable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
+				<thead class="bg-primary">
+					<tr>
+						<th class="dtwrap calign" >{% trans %}Date{% endtrans %}</th>
+						{% if typeflag == "1" %}
+						<th class="mdwrap calign">{% trans %}User Name(Role){% endtrans %}</th>
+						{% endif %}
+						<th class="lngwrap">{% trans %}Activity{% endtrans %}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% if typeflag == "1" %}
+						{% for record in records %}
+						<tr  data-value="{{record['logid']}}">
+							<td class="dtwrap calign">
+								{{record['time']}}
+							</td>
+
+							<td class="mdwrap calign">
+								{{record['username']}}
+							</td>
+
+							<td class="lngwrap">
+								{{record['activity']}}
+							</td>
+						{% endfor %}
+						{% else %}
+						{% for record in records %}
+						<tr  data-value="{{record['logid']}}">
+							<td class="dtwrap calign">
+								{{record['time']}}
+							</td>
+
+							<td class="lngwrap">
+								{{record['activity']}}
+							</td>
+						{% endfor %}
+					{% endif %}
+				</tbody>
+			</table>
+		</div>
+		<span style="margin:auto; display:table;">
+			<button type="button" class="btn btn-sm btn-danger hidden-print" id="logback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+			<button type="button" class="btn btn-sm btn-info hidden-print" id="logprint" >{% trans %}Prin<u>t</u>{% endtrans %}</button>
+		</span>
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("title").html("GNUKhata");
+
+				$("#logback").click(function(event){
+
+					$.ajax(
+			      {
+			        type: "POST",
+			        url: "/log?action=showlogreport",
+			        global: false,
+			        async: false,
+			        datatype: "text/html",
+			        data: {"typeflag":$('#logof').val(),"userid":$('#userid').val(),"username":$('#username').val(), "calculatefrom":$('#calculatefrom').val(),"calculateto":$('#calculateto').val(),"backflag":1},
+			        beforeSend: function(xhr)
+			        {
+			          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+			        },
+			      })
+			        .done(function(resp)
+			        {
+			          $("#info").html(resp);
+			        }
+			      );
+		});
+				$("#logprint").click(function(event) {
+					window.print();
+				});
+			});
+		</script>
+		</body>
+	</html>

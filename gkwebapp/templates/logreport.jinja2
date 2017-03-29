@@ -14,8 +14,6 @@
 
   #logtable th {
     font-size: 85%;
-
-
   }
   .card-view .title {
       font-weight: bold;
@@ -63,6 +61,11 @@
   </style>
 </head>
 <body>
+  <input type="hidden" id="logof" value={{typeflag}}>
+  <input type="hidden" id="username" value={{logheader["username"]}}>
+  <input type="hidden" id="userid" value={{logheader["userid"]}}>
+  <input type="hidden" id="calculatefrom" value={{logheader["calculatefrom"]}} >
+  <input type="hidden" id="calculateto" value={{logheader["calculateto"]}}>
   <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{logheader["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{logheader["calculateto"]}}</strong></span>
   {% if typeflag == "1" %}
   <span style="margin:auto; display:table;"><i>{% trans %}Activity Log of an Organisation{% endtrans %}</i></span>
@@ -114,6 +117,7 @@
   </div>
     <span style="margin:auto; display:table;">
       <button class="btn btn-sm btn-primary" type="button" id="anotherlog" accesskey="v">{% trans %}<u>V</u>iew Another log{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="viewprintablelogreport" accesskey="t">{% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
     </span>
 
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
