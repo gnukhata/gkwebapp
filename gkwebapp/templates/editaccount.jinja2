@@ -59,8 +59,9 @@ th {
 		<div style="padding-top:5px" class="mainbox col-md-6">
 			<div class="panel shadow" >
 				<div class="panel-heading">
-					<div class="panel-title">{% trans %}Edit Account{% endtrans %}</div>
-
+					<div class="panel-title">{% trans %}Edit Account{% endtrans %}
+					<i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" data-target="#EditaccModal"></i>
+					</div>
 				</div>
 
 				<div style="padding-top:5px" class="panel-body" >
@@ -103,6 +104,30 @@ th {
 
 						</div>
 					</form>
+					<div id="EditaccModal"  tabindex="-1" class="modal fade" role="dialog"style="width:650px; margin-top: 150px; padding-right:500px;"  aria-hidden="true">
+  <div class="modal-dialog bgcolor " >
+    <div class="modal-content ">
+    <div class="modal-header">
+      {% trans %}<strong>Help!</strong>{% endtrans %}
+   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> </div>
+      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+       
+       <p>   <font color=" #566573"> {%trans%}
+this is the module for creating accounts under a certain group and optionally sub-group.
+You can use the underlined character along with alt+shift key as shortcut.
+You7 can also navigate forward using enter key and backword using up arrow key.
+YOu can create multiple accounts under a group or subgroup by using the create multiple account checkbox. Press space bar on the checkbox to activate it.{% endtrans %} </font>
+
+        </p>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+					
 					<div id="m_confirmdel" class="modal fade" tabindex="-1" role="dialog">
 						<div class="vertical-alignment-helper">
 							<div class="modal-dialog modal-sm vertical-align-center">
