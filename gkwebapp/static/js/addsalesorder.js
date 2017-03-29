@@ -742,6 +742,7 @@ $(document).ready(function() {
        var designation = $("#designation").val();
        var payterms = $("#payterms").val();
        var modeoftransport = $("#modeoftransport").val();
+       var issuername = $("#salesorder_issuername").attr("placeholder");
        var creditperiod = $("#creditperiod").val();
        var salesorder_state = $("#salesorder_state option:selected").val();
        var taxrate = $("#taxrate").val();
@@ -892,6 +893,7 @@ $(document).ready(function() {
                 "creditperiod":creditperiod,
                 "payterms":payterms,
                 "modeoftransport":modeoftransport,
+                "issuername":issuername,
                 "designation":designation,
                 "schedule":JSON.stringify(scheduledata),
                 "taxstate":salesorder_state,
@@ -907,14 +909,14 @@ $(document).ready(function() {
               .done(function(resp) {
                 if(resp["gkstatus"] == 0){
                   $('.modal-backdrop').remove();
-                  if ($("#salesorder_view").length > 0) {
-                    $("#salesorder_create").click();
-                  }
-                  else {
-                    $("#purchaseorder").click();
-                  }
                   $("#success-alert").alert();
                   $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    if ($("#salesorder_view").length > 0) {
+                      $("#salesorder_create").click();
+                    }
+                    else {
+                      $("#purchaseorder").click();
+                    }
                     $("#success-alert").hide();
                   });
                   return false;

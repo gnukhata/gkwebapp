@@ -3,28 +3,6 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#purchaseorder_select").focus();
 
-  $.ajax({
-    url: '/purchaseorder?action=getuser',
-    type: 'POST',
-    dataType: 'json',
-    async : false,
-
-    beforeSend: function(xhr)
-    {
-      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-    }
-  })
-  .done(function(resp) {
-      $("#purchaseorder_issuername").val("");
-      $("#purchaseorder_issuername").prop("placeholder",resp["username"]);
-  })
-  .fail(function() {
-    console.log("error");
-  })
-  .always(function() {
-    console.log("complete");
-  });
-
 
   $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
     event.preventDefault();
