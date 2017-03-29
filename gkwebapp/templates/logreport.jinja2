@@ -62,7 +62,8 @@
 </head>
 <body>
   <input type="hidden" id="logof" value={{typeflag}}>
-  <input type="hidden" id="user" value={{logheader["userid"]}}>
+  <input type="hidden" id="username" value={{logheader["username"]}}>
+  <input type="hidden" id="userid" value={{logheader["userid"]}}>
   <input type="hidden" id="calculatefrom" value={{logheader["calculatefrom"]}} >
   <input type="hidden" id="calculateto" value={{logheader["calculateto"]}}>
   <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{logheader["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{logheader["calculateto"]}}</strong></span>

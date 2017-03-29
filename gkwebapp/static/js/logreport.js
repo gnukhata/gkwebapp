@@ -32,32 +32,33 @@ $(document).ready(function() {
   $("#anotherlog").click(function(event) {
     $("#showviewlog").click();
   });
+
+  $('#viewprintablelogreport').click(function (e) {
+
+  //console.log($('#userid').val()+$('#username').val());
+    $.ajax(
+      {
+        type: "POST",
+        url: "/log?action=printableshowlogreport",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data: {"typeflag":$('#logof').val(),"userid":$('#userid').val(),"username":$('#username').val(), "calculatefrom":$('#calculatefrom').val(),"calculateto":$('#calculateto').val()},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      })
+        .done(function(resp)
+        {
+          $("#info").html(resp);
+          console.log($('#userid').val()+$('#username').val());
+        }
+      );
+
+    });
+
 });
 /*$("#printlogreport").click(function(event) {
   window.print();
 });*/
-
-
-$('#viewprintablelogreport').click(function (e) {
-
-  console.log("rohini  "+$('#user').val());
-  $.ajax(
-    {
-      type: "POST",
-      url: "/log?action=printableshowlogreport",
-      global: false,
-      async: false,
-      datatype: "text/html",
-      data: {"typeflag":$('#logof').val(),"userid":$('#user').val(), "calculatefrom":$('#calculatefrom').val(),"calculateto":$('#calculateto').val()},
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-      },
-    })
-      .done(function(resp)
-      {
-        $("#info").html(resp);
-      }
-    );
-
-  });
