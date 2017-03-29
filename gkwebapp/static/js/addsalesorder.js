@@ -742,6 +742,7 @@ $(document).ready(function() {
        var designation = $("#designation").val();
        var payterms = $("#payterms").val();
        var modeoftransport = $("#modeoftransport").val();
+       var issuername = $("#salesorder_issuername").attr("placeholder");
        var creditperiod = $("#creditperiod").val();
        var salesorder_state = $("#salesorder_state option:selected").val();
        var taxrate = $("#taxrate").val();
@@ -874,6 +875,18 @@ $(document).ready(function() {
            else {
              allow = 1;
            }
+           if ($("#salesorder_product_table tbody tr:eq("+i+") td:eq(3) input").val()=="" || parseInt($("#salesorder_product_table tbody tr:eq("+i+") td:eq(3) input").val())==0) {
+             allow = 0;
+             $("#price-blank-alert").alert();
+             $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+               $("#salesorder_product_table tbody tr:eq("+i+") td:eq(3) select").focus();
+               $("#price-blank-alert").hide();
+             });
+             return false;
+           }
+           else {
+             allow =1;
+         }
            if (allow == 1) {
              $('.modal-backdrop').remove();
         $('.modal').modal('hide');
@@ -892,6 +905,7 @@ $(document).ready(function() {
                 "creditperiod":creditperiod,
                 "payterms":payterms,
                 "modeoftransport":modeoftransport,
+                "issuername":issuername,
                 "designation":designation,
                 "schedule":JSON.stringify(scheduledata),
                 "taxstate":salesorder_state,
@@ -907,14 +921,14 @@ $(document).ready(function() {
               .done(function(resp) {
                 if(resp["gkstatus"] == 0){
                   $('.modal-backdrop').remove();
-                  if ($("#salesorder_view").length > 0) {
-                    $("#salesorder_create").click();
-                  }
-                  else {
-                    $("#purchaseorder").click();
-                  }
                   $("#success-alert").alert();
                   $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    if ($("#salesorder_view").length > 0) {
+                      $("#salesorder_create").click();
+                    }
+                    else {
+                      $("#purchaseorder").click();
+                    }
                     $("#success-alert").hide();
                   });
                   return false;

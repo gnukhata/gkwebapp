@@ -46,14 +46,13 @@ def purchaseorderdetails(request):
 	podetails = result.json()["gkresult"]
 	supplierid = podetails["csid"]
 	supplier = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(supplierid)), headers=header)
-	if podetails.has_key("togodown"):
-		togoid = podetails["togodown"]
-		if togoid > 0:
-			  togodown=requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(togoid)), headers=header)
-			  return{"gkresult":result.json()["gkresult"], "supplier":supplier.json()["gkresult"], "schedule":podetails["schedule"],"togodown":togodown.json()["gkresult"]}
-		else:
-			togodown=""
-			return{"gkresult":result.json()["gkresult"], "supplier":supplier.json()["gkresult"], "schedule":podetails["schedule"],"togodown":togodown}
+	togoid = podetails["togodown"]
+	if togoid:
+		  togodown=requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(togoid)), headers=header)
+		  return{"gkresult":result.json()["gkresult"], "supplier":supplier.json()["gkresult"], "schedule":podetails["schedule"],"togodown":togodown.json()["gkresult"]}
+	else:
+		togodown=""
+		return{"gkresult":result.json()["gkresult"], "supplier":supplier.json()["gkresult"], "schedule":podetails["schedule"],"togodown":togodown}
 
 
 @view_config(route_name="salesorder",request_param="type=details", renderer="gkwebapp:templates/viewsalesorderdetails.jinja2")
@@ -63,14 +62,13 @@ def salesorderdetails(request):
 	sodetails = result.json()["gkresult"]
 	customerid = sodetails["csid"]
 	customer = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(customerid)), headers=header)
-	if sodetails.has_key("togodown"):
-		togoid = sodetails["togodown"]
-		if togoid > 0:
-			togodown=requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(togoid)), headers=header)
-			return{"gkresult":result.json()["gkresult"], "customer":customer.json()["gkresult"], "schedule":sodetails["schedule"],"togodown":togodown.json()["gkresult"]}
-		else:
-			togodown=""
-			return{"gkresult":result.json()["gkresult"], "customer":customer.json()["gkresult"], "schedule":sodetails["schedule"],"togodown":togodown}
+	togoid = sodetails["togodown"]
+	if togoid:
+		togodown=requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(togoid)), headers=header)
+		return{"gkresult":result.json()["gkresult"], "customer":customer.json()["gkresult"], "schedule":sodetails["schedule"],"togodown":togodown.json()["gkresult"]}
+	else:
+		togodown=""
+		return{"gkresult":result.json()["gkresult"], "customer":customer.json()["gkresult"], "schedule":sodetails["schedule"],"togodown":togodown}
 
 
 
@@ -104,11 +102,11 @@ def savepurchaseorder(request):
 	header={"gktoken":request.headers["gktoken"]}
 	if int(request.params["togodown"]) > 0:
 		purchaseorderdata = {"orderno":request.params["orderno"],"orderdate":request.params["orderdate"],"creditperiod":request.params["creditperiod"],"payterms":request.params["payterms"],"togodown":request.params["togodown"],
-		"modeoftransport":request.params["modeoftransport"],"designation":request.params["designation"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"]
+		"modeoftransport":request.params["modeoftransport"],"issuername":request.params["issuername"],"designation":request.params["designation"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"]
 		}
 	else:
 		purchaseorderdata = {"orderno":request.params["orderno"],"orderdate":request.params["orderdate"],"creditperiod":request.params["creditperiod"],"payterms":request.params["payterms"],
-		"modeoftransport":request.params["modeoftransport"],"designation":request.params["designation"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"]
+		"modeoftransport":request.params["modeoftransport"],"issuername":request.params["issuername"],"designation":request.params["designation"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"]
 		}
 	result=requests.post("http://127.0.0.1:6543/purchaseorder",data=json.dumps(purchaseorderdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
@@ -118,11 +116,11 @@ def savesalesorder(request):
 	header={"gktoken":request.headers["gktoken"]}
 	if int(request.params["togodown"]) > 0:
 		salesorderdata = {"orderno":request.params["orderno"],"orderdate":request.params["orderdate"],"creditperiod":request.params["creditperiod"],"payterms":request.params["payterms"],"togodown":request.params["togodown"],
-		"modeoftransport":request.params["modeoftransport"],"designation":request.params["designation"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"]
+		"modeoftransport":request.params["modeoftransport"],"issuername":request.params["issuername"],"designation":request.params["designation"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"]
 		}
 	else:
 		salesorderdata = {"orderno":request.params["orderno"],"orderdate":request.params["orderdate"],"creditperiod":request.params["creditperiod"],"payterms":request.params["payterms"],
-		"modeoftransport":request.params["modeoftransport"],"designation":request.params["designation"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"],
+		"modeoftransport":request.params["modeoftransport"],"issuername":request.params["issuername"],"designation":request.params["designation"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"],
 		}
 	result=requests.post("http://127.0.0.1:6543/purchaseorder",data=json.dumps(salesorderdata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
