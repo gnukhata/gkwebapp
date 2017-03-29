@@ -41,6 +41,9 @@ $(document).ready(function() {
   var perprice=0.00;
   var ptotal=0.00;
   var taxrate=0.00;
+  var dctaxstate;
+  var custstate;
+  var producstate;
   if ($("#status").val()=='15')
   {
     $(".invoice_issuer").show();
@@ -426,6 +429,7 @@ $(document).ready(function() {
       .done(function(resp) {
         if (resp["gkstatus"]==0) {
           $("#invoice_customer").val(resp["delchal"]["delchaldata"]["custid"]);
+          dctaxstate = resp["delchal"]["delchaldata"]["gostate"];
           //$("#invoice_supplieraddr").val(resp[])
           $("#invoice_customer").prop("disabled",true);
           //yaha
@@ -444,12 +448,22 @@ $(document).ready(function() {
             console.log("success");
             if (resp["gkstatus"]==0) {
               console.log(resp["gkresult"]["custstate"]);
+              custstate = resp["gkresult"]["state"];
               $("#invoice_customerstate").val(resp["gkresult"]["state"]);
               $("#invoice_supplierstate").val(resp["gkresult"]["state"]);
               $("#invoice_customeraddr").val(resp["gkresult"]["custaddr"]);
               $("#invoice_supplieraddr").val(resp["gkresult"]["custaddr"]);
               $("#invoice_customertin").val(resp["gkresult"]["custtan"]);
               $("#invoice_suppliertin").val(resp["gkresult"]["custtan"]);
+              if (custstate == dctaxstate) {
+                $("#invoice_state").val(custstate);
+                producstate = $("#invoice_state").val();
+              }
+              else {
+                $("#invoice_state").val("");
+                producstate = "";
+              }
+              console.log(producstate);
             }
           })
           .fail(function() {
