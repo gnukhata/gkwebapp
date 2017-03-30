@@ -31,15 +31,20 @@ $(document).ready(function() {
   $('.viewlog_date').autotab('number');
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
+  var todaysdate = new Date();
+  var dd = todaysdate.getDate(); //yields day
+   var mm = todaysdate.getMonth()+1; //yields month
+   console.log(mm);
+   var yyyy = todaysdate.getFullYear(); //yields year
 	// Setting default date to financialstart and end.
   var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
   $("#viewlog_fromdate").val(fromdatearray[2])
   $("#viewlog_frommonth").val(fromdatearray[1])
   $("#viewlog_fromyear").val(fromdatearray[0])
   var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g)
-  $("#viewlog_todate").val(todatearray[2])
-  $("#viewlog_tomonth").val(todatearray[1])
-  $("#viewlog_toyear").val(todatearray[0])
+  $("#viewlog_todate").val(dd)
+  $("#viewlog_tomonth").val(mm)
+  $("#viewlog_toyear").val(yyyy)
 
   function pad (str, max) { //to add leading zeros in date
     str = str.toString();
@@ -83,7 +88,9 @@ $(document).ready(function() {
   $("#viewlog_toyear").blur(function(event) {
     $(this).val(yearpad($(this).val(),4));
   });
-
+$("#viewlog_todate").val(pad($("#viewlog_todate").val(),2));
+$("#viewlog_tomonth").val(pad($("#viewlog_tomonth").val(),2));
+$("#viewlog_toyear").val(yearpad($("#viewlog_toyear").val(),4));
   // navigation functions for enter key and up arrow keys.
   $("#viewlog_type").keydown(function(e){
     if(e.which==13){
@@ -203,6 +210,11 @@ $(document).ready(function() {
     }
     var todate = $("#viewlog_toyear").val()+$("#viewlog_tomonth").val()+$("#viewlog_todate").val();
     var fromdate = $("#viewlog_fromyear").val()+$("#viewlog_frommonth").val()+$("#viewlog_fromdate").val();
+
+
+
+      console.log("financialend "+financialend);
+      console.log("currentdate :"+todaysdate);
     if(!Date.parseExact(fromdate,"yyyyMMdd")){
       $("#date-alert").alert();
       $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
@@ -211,7 +223,7 @@ $(document).ready(function() {
       $('#viewlog_fromdate').focus().select();
       return false;
     }
-    if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,financialend)) {
+    if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,todaysdate)) {
       $("#between-date-alert").alert();
       $("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
         $("#between-date-alert").hide();
@@ -227,7 +239,7 @@ $(document).ready(function() {
       $('#viewlog_todate').focus().select();
       return false;
     }
-    if (!Date.parseExact(todate,"yyyyMMdd").between(financialstart,financialend)) {
+    if (!Date.parseExact(todate,"yyyyMMdd").between(financialstart,todaysdate)) {
       $("#between-date-alert").alert();
       $("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
         $("#between-date-alert").hide();

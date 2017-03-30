@@ -35,9 +35,9 @@
 	  <input type="hidden" id="calculateto" value={{logheader["calculateto"]}}>
 
 		{% if typeflag == "1" %}
-	  <span style="margin:auto; display:table;"><i>{% trans %}Activity Log of an Organisation{% endtrans %}</i></span>
+	  <span style="margin:auto; display:table;"><i>{% trans %}Activity Log of All User{% endtrans %}</i></span>
 	  {% else %}
-	  <span style="margin:auto; display:table;"><i>{% trans %}Activity Log of an User{% endtrans %}</i> : <strong>{{logheader["username"]}}</strong></span>
+	  <span style="margin:auto; display:table;"><i>{% trans %}Activity Log of User{% endtrans %}</i> : <strong>{{logheader["username"]}}</strong></span>
 	  {% endif %}
 		<div class="row">
 			<table id="logtable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
