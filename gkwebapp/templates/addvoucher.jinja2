@@ -103,6 +103,11 @@
   #narration {
     max-height: 90px;
   }
+  
+.modal-body {
+    max-height: calc(100vh - 212px);
+    overflow-y: auto;
+}
   </style>
 </head>
 <body>
@@ -196,6 +201,7 @@
           <input type="text" class="vdate form-control input-sm" id="vdate" value="{{lastdetails['vdate'][0:2]}}" size="2" maxlength="2" placeholder="DD" accesskey="d">
           <input type="text" id="vmonth" class="vdate form-control input-sm" value="{{lastdetails['vdate'][3:5]}}" size="2" maxlength="2" placeholder="MM">
           <input type="text" id="vyear" class="vdate form-control input-sm" value="{{lastdetails['vdate'][6:]}}" size="4" maxlength="4" placeholder="YYYY">
+        <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#vchModal"></i>
         </div>
 
       </div>
@@ -362,6 +368,7 @@
                     <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
                     {% trans %}Attac<u>h</u>{% endtrans %}
                   </label>
+                 
                   <span class='label label-info' id="upload-file-info"></span>
 
             </div>
@@ -371,22 +378,79 @@
             <textarea class="form-control" name="narration" id="narration" rows="3" cols="70" accesskey="t"></textarea>
           </div>
 
-
       </div>
-
-
       <input type="hidden" id="vtype" name="vtype" value="{{vtype}}">
-
-
     </form>
 
-
     </div>
-
-
-
-
   </div>
+   <div id="vchModal"  tabindex="-1" class="modal fade" role="dialog"style=" margin-top: 50px; margin-left:100px;"  aria-hidden="true">
+  <div class="modal-dialog bgcolor " >
+    <div class="modal-content ">
+    <div class="modal-header">
+      {% trans %}<strong>Help!</strong>{% endtrans %}
+   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> </div>
+      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+       
+       <p>   <font color=" #566573"> {%trans%}
+Book Keeping is recording of transactions. Since transactions are of different kinds, GNUKhata has a voucher type for recording every kind of transaction, available in the vouchers menu.
+Given below is the description of transaction types GNUKhata records.</br>
+<b>Receipt</b></br> 
+Used for recording amounts received by cash or cheque or through NEFT.
+Accounts from the Sub-Groups Cash and Bank of the Group Current Assets can only be debited and cannot be credited.</br>
+Payment 
+Used for recording payments made by cash or cheque or through NEFT.
+Accounts from the Sub-Groups Cash and Bank of the Group Current Assets can only be credited and cannot be debited.
+</br>
+<b>Sale </b></br>
+Used for recording sale of raw materials, semi-finished goods or finished goods or services.
+Accounts from the Sub-Groups Sundry Debtors, Cash and Bank of the Group Current Assets can only be debited and accounts from the Group Direct Income, Indirect Income and Current Liabilities can only be credited.
+</br>
+<b>Purchase </b></br>
+Used for recording purchase of raw materials, semi-finished goods or finished goods.
+Accounts from the Groups Direct Expense, Indirect Expense and Current Liabilities can only be debited. Accounts from the Sub-Groups Cash and Bank of the Group Current Assets and from the Sub-Group Creditors for Purchase of the Group Current Liabilities can only be credited. 
+</br>
+<b>Contra </b></br>
+Used for recording deposits or withdrawals of cash from bank or transfer of funds from one bank account to another.
+Only accounts from the Sub-Groups Cash and Bank of the Group Current Assets can be debited and credited.
+<br>
+<b>Journal</b></br>
+Used for recording rectification entries, transfer of amounts from one account to another, adjustment entries, recording discount received and given, purchase or sale of asset.
+Accounts from the Sub-Groups Cash and Bank of the Group Current Assets cannot be debited or credited.
+<br>
+<b>Sale Return </b></br>
+Used for recording return of goods by a customer by crediting his account.
+Accounts from the Group Direct Income and Current Liabilities can only be debited and accounts from the SubGroup Sundry Debtors of the Group Current Assets can only be credited.
+<br>
+<b>Purchase Return </b></br>
+Used for recording return of goods to a supplier by debiting his account.
+Accounts from the Sub Group Sundry Creditors for Purchase of the Group Current Liabilities can only be debited and accounts from the Group Direct Expense, Indirect Expense can only be credited.
+<br>
+<b>Credit Note</b></br>
+Used for recording reduction in the price charged to a customer (without return of goods). 
+The accounts that can be debited and credited are similar to those of Sales Return. 
+<br>
+<b>Debit Note </b></br>
+Used for recording reduction in the price charged by a supplier (without return of goods).
+The accounts that can be debited and credited are similar to those of Purchase Return voucher.
+</br>In case of Sale Return, Purchase Return, Debit Note and Credit Note types of vouchers, accounts from the Sub-Groups Cash and Bank of the Group Current Assets cannot be debited and credited.
+<br></br>
+As soon as you open the voucher screen you are placed on the voucher number field.
+Enter all the details by navigating using enter key for going forward and up arrow for going backward.
+When you choose the account for Dr and enter the amount, press enter to select the account for Cr. By default the Dr and Cr amount tallies. You can change either amount and an additional row for Cr or Dr will appear depending on which amount you changed.
+In case of sales and purchase vouchers, if you select an invoice number, the amount and customer/supplier account is picked up by default and the values appear in their respective rows.
+You can choose a project or a cost center which you wish to associate this transaction with. GNUKhata also provides a facility to attach documents to a transaction.
+{% endtrans %} </font>
+
+        </p>
+      </div>
+      
+    </div>
+  </div>
+</div>
+	
   <input type="hidden" id="selpopupaccount" value="">
   <div id="viewacc">
 
