@@ -75,10 +75,10 @@ def printmonthlyledgerreport(request):
 		sheet.getCell(0,row).stringValue(eachmonth["month"])
 		if(eachmonth["advflag"]==1):
 			sheet.getCell(1,row).stringValue(eachmonth["Dr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
-			sheet.getCell(2,row).stringValue(eachmonth["vcountDr"]).setAlignHorizontal("center").setBold(True).setFontColor("#ff0000")
+			sheet.getCell(2,row).stringValue(eachmonth["vcountDr"]).setAlignHorizontal("center")
 			sheet.getCell(3,row).stringValue(eachmonth["Cr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
-			sheet.getCell(4,row).stringValue(eachmonth["vcountCr"]).setAlignHorizontal("center").setBold(True).setFontColor("#ff0000")
-			sheet.getCell(5,row).stringValue(eachmonth["vcountLock"]).setAlignHorizontal("center").setBold(True).setFontColor("#ff0000")
+			sheet.getCell(4,row).stringValue(eachmonth["vcountCr"]).setAlignHorizontal("center")
+			sheet.getCell(5,row).stringValue(eachmonth["vcountLock"]).setAlignHorizontal("center")
 		else:
 			sheet.getCell(1,row).stringValue(eachmonth["Dr"]).setAlignHorizontal("right")
 			sheet.getCell(2,row).stringValue(eachmonth["vcountDr"]).setAlignHorizontal("center")
