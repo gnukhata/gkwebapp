@@ -1,3 +1,23 @@
+[30-March-2017 Release 4.0]
+* Unified Import and Export for GNUKhata and data from other softwares.
+* New user role for godown-in-charge and specific activity assigned to godown-in-charge.
+* Modified selection of tax for product in invoice.
+* Stock on hand report, with or without godown.
+* Godown wise stock report refined.
+* List of unbilled deliveries report.
+* Linking sales and purchase invoices with sales and purchase vouchers.
+* Creation and view of Purchase order and sales order.
+* Linking purchase order / sales order to dc and invoice.
+* Generation and printing of Activity log report.
+* Attachment of files in  invoice and delivery chalan.
+* Account balance of Dr Account and Cr Account in vouchers.
+* Automatic account creation for customer and supplier.
+* Balance sheet consolidation of subsidiary and holding company.
+* Revamp of category and product interface.
+* Context sensitive help for many screens.
+* Performance enhancement in voucher module.
+* Refinement of interfaces for all inventory reports.
+
 [7-February-2017 Release 3.5.2]
 * Fixed alignment and lables in UI.
 * Removed references to cost-center / project when they are not created.
