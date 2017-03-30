@@ -119,10 +119,12 @@
       <div class="panel shadow">
         <div class="panel-heading">
           {% if not projects %}
-            <h3 id = "addid" class="panel-title">{% trans %}Create Cost Center{% endtrans %}</h3>
+            <h3 id = "addid" class="panel-title">{% trans %}Create Cost Center{% endtrans %}
+            <i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" data-target="#ProjModal"></i></h3>
             <input id="projects" type="text" name="" value="0" hidden>
           {% else %}
-            <h3 id = "addid" class="panel-title">{% trans %}Add Cost Center{% endtrans %}</h3>
+            <h3 id = "addid" class="panel-title">{% trans %}Add Cost Center{% endtrans %}
+            <i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" data-target="#ProjModal"></i></h3>
             <input id="projects" type="text" name="" value="1" hidden>
           {% endif %}
         </div>
@@ -237,6 +239,27 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
+   <div id="ProjModal"  tabindex="-1" class="modal fade" role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
+  <div class="modal-dialog bgcolor " >
+    <div class="modal-content ">
+    <div class="modal-header">
+      {% trans %}<strong>Help!</strong>{% endtrans %}
+   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> </div>
+      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+       
+       <p>   <font color=" #566573"> {%trans%}
+This screen helps you To CREATE AND VIEW Project / Cost Center. </br>
+If yours is a Not For Profit organization and have a on-going project, create a Project and view its receipts and expenditure periodically. If yours is a Profit Making organization create Cost Center and view its performance. Enter Name, Sanctioned or Budgeted Amount and press Enter key. 
+</br>Single or multiple Projects / Cost Centers can be created. {% endtrans %} </font>
+
+        </p>
+      </div>
+      
+    </div>
+  </div>
+</div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/project.js')}}"></script>
 </body>
 </html>

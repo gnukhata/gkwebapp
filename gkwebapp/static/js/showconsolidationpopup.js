@@ -33,6 +33,9 @@ $(document).ready(function() {
   var sorgname = [];
   var authuser = 1;
   var authuser1 = 1;
+ // $("#bankRecModal1").click(function(){
+ // $("#bankRecModal").modal();
+ // });
 
   $(document).off("change","#holdingorglist").on('change', '#holdingorglist', function(event) {
     horgname =$('#holdingorglist option:selected').text();//this will give the selected option's organisation

@@ -58,9 +58,9 @@ th {
             <thead class="bg-primary">
               <tr>
                 <th class="mdwrap calign">{% trans %}Month{% endtrans %}</th>
-                <th class="smwrap1 ralign">{% trans %}Debit Amount{% endtrans %}</th>
+                <th class="smwrap1 ralign">{% trans %}Debit Balance{% endtrans %}</th>
                 <th class="smwrap2 calign">{% trans %}No. of Debit Records{% endtrans %}</th>
-                <th class="smwrap1 ralign">{% trans %}Credit Amount{% endtrans %}</th>
+                <th class="smwrap1 ralign">{% trans %}Credit Balance{% endtrans %}</th>
                 <th class="smwrap2 calign">{% trans %}No. of Credit Records{% endtrans %}</th>
                 <th class="smwrap3 calign">{% trans %}No. of Locked Transactions{% endtrans %}</th>
               </tr>
@@ -75,16 +75,16 @@ th {
                 <td class="smwrap1 ralign cred">
                   <b>{{record["Dr"]}}</b>
                 </td>
-                <td class="smwrap2 calign cred">
+                <td class="smwrap2 calign">
                   <b>{{record["vcountDr"]}}</b>
                 </td>
                 <td class="smwrap1 ralign cred">
                   <b>{{record["Cr"]}}</b>
                 </td>
-                <td class="smwrap2 calign cred">
+                <td class="smwrap2 calign">
                   <b>{{record["vcountCr"]}}</b>
                 </td>
-                <td class="smwrap3 calign cred">
+                <td class="smwrap3 calign">
                   <b>{{record["vcountLock"]}}</b>
                 </td>
                 <td class="smwrap1 visible-print ralign cred">

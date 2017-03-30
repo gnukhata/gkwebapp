@@ -555,14 +555,6 @@ $(document).ready(function() {
          $("#salesorder_product_table tbody tr:eq("+curindex1+") td:eq(3) input").focus();
          return false;
        }
-       if ($(this)=="" || parseInt($(this).val())==0) {
-         $("#taxrate-blank-alert").alert();
-         $("#taxrate-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-           $("#taxrate-blank-alert").hide();
-         });
-         $("#salesorder_product_table tbody tr:eq("+curindex1+") td:eq(4) input").focus();
-         return false;
-       }
        if (curindex1 != ($("#salesorder_product_table tbody tr").length-1)) {
          $('#salesorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
        }

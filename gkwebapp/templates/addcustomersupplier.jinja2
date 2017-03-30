@@ -118,7 +118,9 @@
           </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="add_cussup_address"> Street and City:</label>
+                <label for="add_cussup_address"> Street and City:
+                </label>
+                <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#accModal"></i>
                 <textarea class="form-control" rows="3" cols="40" id="add_cussup_address" aria-describedby="textareahelp"></textarea>
                 <small id="textareahelp" class="form-text text-muted">Press Enter Key twice to shift focus to Fax</small>
               </div>
@@ -137,6 +139,29 @@
             </div>
           </div>
         </div>
+  <div id="accModal"  tabindex="-1" class="modal fade " role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
+  <div class="modal-dialog bgcolor " >
+    <div class="modal-content ">
+    <div class="modal-header">
+      {% trans %}<strong>Help!</strong>{% endtrans %}
+   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> </div>
+      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+       
+       <p>   <font color=" #566573"> {%trans%}
+This screen let's you record details of customers or supplyers. The screen by default start in create customer/supplyer mode.
+You can choose the option edit customer/supplyer to go in the edit screen.
+While entering details for a new customer or supplyer, choose the role and then enter all the details.
+You can press enter to navigate forward and up arrow to navigation backword.
+{% endtrans %} </font>
+
+        </p>
+      </div>
+      
+    </div>
+  </div>
+</div>
 
       <div class="panel-footer">
         <button class="btn btn-success btn-sm" id="cussup_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}">{% trans %}Save{% endtrans %}</button>
