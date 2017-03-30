@@ -24,7 +24,7 @@
         </div>
         <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
 
-          <label for="viewlog_fromdate">{% trans %}Please enter date within the financial year!{% endtrans %}</label>
+          <label for="viewlog_fromdate">{% trans %}Please enter date within the Financial Start Date & Current Date!{% endtrans %}</label>
         </div>
         <div class="alert alert-danger" id="compare-date-alert" aria-live="rude" role="alert" hidden>
 
@@ -42,14 +42,14 @@
           <label for="viewlog_type">{% trans %}Type{% endtrans %} :</label>
           <select class = "form-control input-sm" id="viewlog_type"  name = "viewlog_type" >
             <option value="" disabled selected hidden>{% trans %}Select Type of Log{% endtrans %}</option>
-            <option value="1">By Organization</option>
-            <option value="2">By User</option>
+            <option value="1">All User</option>
+            <option value="2">Select User</option>
           </select>
           <br>
           <div class = "form-group" id = "viewlog_users" hidden>
             <label for="viewlog_username">{% trans %}User Name{% endtrans %} :</label>
             <select class = "form-control input-sm" id="viewlog_username"  name = "viewlog_username" >
-              <option value="" disabled selected hidden>{% trans %}Select User{% endtrans %}</option>
+              
               {% for user in gkresult %}
               <option value="{{user['userid']}}">{{user["username"]}}</option>
               {% endfor %}
