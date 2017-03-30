@@ -32,4 +32,30 @@ $(document).ready(function() {
   $("#anotherlog").click(function(event) {
     $("#showviewlog").click();
   });
+
+  $('#viewprintablelogreport').click(function (e) {
+
+
+    $.ajax(
+      {
+        type: "POST",
+        url: "/log?action=printableshowlogreport",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data: {"typeflag":$('#logof').val(),"userid":$('#userid').val(),"username":$('#username').val(), "calculatefrom":$('#calculatefrom').val(),"calculateto":$('#calculateto').val()},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      })
+        .done(function(resp)
+        {
+          $("#info").html(resp);
+          console.log($('#userid').val()+$('#username').val());
+        }
+      );
+
+    });
+
 });

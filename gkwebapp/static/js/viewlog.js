@@ -253,7 +253,7 @@ $(document).ready(function() {
         global: false,
         async: false,
         datatype: "text/html",
-        data: {"typeflag":$("#viewlog_type option:selected").val(),"userid":$("#viewlog_username").val(), "username":$("#viewlog_username option:selected").text(), "calculatefrom":$("#viewlog_fromyear").val()+"-"+$("#viewlog_frommonth").val()+"-"+$("#viewlog_fromdate").val(),"calculateto":$("#viewlog_toyear").val()+"-"+$("#viewlog_tomonth").val()+"-"+$("#viewlog_todate").val()},
+        data: {"typeflag":$("#viewlog_type option:selected").val(),"userid":$("#viewlog_username").val(), "username":$("#viewlog_username option:selected").text(), "calculatefrom":$("#viewlog_fromyear").val()+"-"+$("#viewlog_frommonth").val()+"-"+$("#viewlog_fromdate").val(),"calculateto":$("#viewlog_toyear").val()+"-"+$("#viewlog_tomonth").val()+"-"+$("#viewlog_todate").val(), "backflag":0},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
