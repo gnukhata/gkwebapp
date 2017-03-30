@@ -68,7 +68,7 @@ def createuser(request):
 		elif request.params["userrole"] == "2":
 			userrole = "Internal Auditor"
 		else:
-			userrole = "Godown Keeper"
+			userrole = "Godown In Charge"
 		gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user created"}
 		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=headers)
 	return {"gkstatus":result.json()["gkstatus"]}
@@ -100,7 +100,7 @@ def deleteuser(request):
 	elif urole == "2":
 		userrole = "Internal Auditor"
 	else:
-		userrole = "Godown Keeper"
+		userrole = "Godown In Charge"
 	gkdata={"userid":request.params["username"] }
 	result = requests.delete("http://127.0.0.1:6543/users", data=json.dumps(gkdata), headers=headers)
 	if result.json()["gkstatus"] == 0:
