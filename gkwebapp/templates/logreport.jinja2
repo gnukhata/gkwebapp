@@ -62,15 +62,15 @@
 </head>
 <body>
   <input type="hidden" id="logof" value={{typeflag}}>
-  <input type="hidden" id="username" value={{logheader["username"]}}>
-  <input type="hidden" id="userid" value={{logheader["userid"]}}>
+  <input type="hidden" id="username" value={{username}}>
+  <input type="hidden" id="userid" value={{userid}}>
   <input type="hidden" id="calculatefrom" value={{logheader["calculatefrom"]}} >
   <input type="hidden" id="calculateto" value={{logheader["calculateto"]}}>
   <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{logheader["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{logheader["calculateto"]}}</strong></span>
   {% if typeflag == "1" %}
   <span style="margin:auto; display:table;"><i>{% trans %}Activity Log of an Organisation{% endtrans %}</i></span>
   {% else %}
-  <span style="margin:auto; display:table;"><i>{% trans %}Activity Log of an User{% endtrans %}</i> : <strong>{{logheader["username"]}}</strong></span>
+  <span style="margin:auto; display:table;"><i>{% trans %}Activity Log of an User{% endtrans %}</i> : <strong>{{username}}</strong></span>
   {% endif %}
   <div class="row">
     <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="lclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
