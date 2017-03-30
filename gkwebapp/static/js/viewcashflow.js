@@ -35,6 +35,7 @@ $(document).ready(function() {
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   if (sessionStorage.orgt=="Not For Profit") {
     $(".panel-title").text("View Receipt & Payment");
+    
   }
 
 	// Setting default date to financialstart and end.
