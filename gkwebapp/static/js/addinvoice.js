@@ -134,12 +134,7 @@ $(document).ready(function() {
     if (event.which==13) {
       event.preventDefault();
       if ($("#invoice_customer").is(":disabled")) {
-        if ($("#status").val()=='15'){
-          $("#invoice_state").focus();
-        }
-        else {
-          $('#invoice_product_table tbody tr:first td:eq(0) select').focus();
-        }
+        $('#invoice_product_table tbody tr:first td:eq(0) select').focus();
       }
       else {
         $("#invoice_customer").focus().select();
