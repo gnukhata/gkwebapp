@@ -53,9 +53,9 @@ $(document).ready(function() {
 
   }
 
-  $("#invoice_date").numeric();
-  $("#invoice_month").numeric();
-  $("#invoice_year").numeric();
+  $("#invoice_date").numeric({ negative: false});
+  $("#invoice_month").numeric({ negative: false});
+  $("#invoice_year").numeric({ negative: false});
   $('.invoice_product_quantity').numeric({ negative: false});
   $('.invoice_product_per_price').numeric({ negative: false});
   $("#invoice_deliverynote").keydown(function(event) {
@@ -149,7 +149,12 @@ $(document).ready(function() {
   $("#invoice_customer").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $('#invoice_product_table tbody tr:first td:eq(0) select').focus();
+      if ($("#invoice_state").is(":disabled")) {
+        $('#invoice_product_table tbody tr:first td:eq(0) select').focus();
+      }
+      else {
+        $("#invoice_state").focus();
+      }
 
     }
     if (event.which==38 && (document.getElementById('invoice_customer').selectedIndex==1||document.getElementById('invoice_customer').selectedIndex==0)) {
@@ -221,7 +226,7 @@ $(document).ready(function() {
   $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
     event.preventDefault();
     /* Act on the event */
-    $(".numtype").numeric();
+    $(".numtype").numeric({ negative: false});
   });
   $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
     event.preventDefault();
@@ -239,7 +244,7 @@ $(document).ready(function() {
   $(document).off('focus', '.invoice_product_quantity').on('focus', '.invoice_product_quantity', function(event) {
     event.preventDefault();
     /* Act on the event */
-    $(".numtype").numeric();
+    $(".numtype").numeric({ negative: false});
   });
   $(document).off('blur', '.invoice_product_quantity').on('blur', '.invoice_product_quantity', function(event) {
     event.preventDefault();
@@ -739,19 +744,19 @@ $(document).ready(function() {
   $(document).off('focus', '.invoice_product_quantity').on('focus', '.invoice_product_quantity', function(event) {
     event.preventDefault();
     /* Act on the event */
-    $(".invoice_product_quantity").numeric();
+    $(".invoice_product_quantity").numeric({ negative: false});
   });
 
   $(document).off('focus', '.invoice_product_tax_rate').on('focus', '.invoice_product_tax_rate', function(event) {
     event.preventDefault();
     /* Act on the event */
-    $(".invoice_product_quantity").numeric();
+    $(".invoice_product_quantity").numeric({ negative: false});
   });
 
   $(document).off('focus', '.invoice_product_per_price').on('focus', '.invoice_product_per_price', function(event) {
     event.preventDefault();
     /* Act on the event */
-    $(".invoice_product_per_price").numeric();
+    $(".invoice_product_per_price").numeric({ negative: false});
   });
 
 
@@ -784,7 +789,7 @@ $(document).ready(function() {
   $(document).off('focus', '.invoice_product_tax_amount').on('focus', '.invoice_product_tax_amount', function(event) {
     event.preventDefault();
     /* Act on the event */
-    $(".invoice_product_tax_amount").numeric();
+    $(".invoice_product_tax_amount").numeric({ negative: false});
   });
 
   $(document).off('blur', '.invoice_product_tax_amount').on('blur', '.invoice_product_tax_amount', function(event) {
@@ -1320,7 +1325,7 @@ $(document).ready(function() {
             '<input type="text" class="invoice_product_tax_amount form-control input-sm numtype text-right" value="0.00" disabled>'+
             '</td>'+
             '<td class="col-xs-2">'+
-            '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00">'+
+            '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00" disabled>'+
             '</td>'+
             '<td class="col-xs-1">'+
             '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
