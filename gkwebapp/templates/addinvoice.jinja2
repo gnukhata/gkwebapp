@@ -4,6 +4,14 @@
 
       {% trans %}Invoice saved.{% endtrans %}
     </div>
+    <div class="alert alert-warning" id="notax-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}You have not entered tax for this product!{% endtrans %}
+    </div>
+    <div class="alert alert-warning" id="sometax-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}You have not entered tax for one of the products!{% endtrans %}
+    </div>
     <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
 
       {% trans %}Something went wrong!{% endtrans %}

@@ -154,15 +154,7 @@ $(document).ready(function() {
   $("#invoice_customer").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      if ($("#status").val()=='15')
-      {
-        $('#invoice_state').focus();
-
-      }
-      else
-      {
-        $('#invoice_product_table tbody tr:first td:eq(0) select').focus();
-      }
+      $('#invoice_product_table tbody tr:first td:eq(0) select').focus();
 
     }
     if (event.which==38 && (document.getElementById('invoice_customer').selectedIndex==1||document.getElementById('invoice_customer').selectedIndex==0)) {
@@ -280,6 +272,35 @@ $(document).ready(function() {
       {
         if (productcode!="") {
 
+          $.ajax({
+            url: '/product?type=prodtax',
+            type: 'POST',
+            dataType: 'json',
+            async : false,
+            data : {"productcode":productcode},
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+          })
+          .done(function(resp) {
+            console.log("success");
+            if (resp["gkresult"].length==0) {
+              $("#notax-alert").alert();
+              $("#notax-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#notax-alert").hide();
+              });
+              return false;
+            }
+
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          .always(function() {
+            console.log("complete");
+          });
+
         $.ajax({
           url: '/invoice?action=gettax',
           type: 'POST',
@@ -323,6 +344,34 @@ $(document).ready(function() {
     var curindex = $(this).closest('tbody tr').index();
     if ($("#status").val()=='15')
     {
+      $.ajax({
+        url: '/product?type=prodtax',
+        type: 'POST',
+        dataType: 'json',
+        async : false,
+        data : {"productcode":productcode},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+      .done(function(resp) {
+        console.log("success");
+        if (resp["gkresult"].length==0) {
+          $("#notax-alert").alert();
+          $("#notax-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#notax-alert").hide();
+          });
+          return false;
+        }
+
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
 
       var state = $("#invoice_state option:selected").val();
       if (state == "none")
@@ -1644,6 +1693,35 @@ $(document).ready(function() {
         $("#invoice_product_table tbody tr:eq("+i+") td:eq(0) select").focus();
         return false;
       }
+      var productcode = $("#invoice_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val();
+          $.ajax({
+            url: '/product?type=prodtax',
+            type: 'POST',
+            dataType: 'json',
+            async : false,
+            data : {"productcode":productcode},
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+          })
+          .done(function(resp) {
+            console.log("success");
+            if (resp["gkresult"].length==0) {
+              $("#sometax-alert").alert();
+              $("#sometax-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#sometax-alert").hide();
+              });
+              return false;
+            }
+
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          .always(function() {
+            console.log("complete");
+          });
       if ($("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val()=="" || $("#invoice_product_table tbody tr:eq("+i+") td:eq(1) input").val()<=0) {
         $("#quantity-blank-alert").alert();
         $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){

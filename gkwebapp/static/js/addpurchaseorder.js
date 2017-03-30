@@ -668,14 +668,6 @@ $(document).ready(function() {
         $('.purchaseorder_product_schedule:last').focus().select();
         return false;
       }
-      if ($(this).val()=="" || parseInt($(this).val())==0) {
-        $("#taxrate-blank-alert").alert();
-        $("#taxrate-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#taxrate-blank-alert").hide();
-        });
-        $("#purchaseorder_product_table tbody tr:eq("+curindex1+") td:eq(5) input").focus();
-        return false;
-      }
       if (curindex1 != ($("#purchaseorder_product_table tbody tr").length-1)) {
         $('#purchaseorder_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
