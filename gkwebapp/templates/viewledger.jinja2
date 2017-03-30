@@ -16,7 +16,8 @@
   <div style="padding-top:5px" class="container-fluid mainbox col-md-6 col-md-offset-3">
     <div class="panel shadow">
       <div class="panel-heading">
-        <h3 class="panel-title">{% trans %}View Ledger{% endtrans %}</h3>
+        <h3 class="panel-title">{% trans %}View Ledger{% endtrans %}
+        <i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" data-target="#accModal"></i></h3>
       </div>
       <div class="panel-body" style="padding-top:5px">
         <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
@@ -82,6 +83,36 @@
           {% endif %}
         </div>
       </div>
+        <div id="accModal"  tabindex="-1" class="modal fade" role="dialog"style="width:650px; margin-top: 100px; margin-left:325px;"  aria-hidden="true">
+  <div class="modal-dialog bgcolor " >
+    <div class="modal-content ">
+    <div class="modal-header">
+      {% trans %}<strong>Help!</strong>{% endtrans %}
+   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> </div>
+      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+       
+       <p>   <font color=" #566573"> {%trans%}
+<b>Single</b></br>
+Select name of the account to be viewed. The default option is Monthly Ledger.<br> Press Space Bar to view it or press Enter or Tab key to escape it and view report for any period.</br> The report could be viewed with or without narration. This report gives Date, V. No., Status, Type of Voucher, Name of the corresponding account, Narration, Amount and running balance of account. 
+The locked records are marked by a sign of *** in the Status column.
+Drill Down facility is available where you can double click or press enter key on any transaction to view it and/or modify it. After any modification the ledger report immediately reflects the chnages.
+It can be viewed in entirety or for a Project or Cost Center. 
+You can view only Debit transactions or Credit Transactions of a Ledger account.
+<b>Dual Ledgers</b></br>
+When a Ledger Account appears on the screen, press Shift + Alt + l to view another Ledger Account simultaneously. Select another Ledger account, choose period and press Enter. You can view the same account side by side but for a different period. 
+Drill Down facility is available for both the accounts.
+Each Ledger Account of the dual ledgers has a separate Quick Search facility.
+All users can view this report.
+This report is unique to GNUKhata.{% endtrans %} </font>
+
+        </p>
+      </div>
+      
+    </div>
+  </div>
+</div>
       <div class="panel-footer">
         <button class="btn btn-primary btn-sm" id="viewledger_submit" name="view" accesskey="v">{% trans %}<u>V</u>iew{% endtrans %}</button>
         <button id="viewledger_reset" class="btn btn-danger btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>

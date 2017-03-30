@@ -16,7 +16,8 @@
     <div style="padding-top:5px" class="container-fluid mainbox col-md-4 col-md-offset-4">
     <div class="panel shadow">
       <div class="panel-heading">
-        <h3 class="panel-title">{% trans %}View Trial Balance{% endtrans %}</h3>
+        <h3 class="panel-title">{% trans %}View Trial Balance{% endtrans %}
+        <i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal"  data-target="#TrialBModal"></i></h3>
       </div>
       <div class="panel-body">
         <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
@@ -56,12 +57,39 @@
           </select>
         </div>
       </div>
+   <div id="TrialBModal"  tabindex="-1" class="modal fade " role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
+  <div class="modal-dialog bgcolor " >
+    <div class="modal-content ">
+    <div class="modal-header">
+      {% trans %}<strong>Help!</strong>{% endtrans %}
+   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> </div>
+      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+       
+       <p>   <font color=" #566573"> {%trans%}
+Trial Balance can be seen in three formats.
+</br>The net trial balance will provide the closing balances (or current balance as on selected end date).  The gross trial balance shows the total Drs and Crs along with balance, while the extended version shows all this with opening balance.
+ </br> Apart from the regular account names and balances, these reports include Group name of each account. 
+</br>The period for this report must begin with the first date of the Financial Year and can end on any date.
+If an account has an adverse balance it is shown in red colour. </br> The difference in Trial Balance, if any, is shown in the last row.
+</br>Drill Down facility is available for all types of Trial Balances. You can double click or press enter key on any row to see the ledger for that account.</br>
+All users can view all types of Trial Balances.
+{% endtrans %} </font>
+
+        </p>
+      </div>
+      
+    </div>
+  </div>
+</div>
       <div class="panel-footer">
         <button type="button" class="btn btn-sm btn-success" name="button" id="trialbal_view" accesskey="v">{% trans %}<u>V</u>iew{% endtrans %}</button>
         <button type="button" name="button" class="btn btn-sm btn-danger" id="trialbal_reset" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
       </div>
     </div>
   </div>
+  
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewtrialbalance.js')}}"></script>
   </body>
 </html>
