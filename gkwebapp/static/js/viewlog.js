@@ -203,6 +203,13 @@ $(document).ready(function() {
     }
     var todate = $("#viewlog_toyear").val()+$("#viewlog_tomonth").val()+$("#viewlog_todate").val();
     var fromdate = $("#viewlog_fromyear").val()+$("#viewlog_frommonth").val()+$("#viewlog_fromdate").val();
+    function GetTodayDate() {
+      var tdate = new Date();
+      return tdate;
+      }
+      currentdate=GetTodayDate();
+      console.log("financialend "+financialend);
+      console.log("currentdate :"+currentdate);
     if(!Date.parseExact(fromdate,"yyyyMMdd")){
       $("#date-alert").alert();
       $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
@@ -211,7 +218,7 @@ $(document).ready(function() {
       $('#viewlog_fromdate').focus().select();
       return false;
     }
-    if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,financialend)) {
+    if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,currentdate)) {
       $("#between-date-alert").alert();
       $("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
         $("#between-date-alert").hide();
