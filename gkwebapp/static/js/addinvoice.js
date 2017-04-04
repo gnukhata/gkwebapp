@@ -53,9 +53,9 @@ $(document).ready(function() {
 
   }
 
-  $("#invoice_date").numeric();
-  $("#invoice_month").numeric();
-  $("#invoice_year").numeric();
+  $("#invoice_date").numeric({ negative: false});
+  $("#invoice_month").numeric({ negative: false});
+  $("#invoice_year").numeric({ negative: false});
   $('.invoice_product_quantity').numeric({ negative: false});
   $('.invoice_product_per_price').numeric({ negative: false});
   $("#invoice_deliverynote").keydown(function(event) {
@@ -149,7 +149,12 @@ $(document).ready(function() {
   $("#invoice_customer").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $('#invoice_product_table tbody tr:first td:eq(0) select').focus();
+      if ($("#invoice_state").is(":disabled")) {
+        $('#invoice_product_table tbody tr:first td:eq(0) select').focus();
+      }
+      else {
+        $("#invoice_state").focus();
+      }
 
     }
     if (event.which==38 && (document.getElementById('invoice_customer').selectedIndex==1||document.getElementById('invoice_customer').selectedIndex==0)) {
@@ -221,7 +226,7 @@ $(document).ready(function() {
   $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
     event.preventDefault();
     /* Act on the event */
-    $(".numtype").numeric();
+    $(".numtype").numeric({ negative: false});
   });
   $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
     event.preventDefault();
@@ -239,7 +244,7 @@ $(document).ready(function() {
   $(document).off('focus', '.invoice_product_quantity').on('focus', '.invoice_product_quantity', function(event) {
     event.preventDefault();
     /* Act on the event */
-    $(".numtype").numeric();
+    $(".numtype").numeric({ negative: false});
   });
   $(document).off('blur', '.invoice_product_quantity').on('blur', '.invoice_product_quantity', function(event) {
     event.preventDefault();
@@ -389,9 +394,14 @@ $(document).ready(function() {
         .done(function(resp) {
           console.log("success");
           if (resp["gkstatus"]==0) {
-            $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').val(parseFloat(resp['taxdata']).toFixed(2));
+            if (resp['taxdata'] == 0.00) {
+              $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').prop("disabled", false);
+            }
+            else {
+              $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').val(parseFloat(resp['taxdata']).toFixed(2));
+              $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').prop("disabled", true);
+            }
           }
-
         })
         .fail(function() {
           console.log("error");
@@ -459,6 +469,7 @@ $(document).ready(function() {
 
   $("#invoice_deliverynote").change(function(event) {
     if ($("#invoice_deliverynote option:selected").val()!='') {
+      $("#invoice_state").prop("disabled",true);
       $.ajax({
         url: '/invoice?action=getdeliverynote',
         type: 'POST',
@@ -507,7 +518,6 @@ $(document).ready(function() {
                 $("#invoice_state").val("");
                 producstate = "";
               }
-              console.log(producstate);
             }
           })
           .fail(function() {
@@ -734,19 +744,19 @@ $(document).ready(function() {
   $(document).off('focus', '.invoice_product_quantity').on('focus', '.invoice_product_quantity', function(event) {
     event.preventDefault();
     /* Act on the event */
-    $(".invoice_product_quantity").numeric();
+    $(".invoice_product_quantity").numeric({ negative: false});
   });
 
   $(document).off('focus', '.invoice_product_tax_rate').on('focus', '.invoice_product_tax_rate', function(event) {
     event.preventDefault();
     /* Act on the event */
-    $(".invoice_product_quantity").numeric();
+    $(".invoice_product_quantity").numeric({ negative: false});
   });
 
   $(document).off('focus', '.invoice_product_per_price').on('focus', '.invoice_product_per_price', function(event) {
     event.preventDefault();
     /* Act on the event */
-    $(".invoice_product_per_price").numeric();
+    $(".invoice_product_per_price").numeric({ negative: false});
   });
 
 
@@ -779,7 +789,7 @@ $(document).ready(function() {
   $(document).off('focus', '.invoice_product_tax_amount').on('focus', '.invoice_product_tax_amount', function(event) {
     event.preventDefault();
     /* Act on the event */
-    $(".invoice_product_tax_amount").numeric();
+    $(".invoice_product_tax_amount").numeric({ negative: false});
   });
 
   $(document).off('blur', '.invoice_product_tax_amount').on('blur', '.invoice_product_tax_amount', function(event) {
@@ -967,192 +977,196 @@ $(document).ready(function() {
     var previndex = curindex-1;
     if (event.which==13) {
       event.preventDefault();
-      var curindex = $(this).closest('#invoice_product_table tbody tr').index();
-      var rowqty = parseFloat($('#invoice_product_table tbody tr:eq('+curindex+') td:eq(1) input').val()).toFixed(2);
-      var rowprice = parseFloat($('#invoice_product_table tbody tr:eq('+curindex+') td:eq(2) input').val()).toFixed(2);
-      var rowtaxrate = parseFloat($('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').val()).toFixed(2);
-      var taxpercentamount =rowqty*rowprice*(rowtaxrate/100);
-      var rowtotal = (rowqty*rowprice)+taxpercentamount;
-      $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(4) input').val(parseFloat(taxpercentamount).toFixed(2));
+      if ($('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').is(":disabled")) {
+        var curindex = $(this).closest('#invoice_product_table tbody tr').index();
+        var rowqty = parseFloat($('#invoice_product_table tbody tr:eq('+curindex+') td:eq(1) input').val()).toFixed(2);
+        var rowprice = parseFloat($('#invoice_product_table tbody tr:eq('+curindex+') td:eq(2) input').val()).toFixed(2);
+        var rowtaxrate = parseFloat($('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').val()).toFixed(2);
+        var taxpercentamount =rowqty*rowprice*(rowtaxrate/100);
+        var rowtotal = (rowqty*rowprice)+taxpercentamount;
+        $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(4) input').val(parseFloat(taxpercentamount).toFixed(2));
 
-      $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(5) input').val(parseFloat(rowtotal).toFixed(2));
-      perprice=0.00;
-      ptaxamt=0.00;
-      ptotal=0.00;
+        $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(5) input').val(parseFloat(rowtotal).toFixed(2));
+        perprice=0.00;
+        ptaxamt=0.00;
+        ptotal=0.00;
 
-      $(".invoice_product_per_price").each(function(){
-        perprice += +$(this).val();
+        $(".invoice_product_per_price").each(function(){
+          perprice += +$(this).val();
 
-        // jquery enables us to select specific elements inside a table easily like below.
-        $('#invoice_product_table tfoot tr:last td:eq(2) input').val(parseFloat(perprice).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
-      });
+          // jquery enables us to select specific elements inside a table easily like below.
+          $('#invoice_product_table tfoot tr:last td:eq(2) input').val(parseFloat(perprice).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
+        });
 
-      $(".invoice_product_tax_amount").each(function(){
-        ptaxamt += +$(this).val();
+        $(".invoice_product_tax_amount").each(function(){
+          ptaxamt += +$(this).val();
 
-        // jquery enables us to select specific elements inside a table easily like below.
-        $('#invoice_product_table tfoot tr:last td:eq(4) input').val(parseFloat(ptaxamt).toFixed(2));
-      });
+          // jquery enables us to select specific elements inside a table easily like below.
+          $('#invoice_product_table tfoot tr:last td:eq(4) input').val(parseFloat(ptaxamt).toFixed(2));
+        });
 
-      $(".invoice_product_total").each(function(){
-        ptotal += +$(this).val();
+        $(".invoice_product_total").each(function(){
+          ptotal += +$(this).val();
 
-        // jquery enables us to select specific elements inside a table easily like below.
-        $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
-      });
-      if ($("#status").val()=='9')
-      {
-        $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').focus().select();
-      }
-      else
-      {
-        if (curindex != ($("#invoice_product_table tbody tr").length-1)) {
-          $('#invoice_product_table tbody tr:eq('+nextindex+') td:eq(0) select').focus();
+          // jquery enables us to select specific elements inside a table easily like below.
+          $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
+        });
+        if ($("#status").val()=='9')
+        {
+          $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').focus().select();
         }
-        else {
-          if ($('#invoice_product_table tbody tr:eq('+curindex+') td:eq(0) select option:selected').val()=="") {
-            $("#product-blank-alert").alert();
-            $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-              $("#product-blank-alert").hide();
-            });
-            $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(0) select').focus();
-            return false;
+        else
+        {
+          if (curindex != ($("#invoice_product_table tbody tr").length-1)) {
+            $('#invoice_product_table tbody tr:eq('+nextindex+') td:eq(0) select').focus();
           }
-          $.ajax({
-            url: '/invoice?action=getproducts',
-            type: 'POST',
-            dataType: 'json',
-            async : false,
-            beforeSend: function(xhr)
-            {
-              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          else {
+            if ($('#invoice_product_table tbody tr:eq('+curindex+') td:eq(0) select option:selected').val()=="") {
+              $("#product-blank-alert").alert();
+              $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#product-blank-alert").hide();
+              });
+              $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(0) select').focus();
+              return false;
             }
-          })
-          .done(function(resp) {
-            console.log("success");
-            if (resp["gkstatus"]==0) {
-              $('#invoice_product_table tbody').append('<tr>'+
-              '<td class="col-xs-3">'+
-              '<select class="form-control input-sm product_name"></select>'+
-              '</td>'+
-              '<td class="col-xs-2">'+
-              '<div class="input-group">'+
-              '<input type="text" class="invoice_product_quantity form-control input-sm text-right" value="0">'+
-                '<span class="input-group-addon input-sm" id="unitaddon"></span>'+
-              '</div>'+
-              '</td>'+
-              '<td class="col-xs-2">'+
-              '<input type="text" class="invoice_product_per_price form-control input-sm numtype text-right" value="0.00">'+
-              '</td>'+
-              '<td class="col-xs-1">'+
-              '<input type="text" class="invoice_product_tax_rate form-control input-sm numtype text-right" value="0.00">'+
-              '</td>'+
-              '<td class="col-xs-1">'+
-              '<input type="text" class="invoice_product_tax_amount form-control input-sm numtype text-right" value="0.00" disabled>'+
-              '</td>'+
-              '<td class="col-xs-2">'+
-              '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00" disabled>'+
-              '</td>'+
-              '<td class="col-xs-1">'+
-              '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-              '</td>'+
-              '</tr>');
-              if ($("#status").val()=='15')
+            $.ajax({
+              url: '/invoice?action=getproducts',
+              type: 'POST',
+              dataType: 'json',
+              async : false,
+              beforeSend: function(xhr)
               {
-                $(".invoice_product_tax_rate").prop("disabled",true);
-
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
               }
-              else
-              {
-                $(".invoice_product_tax_rate").prop("disabled",false);
-              }
-              for (product of resp["products"]) {
-                $('#invoice_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
-              }
-              $('#invoice_product_table tbody tr:eq('+nextindex+') td:eq(0) select').focus();
-
-              if ($("#status").val()=='15') {
-
-
-                var state = $("#invoice_state option:selected").val();
-                var productcode = $('#invoice_product_table tbody tr:last td:eq(0) select option:selected').val();
-
-                var curindex = $(this).closest('tbody tr').index();
-                if (state == "none")
+            })
+            .done(function(resp) {
+              console.log("success");
+              if (resp["gkstatus"]==0) {
+                $('#invoice_product_table tbody').append('<tr>'+
+                '<td class="col-xs-3">'+
+                '<select class="form-control input-sm product_name"></select>'+
+                '</td>'+
+                '<td class="col-xs-2">'+
+                '<div class="input-group">'+
+                '<input type="text" class="invoice_product_quantity form-control input-sm text-right" value="0">'+
+                  '<span class="input-group-addon input-sm" id="unitaddon"></span>'+
+                '</div>'+
+                '</td>'+
+                '<td class="col-xs-2">'+
+                '<input type="text" class="invoice_product_per_price form-control input-sm numtype text-right" value="0.00">'+
+                '</td>'+
+                '<td class="col-xs-1">'+
+                '<input type="text" class="invoice_product_tax_rate form-control input-sm numtype text-right" value="0.00">'+
+                '</td>'+
+                '<td class="col-xs-1">'+
+                '<input type="text" class="invoice_product_tax_amount form-control input-sm numtype text-right" value="0.00" disabled>'+
+                '</td>'+
+                '<td class="col-xs-2">'+
+                '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00" disabled>'+
+                '</td>'+
+                '<td class="col-xs-1">'+
+                '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+                '</td>'+
+                '</tr>');
+                if ($("#status").val()=='15')
                 {
-                  $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').val(parseFloat(0).toFixed(2));
+                  $(".invoice_product_tax_rate").prop("disabled",true);
+
                 }
-                else {
-
-
-                  $.ajax({
-                    url: '/invoice?action=gettax',
-                    type: 'POST',
-                    dataType: 'json',
-                    async : false,
-                    data : {"productcode":productcode, "state":state},
-                    beforeSend: function(xhr)
-                    {
-                      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                    }
-                  })
-                  .done(function(resp) {
-                    console.log("success");
-                    if (resp["gkstatus"]==0) {
-                      $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').val(parseFloat(resp['taxdata']).toFixed(2));
-                    }
-
-                  })
-                  .fail(function() {
-                    console.log("error");
-                  })
-                  .always(function() {
-                    console.log("complete");
-                  });
+                else
+                {
+                  $(".invoice_product_tax_rate").prop("disabled",false);
                 }
+                for (product of resp["products"]) {
+                  $('#invoice_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
+                }
+                $('#invoice_product_table tbody tr:eq('+nextindex+') td:eq(0) select').focus();
+
+                if ($("#status").val()=='15') {
+
+
+                  var state = $("#invoice_state option:selected").val();
+                  var productcode = $('#invoice_product_table tbody tr:last td:eq(0) select option:selected').val();
+
+                  var curindex = $(this).closest('tbody tr').index();
+                  if (state == "none")
+                  {
+                    $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').val(parseFloat(0).toFixed(2));
+                  }
+                  else {
+
+
+                    $.ajax({
+                      url: '/invoice?action=gettax',
+                      type: 'POST',
+                      dataType: 'json',
+                      async : false,
+                      data : {"productcode":productcode, "state":state},
+                      beforeSend: function(xhr)
+                      {
+                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                      }
+                    })
+                    .done(function(resp) {
+                      console.log("success");
+                      if (resp["gkstatus"]==0) {
+                        $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').val(parseFloat(resp['taxdata']).toFixed(2));
+                      }
+
+                    })
+                    .fail(function() {
+                      console.log("error");
+                    })
+                    .always(function() {
+                      console.log("complete");
+                    });
+                  }
+                }
+
+                taxrate=0.00;
+                ptaxamt=0.00;
+                ptotal=0.00;
+
+
+                $(".invoice_product_tax_rate").each(function(){
+                  taxrate += +$(this).val();
+
+                  // jquery enables us to select specific elements inside a table easily like below.
+                  $('#invoice_product_table tfoot tr:last td:eq(3) input').val(parseFloat(taxrate).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
+                });
+
+                $(".invoice_product_tax_amount").each(function(){
+                  ptaxamt += +$(this).val();
+
+                  // jquery enables us to select specific elements inside a table easily like below.
+                  $('#invoice_product_table tfoot tr:last td:eq(4) input').val(parseFloat(ptaxamt).toFixed(2));
+                });
+
+                $(".invoice_product_total").each(function(){
+                  ptotal += +$(this).val();
+
+                  // jquery enables us to select specific elements inside a table easily like below.
+                  $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
+                });
+
+                $(".product_name").change();
+                $('#invoice_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
+                $('.invoice_product_quantity').numeric({ negative: false});
+                $('.invoice_product_per_price').numeric({ negative: false});
               }
+            })
+            .fail(function() {
+              console.log("error");
+            })
+            .always(function() {
+              console.log("complete");
+            });
 
-              taxrate=0.00;
-              ptaxamt=0.00;
-              ptotal=0.00;
-
-
-              $(".invoice_product_tax_rate").each(function(){
-                taxrate += +$(this).val();
-
-                // jquery enables us to select specific elements inside a table easily like below.
-                $('#invoice_product_table tfoot tr:last td:eq(3) input').val(parseFloat(taxrate).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
-              });
-
-              $(".invoice_product_tax_amount").each(function(){
-                ptaxamt += +$(this).val();
-
-                // jquery enables us to select specific elements inside a table easily like below.
-                $('#invoice_product_table tfoot tr:last td:eq(4) input').val(parseFloat(ptaxamt).toFixed(2));
-              });
-
-              $(".invoice_product_total").each(function(){
-                ptotal += +$(this).val();
-
-                // jquery enables us to select specific elements inside a table easily like below.
-                $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
-              });
-
-              $(".product_name").change();
-              $('#invoice_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
-              $('.invoice_product_quantity').numeric({ negative: false});
-              $('.invoice_product_per_price').numeric({ negative: false});
-            }
-          })
-          .fail(function() {
-            console.log("error");
-          })
-          .always(function() {
-            console.log("complete");
-          });
-
-        }
-
+          }
+      }
+      }
+      else {
+        $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').focus();
       }
     }
     else if(event.which==190 && event.shiftKey)
@@ -1319,7 +1333,9 @@ $(document).ready(function() {
             '</tr>');
             if ($("#status").val()=='15')
             {
-              $(".invoice_product_tax_rate").prop("disabled",true);
+              if ($("#invoice_deliverynote option:selected").val()!='') {
+                $(".invoice_product_tax_rate").prop("disabled",true);
+              }
 
             }
             else
@@ -1331,47 +1347,6 @@ $(document).ready(function() {
               $('#invoice_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
             }
 
-            if ($("#status").val()=='15') {
-
-
-              var state = $("#invoice_state option:selected").val();
-              var productcode = $('#invoice_product_table tbody tr:last td:eq(0) select option:selected').val();
-
-              var curindex = $(this).closest('tbody tr').index();
-              if (state == "none")
-              {
-                $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').val(parseFloat(0).toFixed(2));
-              }
-              else {
-
-
-                $.ajax({
-                  url: '/invoice?action=gettax',
-                  type: 'POST',
-                  dataType: 'json',
-                  async : false,
-                  data : {"productcode":productcode, "state":state},
-                  beforeSend: function(xhr)
-                  {
-                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                  }
-                })
-                .done(function(resp) {
-                  console.log("success");
-                  if (resp["gkstatus"]==0) {
-                    $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').val(parseFloat(resp['taxdata']).toFixed(2));
-                  }
-
-                })
-                .fail(function() {
-                  console.log("error");
-                })
-                .always(function() {
-                  console.log("complete");
-                });
-              }
-            }
-
             taxrate=0.00;
             ptaxamt=0.00;
             ptotal=0.00;
@@ -1379,7 +1354,6 @@ $(document).ready(function() {
 
             $(".invoice_product_tax_rate").each(function(){
               taxrate += +$(this).val();
-
               // jquery enables us to select specific elements inside a table easily like below.
               $('#invoice_product_table tfoot tr:last td:eq(3) input').val(parseFloat(taxrate).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
             });
@@ -1442,15 +1416,6 @@ $(document).ready(function() {
     else if (event.which==35) {
       event.preventDefault();
       $("#invoice_issuer_name").focus().select();
-    }
-    else
-    {
-      if ($("#status").val()=='15')
-      {
-        event.preventDefault();
-
-      }
-
     }
   });
 
