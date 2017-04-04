@@ -10,7 +10,7 @@
     </div>
     <div class="alert alert-danger" id="cus-duplicate-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Customer/Supplier Already Exist!(Please check Name, FAX, PAN or TIN){% endtrans %}
+      {% trans %}Customer/Supplier already exists!(Please check Name, FAX, PAN or TIN){% endtrans %}
     </div>
 
     <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
@@ -19,16 +19,16 @@
     </div>
     <div class="alert alert-danger" id="role-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Please Select Role!{% endtrans %}
+      {% trans %}Please select Role!{% endtrans %}
     </div>
     <div class="alert alert-danger" id="name-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Please Enter name!{% endtrans %}
+      {% trans %}Please enter name!{% endtrans %}
     </div>
     
      <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Please select state!{% endtrans %}
+      {% trans %}Please select State!{% endtrans %}
       
     </div>
     
@@ -122,7 +122,7 @@
                 </label>
                 <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#accModal"></i>
                 <textarea class="form-control" rows="3" cols="40" id="add_cussup_address" aria-describedby="textareahelp"></textarea>
-                <small id="textareahelp" class="form-text text-muted">Press Enter Key twice to shift focus to Fax</small>
+                <small id="textareahelp" class="form-text text-muted">Press Enter key twice to shift focus to Fax</small>
               </div>
 
             <div class="form-group">
@@ -150,10 +150,9 @@
       <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
        
        <p>   <font color=" #566573"> {%trans%}
-This screen let's you record details of customers or supplyers. The screen by default start in create customer/supplyer mode.
-You can choose the option edit customer/supplyer to go in the edit screen.
-While entering details for a new customer or supplyer, choose the role and then enter all the details.
-You can press enter to navigate forward and up arrow to navigation backword.
+This screen let's you create a customer or supplier. The module by default starts with Create Customer/Supplier mode.
+Enter all the details of a new customer or supplier.
+Pres Enter to move forward and up arrow to move backward.
 {% endtrans %} </font>
 
         </p>
