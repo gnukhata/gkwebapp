@@ -157,12 +157,12 @@
     </div>
     <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
 
-      {% trans %}Please enter voucher date within the financial year!{% endtrans %}
+      {% trans %}Please enter voucher date from within the financial year!{% endtrans %}
     </div>
 
     <div class="alert alert-danger" id="inv-date-alert" aria-live="rude" role="alert" hidden>
 
-      {% trans %}Transaction cannot be prior to Invoice!{% endtrans %}
+      {% trans %}Transaction date cannot be prior to Invoice date!{% endtrans %}
     </div>
 
 
@@ -395,8 +395,8 @@
       <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
        
        <p>   <font color=" #566573"> {%trans%}
-Book Keeping is recording of transactions. Since transactions are of different kinds, GNUKhata has a voucher type for recording every kind of transaction, available in the vouchers menu.
-Given below is the description of transaction types GNUKhata records.</br>
+Book Keeping is recording of transactions. Since transactions are of different kinds, GNUKhata has a voucher type for recording every kind of transaction.
+The Voucher Types are given below.</br>
 <b>Receipt</b></br> 
 Used for recording amounts received by cash or cheque or through NEFT.
 Accounts from the Sub-Groups Cash and Bank of the Group Current Assets can only be debited and cannot be credited.</br>
@@ -437,11 +437,12 @@ Used for recording reduction in the price charged by a supplier (without return 
 The accounts that can be debited and credited are similar to those of Purchase Return voucher.
 </br>In case of Sale Return, Purchase Return, Debit Note and Credit Note types of vouchers, accounts from the Sub-Groups Cash and Bank of the Group Current Assets cannot be debited and credited.
 <br></br>
-As soon as you open the voucher screen you are placed on the voucher number field.
-Enter all the details by navigating using enter key for going forward and up arrow for going backward.
-When you choose the account for Dr and enter the amount, press enter to select the account for Cr. By default the Dr and Cr amount tallies. You can change either amount and an additional row for Cr or Dr will appear depending on which amount you changed.
-In case of sales and purchase vouchers, if you select an invoice number, the amount and customer/supplier account is picked up by default and the values appear in their respective rows.
-You can choose a project or a cost center which you wish to associate this transaction with. GNUKhata also provides a facility to attach documents to a transaction.
+The user interface for all types of vouchers is the same.
+Whatever the type of a voucher be, in voucher entry Debit entry is to be recorded first then the Credit entry. There after any number of Debit and or Credit entries can be recorded. 
+A cross sign will appear in each row in the Remove Column from the third row onwards. Click on the cross sign to delete an unwanted row.
+Project / Cost Center, Document Attachment and Narration fields are optional.
+A voucher can be saved only if the total of the Debit amounts and the total of the Credit amounts are the same.
+The field Balance displays the balance of the account selected as on the date of voucher.
 {% endtrans %} </font>
 
         </p>
