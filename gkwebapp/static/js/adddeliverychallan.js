@@ -278,6 +278,7 @@ $(document).ready(function() {
     var curindex = $(this).closest('tr').index();
     var nextindex = curindex+1;
     var previndex = curindex-1;
+
     if (event.which==13) {
       event.preventDefault();
 
@@ -289,9 +290,11 @@ $(document).ready(function() {
         $('#deliverychallan_product_table tbody tr:eq('+curindex+') td:eq(0) select').focus();
         return false;
       }
+
       else {
         $('#deliverychallan_product_table tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
       }
+
 
 
     }
@@ -336,7 +339,7 @@ $(document).ready(function() {
     var previndex1 = curindex1-1;
     if (event.which==13) {
       event.preventDefault();
-
+console.log($('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(0) select option').length);
       if ($('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(1) input').val()=="") {
 
   	    	 $("#quantity-blank-alert").alert();
@@ -356,6 +359,10 @@ else {
 
       if (curindex1 != ($("#deliverychallan_product_table tbody tr").length-1)) {
         $('#deliverychallan_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
+      }
+      else if ($('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(0) select option').length==2)
+      {
+          $("#deliverychallan_noofpackages").focus().select();
       }
       else {
         if ($('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="") {
