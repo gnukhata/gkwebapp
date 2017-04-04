@@ -49,7 +49,7 @@ $(document).ready(function() {
     sel1 = 0;
   });
   if (sessionStorage.orgt=="Profit Making") { // changing headings and messages depending on type of organisation.
-    $("#prjhead").html("Cost Center");
+    $("#prjhead").html("Cost Center Statement"+' <i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" data-target="#ProjSModal"></i>');
     $("#prjalert").html("Please select a cost center");
     $("#prjnamelbl").html("Cost Center: ");
     $("#failure-alert1").html("No cost center Found");

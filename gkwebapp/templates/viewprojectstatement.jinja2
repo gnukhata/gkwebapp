@@ -16,7 +16,8 @@
   <div style="padding-top:5px" class="container-fluid mainbox col-md-6 col-md-offset-3">
     <div class="panel shadow">
       <div class="panel-heading">
-        <h3 id = "prjhead" class="panel-title">{% trans %} Project Statement{% endtrans %}</h3>
+        <h3 id = "prjhead" class="panel-title">{% trans %} Project Statement{% endtrans %}
+        <i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" data-target="#ProjSModal"></i></h3>
       </div>
       <div class="panel-body" style="padding-top:5px">
         <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
@@ -70,6 +71,29 @@
           {% endif %}
         </div>
       </div>
+      
+      <div id="ProjSModal"  tabindex="-1" class="modal fade" role="dialog"style="width:650px; margin-top: 150px; margin-left:320px;"  aria-hidden="true">
+  <div class="modal-dialog bgcolor " >
+    <div class="modal-content ">
+    <div class="modal-header">
+      {% trans %}<strong>Help!</strong>{% endtrans %}
+   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> </div>
+      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+       
+       <p>   <font color=" #566573"> {%trans%}
+Project/Cost Center Statement <br>
+The period of this report must begin with the first date of the Financial Year and can end on any date. <br>
+Select name of the Project/Cost Center for which the statement is to be seen. This statement gives account wise expenses relating to it.
+{% endtrans %} </font>
+
+        </p>
+      </div>
+      
+    </div>
+  </div>
+</div>
       <div class="panel-footer">
         <button class="btn btn-primary btn-sm" id="viewprjstate_submit" name="view" accesskey="v">{% trans %}<u>V</u>iew{% endtrans %}</button>
         <button id="viewprjstate_reset" class="btn btn-danger btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>

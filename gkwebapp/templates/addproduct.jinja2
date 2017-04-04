@@ -48,12 +48,12 @@
                   {% endfor %}
                 </select>
                 
-                <small id="txtareahelp" class="form-text text-muted">{% trans %}Press space to add new unit.{% endtrans %}</small>
+                <small id="txtareahelp" class="form-text text-muted">{% trans %}Press Space Bar to add a new unit.{% endtrans %}</small>
               </div>
               <div class="form-group col-sm-11 pds newuom" hidden>
                 <label for="newuom" class=""  style="font-size:13px">{% trans %}New Unit of Measurement{% endtrans %} :</label>
                 <input type='text' class="form-control input-sm" name="newuom"  id="newuom" placeholder="Name of the new unit" aria-describedby="textareahelp">
-                <small id="textareahelp" class="form-text text-muted">{% trans %}Press esc to cancel.{% endtrans %}</small>
+                <small id="textareahelp" class="form-text text-muted">{% trans %}Press Esc to cancel.{% endtrans %}</small>
               </div>
             </div>
             <div class="row" id="specdiv" hidden>
@@ -241,10 +241,10 @@
       <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
        
        <p>   <font color=" #566573"> {%trans%}
-This module lets you add data about products in your stock.
-</br> If you have created a categories (which is highly recommended) you can select the suitable category for a product. When you select a category the screen immediately changes and presents you the specification list where you can enter the details for the product.
-</br>Alternatively you can choose to create a product without a category and add all the details in Product Name.
-You can also create unit of measurement. Note that you can choose unit of measurement previously created or also choose from dropdown. </br>
+This module lets you add Products.
+</br> If you have created Categories (at least one is highly recommended) you can select a suitable Category for a Product. When you select a Category the screen immediately changes and presents you the specifications list where you can enter the details pertaning to the product.
+</br>Alternatively you may create a Product without a Category and or Sub-Category with all its specifications.
+You can also create a Unit of Measurement. Note that you can choose a Unit of measurement previously created or create one. </br>
 you can also enter the details of taxes for the product. {%endtrans %} </font>
 
         </p>
@@ -254,11 +254,11 @@ you can also enter the details of taxes for the product. {%endtrans %} </font>
   </div>
 </div>
             </div>
-            <small id="taxhelp3" class="form-text text-muted">Press 'Esc' Key from tax rate or tax name to shift focus to godown name or from godown opening stock to 'Save' button.</small><br>
-            <small id="taxhelp4" class="form-text text-muted">Press 'Insert' Key from anywhere on the screen to save changes.</small>
+            <small id="taxhelp3" class="form-text text-muted">When on Tax Rate or Tax Name press 'Esc' key to shift focus to Godown Name or from Godown Opening Stock to 'Save' button.</small><br>
+            <small id="taxhelp4" class="form-text text-muted">Press 'Insert' key from anywhere on the screen to save changes.</small>
             <div class="collapse" id="moresmall">
-              <small id="taxhelp2" class="form-text text-muted">Press 'Ctrl + >' or 'Ctrl + <' to navigate within a row in tax or godown table.</small><br>
-              <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to navigate within a column in tax or godown table.</small>
+              <small id="taxhelp2" class="form-text text-muted">Press 'Ctrl + >' to move forward or 'Ctrl + <' to move backward within a row in the Tax or Godown table.</small><br>
+              <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to move backward within a Column in the Tax or Godown table.</small>
             </div>
             <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
           </div>

@@ -53,7 +53,7 @@ th {
 		<div class="alert alert-danger" id="transaction-alert"  aria-live="rude" role="alert" hidden>
 
 			{% trans %}Account cannot be deleted!{% endtrans %}
-			{% trans %}Transactions might be remaining for this account.{% endtrans %}
+			{% trans %}There atr transactions in this account.{% endtrans %}
 		</div>
 
 		<div style="padding-top:5px" class="mainbox col-md-6">
@@ -74,7 +74,7 @@ th {
             {% endfor %}
           </select>
 					<div class="alert alert-warning nopadding" id="alertmsg"  aria-live="rude" role="alert" hidden>
-						<strong>{% trans %}This is a system generated account, cannot be edited/deleted.{% endtrans %}</strong>
+						<strong>{% trans %}This is a system generated account, it cannot be edited/deleted.{% endtrans %}</strong>
 					</div>
 					<div class="alert alert-warning nopadding" id="accnamenoedit"  aria-live="rude" role="alert" hidden>
 						<strong>{% trans %}Name of this system generated account cannot be edited.{% endtrans %}</strong>
@@ -115,12 +115,12 @@ th {
       <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
        
        <p>   <font color=" #566573"> {%trans%}
-This screen lets you edit or delete existing accounts.</br>
+This screen let's you edit or delete existing accounts.</br>
 Choose an account from the account name drop down. You will see the details of that account such as it's group name, opening balance etc.</br>
 You can click edit button or press enter on the account you select.
 Account can be selected either using arrows or typing the first few characters quickly.</br>
-Note that an account with either opening balance or with transactions can't be deleted.</br>
-You can use enter key to navigate forward and up arrow to navigate backwards once in the edit mode.</br>
+Note that an account with either opening balance or transactions cannot be deleted.</br>
+In the Edit mode, you can use Enter key to navigate forward and up arrow to navigate backward.</br>
 Note you can't change the group or sub-group of an account. {% endtrans %}</font>
 
         </p>
