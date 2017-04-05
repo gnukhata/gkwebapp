@@ -24,6 +24,7 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
 "Abhijith Balan" <abhijithb21@openmailbox..org>
+"Mohd. Talha Pawaty" <mtalha456@gmail.com>
 */
 
 $(document).ready(function()
@@ -45,7 +46,7 @@ $(document).ready(function()
              return false;
            }
          else {
-         $("#godownstate").focus(); 
+         $("#godownstate").focus();
          }
        }
      });
@@ -80,7 +81,7 @@ $(document).ready(function()
               $("godownaddress").focus();
               return false;
           }
-          
+
             $("#godowncontactname").focus();
             thisKeypressTime = 0;
           }
@@ -93,19 +94,10 @@ $(document).ready(function()
       $(document).off("keydown","#godowncontactname").on("keydown", "#godowncontactname",function(e){
         if (e.which == 13) {
           e.preventDefault();
-          $("#godowndesignation").focus();
-        }
-        if (e.which == 38) {
-          $("#godownaddress").focus();
-        }
-      });
-      $(document).off("keydown","#godowndesignation").on("keydown", "#godowndesignation",function(e){
-        if (e.which == 13) {
-          e.preventDefault();
           $("#godowncontact").focus();
         }
         if (e.which == 38) {
-          $("#godowncontactname").focus();
+          $("#godownaddress").focus();
         }
       });
       $(document).off("keydown","#godowncontact").on("keydown", "#godowncontact",function(e){
@@ -114,7 +106,7 @@ $(document).ready(function()
           $("#gdnsubmit").click();
         }
         if (e.which == 38) {
-          $("#godowndesignation").focus();
+          $("#godowncontactname").focus();
         }
       });
       $(document).off("keyup").on("keyup",function(event) {
@@ -159,7 +151,7 @@ $(document).ready(function()
             global: false,
             async: false,
             datatype: "json",
-            data: {"godownname":$("#godownname").val(), "godownstate":$("#godownstate").val(), "godownaddress":$.trim($("#godownaddress").val()), "godowncontactname":$("#godowncontactname").val(), "godowndesignation":$("#godowndesignation").val(), "godowncontact":$("#godowncontact").val()},
+            data: {"godownname":$("#godownname").val(), "godownstate":$("#godownstate").val(), "godownaddress":$.trim($("#godownaddress").val()), "godowncontactname":$("#godowncontactname").val(), "godowncontact":$("#godowncontact").val()},
             beforeSend: function(xhr)
             {
               xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
