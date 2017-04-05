@@ -65,7 +65,6 @@ $(document).ready(function(){
     }
   })
   .done(function(resp) {
-    console.log(resp["categorycount"]);
     if(resp["categorycount"]==0){
       $("#searchcategory").hide();
     }
@@ -935,7 +934,7 @@ $.ajax({
             {
 
             type: "POST",
-            url: "/category?action=list",
+            url: "/category?action=tree",
             global: false,
             async: false,
             datatype: "text/html",
