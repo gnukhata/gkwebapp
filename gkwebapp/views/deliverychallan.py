@@ -156,12 +156,6 @@ def editdelchal(request):
 	result=requests.put("http://127.0.0.1:6543/delchal",data=json.dumps(delchalwholedata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 
-@view_config(route_name="deliverychallan",request_param="action=delete",renderer="json")
-def deletedelchal(request):
-	header={"gktoken":request.headers["gktoken"]}
-	deldata = {"dcid":int(request.params["dcid"]),"cancelflag":1}
-	result = requests.delete("http://127.0.0.1:6543/delchal",data=json.dumps(deldata), headers=header)
-	return {"gkstatus": result.json()["gkstatus"]}
 
 @view_config(route_name="deliverychallan",request_param="action=print",renderer="gkwebapp:templates/printdeliverychallan.jinja2")
 def deliveryprint(request):
