@@ -24,6 +24,14 @@
       text-align: left !important;
   }
 
+  .smwrap{
+  width:4.8%
+  }
+
+  .calign{
+    text-align:center;
+  }
+
   #latable tbody {
       display:block;
       height: calc(100vh - 17em);
@@ -38,6 +46,7 @@
       width: calc( 100% - 0.65em );
   }
 
+
   </style>
 </head>
 <body>
@@ -47,8 +56,8 @@
   <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
     <thead class="bg-primary">
       <tr>
-        <th class="col-xs-1" >
-          {% trans %}Sr. No.{% endtrans %}
+        <th class="col-xs-1 smwrap calign" >
+          {% trans %}Sr.No.{% endtrans %}
         </th>
         <th class="col-xs-5" >
           {% trans %}Category{% endtrans %}
@@ -65,7 +74,7 @@
 
       {% for record in gkresult %}
       <tr	data-value="{{record["categorycode"]}}">
-        <td class="col-xs-1 " >
+        <td class="col-xs-1 smwrap calign" >
           {{record["srno"]}}
         </td>
         <td class="col-xs-5">

@@ -61,6 +61,10 @@
 width:3%
 }
 
+.smwrap1{
+width:1.5%
+}
+
 .mdwrap{
 width:6%
 }
@@ -92,7 +96,7 @@ width:22%
 			<button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="del_unbilled_clearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
 			<thead class="bg-primary">
 				<tr>
-					<th class="smwrap calign">{% trans %}Sr. No.{% endtrans %}</th>
+					<th class="smwrap1 calign">{% trans %}Sr.No.{% endtrans %}</th>
 					<th class="smwrap calign">{% trans %}DelChal No.{% endtrans %}</th>
 					<th class="mdwrap calign">{% trans %}Delchal Date{% endtrans %}</th>
 					{% if inout == "9" %}
@@ -109,7 +113,7 @@ width:22%
 			<tbody>
 				{% for record in gkresult %}
 				<tr	data-value="{{record['dcid']}}">
-					<td class="smwrap calign">
+					<td class="smwrap1 calign">
 						{{record['srno']}}
 					</td>
 					<td class="smwrap calign">

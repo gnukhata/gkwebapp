@@ -41,7 +41,7 @@
     text-align: right;
   }
  .srno{
-    width: 6%;
+    width:5%;
  }
  .prdct{
     width: 59%;
@@ -52,6 +52,10 @@
  .um{
     width: 15%;
  }
+
+ .calign{
+   text-align:center;
+ }
   </style>
 </head>
 <body>
@@ -60,8 +64,8 @@
   <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
     <thead class="bg-primary">
       <tr>
-        <th class="col-xs-1 srno" >
-          {% trans %}Sr. No.{% endtrans %}
+        <th class="col-xs-1 srno calign" >
+          {% trans %}Sr.No.{% endtrans %}
         </th>
         <th class="col-xs-5 prdct" >
           {% trans %}Product{% endtrans %}
@@ -78,7 +82,7 @@
 
       {% for record in gkresult %}
       <tr	value="{{record["productcode"]}}">
-        <td class="col-xs-1 srno " >
+        <td class="col-xs-1 srno calign" >
           {{record["srno"]}}
         </td>
         <td class="col-xs-5 prdct">

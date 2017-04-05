@@ -58,6 +58,9 @@
  .smwrap{
   width:3%
  }
+ .smwrap1{
+ width:2%
+ }
 
  .lngwrap{
   width:10%
@@ -83,7 +86,7 @@
 								<table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
 									<thead class="bg-primary">
 										<tr>
-											<th class="smwrap calign" >
+											<th class="smwrap1 calign" >
           {% trans %}Sr.No.{% endtrans %}
         </th>
 											<th class="mdwrap lalign">
@@ -93,7 +96,7 @@
           {% trans %}Address{% endtrans %}
         </th>
 											<th class="dtwrap lalign">
-          {% trans %}Contact Name{% endtrans %}
+          {% trans %}Contact Person{% endtrans %}
         </th>
 											<th class="dtwrap lalign">
           {% trans %}Contact Number{% endtrans %}
@@ -107,7 +110,7 @@
       {% for record in gkresult %}
 
 										<tr	value="{{record["godownid"]}}">
-											<td class="smwrap calign" >
+											<td class="smwrap1 calign" >
           {{record["srno"]}}
         </td>
 											<td class="mdwrap lalign">
