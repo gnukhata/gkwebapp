@@ -39,7 +39,9 @@ from odslib import ODS
 
 @view_config(route_name="godown",renderer="gkwebapp:templates/godown.jinja2")
 def godown(request):
-	return {"status":True}
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	return {"numberofgodown":len(result.json()["gkresult"]),"status":True}
 
 @view_config(route_name="godown",request_param="type=addtab", renderer="gkwebapp:templates/creategodown.jinja2")
 def showgodown(request):
@@ -62,7 +64,7 @@ def showmultigodown(request):
 @view_config(route_name="godown",request_param="type=add", renderer="json")
 def addgodown(request):
 	header={"gktoken":request.headers["gktoken"]}
-	gkdata = {"goname":request.params["godownname"], "goaddr":request.params["godownaddress"], "state":request.params["godownstate"], "gocontact":request.params["godowncontact"], "contactname":request.params["godowncontactname"], "designation":request.params["godowndesignation"]}
+	gkdata = {"goname":request.params["godownname"], "goaddr":request.params["godownaddress"], "state":request.params["godownstate"], "gocontact":request.params["godowncontact"], "contactname":request.params["godowncontactname"]}
 	result = requests.post("http://127.0.0.1:6543/godown", data =json.dumps(gkdata),headers=header)
 	if result.json()["gkstatus"] == 0:
 		gkdata = {"activity":request.params["godownname"] + " godown created"}
@@ -130,7 +132,7 @@ def deletegodown(request):
 @view_config(route_name="godown",request_param="type=edit", renderer="json")
 def editgodown(request):
 		header={"gktoken":request.headers["gktoken"]}
-		gkdata = {"goid":request.params["goid"],"goname":request.params["goname"],"goaddr":request.params["goaddr"], "state":request.params["gostate"], "gocontact": request.params["gocontact"], "contactname":request.params["gocontactname"], "designation":request.params["godesignation"]}
+		gkdata = {"goid":request.params["goid"],"goname":request.params["goname"],"goaddr":request.params["goaddr"], "state":request.params["gostate"], "gocontact": request.params["gocontact"], "contactname":request.params["gocontactname"]}
 		result = requests.put("http://127.0.0.1:6543/godown", data =json.dumps(gkdata),headers=header)
 		return {"gkstatus":result.json()["gkstatus"]}
 
@@ -181,7 +183,7 @@ def printlistofgodowns(request):
 	result = requests.get("http://127.0.0.1:6543/godown", headers=header)
 	goddata=[]
 	for record in result.json()["gkresult"]:
-		gdata= {"godownstatus":str(record["godownstatus"]), "srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
+		gdata= {"godownstatus":str(record["godownstatus"]), "srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"])}
 		goddata.append(gdata)
 	return {"gkresult":goddata}
 
@@ -209,23 +211,20 @@ def listofgodownssspreadsheet(request):
 	sheet.getColumn(3).setWidth("4cm")
 	sheet.getColumn(4).setWidth("4cm")
 	sheet.getColumn(5).setWidth("4cm")
-	sheet.getColumn(6).setWidth("4cm")
 	sheet.getCell(0,2).stringValue("Sr. No.").setBold(True)
 	sheet.getCell(1,2).stringValue("Godown Name").setBold(True)
 	sheet.getCell(2,2).stringValue("Address").setBold(True)
 	sheet.getCell(3,2).stringValue("Contact Name").setBold(True)
-	sheet.getCell(4,2).stringValue("Designation").setBold(True)
-	sheet.getCell(5,2).stringValue("Contact Number").setBold(True)
-	sheet.getCell(6,2).stringValue("Status").setBold(True)
+	sheet.getCell(4,2).stringValue("Contact Number").setBold(True)
+	sheet.getCell(5,2).stringValue("Status").setBold(True)
 	row = 3
 	for godown in result:
 		sheet.getCell(0, row).stringValue(godown["srno"])
 		sheet.getCell(1, row).stringValue(godown["goname"])
 		sheet.getCell(2, row).stringValue(godown["goaddr"]+" , "+godown["state"])
 		sheet.getCell(3, row).stringValue(godown["contactname"])
-		sheet.getCell(4, row).stringValue(godown["designation"])
-		sheet.getCell(5, row).stringValue(godown["gocontact"])
-		sheet.getCell(6, row).stringValue(godown["godownstatus"])
+		sheet.getCell(4, row).stringValue(godown["gocontact"])
+		sheet.getCell(5, row).stringValue(godown["godownstatus"])
 		row += 1
 
 	ods.save("response.ods")

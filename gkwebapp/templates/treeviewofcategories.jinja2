@@ -7,16 +7,6 @@
   .shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
-  #latable td {
-    font-size: 75%;
-    padding: 4 !important;
-    margin: 4 !important;
-  }
-
-  #latable th {
-    font-size: 85%;
-  }
-
   .card-view .title {
       font-weight: bold;
       display: inline-block;
@@ -24,18 +14,10 @@
       text-align: left !important;
   }
 
-  #latable tbody {
+  #treediv {
       display:block;
-      height: calc(100vh - 16em);
+      max-height: calc(100vh - 16em);
       overflow-y:scroll;
-  }
-  #latable thead,#latable tbody tr {
-      display:table;
-      width:100%;
-      table-layout:fixed;
-  }
-  #latable thead {
-      width: calc( 100% - 0.65em );
   }
   .list-group {
     margin: 0;
@@ -53,26 +35,32 @@
   </style>
 </head>
 <body>
-  <span style="margin:auto; display:table; font-size:120%;"><strong>{% trans %}Tree View of Categories{% endtrans %}</strong></span><span id="messagespan" class="sr-only" aria-live="rude"></span>
+  <span style="margin:auto; margin-bottom: 10px; display:table; font-size:120%;"><strong>{% trans %}List of Categories{% endtrans %}</strong></span><span id="messagespan" class="sr-only" aria-live="rude"></span>
+  {% if numberofcategories < 1 %}
+    <span style="margin:auto; margin-bottom: 10px; display:table;">{% trans %}No category has been created yet.{% endtrans %}</span>
+    {% else %}
+    <div class="container-fluid">
+      <small style="margin-bottom: 10px;  display:table;" class="form-text text-muted">This is the tree view of categories. Expand categories to see the entire tree structure.</small>
+      <div id="treediv" class="row">
+      {% for record in gkresult %}
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-primary">
+            <a href="" class="topparent list-group-item list-group-item-primary" aria-expanded="false">
+              <span class="glyphicon glyphicon-triangle-right"></span>
+              <span class="glyphicon glyphicon-triangle-bottom" style="display:none;"></span>
+              <span class="categoryname">{{record["categoryname"]}}</span>
+              <span class="sr-only">has </span><span class="badge">{{record["subcount"]}}</span><span class="sr-only"> child categories</span>
+            </a>
+            <input type="text" class="categorycode" name="name" value={{record["categorycode"]}} hidden>
+          </li>
+        </ul>
+        {% endfor %}
+    </div>
+  </div>
+  {% endif %}
   <div class="row">
-    <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px; margin-bottom: 15px;" id="tvback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+      <button class="btn btn-sm btn-primary" type="button" style="margin:auto; margin-top: 20px; margin-left:46%;" id="tvtoloc" accesskey="v">{% trans %}Columnar <u>V</u>iew{% endtrans %}</button>
   </div>
-  <div class="container-fluid">
-    {% for record in gkresult %}
-      <ul class="list-group">
-        <li class="list-group-item list-group-item-primary">
-          <a href="" class="topparent list-group-item list-group-item-primary" aria-expanded="false">
-            <span class="glyphicon glyphicon-triangle-right"></span>
-            <span class="glyphicon glyphicon-triangle-bottom" style="display:none;"></span>
-            <span class="categoryname">{{record["categoryname"]}}</span>
-            <span class="sr-only">has </span><span class="badge">{{record["subcount"]}}</span><span class="sr-only"> child categories</span>
-          </a>
-          <input type="text" class="categorycode" name="name" value={{record["categorycode"]}} hidden>
-        </li>
-      </ul>
-    {% endfor %}
-  </div>
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/treeviewofcategories.js')}}"></script>
 </body>
 </html>

@@ -65,7 +65,6 @@ $(document).ready(function(){
     }
   })
   .done(function(resp) {
-    console.log(resp["categorycount"]);
     if(resp["categorycount"]==0){
       $("#searchcategory").hide();
     }
@@ -549,6 +548,10 @@ $('#godown').click(function (e) {
        global: false,
        async: false,
        datatype: 'text/html',
+       beforeSend: function(xhr)
+       {
+         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+       }
 
      })
      .done(function(resp) {
@@ -935,7 +938,7 @@ $.ajax({
             {
 
             type: "POST",
-            url: "/category?action=list",
+            url: "/category?action=tree",
             global: false,
             async: false,
             datatype: "text/html",
