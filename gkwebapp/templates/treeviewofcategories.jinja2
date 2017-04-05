@@ -37,6 +37,9 @@
 <body>
   <span style="margin:auto; margin-bottom: 20px; display:table; font-size:120%;"><strong>{% trans %}Tree View of Categories{% endtrans %}</strong></span><span id="messagespan" class="sr-only" aria-live="rude"></span>
   <div id="treediv" class="container-fluid">
+  {% if numberofcategories < 1 %}
+    <span style="margin:auto; margin-bottom: 20px; display:table;">{% trans %}No category has been created yet.{% endtrans %}</span>
+    {% else %}
     {% for record in gkresult %}
       <ul class="list-group">
         <li class="list-group-item list-group-item-primary">
@@ -50,11 +53,10 @@
         </li>
       </ul>
     {% endfor %}
+  {% endif %}
   </div>
   <div class="row">
-    <div class="col-sm-offset-5">
-      <button class="btn btn-sm btn-primary" type="button" style="margin:auto; margin-top: 20px; margin-left:20px;" id="tvtoloc" accesskey="v">{% trans %}List <u>V</u>iew of Categories{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
-    </div>
+      <button class="btn btn-sm btn-primary" type="button" style="margin:auto; margin-top: 20px; margin-left:46%;" id="tvtoloc" accesskey="v">{% trans %}Columnar <u>V</u>iew{% endtrans %}</button>
   </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/treeviewofcategories.js')}}"></script>
 </body>

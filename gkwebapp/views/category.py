@@ -238,7 +238,7 @@ def listofgodownssspreadsheet(request):
 def treeviewofcategories(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/categories?type=topcategories", headers=header)
-	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
+	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "numberofcategories": len(result.json()["gkresult"])}
 
 @view_config(route_name="category",request_param="action=treechildren",renderer="json")
 def childrenofcategories(request):
