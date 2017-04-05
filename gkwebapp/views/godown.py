@@ -39,7 +39,9 @@ from odslib import ODS
 
 @view_config(route_name="godown",renderer="gkwebapp:templates/godown.jinja2")
 def godown(request):
-	return {"status":True}
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	return {"numberofgodown":len(result.json()["gkresult"]),"status":True}
 
 @view_config(route_name="godown",request_param="type=addtab", renderer="gkwebapp:templates/creategodown.jinja2")
 def showgodown(request):
@@ -62,7 +64,7 @@ def showmultigodown(request):
 @view_config(route_name="godown",request_param="type=add", renderer="json")
 def addgodown(request):
 	header={"gktoken":request.headers["gktoken"]}
-	gkdata = {"goname":request.params["godownname"], "goaddr":request.params["godownaddress"], "state":request.params["godownstate"], "gocontact":request.params["godowncontact"], "contactname":request.params["godowncontactname"], "designation":request.params["godowndesignation"]}
+	gkdata = {"goname":request.params["godownname"], "goaddr":request.params["godownaddress"], "state":request.params["godownstate"], "gocontact":request.params["godowncontact"], "contactname":request.params["godowncontactname"]}
 	result = requests.post("http://127.0.0.1:6543/godown", data =json.dumps(gkdata),headers=header)
 	if result.json()["gkstatus"] == 0:
 		gkdata = {"activity":request.params["godownname"] + " godown created"}
@@ -130,7 +132,7 @@ def deletegodown(request):
 @view_config(route_name="godown",request_param="type=edit", renderer="json")
 def editgodown(request):
 		header={"gktoken":request.headers["gktoken"]}
-		gkdata = {"goid":request.params["goid"],"goname":request.params["goname"],"goaddr":request.params["goaddr"], "state":request.params["gostate"], "gocontact": request.params["gocontact"], "contactname":request.params["gocontactname"], "designation":request.params["godesignation"]}
+		gkdata = {"goid":request.params["goid"],"goname":request.params["goname"],"goaddr":request.params["goaddr"], "state":request.params["gostate"], "gocontact": request.params["gocontact"], "contactname":request.params["gocontactname"]}
 		result = requests.put("http://127.0.0.1:6543/godown", data =json.dumps(gkdata),headers=header)
 		return {"gkstatus":result.json()["gkstatus"]}
 

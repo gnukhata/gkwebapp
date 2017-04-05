@@ -23,6 +23,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+"Mohd. Talha Pawaty" <mtalha456@gmail.com>
 */
 $(document).ready(function() {
     $('.modal-backdrop').remove();
@@ -54,8 +55,6 @@ $(document).ready(function() {
                 $("#gocontact").prop("disabled", true);
                 $("#gostate").val(goddetails["godownstate"]);
                 $("#gostate").prop("disabled", true);
-                $("#godesignation").val(goddetails["godowndesignation"]);
-                $("#godesignation").prop("disabled", true);
                 $("#gocontactname").val(goddetails["godowncontactname"]);
                 $("#gocontactname").prop("disabled", true);
                 $("#goid").val(goddetails["godownid"]);
@@ -74,7 +73,6 @@ $(document).ready(function() {
         $("#goaddress").prop("disabled", false);
         $("#gocontact").prop("disabled", false);
         $("#gostate").prop("disabled", false);
-        $("#godesignation").prop("disabled", false);
         $("#gocontactname").prop("disabled", false);
         $("#edit").hide();
         $("#goname").focus().select();
@@ -92,11 +90,11 @@ $(document).ready(function() {
     	          return false;
     	        }
     	      else {
-    	      $("#gostate").focus(); 
+    	      $("#gostate").focus();
     	      }
     	    }
     	  });
-    	  
+
     $("#gostate").keydown(function(e){
       if (e.which == 13) {
         e.preventDefault();
@@ -120,7 +118,7 @@ $(document).ready(function() {
                 $("goaddress").focus();
                 return false;
             }
-          	  
+
               $("#gocontactname").focus();
               thisKeypressTime = 0;
             }
@@ -133,19 +131,10 @@ $(document).ready(function() {
         $("#gocontactname").keydown(function(e){
           if (e.which == 13) {
             e.preventDefault();
-            $("#godesignation").focus().select();
-          }
-          if (e.which == 38) {
-            $("#goaddress").focus().select();
-          }
-        });
-        $("#godesignation").keydown(function(e){
-          if (e.which == 13) {
-            e.preventDefault();
             $("#gocontact").focus().select();
           }
           if (e.which == 38) {
-            $("#gocontactname").focus().select();
+            $("#goaddress").focus().select();
           }
         });
         $("#gocontact").keydown(function(e){
@@ -154,7 +143,7 @@ $(document).ready(function() {
             $("#egdnsubmit").click();
           }
           if (e.which == 38) {
-            $("#godesignation").focus().select();
+            $("#gocontactname").focus().select();
           }
         });
 
@@ -193,11 +182,11 @@ $(document).ready(function() {
                 },
                 success: function(resp) {
                     if (resp["gkstatus"] == 0) {
-                        $("#reset").click();
                         $('.modal-backdrop').remove();
                         $("#delsuccess-alert").alert();
                         $("#delsuccess-alert").fadeTo(2250, 500).slideUp(500, function() {
-                            $("#delsuccess-alert").hide();
+                        $("#delsuccess-alert").hide();
+                        $("#godown").click();
                         });
                     } else if (resp["gkstatus"] == 5) {
                         $("#transaction-alert").alert();
@@ -254,7 +243,6 @@ $(document).ready(function() {
         var goaddr = $.trim($("#goaddress").val());
         var gocontact = $("#gocontact").val();
         var gocontactname = $("#gocontactname").val();
-        var godesignation = $("#godesignation").val();
         var gostate = $("#gostate option:selected").val();
         $.ajax({
             type: "POST",
@@ -268,7 +256,6 @@ $(document).ready(function() {
                 "goaddr": goaddr,
                 "gocontact": gocontact,
                 "gocontactname": gocontactname,
-                "godesignation": godesignation,
                 "gostate": gostate
             },
             beforeSend: function(xhr) {
