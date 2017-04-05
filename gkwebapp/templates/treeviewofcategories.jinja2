@@ -35,27 +35,29 @@
   </style>
 </head>
 <body>
-  <span style="margin:auto; margin-bottom: 20px; display:table; font-size:120%;"><strong>{% trans %}Tree View of Categories{% endtrans %}</strong></span><span id="messagespan" class="sr-only" aria-live="rude"></span>
-  <div id="treediv" class="container-fluid">
+  <span style="margin:auto; margin-bottom: 10px; display:table; font-size:120%;"><strong>{% trans %}List of Categories{% endtrans %}</strong></span><span id="messagespan" class="sr-only" aria-live="rude"></span>
   {% if numberofcategories < 1 %}
     <span style="margin:auto; margin-bottom: 10px; display:table;">{% trans %}No category has been created yet.{% endtrans %}</span>
     {% else %}
-    <small style="margin-bottom: 20px;  display:table;" class="form-text text-muted">Expand categories to see the entire tree structure.</small>
-    {% for record in gkresult %}
-      <ul class="list-group">
-        <li class="list-group-item list-group-item-primary">
-          <a href="" class="topparent list-group-item list-group-item-primary" aria-expanded="false">
-            <span class="glyphicon glyphicon-triangle-right"></span>
-            <span class="glyphicon glyphicon-triangle-bottom" style="display:none;"></span>
-            <span class="categoryname">{{record["categoryname"]}}</span>
-            <span class="sr-only">has </span><span class="badge">{{record["subcount"]}}</span><span class="sr-only"> child categories</span>
-          </a>
-          <input type="text" class="categorycode" name="name" value={{record["categorycode"]}} hidden>
-        </li>
-      </ul>
-    {% endfor %}
-  {% endif %}
+    <div class="container-fluid">
+      <small style="margin-bottom: 10px;  display:table;" class="form-text text-muted">This is the tree view of categories. Expand categories to see the entire tree structure.</small>
+      <div id="treediv" class="row">
+      {% for record in gkresult %}
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-primary">
+            <a href="" class="topparent list-group-item list-group-item-primary" aria-expanded="false">
+              <span class="glyphicon glyphicon-triangle-right"></span>
+              <span class="glyphicon glyphicon-triangle-bottom" style="display:none;"></span>
+              <span class="categoryname">{{record["categoryname"]}}</span>
+              <span class="sr-only">has </span><span class="badge">{{record["subcount"]}}</span><span class="sr-only"> child categories</span>
+            </a>
+            <input type="text" class="categorycode" name="name" value={{record["categorycode"]}} hidden>
+          </li>
+        </ul>
+        {% endfor %}
+    </div>
   </div>
+  {% endif %}
   <div class="row">
       <button class="btn btn-sm btn-primary" type="button" style="margin:auto; margin-top: 20px; margin-left:46%;" id="tvtoloc" accesskey="v">{% trans %}Columnar <u>V</u>iew{% endtrans %}</button>
   </div>
