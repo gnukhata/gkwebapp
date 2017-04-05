@@ -157,32 +157,13 @@
       </div>
       <div class="panel-footer" hidden>
         <div class="container-fluid">
-        <button class="btn btn-danger btn-sm" id="deliverychallan_edit_delete">{% trans %}Cancel{% endtrans %}</button>
-        <button id="deliverychallan_editprint" class="btn btn-primary btn-sm" >{% trans %}Print{% endtrans %}</button>
+       <button id="deliverychallan_editprint" class="btn btn-primary btn-sm" >{% trans %}Print{% endtrans %}</button>
         <button class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">{% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
       </div>
       </div>
     </div>
 
-    <div id="confirm_del" class="modal fade" tabindex="-1" role="dialog">
-      <div class="vertical-alignment-helper">
-        <div class="modal-dialog modal-sm vertical-align-center">
-          <div class="modal-content">
-            <div class="modal-header">
 
-              <h4 class="modal-title">{% trans %}Cancel?{% endtrans %}</h4>
-            </div>
-            <div class="modal-body">
-              <p>{% trans %}Are you sure?{% endtrans %}</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
-              <button type="button" id="deldel" data-dismiss="modal" class="btn btn-danger">{% trans %}Yes{% endtrans %}</button>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div>
-    </div>
   </div>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editdeliverychallan.js')}}"></script>
 </body>
