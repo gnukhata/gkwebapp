@@ -498,7 +498,7 @@ else {
            {
              $('#add_cussup_name').focus();
            });
-           $('#custsupmodal').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is opened
+           $('#custsupmodal').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is closed
            {
             var text1 = $('#selectedcustsup').val();
            if(text1==''){
