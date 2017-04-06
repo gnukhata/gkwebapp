@@ -144,7 +144,8 @@ $(document).ready(function(){
 
     $(document).off("keydown","#userrole").on("keydown", '#userrole', function(e) {
 
-        if (e.which === 13) {
+        if (e.which == 13 || e.which == 9) {
+          e.preventDefault();
          if ($(this).val()==3) {
            $("#latable tbody tr:first td:first input").focus().select();
          }
@@ -258,6 +259,16 @@ $(document).ready(function(){
             selectedgodowns.push($(this).attr("value"));
           }
         });
+
+        if (selectedgodowns.length < 1) {
+          $("#select-godowns-alert").alert();
+          $("#select-godowns-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#select-godowns-alert").hide();
+          });
+          $("#latable tbody tr:first td:first input").focus().select();
+          return false;
+
+        }
 
         var adduserformdata = $("#adduser").serializeArray();
         adduserformdata.push({name: 'godowns', value: JSON.stringify(selectedgodowns)});
