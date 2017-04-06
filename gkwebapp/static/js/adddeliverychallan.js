@@ -80,8 +80,13 @@ $(document).ready(function() {
   $("#deliverychallan_customer").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
+      if ($("#deliverychallan_godown").length == 0){
+    	  $("#deliverychallan_consignment").focus().select();
+    	  
+      }
+      else{
       $("#deliverychallan_godown").focus().select();
-    }
+    }}
     if (event.which==38 && (document.getElementById('deliverychallan_customer').selectedIndex==1||document.getElementById('deliverychallan_customer').selectedIndex==0)) {
       event.preventDefault();
       $("#deliverychallan_year").focus().select();
