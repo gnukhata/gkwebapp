@@ -747,7 +747,10 @@ else {
     form_data.append("modeoftransport", $('#deliverychallan_modeoftransport').val());
     form_data.append("issuername", $("#deliverychallan_issuername").val());
     form_data.append("designation", $("#deliverychallan_designation").val());
-    form_data.append("goid", $("#deliverychallan_godown option:selected").val());
+    if ($("#deliverychallan_godown option").length!=0){
+    	form_data.append("goid", $("#deliverychallan_godown option:selected").val());	
+    }
+    
     form_data.append("products", JSON.stringify(products));// a list always needs to be stringified into json before sending it ahead
     form_data.append("dcflag", $("#deliverychallan_consignment option:selected").val());
     var files = $("#my-file-selector")[0].files
@@ -949,6 +952,33 @@ else {
       $('#deliverychallan_designation').focus();
       return false;
     }
+    
+    var dataset = {}
+	if ($("#deliverychallan_godown option").length !=0) {
+		dataset = {"custid":$("#deliverychallan_customer option:selected").val(),
+			      "dcno":$("#deliverychallan_challanno").val(),
+			      "dcdate":$("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val(),
+			      "inout":$("#status").val(),
+			      "noofpackages":$('#deliverychallan_noofpackages').val(),
+			      "modeoftransport":$('#deliverychallan_modeoftransport').val(),
+			      "issuername":$("#deliverychallan_issuername").val(),
+			      "designation":$("#deliverychallan_designation").val(),
+			      "goid":$("#deliverychallan_godown option:selected").val(),
+			      "products":JSON.stringify(products),
+			      "dcflag":$("#deliverychallan_consignment option:selected").val()}
+	}
+	else {
+		dataset = {"custid":$("#deliverychallan_customer option:selected").val(),
+		      "dcno":$("#deliverychallan_challanno").val(),
+		      "dcdate":$("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val(),
+		      "inout":$("#status").val(),
+		      "noofpackages":$('#deliverychallan_noofpackages').val(),
+		      "modeoftransport":$('#deliverychallan_modeoftransport').val(),
+		      "issuername":$("#deliverychallan_issuername").val(),
+		      "designation":$("#deliverychallan_designation").val(),
+		      "products":JSON.stringify(products),
+		      "dcflag":$("#deliverychallan_consignment option:selected").val()}
+	}
     event.preventDefault();
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
@@ -959,17 +989,7 @@ else {
       type: 'POST',
       dataType: 'json',
       async : false,
-      data: {"custid":$("#deliverychallan_customer option:selected").val(),
-      "dcno":$("#deliverychallan_challanno").val(),
-      "dcdate":$("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val(),
-      "inout":$("#status").val(),
-      "noofpackages":$('#deliverychallan_noofpackages').val(),
-      "modeoftransport":$('#deliverychallan_modeoftransport').val(),
-      "issuername":$("#deliverychallan_issuername").val(),
-      "designation":$("#deliverychallan_designation").val(),
-      "goid":$("#deliverychallan_godown option:selected").val(),
-      "products":JSON.stringify(products),
-      "dcflag":$("#deliverychallan_consignment option:selected").val()},
+      data: dataset,
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -989,21 +1009,36 @@ else {
             /* total of product quantities to be displayed in the delivery note at the very end of product details*/
             qtytotal += +obj.qty;
             printset.push(obj);
-          }
+      	} 
+        var datas = {}
+      	if ($("#deliverychallan_godown option").length !=0) {
+      		datas = {"dcno": $("#deliverychallan_challanno").val(),
+      	            "custid":$("#deliverychallan_customer option:selected").val(),
+      	            "dcdate":$("#deliverychallan_date").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_year").val(),
+      	            "printset":JSON.stringify(printset),
+      	            "issuername":$("#deliverychallan_issuername").val(),
+      	            "designation":$("#deliverychallan_designation").val(),
+      	            "goid":$("#deliverychallan_godown option:selected").val(),
+      	            "notetype":$("#deliverychallan_consignment option:selected").text(),
+      	            "qtytotal":qtytotal
+      	            } }
+      	else {
+      		datas = {"dcno": $("#deliverychallan_challanno").val(),
+      	            "custid":$("#deliverychallan_customer option:selected").val(),
+      	            "dcdate":$("#deliverychallan_date").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_year").val(),
+      	            "printset":JSON.stringify(printset),
+      	            "issuername":$("#deliverychallan_issuername").val(),
+      	            "designation":$("#deliverychallan_designation").val(),
+      	            "goid":$("#deliverychallan_godown option:selected").val(),
+      	            "notetype":$("#deliverychallan_consignment option:selected").text(),
+      	            "qtytotal":qtytotal
+      	            }
+       }
           $.ajax({ // passing the delivery note details to a page displaying it as a print preview
             url: '/deliverychallan?action=print',
             type: 'POST',
             dataType: 'html',
-            data: {"dcno": $("#deliverychallan_challanno").val(),
-            "custid":$("#deliverychallan_customer option:selected").val(),
-            "dcdate":$("#deliverychallan_date").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_year").val(),
-            "printset":JSON.stringify(printset),
-            "issuername":$("#deliverychallan_issuername").val(),
-            "designation":$("#deliverychallan_designation").val(),
-            "goid":$("#deliverychallan_godown option:selected").val(),
-            "notetype":$("#deliverychallan_consignment option:selected").text(),
-            "qtytotal":qtytotal,
-            },
+            data: datas,
             beforeSend: function(xhr)
             {
               xhr.setRequestHeader('gktoken', sessionStorage.gktoken);

@@ -6,7 +6,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -37,11 +37,14 @@ import cStringIO
 
 @view_config(route_name="deliverychallan",renderer="gkwebapp:templates/deliverychallan.jinja2")
 def showdeliverychallan(request):
-	return {"status":True}
+	header={"gktoken":request.headers["gktoken"]}
+	delchals = requests.get("http://127.0.0.1:6543/delchal?delchal=all", headers=header)
+	return {"numberofproducts":len(delchals.json()["gkresult"]),"status":True}
+
+	
 
 @view_config(route_name="deliverychallan",request_param="action=showadd",renderer="gkwebapp:templates/adddeliverychallan.jinja2")
 def showadddeliverychallan(request):
-	
 	header={"gktoken":request.headers["gktoken"]}
 	lastdelchaldata = {}
 	if request.params["status"]=='in':
@@ -56,7 +59,7 @@ def showadddeliverychallan(request):
 	godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
 	result = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=16",headers=header)
 	result1 = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=20",headers=header)
-	print  len(godowns.json()["gkresult"])
+#	print  len(godowns.json()["gkresult"])
 	return {"gkstatus": request.params["status"],"suppliers": suppliers.json()["gkresult"],"products": products.json()["gkresult"],"godowns":godowns.json()["gkresult"],"purchaseorders":podata.json()["gkresult"], "lastdelchaldata":lastdelchaldata.json()["gkresult"], "numberofpurchaseorders":len(result.json()["gkresult"]),"numberofsalesorders":len(result1.json()["gkresult"]),"numberofgodowns":len(godowns.json()["gkresult"])}
 
 @view_config(route_name="deliverychallan",request_param="action=showedit",renderer="gkwebapp:templates/editdeliverychallan.jinja2")
@@ -67,6 +70,7 @@ def showeditdeliverychallan(request):
 	suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
 	customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
 	godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	print len(delchals.json()["gkresult"])
 	return {"gkstatus":delchals.json()["gkstatus"],"delchals":delchals.json()["gkresult"],"suppliers":suppliers.json()["gkresult"],"customers":customers.json()["gkresult"],"godowns":godowns.json()["gkresult"]}
 
 @view_config(route_name="deliverychallan", request_param="action=showeditpopup", renderer="gkwebapp:templates/editdeliverychallanpopup.jinja2")
@@ -109,8 +113,7 @@ def savedelchal(request):
 	for  row in json.loads(request.params["products"]):
 		products[row["productcode"]] = row["qty"]
 	stockdata = {"inout":int(request.params["inout"]),"items":products}
-
-	if request.params["goid"]!='':
+	if request.params.has_key("goid"):
 		stockdata["goid"]=int(request.params["goid"])
 	if request.params.has_key("issuername"):
 		delchaldata["issuername"]=request.params["issuername"]
@@ -164,7 +167,7 @@ def deliveryprint(request):
 	header={"gktoken":request.headers["gktoken"]}
 	org = requests.get("http://127.0.0.1:6543/organisation", headers=header)
 	cust = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(request.params["custid"])), headers=header)
-	if request.params["goid"] != '':
+	if request.params.has_key("goid"):
 		godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
 		godowndata = godown.json()["gkresult"]
 	else:
