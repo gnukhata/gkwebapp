@@ -122,19 +122,22 @@
               {% endif %}
             </div>
             <div class="form-group">
+            {%if numberofgodowns > 0 %}
               <label for="deliverychallan_godown">
+              	
                 {% if gkstatus=="in" %}
-                {% trans %}To Godown{% endtrans %} :
+                {% trans %}Received At{% endtrans %} :
                 {% else %}
-                {% trans %}From Godown{% endtrans %} :
+                {% trans %}Dispatch From{% endtrans %} :
                 {% endif %}
+                
               </label>
-              <select class="form-control input-sm" id="deliverychallan_godown" accesskey="">
-                <option value=""  selected>{% trans %}None{% endtrans %}</option>
-                {% for godown in godowns %}
+              <select class="form-control input-sm" id="deliverychallan_godown">
+               {% for godown in godowns %}
                 <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
                 {% endfor %}
               </select>
+               {% endif %}
             </div>
             <div class="form-group">
               <label for="deliverychallan_consignment">Type of transaction:</label>

@@ -59,8 +59,8 @@
               <input class="form-control input-sm" id="deliverychallan_customeraddr" accesskey="" disabled>
             </div>
             <div class="form-group">
-              <label for="deliverychallan_edit_godown" id="fgolabel">{% trans %}From Godown{% endtrans %} :</label>
-              <label for="deliverychallan_edit_godown" id="tgolabel">{% trans %}To Godown{% endtrans %} :</label>
+              <label for="deliverychallan_edit_godown" id="fgolabel">{% trans %}Received At{% endtrans %} :</label>
+              <label for="deliverychallan_edit_godown" id="tgolabel">{% trans %}Dispatch From{% endtrans %} :</label>
               <select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_godown" accesskey="">
                 <option value=""  selected>{% trans %}None{% endtrans %}</option>
                 {% for godown in godowns %}

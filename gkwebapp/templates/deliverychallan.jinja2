@@ -76,7 +76,9 @@
     <ul class="nav nav-pills nav-tabs" role="tablist">
       <li role="presentation" class="active"><a href="" id="deliverychallan_record" role="tab" data-toggle="tab">{% trans %}Delivery In{% endtrans %}</a></li>
       <li role="presentation" ><a href="" id="deliverychallan_create" role="tab" data-toggle="tab">{% trans %}Delivery Out{% endtrans %}</a></li>
+      {%if numberofproducts > 0 %}
       <li role="presentation"><a href="" id="deliverychallan_edit" role="tab" data-toggle="tab">{% trans %}View Delivery Note{% endtrans %}</a></li>
+    {%endif%}
     </ul>
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane active" id="deliverychallan_div">
