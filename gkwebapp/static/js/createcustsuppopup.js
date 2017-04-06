@@ -151,8 +151,8 @@ $(document).ready(function() {
   });
   $(document).keyup(function(event) {
     if(event.which == 45) {
-      $("#cussup_save").click();
       event.preventDefault();
+      $("#cussup_save").click();
       return false;
     }
   });
@@ -222,6 +222,8 @@ $(document).ready(function() {
             {
               if(resp["gkstatus"]==0)
               {
+                var customeradded = $("#add_cussup_name").val();
+                $('#selectedcustsup').val(customeradded);
               //  $("#customersupplier_create").click();
                 if (custsupval == '3') {
                   $("#cus-success-alert").alert();
