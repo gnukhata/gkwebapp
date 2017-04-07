@@ -462,7 +462,9 @@ $(document).ready(function() {
     }
   });
   $(document).off("click",".tax_del").on("click", ".tax_del", function() {
+      if ($(this).closest('tr').attr('value')!="New") {
     deletedtaxs.push($(this).closest('tr').attr('value'));
+  }
     $(this).closest('tr').fadeOut(200, function(){
       $(this).closest('tr').remove();	 //closest method gives the closest element specified
       $('#category_edit_tax_table tbody tr:last td:eq(0) select').focus().select();
