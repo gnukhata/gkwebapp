@@ -204,7 +204,7 @@ $(document).ready(function() {
         $(".btnfocus:enabled:first").focus();
 
       });
-      $('#myModal').on('hidden.bs.modal', function (e)
+      $('#confirm_del').on('hidden.bs.modal', function (e)
       {
         $("#viewvc").html("");
         // A variable is set to indicate from which report this modal is loaded.
