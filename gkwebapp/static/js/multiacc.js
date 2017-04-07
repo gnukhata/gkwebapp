@@ -74,6 +74,17 @@ $(document).ready(function() {
       if(m_grpnm=="Select Group" || m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
       {
         //If groupname is Direct or Indirect income OR direct or Indirect Expense there will be no opening balance field
+        if ($(this).closest('tr').is(":first-child")) {
+          if ($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').val() == "") {
+            $("#nodatasaved-alert").alert();
+            $("#nodatasaved-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#m_multiacc").modal("hide");
+              $(".modal-backdrop").hide();
+              $("#nodatasaved-alert").hide();
+            });
+            return false;
+          }
+        }
         if ($(this).closest('tr').is(":last-child"))
         {
           // If its the last row then a new row is added by calling the function addRow.
@@ -99,14 +110,8 @@ $(document).ready(function() {
   {
 // This function will validate the current row and then add a new row.
     var accname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').val();
-    if (accname=="")
-    {
-
-      $("#m_blank-alert").alert();
-      $("#m_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#m_blank-alert").hide();
-      });
-      $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').focus().select();
+    if (accname == "") {
+      $("#acc_add").click();
       return false;
     }
 
@@ -175,6 +180,7 @@ $(document).off("keydown",".m_openbal").on("keydown",".m_openbal", function(even
   var curindex = $(this).closest('tr').index();
   var nextindex = curindex+1;
   var previndex = curindex-1;
+  var numberofrows = $(".m_openbal").length;
 
   if (event.which==40)
   {
@@ -198,13 +204,19 @@ $(document).off("keydown",".m_openbal").on("keydown",".m_openbal", function(even
 
     if(accnt=="")
     {
-
-      $("#m_blank-alert").alert();
-      $("#m_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#m_blank-alert").hide();
-      });
-      $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').focus().select();
-      return false;
+      if (curindex == 0) {
+        $("#nodatasaved-alert").alert();
+        $("#nodatasaved-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#m_multiacc").modal("hide");
+          $(".modal-backdrop").hide();
+          $("#nodatasaved-alert").hide();
+        });
+        return false;
+      }
+      if (curindex == numberofrows - 1) {
+        $("#acc_add").click();
+        return false;
+      }
     }
 
 
@@ -255,33 +267,24 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
       blankindex = $(this).closest('tr').index();
 
     }
-    var obj = {};// Dictionary is created for every row.
-
-    obj.accountname = $(".m_accname", this).val();
-    if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income" || $(".m_openbal", this).val()=="")
-    {
-      // Opening balance is set to 0.00 is its zero or group name is one from the above mentioned groups.
-      obj.openbal = "0.00";
-    }
     else {
-      obj.openbal = $(".m_openbal", this).val();
-    }
-    obj.groupname = $("#m_gcode").val();
-    obj.subgroupname = $("#m_sgcode").val();
-    obj.newsubgroup = $("#m_nsgcode").val();
-    output.push(obj);
-  });
+      var obj = {};// Dictionary is created for every row.
 
-  if (!allow) {
-    // If allow variable is false then the process is stopped and user is indicated about the blank group name.
-    $("#m_blank-alert").alert();
-    $("#m_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-      $("#m_blank-alert").hide();
-    });
-    $('#m_acctable tbody tr:eq('+blankindex+') td:eq(0) input').focus().select();
-    allow = true;
-    return false;
-  };
+      obj.accountname = $(".m_accname", this).val();
+      if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income" || $(".m_openbal", this).val()=="")
+      {
+        // Opening balance is set to 0.00 is its zero or group name is one from the above mentioned groups.
+        obj.openbal = "0.00";
+      }
+      else {
+        obj.openbal = $(".m_openbal", this).val();
+      }
+      obj.groupname = $("#m_gcode").val();
+      obj.subgroupname = $("#m_sgcode").val();
+      obj.newsubgroup = $("#m_nsgcode").val();
+      output.push(obj);
+    }
+  });
 
 // ajax function below takes list of dictionaries "output" as input and saves all accounts.
   $.ajax({
@@ -301,9 +304,9 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
       $("#m_multiacc").modal('hide');
       $("#reset").click();
       $('.modal-backdrop').remove();
-      $("#success-alert").alert();
-      $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#success-alert").hide();
+      $("#multisuccess-alert").alert();
+      $("#multisuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#multisuccess-alert").hide();
       });
 
     }
