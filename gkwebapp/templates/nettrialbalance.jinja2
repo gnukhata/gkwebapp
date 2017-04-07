@@ -48,6 +48,9 @@
 .smwrap{
 width:3%
 }
+.smwrap1{
+width:2.4%
+}
 
 .mdwrap{
 width:6%
@@ -68,7 +71,7 @@ width:22%
 			<button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="ntbclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
 			<thead class="bg-primary">
 				<tr>
-					<th class="smwrap calign">{% trans %}Sr. No.{% endtrans %}</th>
+					<th class="smwrap1 calign">{% trans %}Sr.No.{% endtrans %}</th>
 					<th class="lngwrap">{% trans %}Account Name{% endtrans %}</th>
 					<th class="mdwrap ralign">{% trans %}Debit{% endtrans %}</th>
 					<th class="mdwrap ralign">{% trans %}Credit{% endtrans %}</th>
@@ -78,7 +81,7 @@ width:22%
 			<tbody>
 				{% for record in records %}
 				<tr	data-value="{{record['accountcode']}}">
-					<td class="smwrap calign">
+					<td class="smwrap1 calign">
 						{{record['srno']}}
 					</td>
 					<td class="lngwrap">
