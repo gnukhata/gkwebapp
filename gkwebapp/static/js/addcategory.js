@@ -38,6 +38,7 @@ $(document).ready(function() {
     });
     var parentspecs = [];
     var childspecs = [];
+    var parenttaxes = [];
     var taxes = [];
     if ($("#catcount").val() > 0) {
         $("#category_under").focus();
@@ -90,7 +91,72 @@ $(document).ready(function() {
         $('#parent_category_spec_name').focus();
     });
     $('#addtaxmodal').on('shown.bs.modal', function() {
-        $("#category_tax_table tbody tr:last td:eq(0) select").focus();
+      $("#category_tax_table tbody").empty();
+      for (var i = 0; i < parenttaxes.length; i++) {
+        $("#category_tax_table tbody").append('<tr>'+
+           '<td class="col-xs-4">'+
+              '<select class="form-control input-sm tax_name">'+
+                 '<option value="" selected disabled hidden>Select Tax</option>'+
+                 '<option value="VAT">VAT</option>'+
+                 '<option value="CVAT">CVAT</option>'+
+              '</select>'+
+           '</td>'+
+           '<td class="col-xs-4">'+
+              '<select class="form-control input-sm tax_state" >'+
+                 '<option value="">None</option>'+
+                 '<option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>'+
+                 '<option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>'+
+                 '<option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option>'+
+                 '<option value="Assam" stateid="4">Assam</option>'+
+                 '<option value="Bihar" stateid="5">Bihar</option>'+
+                 '<option value="Chandigarh" stateid="6">Chandigarh</option>'+
+                 '<option value="Chhattisgarh" stateid="7">Chhattisgarh</option>'+
+                 '<option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option>'+
+                 '<option value="Daman and Diu" stateid="9">Daman and Diu</option>'+
+                 '<option value="Delhi" stateid="10">Delhi</option>'+
+                 '<option value="Goa" stateid="11">Goa</option>'+
+                 '<option value="Gujarat" stateid="12">Gujarat</option>'+
+                 '<option value="Haryana" stateid="13">Haryana</option>'+
+                 '<option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option>'+
+                 '<option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option>'+
+                 '<option value="Jharkhand" stateid="16">Jharkhand</option>'+
+                 '<option value="Karnataka" stateid="17">Karnataka</option>'+
+                 '<option value="Kerala" stateid="19">Kerala</option>'+
+                 '<option value="Lakshadweep" stateid="20">Lakshadweep</option>'+
+                 '<option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option>'+
+                 '<option value="Maharashtra" stateid="22">Maharashtra</option>'+
+                 '<option value="Manipur" stateid="23">Manipur</option>'+
+                 '<option value="Meghalaya" stateid="24">Meghalaya</option>'+
+                 '<option value="Mizoram" stateid="25">Mizoram</option>'+
+                 '<option value="Nagaland" stateid="26">Nagaland</option>'+
+                 '<option value="Odisha" stateid="29">Odisha</option>'+
+                 '<option value="Pondicherry" stateid="31">Pondicherry</option>'+
+                 '<option value="Punjab" stateid="32">Punjab</option>'+
+                 '<option value="Rajasthan" stateid="33">Rajasthan</option>'+
+                 '<option value="Sikkim" stateid="34">Sikkim</option>'+
+                 '<option value="Tamil Nadu" stateid="35">Tamil Nadu</option>'+
+                 '<option value="Telangana" stateid="36">Telangana</option>'+
+                 '<option value="Tripura" stateid="37">Tripura</option>'+
+                 '<option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option>'+
+                 '<option value="Uttarakhand" stateid="39">Uttarakhand</option>'+
+                 '<option value="West Bengal" stateid="41">West Bengal</option>'+
+              '</select>'+
+           '</td>'+
+           '<td class="col-xs-4">'+
+              '<input class="form-control input-sm tax_rate text-right numtype"  placeholder="Rate">'+
+           '</td>'+
+        '</tr>');
+        $("#category_tax_table tbody tr:eq("+i+") td:eq(0) select").val(parenttaxes[i].taxname);
+        if (parenttaxes[i].state=="null") {
+          $("#category_tax_table tbody tr:eq("+i+") td:eq(1) select").val("");
+        }
+        else {
+          $("#category_tax_table tbody tr:eq("+i+") td:eq(1) select").val(parenttaxes[i].state);$(".tax_state", this).val(parenttaxes[i].state);
+        }
+        $("#category_tax_table tbody tr:eq("+i+") td:eq(2) input").val(parenttaxes[i].taxrate);
+        console.log(parenttaxes[i]);
+      }
+      $("#category_tax_table tbody tr:last td:eq(0) select").focus();
     });
     $(document).off("keydown", "#category_under").on("keydown", "#category_under", function(event) {
         categorycode = $("#category_under option:selected").val();
@@ -264,13 +330,32 @@ $(document).ready(function() {
                 .always(function() {
                     console.log("complete");
                 });
-        } else {
-            categorycode = "";
-            $("#spectbl").hide();
-            $(".childcat").hide();
-            $("#doneid").hide();
-        }
 
+                parenttaxes = [];
+                // ajax for getting the taxes of the newly selected (parent)category
+                $.ajax({
+                        url: '/category?action=gettax',
+                        type: 'POST',
+                        dataType: 'json',
+                        async: false,
+                        data: {
+                            "categorycode": categorycode
+                        },
+                        beforeSend: function(xhr) {
+                            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                        }
+                    })
+                    .done(function(resp) {
+                      parenttaxes = resp["gkresult"];
+                    })
+                    .fail(function() {
+                        console.log("error");
+                    })
+                    .always(function() {
+                        console.log("complete");
+                    });
+
+        }
     });
     $(document).off("keydown", "#child_category_spec_type").on("keydown", "#child_category_spec_type", function(event) {
         var curindex1 = $(this).closest('tr').index();
