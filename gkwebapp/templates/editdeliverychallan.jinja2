@@ -1,6 +1,6 @@
 <body>
   <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
-   
+
     <div class="panel shadow deliverychallan_edit_panel">
       <div class="panel-body">
         <div class="container-fluid row">
@@ -13,11 +13,11 @@
               <option value="{{dc['dcid']}}">{{dc["dcno"]}}, {{dc["custname"]}}</option>
               {% endfor %}
             </select>
-           
+
           </div>
         </div>
         <div class="col-md-5 deliverychallan_edit_div" hidden>
-        
+
           <div class="form-group">
             <label for="deliverychallan_edit_challanno">{% trans %}Note No{% endtrans %} :</label>
             <input class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_challanno" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a">
@@ -76,12 +76,13 @@
                 <option value="1">{% trans %}Approval{% endtrans %}</option>
                 <option value="3">{% trans %}Consignment{% endtrans %}</option>
                 <option value="19">{% trans %}Sample{% endtrans %}</option>
+                <option value="6">{% trans %}Free Replacement{% endtrans %}</option>
                 </select>
               </label>
             </div>
           </div>
           <div class="col-md-7 deliverychallan_edit_div" id="deliverychallan_edit_product_div" hidden>
-            
+
             <div class="panel">
             <table id="deliverychallan_edit_product_table" class="table shadow table-condensed table-bordered fixed-edit-table">
               <thead class="bg-primary">

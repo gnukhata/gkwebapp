@@ -82,7 +82,7 @@ $(document).ready(function() {
       event.preventDefault();
       if ($("#deliverychallan_godown").length == 0){
     	  $("#deliverychallan_consignment").focus().select();
-    	  
+
       }
       else{
       $("#deliverychallan_godown").focus().select();
@@ -753,9 +753,9 @@ else {
     form_data.append("issuername", $("#deliverychallan_issuername").val());
     form_data.append("designation", $("#deliverychallan_designation").val());
     if ($("#deliverychallan_godown option").length!=0){
-    	form_data.append("goid", $("#deliverychallan_godown option:selected").val());	
+    	form_data.append("goid", $("#deliverychallan_godown option:selected").val());
     }
-    
+
     form_data.append("products", JSON.stringify(products));// a list always needs to be stringified into json before sending it ahead
     form_data.append("dcflag", $("#deliverychallan_consignment option:selected").val());
     var files = $("#my-file-selector")[0].files
@@ -957,7 +957,7 @@ else {
       $('#deliverychallan_designation').focus();
       return false;
     }
-    
+
     var dataset = {}
 	if ($("#deliverychallan_godown option").length !=0) {
 		dataset = {"custid":$("#deliverychallan_customer option:selected").val(),
@@ -1014,7 +1014,7 @@ else {
             /* total of product quantities to be displayed in the delivery note at the very end of product details*/
             qtytotal += +obj.qty;
             printset.push(obj);
-      	} 
+      	}
         var datas = {}
       	if ($("#deliverychallan_godown option").length !=0) {
       		datas = {"dcno": $("#deliverychallan_challanno").val(),
