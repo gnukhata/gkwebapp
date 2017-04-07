@@ -1258,7 +1258,24 @@ $.ajax({
   });
 
   $('#deliverychallan').click(function (e) {// calls base deliverychallan page.
-    $("#info").load("/deliverychallan");
+   
+    $.ajax(
+    		{
+    		type: "POST",
+    		url: "/deliverychallan",
+    		global: false,
+    		async: false,
+    		datatype: "text/html",
+    		beforeSend: function(xhr)
+    			{
+    				xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    			},
+    		success: function(resp)
+    		{
+    			$("#info").html(resp);
+    		}
+    		}
+    	);
   });
 
   $("#showtrialbalance").click(function(event){// calls view page for trial balance report.
