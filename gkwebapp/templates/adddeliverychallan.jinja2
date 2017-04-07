@@ -124,13 +124,13 @@
             <div class="form-group">
             {%if numberofgodowns > 0 %}
               <label for="deliverychallan_godown">
-              	
+
                 {% if gkstatus=="in" %}
                 {% trans %}Received At{% endtrans %} :
                 {% else %}
                 {% trans %}Dispatch From{% endtrans %} :
                 {% endif %}
-                
+
               </label>
               <select class="form-control input-sm" id="deliverychallan_godown">
                {% for godown in godowns %}
@@ -142,13 +142,15 @@
             <div class="form-group">
               <label for="deliverychallan_consignment">Type of transaction:</label>
                 <select class="form-control input-sm" id="deliverychallan_consignment" accesskey="">
-                  {% if gkstatus=="in" %}
-                  <option value="16"  selected>{% trans %}Purchase{% endtrans %}</option>
-                  {% else %}
-                  <option value="4"  selected>{% trans %}Sale{% endtrans %}</option>
-                  {% endif %}
                   <option value="1">{% trans %}Approval{% endtrans %}</option>
                   <option value="3">{% trans %}Consignment{% endtrans %}</option>
+                  {% if gkstatus=="in" %}
+                  <option value="6">{% trans %}Free Replacement{% endtrans %}</option>
+                  <option value="16">{% trans %}Purchase{% endtrans %}</option>
+                  {% else %}
+                  <option value="6">{% trans %}Free Replacement{% endtrans %}</option>
+                  <option value="4">{% trans %}Sale{% endtrans %}</option>
+                  {% endif %}
                   <option value="19">{% trans %}Sample{% endtrans %}</option>
                 </select>
               </label>
