@@ -1,3 +1,14 @@
+[8-April-2017 Release 4.0 Update]
+* Enhancement in Context sensitive help.
+* Voucher now shows DR/CR along with account balance.
+* Bug fixed where voucher couldn’t be deleted in drill down.
+* Prevented Delivery chalan from getting cancelled.
+* When customer/ supplier added in delivery chalan or invoice they now appear in selected drop down
+* Tax gets properly inherited in sub-category.
+* List of categories is first shown in tree view hierarchy.
+* Improved experience while creating multiple accounts.
+* Other minor typo and nomenclature correction.
+
 [30-March-2017 Release 4.0]
 * Unified Import and Export for GNUKhata and data from other softwares.
 * New user role for godown-in-charge and specific activity assigned to godown-in-charge.
