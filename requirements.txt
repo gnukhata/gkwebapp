@@ -1,0 +1,10 @@
+    pyramid
+    openpyxl
+    pyramid_jinja2
+    WebOb
+    waitress
+    wsgicors
+    requests
+    Pillow
+    supervisor
+    Babel
