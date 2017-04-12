@@ -3,7 +3,7 @@ $(document).ready(function() {
   $(".tax_rate").numeric();
   $("#category_edit_savespecs").hide();
   $(".category_edit_disable").prop("disabled",true);
-  $("#category_edit_under").focus().select();
+  $("#category_edit_name").focus().select();
   var deletedspecs = [];
   var deletedtaxs = [];
 
@@ -45,6 +45,7 @@ $(document).ready(function() {
 
             }
             else {
+
               $("#category_edit_innerdiv").show();
               $(".panel-footer").show();
 
@@ -246,6 +247,7 @@ $(document).ready(function() {
       $("#category_edit_savespecs").show();
       $("#category_edit_edit").hide();
       $("#category_edit_name").focus();
+      $("#category_edit_list_lbl").hide();
     }
     if (event.which==46) {
       event.preventDefault();
@@ -264,7 +266,7 @@ $(document).ready(function() {
     }
   });
 
-  $("#category_edit_under").keydown(function(event) {
+/*  $("#category_edit_under").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
       $("#category_edit_name").focus().select();
@@ -439,6 +441,7 @@ $(document).ready(function() {
         $('#category_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
     }
+
     else if(event.which==190 && event.shiftKey)
     {
       event.preventDefault();
@@ -460,6 +463,10 @@ $(document).ready(function() {
       event.preventDefault();
       $('#category_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
     }
+    if (event.which == 27) {
+      event.preventDefault();
+      $("#category_edit_savespecs").focus();
+    }
   });
   $(document).off("click",".tax_del").on("click", ".tax_del", function() {
       if ($(this).closest('tr').attr('value')!="New") {
@@ -477,7 +484,8 @@ $(document).ready(function() {
     $(".category_edit_disable").prop("disabled",false);
     $("#category_edit_savespecs").show();
     $("#category_edit_edit").hide();
-    $("#category_edit_under").focus().select();
+    $("#category_edit_list_lbl").hide();
+    $("#category_edit_name").focus().select();
 
   });
 
@@ -665,7 +673,7 @@ $(document).ready(function() {
         return false;
       }
       else {
-        $("#category_edit_under").focus();
+        $("#category_edit_name").focus();
         $("#failure-alert").alert();
         $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#failure-alert").hide();
