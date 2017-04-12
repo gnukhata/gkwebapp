@@ -99,7 +99,7 @@
             <select class = "form-control input-sm" id="editgoddet">
               <option value="disabled=""" disabled selected hidden>{% trans %}Select Godown{% endtrans %}</option>
               {% for gods in godown %}
-              <option value="{{gods['goid']}}">{{gods["goname"]}}</option>
+              <option value="{{gods['goid']}}" data-godownname="{{gods["goname"]}}" data-godownaddress="{{gods["goaddr"]}}">{{gods["goname"]}} ({{gods["goaddr"]}})</option>
 
               {% endfor %}
                <option value="allgod" >{% trans %}All godowns{% endtrans %}</option>
