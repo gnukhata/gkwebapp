@@ -1166,7 +1166,7 @@ $(document).ready(function() {
       }
       }
       else {
-        $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').focus();
+        $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').focus().select();
       }
     }
     else if(event.which==190 && event.shiftKey)
