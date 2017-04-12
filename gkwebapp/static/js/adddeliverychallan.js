@@ -542,7 +542,7 @@ else {
 
             $("#deliverychallan_customer option").filter(function() {
                  return this.text == text1;
-               }).attr('selected', true);
+               }).attr('selected', true).trigger('change');
              $("#selectedcustsup").val("");
              $("#deliverychallan_customer").focus();
            });
