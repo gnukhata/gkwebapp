@@ -1541,7 +1541,7 @@ $(document).ready(function() {
           });
            $("#invoice_customer option").filter(function() {
                 return this.text == text1;
-              }).attr('selected', true);
+              }).attr('selected', true).trigger('change');
             $("#selectedcustsup").val("");
             $("#invoice_customer").focus();
           });
