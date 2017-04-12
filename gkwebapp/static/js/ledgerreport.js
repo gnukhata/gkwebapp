@@ -204,74 +204,146 @@ $(document).ready(function() {
         $(".btnfocus:enabled:first").focus();
 
       });
+      $('#myModal').on('hidden.bs.modal', function (e)
+      {
+        if ($("#hideinp").val() == 0) {
+          $("#viewvc").html("");
+          // A variable is set to indicate from which report this modal is loaded.
+          // Depending on the value of #side item, the report is displayed.
+          if ($("#side").val()=="dr") {// if its dr then only drs report is shown after modal is closed.
+            $.ajax(
+              {
+                type: "POST",
+                url: "/showledgerreport",
+                global: false,
+                async: false,
+                datatype: "text/html",
+                data: {"backflag":$("#backflag").val(),"side":"dr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
+                beforeSend: function(xhr)
+                {
+                  xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+                }
+              })
+              .done(function(resp)
+              {
+                $("#info").html("");
+                $("#info").html(resp);
+              }
+            );
+          }
+          else if ($("#side").val()=="cr") {// if its cr then only crs report is shown after modal is closed.
+            $.ajax(
+              {
+                type: "POST",
+                url: "/showledgerreport",
+                global: false,
+                async: false,
+                datatype: "text/html",
+                data: {"backflag":$("#backflag").val(),"side":"cr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
+                beforeSend: function(xhr)
+                {
+                  xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+                }
+              })
+              .done(function(resp)
+              {
+                $("#info").html("");
+                $("#info").html(resp);
+              }
+            );
+          }
+          else {// else the complete ledger is shown.
+            $.ajax(
+              {
+                type: "POST",
+                url: "/showledgerreport",
+                global: false,
+                async: false,
+                datatype: "text/html",
+                data: {"backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
+                beforeSend: function(xhr)
+                {
+                  xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+                }
+              })
+              .done(function(resp)
+              {
+                $("#info").html("");
+                $("#info").html(resp);
+              }
+            );
+          }
+        }
+
+      });
       $('#confirm_del').on('hidden.bs.modal', function (e)
       {
-        $("#viewvc").html("");
-        // A variable is set to indicate from which report this modal is loaded.
-        // Depending on the value of #side item, the report is displayed.
-        if ($("#side").val()=="dr") {// if its dr then only drs report is shown after modal is closed.
-          $.ajax(
-            {
-              type: "POST",
-              url: "/showledgerreport",
-              global: false,
-              async: false,
-              datatype: "text/html",
-              data: {"backflag":$("#backflag").val(),"side":"dr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
-              beforeSend: function(xhr)
+          $("#viewvc").html("");
+          // A variable is set to indicate from which report this modal is loaded.
+          // Depending on the value of #side item, the report is displayed.
+          if ($("#side").val()=="dr") {// if its dr then only drs report is shown after modal is closed.
+            $.ajax(
               {
-                xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-              }
-            })
-            .done(function(resp)
-            {
-              $("#info").html("");
-              $("#info").html(resp);
-            }
-          );
-        }
-        else if ($("#side").val()=="cr") {// if its cr then only crs report is shown after modal is closed.
-          $.ajax(
-            {
-              type: "POST",
-              url: "/showledgerreport",
-              global: false,
-              async: false,
-              datatype: "text/html",
-              data: {"backflag":$("#backflag").val(),"side":"cr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
-              beforeSend: function(xhr)
+                type: "POST",
+                url: "/showledgerreport",
+                global: false,
+                async: false,
+                datatype: "text/html",
+                data: {"backflag":$("#backflag").val(),"side":"dr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
+                beforeSend: function(xhr)
+                {
+                  xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+                }
+              })
+              .done(function(resp)
               {
-                xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+                $("#info").html("");
+                $("#info").html(resp);
               }
-            })
-            .done(function(resp)
-            {
-              $("#info").html("");
-              $("#info").html(resp);
-            }
-          );
-        }
-        else {// else the complete ledger is shown.
-          $.ajax(
-            {
-              type: "POST",
-              url: "/showledgerreport",
-              global: false,
-              async: false,
-              datatype: "text/html",
-              data: {"backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
-              beforeSend: function(xhr)
+            );
+          }
+          else if ($("#side").val()=="cr") {// if its cr then only crs report is shown after modal is closed.
+            $.ajax(
               {
-                xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+                type: "POST",
+                url: "/showledgerreport",
+                global: false,
+                async: false,
+                datatype: "text/html",
+                data: {"backflag":$("#backflag").val(),"side":"cr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
+                beforeSend: function(xhr)
+                {
+                  xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+                }
+              })
+              .done(function(resp)
+              {
+                $("#info").html("");
+                $("#info").html(resp);
               }
-            })
-            .done(function(resp)
-            {
-              $("#info").html("");
-              $("#info").html(resp);
-            }
-          );
-        }
+            );
+          }
+          else {// else the complete ledger is shown.
+            $.ajax(
+              {
+                type: "POST",
+                url: "/showledgerreport",
+                global: false,
+                async: false,
+                datatype: "text/html",
+                data: {"backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
+                beforeSend: function(xhr)
+                {
+                  xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+                }
+              })
+              .done(function(resp)
+              {
+                $("#info").html("");
+                $("#info").html(resp);
+              }
+            );
+          }
 
       });
     });
