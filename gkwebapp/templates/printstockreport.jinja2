@@ -35,6 +35,7 @@
 		<input type="hidden" id="godownflag" name="godownflag" value="{{stockrefresh["godownflag"]}}"></input>
 		<input type="hidden" id="goid" name="goid" value="{{stockrefresh["goid"]}}"></input>
 		<input type="hidden" id="goname" name="goname" value="{{godown}}"></input>
+		<input type="hidden" id="goaddr" name="goaddr" value="{{godownadd}}"></input>
 
 		<div class="printorgdetails hidden-print" style="text-align:center;">
     {% if godown=="" %}
@@ -49,6 +50,7 @@
 		<i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong>
 		{% else %}
 		<i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong><i>  {% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong>
+		<i>{% trans %}Godown Address{% endtrans %}: </i><strong>{{godownadd}}</strong>
     {% endif %}
 		<i>{% trans %}Period{% endtrans %}</i> : <strong>{{stockrefresh["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{stockrefresh["calculateto"]}}</strong>
 	</div>
@@ -236,7 +238,7 @@
 			      backdata = {"productcode":$("#productcode").val(),"productdesc":$("#productdesc").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(), "godownflag":$("#godownflag").val(), "goid":"-1", "goname":"", "backflag":1}
 			    }
 			    else {
-			      backdata = {"productcode":$("#productcode").val(),"productdesc":$("#productdesc").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(), "godownflag":$("#godownflag").val(), "goid":$("#goid").val(), "goname":$("#goname").val(), "backflag":1}
+			      backdata = {"productcode":$("#productcode").val(),"productdesc":$("#productdesc").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(), "godownflag":$("#godownflag").val(), "goid":$("#goid").val(), "goname":$("#goname").val(), "goaddr":$("#goaddr").val(), "backflag":1}
 			    }
 					console.log(backdata);
 					$.ajax(
