@@ -36,20 +36,20 @@
         </div>
         <div class="alert alert-danger" id="user-blank-alert" aria-live="rude" role="alert" hidden>
 
-          <label for="viewlog_user">{% trans %}Please select an User!{% endtrans %}</label>
+          <label for="viewlog_user">{% trans %}Please select a User!{% endtrans %}</label>
         </div>
         <div style="margin-bottom: 5px" class="col-xs-12 from-group">
           <label for="viewlog_type">{% trans %}Type{% endtrans %} :</label>
           <select class = "form-control input-sm" id="viewlog_type"  name = "viewlog_type" >
             <option value="" disabled selected hidden>{% trans %}Select Type of Log{% endtrans %}</option>
-            <option value="1">All User</option>
+            <option value="1">All Users</option>
             <option value="2">Select User</option>
           </select>
           <br>
           <div class = "form-group" id = "viewlog_users" hidden>
             <label for="viewlog_username">{% trans %}User Name{% endtrans %} :</label>
             <select class = "form-control input-sm" id="viewlog_username"  name = "viewlog_username" >
-              
+
               {% for user in gkresult %}
               <option value="{{user['userid']}}">{{user["username"]}}</option>
               {% endfor %}
