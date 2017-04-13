@@ -9,9 +9,20 @@
             <label for="deliverychallan_edit_list">{% trans %}Delivery Note{% endtrans %} :</label>
             <select class="form-control input-sm" id="deliverychallan_edit_list">
               <option value="" disabled selected hidden>{% trans %}Select Delivery Note{% endtrans %}</option>
-              {% for dc in delchals %}
-              <option value="{{dc['dcid']}}">{{dc["dcno"]}}, {{dc["custname"]}}</option>
-              {% endfor %}
+              <optgroup label="Delivery In" id="delin">
+                {% for dc in delchals %}
+                {% if dc['csflag'] == 19 %}
+                  <option value="{{dc['dcid']}}">{{dc["dcno"]}}, {{dc["custname"]}}</option>
+                {% endif %}
+                {% endfor %}
+              </optgroup>
+              <optgroup label="Delivery Out" id="delout">
+                {% for dc in delchals %}
+                {% if dc['csflag'] == 3 %}
+                  <option value="{{dc['dcid']}}">{{dc["dcno"]}}, {{dc["custname"]}}</option>
+                {% endif %}
+                {% endfor %}
+              </optgroup>Delivery In
             </select>
 
           </div>
