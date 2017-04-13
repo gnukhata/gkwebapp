@@ -103,7 +103,7 @@
   #narration {
     max-height: 90px;
   }
-  
+
 .modal-body {
     max-height: calc(100vh - 212px);
     overflow-y: auto;
@@ -339,10 +339,10 @@
       <div class="form-group">
         <div class="form-group col-md-6 pull-right">
       {% if  projects %}
-          <label for="project">{% trans %}Pro<u>j</u>ect{% endtrans %} :</label>
+          <label for="project">{% trans %}Pr<u>o</u>ject{% endtrans %} :</label>
             <div class="form-group">
 
-          <select class="form-control input-sm" id="project" accesskey="j">
+          <select class="form-control input-sm" id="project" accesskey="o">
             <option value="">{% trans %}None{% endtrans %}</option>
             {% for project in projects %}
             <option value="{{project['projectcode']}}">{{project['projectname']}}</option>
@@ -368,7 +368,7 @@
                     <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
                     {% trans %}Attac<u>h</u>{% endtrans %}
                   </label>
-                 
+
                   <span class='label label-info' id="upload-file-info"></span>
 
             </div>
@@ -393,14 +393,14 @@
           <span aria-hidden="true">&times;</span>
         </button> </div>
       <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-       
+
        <p>   <font color=" #566573"> {%trans%}
 Book Keeping is recording of transactions. Since transactions are of different kinds, GNUKhata has a voucher type for recording every kind of transaction.
 The Voucher Types are given below.</br>
-<b>Receipt</b></br> 
+<b>Receipt</b></br>
 Used for recording amounts received by cash or cheque or through NEFT.
 Accounts from the Sub-Groups Cash and Bank of the Group Current Assets can only be debited and cannot be credited.</br>
-Payment 
+Payment
 Used for recording payments made by cash or cheque or through NEFT.
 Accounts from the Sub-Groups Cash and Bank of the Group Current Assets can only be credited and cannot be debited.
 </br>
@@ -410,7 +410,7 @@ Accounts from the Sub-Groups Sundry Debtors, Cash and Bank of the Group Current 
 </br>
 <b>Purchase </b></br>
 Used for recording purchase of raw materials, semi-finished goods or finished goods.
-Accounts from the Groups Direct Expense, Indirect Expense and Current Liabilities can only be debited. Accounts from the Sub-Groups Cash and Bank of the Group Current Assets and from the Sub-Group Creditors for Purchase of the Group Current Liabilities can only be credited. 
+Accounts from the Groups Direct Expense, Indirect Expense and Current Liabilities can only be debited. Accounts from the Sub-Groups Cash and Bank of the Group Current Assets and from the Sub-Group Creditors for Purchase of the Group Current Liabilities can only be credited.
 </br>
 <b>Contra </b></br>
 Used for recording deposits or withdrawals of cash from bank or transfer of funds from one bank account to another.
@@ -429,8 +429,8 @@ Used for recording return of goods to a supplier by debiting his account.
 Accounts from the Sub Group Sundry Creditors for Purchase of the Group Current Liabilities can only be debited and accounts from the Group Direct Expense, Indirect Expense can only be credited.
 <br>
 <b>Credit Note</b></br>
-Used for recording reduction in the price charged to a customer (without return of goods). 
-The accounts that can be debited and credited are similar to those of Sales Return. 
+Used for recording reduction in the price charged to a customer (without return of goods).
+The accounts that can be debited and credited are similar to those of Sales Return.
 <br>
 <b>Debit Note </b></br>
 Used for recording reduction in the price charged by a supplier (without return of goods).
@@ -438,7 +438,7 @@ The accounts that can be debited and credited are similar to those of Purchase R
 </br>In case of Sale Return, Purchase Return, Debit Note and Credit Note types of vouchers, accounts from the Sub-Groups Cash and Bank of the Group Current Assets cannot be debited and credited.
 <br></br>
 The user interface for all types of vouchers is the same.
-Whatever the type of a voucher be, in voucher entry Debit entry is to be recorded first then the Credit entry. There after any number of Debit and or Credit entries can be recorded. 
+Whatever the type of a voucher be, in voucher entry Debit entry is to be recorded first then the Credit entry. There after any number of Debit and or Credit entries can be recorded.
 A cross sign will appear in each row in the Remove Column from the third row onwards. Click on the cross sign to delete an unwanted row.
 Project / Cost Center, Document Attachment and Narration fields are optional.
 A voucher can be saved only if the total of the Debit amounts and the total of the Credit amounts are the same.
@@ -447,11 +447,11 @@ The field Balance displays the balance of the account selected as on the date of
 
         </p>
       </div>
-      
+
     </div>
   </div>
 </div>
-	
+
   <input type="hidden" id="selpopupaccount" value="">
   <div id="viewacc">
 
