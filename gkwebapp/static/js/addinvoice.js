@@ -206,7 +206,6 @@ $(document).ready(function() {
     .done(function(resp) {
       console.log("success");
       if (resp["gkstatus"]==0) {
-        console.log("successsssssss");
         $("#invoice_customerstate").val(resp["gkresult"]["state"]);
         $("#invoice_supplierstate").val(resp["gkresult"]["state"]);
         $("#invoice_customeraddr").val(resp["gkresult"]["custaddr"]);
@@ -502,7 +501,6 @@ $(document).ready(function() {
           .done(function(resp) {
             console.log("success");
             if (resp["gkstatus"]==0) {
-              console.log(resp["gkresult"]["custstate"]);
               custstate = resp["gkresult"]["state"];
               $("#invoice_customerstate").val(resp["gkresult"]["state"]);
               $("#invoice_supplierstate").val(resp["gkresult"]["state"]);
@@ -1166,7 +1164,7 @@ $(document).ready(function() {
       }
       }
       else {
-        $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').focus();
+        $('#invoice_product_table tbody tr:eq('+curindex+') td:eq(3) input').focus().select();
       }
     }
     else if(event.which==190 && event.shiftKey)
@@ -1471,15 +1469,12 @@ $(document).ready(function() {
   });
 
  $("#invoice_addcust").click(function() {
-   console.log("Status : "+$("#status").val());
    var statusinout;
    if ($("#status").val()=='9') {
      statusinout="in"
-     console.log("inside in");
    }
    if($("#status").val()=='15'){
      statusinout="out"
-     console.log("inside out");
    }
     $.ajax(
     {
@@ -1520,14 +1515,11 @@ $(document).ready(function() {
             $('#invoice_customer').focus();
             return false;
           }
-          console.log($('#status').val());
           if ($("#status").val()=='9') {
             var urlcustsup = "/customersuppliers?action=getallsups"
-            console.log("inside in");
           }
           if($("#status").val()=='15'){
             var urlcustsup = "/customersuppliers?action=getallcusts"
-            console.log("inside out");
           }
           $.ajax({
             type:"POST",
@@ -1541,18 +1533,15 @@ $(document).ready(function() {
           })
           .done(function(resp) {
             var custs = resp["customers"];
-            console.log("inside ajax done.");
             $("#invoice_customer").empty();
-            console.log($('#invoice_customer').length);
+
             for (i in custs){
               $("#invoice_customer").append('<option value="'+custs[i].custid+'" >'+custs[i].custname+'</option>');
             }
           });
-          console.log($('#selectedcustsup').val());
-
            $("#invoice_customer option").filter(function() {
                 return this.text == text1;
-              }).attr('selected', true);
+              }).attr('selected', true).trigger('change');
             $("#selectedcustsup").val("");
             $("#invoice_customer").focus();
           });
