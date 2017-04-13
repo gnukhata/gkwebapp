@@ -50,7 +50,7 @@
       </div>
       <div class="panel shadow category_panel col-md-6">
          <div class="panel-body">
-         	
+
             <input type="hidden" id="catcount" value="{{categorycount}}">
             <div class="" >
 			 <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#CatModal"></i>
@@ -58,11 +58,11 @@
                  {% if categorycount > 0 %}
                   <div id="oldparentdiv">
                      <div>
-                   
+
                         <label for="category_under">{% trans %}Category Name:{% endtrans %}</label>
-                           
+
                         <select class="form-control input-sm" id="category_under">
-                           <option value="" selected>{% trans %}Select Category Name{% endtrans %}</option>
+                           <option value="" hidden disabled selected>{% trans %}Select Category Name{% endtrans %}</option>
                            {% for categories in gkresult %}
                            <option value="{{categories['categorycode']}}" data-categoryname="{{categories["categoryname"]}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
                            {% endfor %}
@@ -126,7 +126,7 @@
                         <div>
                            <label for="category_under">{% trans %}Category Name:{% endtrans %}</label>
                            <select class="form-control input-sm" id="category_under">
-                              <option value="" selected>{% trans %}Select Category Name{% endtrans %}</option>
+                              <option value="" selected hidden disabled>{% trans %}Select Category Name{% endtrans %}</option>
                               {% for categories in gkresult %}
                               <option value="{{categories['categorycode']}}" data-categoryname="{{categories["categoryname"]}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
                               {% endfor %}
@@ -441,7 +441,7 @@
           <span aria-hidden="true">&times;</span>
         </button> </div>
       <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-       
+
        <p>   <font color=" #566573"> {%trans%}
 This module lets you create Categories and Sub-Categories under which you can group your products.</br>
 A major purpose of creating Categories is to define products in terms of their specifications</br>
@@ -452,7 +452,7 @@ You can also optionally apply tax for a Category or a Sub-Category. Needless to 
 
         </p>
       </div>
-      
+
     </div>
   </div>
 </div>

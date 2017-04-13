@@ -56,10 +56,10 @@ $(document).ready(function() {
       if (resp.delchaldata.stockdata.inout==9) {
         $("#polabel").show();
         $("#slabel").show();
-        $("#tgolabel").show();
+        $("#tgolabel").hide();
         $("#solabel").hide();
         $("#clabel").hide();
-        $("#fgolabel").hide();
+        $("#fgolabel").show();
         $("#customersgroup").remove();
         $("label[for='deliverychallan_edit_issuername']").hide();
         $("label[for='deliverychallan_edit_designation']").hide();
@@ -70,10 +70,10 @@ $(document).ready(function() {
       else {
         $("#polabel").hide();
         $("#slabel").hide();
-        $("#tgolabel").hide();
+        $("#tgolabel").show();
         $("#solabel").show();
         $("#clabel").show();
-        $("#fgolabel").show();
+        $("#fgolabel").hide();
         $("#suppliersgroup").remove();
         $("label[for='deliverychallan_edit_issuername']").show();
         $("label[for='deliverychallan_edit_designation']").show();
@@ -99,6 +99,12 @@ $(document).ready(function() {
         console.log("success");
         if (resp["gkstatus"]==0) {
           $("#deliverychallan_customeraddr").val(resp["gkresult"]["custaddr"]);
+          if (resp.gkresult.csflag == 3) {
+            $('#deliverychallan_edit_challtype').val("OUT");
+          }
+          else {
+            $('#deliverychallan_edit_challtype').val("IN");
+          }
         }
       })
       .fail(function() {
@@ -144,6 +150,11 @@ $(document).ready(function() {
       console.log("complete");
     });
     $(".deliverychallan_edit_disable").prop("disabled",true);
+  });
+
+  $(document).off("keydown", "#deliverychallan_edit_list").on("keydown", "#deliverychallan_edit_list", function(event) {
+    event.preventDefault();
+    $(".btn:first").focus();
   });
 
   $("#viewattach").click(function(event)

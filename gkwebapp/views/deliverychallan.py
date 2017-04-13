@@ -41,7 +41,7 @@ def showdeliverychallan(request):
 	delchals = requests.get("http://127.0.0.1:6543/delchal?delchal=all", headers=header)
 	return {"numberofproducts":len(delchals.json()["gkresult"]),"status":True}
 
-	
+
 
 @view_config(route_name="deliverychallan",request_param="action=showadd",renderer="gkwebapp:templates/adddeliverychallan.jinja2")
 def showadddeliverychallan(request):
@@ -64,13 +64,12 @@ def showadddeliverychallan(request):
 
 @view_config(route_name="deliverychallan",request_param="action=showedit",renderer="gkwebapp:templates/editdeliverychallan.jinja2")
 def showeditdeliverychallan(request):
-	
+
 	header={"gktoken":request.headers["gktoken"]}
 	delchals = requests.get("http://127.0.0.1:6543/delchal?delchal=all", headers=header)
 	suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
 	customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
 	godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
-	print len(delchals.json()["gkresult"])
 	return {"gkstatus":delchals.json()["gkstatus"],"delchals":delchals.json()["gkresult"],"suppliers":suppliers.json()["gkresult"],"customers":customers.json()["gkresult"],"godowns":godowns.json()["gkresult"]}
 
 @view_config(route_name="deliverychallan", request_param="action=showeditpopup", renderer="gkwebapp:templates/editdeliverychallanpopup.jinja2")
@@ -167,7 +166,7 @@ def deliveryprint(request):
 	header={"gktoken":request.headers["gktoken"]}
 	org = requests.get("http://127.0.0.1:6543/organisation", headers=header)
 	cust = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(request.params["custid"])), headers=header)
-	if request.params.has_key("goid"):
+	if request.params["goid"]:
 		godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
 		godowndata = godown.json()["gkresult"]
 	else:
