@@ -22,13 +22,16 @@
                   <option value="{{dc['dcid']}}">{{dc["dcno"]}}, {{dc["custname"]}}</option>
                 {% endif %}
                 {% endfor %}
-              </optgroup>Delivery In
+              </optgroup>
             </select>
 
           </div>
         </div>
         <div class="col-md-5 deliverychallan_edit_div" hidden>
-
+          <div class="form-group">
+            <label for="deliverychallan_edit_challtype">{% trans %}Note Type{% endtrans %} :</label>
+            <input class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_challtype" placeholder="{% trans %}challan type{% endtrans %}" accesskey="a">
+          </div>
           <div class="form-group">
             <label for="deliverychallan_edit_challanno">{% trans %}Note No{% endtrans %} :</label>
             <input class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_challanno" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a">
