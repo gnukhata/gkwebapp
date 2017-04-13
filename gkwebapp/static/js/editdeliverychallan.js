@@ -152,6 +152,11 @@ $(document).ready(function() {
     $(".deliverychallan_edit_disable").prop("disabled",true);
   });
 
+  $(document).off("keydown", "#deliverychallan_edit_list").on("keydown", "#deliverychallan_edit_list", function(event) {
+    event.preventDefault();
+    $(".btn:first").focus();
+  });
+
   $("#viewattach").click(function(event)
   {
     $.ajax({
