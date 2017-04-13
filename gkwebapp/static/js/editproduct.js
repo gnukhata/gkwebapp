@@ -1005,6 +1005,7 @@ $(document).ready(function() {
             .done(function(resp) {
               var newgodowns = resp["gkresult"];
               if (newgodowns.length > 0) {
+                $("#beforeaddingfirstgodown").hide();
                 $("#newgodownadded").show();
                 $('#editgodown_ob_table tbody tr').each(function(){
                   var curindex2 = $(this).closest('tr').index();
