@@ -116,6 +116,7 @@ $(document).ready(function() {
   $("#prodselect").keydown(function(event) {
     if (event.which==13) {
       $("#editproddesc").focus().select();
+      $("#prodselect_lbl").hide();
     }
   });
   $(document).on('keydown', '#editproddesc', function(event) {
@@ -437,6 +438,7 @@ $(document).ready(function() {
     $("#addgodown").show();
     $("#editproddesc").focus();
     $("#editproddesc").select();
+    $("#prodselect_lbl").hide();
     $(".godownflag").show();
     catcode= $("#editcatselect option:selected").val();
     $(".product_cat_tax_disable").prop('disabled',false);

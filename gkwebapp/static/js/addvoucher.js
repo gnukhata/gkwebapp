@@ -49,7 +49,7 @@ $(document).ready(function() {
     $(".invhide").show();
   }
   if (sessionStorage.orgt=="Profit Making") {
-    $("label[for='project']").text("Cost Center:");
+    $("label[for='project']").html("C<u>o</u>st Center:");
   }
   $("#vno").focus().select();
   $('.vdate').autotab('number');    //autotab is a library for automatically switching the focus to next input when max allowed characters are filled.

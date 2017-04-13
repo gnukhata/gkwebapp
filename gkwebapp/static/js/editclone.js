@@ -636,7 +636,7 @@ $(document).ready(function()
     }
   });
 
-  $('#narr').keydown(function(event) {
+  $(document).off('keydown', '#narr').on('keydown', '#narr', function(event) {
     if (event.which==188 && event.ctrlKey) {
         if (  $('#project').val()== undefined) {
         $('#vctable tbody tr:last input:enabled').focus().select();

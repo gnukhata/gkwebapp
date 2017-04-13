@@ -134,6 +134,32 @@ $(document).ready(function() {
       });
       $('#myModal').on('hidden.bs.modal', function (e)
       {
+        if ($("#hideinp").val() == 0) {
+        $("#viewvc").html("");
+
+        $.ajax(
+          {
+            type: "POST",
+            url: "/showdualledgerreport",
+            global: false,
+            async: false,
+            datatype: "text/html",
+            data: {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val()},
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            },
+          })
+            .done(function(resp)
+            {
+              $(".modal-backdrop").remove();
+              $("#info").html(resp);
+            }
+          );
+        }
+      });
+      $('#confirm_del').on('hidden.bs.modal', function (e)
+      {
         $("#viewvc").html("");
 
         $.ajax(
@@ -156,6 +182,7 @@ $(document).ready(function() {
             }
           );
       });
+
     });
   });
 
@@ -263,6 +290,7 @@ $(document).ready(function() {
       });
       $('#myModal').on('hidden.bs.modal', function (e)
       {
+        if ($("#hideinp").val() == 0) {
         $("#viewvc").html("");
 
         $.ajax(
@@ -283,7 +311,32 @@ $(document).ready(function() {
               $(".modal-backdrop").remove();
               $("#info").html(resp);
             }
-          )
+          );
+        }
+      });
+      $('#confirm_del').on('hidden.bs.modal', function (e)
+      {
+        $("#viewvc").html("");
+
+        $.ajax(
+          {
+            type: "POST",
+            url: "/showdualledgerreport",
+            global: false,
+            async: false,
+            datatype: "text/html",
+            data: {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val()},
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            },
+          })
+            .done(function(resp)
+            {
+              $(".modal-backdrop").remove();
+              $("#info").html(resp);
+            }
+          );
       });
     });
   });
