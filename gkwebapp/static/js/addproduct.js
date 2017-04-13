@@ -910,7 +910,7 @@ $("#addgodown").click(function() {
                 var curindex2 = $(this).closest('tr').index();
                 for (i in newgodowns ) {
                   if (newgodowns[i].godownname == sessionStorage.newgodownname && newgodowns[i].godownaddress == sessionStorage.newgodownaddress) {
-                    $('#godown_ob_table tbody tr:eq('+curindex2+') td:eq(0) select').append('<option value="' + newgodowns[i].godownid + '">' + newgodowns[i].godownname + '(' + newgodowns[i].godownaddress + ')</option>');
+                    $('#godown_ob_table tbody tr:eq('+curindex2+') td:eq(0) select').append('<option value="' + newgodowns[i].godownid + '" selected>' + newgodowns[i].godownname + '(' + newgodowns[i].godownaddress + ')</option>');
                   }
                 }
               });
