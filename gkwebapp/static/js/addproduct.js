@@ -348,6 +348,7 @@ $("#addcatselect").change(function(event) {
   }
   else
   {
+    $("#specdiv").hide();
     $("#specifications").html("");
     $("#specshelp").show();
     $('#product_tax_table tbody tr').remove();
