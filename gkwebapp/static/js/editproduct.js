@@ -342,6 +342,7 @@ $(document).ready(function() {
       })
       .done(function(resp)
       {
+        $('#extsp').show();
         $('#extsp').html(resp);
         $(".specdate").autotab('number');
         $(".specdate").numeric();
@@ -354,6 +355,7 @@ $(document).ready(function() {
       });
     }
     else {
+      $('#extsp').hide();
       $("#nocategory-alert").alert();
       $("#nocategory-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#nocategory-alert").hide();
