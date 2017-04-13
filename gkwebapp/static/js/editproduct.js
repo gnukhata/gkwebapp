@@ -467,7 +467,9 @@ $(document).ready(function() {
     }
     if (event.which == 38) {
       event.preventDefault();
-      $("#editproddesc").focus().select();
+      if($("#editcatselect option:selected").val() == ""){
+        $("#editproddesc").focus().select();
+      }
     }
   });
 
