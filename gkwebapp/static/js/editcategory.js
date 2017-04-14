@@ -248,6 +248,11 @@ $(document).ready(function() {
       $("#category_edit_edit").hide();
       $("#category_edit_name").focus();
       $("#category_edit_list_lbl").hide();
+      $("#category_edit_tax_table tbody tr").each(function() {
+        if($('td:eq(0) select option:selected', this).val() == 'CVAT'){
+          $('td:eq(1) select', this).prop('disabled', true);
+        }
+      });
     }
     if (event.which==46) {
       event.preventDefault();
@@ -489,7 +494,6 @@ $(document).ready(function() {
     $("#category_edit_edit").hide();
     $("#category_edit_list_lbl").hide();
     $("#category_edit_name").focus().select();
-
   });
 
   $(document).off("keydown",".spec_name").on("keydown",".spec_name",function(event)
