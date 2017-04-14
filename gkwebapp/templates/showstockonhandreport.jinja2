@@ -96,9 +96,9 @@ width:1.4%
   <span style="margin:auto; display:table;"><strong><i>{% trans %}Stock on Hand Report{% endtrans %}</i></strong></span>
   <span style="margin:auto; display:table;"><i>{% trans %}Name of the Product {% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
   {% else %}
-  <span style="margin:auto; display:table;"><strong><i>{% trans %}Godown Wise Stock on Hand Report{% endtrans %}</i></strong></span>
-  <span style="margin:auto; display:table;"><i>{% trans %}Name of the Product {% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong><i>  {% trans %} &nbsp Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong></span>
-  <span style="margin:auto; display:table;"><i>{% trans %}Godown Address{% endtrans %}: </i><strong>{{goaddr}}</strong></span>
+  <span style="margin-left: 42%;"><strong><i>{% trans %}Godown Wise Stock on Hand Report{% endtrans %}</i></strong></span>
+  <span style="margin:auto; display:table; width: 100%;text-align: center"><i>{% trans %}Name of the Product {% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
+  <span style="margin:auto; display:table;width: 100%;text-align: center"><i>{% trans %} &nbsp Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong><i>{% trans %} Godown Address{% endtrans %}: </i><strong>{{goaddr}}</strong></span>
   {% endif %}
 
 

@@ -58,12 +58,12 @@
 
   <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{stockrefresh["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{stockrefresh["calculateto"]}}</strong></span>
   {% if godown == "" %}
-  <span style="margin:auto; display:table;"><i>{% trans %}Product Report{% endtrans %}</i></span>
-  <span style="margin:auto; display:table;"><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
+  <span style="margin-left: 46.4%;"><strong><i>{% trans %}Product Report{% endtrans %}</i></strong></span>
+  <span style="margin:auto; display:table; width: 100%; text-align: center"><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
   {% else %}
-  <span style="margin:auto; display:table;"><i>{% trans %}Godown Wise Product Report{% endtrans %}</i></span>
-  <span style="margin:auto; display:table;"><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong><i>  {% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong></span>
-  <span style="margin:auto; display:table;"><i>{% trans %}Godown Address{% endtrans %}: </i><strong>{{godownadd}}</strong></span>
+  <span style="margin-left: 42.7%;"><strong><i>{% trans %}Godown Wise Product Report{% endtrans %}</i></strong></span>
+  <span style="margin:auto; display:table; width: 100%;text-align: center"><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
+  <span style="margin:auto; display:table; width: 100%;text-align: center"><i>{% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong> <i>{% trans %}Godown Address{% endtrans %}: </i><strong>{{godownadd}}</strong></span>
   {% endif %}
 
   <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
