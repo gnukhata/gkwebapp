@@ -786,7 +786,9 @@ else {
     })
     .done(function(resp) {
       if(resp["gkstatus"] == 0){
-
+        if ($("#deliverychallan_edit").length == 0) {
+          $("#deliverychallan").click();
+        }
         if ($("#status").val()=='9') {
             //9 is for delivery in
           $("#deliverychallan_record").click();
