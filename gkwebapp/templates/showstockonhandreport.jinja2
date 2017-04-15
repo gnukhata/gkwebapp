@@ -30,9 +30,8 @@
 
   #latable tbody {
       display:block;
-      height: calc(100vh - 18em);
-      overflow-y:scroll;
-      height: auto !important;
+      overflow-y:auto;
+      max-height: calc(100vh - 18em);
   }
   #latable thead,#latable tbody tr {
       display:table;
@@ -101,8 +100,7 @@ width:1.4%
   <span style="margin:auto; display:table;width: 100%;text-align: center"><i>{% trans %} &nbsp Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong><i>{% trans %} Godown Address{% endtrans %}: </i><strong>{{goaddr}}</strong></span>
   {% endif %}
 
-
-  <table id="latable"  style="margin-top:75px;" class="table shadow table-bordered size mx-auto "   >
+  <table id="latable"  style="margin-top:30px;" class="table shadow table-bordered size mx-auto ">
 
     <thead class="bg-primary">
 
@@ -205,7 +203,7 @@ width:1.4%
   </table>
 
   {% if godown == "" %}
-  <span style="margin-top:100px; margin-left:35%; display:table; ">
+  <span style="margin-top:30px; margin-left:35%; display:table; ">
     <nbsp><nbsp>
       <button type="button" class="btn btn-sm btn-danger" id="viewanotherstock" accesskey="w">{% trans %}Vie<u>w</u> Another Stock{% endtrans %}</button>
     <button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="t">{% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>

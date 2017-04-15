@@ -337,7 +337,8 @@ def printablestockreport(request):
 	godownflag = int(request.params["godownflag"])
 	goid = int(request.params["goid"])
 	goname = request.params["goname"]
-	goaddr = request.params["goaddr"]
+	if godownflag==1:
+		goaddr = request.params["goaddr"]
 	productcode = int(request.params["productcode"])
 	scalculatefrom = request.params["calculatefrom"]
 	scalculateto = request.params["calculateto"]
@@ -349,7 +350,9 @@ def printablestockreport(request):
 		result = requests.get("http://127.0.0.1:6543/report?type=godownstockreport&productcode=%d&startdate=%s&enddate=%s&goid=%d&godownflag=%d"%(productcode, calculatefrom, calculateto, goid, godownflag),headers=header)
 	else:
 		result = requests.get("http://127.0.0.1:6543/report?type=stockreport&productcode=%d&startdate=%s&enddate=%s"%(productcode, calculatefrom, calculateto),headers=header)
-	return render_to_response("gkwebapp:templates/printstockreport.jinja2",{"gkresult":result.json()["gkresult"],"stockrefresh":stockrefresh,"godown":goname, "godownadd":goaddr},request=request)
+	if godownflag==1:
+		return render_to_response("gkwebapp:templates/printstockreport.jinja2",{"gkresult":result.json()["gkresult"],"stockrefresh":stockrefresh,"godown":goname, "godownadd":goaddr},request=request)
+	return render_to_response("gkwebapp:templates/printstockreport.jinja2",{"gkresult":result.json()["gkresult"],"stockrefresh":stockrefresh,"godown":goname},request=request)
 
 @view_config(route_name="product",request_param="type=stockreportspreadsheet", renderer="")
 def stockreportspreadsheet(request):
@@ -387,11 +390,10 @@ def stockreportspreadsheet(request):
 		sheet.getCell(0,1).stringValue("Godown Wise Product Report  (Period : "+calculatefrom+" to "+calculateto+")").setBold(True).setFontSize("12pt").setAlignHorizontal("center")
 		ods.content.mergeCells(0,1,9,1)
 		sheet.getRow(2).setHeight("16pt")
-		sheet.getCell(0,2).stringValue("Name of the Product: "+productdesc+"  Name of the Godown : "+goname).setBold(True).setFontSize("12pt").setAlignHorizontal("center")
+		sheet.getCell(0,2).stringValue("Name of the Product: "+productdesc).setBold(True).setFontSize("12pt").setAlignHorizontal("center")
 		ods.content.mergeCells(0,2,9,1)
 		sheet.getRow(3).setHeight("16pt")
-		print goaddr
-		sheet.getCell(0,3).stringValue("Godown Address: "+goaddr).setBold(True).setFontSize("12pt").setAlignHorizontal("center")
+		sheet.getCell(0,3).stringValue("Name of the Godown : "+goname+", Godown Address: "+goaddr).setBold(True).setFontSize("12pt").setAlignHorizontal("center")
 		ods.content.mergeCells(0,3,9,1)
 		sheet.getColumn(1).setWidth("8cm")
 		sheet.getColumn(2).setWidth("3cm")

@@ -49,8 +49,9 @@
     {% if godown=="" %}
 		<i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong>
 		{% else %}
-		<i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong><i>  {% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong>
-		<i>{% trans %}Godown Address{% endtrans %}: </i><strong>{{godownadd}}</strong>
+		<i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong>
+		<br>
+		<i>{% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong><i>{% trans %} Godown Address{% endtrans %}: </i><strong>{{godownadd}}</strong>
     {% endif %}
 		<i>{% trans %}Period{% endtrans %}</i> : <strong>{{stockrefresh["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{stockrefresh["calculateto"]}}</strong>
 	</div>
@@ -58,9 +59,20 @@
 			<table id="ledgertable" class="table shadow table-striped table-condensed table-bordered">
 				<thead class="bg-primary">
 					<tr class="visible-print">
-						<th colspan="7" style="text-align:center; font-size:80%">
-							<i>{% trans %}Stock Report for{% endtrans %}</i> <strong>{{stockrefresh["productdesc"]}}</strong>
-							<i>{% trans %}Period{% endtrans %}</i> : <strong>{{stockrefresh["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{stockrefresh["calculateto"]}}</strong>
+						<th colspan="15" style="text-align:center; font-size:80%">
+						{% if godown=="" %}
+						<strong><i>{% trans %}Product Report{% endtrans %}</i></strong>
+						{% else %}
+						<strong><i>{% trans %}Godown Wise Product Report{% endtrans %}</i></strong>
+						{% endif %}
+						<br>
+						{% if godown=="" %}
+						<i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong>
+						{% else %}
+						<i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong>
+						<br>
+						<i>{% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong><i>{% trans %} Godown Address{% endtrans %}: </i><strong>{{godownadd}}</strong>
+				    {% endif %}
 						</th>
 					</tr>
 					<tr>
