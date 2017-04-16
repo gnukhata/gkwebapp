@@ -123,23 +123,14 @@ def deleteuser(request):
 	gkdata={"userid":request.params["username"] }
 	result = requests.delete("http://127.0.0.1:6543/users", data=json.dumps(gkdata), headers=headers)
 	if result.json()["gkstatus"] == 0:
-		print "userrole:"
-		print urole
 		if urole == 3:
-			print "started iterations"
 			godnames = ""
 			j = 1
 			for godown in resultgodown:
-				print "godown name:"
-				print godown["goname"]
 				godnames += godown["goname"]
 				if j != len(resultgodown):
 					godnames += ", "
 				j += 1
-				print "All godown names:"
-				print godnames
-			print "Final godown names:"
-			print godnames
 			gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted for " + godnames + "godowns"}
 
 		else:
