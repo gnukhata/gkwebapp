@@ -78,12 +78,12 @@ def createuser(request):
 			godlist = json.loads(request.params["godowns"])
 			for i in godlist:
 				resultgodown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(i)), headers=headers)
-				godnames += resultgodown.json()["gkresult"]["goname"]
+				godnames += resultgodown.json()["gkresult"]["goname"] + "(" + resultgodown.json()["gkresult"]["goaddr"] + ")"
 				if j != len(godlist):
 					godnames += ", "
 				j += 1
 		if request.params["userrole"] == "3":
-			gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user created for " + godnames}
+			gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user created for " + godnames + "godown"}
 		else:
 			gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user created"}
 		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=headers)
@@ -127,11 +127,11 @@ def deleteuser(request):
 			godnames = ""
 			j = 1
 			for godown in resultgodown:
-				godnames += godown["goname"]
+				godnames += godown["goname"] + "(" + godown["goaddr"] + ")"
 				if j != len(resultgodown):
 					godnames += ", "
 				j += 1
-			gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted for " + godnames + "godowns"}
+			gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted for " + godnames + "godown"}
 
 		else:
 			gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted"}

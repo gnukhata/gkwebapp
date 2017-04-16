@@ -144,7 +144,7 @@ def saveproduct(request):
 			j = 1;
 			for i in godowns.keys():
 				resultgodown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(i)), headers=header)
-				godnames += resultgodown.json()["gkresult"]["goname"]
+				godnames += resultgodown.json()["gkresult"]["goname"] + "(" + resultgodown.json()["gkresult"]["goaddr"] + ")"
 				if j != len(godowns):
 					godnames += ", "
 				j += 1
