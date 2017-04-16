@@ -26,6 +26,7 @@ Contributors:
 "Abhijith Balan" <abhijithb21@openmailbox.org>
 "Prajkta Patkar" <prajkta.patkar007@gmail.com>
 "Mohd. Talha Pawaty" <mtalha456@gmail.com>
+"Ravishankar Purne" <ravismail96@gmail.com>
 """
 
 from pyramid.view import view_config
@@ -138,9 +139,21 @@ def saveproduct(request):
 
 
 	productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
-	result = requests.post("http://127.0.0.1:6543/products", data=json.dumps(productdetails),headers=header)
+	if godownflag == True:
+			godnames = ""
+			j = 1;
+			for i in godowns.keys():
+				resultgodown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(i)), headers=header)
+				godnames += resultgodown.json()["gkresult"]["goname"]
+				if j != len(godowns):
+					godnames += ","
+				j += 1
+	result = requests.post("http://127.0.0.1:6543/products",data=json.dumps(productdetails),headers=header)
 	if result.json()["gkstatus"] == 0:
-		gkdata = {"activity":proddetails["productdesc"] + " product created"}
+		if godownflag == True:
+			gkdata = {"activity":proddetails["productdesc"] + " product created in " + godnames}
+		else:
+			gkdata = {"activity":proddetails["productdesc"] + " product created"}
 		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
 	if len(taxes)>0:
 		for tax in taxes:
