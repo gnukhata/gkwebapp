@@ -106,6 +106,12 @@ def getallgodowns(request):
 		goddata.append(gdata)
 	return {"gkresult":goddata}
 
+@view_config(route_name="godown",request_param="type=numOfProdInGodown", renderer="json")
+def getProdInGodown(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/godown?type=goproduct&goid=%d"%int(request.params["goid"]), headers=header)
+	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
+
 @view_config(route_name="godown",request_param="type=getgoddetails", renderer="json")
 def getgoddetails(request):
 	header={"gktoken":request.headers["gktoken"]}
