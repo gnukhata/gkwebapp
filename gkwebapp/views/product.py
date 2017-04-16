@@ -146,7 +146,7 @@ def saveproduct(request):
 				resultgodown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(i)), headers=header)
 				godnames += resultgodown.json()["gkresult"]["goname"]
 				if j != len(godowns):
-					godnames += ","
+					godnames += ", "
 				j += 1
 	result = requests.post("http://127.0.0.1:6543/products",data=json.dumps(productdetails),headers=header)
 	if result.json()["gkstatus"] == 0:

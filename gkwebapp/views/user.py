@@ -25,6 +25,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
+"Ravishankar Purne" <ravismail96@gmail.com>
 """
 
 from pyramid.view import view_config
@@ -72,7 +73,19 @@ def createuser(request):
 			userrole = "Internal Auditor"
 		else:
 			userrole = "Godown In Charge"
-		gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user created"}
+			godnames = ""
+			j = 1;
+			godlist = json.loads(request.params["godowns"])
+			for i in godlist:
+				resultgodown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(i)), headers=headers)
+				godnames += resultgodown.json()["gkresult"]["goname"]
+				if j != len(godlist):
+					godnames += ", "
+				j += 1
+		if request.params["userrole"] == "3":
+			gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user created for " + godnames}
+		else:
+			gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user created"}
 		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=headers)
 	return {"gkstatus":result.json()["gkstatus"]}
 
@@ -104,10 +117,33 @@ def deleteuser(request):
 		userrole = "Internal Auditor"
 	else:
 		userrole = "Godown In Charge"
+		resultgodown = requests.get("http://127.0.0.1:6543/godown?userid=%d"%(int(user["userid"])), headers=headers)
+		resultgodown = resultgodown.json()["gkresult"]
+
 	gkdata={"userid":request.params["username"] }
 	result = requests.delete("http://127.0.0.1:6543/users", data=json.dumps(gkdata), headers=headers)
 	if result.json()["gkstatus"] == 0:
-		gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted"}
+		print "userrole:"
+		print urole
+		if urole == 3:
+			print "started iterations"
+			godnames = ""
+			j = 1
+			for godown in resultgodown:
+				print "godown name:"
+				print godown["goname"]
+				godnames += godown["goname"]
+				if j != len(resultgodown):
+					godnames += ", "
+				j += 1
+				print "All godown names:"
+				print godnames
+			print "Final godown names:"
+			print godnames
+			gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted for " + godnames + "godowns"}
+
+		else:
+			gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted"}
 		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=headers)
 	return {"gkstatus":result.json()["gkstatus"]}
 
