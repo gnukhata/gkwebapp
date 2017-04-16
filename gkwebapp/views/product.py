@@ -151,7 +151,7 @@ def saveproduct(request):
 	result = requests.post("http://127.0.0.1:6543/products",data=json.dumps(productdetails),headers=header)
 	if result.json()["gkstatus"] == 0:
 		if godownflag == True:
-			gkdata = {"activity":proddetails["productdesc"] + " product created in " + godnames}
+			gkdata = {"activity":proddetails["productdesc"] + " product created in " + godnames + " godowns"}
 		else:
 			gkdata = {"activity":proddetails["productdesc"] + " product created"}
 		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)

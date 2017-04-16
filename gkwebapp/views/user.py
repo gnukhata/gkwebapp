@@ -83,7 +83,7 @@ def createuser(request):
 					godnames += ", "
 				j += 1
 		if request.params["userrole"] == "3":
-			gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user created for " + godnames + "godown"}
+			gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user created for " + godnames + " godown"}
 		else:
 			gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user created"}
 		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=headers)
@@ -131,7 +131,7 @@ def deleteuser(request):
 				if j != len(resultgodown):
 					godnames += ", "
 				j += 1
-			gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted for " + godnames + "godown"}
+			gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted for " + godnames + " godown"}
 
 		else:
 			gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted"}
