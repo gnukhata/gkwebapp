@@ -17,7 +17,6 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
   Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
 
-$("#userrole option[value=3]").hide();
 Contributors:
 "Krishnakant Mane" <kk@gmail.com>
 "Ishan Masdekar " <imasdekar@dff.org.in>
@@ -62,7 +61,7 @@ $(document).ready(function(){
     inselect = 1;
   });
 
-  $("#userrole").change(function(event) {
+  $(document).off("change","#userrole").on("change","#userrole",function(e){
     /* Act on the event */
     var role = $("#userrole option:selected").val();
     if (role==3){
@@ -81,6 +80,7 @@ $(document).ready(function(){
          success: function(resp)
          {
            $("#usertable").html(resp);
+           $("#latable tbody tr:first td:first input").focus().select();
          }
          });
          }
@@ -157,7 +157,10 @@ $(document).ready(function(){
      }
 
       if (e.which==38) {
-        $("#confirm_password").focus();
+        var s1 = $("#userrole option:selected").index();
+        if (s1 == 0 || s1 == 1) {
+          $("#confirm_password").focus();
+        }
       }
     });
 
