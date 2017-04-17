@@ -28,7 +28,7 @@ Contributors:
 $(document).ready(function() {
     $('.modal-backdrop').remove();
     $("#egdnsubmit").hide();
-
+    var prod = 0;
     $("#editgoddet").bind("change", function(e) {
         $("#egdnsubmit").hide();
         var goid = $("#editgoddet option:selected").val();
@@ -64,7 +64,26 @@ $(document).ready(function() {
                 $("#edit").show();
             }
         });
+
+        $.ajax({
+            type: "POST",
+            url: "/godown?type=numOfProdInGodown",
+            data: {
+                "goid": goid
+            },
+            global: false,
+            async: false,
+            dataType: "json",
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            },
+            success: function(resp) {
+              prod = resp["gkresult"]
+            }
+        });
+
     });
+
 
     $("#edit").click(function(event) {
         event.preventDefault();
@@ -167,6 +186,7 @@ $(document).ready(function() {
         $('.modal').modal('hide');
         $('#m_confirmdel').modal('show').on('click', '#goddel', function(e) {
 
+          if (prod==0) {
             var goid = $("#editgoddet option:selected").val();
             $.ajax({
                 type: "POST",
@@ -197,7 +217,15 @@ $(document).ready(function() {
                     }
 
                 }
-            });
+            });}
+            else{
+              $("#prod-alert").alert();
+              $("#prod-alert").fadeTo(2250, 500).slideUp(500, function() {
+                  $("#prod-alert").hide();
+              });
+              $("#editgoddet").focus().select();
+              return false;
+            }
         });
         $('#m_confirmdel').on('shown.bs.modal', function(event) {
             $("#m_cancel").focus();
