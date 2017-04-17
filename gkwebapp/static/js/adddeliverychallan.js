@@ -284,7 +284,7 @@ $(document).ready(function() {
     var nextindex = curindex+1;
     var previndex = curindex-1;
 
-    if (event.which==13) {
+    if (event.which==13 || event.which==9) {
       event.preventDefault();
 
       if ($('#deliverychallan_product_table tbody tr:eq('+curindex+') td:eq(0) select option:selected').val()=="") {
