@@ -23,6 +23,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Abhijith Balan" <abhijithb21@openmailbox.org>
+"Mohd. Talha Pawaty" <mtalha456@gmail.com>
 */
 
 $(document).ready(function() {
@@ -95,7 +96,7 @@ $(document).ready(function() {
       printdata = {"productcode":$("#productcode").val(),"productdesc":$("#productdesc").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(), "godownflag":$("#godownflag").val(), "goid":"-1", "goname":""}
     }
     else {
-      printdata = {"productcode":$("#productcode").val(),"productdesc":$("#productdesc").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(), "godownflag":$("#godownflag").val(), "goid":$("#goid").val(), "goname":$("#goname").val()}
+      printdata = {"productcode":$("#productcode").val(),"productdesc":$("#productdesc").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(), "godownflag":$("#godownflag").val(), "goid":$("#goid").val(), "goname":$("#goname").val(), "goaddr":$("#goaddr").val()}
     }
     console.log(printdata);
     $.ajax({
@@ -131,7 +132,7 @@ $(document).ready(function() {
       xhr.open('GET', '/product?type=stockreportspreadsheet&orgname='+ orgname+'&fystart='+sessionStorage.yyyymmddyear1+'&fyend='+sessionStorage.getItem('year2')+'&calculatefrom='+$("#calculatefrom").val()+'&calculateto='+$("#calculateto").val()+'&productcode='+$("#productcode").val()+'&productdesc='+$("#productdesc").val()+'&godownflag=0&goid=-1&goname=""', true);
     }
     else {
-      xhr.open('GET', '/product?type=stockreportspreadsheet&orgname='+ orgname+'&fystart='+sessionStorage.yyyymmddyear1+'&fyend='+sessionStorage.getItem('year2')+'&calculatefrom='+$("#calculatefrom").val()+'&calculateto='+$("#calculateto").val()+'&productcode='+$("#productcode").val()+'&productdesc='+$("#productdesc").val()+'&godownflag=1&goid='+$("#goid").val()+'&goname='+$("#goname").val(), true);
+      xhr.open('GET', '/product?type=stockreportspreadsheet&orgname='+ orgname+'&fystart='+sessionStorage.yyyymmddyear1+'&fyend='+sessionStorage.getItem('year2')+'&calculatefrom='+$("#calculatefrom").val()+'&calculateto='+$("#calculateto").val()+'&productcode='+$("#productcode").val()+'&productdesc='+$("#productdesc").val()+'&godownflag=1&goid='+$("#goid").val()+'&goname='+$("#goname").val()+'&goaddr='+$("#goaddr").val(), true);
     }
     xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
     xhr.responseType = 'blob';

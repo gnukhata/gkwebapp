@@ -30,9 +30,8 @@
 
   #latable tbody {
       display:block;
-      height: calc(100vh - 18em);
-      overflow-y:scroll;
-      height: auto !important;
+      overflow-y:auto;
+      max-height: calc(100vh - 18em);
   }
   #latable thead,#latable tbody tr {
       display:table;
@@ -86,21 +85,22 @@ width:1.4%
   <input type="hidden" id="godownflag" name="godownflag" value="{{stockrefresh["godownflag"]}}"></input>
   <input type="hidden" id="goid" name="goid" value="{{stockrefresh["goid"]}}"></input>
   <input type="hidden" id="goname" name="goname" value="{{godown}}"></input>
+  <input type="hidden" id="goaddr" name="goaddr" value="{{goaddr}}"></input>
 
   <span class="pull-right" style="padding-right:15px"><i>{% trans %}Stock as on{% endtrans %}</i> : <strong>{{stockrefresh["date"]}}</strong></span>
 
 
 
   {% if godown == "" %}
-  <span style="margin:auto; display:table;  "><strong><i>{% trans %}Stock on Hand Report{% endtrans %}</i></strong></span>
-  <span style="margin:auto; display:table;   "><i>{% trans %}Name of the Product {% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
+  <span style="margin:auto; display:table;"><strong><i>{% trans %}Stock on Hand Report{% endtrans %}</i></strong></span>
+  <span style="margin:auto; display:table;"><i>{% trans %}Name of the Product {% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
   {% else %}
-  <span style="margin:auto; display:table;  "><strong><i>{% trans %}Godown Wise Stock on Hand Report{% endtrans %}</i></strong></span>
-  <span style="margin:auto; display:table;  "><i>{% trans %}Name of the Product {% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong><i>  {% trans %} &nbsp Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong></span>
+  <span style="margin-left: 42%;"><strong><i>{% trans %}Godown Wise Stock on Hand Report{% endtrans %}</i></strong></span>
+  <span style="margin:auto; display:table; width: 100%;text-align: center"><i>{% trans %}Name of the Product {% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
+  <span style="margin:auto; display:table;width: 100%;text-align: center"><i>{% trans %} &nbsp Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong><i>{% trans %} Godown Address{% endtrans %}: </i><strong>{{goaddr}}</strong></span>
   {% endif %}
 
-
-  <table id="latable"  style="margin-top:75px;" class="table shadow table-bordered size mx-auto "   >
+  <table id="latable"  style="margin-top:30px;" class="table shadow table-bordered size mx-auto ">
 
     <thead class="bg-primary">
 
@@ -203,7 +203,7 @@ width:1.4%
   </table>
 
   {% if godown == "" %}
-  <span style="margin-top:100px; margin-left:35%; display:table; ">
+  <span style="margin-top:30px; margin-left:35%; display:table; ">
     <nbsp><nbsp>
       <button type="button" class="btn btn-sm btn-danger" id="viewanotherstock" accesskey="w">{% trans %}Vie<u>w</u> Another Stock{% endtrans %}</button>
     <button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="t">{% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
