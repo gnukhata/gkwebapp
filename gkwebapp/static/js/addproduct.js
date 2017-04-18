@@ -544,7 +544,7 @@ $(document).off("change",".tax_name").on("change",".tax_name",function(event)
     if (curindex > 0) {
       for (var i = 1; i < curindex+1; i++) {
         for (var j = 0; j < curindex; j++) {
-          if ($("#product_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "CVAT") {
+          if ($("#product_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "CVAT") {
             i = i + 1;
           }
           selectedtaxstate = $("#product_tax_table tbody tr:eq("+j+") td:eq(1) select option:selected").attr("stateid");
