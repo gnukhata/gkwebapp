@@ -38,6 +38,7 @@ $(document).ready(function() {
   $('#deliverychallan_noofpackages').numeric({ negative: false});
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
+  var selectedproduct = "";
   function pad (str, max) { //to add leading zeros in date
     str = str.toString();
     if (str.length==1) {
@@ -249,6 +250,14 @@ $(document).ready(function() {
   { // depending on the productcode its unit of measurement is retrieved from te database and displayed to the user
     var productcode = $(this).find('option:selected').val();
     var curindex = $(this).closest('tbody tr').index();
+    if (curindex > 0) {
+      for (var i = 1; i < curindex+1; i++) {
+        for (var j = 0; j < curindex; j++) {
+          selectedproduct = $("#deliverychallan_product_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
+          $('#deliverychallan_product_table tbody tr:eq('+i+') td:eq(0) select option[value='+selectedproduct+']').prop('hidden', true).prop('disabled', true);
+        }
+      }
+    }
   $.ajax({
     url: '/invoice?action=getproduct',
     type: 'POST',
@@ -344,7 +353,6 @@ $(document).ready(function() {
     var previndex1 = curindex1-1;
     if (event.which==13) {
       event.preventDefault();
-console.log($('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(0) select option').length);
       if ($('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(1) input').val()=="") {
 
   	    	 $("#quantity-blank-alert").alert();
@@ -378,51 +386,57 @@ else {
           $('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
           return false;
         }
-        //ajax call for getting all the available products in the database
-        $.ajax({
-          url: '/deliverychallan?action=getproducts',
-          type: 'POST',
-          dataType: 'json',
-          async : false,
-          beforeSend: function(xhr)
-          {
-            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-          }
-        })
-        .done(function(resp) {
-          console.log("success");
-          if (resp["gkstatus"]==0) {
-              // new row is appended to the product table and the product name select box is populated with the retrieved products
-            $('#deliverychallan_product_table tbody').append('<tr>'+
-            '<td class="col-xs-7">'+
-            '<select class="form-control input-sm product_name"></select>'+
-            '</td>'+
-            '<td class="col-xs-4">'+
-            '<div class="input-group">'+
-            '<input type="text" class="deliverychallan_product_quantity form-control input-sm text-right" value="">'+
-              '<span class="input-group-addon input-sm" id="unitaddon"></span>'+
-            '</div>'+
-            '</td>'+
-            '<td class="col-xs-1">'+
-            '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-            '</td>'+
-            '</tr>');
-            for (product of resp["products"]) {
-                // for loop to populate product in product name select box
-              $('#deliverychallan_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
+        if ($('#deliverychallan_product_table tbody tr:eq('+curindex1+') td:eq(0) select option:visible').length < 2) {
+          $("#deliverychallan_noofpackages").focus().select();
+        }
+        else {
+          //ajax call for getting all the available products in the database
+          $.ajax({
+            url: '/deliverychallan?action=getproducts',
+            type: 'POST',
+            dataType: 'json',
+            async : false,
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
             }
-            $('#deliverychallan_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
-            $('.deliverychallan_product_quantity').numeric({ negative: false});
-            $(".product_name").change();
-          }
-        })
-        .fail(function() {
-          console.log("error");
-        })
-        .always(function() {
-          console.log("complete");
-        });
-
+          })
+          .done(function(resp) {
+            console.log("success");
+            if (resp["gkstatus"]==0) {
+                // new row is appended to the product table and the product name select box is populated with the retrieved products
+              $('#deliverychallan_product_table tbody').append('<tr>'+
+              '<td class="col-xs-7">'+
+              '<select class="form-control input-sm product_name">'+
+              '<option value="" disabled hidden selected>Select Product</option>'+
+              '</select>'+
+              '</td>'+
+              '<td class="col-xs-4">'+
+              '<div class="input-group">'+
+              '<input type="text" class="deliverychallan_product_quantity form-control input-sm text-right" value="">'+
+                '<span class="input-group-addon input-sm" id="unitaddon"></span>'+
+              '</div>'+
+              '</td>'+
+              '<td class="col-xs-1">'+
+              '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+              '</td>'+
+              '</tr>');
+              for (product of resp["products"]) {
+                  // for loop to populate product in product name select box
+                $('#deliverychallan_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
+              }
+              $('#deliverychallan_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
+              $('.deliverychallan_product_quantity').numeric({ negative: false});
+              $(".product_name").change();
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          .always(function() {
+            console.log("complete");
+          });
+        }
       }
     }
 
