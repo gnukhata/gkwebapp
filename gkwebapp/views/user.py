@@ -134,3 +134,9 @@ def verifypassword(request):
 	gkdata = {"userid":request.params["userid"],"userpassword":request.params["userpassword"],"useranswer":request.params["useranswer"]}
 	result = requests.put("http://127.0.0.1:6543/forgotpassword", data =json.dumps(gkdata))
 	return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="showuser",request_param="type=list", renderer="gkwebapp:templates/listofusers.jinja2")
+def listofusers(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/users?type=list", headers=header)
+	return {"gkresult":result.json()["gkresult"]}
