@@ -245,12 +245,12 @@
         <div class="container-fluid">
 
         <button class="btn btn-success btn-sm" id="deliverychallan_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save anywhere on the current screen">{% trans %}Save{% endtrans %}</button>
-        <button class="btn btn-warning btn-sm" id="deliverychallan_reset">{% trans %}Reset{% endtrans %}</button>
+        <button class="btn btn-warning btn-sm" id="deliverychallan_reset" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
         {% if gkstatus=="out" %}
         <button id="deliverychallan_saveprint" class="btn btn-primary btn-sm" >{% trans %}Save & Print{% endtrans %}</button>
-        <button id="deliverychallan_addcust" class="btn btn-info btn-sm">{% trans %}Add Customer{% endtrans %}</button>
+        <button id="deliverychallan_addcust" class="btn btn-info btn-sm" accesskey="t">{% trans %}Add Cus<u>t</u>omer{% endtrans %}</button>
           {% else %}
-          <button id="deliverychallan_addcust" class="btn btn-info btn-sm">{% trans %}Add Supplier{% endtrans %}</button>
+          <button id="deliverychallan_addcust" class="btn btn-info btn-sm" accesskey="s">{% trans %}Add <u>S</u>upplier{% endtrans %}</button>
        {% endif %}
        <label class="btn btn-primary btn-sm" for="my-file-selector">
          <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
