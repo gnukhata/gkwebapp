@@ -103,50 +103,50 @@ if (sessionStorage.orgt=="Profit Making") { // changing headings and messages de
   // navigation functions for enter key and up arrow keys.
   $("#viewledger_fromdate").keydown(function(e){
     if(e.which==13){
-      $("#viewledger_frommonth").focus();
+      $("#viewledger_frommonth").focus().select();
     }
     if(e.which==38){
-      $("#viewledger_monthly").focus();
+      $("#viewledger_monthly").focus().select();
     }
   });
   $("#viewledger_frommonth").keydown(function(e){
     if(e.which==13){
-      $("#viewledger_fromyear").focus();
+      $("#viewledger_fromyear").focus().select();
     }
     if(e.which==38){
-      $("#viewledger_fromdate").focus();
+      $("#viewledger_fromdate").focus().select();
     }
   });
   $("#viewledger_fromyear").keydown(function(e){
     if(e.which==13){
-      $("#viewledger_todate").focus();
+      $("#viewledger_todate").focus().select();
     }
     if(e.which==38){
-      $("#viewledger_frommonth").focus();
+      $("#viewledger_frommonth").focus().select();
     }
   });
   $("#viewledger_todate").keydown(function(e){
     if(e.which==13){
-      $("#viewledger_tomonth").focus();
+      $("#viewledger_tomonth").focus().select();
     }
     if(e.which==38){
-      $("#viewledger_fromyear").focus();
+      $("#viewledger_fromyear").focus().select();
     }
   });
   $("#viewledger_tomonth").keydown(function(e){
     if(e.which==13){
-      $("#viewledger_toyear").focus();
+      $("#viewledger_toyear").focus().select();
     }
     if(e.which==38){
-      $("#viewledger_todate").focus();
+      $("#viewledger_todate").focus().select();
     }
   });
   $("#viewledger_toyear").keydown(function(e){
     if(e.which==13){
-      $("#viewledger_nar").focus();
+      $("#viewledger_nar").focus().select();
     }
     if(e.which==38){
-      $("#viewledger_tomonth").focus();
+      $("#viewledger_tomonth").focus().select();
     }
   });
 
@@ -162,7 +162,7 @@ if (sessionStorage.orgt=="Profit Making") { // changing headings and messages de
       }
     }
     if(e.which==38){
-      $("#viewledger_toyear").focus();
+      $("#viewledger_toyear").focus().select();
     event.preventDefault();
     }
   });

@@ -83,7 +83,7 @@ $(document).ready(function() {
 						if (e.which == 13) {
 							e.preventDefault();
 							$(".dis").attr('disabled', false);
-							$("#viewstock_todate").focus();
+							$("#viewstock_todate").focus().select();
 						}
 				});
 				$(".dis").attr('disabled', false);
@@ -106,19 +106,19 @@ $(document).ready(function() {
 	$("#viewstock_todate").keydown(function(e){
 		if(e.which==13){
 			e.preventDefault();
-			$("#viewstock_tomonth").focus();
+			$("#viewstock_tomonth").focus().select();
 		}
 		if(e.which==38){
-			$("#viewstock_fromyear").focus();
+			$("#viewstock_fromyear").focus().select();
 		}
 	});
 	$("#viewstock_tomonth").keydown(function(e){
 		if(e.which==13){
 			e.preventDefault();
-			$("#viewstock_toyear").focus();
+			$("#viewstock_toyear").focus().select();
 		}
 		if(e.which==38){
-			$("#viewstock_todate").focus();
+			$("#viewstock_todate").focus().select();
 		}
 	});
 	if ($("#godownpresent").val()==0) {
@@ -128,7 +128,7 @@ $(document).ready(function() {
 				$("#viewstock_submit").click();
 			}
 			if(e.which==38){
-				$("#viewstock_tomonth").focus();
+				$("#viewstock_tomonth").focus().select();
 			}
 		});
 	}
@@ -140,7 +140,7 @@ $(document).ready(function() {
 				$("#godownflag").focus().select();
 			}
 			if(e.which==38){
-				$("#viewstock_tomonth").focus();
+				$("#viewstock_tomonth").focus().select();
 			}
 		});
 		$("#editgoddet").keydown(function(e){
@@ -163,7 +163,7 @@ $(document).ready(function() {
 			$("#editgoddet").focus()  ;
 		}
 		if (e.which == 38) {
-			$("#viewstock_toyear").focus();
+			$("#viewstock_toyear").focus().select();
 		}
 	});
 	$("#viewstock_submit").click(function(event) {
