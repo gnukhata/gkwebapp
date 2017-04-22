@@ -164,6 +164,9 @@
 
       {% trans %}Transaction date cannot be prior to Invoice date!{% endtrans %}
     </div>
+    <div class="alert alert-danger" id="credit-more-alert"  aria-live="rude" role="alert" hidden>
+      {% trans %}Cannot continue to Bill Wise Accounting. Only one customer/supplier can be selected.{% endtrans %}
+    </div>
 
 
     <form id="voucher" name="voucher">
@@ -485,8 +488,8 @@ The field Balance displays the balance of the account selected as on the date of
             <p>{% trans %}Do you want to continue to Bill Wise Accounting?{% endtrans %}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" id ="bw_save_noprint" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
-            <button type="button" id="bw_save_yesprint" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
+            <button type="button" id ="bwno" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
+            <button type="button" id="bwyes" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

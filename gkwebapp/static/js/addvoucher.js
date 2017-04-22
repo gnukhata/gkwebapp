@@ -62,6 +62,7 @@ $(document).ready(function() {
   var curfocusrow = -1;
   var accpopupindex = -1;
   var curselectlength = -1;
+  var numberofcredits = 0;
   var percentwid = 100*(($("table").width()-12)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   $('.table-fixedheader tfoot').width(percentwid+"%");
@@ -1232,6 +1233,12 @@ $("#invsel").keyup(function(event) {
     var amountindex = 0;
     var accallow = true;
     var accountindex=0;
+    $(".crdr").each(function() {
+      if ($(this).val()=="Cr") {
+        numberofcredits = numberofcredits + 1;
+      }
+    });
+    sessionStorage.numberofcredits = numberofcredits;
     // Check if voucher no. is blank and if it is then show an alert
     if ($('#vno').val()=="") {
       $("#vno-alert").alert();
@@ -1436,9 +1443,43 @@ $("#invsel").keyup(function(event) {
           $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#success-alert").hide();
             //Modal asking the user if he wants to do bill wise accounting or not?
-            if ($("#vouchertype").val() == "receipt" || $("#vouchertype").val() == "payment") {
+            if ($("#vouchertype").val() == "receipt" && sessionStorage.invflag == 1) {
               $("#confirm_yes_billwise").modal("show");
-              $("#bw_save_noprint").focus(); //Focus is on "No" when the model opens.
+              $("#bwno").focus(); //Focus is on "No" when the model opens.
+              $(document).off('click', '#bwyes').on('click', '#bwyes', function(event) {
+                event.preventDefault();
+                if (sessionStorage.numberofcredits > 1) {
+                  $("#credit-more-alert").alert();
+                  $("#credit-more-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#credit-more-alert").hide();
+                    $(".modal-backdrop").hide();
+                    $("#confirm_yes_billwise").modal("hide");
+                    $("#vno").focus().select();
+                  });
+                  return false;
+                }
+                $.ajax(
+                  {
+                    type: "POST",
+                    url: "/addvoucher?type=showbillwisetable",
+                    global: false,
+                    async: false,
+                    datatype: "text/html",
+                    beforeSend: function(xhr)
+                    {
+                      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+                    },
+                    success: function(resp)
+                    {
+                      $("#bwtableload").html(resp);
+                      $(".modal-backdrop").hide();
+                      $("#confirm_yes_billwise").modal("hide");
+                      $("#bwtable").modal("show");
+                      $(".fixed-table-loading").remove();
+                    }
+                  }
+                );
+              });
             }
           });
         }
@@ -1610,5 +1651,9 @@ $("#invsel").keyup(function(event) {
 
   $('#reset').click(function(event) {
 $("#show"+$("#vtype").val()).click();
+  });
+  $('#confirm_yes_billwise').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is opened
+  {
+    $("#vno").focus().select();
   });
 });
