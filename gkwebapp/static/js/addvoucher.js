@@ -786,7 +786,6 @@ $("#invsel").keyup(function(event) {
     }
   });
 
-
   /*
   The following events are the backbone of the voucher functionality.
   When one hits enter on an dr or cr amount text box,
@@ -801,15 +800,7 @@ $("#invsel").keyup(function(event) {
   {
     if(event.which==13 && !outfocus)
     {
-
-
-
-
-
-                    event.preventDefault();
-
-
-
+      event.preventDefault();
       drsum=0;
       $(".dramt").each(function(){
         drsum += +$(this).val();
@@ -1444,6 +1435,11 @@ $("#invsel").keyup(function(event) {
           $("#success-alert").alert();
           $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#success-alert").hide();
+            //Modal asking the user if he wants to do bill wise accounting or not?
+            if ($("#vouchertype").val() == "receipt" || $("#vouchertype").val() == "payment") {
+              $("#confirm_yes_billwise").modal("show");
+              $("#bw_save_noprint").focus(); //Focus is on "No" when the model opens.
+            }
           });
         }
         else {

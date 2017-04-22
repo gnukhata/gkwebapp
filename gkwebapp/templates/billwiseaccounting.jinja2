@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{% trans %}GNUKhata{% endtrans %} | {{projectname}} {% trans %}Statement{% endtrans %}</title>
+
+  <style type="text/css">
+  .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  #latable td {
+    font-size: 75%;
+    padding: 4 !important;
+    margin: 4 !important;
+  }
+
+  #latable th {
+    font-size: 85%;
+  }
+
+  .card-view .title {
+      font-weight: bold;
+      display: inline-block;
+      min-width: 30%;
+      text-align: left !important;
+  }
+
+  .calign{
+    text-align:center;
+  }
+  .lalign{
+    text-align:left;
+  }
+  .ralign{
+    text-align:right;
+  }
+  .dtwrap{
+    width :5%
+     }
+ .smwrap{
+  width:3%
+ }
+ .smwrap1{
+ width:2.4%
+ }
+
+ .lngwrap{
+  width:16%
+ }
+ .mdwrap{
+  width:8%
+ }
+
+  </style>
+</head>
+<body>
+  <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="laclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+  <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
+    <thead class="bg-primary">
+      <tr>
+        <th class="dtwrap lalign">
+          {% trans %}Invoice No{% endtrans %}
+        </th>
+        <th class="dtwrap lalign">
+          {% trans %}Date{% endtrans %}
+        </th>
+        <th class="lngwrap lalign">
+          {% trans %}Customer Name{% endtrans %}
+        </th>
+        <th class="mdwrap ralign">
+          {% trans %}Invoice Amount{% endtrans %}
+        </th>
+        <th class="mdwrap ralign">
+          {% trans %}Amount Pending{% endtrans %}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <!--{% for record in gkresult %}
+      <tr	value="{{record["godownid"]}}">
+        <td class="smwrap1 calign" >
+          {{record["srno"]}}
+        </td>
+        <td class="mdwrap lalign">
+          {{record["godownname"]}}
+        </td>
+        <td class="lngwrap lalign" >
+          {{record["godownaddress"]}}, {{record["godownstate"]}}
+        </td>
+        <td class="dtwrap lalign" >
+          {{record["godowncontactname"]}}
+        </td>
+        <td class="dtwrap lalign" >
+          {{record["godowncontact"]}}
+        </td>
+        {% if record["godownstatus"] == "Active" %}
+        <td class="smwrap lalign text-success">
+          {{record["godownstatus"]}}
+        </td>
+        {% else %}
+        <td class="smwrap lalign text-danger">
+          {{record["godownstatus"]}}
+        </td>
+        {% endif %}
+      </tr>
+      {% endfor %}-->
+
+    </tbody>
+  </table>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
+</body>
+</html>

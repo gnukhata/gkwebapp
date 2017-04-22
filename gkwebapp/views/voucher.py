@@ -209,3 +209,8 @@ def getClosingBal(request):
 		return {"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"]}
 	else:
 		return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="addvoucher", request_param = "type=showbillwisetable", renderer="gkwebapp:templates/billwiseaccounting.jinja2")
+def getBillTable(request):
+	header={"gktoken":request.headers["gktoken"]}
+	return {"a":1}
