@@ -17,6 +17,20 @@
     font-size: 85%;
   }
 
+  #latable tbody {
+      display:block;
+      height: calc(100vh - 20em);
+      overflow-y:scroll;
+  }
+  #latable thead,#latable tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  #latable thead {
+      width: calc( 100% - 0.65em );
+  }
+
   .card-view .title {
       font-weight: bold;
       display: inline-block;
@@ -57,14 +71,11 @@
   <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
     <thead class="bg-primary">
       <tr>
-        <th class="dtwrap lalign">
+        <th class="dtwrap calign">
           {% trans %}Invoice No{% endtrans %}
         </th>
-        <th class="dtwrap lalign">
+        <th class="dtwrap calign">
           {% trans %}Date{% endtrans %}
-        </th>
-        <th class="lngwrap lalign">
-          {% trans %}Customer Name{% endtrans %}
         </th>
         <th class="mdwrap ralign">
           {% trans %}Invoice Amount{% endtrans %}
@@ -72,37 +83,33 @@
         <th class="mdwrap ralign">
           {% trans %}Amount Pending{% endtrans %}
         </th>
+        <th class="mdwrap ralign">
+          {% trans %}Amount Paid{% endtrans %}
+        </th>
       </tr>
     </thead>
     <tbody>
-      <!--{% for record in gkresult %}
-      <tr	value="{{record["godownid"]}}">
-        <td class="smwrap1 calign" >
-          {{record["srno"]}}
+      {% for record in gkresult %}
+      <tr	value="{{record["invid"]}}">
+        <td class="dtwrap calign" >
+          {{record["invoiceno"]}}
         </td>
-        <td class="mdwrap lalign">
-          {{record["godownname"]}}
+        <td class="dtwrap calign">
+          {{record["invoicedate"]}}
         </td>
-        <td class="lngwrap lalign" >
-          {{record["godownaddress"]}}, {{record["godownstate"]}}
+        <td class="mdwrap ralign" >
+          {{record["invoicetotal"]}}
         </td>
-        <td class="dtwrap lalign" >
-          {{record["godowncontactname"]}}
+        <td class="mdwrap ralign" >
+          {{record["pendingamount"]}}
         </td>
-        <td class="dtwrap lalign" >
-          {{record["godowncontact"]}}
+        <td class="mdwrap ralign" >
+          <div class="form-group">
+            <input type="text" class="amountpaid form-control input-sm rightJustified" value="">
+          </div>
         </td>
-        {% if record["godownstatus"] == "Active" %}
-        <td class="smwrap lalign text-success">
-          {{record["godownstatus"]}}
-        </td>
-        {% else %}
-        <td class="smwrap lalign text-danger">
-          {{record["godownstatus"]}}
-        </td>
-        {% endif %}
       </tr>
-      {% endfor %}-->
+      {% endfor %}
 
     </tbody>
   </table>

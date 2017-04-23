@@ -213,4 +213,11 @@ def getClosingBal(request):
 @view_config(route_name="addvoucher", request_param = "type=showbillwisetable", renderer="gkwebapp:templates/billwiseaccounting.jinja2")
 def getBillTable(request):
 	header={"gktoken":request.headers["gktoken"]}
-	return {"a":1}
+	accountcode = int(request.params["accountcode"])
+	result = requests.get("http://127.0.0.1:6543/customersupplier?by=account&accountcode=%d"%accountcode, headers=header)
+	if result.json()["gkstatus"] == 0:
+		custid = result.json()["gkresult"]
+		billdetails = requests.get("http://127.0.0.1:6543/invoice?type=bwa&custid=%d"%custid, headers=header)
+		return {"gkstatus":result.json()["gkstatus"], "gkresult":billdetails.json()["gkresult"]["unpaidbills"]}
+	else:
+		return {"gkresult":[]}

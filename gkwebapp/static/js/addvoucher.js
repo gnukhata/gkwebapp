@@ -1239,6 +1239,8 @@ $("#invsel").keyup(function(event) {
       }
     });
     sessionStorage.numberofcredits = numberofcredits;
+    sessionStorage.customeraccname = $.trim($("#vtable tbody tr:eq(1) td:eq(1) select option:selected").text());
+    sessionStorage.customeracccode = $("#vtable tbody tr:eq(1) td:eq(1) select option:selected").val();
     // Check if voucher no. is blank and if it is then show an alert
     if ($('#vno').val()=="") {
       $("#vno-alert").alert();
@@ -1464,6 +1466,7 @@ $("#invsel").keyup(function(event) {
                     url: "/addvoucher?type=showbillwisetable",
                     global: false,
                     async: false,
+                    data:{"accountcode":sessionStorage.customeracccode},
                     datatype: "text/html",
                     beforeSend: function(xhr)
                     {
@@ -1474,6 +1477,7 @@ $("#invsel").keyup(function(event) {
                       $("#bwtableload").html(resp);
                       $(".modal-backdrop").hide();
                       $("#confirm_yes_billwise").modal("hide");
+                      $("#bwtabletitle").append(sessionStorage.customeraccname);
                       $("#bwtable").modal("show");
                       $(".fixed-table-loading").remove();
                     }
@@ -1652,8 +1656,12 @@ $("#invsel").keyup(function(event) {
   $('#reset').click(function(event) {
 $("#show"+$("#vtype").val()).click();
   });
-  $('#confirm_yes_billwise').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is opened
+  $('#confirm_yes_billwise, #bwtable').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is opened
   {
     $("#vno").focus().select();
+  });
+  $('#bwtable').on('shown.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is opened
+  {
+    $(".amountpaid:first").focus().select();
   });
 });
