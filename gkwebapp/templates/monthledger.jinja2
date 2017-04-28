@@ -62,7 +62,7 @@ th {
                 <th class="smwrap2 calign">{% trans %}No. of Debit Records{% endtrans %}</th>
                 <th class="smwrap1 ralign">{% trans %}Credit Balance{% endtrans %}</th>
                 <th class="smwrap2 calign">{% trans %}No. of Credit Records{% endtrans %}</th>
-                <th class="smwrap3 calign">{% trans %}No. of Locked Transactions{% endtrans %}</th>
+                <th class="smwrap3 calign">{% trans %}No. of Transactions to be Locked{% endtrans %}</th>
               </tr>
             </thead>
             <tbody>
@@ -85,7 +85,7 @@ th {
                   <b>{{record["vcountCr"]}}</b>
                 </td>
                 <td class="smwrap3 calign">
-                  <b>{{record["vcountLock"]}}</b>
+                  <b>{{record["vcount"]-record["vcountLock"]}}</b>
                 </td>
                 <td class="smwrap1 visible-print ralign cred">
                   {% if record.Dr %}
@@ -111,7 +111,7 @@ th {
                   <b>{{record["vcountCr"]}}</b>
                 </td>
                 <td class="smwrap3 calign">
-                  <b>{{record["vcountLock"]}}</b>
+                  <b>{{record["vcount"]-record["vcountLock"]}}</b>
                 </td>
                 {%endif%}
               </tr>
