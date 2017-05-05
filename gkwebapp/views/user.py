@@ -31,6 +31,9 @@ from pyramid.view import view_config
 import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
+from pyramid.response import Response
+import os
+from odslib import ODS
 
 @view_config(route_name="showuser", renderer="gkwebapp:templates/createuser.jinja2")
 def showuser(request):
@@ -137,6 +140,12 @@ def verifypassword(request):
 
 @view_config(route_name="showuser",request_param="type=list", renderer="gkwebapp:templates/listofusers.jinja2")
 def listofusers(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/users?type=list", headers=header)
+	return {"gkresult":result.json()["gkresult"]}
+
+@view_config(route_name="showuser",request_param="type=printable", renderer="gkwebapp:templates/printlistofusers.jinja2")
+def printlistofusers(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/users?type=list", headers=header)
 	return {"gkresult":result.json()["gkresult"]}
