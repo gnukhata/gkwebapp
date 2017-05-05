@@ -149,10 +149,19 @@ $(document).ready(function() {
   wholedate = year + "-" + month + "-" + date;
   reversedate = date + "-" + month + "-" + year;
   var del_unbilled_array = wholedate.split(/\s*\-\s*/g);
-  $("#del_unbilled_date").val(del_unbilled_array[2]);
-  $("#del_unbilled_month").val(del_unbilled_array[1]);
-  $("#del_unbilled_year").val(del_unbilled_array[0]);
-  $("#report_type").select();
+  var financialend_array = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g);
+if (today > financialend){
+    $("#del_unbilled_date").val(financialend_array[2]);
+    $("#del_unbilled_month").val(financialend_array[1]);
+    $("#del_unbilled_year").val(financialend_array[0]);
+    $("#report_type").select();
+}
+else {
+   $("#del_unbilled_date").val(del_unbilled_array[2]);
+    $("#del_unbilled_month").val(del_unbilled_array[1]);
+    $("#del_unbilled_year").val(del_unbilled_array[0]);
+    $("#report_type").select();
+}
 
   $("#del_unbilled_type").keydown(function(event) {
     if (event.which==13) {
