@@ -148,8 +148,8 @@ $(document).ready(function() {
       for (var i = 0; i < parenttaxes.length; i++) {
         $("#category_tax_table tbody").append(taxfieldhtml);
         $("#category_tax_table tbody tr:eq("+i+") td:eq(0) select").val(parenttaxes[i].taxname);
-        if (parenttaxes[i].state=="null") {
-          $("#category_tax_table tbody tr:eq("+i+") td:eq(1) select").val("");
+        if (parenttaxes[i].state==null) {
+          $("#category_tax_table tbody tr:eq("+i+") td:eq(1) select").val("").prop('disabled', true);
         }
         else {
           $("#category_tax_table tbody tr:eq("+i+") td:eq(1) select").val(parenttaxes[i].state);
