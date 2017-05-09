@@ -182,6 +182,32 @@ $(document).ready(function() {
       $("#add_cussup_name").focus();
       return false;
     }
+    if ($.trim($("#add_state").val())=="") {
+      $("#state-blank-alert").alert();
+      $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#state-blank-alert").hide();
+      });
+
+        $("#add_state").focus();
+      return false;
+    }
+    if ($.trim($("#add_cussup_address").val())=="") {
+      $("#address-blank-alert").alert();
+      $("#address-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#address-blank-alert").hide();
+      });
+      $("#add_cussup_address").focus();
+      return false;
+    }
+    if ($.trim($("#add_cussup_tan").val())=="") {
+      $("#tin-blank-alert").alert();
+      $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#tin-blank-alert").hide();
+      });
+      $("#add_cussup_tan").focus();
+      return false;
+    }
+
 
     $.ajax({
       url: '/customersuppliers?action=save',
