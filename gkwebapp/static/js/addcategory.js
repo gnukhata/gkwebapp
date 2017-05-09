@@ -148,7 +148,7 @@ $(document).ready(function() {
       for (var i = 0; i < parenttaxes.length; i++) {
         $("#category_tax_table tbody").append(taxfieldhtml);
         $("#category_tax_table tbody tr:eq("+i+") td:eq(0) select").val(parenttaxes[i].taxname);
-        if (parenttaxes[i].state==null) {
+        if (parenttaxes[i].state == null) {
           $("#category_tax_table tbody tr:eq("+i+") td:eq(1) select").val("").prop('disabled', true);
         }
         else {
@@ -278,12 +278,12 @@ $(document).ready(function() {
                         var trs;
                         noofspecs++;
                         if (spec["attrtype"] == 0) {
-                            trs = '<option value="0">Text</option>'
+                            trs = '<option value="0">Text</option>';
                         } else if (spec["attrtype"] == 1) {
                             trs =
-                                '<option value="1">Number</option>'
+                                '<option value="1">Number</option>';
                         } else if (spec["attrtype"] == 2) {
-                            trs = '<option value="2">Date</option>'
+                            trs = '<option value="2">Date</option>';
                         }
                         $('#spectbl tbody').prepend('<tr>' +
                             '<td class="col-xs-6">' + spec["attrname"] + '</td>' +
@@ -688,12 +688,12 @@ $(document).ready(function() {
                         for (spec of parentspecs) {
                             var trs;
                             if (spec["attrtype"] == 0) {
-                                trs = '<option value="0">Text</option>'
+                                trs = '<option value="0">Text</option>';
                             } else if (spec["attrtype"] == 1) {
                                 trs =
-                                    '<option value="1">Number</option>'
+                                    '<option value="1">Number</option>';
                             } else if (spec["attrtype"] == 2) {
-                                trs = '<option value="2">Date</option>'
+                                trs = '<option value="2">Date</option>';
                             }
 
                             $('#child_category_spec_table tbody').append('<tr>' +
@@ -779,12 +779,12 @@ $(document).ready(function() {
                 for (spec of resp["gkresult"].reverse()) {
                     var trs;
                     if (spec["attrtype"] == 0) {
-                        trs = '<option value="0">Text</option>'
+                        trs = '<option value="0">Text</option>';
                     } else if (spec["attrtype"] == 1) {
                         trs =
-                            '<option value="1">Number</option>'
+                            '<option value="1">Number</option>';
                     } else if (spec["attrtype"] == 2) {
-                        trs = '<option value="2">Date</option>'
+                        trs = '<option value="2">Date</option>';
                     }
                     $('#child_showcategory_spec_table tbody').prepend('<tr>' +
                         '<td class="col-xs-8">' +
