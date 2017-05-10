@@ -41,6 +41,11 @@
 
 	{% trans %}Please Enter name!{% endtrans %}
     </div>
+    <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
+
+     {% trans %}Please select State!{% endtrans %}
+
+   </div>
     <div class="alert alert-danger" id="address-blank-alert"  aria-live="rude" role="alert" hidden>
 
 	{% trans %}Please Enter address!{% endtrans %}
@@ -140,7 +145,7 @@
           </div>
             <div class="col-md-6">
               <div class="form-group hidden-load " hidden>
-                <label for="edit_cussup_address"> Street and City:</label>
+                <label for="edit_cussup_address">Address:</label>
                 <textarea class="form-control" rows="2" cols="40" id="edit_cussup_address" aria-describedby="textareahelp"></textarea>
                 <small id="textareahelp" class="form-text text-muted">Press Enter Key twice to shift focus to Fax</small>
               </div>
@@ -162,10 +167,10 @@
 
 
       <div class="panel-footer">
-        <button class="btn btn-primary btn-sm" id="cussup_edit_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}">{% trans %}Save{% endtrans %}</button>
-        <button id="cussup_delete" class="btn btn-danger btn-sm">{% trans %}Delete{% endtrans %}</button>
-        <button id="edit_cussup_btn" class="btn btn-primary btn-sm">{% trans %}Edit{% endtrans %}</button>
-        <button id="edit_cussup_reset" class="btn btn-warning btn-sm">{% trans %}Reset{% endtrans %}</button>
+        <button class="btn btn-primary btn-sm" id="cussup_edit_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
+        <button id="cussup_delete" class="btn btn-danger btn-sm" accesskey="d">{% trans %}<u>D</u>elete{% endtrans %}</button>
+        <button id="edit_cussup_btn" class="btn btn-primary btn-sm" accesskey="t">{% trans %}Edi<u>t</u>{% endtrans %}</button>
+        <button id="edit_cussup_reset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
       </div>
    </div>
    <div id="confirm_del" class="modal fade" tabindex="-1" role="dialog">

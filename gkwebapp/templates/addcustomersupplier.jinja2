@@ -25,24 +25,24 @@
 
       {% trans %}Please enter name!{% endtrans %}
     </div>
-    
+
      <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
 
       {% trans %}Please select State!{% endtrans %}
-      
+
     </div>
-    
+
     <div class="alert alert-danger" id="address-blank-alert"  aria-live="rude" role="alert" hidden>
 
       {% trans %}Please enter address!{% endtrans %}
-      
+
     </div>
     <div class="alert alert-danger" id="tin-blank-alert"  aria-live="rude" role="alert" hidden>
 
       {% trans %}Please enter TIN!{% endtrans %}
-      
+
     </div>
-    
+
     <input type="hidden" id="debtgroupcode" value="{{debtgroupcode}}">
     <input type="hidden" id="credgroupcode" value="{{credgroupcode}}">
     <div class="panel shadow customersupplier_panel">
@@ -118,7 +118,7 @@
           </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="add_cussup_address"> Street and City:
+                <label for="add_cussup_address"> Address:
                 </label>
                 <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#accModal"></i>
                 <textarea class="form-control" rows="3" cols="40" id="add_cussup_address" aria-describedby="textareahelp"></textarea>
@@ -148,7 +148,7 @@
           <span aria-hidden="true">&times;</span>
         </button> </div>
       <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-       
+
        <p>   <font color=" #566573"> {%trans%}
 This screen let's you create a customer or supplier. The module by default starts with Create Customer/Supplier mode.
 Enter all the details of a new customer or supplier.
@@ -157,14 +157,14 @@ Pres Enter to move forward and up arrow to move backward.
 
         </p>
       </div>
-      
+
     </div>
   </div>
 </div>
 
       <div class="panel-footer">
-        <button class="btn btn-success btn-sm" id="cussup_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}">{% trans %}Save{% endtrans %}</button>
-        <button id="add_cussup_reset" class="btn btn-warning btn-sm">{% trans %}Reset{% endtrans %}</button>
+        <button class="btn btn-success btn-sm" id="cussup_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
+        <button id="add_cussup_reset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}Res<u>e</u>t{% endtrans %}</button>
       </div>
    </div>
 
