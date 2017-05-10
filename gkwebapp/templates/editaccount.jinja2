@@ -66,7 +66,7 @@ th {
 
 				<div style="padding-top:5px" class="panel-body" >
 
-          <label for="editaccountname" id="accname">{% trans %}Account Name{% endtrans %} :</label>
+          <label for="editaccountname" id="accname">{% trans %}List of Accounts{% endtrans %} :</label>
           <select class = "form-control input-sm" id="editaccountname"  name = "editaccountname" >
             <option value="" disabled selected hidden>{% trans %}Select Account{% endtrans %}</option>
             {% for accs in gkresult %}
@@ -89,7 +89,7 @@ th {
 							<label for="subgroupname" id="sname">{% trans %}Sub-Group Name{% endtrans %} :</label>
 							<input type="text" id="subgroupname" name="subgroupname" class="form-control input-sm" value=""></input>
 							</br>
-							<label for="accountname" id="accname">{% trans %}<u>A</u>ccount Name{% endtrans %} :</label>
+							<label for="accountname" id="accname">{% trans %}New Name of <u>A</u>ccount{% endtrans %} :</label>
 							<input type="text" id="accountname" class="form-control input-sm" name="accountname" accesskey="a"></input>
 							</br>
 							<label for="openingbal" id="openbal">{% trans %}<u>O</u>pening Balance{% endtrans %} :</label>
