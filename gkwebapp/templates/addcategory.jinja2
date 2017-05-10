@@ -428,7 +428,7 @@
          </div>
          <div class="panel-footer">
             <div class="container-fluid" id="doneid" hidden>
-               <button class="btn btn-success btn-sm" id="done" data-toggle="tooltip" data-placement="top" >{% trans %}Done{% endtrans %}</button>
+              <button class="btn btn-success btn-sm" id="done" data-toggle="tooltip" data-placement="top" accesskey="d" >{% trans %}<u>D</u>one{% endtrans %}</button>
             </div>
          </div>
       </div>
@@ -442,13 +442,11 @@
         </button> </div>
       <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
 
-       <p>   <font color=" #566573"> {%trans%}
-This module lets you create Categories and Sub-Categories under which you can group your products.</br>
-A major purpose of creating Categories is to define products in terms of their specifications</br>
-So when you create a Category it is highly recommended (but not mandatory) to create Specifications. You can create multiple levels of Categories.</br>
-Howevevr in a single section you can only create 2 levels of Category and Sub-Categories,</br>
-To create Sub-Category under a Sub-Category, create a Sub-Category, end your session and log in again.Thus you can have Sub-Sub-Categories.
-You can also optionally apply tax for a Category or a Sub-Category. Needless to say every Category or Sub-Category inherits specifications and taxes from the Category or Sub-Category under which it is created. So with a Product. The acquired specifications can be used to fill values {% endtrans %} </font>
+	<p>   <font color=" #566573"> {%trans%}
+	  This module lets you create Categories and Sub-Categories under which you can group your products.</br></br>
+	  A major purpose of creating Categories is to define products in terms of their specifications. So when you create a Category it is highly recommended (but not mandatory) to create Specifications.</br></br>
+	  You can create multiple levels of Categories. However, in a single try you can only create 2 levels of Category and Sub-Categories. To create Sub-Category under a Sub-Category, create a Sub-Category, start category module again and select that Sub-Category from Category Name dropdown list. Then you can create sub-categories under this sub-category. Thus you can have Sub-Sub-Categories.</br></br>
+You can also optionally apply tax for a Category or a Sub-Category. Needless to say every Category or Sub-Category inherits specifications and taxes from the Category or Sub-Category under which it is created. So with a Product. The acquired specifications can be used to fill values.{% endtrans %} </font>
 
         </p>
       </div>
