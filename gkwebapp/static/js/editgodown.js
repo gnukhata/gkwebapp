@@ -117,7 +117,7 @@ $(document).ready(function() {
     $("#gostate").keydown(function(e){
       if (e.which == 13) {
         e.preventDefault();
-        $("#goaddress").focus();
+        $("#goaddress").focus().select();
       }
       if (e.which == 38 && ($("#gostate option:selected").index()==1 || $("#gostate option:selected").index()==0)) {
         $("#goname").focus().select();
@@ -138,7 +138,7 @@ $(document).ready(function() {
                 return false;
             }
 
-              $("#gocontactname").focus();
+              $("#gocontactname").focus().select();
               thisKeypressTime = 0;
             }
             lastKeypressTime = thisKeypressTime;
