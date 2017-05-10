@@ -31,7 +31,7 @@
 
 			<div class="col-xs-12">
 				<div class="form-group">
-					<label for="editgoddet">{% trans %}Godown Name{% endtrans %} :</label>
+					<label for="editgoddet">{% trans %}List of Godowns{% endtrans %} :</label>
 					<select class = "form-control input-sm" id="editgoddet">
 						<option value="disabled" disabled selected hidden>{% trans %}Select Godown{% endtrans %}</option>
 						{% for gods in gkresult %}
@@ -46,7 +46,7 @@
 						{% trans %}Please enter godown name!{% endtrans %}
 					</div>
 					<div class="form-group">
-						<label for="goname">{% trans %}New Godown Name{% endtrans %} :</label>
+						<label for="goname">{% trans %}New Name of Godown{% endtrans %} :</label>
 						<input type="text" id="goname" name="goname" class="form-control input-sm" accesskey="g"></input>
 					</div>
 					<div class="alert alert-danger" id="stateblank-alert"  aria-live="rude" role="alert" hidden>

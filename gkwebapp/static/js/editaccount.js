@@ -117,7 +117,7 @@ $(document).ready(function()
 
     $("#submit").show();
     $("#alertmsg").hide();
-    $("#accname").hide();
+   
     $("#edit").hide();
     var acccode = $("#editaccountname option:selected").val();
     var accname= $("#editaccountname option:selected").text();
