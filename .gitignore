@@ -3,4 +3,5 @@
 .pydevproject
 .ternproject
 .settings/
+.tern-project
 gkwebapp.egg-info/
