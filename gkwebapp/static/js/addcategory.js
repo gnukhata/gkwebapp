@@ -25,17 +25,6 @@ Contributors:
 // This script is for the add category page
 $(document).ready(function() {
     $('.modal-backdrop').remove();
-    //when home key is pressed parent category selection is focused
-    //when alt +shift+ D pressed Done is clicked
-    $(document).off('keydown').on('keydown', function(event) {
-        if (event.altKey && event.shiftKey && event.keyCode == 68) {
-            event.preventDefault();
-            $("#addcategory").click();
-        }
-        if (event.which == 36) {
-            $("#category_under").focus();
-        }
-    });
     var parentspecs = [];
     var childspecs = [];
     var parenttaxes = [];
