@@ -29,6 +29,31 @@ Contributors:
  */
 $(document).ready(function() {
 
+  $.ajax({
+    url: '/category?type=countcategory',
+    type: 'POST',
+    global: false,
+    async: false,
+    dataType: 'json',
+    beforeSend: function(xhr)
+    {
+      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+    }
+  })
+   .done(function(resp) {
+     if(resp["categorycount"]==0){
+       $("#nocategorycreated").show();
+       $("#helptext").hide();
+       $("#searchcategorypanel").hide();
+     }
+   })
+   .fail(function() {
+     console.log("error");
+   })
+   .always(function() {
+     console.log("complete");
+   });
+  
   $(document).off('keydown', '.catsearch').on('keydown', '.catsearch', function(event) {
     /* Disable Enter keydown on category combo box. */
     if (event.which==13)

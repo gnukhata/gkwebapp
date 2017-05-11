@@ -14,7 +14,8 @@
           <div class="panel-heading">
             <div class="panel-title">{% trans %}Search{% endtrans %}</div>
           </div>
-          <div style="padding-top:5px" class="panel-body" >
+	  <div id="nocategorycreated" hidden><div class="col-xs-12" style="margin-top:10px;"><strong>No category has been created yet.</strong></div></div>
+          <div id="searchcategorypanel" style="padding-top:5px" class="panel-body" >
             <table id="catsearchtab" class="table table-bordered table-condensed" data-toggle="table" data-show-toggle="true">
               <thead>
                 <tr>
@@ -54,7 +55,7 @@
             </table>
           </div>
         </div>
-	<small>Select a category to fill the Product dropdown list. Press 'Enter' to view sub-categories.</br>
+	<small id="helptext" class="form-text text-muted">Select a category to fill the Product dropdown list. Press 'Enter' to view sub-categories.</br>
 	  Use 'Ctrl +<' or 'Ctrl + >' keys to navigate within a row and 'Shift + <' or 'Shift + >' to navigate within a column.
 	</small>
       </div>
