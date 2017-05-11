@@ -129,6 +129,16 @@ def getproductsFromGodown(request):
 			proddata.append(pdata)
 		return {"gkstatus": result.json()["gkstatus"], "products": proddata}
 
+@view_config(route_name="transfernotes",request_param="type=stock",renderer="json")
+def showstockreport(request):
+	header={"gktoken":request.headers["gktoken"]}
+	goid = int(request.params["goid"])
+	productcode = int(request.params["productcode"])
+	scalculateto = request.params["endDate"]
+	result = requests.get("http://127.0.0.1:6543/report?godownwisestockonhand&type=pg&goid=%d&productcode=%d&enddate=%s"%(goid, productcode, scalculateto),headers=header)
+	return {"gkresult":result.json()["gkresult"][0]["balance"]}
+
+
 @view_config(route_name="transfernotes",request_param="action=getgodowns", renderer="json")
 def listofgodowns(request):
 	header={"gktoken":request.headers["gktoken"]}

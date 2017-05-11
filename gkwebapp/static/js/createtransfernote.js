@@ -6,6 +6,7 @@ $(document).ready(function() {
   $("#tn_month").numeric();
   $("#tn_year").numeric();
   $("#no_of_packet").numeric();
+  var stock = 0;
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   $('.transfernote_product_quantity').numeric({ negative: false});
@@ -311,15 +312,15 @@ $(document).ready(function() {
     var previndex1 = curindex1-1;
     if (event.which==13) {
       event.preventDefault();
-     
-      
+
+
       if ($('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(1) input').val()=="") {
-  	   
+
   	    	 $("#quantity-blank-alert").alert();
   	         $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
   	         $("#quantity-blank-alert").hide();
-  	       
-  	    
+
+
   	    });
 $('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(1) input').focus();
       return false;
@@ -328,8 +329,8 @@ else {
       $('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(1) input').focus().select();
     }
 
-     
-     
+
+
       if (curindex1 != ($("#transfernote_product_table tbody tr").length-1)) {
         $('#transfernote_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
       }
@@ -430,6 +431,18 @@ else {
 
   $("#transfernote_save").click(function(event) {
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = today.getMonth();
+    month += 1;
+    var date = today.getDate();
+    if (month < 10) {
+      month = "0" + month;
+    }
+    if(date < 10) {
+      date = "0" + date;
+    }
+    var reversedate = year + "-" + month + "-" + date;
     if ($.trim($('#transfernote_no').val())=="") {
       $("#tnno-blank-alert").alert();
       $("#tnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -504,8 +517,6 @@ else {
       return false;
     }
 
-
-
     var products = [];
     for (var i = 0; i < $("#transfernote_product_table tbody tr").length; i++) {
       if ($("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()=="") {
@@ -524,11 +535,45 @@ else {
         $("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").focus();
         return false;
       }
+
+      $.ajax(
+          {
+            type: "POST",
+            url: "/transfernotes?type=stock",
+            global: false,
+            async: false,
+            datatype: "json",
+            data: {"endDate": reversedate, "goid": $("#tn_from_godown option:selected").val(), "productcode": $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()},
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            },
+          })
+            .done(function(resp)
+            {
+              if ($("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").val() > resp["gkresult"]) {
+                $("#quantity-excess-alert").alert();
+                $("#quantity-excess-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#quantity-excess-alert").hide();
+                });
+                $("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").focus();
+                stock = 1;
+                console.log(stock);
+                return false;
+                }
+                else{
+                  stock = 0;
+                }
+          }
+          );
+
       var obj = {};
       obj.productcode = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val();
       obj.qty = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").val();
       products.push(obj);
     }
+
+    if (stock == 0) {
     event.preventDefault();
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
@@ -574,6 +619,7 @@ else {
 
     });
     });
+  }
   });
   $("#confirm_yes").on('shown.bs.modal', function(event) {
     $("#tn_save_no").focus();
