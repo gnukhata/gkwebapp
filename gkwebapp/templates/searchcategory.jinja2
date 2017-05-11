@@ -3,7 +3,11 @@
     <div class="modal-content">
       <div class="modal-body">
         <div class="alert alert-danger" id="cat-blank-alert"  aria-live="rude" role="alert" hidden>
-          <label >{% trans %}No Child Categories under the selected Category{% endtrans %}</label>
+          <label >{% trans %}No Sub-Categories under the selected Category{% endtrans %}</label>
+
+        </div>
+	<div class="alert alert-danger" id="category-blank-alert"  aria-live="rude" role="alert" hidden>
+          <label >{% trans %}Please select a Category{% endtrans %}</label>
 
         </div>
         <div class="panel shadow" >
@@ -18,10 +22,10 @@
                     {% trans %}Category{% endtrans %}
                   </th>
                   <th>
-                    {% trans %}Products Under{% endtrans %}
+                    {% trans %}Products{% endtrans %}
                   </th>
                   <th>
-                    {% trans %}Show Child Category{% endtrans %}
+                    {% trans %}Show Sub-Category{% endtrans %}
                   </th>
                 </tr>
               </thead>
@@ -43,13 +47,16 @@
                     </select>
                   </td>
                   <td class = "cols-md-3">
-                    <button id="sub-cat" class="btn-primary btn-sm showcat">{% trans %}Show Child Category{% endtrans %}</button>
+                    <button id="sub-cat" class="btn-primary btn-sm showcat">{% trans %}Show Sub-Category{% endtrans %}</button>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
+	<small>Select a category to fill the Product dropdown list. Press 'Enter' to view sub-categories.</br>
+	  Use 'Ctrl +<' or 'Ctrl + >' keys to navigate within a row and 'Shift + <' or 'Shift + >' to navigate within a column.
+	</small>
       </div>
     </div>
   </div>

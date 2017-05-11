@@ -26,11 +26,12 @@ Contributors:
 */
 /*
   This script is for the search category modal.
-*/(document).ready(function() {
+ */
+$(document).ready(function() {
 
   $(document).off('keydown', '.catsearch').on('keydown', '.catsearch', function(event) {
-    /* Disable soace keydown on category combo box. */
-    if (event.which==32)
+    /* Disable Enter keydown on category combo box. */
+    if (event.which==13)
     {
       event.preventDefault();
     }
@@ -38,7 +39,7 @@ Contributors:
 
 $(document).off('keyup', '.catsearch').on('keyup', '.catsearch', function(event) {
   var rindex = $(this).closest('tr').index();
-  if (event.which==32)
+  if (event.which==13)
   {
     event.preventDefault();
     $("#catsearchtab tbody tr:eq("+rindex+") td:eq(2) button").click();
@@ -94,13 +95,9 @@ $(document).off('keydown', '.catsearch').on('keydown', '.catsearch', function(ev
     Ctrl key and angle bracket keys are used to navigate between all elements in the row.
    */
   var curindex = $(this).closest('tr').index();
-  +1;
+  var nextindex = curindex+1;
   var previndex = curindex-1;
-  if (event.which==13)
-  {
-
-  }
-  else if(event.which==190 && event.shiftKey)
+  if(event.which==190 && event.shiftKey)
   {
     $('#catsearchtab tbody tr:eq('+nextindex+') td:eq(0) select').focus();
   }
@@ -143,11 +140,7 @@ $(document).off('keydown', '.catprod').on('keydown', '.catprod', function(event)
   var curindex = $(this).closest('tr').index();
   var nextindex = curindex+1;
   var previndex = curindex-1;
-  if (event.which==13)
-  {
-
-  }
-  else if(event.which==190 && event.shiftKey)
+  if(event.which==190 && event.shiftKey)
   {
     $('#catsearchtab tbody tr:eq('+nextindex+') td:eq(1) select').focus();
   }
@@ -229,7 +222,7 @@ $(document).off('click', '.showcat').on('click', '.showcat', function(event) {
       '</select>'+
       '</td>'+
       '<td class = "cols-md-3">'+
-      '<button id="sub-cat" class="btn-primary btn-sm showcat">Show Child Category</button>'+
+      '<button id="sub-cat" class="btn-primary btn-sm showcat">Show Sub-Category</button>'+
       '</td>'+
       '</tr>');
       for (child of resp["gkresult"]) {
