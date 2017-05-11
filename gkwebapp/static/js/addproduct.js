@@ -780,7 +780,7 @@ $(document).off("keydown",".godown_ob").on("keydown",".godown_ob",function(event
   var curindex1 = $(this).closest('tr').index();
   var nextindex1 = curindex1+1;
   var previndex1 = curindex1-1;
-  var selectindex = $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').index();
+  var selectedgodown = $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').index();
   var numberofgodowns = $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
   if (event.which==13) {
     event.preventDefault();
