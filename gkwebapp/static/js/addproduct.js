@@ -780,7 +780,7 @@ $(document).off("keydown",".godown_ob").on("keydown",".godown_ob",function(event
   var curindex1 = $(this).closest('tr').index();
   var nextindex1 = curindex1+1;
   var previndex1 = curindex1-1;
-  var selectindex = $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').index();
+  var selectedgodown = $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val();
   var numberofgodowns = $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
   if (event.which==13) {
     event.preventDefault();
@@ -811,6 +811,7 @@ $(document).off("keydown",".godown_ob").on("keydown",".godown_ob",function(event
         }
         $(".godown_ob").numeric();
         $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
+	$('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value=""]').prop('selected', true);
         $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
       else {
@@ -910,11 +911,17 @@ $("#addgodown").click(function() {
                 var curindex2 = $(this).closest('tr').index();
                 for (i in newgodowns ) {
                   if (newgodowns[i].godownname == sessionStorage.newgodownname && newgodowns[i].godownaddress == sessionStorage.newgodownaddress) {
-                    $('#godown_ob_table tbody tr:eq('+curindex2+') td:eq(0) select').append('<option value="' + newgodowns[i].godownid + '" selected>' + newgodowns[i].godownname + '(' + newgodowns[i].godownaddress + ')</option>');
+                    $('#godown_ob_table tbody tr:eq('+curindex2+') td:eq(0) select').append('<option value="' + newgodowns[i].godownid + '">' + newgodowns[i].godownname + '(' + newgodowns[i].godownaddress + ')</option>');
                   }
                 }
               });
-              $("#godownflag").focus().select();
+	      $('#godown_ob_table tbody tr:last td:eq(0) select option:last').prop("selected", "true");
+	      if (godownflag == 0) {
+		$("#godownflag").focus().select();
+	      }
+	      else {
+		$('#godown_ob_table tbody tr:last td:eq(1) input').focus().select();
+	      }
             }
             console.log("success");
           })
