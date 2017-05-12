@@ -31,6 +31,11 @@
 	<div class="table-responsive printorgdetails">
     <table  class="table table-fixedheader table-bordered  table-condensed shadow">
       <thead class="bg-primary">
+	<tr class="hidden-print">
+          <th id="printheader1" colspan="8" style="text-align:center; font-size:80%;">
+            {% trans %}List of Transactions{% endtrans %}
+          </th>
+        </tr>
         <tr class="visible-print">
           <th id="printheader" colspan="8" style="text-align:center; font-size:80%;">
             {% trans %}List of Transactions{% endtrans %}
@@ -126,56 +131,58 @@
     </span>
   </div>
   <script type="text/javascript">
-    $(document).ready(function() {
+   $(document).ready(function() {
 
-      oninvoice = 0;
+     oninvoice = 0;
 
-      $("#msspinmodal").modal("hide");
+     $("#msspinmodal").modal("hide");
 
-      $("title").html("GNUKhata")
-      var search = $("#searchby option:selected").val();
-      var heading;
-      if (search=="type")
-      {
-        heading = " for Type: "+$("#vtype option:selected").text();
+     $("title").html("GNUKhata")
+     var search = $("#searchby option:selected").val();
+     var heading;
+     if (search=="type")
+       {
+         heading = " for Type: "+$("#vtype option:selected").text();
 
-      }
-      else if (search=="vnum")
-      {
-        heading = " for V.No. "+$("#vnum").val();
+       }
+     else if (search=="vnum")
+       {
+         heading = " for V.No. "+$("#vnum").val();
 
-      }
-      else if (search=="amount")
-      {
-        heading = " for Amount "+$("#amount").val();
-
-
-      }
-      else if (search=="date")
-      {
-
-        heading = " for Period: "+$("#fday").val()+"-"+$("#fmonth").val()+"-"+$("#fyear").val()+" to "+$("#tday").val()+"-"+$("#tmonth").val()+"-"+$("#tyear").val();
+       }
+     else if (search=="amount")
+       {
+         heading = " for Amount "+$("#amount").val();
 
 
+       }
+     else if (search=="date")
+       {
 
-      }
-
-      else if (search=="narration")
-      {
-
-        heading = " containing Narration: "+$("#narration").val();
-
-      }
+         heading = " for Period: "+$("#fday").val()+"-"+$("#fmonth").val()+"-"+$("#fyear").val()+" to "+$("#tday").val()+"-"+$("#tmonth").val()+"-"+$("#tyear").val();
 
 
-      $("#printheader").append(heading);
-      $("#lotprint").click(function(event) {
-        window.print();
-      });
-      $("#lotback").click(function(event) {
-        $("#submit").click();
-      });
-    });
+
+       }
+
+     else if (search=="narration")
+       {
+
+         heading = " containing Narration: "+$("#narration").val();
+
+       }
+
+
+     $("#printheader").append(heading);
+     $("#printheader1").append(heading);
+     $("#lotprint").click(function(event) {
+       window.print();
+     });
+     $("#lotback").click(function(event) {
+       $("#submit").click();
+       $("#fevoucherhiddenprint").show();
+     });
+   });
   </script>
 
 </body>
