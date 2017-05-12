@@ -128,8 +128,12 @@ $(document).ready(function(){
         if(event.altKey && event.keyCode == 77) {
           $("#manual").click();
           event.preventDefault();
-          }
-        if(event.keyCode == 112) {
+        }
+       if(event.ctrlKey && event.keyCode == 71) {
+	 $("#lang").click();
+	 event.preventDefault();
+       }
+       if(event.keyCode == 112) {
           $("#toolbar").click();
           event.preventDefault();
         }
