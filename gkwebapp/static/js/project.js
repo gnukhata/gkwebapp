@@ -55,6 +55,9 @@ $(document).ready(function() {
     $("#amtlbl").html("Budge<u>t</u>ed Amount: ");
     $("#prjlbltbl").html("Cost Center");
     $("#amtlbltbl").html("Budgeted Amount");
+    $("#editprojectnamelabel").html("Cost Center :");
+    $("#editprojecttitle").html("Edit Cost Center");
+    $("#editsanctionedamountlabel").html("Budgeted Amount");
   }
 
   $("#prjamount").numeric({ negative: false });
@@ -197,7 +200,6 @@ $(document).ready(function() {
 
   $("#prjform").submit(function(e)
   {
-    $("#msspinmodal").modal("show");
 // Validations.
     if ($.trim($("#prjname").val())=="") {
       $("#blank-alert").alert();
@@ -210,7 +212,8 @@ $(document).ready(function() {
     if ($.trim($("#prjamount").val())=="") {
       $("#prjamount").val("0.00");
     }
-// Function to save project.
+    // Function to save project.
+    $("#msspinmodal").modal("show");
     $.ajax(
       {
         type: "POST",
@@ -233,6 +236,8 @@ $(document).ready(function() {
             });
           }
           else if(resp["gkstatus"]==1) {
+	    $("#msspinmodal").modal("hide");
+	    $(".modal-backdrop").hide();
             $("#duplicate-alert").alert();
             $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#duplicate-alert").hide();
@@ -240,6 +245,8 @@ $(document).ready(function() {
             $("#prjname").focus().select();
           }
           else {
+	    $("#msspinmodal").modal("hide");
+	    $(".modal-backdrop").hide();
             $("#failure-alert").alert();
             $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#failure-alert").hide();

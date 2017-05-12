@@ -114,8 +114,10 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header form-inline">
-
-          <div class="alert alert-danger" id="m_blank-alert" aria-live="rude" role="alert" hidden>
+          <span style="margin:auto; display:table;"><strong>{% trans %}Multiple Accounts{% endtrans %}</strong></span>
+        </div>
+        <div class="form-inline container-fluid">
+	  <div class="alert alert-danger" id="m_blank-alert" aria-live="rude" role="alert" hidden>
 
             <label for="m_alt_accname">{% trans %}Please enter account name!{% endtrans %}</label>
           </div>
@@ -128,12 +130,6 @@
 
             <label>{% trans %}No account has been created!{% endtrans %}</label>
           </div>
-          <span style="margin:auto; display:table;"><strong>{% trans %}Multiple Accounts{% endtrans %}</strong></span>
-
-
-        </div>
-        <div class="form-inline container-fluid">
-
           <input type="hidden" name="m_gcode" id="m_gcode" value="{{gkresult['groupcode']}}">
           <input type="hidden" name="m_sgcode" id="m_sgcode" value="{{gkresult['subgroupcode']}}" >
           <input type="hidden" name="m_nsgcode" id="m_nsgcode" value="{{gkresult['newsubgroup']}}">

@@ -65,8 +65,7 @@ $(document).ready(function() {
         $("#unit_edit_name").focus().select();
         $("#sub_unit_edit").prop("disabled", false);
         $("#unit_edit_conversion_rate").prop("disabled", false);
-
-      }
+	      }
 
    });
 

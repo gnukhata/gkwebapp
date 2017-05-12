@@ -1379,42 +1379,47 @@ $("#invsel").keyup(function(event) {
     }
     if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invflag ==1)
     {
-      details.invid = $("#invsel option:selected").val();
-      var invoicetotal= $("#invsel option:selected").attr("total");
-      var vtotal=0;
-      $(".cramt").each(function(){
-        vtotal += +$(this).val();
-    });
+      if ($("#invsel").length > 0) {
+	details.invid = $("#invsel option:selected").val();
+	var invoicetotal= $("#invsel option:selected").attr("total");
+	var vtotal=0;
+	$(".cramt").each(function(){
+          vtotal += +$(this).val();
+	});
+      }
+      else {
+	details.invid = "";
+      }
 
       if (details.invid!="")
-      {
+	{
 
           if (Date.parseExact($("#invsel option:selected").attr("invdate"), "dd-MM-yyyy").compareTo(curdate)==1) {
-              $("#inv-date-alert").alert();
-              $("#inv-date-alert").fadeTo(2250, 500).slideUp(500, function(){
-                  $("#inv-date-alert").hide();
-              });
-              $('#vdate').focus().select();
-              return false;
+            $("#inv-date-alert").alert();
+            $("#inv-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#inv-date-alert").hide();
+            });
+            $('#vdate').focus().select();
+            return false;
           }
 
-      if (vtotal>invoicetotal)
-      {
-        $('#vtable tbody tr:first td:eq(1) input').focus();
-        $('#vtable tbody tr:first td:eq(1) input').select();
-        $("#invoicebalance-alert").alert();
-        $("#invoicebalance-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#invoicebalance-alert").hide();
-        });
-        $('#vtable tbody tr:first input:enabled').focus().select();
-        return false;
-      }
-    }
+	  if (vtotal>invoicetotal)
+	    {
+              $('#vtable tbody tr:first td:eq(1) input').focus();
+              $('#vtable tbody tr:first td:eq(1) input').select();
+              $("#invoicebalance-alert").alert();
+              $("#invoicebalance-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#invoicebalance-alert").hide();
+              });
+              $('#vtable tbody tr:first input:enabled').focus().select();
+              return false;
+	    }
+	}
     }
     else
-    {
-    details.invid="" ;
-    }
+      {
+	details.invid="" ;
+      }
     form_data.append("vdetails",JSON.stringify(details));
     form_data.append("transactions",JSON.stringify(output));
     $("#msspinmodal").modal("show");
@@ -1445,6 +1450,7 @@ $("#invsel").keyup(function(event) {
           $("#failure-alert").alert();
           $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#failure-alert").hide();
+	    $("#msspinmodal").modal("hide");
           });
         }
         $('#vno').focus().select();

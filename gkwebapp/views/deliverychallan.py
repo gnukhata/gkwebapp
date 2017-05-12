@@ -50,11 +50,11 @@ def showadddeliverychallan(request):
 	if request.params["status"]=='in':
 		podata = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=16", headers=header)
 		suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
-		lastdelchaldata = requests.get("http://127.0.0.1:6543/delchal?delchal=last&dcflag=16", headers=header)
+		lastdelchaldata = requests.get("http://127.0.0.1:6543/delchal?delchal=last&status=9", headers=header)
 	else:
 		podata = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=20", headers=header)
 		suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
-		lastdelchaldata = requests.get("http://127.0.0.1:6543/delchal?delchal=last&dcflag=4", headers=header)
+		lastdelchaldata = requests.get("http://127.0.0.1:6543/delchal?delchal=last&status=15", headers=header)
 	products = requests.get("http://127.0.0.1:6543/products", headers=header)
 	godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
 	result = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=16",headers=header)

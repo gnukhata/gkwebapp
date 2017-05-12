@@ -94,6 +94,7 @@ $("#viewlog_toyear").val(yearpad($("#viewlog_toyear").val(),4));
   // navigation functions for enter key and up arrow keys.
   $("#viewlog_type").keydown(function(e){
     if(e.which==13){
+      e.preventDefault();
       if ($("#viewlog_type option:selected").val() == 2) {
         $("#viewlog_username").focus();
       }

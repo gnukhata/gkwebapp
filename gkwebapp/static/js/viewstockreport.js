@@ -89,7 +89,7 @@ $(document).ready(function() {
 						if (e.which == 13) {
 							e.preventDefault();
 							$(".dis").attr('disabled', false);
-							$("#viewstock_fromdate").focus();
+							$("#viewstock_fromdate").focus().select();
 						}
 				});
 				$(".dis").attr('disabled', false);
@@ -118,34 +118,34 @@ $(document).ready(function() {
 	$("#viewstock_fromdate").keydown(function(e){
 		if(e.which==13){
 			e.preventDefault();
-			$("#viewstock_frommonth").focus();
+			$("#viewstock_frommonth").focus().select();
 		}
 		if(e.which==38){
-			$("#viewstock_productname").focus();
+			$("#viewstock_productname").focus().select();
 		}
 	});
 	$("#viewstock_frommonth").keydown(function(e){
 		if(e.which==13){
 			e.preventDefault();
-			$("#viewstock_fromyear").focus();
+			$("#viewstock_fromyear").focus().select();
 		}
 		if(e.which==38){
-			$("#viewstock_fromdate").focus();
+			$("#viewstock_fromdate").focus().select();
 		}
 	});
 	$("#viewstock_fromyear").keydown(function(e){
 		if(e.which==13){
 			e.preventDefault();
-			$("#viewstock_todate").focus();
+			$("#viewstock_todate").focus().select();
 		}
 		if(e.which==38){
-			$("#viewstock_frommonth").focus();
+			$("#viewstock_frommonth").focus().select();
 		}
 	});
 	$("#viewstock_todate").keydown(function(e){
 		if(e.which==13){
 			e.preventDefault();
-			$("#viewstock_tomonth").focus();
+			$("#viewstock_tomonth").focus().select();
 		}
 		if(e.which==38){
 			$("#viewstock_fromyear").focus();
@@ -154,10 +154,10 @@ $(document).ready(function() {
 	$("#viewstock_tomonth").keydown(function(e){
 		if(e.which==13){
 			e.preventDefault();
-			$("#viewstock_toyear").focus();
+			$("#viewstock_toyear").focus().select();
 		}
 		if(e.which==38){
-			$("#viewstock_todate").focus();
+			$("#viewstock_todate").focus().select();
 		}
 	});
 	if ($("#godownpresent").val()==0) {
@@ -167,7 +167,7 @@ $(document).ready(function() {
 				$("#viewstock_submit").click();
 			}
 			if(e.which==38){
-				$("#viewstock_tomonth").focus();
+				$("#viewstock_tomonth").focus().select();
 			}
 		});
 	}
@@ -179,7 +179,7 @@ $(document).ready(function() {
 				$("#godownflag").focus().select();
 			}
 			if(e.which==38){
-				$("#viewstock_tomonth").focus();
+				$("#viewstock_tomonth").focus().select();
 			}
 		});
 		$("#editgoddet").keydown(function(e){
@@ -202,7 +202,7 @@ $(document).ready(function() {
 			$("#editgoddet").focus()  ;
 		}
 		if (e.which == 38) {
-			$("#viewstock_toyear").focus();
+			$("#viewstock_toyear").focus().select();
 		}
 	});
 	$("#viewstock_submit").click(function(event) {
@@ -289,7 +289,7 @@ $(document).ready(function() {
 			dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculatefrom":$("#viewstock_fromyear").val()+"-"+$("#viewstock_frommonth").val()+"-"+$("#viewstock_fromdate").val(),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"backflag":0,"godownflag":$("#godownflag").val(),"goid":-1,"goname":""}
 		}
 		else if ($("#godownflag").val()==1) {
-			dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculatefrom":$("#viewstock_fromyear").val()+"-"+$("#viewstock_frommonth").val()+"-"+$("#viewstock_fromdate").val(),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"backflag":0,"godownflag":$("#godownflag").val(), "goid":$("#editgoddet option:selected").val(), "goname":$("#editgoddet option:selected").text()}
+			dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculatefrom":$("#viewstock_fromyear").val()+"-"+$("#viewstock_frommonth").val()+"-"+$("#viewstock_fromdate").val(),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"backflag":0,"godownflag":$("#godownflag").val(), "goid":$("#editgoddet option:selected").val(), "goname":$("#editgoddet option:selected").data('godownname'), "goaddr":$("#editgoddet option:selected").data('godownaddress')}
 		}
 		$.ajax(
 			{

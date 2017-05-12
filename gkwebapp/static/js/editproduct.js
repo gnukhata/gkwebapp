@@ -116,8 +116,7 @@ $(document).ready(function() {
   $("#prodselect").keydown(function(event) {
     if (event.which==13) {
       $("#editproddesc").focus().select();
-      $("#prodselect_lbl").hide();
-    }
+          }
   });
   $(document).on('keydown', '#editproddesc', function(event) {
     if (event.which==13) {
@@ -441,7 +440,7 @@ $(document).ready(function() {
     $("#addgodown").show();
     $("#editproddesc").focus();
     $("#editproddesc").select();
-    $("#prodselect_lbl").hide();
+    
     $(".godownflag").show();
     catcode= $("#editcatselect option:selected").val();
     $(".product_cat_tax_disable").prop('disabled',false);
@@ -888,7 +887,7 @@ $(document).ready(function() {
     var curindex1 = $(this).closest('tr').index();
     var nextindex1 = curindex1+1;
     var previndex1 = curindex1-1;
-    var selectindex = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').index();
+    var selectedgodown = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val();
     var numberofgodowns = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length;
     selectedgodown = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').val();
     if (event.which==13) {
@@ -919,6 +918,7 @@ $(document).ready(function() {
         }
         $('#editgodown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
         $('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
+	$('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').prepend('<option value="" disabled hidden selected>Select Godown</option>');
         if (curindex1 == 0) {
           $("#editgodown_ob_table tbody tr:last td:last").append('<a href="#" class="editgodown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
         }
@@ -1016,7 +1016,7 @@ $(document).ready(function() {
                   var curindex2 = $(this).closest('tr').index();
                 for (i in newgodowns ) {
                   if (newgodowns[i].godownname == sessionStorage.newgodownname && newgodowns[i].godownaddress == sessionStorage.newgodownaddress) {
-                    $('#editgodown_ob_table tbody tr:eq('+curindex2+') td:eq(0) select').append('<option value="' + newgodowns[i].godownid + '" selected>' + newgodowns[i].godownname + '(' + newgodowns[i].godownaddress + ')</option>');
+                    $('#editgodown_ob_table tbody tr:eq('+curindex2+') td:eq(0) select').append('<option value="' + newgodowns[i].godownid + '">' + newgodowns[i].godownname + '(' + newgodowns[i].godownaddress + ')</option>');
                   }
                 }
                 });

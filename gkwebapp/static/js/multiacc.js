@@ -70,9 +70,17 @@ $(document).ready(function() {
       }
     }
     if (event.which==13)
-    {
-      if(m_grpnm=="Select Group" || m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
       {
+	event.preventDefault();
+	if ($(".m_accname").val()=="") {
+	  $("#m_blank-alert").alert();
+          $("#m_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#m_blank-alert").hide();
+          });
+	  return false;
+	}
+	if(m_grpnm=="Select Group" || m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
+	  {
         //If groupname is Direct or Indirect income OR direct or Indirect Expense there will be no opening balance field
         if ($(this).closest('tr').is(":first-child")) {
           if ($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').val() == "") {

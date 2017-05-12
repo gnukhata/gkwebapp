@@ -166,8 +166,10 @@ $("#viewprintableversion").click(function(event) {
       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
     }
   })
-  .done(function(resp) {
-      $("#vct").html(resp);
+   .done(function(resp) {
+     $("#fevoucherrow").hide();
+     $("#fevoucherhiddenprint").hide();
+     $("#vct").html(resp);
   })
   .fail(function() {
     console.log("error");

@@ -53,33 +53,7 @@ $(document).ready(function(){
   $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');// set the theme depending on users previous choice.
   $("#"+sessionStorage.gktheme+"span").show();
 
-  $.ajax({
-    url: '/category?type=countcategory',
-    type: 'POST',
-    global: false,
-    async: false,
-    dataType: 'json',
-    beforeSend: function(xhr)
-    {
-      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-    }
-  })
-  .done(function(resp) {
-    if(resp["categorycount"]==0){
-      $("#searchcategory").hide();
-    }
-    else {
-      $("#searchcategory").show();
-    }
-  })
-  .fail(function() {
-    console.log("error");
-  })
-  .always(function() {
-    console.log("complete");
-  });
-
-
+  
   $(document).keydown(function(event) {
         // Shortcuts
         if(event.ctrlKey && event.keyCode == 83) {
@@ -154,8 +128,12 @@ $(document).ready(function(){
         if(event.altKey && event.keyCode == 77) {
           $("#manual").click();
           event.preventDefault();
-          }
-        if(event.keyCode == 112) {
+        }
+       if(event.ctrlKey && event.keyCode == 71) {
+	 $("#lang").click();
+	 event.preventDefault();
+       }
+       if(event.keyCode == 112) {
           $("#toolbar").click();
           event.preventDefault();
         }

@@ -124,6 +124,15 @@ $(document).ready(function() {
   $("#edit_state").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
+      if ($.trim($("#edit_state").val())=="") {
+        $("#state-blank-alert").alert();
+        $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#state-blank-alert").hide();
+        });
+
+        $("#edit_state").focus();
+        return false;
+      }
       $("#edit_cussup_address").focus().select();
     }
     if (event.which==38 && $("#edit_state option:selected").index()==0) {
@@ -230,6 +239,32 @@ $(document).ready(function() {
       $("#edit_cussup_name").focus();
       return false;
     }
+    if ($.trim($("#edit_state").val())=="") {
+      $("#state-blank-alert").alert();
+      $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#state-blank-alert").hide();
+      });
+
+      $("#edit_state").focus();
+      return false;
+    }
+    if ($.trim($("#edit_cussup_address").val())=="") {
+      $("#address-blank-alert").alert();
+      $("#address-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#address-blank-alert").hide();
+      });
+      $("#edit_cussup_address").focus();
+      return false;
+    }
+    if ($.trim($("#edit_cussup_tan").val())=="") {
+      $("#tin-blank-alert").alert();
+      $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#tin-blank-alert").hide();
+      });
+      $("#edit_cussup_tan").focus();
+      return false;
+    }
+
     $.ajax({
       url: '/customersuppliers?action=edit',
       type: 'POST',
