@@ -149,7 +149,7 @@ $(document).ready(function() {
   $("#invoice_customer").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      if ($("#invoice_state").is(":disabled")) {
+      if ($("#invoice_state").is(":hidden") || $("#invoice_state").is(":disabled")) {
         $('#invoice_product_table tbody tr:first td:eq(0) select').focus();
       }
       else {
