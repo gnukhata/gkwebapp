@@ -232,16 +232,20 @@ $("#accountform").submit(function(e)
           });
         }
         else if(resp["gkstatus"]==1)
-        {
-          $("#duplicate-alert").alert();
-          $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#duplicate-alert").hide();
-          });
-          $("#accname").focus().select();
-        }
+          {
+	    $("#msspinmodal").modal("hide");
+	    $('.modal-backdrop').remove();
+            $("#duplicate-alert").alert();
+            $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#duplicate-alert").hide();
+            });
+            $("#accname").focus().select();
+          }
         else
-        {
-          $("#failure-alert").alert();
+          {
+	    $("#msspinmodal").modal("hide");
+	    $('.modal-backdrop').remove();
+            $("#failure-alert").alert();
           $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#failure-alert").hide();
           });

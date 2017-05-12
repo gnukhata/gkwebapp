@@ -43,7 +43,7 @@ def showvoucher(request):
 	result = requests.get("http://127.0.0.1:6543/transaction?details=last&type=%s"%(type), headers=header)
 	lastdetails = result.json()["gkresult"]
 	if(lastdetails["vno"] != ""):
-		lastdetails["vno"] = int(lastdetails["vno"]) + 1
+		lastdetails["vno"] = lastdetails["vno"]
 	else:
 		lastdetails["vno"] = 1
 		vdate = str(request.params["financialstart"])
