@@ -915,7 +915,12 @@ $("#addgodown").click(function() {
                   }
                 }
               });
-              $("#godownflag").focus().select();
+	      if (godownflag == 0) {
+		$("#godownflag").focus().select();
+	      }
+	      else {
+		$('#godown_ob_table tbody tr:last td:eq(1) input').focus().select();
+	      }
             }
             console.log("success");
           })
