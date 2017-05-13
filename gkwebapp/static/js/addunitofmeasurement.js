@@ -63,6 +63,25 @@ $(document).ready(function() {
       $('#unit_name').focus().select();
       return false;
     }
+
+    if ($("#unit_name").val()==$("#sub_unit_of option:selected").text()){
+      $("#sameUnit-alert").alert();
+      $("#sameUnit-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#sameUnit-alert").hide();
+      });
+      $('#sub_unit_of').focus().select();
+      return false;
+    }
+
+    if ($("#conversion_rate").val()=="" && $("#sub_unit_of option:selected").val()>0){
+      $("#conversion-alert").alert();
+      $("#conversion-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#conversion-alert").hide();
+      });
+      $('#conversion_rate').focus().select();
+      return false;
+    }
+
     $.ajax({
       url: '/unitofmeasurements?action=save',
       type: 'POST',

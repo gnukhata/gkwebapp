@@ -13,6 +13,14 @@
 
       {% trans %}Unit Already Exist!{% endtrans %}
     </div>
+    <div class="alert alert-danger" id="sameUnit-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Unit and Sub Unit can not be Same!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="conversion-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Please Enter Conversion Rate!{% endtrans %}
+    </div>
     <div class="alert alert-danger" id="unit-blank-alert"  aria-live="rude" role="alert" hidden>
 
       <label for="vno">{% trans %}Please enter Unit  name!{% endtrans %}</label>
