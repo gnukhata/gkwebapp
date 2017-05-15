@@ -17,6 +17,18 @@
 
       {% trans %}Unit Already Exist!{% endtrans %}
     </div>
+    <div class="alert alert-danger" id="sameUnit-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Unit and Sub Unit can not be Same!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="conversion-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Please Enter Conversion Rate!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="conversion-rate-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Conversion Rate can not be Zero!{% endtrans %}
+    </div>
     <div class="alert alert-danger" id="subunit-alert"  aria-live="rude" role="alert" hidden>
 
       <label for="vno">{% trans %}Unit can not be deleted , contains Subunit!{% endtrans %}</label>

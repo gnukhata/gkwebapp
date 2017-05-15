@@ -130,6 +130,35 @@ $(document).ready(function() {
       $('#unit_edit_name').focus().select();
       return false;
     }
+
+    if ($("#unit_edit_name").val()==$("#sub_unit_edit option:selected").text()){
+      $("#sameUnit-alert").alert();
+      $("#sameUnit-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#sameUnit-alert").hide();
+      });
+      $('#sub_unit_edit').focus().select();
+      return false;
+    }
+
+    if ($("#unit_edit_conversion_rate").val()=='' && $("#sub_unit_edit option:selected").val()!=''){
+      $("#conversion-alert").alert();
+      $("#conversion-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#conversion-alert").hide();
+      });
+      $('#conversion_rate').focus().select();
+      return false;
+    }
+
+    if ($("#unit_edit_conversion_rate").val()==0 && $("#unit_edit_conversion_rate").val()==0.00 ){
+      $("#conversion-rate-alert").alert();
+      $("#conversion-rate-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#conversion-rate-alert").hide();
+      });
+      $('#conversion_rate').focus().select();
+      return false;
+    }
+
+
     $.ajax({
       url: '/unitofmeasurements?action=edit',
       type: 'POST',
