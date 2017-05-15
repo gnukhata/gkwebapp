@@ -82,7 +82,7 @@ $(document).ready(function() {
       return false;
     }
 
-    if ($("#conversion_rate").val()==0 && $("#conversion_rate").val()==0.00 ){
+    if ($("#conversion_rate").val()==0 && $("#conversion_rate").val()==0.00 && $("#sub_unit_of option:selected").val()!=''){
       $("#conversion-rate-alert").alert();
       $("#conversion-rate-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#conversion-rate-alert").hide();

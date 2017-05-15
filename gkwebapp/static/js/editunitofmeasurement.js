@@ -149,7 +149,7 @@ $(document).ready(function() {
       return false;
     }
 
-    if ($("#unit_edit_conversion_rate").val()==0 && $("#unit_edit_conversion_rate").val()==0.00 ){
+    if ($("#unit_edit_conversion_rate").val()==0 && $("#unit_edit_conversion_rate").val()==0.00 && $("#sub_unit_edit option:selected").val()!=''){
       $("#conversion-rate-alert").alert();
       $("#conversion-rate-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#conversion-rate-alert").hide();
