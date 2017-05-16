@@ -53,7 +53,7 @@ $(document).ready(function(){
   $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');// set the theme depending on users previous choice.
   $("#"+sessionStorage.gktheme+"span").show();
 
-  
+
   $(document).keydown(function(event) {
         // Shortcuts
         if(event.ctrlKey && event.keyCode == 83) {
@@ -835,34 +835,9 @@ $.ajax({
           success: function(resp)
           {
             $("#info").html(resp);
-            $("#holdingorg").modal("show");
+            //$("#holdingorg").modal("show");
           }
           });
-          $('#holdingorg').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
-          {
-             console.log("modal");
-             $.ajax({              //To retreive org details.
-                type:"POST",
-                url:"/allorgcode?type=orgcodelist",
-                global:false,
-                async:false,
-                datatype:"json",
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                },
-                success: function(resp)
-                {
-                  ListofOrgs = resp["gkresult"];
-                  $('#holdingorglist').empty();
-                  $('#holdingorglist').append('<option value="0" disabled selected hidden>List Of Organisations</option>');
-                  for(i in ListofOrgs)
-                  {
-                  $('#holdingorglist').append('<option value="' + ListofOrgs[i].orgcode + '">'+ ListofOrgs[i].orgname +'</option>');
-                  }
-                }
-            })
-          })
-
         });
 
     $('#listofaccounts').click(function (e) {
@@ -1236,7 +1211,7 @@ $.ajax({
   });
 
   $('#deliverychallan').click(function (e) {// calls base deliverychallan page.
-   
+
     $.ajax(
     		{
     		type: "POST",

@@ -4,65 +4,48 @@
 <title>{% trans %}GNUKhata{% endtrans %}</title>
 </head>
 <body>
-<div id="holdingorg" class="modal fade" tabindex="-1" role="dialog">
-  <div class="vertical-alignment-helper">
-    <div class="modal-dialog modal-lg vertical-align-center">
-      <div class="modal-content">
-        <div class="modal-header">
+  <div style="padding-top:5px" class="container-fluid mainbox col-md-6 col-md-offset-3">
+    <div class="panel shadow">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">{% trans %}Consolidated Final Accounts.{% endtrans %}</h3>
+                  </div>
+                  <div class="panel-body" style="padding-top:5px">
+                      <div style="margin-bottom: 5px" class="col-xs-12 from-group">
+                          <div class="alert alert-danger" id="selorg-blank-alert" hidden>
+                            {% trans %}Please select organisation!{% endtrans %}
+                          </div>
+                          <label >{% trans %}Select Holding Organisation {% endtrans %} :</label>
+                          <select class = "form-control input-sm" id="holdingorglist" style="width:350px"></select>
+                            <small id="txtareahelp" class="form-text text-muted">{% trans %}Select Holding Organisation and press 'Enter' key.{% endtrans %}</small>
+</br>
+                          <button class="btn btn-primary btn-sm" id ="confirm1" name="next" accesskey="n">{% trans %}<u>N</u>ext{% endtrans %}</button>
+</br>
+                        <div class="form-group" id="subsidiary_div" hidden>
+                        </br>
+                        <div class="alert alert-danger" id="selorg-blank-alert1" hidden>
+                          {% trans %}Please select organisation!{% endtrans %}
+                        </div>
+                          <label >{% trans %}Select Subsidiary Organisation {% endtrans %} :</label>
+                        <select class = "form-control input-sm" id="list" name="test[]" style="width:350px"></select>
+                      </br>
+                        <label >{% trans %}List of Selected Organisation {% endtrans %} :</label>
+                        <ul class = "form-control input-sm" id="selected" name="selectedorg" style="width:350px"></ul>
+                      </br>
+                        <div class="footer">
+                        <button type="button" id ="confirm" class="btn">{% trans %}Confirm{% endtrans %}</button>
+                        <button type="button" id="cancel" data-dismiss="modal" class="btn">{% trans %}Cancel{% endtrans %}</button>
+                        </div>
+                      </div>
+                      </div>
+                      </div>
+                </div>
 
-          <h4 class="modal-title">{% trans %}Select Holding Organisation{% endtrans %}
-         </h4>
-        </div>
-        <div class="modal-body">
-          <div id="existingorg" class="mainbox">
-            <div class="alert alert-danger" id="selorg-blank-alert" hidden>
 
-              {% trans %}Please select organisation!{% endtrans %}
-            </div>
-        <select id="holdingorglist" style="width:350px">
-        </select>
-        </div>
-        <div class="modal-footer">
-          <button type="button" id ="confirm1" class="btn">{% trans %}Confirm{% endtrans %}</button>
-          <button type="button" id="cancel1" data-dismiss="modal" class="btn">{% trans %}Cancel{% endtrans %}</button>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div>
-</div><!-- /.modal -->
 </div>
 
-<div id="listoforg" class="modal fade" tabindex="-1" role="dialog">
-<div class="vertical-alignment-helper">
-  <div class="modal-dialog modal-lg vertical-align-center">
-    <div class="modal-content">
-      <div class="modal-header">
-
-        <h4 class="modal-title">{% trans %}Select subsidiary organization{% endtrans %}</h4>
-      </div>
-      <div class="modal-body">
-        <div id="existingorg1" class="mainbox">
-          <div class="alert alert-danger" id="selorg-blank-alert1" hidden>
-
-            {% trans %}Please select organisation!{% endtrans %}
-          </div>
-        <select id="list" name="test[]" style="width:350px">
-        </select>
-        <select id="selected" name="selectedorg" style="width:350px">
-        </select>
-       </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" id ="confirm" class="btn">{% trans %}Confirm{% endtrans %}</button>
-        <button type="button" id="cancel" data-dismiss="modal" class="btn">{% trans %}Cancel{% endtrans %}</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div>
-</div><!-- /.modal -->
-</div>
-
+<!--Authentication model-->
 <div id="authenticate" class="modal fade" tabindex="-1" role="dialog">
+
 <div class="vertical-alignment-helper">
   <div class="modal-dialog modal-sm vertical-align-center">
     <div class="modal-content">
@@ -80,11 +63,21 @@
             Organisation Authentication UnSuccessful.
           </div>
         </div>
-        <label>UserName:</label><input type="textbox" id="user"/>
+        <div class="container-fluid">
+          <div class="alert alert-danger" id="user-alert"  aria-live="rude" role="alert" hidden>
+            Enter Username.
+          </div>
+        </div>
+        <div class="container-fluid">
+          <div class="alert alert-danger" id="password-alert"  aria-live="rude" role="alert" hidden>
+            Enter Password.
+          </div>
+        </div>
+        <label>Username:</label><input type="textbox" id="user"/>
         <label>Password:</label><input type="password" id="pwd"/>
       </div>
-      
-     
+
+
       <div class="modal-footer">
         <button type="button" id ="submit" class="btn">{% trans %}Submit{% endtrans %}</button>
         <button type="button" id="cancel" data-dismiss="modal" class="btn">{% trans %}Cancel{% endtrans %}</button>

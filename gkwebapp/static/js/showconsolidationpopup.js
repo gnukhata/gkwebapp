@@ -36,10 +36,48 @@ $(document).ready(function() {
  // $("#bankRecModal1").click(function(){
  // $("#bankRecModal").modal();
  // });
+    console.log("modal");
+    $.ajax({              //To retreive org details.
+       type:"POST",
+       url:"/allorgcode?type=orgcodelist",
+       global:false,
+       async:false,
+       datatype:"json",
+       beforeSend: function(xhr) {
+           xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+       },
+       success: function(resp)
+       {
+         ListofOrgs = resp["gkresult"];
+         $('#holdingorglist').empty();
+         $('#holdingorglist').append('<option value="0" disabled selected hidden>List of Organisations</option>');
+         for(i in ListofOrgs)
+         {
+         $('#holdingorglist').append('<option value="' + ListofOrgs[i].orgcode + '">'+ ListofOrgs[i].orgname +'</option>');
+         }
+       }
+   });
 
+
+
+ $(document).off('keydown', '#holdingorglist').on('keydown', '#holdingorglist',function(event) {
+   if (event.which==13) {
+     event.preventDefault();
+
+    if ($.trim($("#holdingorglist").val())=="") {
+      $("#selorg-blank-alert").alert();
+      $("#selorg-blank-alert").fadeTo(1000, 500).slideUp(100, function(){
+      $("#selorg-blank-alert").hide();
+      });
+      $("#holdingorglist").focus();
+    }
+    else{
+        $("#authenticate").modal('show');
+    }
+   }
+ });
   $(document).off("change","#holdingorglist").on('change', '#holdingorglist', function(event) {
     horgname =$('#holdingorglist option:selected').text();//this will give the selected option's organisation
-    $("#authenticate").modal();
     $(document).off("click","#submit").on('click', '#submit', function(event) {
     $.ajax({  //used to authenticate the selected subsidiary organisation.
           type: "POST",
@@ -78,6 +116,7 @@ $(document).ready(function() {
 
 
   $("#confirm1").click(function(){
+
     if ($.trim($("#holdingorglist").val())=="") {
       $("#selorg-blank-alert").alert();
       $("#selorg-blank-alert").fadeTo(1000, 500).slideUp(100, function(){
@@ -87,8 +126,11 @@ $(document).ready(function() {
     }
     else if(authuser == 0)
     {
-      $("#holdingorg").modal("hide");
-      $("#listoforg").modal();
+      $("#subsidiary_div").show();
+      $("#list").focus();
+      $("#confirm1").hide();
+    //  $("#holdingorg").modal("hide");
+      //$("#listoforg").modal();
       $.ajax({
         type: "POST",
         url: "/allorgcode?type=orgcodelist",
@@ -126,7 +168,7 @@ $(document).ready(function() {
           ListofOrgs = resp["gkresult"];
           $('#list').empty();
           $('#list').append('<option value="0" disabled selected hidden>List Of Organisations</option>');
-          $('#selected').append('<option value=" " disabled selected hidden>Selected Organisation</option>');
+          $('#selected').append('<li value=" " disabled selected hidden>Selected Organisation</li>');
           for (i in ListofOrgs ) {
             if(orgdetails == ListofOrgs[i].orgcode) //To remove logged in organisation from dropdown list.
             {
@@ -156,7 +198,8 @@ $(document).ready(function() {
     $(document).off("change","#list").on('change', '#list', function(event) {
     var selectedorg = $(this).find(':selected').text();//this will give the selected option's organisation
     $("#authenticate").modal("show");
-    $('#user').focus();
+
+    //$('#user').focus();
     $(document).off("click","#submit").on('click', '#submit', function(event) {
     $.ajax({  //used to authenticate the selected subsidiary organisation.
           type: "POST",
@@ -204,6 +247,7 @@ $(document).ready(function() {
       $("#selorg-blank-alert1").hide();
       });
       $("#list").focus();
+    //  $("#confirm1").hide();
     }
     else if(authuser1 == 0)
     {
@@ -225,4 +269,55 @@ $(document).ready(function() {
     }
   });
 
+  $('#authenticate').on('shown.bs.modal', function() {
+    $('#user').empty();
+    $('#pwd').empty();
+      $('#user').focus();
+
+      $("#user").keydown(function(event) {
+          if (event.which == 13) {
+              event.preventDefault();
+
+              if($("#user").val()==''){
+                $("#user-alert").alert();
+                $("#user-alert").fadeTo(1000, 500).slideUp(100, function(){
+                $("#user-alert").hide();
+                $('#user').focus();
+              });
+              }
+              else{
+                $("#pwd").focus();
+              }
+              }
+      });
+      $("#pwd").keydown(function(event) {
+          if (event.which == 13) {
+              event.preventDefault();
+
+              if($("#pwd").val()==''){
+                $("#password-alert").alert();
+                $("#password-alert").fadeTo(1000, 500).slideUp(100, function(){
+                $("#password-alert").hide();
+                $('#pwd').focus();
+              });
+              }
+              else{
+                $("#submit").focus();
+                $("#submit").click();
+              }
+              }
+      });
+  });
+
+  $('#authenticate').on('hidden.bs.modal', function() {
+    $("#confirm1").focus();
+  });
+
+/*  $('#holdingorg').on('shown.bs.modal', function() {
+$("#holdingorglist").focus();
+  });
+
+  $('#holdingorg').on('hidden.bs.modal', function() {
+$("#holdingorglist").focus();
+  });*/
 });
