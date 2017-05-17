@@ -142,7 +142,7 @@
             </div>
           </div>
 
-					<div class="col-md-2 invdetails" hidden>
+                    <div class="col-md-2 invdetails" hidden>
             <div class="form-group">
                 <label for="invoice_customertin" class = "tin" hidden>
                   {% trans %}TIN{% endtrans %} :
@@ -217,11 +217,12 @@
                 <tr>
                   <th class="col-xs-3 text-center">{% trans %}Product{% endtrans %}</th>
                   <th class="col-xs-2 text-center">{% trans %}Quantity{% endtrans %}</th>
+                  <th class="col-xs-2 text-center">{% trans %}Free Quantity{% endtrans %}</th>
                   <th class="col-xs-2 text-center">{% trans %}Price Per Unit{% endtrans %}</th>
                   <th class="col-xs-1 text-center">{% trans %}Tax Rate{% endtrans %}</th>
-                  <th class="col-xs-1 text-center">{% trans %}Tax Amount{% endtrans %}</th>
+                  <th class="col-xs-1 text-center">{% trans %}Tax Amt{% endtrans %}</th>
                   <th class="col-xs-2 text-center">{% trans %}Total{% endtrans %}</th>
-                  <th class="col-xs-1"></th>
+                  <th class="col-xs-1" style="width: 3%;"></th>
                 </tr>
               </thead>
               <tbody>
@@ -238,6 +239,9 @@
                     <input type="text" class="invoice_product_quantity form-control input-sm text-right" value="0" placeholder="0">
                   </td>
                   <td class="col-xs-2">
+                    <input type="text" class="invoice_product_freequantity form-control input-sm text-right" value="0" placeholder="0">
+                  </td>
+                  <td class="col-xs-2">
                     <input type="text" class="invoice_product_per_price form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
                   </td>
                   <td class="col-xs-1">
@@ -249,7 +253,7 @@
                   <td class="col-xs-2">
                     <input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
                   </td>
-                  <td class="col-xs-1">
+                  <td class="col-xs-1" style="width: 3%;">
 
                   </td>
                 </tr>
@@ -271,10 +275,10 @@
                   <td class="col-xs-1" style="display:none">
                     <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
                   </td>
-                  <td class="col-xs-2">
+                  <td class="col-xs-2" style="width: 13%;">
                     <input type="text" class=" form-control deliverychallan_edit_disable input-sm text-right" value="0.00" disabled>
                   </td>
-                  <td class="col-xs-1">
+                  <td class="col-xs-1" style="width: 3%;">
 
                   </td>
                 </tr>

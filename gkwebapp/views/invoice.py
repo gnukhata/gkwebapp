@@ -21,6 +21,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
 
 Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
+"Mohd. Talha Pawaty" <mtalha456@gmail.com>
 """
 
 from pyramid.view import view_config
@@ -61,7 +62,7 @@ def saveinvoice(request):
 	invoicedata = {"invoiceno":request.params["invoiceno"],"taxstate":request.params["taxstate"],"invoicedate":request.params["invoicedate"],
 		"tax":json.loads(request.params["tax"]),"custid":request.params["custid"],"invoicetotal":request.params["invtotal"],
 		"contents":json.loads(request.params["contents"]),
-		"issuername":request.params["issuername"],"designation":request.params["designation"]}
+		"issuername":request.params["issuername"],"designation":request.params["designation"],"freeqty":json.loads(request.params["freeqty"])}
 
 	try:
 		files = {}
@@ -130,6 +131,7 @@ def showeditinvoice(request):
 def getInvoiceDetails(request):
 	header={"gktoken":request.headers["gktoken"]}
 	invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
+	print invoicedata.json()["gkresult"]
 	return {"gkstatus": invoicedata.json()["gkstatus"],"invoicedata": invoicedata.json()["gkresult"]}
 
 @view_config(route_name="invoice",request_param="action=cancel",renderer="json")
