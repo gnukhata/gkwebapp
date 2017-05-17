@@ -1,14 +1,47 @@
+/*
+   Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+   This file is part of GNUKhata:A modular,robust and Free Accounting System.
+
+   GNUKhata is Free Software; you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as
+   published by the Free Software Foundation; either version 3 of
+   the License, or (at your option) any later version.and old.stockflag = 's'
+
+   GNUKhata is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public
+   License along with GNUKhata (COPYING); if not, write to the
+   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+   Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+
+
+   Contributors:
+   "Krishnakant Mane" <kk@gmail.com>
+   "Ishan Masdekar " <imasdekar@dff.org.in>
+   "Navin Karkera" <navin@dff.org.in>
+   "Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
+ */
 $(document).ready(function() {
-  $('.modal-backdrop').remove();
-  $('.tndate').autotab('number');
-  $("#transfernote_no").focus();
+  /*
+     This is a script for creating transfernote.
+     It sends transfernote number, date, details of godowns, products to be transfered and optionally details of transportation and the person creating the note. It also does validations and displays alerts. The note can also be printed soon after it is saved using the save and print button.
+   */
+  $('.modal-backdrop').remove(); //Removes modal backdrop.
+  $('.tndate').autotab('number'); //Autotab in date fields.
+  $("#transfernote_no").focus(); //Autofocus on transfernote number.
+  //Prevents alphabets in numeric fields.
   $("#tn_date").numeric();
   $("#tn_month").numeric();
   $("#tn_year").numeric();
   $("#no_of_packet").numeric();
+  //Formatting date into YYYYMMDD format.
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
-  $('.transfernote_product_quantity').numeric({ negative: false});
+  $('.transfernote_product_quantity').numeric({ negative: false}); //Prevents negative values in the field.
+  //Key events for transfer note. Focus moves forward on pressing 'Enter' key and backward on 'Up' arrow.
   $("#transfernote_no").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
@@ -100,7 +133,7 @@ $(document).ready(function() {
   $("#name_issuer").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#designation").focus().select
+      $("#designation").focus().select();
     }
     if (event.which==38) {
       event.preventDefault();
@@ -118,13 +151,13 @@ $(document).ready(function() {
       $("#name_issuer").focus().select();
     }
     });
-    function pad (str, max) { //to add leading zeros in date
+    function pad (str, max) { //to add leading zeros in date when single number is entered
       str = str.toString();
       if (str.length==1) {
         return str.length < max ? pad("0" + str, max) : str;
       }
       else{
-        return str
+        return str;
       }
     }
     function yearpad (str, max) {
@@ -136,9 +169,10 @@ $(document).ready(function() {
         return str.length < max ? pad("20" + str, max) : str;
       }
       else{
-        return str
+        return str;
       }
     }
+  //Leading zeroes are added on loss of focus from date fields
     $("#tn_date").blur(function(event) {
       $(this).val(pad($(this).val(),2));
     });
@@ -156,7 +190,8 @@ $(document).ready(function() {
       return false;
     }
   });
-
+  //AJAX request to get godown details.
+  //Dropdown list for selecting godown is populated with available godowns
   $("#tn_from_godown").change(function(event) {
     $.ajax({
       url: '/transfernotes?action=getgodowns',
@@ -170,13 +205,16 @@ $(document).ready(function() {
     })
     .done(function(resp) {
       if (resp["gkstatus"]==0) {
-        $("#tn_to_godown").html('');
+        $("#tn_to_godown").html(''); //Empty the dropdown
+	//Filling the dropdown by appending options. Godown id is set as value of each option and godown name and address are displayed.
         $("#tn_to_godown").append('<option value=""  disabled  hidden selected>Select Godown</option>');
         for (godown of resp["godowns"]) {
           if(godown.goid != $("#tn_from_godown option:selected").val()){
             $("#tn_to_godown").append('<option value="' + godown.goid + '">' +godown.goname+ '('+ godown.goaddr +')' + '</option>');
           }
         }
+	//Getting list of products in selected godown.
+	//ID of selected godown is sent to receive a list of products.
         $.ajax({
           url: '/transfernotes?action=getprod',
           type: 'POST',
@@ -190,7 +228,8 @@ $(document).ready(function() {
         })
         .done(function(resp) {
           if (resp["gkstatus"]==0) {
-            $('#transfernote_product_table tbody').html('');
+            $('#transfernote_product_table tbody').html(''); //Table with product details is emptied.
+	    //A row with a dropdown list of products to choose from and a blank input field for entering quantity is added. In each option tag product code is set as value and produt description is displayed.
             $('#transfernote_product_table tbody').append('' +
             '<tr>' +
             '<td class="col-xs-7">' +
@@ -228,11 +267,13 @@ $(document).ready(function() {
         console.log("complete");
       });
   });
-
+//When reset is clicked the page is reloaded.
   $("#transfernote_reset").click(function(event) {
     $("#transfernote_create").click();
   });
 
+  //Key events for transfernote product table are written below. Convention in this project is to use angle brackets along with Ctrl key or Shift key to navigate within tables.
+  
   $(document).off("keydown",".product_name").on("keydown",".product_name",function(event)
   {
     var curindex = $(this).closest('tr').index();
@@ -276,8 +317,9 @@ $(document).ready(function() {
 
   $(document).off("change",".product_name").on("change",".product_name",function(event)
   {
-    var productcode = $(this).find('option:selected').val();
-    var curindex = $(this).closest('tbody tr').index();
+    var productcode = $(this).find('option:selected').val(); //Retreiving product code from selected option.
+    var curindex = $(this).closest('tbody tr').index();  //Index value used for checking the current row
+    //For each product selected its unit of measurement is displayed in the input field for quantity.
   $.ajax({
     url: '/invoice?action=getproduct',
     type: 'POST',
@@ -303,7 +345,7 @@ $(document).ready(function() {
     console.log("complete");
   });
 });
-
+//Key event for product quantity. Note that here a new row is added when 'Enter' key is pressed.
   $(document).off("keydown",".transfernote_product_quantity").on("keydown",".transfernote_product_quantity",function(event)
   {
     var curindex1 = $(this).closest('tr').index();
@@ -312,7 +354,7 @@ $(document).ready(function() {
     if (event.which==13) {
       event.preventDefault();
 
-
+//Alerts to be displayed as a part of validations
       if ($('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(1) input').val()=="") {
 
   	    	 $("#quantity-blank-alert").alert();
@@ -342,6 +384,9 @@ else {
           $('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
           return false;
         }
+
+	//Getting product details to fill the dropdown list in new row.
+	
         $.ajax({
           url: '/transfernotes?action=getprod',
           type: 'POST',
@@ -418,6 +463,7 @@ else {
     }
   });
 
+  //Deletes a row if.
 
   $(document).off("click",".product_del").on("click", ".product_del", function() {
     $(this).closest('tr').fadeOut(200, function(){
@@ -427,8 +473,11 @@ else {
     $('#transfernote_product_table tbody tr:last td:eq(0) input').select();
   });
 
+  //Click event for saving transfer note.
+  
   $("#transfernote_save").click(function(event) {
-    var stock = 0;
+    var stock = 0; //Flag to check if quantity entered is less than or equal to available stock.
+    //Getting date stored in session storage.
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     var today = new Date();
     var year = today.getFullYear();
@@ -442,6 +491,8 @@ else {
       date = "0" + date;
     }
     var reversedate = year + "-" + month + "-" + date;
+
+    //Alerts that are displayed when when some fields are empty.
     if ($.trim($('#transfernote_no').val())=="") {
       $("#tnno-blank-alert").alert();
       $("#tnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -515,7 +566,7 @@ else {
       $('#tn_from_godown').focus();
       return false;
     }
-
+//Validations for product details.
     var products = [];
     for (var i = 0; i < $("#transfernote_product_table tbody tr").length; i++) {
       if ($("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()=="") {
@@ -535,6 +586,9 @@ else {
         return false;
       }
 
+      //AJAX for checking available stock in godown from which stock is moved.
+      //Godown id, current date and product code are sent to receive available quantity of each selected product in the godown.
+      
       $.ajax(
           {
             type: "POST",
@@ -549,7 +603,8 @@ else {
             },
           })
             .done(function(resp)
-            {
+              {
+		//Quantity is compared with available stock. Stock flag is set to 1 if it exceeds stock.
               if (parseInt($("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").val()) > parseInt(resp["gkresult"])) {
                 $("#quantity-excess-alert").alert();
                 $("#quantity-excess-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -562,16 +617,19 @@ else {
           }
           );
 
+      //A dictionary is made to store product code and quantity in this format - {"productcode":value, "qty":value}
+      
       var obj = {};
       obj.productcode = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val();
       obj.qty = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").val();
-      products.push(obj);
+      products.push(obj); //Each dictioary is added to a list, product.
     }
 
    if (stock == 0) {
     event.preventDefault();
     $('.modal-backdrop').remove();
-    $('.modal').modal('hide');
+     $('.modal').modal('hide');
+     //Modal that seeks confirmation from user before saving
     $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function (e)
     {
     $.ajax({
@@ -616,13 +674,18 @@ else {
     });
   }
   });
+
+  //Focus events on opening and closing of modals.
   $("#confirm_yes").on('shown.bs.modal', function(event) {
     $("#tn_save_no").focus();
 
   });
   $("#confirm_yes").on('hidden.bs.modal', function(event) {
     $("#transfernote_no").focus();
-});
+  });
+
+  //Click event for saving and printing. Documentation for saving click event for saving.
+  
   $("#tn_saveprint").click(function(event) {
     var stock = 0;
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
@@ -801,6 +864,8 @@ else {
 
 		 printset.push(obj);
 	       }
+
+	       //AJAX that loads print preview of transfernote.  All data filled in by the user is sent so that it is displayed in the preview.
 	       $.ajax({
 		 url: '/transfernotes?action=print',
 		 type: 'POST',
