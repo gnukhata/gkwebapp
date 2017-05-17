@@ -6,7 +6,6 @@ $(document).ready(function() {
   $("#tn_month").numeric();
   $("#tn_year").numeric();
   $("#no_of_packet").numeric();
-  var stock = 0;
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   $('.transfernote_product_quantity').numeric({ negative: false});
@@ -429,6 +428,7 @@ else {
   });
 
   $("#transfernote_save").click(function(event) {
+    var stock = 0;
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     var today = new Date();
     var year = today.getFullYear();
