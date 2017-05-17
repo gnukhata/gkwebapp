@@ -31,6 +31,7 @@ Contributors:
 $(document).ready(function() {
 
   oninvoice = 0;
+  consolidateflag=0;
   $(".modal-backdrop").remove();
 
   $("#msspinmodal").modal("hide");
