@@ -156,7 +156,7 @@ $(document).ready(function()
 
 $("#accountform").submit(function(e)
 {
-  $("#msspinmodal").modal("show");
+  
   if ($.trim($("#accountname").val())=="") {
     $("#blank-alert").alert();
     $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
@@ -204,7 +204,7 @@ $("#accountform").submit(function(e)
   }
 
 
-
+  $("#msspinmodal").modal("show");
 
 
   $.ajax(
@@ -232,16 +232,20 @@ $("#accountform").submit(function(e)
           });
         }
         else if(resp["gkstatus"]==1)
-        {
-          $("#duplicate-alert").alert();
-          $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#duplicate-alert").hide();
-          });
-          $("#accname").focus().select();
-        }
+          {
+	    $("#msspinmodal").modal("hide");
+	    $('.modal-backdrop').remove();
+            $("#duplicate-alert").alert();
+            $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#duplicate-alert").hide();
+            });
+            $("#accname").focus().select();
+          }
         else
-        {
-          $("#failure-alert").alert();
+          {
+	    $("#msspinmodal").modal("hide");
+	    $('.modal-backdrop').remove();
+            $("#failure-alert").alert();
           $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#failure-alert").hide();
           });

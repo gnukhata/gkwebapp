@@ -1,5 +1,7 @@
 *.pyc
 .project
 .pydevproject
+.ternproject
 .settings/
+.tern-port
 gkwebapp.egg-info/

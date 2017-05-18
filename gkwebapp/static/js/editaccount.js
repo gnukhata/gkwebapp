@@ -117,7 +117,7 @@ $(document).ready(function()
 
     $("#submit").show();
     $("#alertmsg").hide();
-    $("#accname").hide();
+   
     $("#edit").hide();
     var acccode = $("#editaccountname option:selected").val();
     var accname= $("#editaccountname option:selected").text();
@@ -261,7 +261,6 @@ $(document).off("click","#delete").on("click", "#delete", function(event)
 
 $("#editaccountform").submit(function(e)
 {
-  $("#msspinmodal").modal("show");
   if ($.trim($("#accountname").val())=="") {
     $("#blank-alert").alert();
     $("#blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -288,6 +287,9 @@ $("#editaccountform").submit(function(e)
     accountname=$("#accountname").val();
   }
   accountcode = $("#accountcode").val();
+
+  $("#msspinmodal").modal("show");
+  
   $.ajax(
     {
       type: "POST",

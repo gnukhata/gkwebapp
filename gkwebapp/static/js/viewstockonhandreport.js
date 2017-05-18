@@ -22,6 +22,7 @@ Contributors:
 "Krishnakant Mane" <kk@gmail.com>
 "Prajkta Patkar"<prajkta.patkar007@gmail.com>
 "Abhijith Balan" <abhijithb21@openmailbox.org>
+"Mohd. Talha Pawaty" <mtalha456@gmaail.com>
 */
 /*
 This script is for the view page of stock report.
@@ -37,7 +38,7 @@ $(document).ready(function() {
 	var sel1 = 0; // flag for focus on combo box
 
 	// Setting default date to financialstart and end.
-	
+
 	var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g)
 	$("#viewstock_todate").val(todatearray[2])
 	$("#viewstock_tomonth").val(todatearray[1])
@@ -82,13 +83,13 @@ $(document).ready(function() {
 						if (e.which == 13) {
 							e.preventDefault();
 							$(".dis").attr('disabled', false);
-							$("#viewstock_todate").focus();
+							$("#viewstock_todate").focus().select();
 						}
 				});
 				$(".dis").attr('disabled', false);
 	});
-	
-	
+
+
 	$("#viewstock_todate").blur(function(event) {
 		$(this).val(pad($(this).val(),2));
 	});
@@ -100,24 +101,24 @@ $(document).ready(function() {
 		$(this).val(yearpad($(this).val(),4));
 	});
 	// navigation functions for enter key and up arrow keys.
-	
+
 
 	$("#viewstock_todate").keydown(function(e){
 		if(e.which==13){
 			e.preventDefault();
-			$("#viewstock_tomonth").focus();
+			$("#viewstock_tomonth").focus().select();
 		}
 		if(e.which==38){
-			$("#viewstock_fromyear").focus();
+			$("#viewstock_fromyear").focus().select();
 		}
 	});
 	$("#viewstock_tomonth").keydown(function(e){
 		if(e.which==13){
 			e.preventDefault();
-			$("#viewstock_toyear").focus();
+			$("#viewstock_toyear").focus().select();
 		}
 		if(e.which==38){
-			$("#viewstock_todate").focus();
+			$("#viewstock_todate").focus().select();
 		}
 	});
 	if ($("#godownpresent").val()==0) {
@@ -127,7 +128,7 @@ $(document).ready(function() {
 				$("#viewstock_submit").click();
 			}
 			if(e.which==38){
-				$("#viewstock_tomonth").focus();
+				$("#viewstock_tomonth").focus().select();
 			}
 		});
 	}
@@ -139,7 +140,7 @@ $(document).ready(function() {
 				$("#godownflag").focus().select();
 			}
 			if(e.which==38){
-				$("#viewstock_tomonth").focus();
+				$("#viewstock_tomonth").focus().select();
 			}
 		});
 		$("#editgoddet").keydown(function(e){
@@ -162,7 +163,7 @@ $(document).ready(function() {
 			$("#editgoddet").focus()  ;
 		}
 		if (e.which == 38) {
-			$("#viewstock_toyear").focus();
+			$("#viewstock_toyear").focus().select();
 		}
 	});
 	$("#viewstock_submit").click(function(event) {
@@ -183,7 +184,7 @@ $(document).ready(function() {
 			$('#editgoddet').focus()
 			return false;
 		}
-		
+
 		if ($("#editgoddet").val()=="allgod" && $("#viewstock_productname").val()=="allprod") {
 			$("#godprod-all-alert").alert();
 			$("#godprod-all-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -192,7 +193,7 @@ $(document).ready(function() {
 			$('#viewstock_productname').focus()
 			return false;
 		}
-		
+
 		if ($("#editgoddet").val() > 0  && $("#viewstock_productname").val()=="allprod") {
 			$("#godprod-all-alert").alert();
 			$("#godprod-all-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -202,8 +203,8 @@ $(document).ready(function() {
 			return false;
 		}
 
-		
-		
+
+
 		if ($("#viewstock_toyear").val() ==0||$("#viewstock_tomonth").val()==0||$("#viewstock_todate").val()==0) {
 			$("#date-alert").alert();
 			$("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
@@ -222,7 +223,7 @@ $(document).ready(function() {
 			$('#viewstock_fromdate').focus().select();
 			return false;
 		}*/
-		
+
 		if(!Date.parseExact(todate, "yyyyMMdd")){
 			$("#date-alert").alert();
 			$("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
@@ -236,11 +237,11 @@ $(document).ready(function() {
 			$("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
 				$("#between-date-alert").hide();
 			});
-			
+
 			$('#viewstock_todate').focus().select();
 			return false;
 		}
-		
+
 		// -----------------------end of validations---------------------
 
 		// creating dataset for retrieving report from the server.
@@ -252,14 +253,14 @@ $(document).ready(function() {
 			else {
 				dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":0,"godownflag":$("#godownflag").val(),"goid":-1,"goname":""}
 			}
-		}		
+		}
 		else if ($("#godownflag").val()==1) {
 			if ($("#editgoddet").val()=="allgod"){
-			
-			dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":2,"godownflag":$("#godownflag").val(), "goid":0 , "goname":$("#editgoddet option:selected").text()}
+
+			dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":2,"godownflag":$("#godownflag").val(), "goid":0 , "goname":$("#editgoddet option:selected").data('godownname'), "goaddr":$("#editgoddet option:selected").data('godownaddress')}
 			}
 			else{
-			dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":3,"godownflag":$("#godownflag").val(), "goid":$("#editgoddet option:selected").val(), "goname":$("#editgoddet option:selected").text()}
+			dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":3,"godownflag":$("#godownflag").val(), "goid":$("#editgoddet option:selected").val(), "goname":$("#editgoddet option:selected").data('godownname'), "goaddr":$("#editgoddet option:selected").data('godownaddress')}
 		}
 		}
 		$.ajax(

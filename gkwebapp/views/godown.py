@@ -26,7 +26,7 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
 "Abhijith Balan" <abhijithb21@openmailbox.org>
-"Moh. Talha Pawaty" <mtalha456@gmail.com>
+"Mohd. Talha Pawaty" <mtalha456@gmail.com>
 """
 
 from pyramid.view import view_config
@@ -105,6 +105,12 @@ def getallgodowns(request):
 		gdata= {"godownname":str(record["goname"]),"godownid":str(record["goid"]),"godownaddress": str(record["goaddr"])}
 		goddata.append(gdata)
 	return {"gkresult":goddata}
+
+@view_config(route_name="godown",request_param="type=numOfProdInGodown", renderer="json")
+def getProdInGodown(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/godown?type=goproduct&goid=%d"%int(request.params["goid"]), headers=header)
+	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="godown",request_param="type=getgoddetails", renderer="json")
 def getgoddetails(request):

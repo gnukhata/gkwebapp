@@ -1,41 +1,38 @@
 /*
-Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-This file is part of GNUKhata:A modular,robust and Free Accounting System.
+   Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+   This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
-GNUKhata is Free Software; you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as
-published by the Free Software Foundation; either version 3 of
-the License, or (at your option) any later version.
+   GNUKhata is Free Software; you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as
+   published by the Free Software Foundation; either version 3 of
+   the License, or (at your option) any later version.
 
-GNUKhata is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
+   GNUKhata is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
 
-You should have received a copy of the GNU Affero General Public
-License along with GNUKhata (COPYING); if not, write to the
-Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+   You should have received a copy of the GNU Affero General Public
+   License along with GNUKhata (COPYING); if not, write to the
+   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+   Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
 
 
-Contributors:
-"Bhavesh Bawadhane" <bbhavesh07@gmail.com>
-"Rohini Baraskar"
-*/
+   Contributors:
+   "Abhijith Balan" <abhijithb21@openmailbox.org>
+   "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+   "Ishan Masdekar" <imasdekar@dff.org.in>
+   "Mohd. Talha Pawaty" <mtalha456@gmail.com>
+   "Navin Karkera" <navin@openmailbox.org>
+   "Pornima Kolte" <pornima@openmailbox.org>
+   "Rohini Baraskar" <robaraskar@gmail.com>
+   "Sachin Patil" <sachin619patil@rediffmail.com>
+   "Vaibhav Kurhe" <vaibspidy@openmailbox.org>
+   
+ */
 // This script is for the add category page
 $(document).ready(function() {
     $('.modal-backdrop').remove();
-    //when home key is pressed parent category selection is focused
-    //when alt +shift+ D pressed Done is clicked
-    $(document).off('keydown').on('keydown', function(event) {
-        if (event.altKey && event.shiftKey && event.keyCode == 68) {
-            event.preventDefault();
-            $("#addcategory").click();
-        }
-        if (event.which == 36) {
-            $("#category_under").focus();
-        }
-    });
     var parentspecs = [];
     var childspecs = [];
     var parenttaxes = [];
@@ -148,7 +145,7 @@ $(document).ready(function() {
       for (var i = 0; i < parenttaxes.length; i++) {
         $("#category_tax_table tbody").append(taxfieldhtml);
         $("#category_tax_table tbody tr:eq("+i+") td:eq(0) select").val(parenttaxes[i].taxname);
-        if (parenttaxes[i].state==null) {
+        if (parenttaxes[i].state == null) {
           $("#category_tax_table tbody tr:eq("+i+") td:eq(1) select").val("").prop('disabled', true);
         }
         else {
@@ -278,12 +275,12 @@ $(document).ready(function() {
                         var trs;
                         noofspecs++;
                         if (spec["attrtype"] == 0) {
-                            trs = '<option value="0">Text</option>'
+                            trs = '<option value="0">Text</option>';
                         } else if (spec["attrtype"] == 1) {
                             trs =
-                                '<option value="1">Number</option>'
+                                '<option value="1">Number</option>';
                         } else if (spec["attrtype"] == 2) {
-                            trs = '<option value="2">Date</option>'
+                            trs = '<option value="2">Date</option>';
                         }
                         $('#spectbl tbody').prepend('<tr>' +
                             '<td class="col-xs-6">' + spec["attrname"] + '</td>' +
@@ -688,12 +685,12 @@ $(document).ready(function() {
                         for (spec of parentspecs) {
                             var trs;
                             if (spec["attrtype"] == 0) {
-                                trs = '<option value="0">Text</option>'
+                                trs = '<option value="0">Text</option>';
                             } else if (spec["attrtype"] == 1) {
                                 trs =
-                                    '<option value="1">Number</option>'
+                                    '<option value="1">Number</option>';
                             } else if (spec["attrtype"] == 2) {
-                                trs = '<option value="2">Date</option>'
+                                trs = '<option value="2">Date</option>';
                             }
 
                             $('#child_category_spec_table tbody').append('<tr>' +
@@ -779,12 +776,12 @@ $(document).ready(function() {
                 for (spec of resp["gkresult"].reverse()) {
                     var trs;
                     if (spec["attrtype"] == 0) {
-                        trs = '<option value="0">Text</option>'
+                        trs = '<option value="0">Text</option>';
                     } else if (spec["attrtype"] == 1) {
                         trs =
-                            '<option value="1">Number</option>'
+                            '<option value="1">Number</option>';
                     } else if (spec["attrtype"] == 2) {
-                        trs = '<option value="2">Date</option>'
+                        trs = '<option value="2">Date</option>';
                     }
                     $('#child_showcategory_spec_table tbody').prepend('<tr>' +
                         '<td class="col-xs-8">' +

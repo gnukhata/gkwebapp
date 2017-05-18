@@ -222,14 +222,14 @@
       <div class="modal-content">
         <div class="modal-header">
 
-          <h4 class="modal-title">{% trans %}Edit Project{% endtrans %}</h4>
+          <h4 class="modal-title" id="editprojecttitle">{% trans %}Edit Project{% endtrans %}</h4>
         </div>
         <form class="form-horizontal" id="m_editform">
           <div class="modal-body">
-            <label for="m_prjname">{% trans %}Project name{% endtrans %} : </label>
+            <label id="editprojectnamelabel" for="m_prjname">{% trans %}Project name{% endtrans %} : </label>
             <input type="text" class="form-control" id="m_prjname">
             <br>
-            <label for="m_prjamount">{% trans %}Sanctioned Amount{% endtrans %} : </label>
+            <label id="editsanctionedamountlabel" for="m_prjamount">{% trans %}Sanctioned Amount{% endtrans %} : </label>
             <input class="form-control rightJustified" id="m_prjamount" placeholder="0.00">
           </div>
           <div class="modal-footer">
