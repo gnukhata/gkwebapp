@@ -58,55 +58,61 @@ $(document).ready(function() {
    $(document).off('keydown', '#holdingorglist').on('keydown', '#holdingorglist',function(event) {
      if (event.which==13) {
        event.preventDefault();
-       if ($.trim($("#holdingorglist").val())=="") {
-         $("#selorg-blank-alert").alert();
-         $("#selorg-blank-alert").fadeTo(1000, 500).slideUp(100, function(){
-           $("#selorg-blank-alert").hide();
-          });
-          $("#holdingorglist").focus();
-          }
-        else{
-        $("#authenticate").modal('show');
-        $(document).off("click","#submit").on('click', '#submit', function(event) {
-        $.ajax({  //used to authenticate the selected subsidiary organisation.
-              type: "POST",
-              url: "/userlogin",
-              global: false,
-              async: false,
-              datatype: "json",
-              data: {"username":$("#user").val(), "userpassword":$("#pwd").val(), "orgcode":$("#holdingorglist option:selected").val()},
-              success: function(resp)
-              {
-                if(resp["gkstatus"]==0)
-                {
-                    //alert("Organisation Authentication Successful");
-                    authuser = 0;
-                    console.log(authuser);
-                    $("#success-alert").alert();
-                    $("#success-alert").fadeTo(1000, 500).slideUp(100, function(){
-                    $("#success-alert").hide();
-                    $('#authenticate').modal("hide");
-                    $("#confirm1").focus();
-                    $("#confirm1").click();
-                    $("#confirm1").hide();
 
-                  });
-                }
-                else
-                {
-                    //alert("Organisation Authentication UnSuccessful");
-                    authuser = 1;
-                    console.log(authuser);
-                    $("#danger-alert").alert();
-                    $("#danger-alert").fadeTo(1000, 500).slideUp(100, function(){
-                    $("#danger-alert").hide();
-                    $("#user").focus();
-                  });
-                }
-              }
+         if ($.trim($("#holdingorglist").val())=="") {
+           $("#selorg-blank-alert").alert();
+           $("#selorg-blank-alert").fadeTo(1000, 500).slideUp(100, function(){
+             $("#selorg-blank-alert").hide();
             });
-          });
-        }
+            $("#holdingorglist").focus();
+            }
+          else{
+
+          $("#authenticate").modal('show');
+          $(document).off("click","#submit").on('click', '#submit', function(event) {
+          $.ajax({  //used to authenticate the selected subsidiary organisation.
+                type: "POST",
+                url: "/userlogin",
+                global: false,
+                async: false,
+                datatype: "json",
+                data: {"username":$("#user").val(), "userpassword":$("#pwd").val(), "orgcode":$("#holdingorglist option:selected").val()},
+                success: function(resp)
+                {
+                  if(resp["gkstatus"]==0)
+                  {
+                      //alert("Organisation Authentication Successful");
+                      authuser = 0;
+                      $("#success-alert").alert();
+                      $("#success-alert").fadeTo(1000, 500).slideUp(100, function(){
+                      $("#success-alert").hide();
+                      $('#authenticate').modal("hide");
+                      $("#confirm1").focus();
+                      $("#confirm1").click();
+                      $("#confirm1").hide();
+                      horgname =$('#holdingorglist option:selected').text();
+                    });
+                  }
+                  else
+                  {
+                      //alert("Organisation Authentication UnSuccessful");
+                      authuser = 1;
+                      $("#danger-alert").alert();
+                      $("#danger-alert").fadeTo(1000, 500).slideUp(100, function(){
+                      $("#danger-alert").hide();
+                      $("#user").focus();
+                    });
+                  }
+                }
+              });
+            });
+            $(document).off("click","#cancel").on('click', '#cancel', function(event) {
+                        $("#holdingorglist").focus();
+                    });
+
+
+          }
+
       }
     });
 //Coding of Next button
@@ -136,7 +142,6 @@ $(document).ready(function() {
               {
                   //alert("Organisation Authentication Successful");
                   authuser = 0;
-                  console.log(authuser);
                   $("#success-alert").alert();
                   $("#success-alert").fadeTo(1000, 500).slideUp(100, function(){
                   $("#success-alert").hide();
@@ -147,7 +152,6 @@ $(document).ready(function() {
               {
                   //alert("Organisation Authentication UnSuccessful");
                   authuser = 1;
-                  console.log(authuser);
                   $("#danger-alert").alert();
                   $("#danger-alert").fadeTo(1000, 500).slideUp(100, function(){
                   $("#danger-alert").hide();
@@ -231,8 +235,14 @@ $(document).ready(function() {
       });
 
     $(document).off('keydown','#list').on('keydown', '#list', function(event) {
-    if(event.which==13){
+    if(event.which==13 ){
       event.preventDefault();
+      if($('#list option:selected').val() == 0)
+      {
+        $("#confirm").focus();
+      }
+      else {
+
       var selectedorg = $(this).find(':selected').text();//this will give the selected option's organisation
       $("#authenticate").modal("show");
 
@@ -263,6 +273,7 @@ $(document).ready(function() {
                   $("#success-alert").fadeTo(1000, 500).slideUp(100, function(){
                   $("#success-alert").hide();
                   $("#authenticate").modal("hide");
+                  $("#list").focus();
                 });
               }
               else
@@ -274,15 +285,19 @@ $(document).ready(function() {
                   $("#user").focus().select();
                 });
               }
-            }
-          });
+            }//sucess ends
+          });//
         });
+        $(document).off("click","#cancel").on('click', '#cancel', function(event) {
+                    $("#list").focus();
+                });
+
+      }
     }
     });
 //
 $(document).off("click","#confirm").on('click', '#confirm', function(event) {
 
-      console.log("selectedorgs "+$(".selectedorgs").length);
       if ($(".selectedorgs").length==0) {
         $("#selorg-blank-alert1").alert();
         $("#selorg-blank-alert1").fadeTo(1000, 500).slideUp(100, function(){
@@ -290,25 +305,25 @@ $(document).off("click","#confirm").on('click', '#confirm', function(event) {
         });
         $("#list").focus();
       }
+      else{
+        var selectedorg = {"ds" : JSON.stringify(listofselectedorg),"calculateto":hyearend,"orgcode":horgcode,"financialStart":hyearstart,"orgtype":horgtype};
+        $.ajax({
+          type: "POST",
+          url: "/listoforgselected?type=orgselected",
+          global: false,
+          async: false,
+          datatype: "text/html",
+          data: {"selectedorg" : JSON.stringify(selectedorg),"flag" : 1,"horgname" : horgname,"sorgname" : JSON.stringify(sorgname)},
+          beforeSend: function(xhr) {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          },
+          })
+          .done(function(resp){
 
-  //console.log("inside authuser1 =0 "+authuser1);
-var selectedorg = {"ds" : JSON.stringify(listofselectedorg),"calculateto":hyearend,"orgcode":horgcode,"financialStart":hyearstart,"orgtype":horgtype};
-console.log(JSON.stringify(selectedorg));
-$.ajax({
-  type: "POST",
-  url: "/listoforgselected?type=orgselected",
-  global: false,
-  async: false,
-  datatype: "text/html",
-  data: {"selectedorg" : JSON.stringify(selectedorg),"flag" : 1,"horgname" : horgname,"sorgname" : JSON.stringify(sorgname)},
-  beforeSend: function(xhr) {
-      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-  },
-  })
-  .done(function(resp){
-      console.log("done confirm");
-    $("#info").html(resp);
-  });
+            $("#info").html(resp);
+          });
+
+      }
 
   });
 
@@ -348,7 +363,7 @@ $('#authenticate').on('shown.bs.modal', function() {
               }
               else{
                 $("#submit").focus();
-                $("#submit").click();
+              //  $("#submit").click();
               }
               }
       });
@@ -356,9 +371,28 @@ $('#authenticate').on('shown.bs.modal', function() {
 
   $('#authenticate').on('hidden.bs.modal', function() {
 
-
     $('#user').val("");
     $('#pwd').val("");
+  });
+  $(document).off("click","#cancel_btn").on('click', '#cancel_btn', function(event) {
+    $.ajax(
+      {
+      type: "POST",
+      url: "/showconsolidationpopup",
+      global: false,
+      async: false,
+      datatype: "text/html",
+      beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      success: function(resp)
+      {
+        $("#info").html(resp);
+        //$("#holdingorg").modal("show");
+      }
+      });
+
   });
 
 });

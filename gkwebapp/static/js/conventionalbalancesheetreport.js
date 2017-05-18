@@ -360,60 +360,86 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
     });
 
   $("#balback").click(function(event) {
-    if ($("#realprintbalance").is(":visible")) {
-      if($("#flag").val() == 0)
-      {
-        $.ajax(
+    if($("#flag").val() == 1)
+    {
+      $.ajax(
+        {
+        type: "POST",
+        url: "/showconsolidationpopup",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
           {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+          //$("#holdingorg").modal("show");
+        }
+        });
+    }
+    else {
+      if ($("#realprintbalance").is(":visible")) {
+        if($("#flag").val() == 0)
+        {
+          $.ajax(
+            {
+              type: "POST",
+              url: "/showbalancesheetreport",
+              global: false,
+              async: false,
+              datatype: "text/html",
+              data: {"balancesheettype":"conventionalbalancesheet","calculateto":$("#cto").val(),"orgtype":sessionStorage.orgt,"flag":$("#flag").val()},
+              beforeSend: function(xhr)
+              {
+                xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+              },
+            })
+            .done(function(resp)
+            {
+              $("#info").html(resp);
+            }
+          );
+        }
+
+        else
+        {
+          var selectedorg1 = [];
+          $("#selectedorg > option").each(function() {
+                selectedorg1.push(this.value);
+          });
+          var sorgname1 = [];
+          $("#sorgname > option").each(function() {
+                sorgname1.push(this.text);
+          });
+          var selectedorg = {"ds" : JSON.stringify(selectedorg1),"calculateto":$("#calculateto").val(),"orgcode":$("#orgcode").val(),"financialStart":$("#yearstart").val(),"orgtype":$("#orgtype").val()};
+          $.ajax({
             type: "POST",
-            url: "/showbalancesheetreport",
+            url: "/listoforgselected?type=orgselected",
             global: false,
             async: false,
             datatype: "text/html",
-            data: {"balancesheettype":"conventionalbalancesheet","calculateto":$("#cto").val(),"orgtype":sessionStorage.orgt,"flag":$("#flag").val()},
-            beforeSend: function(xhr)
-            {
-              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            data: {"selectedorg" : JSON.stringify(selectedorg),"flag" : 1,"horgname" : $("#horgname").val(),"sorgname" : JSON.stringify(sorgname1)},
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
             },
-          })
-          .done(function(resp)
-          {
-            $("#info").html(resp);
-          }
-        );
+            })
+            .done(function(resp){
+              $("#info").html(resp);
+            });
+        }
+      }
+      else {
+        $("#showbalancesheet").click();
       }
 
-      else
-      {
-        var selectedorg1 = [];
-        $("#selectedorg > option").each(function() {
-              selectedorg1.push(this.value);
-        });
-        var sorgname1 = [];
-        $("#sorgname > option").each(function() {
-              sorgname1.push(this.text);
-        });
-        var selectedorg = {"ds" : JSON.stringify(selectedorg1),"calculateto":$("#calculateto").val(),"orgcode":$("#orgcode").val(),"financialStart":$("#yearstart").val(),"orgtype":$("#orgtype").val()};
-        $.ajax({
-          type: "POST",
-          url: "/listoforgselected?type=orgselected",
-          global: false,
-          async: false,
-          datatype: "text/html",
-          data: {"selectedorg" : JSON.stringify(selectedorg),"flag" : 1,"horgname" : $("#horgname").val(),"sorgname" : JSON.stringify(sorgname1)},
-          beforeSend: function(xhr) {
-              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-          },
-          })
-          .done(function(resp){
-            $("#info").html(resp);
-          });
-      }
     }
-    else {
-      $("#showbalancesheet").click();
-    }
+
   });
+
+
   $("#printconvbalance").click(function(event) {
     $("#liabtable").unbind('dblclick');
     $("#patable").unbind('dblclick');
