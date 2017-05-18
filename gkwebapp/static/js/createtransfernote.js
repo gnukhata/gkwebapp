@@ -568,7 +568,7 @@ else {
     }
 //Validations for product details.
     var products = [];
-    for (var i = 0; i < $("#transfernote_product_table tbody tr").length; i++) {
+    for (var i = 0; i < $("#transfernote_product_table tbody tr").length && stock==0; i++) {
       if ($("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()=="") {
         $("#product-blank-alert").alert();
         $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
