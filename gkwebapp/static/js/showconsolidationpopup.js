@@ -280,9 +280,9 @@ $(document).ready(function() {
     }
     });
 //
-  $(document).off("click","#confirm").on('click', '#confirm', function(event) {
+$(document).off("click","#confirm").on('click', '#confirm', function(event) {
 
-      console.log($(".selectedorg").length);
+      console.log("selectedorgs "+$(".selectedorgs").length);
       if ($(".selectedorgs").length==0) {
         $("#selorg-blank-alert1").alert();
         $("#selorg-blank-alert1").fadeTo(1000, 500).slideUp(100, function(){
@@ -293,6 +293,7 @@ $(document).ready(function() {
 
   //console.log("inside authuser1 =0 "+authuser1);
 var selectedorg = {"ds" : JSON.stringify(listofselectedorg),"calculateto":hyearend,"orgcode":horgcode,"financialStart":hyearstart,"orgtype":horgtype};
+console.log(JSON.stringify(selectedorg));
 $.ajax({
   type: "POST",
   url: "/listoforgselected?type=orgselected",
@@ -305,6 +306,7 @@ $.ajax({
   },
   })
   .done(function(resp){
+      console.log("done confirm");
     $("#info").html(resp);
   });
 
