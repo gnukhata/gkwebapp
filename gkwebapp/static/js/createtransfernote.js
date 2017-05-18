@@ -22,7 +22,11 @@
    "Krishnakant Mane" <kk@gmail.com>
    "Ishan Masdekar " <imasdekar@dff.org.in>
    "Navin Karkera" <navin@dff.org.in>
-   "Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
+   "Rohini Baraskar" <robaraskar@gmail.com>
+   "Mohd. Talha Pawaty" <mtalha456@gmail.com>
+   "Abhijith Balan" <abhijithb21@openmailbox.org>
+   "Bhavesh Bhawadhane" <bbhavesh07@gmail.com>
+   "Sachin Patil" <sachin619patil@rediffmail.com>
  */
 $(document).ready(function() {
   /*
@@ -150,39 +154,39 @@ $(document).ready(function() {
       event.preventDefault();
       $("#name_issuer").focus().select();
     }
-    });
-    function pad (str, max) { //to add leading zeros in date when single number is entered
-      str = str.toString();
-      if (str.length==1) {
-        return str.length < max ? pad("0" + str, max) : str;
-      }
-      else{
-        return str;
-      }
+  });
+  function pad (str, max) { //to add leading zeros in date when single number is entered
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("0" + str, max) : str;
     }
-    function yearpad (str, max) {
-      str = str.toString();
-      if (str.length==1) {
-        return str.length < max ? pad("200" + str, max) : str;
-      }
-      else if (str.length==2) {
-        return str.length < max ? pad("20" + str, max) : str;
-      }
-      else{
-        return str;
-      }
+    else{
+      return str;
     }
+  }
+  function yearpad (str, max) {
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("200" + str, max) : str;
+    }
+    else if (str.length==2) {
+      return str.length < max ? pad("20" + str, max) : str;
+    }
+    else{
+      return str;
+    }
+  }
   //Leading zeroes are added on loss of focus from date fields
-    $("#tn_date").blur(function(event) {
-      $(this).val(pad($(this).val(),2));
-    });
-    $("#tn_month").blur(function(event) {
-      $(this).val(pad($(this).val(),2));
-    });
+  $("#tn_date").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#tn_month").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
 
-    $("#tn_year").blur(function(event) {
-      $(this).val(yearpad($(this).val(),4));
-      });
+  $("#tn_year").blur(function(event) {
+    $(this).val(yearpad($(this).val(),4));
+  });
   $(document).keyup(function(event) {
     if(event.which == 45) {
       $("#transfernote_save").click();
@@ -203,71 +207,71 @@ $(document).ready(function() {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
       }
     })
-    .done(function(resp) {
-      if (resp["gkstatus"]==0) {
-        $("#tn_to_godown").html(''); //Empty the dropdown
-	//Filling the dropdown by appending options. Godown id is set as value of each option and godown name and address are displayed.
-        $("#tn_to_godown").append('<option value=""  disabled  hidden selected>Select Godown</option>');
-        for (godown of resp["godowns"]) {
-          if(godown.goid != $("#tn_from_godown option:selected").val()){
-            $("#tn_to_godown").append('<option value="' + godown.goid + '">' +godown.goname+ '('+ godown.goaddr +')' + '</option>');
-          }
-        }
-	//Getting list of products in selected godown.
-	//ID of selected godown is sent to receive a list of products.
-        $.ajax({
-          url: '/transfernotes?action=getprod',
-          type: 'POST',
-          dataType: 'json',
-          async : false,
-          data: {"godownid":$("#tn_from_godown option:selected").val()},
-          beforeSend: function(xhr)
-          {
-            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-          }
-        })
-        .done(function(resp) {
-          if (resp["gkstatus"]==0) {
-            $('#transfernote_product_table tbody').html(''); //Table with product details is emptied.
-	    //A row with a dropdown list of products to choose from and a blank input field for entering quantity is added. In each option tag product code is set as value and produt description is displayed.
-            $('#transfernote_product_table tbody').append('' +
-            '<tr>' +
-            '<td class="col-xs-7">' +
-              '<select class="form-control input-sm product_name">' +
-                '<option value="" disabled hidden selected>Select Product</option>' +
-              '</select>' +
-            '</td>' +
-            '<td class="col-xs-4">' +
-              '<div class="input-group">' +
-                '<input type="text" class="transfernote_product_quantity form-control input-sm text-right" value="">' +
-                '<span class="input-group-addon input-sm" id="unitaddon"></span>' +
-              '</div>' +
-            '</td>' +
-            '<td class="col-xs-1">' +
-            '</td>' +
-            '</tr>');
-            for (product of resp["products"]) {
-              $('#transfernote_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
+     .done(function(resp) {
+       if (resp["gkstatus"]==0) {
+         $("#tn_to_godown").html(''); //Empty the dropdown
+	 //Filling the dropdown by appending options. Godown id is set as value of each option and godown name and address are displayed.
+         $("#tn_to_godown").append('<option value=""  disabled  hidden selected>Select Godown</option>');
+         for (godown of resp["godowns"]) {
+           if(godown.goid != $("#tn_from_godown option:selected").val()){
+             $("#tn_to_godown").append('<option value="' + godown.goid + '">' +godown.goname+ '('+ godown.goaddr +')' + '</option>');
+           }
+         }
+	 //Getting list of products in selected godown.
+	 //ID of selected godown is sent to receive a list of products.
+         $.ajax({
+           url: '/transfernotes?action=getprod',
+           type: 'POST',
+           dataType: 'json',
+           async : false,
+           data: {"godownid":$("#tn_from_godown option:selected").val()},
+           beforeSend: function(xhr)
+           {
+             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+           }
+         })
+          .done(function(resp) {
+            if (resp["gkstatus"]==0) {
+              $('#transfernote_product_table tbody').html(''); //Table with product details is emptied.
+	      //A row with a dropdown list of products to choose from and a blank input field for entering quantity is added. In each option tag product code is set as value and produt description is displayed.
+              $('#transfernote_product_table tbody').append('' +
+							    '<tr>' +
+							    '<td class="col-xs-7">' +
+							    '<select class="form-control input-sm product_name">' +
+							    '<option value="" disabled hidden selected>Select Product</option>' +
+							    '</select>' +
+							    '</td>' +
+							    '<td class="col-xs-4">' +
+							    '<div class="input-group">' +
+							    '<input type="text" class="transfernote_product_quantity form-control input-sm text-right" value="">' +
+							    '<span class="input-group-addon input-sm" id="unitaddon"></span>' +
+							    '</div>' +
+							    '</td>' +
+							    '<td class="col-xs-1">' +
+							    '</td>' +
+							    '</tr>');
+              for (product of resp["products"]) {
+		$('#transfernote_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
+              }
+              $('.transfernote_product_quantity').numeric({ negative: false});
             }
-            $('.transfernote_product_quantity').numeric({ negative: false});
-          }
-        })
-        .fail(function() {
-          console.log("error");
-        })
-        .always(function() {
-          console.log("complete");
-        });
-      }
-      })
-      .fail(function() {
-        console.log("error");
-      })
-      .always(function() {
-        console.log("complete");
-      });
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          .always(function() {
+            console.log("complete");
+          });
+       }
+     })
+     .fail(function() {
+       console.log("error");
+     })
+     .always(function() {
+       console.log("complete");
+     });
   });
-//When reset is clicked the page is reloaded.
+  //When reset is clicked the page is reloaded.
   $("#transfernote_reset").click(function(event) {
     $("#transfernote_create").click();
   });
@@ -275,193 +279,193 @@ $(document).ready(function() {
   //Key events for transfernote product table are written below. Convention in this project is to use angle brackets along with Ctrl key or Shift key to navigate within tables.
   
   $(document).off("keydown",".product_name").on("keydown",".product_name",function(event)
-  {
-    var curindex = $(this).closest('tr').index();
-    var nextindex = curindex+1;
-    var previndex = curindex-1;
-    if (event.which==13) {
-      event.preventDefault();
-      $('#transfernote_product_table tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
-    }
-    else if(event.which==190 && event.shiftKey)
     {
-      $('#transfernote_product_table tbody tr:eq('+nextindex+') td:eq(0) select').focus();
-    }
-    else if (event.which==188 && event.shiftKey)
-    {
-      if(previndex>-1)
-      {
-        event.preventDefault();
-        $('#transfernote_product_table tbody tr:eq('+previndex+') td:eq(0) select').focus();
+      var curindex = $(this).closest('tr').index();
+      var nextindex = curindex+1;
+      var previndex = curindex-1;
+      if (event.which==13) {
+	event.preventDefault();
+	$('#transfernote_product_table tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
       }
-      if (curindex==0) {
-        event.preventDefault();
-        $("#no_of_packet").focus().select();
+      else if(event.which==190 && event.shiftKey)
+	{
+	  $('#transfernote_product_table tbody tr:eq('+nextindex+') td:eq(0) select').focus();
+	}
+      else if (event.which==188 && event.shiftKey)
+	{
+	  if(previndex>-1)
+	    {
+              event.preventDefault();
+              $('#transfernote_product_table tbody tr:eq('+previndex+') td:eq(0) select').focus();
+	    }
+	  if (curindex==0) {
+            event.preventDefault();
+            $("#no_of_packet").focus().select();
+	  }
+	}
+      else if (event.which==188 && event.ctrlKey) {
+	event.preventDefault();
+	if (curindex==0) {
+          event.preventDefault();
+          $("#no_of_packet").focus().select();
+	}
+	else {
+          $('#transfernote_product_table tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
+	}
       }
-    }
-    else if (event.which==188 && event.ctrlKey) {
-      event.preventDefault();
-      if (curindex==0) {
-        event.preventDefault();
-        $("#no_of_packet").focus().select();
+      else if (event.which==190 && event.ctrlKey) {
+	$('#transfernote_product_table tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
+	event.preventDefault();
       }
-      else {
-        $('#transfernote_product_table tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
-      }
-    }
-    else if (event.which==190 && event.ctrlKey) {
-      $('#transfernote_product_table tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
-      event.preventDefault();
-    }
-  });
+    });
 
   $(document).off("change",".product_name").on("change",".product_name",function(event)
-  {
-    var productcode = $(this).find('option:selected').val(); //Retreiving product code from selected option.
-    var curindex = $(this).closest('tbody tr').index();  //Index value used for checking the current row
-    //For each product selected its unit of measurement is displayed in the input field for quantity.
-  $.ajax({
-    url: '/invoice?action=getproduct',
-    type: 'POST',
-    dataType: 'json',
-    async : false,
-    data : {"productcode":productcode},
-    beforeSend: function(xhr)
     {
-      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-    }
-  })
-  .done(function(resp) {
-    console.log("success");
-    if (resp["gkstatus"]==0) {
-      $('#transfernote_product_table tbody tr:eq('+curindex+') td:eq(1) span').text(resp["unitname"]);
-    }
+      var productcode = $(this).find('option:selected').val(); //Retreiving product code from selected option.
+      var curindex = $(this).closest('tbody tr').index();  //Index value used for checking the current row
+      //For each product selected its unit of measurement is displayed in the input field for quantity.
+      $.ajax({
+	url: '/invoice?action=getproduct',
+	type: 'POST',
+	dataType: 'json',
+	async : false,
+	data : {"productcode":productcode},
+	beforeSend: function(xhr)
+	{
+	  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+	}
+      })
+       .done(function(resp) {
+	 console.log("success");
+	 if (resp["gkstatus"]==0) {
+	   $('#transfernote_product_table tbody tr:eq('+curindex+') td:eq(1) span').text(resp["unitname"]);
+	 }
 
-  })
-  .fail(function() {
-    console.log("error");
-  })
-  .always(function() {
-    console.log("complete");
-  });
-});
-//Key event for product quantity. Note that here a new row is added when 'Enter' key is pressed.
+       })
+       .fail(function() {
+	 console.log("error");
+       })
+       .always(function() {
+	 console.log("complete");
+       });
+    });
+  //Key event for product quantity. Note that here a new row is added when 'Enter' key is pressed.
   $(document).off("keydown",".transfernote_product_quantity").on("keydown",".transfernote_product_quantity",function(event)
-  {
-    var curindex1 = $(this).closest('tr').index();
-    var nextindex1 = curindex1+1;
-    var previndex1 = curindex1-1;
-    if (event.which==13) {
-      event.preventDefault();
+    {
+      var curindex1 = $(this).closest('tr').index();
+      var nextindex1 = curindex1+1;
+      var previndex1 = curindex1-1;
+      if (event.which==13) {
+	event.preventDefault();
 
-//Alerts to be displayed as a part of validations
-      if ($('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(1) input').val()=="") {
+	//Alerts to be displayed as a part of validations
+	if ($('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(1) input').val()=="") {
 
-  	    	 $("#quantity-blank-alert").alert();
-  	         $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-  	         $("#quantity-blank-alert").hide();
-
-
-  	    });
-$('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(1) input').focus();
-      return false;
-      }
-else {
-      $('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(1) input').focus().select();
-    }
+  	  $("#quantity-blank-alert").alert();
+  	  $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+  	    $("#quantity-blank-alert").hide();
 
 
+  	  });
+	  $('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(1) input').focus();
+	  return false;
+	}
+	else {
+	  $('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(1) input').focus().select();
+	}
 
-      if (curindex1 != ($("#transfernote_product_table tbody tr").length-1)) {
-        $('#transfernote_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
-      }
-      else {
-        if ($('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="") {
-          $("#product-blank-alert").alert();
-          $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#product-blank-alert").hide();
-          });
-          $('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
-          return false;
-        }
 
-	//Getting product details to fill the dropdown list in new row.
-	
-        $.ajax({
-          url: '/transfernotes?action=getprod',
-          type: 'POST',
-          dataType: 'json',
-          async : false,
-          data: {"godownid":$("#tn_from_godown option:selected").val()},
-          beforeSend: function(xhr)
-          {
-            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+
+	if (curindex1 != ($("#transfernote_product_table tbody tr").length-1)) {
+          $('#transfernote_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
+	}
+	else {
+          if ($('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="") {
+            $("#product-blank-alert").alert();
+            $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#product-blank-alert").hide();
+            });
+            $('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
+            return false;
           }
-        })
-        .done(function(resp) {
-          if (resp["gkstatus"]==0) {
-            $('#transfernote_product_table tbody').append('<tr>'+
-            '<td class="col-xs-7">'+
-            '<select class="form-control input-sm product_name"></select>'+
-            '</td>'+
-            '<td class="col-xs-4">'+
-            '<div class="input-group">'+
-            '<input type="text" class="transfernote_product_quantity form-control input-sm text-right" value="">'+
-              '<span class="input-group-addon input-sm" id="unitaddon"></span>'+
-            '</div>'+
-            '</td>'+
-            '<td class="col-xs-1">'+
-            '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-            '</td>'+
-            '</tr>');
-            for (product of resp["products"]) {
-              $('#transfernote_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
+
+	  //Getting product details to fill the dropdown list in new row.
+	  
+          $.ajax({
+            url: '/transfernotes?action=getprod',
+            type: 'POST',
+            dataType: 'json',
+            async : false,
+            data: {"godownid":$("#tn_from_godown option:selected").val()},
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
             }
-            $('#transfernote_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
-            $('.transfernote_product_quantity').numeric({ negative: false});
-            $(".product_name").change();
-          }
-        })
-        .fail(function() {
-          console.log("error");
-        })
-        .always(function() {
-          console.log("complete");
-        });
+          })
+           .done(function(resp) {
+             if (resp["gkstatus"]==0) {
+               $('#transfernote_product_table tbody').append('<tr>'+
+							     '<td class="col-xs-7">'+
+							     '<select class="form-control input-sm product_name"></select>'+
+							     '</td>'+
+							     '<td class="col-xs-4">'+
+							     '<div class="input-group">'+
+							     '<input type="text" class="transfernote_product_quantity form-control input-sm text-right" value="">'+
+							     '<span class="input-group-addon input-sm" id="unitaddon"></span>'+
+							     '</div>'+
+							     '</td>'+
+							     '<td class="col-xs-1">'+
+							     '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+							     '</td>'+
+							     '</tr>');
+               for (product of resp["products"]) {
+		 $('#transfernote_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
+               }
+               $('#transfernote_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
+               $('.transfernote_product_quantity').numeric({ negative: false});
+               $(".product_name").change();
+             }
+           })
+           .fail(function() {
+             console.log("error");
+           })
+           .always(function() {
+             console.log("complete");
+           });
 
+	}
       }
-    }
 
-    else if(event.which==190 && event.shiftKey)
-    {
-      event.preventDefault();
-      $('#transfernote_product_table tbody tr:eq('+nextindex1+') td:eq(1) input').focus().select();
-    }
-    else if (event.which==188 && event.shiftKey)
-    {
-      if(previndex1>-1)
-      {
-        event.preventDefault();
-        $('#transfernote_product_table tbody tr:eq('+previndex1+') td:eq(1) input').focus().select();
+      else if(event.which==190 && event.shiftKey)
+	{
+	  event.preventDefault();
+	  $('#transfernote_product_table tbody tr:eq('+nextindex1+') td:eq(1) input').focus().select();
+	}
+      else if (event.which==188 && event.shiftKey)
+	{
+	  if(previndex1>-1)
+	    {
+              event.preventDefault();
+              $('#transfernote_product_table tbody tr:eq('+previndex1+') td:eq(1) input').focus().select();
+	    }
+	  if (curindex1==0) {
+            event.preventDefault();
+            $("#no_of_packet").focus().select();
+	  }
+	}
+      else if (event.which==190 && event.ctrlKey) {
+	$('#transfernote_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+	event.preventDefault();
       }
-      if (curindex1==0) {
-        event.preventDefault();
-        $("#no_of_packet").focus().select();
+      else if (event.ctrlKey && event.which==188) {
+	$('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
+	event.preventDefault();
       }
-    }
-    else if (event.which==190 && event.ctrlKey) {
-      $('#transfernote_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
-      event.preventDefault();
-    }
-    else if (event.ctrlKey && event.which==188) {
-      $('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
-      event.preventDefault();
-    }
-    else if (event.which==27) {
-      event.preventDefault();
-      $('#no_of_packet').focus().select();
-    }
-  });
+      else if (event.which==27) {
+	event.preventDefault();
+	$('#no_of_packet').focus().select();
+      }
+    });
 
   //Deletes a row if.
 
@@ -566,7 +570,7 @@ else {
       $('#tn_from_godown').focus();
       return false;
     }
-//Validations for product details.
+    //Validations for product details.
     var products = [];
     for (var i = 0; i < $("#transfernote_product_table tbody tr").length && stock==0; i++) {
       if ($("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()=="") {
@@ -590,32 +594,32 @@ else {
       //Godown id, current date and product code are sent to receive available quantity of each selected product in the godown.
       
       $.ajax(
+        {
+          type: "POST",
+          url: "/transfernotes?type=stock",
+          global: false,
+          async: false,
+          datatype: "json",
+          data: {"endDate": reversedate, "goid": $("#tn_from_godown option:selected").val(), "productcode": $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()},
+          beforeSend: function(xhr)
           {
-            type: "POST",
-            url: "/transfernotes?type=stock",
-            global: false,
-            async: false,
-            datatype: "json",
-            data: {"endDate": reversedate, "goid": $("#tn_from_godown option:selected").val(), "productcode": $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()},
-            beforeSend: function(xhr)
-            {
-              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-            },
-          })
-            .done(function(resp)
-              {
-		//Quantity is compared with available stock. Stock flag is set to 1 if it exceeds stock.
-              if (parseInt($("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").val()) > parseInt(resp["gkresult"])) {
-                $("#quantity-excess-alert").alert();
-                $("#quantity-excess-alert").fadeTo(2250, 500).slideUp(500, function(){
-                  $("#quantity-excess-alert").hide();
-                });
-                $("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").focus();
-                stock = 1;
-                return false;
-                }
-          }
-          );
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+        })
+       .done(function(resp)
+         {
+	   //Quantity is compared with available stock. Stock flag is set to 1 if it exceeds stock.
+           if (parseInt($("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").val()) > parseInt(resp["gkresult"])) {
+             $("#quantity-excess-alert").alert();
+             $("#quantity-excess-alert").fadeTo(2250, 500).slideUp(500, function(){
+               $("#quantity-excess-alert").hide();
+             });
+             $("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").focus();
+             stock = 1;
+             return false;
+           }
+         }
+       );
 
       //A dictionary is made to store product code and quantity in this format - {"productcode":value, "qty":value}
       
@@ -625,54 +629,54 @@ else {
       products.push(obj); //Each dictioary is added to a list, product.
     }
 
-   if (stock == 0) {
-    event.preventDefault();
-    $('.modal-backdrop').remove();
-     $('.modal').modal('hide');
-     //Modal that seeks confirmation from user before saving
-    $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function (e)
-    {
-    $.ajax({
-      url: '/transfernotes?action=save',
-      type: 'POST',
-      dataType: 'json',
-      async : false,
-      data: {
-      "transfernoteno":$("#transfernote_no").val(),
-      "transfernotedate":$("#tn_year").val()+'-'+$("#tn_month").val()+'-'+$("#tn_date").val(),
-      "fromgodown":$("#tn_from_godown option:selected").val(),
+    if (stock == 0) {
+      event.preventDefault();
+      $('.modal-backdrop').remove();
+      $('.modal').modal('hide');
+      //Modal that seeks confirmation from user before saving
+      $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function (e)
+	{
+	  $.ajax({
+	    url: '/transfernotes?action=save',
+	    type: 'POST',
+	    dataType: 'json',
+	    async : false,
+	    data: {
+	      "transfernoteno":$("#transfernote_no").val(),
+	      "transfernotedate":$("#tn_year").val()+'-'+$("#tn_month").val()+'-'+$("#tn_date").val(),
+	      "fromgodown":$("#tn_from_godown option:selected").val(),
 
-      "togodown":$("#tn_to_godown option:selected").val(),
-      "transportationmode":$("#transport_mode").val(),
-      "nopkt":$("#no_of_packet").val(),
-      "issuername":$("#name_issuer").val(),
-      "designation":$("#designation").val(),
-      "products":JSON.stringify(products)},
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      },
-      success: function(resp) {
-      console.log(resp["gkstatus"]);
-      if(resp["gkstatus"] == 0){
-        $("#transfernote_create").click();
-        $("#success-alert").alert();
-        $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#success-alert").hide();
-        });
-      }
-      if(resp["gkstatus"] == 1){
-        $("#transfernote_no").focus();
-        $("#duplicate-alert").alert();
-        $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#duplicate-alert").hide();
-        });
-      }
+	      "togodown":$("#tn_to_godown option:selected").val(),
+	      "transportationmode":$("#transport_mode").val(),
+	      "nopkt":$("#no_of_packet").val(),
+	      "issuername":$("#name_issuer").val(),
+	      "designation":$("#designation").val(),
+	      "products":JSON.stringify(products)},
+	    beforeSend: function(xhr)
+	    {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+	    },
+	    success: function(resp) {
+	      console.log(resp["gkstatus"]);
+	      if(resp["gkstatus"] == 0){
+		$("#transfernote_create").click();
+		$("#success-alert").alert();
+		$("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#success-alert").hide();
+		});
+	      }
+	      if(resp["gkstatus"] == 1){
+		$("#transfernote_no").focus();
+		$("#duplicate-alert").alert();
+		$("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#duplicate-alert").hide();
+		});
+	      }
+	    }
+
+	  });
+	});
     }
-
-    });
-    });
-  }
   });
 
   //Focus events on opening and closing of modals.
@@ -822,10 +826,10 @@ else {
          }
        );
       var obj = {};
-    obj.productcode = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val();
-    obj.qty = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").val();
-    products.push(obj);
-  }
+      obj.productcode = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val();
+      obj.qty = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").val();
+      products.push(obj);
+    }
     if (stock == 0) {
       event.preventDefault();
       $('.modal-backdrop').remove();
@@ -924,7 +928,7 @@ else {
   });
   $("#confirm_yestnprint").on('hidden.bs.modal', function(event) {
     $("#transfernote_no").focus();
-});
+  });
 
 
 });
