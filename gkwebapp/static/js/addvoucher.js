@@ -62,7 +62,7 @@ $(document).ready(function() {
   var curfocusrow = -1;
   var accpopupindex = -1;
   var curselectlength = -1;
-  var numberofcredits = 0;
+  var numberofcustomers = 0;
   var percentwid = 100*(($("table").width()-12)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   $('.table-fixedheader tfoot').width(percentwid+"%");
@@ -1235,10 +1235,29 @@ $("#invsel").keyup(function(event) {
     var accountindex=0;
     $(".crdr").each(function() {
       if ($(this).val()=="Cr") {
-        numberofcredits = numberofcredits + 1;
+	if ($("#vouchertype").val() == "receipt") {
+	  $(".cramt").select();
+	  var curindex = $(this).closest('tr').index();
+	  $.ajax({
+	    url: '/getaccdetails',
+	    type: 'POST',
+	    async: false,
+	    dataType: 'json',
+	    data: {"accountcode": $("#vtable tbody tr:eq("+curindex+") td:eq(1) select option:selected").val()},
+	    beforeSend: function(xhr)
+	    {
+	      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	    },
+	    success: function(jsonObj) {
+	      var accountdetails = jsonObj["gkresult"];
+	      if (accountdetails["groupname"] == "Current Assets" && accountdetails["subgroupname"] == "Sundry Debtors") {
+		console.log(accountdetails["accountname"]);
+	      }
+	    }
+	  });
+	}
       }
     });
-    sessionStorage.numberofcredits = numberofcredits;
     sessionStorage.customeraccname = $.trim($("#vtable tbody tr:eq(1) td:eq(1) select option:selected").text());
     sessionStorage.customeracccode = $("#vtable tbody tr:eq(1) td:eq(1) select option:selected").val();
     // Check if voucher no. is blank and if it is then show an alert
@@ -1450,16 +1469,6 @@ $("#invsel").keyup(function(event) {
               $("#bwno").focus(); //Focus is on "No" when the model opens.
               $(document).off('click', '#bwyes').on('click', '#bwyes', function(event) {
                 event.preventDefault();
-                if (sessionStorage.numberofcredits > 1) {
-                  $("#credit-more-alert").alert();
-                  $("#credit-more-alert").fadeTo(2250, 500).slideUp(500, function(){
-                    $("#credit-more-alert").hide();
-                    $(".modal-backdrop").hide();
-                    $("#confirm_yes_billwise").modal("hide");
-                    $("#vno").focus().select();
-                  });
-                  return false;
-                }
                 $.ajax(
                   {
                     type: "POST",
