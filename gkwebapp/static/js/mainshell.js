@@ -428,8 +428,6 @@ $(document).ready(function(){
           $("#tallyimport").remove();
           $(".hideoperator").remove();
           $(".hidemanager").remove();
-          $("#showstockreport").remove();
-          $("#stockonhandreport").remove();
         }
          if (resp["gkresult"]["booksclosedflag"]==1) {
            $(".closebooks").remove();
