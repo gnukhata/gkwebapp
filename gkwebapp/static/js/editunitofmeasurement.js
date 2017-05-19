@@ -75,7 +75,7 @@ $(document).ready(function() {
         event.preventDefault();
         $("#unit_edit_save").click();
       }
-      else if(event.which==13 && $("#sub_unit_edit option:selected").val()!='') {
+      if(event.which==13 && $("#sub_unit_edit option:selected").val()!='') {
         event.preventDefault();
         $("#unit_edit_conversion_rate").focus().select();
 
@@ -85,7 +85,7 @@ $(document).ready(function() {
         $("#unit_edit_name").focus().select();
         $("#edit_conversion_div").hide();
       }
-      if(event.which==40 && $("#sub_unit_edit option:selected").val()!='') {
+      if(event.which==40 || $("#sub_unit_edit option:selected").val()!='') {
         event.preventDefault();
         $("#edit_conversion_div").show();
       }
@@ -130,6 +130,35 @@ $(document).ready(function() {
       $('#unit_edit_name').focus().select();
       return false;
     }
+
+    if ($("#unit_edit_name").val()==$("#sub_unit_edit option:selected").text()){
+      $("#sameUnit-alert").alert();
+      $("#sameUnit-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#sameUnit-alert").hide();
+      });
+      $('#sub_unit_edit').focus().select();
+      return false;
+    }
+
+    if ($("#unit_edit_conversion_rate").val()=='' && $("#sub_unit_edit option:selected").val()!=''){
+      $("#conversion-alert").alert();
+      $("#conversion-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#conversion-alert").hide();
+      });
+      $('#conversion_rate').focus().select();
+      return false;
+    }
+
+    if ($("#unit_edit_conversion_rate").val()==0 && $("#unit_edit_conversion_rate").val()==0.00 && $("#sub_unit_edit option:selected").val()!=''){
+      $("#conversion-rate-alert").alert();
+      $("#conversion-rate-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#conversion-rate-alert").hide();
+      });
+      $('#conversion_rate').focus().select();
+      return false;
+    }
+
+
     $.ajax({
       url: '/unitofmeasurements?action=edit',
       type: 'POST',
