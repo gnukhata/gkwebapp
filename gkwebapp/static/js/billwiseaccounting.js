@@ -27,14 +27,20 @@
 
 $(document).ready(function() {
   $('.modal-backdrop').remove();
+  var typingTimer;                //timer identifier
+  var doneTypingInterval = 200; //typing interval
+  clearTimeout(typingTimer);
   $(document).off('focus', '.amountpaid').on('focus', '.amountpaid', function(event) {
     event.preventDefault();
     /* Act on the event */
     //being a dynamic generated field the numeric property is added on their focus
+    clearTimeout(typingTimer);
     $(".numtype").numeric({ negative : false });
   });
+  
   $(document).off('keydown', '.amountpaid').on('keydown', '.amountpaid', function(event) {
     /* Act on the event */
+    clearTimeout(typingTimer);
     var curindex = $(this).closest('tr').index();
     var nextindex = curindex + 1;
     var previndex = curindex - 1;
@@ -64,6 +70,28 @@ $(document).ready(function() {
       $("#btclose").click();
     }
   });
+
+  $(document).off('keyup', '.amountpaid').on('keyup', '.amountpaid', function(event) {
+    /* Act on the event */
+    var curindex1 = $(this).closest('tr').index();
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(function(){
+      if ($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val() == "") {
+	var originalvalue = parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending"));
+	$("#latable tbody tr:eq("+curindex1+") td:eq(3)").text(parseFloat(originalvalue).toFixed(2));
+      }
+      else {
+	if (parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()) >= parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending"))) {
+	  $("#latable tbody tr:eq("+curindex1+") td:eq(3)").text("0.00");
+	}
+	else {
+	  var bwdiff = parseFloat(parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending")) - parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()));
+	  $("#latable tbody tr:eq("+curindex1+") td:eq(3)").text(parseFloat(bwdiff).toFixed(2));
+	}
+      }
+    }, doneTypingInterval);
+  });
+  
   $(document).off('click', '#btclose').on('click', '#btclose', function(event) {
     event.preventDefault();
     var billwisedata = [];
