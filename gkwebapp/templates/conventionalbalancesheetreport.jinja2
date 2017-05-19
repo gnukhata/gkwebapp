@@ -51,7 +51,7 @@
   {% elif orgtype=="Non For Profit" and flag=="0" %}
   <span style="margin:auto; display:table;"><strong>{% trans %}Conventional Statement of Affairs{% endtrans %} </strong>{% trans %}as on{% endtrans %} <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
   {% elif flag=="1" %}
-  <span style="margin:auto; display:table;"><strong>Consolidated Balance Sheet of Holding Company {{horgname}} and its {% if slen == 1 %}Subsidiary {% else %}Subsidiaries {% endif %}{% for sorgs in sorgname %} {{sorgs}} {%if loop.index == slen-1 %} & {% elif slen > 2 and loop.index != slen%} , {% endif %}{% endfor %} </strong>{% trans %}as on{% endtrans %} <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
+  <span style="margin:auto; display:table;"><strong>Consolidated Balance Sheet of Holding Company <i>{{horgname}}</i> and its {% if slen == 1 %} Subsidiary {% else %}Subsidiaries {% endif %}{% for sorgs in sorgname %} <i>{{sorgs}}</i> {%if loop.index == slen-1 %} & {% elif slen > 2 and loop.index != slen%} , {% endif %}{% endfor %} </strong>{% trans %}as on{% endtrans %} <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
   {% endif %}
   <input type="text" id="calculateto" value="{{to}}" hidden>
   <div class="row">
