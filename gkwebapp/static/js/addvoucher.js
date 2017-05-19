@@ -1255,6 +1255,7 @@ $("#invsel").keyup(function(event) {
 		customername = accountdetails["accountname"];
 		customercode = accountdetails["accountcode"];
 		numberofcustomers = numberofcustomers + 1;
+		sessionStorage.customeramount = $("#vtable tbody tr:eq("+curindex+") td:eq(4) input").val();
 	      }
 	    }
 	  });

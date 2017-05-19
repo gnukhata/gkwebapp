@@ -56,22 +56,24 @@ $(document).ready(function() {
   $(document).off('click', '#btclose').on('click', '#btclose', function(event) {
     event.preventDefault();
     var billwisedata = [];
+    var totalamountpaid = 0;
     for(var i = 0; i < $("#latable tbody tr").length; i++) {
-      if (parseFloat($("#latable tbody tr:eq("+i+") td:eq(4) input").val()) > parseFloat($("#latable tbody tr:eq("+i+") td:eq(3)").data("amountpaid"))) {
-	$("#bwamount-alert").alert();
-	$("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#bwamount-alert").hide();
-	});
-	return false;
-      }
       var amountpaid = parseFloat($("#latable tbody tr:eq("+i+") td:eq(4) input").val());
       var invid = parseInt($("#latable tbody tr:eq("+i+")").data("invid"));
       var invamount = {};
       invamount["pdamt"] = amountpaid;
       invamount["invid"] = invid;
       billwisedata.push(invamount);
+      totalamountpaid = totalamountpaid + amountpaid;
     }
-    console.log(billwisedata);
+    if (parseFloat(totalamountpaid) > parseFloat(sessionStorage.customeramount)) {
+      $("#latable tbody tr:last td:eq(4) input").focus().select();
+      $("#bwamount-alert").alert();
+      $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#bwamount-alert").hide();
+      });
+      return false;
+    }
     $.ajax({
       url: '/invoice?action=updatepayment',
       type: 'POST',
