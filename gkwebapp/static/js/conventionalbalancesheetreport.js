@@ -469,6 +469,7 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
     $('table a').contents().unwrap();
     $("table").removeClass('fixed-table').addClass('table-striped');
     $("#printconvbalance").hide();
+    $("#print").hide();
     $("#realprintbalance").show();
   });
   $("#realprintbalance").click(function(event) {
