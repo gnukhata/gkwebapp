@@ -1477,7 +1477,7 @@ $("#invsel").keyup(function(event) {
           $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#success-alert").hide();
             //Modal asking the user if he wants to do bill wise accounting or not?
-            if ($("#vouchertype").val() == "receipt" && sessionStorage.invflag == 1) {
+            if ($("#vouchertype").val() == "receipt" && sessionStorage.invflag == 1 && numberofcustomers == 1) {
               $("#confirm_yes_billwise").modal("show");
               $("#bwno").focus(); //Focus is on "No" when the model opens.
               $(document).off('click', '#bwyes').on('click', '#bwyes', function(event) {
