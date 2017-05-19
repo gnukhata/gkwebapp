@@ -93,6 +93,14 @@ $(document).ready(function() {
       });
       return false;
     }
+    if (parseFloat(totalamountpaid) < parseFloat(sessionStorage.customeramount)) {
+      $("#latable tbody tr:last td:eq(4) input").focus().select();
+      $("#bwamount-less-alert").alert();
+      $("#bwamount-less-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#bwamount-less-alert").hide();
+      });
+      return false;
+    }
     $.ajax({
       url: '/invoice?action=updatepayment',
       type: 'POST',

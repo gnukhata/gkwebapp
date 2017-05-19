@@ -470,7 +470,11 @@ The field Balance displays the balance of the account selected as on the date of
           <div class="modal-body">
 	    <div class="alert alert-danger" id="bwamount-alert"  aria-live="rude" role="alert" hidden>
 
-	      {% trans %}Total Amount Paid is more than Credit Amount in Receipt!{% endtrans %}
+	      {% trans %}Total Amount Paid is more than Amount entered in Voucher!{% endtrans %}
+	    </div>
+	    <div class="alert alert-danger" id="bwamount-less-alert"  aria-live="rude" role="alert" hidden>
+
+	      {% trans %}Total Amount Paid is less than Amount entered in Voucher!{% endtrans %}
 	    </div>
 	    <div class="alert alert-danger" id="bwamount-blank-alert"  aria-live="rude" role="alert" hidden>
 
@@ -478,7 +482,7 @@ The field Balance displays the balance of the account selected as on the date of
 	    </div>
 	    <div class="alert alert-success" id="bwamount-success-alert"  aria-live="rude" role="alert" hidden>
 
-	      {% trans %}Payment Updated!{% endtrans %}
+	      {% trans %}Receipt/Payment Updated!{% endtrans %}
 	    </div>
 	    <div id="bwtableload"></div>
 	    <small id="txtareahelp" class="form-text text-muted">Press 'Insert' key from anywhere on the screen to save changes.</small><br>
