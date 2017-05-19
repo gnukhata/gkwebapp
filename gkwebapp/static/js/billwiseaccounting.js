@@ -53,4 +53,45 @@ $(document).ready(function() {
       $("#latable tbody tr:eq("+previndex+") td:eq(4) input").focus().select();
     }
   });
+  $(document).off('click', '#btclose').on('click', '#btclose', function(event) {
+    event.preventDefault();
+    var billwisedata = [];
+    for(var i = 0; i < $("#latable tbody tr").length; i++) {
+      if (parseFloat($("#latable tbody tr:eq("+i+") td:eq(4) input").val()) > parseFloat($("#latable tbody tr:eq("+i+") td:eq(3)").data("amountpaid"))) {
+	$("#bwamount-alert").alert();
+	$("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#bwamount-alert").hide();
+	});
+	return false;
+      }
+      var amountpaid = parseFloat($("#latable tbody tr:eq("+i+") td:eq(4) input").val());
+      var invid = parseInt($("#latable tbody tr:eq("+i+")").data("invid"));
+      var invamount = {};
+      invamount["pdamt"] = amountpaid;
+      invamount["invid"] = invid;
+      billwisedata.push(invamount);
+    }
+    console.log(billwisedata);
+    $.ajax({
+      url: '/invoice?action=updatepayment',
+      type: 'POST',
+      async: false,
+      dataType: 'json',
+      data: {"billwisedata":JSON.stringify(billwisedata)},
+      beforeSend: function(xhr)
+      {
+	xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+      success: function(jsonObj) {
+	var status = jsonObj["gkstatus"];
+	if (status == 0) {
+	  $("#bwamount-success-alert").alert();
+	  $("#bwamount-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#bwamount-success-alert").hide();
+	    $("#bwtable").modal("hide");
+	  });
+	}
+      }
+    });
+  });
 });

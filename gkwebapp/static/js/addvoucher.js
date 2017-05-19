@@ -1499,7 +1499,7 @@ $("#invsel").keyup(function(event) {
                       $("#bwtableload").html(resp);
                       $(".modal-backdrop").hide();
                       $("#confirm_yes_billwise").modal("hide");
-                      $("#bwtabletitle").append(sessionStorage.customeraccname);
+                      $("#bwtabletitle").append('<b>'+sessionStorage.customeraccname+'</b>');
                       $("#bwtable").modal("show");
                       $(".fixed-table-loading").remove();
                     }
@@ -1678,12 +1678,16 @@ $("#invsel").keyup(function(event) {
   $('#reset').click(function(event) {
 $("#show"+$("#vtype").val()).click();
   });
-  $('#confirm_yes_billwise, #bwtable').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is opened
+  $('#confirm_yes_billwise, #bwtable').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is closed
   {
     $("#vno").focus().select();
   });
-  $('#bwtable').on('shown.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is opened
+  $('#bwtable').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
   {
     $(".amountpaid:first").focus().select();
   });
+  $('#bwtable').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is closed
+    {
+      $("#vno").focus().select();
+    });
 });

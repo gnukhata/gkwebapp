@@ -4,65 +4,65 @@
   <title>{% trans %}GNUKhata{% endtrans %} | {{projectname}} {% trans %}Statement{% endtrans %}</title>
 
   <style type="text/css">
-  .shadow {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  #latable td {
-    font-size: 75%;
-    padding: 4 !important;
-    margin: 4 !important;
-  }
+   .shadow {
+       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   }
+   #latable td {
+       font-size: 75%;
+       padding: 4 !important;
+       margin: 4 !important;
+   }
 
-  #latable th {
-    font-size: 85%;
-  }
+   #latable th {
+       font-size: 85%;
+   }
 
-  #latable tbody {
-      display:block;
-      height: calc(100vh - 20em);
-      overflow-y:scroll;
-  }
-  #latable thead,#latable tbody tr {
-      display:table;
-      width:100%;
-      table-layout:fixed;
-  }
-  #latable thead {
-      width: calc( 100% - 0.65em );
-  }
+   #latable tbody {
+       display:block;
+       height: calc(100vh - 20em);
+       overflow-y:scroll;
+   }
+   #latable thead,#latable tbody tr {
+       display:table;
+       width:100%;
+       table-layout:fixed;
+   }
+   #latable thead {
+       width: calc( 100% - 0.65em );
+   }
 
-  .card-view .title {
-      font-weight: bold;
-      display: inline-block;
-      min-width: 30%;
-      text-align: left !important;
-  }
+   .card-view .title {
+       font-weight: bold;
+       display: inline-block;
+       min-width: 30%;
+       text-align: left !important;
+   }
 
-  .calign{
-    text-align:center;
-  }
-  .lalign{
-    text-align:left;
-  }
-  .ralign{
-    text-align:right;
-  }
-  .dtwrap{
-    width :5%
-     }
- .smwrap{
-  width:3%
- }
- .smwrap1{
- width:2.4%
- }
+   .calign{
+       text-align:center;
+   }
+   .lalign{
+       text-align:left;
+   }
+   .ralign{
+       text-align:right;
+   }
+   .dtwrap{
+       width :5%
+   }
+   .smwrap{
+       width:3%
+   }
+   .smwrap1{
+       width:2.4%
+   }
 
- .lngwrap{
-  width:16%
- }
- .mdwrap{
-  width:8%
- }
+   .lngwrap{
+       width:16%
+   }
+   .mdwrap{
+       width:8%
+   }
 
   </style>
 </head>
@@ -92,7 +92,7 @@
 	<tr><td>No Data Found.</td></tr>
       {% endif %}
       {% for record in gkresult %}
-      <tr	value="{{record["invid"]}}">
+      <tr data-invid="{{record["invid"]}}">
         <td class="dtwrap calign" >
           {{record["invoiceno"]}}
         </td>
@@ -102,7 +102,7 @@
         <td class="mdwrap ralign" >
           {{record["invoicetotal"]}}
         </td>
-        <td class="mdwrap ralign" >
+        <td class="mdwrap ralign" data-amountpaid="{{record["pendingamount"]}}">
           {{record["pendingamount"]}}
         </td>
         <td class="mdwrap ralign" >

@@ -467,10 +467,19 @@ The field Balance displays the balance of the account selected as on the date of
 
             <h4 class="modal-title" id="bwtabletitle">{% trans %}Unpaid/Partially Paid Bills for {% endtrans %}</h4>
           </div>
-          <div class="modal-body" id="bwtableload">
+          <div class="modal-body">
+	    <div class="alert alert-danger" id="bwamount-alert"  aria-live="rude" role="alert" hidden>
+
+	      {% trans %}Amount Paid is more than Amount Pending!{% endtrans %}
+	    </div>
+	    <div class="alert alert-success" id="bwamount-success-alert"  aria-live="rude" role="alert" hidden>
+
+	      {% trans %}Payment Updated!{% endtrans %}
+	    </div>
+	    <div id="bwtableload"></div>
           </div>
           <div class="modal-footer">
-            <button type="button" id ="btclose" class="btn btn-success" data-dismiss="modal" accesskey="d">{% trans %}<u>D</u>one{% endtrans %}</button>
+            <button type="button" id ="btclose" class="btn btn-success">{% trans %}Done{% endtrans %}</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
