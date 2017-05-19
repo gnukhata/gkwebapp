@@ -75,7 +75,7 @@ $(document).ready(function() {
         event.preventDefault();
         $("#unit_edit_save").click();
       }
-      else if(event.which==13 && $("#sub_unit_edit option:selected").val()!='') {
+      if(event.which==13 && $("#sub_unit_edit option:selected").val()!='') {
         event.preventDefault();
         $("#unit_edit_conversion_rate").focus().select();
 
@@ -85,7 +85,7 @@ $(document).ready(function() {
         $("#unit_edit_name").focus().select();
         $("#edit_conversion_div").hide();
       }
-      if(event.which==40 && $("#sub_unit_edit option:selected").val()!='') {
+      if(event.which==40 || $("#sub_unit_edit option:selected").val()!='') {
         event.preventDefault();
         $("#edit_conversion_div").show();
       }
