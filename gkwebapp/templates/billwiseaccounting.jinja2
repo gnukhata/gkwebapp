@@ -67,8 +67,7 @@
   </style>
 </head>
 <body>
-  <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="laclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
-  <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
+  <table id="latable" class="table shadow table-bordered">
     <thead class="bg-primary">
       <tr>
         <th class="dtwrap calign">
@@ -89,6 +88,9 @@
       </tr>
     </thead>
     <tbody>
+      {% if not gkresult %}
+	<tr><td>No Data Found.</td></tr>
+      {% endif %}
       {% for record in gkresult %}
       <tr	value="{{record["invid"]}}">
         <td class="dtwrap calign" >
@@ -113,6 +115,5 @@
 
     </tbody>
   </table>
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
 </body>
 </html>
