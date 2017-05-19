@@ -1237,7 +1237,6 @@ $("#invsel").keyup(function(event) {
     $(".crdr").each(function() {
       if ($(this).val()=="Cr") {
 	if ($("#vouchertype").val() == "receipt") {
-	  $(".cramt").select();
 	  var curindex = $(this).closest('tr').index();
 	  $.ajax({
 	    url: '/getaccdetails',
@@ -1256,6 +1255,33 @@ $("#invsel").keyup(function(event) {
 		customercode = accountdetails["accountcode"];
 		numberofcustomers = numberofcustomers + 1;
 		sessionStorage.customeramount = $("#vtable tbody tr:eq("+curindex+") td:eq(4) input").val();
+		sessionStorage.amounttitle = "Credit Amount: ";
+	      }
+	    }
+	  });
+	}
+      }
+      if ($(this).val()=="Dr") {
+	if ($("#vouchertype").val() == "payment") {
+	  var curindex = $(this).closest('tr').index();
+	  $.ajax({
+	    url: '/getaccdetails',
+	    type: 'POST',
+	    async: false,
+	    dataType: 'json',
+	    data: {"accountcode": $("#vtable tbody tr:eq("+curindex+") td:eq(1) select option:selected").val()},
+	    beforeSend: function(xhr)
+	    {
+	      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	    },
+	    success: function(jsonObj) {
+	      var accountdetails = jsonObj["gkresult"];
+	      if (accountdetails["groupname"] == "Current Liabilities" && accountdetails["subgroupname"] == "Sundry Creditors for Purchase") {
+		customername = accountdetails["accountname"];
+		customercode = accountdetails["accountcode"];
+		numberofcustomers = numberofcustomers + 1;
+		sessionStorage.customeramount = $("#vtable tbody tr:eq("+curindex+") td:eq(3) input").val();
+		sessionStorage.amounttitle = "Debit Amount: ";
 	      }
 	    }
 	  });
@@ -1478,7 +1504,7 @@ $("#invsel").keyup(function(event) {
           $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#success-alert").hide();
             //Modal asking the user if he wants to do bill wise accounting or not?
-            if ($("#vouchertype").val() == "receipt" && sessionStorage.invflag == 1 && numberofcustomers == 1) {
+            if (($("#vouchertype").val() == "receipt" || $("#vouchertype").val() == "payment") && sessionStorage.invflag == 1 && numberofcustomers == 1) {
               $("#confirm_yes_billwise").modal("show");
               $("#bwno").focus(); //Focus is on "No" when the model opens.
               $(document).off('click', '#bwyes').on('click', '#bwyes', function(event) {
@@ -1500,7 +1526,7 @@ $("#invsel").keyup(function(event) {
                       $("#bwtableload").html(resp);
                       $(".modal-backdrop").hide();
                       $("#confirm_yes_billwise").modal("hide");
-                      $("#bwtabletitle").append('<b>'+sessionStorage.customeraccname+'</b>');
+                      $("#bwtabletitle").append('<b>'+sessionStorage.customeraccname+'</b>'+'<span class="pull-right">'+sessionStorage.amounttitle+'<b>'+sessionStorage.customeramount+'</b><span>');
                       $("#bwtable").modal("show");
                       $(".fixed-table-loading").remove();
                     }

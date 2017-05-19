@@ -472,11 +472,17 @@ The field Balance displays the balance of the account selected as on the date of
 
 	      {% trans %}Total Amount Paid is more than Credit Amount in Receipt!{% endtrans %}
 	    </div>
+	    <div class="alert alert-danger" id="bwamount-blank-alert"  aria-live="rude" role="alert" hidden>
+
+	      {% trans %}Please enter Amount Paid.{% endtrans %}
+	    </div>
 	    <div class="alert alert-success" id="bwamount-success-alert"  aria-live="rude" role="alert" hidden>
 
 	      {% trans %}Payment Updated!{% endtrans %}
 	    </div>
 	    <div id="bwtableload"></div>
+	    <small id="txtareahelp" class="form-text text-muted">Press 'Insert' key from anywhere on the screen to save changes.</small><br>
+	    <small id="txtareahelp2" class="form-text text-muted">You can also press 'Enter' key from 'Amount Paid' field in last row.</small>
           </div>
           <div class="modal-footer">
             <button type="button" id ="btclose" class="btn btn-success">{% trans %}Done{% endtrans %}</button>

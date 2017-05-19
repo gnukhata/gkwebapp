@@ -42,15 +42,26 @@ $(document).ready(function() {
     if (event.which == 13) {
       event.preventDefault();
       if (curindex == numberofrows) {
-	$("#btclose").focus();
+	$("#btclose").click();
       }
       else {
+	if ($("#latable tbody tr:eq("+curindex+") td:eq(4) input").val()=="") {
+	  $("#bwamount-blank-alert").alert();
+	  $("#bwamount-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#bwamount-blank-alert").hide();
+	  });
+	  return false;
+	}
 	$("#latable tbody tr:eq("+nextindex+") td:eq(4) input").focus().select();
       }
     }
-    if (event.which == 38) {
+    else if (event.which == 38) {
       event.preventDefault();
       $("#latable tbody tr:eq("+previndex+") td:eq(4) input").focus().select();
+    }
+    else if (event.which == 45) {
+      event.preventDefault();
+      $("#btclose").click();
     }
   });
   $(document).off('click', '#btclose').on('click', '#btclose', function(event) {
@@ -58,6 +69,14 @@ $(document).ready(function() {
     var billwisedata = [];
     var totalamountpaid = 0;
     for(var i = 0; i < $("#latable tbody tr").length; i++) {
+      if ($("#latable tbody tr:eq("+i+") td:eq(4) input").val()=="") {
+	$("#latable tbody tr:eq("+i+") td:eq(4) input").focus();
+	$("#bwamount-blank-alert").alert();
+	$("#bwamount-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#bwamount-blank-alert").hide();
+	});
+	return false;
+      }
       var amountpaid = parseFloat($("#latable tbody tr:eq("+i+") td:eq(4) input").val());
       var invid = parseInt($("#latable tbody tr:eq("+i+")").data("invid"));
       var invamount = {};
