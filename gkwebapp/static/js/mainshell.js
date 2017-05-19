@@ -406,72 +406,30 @@ $(document).ready(function(){
       .done(function(resp){
         if(resp["gkresult"]["userrole"]==3){
           $("#master").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#invoice").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#addcashmemo").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#godown").remove();
-        }
-        if (resp["gkresult"]["userrole"]==3) {
           $("#purchaseorder").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#transaction").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#showviewledger").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#showtrialbalance").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#showprjstate").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#showcashflow").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#showbalancesheet").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#consolidatedbalancesheet").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#showprofitloss").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#listofaccounts").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#showdeletedvoucher").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#createuser").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#REMOVEuser").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#showclosebooks").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#exportledger").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#deleteorg").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#tallyimport").remove();
-        }
-        if(resp["gkresult"]["userrole"]==1){
           $(".hideoperator").remove();
-        }
-        if(resp["gkresult"]["userrole"]==0){
           $(".hidemanager").remove();
+          $("#showstockreport").remove();
+          $("#stockonhandreport").remove();
         }
          if (resp["gkresult"]["booksclosedflag"]==1) {
            $(".closebooks").remove();
