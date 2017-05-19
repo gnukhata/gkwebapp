@@ -26,6 +26,7 @@ Contributors:
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
 "Parabjyot Singh" <parabjyot1996@gmail.com>
 "Rahul Chaurasiya" <crahul4133@gmail.com>
+"Rohini Baraskar" <robaraskar@gmail.com>
 */
 
 $(document).ready(function() {

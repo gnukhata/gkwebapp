@@ -55,7 +55,9 @@ $(document).ready(function() {
          }
        }
    });
-
+ $(document).off('focusin', '#holdingorglist').on('focusin', '#holdingorglist',function(event) {
+$("#subsidiary_div").hide();
+ });
    $(document).off('keydown', '#holdingorglist').on('keydown', '#holdingorglist',function(event) {
      if (event.which==13) {
        event.preventDefault();
@@ -350,6 +352,7 @@ $('#authenticate').on('shown.bs.modal', function() {
                 $("#pwd").focus();
               }
               }
+
       });
       $("#pwd").keydown(function(event) {
           if (event.which == 13) {
@@ -366,6 +369,10 @@ $('#authenticate').on('shown.bs.modal', function() {
                 $("#submit").focus();
               //  $("#submit").click();
               }
+              }
+              if (event.which==38) {
+                event.preventDefault();
+                $('#user').focus();
               }
       });
   });
