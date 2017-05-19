@@ -92,25 +92,27 @@
 	<tr><td>No Data Found.</td></tr>
       {% endif %}
       {% for record in gkresult %}
-      <tr data-invid="{{record["invid"]}}">
-        <td class="dtwrap calign" >
-          {{record["invoiceno"]}}
-        </td>
-        <td class="dtwrap calign">
-          {{record["invoicedate"]}}
-        </td>
-        <td class="mdwrap ralign" >
-          {{record["invoicetotal"]}}
-        </td>
-        <td class="mdwrap ralign" data-amountpaid="{{record["pendingamount"]}}">
-          {{record["pendingamount"]}}
-        </td>
-        <td class="mdwrap ralign" >
-          <div class="form-group">
-            <input type="text" class="amountpaid form-control input-sm rightJustified numtype" value="">
-          </div>
-        </td>
-      </tr>
+	{% if record["pendingamount"]!=0.00 %}
+	  <tr data-invid="{{record["invid"]}}">
+            <td class="dtwrap calign" >
+              {{record["invoiceno"]}}
+            </td>
+            <td class="dtwrap calign">
+              {{record["invoicedate"]}}
+            </td>
+            <td class="mdwrap ralign" >
+              {{record["invoicetotal"]}}
+            </td>
+            <td class="mdwrap ralign" data-amountpaid="{{record["pendingamount"]}}">
+              {{record["pendingamount"]}}
+            </td>
+            <td class="mdwrap ralign" >
+              <div class="form-group">
+		<input type="text" class="amountpaid form-control input-sm rightJustified numtype" value="">
+              </div>
+            </td>
+	  </tr>
+	{% endif %}
       {% endfor %}
 
     </tbody>
