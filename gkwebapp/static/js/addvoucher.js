@@ -62,7 +62,6 @@ $(document).ready(function() {
   var curfocusrow = -1;
   var accpopupindex = -1;
   var curselectlength = -1;
-  var numberofcustomers = 0;
   var percentwid = 100*(($("table").width()-12)/$("table").width());
   $('.table-fixedheader thead').width(percentwid+"%");
   $('.table-fixedheader tfoot').width(percentwid+"%");
@@ -1233,6 +1232,9 @@ $("#invsel").keyup(function(event) {
     var amountindex = 0;
     var accallow = true;
     var accountindex=0;
+    var customername = "";
+    var customercode = "";
+    var numberofcustomers = 0;
     $(".crdr").each(function() {
       if ($(this).val()=="Cr") {
 	if ($("#vouchertype").val() == "receipt") {
@@ -1251,15 +1253,27 @@ $("#invsel").keyup(function(event) {
 	    success: function(jsonObj) {
 	      var accountdetails = jsonObj["gkresult"];
 	      if (accountdetails["groupname"] == "Current Assets" && accountdetails["subgroupname"] == "Sundry Debtors") {
-		console.log(accountdetails["accountname"]);
+		customername = accountdetails["accountname"];
+		customercode = accountdetails["accountcode"];
+		numberofcustomers = numberofcustomers + 1;
 	      }
 	    }
 	  });
 	}
       }
     });
-    sessionStorage.customeraccname = $.trim($("#vtable tbody tr:eq(1) td:eq(1) select option:selected").text());
-    sessionStorage.customeracccode = $("#vtable tbody tr:eq(1) td:eq(1) select option:selected").val();
+    if (numberofcustomers == 1) {
+      sessionStorage.customeraccname = customername;
+      sessionStorage.customeracccode = customercode;
+    }
+    if (numberofcustomers > 1) {
+      $("#vtable tbody tr:last td:eq(1) select").focus();
+      $("#customer-more-alert").alert();
+      $("#customer-more-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#customer-more-alert").hide();
+      });
+      return false;
+    }
     // Check if voucher no. is blank and if it is then show an alert
     if ($('#vno').val()=="") {
       $("#vno-alert").alert();
