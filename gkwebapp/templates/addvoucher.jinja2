@@ -356,21 +356,21 @@
       {% endif %}
           <div class="form-inline" >
               <button type="button" id="save" name="submit" class="btn btn-success" accesskey="s">
-                {% trans %}<u>S</u>ave{% endtrans %}
+                <i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}
               </button>
             <div class="form-group">
               <button type="button" id="reset" class="btn btn-danger" accesskey="e">
-                {% trans %}R<u>e</u>set{% endtrans %}
+                <i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}
               </button>
             </div>
             <div class="form-group">
               <button type="button" id="popup" class="btn btn-primary" accesskey="o">
-                {% trans %}Add Acc<u>o</u>unt{% endtrans %}
+                <i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Acc<u>o</u>unt{% endtrans %}
               </button>
             </div>
                   <label class="btn btn-primary" for="my-file-selector">
                     <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
-                    {% trans %}Attac<u>h</u>{% endtrans %}
+                    <i class="fa fa-paperclip" aria-hidden="true"></i> {% trans %}Attac<u>h</u>{% endtrans %}
                   </label>
 
                   <span class='label label-info' id="upload-file-info"></span>

@@ -152,13 +152,15 @@
     </div>
   </div>
     <span class="hidden-print" style="margin:auto; display:table;">
-      <button class="btn btn-sm btn-danger" type="button" id="bankrecon_back" accesskey="e">{% trans %}R<u>e</u>conciliation Menu{% endtrans %}</button>
-      <button class="btn btn-sm btn-primary" type="button" id="clrditems" accesskey="a">{% trans %}Cle<u>a</u>red Items{% endtrans %}</button>
-      <button class="btn btn-sm btn-primary" type="button"  id="viewstatement" accesskey="v">{% trans %}<u>V</u>iew Statement{% endtrans %}</button>
-      <button class="btn btn-sm btn-primary" type="button"  id="printstatement" accesskey="s">{% trans %}<u>S</u>tatement's Printable Version{% endtrans %}</button>
-      <button class="btn btn-sm btn-primary" type="button"  id="printtransactions" accesskey="t">{% trans %}<u>T</u>ransaction's Printable Version{% endtrans %}</button>
-      <button class="btn btn-sm btn-primary" type="button"  id="realprintbank" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
-      <button class="btn btn-sm btn-primary" type="button"  id="back" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+      <button class="btn btn-sm btn-danger" type="button" id="bankrecon_back" accesskey="e">{% trans %}<i class="fa fa-bars" aria-hidden="true"></i>
+ R<u>e</u>conciliation Menu{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button" id="clrditems" accesskey="a">{% trans %}<i class="fa fa-list" aria-hidden="true"></i> Cle<u>a</u>red Items{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="viewstatement" accesskey="v">{% trans %}<i class="fa fa-eye" aria-hidden="true"></i> <u>V</u>iew Statement{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="printstatement" accesskey="s">{% trans %}<i class="fa fa-print" aria-hidden="true"> </i> <u>S</u>tatement's Printable Version{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="printtransactions" accesskey="t">{% trans %}<i class="fa fa-print" aria-hidden="true"></i> <u>T</u>ransaction's Printable Version{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="realprintbank" accesskey="t">{% trans %}<i class="fa fa-print" aria-hidden="true"></i> Prin<u>t</u>{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="back" accesskey="b">{% trans %}<i class="fa fa-arrow-left" aria-hidden="true"></i>
+ <u>B</u>ack{% endtrans %}</button>
     </span>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bankreconreport.js')}}"></script>

@@ -93,7 +93,7 @@
                   {{transfernotedate}}
                 </td>
             </tr>
-	    
+
 	    <tr>
               <td class="col-xs-5">
                 <strong> Expected Date of Reciept </strong>
@@ -140,7 +140,7 @@
         </table>
       </div>
       </div>
-      
+
       <div class="row">
 	<div class="col-xs-12">
           <table class="table table-bordered table-condensed" style="margin-bottom:0px;">
@@ -192,8 +192,8 @@
         </div>
       </div>
       <span style="margin:auto; display:table;">
-    	<button type="button" class="btn btn-sm btn-danger hidden-print" id="tnback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
-    	<button type="button" class="btn btn-sm btn-info hidden-print" id="tnprint" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
+    		<button type="button" class="btn btn-sm btn-danger hidden-print" id="tnback" accesskey="b">{% trans %}<i class="fa fa-arrow-left" aria-hidden="true"></i> <u>B</u>ack{% endtrans %}</button>
+    		<button type="button" class="btn btn-sm btn-info hidden-print" id="tnprint" >{% trans %}<i class="fa fa-print" aria-hidden="true"></i> Prin<u>t</u>{% endtrans %}</button>
     	</span>
     </div>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/printtransfernote.js')}}"></script>

@@ -258,8 +258,8 @@
          <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Ctrl + < or Ctrl + >' to navigate within a row and 'Shift + <' or 'Shift + >' to navigate within a column. Press 'Shift + <' from Product of first row to switch focus to From Godown.  Press 'Enter' key from last field for a new row.{% endtrans %}</small>
          		<div class="panel-footer">
          			<div class="container-fluid">
-         				<button type="submit" class="btn btn-success btn-sm" id="sosubmit" name="submit">{% trans %}Save{% endtrans %}</button>
-         				<button id="soreset" class="btn btn-warning btn-sm">{% trans %}Reset{% endtrans %}</button>
+         				<button type="submit" class="btn btn-success btn-sm" id="sosubmit" name="submit">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i> Save{% endtrans %}</button>
+         				<button id="soreset" class="btn btn-warning btn-sm">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> Reset{% endtrans %}</button>
          			</div>
                <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
                  <div class="vertical-alignment-helper">
@@ -273,8 +273,8 @@
                          <p>{% trans %}Are you sure?{% endtrans %}</p>
                        </div>
                        <div class="modal-footer">
-                         <button type="button" id ="so_save_no" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
-                         <button type="button" id="so_save_yes" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
+                         <button type="button" id ="so_save_no" class="btn btn-warning" data-dismiss="modal">{% trans %}<i class="fa fa-times" aria-hidden="true"></i> No{% endtrans %}</button>
+                         <button type="button" id="so_save_yes" data-dismiss="modal" class="btn btn-success">{% trans %}<i class="fa fa-check" aria-hidden="true"></i> Yes{% endtrans %}</button>
                        </div>
                      </div><!-- /.modal-content -->
                    </div><!-- /.modal-dialog -->
