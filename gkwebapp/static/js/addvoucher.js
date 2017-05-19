@@ -20,8 +20,7 @@ Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
 
 Contributors:
 "Krishnakant Mane" <kk@gmail.com>
-"Ishan Masdekar " <imasdekar@dff.org.in>
-"Navin Karkera" <navin@dff.org.in>
+"Abhijith Balan" <abhijithb21@openmailbox.org.in>
 */
 
 /*
