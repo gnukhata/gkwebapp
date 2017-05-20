@@ -89,6 +89,18 @@ $(document).ready(function() {
 	  $("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">'+parseFloat(bwdiff).toFixed(2)+'</div');
 	}
       }
+      var totalap = 0.00;
+      var ap = 0.00;
+      for(var i = 0; i < $("#latable tbody tr").length; i++) {
+	if ($("#latable tbody tr:eq("+i+") td:eq(4) input").val()=="") {
+	  ap = 0.00;
+	}
+	else {
+	  ap = parseFloat($("#latable tbody tr:eq("+i+") td:eq(4) input").val());
+	}
+	totalap = totalap + ap;
+      }
+      $('#latable tfoot tr:eq(0) td:eq(1)').html('<div class="form-control">'+parseFloat(totalap).toFixed(2)+'</div');
     }, doneTypingInterval);
   });
   
