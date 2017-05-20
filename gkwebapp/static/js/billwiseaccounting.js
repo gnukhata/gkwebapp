@@ -25,26 +25,40 @@
 
 // This script is for bill wise accounting
 
+/* 
+   When Receipt/Payment vouchers are created a modal appears asking if user wants to continue to bill wise accounting.  
+   When confirmed a table is presented with fields Invoice No, Invoice Date, Invoice Amount, Amount Pending and Amount to be Paid(input by user).  
+   Account name and Debit/Credit amount are displayed on the title bar of the modal.  
+   Total amount paid is displayed in table footer.  
+   As user enters Amount Paid it is reduced from Amount Pending until Amount Pending is zero.  
+
+   Validations :-  
+   Total Amount Paid must be equal to Debit/Credit Amount.  
+   Amount Paid cannot be blank.  
+ */ 
+
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   var typingTimer;                //timer identifier
   var doneTypingInterval = 200; //typing interval
-  clearTimeout(typingTimer);
+  clearTimeout(typingTimer);  //clearing timeout
   $(document).off('focus', '.amountpaid').on('focus', '.amountpaid', function(event) {
     event.preventDefault();
     /* Act on the event */
-    //being a dynamic generated field the numeric property is added on their focus
+    //Preventing input of alphabets and negative numbers in Amount Paid
     clearTimeout(typingTimer);
     $(".numtype").numeric({ negative : false });
   });
-  
+  //Actions to be triggered when a key is pressed down.
   $(document).off('keydown', '.amountpaid').on('keydown', '.amountpaid', function(event) {
     /* Act on the event */
     clearTimeout(typingTimer);
+    // Indexes tell us the row number.
     var curindex = $(this).closest('tr').index();
     var nextindex = curindex + 1;
     var previndex = curindex - 1;
-    var numberofrows = $("#latable tbody tr").length - 1;
+    var numberofrows = $("#latable tbody tr").length - 1; //Number of rows is reduced by 1 to match indexing of elements which starts from 0.
+    //Actions for 'Enter' key.
     if (event.which == 13) {
       event.preventDefault();
       if (curindex == numberofrows) {
