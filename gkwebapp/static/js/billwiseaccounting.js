@@ -54,17 +54,19 @@ $(document).ready(function() {
     /* Act on the event */
     clearTimeout(typingTimer);
     // Indexes tell us the row number.
-    var curindex = $(this).closest('tr').index();
-    var nextindex = curindex + 1;
-    var previndex = curindex - 1;
+    var curindex = $(this).closest('tr').index(); //Current Index
+    var nextindex = curindex + 1; //Next Index
+    var previndex = curindex - 1; //Previous Index
     var numberofrows = $("#latable tbody tr").length - 1; //Number of rows is reduced by 1 to match indexing of elements which starts from 0.
     //Actions for 'Enter' key.
     if (event.which == 13) {
-      event.preventDefault();
+      event.preventDefault(); //Prevents default behaviour of any event. In this case, submiting the form.
+      //Click event force 'Done' button is fired when 'Enter' is pressed from Amount Paid in last row. Note that current index is compared with number of rows
       if (curindex == numberofrows) {
 	$("#btclose").click();
       }
       else {
+	//Alert is displayed when Amount Paid is blank
 	if ($("#latable tbody tr:eq("+curindex+") td:eq(4) input").val()=="") {
 	  $("#bwamount-blank-alert").alert();
 	  $("#bwamount-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -72,19 +74,23 @@ $(document).ready(function() {
 	  });
 	  return false;
 	}
+	//If 'Enter' is pressed from Amount Paid in any row but the last row focus shifts to Amount Paid field of next row.
 	$("#latable tbody tr:eq("+nextindex+") td:eq(4) input").focus().select();
       }
     }
     else if (event.which == 38) {
       event.preventDefault();
+      //If 'Up' arrow key is pressed focus shifts to Amount Paid in previous row.
       $("#latable tbody tr:eq("+previndex+") td:eq(4) input").focus().select();
     }
     else if (event.which == 45) {
       event.preventDefault();
+      //Pressing 'Insert' key triggers click event of 'Done' button.
       $("#btclose").click();
     }
   });
 
+  //Actions that take place when key is released from Amount Paid field.
   $(document).off('keyup', '.amountpaid').on('keyup', '.amountpaid', function(event) {
     /* Act on the event */
     var curindex1 = $(this).closest('tr').index();
