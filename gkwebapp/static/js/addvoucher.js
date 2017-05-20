@@ -1289,6 +1289,7 @@ $("#invsel").keyup(function(event) {
       }
     });
     if (numberofcustomers == 1) {
+      sessionStorage.voucherdate = $("#vdate").val()+$("#vmonth").val()+$("#vyear").val();
       sessionStorage.customeraccname = customername;
       sessionStorage.customeracccode = customercode;
     }
@@ -1515,7 +1516,7 @@ $("#invsel").keyup(function(event) {
                     url: "/addvoucher?type=showbillwisetable",
                     global: false,
                     async: false,
-                    data:{"accountcode":sessionStorage.customeracccode},
+                    data:{"accountcode":sessionStorage.customeracccode, "voucherdate":sessionStorage.voucherdate},
                     datatype: "text/html",
                     beforeSend: function(xhr)
                     {

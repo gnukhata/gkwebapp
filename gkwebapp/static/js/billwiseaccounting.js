@@ -114,7 +114,7 @@ $(document).ready(function() {
 	}
 	totalap = totalap + ap;
       }
-      $('#latable tfoot tr:eq(0) td:eq(1)').html('<div class="form-control">'+parseFloat(totalap).toFixed(2)+'</div');
+      $('#latable tfoot tr:eq(0) td:eq(1)').html('<div class="form-control" disabled>'+parseFloat(totalap).toFixed(2)+'</div');
     }, doneTypingInterval);
   });
   

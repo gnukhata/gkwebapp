@@ -214,10 +214,18 @@ def getClosingBal(request):
 def getBillTable(request):
 	header={"gktoken":request.headers["gktoken"]}
 	accountcode = int(request.params["accountcode"])
+	voucherdate = request.params["voucherdate"]
+	voucherdate = datetime.strptime(voucherdate, "%d%m%Y")
 	result = requests.get("http://127.0.0.1:6543/customersupplier?by=account&accountcode=%d"%accountcode, headers=header)
 	if result.json()["gkstatus"] == 0:
 		custid = result.json()["gkresult"]
 		billdetails = requests.get("http://127.0.0.1:6543/invoice?type=bwa&custid=%d"%custid, headers=header)
-		return {"gkstatus":result.json()["gkstatus"], "gkresult":billdetails.json()["gkresult"]["unpaidbills"]}
+		unpaidbills = []
+		for bill in billdetails.json()["gkresult"]["unpaidbills"]:
+			invoicedate = bill["invoicedate"]
+			invoicedate = datetime.strptime(invoicedate, "%d-%m-%Y")
+			if invoicedate <= voucherdate:
+			    unpaidbills.append(bill)
+		return {"gkstatus":result.json()["gkstatus"], "gkresult":unpaidbills}
 	else:
 		return {"gkresult":[]}

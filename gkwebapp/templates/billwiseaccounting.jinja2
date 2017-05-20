@@ -112,7 +112,7 @@
 
    #latable tbody {
        display:block;
-       height: calc(100vh - 23em);
+       height: calc(100vh - 24em);
        overflow-y:scroll;
    }
 
@@ -173,7 +173,7 @@
     </thead>
     <tbody>
       {% if not gkresult %}
-	<tr><td>No Data Found.</td></tr>
+	<tr><td style="width:100%">No Data Found.</td></tr>
       {% endif %}
       {% for record in gkresult %}
 	{% if record["pendingamount"]!=0.00 %}
@@ -199,7 +199,7 @@
 	      </div>
             </td>
             <td class="lngwrap ralign" >
-	      <input type="text" class="amountpaid form-control rightJustified numtype" value="">
+	      <input type="text" class="amountpaid form-control rightJustified numtype" value="0.00">
             </td>
 	  </tr>
 	{% endif %}
@@ -209,12 +209,12 @@
     <tfoot>
       <tr>
 	<td class="vlngwrap ralign">
-	  <div class="form-control">
+	  <div class="form-control" disabled>
 	    Total
 	  </div>
 	</td>
 	<td class="lngwrap ralign">
-	  <div class="form-control">
+	  <div class="form-control" disabled>
 	    0.00
 	  </div>
 	</td>
