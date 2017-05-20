@@ -426,7 +426,11 @@ $(document).ready(function(){
           $("#exportledger").remove();
           $("#deleteorg").remove();
           $("#tallyimport").remove();
+        }
+        if(resp["gkresult"]["userrole"]==1){
           $(".hideoperator").remove();
+        }
+        if(resp["gkresult"]["userrole"]==0){
           $(".hidemanager").remove();
         }
          if (resp["gkresult"]["booksclosedflag"]==1) {
