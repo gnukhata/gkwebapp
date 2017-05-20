@@ -20,8 +20,7 @@ Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
 
 Contributors:
 "Krishnakant Mane" <kk@gmail.com>
-"Ishan Masdekar " <imasdekar@dff.org.in>
-"Navin Karkera" <navin@dff.org.in>
+"Abhijith Balan" <abhijithb21@openmailbox.org.in>
 */
 
 /*
@@ -786,7 +785,6 @@ $("#invsel").keyup(function(event) {
     }
   });
 
-
   /*
   The following events are the backbone of the voucher functionality.
   When one hits enter on an dr or cr amount text box,
@@ -801,15 +799,7 @@ $("#invsel").keyup(function(event) {
   {
     if(event.which==13 && !outfocus)
     {
-
-
-
-
-
-                    event.preventDefault();
-
-
-
+      event.preventDefault();
       drsum=0;
       $(".dramt").each(function(){
         drsum += +$(this).val();
@@ -1241,6 +1231,75 @@ $("#invsel").keyup(function(event) {
     var amountindex = 0;
     var accallow = true;
     var accountindex=0;
+    var customername = "";
+    var customercode = "";
+    var numberofcustomers = 0;
+    $(".crdr").each(function() {
+      if ($(this).val()=="Cr") {
+	if ($("#vouchertype").val() == "receipt") {
+	  var curindex = $(this).closest('tr').index();
+	  $.ajax({
+	    url: '/getaccdetails',
+	    type: 'POST',
+	    async: false,
+	    dataType: 'json',
+	    data: {"accountcode": $("#vtable tbody tr:eq("+curindex+") td:eq(1) select option:selected").val()},
+	    beforeSend: function(xhr)
+	    {
+	      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	    },
+	    success: function(jsonObj) {
+	      var accountdetails = jsonObj["gkresult"];
+	      if (accountdetails["groupname"] == "Current Assets" && accountdetails["subgroupname"] == "Sundry Debtors") {
+		customername = accountdetails["accountname"];
+		customercode = accountdetails["accountcode"];
+		numberofcustomers = numberofcustomers + 1;
+		sessionStorage.customeramount = $("#vtable tbody tr:eq("+curindex+") td:eq(4) input").val();
+		sessionStorage.amounttitle = "Credit Amount: ";
+	      }
+	    }
+	  });
+	}
+      }
+      if ($(this).val()=="Dr") {
+	if ($("#vouchertype").val() == "payment") {
+	  var curindex = $(this).closest('tr').index();
+	  $.ajax({
+	    url: '/getaccdetails',
+	    type: 'POST',
+	    async: false,
+	    dataType: 'json',
+	    data: {"accountcode": $("#vtable tbody tr:eq("+curindex+") td:eq(1) select option:selected").val()},
+	    beforeSend: function(xhr)
+	    {
+	      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	    },
+	    success: function(jsonObj) {
+	      var accountdetails = jsonObj["gkresult"];
+	      if (accountdetails["groupname"] == "Current Liabilities" && accountdetails["subgroupname"] == "Sundry Creditors for Purchase") {
+		customername = accountdetails["accountname"];
+		customercode = accountdetails["accountcode"];
+		numberofcustomers = numberofcustomers + 1;
+		sessionStorage.customeramount = $("#vtable tbody tr:eq("+curindex+") td:eq(3) input").val();
+		sessionStorage.amounttitle = "Debit Amount: ";
+	      }
+	    }
+	  });
+	}
+      }
+    });
+    if (numberofcustomers == 1) {
+      sessionStorage.customeraccname = customername;
+      sessionStorage.customeracccode = customercode;
+    }
+    if (numberofcustomers > 1) {
+      $("#vtable tbody tr:last td:eq(1) select").focus();
+      $("#customer-more-alert").alert();
+      $("#customer-more-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#customer-more-alert").hide();
+      });
+      return false;
+    }
     // Check if voucher no. is blank and if it is then show an alert
     if ($('#vno').val()=="") {
       $("#vno-alert").alert();
@@ -1444,6 +1503,37 @@ $("#invsel").keyup(function(event) {
           $("#success-alert").alert();
           $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#success-alert").hide();
+            //Modal asking the user if he wants to do bill wise accounting or not?
+            if (($("#vouchertype").val() == "receipt" || $("#vouchertype").val() == "payment") && sessionStorage.invflag == 1 && numberofcustomers == 1) {
+              $("#confirm_yes_billwise").modal("show");
+              $("#bwno").focus(); //Focus is on "No" when the model opens.
+              $(document).off('click', '#bwyes').on('click', '#bwyes', function(event) {
+                event.preventDefault();
+                $.ajax(
+                  {
+                    type: "POST",
+                    url: "/addvoucher?type=showbillwisetable",
+                    global: false,
+                    async: false,
+                    data:{"accountcode":sessionStorage.customeracccode},
+                    datatype: "text/html",
+                    beforeSend: function(xhr)
+                    {
+                      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+                    },
+                    success: function(resp)
+                    {
+                      $("#bwtableload").html(resp);
+                      $(".modal-backdrop").hide();
+                      $("#confirm_yes_billwise").modal("hide");
+                      $("#bwtabletitle").append('<b>'+sessionStorage.customeraccname+'</b>'+'<span class="pull-right">'+sessionStorage.amounttitle+'<b>'+sessionStorage.customeramount+'</b><span>');
+                      $("#bwtable").modal("show");
+                      $(".fixed-table-loading").remove();
+                    }
+                  }
+                );
+              });
+            }
           });
         }
         else {
@@ -1615,4 +1705,16 @@ $("#invsel").keyup(function(event) {
   $('#reset').click(function(event) {
 $("#show"+$("#vtype").val()).click();
   });
+  $('#confirm_yes_billwise, #bwtable').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is closed
+  {
+    $("#vno").focus().select();
+  });
+  $('#bwtable').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
+  {
+    $(".amountpaid:first").focus().select();
+  });
+  $('#bwtable').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is closed
+    {
+      $("#vno").focus().select();
+    });
 });

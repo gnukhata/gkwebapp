@@ -154,3 +154,13 @@ def getattachment(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/invoice?attach=image&invid=%d"%(int(request.params["invid"])), headers=header)
 	return {"attachment":result.json()["gkresult"],"invid":request.params["invid"], "cancelflag":result.json()["cancelflag"],"userrole":result.json()["userrole"],"invoiceno":result.json()["invoiceno"]}
+
+@view_config(route_name="invoice", request_param="action=updatepayment", renderer="json")
+def updatepayment(request):
+	header={"gktoken":request.headers["gktoken"]}
+	payments = json.loads(request.params["billwisedata"])
+	for payment in payments:
+		invid = int(payment["invid"])
+		pdamt = float(payment["pdamt"])
+		result = requests.put("http://127.0.0.1:6543/invoice?type=bwa&invid=%d&pdamt=%f"%(invid, pdamt), headers=header)
+	return {"gkstatus":result.json()["gkstatus"]}
