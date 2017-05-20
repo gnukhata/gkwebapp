@@ -78,15 +78,15 @@ $(document).ready(function() {
     typingTimer = setTimeout(function(){
       if ($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val() == "") {
 	var originalvalue = parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending"));
-	$("#latable tbody tr:eq("+curindex1+") td:eq(3)").text(parseFloat(originalvalue).toFixed(2));
+	$("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">'+parseFloat(originalvalue).toFixed(2)+'</div>');
       }
       else {
 	if (parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()) >= parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending"))) {
-	  $("#latable tbody tr:eq("+curindex1+") td:eq(3)").text("0.00");
+	  $("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">0.00</div>');
 	}
 	else {
 	  var bwdiff = parseFloat(parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending")) - parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()));
-	  $("#latable tbody tr:eq("+curindex1+") td:eq(3)").text(parseFloat(bwdiff).toFixed(2));
+	  $("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">'+parseFloat(bwdiff).toFixed(2)+'</div');
 	}
       }
     }, doneTypingInterval);
