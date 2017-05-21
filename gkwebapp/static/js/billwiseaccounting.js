@@ -95,23 +95,34 @@ $(document).ready(function() {
     /* Act on the event */
     var curindex1 = $(this).closest('tr').index();
     clearTimeout(typingTimer);
+    /*
+       setTimeout is a built in function that is used to do something after certain interval of time.
+       Here it used to do certain actions after user enters some value in Amount Paid.
+       Whenever user enters a value it is reduced from Amount Pending of corresponding rows. Also the sum of value in Amount Paid column in all rows is displayed in the footer of the table as Total.
+     */
+    
     typingTimer = setTimeout(function(){
+      //Original value of Amount Pending is stored in a variable so that the field can be reset when user clears Amount Paid field.
       if ($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val() == "") {
 	var originalvalue = parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending"));
 	$("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">'+parseFloat(originalvalue).toFixed(2)+'</div>');
       }
       else {
+	//Whenever Amount Paid equals or exceeds Amount Pending the below snippet sets Amount Pending to 0.00.
 	if (parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()) >= parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending"))) {
 	  $("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">0.00</div>');
 	}
 	else {
+	  //When Amount Paid is not empty and less than Amount Pending the below snippet finds the difference and updates Amount Pending.
 	  var bwdiff = parseFloat(parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending")) - parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()));
 	  $("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">'+parseFloat(bwdiff).toFixed(2)+'</div');
 	}
       }
+      //Total Amount Paid is found out and displayed on the foooter.
       var totalap = 0.00;
       var ap = 0.00;
       for(var i = 0; i < $("#latable tbody tr").length; i++) {
+	//Empty fields are treated as fields with value 0.00
 	if ($("#latable tbody tr:eq("+i+") td:eq(4) input").val()=="") {
 	  ap = 0.00;
 	}
@@ -123,20 +134,29 @@ $(document).ready(function() {
       $('#latable tfoot tr:eq(0) td:eq(1)').html('<div class="form-control" disabled>'+parseFloat(totalap).toFixed(2)+'</div');
     }, doneTypingInterval);
   });
-  
+
+  //Actions that occur on click of 'Done' button.
   $(document).off('click', '#btclose').on('click', '#btclose', function(event) {
     event.preventDefault();
-    var billwisedata = [];
-    var totalamountpaid = 0;
+    var billwisedata = [];  //List to store data.
+    var totalamountpaid = 0;  //Variable to store total amount paid. Total is recalculated here to avoid errors.
+    /*
+       The loop below makes a dictionaries from values stored in each row in this format - {"pdamt":amount paid, "invid":invoice id}.
+       It appends each dictionary into a list billwisedata.
+       It stores the total amount paid in the variable totalamountpaid which is later used for validations.
+     */
     for(var i = 0; i < $("#latable tbody tr").length; i++) {
+      //Alert is displayed when Amount Paid is left blank. It is autofilled with 0.00 and selected so that user can leave it as 0.00 or easily edit the field.
       if ($("#latable tbody tr:eq("+i+") td:eq(4) input").val()=="") {
-	$("#latable tbody tr:eq("+i+") td:eq(4) input").focus();
+	$("#latable tbody tr:eq("+i+") td:eq(4) input").val("0.00");
+	$("#latable tbody tr:eq("+i+") td:eq(4) input").focus().select();
 	$("#bwamount-blank-alert").alert();
 	$("#bwamount-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#bwamount-blank-alert").hide();
 	});
 	return false;
       }
+      //Creating a dictionary and appending to the list.
       var amountpaid = parseFloat($("#latable tbody tr:eq("+i+") td:eq(4) input").val());
       var invid = parseInt($("#latable tbody tr:eq("+i+")").data("invid"));
       var invamount = {};
@@ -145,6 +165,8 @@ $(document).ready(function() {
       billwisedata.push(invamount);
       totalamountpaid = totalamountpaid + amountpaid;
     }
+    //Validations.
+    //Alert is displayed when total amount paid is greater than Debit/Credit amount(retrieved from session storage). See addvoucher.js to see when the amount is stored in session storage.
     if (parseFloat(totalamountpaid) > parseFloat(sessionStorage.customeramount)) {
       $("#latable tbody tr:last td:eq(4) input").focus().select();
       $("#bwamount-alert").alert();
@@ -153,6 +175,7 @@ $(document).ready(function() {
       });
       return false;
     }
+    //Alert is displayed when amount paid is less than Debit/Credit amount.
     if (parseFloat(totalamountpaid) < parseFloat(sessionStorage.customeramount)) {
       $("#latable tbody tr:last td:eq(4) input").focus().select();
       $("#bwamount-less-alert").alert();
@@ -161,6 +184,7 @@ $(document).ready(function() {
       });
       return false;
     }
+    //If amount paid equals Debit/Credit amount AJAX request below is sent to the front-end view. Alert is displayed when the requast is successful.
     $.ajax({
       url: '/invoice?action=updatepayment',
       type: 'POST',
@@ -178,6 +202,12 @@ $(document).ready(function() {
 	  $("#bwamount-success-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#bwamount-success-alert").hide();
 	    $("#bwtable").modal("hide");
+	  });
+	}
+	else {
+	  $("#bwfailure-alert").alert();
+	  $("#bwfailure-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#bwfailure-alert").hide();
 	  });
 	}
       }
