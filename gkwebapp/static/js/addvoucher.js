@@ -1,41 +1,47 @@
 /*
-Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-This file is part of GNUKhata:A modular,robust and Free Accounting System.
+   Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+   This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
-GNUKhata is Free Software; you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as
-published by the Free Software Foundation; either version 3 of
-the License, or (at your option) any later version.and old.stockflag = 's'
+   GNUKhata is Free Software; you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as
+   published by the Free Software Foundation; either version 3 of
+   the License, or (at your option) any later version.and old.stockflag = 's'
 
-GNUKhata is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
+   GNUKhata is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
 
-You should have received a copy of the GNU Affero General Public
-License along with GNUKhata (COPYING); if not, write to the
-Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+   You should have received a copy of the GNU Affero General Public
+   License along with GNUKhata (COPYING); if not, write to the
+   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+   Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
 
 
-Contributors:
-"Krishnakant Mane" <kk@gmail.com>
-"Abhijith Balan" <abhijithb21@openmailbox.org.in>
-*/
+   Contributors:
+   "Krishnakant Mane" <kk@gmail.com>
+   "Abhijith Balan" <abhijithb21@openmailbox.org.in>
+   "Rohini Baraskar" <robaraskar@gmail.com>
+   "Bhavesh Bhawadhane" <bbhavesh07@gmail.com>
+   "Prajkta Patkar" <prajkta.patkar007@gmail.com>
+   "Navin Karkera" <navin@openmailbox.org>
+   "Sachin Patil" <sachin619patil@rediffmail.com>
+   "Ishan Masdekar" <imasdekar@dff.org.in>
+ */
 
 /*
-Events are mostly associated with the classes.
-List of classes that we have used.
-1. dramt and cramt are for the dr and cr amount boxes respectively.
-2. accs is for the accounts select boxes.
-3. crdr for the cr dr select box, i.e for the first select box in the row
-4. vdate for the date input boxes.
-Events which have a selector which starts with a . are associated to a class, For eg. $(".crdr")
-Events which have a selector which starts with a # are associated to an id, For eg. $("#vno")
+   Events are mostly associated with the classes.
+   List of classes that we have used.
+   1. dramt and cramt are for the dr and cr amount boxes respectively.
+   2. accs is for the accounts select boxes.
+   3. crdr for the cr dr select box, i.e for the first select box in the row
+   4. vdate for the date input boxes.
+   Events which have a selector which starts with a . are associated to a class, For eg. $(".crdr")
+   Events which have a selector which starts with a # are associated to an id, For eg. $("#vno")
 
-Events are attached to dynamically created elements using document on method.
-Document off is used to remove an already attached event to an element, so as to make sure that an event is fired only once.
-*/
+   Events are attached to dynamically created elements using document on method.
+   Document off is used to remove an already attached event to an element, so as to make sure that an event is fired only once.
+ */
 $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $(".modal-backdrop").remove();
