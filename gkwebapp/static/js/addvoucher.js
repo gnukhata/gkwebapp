@@ -1232,6 +1232,11 @@ $("#invsel").keyup(function(event) {
       }
     }
   });
+  //Actions that happen after 'Save' button is clicked.
+  /*
+     Once Receipt/Payment voucher is saved the user is prompted with a popup asking if he wants to continue to bill wise accounting.
+     When they choose yes the account code of Customer/Supplier is sent to retrieve details about outstanding bills.
+  */
   $('#save').click(function(event) {
     var allow = true;
     var amountindex = 0;
@@ -1241,9 +1246,13 @@ $("#invsel").keyup(function(event) {
     var customercode = "";
     var numberofcustomers = 0;
     $(".crdr").each(function() {
+      //Each row with Credit/Debit entry is scanned
       if ($(this).val()=="Cr") {
+	//This block is for Credit entries.
 	if ($("#vouchertype").val() == "receipt") {
-	  var curindex = $(this).closest('tr').index();
+	  //This block is for Receipt voucher.
+	  var curindex = $(this).closest('tr').index(); //Index helps in identifying the rows.
+	  //In the AJAX request below, account details are fetched by sending account code.
 	  $.ajax({
 	    url: '/getaccdetails',
 	    type: 'POST',
@@ -1256,11 +1265,12 @@ $("#invsel").keyup(function(event) {
 	    },
 	    success: function(jsonObj) {
 	      var accountdetails = jsonObj["gkresult"];
+	      //The block below checks if an account involved in a Credit entry is a customer and number of customers is incremented if yes.
 	      if (accountdetails["groupname"] == "Current Assets" && accountdetails["subgroupname"] == "Sundry Debtors") {
 		customername = accountdetails["accountname"];
 		customercode = accountdetails["accountcode"];
 		numberofcustomers = numberofcustomers + 1;
-		sessionStorage.customeramount = $("#vtable tbody tr:eq("+curindex+") td:eq(4) input").val();
+		sessionStorage.customeramount = $("#vtable tbody tr:eq("+curindex+") td:eq(4) input").val(); //Credit amount is saved in session storage.
 		sessionStorage.amounttitle = "Credit Amount: ";
 	      }
 	    }
@@ -1268,6 +1278,7 @@ $("#invsel").keyup(function(event) {
 	}
       }
       if ($(this).val()=="Dr") {
+	//This block is for Debit entries. Refer above block for Credit entries for documentation.
 	if ($("#vouchertype").val() == "payment") {
 	  var curindex = $(this).closest('tr').index();
 	  $.ajax({
@@ -1282,6 +1293,7 @@ $("#invsel").keyup(function(event) {
 	    },
 	    success: function(jsonObj) {
 	      var accountdetails = jsonObj["gkresult"];
+	      //The block below checks if an account involved in a Debit entry is a supplier and number of suppliers is incremented if yes.
 	      if (accountdetails["groupname"] == "Current Liabilities" && accountdetails["subgroupname"] == "Sundry Creditors for Purchase") {
 		customername = accountdetails["accountname"];
 		customercode = accountdetails["accountcode"];
@@ -1294,11 +1306,13 @@ $("#invsel").keyup(function(event) {
 	}
       }
     });
+    //There should be only one customer/supplier in a Receipt/Payment voucher .
     if (numberofcustomers == 1) {
       sessionStorage.voucherdate = $("#vdate").val()+$("#vmonth").val()+$("#vyear").val();
       sessionStorage.customeraccname = customername;
       sessionStorage.customeracccode = customercode;
     }
+    //Alert is displayed when there are more than one customer/supplier.
     if (numberofcustomers > 1) {
       $("#vtable tbody tr:last td:eq(1) select").focus();
       $("#customer-more-alert").alert();
@@ -1532,10 +1546,10 @@ $("#invsel").keyup(function(event) {
                     {
                       $("#bwtableload").html(resp);
                       $(".modal-backdrop").hide();
-                      $("#confirm_yes_billwise").modal("hide");
-                      $("#bwtabletitle").append('<b>'+sessionStorage.customeraccname+'</b>'+'<span class="pull-right">'+sessionStorage.amounttitle+'<b>'+sessionStorage.customeramount+'</b><span>');
-                      $("#bwtable").modal("show");
-                      $(".fixed-table-loading").remove();
+                      $("#confirm_yes_billwise").modal("hide");  //Confirm modal is hidden
+                      $("#bwtabletitle").append('<b>'+sessionStorage.customeraccname+'</b>'+'<span class="pull-right">'+sessionStorage.amounttitle+'<b>'+sessionStorage.customeramount+'</b><span>'); //Setting title for modal.
+                      $("#bwtable").modal("show");  //Modal for bill wise accounting is shown
+                      $(".fixed-table-loading").remove(); //Removes loading message in table.
                     }
                   }
                 );
