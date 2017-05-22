@@ -789,7 +789,7 @@ $(document).off("keydown",".godown_ob").on("keydown",".godown_ob",function(event
     }
     else {
       if (numberofgodowns > 0) {
-        if ($('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').val()=="") {
+        if ($('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="") {
           $("#godown-blank-alert").alert();
           $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#godown-blank-alert").hide();
