@@ -5,7 +5,7 @@
 	  GNUKhata is Free Software; you can redistribute it and/or modify
 	  it under the terms of the GNU Affero General Public License as
 	  published by the Free Software Foundation; either version 3 of
-	  the License, or (at your option) any later version.and old.stockflag = 's'
+	  the License, or (at your option) any later version.
 
 	  GNUKhata is distributed in the hope that it will be useful, but
 	  WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -67,13 +67,13 @@ def gettransfernote(request):
 @view_config(route_name="transfernotes",request_param="action=save",renderer="json")
 def savetransfernote(request):
 		header={"gktoken":request.headers["gktoken"]}
-		transferdata = {"transfernoteno":request.params["transfernoteno"],"transfernotedate":request.params["transfernotedate"],"togodown":request.params["togodown"],"transportationmode":request.params["transportationmode"],"issuername":request.params["issuername"],"designation":request.params["designation"]}
+		transferdata = {"transfernoteno":request.params["transfernoteno"],"transfernotedate":request.params["transfernotedate"],"togodown":request.params["togodown"],"fromgodown":request.params["fromgodown"],"transportationmode":request.params["transportationmode"],"issuername":request.params["issuername"],"designation":request.params["designation"]}
 		if request.params["nopkt"]!='':
 			transferdata["nopkt"]=request.params["nopkt"]
 		products = {}
 		for  row in json.loads(request.params["products"]):
 			products[row["productcode"]] = row["qty"]
-		stockdata = {"goid":request.params["fromgodown"],"items":products}
+		stockdata = {"items":products}
 		tnwholedata = {"transferdata":transferdata,"stockdata":stockdata}
 		result=requests.post("http://127.0.0.1:6543/transfernote",data=json.dumps(tnwholedata),headers=header)
 		return {"gkstatus":result.json()["gkstatus"]}
@@ -81,23 +81,17 @@ def savetransfernote(request):
 @view_config(route_name="transfernotes",request_param="action=edit",renderer="json")
 def edittransfernote(request):
 		header={"gktoken":request.headers["gktoken"]}
-		transferdata = {"transfernoteno":request.params["transfernoteno"],"transfernotedate":request.params["transfernotedate"],"transfernoteid":request.params["transfernoteid"],"togodown":request.params["togodown"],"transportationmode":request.params["transportationmode"],"issuername":request.params["issuername"],"designation":request.params["designation"]}
+		transferdata = {"transfernoteno":request.params["transfernoteno"],"transfernotedate":request.params["transfernotedate"],"transfernoteid":request.params["transfernoteid"],"fromgodown":request.params["fromgodown"],"togodown":request.params["togodown"],"transportationmode":request.params["transportationmode"],"issuername":request.params["issuername"],"designation":request.params["designation"]}
 		if request.params["nopkt"]!='':
 			transferdata["nopkt"]=request.params["nopkt"]
 		products = {}
 		for  row in json.loads(request.params["products"]):
 			products[row["productcode"]] = row["qty"]
-		stockdata = {"goid":request.params["fromgodown"],"items":products}
+		stockdata = {"items":products}
 		tnwholedata = {"transferdata":transferdata,"stockdata":stockdata}
 		result=requests.put("http://127.0.0.1:6543/transfernote",data=json.dumps(tnwholedata),headers=header)
 		return {"gkstatus":result.json()["gkstatus"]}
 
-@view_config(route_name="transfernotes", request_param="action=delete",renderer="json")
-def deltransfernotes(request):
-		header={"gktoken":request.headers["gktoken"]}
-		dataset={"transfernoteid":int(request.params["transfernoteid"]),"cancelflag":1}
-		result = requests.delete("http://127.0.0.1:6543/transfernote",data =json.dumps(dataset), headers=header)
-		return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="transfernotes",request_param="action=received",renderer="json")
 def recieved(request):
