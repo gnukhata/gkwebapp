@@ -79,19 +79,6 @@ def savetransfernote(request):
 		result=requests.post("http://127.0.0.1:6543/transfernote",data=json.dumps(tnwholedata),headers=header)
 		return {"gkstatus":result.json()["gkstatus"]}
 
-@view_config(route_name="transfernotes",request_param="action=edit",renderer="json")
-def edittransfernote(request):
-		header={"gktoken":request.headers["gktoken"]}
-		transferdata = {"transfernoteno":request.params["transfernoteno"],"transfernotedate":request.params["transfernotedate"],"transfernoteid":request.params["transfernoteid"],"fromgodown":request.params["fromgodown"],"togodown":request.params["togodown"],"transportationmode":request.params["transportationmode"],"issuername":request.params["issuername"],"designation":request.params["designation"]}
-		if request.params["nopkt"]!='':
-			transferdata["nopkt"]=request.params["nopkt"]
-		products = {}
-		for  row in json.loads(request.params["products"]):
-			products[row["productcode"]] = row["qty"]
-		stockdata = {"items":products}
-		tnwholedata = {"transferdata":transferdata,"stockdata":stockdata}
-		result=requests.put("http://127.0.0.1:6543/transfernote",data=json.dumps(tnwholedata),headers=header)
-		return {"gkstatus":result.json()["gkstatus"]}
 
 
 @view_config(route_name="transfernotes",request_param="action=received",renderer="json")
