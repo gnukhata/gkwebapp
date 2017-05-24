@@ -34,13 +34,13 @@
               </div>
               <div class="row">
               <div class="form-group col-sm-11 pd">
-                <label for="addproddesc" class="">{% trans %}Product Name{% endtrans %} :</label>
+                <label for="addproddesc" class="">{% trans %}Product Name{% endtrans %} :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
                 <input type='text' class="form-control input-sm" name="addproddesc"  id="addproddesc" placeholder="Alphanumeric">
               </div>
             </div>
             <div class="row">
               <div class="form-group col-sm-11 pds olduom">
-                <label for="uom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label>
+                <label for="uom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label><label for="uom" style="color:red;font-size: 120%;">*</label>
                 <select class = "form-control input-sm sel"  name = "uom" id="adduom" aria-describedby="txtareahelp">
                   <option value="" disabled selected hidden>{% trans %}Select Unit of Measurement{% endtrans %}</option>
                   {% for uom in gkresult["uom"] %}

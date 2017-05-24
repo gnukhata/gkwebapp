@@ -54,7 +54,7 @@
           </div>
 
             <div class="form-group">
-              <label for="add_cussup">{% trans %}Role:{% endtrans %}</label>
+              <label for="add_cussup">{% trans %}Role:{% endtrans %}</label><label for="add_cussup" style="color:red;font-size: 120%;">*</label>
               <select class="form-control input-sm" id="add_cussup" accesskey="">
                 <option value="" disabled hidden selected>Select Customer/Supplier</option>
                 <option value="3" id=sel_customer>Customer</option>
@@ -62,7 +62,7 @@
               </select>
             </div>
             <div class="form-group" style="padding-top:15px;">
-              <label for="add_cussup_name">{% trans %}Name:{% endtrans %}</label>
+              <label for="add_cussup_name">{% trans %}Name:{% endtrans %}</label><label for="add_cussup_name" style="color:red;font-size: 120%;">*</label>
               <input class="form-control input-sm" id="add_cussup_name" placeholder="{% trans %}Enter Name{% endtrans %}" accesskey="">
             </div>
             <div class="form-group">
@@ -74,7 +74,7 @@
               <input class="form-control input-sm" type="text" id="add_cussup_phone"></input>
             </div>
             <div class="form-group">
-              <label for="add_state">{% trans %}State:{% endtrans %}</label>
+              <label for="add_state">{% trans %}State:{% endtrans %}</label><label for="add_state" style="color:red;font-size: 120%;">*</label>
               <select class="form-control input-sm add-state" id="add_state" accesskey="">
                   <option value="">Select State</option>
                   <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
@@ -119,7 +119,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="add_cussup_address"> Address:
-                </label>
+                </label><label for="add_cussup_address" style="color:red;font-size: 120%;">*</label>
                 <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#accModal"></i>
                 <textarea class="form-control" rows="3" cols="40" id="add_cussup_address" aria-describedby="textareahelp"></textarea>
                 <small id="textareahelp" class="form-text text-muted">Press Enter key twice to shift focus to Fax</small>
@@ -134,7 +134,7 @@
               <input class="form-control input-sm" type="text" id="add_cussup_pan"></input>
             </div>
             <div class="form-group">
-              <label for="add_cussup_tan">{% trans %}TIN:{% endtrans %}</label>
+              <label for="add_cussup_tan">{% trans %}TIN:{% endtrans %}</label><label for="add_cussup_tan" style="color:red;font-size: 120%;">*</label>
               <input class="form-control input-sm" type="text" id="add_cussup_tan"></input>
             </div>
           </div>

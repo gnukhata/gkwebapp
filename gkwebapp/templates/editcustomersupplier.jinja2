@@ -60,11 +60,11 @@
       <div class="panel-body ">
           <div class="alert alert-danger" id="cussup-blank-alert"  aria-live="rude" role="alert" hidden>
 
-            <label for="vno">{% trans %}Please select a customer/supplier!{% endtrans %}</label>
+            <label for="vno">{% trans %}Please select a customer/supplier!{% endtrans %}</label><label for="vno" style="color:red;font-size: 120%;">*</label>
           </div>
           <div class="container-fluid row">
             <div class="form-group col-md-6">
-              <label for="edit_cussup_list">{% trans %}List of Customers & Suppliers :{% endtrans %}</label>
+              <label for="edit_cussup_list">{% trans %}List of Customers & Suppliers :{% endtrans %}</label><label for="edit_cussup_list" style="color:red;font-size: 120%;">*</label>
               <select class="form-control input-sm" id="edit_cussup_list" >
                 <option value="" disabled hidden selected>Select Customer/Supplier</option>
                 <optgroup label="Customers" id="custgroup">
@@ -83,13 +83,13 @@
 
             <div class="col-md-6">
               <div class="form-group hidden-load " hidden>
-              <label id="edit_cussuplabel" for="edit_cussup">{% trans %}Role:{% endtrans %}</label>
+              <label id="edit_cussuplabel" for="edit_cussup">{% trans %}Role:{% endtrans %}</label><label for="edit_cussup" style="color:red;font-size: 120%;">*</label>
               <input class="form-control input-sm" type="text" id="edit_cussup" disabled >
               </div>
 
 
             <div class="form-group hidden-load " hidden>
-              <label for="edit_cussup_name">{% trans %}New Name of Customer / Supplier :{% endtrans %}</label>
+              <label for="edit_cussup_name">{% trans %}New Name of Customer / Supplier :{% endtrans %}</label><label for="edit_cussup_name" style="color:red;font-size: 120%;">*</label>
               <input class="form-control input-sm" id="edit_cussup_name" placeholder="{% trans %}Enter Name{% endtrans %}" >
             </div>
             <div class="form-group hidden-load " hidden>
@@ -101,7 +101,7 @@
               <input class="form-control input-sm" type="text" id="edit_cussup_phone"></input>
             </div>
             <div class="form-group hidden-load" hidden>
-              <label for="edit_state">{% trans %}State:{% endtrans %}</label>
+              <label for="edit_state">{% trans %}State:{% endtrans %}</label><label for="edit_state" style="color:red;font-size: 120%;">*</label>
               <select class="form-control input-sm add-state" id="edit_state">
                 <option value="">Select State</option>
                 <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
@@ -145,7 +145,7 @@
           </div>
             <div class="col-md-6">
               <div class="form-group hidden-load " hidden>
-                <label for="edit_cussup_address">Address:</label>
+                <label for="edit_cussup_address">Address:</label></label><label for="edit_cussup_address" style="color:red;font-size: 120%;">*</label>
                 <textarea class="form-control" rows="2" cols="40" id="edit_cussup_address" aria-describedby="textareahelp"></textarea>
                 <small id="textareahelp" class="form-text text-muted">Press Enter Key twice to shift focus to Fax</small>
               </div>
@@ -159,7 +159,7 @@
               <input class="form-control input-sm" type="text" id="edit_cussup_pan"></input>
             </div>
             <div class="form-group hidden-load " hidden>
-              <label for="edit_cussup_tan">{% trans %}TIN:{% endtrans %}</label>
+              <label for="edit_cussup_tan">{% trans %}TIN:{% endtrans %}</label><label for="edit_cussup_tan" style="color:red;font-size: 120%;">*</label>
               <input class="form-control input-sm" type="text" id="edit_cussup_tan"></input>
             </div>
           </div>
