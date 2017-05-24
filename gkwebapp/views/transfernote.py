@@ -60,6 +60,7 @@ def showreceivedtransfernote(request):
 def gettransfernote(request):
 		header={"gktoken":request.headers["gktoken"]}
 		result = requests.get("http://127.0.0.1:6543/transfernote?tn=single&transfernoteid=%d"%(int(request.params["transfernoteid"])), headers=header)
+		print result.json()["gkresult"]
 		return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
 
 

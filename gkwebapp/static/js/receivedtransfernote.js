@@ -123,7 +123,7 @@ This script is for the Received transfer note page.
 
           $(".hidden-load").show();// Show all the details.
           $("#tn_editprint").show();
-          if (result["cancelflag"]==1) {// If the TN is cancelled then show a message indicating cancellation.
+/*          if (result["cancelflag"]==1) {// If the TN is cancelled then show a message indicating cancellation.
             $("#cancelmsg").show();
             $("#alertstrong").html("Transfer Note cancelled on "+result.canceldate);
             $("#rec_cancel").prop("disabled",true);
@@ -134,7 +134,7 @@ This script is for the Received transfer note page.
             $("#cancelmsg").hide();
             $("#rec_cancel").prop("disabled",false);
             $("#rec_cancel").show();
-          }
+          } */
         // Show all details in its corresponding labels.
           $("#rec_transfernote_godown_div").show();
           $("#rec_transfernote_no").html(result["transfernoteno"]);
@@ -153,23 +153,19 @@ This script is for the Received transfer note page.
           
           if($("#rec_no_of_packet").text()=='')
           {
-        	  console.log("hii na"+$("#rec_no_of_packet").text());
-        	  $("#rec_no_of_packet").text('n/a');
+        	    $("#rec_no_of_packet").text('n/a');
           }
           if($("#rec_transport_mode").text()=='')
           {
-        	  console.log("hii na"+$("#rec_no_of_packet").text());
         	  $("#rec_transport_mode").text('n/a');
           }
           if($("#rec_name_issuer").text()=='')
           {
-        	  console.log("hii na"+$("#rec_no_of_packet").text());
-        	  $("#rec_name_issuer").text('n/a');
+        	   $("#rec_name_issuer").text('n/a');
           }
           if($("#rec_designation").text()=='')
           {
-        	  console.log("hii na"+$("#rec_no_of_packet").text());
-        	  $("#rec_designation").text('n/a');
+        	   $("#rec_designation").text('n/a');
           }
           
           
@@ -209,11 +205,13 @@ This script is for the Received transfer note page.
           
           if (rec_status == 'Received')
           {
-
-              $("#rec_received").hide();
-              $("#received_tn_date").prop("disabled", true);
-              $("#received_tn_month").prop("disabled", true);
-              $("#received_tn_year").prop("disabled", true);
+	    console.log(result["receiveddate"])
+	    var rcdatearray = result["receiveddate"].split(/\s*\-\s*/g)
+	    console.log(rcdatearray)
+            $("#rec_received").hide();
+            $("#received_tn_date").val(rcdatearray[0]).prop("disabled", true);
+	    $("#received_tn_month").val(rcdatearray[1]).prop("disabled", true);
+              $("#received_tn_year").val(rcdatearray[2]).prop("disabled", true);
           }   
 
 
@@ -233,6 +231,9 @@ This script is for the Received transfer note page.
       $("#rec_tn_list").keydown(function(event) {
         if (event.which==13) {
           event.preventDefault();
+	  if ($("#received_tn_date").is(":disabled")) {
+	    $("#tn_editprint").focus();
+	  }
           $("#received_tn_date").focus();
           }
 
