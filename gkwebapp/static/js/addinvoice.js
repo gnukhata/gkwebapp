@@ -614,6 +614,12 @@ $(document).ready(function() {
 						    '</div>' +
 						    '</td>' +
 						    '<td class="col-xs-2">' +
+						    '<div class="input-group">' +
+						    '<input type="text" class="invoice_product_freequantity form-control input-sm text-right" value="0">' +
+						    '<span class="input-group-addon input-sm" id="freeunitaddon"></span>' +
+						    '</div>' +
+						    '</td>' +
+						    '<td class="col-xs-2">' +
 						    '<input type="text" class="invoice_product_per_price form-control input-sm numtype text-right" value="0.00">' +
 						    '</td>' +
 						    '<td class="col-xs-1">' +
@@ -626,7 +632,6 @@ $(document).ready(function() {
 						    '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00" disabled>' +
 						    '</td>' +
 						    '<td class="col-xs-1" style="width: 3%;">' +
-
 						    '</td>' +
 						    '</tr>');
            for (product of resp["products"]) {
@@ -1302,18 +1307,6 @@ $(document).ready(function() {
 						      '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
 						      '</td>' +
 						      '</tr>');
-             /*  if ($("#status").val()=='15')
-                {
-                if ($("#invoice_deliverynote option:selected").val()!='') {
-                //$(".invoice_product_tax_rate").prop("disabled",true);
-                }
-
-                }
-                else
-                {
-                $(".invoice_product_tax_rate").prop("disabled",false);
-                }*/
-
              for (product of resp["products"]) {
                $('#invoice_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' + product.productdesc + '</option>');
              }
