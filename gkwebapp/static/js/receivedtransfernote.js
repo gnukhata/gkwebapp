@@ -23,6 +23,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Vaibhav Kurhe" <vaibspidy@openmailbox.org>
+"Prajkta Patkar" <prajakta@dff.org.in>
 */
 /*
 This script is for the Received transfer note page.
@@ -116,11 +117,7 @@ This script is for the Received transfer note page.
         })
         .done(function(resp) {
           var result = resp["gkresult"];
-        
-          
-        
-          
-
+   
           $(".hidden-load").show();// Show all the details.
           $("#tn_editprint").show();
         // Show all details in its corresponding labels.
@@ -132,13 +129,11 @@ This script is for the Received transfer note page.
           togodownid = result.togodownid;
           $("#rec_tn_to_godown").html(result["togodown"]);
           $("#rec_no_of_packet").html(result["nopkt"]);
-   
           $("#rec_name_issuer").html(result["issuername"]);
           $("#rec_designation").html(result["designation"]);
           $("#rec_transfernote_date").html(result["transfernotedate"]);
-
 	  
-          if($("#rec_no_of_packet").text()=='')
+	  if($("#rec_no_of_packet").text()=='')
             {
               $("#rec_no_of_packet").text('n/a');
             }
@@ -154,9 +149,8 @@ This script is for the Received transfer note page.
             {
               $("#rec_designation").text('n/a');
             }
-          
-          
-          // Empty the table and show the product details of the TN
+           
+         // Empty the table and show the product details of the TN
           $('#transfernote_product_table tbody').empty();
           $.each(result.productdetails, function(key, value) {
             $('#transfernote_product_table tbody').append('<tr>'+
@@ -173,13 +167,23 @@ This script is for the Received transfer note page.
           if (result["recieved"] ==false) {
             $("#recstatus").html("Pending");
             
-            
+            $("#received_tn_date").val("").prop("disabled", false);
+	    $("#received_tn_month").val("").prop("disabled", false);
+            $("#received_tn_year").val("").prop("disabled", false);
+
             
             $("#rec_received").show();
             $("#rec_received").prop("disabled", false);
           }
           
           else  {
+	    console.log(result["receiveddate"])
+	    var rcdatearray = result["receiveddate"].split(/\s*\-\s*/g)
+	    console.log(rcdatearray)
+            $("#rec_received").hide();
+            $("#received_tn_date").val(rcdatearray[0]).prop("disabled", true);
+	    $("#received_tn_month").val(rcdatearray[1]).prop("disabled", true);
+            $("#received_tn_year").val(rcdatearray[2]).prop("disabled", true);
 
             $("#recstatus").html("Received");
             $("#rec_received").hide();
@@ -190,16 +194,6 @@ This script is for the Received transfer note page.
           
           
           
-          if (rec_status == 'Received')
-            {
-	      console.log(result["receiveddate"])
-	      var rcdatearray = result["receiveddate"].split(/\s*\-\s*/g)
-	      console.log(rcdatearray)
-              $("#rec_received").hide();
-              $("#received_tn_date").val(rcdatearray[0]).prop("disabled", true);
-	      $("#received_tn_month").val(rcdatearray[1]).prop("disabled", true);
-              $("#received_tn_year").val(rcdatearray[2]).prop("disabled", true);
-            }   
         })
          .fail(function() {
            console.log("error");
@@ -330,8 +324,6 @@ This script is for the Received transfer note page.
                 $("#received_tn_year").prop("disabled", true);
                 
               }
-
-
 
             }
 
