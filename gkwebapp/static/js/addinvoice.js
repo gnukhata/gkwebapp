@@ -547,7 +547,7 @@ $(document).ready(function() {
              var curindex = $(this).closest('tbody tr').index();
              productcode = $(this).find('option:selected').val();
              if (state == "none") {
-               $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(3) input').val(parseFloat(0).toFixed(2));
+               $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val(parseFloat(0).toFixed(2));
              } else {
 
 
@@ -564,7 +564,7 @@ $(document).ready(function() {
                 .done(function(resp) {
                   console.log("success");
                   if (resp["gkstatus"] == 0) {
-                    $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(3) input').val(parseFloat(resp['taxdata']).toFixed(2));
+                    $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val(parseFloat(resp['taxdata']).toFixed(2));
                   }
 
                 })
