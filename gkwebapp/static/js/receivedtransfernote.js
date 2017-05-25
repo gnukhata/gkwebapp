@@ -171,13 +171,11 @@ This script is for the Received transfer note page.
 	    $("#received_tn_month").val("").prop("disabled", false);
             $("#received_tn_year").val("").prop("disabled", false);
 
-            
             $("#rec_received").show();
             $("#rec_received").prop("disabled", false);
           }
           
           else  {
-	    console.log(result["receiveddate"])
 	    var rcdatearray = result["receiveddate"].split(/\s*\-\s*/g)
 	    console.log(rcdatearray)
             $("#rec_received").hide();
@@ -322,7 +320,7 @@ This script is for the Received transfer note page.
                 $("#received_tn_date").prop("disabled", true);
                 $("#received_tn_month").prop("disabled", true);
                 $("#received_tn_year").prop("disabled", true);
-                
+              
               }
 
             }
