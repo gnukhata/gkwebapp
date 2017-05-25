@@ -173,19 +173,23 @@ $(document).ready(function() {
   $("#invoice_state").keydown(function(event) {
     if (event.which == 13) {
       event.preventDefault();
+      var state = $("#invoice_state option:selected").val();
+      if (state == "none") {
+	$(".invoice_product_tax_rate").prop("disabled", true);
+	$(".invoice_product_tax_rate").val("0.00");
+      }
+      else {
+	$(".invoice_product_tax_rate").prop("disabled", false);
+      }
       $('#invoice_product_table tbody tr:first td:eq(0) select').focus();
-
     }
     if (event.which == 38 && (document.getElementById('invoice_state').selectedIndex == 0)) {
       event.preventDefault();
-
       if ($("#invoice_customer").is(":disabled")) {
         $("#invoice_year").focus().select();
       } else {
         $("#invoice_customer").focus().select();
       }
-
-
     }
   });
 
@@ -251,68 +255,75 @@ $(document).ready(function() {
     event.preventDefault();
     /* Act on the event */
     var state = $("#invoice_state option:selected").val();
-    var productcode;
-    $(".product_name").each(function() {
-      var curindex = $(this).closest('tbody tr').index();
-      productcode = $(this).find('option:selected').val();
+    if (state == "none") {
+      $(".invoice_product_tax_rate").prop("disabled", true);
+      $(".invoice_product_tax_rate").val("0.00");
+    }
+    else {
+      $(".invoice_product_tax_rate").prop("disabled", false);
+      var state = $("#invoice_state option:selected").val();
+      var productcode;
+      $(".product_name").each(function() {
+	var curindex = $(this).closest('tbody tr').index();
+	productcode = $(this).find('option:selected').val();
 
-      if (productcode != "") {
+	if (productcode != "") {
 
-        $.ajax({
-          url: '/product?type=prodtax',
-          type: 'POST',
-          dataType: 'json',
-          async: false,
-          data: { "productcode": productcode },
-          beforeSend: function(xhr) {
-            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-          }
-        })
-         .done(function(resp) {
-           console.log("success");
-           if (resp["gkresult"].length == 0) {
-             $("#notax-alert").alert();
-             $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
-               $("#notax-alert").hide();
-             });
-             return false;
-           }
+          $.ajax({
+            url: '/product?type=prodtax',
+            type: 'POST',
+            dataType: 'json',
+            async: false,
+            data: { "productcode": productcode },
+            beforeSend: function(xhr) {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+          })
+           .done(function(resp) {
+             console.log("success");
+             if (resp["gkresult"].length == 0) {
+	       $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val("0.00");
+               $("#notax-alert").alert();
+               $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
+		 $("#notax-alert").hide();
+               });
+               return false;
+             }
 
-         })
-         .fail(function() {
-           console.log("error");
-         })
-         .always(function() {
-           console.log("complete");
-         });
+           })
+           .fail(function() {
+             console.log("error");
+           })
+           .always(function() {
+             console.log("complete");
+           });
 
-        $.ajax({
-          url: '/invoice?action=gettax',
-          type: 'POST',
-          dataType: 'json',
-          async: false,
-          data: { "productcode": productcode, "state": state },
-          beforeSend: function(xhr) {
-            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-          }
-        })
-         .done(function(resp) {
-           console.log("success");
-           if (resp["gkstatus"] == 0) {
-             $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(3) input').val(parseFloat(resp['taxdata']).toFixed(2));
-           }
+          $.ajax({
+            url: '/invoice?action=gettax',
+            type: 'POST',
+            dataType: 'json',
+            async: false,
+            data: { "productcode": productcode, "state": state },
+            beforeSend: function(xhr) {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+          })
+           .done(function(resp) {
+             console.log("success");
+             if (resp["gkstatus"] == 0) {
+               $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val(parseFloat(resp['taxdata']).toFixed(2));
+             }
 
-         })
-         .fail(function() {
-           console.log("error");
-         })
-         .always(function() {
-           console.log("complete");
-         });
-      }
+           })
+           .fail(function() {
+             console.log("error");
+           })
+           .always(function() {
+             console.log("complete");
+           });
+	}
 
-    });
-    if (state != "none") {
+      });
       $(".invoice_product_tax_rate").change();
     }
 
@@ -325,6 +336,7 @@ $(document).ready(function() {
     /* Act on the event */
     var productcode = $(this).find('option:selected').val();
     var curindex = $(this).closest('tbody tr').index();
+    var state = $("#invoice_state option:selected").val();
     if ($("#status").val() == '15') {
       $.ajax({
         url: '/product?type=prodtax',
@@ -339,6 +351,7 @@ $(document).ready(function() {
        .done(function(resp) {
          console.log("success");
          if (resp["gkresult"].length == 0) {
+	   $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val("0.00");
            $("#notax-alert").alert();
            $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
              $("#notax-alert").hide();
@@ -368,12 +381,8 @@ $(document).ready(function() {
        .done(function(resp) {
          console.log("success");
          if (resp["gkstatus"] == 0) {
-           if (resp['taxdata'] == 0.00) {
-             $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(3) input').prop("disabled", false);
-           } else {
-             $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(3) input').val(parseFloat(resp['taxdata']).toFixed(2));
-             $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(3) input').prop("disabled", true);
-           }
+	   $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val(parseFloat(resp['taxdata']).toFixed(2));
+           $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').prop("disabled", false);
          }
        })
        .fail(function() {
