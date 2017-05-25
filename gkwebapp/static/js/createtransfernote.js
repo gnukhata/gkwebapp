@@ -880,6 +880,7 @@ $(document).ready(function() {
 		   "fromgodown":$("#tn_from_godown option:selected").val(),
 		   "togodown":$("#tn_to_godown option:selected").val(),
 		   "transportationmode":$("#transport_mode").val(),
+		   "receiveddate": "",
 		   "nopkt":$("#no_of_packet").val(),
 		   "printset":JSON.stringify(printset),
 		   "issuername":$("#name_issuer").val(),

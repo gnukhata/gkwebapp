@@ -1,3 +1,4 @@
+
 """
         Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
           This file is part of GNUKhata:A modular,robust and Free Accounting System.
@@ -88,7 +89,7 @@ def tnprint(request):
         fromgodown=requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["fromgodown"])), headers=header)
         togodown=requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["togodown"])), headers=header)
         tableset = json.loads(request.params["printset"])
-        
+        print request.params["receiveddate"]
         return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],
                 "tableset":tableset,"transfernoteno":request.params["transfernoteno"],"transfernotedate":request.params["transfernotedate"],"receiveddate":request.params["receiveddate"],
         "togodown":togodown.json()["gkresult"],"transportationmode":request.params["transportationmode"],"issuername":request.params["issuername"],
