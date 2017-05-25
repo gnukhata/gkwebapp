@@ -17,6 +17,18 @@
 
       {% trans %}Unit Already Exist!{% endtrans %}
     </div>
+    <div class="alert alert-danger" id="sameUnit-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Unit and Sub Unit cannot be Same!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="conversion-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Please Enter Conversion Rate!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="conversion-rate-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Conversion Rate cannot be Zero!{% endtrans %}
+    </div>
     <div class="alert alert-danger" id="subunit-alert"  aria-live="rude" role="alert" hidden>
 
       <label for="vno">{% trans %}Unit can not be deleted , contains Subunit!{% endtrans %}</label>
@@ -63,10 +75,10 @@
     </div>
   </div>
       <div class="panel-footer" id="unit_btn"  disabled hidden>
-        <button id="unit_reset" class="btn btn-warning btn-sm">{% trans %}Reset{% endtrans %}</button>
-        <button class="btn btn-primary btn-sm" id="unit_edit_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}">{% trans %}Save{% endtrans %}</button>
-        <button id="unit_delete" class="btn btn-danger btn-sm">{% trans %}Delete{% endtrans %}</button>
-        <button id="edit_btn" class="btn btn-primary btn-sm">{% trans %}Edit{% endtrans %}</button>
+        <button id="unit_reset" class="btn btn-warning btn-sm" accesskey="s">{% trans %}Re<u>s</u>et{% endtrans %}</button>
+        <button class="btn btn-primary btn-sm" id="unit_edit_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}" accesskey="a">{% trans %}S<u>a</u>ve{% endtrans %}</button>
+        <button id="unit_delete" class="btn btn-danger btn-sm" accesskey="d">{% trans %}<u>D</u>elete{% endtrans %}</button>
+        <button id="edit_btn" class="btn btn-primary btn-sm" accesskey="e">{% trans %}<u>E</u>dit{% endtrans %}</button>
       </div>
     </div>
     <div id="confirm_del" class="modal fade" tabindex="-1" role="dialog">
@@ -82,7 +94,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-              <button type="button" id="accdel" data-dismiss="modal" class="btn btn-danger">{% trans %}Delete{% endtrans %}</button>
+              <button type="button" id="accdel" data-dismiss="modal" class="btn btn-danger" accesskey="d">{% trans %}<u>D</u>elete{% endtrans %}</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

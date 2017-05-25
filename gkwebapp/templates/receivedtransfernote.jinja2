@@ -93,16 +93,14 @@
 
           <form>
             <div class="form-group">
-              <label for="rec_tn_list">{% trans %}Transfer Note:{% endtrans %}</label>
+              <label for="rec_tn_list">{% trans %}Select Transfer Note:{% endtrans %}</label>
               <select class="form-control input-sm " id="rec_tn_list" accesskey="">
                 <option value="" disabled hidden selected>Select Transfer Note</option>
                 {% for tn in transfernote %}
                 <option value="{{tn['transfernoteid']}}">{{tn["transfernoteno"]}} , {{tn["transfernotedate"]}}</option>
                 {% endfor %}>
               </select>
-              <div class="alert alert-danger nopadding" id="cancelmsg" aria-live="rude" role="alert" hidden>
-                <strong id="alertstrong">Transfer Note cancelled on  </strong>
-              </div>
+              
             </div>
             <div class="form-group hidden-load" hidden>
               <label >{% trans %}Transfer Note No:{% endtrans %}</label>  <label id="rec_transfernote_no"></label>
@@ -224,7 +222,7 @@
 
       <div class="panel-footer hidden-load" hidden>
     <button id="rec_received" class="btn btn-success btn-sm" >{% trans %}Received{% endtrans %}</button>
-    <button id="rec_cancel" class="btn btn-danger btn-sm" >{% trans %}Cancel{% endtrans %}</button>
+   
     <button id="tn_editprint" class="btn btn-primary btn-sm" >{% trans %}Print{% endtrans %}</button>
       </div>
     </div>
@@ -248,25 +246,7 @@
       </div>
     </div><!-- /.modal -->
 
-    <div id="confirm_del" class="modal fade" tabindex="-1" role="dialog">
-      <div class="vertical-alignment-helper">
-        <div class="modal-dialog modal-sm vertical-align-center">
-          <div class="modal-content">
-            <div class="modal-header">
-
-              <h4 class="modal-title">{% trans %}Cancel ?{% endtrans %}</h4>
-            </div>
-            <div class="modal-body">
-              <p>{% trans %}Are you sure?{% endtrans %}</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
-              <button type="button" id="accdel" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div>
-    </div><!-- /.modal -->
+   
 
   </div>
 </div>

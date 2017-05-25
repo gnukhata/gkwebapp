@@ -53,7 +53,7 @@ $(document).ready(function(){
   $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');// set the theme depending on users previous choice.
   $("#"+sessionStorage.gktheme+"span").show();
 
-  
+
   $(document).keydown(function(event) {
         // Shortcuts
         if(event.ctrlKey && event.keyCode == 83) {
@@ -406,65 +406,25 @@ $(document).ready(function(){
       .done(function(resp){
         if(resp["gkresult"]["userrole"]==3){
           $("#master").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#invoice").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#addcashmemo").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#godown").remove();
-        }
-        if (resp["gkresult"]["userrole"]==3) {
           $("#purchaseorder").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#transaction").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#showviewledger").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#showtrialbalance").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#showprjstate").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#showcashflow").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#showbalancesheet").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#consolidatedbalancesheet").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#showprofitloss").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#listofaccounts").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#showdeletedvoucher").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#createuser").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#REMOVEuser").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#showclosebooks").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#exportledger").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#deleteorg").remove();
-        }
-        if(resp["gkresult"]["userrole"]==3){
           $("#tallyimport").remove();
         }
         if(resp["gkresult"]["userrole"]==1){
@@ -835,34 +795,9 @@ $.ajax({
           success: function(resp)
           {
             $("#info").html(resp);
-            $("#holdingorg").modal("show");
+            //$("#holdingorg").modal("show");
           }
           });
-          $('#holdingorg').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
-          {
-             console.log("modal");
-             $.ajax({              //To retreive org details.
-                type:"POST",
-                url:"/allorgcode?type=orgcodelist",
-                global:false,
-                async:false,
-                datatype:"json",
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                },
-                success: function(resp)
-                {
-                  ListofOrgs = resp["gkresult"];
-                  $('#holdingorglist').empty();
-                  $('#holdingorglist').append('<option value="0" disabled selected hidden>List Of Organisations</option>');
-                  for(i in ListofOrgs)
-                  {
-                  $('#holdingorglist').append('<option value="' + ListofOrgs[i].orgcode + '">'+ ListofOrgs[i].orgname +'</option>');
-                  }
-                }
-            })
-          })
-
         });
 
     $('#listofaccounts').click(function (e) {
@@ -1236,7 +1171,7 @@ $.ajax({
   });
 
   $('#deliverychallan').click(function (e) {// calls base deliverychallan page.
-   
+
     $.ajax(
     		{
     		type: "POST",
