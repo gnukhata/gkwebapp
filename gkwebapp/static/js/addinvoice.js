@@ -81,7 +81,7 @@ $(document).ready(function() {
     if (str.length == 1) {
       return str.length < max ? pad("0" + str, max) : str;
     } else {
-      return str
+      return str;
     }
   }
 
@@ -92,7 +92,7 @@ $(document).ready(function() {
     } else if (str.length == 2) {
       return str.length < max ? pad("20" + str, max) : str;
     } else {
-      return str
+      return str;
     }
   }
   $("#invoice_date").blur(function(event) {
@@ -879,9 +879,6 @@ $(document).ready(function() {
     } else if (event.which == 190 && event.ctrlKey) {
       $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
       event.preventDefault();
-    } else if (event.which == 27) {
-      event.preventDefault();
-      $("#invoice_issuer_name").focus().select();
     }
   });
 
@@ -1015,6 +1012,7 @@ $(document).ready(function() {
               $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(0) select').focus();
               return false;
             }
+                 
             $.ajax({
               url: '/invoice?action=getproducts',
               type: 'POST',
