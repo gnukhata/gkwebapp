@@ -123,23 +123,9 @@ This script is for the Received transfer note page.
 
           $(".hidden-load").show();// Show all the details.
           $("#tn_editprint").show();
-/*          if (result["cancelflag"]==1) {// If the TN is cancelled then show a message indicating cancellation.
-            $("#cancelmsg").show();
-            $("#alertstrong").html("Transfer Note cancelled on "+result.canceldate);
-            $("#rec_cancel").prop("disabled",true);
-            $("#rec_cancel").hide();
-            $("#tn_editprint").hide();
-          }
-          else {
-            $("#cancelmsg").hide();
-            $("#rec_cancel").prop("disabled",false);
-            $("#rec_cancel").show();
-          } */
         // Show all details in its corresponding labels.
           $("#rec_transfernote_godown_div").show();
           $("#rec_transfernote_no").html(result["transfernoteno"]);
-          
-          
           $("#rec_transport_mode").html(result["transportationmode"]);
           $("#rec_tn_from_godown").html(result["fromgodown"]);
           fromgodownid = result.fromgodownid;
@@ -150,37 +136,38 @@ This script is for the Received transfer note page.
           $("#rec_name_issuer").html(result["issuername"]);
           $("#rec_designation").html(result["designation"]);
           $("#rec_transfernote_date").html(result["transfernotedate"]);
-          
+
+	  
           if($("#rec_no_of_packet").text()=='')
-          {
-        	    $("#rec_no_of_packet").text('n/a');
-          }
+            {
+              $("#rec_no_of_packet").text('n/a');
+            }
           if($("#rec_transport_mode").text()=='')
-          {
-        	  $("#rec_transport_mode").text('n/a');
-          }
+            {
+              $("#rec_transport_mode").text('n/a');
+            }
           if($("#rec_name_issuer").text()=='')
-          {
-        	   $("#rec_name_issuer").text('n/a');
-          }
+            {
+              $("#rec_name_issuer").text('n/a');
+            }
           if($("#rec_designation").text()=='')
-          {
-        	   $("#rec_designation").text('n/a');
-          }
+            {
+              $("#rec_designation").text('n/a');
+            }
           
           
           // Empty the table and show the product details of the TN
           $('#transfernote_product_table tbody').empty();
           $.each(result.productdetails, function(key, value) {
             $('#transfernote_product_table tbody').append('<tr>'+
-            '<td class="col-xs-9">'+
-            value.productdesc+
-            '</td>'+
-            '<td class="col-xs-3">'+
-            value.qty+' ' +value.unitname+
-            '</td>'+
+							  '<td class="col-xs-9">'+
+							  value.productdesc+
+							  '</td>'+
+							  '<td class="col-xs-3">'+
+							  value.qty+' ' +value.unitname+
+							  '</td>'+
 
-           '</tr>');
+							  '</tr>');
           });
           
           if (result["recieved"] ==false) {
@@ -195,7 +182,7 @@ This script is for the Received transfer note page.
           else  {
 
             $("#recstatus").html("Received");
-              $("#rec_received").hide();
+            $("#rec_received").hide();
             $("#rec_received").prop("disabled", true);
           }
           
@@ -204,244 +191,195 @@ This script is for the Received transfer note page.
           
           
           if (rec_status == 'Received')
-          {
-	    console.log(result["receiveddate"])
-	    var rcdatearray = result["receiveddate"].split(/\s*\-\s*/g)
-	    console.log(rcdatearray)
-            $("#rec_received").hide();
-            $("#received_tn_date").val(rcdatearray[0]).prop("disabled", true);
-	    $("#received_tn_month").val(rcdatearray[1]).prop("disabled", true);
+            {
+	      console.log(result["receiveddate"])
+	      var rcdatearray = result["receiveddate"].split(/\s*\-\s*/g)
+	      console.log(rcdatearray)
+              $("#rec_received").hide();
+              $("#received_tn_date").val(rcdatearray[0]).prop("disabled", true);
+	      $("#received_tn_month").val(rcdatearray[1]).prop("disabled", true);
               $("#received_tn_year").val(rcdatearray[2]).prop("disabled", true);
-          }   
-
-
-
-
+            }   
         })
-        .fail(function() {
-          console.log("error");
-        })
-        .always(function() {
-          console.log("complete");
-        });
+         .fail(function() {
+           console.log("error");
+         })
+         .always(function() {
+           console.log("complete");
+         });
+	}
+
+      });
+  // Navigation events,
+  $("#rec_tn_list").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      if ($("#received_tn_date").is(":disabled")) {
+	$("#tn_editprint").focus();
       }
+      $("#received_tn_date").focus();
+    }
 
-      });
-// Navigation events,
-      $("#rec_tn_list").keydown(function(event) {
-        if (event.which==13) {
-          event.preventDefault();
-	  if ($("#received_tn_date").is(":disabled")) {
-	    $("#tn_editprint").focus();
-	  }
-          $("#received_tn_date").focus();
-          }
+  });
+  $("#rec_received").keydown(function(event) {
+    if (event.which==38) {
+      event.preventDefault();
+      $("#rec_tn_list").focus();
+    }
 
-      });
-      $("#rec_received").keydown(function(event) {
-        if (event.which==38) {
-          event.preventDefault();
-          $("#rec_tn_list").focus();
-          }
-
-      });
+  });
   // This function will set the TN as received.
-      $("#rec_received").click(function(event) {
-        event.preventDefault();
-        $('.modal-backdrop').remove();
-        $('.modal').modal('hide');
-        $('#confirm_yes').modal('show').one('click', '#tn_yes', function (e)
-        {
-        	 if ($.trim($('#received_tn_date').val())=="") {
-        	      $("#date-blank-alert").alert();
-        	      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        	        $("#date-blank-alert").hide();
-        	      });
-        	      $('#received_tn_date').focus();
-        	      return false;
-        	    }
-        	    if ($.trim($('#received_tn_month').val())=="") {
-        	      $("#date-blank-alert").alert();
-        	      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        	        $("#date-blank-alert").hide();
-        	      });
-        	      $('#received_tn_month').focus();
-        	      return false;
-        	    }
-        	    if ($.trim($('#received_tn_year').val())=="") {
-        	      $("#date-blank-alert").alert();
-        	      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        	        $("#date-blank-alert").hide();
-        	      });
-        	      $('#received_tn_year').focus();
-        	      return false;
-        	    }
-        	    if(!Date.parseExact($("#received_tn_date").val()+$("#received_tn_month").val()+$("#received_tn_year").val(), "ddMMyyyy")){
-        	      $("#date-alert").alert();
-        	      $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
-        	        $("#date-alert").hide();
-        	      });
-        	      $('#received_tn_date').focus().select();
-        	      return false;
-        	    }
-        	  
-        	    
-        	    var curdate = Date.parseExact($("#received_tn_year").val()+$("#received_tn_month").val()+$("#received_tn_date").val(), "yyyyMMdd")
-        	    
-        	    
-          var receiveddate1 =$("#received_tn_year").val()+'-'+$("#received_tn_month").val()+'-'+$("#received_tn_date").val();
-          console.log("rec"+receiveddate1);
-         
-          if(Date.parseExact(receiveddate1,"yyyy-MM-dd").compareTo(financialend)==1){
-         
-         
-           $("#between-date-alert").alert();
-	       $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
-	        $("#between-date-alert").hide();
-	       });
-	       $('#received_tn_date').focus().select();
-	       return false;
-	    
-          }
-          var createdate=$('#rec_transfernote_date').text();
-          var createdateyyyymmdd=createdate[6]+createdate[7]+createdate[8]+createdate[9]+createdate[5]+createdate[3]+createdate[4]+createdate[2]+createdate[0]+createdate[1]
-                                                                                                                                                                                 
+  $("#rec_received").click(function(event) {
+    event.preventDefault();
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
+    $('#confirm_yes').modal('show').one('click', '#tn_yes', function (e)
+      {
+        if ($.trim($('#received_tn_date').val())=="") {
+          $("#date-blank-alert").alert();
+          $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#date-blank-alert").hide();
+          });
+          $('#received_tn_date').focus();
+          return false;
+        }
+        if ($.trim($('#received_tn_month').val())=="") {
+          $("#date-blank-alert").alert();
+          $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#date-blank-alert").hide();
+          });
+          $('#received_tn_month').focus();
+          return false;
+        }
+        if ($.trim($('#received_tn_year').val())=="") {
+          $("#date-blank-alert").alert();
+          $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#date-blank-alert").hide();
+          });
+          $('#received_tn_year').focus();
+          return false;
+        }
+        if(!Date.parseExact($("#received_tn_date").val()+$("#received_tn_month").val()+$("#received_tn_year").val(), "ddMMyyyy")){
+          $("#date-alert").alert();
+          $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#date-alert").hide();
+          });
+          $('#received_tn_date').focus().select();
+          return false;
+        }
+        
+        
+        var curdate = Date.parseExact($("#received_tn_year").val()+$("#received_tn_month").val()+$("#received_tn_date").val(), "yyyyMMdd")
+        
+        
+        var receiveddate1 =$("#received_tn_year").val()+'-'+$("#received_tn_month").val()+'-'+$("#received_tn_date").val();
+        console.log("rec"+receiveddate1);
+        
+        if(Date.parseExact(receiveddate1,"yyyy-MM-dd").compareTo(financialend)==1){
           
-           if(Date.parseExact(receiveddate1,"yyyy-MM-dd").compareTo(Date.parseExact(createdateyyyymmdd,"yyyy-MM-dd"))==-1)
+          
+          $("#between-date-alert").alert();
+	  $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+	    $("#between-date-alert").hide();
+	  });
+	  $('#received_tn_date').focus().select();
+	  return false;
+	  
+        }
+        var createdate=$('#rec_transfernote_date').text();
+        var createdateyyyymmdd=createdate[6]+createdate[7]+createdate[8]+createdate[9]+createdate[5]+createdate[3]+createdate[4]+createdate[2]+createdate[0]+createdate[1]
+        
+        
+        if(Date.parseExact(receiveddate1,"yyyy-MM-dd").compareTo(Date.parseExact(createdateyyyymmdd,"yyyy-MM-dd"))==-1)
           {
-        	  $("#between-date-alert").alert();
-	      $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
-  	        $("#between-date-alert").hide();
-  	      });
-  	      $('#received_tn_date').focus().select();
-  	      return false;
+            $("#between-date-alert").alert();
+	    $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+  	      $("#between-date-alert").hide();
+  	    });
+  	    $('#received_tn_date').focus().select();
+  	    return false;
   	    
           }
-          
-          
-          
-        	    	
-        	  
-        	    	
-        	
-        	   
-          $.ajax(
+        
+        $.ajax(
+          {
+
+            type: "POST",
+            url: '/transfernotes?action=received',
+            async: false,
+            datatype: "json",
+            data:{"transfernoteid": tnid, "receiveddate":$("#received_tn_year").val()+'-'+$("#received_tn_month").val()+'-'+$("#received_tn_date").val()},
+            beforeSend: function(xhr)
             {
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            },
+            success: function(resp)
+            {
+              if (resp["gkstatus"]==0) {
+                $("#recstatus").html("Received");
+                $('.modal-backdrop').remove();
+                $("#rec-confirm-alert").alert();
+                $("#rec-confirm-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#rec-confirm-alert").hide();
 
-              type: "POST",
-              url: '/transfernotes?action=received',
-              async: false,
-              datatype: "json",
-              data:{"transfernoteid": tnid, "receiveddate":$("#received_tn_year").val()+'-'+$("#received_tn_month").val()+'-'+$("#received_tn_date").val()},
-              beforeSend: function(xhr)
-              {
-                xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-              },
-              success: function(resp)
-              {
-                if (resp["gkstatus"]==0) {
-                  $("#recstatus").html("Received");
-                  $('.modal-backdrop').remove();
-                  $("#rec-confirm-alert").alert();
-                  $("#rec-confirm-alert").fadeTo(2250, 500).slideUp(500, function(){
-                    $("#rec-confirm-alert").hide();
-
-                  });
-                  
-                  $("#rec_received").hide();
-                  $("#received_tn_date").prop("disabled", true);
-                  $("#received_tn_month").prop("disabled", true);
-                  $("#received_tn_year").prop("disabled", true);
-                  
-                }
-
-
-
+                });
+                
+                $("#rec_received").hide();
+                $("#received_tn_date").prop("disabled", true);
+                $("#received_tn_month").prop("disabled", true);
+                $("#received_tn_year").prop("disabled", true);
+                
               }
 
-            });
-
-        });
-        $("#confirm_yes").on('shown.bs.modal', function(event) {
-          $("#tn_no").focus();
-        });
-        $("#confirm_yes").on('hidden.bs.modal', function(event) {
-          $("#rec_tn_list").focus();
-        });
-       });
-
-       $("#rec_cancel").click(function(event) {
-         event.preventDefault();
-        // Cancels the selected TN
-         $('.modal-backdrop').remove();
-         $('.modal').modal('hide');
-         $('#confirm_del').modal('show').one('click', '#accdel', function (e)
-         {
-           $.ajax(
-             {
-
-               type: "POST",
-               url: '/transfernotes?action=delete',
-               async: false,
-               datatype: "json",
-               data:{"transfernoteid": $("#rec_tn_list option:selected").val()},
-               beforeSend: function(xhr)
-               {
-                 xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-               },
-               success: function(resp)
-
-               {
-                 if (resp["gkstatus"]==0) {
-                   $("#transfernote_edit").click();
-                   $('.modal-backdrop').remove();
-                   $("#delsuccess-alert").alert();
-                   $("#delsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
-                     $("#delsuccess-alert").hide();
-
-                   });
-                 }
 
 
+            }
 
-               }
+          });
 
-             });
+      });
+    $("#confirm_yes").on('shown.bs.modal', function(event) {
+      $("#tn_no").focus();
+    });
+    $("#confirm_yes").on('hidden.bs.modal', function(event) {
+      $("#rec_tn_list").focus();
+    });
+  });
 
-         });
-         $("#confirm_del").on('shown.bs.modal', function(event) {
-           $("#m_cancel").focus();
-         });
-         $("#confirm_del").on('hidden.bs.modal', function(event) {
-           $("#rec_tn_list").focus();
-         });
-        });
+  
+  $("#tn_editprint").click(function(event) {
+    // Prints the selected TN. Selects all the details from selected TN
+    printset = [];
+    for (var i = 0; i < $("#transfernote_product_table tbody tr").length; i++) {
+      var obj = {};
+      obj.productdesc = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0)").html();
+      obj.qty = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(1)").html();
 
-        $("#tn_editprint").click(function(event) {
-        // Prints the selected TN. Selects all the details from selected TN
-          printset = [];
-          for (var i = 0; i < $("#transfernote_product_table tbody tr").length; i++) {
-            var obj = {};
-            obj.productdesc = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0)").html();
-            obj.qty = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(1)").html();
-
-            printset.push(obj);
-          }
-          $.ajax({
-            url: '/transfernotes?action=print',
-            type: 'POST',
-            dataType: 'html',
-            data: {
-              "transfernoteno":$("#rec_transfernote_no").text(),
-              "transfernotedate":$("#rec_transfernote_date").text(),
-              "fromgodown":fromgodownid,
-              "togodown":togodownid,
-              "transportationmode":$("#rec_transport_mode").text(),
-              "nopkt":$("#rec_no_of_packet").text(),
-              "printset":JSON.stringify(printset),
-              "issuername":$("#rec_name_issuer").text(),
-              "designation":$("#rec_designation").text()},
-              beforeSend: function(xhr)
+      printset.push(obj);
+    }
+    var rcdate;
+    if(!Date.parseExact($("#received_tn_date").val()+$("#received_tn_month").val()+$("#received_tn_year").val(), "ddMMyyyy")){
+      rcdate = "";
+    }
+    else{
+      rcdate=$("#received_tn_date").val()+'-'+$("#received_tn_month").val()+'-'+$("#received_tn_year").val();
+    }
+      $.ajax({
+      url: '/transfernotes?action=print',
+      type: 'POST',
+      dataType: 'html',
+      data: {
+        "transfernoteno":$("#rec_transfernote_no").text(),
+        "transfernotedate":$("#rec_transfernote_date").text(),
+	"receiveddate":rcdate,
+	"fromgodown":fromgodownid,
+        "togodown":togodownid,
+        "transportationmode":$("#rec_transport_mode").text(),
+        "nopkt":$("#rec_no_of_packet").text(),
+        "printset":JSON.stringify(printset),
+        "issuername":$("#rec_name_issuer").text(),
+        "designation":$("#rec_designation").text()},
+      beforeSend: function(xhr)
               {
                 xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
               }
