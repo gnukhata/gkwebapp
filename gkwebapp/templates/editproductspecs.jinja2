@@ -2,7 +2,7 @@
 <div class="editpr">
   <div class="row">
     <div class="form-group col-sm-11 pd">
-    <label for="editproddesc" class="">{% trans %}New Name of Product{% endtrans %} :</label>
+    <label for="editproddesc" class="">{% trans %}New Name of Product{% endtrans %} :</label><label for="editproddesc" style="color:red;font-size: 120%;">*</label>
 <input type='text' class="form-control input-sm" name="editproddesc"  id="editproddesc" value="{{proddesc['productdesc']}}" placeholder="Alphanumeric">
 </div>
   </div>
@@ -27,7 +27,7 @@
   {% endif %}
   <div class="row">
     <div class="form-group col-sm-11 pds olduom">
-    <label for="edituom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label>
+    <label for="edituom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label><label for="edituom" style="color:red;font-size: 120%;">*</label>
     <select class = "form-control input-sm "  name = "uom" id="edituom" >
       {% for uom in uom %}
       {% if uom["uomid"]== proddesc["uomid"] %}
