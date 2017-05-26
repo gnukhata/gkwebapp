@@ -42,12 +42,20 @@ $(document).ready(function() {
   var typingTimer;                //timer identifier
   var doneTypingInterval = 200; //typing interval
   clearTimeout(typingTimer);  //clearing timeout
+  //Actions to be triggered when focus is on amount paid field
   $(document).off('focus', '.amountpaid').on('focus', '.amountpaid', function(event) {
     event.preventDefault();
     /* Act on the event */
     //Preventing input of alphabets and negative numbers in Amount Paid
     clearTimeout(typingTimer);
     $(".numtype").numeric({ negative : false });
+  });
+  //Actions to be triggered when focus shifts from Amount Paid field
+  $(document).off('blur', '.amountpaid').on('blur', '.amountpaid', function(event) {
+    event.preventDefault();
+    var curindex = $(this).closest('tr').index(); //Current Index
+    var originalvalue = parseFloat($("#latable tbody tr:eq("+curindex+") td:eq(4) input").val()).toFixed(2);
+    $("#latable tbody tr:eq("+curindex+") td:eq(4) input").val(originalvalue);
   });
   //Actions to be triggered when a key is pressed down.
   $(document).off('keydown', '.amountpaid').on('keydown', '.amountpaid', function(event) {
