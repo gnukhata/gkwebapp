@@ -23,6 +23,7 @@ Contributors:
 */
 // This script is for list of users report.
 $(document).ready(function() {
+  $("#msspinmodal").modal("hide");
   $(".modal-backdrop").remove();
   $(".fixed-table-loading").remove();
 
