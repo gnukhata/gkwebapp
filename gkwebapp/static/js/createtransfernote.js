@@ -5,7 +5,7 @@
    GNUKhata is Free Software; you can redistribute it and/or modify
    it under the terms of the GNU Affero General Public License as
    published by the Free Software Foundation; either version 3 of
-   the License, or (at your option) any later version.and old.stockflag = 's'
+   the License, or (at your option) any later version.
 
    GNUKhata is distributed in the hope that it will be useful, but
    WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -27,6 +27,7 @@
    "Abhijith Balan" <abhijithb21@openmailbox.org>
    "Bhavesh Bhawadhane" <bbhavesh07@gmail.com>
    "Sachin Patil" <sachin619patil@rediffmail.com>
+   "Prajkta Patkar" <prajakta@dff.org.in>
  */
 $(document).ready(function() {
   /*
@@ -148,13 +149,25 @@ $(document).ready(function() {
   $("#designation").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#transfernote_save").click();
+      $("#tn_duedate").click();
     }
     if (event.which==38) {
       event.preventDefault();
       $("#name_issuer").focus().select();
     }
   });
+
+  $("#tn_duedate").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#tn_duemonth").click();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#designation").focus().select();
+    }
+  });
+  
   function pad (str, max) { //to add leading zeros in date when single number is entered
     str = str.toString();
     if (str.length==1) {
