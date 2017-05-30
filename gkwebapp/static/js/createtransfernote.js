@@ -149,7 +149,7 @@ $(document).ready(function() {
   $("#designation").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#tn_duedate").click();
+      $("#tn_duedate").focus().select();
     }
     if (event.which==38) {
       event.preventDefault();
@@ -160,13 +160,48 @@ $(document).ready(function() {
   $("#tn_duedate").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#tn_duemonth").click();
+      $("#tn_duemonth").focus().select();
     }
     if (event.which==38) {
       event.preventDefault();
       $("#designation").focus().select();
     }
   });
+
+  $("#tn_duemonth").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#tn_dueyear").focus().select();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#designation").focus().select();
+    }
+  });
+
+  $("#tn_dueyear").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#tn_grace").focus().select();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#designation").focus().select();
+    }
+  });
+
+  $("#tn_grace").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#transfernote_save").click();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#tn_duedate").focus().select();
+    }
+  });
+
+
   
   function pad (str, max) { //to add leading zeros in date when single number is entered
     str = str.toString();
