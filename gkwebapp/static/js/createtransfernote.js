@@ -242,6 +242,27 @@ $(document).ready(function() {
       return false;
     }
   });
+
+
+  //Leading zeroes are added on loss of focus from date fields
+  $("#tn_duedate").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#tn_duemonth").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+
+  $("#tn_dueyear").blur(function(event) {
+    $(this).val(yearpad($(this).val(),4));
+  });
+  $(document).keyup(function(event) {
+    if(event.which == 45) {
+      $("#transfernote_save").click();
+      event.preventDefault();
+      return false;
+    }
+  });
+  
   //AJAX request to get godown details.
   //Dropdown list for selecting godown is populated with available godowns
   $("#tn_from_godown").change(function(event) {
