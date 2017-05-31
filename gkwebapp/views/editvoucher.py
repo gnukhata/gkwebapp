@@ -123,7 +123,6 @@ def viewvoucher(request):
 	vcode =request.params["id"]
 	gkdata = {"code":int(vcode)}
 
-
 	result = requests.get("http://127.0.0.1:6543/transaction?code=%d"%(int(request.params["id"])),headers=header)
 	vc=result.json()["gkresult"]
 

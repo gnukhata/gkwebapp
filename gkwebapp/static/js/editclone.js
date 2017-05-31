@@ -26,6 +26,69 @@ Contributors:
 
 $(document).ready(function()
 {
+    function getBalance( accountcode, calculateTo ){
+        var bal = '';
+        $.ajax({
+          url: '/showvoucher?type=getclosingbal',
+          type: 'POST',
+          dataType: 'json',
+          async : false,
+          data: {"accountcode": accountcode, "calculateto" : calculateTo, "financialstart" : sessionStorage.yyyymmddyear1},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          }
+        })
+        .done(function(resp) {
+          if (resp["gkstatus"]==0) {
+            bal= resp["gkresult"];
+          }
+          else {
+            bal= '';
+          }
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+        return bal;
+      }
+
+      if($('#demovctable tbody tr:first td:eq(1) select option:selected').val()){
+        var curacccode = $('#demovctable tbody tr:first td:eq(1) select option:selected').val();
+        var d = new Date();
+        var month = d.getMonth()+1;
+        var day = d.getDate();
+        var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+        $('#demovctable tbody tr:first td:eq(2) input').val(getBalance(curacccode, caldata));
+      }
+      if($('#demovctable tbody tr:eq(1) td:eq(1) select option:selected').val()){
+        var curacccode = $('#demovctable tbody tr:eq(1) td:eq(1) select option:selected').val();
+        var d = new Date();
+        var month = d.getMonth()+1;
+        var day = d.getDate();
+        var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+        $('#demovctable tbody tr:eq(1) td:eq(2) input').val(getBalance(curacccode, caldata));
+      }
+      $('#demovctable tbody tr:first td:eq(1) select').change(function(event) {
+        var curacccode = $('#demovctable tbody tr:first td:eq(1) select option:selected').val();
+        var d = new Date();
+        var month = d.getMonth()+1;
+        var day = d.getDate();
+        var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+        $('#demovctable tbody tr:first td:eq(2) input').val(getBalance(curacccode, caldata));
+      });
+      $('#demovctable tbody tr:eq(1) td:eq(1) select').change(function(event) {
+        var curacccode = $('#demovctable tbody tr:eq(1) td:eq(1) select option:selected').val();
+        var d = new Date();
+        var month = d.getMonth()+1;
+        var day = d.getDate();
+        var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+        $('#demovctable tbody tr:eq(1) td:eq(2) input').val(getBalance(curacccode, caldata));
+      });
+  //rohini
   if (($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase") && sessionStorage.invflag==1)
   {
     $(".invhide").show();
