@@ -42,6 +42,13 @@ $(document).ready(function() {
   $("#tn_month").numeric();
   $("#tn_year").numeric();
   $("#no_of_packet").numeric();
+
+  $('.tnduedate').autotab('number'); //Autotab in date fields.
+    //Prevents alphabets in numeric fields.
+  $("#tn_duedate").numeric();
+  $("#tn_duemonth").numeric();
+  $("#tn_dueyear").numeric();
+
   //Formatting date into YYYYMMDD format.
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
@@ -620,6 +627,7 @@ $(document).ready(function() {
       $('#tn_date').focus().select();
       return false;
     }
+    
     if ($.trim($('#tn_from_godown').val())=="") {
       $("#godown-blank-alert").alert();
       $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -694,6 +702,25 @@ $(document).ready(function() {
            }
          }
        );
+
+      if(!Date.parseExact($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val(), "ddMMyyyy")){
+	$("#date-alert").alert();
+	$("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#date-alert").hide();
+	});
+	$('#tn_duedate').focus().select();
+	return false;
+      }
+      var curdate = Date.parseExact($("#tn_dueyear").val()+$("#tn_duemonth").val()+$("#tn_duedate").val(), "yyyyMMdd")
+      if (!curdate.between(financialstart,financialend)) {
+	$("#between-date-alert").alert();
+	$("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#between-date-alert").hide();
+	});
+	$('#tn_duedate').focus().select();
+	return false;
+      }
+
 
       //A dictionary is made to store product code and quantity in this format - {"productcode":value, "qty":value}
       
@@ -873,6 +900,25 @@ $(document).ready(function() {
 	$("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").focus();
 	return false;
       }
+
+      if(!Date.parseExact($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val(), "ddMMyyyy")){
+	$("#date-alert").alert();
+	$("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#date-alert").hide();
+	});
+	$('#tn_duedate').focus().select();
+	return false;
+      }
+      var curdate = Date.parseExact($("#tn_dueyear").val()+$("#tn_duemonth").val()+$("#tn_duedate").val(), "yyyyMMdd")
+      if (!curdate.between(financialstart,financialend)) {
+	$("#between-date-alert").alert();
+	$("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#between-date-alert").hide();
+	});
+	$('#tn_duedate').focus().select();
+	return false;
+      }
+      
       $.ajax(
         {
           type: "POST",
