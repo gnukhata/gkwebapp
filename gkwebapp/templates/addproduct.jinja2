@@ -8,7 +8,7 @@
         <form id="addprodform">
           <div class="col-sm-6" >
             <div class="row">
-            
+
               {% if not gkresult["category"] %}
               <div class="form-group col-sm-11" id="categorydiv" hidden>
                 <label class="" for="addcatselect">{% trans %}Select Category{% endtrans %} :</label>
@@ -28,7 +28,7 @@
                   <option value="{{cat['categorycode']}}">{{cat["categoryname"]}}({{cat["subcount"]}})</option>
                   {% endfor %}
                 </select>
-
+                <small id="txtareahelp" class="form-text text-muted">{% trans %}If you want to put this product under a category/sub-category,You must create a category first.{% endtrans %}</small>
               </div>
               {% endif %}
               </div>
@@ -47,7 +47,7 @@
                   <option value="{{uom['uomid']}}">{{uom["unitname"]}}</option>
                   {% endfor %}
                 </select>
-                
+
                 <small id="txtareahelp" class="form-text text-muted">{% trans %}Press Space Bar to add a new unit.{% endtrans %}</small>
               </div>
               <div class="form-group col-sm-11 pds newuom" hidden>
@@ -239,7 +239,7 @@
           <span aria-hidden="true">&times;</span>
         </button> </div>
       <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-       
+
        <p>   <font color=" #566573"> {%trans%}
 This module lets you add Products.
 </br> If you have created Categories (at least one is highly recommended) you can select a suitable Category for a Product. When you select a Category the screen immediately changes and presents you the specifications list where you can enter the details pertaning to the product.
@@ -249,7 +249,7 @@ you can also enter the details of taxes for the product. {%endtrans %} </font>
 
         </p>
       </div>
-      
+
     </div>
   </div>
 </div>
