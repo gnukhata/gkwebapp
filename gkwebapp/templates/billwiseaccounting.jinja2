@@ -147,6 +147,9 @@
    .vlngwrap{
        width:76%
    }
+   .totalwrap {
+       width:28%;
+   }
 
   </style>
 </head>
@@ -208,9 +211,19 @@
     </tbody>
     <tfoot>
       <tr>
-	<td class="vlngwrap ralign">
+	<td class="totalwrap ralign">
 	  <div class="form-control" disabled>
 	    Total
+	  </div>
+	</td>
+	<td class="lngwrap ralign">
+	  <div class="form-control" disabled>
+	    {{sumofinvoiceamounts}}
+	  </div>
+	</td>
+	<td class="lngwrap ralign">
+	  <div class="form-control" disabled>
+	    {{sumofpendingamounts}}
 	  </div>
 	</td>
 	<td class="lngwrap ralign">

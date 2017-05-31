@@ -40,7 +40,7 @@
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   var typingTimer;                //timer identifier
-  var doneTypingInterval = 200; //typing interval
+  var doneTypingInterval = 100; //typing interval
   clearTimeout(typingTimer);  //clearing timeout
   //Actions to be triggered when focus is on amount paid field
   $(document).off('focus', '.amountpaid').on('focus', '.amountpaid', function(event) {
@@ -50,12 +50,17 @@ $(document).ready(function() {
     clearTimeout(typingTimer);
     $(".numtype").numeric({ negative : false });
   });
-  //Actions to be triggered when focus shifts from Amount Paid field
-  $(document).off('blur', '.amountpaid').on('blur', '.amountpaid', function(event) {
+  //When focus shifts from Amount Paid field value entererd is converted to float.
+  $(document).off('focusout', '.amountpaid').on('focusout', '.amountpaid', function(event) {
     event.preventDefault();
     var curindex = $(this).closest('tr').index(); //Current Index
-    var originalvalue = parseFloat($("#latable tbody tr:eq("+curindex+") td:eq(4) input").val()).toFixed(2);
-    $("#latable tbody tr:eq("+curindex+") td:eq(4) input").val(originalvalue);
+    if ($("#latable tbody tr:eq("+curindex+") td:eq(4) input").val() == "") {
+      $("#latable tbody tr:eq("+curindex+") td:eq(4) input").val("0.00");
+    }
+    else {
+      var originalvalue = parseFloat($("#latable tbody tr:eq("+curindex+") td:eq(4) input").val()).toFixed(2);
+      $("#latable tbody tr:eq("+curindex+") td:eq(4) input").val(originalvalue);
+    }
   });
   //Actions to be triggered when a key is pressed down.
   $(document).off('keydown', '.amountpaid').on('keydown', '.amountpaid', function(event) {
@@ -120,10 +125,10 @@ $(document).ready(function() {
 	if (parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()) >= parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending"))) {
 	  $("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">0.00</div>');
 	}
-	else {
-	  //When Amount Paid is not empty and less than Amount Pending the below snippet finds the difference and updates Amount Pending.
-	  var bwdiff = parseFloat(parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending")) - parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()));
-	  $("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">'+parseFloat(bwdiff).toFixed(2)+'</div');
+	    else {
+	      //When Amount Paid is not empty and less than Amount Pending the below snippet finds the difference and updates Amount Pending.
+	      var bwdiff = parseFloat(parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending")) - parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()));
+	      $("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">'+parseFloat(bwdiff).toFixed(2)+'</div');
 	}
       }
       //Total Amount Paid is found out and displayed on the foooter.
@@ -139,10 +144,18 @@ $(document).ready(function() {
 	}
 	totalap = totalap + ap;
       }
-      $('#latable tfoot tr:eq(0) td:eq(1)').html('<div class="form-control" disabled>'+parseFloat(totalap).toFixed(2)+'</div');
+      $('#latable tfoot tr:eq(0) td:eq(3)').html('<div class="form-control" disabled>'+parseFloat(totalap).toFixed(2)+'</div');
+      //Total Amount Pending is found out and displayed on the foooter.
+      var totalpending = 0.00;
+      var pending = 0.00;
+      for(var i = 0; i < $("#latable tbody tr").length; i++) {
+	pending = parseFloat($("#latable tbody tr:eq("+i+") td:eq(3) div").text());
+	totalpending = totalpending + pending;
+      }
+      $('#latable tfoot tr:eq(0) td:eq(2)').html('<div class="form-control" disabled>'+parseFloat(totalpending).toFixed(2)+'</div');
     }, doneTypingInterval);
   });
-
+  
   //Actions that occur on click of 'Done' button.
   $(document).off('click', '#btclose').on('click', '#btclose', function(event) {
     event.preventDefault();

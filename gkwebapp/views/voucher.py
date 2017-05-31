@@ -221,12 +221,16 @@ def getBillTable(request):
 		custid = result.json()["gkresult"]
 		billdetails = requests.get("http://127.0.0.1:6543/invoice?type=bwa&custid=%d"%custid, headers=header)
 		unpaidbills = []
+		sumofinvoiceamounts = 0.00
+		sumofpendingamounts = 0.00
 		if result.json()["gkstatus"] == 0:
 			for bill in billdetails.json()["gkresult"]["unpaidbills"]:
 				invoicedate = bill["invoicedate"]
 				invoicedate = datetime.strptime(invoicedate, "%d-%m-%Y")
 				if invoicedate <= voucherdate:
+					sumofinvoiceamounts = sumofinvoiceamounts + float(bill["invoicetotal"])
+					sumofpendingamounts = sumofpendingamounts + float(bill["pendingamount"])
 					unpaidbills.append(bill)
-		return {"gkstatus":result.json()["gkstatus"], "gkresult":unpaidbills}
+		return {"gkstatus":result.json()["gkstatus"], "gkresult":unpaidbills, "sumofinvoiceamounts":sumofinvoiceamounts, "sumofpendingamounts":sumofpendingamounts}
 	else:
 		return {"gkresult":[]}
