@@ -244,7 +244,8 @@ $(document).ready(function() {
   });
 
 
-  //Leading zeroes are added on loss of focus from date fields
+  
+  //Leading zeroes are added on loss of focus from due date fields
   $("#tn_duedate").blur(function(event) {
     $(this).val(pad($(this).val(),2));
   });
@@ -261,6 +262,10 @@ $(document).ready(function() {
       event.preventDefault();
       return false;
     }
+  });
+
+  $("#tn_grace").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
   });
   
   //AJAX request to get godown details.
