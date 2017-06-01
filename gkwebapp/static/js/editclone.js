@@ -89,7 +89,7 @@ $(document).ready(function()
         $('#demovctable tbody tr:eq(1) td:eq(2) input').val(getBalance(curacccode, caldata));
       });
 
-  //rohini
+
   if (($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase") && sessionStorage.invflag==1)
   {
     $(".invhide").show();
@@ -843,7 +843,7 @@ $(document).ready(function()
         }
       });
     }
-//rohini
+
 var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
 var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
 $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
@@ -1057,7 +1057,6 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
 
     if(event.which==13)
     {
-      console.log("here for dr amount");
 
       var curindex = $(this).closest('tr').index();
       if($('#vctable tbody tr:eq('+curindex+') td:eq(2) input:enabled').val()=="" || $('#vctable tbody tr:eq('+curindex+') td:eq(2) input:enabled').val()==0){
@@ -1078,7 +1077,7 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
             crsum=0;
             $(".cramt").each(function(){
               crsum += +$(this).val();
-              $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));//refer rohini
+              $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
             });
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
           }
@@ -1136,14 +1135,14 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
               $('#vctable tbody tr:last td:eq(1) select').focus();
 
               $('#vctable tbody tr:last td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
-              //rohini
+
                 var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
                 var d = new Date();
                 var month = d.getMonth()+1;
                 var day = d.getDate();
                 var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
                 $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
-                //rohini
+              
                 var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
                 var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
                 $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
@@ -1265,7 +1264,7 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
 
     if(event.which==13)
     {
-      console.log("here for cramout");
+
       var curindex = $(this).closest('tr').index();
       if($('#vctable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()=="" || $('#vctable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
         return false;
