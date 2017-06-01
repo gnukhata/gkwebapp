@@ -39,6 +39,7 @@
 
 $(document).ready(function() {
   $('.modal-backdrop').remove();
+  $("#btbillwise").hide();
   var typingTimer;                //timer identifier
   var doneTypingInterval = 100; //typing interval
   clearTimeout(typingTimer);  //clearing timeout
@@ -154,6 +155,45 @@ $(document).ready(function() {
       }
       $('#latable tfoot tr:eq(0) td:eq(2)').html('<div class="form-control" disabled>'+parseFloat(totalpending).toFixed(2)+'</div');
     }, doneTypingInterval);
+  });
+
+  //Actions that occur when On Account is clicked.
+  $(document).off('click', '#btonacc').on('click', '#btonacc', function(event) {
+    event.preventDefault();
+    $("#latable").hide();
+    $("#asadvancediv").hide();
+    $("#txtareahelp2").hide();
+    $("#onaccdiv").show();
+    $("#btbillwise").show();
+    $("#btonacc").hide();
+    $("#btasadv").show();
+    $("#onaccount").focus().select();
+  });
+
+  //Actions that occur when As Advance is clicked.
+  $(document).off('click', '#btasadv').on('click', '#btasadv', function(event) {
+    event.preventDefault();
+    $("#latable").hide();
+    $("#onaccdiv").hide();
+    $("#txtareahelp2").hide();
+    $("#asadvancediv").show();
+    $("#btbillwise").show();
+    $("#btonacc").show();
+    $("#btasadv").hide();
+    $("#asadvance").focus().select();
+  });
+
+  //Actions that occur when Bill Wise button is clicked.
+  $(document).off('click', '#btbillwise').on('click', '#btbillwise', function(event) {
+    event.preventDefault();
+    $("#onaccdiv").hide();
+    $("#asadvancediv").hide();
+    $("#txtareahelp2").show();
+    $("#latable").show();
+    $("#btbillwise").hide();
+    $("#btonacc").show();
+    $("#btasadv").show();
+    $("#onaccount").focus().select();
   });
   
   //Actions that occur on click of 'Done' button.
