@@ -21,6 +21,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
 
 Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
+"Mohd. Talha Pawaty" <mtalha456@gmail.com>
 """
 
 from pyramid.view import view_config
@@ -61,7 +62,7 @@ def saveinvoice(request):
 	invoicedata = {"invoiceno":request.params["invoiceno"],"taxstate":request.params["taxstate"],"invoicedate":request.params["invoicedate"],
 		"tax":json.loads(request.params["tax"]),"custid":request.params["custid"],"invoicetotal":request.params["invtotal"],
 		"contents":json.loads(request.params["contents"]),
-		"issuername":request.params["issuername"],"designation":request.params["designation"]}
+		"issuername":request.params["issuername"],"designation":request.params["designation"],"freeqty":json.loads(request.params["freeqty"])}
 
 	try:
 		files = {}

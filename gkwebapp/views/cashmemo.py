@@ -58,7 +58,7 @@ def saveinvoice(request):
 
 	cashmemodata = {"invoiceno":request.params["invoiceno"],"invoicetotal":request.params["invoicetotal"],"icflag":3,"taxstate":request.params["taxstate"],"invoicedate":request.params["invoicedate"],
 		"tax":json.loads(request.params["tax"]),
-		"contents":json.loads(request.params["contents"])}
+		"contents":json.loads(request.params["contents"]),"freeqty":json.loads(request.params["freeqty"])}
 
 	stock = json.loads(request.params["stock"])
 	invoicewholedata = {"invoice":cashmemodata,"stock":stock}
