@@ -97,11 +97,6 @@ $(document).ready(function() {
       //If 'Up' arrow key is pressed focus shifts to Amount Paid in previous row.
       $("#latable tbody tr:eq("+previndex+") td:eq(4) input").focus().select();
     }
-    else if (event.which == 45) {
-      event.preventDefault();
-      //Pressing 'Insert' key triggers click event of 'Done' button.
-      $("#btclose").click();
-    }
   });
 
   //Actions that take place when key is released from Amount Paid field.
@@ -126,10 +121,10 @@ $(document).ready(function() {
 	if (parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()) >= parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending"))) {
 	  $("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">0.00</div>');
 	}
-	    else {
-	      //When Amount Paid is not empty and less than Amount Pending the below snippet finds the difference and updates Amount Pending.
-	      var bwdiff = parseFloat(parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending")) - parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()));
-	      $("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">'+parseFloat(bwdiff).toFixed(2)+'</div');
+	else {
+	  //When Amount Paid is not empty and less than Amount Pending the below snippet finds the difference and updates Amount Pending.
+	  var bwdiff = parseFloat(parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending")) - parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()));
+	  $("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">'+parseFloat(bwdiff).toFixed(2)+'</div');
 	}
       }
       //Total Amount Paid is found out and displayed on the foooter.
@@ -157,6 +152,14 @@ $(document).ready(function() {
     }, doneTypingInterval);
   });
 
+  $(document).off("keyup").on("keyup",function(event) {
+    if(event.which == 45) {
+      event.preventDefault();
+      //Pressing 'Insert' key triggers click event of 'Done' button.
+      $("#btclose").click();
+      return false;
+    }
+  });
   //Actions that occur when On Account is clicked.
   $(document).off('click', '#btonacc').on('click', '#btonacc', function(event) {
     event.preventDefault();
@@ -201,6 +204,12 @@ $(document).ready(function() {
     event.preventDefault();
     var billwisedata = [];  //List to store data.
     var totalamountpaid = 0;  //Variable to store total amount paid. Total is recalculated here to avoid errors.
+    var asadvance = {};
+    var onaccount = {};
+    asadvance = {"payflag":1, "pdamt":$("#asadvance").val(), "custid":$("#custid").val()};
+    onaccount = {"payflag":15, "pdamt":$("#onaccount").val(), "custid":$("#custid").val()};
+    billwisedata.push(asadvance);
+    billwisedata.push(onaccount);
     /*
        The loop below makes a dictionaries from values stored in each row in this format - {"pdamt":amount paid, "invid":invoice id}.
        It appends each dictionary into a list billwisedata.
@@ -223,12 +232,13 @@ $(document).ready(function() {
       var invamount = {};
       invamount["pdamt"] = amountpaid;
       invamount["invid"] = invid;
+      invamount["payflag"] = 2;
       billwisedata.push(invamount);
       totalamountpaid = totalamountpaid + amountpaid;
     }
     //Validations.
     //Alert is displayed when total amount paid is greater than Debit/Credit amount(retrieved from session storage). See addvoucher.js to see when the amount is stored in session storage.
-    if (parseFloat(totalamountpaid) > parseFloat(sessionStorage.customeramount)) {
+    if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > parseFloat(sessionStorage.customeramount)) {
       $("#latable tbody tr:last td:eq(4) input").focus().select();
       $("#bwamount-alert").alert();
       $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -236,8 +246,8 @@ $(document).ready(function() {
       });
       return false;
     }
-    //Alert is displayed when amount paid is less than Debit/Credit amount.
-    if (parseFloat(totalamountpaid) < parseFloat(sessionStorage.customeramount)) {
+      //Alert is displayed when amount paid is less than Debit/Credit amount.
+      if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) < parseFloat(sessionStorage.customeramount)) {
       $("#latable tbody tr:last td:eq(4) input").focus().select();
       $("#bwamount-less-alert").alert();
       $("#bwamount-less-alert").fadeTo(2250, 500).slideUp(500, function(){
