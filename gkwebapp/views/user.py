@@ -101,12 +101,16 @@ def deleteuser(request):
 	headers={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/users", headers=headers)
 	uname = ""
+	#urole in terms of integer
 	urole = ""
+	#urole in terms of string
 	userrole = ""
+	'''here request param username is user id only'''
 	for user in result.json()["gkresult"]:
 		if user["userid"] == int(request.params["username"]):
 			uname = user["username"]
 			urole = user["userrole"]
+			break
 	if urole == "-1":
 		userrole = "Admin"
 	elif urole == "0":
@@ -117,9 +121,8 @@ def deleteuser(request):
 		userrole = "Internal Auditor"
 	else:
 		userrole = "Godown In Charge"
-		resultgodown = requests.get("http://127.0.0.1:6543/godown?userid=%d"%(int(user["userid"])), headers=headers)
+		resultgodown = requests.get("http://127.0.0.1:6543/godown?type=byuser&userid=%d"%(int(request.params["username"])), headers=headers)
 		resultgodown = resultgodown.json()["gkresult"]
-
 	gkdata={"userid":request.params["username"] }
 	result = requests.delete("http://127.0.0.1:6543/users", data=json.dumps(gkdata), headers=headers)
 	if result.json()["gkstatus"] == 0:
@@ -131,7 +134,7 @@ def deleteuser(request):
 				if j != len(resultgodown):
 					godnames += ", "
 				j += 1
-			gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted for " + godnames + " godown"}
+			gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted from " + godnames + " godown"}
 
 		else:
 			gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted"}
