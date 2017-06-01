@@ -964,6 +964,13 @@ $(document).ready(function() {
       $('.modal').modal('hide');
       $('#confirm_yestnprint').modal('show').one('click', '#tn_save_yesprint', function (e)
 	{
+	  var duedate;
+	  if(!Date.parseExact($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val(), "ddMMyyyy")){
+	    duedate = "";
+	  }
+	  else{
+	    duedate=$("#tn_duedate").val()+'-'+$("#tn_duemonth").val()+'-'+$("#tn_dueyear").val();
+	  }
 	  $.ajax({
 	    url: '/transfernotes?action=save',
 	    type: 'POST',
@@ -978,6 +985,8 @@ $(document).ready(function() {
 	      "nopkt":$("#no_of_packet").val(),
 	      "issuername":$("#name_issuer").val(),
 	      "designation":$("#designation").val(),
+	      "duedate":duedate,
+	      "grace":$("#tn_grace").val(),
 	      "products":JSON.stringify(products)},
 	    beforeSend: function(xhr)
 	    {
@@ -998,6 +1007,13 @@ $(document).ready(function() {
 	       }
 
 	       //AJAX that loads print preview of transfernote.  All data filled in by the user is sent so that it is displayed in the preview.
+	       var duedate;
+	       if(!Date.parseExact($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val(), "ddMMyyyy")){
+		 duedate = "";
+	       }
+	       else{
+		 duedate=$("#tn_duedate").val()+'-'+$("#tn_duemonth").val()+'-'+$("#tn_dueyear").val();
+	       }
 	       $.ajax({
 		 url: '/transfernotes?action=print',
 		 type: 'POST',
@@ -1013,6 +1029,8 @@ $(document).ready(function() {
 		   "printset":JSON.stringify(printset),
 		   "issuername":$("#name_issuer").val(),
 		   "designation":$("#designation").val(),
+		   "duedate":duedate,
+		   "grace":$("#tn_grace").val(),
 		   "products":JSON.stringify(products)},
 		 beforeSend: function(xhr)
 		 {

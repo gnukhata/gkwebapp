@@ -92,7 +92,7 @@ def tnprint(request):
         togodown=requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["togodown"])), headers=header)
         tableset = json.loads(request.params["printset"])
         return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],
-                "tableset":tableset,"transfernoteno":request.params["transfernoteno"],"transfernotedate":request.params["transfernotedate"],"receiveddate":request.params["receiveddate"],
+                "tableset":tableset,"transfernoteno":request.params["transfernoteno"],"transfernotedate":request.params["transfernotedate"],"receiveddate":request.params["receiveddate"],"duedate":request.params["duedate"],"grace":request.params["grace"],
         "togodown":togodown.json()["gkresult"],"transportationmode":request.params["transportationmode"],"issuername":request.params["issuername"],
         "designation":request.params["designation"],"nopkt":request.params["nopkt"],"fromgodown":fromgodown.json()["gkresult"]}
 
