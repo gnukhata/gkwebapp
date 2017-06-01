@@ -44,6 +44,7 @@ $(document).ready(function() {
   var doneTypingInterval = 100; //typing interval
   clearTimeout(typingTimer);  //clearing timeout
   //Actions to be triggered when focus is on amount paid field
+  $(".numtype").numeric({ negative : false });
   $(document).off('focus', '.amountpaid').on('focus', '.amountpaid', function(event) {
     event.preventDefault();
     /* Act on the event */
@@ -96,6 +97,11 @@ $(document).ready(function() {
       event.preventDefault();
       //If 'Up' arrow key is pressed focus shifts to Amount Paid in previous row.
       $("#latable tbody tr:eq("+previndex+") td:eq(4) input").focus().select();
+    }
+    else if (event.which == 35) {
+      event.preventDefault();
+      //If 'Esc' key is pressed focus shifts to buttons in footer.
+      $(".footerbutton:visible").first().focus();
     }
   });
 
@@ -161,6 +167,13 @@ $(document).ready(function() {
     }
   });
   //Actions that occur when On Account is clicked.
+  $(document).off('keydown', '#onaccount, #asadvance').on('keydown', '#onaccount, #asadvance', function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $(".footerbutton:visible").first().focus();
+    }
+  });
+  //Actions that occur when On Account is clicked.
   $(document).off('click', '#btonacc').on('click', '#btonacc', function(event) {
     event.preventDefault();
     $("#latable").hide();
@@ -196,7 +209,7 @@ $(document).ready(function() {
     $("#btbillwise").hide();
     $("#btonacc").show();
     $("#btasadv").show();
-    $("#onaccount").focus().select();
+    $(".amountpaid:first").focus().select();
   });
   
   //Actions that occur on click of 'Done' button.
