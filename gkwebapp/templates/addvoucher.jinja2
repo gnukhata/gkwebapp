@@ -491,24 +491,8 @@ The field Balance displays the balance of the account selected as on the date of
 	    <div class="row">
 	      <div id="bwtableload"></div>
 	    </div>
-	    <div class="row" id="onaccdiv" hidden>
-	      <form class="form-inline">
-		<div class="form-group col-xs-3">
-		  <label for="onaccount">{% trans %}On Account{% endtrans %} :</label>
-		  <input class="form-control input-sm numtype" id="onaccount" placeholder="{% trans %}On Account Amount{% endtrans %}" value="0.00">
-		</div>
-	      </form>
-	    </div>
-	    <div class="row" id="asadvancediv" hidden>
-	      <form class="form-inline">
-		<div class="form-group col-xs-3">
-		  <label for="asadvance">{% trans %}As Advance{% endtrans %} :</label>
-		  <input class="form-control input-sm numtype" id="asadvance" placeholder="{% trans %}As Advance Amount{% endtrans %}" value="0.00">
-		</div>
-	      </form>
-	    </div>
-	    <small id="txtareahelp" class="form-text text-muted">Press 'Insert' key from anywhere on the screen to save changes.</small><br>
-	    <small id="txtareahelp2" class="form-text text-muted">You can also press 'Enter' key from 'Amount Paid' field in last row.</small>
+	    <small id="txtareahelp" class="form-text text-muted">Press 'Insert' key from any field on the screen to save changes. Press 'End' key from any field to shift focus to buttons.</small><br>
+	    <small id="txtareahelp2" class="form-text text-muted">You can also press 'Enter' key from 'Amount Paid' field in last row to save changes.</small>
           </div>
           <div class="modal-footer">
 	    <button type="button" id ="btasadv" class="btn footerbutton btn-primary">{% trans %}As Advance{% endtrans %}</button>

@@ -103,6 +103,12 @@ $(document).ready(function() {
       //If 'Esc' key is pressed focus shifts to buttons in footer.
       $(".footerbutton:visible").first().focus();
     }
+    else if(event.which == 45) {
+      event.preventDefault();
+      //Pressing 'Insert' key triggers click event of 'Done' button.
+      $("#btclose").click();
+      return false;
+    }
   });
 
   //Actions that take place when key is released from Amount Paid field.
@@ -157,20 +163,17 @@ $(document).ready(function() {
       $('#latable tfoot tr:eq(0) td:eq(2)').html('<div class="form-control" disabled>'+parseFloat(totalpending).toFixed(2)+'</div');
     }, doneTypingInterval);
   });
-
-  $(document).off("keyup").on("keyup",function(event) {
-    if(event.which == 45) {
-      event.preventDefault();
-      //Pressing 'Insert' key triggers click event of 'Done' button.
-      $("#btclose").click();
-      return false;
-    }
-  });
   //Actions that occur when On Account is clicked.
   $(document).off('keydown', '#onaccount, #asadvance').on('keydown', '#onaccount, #asadvance', function(event) {
     if (event.which == 13) {
       event.preventDefault();
       $(".footerbutton:visible").first().focus();
+    }
+    if(event.which == 45) {
+      event.preventDefault();
+      //Pressing 'Insert' key triggers click event of 'Done' button.
+      $("#btclose").click();
+      return false;
     }
   });
   //Actions that occur when On Account is clicked.
@@ -251,7 +254,7 @@ $(document).ready(function() {
     }
     //Validations.
     //Alert is displayed when total amount paid is greater than Debit/Credit amount(retrieved from session storage). See addvoucher.js to see when the amount is stored in session storage.
-    if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > parseFloat(sessionStorage.customeramount)) {
+    if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > (parseFloat(sessionStorage.customeramount) + parseFloat($("#asadvancelabel").data("asadvance") + parseFloat($("#onaccountlabel").data("onaccount"))))) {
       $("#latable tbody tr:last td:eq(4) input").focus().select();
       $("#bwamount-alert").alert();
       $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -259,8 +262,8 @@ $(document).ready(function() {
       });
       return false;
     }
-      //Alert is displayed when amount paid is less than Debit/Credit amount.
-      if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) < parseFloat(sessionStorage.customeramount)) {
+    //Alert is displayed when amount paid is less than Debit/Credit amount.
+    if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) < (parseFloat(sessionStorage.customeramount))) {
       $("#latable tbody tr:last td:eq(4) input").focus().select();
       $("#bwamount-less-alert").alert();
       $("#bwamount-less-alert").fadeTo(2250, 500).slideUp(500, function(){

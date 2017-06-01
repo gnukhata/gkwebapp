@@ -219,6 +219,8 @@ def getBillTable(request):
     result = requests.get("http://127.0.0.1:6543/customersupplier?by=account&accountcode=%d"%accountcode, headers=header)
     if result.json()["gkstatus"] == 0:
         custid = result.json()["gkresult"]
+        customer = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%custid, headers=header)
+        customerdetails = customer.json()["gkresult"]
         billdetails = requests.get("http://127.0.0.1:6543/invoice?type=bwa&custid=%d"%custid, headers=header)
         unpaidbills = []
         sumofinvoiceamounts = 0.00
@@ -231,6 +233,6 @@ def getBillTable(request):
                     sumofinvoiceamounts = sumofinvoiceamounts + float(bill["invoicetotal"])
                     sumofpendingamounts = sumofpendingamounts + float(bill["pendingamount"])
                     unpaidbills.append(bill)
-        return {"gkstatus":result.json()["gkstatus"], "gkresult":unpaidbills, "sumofinvoiceamounts":sumofinvoiceamounts, "sumofpendingamounts":sumofpendingamounts, "custid":custid}
+        return {"gkstatus":result.json()["gkstatus"], "gkresult":unpaidbills, "sumofinvoiceamounts":sumofinvoiceamounts, "sumofpendingamounts":sumofpendingamounts, "custid":custid, "onaccount":customerdetails["onaccamt"], "asadvance":customerdetails["advamt"]}
     else:
         return {"gkresult":[]}

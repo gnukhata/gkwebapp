@@ -112,7 +112,7 @@
 
    #latable tbody {
        display:block;
-       height: calc(100vh - 24em);
+       height: calc(100vh - 26em);
        overflow-y:scroll;
    }
 
@@ -154,86 +154,110 @@
   </style>
 </head>
 <body>
-  <table id="latable" class="table shadow table-bordered table-condensed table-fixedheader">
-    <thead class="bg-primary">
-      <tr>
-        <th class="mdwrap calign">
-          {% trans %}Invoice No{% endtrans %}
-        </th>
-        <th class="mdwrap calign">
-          {% trans %}Date{% endtrans %}
-        </th>
-        <th class="lngwrap ralign">
-          {% trans %}Invoice Amount{% endtrans %}
-        </th>
-        <th class="lngwrap ralign">
-          {% trans %}Amount Pending{% endtrans %}
-        </th>
-        <th class="lngwrap ralign">
-          {% trans %}Amount Paid{% endtrans %}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      {% if not gkresult %}
-	<tr><td style="width:100%">No Data Found.</td></tr>
-      {% endif %}
-      {% for record in gkresult %}
-	{% if record["pendingamount"]!=0.00 %}
-	  <tr data-invid="{{record["invid"]}}">
-            <td class="mdwrap calign" >
-	      <div class="form-control">
-		{{record["invoiceno"]}}
-	      </div>
-            </td>
-            <td class="mdwrap calign">
-	      <div class="form-control">
-		{{record["invoicedate"]}}
-	      </div>
-            </td>
-            <td class="lngwrap ralign" >
-	      <div class="form-control">
-		{{record["invoicetotal"]}}
-	      </div>
-            </td>
-            <td class="lngwrap ralign" data-amountpending="{{record["pendingamount"]}}">
-	      <div class="form-control">
-		{{record["pendingamount"]}}
-	      </div>
-            </td>
-            <td class="lngwrap ralign" >
-	      <input type="text" class="amountpaid form-control rightJustified numtype" value="0.00">
-            </td>
-	  </tr>
+    <table id="latable" class="table shadow table-bordered table-condensed table-fixedheader">
+      <thead class="bg-primary">
+	<tr>
+          <th class="mdwrap calign">
+            {% trans %}Invoice No{% endtrans %}
+          </th>
+          <th class="mdwrap calign">
+            {% trans %}Date{% endtrans %}
+          </th>
+          <th class="lngwrap ralign">
+            {% trans %}Invoice Amount{% endtrans %}
+          </th>
+          <th class="lngwrap ralign">
+            {% trans %}Amount Pending{% endtrans %}
+          </th>
+          <th class="lngwrap ralign">
+            {% trans %}Amount Paid{% endtrans %}
+          </th>
+	</tr>
+      </thead>
+      <tbody>
+	{% if not gkresult %}
+	  <tr><td style="width:100%">No Data Found.</td></tr>
 	{% endif %}
-      {% endfor %}
-      
-    </tbody>
-    <tfoot>
-      <tr>
-	<td class="totalwrap ralign">
-	  <div class="form-control" disabled>
-	    Total
-	  </div>
-	</td>
-	<td class="lngwrap ralign">
-	  <div class="form-control" disabled>
-	    {{sumofinvoiceamounts}}
-	  </div>
-	</td>
-	<td class="lngwrap ralign">
-	  <div class="form-control" disabled>
-	    {{sumofpendingamounts}}
-	  </div>
-	</td>
-	<td class="lngwrap ralign">
-	  <div class="form-control" disabled>
-	    0.00
-	  </div>
-	</td>
-      </tr>
-    </tfoot>
-  </table>
+	{% for record in gkresult %}
+	  {% if record["pendingamount"]!=0.00 %}
+	    <tr data-invid="{{record["invid"]}}">
+              <td class="mdwrap calign" >
+		<div class="form-control">
+		  {{record["invoiceno"]}}
+		</div>
+              </td>
+              <td class="mdwrap calign">
+		<div class="form-control">
+		  {{record["invoicedate"]}}
+		</div>
+              </td>
+              <td class="lngwrap ralign" >
+		<div class="form-control">
+		  {{record["invoicetotal"]}}
+		</div>
+              </td>
+              <td class="lngwrap ralign" data-amountpending="{{record["pendingamount"]}}">
+		<div class="form-control">
+		  {{record["pendingamount"]}}
+		</div>
+              </td>
+              <td class="lngwrap ralign" >
+		<input type="text" class="amountpaid form-control rightJustified numtype" value="0.00">
+              </td>
+	    </tr>
+	  {% endif %}
+	{% endfor %}
+	
+      </tbody>
+      <tfoot>
+	<tr>
+	  <td class="totalwrap ralign">
+	    <div class="form-control" disabled>
+	      Total
+	    </div>
+	  </td>
+	  <td class="lngwrap ralign">
+	    <div class="form-control" disabled>
+	      {{sumofinvoiceamounts}}
+	    </div>
+	  </td>
+	  <td class="lngwrap ralign">
+	    <div class="form-control" disabled>
+	      {{sumofpendingamounts}}
+	    </div>
+	  </td>
+	  <td class="lngwrap ralign">
+	    <div class="form-control" disabled>
+	      0.00
+	    </div>
+	  </td>
+	</tr>
+      </tfoot>
+    </table>
+    <div id="onaccdiv" class="col-xs-12" style="margin-bottom:20px;" hidden>
+      <form class="form-inline">
+	<div class="form-group col-xs-3">
+	  <label for="onaccount">{% trans %}On Account{% endtrans %} :</label>
+	  <input class="form-control input-sm numtype" id="onaccount" placeholder="{% trans %}On Account Amount{% endtrans %}" value="0.00">
+	</div>
+      </form>
+    </div>
+    <div id="asadvancediv" class="col-xs-12" style="margin-bottom:20px;" hidden>
+      <form class="form-inline">
+	<div class="form-group col-xs-3">
+	  <label for="asadvance">{% trans %}As Advance{% endtrans %} :</label>
+	  <input class="form-control input-sm numtype" id="asadvance" placeholder="{% trans %}As Advance Amount{% endtrans %}" value="0.00">
+	</div>
+      </form>
+    </div>
+    <div class="col-sm-12">
+      <div id="asadvanceamt" class="col-sm-offset-2 col-sm-4">
+	<b>As Advance Amount :- </b><label id="asadvancelabel" data-asadvance="{{asadvance}}" class="text-danger"><b>{{asadvance}}</b></label>
+      </div>-
+      <div id="onaccamt" class="col-sm-4">
+	<b>On Account Amount:- </b><label id="onaccountlabel" data-onaccount="{{onaccount}}" class="text-primary"><b>{{onaccount}}</b></label>
+      </div>
+    </div>
   <input type="text" id="custid" value="{{custid}}" hidden></input>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/billwiseaccounting.js')}}"></script>
 </body>

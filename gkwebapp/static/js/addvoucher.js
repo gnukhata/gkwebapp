@@ -1729,6 +1729,7 @@ $("#show"+$("#vtype").val()).click();
   $('#confirm_yes_billwise, #bwtable').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is closed
   {
     $("#vno").focus().select();
+    $("#bwtableload").html("");
   });
   $('#bwtable').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
   {
