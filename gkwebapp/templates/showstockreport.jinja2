@@ -42,6 +42,10 @@
     text-align: right;
   }
 
+  .calign {
+    text-align: center;
+  }
+
   </style>
 </head>
 <body>
@@ -69,37 +73,37 @@
   <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
     <thead class="bg-primary">
       <tr>
-        <th class="col-xs-1" >
+        <th class="col-xs-1 calign" >
           {% trans %}Date{% endtrans %}
         </th>
         {% if godown == "" %}
-        <th class="col-xs-4" >
+        <th class="col-xs-3 calign" >
         {% else %}
-        <th class="col-xs-3" >
+        <th class="col-xs-3 calign" >
         {% endif %}
           {% trans %}Particulars{% endtrans %}
         </th>
-        <th class="col-xs-2" >
+        <th class="col-xs-2 calign" >
           {% trans %}Trn Type{% endtrans %}
         </th>
-        <th class="col-xs-1 rightlist" >
-          {% trans %}DC No{% endtrans %}
+        <th class="col-xs-2 calign" >
+          {% trans %}Deli. Note No.{% endtrans %}
         </th>
-        <th class="col-xs-1 rightlist" >
+        <th class="col-xs-1 calign" >
           {% trans %}INV No{% endtrans %}
         </th>
         {% if godown != "" %}
-        <th class="col-xs-1 rightlist" >
+        <th class="col-xs-1 calign" >
           {% trans %}TN No{% endtrans %}
         </th>
         {% endif %}
-        <th class="col-xs-1 rightlist" >
+        <th class="col-xs-1 calign" >
           {% trans %}Inward{% endtrans %}
         </th>
-        <th class="col-xs-1 rightlist" >
+        <th class="col-xs-1 calign" >
           {% trans %}Outward{% endtrans %}
         </th>
-        <th class="col-xs-1 rightlist" >
+        <th class="col-xs-1 calign" >
           {% trans %}Balance{% endtrans %}
         </th>
       </tr>
@@ -108,23 +112,23 @@
       {% for record in gkresult %}
       {% if record["particulars"] =="opening stock" and record["invno"]=="" and record["dcno"]=="" and record["date"]=="" %}
       <tr>
-        <td class="col-xs-1 " >
+        <td class="col-xs-1 calign" >
         </td>
         {% if godown == "" %}
-        <td class="col-xs-4">
+        <td class="col-xs-3 calign">
         {% else %}
-        <td class="col-xs-3">
+        <td class="col-xs-3 calign">
         {% endif %}
           <d class="libgname text-capitalize" >{{record["particulars"]}}</d>
         </td>
-        <td class="col-xs-2" >
+        <td class="col-xs-2 calign" >
         </td>
-        <td class="col-xs-1" >
+        <td class="col-xs-2 calign" >
         </td>
-        <td class="col-xs-1" >
+        <td class="col-xs-1 calign" >
         </td>
         {% if godown != "" %}
-        <td class="col-xs-1" >
+        <td class="col-xs-1 calign" >
         </td>
         {% endif %}
         <td class="col-xs-1 rightlist">
@@ -144,17 +148,17 @@
       {% else %}
       <tr value="{{record["tnid"]}}"> <!-- check once-->
       {% endif %}
-        <td class="col-xs-1 " >
+        <td class="col-xs-1 calign" >
           {{record["date"]}}
         </td>
         {% if godown == "" %}
-        <td class="col-xs-4">
+        <td class="col-xs-3 calign">
         {% else %}
-        <td class="col-xs-3">
+        <td class="col-xs-3 calign">
         {% endif %}
           {{record["particulars"]}}
         </td>
-        <td class="col-xs-2" >
+        <td class="col-xs-2 calign" >
           {% if record["trntype"] == "delchal" %}
               Delivery Note
           {% endif %}
@@ -169,18 +173,18 @@
           {% endif %}
 
         </td>
-        <td value="{{record["dcid"]}}" class="col-xs-1 rightlist" >
+        <td value="{{record["dcid"]}}" class="col-xs-2 calign" >
           {% if record["dcno"]!="" %}
             {{record["dcno"]}}
           {% endif %}
         </td>
-        <td value="{{record["invid"]}}" class="col-xs-1 rightlist" >
+        <td value="{{record["invid"]}}" class="col-xs-1 calign" >
           {% if record["invno"]!="" %}
             {{record["invno"]}}
           {% endif %}
         </td>
         {% if godown != "" %}
-        <td value="{{record["tnid"]}}" class="col-xs-1 rightlist" >
+        <td value="{{record["tnid"]}}" class="col-xs-1 calign" >
           {% if record["tnno"] != "" %}
             {{record["tnno"]}}
           {% endif %}
@@ -200,23 +204,23 @@
       {% endif %}
       {% if record["particulars"] =="Total" and record["dcno"]=="" and record["invno"]=="" and record["date"]=="" %}
       <tr>
-        <td class="col-xs-1 " >
+        <td class="col-xs-1 calign" >
         </td>
         {% if godown == "" %}
-        <td class="col-xs-4">
+        <td class="col-xs-3 calign">
         {% else %}
-        <td class="col-xs-3">
+        <td class="col-xs-3 calign">
         {% endif %}
           {{record["particulars"]}}
         </td>
-        <td class="col-xs-2" >
+        <td class="col-xs-2 calign" >
         </td>
-        <td class="col-xs-1" >
+        <td class="col-xs-2 calign" >
         </td>
-        <td class="col-xs-1" >
+        <td class="col-xs-1 calign" >
         </td>
         {% if godown != "" %}
-        <td class="col-xs-1" >
+        <td class="col-xs-1 calign" >
         </td>
         {% endif %}
         <td class="col-xs-1 rightlist">
