@@ -24,7 +24,7 @@
    "Navin Karkera" <navin@dff.org.in>
    "Rohini Baraskar" <robaraskar@gmail.com>
    "Mohd. Talha Pawaty" <mtalha456@gmail.com>
-   "Abhijith Balan" <abhijithb21@openmailbox.org>
+   "Abhijith Balan" <abhijith@dff.org.in>
    "Bhavesh Bhawadhane" <bbhavesh07@gmail.com>
    "Sachin Patil" <sachin619patil@rediffmail.com>
    "Prajkta Patkar" <prajakta@dff.org.in>
