@@ -10,6 +10,9 @@
 	table td {
 		border-top: none !important;
 	}
+	.img-circle {
+  border-radius: 50%;
+}
 	</style>
 </head>
 <body >
@@ -37,7 +40,16 @@
 
 					{% trans %}Connection Failed.{% endtrans %}
 				</div>
+<div class="col-xs-12 from-group">
+<div class="img-thumbnail img-circle ">
+  <div style="position: relative; padding: 0; cursor: pointer;" type="file">
+ <img class="img-circle"  style="width: 140px; height: 140px;" align="middle">
+    <span style="position: absolute; color: red; bottom: 20px; left: 40px;">UPLOAD</span>
 
+	</div>
+
+</div>
+</div>
 				<form id="editorganisationform" method="post" class="form-inline">
 					<div class="col-xs-6 from-group" >
 						<input type="text" id="orgtype" hidden value="{{gkresult["orgtype"]}}" style="width: 100%"></input>
@@ -208,7 +220,7 @@
           <span aria-hidden="true">&times;</span>
         </button> </div>
       <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-       
+
        <p>   <font color=" #566573"> {%trans%}
 
 This screen helps you edit or update organisation particulars.</br>
@@ -218,7 +230,7 @@ Note that the default tab and shift + tab shortcuts are also available for navig
 
         </p>
       </div>
-      
+
     </div>
   </div>
 </div>
