@@ -77,7 +77,6 @@ $(document).ready(function() {
   $("#print").click(function(event) {
         event.preventDefault();
         var xhr = new XMLHttpRequest();
-        alert("in");
         xhr.open('GET', '/showuser?type=spreadsheet&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2'), true);
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
         xhr.responseType = 'blob';
