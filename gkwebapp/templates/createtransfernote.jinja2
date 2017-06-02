@@ -64,10 +64,26 @@
 
             <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
           </div>
-          <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
+
+	  <div class="alert alert-danger" id="beforetndate-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}Expected Date of Receipt cannot be before Transfer Note Date!{% endtrans %}</label>
+          </div>
+
+	  <div class="alert alert-danger" id="beforedate-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}Expected Date of Receipt cannot be before Financial Year!{% endtrans %}</label>
+          </div>
+
+          <div class="alert alert-danger" id="gracedate-alert" aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please enter Expected Date of Receipt!{% endtrans %}
+          </div>
+	  <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
 
             {% trans %}Please enter date within the financial year!{% endtrans %}
           </div>
+
           <div class="alert alert-danger" id="godown-blank-alert"  aria-live="rude" role="alert" hidden>
 
             <label for="vno">{% trans %}Godown Must be Selected!{% endtrans %}</label>
