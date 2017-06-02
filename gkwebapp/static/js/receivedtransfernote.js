@@ -333,7 +333,9 @@ This script is for the Received transfer note page.
                 $("#received_tn_date").prop("disabled", true);
                 $("#received_tn_month").prop("disabled", true);
                 $("#received_tn_year").prop("disabled", true);
-              
+
+	//	$('#rec_tn_list select option[value="+'tnid'+"]').prop('hidden', true).prop('disabled', true);
+		//$('#rec_tn_list select option[value=""]').prop('selected', true);
               }
 
             }

@@ -68,9 +68,12 @@ def savetransfernote(request):
                 transferdata = {"transfernoteno":request.params["transfernoteno"],"transfernotedate":request.params["transfernotedate"],"togodown":request.params["togodown"],"fromgodown":request.params["fromgodown"],"transportationmode":request.params["transportationmode"],"issuername":request.params["issuername"],"designation":request.params["designation"]}
                 if request.params["nopkt"]!='':
                         transferdata["nopkt"]=request.params["nopkt"]
-                if request.params.has_key(["duedate"]):
+                print  request.params.has_key("duedate")
+                if request.params.has_key("duedate"):
                     transferdata["duedate"]=request.params["duedate"]
-                    
+                if request.params.has_key("grace"):
+                    transferdata["grace"]=request.params["grace"]
+                 
                 products = {}
                 for  row in json.loads(request.params["products"]):
                         products[row["productcode"]] = row["qty"]
