@@ -366,7 +366,7 @@ This script is for the Received transfer note page.
     }
     var rcdate;
     if(!Date.parseExact($("#received_tn_date").val()+$("#received_tn_month").val()+$("#received_tn_year").val(), "ddMMyyyy")){
-      rcdate = "";
+      rcdate = "n/a";
     }
     else{
       rcdate=$("#received_tn_date").val()+'-'+$("#received_tn_month").val()+'-'+$("#received_tn_year").val();
