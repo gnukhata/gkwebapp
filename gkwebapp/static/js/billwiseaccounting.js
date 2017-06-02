@@ -254,7 +254,7 @@ $(document).ready(function() {
     }
     //Validations.
     //Alert is displayed when total amount paid is greater than Debit/Credit amount(retrieved from session storage). See addvoucher.js to see when the amount is stored in session storage.
-    if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > (parseFloat(sessionStorage.customeramount) + parseFloat($("#asadvancelabel").data("asadvance") + parseFloat($("#onaccountlabel").data("onaccount"))))) {
+    if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > (parseFloat(sessionStorage.customeramount) + parseFloat($("#asadvancelabel").data("asadvance")) + parseFloat($("#onaccountlabel").data("onaccount")))) {
       $("#latable tbody tr:last td:eq(4) input").focus().select();
       $("#bwamount-alert").alert();
       $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -263,7 +263,7 @@ $(document).ready(function() {
       return false;
     }
     //Alert is displayed when amount paid is less than Debit/Credit amount.
-    if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) < (parseFloat(sessionStorage.customeramount))) {
+    if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) < (parseFloat(sessionStorage.customeramount) + parseFloat($("#asadvancelabel").data("asadvance")) + parseFloat($("#onaccountlabel").data("onaccount")))) {
       $("#latable tbody tr:last td:eq(4) input").focus().select();
       $("#bwamount-less-alert").alert();
       $("#bwamount-less-alert").fadeTo(2250, 500).slideUp(500, function(){
