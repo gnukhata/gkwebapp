@@ -945,7 +945,42 @@ $(document).ready(function() {
 	return false;
       }
 
-            
+      if(!Date.parseExact($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val(), "ddMMyyyy")&&($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val())!=''){
+	$("#date-alert").alert();
+	$("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#date-alert").hide();
+	});
+	$('#tn_duedate').focus().select();
+	return false;
+      }
+
+      if((Date.parseExact($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val(), "ddMMyyyy")< financialstart)&&(($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val())!='')){
+	$("#beforedate-alert").alert();
+	$("#beforedate-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#beforedate-alert").hide();
+	});
+	$('#tn_duedate').focus().select();
+	return false;
+      }
+
+      if((Date.parseExact($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val(), "ddMMyyyy")< Date.parseExact($("#tn_date").val()+$("#tn_month").val()+$("#tn_year").val(), "ddMMyyyy"))&&($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val())!=''){
+	$("#beforetndate-alert").alert();
+	$("#beforetndate-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#beforetndate-alert").hide();
+	});
+	$('#tn_duedate').focus().select();
+	return false;
+      }
+
+      if($("#tn_grace").val()!=''&&($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val())==''){
+	$("#gracedate-alert").alert();
+	$("#gracedate-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#gracedate-alert").hide();
+	});
+	$('#tn_duedate').focus().select();
+	return false;
+      }
+      
       $.ajax(
         {
           type: "POST",
@@ -1035,13 +1070,7 @@ $(document).ready(function() {
 	       }
 
 	       //AJAX that loads print preview of transfernote.  All data filled in by the user is sent so that it is displayed in the preview.
-	     /*  var duedate;
-	       if(!Date.parseExact($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val(), "ddMMyyyy")){
-		 duedate = "";
-	       }
-	       else{
-		 duedate=$("#tn_duedate").val()+'-'+$("#tn_duemonth").val()+'-'+$("#tn_dueyear").val();
-		 }*/
+	    
 
 		  if(($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val())!=''){
 		    dataset =  { "transfernoteno":$("#transfernote_no").val(),
