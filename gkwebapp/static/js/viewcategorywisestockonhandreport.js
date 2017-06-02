@@ -24,7 +24,7 @@ This script is for the view page of categorywise stock on hand report.
 */
 $(document).ready(function() {
 	$('.modal-backdrop').remove();
-	$("#viewstock_productname").focus();
+	$("#viewstock_categoryname").focus();
 	$('.viewstock_date').autotab('number');
 	$(".dis").attr('disabled', true);
 
@@ -117,6 +117,24 @@ $(document).ready(function() {
 	});
 	// navigation functions for enter key and up arrow keys.
 
+	$("#viewstock_subcategoryname").keydown(function(e){
+		if(e.which==13){
+			e.preventDefault();
+			$("#viewstock_specsname").focus().select();
+		}
+		if(e.which==38 && $("#viewstock_subcategoryname").val() == null){
+			$("#viewstock_categoryname").focus().select();
+		}
+	});
+	$("#viewstock_specsname").keydown(function(e){
+		if(e.which==13){
+			e.preventDefault();
+			$("#viewstock_todate").focus().select();
+		}
+		if(e.which==38 && $("#viewstock_specsname").val() == null){
+			$("#viewstock_subcategoryname").focus().select();
+		}
+	});
 
 	$("#viewstock_todate").keydown(function(e){
 		if(e.which==13){
@@ -124,7 +142,7 @@ $(document).ready(function() {
 			$("#viewstock_tomonth").focus().select();
 		}
 		if(e.which==38){
-			$("#viewstock_fromyear").focus().select();
+			$("#viewstock_specsname").focus().select();
 		}
 	});
 	$("#viewstock_tomonth").keydown(function(e){
@@ -299,6 +317,6 @@ $(document).ready(function() {
 	});
 
 	$("#viewstock_reset").click(function(event) {
-		$("#stockonhandreport").click();
+		$("#categorywisestockonhandreport").click();
 	});
 	});
