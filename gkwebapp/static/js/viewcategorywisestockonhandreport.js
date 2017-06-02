@@ -201,12 +201,12 @@ $(document).ready(function() {
 	});
 	$("#viewstock_submit").click(function(event) {
 		// --------------------starting validations------------------
-		if ($("#viewstock_productname").val()==null) {
-			$("#account-blank-alert").alert();
-			$("#account-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-				$("#account-blank-alert").hide();
+		if ($("#viewstock_categoryname").val()==null) {
+			$("#category-blank-alert").alert();
+			$("#category-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+				$("#category-blank-alert").hide();
 			});
-			$('#viewstock_productname').focus()
+			$('#viewstock_categoryname').focus()
 			return false;
 		}
 		if ($("#editgoddet").val()==null && $("#godownflag").val()==1) {
@@ -218,26 +218,6 @@ $(document).ready(function() {
 			return false;
 		}
 
-		if ($("#editgoddet").val()=="allgod" && $("#viewstock_productname").val()=="allprod") {
-			$("#godprod-all-alert").alert();
-			$("#godprod-all-alert").fadeTo(2250, 500).slideUp(500, function(){
-				$("#godprod-all-alert").hide();
-			});
-			$('#viewstock_productname').focus()
-			return false;
-		}
-
-		if ($("#editgoddet").val() > 0  && $("#viewstock_productname").val()=="allprod") {
-			$("#godprod-all-alert").alert();
-			$("#godprod-all-alert").fadeTo(2250, 500).slideUp(500, function(){
-				$("#godprod-all-alert").hide();
-			});
-			$('#viewstock_productname').focus()
-			return false;
-		}
-
-
-
 		if ($("#viewstock_toyear").val() ==0||$("#viewstock_tomonth").val()==0||$("#viewstock_todate").val()==0) {
 			$("#date-alert").alert();
 			$("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
@@ -247,15 +227,6 @@ $(document).ready(function() {
 			return false;
 		}
 		var todate = $("#viewstock_toyear").val()+$("#viewstock_tomonth").val()+$("#viewstock_todate").val();
-	/*	var fromdate = $("#viewstock_fromyear").val()+$("#viewstock_frommonth").val()+$("#viewstock_fromdate").val();
-		if(!Date.parseExact(fromdate,"yyyyMMdd")){
-			$("#date-alert").alert();
-			$("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
-				$("#date-alert").hide();
-			});
-			$('#viewstock_fromdate').focus().select();
-			return false;
-		}*/
 
 		if(!Date.parseExact(todate, "yyyyMMdd")){
 			$("#date-alert").alert();
