@@ -703,24 +703,7 @@ $(document).ready(function() {
          }
        );
 
-      if(!Date.parseExact($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val(), "ddMMyyyy")){
-	$("#date-alert").alert();
-	$("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#date-alert").hide();
-	});
-	$('#tn_duedate').focus().select();
-	return false;
-      }
-      var curdate = Date.parseExact($("#tn_dueyear").val()+$("#tn_duemonth").val()+$("#tn_duedate").val(), "yyyyMMdd")
-      if (!curdate.between(financialstart,financialend)) {
-	$("#between-date-alert").alert();
-	$("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#between-date-alert").hide();
-	});
-	$('#tn_duedate').focus().select();
-	return false;
-      }
-
+      
 
       //A dictionary is made to store product code and quantity in this format - {"productcode":value, "qty":value}
       
@@ -740,9 +723,11 @@ $(document).ready(function() {
 	  var duedate;
 	  if(!Date.parseExact($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val(), "ddMMyyyy")){
 	    duedate = "";
+	    console.log(duedate);
 	  }
 	  else{
 	    duedate=$("#tn_duedate").val()+'-'+$("#tn_duemonth").val()+'-'+$("#tn_dueyear").val();
+	    console.log(duedate);
 	  }
 	  $.ajax({
 	    url: '/transfernotes?action=save',
@@ -909,24 +894,7 @@ $(document).ready(function() {
 	return false;
       }
 
-      if(!Date.parseExact($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val(), "ddMMyyyy")){
-	$("#date-alert").alert();
-	$("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#date-alert").hide();
-	});
-	$('#tn_duedate').focus().select();
-	return false;
-      }
-      var curdate = Date.parseExact($("#tn_dueyear").val()+$("#tn_duemonth").val()+$("#tn_duedate").val(), "yyyyMMdd")
-      if (!curdate.between(financialstart,financialend)) {
-	$("#between-date-alert").alert();
-	$("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#between-date-alert").hide();
-	});
-	$('#tn_duedate').focus().select();
-	return false;
-      }
-      
+            
       $.ajax(
         {
           type: "POST",

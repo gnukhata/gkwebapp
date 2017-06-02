@@ -133,18 +133,17 @@ This script is for the Received transfer note page.
           $("#rec_designation").html(result["designation"]);
           $("#rec_transfernote_date").html(result["transfernotedate"]);
 	  console.log(result["duedate"])
+
 	  if (result["duedate"]!='') {
 	    $("#tn_duedate").html(result["duedate"]);
 	  }
 	  else{
 	    $("#tn_duedate").text('n/a');
 	  }
-	  if(result["grace"]!='')
-	    {
+	  if(result["grace"]!='') {
 	      $("#tn_grace").html(result["grace"]);
 	    }
-	  else
-	    {
+	  else{
 	      $("#tn_grace").text('n/a');
 	    }
 	  
@@ -370,13 +369,7 @@ This script is for the Received transfer note page.
       rcdate=$("#received_tn_date").val()+'-'+$("#received_tn_month").val()+'-'+$("#received_tn_year").val();
     }
 
-    var duedate;
-    if(!Date.parseExact($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val(), "ddMMyyyy")){
-      duedate = "";
-    }
-    else{
-      duedate=$("#tn_duedate").val()+'-'+$("#tn_duemonth").val()+'-'+$("#tn_dueyear").val();
-    }
+   
     $.ajax({
       url: '/transfernotes?action=print',
       type: 'POST',
@@ -385,8 +378,8 @@ This script is for the Received transfer note page.
         "transfernoteno":$("#rec_transfernote_no").text(),
         "transfernotedate":$("#rec_transfernote_date").text(),
 	"receiveddate":rcdate,
-	"duedate":duedate;
-	"grace":$("#tn_grace"),
+	"duedate":$("#tn_duedate").text(),
+	"grace":$("#tn_grace").text(),
 	"fromgodown":fromgodownid,
         "togodown":togodownid,
         "transportationmode":$("#rec_transport_mode").text(),

@@ -64,13 +64,16 @@ def gettransfernote(request):
 @view_config(route_name="transfernotes",request_param="action=save",renderer="json")
 def savetransfernote(request):
                 header={"gktoken":request.headers["gktoken"]}
-                transferdata = {"transfernoteno":request.params["transfernoteno"],"transfernotedate":request.params["transfernotedate"],"togodown":request.params["togodown"],"fromgodown":request.params["fromgodown"],"transportationmode":request.params["transportationmode"],"issuername":request.params["issuername"],"designation":request.params["designation"],"duedate":request.params["duedate"],"grace":request.params["grace"]}
+                transferdata = {"transfernoteno":request.params["transfernoteno"],"transfernotedate":request.params["transfernotedate"],"togodown":request.params["togodown"],"fromgodown":request.params["fromgodown"],"transportationmode":request.params["transportationmode"],"issuername":request.params["issuername"],"designation":request.params["designation"],"duedate":request.params["duedate"]}
                 if request.params["nopkt"]!='':
                         transferdata["nopkt"]=request.params["nopkt"]
+                if request.params["grace"]!='':
+                    transferdata["grace"]=request.params["grace"]
                 products = {}
                 for  row in json.loads(request.params["products"]):
                         products[row["productcode"]] = row["qty"]
                 stockdata = {"items":products}
+                print transferdata
                 tnwholedata = {"transferdata":transferdata,"stockdata":stockdata}
                 result=requests.post("http://127.0.0.1:6543/transfernote",data=json.dumps(tnwholedata),headers=header)
                 return {"gkstatus":result.json()["gkstatus"]}
