@@ -102,7 +102,7 @@
               <option value="{{gods['goid']}}" data-godownname="{{gods["goname"]}}" data-godownaddress="{{gods["goaddr"]}}">{{gods["goname"]}} ({{gods["goaddr"]}})</option>
 
               {% endfor %}
-               <option value="allgod" >{% trans %}All godowns{% endtrans %}</option>
+               <option value="0" data-godownname="" data-godownaddress="">{% trans %}All godowns{% endtrans %}</option>
             </select>
           </div>
           {% endif %}
