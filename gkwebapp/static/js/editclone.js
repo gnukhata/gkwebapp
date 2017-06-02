@@ -89,6 +89,16 @@ $(document).ready(function()
         $('#demovctable tbody tr:eq(1) td:eq(2) input').val(getBalance(curacccode, caldata));
       });
 
+        $("#demovctable tbody tr").each(function() {
+          var curacccode = $("td:eq(1) select",this).val();
+            console.log(curacccode);
+            var d = new Date();
+            var month = d.getMonth()+1;
+            var day = d.getDate();
+            var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+          $("td:eq(2) input",this).val(getBalance(curacccode,caldata));
+
+      });
 
   if (($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase") && sessionStorage.invflag==1)
   {
@@ -1136,13 +1146,6 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
 
               $('#vctable tbody tr:last td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
 
-                var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
-                var d = new Date();
-                var month = d.getMonth()+1;
-                var day = d.getDate();
-                var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
-                $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
-              
                 var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
                 var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
                 $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
