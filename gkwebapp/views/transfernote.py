@@ -56,6 +56,7 @@ def showreceivedtransfernote(request):
 @view_config(route_name="transfernotes",request_param="action=get",renderer="json")
 def gettransfernote(request):
                 header={"gktoken":request.headers["gktoken"]}
+                print request.params["transfernoteid"]
                 result = requests.get("http://127.0.0.1:6543/transfernote?tn=single&transfernoteid=%d"%(int(request.params["transfernoteid"])), headers=header)
                 return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
 

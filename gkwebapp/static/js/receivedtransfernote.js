@@ -132,20 +132,19 @@ This script is for the Received transfer note page.
           $("#rec_name_issuer").html(result["issuername"]);
           $("#rec_designation").html(result["designation"]);
           $("#rec_transfernote_date").html(result["transfernotedate"]);
+	  $("#tn_duedate").html(result["duedate"]);
+	  $("#tn_grace").html(result["grace"]);
 	  console.log(result["duedate"])
 
-	  if (result["duedate"]!='') {
-	    $("#tn_duedate").html(result["duedate"]);
-	  }
-	  else{
-	    $("#tn_duedate").text('n/a');
-	  }
-	  if(result["grace"]!='') {
-	      $("#tn_grace").html(result["grace"]);
-	    }
-	  else{
-	      $("#tn_grace").text('n/a');
-	    }
+	  if($("#tn_duedate").text()=='')
+            {
+              $("#tn_duedate").text('n/a');
+            }
+	  if($("#tn_grace").text()=='')
+            {
+              $("#tn_grace").text('n/a');
+            }
+	  
 	  
 	  if($("#rec_no_of_packet").text()=='')
             {
