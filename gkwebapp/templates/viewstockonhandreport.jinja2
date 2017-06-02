@@ -50,7 +50,7 @@
             {% for product in gkresult %}
             <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
             {% endfor %}
-            <option value="allprod" >{% trans %}All Products{% endtrans %}</option>
+            <option value=0 >{% trans %}All Products{% endtrans %}</option>
           </select>
 
           <div class="col-xs-12" style="margin-top: 10px;">
