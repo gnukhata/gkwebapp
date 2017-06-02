@@ -284,9 +284,9 @@ This script is for the Received transfer note page.
         
         
         var receiveddate1 =$("#received_tn_year").val()+'-'+$("#received_tn_month").val()+'-'+$("#received_tn_date").val();
-        console.log("rec"+receiveddate1);
         
-        if(Date.parseExact(receiveddate1,"yyyy-MM-dd").compareTo(financialend)==1){
+        var duedate
+        if(Date.parseExact(receiveddate1,"yyyy-MM-dd").compareTo(financialstart)==1){
           
           
           $("#between-date-alert").alert();
