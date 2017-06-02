@@ -755,43 +755,26 @@ $(document).ready(function() {
       //Modal that seeks confirmation from user before saving
       $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function (e)
 	{
-/*	  var duedate;
-	  if(!Date.parseExact($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val(), "ddMMyyyy")){
-	    duedate = "";
-	    console.log(duedate);
+	  var dataset ={}
+	  dataset = {
+	    "transfernoteno":$("#transfernote_no").val(),
+	    "transfernotedate":$("#tn_year").val()+'-'+$("#tn_month").val()+'-'+$("#tn_date").val(),
+	    "fromgodown":$("#tn_from_godown option:selected").val(),
+	    "togodown":$("#tn_to_godown option:selected").val(),
+	    "transportationmode":$("#transport_mode").val(),
+	    "nopkt":$("#no_of_packet").val(),
+	    "issuername":$("#name_issuer").val(),
+	    "designation":$("#designation").val(),
+	    "products":JSON.stringify(products)
+	    
 	  }
-	  else{
-	    duedate=$("#tn_duedate").val()+'-'+$("#tn_duemonth").val()+'-'+$("#tn_dueyear").val();
-	    console.log(duedate);
-	    }*/
-	    if(($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val())!=''){
-	    dataset =  { "transfernoteno":$("#transfernote_no").val(),
-			 "transfernotedate":$("#tn_year").val()+'-'+$("#tn_month").val()+'-'+$("#tn_date").val(),
-			 "fromgodown":$("#tn_from_godown option:selected").val(),
-			 "togodown":$("#tn_to_godown option:selected").val(),
-			 "transportationmode":$("#transport_mode").val(),
-			 "nopkt":$("#no_of_packet").val(),
-			 "issuername":$("#name_issuer").val(),
-			 "designation":$("#designation").val(),
-			 "duedate":$("#tn_duedate").val()+'-'+$("#tn_duemonth").val()+'-'+$("#tn_dueyear").val(),
-			 "grace":$("#tn_grace").val(),
-			 "products":JSON.stringify(products)}
-	  
-	}
-	  else{
-	    dataset =  { "transfernoteno":$("#transfernote_no").val(),
-			 "transfernotedate":$("#tn_year").val()+'-'+$("#tn_month").val()+'-'+$("#tn_date").val(),
-			 "fromgodown":$("#tn_from_godown option:selected").val(),
-			 "togodown":$("#tn_to_godown option:selected").val(),
-			 "transportationmode":$("#transport_mode").val(),
-			 "nopkt":$("#no_of_packet").val(),
-			 "issuername":$("#name_issuer").val(),
-			 "designation":$("#designation").val(),
-			 "products":JSON.stringify(products)}
-	  }
+	  if(($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val())!=''){
+	    dataset["duedate"]=($("#tn_dueyear").val()+'-'+$("#tn_duemonth").val()+'-'+$("#tn_duedate").val());}
 
-
-	  $.ajax({
+	      if ($("#tn_grace").val()!='')
+		{ dataset["grace"]=$("#tn_grace").val();
+		}
+	    $.ajax({
 	    url: '/transfernotes?action=save',
 	    type: 'POST',
 	    dataType: 'json',

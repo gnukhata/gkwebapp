@@ -72,7 +72,7 @@ def savetransfernote(request):
                     transferdata["duedate"]=request.params["duedate"]
                 if request.params.has_key("grace"):
                     transferdata["grace"]=request.params["grace"]
-                 
+                print transferdata
                 products = {}
                 for  row in json.loads(request.params["products"]):
                         products[row["productcode"]] = row["qty"]
