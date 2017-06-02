@@ -108,8 +108,17 @@
             <div class="form-group hidden-load" hidden>
               <label >{% trans %}Date:{% endtrans %}</label> <label id="rec_transfernote_date"></label>
               </br>
-            </br>
+              </br>
 
+	      <div class="form-group hidden-load form_inline" hidden>
+		<label >{% trans %}Expected Date of Receipt:{% endtrans %}</label> <label id="tn_duedate"></label>
+              </br>
+                  
+         	<label >{% trans %}Grace Period :{% endtrans %}</label> <label id="tn_grace"></label>
+              </br>
+              
+	      </div>
+	    
       <div class="form-group">
        <div class="form-inline">
               <label for="received_transfernote_date">{% trans %}Received Date:{% endtrans %}</label><label for="received_transfernote_date" style="color:red;font-size: 120%;">*</label>
