@@ -932,30 +932,40 @@ $(document).ready(function() {
       $('.modal').modal('hide');
       $('#confirm_yestnprint').modal('show').one('click', '#tn_save_yesprint', function (e)
 	{
-	  var duedate;
-	  if(!Date.parseExact($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val(), "ddMMyyyy")){
-	    duedate = "";
-	  }
+	  console.log($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val());
+	  var dataset = {};
+	  if(($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val())!=''){
+	    dataset =  { "transfernoteno":$("#transfernote_no").val(),
+			 "transfernotedate":$("#tn_year").val()+'-'+$("#tn_month").val()+'-'+$("#tn_date").val(),
+			 "fromgodown":$("#tn_from_godown option:selected").val(),
+			 "togodown":$("#tn_to_godown option:selected").val(),
+			 "transportationmode":$("#transport_mode").val(),
+			 "nopkt":$("#no_of_packet").val(),
+			 "issuername":$("#name_issuer").val(),
+			 "designation":$("#designation").val(),
+			 "duedate":$("#tn_duedate").val()+'-'+$("#tn_duemonth").val()+'-'+$("#tn_dueyear").val(),
+			 "grace":$("#tn_grace"),
+			 "products":JSON.stringify(products)}
+	  
+	}
 	  else{
-	    duedate=$("#tn_duedate").val()+'-'+$("#tn_duemonth").val()+'-'+$("#tn_dueyear").val();
+	    dataset =  { "transfernoteno":$("#transfernote_no").val(),
+			 "transfernotedate":$("#tn_year").val()+'-'+$("#tn_month").val()+'-'+$("#tn_date").val(),
+			 "fromgodown":$("#tn_from_godown option:selected").val(),
+			 "togodown":$("#tn_to_godown option:selected").val(),
+			 "transportationmode":$("#transport_mode").val(),
+			 "nopkt":$("#no_of_packet").val(),
+			 "issuername":$("#name_issuer").val(),
+			 "designation":$("#designation").val(),
+			 
+			 "products":JSON.stringify(products)}
 	  }
 	  $.ajax({
 	    url: '/transfernotes?action=save',
 	    type: 'POST',
 	    dataType: 'json',
 	    async : false,
-	    data: {
-	      "transfernoteno":$("#transfernote_no").val(),
-	      "transfernotedate":$("#tn_year").val()+'-'+$("#tn_month").val()+'-'+$("#tn_date").val(),
-	      "fromgodown":$("#tn_from_godown option:selected").val(),
-	      "togodown":$("#tn_to_godown option:selected").val(),
-	      "transportationmode":$("#transport_mode").val(),
-	      "nopkt":$("#no_of_packet").val(),
-	      "issuername":$("#name_issuer").val(),
-	      "designation":$("#designation").val(),
-	      "duedate":duedate,
-	      "grace":$("#tn_grace").val(),
-	      "products":JSON.stringify(products)},
+	    data: dataset,
 	    beforeSend: function(xhr)
 	    {
 	      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
