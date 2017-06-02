@@ -56,7 +56,6 @@ def showreceivedtransfernote(request):
 @view_config(route_name="transfernotes",request_param="action=get",renderer="json")
 def gettransfernote(request):
                 header={"gktoken":request.headers["gktoken"]}
-                print request.params["transfernoteid"]
                 result = requests.get("http://127.0.0.1:6543/transfernote?tn=single&transfernoteid=%d"%(int(request.params["transfernoteid"])), headers=header)
                 return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
 
@@ -68,7 +67,7 @@ def savetransfernote(request):
                 transferdata = {"transfernoteno":request.params["transfernoteno"],"transfernotedate":request.params["transfernotedate"],"togodown":request.params["togodown"],"fromgodown":request.params["fromgodown"],"transportationmode":request.params["transportationmode"],"issuername":request.params["issuername"],"designation":request.params["designation"]}
                 if request.params["nopkt"]!='':
                         transferdata["nopkt"]=request.params["nopkt"]
-                print  request.params.has_key("duedate")
+                
                 if request.params.has_key("duedate"):
                     transferdata["duedate"]=request.params["duedate"]
                 if request.params.has_key("grace"):
@@ -78,7 +77,7 @@ def savetransfernote(request):
                 for  row in json.loads(request.params["products"]):
                         products[row["productcode"]] = row["qty"]
                 stockdata = {"items":products}
-                print transferdata
+                
                 tnwholedata = {"transferdata":transferdata,"stockdata":stockdata}
                 result=requests.post("http://127.0.0.1:6543/transfernote",data=json.dumps(tnwholedata),headers=header)
                 return {"gkstatus":result.json()["gkstatus"]}
