@@ -141,14 +141,18 @@ This script is for the Received transfer note page.
 	    $("#tn_duedate").text('n/a');
 	  }
 
-	  if ("grace" in result) {
+	  if ("grace" in result){
 	    $("#tn_grace").html(result["grace"]);  
 	  }
 	  else{
 	    $("#tn_grace").text('n/a');
 	  }
-	  
-	  if($("#rec_no_of_packet").text()=='')
+
+	  if($("#tn_grace").text()=='')
+	    {
+	      $("#tn_grace").text('n/a');   
+	    }
+	    if($("#rec_no_of_packet").text()=='')
             {
               $("#rec_no_of_packet").text('n/a');
             }
