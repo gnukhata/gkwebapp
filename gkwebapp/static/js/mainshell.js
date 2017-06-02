@@ -1005,7 +1005,7 @@ var userrole1;
           }
           }
         );
-  });
+      });
 
   $('#fevoucher').click(function (e) {
     // calls find and edit voucher page.
