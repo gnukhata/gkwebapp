@@ -93,12 +93,21 @@
                   {{transfernotedate}}
                 </td>
             </tr>
+	    
 	    <tr>
               <td class="col-xs-5">
-                <strong>Received Date</strong>
+                <strong> Expected Date of Reciept </strong>
               </td>
               <td class="text-right">
-                {{receiveddate}}
+                {{duedate}}
+              </td>
+            </tr>
+	    <tr>
+              <td class="col-xs-5">
+                <strong> Grace Period (in days)</strong>
+              </td>
+              <td class="text-right">
+                {{grace}}
               </td>
             </tr>
             <tr>
@@ -110,22 +119,31 @@
               </td>
             </tr>
             <tr>
-                <td class="col-xs-5">
-                  <strong> Mode Of Transport</strong>
-                </td>
-                <td class="text-right">
-                  {{transportationmode}}
-                </td>
+              <td class="col-xs-5">
+                <strong> Mode Of Transport</strong>
+              </td>
+              <td class="text-right">
+                {{transportationmode}}
+              </td>
             </tr>
+	    <tr>
+              <td class="col-xs-5">
+                <strong>Received Date</strong>
+              </td>
+              <td class="text-right">
+                {{receiveddate}}
+              </td>
+            </tr>
+
 
           </tbody>
         </table>
       </div>
-    </div>
-    
-    <div class="row">
-      <div class="col-xs-12">
-        <table class="table table-bordered table-condensed" style="margin-bottom:0px;">
+      </div>
+      
+      <div class="row">
+	<div class="col-xs-12">
+          <table class="table table-bordered table-condensed" style="margin-bottom:0px;">
             <thead class="bg-primary" style="border-bottom-style:double; border-top-style:double;">
               <tr>
                 <th>
@@ -137,31 +155,31 @@
 
               </tr>
             </thead>
-          <tbody>
-            {% for set in tableset %}
-            <tr>
-              <td>
-                {{set["productdesc"]}}
-              </td>
-              <td class="text-right">
-                {{set["qty"]}} {{set["unitname"]}}
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        <hr style="border-color:grey;margin-top:0px; margin-bottom:0px;">
+            <tbody>
+              {% for set in tableset %}
+		<tr>
+		  <td>
+                    {{set["productdesc"]}}
+		  </td>
+		  <td class="text-right">
+                    {{set["qty"]}} {{set["unitname"]}}
+		  </td>
+		</tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <hr style="border-color:grey;margin-top:0px; margin-bottom:0px;">
+	</div>
       </div>
-    </div>
 
 
       <div class="row">
-      <div class="col-xs-7">
-        <label for="notes" class="hidden-print">Notes :</label>
-        <textarea name="name" row='3' id="notes" class="form-control hidden-print" id="notes"></textarea>
-        <p class="visible-print" id = "notespara">
-        </p>
-      </div>
+	<div class="col-xs-7">
+          <label for="notes" class="hidden-print">Notes :</label>
+          <textarea name="name" row='3' id="notes" class="form-control hidden-print" id="notes"></textarea>
+          <p class="visible-print" id = "notespara">
+          </p>
+	</div>
 
       </div>
       <br>
@@ -169,13 +187,13 @@
         <div class="text-right col-xs-12">
           <strong>{{issuername}}</strong>
           {% if designation!='' %}
-          <i>({{designation}})</i>
+            <i>({{designation}})</i>
           {% endif %}
         </div>
       </div>
       <span style="margin:auto; display:table;">
-    		<button type="button" class="btn btn-sm btn-danger hidden-print" id="tnback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
-    		<button type="button" class="btn btn-sm btn-info hidden-print" id="tnprint" >{% trans %}Prin<u>t</u>{% endtrans %}</button>
+    	<button type="button" class="btn btn-sm btn-danger hidden-print" id="tnback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+    	<button type="button" class="btn btn-sm btn-info hidden-print" id="tnprint" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
     	</span>
     </div>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/printtransfernote.js')}}"></script>
