@@ -91,7 +91,6 @@ $(document).ready(function()
 
         $("#demovctable tbody tr").each(function() {
           var curacccode = $("td:eq(1) select",this).val();
-            console.log(curacccode);
             var d = new Date();
             var month = d.getMonth()+1;
             var day = d.getDate();
@@ -458,6 +457,16 @@ $(document).ready(function()
         $('#vctable tbody tr:eq(1) td:eq(2) input').val(getBalance(curacccode, caldata));
       });
 
+              $("#vctable tbody tr").each(function() {
+                var curacccode = $("td:eq(1) select",this).val();
+                
+                  var d = new Date();
+                  var month = d.getMonth()+1;
+                  var day = d.getDate();
+                  var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+                $("td:eq(2) input",this).val(getBalance(curacccode,caldata));
+
+            });
 
 
   });
@@ -895,6 +904,10 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
         }
       });
   $(document).off("keydown",".accs").on("keydown",".accs",function(event){
+    var curindex = $(this).closest('tr').index();
+    var curacccode = $('#vctable tbody tr:eq('+curindex+') td:eq(1) select option:selected').val();
+    var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+    $('#vctable tbody tr:eq('+curindex+') td:eq(2) input').val(getBalance(curacccode, caldata));
     curindex = $(this).closest('tr').index();
     nextindex = curindex+1;
     previndex = curindex-1;
