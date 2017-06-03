@@ -519,6 +519,7 @@ def showstockonhandreport(request):
 	godownflag = int(request.params["godownflag"])
 	goid = int(request.params["goid"])
 	goname = request.params["goname"]
+
 	if godownflag==1:
 		goaddr = request.params["goaddr"]
 	productcode = int(request.params["productcode"])
@@ -547,7 +548,6 @@ def showstockonhandreport(request):
 		result = requests.get("http://127.0.0.1:6543/report?godownwisestockonhand&type=pg&goid=%d&productcode=%d&enddate=%s"%(goid, productcode, scalculateto),headers=header)
 
 	if godownflag == 1 and int(request.params["backflag"]) == 2 and goid == 0:
-
 		scalculateto = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%Y-%m-%d')
 		date = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%d-%m-%Y')
 		stockrefresh = {"productcode":productcode,"calculateto":calculateto,"productdesc":productdesc,"godownflag":godownflag,"goid":goid,"date":date}

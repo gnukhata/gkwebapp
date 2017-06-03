@@ -66,6 +66,7 @@ $(document).ready(function() {
 		}
 	}
 
+
 	// function to toggle godown option depending on check box.
 	$("#godownflag").click(function(e){
 		if ($(this).is(":checked")) {
@@ -79,6 +80,12 @@ $(document).ready(function() {
 	});
 	// function to enable date fields on change of combo box  and setting focus on the date field on enter keyup.
 	$("#viewstock_productname").change(function(){
+		if ($("#viewstock_productname").val()==0){
+			$("#godownwise_div").hide();
+		}
+		else{
+			$("#godownwise_div").show();
+		}
 				$(this).keyup(function(e){
 						if (e.which == 13) {
 							e.preventDefault();
@@ -137,7 +144,14 @@ $(document).ready(function() {
 		$("#viewstock_toyear").keydown(function(e){
 			if(e.which==13){
 				e.preventDefault();
+				if($("#godownwise_div").is(":hidden"))
+				{
+					$('#viewstock_submit').focus().click();
+				}
+				else {
 				$("#godownflag").focus().select();
+				}
+
 			}
 			if(e.which==38){
 				$("#viewstock_tomonth").focus().select();
@@ -203,6 +217,16 @@ $(document).ready(function() {
 			return false;
 		}
 
+			/*	if ($("#godownflag").val()==1  && $("#viewstock_productname").val()=="allprod") {
+					$("#godprod-all-alert").alert();
+					$("#godprod-all-alert").fadeTo(2250, 500).slideUp(500, function(){
+						$("#godprod-all-alert").hide();
+					});
+					$('#viewstock_productname').focus()
+					return false;
+				}
+*/
+
 
 
 		if ($("#viewstock_toyear").val() ==0||$("#viewstock_tomonth").val()==0||$("#viewstock_todate").val()==0) {
@@ -247,7 +271,8 @@ $(document).ready(function() {
 		// creating dataset for retrieving report from the server.
 		var dataset = {}
 		if ($("#godownflag").val()==0) {
-			if ($("#viewstock_productname").val()=="allprod"){
+			if ($("#viewstock_productname").val()==0){
+
 			dataset = {"productcode":0, "productdesc": 0,"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":1,"godownflag":$("#godownflag").val(),"goid":-1,"goname":""}
 		}
 			else {
@@ -255,9 +280,10 @@ $(document).ready(function() {
 			}
 		}
 		else if ($("#godownflag").val()==1) {
-			if ($("#editgoddet").val()=="allgod"){
-
-			dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":2,"godownflag":$("#godownflag").val(), "goid":0 , "goname":$("#editgoddet option:selected").data('godownname'), "goaddr":$("#editgoddet option:selected").data('godownaddress')}
+			console.log($("#editgoddet").val());
+			if ($("#editgoddet").val()==0){
+//pag condition
+			dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":2,"godownflag":$("#godownflag").val(), "goid":0 , "goname":"All godowns", "goaddr":$("#editgoddet option:selected").data('godownaddress')}
 			}
 			else{
 			dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":3,"godownflag":$("#godownflag").val(), "goid":$("#editgoddet option:selected").val(), "goname":$("#editgoddet option:selected").data('godownname'), "goaddr":$("#editgoddet option:selected").data('godownaddress')}

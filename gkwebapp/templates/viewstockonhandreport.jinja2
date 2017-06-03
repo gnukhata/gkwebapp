@@ -50,7 +50,7 @@
             {% for product in gkresult %}
             <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
             {% endfor %}
-            <option value="allprod" >{% trans %}All Products{% endtrans %}</option>
+            <option value=0 >{% trans %}All Products{% endtrans %}</option>
           </select>
 
           <div class="col-xs-12" style="margin-top: 10px;">
@@ -67,10 +67,12 @@
               </div>
             </div>
           </div>
+
           {% if not godown %}
           <input type="text" id="godownpresent" value="0" hidden>
           <input type="checkbox" id="godownflag" value="0" hidden>
           {% else %}
+          <div id="godownwise_div">
           {% if userrole == 3 %}
           <div class="form-group">
             <input type="text" id="godownpresent" value="1" hidden>
@@ -102,12 +104,14 @@
               <option value="{{gods['goid']}}" data-godownname="{{gods["goname"]}}" data-godownaddress="{{gods["goaddr"]}}">{{gods["goname"]}} ({{gods["goaddr"]}})</option>
 
               {% endfor %}
-               <option value="allgod" >{% trans %}All godowns{% endtrans %}</option>
+               <option value="0" data-godownname="" data-godownaddress="">{% trans %}All godowns{% endtrans %}</option>
             </select>
+          </div>
           </div>
           {% endif %}
           {% endif %}
-        </div>
+
+      </div>
       </div>
       <div class="panel-footer">
         <button class="btn btn-primary btn-sm" id="viewstock_submit" name="view" accesskey="v">{% trans %}<u>V</u>iew{% endtrans %}</button>
