@@ -80,6 +80,12 @@ $(document).ready(function() {
 	});
 	// function to enable date fields on change of combo box  and setting focus on the date field on enter keyup.
 	$("#viewstock_productname").change(function(){
+		if ($("#viewstock_productname").val()==0){
+			$("#godownwise_div").hide();
+		}
+		else{
+			$("#godownwise_div").show();
+		}
 				$(this).keyup(function(e){
 						if (e.which == 13) {
 							e.preventDefault();
@@ -88,9 +94,6 @@ $(document).ready(function() {
 						}
 				});
 				$(".dis").attr('disabled', false);
-				if ($("#viewstock_productname").val()=="allprod"){
-					$("#godownwise_div").hide();
-				}
 	});
 
 
@@ -141,7 +144,14 @@ $(document).ready(function() {
 		$("#viewstock_toyear").keydown(function(e){
 			if(e.which==13){
 				e.preventDefault();
+				if($("#godownwise_div").is(":hidden"))
+				{
+					$('#viewstock_submit').focus().click();
+				}
+				else {
 				$("#godownflag").focus().select();
+				}
+
 			}
 			if(e.which==38){
 				$("#viewstock_tomonth").focus().select();
@@ -261,7 +271,7 @@ $(document).ready(function() {
 		// creating dataset for retrieving report from the server.
 		var dataset = {}
 		if ($("#godownflag").val()==0) {
-			if ($("#viewstock_productname").val()=="allprod"){
+			if ($("#viewstock_productname").val()==0){
 
 			dataset = {"productcode":0, "productdesc": 0,"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":1,"godownflag":$("#godownflag").val(),"goid":-1,"goname":""}
 		}

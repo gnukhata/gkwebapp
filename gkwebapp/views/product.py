@@ -519,7 +519,7 @@ def showstockonhandreport(request):
 	godownflag = int(request.params["godownflag"])
 	goid = int(request.params["goid"])
 	goname = request.params["goname"]
-	print goname
+
 	if godownflag==1:
 		goaddr = request.params["goaddr"]
 	productcode = int(request.params["productcode"])
@@ -528,8 +528,6 @@ def showstockonhandreport(request):
 
 
 	productdesc = request.params["productdesc"]
-	print request.params["backflag"]
-	print "rohini"
 	if int(request.params["backflag"]) == 1 :
 		scalculateto = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%Y-%m-%d')
 		date = datetime.strptime(calculateto, '%Y-%m-%d').strftime('%d-%m-%Y')

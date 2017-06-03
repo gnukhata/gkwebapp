@@ -108,6 +108,7 @@ width:1.4%
      <th class="calign smwrap1" >
             {% trans %}Sr.No.{% endtrans %}
           </th>
+          <!-- single product no godown-->
 		{% if godown == "" and stockrefresh["productdesc"]!= "All Products" %}
         <th class="mdwrap calign" >
           {% trans %}Product Name{% endtrans %}
@@ -117,6 +118,7 @@ width:1.4%
           {% trans %}Quantity{% endtrans %}
         </th>
         {% endif %}
+          <!--All product no godown-->
         {% if godown == "" and stockrefresh["productdesc"]== "All Products"%}
         <th class="mdwrap calign" >
           {% trans %}Product Name{% endtrans %}
@@ -125,6 +127,7 @@ width:1.4%
           {% trans %}Quantity{% endtrans %}
         </th>
         {% endif %}
+           <!--CODE FOR PAG condition-->
         {% if godown == "All godowns" and stockrefresh["productdesc"] != "All Products"%}
         <th class="mdwrap calign" >
           {% trans %}Product Name{% endtrans %}
@@ -136,6 +139,8 @@ width:1.4%
           {% trans %}Quantity{% endtrans %}
         </th>
          {% endif %}
+         <!--one godown one product-->
+
         {% if godown != "All godowns" and godown != "" and stockrefresh["productdesc"] != "All Products" %}
         <th class="mdwrap calign" >
           {% trans %}Product Name{% endtrans %}
@@ -154,6 +159,7 @@ width:1.4%
     <td class="calign smwrap1" >
           {{record["srno"]}}
         </td>
+            <!--All product no godown-->
        {% if godown == "" and stockrefresh["productdesc"]!= "All Products" %}
     <td class="mdwrap calign" >
           {{record["productname"]}}
@@ -163,7 +169,7 @@ width:1.4%
           {{record["balance"]}}
 
         </td>
-
+<!--all product no godown-->
         {% endif %}
         {% if godown == "" and stockrefresh["productdesc"]== "All Products"%}
         <td class="mdwrap calign " >
@@ -173,6 +179,7 @@ width:1.4%
           {{record["balance"]}}
         </td>
         {% endif %}
+        <!--PAG condition-->
         {% if godown == "All godowns" and stockrefresh["productdesc"] != "All Products"%}
 
          <td class="mdwrap calign" >
@@ -186,6 +193,7 @@ width:1.4%
         </td>
 
         {% endif %}
+        <!--no godown single product-->
         {% if godown != "All godowns" and godown != "" and stockrefresh["productdesc"] != "All Products" %}
 
          <td class="mdwrap calign " >

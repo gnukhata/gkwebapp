@@ -67,11 +67,12 @@
               </div>
             </div>
           </div>
-          <div id="godownwise_div">
+
           {% if not godown %}
           <input type="text" id="godownpresent" value="0" hidden>
           <input type="checkbox" id="godownflag" value="0" hidden>
           {% else %}
+          <div id="godownwise_div">
           {% if userrole == 3 %}
           <div class="form-group">
             <input type="text" id="godownpresent" value="1" hidden>
@@ -106,9 +107,10 @@
                <option value="0" data-godownname="" data-godownaddress="">{% trans %}All godowns{% endtrans %}</option>
             </select>
           </div>
+          </div>
           {% endif %}
           {% endif %}
-        </div>
+
       </div>
       </div>
       <div class="panel-footer">
