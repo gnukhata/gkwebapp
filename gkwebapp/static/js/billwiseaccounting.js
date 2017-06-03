@@ -255,7 +255,6 @@ $(document).ready(function() {
     //Validations.
     //Alert is displayed when total amount paid is greater than Debit/Credit amount(retrieved from session storage). See addvoucher.js to see when the amount is stored in session storage.
     if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > (parseFloat(sessionStorage.customeramount) + parseFloat($("#asadvancelabel").data("asadvance")) + parseFloat($("#onaccountlabel").data("onaccount")))) {
-      $("#latable tbody tr:last td:eq(4) input").focus().select();
       $("#bwamount-alert").alert();
       $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#bwamount-alert").hide();
@@ -264,7 +263,6 @@ $(document).ready(function() {
     }
     //Alert is displayed when amount paid is less than Debit/Credit amount.
     if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) < (parseFloat(sessionStorage.customeramount) + parseFloat($("#asadvancelabel").data("asadvance")) + parseFloat($("#onaccountlabel").data("onaccount")))) {
-      $("#latable tbody tr:last td:eq(4) input").focus().select();
       $("#bwamount-less-alert").alert();
       $("#bwamount-less-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#bwamount-less-alert").hide();
@@ -288,7 +286,12 @@ $(document).ready(function() {
 	  $("#bwamount-success-alert").alert();
 	  $("#bwamount-success-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#bwamount-success-alert").hide();
-	    $("#bwtable").modal("hide");
+	    if ($("#customerselect").length == 0) {
+	      $("#bwtable").modal("hide");
+	    }
+	    else {
+	      $("#showbillwiseaccounting").click();
+	    }
 	  });
 	}
 	else {

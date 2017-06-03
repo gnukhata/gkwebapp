@@ -26,29 +26,79 @@ $(document).ready(function() {
   $("select:first").focus();
   $(document).off('change', '#customerselect').on('change', '#customerselect', function(event) {
     event.preventDefault();
-    if ($("#customerselect").val() == '') {
-      $(".panel-footer").hide();
+    $.ajax(
+      {
+        type: "POST",
+        url: "/addvoucher?type=showbillwisetable",
+        global: false,
+        async: false,
+        data:{"custid":$("#customerselect").val()},
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+	  sessionStorage.customeramount =  0.00;
+          $("#billwisediv").html(resp);
+	  $(".panel-footer").show();
+	  $('#supplierselect option[value=""]').prop("selected", true);
+	  $("#cslisttitle").show();
+	  $("#csname").html($("#customerselect option:selected").text());
+        }
+      }
+    );
+  });
+
+  $(document).off('keydown', '#customerselect').on('keydown', '#customerselect', function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      if ($(".amountpaid").length > 0) {
+	$(".amountpaid:first").focus().select();
+      }
+      else{
+	$(".footerbutton:first").focus();
+      }
     }
-    else {
-      $.ajax(
-	{
-          type: "POST",
-          url: "/addvoucher?type=showbillwisetable",
-          global: false,
-          async: false,
-          data:{"custid":$("#customerselect").val()},
-          datatype: "text/html",
-          beforeSend: function(xhr)
-          {
-            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-          },
-          success: function(resp)
-          {
-            $("#billwisediv").html(resp);
-	    $(".panel-footer").show();
-          }
-	}
-      );
+  });
+  
+  $(document).off('change', '#supplierselect').on('change', '#supplierselect', function(event) {
+    event.preventDefault();
+    $.ajax(
+      {
+        type: "POST",
+        url: "/addvoucher?type=showbillwisetable",
+        global: false,
+        async: false,
+        data:{"custid":$("#supplierselect").val()},
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+	  sessionStorage.customeramount =  0.00;
+          $("#billwisediv").html(resp);
+	  $(".panel-footer").show();
+	  $('#customerselect option[value=""]').prop("selected", true);
+	  $("#cslisttitle").show();
+	  $("#csname").html($("#supplierselect option:selected").text());
+        }
+      }
+    );
+  });
+
+  $(document).off('keydown', '#supplierselect').on('keydown', '#supplierselect', function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      if ($(".amountpaid").length > 0) {
+	$(".amountpaid:first").focus().select();
+      }
+      else{
+	$(".footerbutton:first").focus();
+      }
     }
   });
 });
