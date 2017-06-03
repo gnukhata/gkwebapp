@@ -217,6 +217,13 @@ def getCustomerSupplierList(request):
     suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
     return {"customers": customers.json()["gkresult"], "suppliers": suppliers.json()["gkresult"]}
 
+'''
+This function brings data of unpaid bills and unadjusted amounts.
+This could be either called after a voucher is created or from the Unadjusted Amounts module.
+If accountcode is received it must have been called after voucher entry. In this case we retrieve custid from backend by sending accountcode and then get the bill details by sending the custid.
+In case of unadjusted amounts module custid is received instead of account code and bill details are subsequently fetched.
+The details of bills, sum of invoice and pending amounts and custid are then returned.
+'''
 @view_config(route_name="addvoucher", request_param = "type=showbillwisetable", renderer="gkwebapp:templates/billwiseaccounting.jinja2")
 def getBillTable(request):
     header={"gktoken":request.headers["gktoken"]}
