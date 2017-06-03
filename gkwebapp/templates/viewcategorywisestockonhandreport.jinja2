@@ -41,11 +41,11 @@
           </select>
           <label for="viewstock_subcategoryname" style="margin-top: 10px;">{% trans %}Sub-Category{% endtrans %} :</label>
           <select class = "form-control input-sm" id="viewstock_subcategoryname"  name = "subcategoryname" >
-            <option value="" disabled selected hidden>{% trans %}All{% endtrans %}</option>
+            <option value="all" selected >{% trans %}All{% endtrans %}</option>
           </select>
           <label for="viewstock_specsname" style="margin-top: 10px;">{% trans %}Specification{% endtrans %} :</label>
           <select class = "form-control input-sm" id="viewstock_specsname"  name = "specsname" >
-            <option value="" disabled selected hidden>{% trans %}All{% endtrans %}</option>
+            <option value="all" selected>{% trans %}All{% endtrans %}</option>
           </select>
           <div class="col-xs-12" style="margin-top: 10px;">
               <div class="col-xs-6">
@@ -74,12 +74,11 @@
           <div class="form-group" id="goselect">
             <label for="editgoddet">{% trans %}Godown{% endtrans %} :</label>
             <select class = "form-control input-sm" id="editgoddet">
-              <option value="disabled=""" disabled selected hidden>{% trans %}Select Godown{% endtrans %}</option>
+            <option value="all" selected>{% trans %}All{% endtrans %}</option>
               {% for gods in godown %}
               <option value="{{gods['goid']}}" data-godownname="{{gods["goname"]}}" data-godownaddress="{{gods["goaddr"]}}">{{gods["goname"]}} ({{gods["goaddr"]}})</option>
 
               {% endfor %}
-               <option value="allgod" >{% trans %}All godowns{% endtrans %}</option>
             </select>
           </div>
           {%else%}
@@ -91,12 +90,11 @@
           <div class="form-group" id="goselect" hidden>
             <label for="editgoddet">{% trans %}Godown{% endtrans %} :</label>
             <select class = "form-control input-sm" id="editgoddet">
-              <option value="disabled=""" disabled selected hidden>{% trans %}Select Godown{% endtrans %}</option>
+            <option value="all" >{% trans %}All{% endtrans %}</option>
               {% for gods in godown %}
               <option value="{{gods['goid']}}" data-godownname="{{gods["goname"]}}" data-godownaddress="{{gods["goaddr"]}}">{{gods["goname"]}} ({{gods["goaddr"]}})</option>
 
               {% endfor %}
-               <option value="allgod" >{% trans %}All godowns{% endtrans %}</option>
             </select>
           </div>
           {% endif %}
