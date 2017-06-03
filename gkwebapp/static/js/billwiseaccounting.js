@@ -32,9 +32,17 @@
    Total amount paid is displayed in table footer.  
    As user enters Amount Paid it is reduced from Amount Pending until Amount Pending is zero.  
 
+   In case the user does not intend to settle any bills the debit/credit amount can be set as "On Account".
+   To make advance payments the amount can be set as "As Advance".
+   A user may choose to set some amount as advance, some on account and the remaining may be used to settle bills.
+   
+   At a later point Unadjusted Amounts module can be activated to use the advance or on account amounts to settle bills.
+   It can also be done when bill wise accounting is activated again another voucher is made.
+
+   
    Validations :-  
-   Total Amount Paid must be equal to Debit/Credit Amount.  
-   Amount Paid cannot be blank.  
+   Sum of Total Amount Paid, On Account amount and As Advance amount must be equal to the sum of Debit/Credit Amount and previous unadjusted amounts.  
+   Amount Paid cannot be blank.
  */ 
 
 $(document).ready(function() {
@@ -64,6 +72,7 @@ $(document).ready(function() {
       $("#latable tbody tr:eq("+curindex+") td:eq(4) input").val(originalvalue);
     }
   });
+  ////When focus shifts from As Advance or On Account amount fields value entererd is converted to float.
   $(document).off('focusout', '#onaccount, #asadvance').on('focusout', '#onaccount, #asadvance', function(event) {
     event.preventDefault();
     if ($(this).val() == "") {
@@ -189,40 +198,40 @@ $(document).ready(function() {
   //Actions that occur when On Account is clicked.
   $(document).off('click', '#btonacc').on('click', '#btonacc', function(event) {
     event.preventDefault();
-    $("#latable").hide();
-    $("#asadvancediv").hide();
-    $("#txtareahelp2").hide();
-    $("#onaccdiv").show();
-    $("#btbillwise").show();
-    $("#btonacc").hide();
-    $("#btasadv").show();
-    $("#onaccount").focus().select();
+    $("#latable").hide();  //Bill wise table is hidden
+    $("#asadvancediv").hide();  //Field for entering As Advance amount is hiddden.
+    $("#txtareahelp2").hide();  //Helper text for navigation amount paid is hidden.
+    $("#onaccdiv").show();  //Field for entering On Account amount is shown.
+    $("#btbillwise").show();  //Button for viewing billwisedata is shown.
+    $("#btonacc").hide();  //This button is hiddden.
+    $("#btasadv").show();  //Button for As Advance is shown.
+    $("#onaccount").focus().select();  //Focus on input field.
   });
 
   //Actions that occur when As Advance is clicked.
   $(document).off('click', '#btasadv').on('click', '#btasadv', function(event) {
     event.preventDefault();
-    $("#latable").hide();
-    $("#onaccdiv").hide();
-    $("#txtareahelp2").hide();
-    $("#asadvancediv").show();
-    $("#btbillwise").show();
-    $("#btonacc").show();
-    $("#btasadv").hide();
-    $("#asadvance").focus().select();
+    $("#latable").hide();  //Bill wise table is hidden
+    $("#onaccdiv").hide();  //Field for entering On Account amount is hiddden.
+    $("#txtareahelp2").hide();  //Helper text for navigation amount paid is hidden.
+    $("#asadvancediv").show();  //Field for entering As Advance amount is shown.
+    $("#btbillwise").show();  //Button for viewing billwisedata is shown.
+    $("#btonacc").show();  //Button for On Account is shown.
+    $("#btasadv").hide();  //This button is hiddden.
+    $("#asadvance").focus().select();  //Focus on input field.
   });
 
   //Actions that occur when Bill Wise button is clicked.
   $(document).off('click', '#btbillwise').on('click', '#btbillwise', function(event) {
     event.preventDefault();
-    $("#onaccdiv").hide();
-    $("#asadvancediv").hide();
-    $("#txtareahelp2").show();
-    $("#latable").show();
-    $("#btbillwise").hide();
-    $("#btonacc").show();
-    $("#btasadv").show();
-    $(".amountpaid:first").focus().select();
+    $("#onaccdiv").hide();  //Field for entering On Account amount is hiddden.
+    $("#asadvancediv").hide();  //Field for entering As Advance amount is 
+    $("#txtareahelp2").show();  //Helper text for navigation amount paid is shown.
+    $("#latable").show();  //Bill wise table is shown.
+    $("#btbillwise").hide();  //This button is hiddden.
+    $("#btonacc").show();  //Button for On Account is shown.
+    $("#btasadv").show();  //Button for As Advance is shown.
+    $(".amountpaid:first").focus().select();  //Focus on input field.
   });
   
   //Actions that occur on click of 'Done' button.
@@ -230,6 +239,8 @@ $(document).ready(function() {
     event.preventDefault();
     var billwisedata = [];  //List to store data.
     var totalamountpaid = 0;  //Variable to store total amount paid. Total is recalculated here to avoid errors.
+    //Dictionaries are created to store unadjusted amounts along with payflag , icflag and custid.
+    //For As Advance payflag=1 and for on account payflag=15. Since these amounts are to be incremented icflag is set to 9.
     var asadvance = {};
     var onaccount = {};
     asadvance = {"payflag":1,"icflag":9, "pdamt":parseFloat($("#asadvance").val()), "custid":$("#custid").val()};
@@ -263,7 +274,7 @@ $(document).ready(function() {
       totalamountpaid = totalamountpaid + amountpaid;
     }
     //Validations.
-    //Alert is displayed when total amount paid is greater than Debit/Credit amount(retrieved from session storage). See addvoucher.js to see when the amount is stored in session storage.
+    //Alert is displayed when sum of total amount paid and sum of unadjusted amounts is greater than sum of Debit/Credit amount(retrieved from session storage) and previous unadjusted amounts. See addvoucher.js to see when the amount is stored in session storage.
     if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > (parseFloat(sessionStorage.customeramount) + parseFloat($("#asadvancelabel").data("asadvance")) + parseFloat($("#onaccountlabel").data("onaccount")))) {
       $("#bwamount-alert").alert();
       $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -271,7 +282,7 @@ $(document).ready(function() {
       });
       return false;
     }
-    //Alert is displayed when amount paid is less than Debit/Credit amount.
+    //Alert is displayed when sum of total amount paid and sum of unadjusted amounts is less than sum of Debit/Credit amount and previous unadjusted amounts.
     if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) < (parseFloat(sessionStorage.customeramount) + parseFloat($("#asadvancelabel").data("asadvance")) + parseFloat($("#onaccountlabel").data("onaccount")))) {
       $("#bwamount-less-alert").alert();
       $("#bwamount-less-alert").fadeTo(2250, 500).slideUp(500, function(){
