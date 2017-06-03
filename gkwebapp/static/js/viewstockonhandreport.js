@@ -66,6 +66,7 @@ $(document).ready(function() {
 		}
 	}
 
+
 	// function to toggle godown option depending on check box.
 	$("#godownflag").click(function(e){
 		if ($(this).is(":checked")) {
@@ -87,6 +88,9 @@ $(document).ready(function() {
 						}
 				});
 				$(".dis").attr('disabled', false);
+				if ($("#viewstock_productname").val()=="allprod"){
+					$("#godownwise_div").hide();
+				}
 	});
 
 
@@ -203,6 +207,16 @@ $(document).ready(function() {
 			return false;
 		}
 
+			/*	if ($("#godownflag").val()==1  && $("#viewstock_productname").val()=="allprod") {
+					$("#godprod-all-alert").alert();
+					$("#godprod-all-alert").fadeTo(2250, 500).slideUp(500, function(){
+						$("#godprod-all-alert").hide();
+					});
+					$('#viewstock_productname').focus()
+					return false;
+				}
+*/
+
 
 
 		if ($("#viewstock_toyear").val() ==0||$("#viewstock_tomonth").val()==0||$("#viewstock_todate").val()==0) {
@@ -248,6 +262,7 @@ $(document).ready(function() {
 		var dataset = {}
 		if ($("#godownflag").val()==0) {
 			if ($("#viewstock_productname").val()=="allprod"){
+
 			dataset = {"productcode":0, "productdesc": 0,"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":1,"godownflag":$("#godownflag").val(),"goid":-1,"goname":""}
 		}
 			else {
