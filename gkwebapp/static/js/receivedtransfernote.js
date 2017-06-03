@@ -132,8 +132,27 @@ This script is for the Received transfer note page.
           $("#rec_name_issuer").html(result["issuername"]);
           $("#rec_designation").html(result["designation"]);
           $("#rec_transfernote_date").html(result["transfernotedate"]);
-	  
-	  if($("#rec_no_of_packet").text()=='')
+	  console.log(result["duedate"])
+
+	  if ("duedate" in result) {
+	     $("#tn_duedate").html(result["duedate"]);  
+	  }
+	  else{
+	    $("#tn_duedate").text('n/a');
+	  }
+
+	  if ("grace" in result){
+	    $("#tn_grace").html(result["grace"]);  
+	  }
+	  else{
+	    $("#tn_grace").text('n/a');
+	  }
+
+	  if($("#tn_grace").text()=='')
+	    {
+	      $("#tn_grace").text('n/a');   
+	    }
+	    if($("#rec_no_of_packet").text()=='')
             {
               $("#rec_no_of_packet").text('n/a');
             }
@@ -265,9 +284,9 @@ This script is for the Received transfer note page.
         
         
         var receiveddate1 =$("#received_tn_year").val()+'-'+$("#received_tn_month").val()+'-'+$("#received_tn_date").val();
-        console.log("rec"+receiveddate1);
-        
-        if(Date.parseExact(receiveddate1,"yyyy-MM-dd").compareTo(financialend)==1){
+        var duedate =  $('#tn_duedate').text();
+       
+        if(Date.parseExact(receiveddate1,"yyyy-MM-dd").compareTo(financialstart)==-1){
           
           
           $("#between-date-alert").alert();
@@ -277,11 +296,11 @@ This script is for the Received transfer note page.
 	  $('#received_tn_date').focus().select();
 	  return false;
 	  
-        }
+        } 
         var createdate=$('#rec_transfernote_date').text();
         var createdateyyyymmdd=createdate[6]+createdate[7]+createdate[8]+createdate[9]+createdate[5]+createdate[3]+createdate[4]+createdate[2]+createdate[0]+createdate[1]
         
-        
+	      
         if(Date.parseExact(receiveddate1,"yyyy-MM-dd").compareTo(Date.parseExact(createdateyyyymmdd,"yyyy-MM-dd"))==-1)
           {
             $("#between-date-alert").alert();
@@ -320,7 +339,9 @@ This script is for the Received transfer note page.
                 $("#received_tn_date").prop("disabled", true);
                 $("#received_tn_month").prop("disabled", true);
                 $("#received_tn_year").prop("disabled", true);
-              
+
+		//$('#rec_tn_list select option[value="+'tnid'+"]').prop('hidden', true).prop('disabled', true);
+		//$('#rec_tn_list select option[value=""]').prop('selected', true);
               }
 
             }
@@ -349,12 +370,14 @@ This script is for the Received transfer note page.
     }
     var rcdate;
     if(!Date.parseExact($("#received_tn_date").val()+$("#received_tn_month").val()+$("#received_tn_year").val(), "ddMMyyyy")){
-      rcdate = "";
+      rcdate = "n/a";
     }
     else{
       rcdate=$("#received_tn_date").val()+'-'+$("#received_tn_month").val()+'-'+$("#received_tn_year").val();
     }
-      $.ajax({
+
+   
+    $.ajax({
       url: '/transfernotes?action=print',
       type: 'POST',
       dataType: 'html',
@@ -362,6 +385,8 @@ This script is for the Received transfer note page.
         "transfernoteno":$("#rec_transfernote_no").text(),
         "transfernotedate":$("#rec_transfernote_date").text(),
 	"receiveddate":rcdate,
+	"duedate":$("#tn_duedate").text(),
+	"grace":$("#tn_grace").text(),
 	"fromgodown":fromgodownid,
         "togodown":togodownid,
         "transportationmode":$("#rec_transport_mode").text(),

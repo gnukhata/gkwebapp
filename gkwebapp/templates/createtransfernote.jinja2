@@ -54,7 +54,7 @@
           </div>
           <div class="alert alert-danger" id="duplicate-alert"  aria-live="rude" role="alert" hidden>
 
-            <label for="vno">{% trans %}Transfernote No.Already Exist!{% endtrans %}</label>
+            <label for="vno">{% trans %}Transfernote No. Already Exist!{% endtrans %}</label>
           </div>
           <div class="alert alert-danger" id="tnno-blank-alert"  aria-live="rude" role="alert" hidden>
 
@@ -64,13 +64,29 @@
 
             <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
           </div>
-          <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
+
+	  <div class="alert alert-danger" id="beforetndate-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}Expected Date of Receipt cannot be before Transfer Note Date!{% endtrans %}</label>
+          </div>
+
+	  <div class="alert alert-danger" id="beforedate-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}Expected Date of Receipt cannot be before Financial Year!{% endtrans %}</label>
+          </div>
+
+          <div class="alert alert-danger" id="gracedate-alert" aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please enter Expected Date of Receipt!{% endtrans %}
+          </div>
+	  <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
 
             {% trans %}Please enter date within the financial year!{% endtrans %}
           </div>
+
           <div class="alert alert-danger" id="godown-blank-alert"  aria-live="rude" role="alert" hidden>
 
-            <label for="vno">{% trans %}Godown Must be Selected!{% endtrans %}</label>
+            <label for="vno">{% trans %}Please select a godown!{% endtrans %}</label>
           </div>
           <div class="alert alert-danger" id="product-blank-alert"  aria-live="rude" role="alert" hidden>
 
@@ -93,23 +109,25 @@
               <label for="transfernote_no">{% trans %}Transfer Note No:{% endtrans %}</label><label for="transfernote_no" style="color:red;font-size: 120%;">*</label>
               <input class="form-control input-sm" id="transfernote_no" placeholder="{% trans %}Enter Transfer Note no{% endtrans %}" >
             </div>
-            <div class="form-group">
-              <label for="transfernote_date">{% trans %}Date:{% endtrans %}</label><label for="transfernote_date" style="color:red;font-size: 120%;">*</label>
-              <div class="form-inline nopadding">
-                <form class="form-inline">
-                  <div class="form-group ">
+          </form>
+	  <div class="form-group">
+	    <form class="form-inline">
+	      <label for="transfernote_date">{% trans %}Date :{% endtrans %}</label><label style="color:red;font-size: 120%;">*</label>
+		
+		
+		  <div class="form-group ">
                     <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="DD" id="tn_date" accesskey="v">
-                  </div>
-                  <div class="form-group ">
+		  </div>
+		  <div class="form-group ">
                     <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="MM" id="tn_month" accesskey="v">
-                  </div>
-                  <div class="form-group">
+		  </div>
+		  <div class="form-group">
                     <input type="text" class="form-control input-sm tndate" size="4" maxlength="4" placeholder="YYYY" id="tn_year" accesskey="v">
-                  </div>
-                </form>
-              </div>
-
-            </div>
+		  </div>
+		
+	      </form>
+	    </div>
+	 
          <form>
             <div class="form-group ">
             <div class="row ">
@@ -178,31 +196,58 @@
           </div>
             <div class="col-md-6" id="transfernote_godown_div">
               <div class="form-group">
-                <label for="no_of_packet">{% trans %} Number of Packets:{% endtrans %}</label>
+                <label for="no_of_packet">{% trans %} Number of Packets :{% endtrans %}</label>
                 <input class="form-control input-sm" id="no_of_packet">
               </div>
             <div class="form-group">
-              <label for="transport_mode">{% trans %} Mode of Transport:{% endtrans %}</label>
+              <label for="transport_mode">{% trans %} Mode of Transport :{% endtrans %}</label>
               <input class="form-control input-sm" id="transport_mode">
             </div>
 
           <div class="form-group">
-            <label for="name_issuer">{% trans %} Name of Issuer:{% endtrans %}</label>
+            <label for="name_issuer">{% trans %} Name of Issuer :{% endtrans %}</label>
             <input class="form-control input-sm" id="name_issuer">
           </div>
         <div class="form-group">
-          <label for="designation">{% trans %} Designation:{% endtrans %}</label>
+          <label for="designation">{% trans %} Designation :{% endtrans %}</label>
           <input class="form-control input-sm" id="designation">
         </div>
-      </form>
-      </div>
-    </div>
+
+	<div "class=" form-group">
+	  <form class="form-inline">
+            <label for="transfernote_duedate">{% trans %}Expected Date of Reciept :{% endtrans %}</label>
+            
+            <form class="form-inline nopadding">
+              <div class="form-group ">
+                <input type="text" class="form-control input-sm tnduedate" size="2" maxlength="2" placeholder="DD" id="tn_duedate" accesskey="v">
+              </div>
+              <div class="form-group ">
+                <input type="text" class="form-control input-sm tnduedate" size="2" maxlength="2" placeholder="MM" id="tn_duemonth" accesskey="v">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control input-sm tnduedate" size="4" maxlength="4" placeholder="YYYY" id="tn_dueyear" accesskey="v">
+              </div>
+            </form>
+	  </form>
+	</div>
+	<div>
+	  <form class="form-inline nopadding">
+	    <div class="form-group ">
+	      <label for="tn_grace">{% trans %} Grace Period :{% endtrans %}</label>
+	      
+	      <input type="text" class="form-control input-sm " size="2" maxlength="2" id="tn_grace"><small> <b>days</b></small>
+	      
+	    </div>
+	</div>
+	    </div>
+	 
+	    </div>
       <div class="panel-footer">
         <button class="btn btn-success btn-sm" id="transfernote_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}">{% trans %}Save{% endtrans %}</button>
         <button id="transfernote_reset" class="btn btn-warning btn-sm">{% trans %}Reset{% endtrans %}</button>
         <button id="tn_saveprint" class="btn btn-primary btn-sm" >{% trans %} Save & Print{% endtrans %}</button>
       </div>
-    </div>
+
     <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
       <div class="vertical-alignment-helper">
         <div class="modal-dialog modal-sm vertical-align-center">

@@ -25,7 +25,9 @@
         "Ishan Masdekar " <imasdekar@dff.org.in>
         "Navin Karkera" <navin@dff.org.in>
         "Sachin Patil" <sachpatil@openmailbox.org>
+        'Prajkta Patkar' <prajakta.dff.org.in>
         "Mohd. Talha Pawaty" <mtalha456@gmail.com>
+               
 """
 from pyramid.view import view_config
 import requests, json
@@ -65,10 +67,17 @@ def savetransfernote(request):
                 transferdata = {"transfernoteno":request.params["transfernoteno"],"transfernotedate":request.params["transfernotedate"],"togodown":request.params["togodown"],"fromgodown":request.params["fromgodown"],"transportationmode":request.params["transportationmode"],"issuername":request.params["issuername"],"designation":request.params["designation"]}
                 if request.params["nopkt"]!='':
                         transferdata["nopkt"]=request.params["nopkt"]
+                
+                if request.params.has_key("duedate"):
+                    transferdata["duedate"]=request.params["duedate"]
+                if request.params.has_key("grace"):
+                    transferdata["grace"]=request.params["grace"]
+                
                 products = {}
                 for  row in json.loads(request.params["products"]):
                         products[row["productcode"]] = row["qty"]
                 stockdata = {"items":products}
+                
                 tnwholedata = {"transferdata":transferdata,"stockdata":stockdata}
                 result=requests.post("http://127.0.0.1:6543/transfernote",data=json.dumps(tnwholedata),headers=header)
                 return {"gkstatus":result.json()["gkstatus"]}
@@ -90,7 +99,7 @@ def tnprint(request):
         togodown=requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["togodown"])), headers=header)
         tableset = json.loads(request.params["printset"])
         return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],
-                "tableset":tableset,"transfernoteno":request.params["transfernoteno"],"transfernotedate":request.params["transfernotedate"],"receiveddate":request.params["receiveddate"],
+                "tableset":tableset,"transfernoteno":request.params["transfernoteno"],"transfernotedate":request.params["transfernotedate"],"receiveddate":request.params["receiveddate"],"duedate":request.params["duedate"],"grace":request.params["grace"],
         "togodown":togodown.json()["gkresult"],"transportationmode":request.params["transportationmode"],"issuername":request.params["issuername"],
         "designation":request.params["designation"],"nopkt":request.params["nopkt"],"fromgodown":fromgodown.json()["gkresult"]}
 
