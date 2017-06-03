@@ -91,13 +91,21 @@ width:1.4%
 
 
 
-  {% if godown == "" %}
-  <span style="margin:auto; display:table;"><strong><i>{% trans %}Category Wise Stock on Hand Report{% endtrans %}</i></strong></span>
-  <span style="margin:auto; display:table;"><i>{% trans %}Name of the Category {% endtrans %}: </i><strong>{{stockrefresh["categoryname"]}}</strong></span>
+  {% if stockrefresh["godownflag"] == 0 %}
+  <span style="margin:auto; display:table; width: 100%; text-align: center"><strong><i>{% trans %}Category Wise Stock on Hand Report{% endtrans %}</i></strong></span>
+  <span style="margin:auto; display:table; width: 100%; text-align: center"><i>{% trans %}Name of the Category {% endtrans %}: </i><strong>{{stockrefresh["categoryname"]}}</strong></span>
+  <span style="margin:auto; display:table; width: 100%; text-align: center"><i>{% trans %}Name of the Sub Category {% endtrans %}: </i><strong>{{stockrefresh["subcategoryname"]}}</strong></span>
+  <span style="margin:auto; display:table; width: 100%; text-align: center"><i>{% trans %}Name of the Specification {% endtrans %}: </i><strong>{{stockrefresh["specname"]}}</strong></span>
   {% else %}
-  <span style="margin-left: 42%;"><strong><i>{% trans %}Category & Godown Wise Stock on Hand Report{% endtrans %}</i></strong></span>
+  <span style="margin-auto; display:table; width: 100%; text-align: center"><strong><i>{% trans %}Category & Godown Wise Stock on Hand Report{% endtrans %}</i></strong></span>
   <span style="margin:auto; display:table; width: 100%;text-align: center"><i>{% trans %}Name of the Category {% endtrans %}: </i><strong>{{stockrefresh["categoryname"]}}</strong></span>
-  <span style="margin:auto; display:table;width: 100%;text-align: center"><i>{% trans %} &nbsp Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong><i>{% trans %} Godown Address{% endtrans %}: </i><strong>{{goaddr}}</strong></span>
+  <span style="margin:auto; display:table;  width: 100%; text-align: center"><i>{% trans %}Name of the Sub Category {% endtrans %}: </i><strong>{{stockrefresh["subcategoryname"]}}</strong></span>
+  <span style="margin:auto; display:table;  width: 100%; text-align: center"><i>{% trans %}Name of the Specification {% endtrans %}: </i><strong>{{stockrefresh["specname"]}}</strong></span>
+    {% if stockrefresh["goid"] == "all" %}
+      <span style="margin:auto; display:table;width: 100%;text-align: center"><i>{% trans %} &nbsp Name of the Godown{% endtrans %}: </i><strong>All</strong><i> </strong></span>
+    {% else %}
+      <span style="margin:auto; display:table;width: 100%;text-align: center"><i>{% trans %} &nbsp Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong><i>{% trans %} Godown Address{% endtrans %}: </i><strong>{{goaddr}}</strong></span>
+    {% endif %}
   {% endif %}
 
   <table id="latable"  style="margin-top:30px;" class="table shadow table-bordered size mx-auto ">
@@ -108,7 +116,7 @@ width:1.4%
      <th class="calign smwrap1" >
             {% trans %}Sr.No.{% endtrans %}
           </th>
-		{% if godown == "" %}
+		{% if stockrefresh["godownflag"] == 0 %}
         <th class="mdwrap calign" >
           {% trans %}Product Name{% endtrans %}
         </th>
@@ -116,7 +124,7 @@ width:1.4%
         <th class="smwrap calign" >
           {% trans %}Quantity{% endtrans %}
         </th>
-        {% elif godown == "All godowns" %}
+        {% elif stockrefresh["goid"] == "all" %}
         <th class="mdwrap calign" >
           {% trans %}Product Name{% endtrans %}
         </th>
@@ -168,7 +176,7 @@ width:1.4%
         {% else %}
 
          <td class="mdwrap calign " >
-          {{stockrefresh["productdesc"]}}
+          {{record["productname"]}}
         </td>
      <td class="smwrap calign" >
           {{record["balance"]}}
