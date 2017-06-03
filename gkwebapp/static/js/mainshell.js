@@ -405,7 +405,6 @@ var userrole1;
         }
       })
       .done(function(resp){
-        console.log(resp["gkresult"]);
         if(resp["gkresult"]["userrole"]==3){
           $("#master").remove();
           $("#invoice").remove();
@@ -419,13 +418,13 @@ var userrole1;
           $("#showcashflow").remove();
           $("#showbalancesheet").remove();
           $("#consolidatedbalancesheet").remove();
+          $("#exportledger").remove();
           $("#showprofitloss").remove();
           $("#listofaccounts").remove();
           $("#showdeletedvoucher").remove();
           $("#createuser").remove();
           $("#REMOVEuser").remove();
           $("#showclosebooks").remove();
-          $("#exportledger").remove();
           $("#deleteorg").remove();
           $("#tallyimport").remove();
         }
@@ -463,7 +462,7 @@ var userrole1;
       });
       // for getting username who is logged in
       $.ajax({
-        url: '/showmainshell?action=getuser',
+        url: '/purchaseorder?action=getuser',
         type: 'POST',
         dataType: 'json',
         async : false,
@@ -473,6 +472,7 @@ var userrole1;
         }
       })
       .done(function(resp) {
+        console.log(username1);
         username1=resp["username"];
 
       })

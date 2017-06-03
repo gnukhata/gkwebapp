@@ -144,18 +144,3 @@ def addtheme(request):
 	header={"gktoken":request.headers["gktoken"]}
 	themename= {"themename":request.params["themename"]}
 	result= requests.put("http://127.0.0.1:6543/user?type=theme",headers=header,data =json.dumps(themename))
-	return {"status":result.json()["gkstatus"]}
-
-@view_config(route_name="showmainshell",request_param="action=getuser",renderer="json")
-def getuser(request):
-	header={"gktoken":request.headers["gktoken"]}
-	usern = requests.get("http://127.0.0.1:6543/user", headers=header)
-	username = usern.json()["gkresult"]["username"]
-	return {"status":True,"username":username}
-
-@view_config(route_name="showmainshell",request_param="action=getuserrole",renderer="json")
-def getuserrole(request):
-	header={"gktoken":request.headers["gktoken"]}
-	usern = requests.get("http://127.0.0.1:6543/user?type=theme", headers=header)
-	username = usern.json()["gkresult"]["userrole"]
-	return {"status":True,"userrole":userrole}
