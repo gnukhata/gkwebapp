@@ -163,7 +163,8 @@ def updatepayment(request):
         if payflag == 1 or payflag == 15:
            custid = int(payment["custid"])
            pdamt = float(payment["pdamt"])
-           result = requests.put("http://127.0.0.1:6543/invoice?type=bwa&payflag=%d&custid=%d&pdamt=%f"%(payflag, custid, pdamt), headers=header)
+           icflag = int(payment["icflag"])
+           result = requests.put("http://127.0.0.1:6543/invoice?type=bwa&payflag=%d&icflag=%d&custid=%d&pdamt=%f"%(payflag, icflag, custid, pdamt), headers=header)
         
         elif payflag == 2:
            invid = int(payment["invid"])

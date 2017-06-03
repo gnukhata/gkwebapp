@@ -64,6 +64,16 @@ $(document).ready(function() {
       $("#latable tbody tr:eq("+curindex+") td:eq(4) input").val(originalvalue);
     }
   });
+  $(document).off('focusout', '#onaccount, #asadvance').on('focusout', '#onaccount, #asadvance', function(event) {
+    event.preventDefault();
+    if ($(this).val() == "") {
+      $(this).val("0.00");
+    }
+    else {
+      var originalvalue = parseFloat($(this).val()).toFixed(2);
+      $(this).val(originalvalue);
+    }
+  });
   //Actions to be triggered when a key is pressed down.
   $(document).off('keydown', '.amountpaid').on('keydown', '.amountpaid', function(event) {
     /* Act on the event */
@@ -222,8 +232,8 @@ $(document).ready(function() {
     var totalamountpaid = 0;  //Variable to store total amount paid. Total is recalculated here to avoid errors.
     var asadvance = {};
     var onaccount = {};
-    asadvance = {"payflag":1, "pdamt":$("#asadvance").val(), "custid":$("#custid").val()};
-    onaccount = {"payflag":15, "pdamt":$("#onaccount").val(), "custid":$("#custid").val()};
+    asadvance = {"payflag":1,"icflag":9, "pdamt":parseFloat($("#asadvance").val()), "custid":$("#custid").val()};
+    onaccount = {"payflag":15,"icflag":9, "pdamt":parseFloat($("#onaccount").val()), "custid":$("#custid").val()};
     billwisedata.push(asadvance);
     billwisedata.push(onaccount);
     /*
@@ -269,6 +279,14 @@ $(document).ready(function() {
       });
       return false;
     }
+
+    var oldasadvance = {};
+    var oldonaccount = {};
+    oldasadvance = {"payflag":1,"icflag":4, "pdamt":parseFloat($("#asadvancelabel").data("asadvance")), "custid":$("#custid").val()};
+    oldonaccount = {"payflag":15,"icflag":4, "pdamt":parseFloat($("#onaccountlabel").data("onaccount")), "custid":$("#custid").val()};
+    billwisedata.push(oldasadvance);
+    billwisedata.push(oldonaccount);
+    
     //If amount paid equals Debit/Credit amount AJAX request below is sent to the front-end view. Alert is displayed when the requast is successful.
     $.ajax({
       url: '/invoice?action=updatepayment',
