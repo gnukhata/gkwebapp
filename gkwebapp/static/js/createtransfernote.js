@@ -451,9 +451,6 @@ $(document).ready(function() {
 	  $('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(1) input').focus();
 	  return false;
 	}
-	else {
-	  $('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(1) input').focus().select();
-	}
 
 
 

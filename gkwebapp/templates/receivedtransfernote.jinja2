@@ -32,10 +32,7 @@
 </head>
 <body>
   <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
-    <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
-
-      {% trans %}Transfer Note saved.{% endtrans %}
-    </div>
+   
     <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
 
       {% trans %}Something went wrong!{% endtrans %}
@@ -48,28 +45,22 @@
 
             <label >{% trans %}Please Enter Date{% endtrans %}</label>
           </div>
-          <div class="alert alert-danger" id="date-blank-alert"  aria-live="rude" role="alert" hidden>
+          
+             <div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
 
-            <label >{% trans %}Please enter Received Date!{% endtrans %}</label>
-          </div>
-          <div class="alert alert-danger" id="tnno-blank-alert"  aria-live="rude" role="alert" hidden>
-
-         
             <label >{% trans %}Please enter date in proper format!{% endtrans %}</label>
           </div>
-          <div class="alert alert-danger" id="godown-blank-alert"  aria-live="rude" role="alert" hidden>
+          
+          <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
 
-            <label >{% trans %}Godown Must be Selected!{% endtrans %}</label>
+            {% trans %}Received date cannot be before Transfer Note Date!{% endtrans %}
+          </div>
+                    
+          <div class="alert alert-success" id="rec-confirm-alert"  aria-live="rude" role="alert" hidden>
+
+            <label >{% trans %}Transfer Note received! {% endtrans %}</label>
           </div>
 
-           <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
-
-            {% trans %}Received Date cannot be before transfer note date!{% endtrans %}
-          </div>
-
-         
-            <label >{% trans %}Transfer Note received {% endtrans %}</label>
-          </div>
 
           <form>
             <div class="form-group">
@@ -91,12 +82,14 @@
               </br>
 	      <div class =" row">
 		    <div class="col-sm-6">
-		      <label >{% trans %}Expected Date of Receipt:{% endtrans %}</label> <label id="tn_duedate"></label>
-             
+		      <label >{% trans %}Expected Date of Receipt :{% endtrans %}</label> <label id="tn_duedate"></label>
                     </div>
 		    <div class ="col-sm-6">
          	      <label >{% trans %}Grace Period :{% endtrans %}</label> <label id="tn_grace"></label>
+
+		   <small >   <b> days</b></small>
 		    </div>
+		    
               </br>
 	      </br>
 	     
