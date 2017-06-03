@@ -31,7 +31,8 @@ Contributors:
 // This script is for the mainshell page and loads when the main page of GNUKhata is loaded.
 // Also all the external js libraries we have used is loaded along with the mainshell.
 $(document).ready(function(){
-
+var username1;
+var userrole1;
   $('.modal-backdrop').remove();
 
   if (sessionStorage.reload == 1)// The mainshell when loads for the first time its reloaded so that the javascript file can be fully loaded.
@@ -417,13 +418,13 @@ $(document).ready(function(){
           $("#showcashflow").remove();
           $("#showbalancesheet").remove();
           $("#consolidatedbalancesheet").remove();
+          $("#exportledger").remove();
           $("#showprofitloss").remove();
           $("#listofaccounts").remove();
           $("#showdeletedvoucher").remove();
           $("#createuser").remove();
           $("#REMOVEuser").remove();
           $("#showclosebooks").remove();
-          $("#exportledger").remove();
           $("#deleteorg").remove();
           $("#tallyimport").remove();
         }
@@ -444,8 +445,42 @@ $(document).ready(function(){
          if (resp["gkresult"]["roflag"]==1) {
            $(".rollover").remove();
          }
+
+         if(resp["gkresult"]["userrole"]==-1) {
+           userrole1="<i>Admin</i>";
+         } else if(resp["gkresult"]["userrole"]==0) {
+           userrole1="<i>Manager</i>";
+         } else if(resp["gkresult"]["userrole"]==1) {
+           userrole1="<i>Operator</i>";
+         } else if(resp["gkresult"]["userrole"]==2) {
+           userrole1="<i>Auditor</i>";
+         } else if(resp["gkresult"]["userrole"]==3) {
+           userrole1="<i>Godown In Charge</i>";
+         }
          sessionStorage.setItem('booksclosedflag', resp["gkresult"]["booksclosedflag"]);
          sessionStorage.setItem('roflag', resp["gkresult"]["roflag"]);
+      });
+      // for getting username who is logged in
+      $.ajax({
+        url: '/purchaseorder?action=getuser',
+        type: 'POST',
+        dataType: 'json',
+        async : false,
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+      .done(function(resp) {
+        console.log(username1);
+        username1=resp["username"];
+
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
       });
 
   // organisation name, type and financial year are stored in sessionstorage.
@@ -453,7 +488,7 @@ $(document).ready(function(){
   var ortype = sessionStorage.getItem('orgt');
   var styear = sessionStorage.getItem('year1');
   var enyear = sessionStorage.getItem('year2');
-  var orgdata = orname + " (" + ortype + ")";
+  var orgdata = orname + " (" + ortype + ")"+"\xa0\xa0 <i>"+ username1 +"</i> <i>(</i>" + userrole1 + "<i>)</i>";
   var yeardata = "Financial Year : " + styear + " to " + enyear;
 // organisation details are stored in items that are only visible in print.
 $("title").append(orname);
