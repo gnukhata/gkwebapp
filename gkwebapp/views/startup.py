@@ -144,3 +144,4 @@ def addtheme(request):
 	header={"gktoken":request.headers["gktoken"]}
 	themename= {"themename":request.params["themename"]}
 	result= requests.put("http://127.0.0.1:6543/user?type=theme",headers=header,data =json.dumps(themename))
+	return {"status":result.json()["gkstatus"]}
