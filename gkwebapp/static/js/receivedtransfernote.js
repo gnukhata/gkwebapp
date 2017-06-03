@@ -284,9 +284,9 @@ This script is for the Received transfer note page.
         
         
         var receiveddate1 =$("#received_tn_year").val()+'-'+$("#received_tn_month").val()+'-'+$("#received_tn_date").val();
-        
-        
-        if(Date.parseExact(receiveddate1,"yyyy-MM-dd").compareTo(financialstart)==1){
+        var duedate =  $('#tn_duedate').text();
+       
+        if(Date.parseExact(receiveddate1,"yyyy-MM-dd").compareTo(financialstart)==-1){
           
           
           $("#between-date-alert").alert();
@@ -296,11 +296,11 @@ This script is for the Received transfer note page.
 	  $('#received_tn_date').focus().select();
 	  return false;
 	  
-        }
+        } 
         var createdate=$('#rec_transfernote_date').text();
         var createdateyyyymmdd=createdate[6]+createdate[7]+createdate[8]+createdate[9]+createdate[5]+createdate[3]+createdate[4]+createdate[2]+createdate[0]+createdate[1]
         
-        
+	      
         if(Date.parseExact(receiveddate1,"yyyy-MM-dd").compareTo(Date.parseExact(createdateyyyymmdd,"yyyy-MM-dd"))==-1)
           {
             $("#between-date-alert").alert();
