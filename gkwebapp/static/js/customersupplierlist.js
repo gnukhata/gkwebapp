@@ -64,15 +64,9 @@ $(document).ready(function() {
 
   //Actions that occur when key is pressed down while at list of customers.  
   $(document).off('keydown', '#customerselect').on('keydown', '#customerselect', function(event) {
-    //When enter key is pressed focus shifts to first of amount paid fields. If no field is visible focus shifts to buttons at the footer.
     if (event.which == 13) {
       event.preventDefault();
-      if ($(".amountpaid").length > 0) {
-	$(".amountpaid:first").focus().select();
-      }
-      else{
-	$(".footerbutton:first").focus();
-      }
+      $("#useasadvance").focus().select();
     }
   });
   //This is similar to the change event of list of customers.

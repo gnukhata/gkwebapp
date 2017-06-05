@@ -97,7 +97,7 @@ $(document).ready(function() {
       event.preventDefault(); //Prevents default behaviour of any event. In this case, submiting the form.
       //Click event force 'Done' button is fired when 'Enter' is pressed from Amount Paid in last row. Note that current index is compared with number of rows
       if (curindex == numberofrows) {
-	$("#useasadvance").focus().select();
+	$("#btclose").click();
       }
       else {
 	//Alert is displayed when Amount Paid is blank
@@ -120,7 +120,7 @@ $(document).ready(function() {
     else if (event.which == 35) {
       event.preventDefault();
       //If 'End' key is pressed focus shifts to buttons in footer.
-      $("#useasadvance").focus().select();
+      $(".footerbutton:visible").first().focus();
     }
     else if(event.which == 45) {
       event.preventDefault();
@@ -194,6 +194,13 @@ $(document).ready(function() {
   $(document).off('keydown', '#useasadvance').on('keydown', '#useasadvance', function(event) {
     if (event.which == 13) {
       event.preventDefault();
+      if (parseFloat($("#useasadvance").val()) > parseFloat($("#asadvancelabel").data("asadvance"))) {
+	$("#asadvance-alert").alert();
+	$("#asadvance-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#asadvance-alert").hide();
+	});
+	return false;
+      }
       $("#useonaccount").focus().select();
     }
     if(event.which == 45) {
@@ -206,7 +213,14 @@ $(document).ready(function() {
   $(document).off('keydown', '#useonaccount').on('keydown', '#useonaccount', function(event) {
     if (event.which == 13) {
       event.preventDefault();
-      $(".footerbutton:visible").first().focus();
+      if (parseFloat($("#useonaccount").val()) > parseFloat($("#onaccountlabel").data("onaccount"))) {
+	$("#onaccount-alert").alert();
+	$("#onaccount-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#onaccount-alert").hide();
+	});
+	return false;
+      }
+      $(".amountpaid:first").focus().select();
     }
     if(event.which == 45) {
       event.preventDefault();
@@ -325,13 +339,22 @@ $(document).ready(function() {
       return false;
     }
     if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > parseFloat(sessionStorage.customeramount) && ($("#useasadvance").val()=="" || $("#useasadvance").val()==0) && ($("#useonaccount").val()=="" || $("#useonaccount").val()==0)) {
-      $("#bwvamount-alert").alert();
-      $("#bwvamount-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#bwvamount-alert").hide();
-      });
-      return false;
+      if ($("#customerselect").length == 0) {
+	$("#bwvamount-alert").alert();
+	$("#bwvamount-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#bwvamount-alert").hide();
+	});
+	return false;
+      }
+      else {
+	$("#unadjustedamount-alert").alert();
+	$("#unadjustedamount-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#unadjustedamount-alert").hide();
+	});
+	return false;
+      }
     }
-    if (parseFloat((parseFloat($("#useasadvance").val()) + parseFloat($("#useonaccount").val()))) > parseFloat(parseFloat($("#asadvancelabel").data("asadvance")) + parseFloat($("#onaccountlabel").data("onaccount")))) {
+    if (parseFloat((parseFloat($("#useasadvance").val()) + parseFloat($("#useonaccount").val()))) > parseFloat(parseFloat($("#asadvancelabel").data("asadvance")) + parseFloat($("#onaccountlabel").data("onaccount")) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) {
       $("#bwadvac-alert").alert();
       $("#bwadvac-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#bwadvac-alert").hide();
@@ -343,6 +366,24 @@ $(document).ready(function() {
       $("#bwamount-less-alert").alert();
       $("#bwamount-less-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#bwamount-less-alert").hide();
+      });
+      return false;
+    }
+
+    if (parseFloat($("#useasadvance").val()) > parseFloat($("#asadvancelabel").data("asadvance"))) {
+      $("#useasadvance").focus().select();
+      $("#asadvance-alert").alert();
+      $("#asadvance-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#asadvance-alert").hide();
+      });
+      return false;
+    }
+
+    if (parseFloat($("#useonaccount").val()) > parseFloat($("#onaccountlabel").data("onaccount"))) {
+      $("#useonaccount").focus.select();
+      $("#onaccount-alert").alert();
+      $("#onaccount-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#onaccount-alert").hide();
       });
       return false;
     }
