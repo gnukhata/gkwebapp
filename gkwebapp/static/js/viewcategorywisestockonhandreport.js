@@ -123,8 +123,8 @@ $(document).ready(function() {
 					.done(function(resp)
 					{
 						if(resp.gkstatus == 0){
-							$("#viewstock_specsname").html("");
-							$("#viewstock_specsname").append('<option value="all">All</option>');
+							$("#viewstock_subcategoryname").html("");
+							$("#viewstock_subcategoryname").append('<option value="all">All</option>');
 							for (cat of resp.gkresult){
 								$("#viewstock_subcategoryname").append('<option value="'+cat.categorycode+'">'+cat.categoryname+'</option>');
 							}
