@@ -123,6 +123,8 @@ $(document).ready(function() {
 					.done(function(resp)
 					{
 						if(resp.gkstatus == 0){
+							$("#viewstock_specsname").html("");
+							$("#viewstock_specsname").append('<option value="all">All</option>');
 							for (cat of resp.gkresult){
 								$("#viewstock_subcategoryname").append('<option value="'+cat.categorycode+'">'+cat.categoryname+'</option>');
 							}
@@ -150,6 +152,8 @@ $(document).ready(function() {
 					.done(function(resp)
 					{
 						if(resp.gkstatus == 0){
+							$("#viewstock_specsname").html("");
+							$("#viewstock_specsname").append('<option value="all">All</option>');
 							for (cat of resp.gkresult){
 								$("#viewstock_specsname").append('<option value="'+cat.spcode+'">'+cat.attrname+'</option>');
 							}
@@ -174,6 +178,8 @@ $(document).ready(function() {
 					.done(function(resp)
 					{
 						if(resp.gkstatus == 0){
+							$("#viewstock_specsname").html("");
+							$("#viewstock_specsname").append('<option value="all">All</option>');
 							for (cat of resp.gkresult){
 								$("#viewstock_specsname").append('<option value="'+cat.spcode+'">'+cat.attrname+'</option>');
 							}
