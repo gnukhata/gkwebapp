@@ -26,7 +26,6 @@ $(document).ready(function() {
 	$('.modal-backdrop').remove();
 	$("#viewstock_categoryname").focus();
 	$('.viewstock_date').autotab('number');
-	$(".dis").attr('disabled', true);
 
 	var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
 	var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
@@ -77,34 +76,32 @@ $(document).ready(function() {
 				$(this).keyup(function(e){
 						if (e.which == 13) {
 							e.preventDefault();
-							$(".dis").attr('disabled', false);
 							$("#viewstock_subcategoryname").focus().select();
 						}
 				});
-				$(".dis").attr('disabled', false);
 	});
 
   $("#viewstock_subcategoryname").change(function(){
 				$(this).keyup(function(e){
 						if (e.which == 13) {
 							e.preventDefault();
-							$(".dis").attr('disabled', false);
-							$("#viewstock_specsname").focus().select();
+							$("#viewstock_todate").focus().select();
 						}
 				});
-				$(".dis").attr('disabled', false);
 	});
 
-  $("#viewstock_specsname").change(function(){
+/*  $("#viewstock_specsname").change(function(){
 				$(this).keyup(function(e){
 						if (e.which == 13) {
 							e.preventDefault();
-							$(".dis").attr('disabled', false);
 							$("#viewstock_todate").focus().select();						}
 				});
-				$(".dis").attr('disabled', false);
+				if (e.which == 38 && $("#viewstock_specsname").val() == "all") {
+					e.preventDefault();
+					$("#viewstock_todate").focus().select();
+				}
 	});
-
+*/
 	$(document).off("focus","#viewstock_subcategoryname").on("focus","#viewstock_subcategoryname",function(event) {
 		if($("#viewstock_categoryname").val()){
 			$.ajax(
@@ -134,7 +131,7 @@ $(document).ready(function() {
 		}
   });
 
-	$(document).off("focus","#viewstock_specsname").on("focus","#viewstock_specsname",function(event) {
+/*	$(document).off("focus","#viewstock_specsname").on("focus","#viewstock_specsname",function(event) {
 		if($("#viewstock_subcategoryname").val() != "all"){
 			$.ajax(
 				{
@@ -188,7 +185,7 @@ $(document).ready(function() {
 				);
 		}
   });
-
+*/
 	$("#viewstock_todate").blur(function(event) {
 		$(this).val(pad($(this).val(),2));
 	});
@@ -204,12 +201,13 @@ $(document).ready(function() {
 	$("#viewstock_subcategoryname").keydown(function(e){
 		if(e.which==13){
 			e.preventDefault();
-			$("#viewstock_specsname").focus().select();
+			$("#viewstock_todate").focus().select();
 		}
-		if(e.which==38 && $("#viewstock_subcategoryname").val() == null){
+		if(e.which==38 && $("#viewstock_subcategoryname").val() == "all"){
 			$("#viewstock_categoryname").focus().select();
 		}
 	});
+	/*
 	$("#viewstock_specsname").keydown(function(e){
 		if(e.which==13){
 			e.preventDefault();
@@ -219,14 +217,14 @@ $(document).ready(function() {
 			$("#viewstock_subcategoryname").focus().select();
 		}
 	});
-
+*/
 	$("#viewstock_todate").keydown(function(e){
 		if(e.which==13){
 			e.preventDefault();
 			$("#viewstock_tomonth").focus().select();
 		}
 		if(e.which==38){
-			$("#viewstock_specsname").focus().select();
+			$("#viewstock_subcategoryname").focus().select();
 		}
 	});
 	$("#viewstock_tomonth").keydown(function(e){
@@ -335,10 +333,10 @@ $(document).ready(function() {
 		// creating dataset for retrieving report from the server.
 		var dataset = {};
 		if($("#godownflag").val()==0) {
-		dataset = {"categorycode":$("#viewstock_categoryname option:selected").val(), "categoryname": $.trim($("#viewstock_categoryname option:selected").text()), "subcategorycode":$("#viewstock_subcategoryname option:selected").val(), "subcategoryname": $.trim($("#viewstock_subcategoryname option:selected").text()), "speccode":$("#viewstock_specsname option:selected").val(), "specname": $.trim($("#viewstock_specsname option:selected").text()),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":0,"godownflag":0};
+		dataset = {"categorycode":$("#viewstock_categoryname option:selected").val(), "categoryname": $.trim($("#viewstock_categoryname option:selected").text()), "subcategorycode":$("#viewstock_subcategoryname option:selected").val(), "subcategoryname": $.trim($("#viewstock_subcategoryname option:selected").text()), "speccode":"all", "specname": "all", /*$("#viewstock_specsname option:selected").val(), "specname": $.trim($("#viewstock_specsname option:selected").text()),*/"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":0,"godownflag":0};
 		}
 		else {
-				dataset = {"categorycode":$("#viewstock_categoryname option:selected").val(), "categoryname": $.trim($("#viewstock_categoryname option:selected").text()), "subcategorycode":$("#viewstock_subcategoryname option:selected").val(), "subcategoryname": $.trim($("#viewstock_subcategoryname option:selected").text()), "speccode":$("#viewstock_specsname option:selected").val(), "specname": $.trim($("#viewstock_specsname option:selected").text()),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":0,"godownflag":1,"goid":$("#editgoddet option:selected").val(),"goname":$("#editgoddet option:selected").data('godownname'), "goaddr":$("#editgoddet option:selected").data('godownaddress')};
+				dataset = {"categorycode":$("#viewstock_categoryname option:selected").val(), "categoryname": $.trim($("#viewstock_categoryname option:selected").text()), "subcategorycode":$("#viewstock_subcategoryname option:selected").val(), "subcategoryname": $.trim($("#viewstock_subcategoryname option:selected").text()), "speccode":"all", "specname": "all", /*$("#viewstock_specsname option:selected").val(), "specname": $.trim($("#viewstock_specsname option:selected").text()),*/"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":0,"godownflag":1,"goid":$("#editgoddet option:selected").val(),"goname":$("#editgoddet option:selected").data('godownname'), "goaddr":$("#editgoddet option:selected").data('godownaddress')};
 		}
 		$.ajax(
 			{
