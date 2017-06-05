@@ -1630,12 +1630,15 @@ $(document).ready(function() {
         $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(1) input").focus();
         return false;
       }
-      if ($("#invoice_product_table tbody tr:eq(" + i + ") td:eq(2) input").val() == "" || $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(2) input").val() <= 0) {
+      if ($("#invoice_product_table tbody tr:eq(" + i + ") td:eq(2) input").val() == "") {
+        $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(2) input").val(0.00);
+      }
+      if ($("#invoice_product_table tbody tr:eq(" + i + ") td:eq(3) input").val() == "" || $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(3) input").val() <= 0) {
         $("#price-blank-alert").alert();
         $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
           $("#price-blank-alert").hide();
         });
-        $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(2) input").focus();
+        $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(3) input").focus().select();
         return false;
       }
       var obj = {};
@@ -1854,12 +1857,15 @@ $(document).ready(function() {
         $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(1) input").focus();
         return false;
       }
-      if ($("#invoice_product_table tbody tr:eq(" + i + ") td:eq(2) input").val() == "" || $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(2) input").val() <= 0) {
+      if ($("#invoice_product_table tbody tr:eq(" + i + ") td:eq(3) input").val() == "") {
+        $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(3) input").val(0.00);
+      }
+      if ($("#invoice_product_table tbody tr:eq(" + i + ") td:eq(3) input").val() == "" || $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(3) input").val() <= 0) {
         $("#price-blank-alert").alert();
         $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
           $("#price-blank-alert").hide();
         });
-        $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(2) input").focus();
+        $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(3) input").focus().select();
         return false;
       }
       var obj = {};
