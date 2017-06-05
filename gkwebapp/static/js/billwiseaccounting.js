@@ -362,7 +362,7 @@ $(document).ready(function() {
       return false;
     }
     //Alert is displayed when sum of total amount paid and sum of unadjusted amounts is less than sum of Debit/Credit amount and previous unadjusted amounts.
-    if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) < parseFloat(sessionStorage.customeramount)) {
+    if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) < (parseFloat(sessionStorage.customeramount) + parseFloat($("#useasadvance").val()) + parseFloat($("#useonaccount").val()))) {
       $("#bwamount-less-alert").alert();
       $("#bwamount-less-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#bwamount-less-alert").hide();

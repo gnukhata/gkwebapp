@@ -248,7 +248,7 @@ def getBillTable(request):
                         sumofinvoiceamounts = sumofinvoiceamounts + float(bill["invoicetotal"])
                         sumofpendingamounts = sumofpendingamounts + float(bill["pendingamount"])
                         unpaidbills.append(bill)
-        return {"gkstatus":result.json()["gkstatus"], "gkresult":unpaidbills, "sumofinvoiceamounts":sumofinvoiceamounts, "sumofpendingamounts":sumofpendingamounts, "custid":custid, "onaccount":customerdetails["onaccamt"], "asadvance":customerdetails["advamt"]}
+        return {"gkstatus":result.json()["gkstatus"], "gkresult":unpaidbills, "sumofinvoiceamounts":sumofinvoiceamounts, "sumofpendingamounts":sumofpendingamounts, "custid":custid, "onaccount":"%.2f"%customerdetails["onaccamt"], "asadvance":"%.2f"%customerdetails["advamt"]}
     elif request.params.has_key("custid"):
         custid = int(request.params["custid"])
         customer = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%custid, headers=header)
@@ -262,6 +262,6 @@ def getBillTable(request):
                 sumofinvoiceamounts = sumofinvoiceamounts + float(bill["invoicetotal"])
                 sumofpendingamounts = sumofpendingamounts + float(bill["pendingamount"])
                 unpaidbills.append(bill)
-        return {"gkstatus":customer.json()["gkstatus"], "gkresult":unpaidbills, "sumofinvoiceamounts":sumofinvoiceamounts, "sumofpendingamounts":sumofpendingamounts, "custid":custid, "onaccount":customerdetails["onaccamt"], "asadvance":customerdetails["advamt"]}
+        return {"gkstatus":customer.json()["gkstatus"], "gkresult":unpaidbills, "sumofinvoiceamounts":sumofinvoiceamounts, "sumofpendingamounts":sumofpendingamounts, "custid":custid, "onaccount":"%.2f"%customerdetails["onaccamt"], "asadvance":"%.2f"%customerdetails["advamt"]}
     else:
         return {"gkresult":[]}
