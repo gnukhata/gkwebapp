@@ -97,7 +97,7 @@ $(document).ready(function() {
       event.preventDefault(); //Prevents default behaviour of any event. In this case, submiting the form.
       //Click event force 'Done' button is fired when 'Enter' is pressed from Amount Paid in last row. Note that current index is compared with number of rows
       if (curindex == numberofrows) {
-	$("#btclose").click();
+	$("#useasadvance").focus().select();
       }
       else {
 	//Alert is displayed when Amount Paid is blank
@@ -119,8 +119,8 @@ $(document).ready(function() {
     }
     else if (event.which == 35) {
       event.preventDefault();
-      //If 'Esc' key is pressed focus shifts to buttons in footer.
-      $(".footerbutton:visible").first().focus();
+      //If 'End' key is pressed focus shifts to buttons in footer.
+      $("#useasadvance").focus().select();
     }
     else if(event.which == 45) {
       event.preventDefault();
@@ -191,11 +191,34 @@ $(document).ready(function() {
       $('#latable tfoot tr:eq(0) td:eq(2)').html('<div class="form-control" disabled>'+parseFloat(totalpending).toFixed(2)+'</div');
     }, doneTypingInterval);
   });
-  //Actions that occur when On Account is clicked.
-  $(document).off('keydown', '#onaccount, #asadvance').on('keydown', '#onaccount, #asadvance', function(event) {
+  $(document).off('keydown', '#useasadvance').on('keydown', '#useasadvance', function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#useonaccount").focus().select();
+    }
+    if(event.which == 45) {
+      event.preventDefault();
+      //Pressing 'Insert' key triggers click event of 'Done' button.
+      $("#btclose").click();
+      return false;
+    }
+  });
+  $(document).off('keydown', '#useonaccount').on('keydown', '#useonaccount', function(event) {
     if (event.which == 13) {
       event.preventDefault();
       $(".footerbutton:visible").first().focus();
+    }
+    if(event.which == 45) {
+      event.preventDefault();
+      //Pressing 'Insert' key triggers click event of 'Done' button.
+      $("#btclose").click();
+      return false;
+    }
+  });
+  $(document).off('keydown', '#onaccount, #asadvance').on('keydown', '#onaccount, #asadvance', function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#useasadvance").focus().select();
     }
     if(event.which == 45) {
       event.preventDefault();
@@ -301,8 +324,22 @@ $(document).ready(function() {
       });
       return false;
     }
+    if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > parseFloat(sessionStorage.customeramount) && ($("#useasadvance").val()=="" || $("#useasadvance").val()==0) && ($("#useonaccount").val()=="" || $("#useonaccount").val()==0)) {
+      $("#bwvamount-alert").alert();
+      $("#bwvamount-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#bwvamount-alert").hide();
+      });
+      return false;
+    }
+    if (parseFloat((parseFloat($("#useasadvance").val()) + parseFloat($("#useonaccount").val()))) > parseFloat(parseFloat($("#asadvancelabel").data("asadvance")) + parseFloat($("#onaccountlabel").data("onaccount")))) {
+      $("#bwadvac-alert").alert();
+      $("#bwadvac-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#bwadvac-alert").hide();
+      });
+      return false;
+    }
     //Alert is displayed when sum of total amount paid and sum of unadjusted amounts is less than sum of Debit/Credit amount and previous unadjusted amounts.
-    if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) < (parseFloat(sessionStorage.customeramount) + parseFloat($("#asadvancelabel").data("asadvance")) + parseFloat($("#onaccountlabel").data("onaccount")))) {
+    if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) < parseFloat(sessionStorage.customeramount)) {
       $("#bwamount-less-alert").alert();
       $("#bwamount-less-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#bwamount-less-alert").hide();
@@ -310,12 +347,12 @@ $(document).ready(function() {
       return false;
     }
 
-    var oldasadvance = {};
-    var oldonaccount = {};
-    oldasadvance = {"payflag":1,"icflag":4, "pdamt":parseFloat($("#asadvancelabel").data("asadvance")), "custid":$("#custid").val()};
-    oldonaccount = {"payflag":15,"icflag":4, "pdamt":parseFloat($("#onaccountlabel").data("onaccount")), "custid":$("#custid").val()};
-    billwisedata.push(oldasadvance);
-    billwisedata.push(oldonaccount);
+    var usedasadvance = {};
+    var usedonaccount = {};
+    usedasadvance = {"payflag":1,"icflag":4, "pdamt":parseFloat($("#useasadvance").val()), "custid":$("#custid").val()};
+    usedonaccount = {"payflag":15,"icflag":4, "pdamt":parseFloat($("#useonaccount").val()), "custid":$("#custid").val()};
+    billwisedata.push(usedasadvance);
+    billwisedata.push(usedonaccount);
     
     //If amount paid equals Debit/Credit amount AJAX request below is sent to the front-end view. Alert is displayed when the requast is successful.
     $.ajax({
