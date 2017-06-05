@@ -598,7 +598,7 @@ def showcategorywisestockonhandreport(request):
 	header={"gktoken":request.headers["gktoken"]}
 	godownflag = int(request.params["godownflag"])
 	if godownflag == 0:
-		goid = -1
+		goid = "-1"
 	else:
 		goid = request.params["goid"]
 	categorycode = int(request.params["categorycode"])
@@ -618,7 +618,7 @@ def showcategorywisestockonhandreport(request):
 			return render_to_response("gkwebapp:templates/showcategorywisestockonhandreport.jinja2",{"gkresult":result.json()["gkresult"],"stockrefresh":stockrefresh},request=request)
 
 	if int(request.params["backflag"]) == 0:
-		result = requests.get("http://127.0.0.1:6543/report?type=categorywisestockonhand&categorycode=%d&subcategorycode=%s&speccode=%s&goid=%s&enddate=%s"%(categorycode, request.params["subcategorycode"], request.params["speccode"], request.paramscalculateto),headers=header)
+		result = requests.get("http://127.0.0.1:6543/report?type=categorywisestockonhand&categorycode=%d&subcategorycode=%s&speccode=%s&goid=%s&enddate=%s"%(categorycode, request.params["subcategorycode"], request.params["speccode"], goid, calculateto),headers=header)
 		if godownflag==1:
 			if request.params["goid"] == "all":
 				return render_to_response("gkwebapp:templates/showcategorywisestockonhandreport.jinja2",{"gkresult":result.json()["gkresult"],"stockrefresh":stockrefresh},request=request)
