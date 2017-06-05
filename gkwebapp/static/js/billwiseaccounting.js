@@ -148,8 +148,17 @@ $(document).ready(function() {
 	$("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">'+parseFloat(originalvalue).toFixed(2)+'</div>');
       }
       else {
-	//Whenever Amount Paid equals or exceeds Amount Pending the below snippet sets Amount Pending to 0.00.
-	if (parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()) >= parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending"))) {
+	//Whenever Amount Paid is greater than Amount Pending alert is displayed.
+	if (parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()) > parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending"))) {
+	  $("#latable tbody tr:eq("+curindex1+") td:eq(4) input").focus().select();
+	  $("#bwinvamount-alert").alert();
+	  $("#bwinvamount-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#bwinvamount-alert").hide();
+	  });
+	  return false;
+	}
+	//Whenever Amount Paid equals Amount Pending the below snippet sets Amount Pending to 0.00.
+	else if (parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()) >= parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending"))) {
 	  $("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">0.00</div>');
 	}
 	else {
@@ -260,6 +269,16 @@ $(document).ready(function() {
 	$("#bwamount-blank-alert").alert();
 	$("#bwamount-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#bwamount-blank-alert").hide();
+	});
+	return false;
+      }
+      //Alert is displayed when amount paid is greater than amount pending.
+      if (parseFloat($("#latable tbody tr:eq("+i+") td:eq(4) input").val()) > parseFloat($("#latable tbody tr:eq("+i+") td:eq(3)").data("amountpending"))) {
+	$("#latable tbody tr:eq("+i+") td:eq(4) input").focus().select();
+	$("#bwinvamount-alert").hide();
+	$("#bwinvamount-alert").alert();
+	$("#bwinvamount-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#bwinvamount-alert").hide();
 	});
 	return false;
       }
