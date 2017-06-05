@@ -319,7 +319,7 @@ $(document).ready(function() {
 	});
 	return false;
       }
-      if ($("#latable tbody tr:eq("+i+")").data("invid") != "") {
+      if ($("#latable tbody tr:eq("+i+") td:eq(4) input").length != 0) {
 	//Creating a dictionary and appending to the list.
 	var amountpaid = parseFloat($("#latable tbody tr:eq("+i+") td:eq(4) input").val());
 	var invid = parseInt($("#latable tbody tr:eq("+i+")").data("invid"));
