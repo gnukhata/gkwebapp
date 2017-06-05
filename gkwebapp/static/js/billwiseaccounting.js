@@ -189,6 +189,7 @@ $(document).ready(function() {
 	totalpending = totalpending + pending;
       }
       $('#latable tfoot tr:eq(0) td:eq(2)').html('<div class="form-control" disabled>'+parseFloat(totalpending).toFixed(2)+'</div');
+      $(".billamount").html("<b>"+parseFloat(totalap).toFixed(2)+"</b>");
     }, doneTypingInterval);
   });
   $(document).off('keydown', '#useasadvance').on('keydown', '#useasadvance', function(event) {
