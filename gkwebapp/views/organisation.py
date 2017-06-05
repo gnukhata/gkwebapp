@@ -33,6 +33,10 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
 from pyramid.httpexceptions import HTTPFound
+from PIL import Image
+import base64
+import cStringIO
+
 
 @view_config(route_name='locale')
 def set_locale_cookie(request):
@@ -72,8 +76,21 @@ def oexists(request):
 def editOrganisation(request):
 	header={"gktoken":request.headers["gktoken"]}
 	gkdata= {"orgcity":request.params["orgcity"],"orgaddr":request.params["orgaddr"],"orgpincode":request.params["orgpincode"],"orgstate":request.params["orgstate"], "orgcountry":request.params["orgcountry"],"orgtelno":request.params["orgtelno"], "orgfax":request.params["orgfax"],"orgwebsite":request.params["orgwebsite"],"orgemail":request.params["orgemail"],"orgpan":request.params["orgpan"],"orgmvat":request.params["orgmvat"],"orgstax":request.params["orgstax"],"orgregno":request.params["orgregno"],"orgregdate":request.params["orgregdate"], "orgfcrano":request.params["orgfcrano"],"orgfcradate":request.params["orgfcradate"]}
+
+    try:
+        img=request.POST.files
+        image=Image.open(img)
+        imgbuffer = cStringIO.StringIO()
+        image.save(imgbuffer, format="JPEG")
+        img_str = base64.b64encode(imgbuffer.getvalue())
+        image.close()
+        filelogo=img_str
+    except:
+        print "no photo found "
+    gkdata["logo"]=filelogo
 	result = requests.put("http://127.0.0.1:6543/organisations", headers=header, data=json.dumps(gkdata))
-	return {"gkstatus":result.json()["gkstatus"]}
+    return {"gkstatus":result.json()["gkstatus"]}
+
 
 @view_config(route_name="getorgcode", renderer="json")
 def getOrgcode(request):

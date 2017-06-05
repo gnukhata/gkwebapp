@@ -50,6 +50,13 @@
 
 </div>
 </div>
+
+<label class="btn btn-primary btn-sm" for="my-file-selector">
+	<input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
+	{% trans %}Attac<u>h</u>{% endtrans %}
+</label>
+<span class='label label-info' id="upload-file-info"></span>
+
 				<form id="editorganisationform" method="post" class="form-inline">
 					<div class="col-xs-6 from-group" >
 						<input type="text" id="orgtype" hidden value="{{gkresult["orgtype"]}}" style="width: 100%"></input>
