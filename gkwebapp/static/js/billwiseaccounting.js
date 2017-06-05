@@ -229,6 +229,61 @@ $(document).ready(function() {
       return false;
     }
   });
+  $(document).off('focusout', '#useasadvance').on('focusout', '#useasadvance', function(event) {
+    /* Act on the event */
+    if ($("#useasadvance").val() == "") {
+      $("#useasadvance").val("0.00");
+    }
+  });
+  $(document).off('keyup', '#useasadvance').on('keyup', '#useasadvance', function(event) {
+    /* Act on the event */
+    clearTimeout(typingTimer);
+    if ($("#useasadvance").val() == "") {
+      $("#useasadvance").val("0.00");
+    }
+    if (parseFloat($("#useasadvance").val()) > parseFloat($("#asadvancelabel").data("asadvance"))) {
+      $("#asadvance-alert").alert();
+      $("#asadvance-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#asadvance-alert").hide();
+      });
+      return false;
+    }
+    var newadvance = parseFloat($("#asadvancelabel").data("asadvance")) - parseFloat($("#useasadvance").val());
+    $("#asadvancelabel").html("<b>"+parseFloat(newadvance).toFixed(2)+"</b");
+    typingTimer = setTimeout(function(){
+      
+    }, doneTypingInterval);
+  });
+  $(document).off('focusout', '#useonaccount').on('focusout', '#useonaccount', function(event) {
+    /* Act on the event */
+    if ($("#useonaccount").val() == "") {
+      $("#useonaccount").val("0.00");
+    }
+  });
+  $(document).off('keyup', '#useonaccount').on('keyup', '#useonaccount', function(event) {
+    /* Act on the event */
+    clearTimeout(typingTimer);
+    if ($("#useonaccount").val() == "") {
+      $("#useonaccount").val("0.00");
+    }
+    if (parseFloat($("#useonaccount").val()) > parseFloat($("#onaccountlabel").data("onaccount"))) {
+      $("#onaccount-alert").alert();
+      $("#onaccount-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#onaccount-alert").hide();
+      });
+      return false;
+    }
+    var newonaccount = parseFloat($("#onaccountlabel").data("onaccount")) - parseFloat($("#useonaccount").val());
+    $("#onaccountlabel").html("<b>"+parseFloat(newonaccount).toFixed(2)+"</b");
+    typingTimer = setTimeout(function(){
+      
+    }, doneTypingInterval);
+  });
+  $(document).off('focusout', '#onaccount, #asadvance').on('focusout', '#onaccount, #asadvance', function(event) {
+    if ($(this).val() == "") {
+      $(this).val("0.00");
+    }
+  });
   $(document).off('keydown', '#onaccount, #asadvance').on('keydown', '#onaccount, #asadvance', function(event) {
     if (event.which == 13) {
       event.preventDefault();
