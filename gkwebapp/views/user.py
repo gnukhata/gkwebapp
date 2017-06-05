@@ -109,17 +109,17 @@ def deleteuser(request):
 	for user in result.json()["gkresult"]:
 		if user["userid"] == int(request.params["username"]):
 			uname = user["username"]
-			urole = user["userrole"]
+			urole = int(user["userrole"])
 			break
-	if urole == "-1":
+	if urole == -1:
 		userrole = "Admin"
-	elif urole == "0":
+	elif urole == 0:
 		userrole = "Manager"
-	elif urole == "1":
+	elif urole == 1:
 		userrole = "Operator"
-	elif urole == "2":
+	elif urole == 2:
 		userrole = "Internal Auditor"
-	else:
+	elif urole == 3:
 		userrole = "Godown In Charge"
 		resultgodown = requests.get("http://127.0.0.1:6543/godown?type=byuser&userid=%d"%(int(request.params["username"])), headers=headers)
 		resultgodown = resultgodown.json()["gkresult"]
