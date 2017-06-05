@@ -161,7 +161,7 @@ $(document).ready(function() {
 					}
 				);
 		}
-		else if($("#viewstock_categoryname")){
+		else if($("#viewstock_categoryname").val()){
 			$.ajax(
 				{
 					type: "POST",
