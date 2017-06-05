@@ -319,15 +319,17 @@ $(document).ready(function() {
 	});
 	return false;
       }
-      //Creating a dictionary and appending to the list.
-      var amountpaid = parseFloat($("#latable tbody tr:eq("+i+") td:eq(4) input").val());
-      var invid = parseInt($("#latable tbody tr:eq("+i+")").data("invid"));
-      var invamount = {};
-      invamount["pdamt"] = amountpaid;
-      invamount["invid"] = invid;
-      invamount["payflag"] = 2;
-      billwisedata.push(invamount);
-      totalamountpaid = totalamountpaid + amountpaid;
+      if ($("#latable tbody tr:eq("+i+")").data("invid") != "") {
+	//Creating a dictionary and appending to the list.
+	var amountpaid = parseFloat($("#latable tbody tr:eq("+i+") td:eq(4) input").val());
+	var invid = parseInt($("#latable tbody tr:eq("+i+")").data("invid"));
+	var invamount = {};
+	invamount["pdamt"] = amountpaid;
+	invamount["invid"] = invid;
+	invamount["payflag"] = 2;
+	billwisedata.push(invamount);
+	totalamountpaid = totalamountpaid + amountpaid;
+      }
     }
     //Validations.
     //Alert is displayed when sum of total amount paid and sum of unadjusted amounts is greater than sum of Debit/Credit amount(retrieved from session storage) and previous unadjusted amounts. See addvoucher.js to see when the amount is stored in session storage.
