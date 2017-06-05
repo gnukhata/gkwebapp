@@ -468,28 +468,17 @@ The field Balance displays the balance of the account selected as on the date of
             <h4 class="modal-title" id="bwtabletitle">{% trans %}Unpaid/Partially Paid Bills for {% endtrans %}</h4>
           </div>
           <div class="modal-body">
-	    <div class="alert alert-danger" id="bwamount-alert"  aria-live="rude" role="alert" hidden>
-
-	      {% trans %}Total Amount Paid is more than Amount entered in Voucher!{% endtrans %}
+	    <div class="row">
+	      <div id="bwtableload"></div>
 	    </div>
-	    <div class="alert alert-danger" id="bwamount-less-alert"  aria-live="rude" role="alert" hidden>
-
-	      {% trans %}Total Amount Paid is less than Amount entered in Voucher!{% endtrans %}
-	    </div>
-	    <div class="alert alert-danger" id="bwamount-blank-alert"  aria-live="rude" role="alert" hidden>
-
-	      {% trans %}Please enter Amount Paid.{% endtrans %}
-	    </div>
-	    <div class="alert alert-success" id="bwamount-success-alert"  aria-live="rude" role="alert" hidden>
-
-	      {% trans %}Receipt/Payment Updated!{% endtrans %}
-	    </div>
-	    <div id="bwtableload"></div>
-	    <small id="txtareahelp" class="form-text text-muted">Press 'Insert' key from anywhere on the screen to save changes.</small><br>
-	    <small id="txtareahelp2" class="form-text text-muted">You can also press 'Enter' key from 'Amount Paid' field in last row.</small>
+	    <small id="txtareahelp" class="form-text text-muted">Press 'Insert' key from any field on the screen to save changes. Press 'End' key from last input field to shift focus to buttons.</small><br>
+	    <small id="txtareahelp2" class="form-text text-muted">You can also press 'Enter' key from 'Amount Paid' field in last row to save changes.</small>
           </div>
           <div class="modal-footer">
-            <button type="button" id ="btclose" class="btn btn-success">{% trans %}Done{% endtrans %}</button>
+	    <button type="button" id ="btasadv" class="btn footerbutton btn-primary">{% trans %}As Advance{% endtrans %}</button>
+	    <button type="button" id ="btonacc" class="btn footerbutton btn-danger">{% trans %}On Account{% endtrans %}</button>
+	    <button type="button" id ="btbillwise" class="btn footerbutton btn-info">{% trans %}Bill Wise Accounting{% endtrans %}</button>
+            <button type="button" id ="btclose" class="btn footerbutton btn-success">{% trans %}Done{% endtrans %}</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -501,10 +490,10 @@ The field Balance displays the balance of the account selected as on the date of
         <div class="modal-content">
           <div class="modal-header">
 
-            <h4 class="modal-title">{% trans %}Bill Wise Accounting?{% endtrans %}</h4>
+            <h4 class="modal-title">{% trans %}Bill Wise Accounting{% endtrans %}</h4>
           </div>
           <div class="modal-body">
-            <p>{% trans %}Do you want to continue to Bill Wise Accounting?{% endtrans %}</p>
+            <p>{% trans %}Do you want to do Bill Wise Accounting?{% endtrans %}</p>
           </div>
           <div class="modal-footer">
             <button type="button" id ="bwno" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>

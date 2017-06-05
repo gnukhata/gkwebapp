@@ -1,41 +1,47 @@
 /*
-Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-This file is part of GNUKhata:A modular,robust and Free Accounting System.
+   Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+   This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
-GNUKhata is Free Software; you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as
-published by the Free Software Foundation; either version 3 of
-the License, or (at your option) any later version.and old.stockflag = 's'
+   GNUKhata is Free Software; you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as
+   published by the Free Software Foundation; either version 3 of
+   the License, or (at your option) any later version.and old.stockflag = 's'
 
-GNUKhata is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
+   GNUKhata is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
 
-You should have received a copy of the GNU Affero General Public
-License along with GNUKhata (COPYING); if not, write to the
-Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+   You should have received a copy of the GNU Affero General Public
+   License along with GNUKhata (COPYING); if not, write to the
+   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+   Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
 
 
-Contributors:
-"Krishnakant Mane" <kk@gmail.com>
-"Abhijith Balan" <abhijithb21@openmailbox.org.in>
-*/
+   Contributors:
+   "Krishnakant Mane" <kk@gmail.com>
+   "Abhijith Balan" <abhijithb21@openmailbox.org.in>
+   "Rohini Baraskar" <robaraskar@gmail.com>
+   "Bhavesh Bhawadhane" <bbhavesh07@gmail.com>
+   "Prajkta Patkar" <prajkta.patkar007@gmail.com>
+   "Navin Karkera" <navin@openmailbox.org>
+   "Sachin Patil" <sachin619patil@rediffmail.com>
+   "Ishan Masdekar" <imasdekar@dff.org.in>
+ */
 
 /*
-Events are mostly associated with the classes.
-List of classes that we have used.
-1. dramt and cramt are for the dr and cr amount boxes respectively.
-2. accs is for the accounts select boxes.
-3. crdr for the cr dr select box, i.e for the first select box in the row
-4. vdate for the date input boxes.
-Events which have a selector which starts with a . are associated to a class, For eg. $(".crdr")
-Events which have a selector which starts with a # are associated to an id, For eg. $("#vno")
+   Events are mostly associated with the classes.
+   List of classes that we have used.
+   1. dramt and cramt are for the dr and cr amount boxes respectively.
+   2. accs is for the accounts select boxes.
+   3. crdr for the cr dr select box, i.e for the first select box in the row
+   4. vdate for the date input boxes.
+   Events which have a selector which starts with a . are associated to a class, For eg. $(".crdr")
+   Events which have a selector which starts with a # are associated to an id, For eg. $("#vno")
 
-Events are attached to dynamically created elements using document on method.
-Document off is used to remove an already attached event to an element, so as to make sure that an event is fired only once.
-*/
+   Events are attached to dynamically created elements using document on method.
+   Document off is used to remove an already attached event to an element, so as to make sure that an event is fired only once.
+ */
 $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $(".modal-backdrop").remove();
@@ -1226,6 +1232,11 @@ $("#invsel").keyup(function(event) {
       }
     }
   });
+  //Actions that happen after 'Save' button is clicked.
+  /*
+     Once Receipt/Payment voucher is saved the user is prompted with a popup asking if he wants to continue to bill wise accounting.
+     When they choose yes the account code of Customer/Supplier is sent to retrieve details about outstanding bills.
+  */
   $('#save').click(function(event) {
     var allow = true;
     var amountindex = 0;
@@ -1235,9 +1246,13 @@ $("#invsel").keyup(function(event) {
     var customercode = "";
     var numberofcustomers = 0;
     $(".crdr").each(function() {
+      //Each row with Credit/Debit entry is scanned
       if ($(this).val()=="Cr") {
+	//This block is for Credit entries.
 	if ($("#vouchertype").val() == "receipt") {
-	  var curindex = $(this).closest('tr').index();
+	  //This block is for Receipt voucher.
+	  var curindex = $(this).closest('tr').index(); //Index helps in identifying the rows.
+	  //In the AJAX request below, account details are fetched by sending account code.
 	  $.ajax({
 	    url: '/getaccdetails',
 	    type: 'POST',
@@ -1250,18 +1265,20 @@ $("#invsel").keyup(function(event) {
 	    },
 	    success: function(jsonObj) {
 	      var accountdetails = jsonObj["gkresult"];
+	      //The block below checks if an account involved in a Credit entry is a customer and number of customers is incremented if yes.
 	      if (accountdetails["groupname"] == "Current Assets" && accountdetails["subgroupname"] == "Sundry Debtors") {
 		customername = accountdetails["accountname"];
 		customercode = accountdetails["accountcode"];
 		numberofcustomers = numberofcustomers + 1;
-		sessionStorage.customeramount = $("#vtable tbody tr:eq("+curindex+") td:eq(4) input").val();
-		sessionStorage.amounttitle = "Credit Amount: ";
+		sessionStorage.customeramount = $("#vtable tbody tr:eq("+curindex+") td:eq(4) input").val(); //Credit amount is saved in session storage.
+		sessionStorage.amounttitle = "Amount to be paid: ";
 	      }
 	    }
 	  });
 	}
       }
       if ($(this).val()=="Dr") {
+	//This block is for Debit entries. Refer above block for Credit entries for documentation.
 	if ($("#vouchertype").val() == "payment") {
 	  var curindex = $(this).closest('tr').index();
 	  $.ajax({
@@ -1276,22 +1293,26 @@ $("#invsel").keyup(function(event) {
 	    },
 	    success: function(jsonObj) {
 	      var accountdetails = jsonObj["gkresult"];
+	      //The block below checks if an account involved in a Debit entry is a supplier and number of suppliers is incremented if yes.
 	      if (accountdetails["groupname"] == "Current Liabilities" && accountdetails["subgroupname"] == "Sundry Creditors for Purchase") {
 		customername = accountdetails["accountname"];
 		customercode = accountdetails["accountcode"];
 		numberofcustomers = numberofcustomers + 1;
 		sessionStorage.customeramount = $("#vtable tbody tr:eq("+curindex+") td:eq(3) input").val();
-		sessionStorage.amounttitle = "Debit Amount: ";
+		sessionStorage.amounttitle = "Amount to be paid: ";
 	      }
 	    }
 	  });
 	}
       }
     });
+    //There should be only one customer/supplier in a Receipt/Payment voucher .
     if (numberofcustomers == 1) {
+      sessionStorage.voucherdate = $("#vdate").val()+$("#vmonth").val()+$("#vyear").val();
       sessionStorage.customeraccname = customername;
       sessionStorage.customeracccode = customercode;
     }
+    //Alert is displayed when there are more than one customer/supplier.
     if (numberofcustomers > 1) {
       $("#vtable tbody tr:last td:eq(1) select").focus();
       $("#customer-more-alert").alert();
@@ -1515,7 +1536,7 @@ $("#invsel").keyup(function(event) {
                     url: "/addvoucher?type=showbillwisetable",
                     global: false,
                     async: false,
-                    data:{"accountcode":sessionStorage.customeracccode},
+                    data:{"accountcode":sessionStorage.customeracccode, "voucherdate":sessionStorage.voucherdate},
                     datatype: "text/html",
                     beforeSend: function(xhr)
                     {
@@ -1525,10 +1546,10 @@ $("#invsel").keyup(function(event) {
                     {
                       $("#bwtableload").html(resp);
                       $(".modal-backdrop").hide();
-                      $("#confirm_yes_billwise").modal("hide");
-                      $("#bwtabletitle").append('<b>'+sessionStorage.customeraccname+'</b>'+'<span class="pull-right">'+sessionStorage.amounttitle+'<b>'+sessionStorage.customeramount+'</b><span>');
-                      $("#bwtable").modal("show");
-                      $(".fixed-table-loading").remove();
+                      $("#confirm_yes_billwise").modal("hide");  //Confirm modal is hidden
+                      $("#bwtabletitle").append('<b>'+sessionStorage.customeraccname+'</b>'+'<span class="pull-right">'+sessionStorage.amounttitle+'<b>'+sessionStorage.customeramount+'</b><span>'); //Setting title for modal.
+                      $("#bwtable").modal("show");  //Modal for bill wise accounting is shown
+                      $(".fixed-table-loading").remove(); //Removes loading message in table.
                     }
                   }
                 );
@@ -1708,10 +1729,11 @@ $("#show"+$("#vtype").val()).click();
   $('#confirm_yes_billwise, #bwtable').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is closed
   {
     $("#vno").focus().select();
+    $("#bwtableload").html("");
   });
   $('#bwtable').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
   {
-    $(".amountpaid:first").focus().select();
+    $("#useasadvance").focus().select();
   });
   $('#bwtable').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is closed
     {

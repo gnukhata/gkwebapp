@@ -112,7 +112,7 @@
 
    #latable tbody {
        display:block;
-       height: calc(100vh - 23em);
+       height: calc(100vh - 26em);
        overflow-y:scroll;
    }
 
@@ -147,80 +147,189 @@
    .vlngwrap{
        width:76%
    }
+   .totalwrap {
+       width:28%;
+   }
+   .rightJustified {
+       text-align: right;
+   }
 
   </style>
 </head>
 <body>
-  <table id="latable" class="table shadow table-bordered table-condensed table-fixedheader">
-    <thead class="bg-primary">
-      <tr>
-        <th class="mdwrap calign">
-          {% trans %}Invoice No{% endtrans %}
-        </th>
-        <th class="mdwrap calign">
-          {% trans %}Date{% endtrans %}
-        </th>
-        <th class="lngwrap ralign">
-          {% trans %}Invoice Amount{% endtrans %}
-        </th>
-        <th class="lngwrap ralign">
-          {% trans %}Amount Pending{% endtrans %}
-        </th>
-        <th class="lngwrap ralign">
-          {% trans %}Amount Paid{% endtrans %}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      {% if not gkresult %}
-	<tr><td>No Data Found.</td></tr>
-      {% endif %}
-      {% for record in gkresult %}
-	{% if record["pendingamount"]!=0.00 %}
-	  <tr data-invid="{{record["invid"]}}">
-            <td class="mdwrap calign" >
-	      <div class="form-control">
-		{{record["invoiceno"]}}
-	      </div>
-            </td>
-            <td class="mdwrap calign">
-	      <div class="form-control">
-		{{record["invoicedate"]}}
-	      </div>
-            </td>
-            <td class="lngwrap ralign" >
-	      <div class="form-control">
-		{{record["invoicetotal"]}}
-	      </div>
-            </td>
-            <td class="lngwrap ralign" data-amountpending="{{record["pendingamount"]}}">
-	      <div class="form-control">
-		{{record["pendingamount"]}}
-	      </div>
-            </td>
-            <td class="lngwrap ralign" >
-	      <input type="text" class="amountpaid form-control rightJustified numtype" value="">
-            </td>
-	  </tr>
+  <div class="alert alert-danger" id="bwamount-alert"  aria-live="rude" role="alert" hidden>
+
+    {% trans %}Total Amount Paid is more than available Amount!{% endtrans %}
+  </div>
+  <div class="alert alert-danger" id="asadvance-alert"  aria-live="rude" role="alert" hidden>
+
+    {% trans %}Advance amount used is more than available!{% endtrans %}
+  </div>
+  <div class="alert alert-danger" id="onaccount-alert"  aria-live="rude" role="alert" hidden>
+
+    {% trans %}On Account amount used is more than available!{% endtrans %}
+  </div>
+  <div class="alert alert-danger" id="bwvamount-alert"  aria-live="rude" role="alert" hidden>
+
+    {% trans %}Total Amount adjusted is more than Amount entered in Voucher. Please enter remaining amount as advance or on account!{% endtrans %}
+  </div>
+  <div class="alert alert-danger" id="unadjustedamount-alert"  aria-live="rude" role="alert" hidden>
+
+    {% trans %}Total Amount adjusted is more than available Amount. Please enter remaining amount as advance or on account!{% endtrans %}
+  </div>
+  <div class="alert alert-danger" id="bwadvac-alert"  aria-live="rude" role="alert" hidden>
+
+    {% trans %}Sum of as advance and on account amounts used is more than that is available!{% endtrans %}
+  </div>
+  <div class="alert alert-danger" id="bwinvamount-alert"  aria-live="rude" role="alert" hidden>
+
+    {% trans %}Amount Paid is more than Amount Pending for Invoice!{% endtrans %}
+  </div>
+  <div class="alert alert-danger" id="bwamount-less-alert"  aria-live="rude" role="alert" hidden>
+
+    {% trans %}Total Amount Adjusted is less than Amount to be adjusted!{% endtrans %}
+  </div>
+  <div class="alert alert-danger" id="bwamount-blank-alert"  aria-live="rude" role="alert" hidden>
+
+    {% trans %}Please enter Amount Paid.{% endtrans %}
+  </div>
+  <div class="alert alert-warning" id="bwfailure-alert"  aria-live="rude" role="alert" hidden>
+
+    {% trans %}Something went wrong.{% endtrans %}
+  </div>
+  <div class="alert alert-success" id="bwamount-success-alert"  aria-live="rude" role="alert" hidden>
+
+    {% trans %}Receipt/Payment Updated!{% endtrans %}
+  </div>
+    <div id="onaccdiv" class="col-sm-12" style="margin-bottom:20px;" hidden>
+      <form class="form-inline">
+	<div class="form-group col-sm-6">
+	  <label for="onaccount">{% trans %}On Account{% endtrans %} :</label>
+	  <input class="form-control input-sm numtype rightJustified" id="onaccount" placeholder="{% trans %}On Account Amount{% endtrans %}" value="0.00">
+	</div>
+	<div class="form-group col-sm-6">
+	  <label>{% trans %}Amount adjusted against bills{% endtrans %} :</label><label class="billamount">0.00</label>
+	</div>
+      </form>
+    </div>
+    <div id="asadvancediv" class="col-sm-12" style="margin-bottom:20px;" hidden>
+      <form class="form-inline">
+	<div class="form-group col-sm-6">
+	  <label for="asadvance">{% trans %}As Advance{% endtrans %} :</label>
+	  <input class="form-control input-sm numtype rightJustified" id="asadvance" placeholder="{% trans %}As Advance Amount{% endtrans %}" value="0.00">
+	</div>
+	<div class="form-group col-sm-6">
+	  <label>{% trans %}Amount adjusted against bills{% endtrans %} :</label><label class="billamount">0.00</label>
+	</div>
+      </form>
+    </div>
+    <div class="col-sm-12" style="margin-top:10px;">
+      <div id="asadvanceamt" class="col-sm-6">
+	<b>As Advance Amount : </b><label id="asadvancelabel" data-asadvance="{{asadvance}}" class="text-primary"><b>{{asadvance}}</b></label>
+      </div>
+      <div id="onaccamt" class="col-sm-6">
+	<b>On Account Amount: </b><label id="onaccountlabel" data-onaccount="{{onaccount}}" class="text-danger"><b>{{onaccount}}</b></label>
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <div id="asadvancediv" class="col-sm-6">
+	<form class="form-inline">
+	  <div class="form-group">
+	    <label for="useasadvance">{% trans %}Use from As Advance{% endtrans %} :</label>
+	    <input class="form-control input-sm numtype rightJustified" id="useasadvance" placeholder="{% trans %}As Advance Amount{% endtrans %}" value="0.00">
+	  </div>
+	</form>
+      </div>
+      <div id="onaccdiv" class="col-sm-6">
+	<form class="form-inline">
+	  <div class="form-group">
+	    <label for="useonaccount">{% trans %}Use from On Account{% endtrans %} :</label>
+	    <input class="form-control input-sm numtype rightJustified" id="useonaccount" placeholder="{% trans %}On Account Amount{% endtrans %}" value="0.00">
+	  </div>
+	</form>
+      </div>
+    </div>
+    <table id="latable" class="table shadow nopadding table-bordered table-condensed table-fixedheader">
+      <thead class="bg-primary">
+	<tr>
+          <th class="mdwrap calign">
+            {% trans %}Invoice No{% endtrans %}
+          </th>
+          <th class="mdwrap calign">
+            {% trans %}Date{% endtrans %}
+          </th>
+          <th class="lngwrap ralign">
+            {% trans %}Invoice Amount{% endtrans %}
+          </th>
+          <th class="lngwrap ralign">
+            {% trans %}Amount Pending{% endtrans %}
+          </th>
+          <th class="lngwrap ralign">
+            {% trans %}Amount Paid{% endtrans %}
+          </th>
+	</tr>
+      </thead>
+      <tbody>
+	{% if not gkresult %}
+	  <tr><td style="width:100%">No Data Found.</td></tr>
 	{% endif %}
-      {% endfor %}
-      
-    </tbody>
-    <tfoot>
-      <tr>
-	<td class="vlngwrap ralign">
-	  <div class="form-control">
-	    Total
-	  </div>
-	</td>
-	<td class="lngwrap ralign">
-	  <div class="form-control">
-	    0.00
-	  </div>
-	</td>
-      </tr>
-    </tfoot>
-  </table>
+	{% for record in gkresult %}
+	  {% if record["pendingamount"]!=0.00 %}
+	    <tr data-invid="{{record["invid"]}}">
+              <td class="mdwrap calign" >
+		<div class="form-control">
+		  {{record["invoiceno"]}}
+		</div>
+              </td>
+              <td class="mdwrap calign">
+		<div class="form-control">
+		  {{record["invoicedate"]}}
+		</div>
+              </td>
+              <td class="lngwrap ralign" >
+		<div class="form-control">
+		  {{record["invoicetotal"]}}
+		</div>
+              </td>
+              <td class="lngwrap ralign" data-amountpending="{{record["pendingamount"]}}">
+		<div class="form-control">
+		  {{record["pendingamount"]}}
+		</div>
+              </td>
+              <td class="lngwrap ralign" >
+		<input type="text" class="amountpaid form-control rightJustified numtype" value="0.00">
+              </td>
+	    </tr>
+	  {% endif %}
+	{% endfor %}
+	
+      </tbody>
+      <tfoot>
+	<tr>
+	  <td class="totalwrap ralign">
+	    <div class="form-control" disabled>
+	      Total
+	    </div>
+	  </td>
+	  <td class="lngwrap ralign">
+	    <div class="form-control" disabled>
+	      {{sumofinvoiceamounts}}
+	    </div>
+	  </td>
+	  <td class="lngwrap ralign">
+	    <div class="form-control" disabled>
+	      {{sumofpendingamounts}}
+	    </div>
+	  </td>
+	  <td class="lngwrap ralign">
+	    <div class="form-control" disabled>
+	      0.00
+	    </div>
+	  </td>
+	</tr>
+      </tfoot>
+    </table>
+  <input type="text" id="custid" value="{{custid}}" hidden></input>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/billwiseaccounting.js')}}"></script>
 </body>
 </html>

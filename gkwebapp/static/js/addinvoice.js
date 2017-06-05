@@ -903,6 +903,14 @@ $(document).ready(function() {
 
     if (event.which == 13) {
       event.preventDefault();
+      if (parseFloat($("#invoice_product_table tbody tr:eq(" + curindex + ") td:eq(2) input").val()) > parseFloat($("#invoice_product_table tbody tr:eq(" + curindex + ") td:eq(1) input").val())) {
+        $("#quantity-freeqty-alert").alert();
+        $("#quantity-freeqty-alert").fadeTo(2250, 500).slideUp(500, function() {
+          $("#quantity-freeqty-alert").hide();
+        });
+        $("#invoice_product_table tbody tr:eq(" + curindex + ") td:eq(2) input").focus();
+        return false;
+      }
       $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(3) input').focus().select();
     } else if (event.which == 190 && event.shiftKey) {
       $('#invoice_product_table tbody tr:eq(' + nextindex + ') td:eq(2) input').focus();
@@ -930,6 +938,7 @@ $(document).ready(function() {
 
   $(document).off('change', '.invoice_product_per_price').on('change', '.invoice_product_per_price', function(event) {
     event.preventDefault();
+    console.log("H1i!");
     /* Act on the event */
     if ($(this).val() == "") {
       $(this).val(0);
