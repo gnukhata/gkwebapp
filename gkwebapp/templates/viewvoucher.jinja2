@@ -251,9 +251,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                     <th width="40%">
                       {% trans %}Account Name{% endtrans %}
                     </th>
-                    <th>
-                        {% trans %}Balance{% endtrans %}
-                    </th>
+
                     <th class="rightJustified">
                       {% trans %}Dr Amount{% endtrans %}
                     </th>
@@ -284,9 +282,6 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                     </td>
 
                     <td>
-                      <input class="form-control input-sm clbal rightJustified" type="text" value="0.00" disabled>
-                    </td>
-                    <td>
                       <input class="form-control input-sm demodramt rightJustified" type="text" value="{{voucher["drs"][dr]}}">
                     </td>
                     <td>
@@ -316,9 +311,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                         {% endfor %}
                       </select>
                     </td>
-                    <td>
-                      <input class="form-control input-sm clbal rightJustified" type="text" value="0.00" disabled>
-                    </td>
+
                     <td>
                       <input class="form-control input-sm demodramt rightJustified" type="text" value="" disabled>
                     </td>
@@ -331,7 +324,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colspan="3">
+                    <td colspan="2">
                       <input type="text" class="form-control input-sm demottl" value="Total" disabled>
                     </td>
                     <td>
