@@ -105,6 +105,35 @@ $(document).ready(function() {
 				$(".dis").attr('disabled', false);
 	});
 
+	$(document).off("focus","#viewstock_subcategoryname").on("focus","#viewstock_subcategoryname",function(event) {
+		if($("#viewstock_categoryname").val()){
+			$.ajax(
+				{
+					type: "POST",
+					url: "/category?action=treechildren",
+					global: false,
+					async: false,
+					datatype: "json",
+					data: {"categorycode":$("#viewstock_categoryname").val()},
+					beforeSend: function(xhr)
+					{
+						xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+					},
+				})
+					.done(function(resp)
+					{
+						if(resp.gkstatus == 0){
+							for (cat of resp.gkresult){
+								$("#viewstock_subcategoryname").append('<option value="'+cat.categorycode+'">'+cat.categoryname+'</option>');
+							}
+						}
+					}
+				);
+		}
+  });
+
+	
+
 	$("#viewstock_todate").blur(function(event) {
 		$(this).val(pad($(this).val(),2));
 	});
