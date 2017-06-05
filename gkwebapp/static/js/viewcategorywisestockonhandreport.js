@@ -132,7 +132,56 @@ $(document).ready(function() {
 		}
   });
 
-	
+	$(document).off("focus","#viewstock_specsname").on("focus","#viewstock_specsname",function(event) {
+		if($("#viewstock_subcategoryname").val() != "all"){
+			$.ajax(
+				{
+					type: "POST",
+					url: "/category?action=getspecs",
+					global: false,
+					async: false,
+					datatype: "json",
+					data: {"categorycode":$("#viewstock_subcategoryname").val()},
+					beforeSend: function(xhr)
+					{
+						xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+					},
+				})
+					.done(function(resp)
+					{
+						if(resp.gkstatus == 0){
+							for (cat of resp.gkresult){
+								$("#viewstock_specsname").append('<option value="'+cat.spcode+'">'+cat.attrname+'</option>');
+							}
+						}
+					}
+				);
+		}
+		else if($("#viewstock_categoryname")){
+			$.ajax(
+				{
+					type: "POST",
+					url: "/category?action=getspecs",
+					global: false,
+					async: false,
+					datatype: "json",
+					data: {"categorycode":$("#viewstock_categoryname").val()},
+					beforeSend: function(xhr)
+					{
+						xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+					},
+				})
+					.done(function(resp)
+					{
+						if(resp.gkstatus == 0){
+							for (cat of resp.gkresult){
+								$("#viewstock_specsname").append('<option value="'+cat.spcode+'">'+cat.attrname+'</option>');
+							}
+						}
+					}
+				);
+		}
+  });
 
 	$("#viewstock_todate").blur(function(event) {
 		$(this).val(pad($(this).val(),2));
