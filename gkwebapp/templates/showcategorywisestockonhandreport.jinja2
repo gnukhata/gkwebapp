@@ -95,13 +95,13 @@ width:1.4%
   <span style="margin:auto; display:table; width: 100%; text-align: center"><strong><i>{% trans %}Category Wise Stock on Hand Report{% endtrans %}</i></strong></span>
   <span style="margin:auto; display:table; width: 100%; text-align: center"><i>{% trans %}Name of the Category {% endtrans %}: </i><strong>{{stockrefresh["categoryname"]}}</strong></span>
   <span style="margin:auto; display:table; width: 100%; text-align: center"><i>{% trans %}Name of the Sub Category {% endtrans %}: </i><strong>{{stockrefresh["subcategoryname"]}}</strong></span>
-  <span style="margin:auto; display:table; width: 100%; text-align: center"><i>{% trans %}Name of the Specification {% endtrans %}: </i><strong>{{stockrefresh["specname"]}}</strong></span>
-  {% else %}
+<!--  <span style="margin:auto; display:table; width: 100%; text-align: center"><i>{% trans %}Name of the Specification {% endtrans %}: </i><strong>{{stockrefresh["specname"]}}</strong></span>
+-->  {% else %}
   <span style="margin-auto; display:table; width: 100%; text-align: center"><strong><i>{% trans %}Category & Godown Wise Stock on Hand Report{% endtrans %}</i></strong></span>
   <span style="margin:auto; display:table; width: 100%;text-align: center"><i>{% trans %}Name of the Category {% endtrans %}: </i><strong>{{stockrefresh["categoryname"]}}</strong></span>
   <span style="margin:auto; display:table;  width: 100%; text-align: center"><i>{% trans %}Name of the Sub Category {% endtrans %}: </i><strong>{{stockrefresh["subcategoryname"]}}</strong></span>
-  <span style="margin:auto; display:table;  width: 100%; text-align: center"><i>{% trans %}Name of the Specification {% endtrans %}: </i><strong>{{stockrefresh["specname"]}}</strong></span>
-    {% if stockrefresh["goid"] == "all" %}
+<!--  <span style="margin:auto; display:table;  width: 100%; text-align: center"><i>{% trans %}Name of the Specification {% endtrans %}: </i><strong>{{stockrefresh["specname"]}}</strong></span>
+-->    {% if stockrefresh["goid"] == "all" %}
       <span style="margin:auto; display:table;width: 100%;text-align: center"><i>{% trans %} &nbsp Name of the Godown{% endtrans %}: </i><strong>All</strong><i> </strong></span>
     {% else %}
       <span style="margin:auto; display:table;width: 100%;text-align: center"><i>{% trans %} &nbsp Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong><i>{% trans %} Godown Address{% endtrans %}: </i><strong>{{goaddr}}</strong></span>
