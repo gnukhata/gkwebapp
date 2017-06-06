@@ -39,14 +39,15 @@ def showinvoice(request):
 @view_config(route_name="invoice",request_param="action=showadd",renderer="gkwebapp:templates/addinvoice.jinja2")
 def showaddinvoice(request):
     header={"gktoken":request.headers["gktoken"]}
-    delchal = requests.get("http://127.0.0.1:6543/delchal?delchal=all", headers=header)
+	inputdate = request.params["inputdate"]
+	gkdata = {"inputdate": inputdate}
+	unbilled_delnotes = requests.get("http://127.0.0.1:6543/invoice?unbilled_delnotes", data=json.dumps(gkdata), headers=header)
     if request.params["status"]=='in':
         suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
     else:
         suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
     products = requests.get("http://127.0.0.1:6543/products", headers=header)
-
-    return {"gkstatus": request.params["status"],"suppliers": suppliers.json()["gkresult"],"products": products.json()["gkresult"],"deliverynotes":delchal.json()["gkresult"]}
+	return {"gkstatus": request.params["status"],"suppliers": suppliers.json()["gkresult"],"products": products.json()["gkresult"],"deliverynotes":unbilled_delnotes.json()["gkresult"]}
 
 @view_config(route_name="invoice",request_param="action=getproducts",renderer="json")
 def getproducts(request):
@@ -155,7 +156,7 @@ def getattachment(request):
     return {"attachment":result.json()["gkresult"],"invid":request.params["invid"], "cancelflag":result.json()["cancelflag"],"userrole":result.json()["userrole"],"invoiceno":result.json()["invoiceno"]}
 
 '''
-The below function calls a function in API for invoice that updates the amount paid field in invoice table and advamt and onaccamt fields in customersupplier table. 
+The below function calls a function in API for invoice that updates the amount paid field in invoice table and advamt and onaccamt fields in customersupplier table.
 It receives a list of dictionaries.
 It contains a flag(payflag) to check for the type of payment. It could be settlement of a bill(payflag=2), advance payment(payflag=1) of amount or amount set as on account(payflag=15).
 For advance and on account payments an additional flag(icflag) is also sent which tells the API whether to increment organisation decrement the advamt or onaccamt fields.
@@ -172,10 +173,10 @@ def updatepayment(request):
            pdamt = float(payment["pdamt"])
            icflag = int(payment["icflag"])
            result = requests.put("http://127.0.0.1:6543/invoice?type=bwa&payflag=%d&icflag=%d&custid=%d&pdamt=%f"%(payflag, icflag, custid, pdamt), headers=header)
-        
+
         elif payflag == 2:
            invid = int(payment["invid"])
            pdamt = float(payment["pdamt"])
            result = requests.put("http://127.0.0.1:6543/invoice?type=bwa&payflag=%d&invid=%d&pdamt=%f"%(payflag, invid, pdamt), headers=header)
-        
+
     return {"gkstatus":result.json()["gkstatus"]}
