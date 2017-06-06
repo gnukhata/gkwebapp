@@ -26,6 +26,7 @@ Contributors:
 "Abhijith Balan" <abhijithb21@openmailbox.org>
 "Prajkta Patkar" <prajkta.patkar007@gmail.com>
 "Mohd. Talha Pawaty" <mtalha456@gmail.com>
+"Ravishankar Purne" <ravismail96@gmail.com>
 """
 
 from pyramid.view import view_config
@@ -76,6 +77,7 @@ def getprodbycat(request):
 	else:
 		return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
+'''This method is used to get opening stock and godown id's of given productcode(i.e. opening stock of a product in different godowns).'''
 @view_config(route_name="product",request_param="by=godown", renderer="json")
 def getgodownproduct(request):
 	header={"gktoken":request.headers["gktoken"]}
@@ -138,9 +140,21 @@ def saveproduct(request):
 
 
 	productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
-	result = requests.post("http://127.0.0.1:6543/products", data=json.dumps(productdetails),headers=header)
+	if godownflag == True:
+			godnames = ""
+			j = 1;
+			for i in godowns.keys():
+				resultgodown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(i)), headers=header)
+				godnames += resultgodown.json()["gkresult"]["goname"] + "(" + resultgodown.json()["gkresult"]["goaddr"] + ")"
+				if j != len(godowns):
+					godnames += ", "
+				j += 1
+	result = requests.post("http://127.0.0.1:6543/products",data=json.dumps(productdetails),headers=header)
 	if result.json()["gkstatus"] == 0:
-		gkdata = {"activity":proddetails["productdesc"] + " product created"}
+		if godownflag == True:
+			gkdata = {"activity":proddetails["productdesc"] + " product created in " + godnames + " godowns"}
+		else:
+			gkdata = {"activity":proddetails["productdesc"] + " product created"}
 		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
 	if len(taxes)>0:
 		for tax in taxes:
@@ -209,9 +223,21 @@ def editproduct(request):
 def deleteproduct(request):
 	header={"gktoken":request.headers["gktoken"]}
 	resultprod = requests.get("http://127.0.0.1:6543/products?qty=single&productcode=%d"%(int(request.params['productcode'])),headers=header)
+	resultgoprod = requests.get("http://127.0.0.1:6543/products?by=godown&productcode=%d"%(int(request.params["productcode"])), headers=header)
+	goproddata = resultgoprod.json()["gkresult"]
 	result = requests.delete("http://127.0.0.1:6543/products", data=json.dumps({"productcode":request.params["productcode"]}),headers=header)
 	if result.json()["gkstatus"] == 0:
-		gkdata = {"activity":resultprod.json()["gkresult"]["productdesc"] + " product deleted"}
+		goddetdata = ""
+		if len(goproddata) > 0:
+			goddetdata = " from godown "
+			j = 1
+			for goprod in goproddata:
+				result = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(goprod["goid"])), headers=header)
+				goddetdata = goddetdata + result.json()["gkresult"]["goname"] + "(" + result.json()["gkresult"]["goaddr"] + ")"
+				if j != len(goproddata):
+					goddetdata += ", "
+				j += 1
+		gkdata = {"activity":resultprod.json()["gkresult"]["productdesc"] + " product deleted" + goddetdata + "."}
 		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
 	return{"gkstatus":result.json()["gkstatus"]}
 

@@ -30,7 +30,7 @@ $(document).ready(function() {
   $('#lutable tbody tr:first-child td:eq(1) a').focus();
   $('#lutable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 
-  $('#laclearfields').click(function(){
+  $('#luclearfields').click(function(){
     $(".search").children(".form-control").val("");
   });
 

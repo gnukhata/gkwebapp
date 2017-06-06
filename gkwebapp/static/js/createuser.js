@@ -45,7 +45,6 @@ $(document).ready(function(){
        success: function(resp)
        {
          var abc = resp["gkresult"];
-         console.log(abc);
          if (resp["gkresult"].length>0) {
            $("#userrole option[value=3]").show();
          }
@@ -295,6 +294,7 @@ $(document).ready(function(){
             {
               if(resp["gkstatus"]==0)
               {
+                $("#msspinmodal").modal("hide");
                 $('#adduser')[0].reset();
                 $("#success-blank-alert").alert();
                 $("#success-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
