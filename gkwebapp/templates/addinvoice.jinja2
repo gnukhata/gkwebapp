@@ -28,6 +28,10 @@
 
       <label >{% trans %}Quantity cannot be blank zero and / or negative!{% endtrans %}</label>
     </div>
+    <div class="alert alert-danger" id="quantity-exceed-alert"  aria-live="rude" role="alert" hidden>
+
+      <label >{% trans %}Quantity cannot be greater than that specified in the delivery note!{% endtrans %}</label>
+    </div>
     <div class="alert alert-danger" id="quantity-freeqty-alert"  aria-live="rude" role="alert" hidden>
 
       <label >{% trans %}Free Quantity cannot be more than Quantity!{% endtrans %}</label>

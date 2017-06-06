@@ -856,6 +856,18 @@ $(document).ready(function() {
       var rowtaxrate = parseFloat($('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
       var taxpercentamount = (rowqty - rowfreeqty) * rowprice * (rowtaxrate / 100);
       var rowtotal = ((rowqty - rowfreeqty) * rowprice) + taxpercentamount;
+
+      console.log("$(this).val() = "+$(this).val());
+      console.log("$(this).attr('data') = "+$(this).attr("data"));
+      if (parseFloat(parseFloat($(this).val()).toFixed(2)) > parseFloat(parseFloat($(this).attr("data")).toFixed(2))) {
+          $("#quantity-exceed-alert").alert();
+          $("#quantity-exceed-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#quantity-exceed-alert").hide();
+          });
+          $(this).focus();
+          return false;
+      }
+
       $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(taxpercentamount).toFixed(2));
 
       $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtotal).toFixed(2));
@@ -1660,6 +1672,16 @@ $(document).ready(function() {
         });
         $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(1) input").focus();
         return false;
+      }
+      console.log("input value: "+$("#invoice_product_table tbody tr:eq(" + i + ") td:eq(1) input").val());
+      console.log("highest allowed value: "+$("#invoice_product_table tbody tr:eq(" + i + ") td:eq(1) input").attr("data"));
+      if (parseFloat($("#invoice_product_table tbody tr:eq(" + i + ") td:eq(1) input").val()).toFixed(2) > parseFloat($("#invoice_product_table tbody tr:eq(" + i + ") td:eq(1) input").attr("data")).toFixed(2)) {
+          $("#quantity-exceed-alert").alert();
+          $("#quantity-exceed-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#quantity-exceed-alert").hide();
+          });
+          $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(1) input").focus();
+          return false;
       }
       if (parseFloat($("#invoice_product_table tbody tr:eq(" + i + ") td:eq(2) input").val()) > parseFloat($("#invoice_product_table tbody tr:eq(" + i + ") td:eq(1) input").val())) {
         $("#quantity-freeqty-alert").alert();
