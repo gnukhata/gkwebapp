@@ -504,42 +504,64 @@ $(document).ready(function() {
             });
            $('#invoice_product_table tbody').empty();
            var totqty = 0;
-           $.each(resp.delchal.stockdata.items, function(key, value) {
-             $('#invoice_product_table tbody').append('<tr>' +
-						      '<td class="col-xs-3">' +
-						      '<select class="form-control deliverychallan_edit_disable input-sm product_name">' +
-						      '<option value="' + key + '">' + value.productdesc + '</option>' +
-						      '</select>' +
-						      '</td>' +
-						      '<td class="col-xs-2">' +
-						      '<div class="input-group">' +
-						      '<input type="text" class="invoice_product_quantity form-control deliverychallan_edit_disable input-sm text-right" value="' + value.qty + '">' +
-						      '<span class="input-group-addon input-sm" id="unitaddon">' + value.unitname + '</span>' +
-						      '</div>' +
-						      '</td>' +
-						      '<td class="col-xs-2">' +
-						      '<div class="input-group">' +
-						      '<input type="text" class="invoice_product_freequantity form-control deliverychallan_edit_disable input-sm text-right" value="' + 0 + '">' +
-						      '<span class="input-group-addon input-sm" id="freeunitaddon">' + value.unitname + '</span>' +
-						      '</div>' +
-						      '</td>' +
-						      '<td class="col-xs-2">' +
-						      '<input type="text" class="invoice_product_per_price form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00">' +
-						      '</td>' +
-						      '<td class="col-xs-1">' +
-						      '<input type="text" class="invoice_product_tax_rate form-control input-sm numtype text-right" value="0.00">' +
-						      '</td>' +
-						      '<td class="col-xs-1">' +
-						      '<input type="text" class="invoice_product_tax_amount form-control input-sm numtype text-right" value="0.00" disabled>' +
-						      '</td>' +
-						      '<td class="col-xs-2">' +
-						      '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00" disabled>' +
-						      '</td>' +
-						      '<td class="col-xs-1" style="width: 3%;">' +
-						      '</td>' +
-						      '</tr>');
-             totqty += +value.qty;
-           });
+           $.ajax({
+                   url: '/invoice?action=getdelinvprods',
+                   type: 'POST',
+                   dataType: 'json',
+                   async: false,
+                   data: {"dcid": $("#invoice_deliverynote option:selected").val()},
+                   beforeSend: function(xhr) {
+                       xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                   }
+               })
+               .done(function(resp) {
+                   console.log("success");
+                   if (resp["gkstatus"] == 0) {
+                     $.each(resp.items, function(key, value) {
+                       $('#invoice_product_table tbody').append('<tr>' +
+                           '<td class="col-xs-3">' +
+                           '<select class="form-control deliverychallan_edit_disable input-sm product_name">' +
+                           '<option value="' + key + '">' + value.productdesc + '</option>' +
+                           '</select>' +
+                           '</td>' +
+                           '<td class="col-xs-2">' +
+                           '<div class="input-group">' +
+                           '<input type="text" class="invoice_product_quantity form-control deliverychallan_edit_disable input-sm text-right" data="' + value.qty + '" value="' + value.qty + '">' +
+                           '<span class="input-group-addon input-sm" id="unitaddon">' + value.unitname + '</span>' +
+                           '</div>' +
+                           '</td>' +
+          						      '<td class="col-xs-2">' +
+          						      '<div class="input-group">' +
+          						      '<input type="text" class="invoice_product_freequantity form-control deliverychallan_edit_disable input-sm text-right" value="' + 0 + '">' +
+          						      '<span class="input-group-addon input-sm" id="freeunitaddon">' + value.unitname + '</span>' +
+          						      '</div>' +
+          						      '</td>' +
+                            '<td class="col-xs-2">' +
+                            '<input type="text" class="invoice_product_per_price form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00">' +
+                            '</td>' +
+                            '<td class="col-xs-1">' +
+                            '<input type="text" class="invoice_product_tax_rate form-control input-sm numtype text-right" value="0.00">' +
+                            '</td>' +
+                            '<td class="col-xs-1">' +
+                            '<input type="text" class="invoice_product_tax_amount form-control input-sm numtype text-right" value="0.00" disabled>' +
+                            '</td>' +
+                            '<td class="col-xs-2">' +
+                            '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00" disabled>' +
+                            '</td>' +
+          						      '<td class="col-xs-1" style="width: 3%;">' +
+                            '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
+          						      '</td>' +
+          						      '</tr>');
+                       totqty += +value.qty;
+                     });
+                   }
+               })
+               .fail(function() {
+                   console.log("error");
+               })
+               .always(function() {
+                   console.log("complete");
+               });
 
            var state = $("#invoice_state option:selected").val();
            var productcode;
@@ -1035,7 +1057,7 @@ $(document).ready(function() {
               $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(0) select').focus();
               return false;
             }
-                 
+
             $.ajax({
               url: '/invoice?action=getproducts',
               type: 'POST',

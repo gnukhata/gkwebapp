@@ -180,3 +180,15 @@ def updatepayment(request):
            result = requests.put("http://127.0.0.1:6543/invoice?type=bwa&payflag=%d&invid=%d&pdamt=%f"%(payflag, invid, pdamt), headers=header)
 
     return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="invoice", request_param="action=getdelinvprods", renderer="json")
+def getdelinvproducts(request):
+	header={"gktoken":request.headers["gktoken"]}
+	dcid = request.params["dcid"]
+	result = requests.get("http://127.0.0.1:6543/delchal?action=getdcinvprods&dcid=%d"%(int(dcid)), headers=header)
+	print "dcinv status: "
+	print result.json()["gkstatus"]
+	print result.json()["gkresult"]
+	#print "type of quantity:"
+	#print type(result.json()["gkresult"]["72"]["qty"])
+	return {"gkstatus": result.json()["gkstatus"], "items": result.json()["gkresult"]}
