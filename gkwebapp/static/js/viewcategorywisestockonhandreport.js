@@ -204,6 +204,7 @@ $(document).ready(function() {
 			$("#viewstock_todate").focus().select();
 		}
 		if(e.which==38 && $("#viewstock_subcategoryname").val() == "all"){
+			e.preventDefault();
 			$("#viewstock_categoryname").focus().select();
 		}
 	});
@@ -224,6 +225,7 @@ $(document).ready(function() {
 			$("#viewstock_tomonth").focus().select();
 		}
 		if(e.which==38){
+			e.preventDefault();
 			$("#viewstock_subcategoryname").focus().select();
 		}
 	});
@@ -233,6 +235,7 @@ $(document).ready(function() {
 			$("#viewstock_toyear").focus().select();
 		}
 		if(e.which==38){
+			e.preventDefault();
 			$("#viewstock_todate").focus().select();
 		}
 	});
@@ -243,6 +246,7 @@ $(document).ready(function() {
 				$("#viewstock_submit").click();
 			}
 			if(e.which==38){
+				e.preventDefault();
 				$("#viewstock_tomonth").focus().select();
 			}
 		});
@@ -255,6 +259,7 @@ $(document).ready(function() {
 				$("#godownflag").focus().select();
 			}
 			if(e.which==38){
+				e.preventDefault();
 				$("#viewstock_tomonth").focus().select();
 			}
 		});
@@ -278,6 +283,7 @@ $(document).ready(function() {
 			$("#editgoddet").focus()  ;
 		}
 		if (e.which == 38) {
+			e.preventDefault();
 			$("#viewstock_toyear").focus().select();
 		}
 	});
