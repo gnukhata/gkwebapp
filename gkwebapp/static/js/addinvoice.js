@@ -654,6 +654,7 @@ $(document).ready(function() {
 						    '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00" disabled>' +
 						    '</td>' +
 						    '<td class="col-xs-1" style="width: 3%;">' +
+                '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
 						    '</td>' +
 						    '</tr>');
            for (product of resp["products"]) {
@@ -866,6 +867,15 @@ $(document).ready(function() {
           });
           $(this).focus();
           return false;
+      }
+      if (parseFloat($(this).val()).toFixed(2) == 0) {
+        nextindex = curindex + 1;
+        $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(3) input').val("0.00");
+        $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(3) input').prop('disabled', true);
+        $('#invoice_product_table tbody tr:eq(' + nextindex + ') td:eq(0) select').focus();
+      }
+      else {
+        $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(3) input').prop('disabled', false);
       }
 
       $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(taxpercentamount).toFixed(2));
@@ -1114,9 +1124,25 @@ $(document).ready(function() {
 							  '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
 							  '</td>' +
 							  '</tr>');
-                 for (product of resp["products"]) {
-                   $('#invoice_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' + product.productdesc + '</option>');
-                 }
+                var temp_list = [];
+                for (let i = 0; i <= curindex; i++) {
+                  console.log("value : "+$("#invoice_product_table tbody tr:eq("+ i +") td:eq(0) select").val());
+                  temp_list.push($("#invoice_product_table tbody tr:eq("+ i +") td:eq(0) select option:selected").val());
+                }
+                var noflag = 0;
+                for (product of resp["products"]) {
+                  noflag = 0;
+                  for (element of temp_list) {
+                    if (product.productcode == element) {
+                      noflag = 1;
+                      break;
+                    }
+                  }
+                  if (noflag == 0) {
+                    $('#invoice_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' + product.productdesc + '</option>');
+                  }
+                }
+                console.log("temp_list: "+temp_list+"noflag: "+noflag);
                  $('#invoice_product_table tbody tr:eq(' + nextindex + ') td:eq(0) select').focus();
 
                  if ($("#status").val() == '15') {
@@ -1297,7 +1323,7 @@ $(document).ready(function() {
       event.preventDefault();
       if (curindex1 != ($("#invoice_product_table tbody tr").length - 1)) {
         $('#invoice_product_table tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
-      } else if ($("#invoice_deliverynote option:selected").val() == '') {
+      } else if ($("#invoice_deliverynote option:selected").val() == '' && $('#invoice_product_table tbody tr:eq(' + curindex1 + ') td:eq(0) select option').length >= 2){
         if ($('#invoice_product_table tbody tr:eq(' + curindex1 + ') td:eq(0) select option:selected').val() == "") {
           $("#product-blank-alert").alert();
           $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -1350,9 +1376,26 @@ $(document).ready(function() {
 						      '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
 						      '</td>' +
 						      '</tr>');
-             for (product of resp["products"]) {
-               $('#invoice_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' + product.productdesc + '</option>');
-             }
+
+            var temp_list = [];
+            for (let i = 0; i <= curindex1; i++) {
+              console.log("value : "+$("#invoice_product_table tbody tr:eq("+ i +") td:eq(0) select").val());
+              temp_list.push($("#invoice_product_table tbody tr:eq("+ i +") td:eq(0) select option:selected").val());
+            }
+            var noflag = 0;
+            for (product of resp["products"]) {
+              noflag = 0;
+              for (element of temp_list) {
+                if (product.productcode == element) {
+                  noflag = 1;
+                  break;
+                }
+              }
+              if (noflag == 0) {
+                $('#invoice_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' + product.productdesc + '</option>');
+              }
+            }
+            console.log("currentindex: "+curindex1+"temp_list: "+temp_list+"noflag: "+noflag);
 
              taxrate = 0.00;
              ptaxamt = 0.00;
@@ -1419,8 +1462,13 @@ $(document).ready(function() {
 
 
   $(document).off("click", ".product_del").on("click", ".product_del", function() {
+  console.log("hello");
+  if ($("#invoice_product_table tbody tr").length > 1) {
     $(this).closest('tr').fadeOut(200, function() {
       $(this).closest('tr').remove(); //closest method gives the closest element productified
+      if ($("#invoice_product_table tbody tr").length == 1) {
+        $("#invoice_product_table tbody tr:eq(0) td:eq(6)").empty();
+      }
       $('#invoice_product_table tbody tr:last td:eq(0) input').focus().select();
       pqty = 0;
       ptaxamt = 0.00;
@@ -1466,6 +1514,7 @@ $(document).ready(function() {
 
 
     $('#invoice_product_table tbody tr:last td:eq(0) select').select();
+  }
   });
 
   $("#invoice_addcust").click(function() {
