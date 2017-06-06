@@ -297,14 +297,6 @@ $(document).ready(function() {
 			$('#viewstock_categoryname').focus()
 			return false;
 		}
-		/*if ($("#editgoddet").val()==null && $("#godownflag").val()==1) {
-			$("#godown-blank-alert").alert();
-			$("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-				$("#godown-blank-alert").hide();
-			});
-			$('#editgoddet').focus()
-			return false;
-		}*/
 
 		if ($("#viewstock_toyear").val() ==0||$("#viewstock_tomonth").val()==0||$("#viewstock_todate").val()==0) {
 			$("#date-alert").alert();
