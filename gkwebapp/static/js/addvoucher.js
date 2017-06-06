@@ -1733,7 +1733,7 @@ $("#show"+$("#vtype").val()).click();
   });
   $('#bwtable').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
   {
-    $("#useasadvance").focus().select();
+    $(".amountpaid:first").focus().select();
   });
   $('#bwtable').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is closed
     {
