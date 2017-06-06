@@ -1060,7 +1060,7 @@ $(document).ready(function() {
         } else {
           if (curindex != ($("#invoice_product_table tbody tr").length - 1)) {
             $('#invoice_product_table tbody tr:eq(' + nextindex + ') td:eq(0) select').focus();
-          } else {
+          } else if ($("#invoice_deliverynote option:selected").val() == '') {
             if ($('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(0) select option:selected').val() == "") {
               $("#product-blank-alert").alert();
               $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -1297,7 +1297,7 @@ $(document).ready(function() {
       event.preventDefault();
       if (curindex1 != ($("#invoice_product_table tbody tr").length - 1)) {
         $('#invoice_product_table tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
-      } else {
+      } else if ($("#invoice_deliverynote option:selected").val() == '') {
         if ($('#invoice_product_table tbody tr:eq(' + curindex1 + ') td:eq(0) select option:selected').val() == "") {
           $("#product-blank-alert").alert();
           $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
