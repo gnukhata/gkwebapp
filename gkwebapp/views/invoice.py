@@ -37,7 +37,7 @@ def showinvoice(request):
 	return {"status":True}
 
 @view_config(route_name="invoice", request_param="action=showviewregister", renderer="gkwebapp:templates/viewregister.jinja2")
-def showinvoice(request):
+def showviewregister(request):
     return {"status":True}
 
 @view_config(route_name="invoice",request_param="action=showadd",renderer="gkwebapp:templates/addinvoice.jinja2")
@@ -191,3 +191,10 @@ def getdelinvproducts(request):
 	dcid = request.params["dcid"]
 	result = requests.get("http://127.0.0.1:6543/delchal?action=getdcinvprods&dcid=%d"%(int(dcid)), headers=header)
 	return {"gkstatus": result.json()["gkstatus"], "items": result.json()["gkresult"]}
+
+@view_config(route_name="invoice",request_param="action=showregisterreport",renderer="gkwebapp:templates/registerreport.jinja2")
+def showregisterreport(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/report?type=register&flag=%d&calculatefrom%s&calculateto"%(int(request.params["flag"]), request.params["calculatefrom"], request.params["calculateto"]), headers=header)
+    print result.json()
+    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "flag": result.json()["flag"]}
