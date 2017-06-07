@@ -53,6 +53,17 @@ $(document).ready(function() {
   clearTimeout(typingTimer);  //clearing timeout
   //Actions to be triggered when focus is on amount paid field
   $(".numtype").numeric({ negative : false });
+  var paymentmode = 15;
+  var advocremainder = 0.00;
+  $(document).off('change', '#paymentmode').on('change', '#paymentmode', function(event) {
+    event.preventDefault();
+    if ($("#paymentmode").val() == 1) {
+      paymentmode = 1;
+    }
+    else {
+      paymentmode = 15;
+    }
+  });
   $(document).off('focus', '.amountpaid').on('focus', '.amountpaid', function(event) {
     event.preventDefault();
     /* Act on the event */
@@ -158,7 +169,7 @@ $(document).ready(function() {
 	  return false;
 	}
 	//Whenever Amount Paid equals Amount Pending the below snippet sets Amount Pending to 0.00.
-	else if (parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()) >= parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending"))) {
+	else if (parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()) == parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending"))) {
 	  $("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">0.00</div>');
 	}
 	else {
@@ -190,6 +201,18 @@ $(document).ready(function() {
       }
       $('#latable tfoot tr:eq(0) td:eq(2)').html('<div class="form-control" disabled>'+parseFloat(totalpending).toFixed(2)+'</div');
       $(".billamount").html("<b>"+parseFloat(totalap).toFixed(2)+"</b>");
+      if (parseFloat(parseFloat(totalap).toFixed(2)) > parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2))) {
+	if (paymentmode == 15) {
+	  var usedonaccount = parseFloat(parseFloat(totalap).toFixed(2)) - parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2)) - parseFloat(parseFloat($("#useasadvance").data("useasadvance")).toFixed(2));
+	  $("#useonaccount").html(parseFloat(usedonaccount).toFixed(2));
+	  $("#useonaccount").data("useonaccount", usedonaccount);
+	}
+	if (paymentmode == 1) {
+	  var usedasadvance = parseFloat(parseFloat(totalap).toFixed(2)) - parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2)) - parseFloat(parseFloat($("#useonaccount").data("useonaccount")).toFixed(2));
+	  $("#useasadvance").html(parseFloat(usedasadvance).toFixed(2));
+	  $("#useasadvance").data("useasadvance", usedasadvance);
+	}
+      }
     }, doneTypingInterval);
   });
   $(document).off('focusout', '#onaccount, #asadvance').on('focusout', '#onaccount, #asadvance', function(event) {
