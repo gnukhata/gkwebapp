@@ -216,7 +216,25 @@ $("#viewregister_toyear").val(yearpad($("#viewregister_toyear").val(),4));
     return false;
   }
   // -----------------------end of validations---------------------
-  
+  $("#msspinmodal").modal("show");
+  $.ajax(
+    {
+      type: "POST",
+      url: "/invoice?action=showregisterreport",
+      global: false,
+      async: false,
+      datatype: "text/html",
+      data: {"flag":$("#viewregister_type option:selected").val(), "calculatefrom":$("#viewregister_fromyear").val()+"-"+$("#viewregister_frommonth").val()+"-"+$("#viewregister_fromdate").val(),"calculateto":$("#viewregister_toyear").val()+"-"+$("#viewregister_tomonth").val()+"-"+$("#viewregister_todate").val()},
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+    })
+    .done(function(resp)
+    {
+      $("#msspinmodal").modal("hide");
+      $("#info").html(resp);
+    });
   });
   $("#viewregister_reset").click(function(event) {
       $("#showviewregister").click();
