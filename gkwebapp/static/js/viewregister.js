@@ -94,7 +94,7 @@ $("#viewregister_toyear").val(yearpad($("#viewregister_toyear").val(),4));
   $("#viewregister_type").keydown(function(e){
     if(e.which==13){
       e.preventDefault();
-      if ($("#viewregister_type option:selected").val() != "") {
+      if ($("#viewregister_type option:selected").val() != null) {
         $("#viewregister_fromdate").focus();
       }
     }
@@ -146,6 +146,77 @@ $("#viewregister_toyear").val(yearpad($("#viewregister_toyear").val(),4));
     if(e.which==38){
       $("#viewregister_tomonth").focus().select();
     }
+  });
+  $("#viewregister_submit").click(function(event) {
+  // --------------------starting validations------------------
+  if ($("#viewregister_type").val()==null) {
+    $("#type-blank-alert").alert();
+    $("#type-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#type-blank-alert").hide();
+    });
+    $('#viewregister_type').focus()
+    return false;
+  }
+  if ($("#viewregister_fromyear").val()==0 ||$("#viewregister_frommonth").val()==0 ||$("#viewregister_fromdate").val()==0 ) {
+    $("#date-alert").alert();
+    $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+      $("#date-alert").hide();
+    });
+    $('#viewregister_fromdate').focus().select();
+    return false;
+  }
+  if ($("#viewregister_toyear").val() ==0||$("#viewregister_tomonth").val()==0||$("#viewregister_todate").val()==0) {
+    $("#date-alert").alert();
+    $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+      $("#date-alert").hide();
+    });
+    $('#viewregister_todate').focus().select();
+    return false;
+  }
+  var todate = $("#viewregister_toyear").val()+$("#viewregister_tomonth").val()+$("#viewregister_todate").val();
+  var fromdate = $("#viewregister_fromyear").val()+$("#viewregister_frommonth").val()+$("#viewregister_fromdate").val();
+  if(!Date.parseExact(fromdate,"yyyyMMdd")){
+    $("#date-alert").alert();
+    $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+      $("#date-alert").hide();
+    });
+    $('#viewregister_fromdate').focus().select();
+    return false;
+  }
+  if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,todaysdate)) {
+    $("#between-date-alert").alert();
+    $("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
+      $("#between-date-alert").hide();
+    });
+    $('#viewregister_fromdate').focus().select();
+    return false;
+  }
+  if(!Date.parseExact(todate, "yyyyMMdd")){
+    $("#date-alert").alert();
+    $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+      $("#date-alert").hide();
+    });
+    $('#viewregister_todate').focus().select();
+    return false;
+  }
+  if (!Date.parseExact(todate,"yyyyMMdd").between(financialstart,todaysdate)) {
+    $("#between-date-alert").alert();
+    $("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
+      $("#between-date-alert").hide();
+    });
+    $('#viewregister_todate').focus().select();
+    return false;
+  }
+  if (Date.parseExact(fromdate,"yyyyMMdd").compareTo(Date.parseExact(todate,"yyyyMMdd"))==1) {
+    $("#compare-date-alert").alert();
+    $("#compare-date-alert").fadeTo(2250, 400).slideUp(500, function(){
+      $("#compare-date-alert").hide();
+    });
+    $('#viewregister_todate').focus().select();
+    return false;
+  }
+  // -----------------------end of validations---------------------
+  
   });
   $("#viewregister_reset").click(function(event) {
       $("#showviewregister").click();
