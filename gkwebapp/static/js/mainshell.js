@@ -107,24 +107,12 @@ var userrole1;
       $("#BRS").click();
       event.preventDefault();
     }
-    if(event.altKey && event.keyCode == 78) {
-      $("#createuser").click();
-      event.preventDefault();
-    }
-    if(event.altKey && event.keyCode == 85) {
-      $("#REMOVEuser").click();
-      event.preventDefault();
-    }
     if(event.altKey && event.keyCode == 67) {
       $("#showproject").click();
       event.preventDefault();
     }
     if(event.altKey && event.keyCode == 76) {
       $("#showclosebooks").click();
-      event.preventDefault();
-    }
-    if(event.altKey && event.keyCode == 73) {
-      $("#deleteorg").click();
       event.preventDefault();
     }
     if(event.altKey && event.keyCode == 77) {
