@@ -308,7 +308,7 @@ $(document).ready(function() {
       });
       return false;
     }
-    if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > parseFloat(sessionStorage.customeramount) && ($("#useasadvance").val()=="" || $("#useasadvance").val()==0) && ($("#useonaccount").val()=="" || $("#useonaccount").val()==0)) {
+    if ((parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > parseFloat(sessionStorage.customeramount)) && parseFloat($("#useasadvance").data("useasadvance"))==0.00 && parseFloat($("#useonaccount").data("useonaccount"))==0.00) {
       if ($("#customerselect").length == 0) {
 	$("#bwvamount-alert").alert();
 	$("#bwvamount-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -324,7 +324,7 @@ $(document).ready(function() {
 	return false;
       }
     }
-    if (parseFloat((parseFloat($("#useasadvance").val()) + parseFloat($("#useonaccount").val()))) > parseFloat(parseFloat($("#asadvancelabel").data("asadvance")) + parseFloat($("#onaccountlabel").data("onaccount")) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) {
+      if (parseFloat((parseFloat($("#useasadvance").data("useasadvance")) + parseFloat($("#useonaccount").data("useonaccount")))) > parseFloat(parseFloat($("#asadvancelabel").data("asadvance")) + parseFloat($("#onaccountlabel").data("onaccount")) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) {
       $("#bwadvac-alert").alert();
       $("#bwadvac-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#bwadvac-alert").hide();
@@ -332,7 +332,7 @@ $(document).ready(function() {
       return false;
     }
     //Alert is displayed when sum of total amount paid and sum of unadjusted amounts is less than sum of Debit/Credit amount and previous unadjusted amounts.
-    if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) < (parseFloat(sessionStorage.customeramount) + parseFloat($("#useasadvance").val()) + parseFloat($("#useonaccount").val()))) {
+    if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) < (parseFloat(sessionStorage.customeramount) + parseFloat($("#useasadvance").data("useasadvance")) + parseFloat($("#useonaccount").data("useonaccount")))) {
       $("#bwamount-less-alert").alert();
       $("#bwamount-less-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#bwamount-less-alert").hide();
@@ -340,16 +340,16 @@ $(document).ready(function() {
       return false;
     }
 
-    if (parseFloat($("#useasadvance").val()) > parseFloat($("#asadvancelabel").data("asadvance"))) {
-      $("#useasadvance").focus().select();
-      $("#asadvance-alert").alert();
-      $("#asadvance-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#asadvance-alert").hide();
-      });
-      return false;
-    }
+      if (parseFloat($("#useasadvance").data("useasadvance")) > parseFloat($("#asadvancelabel").data("asadvance"))) {
+	$("#useasadvance").focus().select();
+	$("#asadvance-alert").alert();
+	$("#asadvance-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#asadvance-alert").hide();
+	});
+	return false;
+      }
 
-    if (parseFloat($("#useonaccount").val()) > parseFloat($("#onaccountlabel").data("onaccount"))) {
+      if (parseFloat($("#useonaccount").data("useonaccount")) > parseFloat($("#onaccountlabel").data("onaccount"))) {
       $("#useonaccount").focus.select();
       $("#onaccount-alert").alert();
       $("#onaccount-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -360,8 +360,8 @@ $(document).ready(function() {
 
     var usedasadvance = {};
     var usedonaccount = {};
-    usedasadvance = {"payflag":1,"icflag":4, "pdamt":parseFloat($("#useasadvance").val()), "custid":$("#custid").val()};
-    usedonaccount = {"payflag":15,"icflag":4, "pdamt":parseFloat($("#useonaccount").val()), "custid":$("#custid").val()};
+    usedasadvance = {"payflag":1,"icflag":4, "pdamt":parseFloat($("#useasadvance").data("useasadvance")).toFixed(2), "custid":$("#custid").val()};
+    usedonaccount = {"payflag":15,"icflag":4, "pdamt":parseFloat($("#useonaccount").data("useonaccount")).toFixed(2), "custid":$("#custid").val()};
     billwisedata.push(usedasadvance);
     billwisedata.push(usedonaccount);
     
