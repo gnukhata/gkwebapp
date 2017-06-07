@@ -24,9 +24,17 @@
 
       <label >{% trans %}Please select a product!{% endtrans %}</label>
     </div>
+    <div class="alert alert-danger" id="product-duplicate-alert"  aria-live="rude" role="alert" hidden>
+
+      <label >{% trans %}Each product can be entered only once!{% endtrans %}</label>
+    </div>
     <div class="alert alert-danger" id="quantity-blank-alert"  aria-live="rude" role="alert" hidden>
 
       <label >{% trans %}Quantity cannot be blank zero and / or negative!{% endtrans %}</label>
+    </div>
+    <div class="alert alert-danger" id="allquantities-blank-alert"  aria-live="rude" role="alert" hidden>
+
+      <label >{% trans %}All product quantities cannot be zero!{% endtrans %}</label>
     </div>
     <div class="alert alert-danger" id="quantity-exceed-alert"  aria-live="rude" role="alert" hidden>
 
@@ -136,6 +144,7 @@
             <div class="form-group">
             </div>
           </div>
+
           <div class="col-md-3">
 
             <div class="form-group">
