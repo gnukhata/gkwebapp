@@ -232,7 +232,7 @@ $("#viewregister_toyear").val(yearpad($("#viewregister_toyear").val(),4));
     })
     .done(function(resp)
     {
-      $("#msspinmodal").modal("hide");
+      //$("#msspinmodal").modal("hide");
       $("#info").html(resp);
     });
   });
