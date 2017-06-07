@@ -94,7 +94,7 @@ $("#viewregister_toyear").val(yearpad($("#viewregister_toyear").val(),4));
   $("#viewregister_type").keydown(function(e){
     if(e.which==13){
       e.preventDefault();
-      if ($("#viewregister_type option:selected").val() != null) {
+      if ($("#viewregister_type").val() != null) {
         $("#viewregister_fromdate").focus();
       }
     }
