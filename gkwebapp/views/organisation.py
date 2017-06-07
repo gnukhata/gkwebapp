@@ -75,21 +75,26 @@ def oexists(request):
 @view_config(route_name="editorganisation", renderer="json")
 def editOrganisation(request):
 	header={"gktoken":request.headers["gktoken"]}
-	gkdata= {"orgcity":request.params["orgcity"],"orgaddr":request.params["orgaddr"],"orgpincode":request.params["orgpincode"],"orgstate":request.params["orgstate"], "orgcountry":request.params["orgcountry"],"orgtelno":request.params["orgtelno"], "orgfax":request.params["orgfax"],"orgwebsite":request.params["orgwebsite"],"orgemail":request.params["orgemail"],"orgpan":request.params["orgpan"],"orgmvat":request.params["orgmvat"],"orgstax":request.params["orgstax"],"orgregno":request.params["orgregno"],"orgregdate":request.params["orgregdate"], "orgfcrano":request.params["orgfcrano"],"orgfcradate":request.params["orgfcradate"]}
 
-    try:
-        img=request.POST.files
-        image=Image.open(img)
-        imgbuffer = cStringIO.StringIO()
-        image.save(imgbuffer, format="JPEG")
-        img_str = base64.b64encode(imgbuffer.getvalue())
-        image.close()
-        filelogo=img_str
-    except:
-        print "no photo found "
-    gkdata["logo"]=filelogo
+	gkdata= {"orgcity":request.params["orgcity"],"orgaddr":request.params["orgaddr"],"orgpincode":request.params["orgpincode"],"orgstate":request.params["orgstate"], "orgcountry":request.params["orgcountry"],"orgtelno":request.params["orgtelno"], "orgfax":request.params["orgfax"],"orgwebsite":request.params["orgwebsite"],"orgemail":request.params["orgemail"],"orgpan":request.params["orgpan"],"orgmvat":request.params["orgmvat"],"orgstax":request.params["orgstax"],"orgregno":request.params["orgregno"],"orgregdate":request.params["orgregdate"], "orgfcrano":request.params["orgfcrano"],"orgfcradate":request.params["orgfcradate"]}
+	filelogo={}
+	try:
+		if request.POST['logo'].file:
+			
+			img=request.POST['logo'].file
+			image=Image.open(img)
+			imgbuffer = cStringIO.StringIO()
+			image.save(imgbuffer, format="JPEG")
+			img_str = base64.b64encode(imgbuffer.getvalue())
+			image.close()
+			filelogo=img_str
+			print "photo found"
+			gkdata["logo"]=filelogo
+	except:
+		print "no photo found "
+
 	result = requests.put("http://127.0.0.1:6543/organisations", headers=header, data=json.dumps(gkdata))
-    return {"gkstatus":result.json()["gkstatus"]}
+	return {"gkstatus":result.json()["gkstatus"]}
 
 
 @view_config(route_name="getorgcode", renderer="json")
@@ -118,3 +123,9 @@ def deleteorg(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.delete("http://127.0.0.1:6543/organisations", headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="editorganisation", request_param="action=getattachment", renderer="json")
+def getattachment(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/organisation?attach=image", headers=header)
+	return {"logo":result.json()["logo"]}

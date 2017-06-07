@@ -41,22 +41,24 @@
 					{% trans %}Connection Failed.{% endtrans %}
 				</div>
 <div class="col-xs-12 from-group">
+	<center>
 <div class="img-thumbnail img-circle ">
+
   <div style="position: relative; padding: 0; cursor: pointer;" type="file">
- <img class="img-circle"  style="width: 140px; height: 140px;" align="middle">
-    <span style="position: absolute; color: red; bottom: 20px; left: 40px;">UPLOAD</span>
+ <img class="img-circle"  style="width: 100px; height: 100px;" id="imgbox">
+
 
 	</div>
-
+</center>
 </div>
 </div>
-
+<center>
 <label class="btn btn-primary btn-sm" for="my-file-selector">
-	<input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
-	{% trans %}Attac<u>h</u>{% endtrans %}
+	<input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" style="display:none;" >
+	{% trans %}Attac<u>h</u> a logo{% endtrans %}
 </label>
 <span class='label label-info' id="upload-file-info"></span>
-
+</center>
 				<form id="editorganisationform" method="post" class="form-inline">
 					<div class="col-xs-6 from-group" >
 						<input type="text" id="orgtype" hidden value="{{gkresult["orgtype"]}}" style="width: 100%"></input>
@@ -243,7 +245,7 @@ Note that the default tab and shift + tab shortcuts are also available for navig
 </div>
 					<div class="container-fluid">
 						<div class="col-xs-2 col-xs-offset-5">
-							<button type="submit" class="btn btn-primary btn-sm" id="submit" name="submit" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
+							<button type="submit" class="btn btn-primary btn-sm" id="submit" name="editorganisationsubmit" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
 							<button id="reset" class="btn btn-warning btn-sm" accesskey="r">{% trans %}<u>R</u>eset{% endtrans %}</button>
 						</div>
 					</div>
