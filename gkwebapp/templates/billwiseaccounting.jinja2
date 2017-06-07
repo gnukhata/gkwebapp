@@ -112,7 +112,7 @@
 
    #latable tbody {
        display:block;
-       height: calc(100vh - 26em);
+       height: calc(100vh - 27em);
        overflow-y:scroll;
    }
 
@@ -202,13 +202,22 @@
     {% trans %}Receipt/Payment Updated!{% endtrans %}
   </div>
     <div class="col-sm-12" style="margin-top:10px;">
-      <div id="asadvanceamt" class="col-sm-6">
-	<div style="float:right;">
-	  <b>As Advance Amount : </b><label id="asadvancelabel" data-asadvance="{{asadvance}}" class="text-primary"><b>{{asadvance}}</b></label>
-	</div>
+      <div id="asadvanceamt" class="col-sm-5">
+	<form class="form-inline">
+	  <div class="form-group">
+	    <label for="paymentmode">{% trans %}Use From{% endtrans %} :</label>
+	    <select id="paymentmode" class="form-control input-sm" accesskey="u">
+		<option value="15">{% trans %}On Account{% endtrans %}</option>
+		<option value="1">{% trans %}As Advance{% endtrans %}}</option>
+	    </select>
+	  </div>
+	</form>
       </div>
-      <div id="onaccamt" class="col-sm-6">
-	  <b>On Account Amount : </b><label id="onaccountlabel" data-onaccount="{{onaccount}}" class="text-danger"><b>{{onaccount}}</b></label>
+      <div id="onaccamt" class="col-sm-7">
+	<div style="float:right;">
+	  <b>As Advance : </b><label id="asadvancelabel" data-asadvance="{{asadvance}}" class="text-primary"><b>{{asadvance}}</b></label>&nbsp
+	  <b>On Account : </b><label id="onaccountlabel" data-onaccount="{{onaccount}}" class="text-danger"><b>{{onaccount}}</b></label>
+	</div>
       </div>
     </div>
     <div id="onaccdiv" class="col-sm-12" style="margin-bottom:10px;" hidden>
