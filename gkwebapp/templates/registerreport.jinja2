@@ -65,22 +65,21 @@
   <input type="hidden" id="calculatefrom" value={{registerheader["calculatefrom"]}} >
   <input type="hidden" id="calculateto" value={{registerheader["calculateto"]}}>
   <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{registerheader["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{registerheader["calculateto"]}}</strong></span>
-  {% if registerheader["flag"] == 0 %}
-  <span style="margin:auto; display:table;"><i>{% trans %}Sales Register{% endtrans %}</i></span>
+  {% if registerheader["flag"] == "0" %}
+  <span style="margin:auto; display:table; font-size:120%;"><strong>{% trans %}Sales Register{% endtrans %}</strong></span>
   {% else %}
-  <span style="margin:auto; display:table;"><i>{% trans %}Purchase Register{% endtrans %}</i></span>
+  <span style="margin:auto; display:table; font-size:120%;"><strong>{% trans %}Purchase Register{% endtrans %}</strong></span>
   {% endif %}
-  <div class="row">
-    <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="rclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
-    <table id="registertable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
-      <thead class="bg-primary">
+  <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="rclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+  <table id="registertable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
+    <thead class="bg-primary">
         <tr>
           <th class="smwrap calign" >{% trans %}Sr. No.{% endtrans %}</th>
           <th class="smwrap calign" >{% trans %}Invoice No.{% endtrans %}</th>
           <th class="dtwrap calign" >{% trans %}Invoice Dt{% endtrans %}</th>
-          {% if registerheader["flag"] == 0 %}
-          <th class="dtwrap calign">{% trans %}Cust Name){% endtrans %}</th>
-          <th class="dtwrap calign">{% trans %}Cust TIN){% endtrans %}</th>
+          {% if registerheader["flag"] == "0" %}
+          <th class="dtwrap calign">{% trans %}Cust Name{% endtrans %}</th>
+          <th class="dtwrap calign">{% trans %}Cust TIN{% endtrans %}</th>
           {% else %}
           <th class="dtwrap calign">{% trans %}Suppl Name{% endtrans %}</th>
           <th class="dtwrap calign">{% trans %}Suppl TIN{% endtrans %}</th>
@@ -88,7 +87,10 @@
           <th class="dtwrap">{% trans %}Gross Amt{% endtrans %}</th>
           <th class="dtwrap calign">{% trans %}Tax Free{% endtrans %}</th>
           {% for tax in taxcolumns %}
-            <th class="dtwrap calign">{% trans %}Net @{{tax}}% TAX{% endtrans %}</th>
+            <th class="dtwrap calign">{% trans %}Net @{{tax}}%{% endtrans %}</th>
+          {% endfor %}
+          {% for tax in taxcolumns %}
+            <th class="dtwrap calign">{% trans %}{{tax}}% TAX{% endtrans %}</th>
           {% endfor %}
         </tr>
       </thead>
@@ -124,11 +126,19 @@
               0.00
             {% endif %}
             </td>
-          {% endfor %}
+            {% endfor %}
+            {% for tax in taxcolumns %}
+            <td class="dtwrap calign">
+            {% if tax in record["taxamount"] %}
+              {{record['taxamount'][tax]}}
+            {% else %}
+              0.00
+            {% endif %}
+            </td>
+            {% endfor %}
           {% endfor %}
       </tbody>
     </table>
-  </div>
     <span style="margin:auto; display:table;">
       <button class="btn btn-sm btn-primary" type="button" id="anotherlog" accesskey="v">{% trans %}<u>V</u>iew Another Register{% endtrans %}</button>
       <button class="btn btn-sm btn-primary" type="button"  id="viewprintablelogreport" accesskey="x">{% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
