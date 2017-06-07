@@ -27,10 +27,10 @@
 
 /* 
    When Receipt/Payment vouchers are created a modal appears asking if user wants to continue to bill wise accounting.  
-   When confirmed a table is presented with fields Invoice No, Invoice Date, Invoice Amount, Amount Pending and Amount to be Paid(input by user).  
+   When confirmed a table is presented with fields Invoice No, Invoice Date, Invoice Amount, Amount Pending and Amount Adjusted(input by user).  
    Account name and Debit/Credit amount are displayed on the title bar of the modal.  
-   Total amount paid is displayed in table footer.  
-   As user enters Amount Paid it is reduced from Amount Pending until Amount Pending is zero.  
+   Total amount adjusted is displayed in table footer.  
+   As user enters Amount Adjusted it is reduced from Amount Pending until Amount Pending is zero.  
 
    In case the user does not intend to settle any bills the debit/credit amount can be set as "On Account".
    To make advance payments the amount can be set as "As Advance".
@@ -42,13 +42,14 @@
    
    Validations :-  
    Sum of Total Amount Paid, On Account amount and As Advance amount must be equal to the sum of Debit/Credit Amount and previous unadjusted amounts.  
-   Amount Paid cannot be blank.
+   Amount Adjusted cannot be blank.
  */ 
 
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#btbillwise").hide();
   var typingTimer;                //timer identifier
+  var typingTimer1;                //timer identifier
   var doneTypingInterval = 100; //typing interval
   clearTimeout(typingTimer);  //clearing timeout
   //Actions to be triggered when focus is on amount paid field
@@ -243,22 +244,22 @@ $(document).ready(function() {
       }
       if (parseFloat(parseFloat(totalap).toFixed(2)) > parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2))) {
 	if (paymentmode == 15) {
-	  usedonaccount = parseFloat(parseFloat(totalap).toFixed(2)) - parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2)) - parseFloat(parseFloat($("#useasadvance").data("useasadvance")).toFixed(2));
-	  if (usedonaccount > parseFloat(parseFloat($("#onaccountlabel").data("onaccount")).toFixed(2))) {
-	    $("#paymentmode").focus();
-	    $("#onaccount-alert").alert();
-	    $("#onaccount-alert").fadeTo(2250, 500).slideUp(500, function(){
-              $("#onaccount-alert").hide();
-	    });
-	    return false;
-	  }
-	  else {
-	    $("#useonaccount").html(parseFloat(usedonaccount).toFixed(2));
-	    $("#useonaccount").data("useonaccount", usedonaccount);
-	  }
+	  usedonaccount = parseFloat(parseFloat(totalap).toFixed(2)) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val() - parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2)) - parseFloat(parseFloat($("#useasadvance").data("useasadvance")).toFixed(2));
+	    if (usedonaccount > parseFloat(parseFloat($("#onaccountlabel").data("onaccount")).toFixed(2))) {
+	      $("#paymentmode").focus();
+	      $("#onaccount-alert").alert();
+	      $("#onaccount-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#onaccount-alert").hide();
+	      });
+	      return false;
+	    }
+	    else {
+	      $("#useonaccount").html(parseFloat(usedonaccount).toFixed(2));
+	      $("#useonaccount").data("useonaccount", usedonaccount);
+	    }
 	}
-	if (paymentmode == 1) {
-	  usedasadvance = parseFloat(parseFloat(totalap).toFixed(2)) - parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2)) - parseFloat(parseFloat($("#useonaccount").data("useonaccount")).toFixed(2));
+	    if (paymentmode == 1) {
+	      usedasadvance = parseFloat(parseFloat(totalap).toFixed(2)) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val() - parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2)) - parseFloat(parseFloat($("#useonaccount").data("useonaccount")).toFixed(2));
 	  if (usedasadvance > parseFloat(parseFloat($("#asadvancelabel").data("asadvance")).toFixed(2))) {
 	    $("#paymentmode").focus();
 	    $("#asadvance-alert").alert();
