@@ -147,5 +147,7 @@ $("#viewregister_toyear").val(yearpad($("#viewregister_toyear").val(),4));
       $("#viewregister_tomonth").focus().select();
     }
   });
-
+  $("#viewregister_reset").click(function(event) {
+      $("#showviewregister").click();
+  });
 });
