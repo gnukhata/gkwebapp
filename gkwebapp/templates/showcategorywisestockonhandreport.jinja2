@@ -152,7 +152,7 @@ width:1.4%
     <td class="calign smwrap1" >
           {{record["srno"]}}
         </td>
-       {% if godown == "" %}
+        {% if stockrefresh["godownflag"] == 0 %}
     <td class="mdwrap calign" >
           {{record["productname"]}}
         </td>
@@ -161,7 +161,7 @@ width:1.4%
           {{record["balance"]}}
 
         </td>
-        {% elif godown == "All godowns" %}
+        {% elif stockrefresh["goid"] == "all" %}
 
          <td class="mdwrap calign" >
           {{record["productname"]}}
