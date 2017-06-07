@@ -36,6 +36,10 @@ import cStringIO
 def showinvoice(request):
 	return {"status":True}
 
+@view_config(route_name="invoice", request_param="action=showviewregister", renderer="gkwebapp:templates/viewregister.jinja2")
+def showinvoice(request):
+    return {"status":True}
+
 @view_config(route_name="invoice",request_param="action=showadd",renderer="gkwebapp:templates/addinvoice.jinja2")
 def showaddinvoice(request):
 	header={"gktoken":request.headers["gktoken"]}
