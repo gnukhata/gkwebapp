@@ -86,6 +86,17 @@ $(document).ready(function() {
       }
     }
   });
+  $(document).off('keydown', '#paymentmode').on('keydown', '#paymentmode', function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      if ($(".amountpaid").length > 0) {
+	$(".amountpaid:first").focus().select();
+      }
+      else{
+	$(".footerbutton:first").focus();
+      }
+    }
+  });
   $(document).off('focus', '.amountpaid').on('focus', '.amountpaid', function(event) {
     event.preventDefault();
     /* Act on the event */

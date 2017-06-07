@@ -66,7 +66,7 @@ $(document).ready(function() {
   $(document).off('keydown', '#customerselect').on('keydown', '#customerselect', function(event) {
     if (event.which == 13) {
       event.preventDefault();
-      $("#useasadvance").focus().select();
+      $("#supplierselect").focus().select();
     }
   });
   //This is similar to the change event of list of customers.
@@ -100,12 +100,7 @@ $(document).ready(function() {
   $(document).off('keydown', '#supplierselect').on('keydown', '#supplierselect', function(event) {
     if (event.which == 13) {
       event.preventDefault();
-      if ($(".amountpaid").length > 0) {
-	$(".amountpaid:first").focus().select();
-      }
-      else{
-	$(".footerbutton:first").focus();
-      }
+      $("#paymentmode").focus();
     }
   });
 });
