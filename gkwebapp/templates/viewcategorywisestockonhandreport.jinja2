@@ -19,6 +19,13 @@
         <h3 class="panel-title">{% trans %}View Category Wise Stock On Hand{% endtrans %}</h3>
       </div>
       <div class="panel-body" style="padding-top:5px">
+      <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
+        <label for="viewstock_fromdate">{% trans %}Please enter date in proper format!{% endtrans %}</label>
+      </div>
+      <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
+
+        <label for="viewstock_fromdate">{% trans %}Please enter date within the financial year!{% endtrans %}</label>
+      </div>
         <div class="alert alert-danger" id="category-blank-alert" aria-live="rude" role="alert" hidden>
           <label>{% trans %}Please select a Category!{% endtrans %}</label>
         </div>
