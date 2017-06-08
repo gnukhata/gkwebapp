@@ -446,7 +446,33 @@ $(document).ready(function()
     $('.modal-backdrop').remove();
     $("tbody tr:eq("+$("#modalindex").val()+")").dblclick();
   });
-
+    $(document).off('click' ,'#printvoucher').on('click' ,'#printvoucher',function(event) {
+	event.preventDefault();
+	$("#otherdiv").hide();
+	$('.modal-backdrop').hide();
+	$("#printvoucherdiv").show();
+	$.ajax({
+          type: "POST",
+          url: "/viewvoucher?action=print",
+          global: false,
+          async: false,
+	  data:{"id":$("#vouchernumberinput").val()},
+          datatype: "text/html",
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+        })
+        .done(function(resp) {
+          $("#printvoucherdiv").html(resp);
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+  });
   $("#viewattach").click(function(event)
   {
     var vcode = $("#vcode").val();

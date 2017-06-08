@@ -161,6 +161,51 @@ def viewvoucher(request):
 	else:
 		return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)
 
+
+@view_config(route_name="viewvoucher",request_param="action=print", renderer="gkwebapp:templates/printvoucher.jinja2")
+def printvoucher(request):
+	header={"gktoken":request.headers["gktoken"]}
+	vcode =request.params["id"]
+	gkdata = {"code":int(vcode)}
+
+	result = requests.get("http://127.0.0.1:6543/transaction?code=%d"%(int(request.params["id"])),headers=header)
+	vc=result.json()["gkresult"]
+
+	type = vc["vouchertype"]
+	projects = requests.get("http://127.0.0.1:6543/projects", headers=header)
+	if type=="contra" or type=="journal":
+		result1 = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s"%(type), headers=header)
+		if result1.json()["gkstatus"]==0:
+			draccounts=result1.json()["gkresult"]
+			craccounts=result1.json()["gkresult"]
+	elif type=="creditnote" or type=="debitnote" or type=="salesreturn" or type=="purchasereturn":
+		result1 = requests.get("http://127.0.0.1:6543/accountsbyrule?type=journal", headers=header)
+		if result1.json()["gkstatus"]==0:
+			draccounts=result1.json()["gkresult"]
+			craccounts=result1.json()["gkresult"]
+
+	else:
+		drresult = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s&side=Dr"%(type), headers=header)
+		crresult = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s&side=Cr"%(type), headers=header)
+		if drresult.json()["gkstatus"]==0 and crresult.json()["gkstatus"]==0:
+			draccounts=drresult.json()["gkresult"]
+			craccounts=crresult.json()["gkresult"]
+		else:
+			return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)
+
+
+
+	if result.json()["gkstatus"]==0:
+
+		if type=="sales" or type=="purchase":
+			invdata = requests.get("http://127.0.0.1:6543/invoice?inv=all", headers=header)
+			if invdata.json()["gkstatus"]==0:
+				return {"projects":projects.json()["gkresult"],"vtype":type,"voucher":vc,"userrole":result.json()["userrole"],"draccounts":draccounts,"craccounts":craccounts,"invoicedata":invdata.json()["gkresult"]}
+		else:
+			return {"projects":projects.json()["gkresult"],"vtype":type,"voucher":vc,"userrole":result.json()["userrole"],"draccounts":draccounts,"craccounts":craccounts,"invoicedata":0}
+	else:
+		return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)
+
 @view_config(route_name="editvoucher", renderer="json")
 def editvoucher(request):
 	vdetails = json.loads(request.params["vdetails"])

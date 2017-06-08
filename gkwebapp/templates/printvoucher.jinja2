@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}List of Categories{% endtrans %}</title>
+    <style type="text/css">
+
+     td {
+  	 font-size: 65%;
+  	 color: black;
+     }
+
+     th {
+  	 font-size: 70%;
+     }
+
+     @page {
+	 size : 21cm 29.7cm;
+	 margin : 10mm 10mm 20mm 10mm
+     }
+     thead{
+	 display: table-header-group;
+     }
+     tfoot{
+	 display: table-footer-group;
+     }
+
+    </style>
+  </head>
+  <body>
+    <div class="form-inline">
+      <div class="well well-sm" >
+	<label for="vno">{% trans %}Voucher No{% endtrans %} :</label><label for="vno" style="color:red;font-size: 120%;">*</label>
+	<input type="text" name="vno" class=" form-control input-sm" id="vno" size="10" value="{{voucher["vouchernumber"]}}">
+	<div class="form-group col-xs-offset-2">
+          {% if vtype=="contra" %}
+            <label class="lblec"><i>{% trans %}Contra{% endtrans %}</i></label>
+          {% elif vtype == "payment" %}
+            <label class="lblec"><i>{% trans %}Payment{% endtrans %}</i></label>
+          {% elif vtype == "receipt" %}
+            <label class="lblec"><i>{% trans %}Receipt{% endtrans %}</i></label>
+          {% elif vtype == "journal" %}
+            <label class="lblec"><i>{% trans %}Journal{% endtrans %}</i></label>
+          {% elif vtype == "sales" %}
+            <label class="lblec"><i>{% trans %}Sales{% endtrans %}</i></label>
+          {% elif vtype == "purchase" %}
+            <label class="lblec"><i>{% trans %}Purchase{% endtrans %}</i></label>
+          {% elif vtype == "creditnote" %}
+            <label class="lblec"><i>{% trans %}Credit Note{% endtrans %}</i></label>
+          {% elif vtype == "debitnote" %}
+            <label class="lblec"><i>{% trans %}Debit Note{% endtrans %}</i></label>
+          {% elif vtype == "salesreturn" %}
+            <label class="lblec"><i>{% trans %}Sale Return{% endtrans %}</i></label>
+          {% elif vtype == "purchasereturn" %}
+            <label class="lblec"><i>{% trans %}Purchase Return{% endtrans %}</i></label>
+          {% endif %}
+	</div>
+
+	<div class="pull-right form-group">
+          <label for="vdate">{% trans %}<u>D</u>ate{% endtrans %} :</label><label for="vdate" style="color:red;font-size: 120%;">*</label>
+          <input type="text" class="vdate form-control input-sm" id="vdate" value="{{voucher['voucherdate'][:2]}}" size="2" maxlength="2" placeholder="DD"accesskey="d">
+          <input type="text" id="vmonth" class="vdate form-control input-sm" value="{{voucher['voucherdate'][3:5]}}" size="2" maxlength="2" placeholder="MM">
+          <input type="text" id="vyear" class="vdate form-control input-sm" value="{{voucher['voucherdate'][6:]}}" size="4" maxlength="4" placeholder="YYYY">
+	</div>
+      </div>
+    </div>
+
+    <div class="table-responsive printorgdetails">
+      <table id="latable" class="table table-condensed table-bordered table-striped shadow">
+	<thead>
+          <tr>
+            <th class="col-xs-1">
+              {% trans %}Cr/Dr{% endtrans %}
+            </th>
+            <th class="col-xs-5">
+              {% trans %}Account Name{% endtrans %}
+            </th>
+            <th class="col-xs-3 rightJustified">
+              {% trans %}Dr Amount{% endtrans %}
+            </th>
+            <th class="col-xs-3 rightJustified">
+              {% trans %}Cr Amount{% endtrans %}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for dr in voucher["drs"] %}
+            <tr>
+              <td class="col-xs-1">
+                <select class="form-control input-sm crdr" >
+                  <option value="Dr" selected>{% trans %}Dr{% endtrans %}</option>
+                  <option value="Cr">{% trans %}Cr{% endtrans %}</option>
+                </select>
+              </td>
+              <td class="col-xs-5">
+                <select class="form-control input-sm accs">
+                  {% for acc in draccounts %}
+                    {% if dr==acc['accountname'] %}
+                      <option value="{{acc['accountcode']}}" selected>{{acc['accountname']}}</option>
+                    {% else %}
+                      <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              </td>
+              <td class="col-xs-3">
+                <input class="form-control input-sm dramt rightJustified" type="text" value="{{voucher["drs"][dr]}}">
+              </td>
+              <td class="col-xs-3">
+                <input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>
+              </td>
+            </tr>
+
+          {% endfor %}
+
+          {% for cr in voucher["crs"] %}
+            <tr>
+              <td class="col-xs-1">
+                <select class="form-control input-sm crdr" >
+                  <option value="Cr" selected>{% trans %}Cr{% endtrans %}</option>
+                  <option value="Dr">{% trans %}Dr{% endtrans %}</option>
+                </select>
+              </td>
+              <td class="col-xs-5">
+                <select class="form-control input-sm accs">
+                  {% for acc in craccounts %}
+                    {% if cr==acc['accountname'] %}
+                      <option value="{{acc['accountcode']}}" selected>{{acc['accountname']}}</option>
+                    {% else %}
+                      <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
+                    {% endif %}
+
+                  {% endfor %}
+                </select>
+              </td >
+              <td class="col-xs-3">
+                <input class="form-control input-sm clbal rightJustified" type="text" value="0.00" disabled>
+              </td>
+              <td class="col-xs-3">
+                <input class="form-control input-sm cramt rightJustified" type="text" value="{{voucher["crs"][cr]}}">
+              </td>
+            </tr>
+
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td class="col-xs-7" colspan="2">
+              <input type="text" class="form-control input-sm ttl" value="Total" disabled>
+            </td>
+            <td class="col-xs-2">
+              <input id="drtotal" class="form-control input-sm ttl rightJustified" type="text" value="0.00" disabled>
+            </td>
+            <td class="col-xs-2">
+              <input id="crtotal" class="form-control input-sm ttl rightJustified" type="text" value="0.00" disabled>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+      <span style="margin:auto; display:table;">
+  	<button type="button" class="btn btn-sm btn-danger hidden-print" id="loaback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+  	<button type="button" class="btn btn-sm btn-info hidden-print" id="loaprint" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
+      </span>
+    </div>
+    <script type="text/javascript">
+     $(document).ready(function() {
+       oninvoice = 0;
+       $("title").html("GNUKhata");
+       $("#loaprint").click(function(event) {
+         window.print();
+       });
+       $("#loaback").click(function(event) {
+	 event.preventDefault();
+	 $("#printvoucherdiv").hide();
+         $("#otherdiv").show();
+	 $('.modal-backdrop').show();
+       });
+     });
+    </script>
+
+  </body>
+</html>
+
