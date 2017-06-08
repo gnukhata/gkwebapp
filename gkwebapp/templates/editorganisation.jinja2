@@ -46,6 +46,7 @@
 
   <div style="position: relative; padding: 0; cursor: pointer;" type="file">
  <img class="img-circle"  style="width: 100px; height: 100px;" id="imgbox">
+ <canvas id="imgcanvas" hidden></canvas>
 
 
 	</div>
@@ -54,7 +55,7 @@
 </div>
 <center>
 <label class="btn btn-primary btn-sm" for="my-file-selector">
-	<input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" style="display:none;" >
+	<input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" style="display:none;" onchange="$('#upload-file-info').html('new logo selected');" >
 	{% trans %}Attac<u>h</u> a logo{% endtrans %}
 </label>
 <span class='label label-info' id="upload-file-info"></span>

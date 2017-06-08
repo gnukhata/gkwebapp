@@ -66,11 +66,8 @@ $(document).ready(function(){
   {
     $("#showeditorg").click();
   });
-/*$("my-file-selector").onchange(function(){
-  $("#submit").click();
-}
 
-);*/
+
   $(document).off("click", "#submit").on("click", "#submit", function(event){
     event.preventDefault();
     console.log("Hello1")
