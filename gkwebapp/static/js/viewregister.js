@@ -224,7 +224,7 @@ $("#viewregister_toyear").val(yearpad($("#viewregister_toyear").val(),4));
       global: false,
       async: false,
       datatype: "text/html",
-      data: {"flag":$("#viewregister_type option:selected").val(), "calculatefrom":$("#viewregister_fromyear").val()+"-"+$("#viewregister_frommonth").val()+"-"+$("#viewregister_fromdate").val(),"calculateto":$("#viewregister_toyear").val()+"-"+$("#viewregister_tomonth").val()+"-"+$("#viewregister_todate").val()},
+      data: {"flag":$("#viewregister_type option:selected").val(), "calculatefrom":$("#viewregister_fromdate").val()+"-"+$("#viewregister_frommonth").val()+"-"+$("#viewregister_fromyear").val(),"calculateto":$("#viewregister_todate").val()+"-"+$("#viewregister_tomonth").val()+"-"+$("#viewregister_toyear").val()},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
