@@ -32,28 +32,24 @@ $(document).ready(function() {
   $("#anotherregister").click(function(event) {
     $("#showviewregister").click();
   });
-/*
-  $('#exporttospreadsheetregister').click(function (e) {
-    $.ajax(
-      {
-        type: "POST",
-        url: "/log?action=printableshowlogreport",
-        global: false,
-        async: false,
-        datatype: "text/html",
-        data: {"typeflag":$('#logof').val(),"userid":$('#userid').val(),"username":$('#username').val(), "calculatefrom":$('#calculatefrom').val(),"calculateto":$('#calculateto').val()},
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-      })
-        .done(function(resp)
-        {
-          $("#info").html(resp);
-          console.log($('#userid').val()+$('#username').val());
-        }
-      );
 
-    });
-*/
+  $('#exporttospreadsheetregister').click(function (event) {
+    console.log("in");
+    event.preventDefault();
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/invoice?type=spreadsheet&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2')+'&calculatefrom='+$("#calculatefrom").val()+'&calculateto='+$("#calculateto").val()+'&flag='+$('#flag').val(), true);
+    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    xhr.responseType = 'blob';
+
+    xhr.onload = function(e) {
+      if (this.status == 200) {
+      // get binary data as a response
+        var blob = this.response;
+        var url = window.URL.createObjectURL(blob);
+        window.location.assign(url)
+      }
+    };
+    xhr.send();
+  });
+
 });
