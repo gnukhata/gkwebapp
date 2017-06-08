@@ -197,4 +197,4 @@ def showregisterreport(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/report?type=register&flag=%d&calculatefrom=%s&calculateto=%s"%(int(request.params["flag"]), str(request.params["calculatefrom"]), str(request.params["calculateto"])), headers=header)
     registerheader = {"flag": request.params["flag"], "calculatefrom": datetime.strptime(request.params["calculatefrom"], '%Y-%m-%d').strftime('%d-%m-%Y'), "calculateto": datetime.strptime(request.params["calculateto"], '%Y-%m-%d').strftime('%d-%m-%Y')}
-    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "taxcolumns":result.json()["taxcolumns"], "registerheader": registerheader}
+    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "totalrow": result.json()["totalrow"], "taxcolumns":result.json()["taxcolumns"], "registerheader": registerheader}
