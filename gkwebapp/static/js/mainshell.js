@@ -427,15 +427,21 @@ var userrole1;
        $("#showclosebooks").remove();
        $("#deleteorg").remove();
        $("#tallyimport").remove();
+       $("#showviewlog").remove();
      }
      if(resp["gkresult"]["userrole"]==-1 || resp["gkresult"]["userrole"]==0){
        $("listofusers").remove();
      }
      if(resp["gkresult"]["userrole"]==1){
        $(".hideoperator").remove();
+       $("#showviewlog").remove();
      }
      if(resp["gkresult"]["userrole"]==0){
        $(".hidemanager").remove();
+       $("#showviewlog").remove();
+     }
+     if(resp["gkresult"]["userrole"]==2) {
+       $("#showviewlog").remove();
      }
      if (resp["gkresult"]["booksclosedflag"]==1) {
        $(".closebooks").remove();
@@ -444,6 +450,7 @@ var userrole1;
      }
      if (resp["gkresult"]["roflag"]==1) {
        $(".rollover").remove();
+       $("#showviewlog").remove();
      }
 
      if(resp["gkresult"]["userrole"]==-1) {
