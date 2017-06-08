@@ -167,14 +167,14 @@ $(document).ready(function()
           $("#godownname").focus();
           return false;
         }
-        if ($.trim($("#godownstate option:selected").text())=="None") {
-          $("#stateblank-alert").alert();
-          $("#stateblank-alert").fadeTo(2250, 200).slideUp(500, function(){
-            $("#stateblank-alert").hide();
-          });
-          $("#godownstate").focus();
-          return false;
-        }
+        if ($.trim($("#godownstate").val())=="") {
+  	        $("#stateblank-alert").alert();
+  	        $("#stateblank-alert").fadeTo(2250, 500).slideUp(500, function(){
+  	          $("#stateblank-alert").hide();
+  	        });
+  	        $("#godownstate").focus();
+  	        return false;
+  	      }
         if ($.trim($("#godownaddress").val())=="") {
           $("#addressblank-alert").alert();
           $("#addressblank-alert").fadeTo(2250, 200).slideUp(500, function(){
