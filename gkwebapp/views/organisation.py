@@ -80,7 +80,7 @@ def editOrganisation(request):
 	filelogo={}
 	try:
 		if request.POST['logo'].file:
-			
+
 			img=request.POST['logo'].file
 			image=Image.open(img)
 			imgbuffer = cStringIO.StringIO()
@@ -88,10 +88,10 @@ def editOrganisation(request):
 			img_str = base64.b64encode(imgbuffer.getvalue())
 			image.close()
 			filelogo=img_str
-			print "photo found"
+
 			gkdata["logo"]=filelogo
 	except:
-		print "no photo found "
+		print "no file found "
 
 	result = requests.put("http://127.0.0.1:6543/organisations", headers=header, data=json.dumps(gkdata))
 	return {"gkstatus":result.json()["gkstatus"]}

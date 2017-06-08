@@ -70,7 +70,7 @@ $(document).ready(function(){
 
   $(document).off("click", "#submit").on("click", "#submit", function(event){
     event.preventDefault();
-    console.log("Hello1")
+
     var regdate="";
     var fcraregdate="";
     var regno="";
@@ -126,7 +126,7 @@ $(document).ready(function(){
     form_data.append("orgfcradate",fcraregdate);
     if ($("#my-file-selector")[0].files[0])
     {
-      console.log("file selected");
+
       var file = $("#my-file-selector")[0].files[0];
       form_data.append("logo",file);
     }
@@ -148,7 +148,7 @@ $(document).ready(function(){
       },
       success: function(jsonObj)
       {
-        //console.log(data);
+
         if(jsonObj["gkstatus"]==0)
         {
           console.log("success");
@@ -184,7 +184,7 @@ $(document).ready(function(){
             var imagesrc = "data:image/png;base64,"+resp["logo"];
 
            $("#imgbox").attr("src", imagesrc);
-           console.log("Cool rohini");
+
           console.log("success");
       })
       .fail(function() {
