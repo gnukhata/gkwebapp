@@ -95,6 +95,7 @@
         </tr>
       </thead>
       <tbody>
+        <!-- Description: this is for all rows of invoices" -->
           {% for record in gkresult %}
           <tr  data-value="{{record['invid']}}">
             <td class="smwrap calign">
@@ -136,7 +137,46 @@
             {% endif %}
             </td>
             {% endfor %}
+          </tr>
           {% endfor %}
+          <!-- Description: This is for last row i.e. Total of transactions -->
+        <tr>
+          <td class="smwrap calign">
+          </td>
+          <td class="smwrap calign">
+          </td>
+          <td class="dtwrap calign">
+          </td>
+          <td class="dtwrap calign">
+          </td>
+          <td class="dtwrap calign">
+            <strong> <i>Total </i></strong>
+          </td>
+          <td class="dtwrap calign">
+            {{totalrow['grossamount']}}
+          </td>
+          <td class="dtwrap calign">
+            {{totalrow['taxfree']}}
+          </td>
+          {% for tax in taxcolumns %}
+          <td class="dtwrap calign">
+          {% if tax in totalrow["taxamount"] %}
+            {{totalrow['taxamount'][tax]}}
+          {% else %}
+            0.00
+          {% endif %}
+          </td>
+          {% endfor %}
+          {% for tax in taxcolumns %}
+          <td class="dtwrap calign">
+          {% if tax in totalrow["tax"] %}
+            {{totalrow['tax'][tax]}}
+          {% else %}
+            0.00
+          {% endif %}
+          </td>
+          {% endfor %}
+        </tr>
       </tbody>
     </table>
     <span style="margin:auto; display:table;">
