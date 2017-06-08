@@ -618,7 +618,9 @@ var userrole1;
       });
   });
 
-
+  $("#exportdata").on('shown.bs.modal', function(event) {
+    $("#exportbutton").focus();
+  });
 
   $("#product").click(function (e){
     // calls product page.

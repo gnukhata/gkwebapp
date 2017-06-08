@@ -23,7 +23,7 @@
               Note however that a spreadsheet containing data exported from GNUKhata precisely contains list of accounts and vouchers in two separate sheets.  However if the proper specifications are followed, you can get data from other programs too.
               <br>
               As an example, all you need is to export data from Tally ERP 9 to a spreadsheet in xlsx format.  This can be done through the gateway function of Tally.  For more details on how to export, please refer Tally documentation.<br>
-              Once data is exported to the spreadsheet,  it however has to comply with the import specification given below, which need minor adjustment in the sheets. 
+              Once data is exported to the spreadsheet,  it however has to comply with the import specification given below, which need minor adjustment in the sheets.
               <br>
               <div class = "mygrid-wrapper ">
               <ul>
@@ -104,8 +104,8 @@
               </div>
               <div  class="panel-footer ">
                 <div class="form-inline">
-                  <label class="btn btn-primary btn-sm" for="my-file-selector">
-                    <input name="spreadsheet" accesskey="w" class="input-sm" id="my-file-selector" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" / style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
+                  <label class="btn btn-primary btn-sm" for="my-file-selector" id="importlink">
+                    <input name="spreadsheet" accesskey="w" class="input-sm" id="my-file-selector" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" / style="display:none;"  onchange="$('#upload-file-info').html($(this).val());">
                     {% trans %}Bro<u>w</u>se{% endtrans %}
                   </label>
                   <span class='label label-info' id="upload-file-info"></span>
