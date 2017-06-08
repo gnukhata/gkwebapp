@@ -55,6 +55,7 @@ $(document).ready(function() {
                         $(".invdetails").show();
                         $(document).find('.invdetails input,.invdetails select, .invstate select,.invoice_issuer input').prop("disabled", true); // disable all input fields for viewing only.
                         $("#invoice_challanno").val(resp["invoicedata"]["invoiceno"]);
+                        $("#footer_id").show();
                         $("#invoice_editprint").show();
                         $("#invoice_state").val(resp["invoicedata"]["taxstate"]);
                         $('#edit_invoice_product_table tbody').empty();
@@ -215,6 +216,9 @@ $(document).ready(function() {
                     console.log("complete");
                 });
         }
+
+
+
 
     });
 
