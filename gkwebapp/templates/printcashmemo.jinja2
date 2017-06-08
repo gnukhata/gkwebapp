@@ -30,7 +30,17 @@
   <body>
     <div class="container-fluid">
       <div class="row">
+        <div class="col-xs-6">
+          <div class="row">
 
+        <div class="col-xs-6" id="logo_div">
+
+            <div class="img-thumbnail img-circle ">
+              <div style="position: relative; padding: 0; cursor: pointer;" type="file">
+             <img class="img-circle"  style="width: 100px; height: 100px;" id="imgbox">
+              </div>
+            </div>
+        </div>
       <div class="col-xs-6">
           <h4>{{org["orgname"]}}</br>
             <small>
@@ -56,9 +66,13 @@
               <br>Website : {{org["orgwebsite"]}}
               {% endif %}
           <br></small></h4>
-          <hr style="border-color:grey;margin-top:0px; margin-bottom:0px;">
 
       </div>
+      <hr style="border-color:grey;margin-top:0px; margin-bottom:0px;">
+    </div>
+  </div>
+
+
       <div class="col-sm-offset-1 col-sm-5">
         <h2 class="text-right">Cash Memo</h2><br>
         <table class="table table-bordered">
