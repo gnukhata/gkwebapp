@@ -64,14 +64,14 @@ $(document).ready(function() {
                         if (resp.invoicedata.cancelflag == 1) {
                             $("#cancelmsg").show();
                             $("#alertstrong").html("Invoice cancelled on " + resp.invoicedata.canceldate);
-                            $("#invcl").prop("disabled", true);
-                            $("#invcl").hide();
+                            //$("#invcl").prop("disabled", true);
+                            //$("#invcl").hide();
 
 
                         } else {
                             $("#cancelmsg").hide();
-                            $("#invcl").prop("disabled", false);
-                            $("#invcl").show();
+                            //$("#invcl").prop("disabled", false);
+                            //$("#invcl").show();
                         }
                         if (resp.invoicedata.attachmentcount > 0) {
                             $("#viewattach").show();
@@ -159,7 +159,7 @@ $(document).ready(function() {
                                 '</td>' +
                                 '<td class="col-xs-2">' +
                                 '<div class="input-group">' +
-                                '<input type="text" class="invoice_product_freequantity form-control deliverychallan_edit_disable edit_invoice_disable input-sm text-right" value="' + 0 + '">' +
+                                '<input type="text" class="invoice_product_freequantity form-control deliverychallan_edit_disable edit_invoice_disable input-sm text-right" value="' + resp["invoicedata"]["freeqty"] + '">' +
                                 '<span class="input-group-addon input-sm" id="unitaddon">' + resp["invoicedata"]["contents"][content]["unitname"] + '</span>' +
                                 '</div>' +
                                 '</td>' +
@@ -343,173 +343,6 @@ $(document).ready(function() {
         }
     });
 
-
-
-
-    $("#invoice_deliverynote").change(function(event) {
-        if ($("#invoice_deliverynote option:selected").val() != '') {
-            $.ajax({
-                    url: '/invoice?action=getdeliverynote',
-                    type: 'POST',
-                    dataType: 'json',
-                    async: false,
-                    data: { "dcid": $("#invoice_deliverynote option:selected").val() },
-                    beforeSend: function(xhr) {
-                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                    }
-                })
-                .done(function(resp) {
-                    if (resp["gkstatus"] == 0) {
-                        $("#invoice_customer").val(resp["delchal"]["delchaldata"]["custid"]);
-                        $('#edit_invoice_product_table tbody').empty();
-                        var totqty = 0;
-                        $.each(resp.delchal.stockdata.items, function(key, value) {
-                            $('#edit_invoice_product_table tbody').append('<tr>' +
-                                '<td class="col-xs-3">' +
-                                '<select class="form-control deliverychallan_edit_disable edit_invoice_disable input-sm product_name">' +
-                                '<option value="' + key + '">' + value.productdesc + '</option>' +
-                                '</select>' +
-                                '</td>' +
-                                '<td class="col-xs-2">' +
-                                '<input type="text" class="invoice_product_quantity form-control deliverychallan_edit_disable edit_invoice_disable input-sm text-right" value="' + value.qty + '">' +
-                                '</td>' +
-                                '<td class="col-xs-2">' +
-                                '<input type="text" class="invoice_product_per_price form-control deliverychallan_edit_disable edit_invoice_disable input-sm numtype text-right" value="0.00">' +
-                                '</td>' +
-                                '<td class="col-xs-1">' +
-                                '<input type="text" class="invoice_product_tax_rate form-control edit_invoice_disable input-sm numtype text-right" value="0.00">' +
-                                '</td>' +
-                                '<td class="col-xs-1">' +
-                                '<input type="text" class="invoice_product_tax_amount form-control edit_invoice_disable input-sm numtype text-right" value="0.00" disabled>' +
-                                '</td>' +
-                                '<td class="col-xs-2">' +
-                                '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable edit_invoice_disable input-sm numtype text-right" value="0.00" disabled>' +
-                                '</td>' +
-                                '<td class="col-xs-1" style="width: 3%;">' +
-                                '<a href="#" class="product_del deliverychallan_edit_disable"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
-                                '</td>' +
-                                '</tr>');
-                            totqty += +value.qty;
-                        });
-                        $('#edit_invoice_product_table tfoot tr:last td:eq(1) input').val(parseFloat(totqty).toFixed(2));
-
-                    }
-                })
-                .fail(function() {
-                    console.log("error");
-                })
-                .always(function() {
-                    console.log("complete");
-                });
-
-        } else {
-            $.ajax({
-                    url: '/invoice?action=getproducts',
-                    type: 'POST',
-                    dataType: 'json',
-                    async: false,
-                    beforeSend: function(xhr) {
-                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                    }
-                })
-                .done(function(resp) {
-                    console.log("success");
-                    if (resp["gkstatus"] == 0) {
-                        $('#edit_invoice_product_table tbody').empty();
-                        $('#edit_invoice_product_table tbody').append('<tr>' +
-                            '<td class="col-xs-3">' +
-                            '<select class="form-control edit_invoice_disable input-sm product_name"></select>' +
-                            '</td>' +
-                            '<td class="col-xs-2">' +
-                            '<input type="text" class="invoice_product_quantity form-control edit_invoice_disable input-sm text-right" value="0">' +
-                            '</td>' +
-                            '<td class="col-xs-2">' +
-                            '<input type="text" class="invoice_product_per_price form-control edit_invoice_disable input-sm numtype text-right" value="0.00">' +
-                            '</td>' +
-                            '<td class="col-xs-1">' +
-                            '<input type="text" class="invoice_product_tax_rate form-control edit_invoice_disable input-sm numtype text-right" value="0.00">' +
-                            '</td>' +
-                            '<td class="col-xs-1">' +
-                            '<input type="text" class="invoice_product_tax_amount form-control edit_invoice_disable input-sm numtype text-right" value="0.00" disabled>' +
-                            '</td>' +
-                            '<td class="col-xs-2" style="width: 3%;">' +
-                            '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable edit_invoice_disable input-sm numtype text-right" value="0.00" disabled>' +
-                            '</td>' +
-                            '<td class="col-xs-1">' +
-
-                            '</td>' +
-                            '</tr>');
-                        for (product of resp["products"]) {
-                            $('#edit_invoice_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' + product.productdesc + '</option>');
-                        }
-                        $('#edit_invoice_product_table tbody tr:last td:eq(0) select').prepend(('<option value="" selected>None</option>'));
-                        $('#edit_invoice_product_table tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
-                        $('.invoice_product_quantity').numeric({ negative: false });
-                        $('.invoice_product_per_price').numeric({ negative: false });
-                    }
-                    $('#edit_invoice_product_table tfoot tr:last td:eq(1) input').val(parseFloat(0).toFixed(2));
-                })
-                .fail(function() {
-                    console.log("error");
-                })
-                .always(function() {
-                    console.log("complete");
-                });
-        }
-
-    });
-
-
-    $('#invcl').click(function(event) {
-        event.preventDefault();
-        /* Act on the event */
-        $('.modal-backdrop').remove();
-        $('.modal').modal('hide');
-        invcode = $("#invoice_all_no option:selected").val();
-        $('#m_confirmdel').modal('show').one('click', '#invcancel', function(e) {
-            $.ajax({
-                    url: '/invoice?action=cancel',
-                    type: 'POST',
-                    global: false,
-                    async: false,
-                    datatype: 'json',
-                    data: { "invid": invcode },
-                    beforeSend: function(xhr) {
-                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                    }
-                })
-                .done(function(resp) {
-                    if (resp["gkstatus"] == 0) {
-                        $('.modal-backdrop').remove();
-                        $("#invoice_view").click();
-                        $("#invoicecancelsuccess-alert").alert();
-                        $("#invoicecancelsuccess-alert").fadeTo(2250, 500).slideUp(500, function() {
-                            $("#invoicecancelsuccess-alert").hide();
-                        });
-                    } else if (resp["gkstatus"] == 5) {
-                        $("#invoice_all_no").focus();
-                        $("#failure-delete-alert").alert();
-                        $("#failure-delete-alert").fadeTo(2250, 500).slideUp(500, function() {
-                            $("#failure-delete-alert").hide();
-                        });
-                        return false;
-                    }
-                })
-                .fail(function() {
-                    console.log("error");
-                })
-                .always(function() {
-                    console.log("complete");
-                });
-        });
-        $('#m_confirmdel').on('shown.bs.modal', function(event) {
-            $("#m_cancel").focus();
-        });
-        $('#m_confirmdel').on('hidden.bs.modal', function(event) {
-            $("#invoice_all_no").focus();
-        });
-
-    });
     $("#invoice_editprint").click(function(event) {
         printset = [];
         subtotal = 0;
