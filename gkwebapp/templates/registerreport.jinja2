@@ -23,9 +23,9 @@
   }
   #registertable tbody {
       display:block;
+      width: 100%;
       height: calc(100vh - 17em);
-      overflow-y:scroll;
-      overflow-x:scroll;
+
   }
   #registertable thead,#registertable tbody tr {
       display:table;
@@ -34,6 +34,10 @@
   }
   #registertable thead {
       width: calc( 100% - 0.65em )
+  }
+  .registertablecss{
+    overflow-y:scroll;
+    overflow-x:scroll;
   }
   .ralign{
     text-align:right;
@@ -71,6 +75,7 @@
   {% else %}
   <span style="margin:auto; display:table; font-size:120%;"><strong>{% trans %}Purchase Register{% endtrans %}</strong></span>
   {% endif %}
+  <div class="registertablecss">
   <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="rclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
   <table id="registertable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
     <thead class="bg-primary">
@@ -172,6 +177,7 @@
         </tr>
       </tbody>
     </table>
+  </div>
     <span style="margin:auto; display:table;">
       <button class="btn btn-sm btn-primary" type="button" id="anotherregister" accesskey="v">{% trans %}<u>V</u>iew Another Register{% endtrans %}</button>
       <button class="btn btn-sm btn-primary" type="button"  id="exporttospreadsheetregister" accesskey="x">{% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
