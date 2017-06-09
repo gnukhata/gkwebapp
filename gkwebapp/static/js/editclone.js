@@ -293,7 +293,7 @@ $(document).ready(function()
 
   $("#edit").click(function(event)
   {
-
+      $("#printvoucher").hide();
     ecflag="edit";
     $(".lblec").prepend('<i>Edit </i>');
     if ($("#replaceattach").length) {
@@ -368,7 +368,8 @@ $(document).ready(function()
 
   $("#clone").click(function(event)
   {
-    if ($("#replaceattach").length) {
+      $("#printvoucher").hide();
+      if ($("#replaceattach").length) {
       $("#replaceattach").show();
     }
     else {
@@ -475,7 +476,8 @@ $(document).ready(function()
   });
   $("#viewattach").click(function(event)
   {
-    var vcode = $("#vcode").val();
+      $("#printvoucher").hide();
+      var vcode = $("#vcode").val();
     $.ajax({
       url: '/getattachment',
       type: 'POST',
@@ -1468,7 +1470,6 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
 
   $("#delete").click(function(event) {
     // Act on the event
-
 	  $("#hideinp").val(1);
 	  $('#myModal').modal('hide');
 	  $('#confirm_del').modal('show');
