@@ -76,21 +76,21 @@
   <span style="margin:auto; display:table; font-size:120%;"><strong>{% trans %}Purchase Register{% endtrans %}</strong></span>
   {% endif %}
   <div class="registertablecss">
-<!--  <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="rclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
--->  <table id="registertable" class="table shadow table-bordered" >
+  <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="rclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+  <table id="registertable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
     <thead class="bg-primary">
         <tr>
           <th class="smwrap calign" >{% trans %}Sr. No.{% endtrans %}</th>
-          <th class="smwrap calign" >{% trans %}Invoice No.{% endtrans %}</th>
-          <th class="dtwrap calign" >{% trans %}Invoice Dt{% endtrans %}</th>
+          <th class="smwrap calign" >{% trans %}Invoice Number{% endtrans %}</th>
+          <th class="dtwrap calign" >{% trans %}Invoice Date{% endtrans %}</th>
           {% if registerheader["flag"] == "0" %}
-          <th class="dtwrap calign">{% trans %}Cust Name{% endtrans %}</th>
-          <th class="dtwrap calign">{% trans %}Cust TIN{% endtrans %}</th>
+          <th class="dtwrap calign">{% trans %}Customer Name{% endtrans %}</th>
+          <th class="dtwrap calign">{% trans %}Customer TIN{% endtrans %}</th>
           {% else %}
-          <th class="dtwrap calign">{% trans %}Suppl Name{% endtrans %}</th>
-          <th class="dtwrap calign">{% trans %}Suppl TIN{% endtrans %}</th>
+          <th class="dtwrap calign">{% trans %}Supplier Name{% endtrans %}</th>
+          <th class="dtwrap calign">{% trans %}Supplier TIN{% endtrans %}</th>
           {% endif %}
-          <th class="dtwrap">{% trans %}Gross Amt{% endtrans %}</th>
+          <th class="dtwrap calign">{% trans %}Gross Amount{% endtrans %}</th>
           <th class="dtwrap calign">{% trans %}TAX Free{% endtrans %}</th>
           {% for tax in taxcolumns %}
             <th class="dtwrap calign">{% trans %}Net @{{tax}}%{% endtrans %}</th>

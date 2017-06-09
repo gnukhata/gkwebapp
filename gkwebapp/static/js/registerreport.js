@@ -26,10 +26,10 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#msspinmodal").modal("hide");
   $(".fixed-table-loading").remove();
-/*  $('#rclearfields').click(function(){
+  $('#rclearfields').click(function(){
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
   });
-*/  $("#anotherregister").click(function(event) {
+  $("#anotherregister").click(function(event) {
     $("#showviewregister").click();
   });
 
