@@ -465,7 +465,8 @@ $(document).ready(function()
           },
         })
         .done(function(resp) {
-          $("#printvoucherdiv").html(resp);
+            $("#printvoucherdiv").html(resp);
+	    $("#loaprint").focus();
         })
         .fail(function() {
           console.log("error");

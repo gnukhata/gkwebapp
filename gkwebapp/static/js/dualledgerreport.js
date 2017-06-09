@@ -99,7 +99,8 @@ $(document).ready(function() {
 
   $("#ledgertable1").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
-    var id = $(this).attr('data-value');
+      var id = $(this).attr('data-value');
+      $("#vouchernumberinput").val(id);
     if (id=="")
     {
       return false;
