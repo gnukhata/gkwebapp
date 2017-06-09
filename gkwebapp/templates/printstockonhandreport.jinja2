@@ -27,7 +27,7 @@
 	    .shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
-  
+
   #latable td {
     font-size: 75%;
     padding: 4 !important;
@@ -35,7 +35,7 @@
   }
 #latable{
    margin: 0 auto
-     
+
 }
   #latable th {
     font-size: 85%;
@@ -62,12 +62,12 @@
   }
   #latable thead {
       width: calc( 100% - 0.65em );
-      
+
   }
 
  .size{
 	width: 800px;
-	
+
 }
 
   .cred{
@@ -95,7 +95,7 @@
 	<body>
     <input type="hidden" id="productcode" name="productcode" value="{{stockrefresh["productcode"]}}"></input>
     <input type="hidden" id="productdesc" name="productdesc" value="{{stockrefresh["productdesc"]}}"></input>
-    
+
     <input type="hidden" id="calculateto" name="calculateto" value="{{stockrefresh["calculateto"]}}"></input>
     <input type="hidden" id="financialstart" name="financialstart" value="{{stockrefresh["financialstart"]}}"></input>
 		<input type="hidden" id="godownflag" name="godownflag" value="{{stockrefresh["godownflag"]}}"></input>
@@ -116,7 +116,7 @@
 		{% else %}
 		<i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong><i>  {% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong>
     {% endif %}
-		<i>{% trans %}Period{% endtrans %}</i> : <strong>{{stockrefresh["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{stockrefresh["calculateto"]}}</strong>
+		<i>{% trans %}As On{% endtrans %}</i> : <strong>{{stockrefresh["calculatefrom"]}}</strong> {% trans %}{% endtrans %} <strong>{{stockrefresh["calculateto"]}}</strong>
 	</div>
 		<div class="table-responsive printorgdetails">
 			<table id="ledgertable" class="table shadow table-striped table-condensed table-bordered">
@@ -124,7 +124,7 @@
 					<tr class="visible-print">
 						<th colspan="7" style="text-align:center; font-size:80%">
 							<i>{% trans %}Stock on Hand Report for{% endtrans %}</i> <strong>{{stockrefresh["productdesc"]}}</strong>
-							<i>{% trans %}Stock as on{% endtrans %}</i> : <strong> <strong>{{stockrefresh["calculateto"]}}</strong>
+							<i>{% trans %}As On{% endtrans %}</i> : <strong> <strong>{{stockrefresh["calculateto"]}}</strong>
 						</th>
 					</tr>
 					<tr>
@@ -136,7 +136,7 @@
         <th class="mdwrap calign" >
           {% trans %}Product Name{% endtrans %}
         </th>
-         
+
         <th class="smwrap calign" >
           {% trans %}Quantity{% endtrans %}
         </th>
@@ -182,10 +182,10 @@
     <td class="mdwrap calign" >
           {{record["productname"]}}
         </td>
-       
+
      <td class="smwrap calign" >
           {{record["balance"]}}
-        
+
         </td>
 
         {% endif %}
@@ -198,7 +198,7 @@
         </td>
         {% endif %}
         {% if godown == "All godowns" and stockrefresh["productdesc"] != "All Products"%}
-        
+
          <td class="mdwrap calign" >
           {{record["productname"]}}
         </td>
@@ -208,7 +208,7 @@
      <td class="smwrap calign" >
           {{record["balance"]}}
         </td>
-        
+
         {% endif %}
         {% if godown != "All godowns" and godown != "" and stockrefresh["productdesc"] != "All Products" %}
 
@@ -222,8 +222,8 @@
 	</tr>
         {% endfor %}
 
-  
- 
+
+
 				</tbody>
 			</table>
 			<span style="margin:auto; display:table;">
@@ -243,7 +243,7 @@
 else {
 	backdata = {"productcode":$("#productcode").val(), "productdesc":$("#productdesc").val(),"calculateto":$("#calculateto").val(),"backflag":"0","godownflag":$("#godownflag").val(),"goid":"-1","goname":""}
 }
-}		
+}
 else if ($("#godownflag").val()==1) {
 if ($("#editgoddet").val()=="allgod"){
 
