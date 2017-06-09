@@ -36,15 +36,23 @@ $(document).ready(function() {
   var mm = todaysdate.getMonth()+1; //yields month
   var yyyy = todaysdate.getFullYear(); //yields year
 	// Setting default date to financialstart and end.
-  var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
-  $("#viewregister_fromdate").val(fromdatearray[2])
-  $("#viewregister_frommonth").val(fromdatearray[1])
-  $("#viewregister_fromyear").val(fromdatearray[0])
-  var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g)
-  $("#viewregister_todate").val(dd)
-  $("#viewregister_tomonth").val(mm)
-  $("#viewregister_toyear").val(yyyy)
-
+  var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g);
+  $("#viewregister_fromdate").val(fromdatearray[2]);
+  $("#viewregister_frommonth").val(fromdatearray[1]);
+  $("#viewregister_fromyear").val(fromdatearray[0]);
+  var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g);
+  var fromd = new Date(fromdatearray[0], fromdatearray[1] - 1, fromdatearray[2]);
+  var tod = new Date(todatearray[0], todatearray[1] - 1, todatearray[2]);
+  if (fromd <= todaysdate && tod >= todaysdate) {
+    $("#viewregister_todate").val(dd)
+    $("#viewregister_tomonth").val(mm)
+    $("#viewregister_toyear").val(yyyy)
+  }
+  else{
+    $("#viewregister_todate").val(todatearray[2])
+    $("#viewregister_tomonth").val(todatearray[1])
+    $("#viewregister_toyear").val(todatearray[0])
+  }
   function pad (str, max) { //to add leading zeros in date
     str = str.toString();
     if (str.length==1) {
@@ -183,7 +191,7 @@ $("#viewregister_toyear").val(yearpad($("#viewregister_toyear").val(),4));
     $('#viewregister_fromdate').focus().select();
     return false;
   }
-  if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,todaysdate)) {
+  if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,financialend)) {
     $("#between-date-alert").alert();
     $("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
       $("#between-date-alert").hide();
@@ -199,7 +207,7 @@ $("#viewregister_toyear").val(yearpad($("#viewregister_toyear").val(),4));
     $('#viewregister_todate').focus().select();
     return false;
   }
-  if (!Date.parseExact(todate,"yyyyMMdd").between(financialstart,todaysdate)) {
+  if (!Date.parseExact(todate,"yyyyMMdd").between(financialstart, financialend)) {
     $("#between-date-alert").alert();
     $("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
       $("#between-date-alert").hide();
