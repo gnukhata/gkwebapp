@@ -25,8 +25,20 @@ Contributors:
 
 
 */
-// This script is for base page of invoice. 
+// This script is for base page of invoice.
 (document).ready(function() {
+  today = new Date();
+  year = today.getFullYear();
+  month = today.getMonth();
+  month += 1;
+  date = today.getDate();
+  if (month < 10) {
+    month = "0" + month;
+  }
+  if(date < 10) {
+    date = "0" + date;
+  }
+  wholedate = year + "-" + month + "-" + date;
 
   $("#invoice_record").click(function() { // calls record invoice page i.e purchase invoice.
     $.ajax(
@@ -36,6 +48,7 @@ Contributors:
     url: "/invoice?action=showadd&status=in",
     global: false,
     async: false,
+    data: {"inputdate": wholedate},
     datatype: "text/html",
     beforeSend: function(xhr)
       {
@@ -56,6 +69,7 @@ Contributors:
     url: "/invoice?action=showadd&status=out",
     global: false,
     async: false,
+    data: {"inputdate": wholedate},
     datatype: "text/html",
     beforeSend: function(xhr)
       {
