@@ -32,30 +32,45 @@
     <div class="row">
 
       <div class="col-xs-6">
-        <h4>{{org["orgname"]}}</br>
-          <small>
-            {% if org["orgaddr"]!='' %}
-            {{org["orgaddr"]}},
-            {% endif %}
-            {% if org["orgcity"]!='' %}
-          </br>{{org["orgcity"]}} - {{org["orgpincode"]}},
-          {% endif %}
-          {% if org["orgstate"]!='' %}
-        </br>{{org["orgstate"]}}.
-        {% endif %}
-        {% if org["orgtelno"]!='' %}
-      </br>Contact No.: {{org["orgtelno"]}}
-      {% endif %}
-      {% if org["orgemail"]!='' %}
-      <br>Email : {{org["orgemail"]}}
-      {% endif %}
-      {% if org["orgfax"] %}
-      <br>Fax : {{org["orgfax"]}}
-      {% endif %}
-      {% if org["orgwebsite"]!='' %}
-      <br>Website : {{org["orgwebsite"]}}
-      {% endif %}
-      <br></small></h4>
+        <div class="row">
+        <div class="col-xs-6" id="logo_div">
+
+            <div class="img-thumbnail img-circle ">
+              <div style="position: relative; padding: 0; cursor: pointer;" type="file">
+             <img class="img-circle"  style="width: 100px; height: 100px;" id="imgbox">
+              </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+
+                    <h4>{{org["orgname"]}}</br>
+                      <small>
+                        {% if org["orgaddr"]!='' %}
+                        {{org["orgaddr"]}},
+                        {% endif %}
+                        {% if org["orgcity"]!='' %}
+                      </br>{{org["orgcity"]}} - {{org["orgpincode"]}},
+                      {% endif %}
+                      {% if org["orgstate"]!='' %}
+                    </br>{{org["orgstate"]}}.
+                    {% endif %}
+                    {% if org["orgtelno"]!='' %}
+                    </br>Contact No.: {{org["orgtelno"]}}
+                    {% endif %}
+                    {% if org["orgemail"]!='' %}
+                    <br>Email : {{org["orgemail"]}}
+                    {% endif %}
+                    {% if org["orgfax"] %}
+                    <br>Fax : {{org["orgfax"]}}
+                    {% endif %}
+                    {% if org["orgwebsite"]!='' %}
+                    <br>Website : {{org["orgwebsite"]}}
+                    {% endif %}
+                    <br></small></h4>
+
+        </div>
+      
+  </div>
       <hr style="border-color:grey;margin-top:0px; margin-bottom:0px;">
       To,
       <h4>{{cust["custname"]}}</br><small>{{cust["custaddr"]}},</br>{{cust["state"]}}
@@ -66,8 +81,8 @@
         <br>Email : {{cust["custemail"]}}
         {% endif %}
       </small></h4>
+</div>
 
-    </div>
     <div class="col-sm-offset-1 col-sm-5">
       <h2 class="text-right">Invoice</h2><br>
       <table class="table table-bordered">

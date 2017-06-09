@@ -10,6 +10,9 @@
 	table td {
 		border-top: none !important;
 	}
+	.img-circle {
+  border-radius: 50%;
+}
 	</style>
 </head>
 <body >
@@ -37,7 +40,26 @@
 
 					{% trans %}Connection Failed.{% endtrans %}
 				</div>
+<div class="col-xs-12 from-group">
+	<center>
+<div class="img-thumbnail img-circle ">
 
+  <div style="position: relative; padding: 0; cursor: pointer;" type="file">
+ <img class="img-circle"  style="width: 100px; height: 100px;" id="imgbox">
+ <canvas id="imgcanvas" hidden></canvas>
+
+
+	</div>
+</center>
+</div>
+</div>
+<center>
+<label class="btn btn-primary btn-sm" for="my-file-selector">
+	<input name="img"  class="input-sm" accesskey="o" id="my-file-selector" type="file" accept="image/*" style="display:none;" onchange="$('#upload-file-info').html('New Logo selected');" >
+	{% trans %}Upload L<u>o</u>go{% endtrans %}
+</label>
+<span class='label label-info' id="upload-file-info"></span>
+</center>
 				<form id="editorganisationform" method="post" class="form-inline">
 					<div class="col-xs-6 from-group" >
 						<input type="text" id="orgtype" hidden value="{{gkresult["orgtype"]}}" style="width: 100%"></input>
@@ -208,7 +230,7 @@
           <span aria-hidden="true">&times;</span>
         </button> </div>
       <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-       
+
        <p>   <font color=" #566573"> {%trans%}
 
 This screen helps you edit or update organisation particulars.</br>
@@ -218,13 +240,13 @@ Note that the default tab and shift + tab shortcuts are also available for navig
 
         </p>
       </div>
-      
+
     </div>
   </div>
 </div>
 					<div class="container-fluid">
 						<div class="col-xs-2 col-xs-offset-5">
-							<button type="submit" class="btn btn-primary btn-sm" id="submit" name="submit" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
+							<button type="submit" class="btn btn-primary btn-sm" id="submit" name="editorganisationsubmit" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
 							<button id="reset" class="btn btn-warning btn-sm" accesskey="r">{% trans %}<u>R</u>eset{% endtrans %}</button>
 						</div>
 					</div>

@@ -67,12 +67,14 @@ $(document).ready(function(){
     $("#showeditorg").click();
   });
 
-  $("#editorganisationform").submit(function(event){
-    $("#msspinmodal").modal("show");
-    var regdate=""
-    var fcraregdate=""
-    var regno=""
-    var fcrano=""
+
+  $(document).off("click", "#submit").on("click", "#submit", function(event){
+    event.preventDefault();
+
+    var regdate="";
+    var fcraregdate="";
+    var regno="";
+    var fcrano="";
 
     if($("#orgtype").val()=="Not For Profit")
     {
@@ -105,22 +107,51 @@ $(document).ready(function(){
         }
       }
     }
+    var form_data = new FormData();
+    form_data.append("orgcity", $("#orgcity").val());
+    form_data.append("orgaddr", $("#orgaddr").val());
+    form_data.append("orgpincode", $("#orgpincode").val());
+    form_data.append("orgstate",$("#orgstate").val());
+    form_data.append("orgcountry",$("#orgcountry").val());
+    form_data.append("orgtelno",$("#orgtelno").val());
+    form_data.append("orgfax",$("#orgfax").val());
+    form_data.append("orgwebsite",$("#orgwebsite").val());
+    form_data.append("orgemail",$("#orgemail").val());
+    form_data.append("orgpan",$("#orgpan").val());
+    form_data.append("orgmvat",$("#orgmvat").val());
+    form_data.append("orgstax",$("#orgstax").val());
+    form_data.append("orgregno",regno);
+    form_data.append("orgregdate",regdate);
+    form_data.append( "orgfcrano",fcrano);
+    form_data.append("orgfcradate",fcraregdate);
+    if ($("#my-file-selector")[0].files[0])
+    {
 
+      var file = $("#my-file-selector")[0].files[0];
+      form_data.append("logo",file);
+    }
+
+  $("#msspinmodal").modal("show");
     $.ajax({
       type: 'POST',
       url: '/editorganisation',
       global: false,
+      contentType: false,
+      cache: false,
+      processData: false,
       async: false,
       dataType: 'json',
-      data: {"orgcity":$("#orgcity").val(),"orgaddr":$("#orgaddr").val(),"orgpincode":$("#orgpincode").val(),"orgstate":$("#orgstate").val(), "orgcountry":$("#orgcountry").val(),"orgtelno":$("#orgtelno").val(), "orgfax":$("#orgfax").val(),"orgwebsite":$("#orgwebsite").val(),"orgemail":$("#orgemail").val(),"orgpan":$("#orgpan").val(),"orgmvat":$("#orgmvat").val(),"orgstax":$("#orgstax").val(),"orgregno":regno,"orgregdate":regdate, "orgfcrano":fcrano,"orgfcradate":fcraregdate},
+      data: form_data,
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
       },
       success: function(jsonObj)
       {
+
         if(jsonObj["gkstatus"]==0)
         {
+          console.log("success");
           $("#reset").click();
           $("#success-alert").alert();
           $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -139,4 +170,28 @@ $(document).ready(function(){
 
 
   });
+
+  $.ajax({
+          url: '/editorganisation?action=getattachment',
+          type: 'POST',
+          datatype: 'json',
+          beforeSend: function(xhr) {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          },
+          data: {},
+      })
+      .done(function(resp) {
+            var imagesrc = "data:image/png;base64,"+resp["logo"];
+
+           $("#imgbox").attr("src", imagesrc);
+
+          console.log("success");
+      })
+      .fail(function() {
+          console.log("error");
+      })
+      .always(function() {
+          console.log("complete");
+      });
+
 });
