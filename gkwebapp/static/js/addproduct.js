@@ -616,6 +616,7 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
   var nextindex1 = curindex1+1;
   var previndex1 = curindex1-1;
   if (event.which==13) {
+    $('#product_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').val(parseFloat($('#product_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').val()).toFixed(2));
     event.preventDefault();
     if ($('#product_tax_table tbody tr:eq('+curindex1+') td:eq(1) select option:selected').attr("stateid") < 1 && selectedtaxname == "VAT") {
       $("#tax_state-blank-alert").alert();
@@ -644,6 +645,7 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
         $('#product_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').focus();
         return false;
       }
+
       $('#product_tax_table tbody').append('<tr>'+
       '<td class="col-xs-4">'+
       '<select class="form-control input-sm tax_name product_new_name">'+
