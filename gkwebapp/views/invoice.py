@@ -281,8 +281,8 @@ def registerspreadsheet(request):
 				sheet.getCell(i,row).stringValue("0.00")
 			i += 1
 		row += 1
-	sheet.getCell(4, row).stringValue("Total").setBold(True)
-	ods.content.mergeCells(0,row,4,1)
+	sheet.getCell(0, row).stringValue("Total").setBold(True)
+	ods.content.mergeCells(0,row,5,1)
 	sheet.getCell(5, row).stringValue(totalrow["grossamount"]).setBold(True)
 	sheet.getCell(6, row).stringValue(totalrow["taxfree"]).setBold(True)
 	i = 7
