@@ -23,20 +23,17 @@
      tfoot{
 	 display: table-footer-group;
      }
-     .dtwrap{
-	 width :11%
-     }
-     .smwrap{
-	 width:1%
+     .narwrap{
+	 width :10%;
      }
      .lngwrap{
-	 width:39%
+	 width:50%;
      }
      .mdwrap{
-	 width:20%
+	 width:25%;
      }
      .vlngwrap{
-	 width:76%
+	 width:80%;
      }
      .totalwrap {
 	 width:28%;
@@ -85,9 +82,6 @@
       <table id="latable" class="table table-condensed table-bordered table-striped shadow">
 	<thead>
           <tr>
-            <th class="smwrap">
-	      {% trans %}Cr/Dr{% endtrans %}
-            </th>
             <th class="lngwrap">
 	      {% trans %}Account Name{% endtrans %}
             </th>
@@ -102,9 +96,6 @@
         <tbody>
           {% for dr in voucher["drs"] %}
             <tr>
-	      <td class="smwrap">
-                  {% trans %}Dr{% endtrans %}
-	      </td>
 	      <td class="lngwrap">
                   {% for acc in draccounts %}
                     {% if dr==acc['accountname'] %}
@@ -123,9 +114,6 @@
 
           {% for cr in voucher["crs"] %}
             <tr>
-	      <td class="smwrap">
-                {% trans %}Cr{% endtrans %}
-	      </td>
 	      <td class="lngwrap">
                   {% for acc in craccounts %}
                     {% if cr==acc['accountname'] %}
@@ -145,33 +133,33 @@
           {% endfor %}
         </tbody>
         <tfoot>
-	  <tr>
-	    <td colspan="4">
-	      <label>{% trans %}Narration{% endtrans %} :</label><label>&nbsp {{voucher["narration"]}}</label>
-	    </td>
-	  </tr>
           <tr>
-            <td class="col-xs-6" colspan="2">
+            <td class="lngwrap">
 	      <label>{% trans %}Total{% endtrans %}</label>
             </td>
-            <td class="col-xs-2 text-right">
+            <td class="mdwrap text-right">
 	      {{voucher["totaldr"]}}
             </td>
-            <td class="col-xs-2 text-right">
+            <td class="mdwrap text-right">
 	      {{voucher["totalcr"]}}
             </td>
+	    <tr>
+	      <td colspan="3">
+		{% trans %}Narration{% endtrans %} : {{voucher["narration"]}}
+	      </td>
+	    </tr>
           </tr>
 	  {% if  projects %}
 	    <tr>
-	      <td colspan="4">
-		<label>{% trans %}Project{% endtrans %} :</label>
+	      <td colspan="3">
+		{% trans %}Project{% endtrans %} : 
         {% for project in projects %}
           {% if project['projectcode']==voucher["project"] %}
-            <label>&nbsp {{project['projectname']}}</label>
+            {{project['projectname']}}
           {% endif %}
         {% endfor %}
         {% if voucher["project"]==None %}
-          <label>{% trans %}None{% endtrans %}</label>
+          {% trans %}None{% endtrans %}
         {% endif %}
 	      </td>
 	    </tr>
