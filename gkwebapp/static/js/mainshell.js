@@ -22,6 +22,7 @@
    "Krishnakant Mane" <kk@gmail.com>
    "Ishan Masdekar " <imasdekar@dff.org.in>
    "Navin Karkera" <navin@dff.org.in>
+   "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
    "Dinesh Sutar" <dinesh.sutar@openmailbox.org>
    "Abhijith Balan" <abhijithb21@openmailbox.org>
    "Parabjyot Singh" <parabjyot1996@gmail.com>
@@ -1155,6 +1156,28 @@ var userrole1;
 
         type: "POST",
         url: "/log?action=showviewlog",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+      }
+    );
+  });
+
+  $('#showviewregister').click(function (e) {
+    // calls view page for ledger report.
+    $("#msspinmodal").modal();
+    $.ajax(
+      {
+        type: "POST",
+        url: "/invoice?action=showviewregister",
         global: false,
         async: false,
         datatype: "text/html",

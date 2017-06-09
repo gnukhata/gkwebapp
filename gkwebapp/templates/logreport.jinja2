@@ -68,13 +68,12 @@
   <input type="hidden" id="calculateto" value={{logheader["calculateto"]}}>
   <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{logheader["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{logheader["calculateto"]}}</strong></span>
   {% if typeflag == "1" %}
-  <span style="margin:auto; display:table;"><i>{% trans %}Activity Log of All Users{% endtrans %}</i></span>
+  <span style="margin:auto; display:table; font-size:120%;"><strong>{% trans %}Activity Log of All Users{% endtrans %}</strong></span>
   {% else %}
-  <span style="margin:auto; display:table;"><i>{% trans %}Activity Log of User{% endtrans %}</i> : <strong>{{username}}</strong></span>
+  <span style="margin:auto; display:table; font-size:120%;"><strong>{% trans %}Activity Log of User{% endtrans %}</i> :{{username}}</strong></span>
   {% endif %}
-  <div class="row">
-    <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="lclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
-    <table id="logtable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
+  <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="lclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+  <table id="logtable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
       <thead class="bg-primary">
         <tr>
           <th class="dtwrap calign" >{% trans %}Date{% endtrans %}</th>
@@ -114,7 +113,6 @@
         {% endif %}
       </tbody>
     </table>
-  </div>
     <span style="margin:auto; display:table;">
       <button class="btn btn-sm btn-primary" type="button" id="anotherlog" accesskey="v">{% trans %}<u>V</u>iew Another log{% endtrans %}</button>
       <button class="btn btn-sm btn-primary" type="button"  id="viewprintablelogreport" accesskey="t">{% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>

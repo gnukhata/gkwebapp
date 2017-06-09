@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Register{% endtrans %}</title>
+  <style media="screen">
+  .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  label {
+		font-size: 90%;
+	}
+  </style>
+</head>
+<body>
+  <div style="padding-top:5px" class="container-fluid mainbox col-md-6 col-md-offset-3">
+    <div class="panel shadow">
+      <div class="panel-heading">
+        <h3 class="panel-title">{% trans %}View Register{% endtrans %}</h3>
+      </div>
+      <div class="panel-body" style="padding-top:5px">
+        <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
+          <label for="viewregister_fromdate">{% trans %}Please enter date in proper format!{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
+
+          <label for="viewregister_fromdate">{% trans %}Please enter date within the Financial Start Date & financial End!{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="compare-date-alert" aria-live="rude" role="alert" hidden>
+
+          <label for="viewregister_todate">{% trans %}From date should be smaller or equal to to date !{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="type-blank-alert" aria-live="rude" role="alert" hidden>
+
+          <label for="viewregister_type">{% trans %}Please select a type!{% endtrans %}</label>
+        </div>
+        <div style="margin-bottom: 5px" class="col-xs-12 from-group">
+          <label for="viewregister_type">{% trans %}Type{% endtrans %} :</label>
+          <select class = "form-control input-sm" id="viewregister_type"  name = "viewregister_type" >
+            <option value="" disabled selected hidden>{% trans %}Select Type of Register{% endtrans %}</option>
+            <option value="0">Sales</option>
+            <option value="1">Purchase</option>
+          </select>
+          <br>
+          <label for="viewregister_fromdate">{% trans %}From Date{% endtrans %} :</label>
+          <div class="form-inline" >
+
+            <div class="form-group">
+
+              <input type="text" class="viewregister_date form-control input-sm" id="viewregister_fromdate" value="" size="2" maxlength="2" placeholder="DD" accesskey="d" >
+              <input type="text" id="viewregister_frommonth" class="viewregister_date form-control input-sm" value="" size="2" maxlength="2" placeholder="MM" >
+              <input type="text" id="viewregister_fromyear" class="viewregister_date form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY" >
+            </div>
+
+          </div>
+          <br>
+          <label for="viewregister_todate">{% trans %}To Date{% endtrans %} :</label>
+          <div class="form-inline" >
+            <div class="form-group">
+              <input type="text" class="viewregister_date form-control input-sm" id="viewregister_todate" value="" size="2" maxlength="2" placeholder="DD" >
+              <input type="text" id="viewregister_tomonth" class="viewregister_date form-control input-sm" value="" size="2" maxlength="2" placeholder="MM" >
+              <input type="text" id="viewregister_toyear" class="viewregister_date form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY" >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button class="btn btn-primary btn-sm" id="viewregister_submit" name="view" accesskey="v">{% trans %}<u>V</u>iew{% endtrans %}</button>
+        <button id="viewregister_reset" class="btn btn-danger btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewregister.js')}}"></script>
+</body>
+</html>
