@@ -193,7 +193,8 @@ $(".search").children(".form-control").keyup(function(event){
 
   $("#vtable").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
-    var id = $(this).attr('data-value');
+      var id = $(this).attr('data-value');
+      $("#vouchernumberinput").val(id);
     $("#modalindex").val($(this).index());
     $.ajax(
       {
