@@ -23,15 +23,36 @@
      tfoot{
 	 display: table-footer-group;
      }
+     .dtwrap{
+	 width :11%
+     }
+     .smwrap{
+	 width:1%
+     }
+     .lngwrap{
+	 width:39%
+     }
+     .mdwrap{
+	 width:20%
+     }
+     .vlngwrap{
+	 width:76%
+     }
+     .totalwrap {
+	 width:28%;
+     }
+     .rightJustified {
+	 text-align: right;
+     }
 
     </style>
   </head>
   <body>
-    <div class="form-inline">
-      <div class="well well-sm" >
-	<label for="vno">{% trans %}Voucher No{% endtrans %} :</label><label for="vno" style="color:red;font-size: 120%;">*</label>
-	<input type="text" name="vno" class=" form-control input-sm" id="vno" size="10" value="{{voucher["vouchernumber"]}}">
-	<div class="form-group col-xs-offset-2">
+      <div class="row">
+	<div class="col-xs-4 text-left">
+	  <label for="vno">{% trans %}Voucher No{% endtrans %} : </label><label>&nbsp{{voucher["vouchernumber"]}}</label>
+	</div>
+	<div class="col-xs-4 text-center">
           {% if vtype=="contra" %}
             <label class="lblec"><i>{% trans %}Contra{% endtrans %}</i></label>
           {% elif vtype == "payment" %}
@@ -55,105 +76,106 @@
           {% endif %}
 	</div>
 
-	<div class="pull-right form-group">
-          <label for="vdate">{% trans %}<u>D</u>ate{% endtrans %} :</label><label for="vdate" style="color:red;font-size: 120%;">*</label>
-          <input type="text" class="vdate form-control input-sm" id="vdate" value="{{voucher['voucherdate'][:2]}}" size="2" maxlength="2" placeholder="DD"accesskey="d">
-          <input type="text" id="vmonth" class="vdate form-control input-sm" value="{{voucher['voucherdate'][3:5]}}" size="2" maxlength="2" placeholder="MM">
-          <input type="text" id="vyear" class="vdate form-control input-sm" value="{{voucher['voucherdate'][6:]}}" size="4" maxlength="4" placeholder="YYYY">
+	<div class="col-xs-4 text-right">
+          <label for="vdate">{% trans %}Date{% endtrans %} :</label><label>&nbsp{{voucher['voucherdate'][:2]}}&nbsp-{{voucher['voucherdate'][3:5]}}&nbsp-{{voucher['voucherdate'][6:]}}</label>
 	</div>
       </div>
-    </div>
 
     <div class="table-responsive printorgdetails">
       <table id="latable" class="table table-condensed table-bordered table-striped shadow">
 	<thead>
           <tr>
-            <th class="col-xs-1">
-              {% trans %}Cr/Dr{% endtrans %}
+            <th class="smwrap">
+	      {% trans %}Cr/Dr{% endtrans %}
             </th>
-            <th class="col-xs-5">
-              {% trans %}Account Name{% endtrans %}
+            <th class="lngwrap">
+	      {% trans %}Account Name{% endtrans %}
             </th>
-            <th class="col-xs-3 rightJustified">
-              {% trans %}Dr Amount{% endtrans %}
+            <th class="mdwrap rightJustified">
+	      {% trans %}Dr Amount{% endtrans %}
             </th>
-            <th class="col-xs-3 rightJustified">
-              {% trans %}Cr Amount{% endtrans %}
+            <th class="mdwrap rightJustified">
+	      {% trans %}Cr Amount{% endtrans %}
             </th>
           </tr>
         </thead>
         <tbody>
           {% for dr in voucher["drs"] %}
             <tr>
-              <td class="col-xs-1">
-                <select class="form-control input-sm crdr" >
-                  <option value="Dr" selected>{% trans %}Dr{% endtrans %}</option>
-                  <option value="Cr">{% trans %}Cr{% endtrans %}</option>
-                </select>
-              </td>
-              <td class="col-xs-5">
-                <select class="form-control input-sm accs">
+	      <td class="smwrap">
+                  {% trans %}Dr{% endtrans %}
+	      </td>
+	      <td class="lngwrap">
                   {% for acc in draccounts %}
                     {% if dr==acc['accountname'] %}
-                      <option value="{{acc['accountcode']}}" selected>{{acc['accountname']}}</option>
-                    {% else %}
-                      <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
+		      {{acc['accountname']}}
                     {% endif %}
                   {% endfor %}
-                </select>
-              </td>
-              <td class="col-xs-3">
-                <input class="form-control input-sm dramt rightJustified" type="text" value="{{voucher["drs"][dr]}}">
-              </td>
-              <td class="col-xs-3">
-                <input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>
-              </td>
+	      </td>
+	      <td class="mdwrap text-right">
+                {{voucher["drs"][dr]}}
+	      </td>
+	      <td class="mdwrap">
+	      </td>
             </tr>
 
           {% endfor %}
 
           {% for cr in voucher["crs"] %}
             <tr>
-              <td class="col-xs-1">
-                <select class="form-control input-sm crdr" >
-                  <option value="Cr" selected>{% trans %}Cr{% endtrans %}</option>
-                  <option value="Dr">{% trans %}Dr{% endtrans %}</option>
-                </select>
-              </td>
-              <td class="col-xs-5">
-                <select class="form-control input-sm accs">
+	      <td class="smwrap">
+                {% trans %}Cr{% endtrans %}
+	      </td>
+	      <td class="lngwrap">
                   {% for acc in craccounts %}
                     {% if cr==acc['accountname'] %}
-                      <option value="{{acc['accountcode']}}" selected>{{acc['accountname']}}</option>
-                    {% else %}
-                      <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
+		      {{acc['accountname']}}
                     {% endif %}
 
                   {% endfor %}
                 </select>
-              </td >
-              <td class="col-xs-3">
-                <input class="form-control input-sm clbal rightJustified" type="text" value="0.00" disabled>
-              </td>
-              <td class="col-xs-3">
-                <input class="form-control input-sm cramt rightJustified" type="text" value="{{voucher["crs"][cr]}}">
-              </td>
+	      </td >
+	      <td class="mdwrap">
+	      </td>
+	      <td class="mdwrap text-right">
+                {{voucher["crs"][cr]}}
+	      </td>
             </tr>
 
           {% endfor %}
         </tbody>
         <tfoot>
+	  <tr>
+	    <td colspan="4">
+	      <label>{% trans %}Narration{% endtrans %} :</label><label>&nbsp {{voucher["narration"]}}</label>
+	    </td>
+	  </tr>
           <tr>
-            <td class="col-xs-7" colspan="2">
-              <input type="text" class="form-control input-sm ttl" value="Total" disabled>
+            <td class="col-xs-6" colspan="2">
+	      <label>{% trans %}Total{% endtrans %}</label>
             </td>
-            <td class="col-xs-2">
-              <input id="drtotal" class="form-control input-sm ttl rightJustified" type="text" value="0.00" disabled>
+            <td class="col-xs-2 text-right">
+	      {{voucher["totaldr"]}}
             </td>
-            <td class="col-xs-2">
-              <input id="crtotal" class="form-control input-sm ttl rightJustified" type="text" value="0.00" disabled>
+            <td class="col-xs-2 text-right">
+	      {{voucher["totalcr"]}}
             </td>
           </tr>
+	  {% if  projects %}
+	    <tr>
+	      <td colspan="4">
+		<label>{% trans %}Project{% endtrans %} :</label>
+        {% for project in projects %}
+          {% if project['projectcode']==voucher["project"] %}
+            <label>&nbsp {{project['projectname']}}</label>
+          {% endif %}
+        {% endfor %}
+        {% if voucher["project"]==None %}
+          <label>{% trans %}None{% endtrans %}</label>
+        {% endif %}
+	      </td>
+	    </tr>
+          {% endif %}
         </tfoot>
       </table>
       <span style="margin:auto; display:table;">
