@@ -92,8 +92,16 @@ $(document).ready(function() {
   $(document).off('keydown', '#paymentmode').on('keydown', '#paymentmode', function(event) {
     if (event.which == 13) {
       event.preventDefault();
-      if ($(".amountpaid").length > 0) {
-	$(".amountpaid:first").focus().select();
+	if ($(".amountpaid").length > 0) {
+	    if ($("#onaccdiv").css('display') != 'none') {
+		$("#onaccount").focus().select();
+	    }
+		else if ($("#asadvancediv").css('display') != 'none') {
+		    $("#asadvance").focus().select();
+		}
+		else {
+		    $(".amountpaid:first").focus().select();
+		}
       }
       else{
 	$(".footerbutton:first").focus();
@@ -380,7 +388,7 @@ $(document).ready(function() {
   $(document).off('keydown', '#onaccount, #asadvance').on('keydown', '#onaccount, #asadvance', function(event) {
     if (event.which == 13) {
       event.preventDefault();
-      $("#useasadvance").focus().select();
+      $(".footerbutton:first").focus();
     }
     if(event.which == 45) {
       event.preventDefault();
