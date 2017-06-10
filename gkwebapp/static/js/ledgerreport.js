@@ -171,7 +171,8 @@ $(document).ready(function() {
   // This function opens a modal of the selected voucher.
   // It shows the complete details of the selected voucher along with option to edit, delete and clone.
     e.preventDefault();
-    var id = $(this).attr('data-value');
+      var id = $(this).attr('data-value');
+      $("#vouchernumberinput").val(id);
     if (id=="")
     {
       return false;

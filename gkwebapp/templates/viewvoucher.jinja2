@@ -503,9 +503,10 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
               <button type="submit" id="save" class="btn btn-success btn-sm" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
               <button type="button" class="btn btn-danger btnfocus btn-sm" id="delete" accesskey="d">{% trans %}<u>D</u>elete{% endtrans %}</button>
               {% if voucher["attachmentcount"]>0 %}
-              <button type="button" class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">{% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
+		<button type="button" class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">{% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
             </div>
-            {% else %}
+              {% else %}
+	    <button type="button" class="btn btn-success btn-sm" id="printvoucher">{% trans %}Print Voucher{% endtrans %}</button>
             <div class="form-group" id="replaceattach">
               <label class="btn btn-info btn-sm" id="attachlbl" for="my-edit-file-selector">
                 <input name="img" accesskey="h" class="input-sm" multiple accept="image/*" id="my-edit-file-selector" type="file" style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
