@@ -1500,8 +1500,13 @@ $("#invsel").keyup(function(event) {
       {
 	details.invid="" ;
       }
+      if($("#instrumentno").val())
+      {
+        details.instrumentno=$("#instrumentno").val();
+      }
     form_data.append("vdetails",JSON.stringify(details));
     form_data.append("transactions",JSON.stringify(output));
+  
     $("#msspinmodal").modal("show");
     $.ajax({
       type: "POST",
@@ -1739,4 +1744,17 @@ $("#show"+$("#vtype").val()).click();
     {
       $("#vno").focus().select();
     });
+
+    $(document).off("click","#instrumentbtn").on("click","#instrumentbtn",function(event)
+    {
+      event.preventDefault();
+$("#instrumentmodal").modal("show");
+    });
+
+      $("#instrumentmodal").on('shown.bs.modal', function(event) {
+        $("#instrumentno").focus();
+      });
+      $("#instrumentmodal").on('hidden.bs.modal', function(event) {
+        event.preventDefault();
+      });
 });

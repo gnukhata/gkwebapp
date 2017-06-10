@@ -264,7 +264,7 @@
             {% if invoicedata!= 0 %}
             <tbody style="height: 20%;">
             {% else %}
-            <tbody style="height: 45%;">
+            <tbody style="height: 35%;">
             {% endif %}
               <tr>
                 <td class="col-xs-1">
@@ -355,6 +355,7 @@
         </div>
       {% endif %}
           <div class="form-inline" >
+              <button class="btn btn-info" type="button" id="instrumentbtn">{% trans %}Instrument Details{% endtrans %}</button>
               <button type="button" id="save" name="submit" class="btn btn-success" accesskey="s">
                 {% trans %}<u>S</u>ave{% endtrans %}
               </button>
@@ -478,7 +479,7 @@ The field Balance displays the balance of the account selected as on the date of
 	    <button type="button" id ="btasadv" class="btn footerbutton btn-primary" accesskey="a">{% trans %}<u>A</u>dd As Advance{% endtrans %}</button>
 	    <button type="button" id ="btonacc" class="btn footerbutton btn-danger" accesskey="n">{% trans %}Add On Accou<u>n</u>t{% endtrans %}</button>
 	    <button type="button" id ="btbillwise" class="btn footerbutton btn-info" accesskey="b">{% trans %}<u>B</u>ill Wise Accounting{% endtrans %}</button>
-            <button type="button" id ="btclose" class="btn footerbutton btn-success">{% trans %}Done{% endtrans %}</button>
+      <button type="button" id ="btclose" class="btn footerbutton btn-success">{% trans %}Done{% endtrans %}</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -503,6 +504,69 @@ The field Balance displays the balance of the account selected as on the date of
       </div><!-- /.modal-dialog -->
     </div>
   </div><!-- /.modal -->
+
+  <!-- instrument details popup modal-->
+  <div id="instrumentmodal" class="modal " tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">
+          {% trans %}Instrument Details{% endtrans %}
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <div class="panel shadow">
+          <div class="panel-body">
+            <div class="row">
+              <div class="alert alert-danger" id="dates-improper-alert" aria-live="rude" role="alert" hidden>
+               {% trans %}Improper Date!{% endtrans %}
+             </div>
+
+             <div class="form-group form-inline">
+               <label for="instrumentno">{% trans %}Instrument No{% endtrans %} :</label>
+               <input class="form-control input-sm" id="instrumentno" placeholder="{% trans %}Enter Instrument no{% endtrans %}" >
+             </div>
+             <div class="form-group form-inline">
+               <label for="bankname">{% trans %}Bank Name{% endtrans %} :</label>
+               <input class="form-control input-sm" id="bankname" placeholder="{% trans %}Enter Bank Name{% endtrans %}" >
+             </div>
+             <div class="form-group form-inline">
+               <label for="branchname">{% trans %}Branch Name{% endtrans %} :</label>
+               <input class="form-control input-sm" id="branchname" placeholder="{% trans %}Enter Branch Name{% endtrans %}" >
+             </div>
+             <div class="form-group form-inline">
+               <label for="instrumentno">{% trans %}Instrument No{% endtrans %} :</label>
+               <input class="form-control input-sm" id="instrumentno" placeholder="{% trans %}Enter Instrument no{% endtrans %}">
+             </div>
+             <div class="form-inline">
+                    <label for="instrument_date">{% trans %}Instrument Date:{% endtrans %}</label>
+
+                      <form class="form-inline">
+                        <div class="form-group">
+                          <input type="text" class="form-control input-sm instrdate" size="2" maxlength="2" placeholder="DD" id="instrument_date" >
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control input-sm instrdate" size="2" maxlength="2" placeholder="MM" id="instrument_month">
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control input-sm instrdate" size="4" maxlength="4" placeholder="YYYY" id="instrument_year">
+                        </div>
+                      </form>
+              </div>
+
+            </div>
+        </div>
+      </div>
+      <small id="exithelp" class="form-text text-muted">{% trans %}Press Esc key to save Instrument Details. {% endtrans %}</small><br>
+    </div>
+    <div class="modal-footer">
+          <button type="button"  id="donebutton" class="btn btn-sm btn-success pull-left" data-dismiss="modal">Done</button>
+        </div>
+  </div>
+  </div>
+</div>
+
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addvoucher.js')}}"></script>
 </body>
 </html>

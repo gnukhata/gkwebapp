@@ -102,9 +102,9 @@ def addvoucher(request):
     crs={}
     drs={}
     if vdetails["projectcode"] !="":
-        gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails["projectcode"])}
+        gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails["projectcode"]),"instrumentno":vdetails["instrumentno"]}
     else:
-        gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"]}
+        gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"instrumentno":vdetails["instrumentno"]}
     if vdetails["vtype"] == "purchase" or vdetails["vtype"] == "sales":
         if vdetails["invid"] != "":
             gkdata["invid"] = vdetails["invid"]
