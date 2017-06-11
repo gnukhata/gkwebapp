@@ -112,7 +112,7 @@
 
    #latable tbody {
        display:block;
-       height: calc(100vh - 26em);
+       height: calc(100vh - 27em);
        overflow-y:scroll;
    }
 
@@ -157,97 +157,96 @@
   </style>
 </head>
 <body>
-  <div class="alert alert-danger" id="bwamount-alert"  aria-live="rude" role="alert" hidden>
+  <div class="col-sm-12">
+    <div class="alert alert-danger" id="bwamount-alert"  aria-live="rude" role="alert" hidden>
 
-    {% trans %}Total Amount Paid is more than available Amount!{% endtrans %}
-  </div>
-  <div class="alert alert-danger" id="asadvance-alert"  aria-live="rude" role="alert" hidden>
-
-    {% trans %}Advance amount used is more than available!{% endtrans %}
-  </div>
-  <div class="alert alert-danger" id="onaccount-alert"  aria-live="rude" role="alert" hidden>
-
-    {% trans %}On Account amount used is more than available!{% endtrans %}
-  </div>
-  <div class="alert alert-danger" id="bwvamount-alert"  aria-live="rude" role="alert" hidden>
-
-    {% trans %}Total Amount adjusted is more than Amount entered in Voucher. Please enter remaining amount as advance or on account!{% endtrans %}
-  </div>
-  <div class="alert alert-danger" id="unadjustedamount-alert"  aria-live="rude" role="alert" hidden>
-
-    {% trans %}Total Amount adjusted is more than available Amount. Please enter remaining amount as advance or on account!{% endtrans %}
-  </div>
-  <div class="alert alert-danger" id="bwadvac-alert"  aria-live="rude" role="alert" hidden>
-
-    {% trans %}Sum of as advance and on account amounts used is more than that is available!{% endtrans %}
-  </div>
-  <div class="alert alert-danger" id="bwinvamount-alert"  aria-live="rude" role="alert" hidden>
-
-    {% trans %}Amount Paid is more than Amount Pending for Invoice!{% endtrans %}
-  </div>
-  <div class="alert alert-danger" id="bwamount-less-alert"  aria-live="rude" role="alert" hidden>
-
-    {% trans %}Total Amount Adjusted is less than Amount to be adjusted!{% endtrans %}
-  </div>
-  <div class="alert alert-danger" id="bwamount-blank-alert"  aria-live="rude" role="alert" hidden>
-
-    {% trans %}Please enter Amount Paid.{% endtrans %}
-  </div>
-  <div class="alert alert-warning" id="bwfailure-alert"  aria-live="rude" role="alert" hidden>
-
-    {% trans %}Something went wrong.{% endtrans %}
-  </div>
-  <div class="alert alert-success" id="bwamount-success-alert"  aria-live="rude" role="alert" hidden>
-
-    {% trans %}Receipt/Payment Updated!{% endtrans %}
-  </div>
-    <div id="onaccdiv" class="col-sm-12" style="margin-bottom:20px;" hidden>
-      <form class="form-inline">
-	<div class="form-group col-sm-6">
-	  <label for="onaccount">{% trans %}On Account{% endtrans %} :</label>
-	  <input class="form-control input-sm numtype rightJustified" id="onaccount" placeholder="{% trans %}On Account Amount{% endtrans %}" value="0.00">
-	</div>
-	<div class="form-group col-sm-6">
-	  <label>{% trans %}Amount adjusted against bills{% endtrans %} :</label><label class="billamount">0.00</label>
-	</div>
-      </form>
+      {% trans %}Total Amount Adjusted is more than available Amount!{% endtrans %}
     </div>
-    <div id="asadvancediv" class="col-sm-12" style="margin-bottom:20px;" hidden>
-      <form class="form-inline">
-	<div class="form-group col-sm-6">
-	  <label for="asadvance">{% trans %}As Advance{% endtrans %} :</label>
-	  <input class="form-control input-sm numtype rightJustified" id="asadvance" placeholder="{% trans %}As Advance Amount{% endtrans %}" value="0.00">
-	</div>
-	<div class="form-group col-sm-6">
-	  <label>{% trans %}Amount adjusted against bills{% endtrans %} :</label><label class="billamount">0.00</label>
-	</div>
-      </form>
+    <div class="alert alert-danger" id="asadvance-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Advance amount used is more than available!{% endtrans %}
     </div>
+    <div class="alert alert-danger" id="onaccount-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}On Account amount used is more than available!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="bwvamount-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Total Amount adjusted is more than Amount entered in Voucher. Please enter remaining amount as advance or on account!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="unadjustedamount-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Total Amount adjusted is more than available Amount. Please enter remaining amount as advance or on account!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="bwadvac-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Sum of as advance and on account amounts used is more than that is available!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="bwinvamount-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Amount Adjusted is more than Amount Pending for Invoice!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="bwamount-less-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Total Amount Adjusted is less than Amount to be adjusted!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="bwamount-blank-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Please enter Amount Paid.{% endtrans %}
+    </div>
+    <div class="alert alert-warning" id="bwfailure-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Something went wrong.{% endtrans %}
+    </div>
+    <div class="alert alert-success" id="bwamount-success-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Receipt/Payment Updated!{% endtrans %}
+    </div>
+  </div>
     <div class="col-sm-12" style="margin-top:10px;">
-      <div id="asadvanceamt" class="col-sm-6">
-	<b>As Advance Amount : </b><label id="asadvancelabel" data-asadvance="{{asadvance}}" class="text-primary"><b>{{asadvance}}</b></label>
+      <div id="asadvanceamt" class="col-sm-5">
+	<form class="form-inline">
+	  <div class="form-group">
+	    <label for="paymentmode">{% trans %}<u>U</u>se From{% endtrans %} :</label>
+	    <select id="paymentmode" class="form-control input-sm" accesskey="u">
+		<option value="15">{% trans %}On Account{% endtrans %}</option>
+		<option value="1">{% trans %}As Advance{% endtrans %}</option>
+	    </select>
+	  </div>
+	</form>
       </div>
-      <div id="onaccamt" class="col-sm-6">
-	<b>On Account Amount: </b><label id="onaccountlabel" data-onaccount="{{onaccount}}" class="text-danger"><b>{{onaccount}}</b></label>
+      <div id="onaccamt" class="col-sm-7">
+	<div style="float:right;">
+	  <b>As Advance : </b><label id="asadvancelabel" data-asadvance="{{asadvance}}" class="text-primary"><b>{{asadvance}}</b></label>&nbsp
+	  <b>On Account : </b><label id="onaccountlabel" data-onaccount="{{onaccount}}" class="text-danger"><b>{{onaccount}}</b></label>
+	</div>
       </div>
     </div>
-    <div class="col-sm-12">
-      <div id="asadvancediv" class="col-sm-6">
-	<form class="form-inline">
-	  <div class="form-group">
-	    <label for="useasadvance">{% trans %}Use from As Advance{% endtrans %} :</label>
-	    <input class="form-control input-sm numtype rightJustified" id="useasadvance" placeholder="{% trans %}As Advance Amount{% endtrans %}" value="0.00">
+    <div id="onaccdiv" class="col-sm-12" style="margin-bottom:10px;" hidden>
+      <form class="form-inline">
+	<div class="form-group col-sm-6">
+	  <div style="float:right;">
+	    <label for="onaccount">{% trans %}On Account{% endtrans %} :</label>
+	    <input class="form-control input-sm numtype rightJustified" id="onaccount" placeholder="{% trans %}On Account Amount{% endtrans %}" value="0.00">
 	  </div>
-	</form>
-      </div>
-      <div id="onaccdiv" class="col-sm-6">
-	<form class="form-inline">
-	  <div class="form-group">
-	    <label for="useonaccount">{% trans %}Use from On Account{% endtrans %} :</label>
-	    <input class="form-control input-sm numtype rightJustified" id="useonaccount" placeholder="{% trans %}On Account Amount{% endtrans %}" value="0.00">
+	</div>
+	<div class="form-group col-sm-6">
+	  <label>{% trans %}Amount adjusted against bills{% endtrans %} :</label><label class="billamount">0.00</label>
+	</div>
+      </form>
+    </div>
+    <div id="asadvancediv" class="col-sm-12" style="margin-bottom:10px;" hidden>
+      <form class="form-inline">
+	<div class="form-group col-sm-6">
+	  <div style="float:right">
+	    <label for="asadvance">{% trans %}As Advance{% endtrans %} :</label>
+	    <input class="form-control input-sm numtype rightJustified" id="asadvance" placeholder="{% trans %}As Advance Amount{% endtrans %}" value="0.00">
 	  </div>
-	</form>
-      </div>
+	</div>
+	<div class="form-group col-sm-6">
+	  <label>{% trans %}Amount adjusted against bills{% endtrans %} :</label><label class="billamount">0.00</label>
+	</div>
+      </form>
     </div>
     <table id="latable" class="table shadow nopadding table-bordered table-condensed table-fixedheader">
       <thead class="bg-primary">
@@ -265,7 +264,7 @@
             {% trans %}Amount Pending{% endtrans %}
           </th>
           <th class="lngwrap ralign">
-            {% trans %}Amount Paid{% endtrans %}
+            {% trans %}Amount Adjusted{% endtrans %}
           </th>
 	</tr>
       </thead>
@@ -329,6 +328,16 @@
 	</tr>
       </tfoot>
     </table>
+    <div class="col-sm-12" style="margin-top:10px;">
+      <div id="asadvancediv" class="col-sm-6">
+	<div style="float:right;">
+	  <label for="useasadvance">{% trans %}Amount used from As Advance{% endtrans %} : </label><label id="useasadvance" data-useasadvance="0.00"> 0.00</label>
+	</div>
+      </div>
+      <div id="onaccdiv" class="col-sm-6">
+	<label for="useonaccount">{% trans %}Amount used from On Account{% endtrans %} : </label><label id="useonaccount" data-useonaccount="0.00"> 0.00</label>
+      </div>
+    </div>
   <input type="text" id="custid" value="{{custid}}" hidden></input>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/billwiseaccounting.js')}}"></script>
 </body>

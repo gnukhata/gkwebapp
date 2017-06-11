@@ -1271,7 +1271,7 @@ $("#invsel").keyup(function(event) {
 		customercode = accountdetails["accountcode"];
 		numberofcustomers = numberofcustomers + 1;
 		sessionStorage.customeramount = $("#vtable tbody tr:eq("+curindex+") td:eq(4) input").val(); //Credit amount is saved in session storage.
-		sessionStorage.amounttitle = "Amount to be paid: ";
+		sessionStorage.amounttitle = "Amount Received: ";
 	      }
 	    }
 	  });
@@ -1299,7 +1299,7 @@ $("#invsel").keyup(function(event) {
 		customercode = accountdetails["accountcode"];
 		numberofcustomers = numberofcustomers + 1;
 		sessionStorage.customeramount = $("#vtable tbody tr:eq("+curindex+") td:eq(3) input").val();
-		sessionStorage.amounttitle = "Amount to be paid: ";
+		sessionStorage.amounttitle = "Amount Paid: ";
 	      }
 	    }
 	  });
@@ -1733,7 +1733,7 @@ $("#show"+$("#vtype").val()).click();
   });
   $('#bwtable').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
   {
-    $("#useasadvance").focus().select();
+    $(".amountpaid:first").focus().select();
   });
   $('#bwtable').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is closed
     {
