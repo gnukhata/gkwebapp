@@ -46,27 +46,36 @@
  */ 
 
 $(document).ready(function() {
-  $('.modal-backdrop').remove();
-  $("#btbillwise").hide();
-  var typingTimer;                //timer identifier
-  var typingTimer1;                //timer identifier
-  var typingTimer2;                //timer identifier
-  var doneTypingInterval = 100; //typing interval
-  clearTimeout(typingTimer);  //clearing timeout
-  clearTimeout(typingTimer1);  //clearing timeout
-  clearTimeout(typingTimer2);  //clearing timeout
-  //Actions to be triggered when focus is on amount paid field
-  $(".numtype").numeric({ negative : false });
-  var paymentmode = 15;
-  var advocremainder = 0.00;
-  var usedonaccount = 0.00;
-  var usedasadvance = 0.00;
-  var totalap = 0.00;
-  $(document).off('change', '#paymentmode').on('change', '#paymentmode', function(event) {
+    $('.modal-backdrop').remove();
+    $("#btbillwise").hide();
+    var typingTimer;                //timer identifier
+    var typingTimer1;                //timer identifier
+    var typingTimer2;                //timer identifier
+    var doneTypingInterval = 100; //typing interval
+    clearTimeout(typingTimer);  //clearing timeout
+    clearTimeout(typingTimer1);  //clearing timeout
+    clearTimeout(typingTimer2);  //clearing timeout
+
+    $(".numtype").numeric({ negative : false });
+    var paymentmode = 15;
+    var advocremainder = 0.00;
+    var usedonaccount = 0.00;
+    var usedasadvance = 0.00;
+    var totalap = 0.00;
+
+    /* 
+       When user adjusts bills and total of amount adjusted is more than credit/debit amount in the voucher unadjusted amounts are used.
+       A select combo has been provided above bill wise table. There are two options - On account(default) and as As Advance.
+       Based on the option selected in this combo either of the two is used first. 
+       Alert is displayed when toal amount adjusted exceeds available unadjusted amount.  
+       Given below is the set of actions that are triggered when selected option in this combo is changed.
+     */
+    $(document).off('change', '#paymentmode').on('change', '#paymentmode', function(event) {
     event.preventDefault();
-    if ($("#paymentmode").val() == 1) {
-      paymentmode = 1;
-      usedonaccount = parseFloat(parseFloat(totalap).toFixed(2)) - parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2)) - parseFloat(parseFloat($("#useasadvance").data("useasadvance")).toFixed(2));
+    if ($("#paymentmode").val() == 1) {  //Actions that are triggered when As asvance is selected, i.e when on account is changed to as advance.
+	paymentmode = 1;  //Flag to indicate as advance is chosen as default.
+	//Amount used as on account before is calculated and stored in a variable. If this amount exceeds available on account difference is adjusted using available as advance.
+	usedonaccount = parseFloat(parseFloat(totalap).toFixed(2)) - parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2)) - parseFloat(parseFloat($("#useasadvance").data("useasadvance")).toFixed(2));
       if (usedonaccount > parseFloat(parseFloat($("#onaccountlabel").data("onaccount")).toFixed(2))) {
 	advocremainder = usedonaccount - parseFloat(parseFloat($("#onaccountlabel").data("onaccount")).toFixed(2));
 	$("#useonaccount").html($("#onaccountlabel").data("onaccount")).addClass("text-danger");
@@ -76,8 +85,8 @@ $(document).ready(function() {
 	$("#useasadvance").data("useasadvance", newasadvance);
       }
     }
-    else {
-      paymentmode = 15;
+    else {  //Actions that are triggered when As Advance is selected.
+      paymentmode = 15;  //Flag is set to indicate option has been changed from as advance to on account.
       usedasadvance = parseFloat(parseFloat(totalap).toFixed(2)) - parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2)) - parseFloat(parseFloat($("#useonaccount").data("useonaccount")).toFixed(2));
       if (usedasadvance > parseFloat(parseFloat($("#asadvancelabel").data("asadvance")).toFixed(2))) {
 	advocremainder = usedasadvance - parseFloat(parseFloat($("#asadvancelabel").data("asadvance")).toFixed(2));
