@@ -28,7 +28,7 @@
    "Rohini Baraskar" <robaraskar@gmail.com>
    "Sachin Patil" <sachin619patil@rediffmail.com>
    "Vaibhav Kurhe" <vaibspidy@openmailbox.org>
-   
+
  */
 // This script is for the add category page
 $(document).ready(function() {
@@ -670,9 +670,9 @@ $(document).ready(function() {
                         taxes = [];
                         $("#category_tax_table tbody tr").not(":last").remove();
                         childspecs = [];
-                        $("#success-alert").alert();
-                        $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
-                            $("#success-alert").hide();
+                        $("#success-alert-child").alert();
+                        $("#success-alert-child").fadeTo(2250, 500).slideUp(500, function() {
+                            $("#success-alert-child").hide();
                         });
                         $("#child_category_table tbody tr:last td:eq(1) button").attr('id', resp.gkresult);
                         $("#child_category_table tbody tr:last td:eq(1) button").text("View Specs");
