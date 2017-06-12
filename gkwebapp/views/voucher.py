@@ -111,8 +111,7 @@ def addvoucher(request):
 		else:
 			gkdata["invid"] = None
 	if vdetails["vtype"]== "payment"or vdetails["vtype"]=="receipt":
-		print "before if"
-		print vdetails["instrumentno"]
+
 		if vdetails["instrumentno"] !="":
 			gkdata["instrumentno"]=vdetails["instrumentno"]
 			gkdata["bankname"]=vdetails["bankname"]

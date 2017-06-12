@@ -481,8 +481,9 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
               <textarea class="form-control" name="narration" id="narr" rows="2" cols="50" accesskey="a">{{voucher["narration"]}}</textarea>
             </div>
             <input type="hidden" id="m_vtype" name="m_vtype" value="{{vtype}}">
-
-
+            <div class="pull-right" >
+            <button class="btn btn-info" type="button" id="instrumentbtn">{% trans %}View Bank Details{% endtrans %}</button>
+          </div>
           </form>
           <input type="hidden" id="vcode" name="vcode" value="{{voucher['vouchercode']}}"></input>
 
@@ -490,6 +491,64 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
         </div>
         <br>
         <br>
+
+        <div id="instrumentmodal" class="modal " tabindex="-1" role="dialog">
+            <div class="modal-dialog ">
+              <div class="modal-content">
+            <div class="modal-header">
+              <div class="modal-title">
+                {% trans %}Bank Details{% endtrans %}
+              </div>
+            </div>
+
+            <div class="modal-body">
+              <div class="panel shadow">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-12">
+
+                       <div class="form-group form-inline">
+                         <label for="instrumentno">{% trans %}Instrument No{% endtrans %} :</label>
+                         <input class="form-control input-sm" disabled id="instrumentno" placeholder="{% trans %} Instrument no{% endtrans %}" value={{voucher["instrumentno"]}}>
+                       </div>
+                       <div class="form-group form-inline">
+                         <label for="bankname">{% trans %}Bank Name{% endtrans %} :</label>
+                         <input class="form-control input-sm" disabled id="bankname" placeholder="{% trans %} Bank Name{% endtrans %}" >
+                       </div>
+                       <div class="form-group form-inline">
+                         <label for="branchname">{% trans %}Branch Name{% endtrans %} :</label>
+                         <input class="form-control input-sm" disabled id="branchname" placeholder="{% trans %} Branch Name{% endtrans %}" >
+                       </div>
+                       <div class="form-inline">
+                              <label for="instrument_date">{% trans %}Instrument Date:{% endtrans %}</label>
+
+
+                                  <div class="form-group">
+                                    <input type="text" class="form-control input-sm instrdate" disabled size="2" maxlength="2" placeholder="DD" id="instrument_date" >
+                                  </div>
+                                  <div class="form-group">
+                                    <input type="text" class="form-control input-sm instrdate" size="2" disabled maxlength="2" placeholder="MM" id="instrument_month">
+                                  </div>
+                                  <div class="form-group">
+                                    <input type="text" class="form-control input-sm instrdate" size="4" disabled maxlength="4" placeholder="YYYY" id="instrument_year">
+                                  </div>
+
+                        </div>
+                     </div>
+                  </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+                <button type="button"  id="closebutton" class="btn btn-sm btn-success pull-left" data-dismiss="modal">Close</button>
+              </div>
+        </div>
+        </div>
+        </div>
+
+
+
         <div class="modal-footer">
           <div id="butform" class="form-inline">
             <div class="form-group">

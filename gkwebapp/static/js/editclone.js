@@ -1780,5 +1780,10 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
 
 
 
+  $(document).off("click","#instrumentbtn").on("click","#instrumentbtn",function(event)
+  {
+    event.preventDefault();
+  $("#instrumentmodal").modal("show");
+  });
 
 });
