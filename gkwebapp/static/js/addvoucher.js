@@ -1504,9 +1504,10 @@ $("#invsel").keyup(function(event) {
       if($("#instrumentno").val())
       {
         details.instrumentno=$("#instrumentno").val();
+        //if($(#))
         details.bankname=$("#bankname").val();
         details.branchname=$("#branchname").val();
-        instrdate=$("#instrument_date").val()+'-'+$("#instrument_month").val()+'-'+$("#instrument_year").val();
+        instrdate=$("#instrument_year").val()+'-'+$("#instrument_month").val()+'-'+$("#instrument_date").val();
         details.instrumentdate=instrdate;
       }
     form_data.append("vdetails",JSON.stringify(details));
@@ -1762,6 +1763,70 @@ $("#instrumentmodal").modal("show");
       $("#instrumentmodal").on('hidden.bs.modal', function(event) {
         event.preventDefault();
       });
+      $("#instrumentno").keydown(function(event) {
+        if (event.which==13) {
+          event.preventDefault();
+          if(!$("#instrumentno").val()){
+
+          $("#instrumentno-alert").show();
+          $("#instrumentno-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#instrumentno-alert").hide();
+          });
+          $("#instrumentno").focus();
+
+          }
+          else{
+          $("#bankname").focus().select();
+          }
+
+        }
+
+      });
+      $("#bankname").keydown(function(event) {
+        if (event.which==13) {
+          event.preventDefault();
+          if(!$("#bankname").val())
+          {
+            $("#bankname-alert").show();
+            $("#bankname-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#bankname-alert").hide();
+            });
+            $("#bankname").focus();
+
+          }
+          else{
+          $("#branchname").focus().select();
+          }
+
+        }
+        if (event.which==38) {
+          event.preventDefault();
+          $("#instrumentno").focus().select();
+        }
+      });
+      $("#branchname").keydown(function(event) {
+        if (event.which==13) {
+          event.preventDefault();
+          if(!$("#branchname").val())
+          {
+
+              $("#branchname-alert").show();
+              $("#branchname-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#branchname-alert").hide();
+              });
+              $("#branchname").focus();
+
+          }
+          else{
+          $("#instrument_date").focus().select();
+          }
+
+        }
+        if (event.which==38) {
+          event.preventDefault();
+          $("#bankname").focus().select();
+        }
+      });
       $("#instrument_date").numeric();
       $("#instrument_month").numeric();
       $("#instrument_year").numeric();
@@ -1797,5 +1862,41 @@ $("#instrumentmodal").modal("show");
         }
       });
 
+if (!($("#vouchertype").val() == "receipt" || $("#vouchertype").val() == "payment")){
+  $("#instrumentbtn").hide();
+}
+  $('.instrdate').autotab('number');
 
+  function pad (str, max) { //to add leading zeros in date when single number is entered
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("0" + str, max) : str;
+    }
+    else{
+      return str;
+    }
+  }
+  function yearpad (str, max) {
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("200" + str, max) : str;
+    }
+    else if (str.length==2) {
+      return str.length < max ? pad("20" + str, max) : str;
+    }
+    else{
+      return str;
+    }
+  }
+  //Leading zeroes are added on loss of focus from date fields
+  $("#instrument_date").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#instrument_month").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+
+  $("#instrument_year").blur(function(event) {
+    $(this).val(yearpad($(this).val(),4));
+  });
 });

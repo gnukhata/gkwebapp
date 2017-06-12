@@ -117,10 +117,7 @@ def addvoucher(request):
 			gkdata["instrumentno"]=vdetails["instrumentno"]
 			gkdata["bankname"]=vdetails["bankname"]
 			gkdata["branchname"]=vdetails["branchname"]
-			instrumentdate = vdetails["instrumentdate"]
-			gkdata["instrumentdate"] = datetime.strptime(instrumentdate, "%d-%m-%Y")
-
-
+			gkdata["instrumentdate"] = vdetails["instrumentdate"]
 	try:
 		files = {}
 		count = 0
@@ -147,7 +144,7 @@ def addvoucher(request):
 		if row["side"]=="Dr":
 			drs[row["accountcode"]]=row["dramount"]
 	header={"gktoken":request.headers["gktoken"]}
-
+	print gkdata
 	result = requests.post("http://127.0.0.1:6543/transaction",data=json.dumps(gkdata) , headers=header)
 	if result.json()["gkstatus"]==0:
 		return {"gkstatus":True}
