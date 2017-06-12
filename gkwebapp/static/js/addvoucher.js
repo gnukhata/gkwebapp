@@ -442,7 +442,14 @@ $("#invsel").keyup(function(event) {
       event.preventDefault();
     }
     if (event.which==13 && $('#project').val()== undefined){
+        if($("#instrumentbtn").is(":hidden"))
+        {
           $('#save').click();
+        }
+        else {
+          $("#instrumentbtn").focus();
+        }
+
       }
   });
     var details = {}
@@ -1500,11 +1507,42 @@ $("#invsel").keyup(function(event) {
       {
 	details.invid="" ;
       }
+      console.log("hello o");
       details.instrumentno=""
+      //details.instrumentdate="";
       if($("#instrumentno").val())
       {
+        console.log("instrumentno");
         details.instrumentno=$("#instrumentno").val();
-        //if($(#))
+        if(!$("#bankname").val()){
+          $("#bankdetails-alert").show();
+          $("#bankdetails-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#bankdetails-alert").hide();
+          });
+          $('#instrumentbtn').focus().select();
+          return false;
+
+        }
+        if(!$("#branchname").val()){
+          $("#bankdetails-alert").show();
+          $("#bankdetails-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#bankdetails-alert").hide();
+          });
+          $('#instrumentbtn').focus().select();
+          return false;
+
+        }
+        instrumentdate1=Date.parseExact($("#instrument_date").val()+$("#instrument_month").val()+$("#instrument_year").val(), "ddMMyyyy");
+
+        if(!instrumentdate1){
+          $("#bankdetails-alert").show();
+          $("#bankdetails-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#bankdetails-alert").hide();
+          });
+
+          $('#instrumentbtn').focus().select();
+          return false;
+        }
         details.bankname=$("#bankname").val();
         details.branchname=$("#branchname").val();
         instrdate=$("#instrument_year").val()+'-'+$("#instrument_month").val()+'-'+$("#instrument_date").val();
