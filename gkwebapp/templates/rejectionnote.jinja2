@@ -4,6 +4,33 @@
   <meta charset="utf-8">
   <title>{% trans %}GNUKhata | Rejection Note{% endtrans %}</title>
   <style media="screen">
+  .nopadding {
+     padding: 0 !important;
+     margin: 0 !important;
+   }
+
+   .fixed-table td {
+       font-size: 75%;
+       padding: 4 !important;
+       margin: 4 !important;
+     }
+   .fixed-table th {
+       font-size: 85%;
+   }
+   .fixed-table tbody {
+       display:block;
+       height: calc(100vh - 26.5em);
+       overflow-y:scroll;
+   }
+
+   .fixed-table thead ,.fixed-table tbody tr {
+       display:table;
+       width:100%;
+       table-layout:fixed;
+   }
+   .fixed-table thead {
+       width: calc( 100% - 0.6em )
+   }
   </style>
 </head>
 <body>
