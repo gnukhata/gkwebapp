@@ -36,7 +36,8 @@ $(document).ready(function() {
      The view returns a jinja template with bill details represented in tabular form. It also returns unadjusted amounts.
    */
   $(document).off('change', '#customerselect').on('change', '#customerselect', function(event) {
-    event.preventDefault();
+      event.preventDefault();
+      if ($("#customerselect option:selected").val() != 0) {
     $.ajax(
       {
         type: "POST",
@@ -60,18 +61,25 @@ $(document).ready(function() {
         }
       }
     );
+      }
   });
 
   //Actions that occur when key is pressed down while at list of customers.  
   $(document).off('keydown', '#customerselect').on('keydown', '#customerselect', function(event) {
     if (event.which == 13) {
-      event.preventDefault();
-      $("#supplierselect").focus().select();
+	event.preventDefault();
+	if ($("#customerselect option:selected").val() == 0) {
+	  $("#supplierselect").focus();
+	}
+	else {
+	    $("#paymentmode").focus();
+	}
     }
   });
   //This is similar to the change event of list of customers.
   $(document).off('change', '#supplierselect').on('change', '#supplierselect', function(event) {
-    event.preventDefault();
+      event.preventDefault();
+      if ($("#supplierselect option:selected").val() != 0) {
     $.ajax(
       {
         type: "POST",
@@ -95,6 +103,7 @@ $(document).ready(function() {
         }
       }
     );
+      }
   });
   //Key events for list of suppliers which is similar to that of list of customers.
   $(document).off('keydown', '#supplierselect').on('keydown', '#supplierselect', function(event) {
@@ -102,5 +111,11 @@ $(document).ready(function() {
       event.preventDefault();
       $("#paymentmode").focus();
     }
+    else if (event.which == 38) {
+	  event.preventDefault();
+	  if ($("#supplierselect option:selected").val() == 0) {
+	      $("#customerselect").focus();
+	  }
+      }
   });
 });

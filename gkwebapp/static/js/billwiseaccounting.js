@@ -116,6 +116,12 @@ $(document).ready(function() {
 	$(".footerbutton:first").focus();
       }
     }
+    else if (event.which == 38) {
+	    if ($("#paymentmode option:selected").val() == 0) {
+		event.preventDefault();
+	      $("#supplierselect").focus();
+	  }  
+    }
   });
   $(document).off('focus', '.amountpaid').on('focus', '.amountpaid', function(event) {
     event.preventDefault();

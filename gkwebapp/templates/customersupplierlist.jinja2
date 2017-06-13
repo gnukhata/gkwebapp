@@ -13,19 +13,19 @@
 	<div class="panel-body">
 	  <div class="container-fluid col-sm-12" style="margin-top:10px;">
 	      <form class="form-inline">
-		<div class="form-group col-sm-3">
+		<div class="form-group col-sm-6">
 		  <label for="customerselect">{% trans %}List of Cus<u>t</u>omers{% endtrans %} :</label>
 		  <select id="customerselect" class="form-control input-sm" accesskey="t">
-		    <option value="" disabled hidden selected>{% trans %}Select Customer{% endtrans %}</option>
+		    <option value="0" disabled hidden selected>{% trans %}Select Customer{% endtrans %}</option>
 		    {% for customer in customers %}
                       <option value="{{customer['custid']}}">{{customer["custname"]}}</option>
 		    {% endfor %}
 		  </select>
 	      </div>
-	      <div class="form-group col-sm-3">
+	      <div class="form-group col-sm-6">
 		<label for="supplierselect">{% trans %}List of <u>S</u>uppliers{% endtrans %} :</label>
 		  <select id="supplierselect" class="form-control input-sm" accesskey="s">
-		    <option value="" disabled hidden selected>{% trans %}Select Supplier{% endtrans %}</option>
+		    <option value="0" disabled hidden selected>{% trans %}Select Supplier{% endtrans %}</option>
 		    {% for supplier in suppliers %}
                       <option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
 		    {% endfor %}
