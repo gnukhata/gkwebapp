@@ -90,6 +90,10 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
   max-height: 90px;
   max-width: 450px;
 }
+label.normal {
+    font-weight: normal;
+    font-family: 'times new roman';
+}
 </style>
 
 </head>
@@ -473,17 +477,66 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
               </select>
                 {% endif %}
             </div>
+            <div class="col-md-12 row">
+                <div class=" pull-left col-md-6">
             <div class="col-xs-1 pull-left">
-              <label for="narration">{% trans %}N<u>a</u>rration{% endtrans %} :</label>
+              <label for="narration">{% trans %}N<u>a</u>rration{% endtrans %}:</label>
             </div>
             <br>
-            <div class=" pull-left">
-              <textarea class="form-control" name="narration" id="narr" rows="2" cols="50" accesskey="a">{{voucher["narration"]}}</textarea>
+
+
+              <textarea class="form-control" name="narration" id="narr" rows="2" cols="20" accesskey="a">{{voucher["narration"]}}</textarea>
+
             </div>
+            <div class=" col-md-6">
             <input type="hidden" id="m_vtype" name="m_vtype" value="{{vtype}}">
-            <div class="pull-right" >
-            <button class="btn btn-info" type="button" id="instrumentbtn">{% trans %}View Bank Details{% endtrans %}</button>
-          </div>
+            {% if voucher['instrumentno'] != None %}
+              <div id="instrumentmodal" class="collapse " tabindex="-1" role="dialog">
+
+                    <h4>  {% trans %}Bank Details{% endtrans %}</h4>
+
+                  <div class="row">
+                          <div class="col-xs-12">
+<table class="table table-bodered" >
+  <tbody>
+
+                                   <tr>
+                                   <td><label class="normal" for="instrumentno">{% trans %}Instrument No{% endtrans %} :</label></td>
+                                   <td><input class="form-control input-sm" disabled id="instrumentno" placeholder="{% trans %} Instrument no{% endtrans %}" value={{voucher['instrumentno']}}></td>
+                                   </tr>
+                                   <tr>
+                                   <td><label class="normal" for="bankname">{% trans %}Bank Name{% endtrans %} :</label></td>
+                                   <td><input class="form-control input-sm" disabled id="bankname" placeholder="{% trans %} Bank Name{% endtrans %}" value={{voucher['bankname']}}></td>
+                                   </tr>
+                                   <tr>
+                                   <td><label class="normal" for="branchname">{% trans %}Branch Name{% endtrans %} :</label></td>
+                                   <td><input class="form-control input-sm" disabled id="branchname" placeholder="{% trans %} Branch Name{% endtrans %}" value={{voucher['branchname']}}></td>
+                                   </tr>
+                                   <tr>
+                                        <td><label class="normal" for="instrument_date">{% trans %}Instrument Date:{% endtrans %}</label></td>
+                                        <td>
+                                          <div class="form-inline">
+                                          <div class="form-group">
+                                            <input type="text" class="form-control input-sm instrdate" disabled size="2" maxlength="2" placeholder="DD" id="instrument_date" value="{{voucher['instrumentdate'][:2]}}">
+                                      <input type="text" class="form-control input-sm instrdate" size="2" disabled maxlength="2" placeholder="MM" id="instrument_month" value="{{voucher['instrumentdate'][3:5]}}">
+                                                <input type="text" class="form-control input-sm instrdate" size="4" disabled maxlength="4" placeholder="YYYY" id="instrument_year" value="{{voucher['instrumentdate'][6:]}}" >
+                                          </div>
+                                              </div>
+</td>
+
+</tr>
+                                  </div>
+
+  </tbody>
+</table>
+                           </div>
+                        </div>
+
+              </div>
+              {%endif%}
+
+</div>
+
           </form>
           <input type="hidden" id="vcode" name="vcode" value="{{voucher['vouchercode']}}"></input>
 
@@ -492,65 +545,14 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
         <br>
         <br>
 
-        <div id="instrumentmodal" class="modal " tabindex="-1" role="dialog">
-            <div class="modal-dialog ">
-              <div class="modal-content">
-            <div class="modal-header">
-              <div class="modal-title">
-                {% trans %}Bank Details{% endtrans %}
-              </div>
-            </div>
+        <br>
+        <br>
 
-            <div class="modal-body">
-              <div class="panel shadow">
-                <div class="panel-body">
-                  <div class="row">
-                    <div class="col-sm-12">
-
-                       <div class="form-group form-inline">
-                         <label for="instrumentno">{% trans %}Instrument No{% endtrans %} :</label>
-                         <input class="form-control input-sm" disabled id="instrumentno" placeholder="{% trans %} Instrument no{% endtrans %}" value={{voucher['instrumentno']}}>
-                       </div>
-                       <div class="form-group form-inline">
-                         <label for="bankname">{% trans %}Bank Name{% endtrans %} :</label>
-                         <input class="form-control input-sm" disabled id="bankname" placeholder="{% trans %} Bank Name{% endtrans %}" value={{voucher['bankname']}}>
-                       </div>
-                       <div class="form-group form-inline">
-                         <label for="branchname">{% trans %}Branch Name{% endtrans %} :</label>
-                         <input class="form-control input-sm" disabled id="branchname" placeholder="{% trans %} Branch Name{% endtrans %}" value={{voucher['branchname']}}>
-                       </div>
-                       <div class="form-inline">
-                              <label for="instrument_date">{% trans %}Instrument Date:{% endtrans %}</label>
-
-                                  <div class="form-group">
-                                    <input type="text" class="form-control input-sm instrdate" disabled size="2" maxlength="2" placeholder="DD" id="instrument_date" value="{{voucher['instrumentdate'][:2]}}">
-                                  </div>
-                                  <div class="form-group">
-                                    <input type="text" class="form-control input-sm instrdate" size="2" disabled maxlength="2" placeholder="MM" id="instrument_month" value="{{voucher['instrumentdate'][3:5]}}">
-                                  </div>
-                                  <div class="form-group">
-                                    <input type="text" class="form-control input-sm instrdate" size="4" disabled maxlength="4" placeholder="YYYY" id="instrument_year" value="{{voucher['instrumentdate'][6:]}}" >
-                                  </div>
-
-                        </div>
-                     </div>
-                  </div>
-              </div>
-            </div>
-
-          </div>
-          <div class="modal-footer">
-                <button type="button"  id="closebutton" class="btn btn-sm btn-success pull-left" data-dismiss="modal">Close</button>
-              </div>
-        </div>
-        </div>
-        </div>
-
-
-
+                <br>
+                <br>
         <div class="modal-footer">
-          <div id="butform" class="form-inline">
-            <div class="form-group">
+          <div id="butform" class="form-inline ">
+            <div class="form-group pull-left">
               {% if voucher['status'] %}
               <button type="button" class="btn btn-warning btn-sm" id="lock" value="Unlock" accesskey="k">{% trans %}Unloc<u>k</u>{% endtrans %}</button>
               {% else %}
@@ -560,11 +562,14 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
               <button type="button" class="btn btn-primary btnfocus btn-sm" id="clone" accesskey="o">{% trans %}Cl<u>o</u>ne{% endtrans %}</button>
               <button type="submit" id="save" class="btn btn-success btn-sm" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
               <button type="button" class="btn btn-danger btnfocus btn-sm" id="delete" accesskey="d">{% trans %}<u>D</u>elete{% endtrans %}</button>
+              <button type="button" class="btn btn-success btn-sm" id="printvoucher">{% trans %}Print Voucher{% endtrans %}</button>
+              {% if voucher['instrumentno'] != None %}
+            <button class="btn btn-info btn-sm" type="button" id="instrumentbtn" data-toggle="collapse" data-target="#instrumentmodal">{% trans %}View Bank Details{% endtrans %}</button>
+            {%endif%}
               {% if voucher["attachmentcount"]>0 %}
 		<button type="button" class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">{% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
             </div>
               {% else %}
-	    <button type="button" class="btn btn-success btn-sm" id="printvoucher">{% trans %}Print Voucher{% endtrans %}</button>
             <div class="form-group" id="replaceattach">
               <label class="btn btn-info btn-sm" id="attachlbl" for="my-edit-file-selector">
                 <input name="img" accesskey="h" class="input-sm" multiple accept="image/*" id="my-edit-file-selector" type="file" style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
@@ -588,6 +593,7 @@ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.
       </div>
     </div>
   </div>
+
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.numeric.min.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editclone.js')}}"></script>
 </body>

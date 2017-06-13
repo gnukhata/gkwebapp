@@ -316,6 +316,13 @@ $(document).ready(function()
     $("#demovctable").hide();
     $("#narr").prop('disabled', false);
     $("#project").prop('disabled', false);
+    $("#instrumentno").prop('disabled', false);
+    $("#bankname").prop('disabled', false);
+    $("#branchname").prop('disabled', false);
+    $("#instrument_date").prop('disabled', false);
+    $("#instrument_month").prop('disabled', false);
+    $("#instrument_year").prop('disabled', false);
+
 
 
   if($('#vctable tbody tr:first td:eq(1) select option:selected').val()){
@@ -393,7 +400,12 @@ $(document).ready(function()
     $("#narr").prop('disabled', false);
     $("#project").prop('disabled', false);
     $("#viewattach").hide();
-
+    $("#instrumentno").prop('disabled', false);
+    $("#bankname").prop('disabled', false);
+    $("#branchname").prop('disabled', false);
+    $("#instrument_date").prop('disabled', false);
+    $("#instrument_month").prop('disabled', false);
+    $("#instrument_year").prop('disabled', false);
 
       if($('#vctable tbody tr:first td:eq(1) select option:selected').val()){
         var curacccode = $('#vctable tbody tr:first td:eq(1) select option:selected').val();
@@ -1774,16 +1786,44 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
 
     $(this).parent().hide();
 
-  })
-
-
-
-
-
-  $(document).off("click","#instrumentbtn").on("click","#instrumentbtn",function(event)
-  {
-    event.preventDefault();
-  $("#instrumentmodal").modal("show");
   });
 
+
+
+
+  /*  $(document).off("click","#instrumentbtn").on("click","#instrumentbtn",function(event)
+  {
+    event.preventDefault();
+  $("#instrumentmodal").popover("show");
+
+  });
+  $(document).off("click","#closebutton").on("click","#closebutton",function(event){
+    event.preventDefault();
+    $("#instrumentmodal").popover("hide");
+  });
+$("#instrumentmodal").on('shown.bs.modal', function(event) {
+event.preventDefault();
+    //$("#myModal").modal("hide");
+  });
+  $("#instrumentmodal").on('hidden.bs.modal', function(event) {
+    event.preventDefault();
+    //$("#myModal").modal("show");
+  });
+
+
+    $(document).off("click","#closebutton").on("click","#closebutton",function(event)
+    {
+      event.preventDefault();
+
+        $('#myModal')
+                  .modal('hide')
+                  .on('hidden.bs.modal', function (e) {
+                      $('#instrumentModal').modal('show');
+
+                      $(this).off('hidden.bs.modal'); // Remove the 'on' event binding
+                  });
+
+
+    });
+*/
 });
