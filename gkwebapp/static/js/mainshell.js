@@ -942,6 +942,28 @@ var userrole1;
     );
   });
 
+  $('#listoftransfernotes').click(function (e) {
+    // calls list of stock items report.
+    $.ajax(
+      {
+
+        type: "POST",
+        url: "/transfernotes?action=viewlist",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+      }
+    );
+  });
+
   $('#showstockreport').click(function (e) {
     // calls view page for stock report.
     $.ajax(
