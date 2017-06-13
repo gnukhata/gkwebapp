@@ -84,7 +84,7 @@
                 {% if gkstatus=="in" %}
                 {% trans %}Received At{% endtrans %} :
                 {% else %}
-                {% trans %}Dispatch From{% endtrans %} :
+                {% trans %}Dispatched From{% endtrans %} :
                 {% endif %}
 
               </label>
@@ -93,7 +93,7 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="rejectionnote_consignment">Type of transaction:</label>
+              <label for="rejectionnote_consignment">Type of Transaction:</label>
                 <select class="form-control input-sm" id="rejectionnote_consignment" accesskey="" disabled>
                   <option value="" selected>{% trans %}None{% endtrans %} </option>
                   <option value="1">{% trans %}Approval{% endtrans %}</option>
@@ -132,13 +132,13 @@
               <tbody>
                 <tr>
                   <td class="col-xs-5">
-                    <select class="form-control input-sm product_name">
+                    <select class="form-control input-sm product_name" disabled>
                       <option value="" disabled hidden selected>Select Product</option>
                     </select>
                   </td>
                   <td class="col-xs-3">
                     <div class="input-group">
-                      <input type="text" class="rejectionnote_product_quantity form-control input-sm text-right" value="">
+                      <input type="text" class="rejectionnote_product_quantity form-control input-sm text-right" value="" disabled>
                       <span class="input-group-addon input-sm" id="unitaddon"></span>
                     </div>
                   </td>
@@ -154,7 +154,7 @@
                 </tr>
               </tbody>
             </table>
-            <small id="spectotaxhelp" class="form-text text-muted">{% trans %}Press Esc key on Product Quantity to switch to Number of Packages.{% endtrans %}</small><br>
+            <small id="spectotaxhelp" class="form-text text-muted">{% trans %}Press Esc key on Rejected Quantity to switch to Save.{% endtrans %}</small><br>
             </div>
         </div>
       </div>
