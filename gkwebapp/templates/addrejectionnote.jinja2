@@ -1,197 +1,172 @@
 <body>
-  <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
-    <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
+    <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
+        <div class="alert alert-success" id="success-alert" aria-live="rude" role="alert" hidden>
 
-      {% trans %}Rejection Note Saved!{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
+            {% trans %}Rejection Note Saved!{% endtrans %}
+        </div>
+        <div class="alert alert-danger" id="failure-alert" aria-live="rude" role="alert" hidden>
 
-      {% trans %}Something went wrong!{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="duplicate-alert"  aria-live="rude" role="alert" hidden>
+            {% trans %}Something went wrong!{% endtrans %}
+        </div>
+        <div class="alert alert-danger" id="duplicate-alert" aria-live="rude" role="alert" hidden>
 
-      {% trans %}Duplicate Note no.!{% endtrans %}
-    </div>
-    <div class="panel shadow rejectionnote_panel" id="rnmain">
-      <div class="panel-body">
-        <div class="col-md-5">
-          <div class="alert alert-danger" id="date-blank-alert"  aria-live="rude" role="alert" hidden>
-
-            <label for="vno">{% trans %}Please enter date!{% endtrans %}</label>
-          </div>
-          <div class="alert alert-danger" id="noteno-blank-alert"  aria-live="rude" role="alert" hidden>
-
-            <label for="vno">{% trans %}Please enter note no.!{% endtrans %}</label>
-          </div>
-          <div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
-
-            <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
-          </div>
-          <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
-
-            {% trans %}Please enter date within the financial year!{% endtrans %}
-          </div>
-            <div class="form-group">
-              <label for="rejectionnote_noteno">{% trans %}Note No{% endtrans %} :</label>
-              <input class="form-control input-sm" id="rejectionnote_noteno" placeholder="{% trans %}Enter Note No{% endtrans %}" accesskey="a" >
-              <label for="rejectionnote_date">{% trans %}Note Date{% endtrans %} :</label>
-              <div class="form-inline">
-                  <div class="form-group ">
-                    <input type="text" class="form-control input-sm rndate" size="2" maxlength="2" placeholder="DD" id="rejectionnote_date" accesskey="v" >
-                  </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control input-sm rndate" size="2" maxlength="2" placeholder="MM" id="rejectionnote_month" accesskey="v">
-                  </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control input-sm rndate" size="4" maxlength="4" placeholder="YYYY" id="rejectionnote_year" accesskey="v">
-                  </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="rejectionnote_customer">
-                {% if gkstatus=="out" %}
-                {% trans %}Supplier{% endtrans %} :
-                {% else %}
-                {% trans %}Customer{% endtrans %} :
-                {% endif %}
-              </label>
-              <select class="form-control input-sm" id="rejectionnote_customer" accesskey="" disabled>
-                <option value="" disabled hidden selected>
-                  {% if gkstatus=="out" %}
-                  {% trans %}Select Supplier{% endtrans %}
-                  {% else %}
-                  {% trans %}Select Customer{% endtrans %}
-                  {% endif %}
-                </option>
-              </select>
-              {% if gkstatus == "in" %}
-                <br>
-                <label for="rejectionnote_customeraddr">
-                  {% trans %}Customer Address{% endtrans %} :
-                </label>
-                <input class="form-control input-sm" id="rejectionnote_customeraddr" placeholder="{% trans %}Select Customer to see Address{% endtrans %}" accesskey="" disabled>
-              {% else %}
-                <br>
-                <label for="rejectionnote_supplieraddr">
-                  {% trans %}Supplier Address{% endtrans %} :
-                </label>
-                <input class="form-control input-sm" id="rejectionnote_supplieraddr" placeholder="{% trans %}Select Supplier to see Address{% endtrans %}" accesskey="" disabled>
-              {% endif %}
-            </div>
-            <div class="form-group">
-              <label for="rejectionnote_godown">
-
-                {% if gkstatus=="in" %}
-                {% trans %}Received At{% endtrans %} :
-                {% else %}
-                {% trans %}Dispatched From{% endtrans %} :
-                {% endif %}
-
-              </label>
-              <select class="form-control input-sm" id="rejectionnote_godown" disabled>
-                <option value="">None</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="rejectionnote_consignment">Type of Transaction:</label>
-                <select class="form-control input-sm" id="rejectionnote_consignment" accesskey="" disabled>
-                  <option value="" selected>{% trans %}None{% endtrans %} </option>
-                  <option value="1">{% trans %}Approval{% endtrans %}</option>
-                  <option value="3">{% trans %}Consignment{% endtrans %}</option>
-                  <option value="6">{% trans %}Free Replacement{% endtrans %}</option>
-                  {% if gkstatus=="out" %}
-                  <option value="16">{% trans %}Purchase{% endtrans %}</option>
-                  {% else %}
-                  <option value="4">{% trans %}Sale{% endtrans %}</option>
-                  {% endif %}
-                  <option value="19">{% trans %}Sample{% endtrans %}</option>
-                </select>
-              </label>
-            </div>
-            {% if gkstatus=="in" %}
-            <input type="hidden" id="status" value="9">
-            {% else %}
-            <input type="hidden" id="status" value="15">
-            {% endif %}
-          </div>
-          <div class="col-md-7" id="rejectionnote_product_div">
-            <div class="alert alert-danger" id="quantity-blank-alert"  aria-live="rude" role="alert" hidden>
-
-              <label for="vno">{% trans %}Please enter rejected quantity!{% endtrans %}</label>
-            </div>
-            <div class="panel">
-            <table id="rejectionnote_product_table" class="table shadow table-condensed table-bordered fixed-table">
-              <thead class="bg-primary">
-                <tr>
-                  <th class="col-xs-5">{% trans %}Product{% endtrans %}</th>
-                  <th class="col-xs-3 text-center">{% trans %}Total Quantity{% endtrans %}</th>
-                  <th class="col-xs-3 text-center">{% trans %}Rejected Quantity{% endtrans %}</th>
-                  <th class="col-xs-1"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="col-xs-5">
-                    <select class="form-control input-sm product_name" disabled>
-                      <option value="" disabled hidden selected>Select Product</option>
-                    </select>
-                  </td>
-                  <td class="col-xs-3">
-                    <div class="input-group">
-                      <input type="text" class="rejectionnote_product_quantity form-control input-sm text-right" value="" disabled>
-                      <span class="input-group-addon input-sm" id="unitaddon"></span>
+            {% trans %}Duplicate Note no.!{% endtrans %}
+        </div>
+        <div class="panel shadow rejectionnote_panel" id="rnmain">
+            <div class="panel-body">
+                <div class="col-md-5">
+                    <div class="alert alert-danger" id="date-blank-alert" aria-live="rude" role="alert" hidden>
+                        <label for="vno">{% trans %}Please enter date!{% endtrans %}</label>
                     </div>
-                  </td>
-                  <td class="col-xs-3">
-                    <div class="input-group">
-                      <input type="text" class="rejectionnote_product_rejected_quantity form-control input-sm text-right" value="">
-                      <span class="input-group-addon input-sm" id="unitaddon"></span>
+                    <div class="alert alert-danger" id="noteno-blank-alert" aria-live="rude" role="alert" hidden>
+                        <label for="vno">{% trans %}Please enter note no.!{% endtrans %}</label>
                     </div>
-                  </td>
-                  <td class="col-xs-1">
+                    <div class="alert alert-danger" id="dcinv-blank-alert" aria-live="rude" role="alert" hidden>
+                        <label for="vno">{% trans %}Please Select Invoice or Delivery Note.!{% endtrans %}</label>
+                    </div>
+                    <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
+                        <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
+                    </div>
+                    <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
+                        {% trans %}Please enter date within the financial year!{% endtrans %}
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <label for="rejectionnote_noteno">{% trans %}Note No{% endtrans %} :</label>
+                                <input class="form-control input-sm" id="rejectionnote_noteno" placeholder="{% trans %}Enter Note No{% endtrans %}" accesskey="a">
+                            </div>
+                            <div class="col-xs-6">
+                                <label for="rejectionnote_date">{% trans %}Note Date{% endtrans %} :</label>
+                                <div class="form-inline">
+                                    <div class="form-group ">
+                                        <input type="text" class="form-control input-sm rndate" size="2" maxlength="2" placeholder="DD" id="rejectionnote_date" accesskey="v">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-sm rndate" size="2" maxlength="2" placeholder="MM" id="rejectionnote_month" accesskey="v">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-sm rndate" size="4" maxlength="4" placeholder="YYYY" id="rejectionnote_year" accesskey="v">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="rejectionnote_customer">
+                            {% if gkstatus=="out" %} {% trans %}Supplier Name{% endtrans %} : {% else %} {% trans %}Customer Name{% endtrans %} : {% endif %}
+                        </label>
+                        <input class="form-control input-sm" id="rejectionnote_customer" placeholder="None" accesskey="" disabled>
+                    </div>
+                    <div class="form-group">
+                        {% if gkstatus == "in" %}
+                        <label for="rejectionnote_customeraddr">
+                            {% trans %}Customer Address{% endtrans %} :
+                        </label>
+                        <input class="form-control input-sm" id="rejectionnote_customeraddr" placeholder="{% trans %}None{% endtrans %}" accesskey="" disabled> {% else %}
+                        <label for="rejectionnote_supplieraddr">
+                            {% trans %}Supplier Address{% endtrans %} :
+                        </label>
+                        <input class="form-control input-sm" id="rejectionnote_supplieraddr" placeholder="{% trans %}None{% endtrans %}" accesskey="" disabled> {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <label for="rejectionnote_godown">
 
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <small id="spectotaxhelp" class="form-text text-muted">{% trans %}Press Esc key on Rejected Quantity to switch to Save.{% endtrans %}</small><br>
+                                    {% if gkstatus=="in" %} {% trans %}Received At{% endtrans %} : {% else %} {% trans %}Dispatched From{% endtrans %} : {% endif %}
+
+                                </label>
+                                <input class="form-control input-sm" id="rejectionnote_godown" placeholder="None" disabled>
+                            </div>
+                            <div class="col-xs-6">
+                                <label for="rejectionnote_consignment">Type of Transaction:</label>
+                                <input class="form-control input-sm" id="rejectionnote_consignment" placeholder="None" accesskey="" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    {% if gkstatus=="in" %}
+                    <input type="hidden" id="status" value="9"> {% else %}
+                    <input type="hidden" id="status" value="15"> {% endif %}
+                </div>
+                <div class="col-md-7" id="rejectionnote_product_div">
+                    <div class="alert alert-danger" id="quantity-blank-alert" aria-live="rude" role="alert" hidden>
+
+                        <label for="vno">{% trans %}Please enter rejected quantity!{% endtrans %}</label>
+                    </div>
+                    <div class="panel">
+                        <table id="rejectionnote_product_table" class="table shadow table-condensed table-bordered fixed-table">
+                            <thead class="bg-primary">
+                                <tr>
+                                    <th class="col-xs-5">{% trans %}Product{% endtrans %}</th>
+                                    <th class="col-xs-3 text-center">{% trans %}Total Quantity{% endtrans %}</th>
+                                    <th class="col-xs-3 text-center">{% trans %}Rejected Quantity{% endtrans %}</th>
+                                    <th class="col-xs-1"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="col-xs-5">
+                                        <input class="form-control input-sm product_name" placeholder="None" disabled>
+                                    </td>
+                                    <td class="col-xs-3">
+                                        <div class="input-group">
+                                            <input type="text" class="rejectionnote_product_quantity form-control input-sm text-right" value="" disabled>
+                                            <span class="input-group-addon input-sm" id="unitaddon"></span>
+                                        </div>
+                                    </td>
+                                    <td class="col-xs-3">
+                                        <div class="input-group">
+                                            <input type="text" class="rejectionnote_product_rejected_quantity form-control input-sm text-right" value="">
+                                            <span class="input-group-addon input-sm" id="unitaddon"></span>
+                                        </div>
+                                    </td>
+                                    <td class="col-xs-1">
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <small id="spectotaxhelp" class="form-text text-muted">{% trans %}Press Esc key on Rejected Quantity to switch to Save.{% endtrans %}</small>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div>
+                {% if gkstatus=='out' %}
+                <input type="hidden" id="rejectionnote_gkstatus" value="out"> {%else%}
+                <input type="hidden" id="rejectionnote_gkstatus" value="in"> {% endif %}
+            </div>
+            <div class="panel-footer">
+                <div class="container-fluid">
+
+                    <button class="btn btn-success btn-sm" id="rejectionnote_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save anywhere on the current screen">{% trans %}Save{% endtrans %}</button>
+                    <button class="btn btn-warning btn-sm" id="rejectionnote_reset" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+                </div>
             </div>
         </div>
-      </div>
-      <div>
-     {% if gkstatus=='out' %}
-       <input type="hidden"  id="rejectionnote_gkstatus" value="out">
-     {%else%}
-       <input type="hidden" id="rejectionnote_gkstatus" value="in">
-     {% endif %}
-     </div>
-      <div class="panel-footer">
-        <div class="container-fluid">
+        <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
+            <div class="vertical-alignment-helper">
+                <div class="modal-dialog modal-sm vertical-align-center">
+                    <div class="modal-content">
+                        <div class="modal-header">
 
-        <button class="btn btn-success btn-sm" id="rejectionnote_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save anywhere on the current screen">{% trans %}Save{% endtrans %}</button>
-        <button class="btn btn-warning btn-sm" id="rejectionnote_reset" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
-      </div>
-      </div>
+                            <h4 class="modal-title">{% trans %}Save?{% endtrans %}</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>{% trans %}Are you sure?{% endtrans %}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="rn_save_no" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
+                            <button type="button" id="rn_save_yes" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+        </div>
+        <!-- /.modal -->
     </div>
-    <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
-      <div class="vertical-alignment-helper">
-        <div class="modal-dialog modal-sm vertical-align-center">
-          <div class="modal-content">
-            <div class="modal-header">
-
-              <h4 class="modal-title">{% trans %}Save?{% endtrans %}</h4>
-            </div>
-            <div class="modal-body">
-              <p>{% trans %}Are you sure?{% endtrans %}</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" id ="rn_save_no" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
-              <button type="button" id="rn_save_yes" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div>
-    </div><!-- /.modal -->
-</div>
-<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addrejectionnote.js')}}"></script>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addrejectionnote.js')}}"></script>
 </body>
