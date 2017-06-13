@@ -54,7 +54,10 @@
                     </div>
                     <div class="form-group">
                         <label for="rejectionnote_customer">
-                            {% if gkstatus=="out" %} {% trans %}Supplier Name{% endtrans %} : {% else %} {% trans %}Customer Name{% endtrans %} : {% endif %}
+                            {% if gkstatus=="out" %}
+                            {% trans %}Supplier Name{% endtrans %} :
+                            {% else %} {% trans %}Customer Name{% endtrans %} :
+                            {% endif %}
                         </label>
                         <input class="form-control input-sm" id="rejectionnote_customer" placeholder="None" accesskey="" disabled>
                     </div>
@@ -63,18 +66,23 @@
                         <label for="rejectionnote_customeraddr">
                             {% trans %}Customer Address{% endtrans %} :
                         </label>
-                        <input class="form-control input-sm" id="rejectionnote_customeraddr" placeholder="{% trans %}None{% endtrans %}" accesskey="" disabled> {% else %}
+                        <input class="form-control input-sm" id="rejectionnote_customeraddr" placeholder="{% trans %}None{% endtrans %}" accesskey="" disabled>
+                        {% else %}
                         <label for="rejectionnote_supplieraddr">
                             {% trans %}Supplier Address{% endtrans %} :
                         </label>
-                        <input class="form-control input-sm" id="rejectionnote_supplieraddr" placeholder="{% trans %}None{% endtrans %}" accesskey="" disabled> {% endif %}
+                        <input class="form-control input-sm" id="rejectionnote_supplieraddr" placeholder="{% trans %}None{% endtrans %}" accesskey="" disabled>
+                        {% endif %}
                     </div>
                     <div class="form-group">
                         <div class="row">
                             <div class="col-xs-6">
                                 <label for="rejectionnote_godown">
 
-                                    {% if gkstatus=="in" %} {% trans %}Received At{% endtrans %} : {% else %} {% trans %}Dispatched From{% endtrans %} : {% endif %}
+                                    {% if gkstatus=="in" %}
+                                    {% trans %}Received At{% endtrans %} :
+                                    {% else %} {% trans %}Dispatched From{% endtrans %} :
+                                    {% endif %}
 
                                 </label>
                                 <input class="form-control input-sm" id="rejectionnote_godown" placeholder="None" disabled>
@@ -85,9 +93,6 @@
                             </div>
                         </div>
                     </div>
-                    {% if gkstatus=="in" %}
-                    <input type="hidden" id="status" value="9"> {% else %}
-                    <input type="hidden" id="status" value="15"> {% endif %}
                 </div>
                 <div class="col-md-7" id="rejectionnote_product_div">
                     <div class="alert alert-danger" id="quantity-blank-alert" aria-live="rude" role="alert" hidden>
@@ -134,8 +139,10 @@
             </div>
             <div>
                 {% if gkstatus=='out' %}
-                <input type="hidden" id="rejectionnote_gkstatus" value="out"> {%else%}
-                <input type="hidden" id="rejectionnote_gkstatus" value="in"> {% endif %}
+                <input type="hidden" id="rejectionnote_gkstatus" value="out">
+                {%else%}
+                <input type="hidden" id="rejectionnote_gkstatus" value="in">
+                {% endif %}
             </div>
             <div class="panel-footer">
                 <div class="container-fluid">
