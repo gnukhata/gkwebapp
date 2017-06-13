@@ -109,7 +109,7 @@ $(document).ready(function() {
       event.preventDefault();
       $("#rejectionnote_deliverynote").focus();
     }
-    if (event.which==38 && document.getElementById('rejectionnote_invoice').selectedIndex==1) {
+    if (event.which==38 && document.getElementById('rejectionnote_invoice').selectedIndex==0) {
       event.preventDefault();
       $('#rejectionnote_year').focus().select();
     }
@@ -119,9 +119,17 @@ $(document).ready(function() {
       event.preventDefault();
       $('#rejectionnote_product_table tbody tr:first td:eq(2) input').focus().select();
     }
-    if (event.which==38 && document.getElementById('rejectionnote_deliverynote').selectedIndex==1) {
+    if (event.which==38 && document.getElementById('rejectionnote_deliverynote').selectedIndex==0) {
       event.preventDefault();
       $("#rejectionnote_invoice").focus();
+    }
+  });
+  //insert key press event
+  $(document).off("keyup").on("keyup",function(event) {
+    if(event.which == 45) {
+      event.preventDefault();
+      $("#rejectionnote_save").click();
+      return false;
     }
   });
 });
