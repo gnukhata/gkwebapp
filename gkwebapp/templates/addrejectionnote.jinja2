@@ -53,10 +53,53 @@
                         </div>
                     </div>
                     <div class="form-group">
+                      <div class="row">
+                          <div class="col-xs-6">
+                            <label for="rejectionnote_invoice">
+                              {% trans %}Invoice{% endtrans %} :
+                            </label>
+                            <select class="form-control input-sm" id="rejectionnote_invoice" accesskey="">
+                              <option value="" dcno = "" selected>None</option>
+                              {% for invoice in invoices %}
+                              {% if gkstatus=="out" %}
+                              {% if invoice['csflag']==19 %}
+                              <option value="{{invoice['invid']}}" invoiceno = "{{invoice["invoiceno"]}}" invoicedate="{{invoice['invoicedate']}}">{{invoice["invoiceno"]}}, {{invoice['invoicedate']}}, {{invoice["custname"]}}</option>
+                              {% endif %}
+                              {% else %}
+                              {% if invoice['csflag']==3 %}
+                              <option value="{{invoice['invid']}}" invoiceno = "{{invoice["invoiceno"]}}" invoicedate="{{invoice['invoicedate']}}">{{invoice["invoiceno"]}}, {{invoice['invoicedate']}}, {{invoice["custname"]}}</option>
+                              {% endif %}
+                              {% endif %}
+                              {% endfor %}
+                            </select> 
+                          </div>
+                          <div class="col-xs-6">
+                            <label for="rejectionnote_deliverynote">
+                              {% trans %}Delivery Note{% endtrans %} :
+                            </label>
+                            <select class="form-control input-sm" id="rejectionnote_deliverynote" accesskey="">
+                              <option value="" dcno = "" selected>None</option>
+                              {% for deliverynote in deliverynotes %}
+                              {% if gkstatus=="out" %}
+                              {% if deliverynote['csflag']==19 %}
+                              <option value="{{deliverynote['dcid']}}" dcno = "{{deliverynote["dcno"]}}" dcdate="{{deliverynote['dcdate']}}">{{deliverynote["dcno"]}}, {{deliverynote['dcdate']}}, {{deliverynote["custname"]}}</option>
+                              {% endif %}
+                              {% else %}
+                              {% if deliverynote['csflag']==3 %}
+                              <option value="{{deliverynote['dcid']}}" dcno = "{{deliverynote["dcno"]}}" dcdate="{{deliverynote['dcdate']}}">{{deliverynote["dcno"]}}, {{deliverynote['dcdate']}}, {{deliverynote["custname"]}}</option>
+                              {% endif %}
+                              {% endif %}
+                              {% endfor %}
+                            </select>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
                         <label for="rejectionnote_customer">
                             {% if gkstatus=="out" %}
                             {% trans %}Supplier Name{% endtrans %} :
-                            {% else %} {% trans %}Customer Name{% endtrans %} :
+                            {% else %}
+                            {% trans %}Customer Name{% endtrans %} :
                             {% endif %}
                         </label>
                         <input class="form-control input-sm" id="rejectionnote_customer" placeholder="None" accesskey="" disabled>
@@ -81,7 +124,8 @@
 
                                     {% if gkstatus=="in" %}
                                     {% trans %}Received At{% endtrans %} :
-                                    {% else %} {% trans %}Dispatched From{% endtrans %} :
+                                    {% else %}
+                                    {% trans %}Dispatched From{% endtrans %} :
                                     {% endif %}
 
                                 </label>
