@@ -33,3 +33,10 @@ def showrejectionnote(request):
 	header={"gktoken":request.headers["gktoken"]}
 	rnotes = requests.get("http://127.0.0.1:6543/rejectionnote?type=all", headers=header)
 	return {"noofrejectionnotes":len(rnotes.json()["gkresult"]),"status":True}
+
+@view_config(route_name="rejectionnote",request_param="action=showadd",renderer="gkwebapp:templates/addrejectionnote.jinja2")
+def showaddrejectionnote(request):
+	header={"gktoken":request.headers["gktoken"]}
+	unbilled_delnotes = requests.get("http://127.0.0.1:6543/invoice?unbilled_delnotes", data=json.dumps(gkdata), headers=header)
+    result = requests.get("http://127.0.0.1:6543/invoice?inv=all", headers=header)
+	return {"gkstatus": request.params["status"], "invoices": result.json()["gkresult"], "deliverynotes":unbilled_delnotes.json()["gkresult"]}
