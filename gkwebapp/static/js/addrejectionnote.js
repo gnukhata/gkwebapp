@@ -132,4 +132,35 @@ $(document).ready(function() {
       return false;
     }
   });
+  $(document).off("keydown",".rejectionnote_product_rejected_quantity").on("keydown",".rejectionnote_product_rejected_quantity",function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      if($(this).closest("tr").is(":last-child")){
+        $("#rejectionnote_save").focus();
+      }
+      else{
+        var ind = $(this).closest("tr").index() + 1;
+        $('#rejectionnote_product_table tbody tr:eq('+ind+') td:eq(2) input').focus().select();
+      }
+    }
+  });
+  
+  $("#confirm_yes").on('shown.bs.modal', function(event) {
+      // on opening of modal the focus should be by efault on the no option so this event
+    $("#dc_save_no").focus();
+
+  });
+  $("#confirm_yes").on('hidden.bs.modal', function(event) {
+      // after te modal is closed the focus should be on the delivery note number so this event
+    $("#rejectionnote_noteno").focus();
+  });
+  $("#rejectionnote_reset").click(function(event) {
+      // function for resetting the entered delivery note details
+    if ($("#status").val()=='9') {
+      $("#rejectionnote_in").click();
+    }
+    else {
+      $("#rejectionnote_out").click();
+    }
+  });
 });
