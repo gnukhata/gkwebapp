@@ -25,7 +25,7 @@ Contributors:
 
 from pyramid.view import view_config
 import requests, json
-from datetime import datetime
+import time
 from pyramid.renderers import render_to_response
 
 @view_config(route_name="rejectionnote",renderer="gkwebapp:templates/rejectionnote.jinja2")
@@ -37,7 +37,7 @@ def showrejectionnote(request):
 @view_config(route_name="rejectionnote",request_param="action=showadd",renderer="gkwebapp:templates/addrejectionnote.jinja2")
 def showaddrejectionnote(request):
 	header={"gktoken":request.headers["gktoken"]}
-	unbilled_delnotes = requests.get("http://127.0.0.1:6543/invoice?unbilled_delnotes", data=json.dumps(gkdata), headers=header)
+	unbilled_delnotes = requests.get("http://127.0.0.1:6543/invoice?unbilled_delnotes", data=json.dumps({"inputdate": time.strftime("%Y-%m-%d")}), headers=header)
 	result = requests.get("http://127.0.0.1:6543/invoice?inv=all", headers=header)
 	return {"gkstatus": request.params["status"], "invoices": result.json()["gkresult"], "deliverynotes":unbilled_delnotes.json()["gkresult"]}
 
