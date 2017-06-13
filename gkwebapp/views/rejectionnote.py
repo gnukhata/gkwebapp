@@ -40,3 +40,11 @@ def showaddrejectionnote(request):
 	unbilled_delnotes = requests.get("http://127.0.0.1:6543/invoice?unbilled_delnotes", data=json.dumps(gkdata), headers=header)
     result = requests.get("http://127.0.0.1:6543/invoice?inv=all", headers=header)
 	return {"gkstatus": request.params["status"], "invoices": result.json()["gkresult"], "deliverynotes":unbilled_delnotes.json()["gkresult"]}
+
+@view_config(route_name="rejectionnote",request_param="action=showview",renderer="gkwebapp:templates/viewrejectionnote.jinja2")
+def showviewrejectionnote(request):
+	header={"gktoken":request.headers["gktoken"]}
+	rnotes = requests.get("http://127.0.0.1:6543/rejectionnote?type=all", headers=header)
+	suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
+	customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
+	return {"gkstatus":rnotes.json()["gkstatus"],"rejectionnotes":rnotes.json()["gkresult"],"suppliers":suppliers.json()["gkresult"],"customers":customers.json()["gkresult"]}
