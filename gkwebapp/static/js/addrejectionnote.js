@@ -494,8 +494,8 @@ $(document).ready(function() {
         $("#rejectionnote_product_table tbody tr:eq("+i+") td:eq(2) input").focus();
         return false;
       }
-      products.productcode = $("#rejectionnote_product_table tbody tr:eq("+i+") td:eq(0) input").data("productcode");
-      products.rejectedqty = parseFloat($("#rejectionnote_product_table tbody tr:eq("+i+") td:eq(2) input").val()).toFixed(2);
+      var productcode = $("#rejectionnote_product_table tbody tr:eq("+i+") td:eq(0) input").data("productcode");
+      products[productcode] = parseFloat($("#rejectionnote_product_table tbody tr:eq("+i+") td:eq(2) input").val()).toFixed(2);
     }
     if(i == 0){
       $("#product-blank-alert").alert();
@@ -508,8 +508,12 @@ $(document).ready(function() {
     form_data.append("rnno", $("#rejectionnote_noteno").val());
     form_data.append("rndate", $("#rejectionnote_year").val()+'-'+$("#rejectionnote_month").val()+'-'+$("#rejectionnote_date").val());
     form_data.append("inout", $("#rejectionnote_gkstatus").val());
-    form_data.append("dcid", $('#rejectionnote_deliverynote').val());
-    form_data.append("invid", $('#rejectionnote_invoice').val());
+    if($('#rejectionnote_deliverynote').val()){
+      form_data.append("dcid", $('#rejectionnote_deliverynote').val());
+    }
+    if($('#rejectionnote_invoice').val()){
+      form_data.append("invid", $('#rejectionnote_invoice').val());
+    }
     if($("#rejectionnote_godown").attr("data-goid")){
   	  form_data.append("goid", $("#rejectionnote_godown").attr("data-goid"));
     }
@@ -517,10 +521,9 @@ $(document).ready(function() {
     event.preventDefault();
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
-    $('#confirm_yes').modal('show').one('click', '#dc_save_yes', function (e)
+    $('#confirm_yes').modal('show').one('click', '#rn_save_yes', function (e)
     {
-        // modal opened for save confirmation as delivery note once created cannot be edited later
-    $.ajax({ //ajax call for saving the delivery note
+    $.ajax({
       url: '/rejectionnote?action=save',
       type: 'POST',
       global: false,
@@ -581,11 +584,11 @@ $(document).ready(function() {
 
   $("#confirm_yes").on('shown.bs.modal', function(event) {
       // on opening of modal the focus should be by efault on the no option so this event
-    $("#dc_save_no").focus();
+    $("#rn_save_no").focus();
 
   });
   $("#confirm_yes").on('hidden.bs.modal', function(event) {
-      // after te modal is closed the focus should be on the delivery note number so this event
+      // after te modal is closed the focus should be on the rejection note number so this event
     $("#rejectionnote_noteno").focus();
   });
   $("#rejectionnote_reset").click(function(event) {
