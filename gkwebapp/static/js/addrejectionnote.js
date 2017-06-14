@@ -87,7 +87,7 @@ $(document).ready(function() {
   });
   // events for shifting focus. Enter shifts to next element and up arrow shifts to previous
   $("#rejectionnote_noteno").keydown(function(event) {
-    if (event.which==13) {
+    if (event.which==13 && $("#rejectionnote_noteno").val()) {
       event.preventDefault();
       $("#rejectionnote_date").focus().select();
     }
