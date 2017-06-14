@@ -155,9 +155,6 @@ $(document).ready(function() {
     }
   });
   $(document).off("change", "#rejectionnote_invoice").on("change", "#rejectionnote_invoice", function(event) {
-    $("#rejectionnote_customer").val("None");
-    $("#rejectionnote_customeraddr").val("None");
-    $("#rejectionnote_customertin").val("None");
     $('#rejectionnote_product_table tbody').empty();
     $('#rejectionnote_product_table tbody').append('<tr>' +
         '<td class="col-xs-5">' +
@@ -293,10 +290,6 @@ $(document).ready(function() {
      }
   });
   $(document).off("change", "#rejectionnote_deliverynote").on("change", "#rejectionnote_deliverynote", function(event) {
-    $("#rejectionnote_customer").val("None");
-    $("#rejectionnote_customeraddr").val("None");
-    $("#rejectionnote_customertin").val("None");
-    //$("#rejectionnote_godown").val("None");
     if ($("#rejectionnote_deliverynote option:selected").val() != '') {
       $("#rejectionnote_invoice option[value='']").prop("selected", true);
       $.ajax({
