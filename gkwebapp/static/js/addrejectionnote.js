@@ -141,9 +141,16 @@ $(document).ready(function() {
       $("#rejectionnote_invoice").focus();
     }
   });
-  $(".rejectionnote_product_rejected_quantity").blur(function(event) {
-    $('#rejectionnote_product_table tbody tr:eq(' + $(this).closest("tr").index() + ') td:eq(2) input').val(parseFloat($('#rejectionnote_product_table tbody tr:eq(' + $(this).closest("tr").index() + ') td:eq(2) input').val()).toFixed(2));
+  $(document).off('blur', '.rejectionnote_product_rejected_quantity').on('blur', '.rejectionnote_product_rejected_quantity', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    if ($(this).val() == "") {
+      $(this).val(parseFloat(0).toFixed(2));
+    } else {
+      $(this).val(parseFloat($(this).val()).toFixed(2));
+    }
   });
+  
   //insert key press event
   $(document).off("keyup").on("keyup",function(event) {
     if(event.which == 45) {
