@@ -124,6 +124,9 @@ $(document).ready(function() {
       $("#rejectionnote_invoice").focus();
     }
   });
+  $(".rejectionnote_product_rejected_quantity").blur(function(event) {
+    $('#rejectionnote_product_table tbody tr:eq(' + $(this).closest("tr").index() + ') td:eq(2) input').val(parseFloat($('#rejectionnote_product_table tbody tr:eq(' + $(this).closest("tr").index() + ') td:eq(2) input').val()).toFixed(2));
+  });
   //insert key press event
   $(document).off("keyup").on("keyup",function(event) {
     if(event.which == 45) {
@@ -194,7 +197,7 @@ $(document).ready(function() {
              $.each(resp.invoicedata.contents, function(key, value) {
                $('#rejectionnote_product_table tbody').append('<tr>' +
                    '<td class="col-xs-5">' +
-                   '<input class="form-control input-sm product_name" data="' + key + '" value="' + value.productdesc + '" disabled>' +
+                   '<input class="form-control input-sm product_name" data-productcode="' + key + '" value="' + value.productdesc + '" disabled>' +
                    '</td>' +
                    '<td class="col-xs-3">' +
                    '<div class="input-group">' +
@@ -266,6 +269,7 @@ $(document).ready(function() {
                   else if(resp["delchal"]["delchaldata"]["dcflag"] == 19){
                     $("#rejectionnote_consignment").val("Sample");
                   }
+                  $("#rejectionnote_godown").attr("data-goid", resp["delchal"]["delchaldata"]["goid"]);
                   $("#rejectionnote_godown").val(resp["delchal"]["delchaldata"]["goname"] + "("+ resp["delchal"]["delchaldata"]["gostate"] +")");
                 })
                 .fail(function() {
@@ -276,6 +280,7 @@ $(document).ready(function() {
                 });
             }
             else{
+              $("#rejectionnote_godown").attr("data-goid", "");
               $("#rejectionnote_godown").val("None");
               $("#rejectionnote_consignment").val("None");
             }
@@ -318,6 +323,7 @@ $(document).ready(function() {
          else if(resp["delchal"]["delchaldata"]["dcflag"] == 19){
            $("#rejectionnote_consignment").val("Sample");
          }
+         $("#rejectionnote_godown").attr("data-goid", resp["delchal"]["delchaldata"]["goid"]);
          $("#rejectionnote_godown").val(resp["delchal"]["delchaldata"]["goname"] + "("+ resp["delchal"]["delchaldata"]["gostate"] +")");
          if (resp["gkstatus"] == 0) {
            $.ajax({
@@ -361,7 +367,7 @@ $(document).ready(function() {
                      $.each(resp.items, function(key, value) {
                        $('#rejectionnote_product_table tbody').append('<tr>' +
                            '<td class="col-xs-5">' +
-                           '<input class="form-control input-sm product_name" data="' + key + '" value="' + value.productdesc + '" disabled>' +
+                           '<input class="form-control input-sm product_name" data-productcode="' + key + '" value="' + value.productdesc + '" disabled>' +
                            '</td>' +
                            '<td class="col-xs-3">' +
                            '<div class="input-group">' +
@@ -399,6 +405,7 @@ $(document).ready(function() {
        });
      }
      else{
+       $("#rejectionnote_godown").attr("data-goid", "");
        $('#rejectionnote_product_table tbody').empty();
        $('#rejectionnote_product_table tbody').append('<tr>' +
            '<td class="col-xs-5">' +
@@ -422,6 +429,156 @@ $(document).ready(function() {
      }
   });
 
+  $("#rejectionnote_save").click(function(event) {
+      // save event to save rejection note.
+    event.stopPropagation();
+    // below are all the validation checks
+    if ($.trim($('#rejectionnote_noteno').val())=="") {
+      $("#noteno-blank-alert").alert();
+      $("#noteno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#noteno-blank-alert").hide();
+      });
+      $('#rejectionnote_noteno').focus();
+      return false;
+    }
+    if ($.trim($('#rejectionnote_date').val())=="") {
+      $("#date-blank-alert").alert();
+      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#date-blank-alert").hide();
+      });
+      $('#rejectionnote_date').focus();
+      return false;
+    }
+    if ($.trim($('#rejectionnote_month').val())=="") {
+      $("#date-blank-alert").alert();
+      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#date-blank-alert").hide();
+      });
+      $('#rejectionnote_month').focus();
+      return false;
+    }
+    if ($.trim($('#rejectionnote_year').val())=="") {
+      $("#date-blank-alert").alert();
+      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#date-blank-alert").hide();
+      });
+      $('#rejectionnote_year').focus();
+      return false;
+    }
+    if(!Date.parseExact($("#rejectionnote_date").val()+$("#rejectionnote_month").val()+$("#rejectionnote_year").val(), "ddMMyyyy")){
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#rejectionnote_date').focus().select();
+      return false;
+    }
+    var curdate = Date.parseExact($("#rejectionnote_year").val()+$("#rejectionnote_month").val()+$("#rejectionnote_date").val(), "yyyyMMdd")
+    if (!curdate.between(financialstart,financialend)) {
+      $("#between-date-alert").alert();
+      $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#between-date-alert").hide();
+      });
+      $('#rejectionnote_date').focus().select();
+      return false;
+    }
+    var products = {}; // dictionary containing product code with rejected quantity.
+    var i = 0;
+    for (i; i < $("#rejectionnote_product_table tbody tr").length; i++) {
+        // loop for getting details from each row at a time
+      if ($("#rejectionnote_product_table tbody tr:eq("+i+") td:eq(2) input").val()=="" || $("#rejectionnote_product_table tbody tr:eq("+i+") td:eq(2) input").val()=="0.00") {
+        $("#quantity-blank-alert").alert();
+        $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#quantity-blank-alert").hide();
+        });
+        $("#rejectionnote_product_table tbody tr:eq("+i+") td:eq(2) input").focus();
+        return false;
+      }
+      products.productcode = $("#rejectionnote_product_table tbody tr:eq("+i+") td:eq(0) input").data("productcode");
+      products.rejectedqty = parseFloat($("#rejectionnote_product_table tbody tr:eq("+i+") td:eq(2) input").val()).toFixed(2);
+    }
+    if(i == 0){
+      $("#product-blank-alert").alert();
+      $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#product-blank-alert").hide();
+      });
+      return false;
+    }
+    var form_data = new FormData();
+    form_data.append("rnno", $("#rejectionnote_noteno").val());
+    form_data.append("rndate", $("#rejectionnote_year").val()+'-'+$("#rejectionnote_month").val()+'-'+$("#rejectionnote_date").val());
+    form_data.append("inout", $("#rejectionnote_gkstatus").val());
+    form_data.append("dcid", $('#rejectionnote_deliverynote').val());
+    form_data.append("invid", $('#rejectionnote_invoice').val());
+    if($("#rejectionnote_godown").attr("data-goid")){
+  	  form_data.append("goid", $("#rejectionnote_godown").attr("data-goid"));
+    }
+    form_data.append("products", JSON.stringify(products));
+    event.preventDefault();
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
+    $('#confirm_yes').modal('show').one('click', '#dc_save_yes', function (e)
+    {
+        // modal opened for save confirmation as delivery note once created cannot be edited later
+    $.ajax({ //ajax call for saving the delivery note
+      url: '/rejectionnote?action=save',
+      type: 'POST',
+      global: false,
+      contentType: false,
+      cache: false,
+      processData: false,
+      dataType: 'json',
+      async : false,
+      data: form_data,
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+    })
+    .done(function(resp) {
+      if(resp["gkstatus"] == 0){
+        $("#success-alert").alert();
+        $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#success-alert").hide();
+        });
+        if ($("#rejectionnote_edit").length == 0) {
+          $("#rejectionnote").click();
+        }
+        if ($("#rejectionnote_gkstatus").val()=='9') {
+          $("#rejectionnote_in").click();
+        }
+        else {
+          $("#rejectionnote_out").click();
+        }
+        return false;
+      }
+      else if(resp["gkstatus"]==1) {
+        $("#rejectionnote_noteno").focus();
+        $("#duplicate-alert").alert();
+        $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#duplicate-alert").hide();
+        });
+        return false;
+      }
+      else {
+        $("#failure-alert").alert();
+        $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#failure-alert").hide();
+        });
+        return false;
+      }
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
+
+    return false;
+  });
+  });
+
   $("#confirm_yes").on('shown.bs.modal', function(event) {
       // on opening of modal the focus should be by efault on the no option so this event
     $("#dc_save_no").focus();
@@ -433,7 +590,7 @@ $(document).ready(function() {
   });
   $("#rejectionnote_reset").click(function(event) {
       // function for resetting the entered delivery note details
-    if ($("#status").val()=='9') {
+    if ($("#rejectionnote_gkstatus").val()=='9') {
       $("#rejectionnote_in").click();
     }
     else {
