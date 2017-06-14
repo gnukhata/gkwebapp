@@ -28,8 +28,10 @@ Contributors:
 This script is for the report page of Unbilled Deliveries.
 */
 $(document).ready(function() {
+	//Disabled Clear Search button
 	$(".fixed-table-loading").remove(); // Remove unwanted symbol of loading from bootstrap-table
 	$("#msspinmodal").modal("hide");
+	$("#del_unbilled_clearfields").hide();
 	$('.del_unbilled_table tbody tr:first-child td:eq(1) a').focus(); // Set focus on first row on load.
 	$('.del_unbilled_table tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 
@@ -164,12 +166,21 @@ $(".del_unbilled_table").off('dblclick','tr').on('dblclick','tr',function(e){
 		$("#show_unbilled_deliveries").click();
 	});
 
-/*  $(".search").children(".form-control").keyup(function(event){
+$(".search").children(".form-control").keyup(function(event){
+	$("#del_unbilled_clearfields").show();
     if (event.keyCode == 27) {
       $(this).val("");
+			$("#del_unbilled_clearfields").hide();
     }
+		else if (event.which == 13) {
+			$(".dcno:visible").first().focus();
+		}
+		else if ($(this).val() == "") {
+			$("#del_unbilled_clearfields").hide();
+		}
   });
-
+	
+/*
 		$("#printbutton").click(function(event) {
 			// this function creates a spreadsheet of the report.
 		event.preventDefault();
