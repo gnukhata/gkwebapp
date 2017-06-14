@@ -46,3 +46,18 @@ def showviewrejectionnote(request):
 	header={"gktoken":request.headers["gktoken"]}
 	rnotes = requests.get("http://127.0.0.1:6543/rejectionnote?type=all", headers=header)
 	return {"gkstatus":rnotes.json()["gkstatus"],"rejectionnotes":rnotes.json()["gkresult"]}
+
+@view_config(route_name="rejectionnote",request_param="action=save",renderer="json")
+def saverejectionnote(request):
+	header={"gktoken":request.headers["gktoken"]}
+	rndata = {"rnno":request.params["rnno"],"rndate":request.params["rndate"],"inout":request.params["inout"]}
+	if "dcid" in request.params:
+		rndata["dcid"] = request.params["dcid"]
+	if "invid" in request.params:
+		rndata["invid"] = request.params["invid"]
+	stockdata = {"inout":int(request.params["inout"]),"items":json.loads(request.params["products"])}
+	if request.params.has_key("goid"):
+		stockdata["goid"]=int(request.params["goid"])
+	rnwholedata = {"rejectionnotedata":rndata,"stockdata":stockdata}
+	result=requests.post("http://127.0.0.1:6543/rejectionnote",data=json.dumps(rnwholedata),headers=header)
+	return {"gkstatus":result.json()["gkstatus"]}
