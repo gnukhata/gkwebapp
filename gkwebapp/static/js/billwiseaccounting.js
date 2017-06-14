@@ -424,6 +424,71 @@ $(document).ready(function() {
       return false;
     }
   });
+    $(document).off('keydown', '#btasadv').on('keydown', '#btasadv', function(event) {
+    if (event.which == 39) {
+	event.preventDefault();
+	if ($("#btonacc").is(":visible")) {
+	  $("#btonacc").focus();  
+	}
+	else{
+	    $("#btbillwise").focus();
+	}
+    }
+    else if(event.which == 37) {
+      event.preventDefault();
+      $("#btclose").focus();
+    }
+    });
+    $(document).off('keydown', '#btonacc').on('keydown', '#btonacc', function(event) {
+    if (event.which == 39) {
+      event.preventDefault();
+	if ($("#btbillwise").is(":visible")) {
+	  $("#btbillwise").focus();  
+	}
+	else{
+	    $("#btclose").focus();
+	}
+    }
+    else if(event.which == 37) {
+      event.preventDefault();
+      if ($("#btasadv").is(":visible")) {
+	  $("#btasadv").focus();  
+	}
+	else{
+	    $("#btclose").focus();
+	}
+    }
+    });
+    $(document).off('keydown', '#btbillwise').on('keydown', '#btbillwise', function(event) {
+    if (event.which == 39) {
+      event.preventDefault();
+	$("#btclose").focus();
+    }
+    else if(event.which == 37) {
+      event.preventDefault();
+      if ($("#btonacc").is(":visible")) {
+	  $("#btonacc").focus();  
+	}
+	else{
+	    $("#btasadv").focus();
+	}
+    }
+    });
+    $(document).off('keydown', '#btclose').on('keydown', '#btclose', function(event) {
+    if (event.which == 39) {
+      event.preventDefault();
+	$(".footerbutton:visible").first().focus();
+    }
+    else if(event.which == 37) {
+      event.preventDefault();
+	if ($("#btbillwise").is(":visible")) {
+	  $("#btbillwise").focus();  
+	}
+	else {
+	    $("#btonacc").focus();
+	}
+    }
+  });
   //Actions that occur when On Account is clicked.
   $(document).off('click', '#btonacc').on('click', '#btonacc', function(event) {
     event.preventDefault();
