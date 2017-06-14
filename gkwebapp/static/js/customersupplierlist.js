@@ -59,6 +59,9 @@ $(document).ready(function() {
 	  $("#cstitle").show();  //Displays a the title of the table.
 	  $("#csname").html($("#customerselect option:selected").text());  //Loads customer name into a span to be displayed next to the title.
 	  $("#txtareahelp").show();
+	  $("#btasadv").show();
+	  $("#btonacc").show();
+	  $("#btbillwise").hide();
 	}
       }
     );
@@ -102,6 +105,9 @@ $(document).ready(function() {
 	  $("#cstitle").show();
 	  $("#csname").html($("#supplierselect option:selected").text());
 	  $("#txtareahelp").show();
+	  $("#btasadv").show();
+	  $("#btonacc").show();
+	  $("#btbillwise").hide();
         }
       }
     );

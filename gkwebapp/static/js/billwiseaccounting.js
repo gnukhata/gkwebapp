@@ -94,7 +94,7 @@ $(document).ready(function() {
 	$("#useasadvance").data("useonaccount", $("#asadvancelabel").data("asadvance"));
 	var newonaccount = parseFloat(parseFloat($("#useonaccount").data("useonaccount")).toFixed(2)) + parseFloat(parseFloat(advocremainder).toFixed(2));
 	$("#useonaccount").html(parseFloat(newonaccount).toFixed(2));
-	$("#useonaccount").data("useonaccount", newonaccount);
+	$("#useonaccount").data("useonaccount", parseFloat(newonaccount).toFixed(2));
       }
     }
   });
@@ -339,8 +339,22 @@ $(document).ready(function() {
     /* Act on the event */
     var curindex1 = $(this).closest('tr').index();
     clearTimeout(typingTimer1);
-    typingTimer1 = setTimeout(function(){
-      if (parseFloat(parseFloat(totalap).toFixed(2)) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()) > parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2))) {
+      typingTimer1 = setTimeout(function(){
+	  if ($("#onaccount").val() == "") {
+	      $("#onaccount").val(parseFloat(0).toFixed(2));
+	      var previousinput = $("#onaccount").data("onaccount");
+	  if (paymentmode == 1) {
+	      usedasadvance = usedasadvance - previousinput;
+	      $("#useasadvance").html(parseFloat(usedasadvance).toFixed(2));
+	      $("#useasadvance").data("useasadvance", parseFloat(usedasadvance).toFixed(2));
+	  }
+	  else{
+	      usedonaccount = usedonaccount - previousinput;
+	      $("#useonaccount").html(parseFloat(usedonaccount).toFixed(2));
+	      $("#useonaccount").data("useonaccount", parseFloat(usedonaccount).toFixed(2));
+	  }
+	  }
+      else if (parseFloat(parseFloat(totalap).toFixed(2)) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()) > parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2))) {
 	if (paymentmode == 15) {
 	    usedonaccount = parseFloat(parseFloat(totalap).toFixed(2)) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()) - parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2)) - parseFloat(parseFloat($("#useasadvance").data("useasadvance")).toFixed(2));
 	    if (usedonaccount > parseFloat(parseFloat($("#onaccountlabel").data("onaccount")).toFixed(2))) {
@@ -353,7 +367,7 @@ $(document).ready(function() {
 	    }
 	    else {
 	      $("#useonaccount").html(parseFloat(usedonaccount).toFixed(2));
-	      $("#useonaccount").data("useonaccount", usedonaccount);
+	      $("#useonaccount").data("useonaccount", parseFloat(usedonaccount).toFixed(2));
 	    }
 	}
 	    if (paymentmode == 1) {
@@ -368,9 +382,10 @@ $(document).ready(function() {
 	  }
 	  else {
 	    $("#useasadvance").html(parseFloat(usedasadvance).toFixed(2));
-	    $("#useasadvance").data("useasadvance", usedasadvance);
+	    $("#useasadvance").data("useasadvance", parseFloat(usedasadvance).toFixed(2));
 	  }
-	}
+	    }
+	  $("#onaccount").data("onaccount", parseFloat($("#onaccount").val()).toFixed(2));
       }
     }, doneTypingInterval);
     });
@@ -378,8 +393,22 @@ $(document).ready(function() {
     /* Act on the event */
     var curindex1 = $(this).closest('tr').index();
     clearTimeout(typingTimer2);
-    typingTimer2 = setTimeout(function(){
-      if (parseFloat(parseFloat(totalap).toFixed(2)) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()) > parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2))) {
+      typingTimer2 = setTimeout(function(){
+	  if ($("#asadvance").val() == "") {
+	      $("#asadvance").val(parseFloat(0).toFixed(2));
+	      var previousinput = $("#asadvance").data("asadvance");
+	  if (paymentmode == 1) {
+	      usedasadvance = usedasadvance - previousinput;
+	      $("#useasadvance").html(parseFloat(usedasadvance).toFixed(2));
+	      $("#useasadvance").data("useasadvance", parseFloat(usedasadvance).toFixed(2));
+	  }
+	  else{
+	      usedonaccount = usedonaccount - previousinput;
+	      $("#useonaccount").html(parseFloat(usedonaccount).toFixed(2));
+	      $("#useonaccount").data("useonaccount", parseFloat(usedonaccount).toFixed(2));
+	  }
+	  }
+      else if (parseFloat(parseFloat(totalap).toFixed(2)) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()) > parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2))) {
 	if (paymentmode == 15) {
 	    usedonaccount = parseFloat(parseFloat(totalap).toFixed(2)) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()) - parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2)) - parseFloat(parseFloat($("#useasadvance").data("useasadvance")).toFixed(2));
 	    if (usedonaccount > parseFloat(parseFloat($("#onaccountlabel").data("onaccount")).toFixed(2))) {
@@ -409,7 +438,8 @@ $(document).ready(function() {
 		    $("#useasadvance").html(parseFloat(usedasadvance).toFixed(2));
 		    $("#useasadvance").data("useasadvance", usedasadvance);
 		}
-	}
+	    }
+	  $("#asadvance").data("asadvance", parseFloat($("#asadvance").val()).toFixed(2));
       }
     }, doneTypingInterval);
   });
