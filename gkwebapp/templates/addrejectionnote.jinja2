@@ -59,7 +59,8 @@
                               {% trans %}Invoice{% endtrans %} :
                             </label>
                             <select class="form-control input-sm" id="rejectionnote_invoice" accesskey="">
-                              <option value="" dcno = "" selected>None</option>
+                              <option value="" selected disabled hidden>Select Invoice</option>
+                              <option value="" dcno = "" >None</option>
                               {% for invoice in invoices %}
                               {% if gkstatus=="out" %}
                               {% if invoice['csflag']==19 %}
@@ -78,7 +79,8 @@
                               {% trans %}Delivery Note{% endtrans %} :
                             </label>
                             <select class="form-control input-sm" id="rejectionnote_deliverynote" accesskey="">
-                              <option value="" dcno = "" selected>None</option>
+                              <option value="" selected disabled hidden>Select Delivery Note</option>
+                              <option value="" dcno = "" >None</option>
                               {% for deliverynote in deliverynotes %}
                               {% if gkstatus=="out" %}
                               {% if deliverynote['csflag']==19 %}
@@ -159,6 +161,10 @@
                     <div class="alert alert-danger" id="quantity-blank-alert" aria-live="rude" role="alert" hidden>
 
                         <label for="vno">{% trans %}Either enter rejected quantity or remove that product! {% endtrans %}</label>
+                    </div>
+                    <div class="alert alert-danger" id="quantity-more-alert" aria-live="rude" role="alert" hidden>
+
+                        <label for="vno">{% trans %} Rejected Quantity should not be greater than Total Quantity! {% endtrans %}</label>
                     </div>
                     <div class="panel">
                         <table id="rejectionnote_product_table" class="table shadow table-condensed table-bordered fixed-table">
