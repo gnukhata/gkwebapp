@@ -36,6 +36,24 @@ $(document).ready(function() {
   $('.rejectionnote_product_rejected_quantity').numeric({ negative: false});
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
+  var todaysdate = new Date();
+  var dd = todaysdate.getDate(); //yields day
+  var mm = pad(todaysdate.getMonth()+1, 2); //yields month
+  var yyyy = todaysdate.getFullYear(); //yields year
+  var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g);
+  var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g);
+  var fromd = new Date(fromdatearray[0], fromdatearray[1] - 1, fromdatearray[2]);
+  var tod = new Date(todatearray[0], todatearray[1] - 1, todatearray[2]);
+  if (fromd <= todaysdate && tod >= todaysdate) {
+    $("#rejectionnote_date").val(dd)
+    $("#rejectionnote_month").val(mm)
+    $("#rejectionnote_year").val(yyyy)
+  }
+  else{
+    $("#rejectionnote_date").val(todatearray[2])
+    $("#rejectionnote_month").val(todatearray[1])
+    $("#rejectionnote_year").val(todatearray[0])
+  }
   function pad (str, max) { //to add leading zeros in date
     str = str.toString();
     if (str.length==1) {
