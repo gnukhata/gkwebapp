@@ -1702,7 +1702,45 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
 
             details.instrumentno=""
             //details.instrumentdate="";
-            
+
+            if($("#instrumentno").val())
+            {
+              console.log("instrumentno");
+              details.instrumentno=$("#instrumentno").val();
+              if(!$("#bankname").val()){
+                $("#bankname-alert").show();
+                $("#bankname-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#bankname-alert").hide();
+                });
+                $('#bankname').focus().select();
+                return false;
+
+              }
+              if(!$("#branchname").val()){
+                $("#branchname-alert").show();
+                $("#branchname-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#branchname-alert").hide();
+                });
+                $('#branchname').focus().select();
+                return false;
+
+              }
+              instrumentdate1=Date.parseExact($("#instrument_date").val()+$("#instrument_month").val()+$("#instrument_year").val(), "ddMMyyyy");
+
+              if(!instrumentdate1){
+                $("#instrumentdate-alert").show();
+                $("#instrumentdate-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#instrumentdate-alert").hide();
+                });
+
+                $('#instrument_date').focus().select();
+                return false;
+              }
+              details.bankname=$("#bankname").val();
+              details.branchname=$("#branchname").val();
+              instrdate=$("#instrument_year").val()+'-'+$("#instrument_month").val()+'-'+$("#instrument_date").val();
+              details.instrumentdate=instrdate;
+            }
       form_data.append("vdetails",JSON.stringify(details));
       form_data.append("transactions",JSON.stringify(output));
       $.ajax({
