@@ -57,7 +57,7 @@ $(document).ready(function() {
     clearTimeout(typingTimer2);  //clearing timeout
 
     $(".numtype").numeric({ negative : false });
-    var paymentmode = 15;
+    var paymentmode = 1;
     var advocremainder = 0.00;
     var usedonaccount = 0.00;
     var usedasadvance = 0.00;
@@ -117,7 +117,7 @@ $(document).ready(function() {
       }
     }
     else if (event.which == 38) {
-	    if ($("#paymentmode option:selected").val() == 0) {
+	    if ($("#paymentmode option:selected").val() == 1) {
 		event.preventDefault();
 	      $("#supplierselect").focus();
 	  }  
@@ -215,7 +215,18 @@ $(document).ready(function() {
       //Original value of Amount Pending is stored in a variable so that the field can be reset when user clears Amount Paid field.
       if ($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val() == "") {
 	var originalvalue = parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending"));
-	$("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">'+parseFloat(originalvalue).toFixed(2)+'</div>');
+	  $("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">'+parseFloat(originalvalue).toFixed(2)+'</div>');
+	  var previousinput = $("#latable tbody tr:eq("+curindex1+") td:eq(4) input").data("amountpaid");
+	  if (paymentmode == 1) {
+	      usedasadvance = usedasadvance - previousinput;
+	      $("#useasadvance").html(parseFloat(usedasadvance).toFixed(2));
+	      $("#useasadvance").data("useasadvance", parseFloat(usedasadvance).toFixed(2));
+	  }
+	  else{
+	      usedonaccount = usedonaccount - previousinput;
+	      $("#useonaccount").html(parseFloat(usedonaccount).toFixed(2));
+	      $("#useonaccount").data("useonaccount", parseFloat(usedonaccount).toFixed(2));
+	  }
       }
       else {
 	//Whenever Amount Paid is greater than Amount Pending alert is displayed.
@@ -230,12 +241,14 @@ $(document).ready(function() {
 	}
 	//Whenever Amount Paid equals Amount Pending the below snippet sets Amount Pending to 0.00.
 	else if (parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()) == parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending"))) {
-	  $("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">0.00</div>');
+	    $("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">0.00</div>');
+	    $("#latable tbody tr:eq("+curindex1+") td:eq(4) input").data("amountpaid", parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()).toFixed(2));
 	}
 	else {
 	  //When Amount Paid is not empty and less than Amount Pending the below snippet finds the difference and updates Amount Pending.
 	  var bwdiff = parseFloat(parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending")) - parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()));
-	  $("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">'+parseFloat(bwdiff).toFixed(2)+'</div');
+	    $("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">'+parseFloat(bwdiff).toFixed(2)+'</div');
+	    $("#latable tbody tr:eq("+curindex1+") td:eq(4) input").data("amountpaid", parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()).toFixed(2));
 	}
       }
       //Total Amount Paid is found out and displayed on the foooter.
@@ -282,7 +295,7 @@ $(document).ready(function() {
 	    }
 	    else {
 	      $("#useonaccount").html(parseFloat(usedonaccount).toFixed(2));
-	      $("#useonaccount").data("useonaccount", usedonaccount);
+	      $("#useonaccount").data("useonaccount", parseFloat(usedonaccount).toFixed(2));
 	    }
 	}
 	    if (paymentmode == 1) {
@@ -297,7 +310,7 @@ $(document).ready(function() {
 		}
 		else {
 		    $("#useasadvance").html(parseFloat(usedasadvance).toFixed(2));
-		    $("#useasadvance").data("useasadvance", usedasadvance);
+		    $("#useasadvance").data("useasadvance", parseFloat(usedasadvance).toFixed(2));
 		}
 	    }
 	}

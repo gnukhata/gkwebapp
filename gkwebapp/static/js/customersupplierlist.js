@@ -55,7 +55,7 @@ $(document).ready(function() {
 	  sessionStorage.customeramount =  0.00;
           $("#billwisediv").html(resp);  //Here, resp contains jinja template with bill data. It is loaded into a div.
 	  $(".panel-footer").show();  //Footer buttons are displayed.
-	  $('#supplierselect option[value=""]').prop("selected", true);  //If a customer is selected then the list of suppliers is reset.
+	  $('#supplierselect option[value="0"]').prop("selected", true);  //If a customer is selected then the list of suppliers is reset.
 	  $("#cstitle").show();  //Displays a the title of the table.
 	  $("#csname").html($("#customerselect option:selected").text());  //Loads customer name into a span to be displayed next to the title.
 	  $("#txtareahelp").show();
@@ -98,9 +98,10 @@ $(document).ready(function() {
 	  sessionStorage.customeramount =  0.00;
           $("#billwisediv").html(resp);
 	  $(".panel-footer").show();
-	  $('#customerselect option[value=""]').prop("selected", true);  //Here list of suppliers is reset when a supplier is selected.
+	  $('#customerselect option[value="0"]').prop("selected", true);  //Here list of suppliers is reset when a supplier is selected.
 	  $("#cstitle").show();
 	  $("#csname").html($("#supplierselect option:selected").text());
+	  $("#txtareahelp").show();
         }
       }
     );
