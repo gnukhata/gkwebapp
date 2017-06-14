@@ -95,14 +95,28 @@
                       </div>
                     </div>
                     <div class="form-group">
-                        <label for="rejectionnote_customer">
-                            {% if gkstatus=="out" %}
-                            {% trans %}Supplier Name{% endtrans %} :
-                            {% else %}
-                            {% trans %}Customer Name{% endtrans %} :
-                            {% endif %}
-                        </label>
-                        <input class="form-control input-sm" id="rejectionnote_customer" placeholder="None" accesskey="" disabled>
+                      <div class="row">
+                          <div class="col-xs-6">
+                            <label for="rejectionnote_customer">
+                                {% if gkstatus=="out" %}
+                                {% trans %}Supplier Name{% endtrans %} :
+                                {% else %}
+                                {% trans %}Customer Name{% endtrans %} :
+                                {% endif %}
+                            </label>
+                            <input class="form-control input-sm" id="rejectionnote_customer" placeholder="None" accesskey="" disabled>
+                          </div>
+                          <div class="col-xs-6">
+                            <label for="rejectionnote_customer">
+                                {% if gkstatus=="out" %}
+                                {% trans %}Supplier TIN{% endtrans %} :
+                                {% else %}
+                                {% trans %}Customer TIN{% endtrans %} :
+                                {% endif %}
+                            </label>
+                            <input class="form-control input-sm" id="rejectionnote_customertin" placeholder="None" accesskey="" disabled>
+                          </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         {% if gkstatus == "in" %}
