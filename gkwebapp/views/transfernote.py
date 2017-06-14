@@ -83,6 +83,62 @@ def printlistoftransfernotes(request):
                     transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s"%(startDate, endDate),headers=header)
                 return {"transfernotes":transfernotes.json()["gkresult"], "startdate":startDate, "enddate":endDate, "godownname":godownname, "godownaddress":godownaddress, "goid":goid}
 
+@view_config(route_name="transfernotes",request_param="action=generatespreadsheet", renderer="")
+def listoftransfernotesspreadsheet(request):
+    header={"gktoken":request.headers["gktoken"]}
+    fystart = str(request.params["fystart"]);
+    fyend = str(request.params["fyend"]);
+    orgname = str(request.params["orgname"])
+    orgname += " (FY: " + fystart+" to "+fyend +")"
+    startDate =str(request.params["startdate"])
+    endDate =str(request.params["enddate"])
+    godownname = ""
+    godownaddress = ""
+    goid = 0
+    ods = ODS()
+    sheet = ods.content.getSheet(0)
+    sheet.setSheetName("List of Transfer Notes")
+    sheet.getRow(0).setHeight("23pt")
+
+    sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("16pt")
+    ods.content.mergeCells(0,0,8,0)
+    sheet.getRow(1).setHeight("18pt")
+    sheet.getCell(0,1).stringValue("List Of Transfer Notes").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+    if request.params.has_key("goid"):
+        goid = int(request.params["goid"])
+        transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&"%(startDate, endDate),headers=header)
+        godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
+        godownname = godown.json()["gkresult"]["goname"]
+        godownaddress = godown.json()["gkresult"]["goaddr"]
+        ods.content.mergeCells(0,1,8,1)
+        sheet.getRow(1).setHeight("18pt")
+        sheet.getCell(0,1).stringValue("List Of Transfer Notes").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+    else:
+        transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s"%(startDate, endDate),headers=header)
+    ods.content.mergeCells(0,1,4,1)
+    sheet.getColumn(1).setWidth("9cm")
+    sheet.getColumn(2).setWidth("4cm")
+    sheet.getColumn(3).setWidth("4cm")
+    sheet.getCell(0,2).stringValue("Sr. No.").setBold(True)
+    sheet.getCell(1,2).stringValue("Product").setBold(True)
+    sheet.getCell(2,2).stringValue("Category").setBold(True)
+    sheet.getCell(3,2).stringValue("UOM").setBold(True)
+    row = 3
+    for stock in result:
+        sheet.getCell(0, row).stringValue(stock["srno"])
+        sheet.getCell(1, row).stringValue(stock["productdesc"])
+        sheet.getCell(2, row).stringValue(stock["categoryname"])
+        sheet.getCell(3, row).stringValue(stock["unitname"])
+        row += 1
+
+    ods.save("response.ods")
+    repFile = open("response.ods")
+    rep = repFile.read()
+    repFile.close()
+    headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+    os.remove("response.ods")
+    return Response(rep, headerlist=headerList.items())
+
 @view_config(route_name="transfernotes",request_param="action=showlist",renderer="gkwebapp:templates/listoftransfernotes.jinja2")
 def showlistoftransfernotes(request):
                 header={"gktoken":request.headers["gktoken"]}
