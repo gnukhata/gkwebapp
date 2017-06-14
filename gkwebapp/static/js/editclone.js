@@ -1700,45 +1700,9 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
     if(ecflag=="clone")
     {
 
-      details.instrumentno=""
-      //details.instrumentdate="";
-      if($("#instrumentno").val())
-      {
-        console.log("instrumentno");
-        details.instrumentno=$("#instrumentno").val();
-        if(!$("#bankname").val()){
-          $("#bankdetails-alert").show();
-          $("#bankdetails-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#bankdetails-alert").hide();
-          });
-          $('#bankname').focus().select();
-          return false;
-
-        }
-        if(!$("#branchname").val()){
-          $("#bankdetails-alert").show();
-          $("#bankdetails-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#bankdetails-alert").hide();
-          });
-          $('#branchname').focus().select();
-          return false;
-
-        }
-        instrumentdate1=Date.parseExact($("#instrument_date").val()+$("#instrument_month").val()+$("#instrument_year").val(), "ddMMyyyy");
-
-        if(!instrumentdate1){
-          $("#instrdate-alert").show();
-          $("#instrdate-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#instrdate-alert").hide();
-          });
-          $('#instrumentdate').focus().select();
-          return false;
-        }
-        details.bankname=$("#bankname").val();
-        details.branchname=$("#branchname").val();
-        instrdate=$("#instrument_year").val()+'-'+$("#instrument_month").val()+'-'+$("#instrument_date").val();
-        details.instrumentdate=instrdate;
-      }
+            details.instrumentno=""
+            //details.instrumentdate="";
+            
       form_data.append("vdetails",JSON.stringify(details));
       form_data.append("transactions",JSON.stringify(output));
       $.ajax({
@@ -1873,12 +1837,12 @@ $("#instrumentno").keydown(function(event) {
     event.preventDefault();
     if(!$("#instrumentno").val()){
 
-    $("#instrumentno-alert").show();
-    $("#instrumentno-alert").fadeTo(2250, 500).slideUp(500, function(){
-      $("#instrumentno-alert").hide();
-    });
-    $("#instrumentno").focus();
-
+$("#save").focus();
+$("#bankname").val("");
+$("#branchname").val("");
+$("#instrument_date").val("");
+$("#instrument_month").val("");
+$("#instrument_year").val("");
     }
     else{
     $("#bankname").focus().select();

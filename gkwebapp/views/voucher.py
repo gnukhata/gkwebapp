@@ -110,13 +110,11 @@ def addvoucher(request):
 			gkdata["invid"] = vdetails["invid"]
 		else:
 			gkdata["invid"] = None
-	if vdetails["vtype"]== "payment"or vdetails["vtype"]=="receipt":
-
-		if vdetails["instrumentno"] !="":
-			gkdata["instrumentno"]=vdetails["instrumentno"]
-			gkdata["bankname"]=vdetails["bankname"]
-			gkdata["branchname"]=vdetails["branchname"]
-			gkdata["instrumentdate"] = vdetails["instrumentdate"]
+	if vdetails["instrumentno"] !="":
+		gkdata["instrumentno"]=vdetails["instrumentno"]
+		gkdata["bankname"]=vdetails["bankname"]
+		gkdata["branchname"]=vdetails["branchname"]
+		gkdata["instrumentdate"] = vdetails["instrumentdate"]
 	else:
 		gkdata["instrumentno"]=None
 		gkdata["bankname"]=None
