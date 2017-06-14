@@ -149,7 +149,7 @@ def addvoucher(request):
 		if row["side"]=="Dr":
 			drs[row["accountcode"]]=row["dramount"]
 	header={"gktoken":request.headers["gktoken"]}
-	print gkdata
+
 	result = requests.post("http://127.0.0.1:6543/transaction",data=json.dumps(gkdata) , headers=header)
 	if result.json()["gkstatus"]==0:
 		return {"gkstatus":True}

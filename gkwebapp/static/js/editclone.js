@@ -316,12 +316,6 @@ $(document).ready(function()
     $("#demovctable").hide();
     $("#narr").prop('disabled', false);
     $("#project").prop('disabled', false);
-    $("#instrumentno").prop('disabled', false);
-    $("#bankname").prop('disabled', false);
-    $("#branchname").prop('disabled', false);
-    $("#instrument_date").prop('disabled', false);
-    $("#instrument_month").prop('disabled', false);
-    $("#instrument_year").prop('disabled', false);
 
 
 
@@ -817,7 +811,14 @@ $(document).ready(function()
       event.preventDefault();
     }
     if (event.which==13) {
+      if($("#bankflag").val()=='1')
+      {
+        $("#instrumentno").focus().select();
+      }
+      else{
       $('#save').click();
+      }
+
       event.preventDefault();
     }
   });
@@ -1698,6 +1699,46 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
     }
     if(ecflag=="clone")
     {
+
+      details.instrumentno=""
+      //details.instrumentdate="";
+      if($("#instrumentno").val())
+      {
+        console.log("instrumentno");
+        details.instrumentno=$("#instrumentno").val();
+        if(!$("#bankname").val()){
+          $("#bankdetails-alert").show();
+          $("#bankdetails-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#bankdetails-alert").hide();
+          });
+          $('#bankname').focus().select();
+          return false;
+
+        }
+        if(!$("#branchname").val()){
+          $("#bankdetails-alert").show();
+          $("#bankdetails-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#bankdetails-alert").hide();
+          });
+          $('#branchname').focus().select();
+          return false;
+
+        }
+        instrumentdate1=Date.parseExact($("#instrument_date").val()+$("#instrument_month").val()+$("#instrument_year").val(), "ddMMyyyy");
+
+        if(!instrumentdate1){
+          $("#instrdate-alert").show();
+          $("#instrdate-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#instrdate-alert").hide();
+          });
+          $('#instrumentdate').focus().select();
+          return false;
+        }
+        details.bankname=$("#bankname").val();
+        details.branchname=$("#branchname").val();
+        instrdate=$("#instrument_year").val()+'-'+$("#instrument_month").val()+'-'+$("#instrument_date").val();
+        details.instrumentdate=instrdate;
+      }
       form_data.append("vdetails",JSON.stringify(details));
       form_data.append("transactions",JSON.stringify(output));
       $.ajax({
@@ -1826,4 +1867,115 @@ event.preventDefault();
 
     });
 */
+
+$("#instrumentno").keydown(function(event) {
+  if (event.which==13) {
+    event.preventDefault();
+    if(!$("#instrumentno").val()){
+
+    $("#instrumentno-alert").show();
+    $("#instrumentno-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#instrumentno-alert").hide();
+    });
+    $("#instrumentno").focus();
+
+    }
+    else{
+    $("#bankname").focus().select();
+    }
+
+  }
+
+});
+$("#bankname").keydown(function(event) {
+  if (event.which==13) {
+    event.preventDefault();
+    if(!$("#bankname").val())
+    {
+      $("#bankname-alert").show();
+      $("#bankname-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#bankname-alert").hide();
+      });
+      $("#bankname").focus();
+
+    }
+    else{
+    $("#branchname").focus().select();
+    }
+
+  }
+  if (event.which==38) {
+    event.preventDefault();
+    $("#instrumentno").focus().select();
+  }
+});
+$("#branchname").keydown(function(event) {
+  if (event.which==13) {
+    event.preventDefault();
+    if(!$("#branchname").val())
+    {
+
+        $("#branchname-alert").show();
+        $("#branchname-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#branchname-alert").hide();
+        });
+        $("#branchname").focus();
+
+    }
+    else{
+    $("#instrument_date").focus().select();
+    }
+
+  }
+  if (event.which==38) {
+    event.preventDefault();
+    $("#bankname").focus().select();
+  }
+});
+$("#instrument_date").numeric();
+$("#instrument_month").numeric();
+$("#instrument_year").numeric();
+$("#instrument_date").keydown(function(event) {
+  if (event.which==13) {
+    event.preventDefault();
+    $("#instrument_month").focus().select();
+  }
+  if (event.which==38) {
+    event.preventDefault();
+    $("#transfernote_no").focus().select();
+  }
+});
+
+$("#instrument_month").keydown(function(event) {
+  if (event.which==13) {
+    event.preventDefault();
+    $("#instrument_year").focus().select();
+  }
+  if (event.which==38) {
+    event.preventDefault();
+    $("#instrument_date").focus().select();
+  }
+});
+$("#instrument_year").keydown(function(event) {
+  if (event.which==13) {
+    event.preventDefault();
+    $("#save").focus().select();
+  }
+  if (event.which==38) {
+    event.preventDefault();
+    $("#instrument_month").focus().select();
+  }
+});
+
+$("#instrument_date").blur(function(event) {
+  $(this).val(pad($(this).val(),2));
+});
+$("#instrument_month").blur(function(event) {
+  $(this).val(pad($(this).val(),2));
+});
+
+$("#instrument_year").blur(function(event) {
+  $(this).val(yearpad($(this).val(),4));
+});
+
 });

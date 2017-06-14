@@ -37,7 +37,7 @@ when a scrollbar is visible and wider when it is not).
 */
 table.table-fixedheader>tbody {
   overflow-y: scroll;
-  height: 35%;
+  height: 24%;
 
 }
 /*
@@ -46,12 +46,12 @@ a scrollbar to be displayed anyway so that the usable width of the thead
 will exactly match the tbody.
 */
 table.table-fixedheader>tfoot {
-  height: 39px;
+  height: 25px;
   width: 100%;
 }
 table.table-fixedheader>thead{
   overflow-y: scroll;
-  height: 26px;
+  height: 24px;
 }
 /*
 For browsers that support it (webkit), we set the background color of
@@ -175,6 +175,18 @@ label.normal {
           <div class="alert alert-warning nopadding" id="postdate-alert" aria-live="rude" role="alert" hidden>
             <strong>{% trans %}You are entering a post-dated transaction!{% endtrans %}</strong>
           </div>
+          <div class="alert alert-danger" id="instrumentno-alert" aria-live="rude" role="alert" hidden>
+           {% trans %}Enter Instrument No.!{% endtrans %}
+         </div>
+            <div class="alert alert-danger" id="bankname-alert" aria-live="rude" role="alert" hidden>
+             {% trans %}Enter Bank Name!{% endtrans %}
+           </div>
+           <div class="alert alert-danger" id="branchname-alert" aria-live="rude" role="alert" hidden>
+            {% trans %}Enter Branch Name!{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="instrdate-alert" aria-live="rude" role="alert" hidden>
+           {% trans %}Enter Proper Instrument Date!{% endtrans %}
+         </div>
 
           <form id="viewvoucher" name="voucher" class="" action="" method="get">
             <div class="form-inline">
@@ -491,29 +503,29 @@ label.normal {
             <div class=" col-md-6">
             <input type="hidden" id="m_vtype" name="m_vtype" value="{{vtype}}">
             {% if voucher['instrumentno'] != None %}
-              <div id="instrumentmodal" class="collapse " tabindex="-1" role="dialog">
+              <div id="instrumentmodal" tabindex="-1" role="dialog">
 
                     <h4>  {% trans %}Bank Details{% endtrans %}</h4>
-
+<input type="hidden" id="bankflag" name="bankflag" value="1">
                   <div class="row">
                           <div class="col-xs-12">
 <table class="table table-bodered" >
   <tbody>
 
-                                   <tr>
+                                   <tr style="height:10px;">
                                    <td><label class="normal" for="instrumentno">{% trans %}Instrument No{% endtrans %} :</label></td>
                                    <td><input class="form-control input-sm" disabled id="instrumentno" placeholder="{% trans %} Instrument no{% endtrans %}" value={{voucher['instrumentno']}}></td>
                                    </tr>
                                    <tr>
-                                   <td><label class="normal" for="bankname">{% trans %}Bank Name{% endtrans %} :</label></td>
+                                   <td><label class="normal"for="bankname">{% trans %}Bank Name{% endtrans %} :</label></td>
                                    <td><input class="form-control input-sm" disabled id="bankname" placeholder="{% trans %} Bank Name{% endtrans %}" value={{voucher['bankname']}}></td>
                                    </tr>
                                    <tr>
-                                   <td><label class="normal" for="branchname">{% trans %}Branch Name{% endtrans %} :</label></td>
+                                   <td><label for="branchname" class="normal">{% trans %}Branch Name{% endtrans %} :</label></td>
                                    <td><input class="form-control input-sm" disabled id="branchname" placeholder="{% trans %} Branch Name{% endtrans %}" value={{voucher['branchname']}}></td>
                                    </tr>
                                    <tr>
-                                        <td><label class="normal" for="instrument_date">{% trans %}Instrument Date:{% endtrans %}</label></td>
+                                        <td><label for="instrument_date" class="normal">{% trans %}Instrument Date:{% endtrans %}</label></td>
                                         <td>
                                           <div class="form-inline">
                                           <div class="form-group">
@@ -563,9 +575,15 @@ label.normal {
               <button type="submit" id="save" class="btn btn-success btn-sm" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
               <button type="button" class="btn btn-danger btnfocus btn-sm" id="delete" accesskey="d">{% trans %}<u>D</u>elete{% endtrans %}</button>
               <button type="button" class="btn btn-success btn-sm" id="printvoucher">{% trans %}Print Voucher{% endtrans %}</button>
+<!--
               {% if voucher['instrumentno'] != None %}
-            <button class="btn btn-info btn-sm" type="button" id="instrumentbtn" data-toggle="collapse" data-target="#instrumentmodal">{% trans %}View Bank Details{% endtrans %}</button>
+            <button class="btn btn-info btn-sm" type="button" id="instrumentbtn" data-toggle="collapse" data-target="#instrumentmodal">{% trans %}view Bank Details{% endtrans %}</button>
+
+            {%elif vtype == "receipt" or vtype == "payment"%}
+            <button class="btn btn-info btn-sm" type="button" id="instrumentbtn2" data-toggle="collapse" data-target="#instrumentmodal">{% trans %}Add Bank Details{% endtrans %}</button>
+
             {%endif%}
+    -->
               {% if voucher["attachmentcount"]>0 %}
 		<button type="button" class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">{% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
             </div>

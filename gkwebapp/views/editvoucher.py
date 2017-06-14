@@ -155,7 +155,7 @@ def viewvoucher(request):
             if invdata.json()["gkstatus"]==0:
                 return {"projects":projects.json()["gkresult"],"vtype":type,"voucher":vc,"userrole":result.json()["userrole"],"draccounts":draccounts,"craccounts":craccounts,"invoicedata":invdata.json()["gkresult"]}
         else:
-            print vc["vouchernumber"]
+
             return {"projects":projects.json()["gkresult"],"vtype":type,"voucher":vc,"userrole":result.json()["userrole"],"draccounts":draccounts,"craccounts":craccounts,"invoicedata":0}
     else:
         return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)

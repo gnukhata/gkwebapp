@@ -1507,7 +1507,7 @@ $("#invsel").keyup(function(event) {
       {
 	details.invid="" ;
       }
-      console.log("hello o");
+
       details.instrumentno=""
       //details.instrumentdate="";
       if($("#instrumentno").val())
@@ -1799,6 +1799,7 @@ $("#instrumentmodal").modal("show");
         $("#instrumentno").focus();
       });
       $("#instrumentmodal").on('hidden.bs.modal', function(event) {
+        $("#save").focus();
         event.preventDefault();
       });
       $("#instrumentno").keydown(function(event) {
