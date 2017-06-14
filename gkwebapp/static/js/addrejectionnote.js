@@ -32,7 +32,6 @@ $(document).ready(function() {
   $("#rejectionnote_date").numeric();
   $("#rejectionnote_month").numeric();
   $("#rejectionnote_year").numeric();
-  $('.rejectionnote_product_quantity').numeric({ negative: false});
   $('.rejectionnote_product_rejected_quantity').numeric({ negative: false});
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
@@ -165,6 +164,13 @@ $(document).ready(function() {
         $("#quantity-blank-alert").alert();
         $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#quantity-blank-alert").hide();
+        });
+        return false;
+      }
+      if(parseFloat(qty) > parseFloat($('#rejectionnote_product_table tbody tr:eq('+$(this).closest("tr").index()+') td:eq(1) input').val())){
+        $("#quantity-more-alert").alert();
+        $("#quantity-more-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#quantity-more-alert").hide();
         });
         return false;
       }
