@@ -33,6 +33,7 @@ $(document).ready(function() {
   $("#rejectionnote_month").numeric();
   $("#rejectionnote_year").numeric();
   $('.rejectionnote_product_rejected_quantity').numeric({ negative: false});
+  $('.numtype').numeric({ negative: false});
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   var todaysdate = new Date();
@@ -150,7 +151,7 @@ $(document).ready(function() {
       $(this).val(parseFloat($(this).val()).toFixed(2));
     }
   });
-  
+
   //insert key press event
   $(document).off("keyup").on("keyup",function(event) {
     if(event.which == 45) {
@@ -214,7 +215,7 @@ $(document).ready(function() {
         '</td>' +
         '<td class="col-xs-3">' +
         '<div class="input-group">' +
-        '<input type="text" class="rejectionnote_product_rejected_quantity form-control input-sm text-right" value="0.00">' +
+        '<input type="text" class="rejectionnote_product_rejected_quantity numtype form-control input-sm text-right" value="0.00">' +
         '<span class="input-group-addon input-sm" id="unitaddon"></span>' +
         '</div>' +
         '</td>' +
@@ -250,7 +251,7 @@ $(document).ready(function() {
                    '</td>' +
                    '<td class="col-xs-3">' +
                    '<div class="input-group">' +
-                   '<input type="text" class="rejectionnote_product_rejected_quantity form-control input-sm text-right" value="0.00">' +
+                   '<input type="text" class="rejectionnote_product_rejected_quantity numtype form-control input-sm text-right" value="0.00">' +
                    '<span class="input-group-addon input-sm" id="unitaddon">' + value.unitname + '</span>' +
                    '</div>' +
                    '</td>' +
@@ -420,7 +421,7 @@ $(document).ready(function() {
                            '</td>' +
                            '<td class="col-xs-3">' +
                            '<div class="input-group">' +
-                           '<input type="text" class="rejectionnote_product_rejected_quantity form-control input-sm text-right" value="0.00">' +
+                           '<input type="text" class="rejectionnote_product_rejected_quantity numtype form-control input-sm text-right" value="0.00">' +
                            '<span class="input-group-addon input-sm" id="unitaddon">' + value.unitname + '</span>' +
                            '</div>' +
                            '</td>' +
@@ -462,7 +463,7 @@ $(document).ready(function() {
            '</td>' +
            '<td class="col-xs-3">' +
            '<div class="input-group">' +
-           '<input type="text" class="rejectionnote_product_rejected_quantity form-control input-sm text-right" value="0.00">' +
+           '<input type="text" class="rejectionnote_product_rejected_quantity numtype form-control input-sm text-right" value="0.00">' +
            '<span class="input-group-addon input-sm" id="unitaddon"></span>' +
            '</div>' +
            '</td>' +
