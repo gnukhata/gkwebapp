@@ -113,7 +113,7 @@ $(document).ready(function() {
 		}
       }
       else{
-	$(".footerbutton:first").focus();
+	$(".footerbutton:visible").first().focus();
       }
     }
     else if (event.which == 38) {
@@ -400,10 +400,22 @@ $(document).ready(function() {
       }
     }, doneTypingInterval);
   });
-  $(document).off('keydown', '#onaccount, #asadvance').on('keydown', '#onaccount, #asadvance', function(event) {
+  $(document).off('keydown', '#onaccount').on('keydown', '#onaccount', function(event) {
     if (event.which == 13) {
       event.preventDefault();
-      $(".footerbutton:first").focus();
+      $(".footerbutton:visible").first().focus();
+    }
+    if(event.which == 45) {
+      event.preventDefault();
+      //Pressing 'Insert' key triggers click event of 'Done' button.
+      $("#btclose").click();
+      return false;
+    }
+  });
+  $(document).off('keydown', '#asadvance').on('keydown', '#asadvance', function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $(".footerbutton:visible").first().focus();
     }
     if(event.which == 45) {
       event.preventDefault();
@@ -503,7 +515,15 @@ $(document).ready(function() {
 	totalamountpaid = totalamountpaid + amountpaid;
       }
     }
-    //Validations.
+      //Validations.
+      if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) == 0) {
+	  $(".alert").hide();
+	  $("#nochange-alert").alert();
+	  $("#nochange-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#nochange-alert").hide();
+	  });
+	  return false;
+    }
     //Alert is displayed when sum of total amount paid and sum of unadjusted amounts is greater than sum of Debit/Credit amount(retrieved from session storage) and previous unadjusted amounts. See addvoucher.js to see when the amount is stored in session storage.
       if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > (parseFloat(sessionStorage.customeramount) + parseFloat($("#asadvancelabel").data("asadvance")) + parseFloat($("#onaccountlabel").data("onaccount")))) {
 	  $(".alert").hide();
