@@ -58,7 +58,8 @@ $(document).ready(function() {
 	  $('#supplierselect option[value=""]').prop("selected", true);  //If a customer is selected then the list of suppliers is reset.
 	  $("#cstitle").show();  //Displays a the title of the table.
 	  $("#csname").html($("#customerselect option:selected").text());  //Loads customer name into a span to be displayed next to the title.
-        }
+	  $("#txtareahelp").show();
+	}
       }
     );
       }

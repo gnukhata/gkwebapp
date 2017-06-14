@@ -167,7 +167,7 @@ $(document).ready(function() {
       event.preventDefault(); //Prevents default behaviour of any event. In this case, submiting the form.
       //Click event force 'Done' button is fired when 'Enter' is pressed from Amount Paid in last row. Note that current index is compared with number of rows
       if (curindex == numberofrows) {
-	$("#btclose").click();
+	  $(".footerbutton:visible").first().focus();
       }
       else {
 	//Alert is displayed when Amount Paid is blank
