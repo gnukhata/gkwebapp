@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}stock{% endtrans %}</title>
+    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}List Of Transfer Notes{% endtrans %}</title>
     <style media="screen">
      .shadow {
 	 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -38,9 +38,9 @@
 
                   <div class="form-group">
 
-                    <input type="text" class="viewlist_date form-control input-sm dis" id="viewstock_fromdate" value="" size="2" maxlength="2" placeholder="DD" accesskey="d" >
-                    <input type="text" id="viewlist_frommonth" class="viewstock_date dis form-control input-sm" value="" size="2" maxlength="2" placeholder="MM" >
-                    <input type="text" id="viewlist_fromyear" class="viewstock_date dis form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY" >
+                    <input type="text" class="viewlist_date form-control input-sm" id="viewlist_fromdate" value="" size="2" maxlength="2" placeholder="DD" accesskey="d" >
+                    <input type="text" id="viewlist_frommonth" class="viewlist_date form-control input-sm" value="" size="2" maxlength="2" placeholder="MM" >
+                    <input type="text" id="viewlist_fromyear" class="viewlist_date form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY" >
                   </div>
 
 		</div>
@@ -51,16 +51,16 @@
 
                   <div class="form-group">
 
-                    <input type="text" class="viewlist_date form-control input-sm dis" id="viewstock_todate" value="" size="2" maxlength="2" placeholder="DD" >
-                    <input type="text" id="viewlist_tomonth" class="viewstock_date form-control input-sm dis" value="" size="2" maxlength="2" placeholder="MM" >
-                    <input type="text" id="viewlist_toyear" class="viewstock_date form-control input-sm dis" value="" size="4" maxlength="4" placeholder="YYYY" >
+                    <input type="text" class="viewlist_date form-control input-sm" id="viewlist_todate" value="" size="2" maxlength="2" placeholder="DD" >
+                    <input type="text" id="viewlist_tomonth" class="viewlist_date form-control input-sm" value="" size="2" maxlength="2" placeholder="MM" >
+                    <input type="text" id="viewlist_toyear" class="viewlist_date form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY" >
                   </div>
 		</div>
               </div>
-	      <div class="form-group col-xs-12" id="godownselectdiv">
+	      <div class="form-group col-xs-12" id="godownselectdiv" style="margin-top:10px;">
 		<label for="editgoddet">{% trans %}Godown{% endtrans %} :</label>
 		<select class = "form-control input-sm" id="godownselect">
-		  <option value="0" disabled selected hidden>{% trans %}All{% endtrans %}</option>
+		  <option value="0" selected>{% trans %}All{% endtrans %}</option>
 		  {% for godown in gkresult %}
 		    <option value="{{godown['godownid']}}" data-godownname="{{godown["godownname"]}}" data-godownaddress="{{godown["godownaddress"]}}">{{godown["godownname"]}} ({{godown["godownaddress"]}})</option>
 		  {% endfor %}

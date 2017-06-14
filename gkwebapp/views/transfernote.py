@@ -27,6 +27,7 @@
         "Sachin Patil" <sachpatil@openmailbox.org>
         'Prajkta Patkar' <prajakta.dff.org.in>
         "Mohd. Talha Pawaty" <mtalha456@gmail.com>
+        "Abhijith Balan" <abhijithb21@openmailbox.org>
                
 """
 from pyramid.view import view_config
@@ -69,12 +70,17 @@ def showlistoftransfernotes(request):
                 header={"gktoken":request.headers["gktoken"]}
                 startDate =str(request.params["startdate"])
                 endDate =str(request.params["enddate"])
+                godownname = ""
+                godownaddress = ""
                 if request.params.has_key("goid"):
                     goid = int(request.params["goid"])
                     transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&"%(startDate, endDate),headers=header)
+                    godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
+                    godownname = godown.json()["gkresult"]["goname"]
+                    godownaddress = godown.json()["gkresult"]["goaddr"]
                 else:
                     transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s"%(startDate, endDate),headers=header)
-                return {"transfernotes":transfernotes.json()["gkresult"]}
+                return {"transfernotes":transfernotes.json()["gkresult"], "startdate":startDate, "enddate":endDate, "godownname":godownname, "godownaddress":godownaddress}
 
 @view_config(route_name="transfernotes",request_param="action=get",renderer="json")
 def gettransfernote(request):
