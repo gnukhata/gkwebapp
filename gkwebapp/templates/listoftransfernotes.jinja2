@@ -55,9 +55,9 @@
   </head>
   <body>
     <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="startdate" data-startdate="{{startdate}}">{{startdate}}</strong> {% trans %}to{% endtrans %} <strong id="enddate" data-enddate="{{enddate}}">{{enddate}}</strong></span>
-    <span style="margin-left: 46.4%;"><strong><i>{% trans %}List of Transfer Notes{% endtrans %}</i></strong></span>
+    <span style="margin-left: 46.4%;"><strong>{% trans %}List of Transfer Notes{% endtrans %}</strong></span>
     {% if godownname!="" and godownname!="" %}
-      <span style="margin:auto; display:table; width: 100%;text-align: center"><i>{% trans %}Name of Godown{% endtrans %}: </i><strong>{{godownname}}</strong> <i>{% trans %}Godown Address{% endtrans %}: </i><strong>{{godownaddress}}</strong></span>
+      <span style="margin:auto; display:table; width: 100%;text-align: center"><i>{% trans %}Name of Godown{% endtrans %}: </i><strong id="goid" data-goid="{{goid}}">{{godownname}}</strong> <i>{% trans %}Godown Address{% endtrans %}: </i><strong>{{godownaddress}}</strong></span>
     {% endif %}
     <br>
     <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="laclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
@@ -96,7 +96,7 @@
 	    <td class="bigwrap text-left">{{transfernote["fromgodown"]}}</td>
 	    <td class="bigwrap text-left">{{transfernote["togodown"]}}</td>
 	    <td class="bigwrap text-left">{% if transfernote["numberofproducts"] == 1 %}{{ transfernote["products"][0] }}{% else %}{{ transfernote["products"][0] }} + {{ transfernote["numberofproducts"] - 1 }}{% endif %}</td>
-	    <td class="qtywrap text-center">{{transfernote["quantity"]}}</td>
+	    <td class="qtywrap text-right">{{transfernote["quantity"]}}</td>
 	  </tr>
 	  {% endfor %}
       </tbody>

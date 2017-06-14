@@ -67,12 +67,17 @@ $(document).ready(function() {
     });
 
   $('#viewprintableversion').click(function (e) {
-    $("#msspinmodal").modal("show");
+      $("#msspinmodal").modal("show");
+      var dataset = {"startdate":$("#startdate").data("startdate"),"enddate":$("#enddate").data("enddate")};
+	    if ($("#godownselect option:selected").val() != 0) {
+		dataset["goid"] = $("#goid").data("goid");
+	    }
     $.ajax({
       type: "POST",
-      url: "/listofaccountsprint",
+      url: "/transfernotes?action=printlist",
       global: false,
-      async: false,
+	async: false,
+	data: dataset,
       datatype: "text/html",
       beforeSend: function(xhr)
       {
