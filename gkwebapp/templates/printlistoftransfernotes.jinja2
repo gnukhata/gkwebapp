@@ -39,7 +39,7 @@
       <table class="table table-condensed table-bordered table-striped shadow">
 	<thead class="bg-primary">
           <tr class="visible-print">
-            <th colspan="7" style="text-align:center; font-size:80%;">
+            <th colspan="8" style="text-align:center; font-size:80%;">
               {% trans %}List of Transfer Notes{% endtrans %}
 	      <br>
 	      <i>{% trans %}Period{% endtrans %}</i> : <strong id="startdate" data-startdate="{{startdate}}">{{startdate}}</strong> {% trans %}to{% endtrans %} <strong id="enddate" data-enddate="{{enddate}}">{{enddate}}</strong>
@@ -50,7 +50,7 @@
             </th>
           </tr>
 	  <tr>
-            <th class="srnowrap calign" >
+            <th class="srnowrap text-center" >
               {% trans %}Sr. No.{% endtrans %}
             </th>
             <th class="smwrap text-center" >
@@ -71,6 +71,9 @@
             <th class="qtywrap text-right" >
 	      {% trans %}Quantity{% endtrans %}
             </th>
+	    <th class="qtywrap text-center" >
+	      {% trans %}Status{% endtrans %}
+            </th>
 	  </tr>
 	</thead>
 	<tbody>
@@ -83,6 +86,11 @@
 	      <td class="bigwrap text-left">{{transfernote["togodown"]}}</td>
 	      <td class="bigwrap text-left">{% if transfernote["numberofproducts"] == 1 %}{{ transfernote["products"][0] }}{% else %}{{ transfernote["products"][0] }} + {{ transfernote["numberofproducts"] - 1 }}{% endif %}</td>
 	      <td class="qtywrap text-right">{{transfernote["quantity"]}}</td>
+	      {% if transfernote["receivedflag"] %}
+		<td class="qtywrap text-center text-success">{% trans %}Received{% endtrans %}</td>
+	      {% else %}
+		<td class="qtywrap text-center text-danger">{% trans %}Pending{% endtrans %}</td>
+	      {% endif %}
 	    </tr>
 	  {% endfor %}
 	</tbody>
