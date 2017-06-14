@@ -101,7 +101,7 @@ def listoftransfernotesspreadsheet(request):
     sheet.getRow(0).setHeight("23pt")
 
     sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("16pt")
-    ods.content.mergeCells(0,0,8,0)
+    ods.content.mergeCells(0,0,8,1)
     sheet.getRow(1).setHeight("18pt")
     sheet.getCell(0,1).stringValue("List Of Transfer Notes").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
     if request.params.has_key("goid"):
@@ -110,26 +110,43 @@ def listoftransfernotesspreadsheet(request):
         godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
         godownname = godown.json()["gkresult"]["goname"]
         godownaddress = godown.json()["gkresult"]["goaddr"]
-        ods.content.mergeCells(0,1,8,1)
+        nameofgodown = "Name of Godown: "+godownname+" Godown Address: "+godownaddress
+        ods.content.mergeCells(0,2,8,2)
         sheet.getRow(1).setHeight("18pt")
-        sheet.getCell(0,1).stringValue("List Of Transfer Notes").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+        sheet.getCell(0,1).stringValue(nameofgodown).setBold(True).setFontSize("14pt").setAlignHorizontal("center")
     else:
         transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s"%(startDate, endDate),headers=header)
-    ods.content.mergeCells(0,1,4,1)
-    sheet.getColumn(1).setWidth("9cm")
-    sheet.getColumn(2).setWidth("4cm")
-    sheet.getColumn(3).setWidth("4cm")
-    sheet.getCell(0,2).stringValue("Sr. No.").setBold(True)
-    sheet.getCell(1,2).stringValue("Product").setBold(True)
-    sheet.getCell(2,2).stringValue("Category").setBold(True)
-    sheet.getCell(3,2).stringValue("UOM").setBold(True)
-    row = 3
-    for stock in result:
-        sheet.getCell(0, row).stringValue(stock["srno"])
-        sheet.getCell(1, row).stringValue(stock["productdesc"])
-        sheet.getCell(2, row).stringValue(stock["categoryname"])
-        sheet.getCell(3, row).stringValue(stock["unitname"])
-        row += 1
+        ods.content.mergeCells(0,1,4,1)
+        sheet.getColumn(1).setWidth("3cm")
+        sheet.getColumn(2).setWidth("3cm")
+        sheet.getColumn(3).setWidth("7cm")
+        sheet.getColumn(4).setWidth("7cm")
+        sheet.getColumn(5).setWidth("7cm")
+        sheet.getColumn(6).setWidth("3cm")
+        sheet.getColumn(7).setWidth("3cm")
+        sheet.getCell(0,2).stringValue("Sr. No.").setBold(True)
+        sheet.getCell(1,2).stringValue("TN No.").setBold(True)
+        sheet.getCell(2,2).stringValue("Date").setBold(True)
+        sheet.getCell(3,2).stringValue("Dispatched From").setBold(True)
+        sheet.getCell(4,2).stringValue("To be Delivered At").setBold(True)
+        sheet.getCell(5,2).stringValue("Products").setBold(True)
+        sheet.getCell(6,2).stringValue("Quantity").setBold(True)
+        sheet.getCell(7,2).stringValue("Status").setBold(True)
+        row = 3
+        for transfernote in transfernotes:
+            sheet.getCell(0, row).stringValue(transfernote["srno"])
+            sheet.getCell(1, row).stringValue(transfernote["transfernoteno"])
+            sheet.getCell(2, row).stringValue(transfernote["transfernotedate"])
+            sheet.getCell(3, row).stringValue(transfernote["fromgodown"])
+            sheet.getCell(4, row).stringValue(transfernote["togodown"])
+            if len(transfernote["products"]) == 1:
+                sheet.getCell(5, row).stringValue(transfernote["products"][0])
+            else:
+                sheet.getCell(5, row).stringValue(transfernote["products"][0] + len(transfernote["products"][0]))
+            sheet.getCell(5, row).stringValue(stock["unitname"])
+            sheet.getCell(6, row).stringValue(stock["unitname"])
+            sheet.getCell(7, row).stringValue(stock["unitname"])
+            row += 1
 
     ods.save("response.ods")
     repFile = open("response.ods")
