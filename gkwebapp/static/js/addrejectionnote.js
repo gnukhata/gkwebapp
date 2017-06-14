@@ -143,6 +143,150 @@ $(document).ready(function() {
         $('#rejectionnote_product_table tbody tr:eq('+ind+') td:eq(2) input').focus().select();
       }
     }
+    if (event.which==38) {
+      event.preventDefault();
+      if($(this).closest("tr").is(":first-child")){
+        $("#rejectionnote_deliverynote").focus();
+      }
+      else{
+        var ind = $(this).closest("tr").index() - 1;
+        $('#rejectionnote_product_table tbody tr:eq('+ind+') td:eq(2) input').focus().select();
+      }
+    }
+  });
+  $(document).off("change", "#rejectionnote_deliverynote").on("change", "#rejectionnote_deliverynote", function(event) {
+    if ($("#rejectionnote_deliverynote option:selected").val() != '') {
+      $("#rejectionnote_invoice option[value='']").prop("selected", true);
+      $.ajax({
+        url: '/invoice?action=getdeliverynote',
+        type: 'POST',
+        dataType: 'json',
+        async: false,
+        data: { "dcid": $("#rejectionnote_deliverynote option:selected").val() },
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+       .done(function(resp) {
+         if(resp["delchal"]["delchaldata"]["dcflag"] == 1){
+           $("#rejectionnote_consignment").val("Approval");
+         }
+         else if(resp["delchal"]["delchaldata"]["dcflag"] == 3){
+           $("#rejectionnote_consignment").val("Consignment");
+         }
+         else if(resp["delchal"]["delchaldata"]["dcflag"] == 4){
+           $("#rejectionnote_consignment").val("Sale");
+         }
+         else if(resp["delchal"]["delchaldata"]["dcflag"] == 5){
+           $("#rejectionnote_consignment").val("Free Replacement");
+         }
+         else if(resp["delchal"]["delchaldata"]["dcflag"] == 19){
+           $("#rejectionnote_consignment").val("Sample");
+         }
+         $("#rejectionnote_godown").val(resp["delchal"]["delchaldata"]["goname"] + "("+ resp["delchal"]["delchaldata"]["gostate"] +")");
+         if (resp["gkstatus"] == 0) {
+           $.ajax({
+             url: '/customersuppliers?action=get',
+             type: 'POST',
+             dataType: 'json',
+             async: false,
+             data: { "custid": resp["delchal"]["delchaldata"]["custid"] },
+             beforeSend: function(xhr) {
+               xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+             }
+           })
+            .done(function(resp) {
+              console.log("success");
+              if (resp["gkstatus"] == 0) {
+                $("#rejectionnote_customer").val(resp["gkresult"]["custname"]);
+                $("#rejectionnote_customeraddr").val(resp["gkresult"]["custaddr"]);
+                $("#rejectionnote_supplieraddr").val(resp["gkresult"]["custaddr"]);
+                $("#rejectionnote_customertin").val(resp["gkresult"]["custtan"]);
+                $("#rejectionnote_suppliertin").val(resp["gkresult"]["custtan"]);
+              }
+            })
+            .fail(function() {
+              console.log("error");
+            })
+            .always(function() {
+              console.log("complete");
+            });
+           $('#rejectionnote_product_table tbody').empty();
+           $.ajax({
+                   url: '/invoice?action=getdelinvprods',
+                   type: 'POST',
+                   dataType: 'json',
+                   async: false,
+                   data: {"dcid": $("#rejectionnote_deliverynote option:selected").val()},
+                   beforeSend: function(xhr) {
+                       xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                   }
+               })
+               .done(function(resp) {
+                   console.log("success");
+                   if (resp["gkstatus"] == 0) {
+                     $.each(resp.items, function(key, value) {
+                       $('#rejectionnote_product_table tbody').append('<tr>' +
+                           '<td class="col-xs-5">' +
+                           '<input class="form-control input-sm product_name" data="' + key + '" value="' + value.productdesc + '" disabled>' +
+                           '</td>' +
+                           '<td class="col-xs-3">' +
+                           '<div class="input-group">' +
+                           '<input type="text" class="rejectionnote_product_quantity form-control input-sm text-right" data="' + value.qty + '" value="' + value.qty + '" disabled>' +
+                           '<span class="input-group-addon input-sm" id="unitaddon">' + value.unitname + '</span>' +
+                           '</div>' +
+                           '</td>' +
+                           '<td class="col-xs-3">' +
+                           '<div class="input-group">' +
+                           '<input type="text" class="rejectionnote_product_rejected_quantity form-control input-sm text-right value="0.00">' +
+                           '<span class="input-group-addon input-sm" id="unitaddon">' + value.unitname + '</span>' +
+                           '</div>' +
+                           '</td>' +
+                           '<td class="col-xs-1">' +
+                           '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
+                           '</td>' +
+                           '</tr>');
+                        $('#rejectionnote_product_table tbody tr:eq(' + $(this).closest("tr").index() + ') td:eq(1) input').val(parseFloat(value.qty).toFixed(2));
+                     });
+                   }
+               })
+               .fail(function() {
+                   console.log("error");
+               })
+               .always(function() {
+                   console.log("complete");
+               });
+         }
+       })
+       .fail(function() {
+         console.log("error");
+       })
+       .always(function() {
+         console.log("complete");
+       });
+     }
+     else{
+       $('#rejectionnote_product_table tbody').empty();
+       $('#rejectionnote_product_table tbody').append('<tr>' +
+           '<td class="col-xs-5">' +
+           '<input class="form-control input-sm product_name" placeholder="None" disabled>' +
+           '</td>' +
+           '<td class="col-xs-3">' +
+           '<div class="input-group">' +
+           '<input type="text" class="rejectionnote_product_quantity form-control input-sm text-right" placeholder="0.00" disabled>' +
+           '<span class="input-group-addon input-sm" id="unitaddon"></span>' +
+           '</div>' +
+           '</td>' +
+           '<td class="col-xs-3">' +
+           '<div class="input-group">' +
+           '<input type="text" class="rejectionnote_product_rejected_quantity form-control input-sm text-right value="0.00">' +
+           '<span class="input-group-addon input-sm" id="unitaddon"></span>' +
+           '</div>' +
+           '</td>' +
+           '<td class="col-xs-1">' +
+           '</td>' +
+           '</tr>');
+     }
   });
   
   $("#confirm_yes").on('shown.bs.modal', function(event) {
