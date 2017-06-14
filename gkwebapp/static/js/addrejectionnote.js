@@ -482,11 +482,19 @@ $(document).ready(function() {
       $('#rejectionnote_date').focus().select();
       return false;
     }
+    if (!($("#rejectionnote_invoice").val()) && !($("#rejectionnote_deliverynote").val())) {
+      $("#dcinv-blank-alert").alert();
+      $("#dcinv-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#dcinv-blank-alert").hide();
+      });
+      $('#rejectionnote_invoice').focus().select();
+      return false;
+    }
     var products = {}; // dictionary containing product code with rejected quantity.
     var i = 0;
     for (i; i < $("#rejectionnote_product_table tbody tr").length; i++) {
         // loop for getting details from each row at a time
-      if ($("#rejectionnote_product_table tbody tr:eq("+i+") td:eq(2) input").val()=="" || $("#rejectionnote_product_table tbody tr:eq("+i+") td:eq(2) input").val()=="0.00") {
+      if ($("#rejectionnote_product_table tbody tr:eq("+i+") td:eq(2) input").val()=="" || $("#rejectionnote_product_table tbody tr:eq("+i+") td:eq(2) input").val()=="0.00" || $("#rejectionnote_product_table tbody tr:eq("+i+") td:eq(2) input").val()=="0") {
         $("#quantity-blank-alert").alert();
         $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#quantity-blank-alert").hide();
