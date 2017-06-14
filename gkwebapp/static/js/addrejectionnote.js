@@ -153,9 +153,21 @@ $(document).ready(function() {
       return false;
     }
   });
+  $(document).off("click", ".product_del").on("click", ".product_del", function() {
+    $(this).closest('tr').remove();
+    $('#rejectionnote_product_table tbody tr:eq('+$(this).closest("tr").index()+') td:eq(2) input').focus().select();
+  });
   $(document).off("keydown",".rejectionnote_product_rejected_quantity").on("keydown",".rejectionnote_product_rejected_quantity",function(event) {
     if (event.which==13) {
       event.preventDefault();
+      var qty = $('#rejectionnote_product_table tbody tr:eq('+$(this).closest("tr").index()+') td:eq(2) input').val();
+      if(qty == "" || qty == "0.00" || qty == "0"){
+        $("#quantity-blank-alert").alert();
+        $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#quantity-blank-alert").hide();
+        });
+        return false;
+      }
       if($(this).closest("tr").is(":last-child")){
         $("#rejectionnote_save").focus();
       }
