@@ -172,11 +172,11 @@
     </div>
     <div class="alert alert-danger" id="bwvamount-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Total Amount adjusted is more than Amount entered in Voucher. Please enter remaining amount as advance or on account!{% endtrans %}
+      {% trans %}Total Amount adjusted is more than Amount entered in Voucher. Please enter remaining amount using As advance or On account!{% endtrans %}
     </div>
     <div class="alert alert-danger" id="unadjustedamount-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Total Amount adjusted is more than available Amount. Please enter remaining amount as advance or on account!{% endtrans %}
+      {% trans %}Total Amount adjusted is more than available Amount.{% endtrans %}
     </div>
     <div class="alert alert-danger" id="bwadvac-alert"  aria-live="rude" role="alert" hidden>
 
@@ -213,6 +213,7 @@
 	  <div class="form-group">
 	    <label for="paymentmode">{% trans %}<u>U</u>se From{% endtrans %} :</label>
 	    <select id="paymentmode" class="form-control input-sm" accesskey="u">
+	      <option value="0">{% trans %}Select As Advance/On Account{% endtrans %}</option>
 	      <option value="1">{% trans %}As Advance{% endtrans %}</option>
 	      <option value="15">{% trans %}On Account{% endtrans %}</option>
 	    </select>
