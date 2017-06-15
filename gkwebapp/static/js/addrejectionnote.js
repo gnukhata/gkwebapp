@@ -595,17 +595,18 @@ $(document).ready(function() {
         $("#success-alert").alert();
         $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#success-alert").hide();
+          if ($("#rejectionnote_edit").length == 0) {
+            $("#rejectionnote").click();
+          }
+          if ($("#rejectionnote_gkstatus").val()=='9') {
+            $("#rejectionnote_in").click();
+          }
+          else {
+            $("#rejectionnote_out").click();
+          }
+          return false;
         });
-        if ($("#rejectionnote_edit").length == 0) {
-          $("#rejectionnote").click();
-        }
-        if ($("#rejectionnote_gkstatus").val()=='9') {
-          $("#rejectionnote_in").click();
-        }
-        else {
-          $("#rejectionnote_out").click();
-        }
-        return false;
+
       }
       else if(resp["gkstatus"]==1) {
         $("#rejectionnote_noteno").focus();
