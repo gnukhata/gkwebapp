@@ -13,6 +13,22 @@
      #vct{
 	 border: none;
 	 box-shadow: none;
+   height: 25%;
+
+     }
+     table.table-fixedheader, table.table-fixedheader>thead, table.table-fixedheader>tbody, table.table-fixedheader>tfoot, table.table-fixedheader>thead>tr, table.table-fixedheader>tbody>tr, table.table-fixedheader>tfoot>tr, table.table-fixedheader>thead>tr>th, table.table-fixedheader>tbody>tr>td, table.table-fixedheader>tfoot>tr>td {
+       display: block;
+     }
+     table.table-fixedheader>thead>tr:after, table.table-fixedheader>tbody>tr:after, table.table-fixedheader>tfoot>tr:after  {
+       content:' ';
+       display: block;
+       visibility: hidden;
+       clear: both;
+     }
+     table.table-fixedheader>tbody {
+       overflow-y: scroll;
+       height: 20%;
+
      }
     </style>
   </head>

@@ -152,7 +152,7 @@
 	  {% if  projects %}
 	    <tr>
 	      <td colspan="3">
-		{% trans %}Project{% endtrans %} : 
+		{% trans %}Project{% endtrans %} :
         {% for project in projects %}
           {% if project['projectcode']==voucher["project"] %}
             {{project['projectname']}}
@@ -166,10 +166,60 @@
           {% endif %}
         </tfoot>
       </table>
+      <div id="bankdetails">
+      <div class=" col-md-6">
+      <input type="hidden" id="m_vtype" name="m_vtype" value="{{vtype}}">
+      {% if voucher['instrumentno'] != None %}
+        <div id="instrumentmodal" tabindex="-1" role="dialog">
+
+           <label>{% trans %}Bank Details{% endtrans %}</label>
+<input type="hidden" id="bankflag" name="bankflag" value="1">
+            <div class="row">
+                    <div class="col-xs-12">
+<table class="stable table-condensed table-bordered table-striped shadow" >
+<tbody>
+
+                             <tr style="height:10px;">
+                             <td class="mdwrap">{% trans %}Instrument No{% endtrans %} :</td>
+                             <td>{{voucher['instrumentno']}}</td>
+
+                             <td class="mdwrap">{% trans %}Bank Name{% endtrans %} :</td>
+                             <td>{{voucher['bankname']}}</td>
+                             <tr>
+                               <tr>
+                             <td class="mdwrap">{% trans %}Branch Name{% endtrans %} :</td>
+                             <td class="mdwrap">{{voucher['branchname']}}</td>
+                                   <td class="mdwrap">{% trans %}Instrument Date:{% endtrans %}</td>
+                                  <td class="mdwrap">
+                                    <div class="form-inline">
+                                    <div class="form-group">
+                                          {{voucher['instrumentdate'][:2]}}&nbsp-{{voucher['instrumentdate'][3:5]}}&nbsp-{{voucher['instrumentdate'][6:]}}
+                                    </div>
+                                        </div>
+</td>
+
+</tr>
+                            </div>
+
+</tbody>
+</table>
+                     </div>
+                  </div>
+
+        </div>
+        {%endif%}
+      </div>
+
+    <div id="bottombuttons" class="col-md-12">
+<center>
+  <br>
+<br>
+<br>
       <span style="margin:auto; display:table;">
-  	<button type="button" class="btn btn-sm btn-danger hidden-print" id="loaback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+  	<button type="button" class="btn btn-sm btn-danger hidden-print" id="loaback" accesskey="k" name="button">{% trans %}Bac<u>k</u>{% endtrans %}</button>
   	<button type="button" class="btn btn-sm btn-info hidden-print" id="loaprint" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
       </span>
+    </center>
     </div>
     <script type="text/javascript">
      $(document).ready(function() {
@@ -190,4 +240,3 @@
 
   </body>
 </html>
-

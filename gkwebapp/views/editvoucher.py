@@ -122,10 +122,8 @@ def viewvoucher(request):
     header={"gktoken":request.headers["gktoken"]}
     vcode =request.params["id"]
     gkdata = {"code":int(vcode)}
-
     result = requests.get("http://127.0.0.1:6543/transaction?code=%d"%(int(request.params["id"])),headers=header)
     vc=result.json()["gkresult"]
-
     type = vc["vouchertype"]
     projects = requests.get("http://127.0.0.1:6543/projects", headers=header)
     if type=="contra" or type=="journal":
@@ -157,6 +155,7 @@ def viewvoucher(request):
             if invdata.json()["gkstatus"]==0:
                 return {"projects":projects.json()["gkresult"],"vtype":type,"voucher":vc,"userrole":result.json()["userrole"],"draccounts":draccounts,"craccounts":craccounts,"invoicedata":invdata.json()["gkresult"]}
         else:
+
             return {"projects":projects.json()["gkresult"],"vtype":type,"voucher":vc,"userrole":result.json()["userrole"],"draccounts":draccounts,"craccounts":craccounts,"invoicedata":0}
     else:
         return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)
