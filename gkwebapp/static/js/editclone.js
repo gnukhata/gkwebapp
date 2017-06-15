@@ -1702,7 +1702,7 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
     }
     if(ecflag=="clone")
     {
-
+      $("#instrumentno").val("");
             details.instrumentno=""
             //details.instrumentdate="";
 
