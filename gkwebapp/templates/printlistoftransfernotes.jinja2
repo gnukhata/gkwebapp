@@ -31,7 +31,10 @@
       <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="startdate" data-startdate="{{startdate}}">{{startdate}}</strong> {% trans %}to{% endtrans %} <strong id="enddate" data-enddate="{{enddate}}">{{enddate}}</strong></span>
       <span style="margin-left: 46.4%;"><strong>{% trans %}List of Transfer Notes{% endtrans %}</strong></span>
       {% if godownname!="" and godownname!="" %}
-	<span style="margin:auto; display:table; width: 100%;text-align: center"><i>{% trans %}Name of Godown{% endtrans %}: </i><strong>{{godownname}}</strong> <i>{% trans %}Godown Address{% endtrans %}: </i><strong>{{godownaddress}}</strong></span>
+	<input type="text" id="godownselect" value="1" hidden></input>
+	<span style="margin:auto; display:table; width: 100%;text-align: center"><i>{% trans %}Name of Godown{% endtrans %}: </i><strong id="goid" data-goid="{{goid}}">{{godownname}}</strong> <i>{% trans %}Godown Address{% endtrans %}: </i><strong>{{godownaddress}}</strong></span>
+      {% else %}
+	<input type="text" id="godownselect" value="0" hidden></input>
       {% endif %}
     </div>
 
@@ -84,8 +87,8 @@
 	      <td class="smwrap text-center">{{transfernote["transfernotedate"]}}</td>
 	      <td class="bigwrap text-left">{{transfernote["fromgodown"]}}</td>
 	      <td class="bigwrap text-left">{{transfernote["togodown"]}}</td>
-	      <td class="bigwrap text-left">{% if transfernote["numberofproducts"] == 1 %}{{ transfernote["products"][0] }}{% else %}{{ transfernote["products"][0] }} + {{ transfernote["numberofproducts"] - 1 }}{% endif %}</td>
-	      <td class="qtywrap text-right">{{transfernote["quantity"]}}</td>
+	      <td class="bigwrap text-left">{% for productqty in transfernote["productqty"] %}<p>{{productqty["productdesc"]}}</p>{% endfor %}</td>
+	      <td class="qtywrap text-right">{% for productqty in transfernote["productqty"] %}<p>{{productqty["quantity"]}}</p>{% endfor %}<p>{% trans %}Total: {% endtrans %}{{transfernote["quantity"]}}</p></td>
 	      {% if transfernote["receivedflag"] %}
 		<td class="qtywrap text-center text-success">{% trans %}Received{% endtrans %}</td>
 	      {% else %}
@@ -114,7 +117,7 @@
        $("#loaback").click(function(event) {
          $("#msspinmodal").modal("show");
 	 var dataset = {"startdate":$("#startdate").data("startdate"),"enddate":$("#enddate").data("enddate")};
-	 if ($("#godownselect option:selected").val() != 0) {
+	 if ($("#godownselect").val() == 1) {
 	   dataset["goid"] = $("#goid").data("goid");
 	 }
 	 $.ajax(

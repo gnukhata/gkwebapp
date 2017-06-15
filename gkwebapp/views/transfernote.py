@@ -34,6 +34,9 @@ from pyramid.view import view_config
 import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
+from pyramid.response import Response
+import os
+from odslib import ODS
 
 @view_config(route_name="transfernotes",renderer="gkwebapp:templates/transfernote.jinja2")
 def showtransfernote(request):
@@ -104,6 +107,11 @@ def listoftransfernotesspreadsheet(request):
     ods.content.mergeCells(0,0,8,1)
     sheet.getRow(1).setHeight("18pt")
     sheet.getCell(0,1).stringValue("List Of Transfer Notes").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+    ods.content.mergeCells(0,1,8,1)
+    sheet.getRow(2).setHeight("16pt")
+    sheet.getCell(0,2).stringValue("Period: " + startDate + " to " + endDate).setBold(True).setFontSize("12pt").setAlignHorizontal("center")
+    ods.content.mergeCells(0,2,8,1)
+    titlerow = 3
     if request.params.has_key("goid"):
         goid = int(request.params["goid"])
         transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&"%(startDate, endDate),headers=header)
@@ -111,43 +119,50 @@ def listoftransfernotesspreadsheet(request):
         godownname = godown.json()["gkresult"]["goname"]
         godownaddress = godown.json()["gkresult"]["goaddr"]
         nameofgodown = "Name of Godown: "+godownname+" Godown Address: "+godownaddress
-        ods.content.mergeCells(0,2,8,2)
-        sheet.getRow(1).setHeight("18pt")
-        sheet.getCell(0,1).stringValue(nameofgodown).setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-    else:
-        transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s"%(startDate, endDate),headers=header)
-        ods.content.mergeCells(0,1,4,1)
-        sheet.getColumn(1).setWidth("3cm")
-        sheet.getColumn(2).setWidth("3cm")
-        sheet.getColumn(3).setWidth("7cm")
-        sheet.getColumn(4).setWidth("7cm")
-        sheet.getColumn(5).setWidth("7cm")
-        sheet.getColumn(6).setWidth("3cm")
-        sheet.getColumn(7).setWidth("3cm")
-        sheet.getCell(0,2).stringValue("Sr. No.").setBold(True)
-        sheet.getCell(1,2).stringValue("TN No.").setBold(True)
-        sheet.getCell(2,2).stringValue("Date").setBold(True)
-        sheet.getCell(3,2).stringValue("Dispatched From").setBold(True)
-        sheet.getCell(4,2).stringValue("To be Delivered At").setBold(True)
-        sheet.getCell(5,2).stringValue("Products").setBold(True)
-        sheet.getCell(6,2).stringValue("Quantity").setBold(True)
-        sheet.getCell(7,2).stringValue("Status").setBold(True)
-        row = 3
-        for transfernote in transfernotes:
-            sheet.getCell(0, row).stringValue(transfernote["srno"])
-            sheet.getCell(1, row).stringValue(transfernote["transfernoteno"])
-            sheet.getCell(2, row).stringValue(transfernote["transfernotedate"])
-            sheet.getCell(3, row).stringValue(transfernote["fromgodown"])
-            sheet.getCell(4, row).stringValue(transfernote["togodown"])
-            if len(transfernote["products"]) == 1:
-                sheet.getCell(5, row).stringValue(transfernote["products"][0])
-            else:
-                sheet.getCell(5, row).stringValue(transfernote["products"][0] + len(transfernote["products"][0]))
-            sheet.getCell(5, row).stringValue(stock["unitname"])
-            sheet.getCell(6, row).stringValue(stock["unitname"])
-            sheet.getCell(7, row).stringValue(stock["unitname"])
+        ods.content.mergeCells(0,3,8,1)
+        sheet.getRow(3).setHeight("16pt")
+        sheet.getCell(0,3).stringValue(nameofgodown).setBold(True).setFontSize("12pt").setAlignHorizontal("center")
+        titlerow = 4
+    transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s"%(startDate, endDate),headers=header)
+    transfernotes = transfernotes.json()["gkresult"]
+    sheet.getColumn(0).setWidth("1.5cm")
+    sheet.getColumn(1).setWidth("2cm")
+    sheet.getColumn(2).setWidth("2cm")
+    sheet.getColumn(3).setWidth("7cm")
+    sheet.getColumn(4).setWidth("7cm")
+    sheet.getColumn(5).setWidth("7cm")
+    sheet.getColumn(6).setWidth("3cm")
+    sheet.getColumn(7).setWidth("3cm")
+    sheet.getCell(0,titlerow).stringValue("Sr. No.").setBold(True)
+    sheet.getCell(1,titlerow).stringValue("TN No.").setBold(True).setAlignHorizontal("center")
+    sheet.getCell(2,titlerow).stringValue("Date").setBold(True).setAlignHorizontal("center")
+    sheet.getCell(3,titlerow).stringValue("Dispatched From").setBold(True).setAlignHorizontal("center")
+    sheet.getCell(4,titlerow).stringValue("To be Delivered At").setBold(True).setAlignHorizontal("center")
+    sheet.getCell(5,titlerow).stringValue("Products").setBold(True).setAlignHorizontal("center")
+    sheet.getCell(6,titlerow).stringValue("Quantity").setBold(True).setAlignHorizontal("right")
+    sheet.getCell(7,titlerow).stringValue("Status").setBold(True).setAlignHorizontal("center")
+    row = titlerow + 1
+    for transfernote in transfernotes:
+        sheet.getCell(0, row).stringValue(transfernote["srno"])
+        sheet.getCell(1, row).stringValue(transfernote["transfernoteno"]).setAlignHorizontal("center")
+        sheet.getCell(2, row).stringValue(transfernote["transfernotedate"]).setAlignHorizontal("center")
+        sheet.getCell(3, row).stringValue(transfernote["fromgodown"])
+        sheet.getCell(4, row).stringValue(transfernote["togodown"])
+        subrow = row
+        for productqty in transfernote["productqty"]:
+            sheet.getCell(5, subrow).stringValue(productqty["productdesc"])
+            sheet.getCell(6, subrow).stringValue(productqty["quantity"]).setAlignHorizontal("right")
+            subrow +=1
+        sheet.getCell(6, subrow).stringValue("Total: " + transfernote["quantity"]).setBold(True).setAlignHorizontal("right")
+        subrow +=1
+        if transfernote["receivedflag"]:
+            sheet.getCell(7, row).stringValue("Received").setAlignHorizontal("center")
+        else:
+            sheet.getCell(7, row).stringValue("Pending").setAlignHorizontal("center")
+        if subrow == row:
             row += 1
-
+        else:
+            row = subrow
     ods.save("response.ods")
     repFile = open("response.ods")
     rep = repFile.read()

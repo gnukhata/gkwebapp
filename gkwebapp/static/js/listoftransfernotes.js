@@ -69,7 +69,7 @@ $(document).ready(function() {
   $('#viewprintableversion').click(function (e) {
       $("#msspinmodal").modal("show");
       var dataset = {"startdate":$("#startdate").data("startdate"),"enddate":$("#enddate").data("enddate")};
-	    if ($("#godownselect option:selected").val() != 0) {
+	    if ($("#godownselect").val() == 1) {
 		dataset["goid"] = $("#goid").data("goid");
 	    }
     $.ajax({
@@ -128,9 +128,12 @@ $(document).ready(function() {
   });
   $("#print").click(function(event) {
     event.preventDefault();
-    var xhr = new XMLHttpRequest();
-
-    xhr.open('GET', '/printlistofaccounts?fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2'), true);
+      var xhr = new XMLHttpRequest();
+      var ltnurlstring = '&startdate='+$("#startdate").data("startdate")+'&enddate='+$("#enddate").data("enddate");
+      if ($("#godownselect").val() == 1) {
+	  ltnurlstring = ltnurlstring + '&goid=' + $("#goid").data("goid");
+	    }
+      xhr.open('GET', '/transfernotes?action=generatespreadsheet&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2')+ltnurlstring, true);
     xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
     xhr.responseType = 'blob';
 
