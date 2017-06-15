@@ -444,9 +444,11 @@ $("#invsel").keyup(function(event) {
     if (event.which==13 && $('#project').val()== undefined){
         if($("#instrumentbtn").is(":hidden"))
         {
+          event.preventDefault();
           $('#save').click();
         }
         else {
+          event.preventDefault();
           $("#instrumentbtn").focus();
         }
 
@@ -1893,13 +1895,31 @@ $("#instrumentmodal").modal("show");
       $("#instrument_year").keydown(function(event) {
         if (event.which==13) {
           event.preventDefault();
-          $("#donebutton").focus().select();
+                                    //
+                                    instrumentdate1=Date.parseExact($("#instrument_date").val()+$("#instrument_month").val()+$("#instrument_year").val(), "ddMMyyyy");
+
+                                    if(!instrumentdate1){
+                                      $("#instrdate-alert").show();
+                                      $("#instrdate-alert").fadeTo(2250, 500).slideUp(500, function(){
+                                        $("#instrdate-alert").hide();
+                                      });
+
+                                      $('#instrument_date').focus().select();
+                                      //return false;
+                                    }
+                                    else{
+                                          $("#donebutton").focus().select();
+                                    }
+
+                                    //
+
         }
         if (event.which==38) {
           event.preventDefault();
           $("#instrument_month").focus().select();
         }
       });
+
 
 if (!($("#vouchertype").val() == "receipt" || $("#vouchertype").val() == "payment")){
   $("#instrumentbtn").hide();

@@ -1728,9 +1728,9 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
               instrumentdate1=Date.parseExact($("#instrument_date").val()+$("#instrument_month").val()+$("#instrument_year").val(), "ddMMyyyy");
 
               if(!instrumentdate1){
-                $("#instrumentdate-alert").show();
-                $("#instrumentdate-alert").fadeTo(2250, 500).slideUp(500, function(){
-                  $("#instrumentdate-alert").hide();
+                $("#instrdate-alert").show();
+                $("#instrdate-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#instrdate-alert").hide();
                 });
 
                 $('#instrument_date').focus().select();
