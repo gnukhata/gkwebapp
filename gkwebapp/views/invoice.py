@@ -47,7 +47,7 @@ def showviewregister(request):
 def showaddinvoice(request):
 	header={"gktoken":request.headers["gktoken"]}
 	inputdate = request.params["inputdate"]
-	gkdata = {"inputdate": inputdate}
+	gkdata = {"inputdate": inputdate, "type": "invoice"}
 	unbilled_delnotes = requests.get("http://127.0.0.1:6543/invoice?unbilled_delnotes", data=json.dumps(gkdata), headers=header)
 	if request.params["status"]=='in':
 		suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
