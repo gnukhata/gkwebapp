@@ -571,7 +571,12 @@ $(document).ready(function() {
     $(document).off('keydown', '#btclose').on('keydown', '#btclose', function(event) {
     if (event.which == 39) {
       event.preventDefault();
-	$(".footerbutton:visible").first().focus();
+	if ($(this).next().is(":visible")) {
+	  $(this).next().focus();  
+	}
+	else {
+	    $("#btonacc").focus();
+	}
     }
     else if(event.which == 37) {
       event.preventDefault();
