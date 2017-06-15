@@ -394,6 +394,7 @@ $(document).ready(function()
     $("#narr").prop('disabled', false);
     $("#project").prop('disabled', false);
     $("#viewattach").hide();
+    $("#instrumentno").val("");
     $("#instrumentno").prop('disabled', false);
     $("#bankname").prop('disabled', false);
     $("#branchname").prop('disabled', false);
@@ -811,12 +812,13 @@ $(document).ready(function()
       event.preventDefault();
     }
     if (event.which==13) {
-      if($("#bankflag").val()=='1')
+      if($("#bankflag").val()=='1' && ecflag=="clone" )
       {
+
         $("#instrumentno").focus().select();
       }
       else{
-      $('#save').click();
+      $('#save').focus();
       }
 
       event.preventDefault();
@@ -1702,7 +1704,7 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
     }
     if(ecflag=="clone")
     {
-      $("#instrumentno").val("");
+
             details.instrumentno=""
             //details.instrumentdate="";
 
