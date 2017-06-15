@@ -1666,6 +1666,9 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
       }
     details.narration=$('#narr').val();
     details.vtype=$('#m_vtype').val();
+
+
+
     var form_data = new FormData();
     var files = $("#my-edit-file-selector")[0].files
     var filelist = [];
@@ -1741,6 +1744,21 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
               instrdate=$("#instrument_year").val()+'-'+$("#instrument_month").val()+'-'+$("#instrument_date").val();
               details.instrumentdate=instrdate;
             }
+
+                if($("#bankflag").val()==1)
+                {
+                  if($("#instrumentno").val()=="")
+                  {
+                    $("#instrumentno-alert").show();
+                    $("#instrumentno-alert").fadeTo(2250, 500).slideUp(500, function(){
+                      $("#instrumentno-alert").hide();
+                    });
+                    $('#instrumentno').focus().select();
+                    return false;
+
+                }
+              }
+              //console.log("Rohini "+$("#bankflag").);
       form_data.append("vdetails",JSON.stringify(details));
       form_data.append("transactions",JSON.stringify(output));
       $.ajax({
