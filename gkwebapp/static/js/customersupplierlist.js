@@ -73,7 +73,7 @@ $(document).ready(function() {
 	  $("#supplierselect").focus();
 	}
 	else {
-	    $("#paymentmode").focus();
+	    $("#useasadvance").focus().select();
 	}
     }
   });
@@ -111,7 +111,7 @@ $(document).ready(function() {
   $(document).off('keydown', '#supplierselect').on('keydown', '#supplierselect', function(event) {
     if (event.which == 13) {
       event.preventDefault();
-      $("#paymentmode").focus();
+      $("#useasadvance").focus().select();
     }
     else if (event.which == 38) {
 	  event.preventDefault();
