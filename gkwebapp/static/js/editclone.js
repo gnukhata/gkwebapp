@@ -2028,18 +2028,15 @@ $("#instrument_month").blur(function(event) {
 $("#instrument_year").blur(function(event) {
   $(this).val(yearpad($(this).val(),4));
 });
-  /*$('#instrumentbtn2').click(function(event) {
-
+  $('#instrumentbtn2').click(function(event) {
+      $( "#addbankdetailsdiv" ).show();
     if($("#bankflag2").val()==1){
     event.preventDefault();
     $("#instrumentno").focus();
     }
 
-  });*/
-  $( "#addbankdetailsdiv" ).load(function() {
-    event.preventDefault();
-    $("#instrumentno").focus();
-});
+  });
+
 
 
 

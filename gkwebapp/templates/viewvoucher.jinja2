@@ -547,7 +547,7 @@ label.normal {
               </div>
               {%endif%}
 
-              <div id="addbankdetailsdiv" class="collapse" tabindex="-1" role="dialog" hidden>
+              <div id="addbankdetailsdiv" tabindex="-1" role="dialog" hidden>
 
                                  <h5>  {% trans %}Bank Details{% endtrans %}</h5>
              <input type="hidden" id="bankflag2" name="bankflag" value="1">
@@ -606,22 +606,22 @@ label.normal {
                 <br>
                 <br>
         <div class="modal-footer">
-          <div id="butform" class="form-inline ">
+          <div id="butform" class="form-inline pull-left ">
             <div class="form-group pull-left">
               {% if voucher['status'] %}
               <button type="button" class="btn btn-warning btn-sm" id="lock" value="Unlock" accesskey="k">{% trans %}Unloc<u>k</u>{% endtrans %}</button>
               {% else %}
               <button type="button" class="btn btn-warning btn-sm" id="lock" value="Lock" accesskey="k">{% trans %}Loc<u>k</u>{% endtrans %}</button>
               {% endif %}
-              <button type="button" class="btn btn-primary btnfocus btn-sm" id="edit" accesskey="e">{% trans %}<u>E</u>dit{% endtrans %}</button>
+              <button type="button" class="btn btn-primary btnfocus btn-sm" id="edit" >{% trans %}Edit{% endtrans %}</button>
               <button type="button" class="btn btn-primary btnfocus btn-sm" id="clone" accesskey="o">{% trans %}Cl<u>o</u>ne{% endtrans %}</button>
               <button type="submit" id="save" class="btn btn-success btn-sm" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
-              <button type="button" class="btn btn-danger btnfocus btn-sm" id="delete" accesskey="d">{% trans %}<u>D</u>elete{% endtrans %}</button>
-              <button type="button" class="btn btn-success btn-sm" id="printvoucher">{% trans %}Print Voucher{% endtrans %}</button>
+              <button type="button" class="btn btn-danger btnfocus btn-sm" id="delete" >{% trans %}Delete{% endtrans %}</button>
+              <button type="button" class="btn btn-success btn-sm" id="printvoucher" accesskey="v">{% trans %}Print <u>V</u>oucher{% endtrans %}</button>
 
     {%if vtype == "receipt" or vtype == "payment"%}
                 {% if voucher['instrumentno'] == None or voucher['instrumentno'] == ""  %}
-                <button class="btn btn-primary btn-sm" type="button" id="instrumentbtn2" data-toggle="collapse" data-target="#addbankdetailsdiv" hidden>{% trans %}Add Bank Details{% endtrans %}</button>
+                <button class="btn btn-primary btn-sm" type="button" id="instrumentbtn2"  hidden accesskey="i">{% trans %}Add Bank Deta<u>i</u>ls{% endtrans %}</button>
                 {%endif%}
 
                 {%endif%}
