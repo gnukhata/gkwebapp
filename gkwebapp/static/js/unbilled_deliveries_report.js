@@ -168,6 +168,7 @@ $(".del_unbilled_table").off('dblclick','tr').on('dblclick','tr',function(e){
 
 	$('#del_unbilled_clearfields').click(function(){
     $(".search").children(".form-control").val("");
+		$("#del_unbilled_clearfields").hide();
   });
 
 $(".search").children(".form-control").keyup(function(event){
