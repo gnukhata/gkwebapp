@@ -1,31 +1,21 @@
 <div class="col-sm-6">
   <div class="form-group " >
-    <label >{% trans %}Transfer Note No:{% endtrans %}</label>
+    <label >{% trans %}Transfer Note No:{% endtrans %} {{transfernote["transfernoteno"]}}</label>
   </div>
   <div class="form-group " >
-    <label >{% trans %}Date:{% endtrans %}</label> <label id="rec_transfernote_date"></label>
-            </br>
-            </br>
-	    <div class =" row">
-	      <div class="col-sm-6">
-		<label >{% trans %}Expected Date of Receipt :{% endtrans %}</label>
-              </div>
-	      <div class ="col-sm-6">
-         	<label >{% trans %}Grace Period :{% endtrans %}</label>
-		<small >   <b> days</b></small>
-	      </div>
-	      
-            </br>
-	    </br>
-	    
-	    </div>
-	    <div class="form-group"  >
-	      <div class="form-inline">
-		<label for="received_transfernote_date">{% trans %}Received Date:{% endtrans %}</label>
-              </div>
-            </div>
-
+    <label >{% trans %}Date:{% endtrans %} {{transfernote["transfernotedate"]}}</label>
   </div>
+	      <div class="form-group">
+		<label >{% trans %}Expected Date of Receipt :{% endtrans %} {% if transfernote["duedate"] %} {{transfernote["duedate"]}}{% else %} N/A{% endif %}</label>
+              </div>
+	      <div class ="form-group">
+         	<label >{% trans %}Grace Period :{% endtrans %} {% if transfernote["grace"] %} {{transfernote["grace"]}}</label>
+		  <small >   <b> days</b></small>{% else %} N/A</label>{% endif %}
+	      </div>
+
+	    <div class="form-group"  >
+	      <label for="received_transfernote_date">{% trans %}Received Date:{% endtrans %} {% if transfernote["receiveddate"] %} {{transfernote["receiveddate"]}}{% else %} N/A{% endif %}</label>
+            </div>
 
   <div class="form-group " >
     <div class="panel">

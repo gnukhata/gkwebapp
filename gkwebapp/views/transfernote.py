@@ -198,7 +198,7 @@ def gettransfernote(request):
 def showsingletransfernote(request):
                 header={"gktoken":request.headers["gktoken"]}
                 result = requests.get("http://127.0.0.1:6543/transfernote?tn=single&transfernoteid=%d"%(int(request.params["transfernoteid"])), headers=header)
-                return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
+                return {"gkstatus": result.json()["gkstatus"], "transfernote": result.json()["gkresult"]}
 
 @view_config(route_name="transfernotes",request_param="action=save",renderer="json")
 def savetransfernote(request):
