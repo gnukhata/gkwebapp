@@ -28,8 +28,10 @@ Contributors:
 This script is for the report page of Unbilled Deliveries.
 */
 $(document).ready(function() {
+	//Disabled Clear Search button
 	$(".fixed-table-loading").remove(); // Remove unwanted symbol of loading from bootstrap-table
 	$("#msspinmodal").modal("hide");
+	$("#del_unbilled_clearfields").hide();
 	$('.del_unbilled_table tbody tr:first-child td:eq(1) a').focus(); // Set focus on first row on load.
 	$('.del_unbilled_table tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 
@@ -164,12 +166,54 @@ $(".del_unbilled_table").off('dblclick','tr').on('dblclick','tr',function(e){
 		$("#show_unbilled_deliveries").click();
 	});
 
-/*  $(".search").children(".form-control").keyup(function(event){
-    if (event.keyCode == 27) {
-      $(this).val("");
-    }
+	$('#del_unbilled_clearfields').click(function(){
+    $(".search").children(".form-control").val("");
+		$("#del_unbilled_clearfields").hide();
+		$(".search").children(".form-control").focus();
   });
 
+$(".search").children(".form-control").keyup(function(event){
+	$("#del_unbilled_clearfields").show();
+    if (event.keyCode == 27) {
+      $(this).val("");
+			$("#del_unbilled_clearfields").hide();
+    }
+		else if (event.which == 13) {
+			$(".dcno:visible").first().focus();
+		}
+		else if ($(this).val() == "") {
+			$("#del_unbilled_clearfields").hide();
+		}
+  });
+
+	//For search data
+	var curindex ;
+  var nextindex;
+  var previndex;
+
+  $(document).off('keydown' ,'.libgname').on('keydown' ,'.libgname',function(event) {
+    curindex = $(this).closest('tr').index();
+    nextindex = curindex+1;
+    previndex = curindex-1;
+    n = $(".libgname").length;
+    if (event.which==40 && nextindex < n)
+    {
+      event.preventDefault();
+      $('#unbill_del_table tbody tr:eq('+nextindex+') td:eq(1) a').focus();
+    }
+    else if (event.which==38)
+    {
+      if(previndex>-1)
+      {
+        event.preventDefault();
+        $('#unbill_del_table tbody tr:eq('+previndex+') td:eq(1) a').focus();
+      }
+    }
+
+  });
+
+
+/*
 		$("#printbutton").click(function(event) {
 			// this function creates a spreadsheet of the report.
 		event.preventDefault();
