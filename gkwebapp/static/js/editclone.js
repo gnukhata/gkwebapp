@@ -326,7 +326,7 @@ $(document).ready(function()
       $("#instrument_date").prop('disabled', false);
       $("#instrument_month").prop('disabled', false);
       $("#instrument_year").prop('disabled', false);
-      
+
 
     }
 
@@ -2028,5 +2028,19 @@ $("#instrument_month").blur(function(event) {
 $("#instrument_year").blur(function(event) {
   $(this).val(yearpad($(this).val(),4));
 });
+  /*$('#instrumentbtn2').click(function(event) {
+
+    if($("#bankflag2").val()==1){
+    event.preventDefault();
+    $("#instrumentno").focus();
+    }
+
+  });*/
+  $( "#addbankdetailsdiv" ).load(function() {
+    event.preventDefault();
+    $("#instrumentno").focus();
+});
+
+
 
 });
