@@ -554,7 +554,7 @@ $(document).ready(function() {
         $("#success-alert").alert();
         $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#success-alert").hide();
-          if ($("#rejectionnote_edit").length == 0) {
+          if ($("#rejectionnote_view").length == 0) {
             $("#rejectionnote").click();
           }
           if ($("#rejectionnote_gkstatus").val()=='9') {
