@@ -326,9 +326,18 @@ $(document).ready(function()
       $("#instrument_date").prop('disabled', false);
       $("#instrument_month").prop('disabled', false);
       $("#instrument_year").prop('disabled', false);
-
-
     }
+
+        $("#instrumentno").prop('disabled', true);
+        $("#bankname").prop('disabled', true);
+        $("#branchname").prop('disabled', true);
+        $("#instrument_date").prop('disabled', true);
+        $("#instrument_month").prop('disabled', true);
+        $("#instrument_year").prop('disabled', true);
+
+      
+
+
 
 
   if($('#vctable tbody tr:first td:eq(1) select option:selected').val()){
@@ -2035,6 +2044,25 @@ $("#instrument_year").blur(function(event) {
     $("#instrumentno").focus();
     }
     $('#instrumentbtn2').hide();
+    if($("#bankflag2").val()==1)
+    {
+      $("#instrumentno").prop('disabled', false);
+      $("#bankname").prop('disabled', false);
+      $("#branchname").prop('disabled', false);
+      $("#instrument_date").prop('disabled', false);
+      $("#instrument_month").prop('disabled', false);
+      $("#instrument_year").prop('disabled', false);
+    }
+      else {
+        $("#instrumentno").prop('disabled', true);
+        $("#bankname").prop('disabled', true);
+        $("#branchname").prop('disabled', true);
+        $("#instrument_date").prop('disabled', true);
+        $("#instrument_month").prop('disabled', true);
+        $("#instrument_year").prop('disabled', true);
+
+      }
+
 
   });
 
