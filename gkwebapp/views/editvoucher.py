@@ -226,6 +226,11 @@ def editvoucher(request):
         gkdata={"vouchercode":vdetails["vcode"],"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails["projectcode"])}
     else:
         gkdata={"vouchercode":vdetails["vcode"],"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":None}
+    if vdetails["instrumentno"] !="":
+        gkdata["instrumentno"]=vdetails["instrumentno"]
+        gkdata["bankname"]=vdetails["bankname"]
+        gkdata["branchname"]=vdetails["branchname"]
+        gkdata["instrumentdate"]=vdetails["instrumentdate"]
     if vdetails["vtype"] == "purchase" or vdetails["vtype"] == "sales":
         if vdetails["invid"] != "":
             gkdata["invid"] = vdetails["invid"]
