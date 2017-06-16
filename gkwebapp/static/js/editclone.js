@@ -335,7 +335,7 @@ $(document).ready(function()
         $("#instrument_month").prop('disabled', true);
         $("#instrument_year").prop('disabled', true);
 
-      
+
 
 
 
@@ -1768,7 +1768,7 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
               details.instrumentdate=instrdate;
             }
 
-                if($("#bankflag").val()==1)
+                if($("#bankname").val()!="" || $("#branchname").val()!=""  )
                 {
                   if($("#instrumentno").val()=="")
                   {
