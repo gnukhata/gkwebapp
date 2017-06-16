@@ -53,6 +53,12 @@ def nonrejectedinvprods(request):
 	rnotes = requests.get("http://127.0.0.1:6543/invoice?type=nonrejectedinvprods", data=json.dumps({"invid":request.params["invid"] }), headers=header)
 	return {"gkstatus":rnotes.json()["gkstatus"],"items":rnotes.json()["gkresult"], "delchal": rnotes.json()["delchal"]}
 
+@view_config(route_name="rejectionnote",request_param="action=getrejectionnote",renderer="json")
+def getrejectionnote(request):
+	header={"gktoken":request.headers["gktoken"]}
+	rnotes = requests.get("http://127.0.0.1:6543/rejectionnote?type=single&rnid=%d"%(int(request.params["rnid"])), headers=header)
+	return {"gkstatus":rnotes.json()["gkstatus"],"gkresult":rnotes.json()["gkresult"]}
+
 @view_config(route_name="rejectionnote",request_param="action=save",renderer="json")
 def saverejectionnote(request):
 	header={"gktoken":request.headers["gktoken"]}
