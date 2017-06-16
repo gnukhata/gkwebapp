@@ -225,7 +225,7 @@ $(document).ready(function() {
     if ($("#rejectionnote_invoice option:selected").val() != '') {
       $("#rejectionnote_deliverynote option[value='']").prop("selected", true);
       $.ajax({
-        url: '/invoice?action=getinvdetails',
+        url: '/rejectionnote?action=nonrejectedinvprods',
         type: 'POST',
         dataType: 'json',
         async: false,
@@ -236,9 +236,8 @@ $(document).ready(function() {
       })
        .done(function(resp) {
          if (resp["gkstatus"] == 0) {
-           var dcid = resp["invoicedata"]["dcid"];
            $('#rejectionnote_product_table tbody').empty();
-             $.each(resp.invoicedata.contents, function(key, value) {
+             $.each(resp.items, function(key, value) {
                $('#rejectionnote_product_table tbody').append('<tr>' +
                    '<td class="col-xs-5">' +
                    '<input class="form-control input-sm product_name" data-productcode="' + key + '" value="' + value.productdesc + '" disabled>' +
@@ -261,74 +260,34 @@ $(document).ready(function() {
                    '</tr>');
                 $('#rejectionnote_product_table tbody tr:eq(' + $(this).closest("tr").index() + ') td:eq(1) input').val(parseFloat(value.qty).toFixed(2));
              });
-           $.ajax({
-             url: '/customersuppliers?action=get',
-             type: 'POST',
-             dataType: 'json',
-             async: false,
-             data: { "custid": resp["invoicedata"]["custid"] },
-             beforeSend: function(xhr) {
-               xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+             $("#rejectionnote_customer").val(resp["delchal"]["custname"]);
+             $("#rejectionnote_customeraddr").val(resp["delchal"]["custaddr"]);
+             $("#rejectionnote_customertin").val(resp["delchal"]["custtin"]);
+             if(resp["delchal"]["dcflag"] == 1){
+               $("#rejectionnote_consignment").val("Approval");
              }
-           })
-            .done(function(resp) {
-              console.log("success");
-              if (resp["gkstatus"] == 0) {
-                $("#rejectionnote_customer").val(resp["gkresult"]["custname"]);
-                $("#rejectionnote_customeraddr").val(resp["gkresult"]["custaddr"]);
-                $("#rejectionnote_customertin").val(resp["gkresult"]["custtan"]);
-              }
-            })
-            .fail(function() {
-              console.log("error");
-            })
-            .always(function() {
-              console.log("complete");
-            });
-            if(dcid){
-               $.ajax({
-                 url: '/invoice?action=getdeliverynote',
-                 type: 'POST',
-                 dataType: 'json',
-                 async: false,
-                 data: { "dcid": dcid },
-                 beforeSend: function(xhr) {
-                   xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                 }
-               })
-                .done(function(resp) {
-                  console.log("success");
-                  if(resp["delchal"]["delchaldata"]["dcflag"] == 1){
-                    $("#rejectionnote_consignment").val("Approval");
-                  }
-                  else if(resp["delchal"]["delchaldata"]["dcflag"] == 3){
-                    $("#rejectionnote_consignment").val("Consignment");
-                  }
-                  else if(resp["delchal"]["delchaldata"]["dcflag"] == 4){
-                    $("#rejectionnote_consignment").val("Sale");
-                  }
-                  else if(resp["delchal"]["delchaldata"]["dcflag"] == 5){
-                    $("#rejectionnote_consignment").val("Free Replacement");
-                  }
-                  else if(resp["delchal"]["delchaldata"]["dcflag"] == 19){
-                    $("#rejectionnote_consignment").val("Sample");
-                  }
-                  $("#rejectionnote_godown").attr("data-goid", resp["delchal"]["delchaldata"]["goid"]);
-                  $("#rejectionnote_godown").val(resp["delchal"]["delchaldata"]["goname"] + "("+ resp["delchal"]["delchaldata"]["gostate"] +")");
-                })
-                .fail(function() {
-                  console.log("error");
-                })
-                .always(function() {
-                  console.log("complete");
-                });
+             else if(resp["delchal"]["dcflag"] == 3){
+               $("#rejectionnote_consignment").val("Consignment");
+             }
+             else if(resp["delchal"]["dcflag"] == 4){
+               $("#rejectionnote_consignment").val("Sale");
+             }
+             else if(resp["delchal"]["dcflag"] == 5){
+               $("#rejectionnote_consignment").val("Free Replacement");
+             }
+             else if(resp["delchal"]["dcflag"] == 19){
+               $("#rejectionnote_consignment").val("Sample");
+             }
+             if(resp["delchal"]["goid"]){
+               $("#rejectionnote_godown").attr("data-goid", resp["delchal"]["goid"]);
+               $("#rejectionnote_godown").val(resp["delchal"]["goname"] + "("+ resp["delchal"]["gostate"] +")");
             }
             else{
               $("#rejectionnote_godown").attr("data-goid", "");
               $("#rejectionnote_godown").val("None");
               $("#rejectionnote_consignment").val("None");
             }
-         }
+          }
        })
        .fail(function() {
          console.log("error");
