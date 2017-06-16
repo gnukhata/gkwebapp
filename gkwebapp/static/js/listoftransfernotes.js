@@ -126,13 +126,49 @@ $(document).ready(function() {
     $('#latable tbody tr:eq('+currindex+') a').focus();
 
   });
+
+  $("#latable").off('dblclick','tr').on('dblclick','tr',function(e){
+  // This function opens a modal of the selected voucher.
+  // It shows the complete details of the selected voucher along with option to edit, delete and clone.
+    e.preventDefault();
+      var id = "";
+      id = $(this).data("transfernoteid");
+    if (id=="")
+    {
+      return false;
+    }
+    $.ajax(
+      {
+
+        type: "POST",
+        url: "/transfernotes?action=showtn",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data : {"transfernoteid":id},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        }
+      }
+    )
+    .done(function(resp)
+    {
+      $("#tnload").html("");
+      $('.modal-backdrop').remove();
+      $('.modal').modal('hide');
+      $("#tnload").html(resp);
+      $('#tnview').modal('show');
+      });
+  });
   $("#print").click(function(event) {
     event.preventDefault();
       var xhr = new XMLHttpRequest();
       var ltnurlstring = '&startdate='+$("#startdate").data("startdate")+'&enddate='+$("#enddate").data("enddate");
       if ($("#godownselect").val() == 1) {
 	  ltnurlstring = ltnurlstring + '&goid=' + $("#goid").data("goid");
-	    }
+      }
+      console.log(ltnurlstring);
       xhr.open('GET', '/transfernotes?action=generatespreadsheet&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2')+ltnurlstring, true);
     xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
     xhr.responseType = 'blob';
@@ -142,7 +178,7 @@ $(document).ready(function() {
         // get binary data as a response
         var blob = this.response;
         var url = window.URL.createObjectURL(blob);
-        window.location.assign(url)
+          window.location.assign(url);
       }
     };
 

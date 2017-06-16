@@ -78,7 +78,7 @@ def printlistoftransfernotes(request):
                 goid = 0
                 if request.params.has_key("goid"):
                     goid = int(request.params["goid"])
-                    transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&"%(startDate, endDate),headers=header)
+                    transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&goid=%d"%(startDate, endDate, goid),headers=header)
                     godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
                     godownname = godown.json()["gkresult"]["goname"]
                     godownaddress = godown.json()["gkresult"]["goaddr"]
@@ -114,7 +114,7 @@ def listoftransfernotesspreadsheet(request):
     titlerow = 3
     if request.params.has_key("goid"):
         goid = int(request.params["goid"])
-        transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&"%(startDate, endDate),headers=header)
+        transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&goid=%d"%(startDate, endDate, goid),headers=header)
         godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
         godownname = godown.json()["gkresult"]["goname"]
         godownaddress = godown.json()["gkresult"]["goaddr"]
@@ -123,7 +123,8 @@ def listoftransfernotesspreadsheet(request):
         sheet.getRow(3).setHeight("16pt")
         sheet.getCell(0,3).stringValue(nameofgodown).setBold(True).setFontSize("12pt").setAlignHorizontal("center")
         titlerow = 4
-    transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s"%(startDate, endDate),headers=header)
+    else:
+        transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s"%(startDate, endDate),headers=header)
     transfernotes = transfernotes.json()["gkresult"]
     sheet.getColumn(0).setWidth("1.5cm")
     sheet.getColumn(1).setWidth("2cm")
@@ -150,11 +151,9 @@ def listoftransfernotesspreadsheet(request):
         sheet.getCell(4, row).stringValue(transfernote["togodown"])
         subrow = row
         for productqty in transfernote["productqty"]:
-            sheet.getCell(5, subrow).stringValue(productqty["productdesc"])
+            sheet.getCell(5, subrow).stringValue(productqty["productdesc"] + " " + productqty["uom"])
             sheet.getCell(6, subrow).stringValue(productqty["quantity"]).setAlignHorizontal("right")
             subrow +=1
-        sheet.getCell(6, subrow).stringValue("Total: " + transfernote["quantity"]).setBold(True).setAlignHorizontal("right")
-        subrow +=1
         if transfernote["receivedflag"]:
             sheet.getCell(7, row).stringValue("Received").setAlignHorizontal("center")
         else:
@@ -181,7 +180,7 @@ def showlistoftransfernotes(request):
                 goid = 0
                 if request.params.has_key("goid"):
                     goid = int(request.params["goid"])
-                    transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&"%(startDate, endDate),headers=header)
+                    transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&goid=%d"%(startDate, endDate, goid),headers=header)
                     godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
                     godownname = godown.json()["gkresult"]["goname"]
                     godownaddress = godown.json()["gkresult"]["goaddr"]
@@ -195,7 +194,11 @@ def gettransfernote(request):
                 result = requests.get("http://127.0.0.1:6543/transfernote?tn=single&transfernoteid=%d"%(int(request.params["transfernoteid"])), headers=header)
                 return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
 
-
+@view_config(route_name="transfernotes",request_param="action=showtn",renderer="gkwebapp:templates/viewsingletransfernote.jinja2")
+def showsingletransfernote(request):
+                header={"gktoken":request.headers["gktoken"]}
+                result = requests.get("http://127.0.0.1:6543/transfernote?tn=single&transfernoteid=%d"%(int(request.params["transfernoteid"])), headers=header)
+                return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
 
 @view_config(route_name="transfernotes",request_param="action=save",renderer="json")
 def savetransfernote(request):

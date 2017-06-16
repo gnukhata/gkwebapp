@@ -87,8 +87,8 @@
 	      <td class="smwrap text-center">{{transfernote["transfernotedate"]}}</td>
 	      <td class="bigwrap text-left">{{transfernote["fromgodown"]}}</td>
 	      <td class="bigwrap text-left">{{transfernote["togodown"]}}</td>
-	      <td class="bigwrap text-left">{% for productqty in transfernote["productqty"] %}<p>{{productqty["productdesc"]}}</p>{% endfor %}</td>
-	      <td class="qtywrap text-right">{% for productqty in transfernote["productqty"] %}<p>{{productqty["quantity"]}}</p>{% endfor %}<p>{% trans %}Total: {% endtrans %}{{transfernote["quantity"]}}</p></td>
+	      <td class="bigwrap text-left">{% for productqty in transfernote["productqty"] %}<p>{{productqty["productdesc"]}} {{productqty["uom"]}}</p>{% endfor %}</td>
+	      <td class="qtywrap text-right">{% for productqty in transfernote["productqty"] %}<p>{{productqty["quantity"]}}</p>{% endfor %}</td>
 	      {% if transfernote["receivedflag"] %}
 		<td class="qtywrap text-center text-success">{% trans %}Received{% endtrans %}</td>
 	      {% else %}
