@@ -19,17 +19,19 @@
 
 
    Contributors:
-   "Krishnakant Mane" <kk@gmail.com>
+   "Krishnakant Mane" <kk@dff.org.in>
    "Abhijith Balan" <abhijithb21@openmailbox.org.in>
+   "Prajkta Patkar" <prajkta@dff.org.in>
+   "Arun Kelkar" <arunkelkar@dff.org.in>
  */
 
 // This script is for bill wise accounting
 
 /* 
    When Receipt/Payment vouchers are created a modal appears asking if user wants to continue to bill wise accounting.  
-   When confirmed a table is presented with fields Invoice No, Invoice Date, Invoice Amount, Amount Pending and Amount Adjusted(input by user).  
+   When confirmed a table is presented with fields Invoice No, Invoice Date, Invoice Amount, Amount Pending and Amount to be Adjusted(input by user).  
    Account name and Debit/Credit amount are displayed on the title bar of the modal.  
-   Total amount adjusted is displayed in table footer.  
+   Total amount paid is displayed in table footer.  
    As user enters Amount Adjusted it is reduced from Amount Pending until Amount Pending is zero.  
 
    In case the user does not intend to settle any bills the debit/credit amount can be set as "On Account".
@@ -41,7 +43,7 @@
 
    
    Validations :-  
-   Sum of Total Amount Paid, On Account amount and As Advance amount must be equal to the sum of Debit/Credit Amount and previous unadjusted amounts.  
+   Sum of Total Amount Adjusted, On Account amount and As Advance amount must be equal to the sum of Debit/Credit Amount and previous unadjusted amounts.  
    Amount Adjusted cannot be blank.
  */ 
 
@@ -49,73 +51,18 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#btbillwise").hide();
   var typingTimer;                //timer identifier
-  var typingTimer1;                //timer identifier
-  var typingTimer2;                //timer identifier
   var doneTypingInterval = 100; //typing interval
   clearTimeout(typingTimer);  //clearing timeout
-  clearTimeout(typingTimer1);  //clearing timeout
-  clearTimeout(typingTimer2);  //clearing timeout
-  //Actions to be triggered when focus is on amount paid field
+  //Actions to be triggered when focus is on amount adjusted field
   $(".numtype").numeric({ negative : false });
-  var paymentmode = 15;
-  var advocremainder = 0.00;
-  var usedonaccount = 0.00;
-  var usedasadvance = 0.00;
-  var totalap = 0.00;
-  $(document).off('change', '#paymentmode').on('change', '#paymentmode', function(event) {
-    event.preventDefault();
-    if ($("#paymentmode").val() == 1) {
-      paymentmode = 1;
-      usedonaccount = parseFloat(parseFloat(totalap).toFixed(2)) - parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2)) - parseFloat(parseFloat($("#useasadvance").data("useasadvance")).toFixed(2));
-      if (usedonaccount > parseFloat(parseFloat($("#onaccountlabel").data("onaccount")).toFixed(2))) {
-	advocremainder = usedonaccount - parseFloat(parseFloat($("#onaccountlabel").data("onaccount")).toFixed(2));
-	$("#useonaccount").html($("#onaccountlabel").data("onaccount")).addClass("text-danger");
-	$("#useonaccount").data("useonaccount", $("#onaccountlabel").data("onaccount"));
-	var newasadvance = parseFloat(parseFloat($("#useasadvance").data("useasadvance")).toFixed(2)) + parseFloat(parseFloat(advocremainder).toFixed(2));
-	$("#useasadvance").html(parseFloat(newasadvance).toFixed(2));
-	$("#useasadvance").data("useasadvance", newasadvance);
-      }
-    }
-    else {
-      paymentmode = 15;
-      usedasadvance = parseFloat(parseFloat(totalap).toFixed(2)) - parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2)) - parseFloat(parseFloat($("#useonaccount").data("useonaccount")).toFixed(2));
-      if (usedasadvance > parseFloat(parseFloat($("#asadvancelabel").data("asadvance")).toFixed(2))) {
-	advocremainder = usedasadvance - parseFloat(parseFloat($("#asadvancelabel").data("asadvance")).toFixed(2));
-	$("#useasadvance").html($("#asadvancelabel").data("asadvance")).addClass("text-primary");
-	$("#useasadvance").data("useonaccount", $("#asadvancelabel").data("asadvance"));
-	var newonaccount = parseFloat(parseFloat($("#useonaccount").data("useonaccount")).toFixed(2)) + parseFloat(parseFloat(advocremainder).toFixed(2));
-	$("#useonaccount").html(parseFloat(newonaccount).toFixed(2));
-	$("#useonaccount").data("useonaccount", newonaccount);
-      }
-    }
-  });
-  $(document).off('keydown', '#paymentmode').on('keydown', '#paymentmode', function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-	if ($(".amountpaid").length > 0) {
-	    if ($("#onaccdiv").css('display') != 'none') {
-		$("#onaccount").focus().select();
-	    }
-		else if ($("#asadvancediv").css('display') != 'none') {
-		    $("#asadvance").focus().select();
-		}
-		else {
-		    $(".amountpaid:first").focus().select();
-		}
-      }
-      else{
-	$(".footerbutton:first").focus();
-      }
-    }
-  });
   $(document).off('focus', '.amountpaid').on('focus', '.amountpaid', function(event) {
     event.preventDefault();
     /* Act on the event */
-    //Preventing input of alphabets and negative numbers in Amount Paid
+    //Preventing input of alphabets and negative numbers in Amount Adjusted
     clearTimeout(typingTimer);
     $(".numtype").numeric({ negative : false });
   });
-  //When focus shifts from Amount Paid field value entererd is converted to float.
+  //When focus shifts from Amount Adjusted field value entererd is converted to float.
   $(document).off('focusout', '.amountpaid').on('focusout', '.amountpaid', function(event) {
     event.preventDefault();
     var curindex = $(this).closest('tr').index(); //Current Index
@@ -150,26 +97,28 @@ $(document).ready(function() {
     //Actions for 'Enter' key.
     if (event.which == 13) {
       event.preventDefault(); //Prevents default behaviour of any event. In this case, submiting the form.
-      //Click event force 'Done' button is fired when 'Enter' is pressed from Amount Paid in last row. Note that current index is compared with number of rows
+      //Focus is shifted to 'Done' button when 'Enter' is pressed from Amount Adjusted in last row. Note that current index is compared with number of rows
       if (curindex == numberofrows) {
-	$("#btclose").click();
+	$("#btclose").focus();
       }
       else {
-	//Alert is displayed when Amount Paid is blank
-	if ($("#latable tbody tr:eq("+curindex+") td:eq(4) input").val()=="") {
+	//Alert is displayed when Amount Adjusted is blank
+	  if ($("#latable tbody tr:eq("+curindex+") td:eq(4) input").val()=="") {
+	      $("#latable tbody tr:eq("+curindex+") td:eq(4) input").val(parseFloat(0).toFixed(2)).focus().select();
+	  $(".alert").hide();
 	  $("#bwamount-blank-alert").alert();
 	  $("#bwamount-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#bwamount-blank-alert").hide();
 	  });
 	  return false;
 	}
-	//If 'Enter' is pressed from Amount Paid in any row but the last row focus shifts to Amount Paid field of next row.
+	//If 'Enter' is pressed from Amount Adjusted in any row but the last row focus shifts to Amount Adjusted field of next row.
 	$("#latable tbody tr:eq("+nextindex+") td:eq(4) input").focus().select();
       }
     }
     else if (event.which == 38) {
       event.preventDefault();
-      //If 'Up' arrow key is pressed focus shifts to Amount Paid in previous row.
+      //If 'Up' arrow key is pressed focus shifts to Amount Adjusted in previous row.
       $("#latable tbody tr:eq("+previndex+") td:eq(4) input").focus().select();
     }
     else if (event.which == 35) {
@@ -185,46 +134,46 @@ $(document).ready(function() {
     }
   });
 
-  //Actions that take place when key is released from Amount Paid field.
+  //Actions that take place when key is released from Amount Adjusted field.
   $(document).off('keyup', '.amountpaid').on('keyup', '.amountpaid', function(event) {
     /* Act on the event */
     var curindex1 = $(this).closest('tr').index();
     clearTimeout(typingTimer);
     /*
        setTimeout is a built in function that is used to do something after certain interval of time.
-       Here it used to do certain actions after user enters some value in Amount Paid.
-       Whenever user enters a value it is reduced from Amount Pending of corresponding rows. Also the sum of value in Amount Paid column in all rows is displayed in the footer of the table as Total.
+       Here it used to do certain actions after user enters some value in Amount Adjusted.
+       Whenever user enters a value it is reduced from Amount Adjusted of corresponding rows. Also the sum of value in Amount Paid column in all rows is displayed in the footer of the table as Total.
      */
     
     typingTimer = setTimeout(function(){
-      //Original value of Amount Pending is stored in a variable so that the field can be reset when user clears Amount Paid field.
+      //Original value of Amount Adjusted is stored in a variable so that the field can be reset when user clears Amount Paid field.
       if ($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val() == "") {
 	var originalvalue = parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending"));
 	$("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">'+parseFloat(originalvalue).toFixed(2)+'</div>');
       }
       else {
-	//Whenever Amount Paid is greater than Amount Pending alert is displayed.
+	//Whenever Amount Adjusted is greater than Amount Pending alert is displayed.
 	if (parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()) > parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending"))) {
 	    $("#latable tbody tr:eq("+curindex1+") td:eq(4) input").focus().select();
 	    $(".alert").hide();
-	    $("#bwinvamount-alert").alert();
-	    $("#bwinvamount-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#bwinvamount-alert").hide();
-	    });
-	    return false;
+	  $("#bwinvamount-alert").alert();
+	  $("#bwinvamount-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#bwinvamount-alert").hide();
+	  });
+	  return false;
 	}
-	//Whenever Amount Paid equals Amount Pending the below snippet sets Amount Pending to 0.00.
-	else if (parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()) == parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending"))) {
+	//Whenever Amount Adjusted equals Amount Pending the below snippet sets Amount Pending to 0.00.
+	else if (parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()) >= parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending"))) {
 	  $("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">0.00</div>');
 	}
 	else {
-	  //When Amount Paid is not empty and less than Amount Pending the below snippet finds the difference and updates Amount Pending.
+	  //When Amount Adjusted is not empty and less than Amount Pending the below snippet finds the difference and updates Amount Pending.
 	  var bwdiff = parseFloat(parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending")) - parseFloat($("#latable tbody tr:eq("+curindex1+") td:eq(4) input").val()));
 	  $("#latable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">'+parseFloat(bwdiff).toFixed(2)+'</div');
 	}
       }
-      //Total Amount Paid is found out and displayed on the foooter.
-      totalap = 0.00;
+      //Total Amount Adjusted is found out and displayed on the foooter.
+      var totalap = 0.00;
       var ap = 0.00;
       for(var i = 0; i < $("#latable tbody tr").length; i++) {
 	//Empty fields are treated as fields with value 0.00
@@ -245,150 +194,134 @@ $(document).ready(function() {
 	totalpending = totalpending + pending;
       }
       $('#latable tfoot tr:eq(0) td:eq(2)').html('<div class="form-control" disabled>'+parseFloat(totalpending).toFixed(2)+'</div');
-      $(".billamount").html("<b>"+parseFloat(totalap).toFixed(2)+"</b>");
-	if (parseFloat((totalap + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > (parseFloat(sessionStorage.customeramount) + parseFloat($("#asadvancelabel").data("asadvance")) + parseFloat($("#onaccountlabel").data("onaccount")))) {
-	$(".alert").hide();
-	$("#bwamount-alert").alert();
-	$("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#bwamount-alert").hide();
+	$(".billamount").html("<b>"+parseFloat(totalap).toFixed(2)+"</b>");
+      //Alert is displayed when sum of total amount paid and sum of unadjusted amounts is more than sum of Debit/Credit amount and previous unadjusted amounts.
+      if (parseFloat((totalap + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > (parseFloat(sessionStorage.customeramount) + parseFloat($("#useasadvance").val()) + parseFloat($("#useonaccount").val()))) {
+	  $(".alert").hide();
+      $("#bwamount-alert").alert();
+      $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#bwamount-alert").hide();
+      });
+      return false;
+    }
+    }, doneTypingInterval);
+  });
+  $(document).off('keydown', '#useasadvance').on('keydown', '#useasadvance', function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+	if (parseFloat($("#useasadvance").val()) > parseFloat($("#asadvancelabel").data("asadvance"))) {
+	    $(".alert").hide();
+	$("#asadvance-alert").alert();
+	$("#asadvance-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#asadvance-alert").hide();
 	});
 	return false;
       }
-	if (parseFloat(parseFloat(totalap).toFixed(2)) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()) > parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2))) {
-	if (paymentmode == 15) {
-	    usedonaccount = parseFloat(parseFloat(totalap).toFixed(2)) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()) - parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2)) - parseFloat(parseFloat($("#useasadvance").data("useasadvance")).toFixed(2));
-	    if (usedonaccount > parseFloat(parseFloat($("#onaccountlabel").data("onaccount")).toFixed(2))) {
-		$(".alert").hide();
-		$("#onaccount-alert").alert();
-		$("#onaccount-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#onaccount-alert").hide();
-		});
-		return false;
-	    }
-	    else {
-	      $("#useonaccount").html(parseFloat(usedonaccount).toFixed(2));
-	      $("#useonaccount").data("useonaccount", usedonaccount);
-	    }
-	}
-	    if (paymentmode == 1) {
-		usedasadvance = parseFloat(parseFloat(totalap).toFixed(2)) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()) - parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2)) - parseFloat(parseFloat($("#useonaccount").data("useonaccount")).toFixed(2));
-		if (usedasadvance > parseFloat(parseFloat($("#asadvancelabel").data("asadvance")).toFixed(2))) {
-		    $(".alert").hide();
-		    $("#asadvance-alert").alert();
-		    $("#asadvance-alert").fadeTo(2250, 500).slideUp(500, function(){
-			$("#asadvance-alert").hide();
-		    });
-		    return false;
-		}
-		else {
-		    $("#useasadvance").html(parseFloat(usedasadvance).toFixed(2));
-		    $("#useasadvance").data("useasadvance", usedasadvance);
-		}
-	    }
-	}
+      $("#useonaccount").focus().select();
+    }
+      else if(event.which == 38) {
+      event.preventDefault();
+	  if ($("#customerselect").length > 0) {
+	      if ($("#supplierselect option:selected").val() != 0) {
+		  $("#supplierselect").focus();
+	      }
+	      else {
+		  $("#customerselect").focus();
+	      }
+      }
+    }
+    else if(event.which == 45) {
+      event.preventDefault();
+      //Pressing 'Insert' key triggers click event of 'Done' button.
+      $("#btclose").click();
+      return false;
+    }
+  });
+  $(document).off('keydown', '#useonaccount').on('keydown', '#useonaccount', function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+	if (parseFloat($("#useonaccount").val()) > parseFloat($("#onaccountlabel").data("onaccount"))) {
+	    $(".alert").hide();
+	$("#onaccount-alert").alert();
+	$("#onaccount-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#onaccount-alert").hide();
+	});
+	return false;
+      }
+      $(".amountpaid:first").focus().select();
+    }
+    else if(event.which == 38) {
+	event.preventDefault();
+	$("#useasadvance").focus().select();
+    }
+    else if(event.which == 45) {
+      event.preventDefault();
+      //Pressing 'Insert' key triggers click event of 'Done' button.
+      $("#btclose").click();
+      return false;
+    }
+  });
+  $(document).off('focusout', '#useasadvance').on('focusout', '#useasadvance', function(event) {
+    /* Act on the event */
+    if ($("#useasadvance").val() == "") {
+      $("#useasadvance").val("0.00");
+    }
+  });
+  $(document).off('keyup', '#useasadvance').on('keyup', '#useasadvance', function(event) {
+    /* Act on the event */
+    clearTimeout(typingTimer);
+    if ($("#useasadvance").val() == "") {
+      $("#useasadvance").val("0.00");
+    }
+      if (parseFloat($("#useasadvance").val()) > parseFloat($("#asadvancelabel").data("asadvance"))) {
+	  $(".alert").hide();
+      $("#asadvance-alert").alert();
+      $("#asadvance-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#asadvance-alert").hide();
+      });
+      return false;
+    }
+    var newadvance = parseFloat($("#asadvancelabel").data("asadvance")) - parseFloat($("#useasadvance").val());
+    $("#asadvancelabel").html("<b>"+parseFloat(newadvance).toFixed(2)+"</b");
+    typingTimer = setTimeout(function(){
+      
     }, doneTypingInterval);
   });
-  $(document).off('focus', '#onaccount').on('focus', '#onaccount', function(event) {
-    event.preventDefault();
+  $(document).off('focusout', '#useonaccount').on('focusout', '#useonaccount', function(event) {
     /* Act on the event */
-    //Preventing input of alphabets and negative numbers in Amount Paid
-    clearTimeout(typingTimer1);
-    $(".numtype").numeric({ negative : false });
+    if ($("#useonaccount").val() == "") {
+      $("#useonaccount").val("0.00");
+    }
   });
-  $(document).off('focus', '#asadvance').on('focus', '#asadvance', function(event) {
-    event.preventDefault();
+  $(document).off('keyup', '#useonaccount').on('keyup', '#useonaccount', function(event) {
     /* Act on the event */
-    //Preventing input of alphabets and negative numbers in Amount Paid
-    clearTimeout(typingTimer2);
-    $(".numtype").numeric({ negative : false });
+    clearTimeout(typingTimer);
+    if ($("#useonaccount").val() == "") {
+      $("#useonaccount").val("0.00");
+    }
+      if (parseFloat($("#useonaccount").val()) > parseFloat($("#onaccountlabel").data("onaccount"))) {
+	  $(".alert").hide();
+      $("#onaccount-alert").alert();
+      $("#onaccount-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#onaccount-alert").hide();
+      });
+      return false;
+    }
+    var newonaccount = parseFloat($("#onaccountlabel").data("onaccount")) - parseFloat($("#useonaccount").val());
+    $("#onaccountlabel").html("<b>"+parseFloat(newonaccount).toFixed(2)+"</b");
+    typingTimer = setTimeout(function(){
+      
+    }, doneTypingInterval);
   });
   $(document).off('focusout', '#onaccount, #asadvance').on('focusout', '#onaccount, #asadvance', function(event) {
     if ($(this).val() == "") {
       $(this).val("0.00");
     }
   });
-  $(document).off('keyup', '#onaccount').on('keyup', '#onaccount', function(event) {
-    /* Act on the event */
-    var curindex1 = $(this).closest('tr').index();
-    clearTimeout(typingTimer1);
-    typingTimer1 = setTimeout(function(){
-      if (parseFloat(parseFloat(totalap).toFixed(2)) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()) > parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2))) {
-	if (paymentmode == 15) {
-	    usedonaccount = parseFloat(parseFloat(totalap).toFixed(2)) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()) - parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2)) - parseFloat(parseFloat($("#useasadvance").data("useasadvance")).toFixed(2));
-	    if (usedonaccount > parseFloat(parseFloat($("#onaccountlabel").data("onaccount")).toFixed(2))) {
-		$(".alert").hide();
-		$("#onaccount-alert").alert();
-		$("#onaccount-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#onaccount-alert").hide();
-		});
-		return false;
-	    }
-	    else {
-	      $("#useonaccount").html(parseFloat(usedonaccount).toFixed(2));
-	      $("#useonaccount").data("useonaccount", usedonaccount);
-	    }
-	}
-	    if (paymentmode == 1) {
-		usedasadvance = parseFloat(parseFloat(totalap).toFixed(2)) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()) - parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2)) - parseFloat(parseFloat($("#useonaccount").data("useonaccount")).toFixed(2));
-		if (usedasadvance > parseFloat(parseFloat($("#asadvancelabel").data("asadvance")).toFixed(2))) {
-		    $(".alert").hide();
-		    $("#asadvance-alert").alert();
-		    $("#asadvance-alert").fadeTo(2250, 500).slideUp(500, function(){
-			$("#asadvance-alert").hide();
-		    });
-		    return false;
-	  }
-	  else {
-	    $("#useasadvance").html(parseFloat(usedasadvance).toFixed(2));
-	    $("#useasadvance").data("useasadvance", usedasadvance);
-	  }
-	}
-      }
-    }, doneTypingInterval);
-    });
-  $(document).off('keyup', '#asadvance').on('keyup', '#asadvance', function(event) {
-    /* Act on the event */
-    var curindex1 = $(this).closest('tr').index();
-    clearTimeout(typingTimer2);
-    typingTimer2 = setTimeout(function(){
-      if (parseFloat(parseFloat(totalap).toFixed(2)) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()) > parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2))) {
-	if (paymentmode == 15) {
-	    usedonaccount = parseFloat(parseFloat(totalap).toFixed(2)) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()) - parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2)) - parseFloat(parseFloat($("#useasadvance").data("useasadvance")).toFixed(2));
-	    if (usedonaccount > parseFloat(parseFloat($("#onaccountlabel").data("onaccount")).toFixed(2))) {
-		$(".alert").hide();
-		$("#onaccount-alert").alert();
-		$("#onaccount-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#onaccount-alert").hide();
-		});
-		return false;
-	    }
-	    else {
-	      $("#useonaccount").html(parseFloat(usedonaccount).toFixed(2));
-	      $("#useonaccount").data("useonaccount", usedonaccount);
-	    }
-	}
-	    if (paymentmode == 1) {
-		usedasadvance = parseFloat(parseFloat(totalap).toFixed(2)) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()) - parseFloat(parseFloat(sessionStorage.customeramount).toFixed(2)) - parseFloat(parseFloat($("#useonaccount").data("useonaccount")).toFixed(2));
-		if (usedasadvance > parseFloat(parseFloat($("#asadvancelabel").data("asadvance")).toFixed(2))) {
-		    $(".alert").hide();
-		    $("#asadvance-alert").alert();
-		    $("#asadvance-alert").fadeTo(2250, 500).slideUp(500, function(){
-			$("#asadvance-alert").hide();
-		    });
-		    return false;
-		}
-		else {
-		    $("#useasadvance").html(parseFloat(usedasadvance).toFixed(2));
-		    $("#useasadvance").data("useasadvance", usedasadvance);
-		}
-	}
-      }
-    }, doneTypingInterval);
-  });
   $(document).off('keydown', '#onaccount, #asadvance').on('keydown', '#onaccount, #asadvance', function(event) {
     if (event.which == 13) {
       event.preventDefault();
-      $(".footerbutton:first").focus();
+      $("#useasadvance").focus().select();
     }
     if(event.which == 45) {
       event.preventDefault();
@@ -397,6 +330,101 @@ $(document).ready(function() {
       return false;
     }
   });
+  $(document).off('keydown', '#onaccount').on('keydown', '#onaccount', function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $(".footerbutton:visible").first().focus();
+    }
+    if(event.which == 45) {
+      event.preventDefault();
+      //Pressing 'Insert' key triggers click event of 'Done' button.
+      $("#btclose").click();
+      return false;
+    }
+  });
+  $(document).off('keydown', '#asadvance').on('keydown', '#asadvance', function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $(".footerbutton:visible").first().focus();
+    }
+    if(event.which == 45) {
+      event.preventDefault();
+      //Pressing 'Insert' key triggers click event of 'Done' button.
+      $("#btclose").click();
+      return false;
+    }
+  });
+    //Key Events for navigating through buttons
+    $(document).off('keydown', '#btasadv').on('keydown', '#btasadv', function(event) {
+    if (event.which == 39) {
+	event.preventDefault();
+	if ($("#btonacc").is(":visible")) {
+	  $("#btonacc").focus();  
+	}
+	else{
+	    $("#btbillwise").focus();
+	}
+    }
+    else if(event.which == 37) {
+      event.preventDefault();
+      $("#btclose").focus();
+    }
+    });
+    $(document).off('keydown', '#btonacc').on('keydown', '#btonacc', function(event) {
+    if (event.which == 39) {
+      event.preventDefault();
+	if ($("#btbillwise").is(":visible")) {
+	  $("#btbillwise").focus();  
+	}
+	else{
+	    $("#btclose").focus();
+	}
+    }
+    else if(event.which == 37) {
+      event.preventDefault();
+      if ($("#btasadv").is(":visible")) {
+	  $("#btasadv").focus();  
+	}
+	else{
+	    $("#btclose").focus();
+	}
+    }
+    });
+    $(document).off('keydown', '#btbillwise').on('keydown', '#btbillwise', function(event) {
+    if (event.which == 39) {
+      event.preventDefault();
+	$("#btclose").focus();
+    }
+    else if(event.which == 37) {
+      event.preventDefault();
+      if ($("#btonacc").is(":visible")) {
+	  $("#btonacc").focus();  
+	}
+	else{
+	    $("#btasadv").focus();
+	}
+    }
+    });
+    $(document).off('keydown', '#btclose').on('keydown', '#btclose', function(event) {
+    if (event.which == 39) {
+      event.preventDefault();
+	if ($(this).next().is(":visible")) {
+	  $(this).next().focus();  
+	}
+	else {
+	    $("#btonacc").focus();
+	}
+    }
+    else if(event.which == 37) {
+      event.preventDefault();
+	if ($("#btbillwise").is(":visible")) {
+	  $("#btbillwise").focus();  
+	}
+	else {
+	    $("#btonacc").focus();
+	}
+    }
+  });   
   //Actions that occur when On Account is clicked.
   $(document).off('click', '#btonacc').on('click', '#btonacc', function(event) {
     event.preventDefault();
@@ -435,10 +463,11 @@ $(document).ready(function() {
     $("#btasadv").show();  //Button for As Advance is shown.
     $(".amountpaid:first").focus().select();  //Focus on input field.
   });
-  
+    var allow = 1;
   //Actions that occur on click of 'Done' button.
   $(document).off('click', '#btclose').on('click', '#btclose', function(event) {
-    event.preventDefault();
+      event.preventDefault();
+      event.stopPropagation();
     var billwisedata = [];  //List to store data.
     var totalamountpaid = 0;  //Variable to store total amount paid. Total is recalculated here to avoid errors.
     //Dictionaries are created to store unadjusted amounts along with payflag , icflag and custid.
@@ -450,23 +479,23 @@ $(document).ready(function() {
     billwisedata.push(asadvance);
     billwisedata.push(onaccount);
     /*
-       The loop below makes a dictionaries from values stored in each row in this format - {"pdamt":amount paid, "invid":invoice id}.
+       The loop below makes a dictionaries from values stored in each row in this format - {"pdamt":amount adjusted, "invid":invoice id}.
        It appends each dictionary into a list billwisedata.
-       It stores the total amount paid in the variable totalamountpaid which is later used for validations.
+       It stores the total amount adjusted in the variable totalamountpaid which is later used for validations.
      */
     for(var i = 0; i < $("#latable tbody tr").length; i++) {
-      //Alert is displayed when Amount Paid is left blank. It is autofilled with 0.00 and selected so that user can leave it as 0.00 or easily edit the field.
+      //Alert is displayed when Amount Adjusted is left blank. It is autofilled with 0.00 and selected so that user can leave it as 0.00 or easily edit the field.
       if ($("#latable tbody tr:eq("+i+") td:eq(4) input").val()=="") {
 	$("#latable tbody tr:eq("+i+") td:eq(4) input").val("0.00");
 	  $("#latable tbody tr:eq("+i+") td:eq(4) input").focus().select();
 	  $(".alert").hide();
-	  $("#bwamount-blank-alert").alert();
-	  $("#bwamount-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-	      $("#bwamount-blank-alert").hide();
-	  });
-	  return false;
+	$("#bwamount-blank-alert").alert();
+	$("#bwamount-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#bwamount-blank-alert").hide();
+	});
+	return false;
       }
-      //Alert is displayed when amount paid is greater than amount pending.
+      //Alert is displayed when amount adjusted is greater than amount pending.
       if (parseFloat($("#latable tbody tr:eq("+i+") td:eq(4) input").val()) > parseFloat($("#latable tbody tr:eq("+i+") td:eq(3)").data("amountpending"))) {
 	$("#latable tbody tr:eq("+i+") td:eq(4) input").focus().select();
 	$(".alert").hide();
@@ -488,81 +517,101 @@ $(document).ready(function() {
 	totalamountpaid = totalamountpaid + amountpaid;
       }
     }
-    //Validations.
-    //Alert is displayed when sum of total amount paid and sum of unadjusted amounts is greater than sum of Debit/Credit amount(retrieved from session storage) and previous unadjusted amounts. See addvoucher.js to see when the amount is stored in session storage.
+      //Validations.
+     //Alert is displayed when no changes have been made.
+      if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) == 0) {
+	  $(".alert").hide();
+	  $("#nochange-alert").alert();
+	  $("#nochange-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#nochange-alert").hide();
+	  });
+	  return false;
+    }
+    //Alert is displayed when sum of total amount adjusted and sum of unadjusted amounts is greater than sum of Debit/Credit amount(retrieved from session storage) and previous unadjusted amounts. See addvoucher.js to see when the amount is stored in session storage.
       if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > (parseFloat(sessionStorage.customeramount) + parseFloat($("#asadvancelabel").data("asadvance")) + parseFloat($("#onaccountlabel").data("onaccount")))) {
 	  $(".alert").hide();
-	  $("#bwamount-alert").alert();
-	  $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
-	      $("#bwamount-alert").hide();
-	  });
-	  return false;
+      $("#bwamount-alert").alert();
+      $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#bwamount-alert").hide();
+      });
+      return false;
     }
-    if ((parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > parseFloat(sessionStorage.customeramount)) && parseFloat($("#useasadvance").data("useasadvance"))==0.00 && parseFloat($("#useonaccount").data("useonaccount"))==0.00) {
+    if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > parseFloat(sessionStorage.customeramount) && ($("#useasadvance").val()=="" || $("#useasadvance").val()==0) && ($("#useonaccount").val()=="" || $("#useonaccount").val()==0)) {
 	if ($("#customerselect").length == 0) {
 	    $(".alert").hide();
-	    $("#bwvamount-alert").alert();
-	    $("#bwvamount-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#bwvamount-alert").hide();
-	    });
-	    return false;
-	}
+	$("#bwvamount-alert").alert();
+	$("#bwvamount-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#bwvamount-alert").hide();
+	});
+	return false;
+      }
 	else {
 	    $(".alert").hide();
-	    $("#unadjustedamount-alert").alert();
-	    $("#unadjustedamount-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#unadjustedamount-alert").hide();
-	    });
-	    return false;
+	$("#bwamount-alert").alert();
+      $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#bwamount-alert").hide();
+      });
+	return false;
       }
     }
-      if (parseFloat((parseFloat($("#useasadvance").data("useasadvance")) + parseFloat($("#useonaccount").data("useonaccount")))) > parseFloat(parseFloat($("#asadvancelabel").data("asadvance")) + parseFloat($("#onaccountlabel").data("onaccount")) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) {
+      if (parseFloat((parseFloat($("#useasadvance").val()) + parseFloat($("#useonaccount").val()))) > parseFloat(parseFloat($("#asadvancelabel").data("asadvance")) + parseFloat($("#onaccountlabel").data("onaccount")) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) {
 	  $(".alert").hide();
-	  $("#bwadvac-alert").alert();
-	  $("#bwadvac-alert").fadeTo(2250, 500).slideUp(500, function(){
-	      $("#bwadvac-alert").hide();
-	  });
-	  return false;
+      $("#bwadvac-alert").alert();
+      $("#bwadvac-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#bwadvac-alert").hide();
+      });
+      return false;
     }
     //Alert is displayed when sum of total amount paid and sum of unadjusted amounts is less than sum of Debit/Credit amount and previous unadjusted amounts.
-      if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) < (parseFloat(sessionStorage.customeramount) + parseFloat($("#useasadvance").data("useasadvance")) + parseFloat($("#useonaccount").data("useonaccount")))) {
+      if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) < (parseFloat(sessionStorage.customeramount) + parseFloat($("#useasadvance").val()) + parseFloat($("#useonaccount").val()))) {
 	  $(".alert").hide();
-	  $("#bwamount-less-alert").alert();
-	  $("#bwamount-less-alert").fadeTo(2250, 500).slideUp(500, function(){
-	      $("#bwamount-less-alert").hide();
-	  });
-	  return false;
-    }
-
-      if (parseFloat($("#useasadvance").data("useasadvance")) > parseFloat($("#asadvancelabel").data("asadvance"))) {
-	  $("#useasadvance").focus().select();
-	  $(".alert").hide();
-	  $("#asadvance-alert").alert();
-	  $("#asadvance-alert").fadeTo(2250, 500).slideUp(500, function(){
-	      $("#asadvance-alert").hide();
-	  });
-	  return false;
+      $("#bwamount-less-alert").alert();
+      $("#bwamount-less-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#bwamount-less-alert").hide();
+      });
+      return false;
       }
 
-      if (parseFloat($("#useonaccount").data("useonaccount")) > parseFloat($("#onaccountlabel").data("onaccount"))) {
-	  $("#useonaccount").focus.select();
+      //Alert is displayed when sum of total amount paid and sum of unadjusted amounts is more than sum of Debit/Credit amount and previous unadjusted amounts.
+      if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > (parseFloat(sessionStorage.customeramount) + parseFloat($("#useasadvance").val()) + parseFloat($("#useonaccount").val()))) {
 	  $(".alert").hide();
-	  $("#onaccount-alert").alert();
-	  $("#onaccount-alert").fadeTo(2250, 500).slideUp(500, function(){
-	      $("#onaccount-alert").hide();
-	  });
-	  return false;
+      $("#bwamount-alert").alert();
+      $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#bwamount-alert").hide();
+      });
+      return false;
+    }
+
+    if (parseFloat($("#useasadvance").val()) > parseFloat($("#asadvancelabel").data("asadvance"))) {
+	$("#useasadvance").focus().select();
+	$(".alert").hide();
+      $("#asadvance-alert").alert();
+      $("#asadvance-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#asadvance-alert").hide();
+      });
+      return false;
+    }
+
+    if (parseFloat($("#useonaccount").val()) > parseFloat($("#onaccountlabel").data("onaccount"))) {
+	$("#useonaccount").focus.select();
+	$(".alert").hide();
+      $("#onaccount-alert").alert();
+      $("#onaccount-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#onaccount-alert").hide();
+      });
+      return false;
     }
 
     var usedasadvance = {};
     var usedonaccount = {};
-    usedasadvance = {"payflag":1,"icflag":4, "pdamt":parseFloat($("#useasadvance").data("useasadvance")).toFixed(2), "custid":$("#custid").val()};
-    usedonaccount = {"payflag":15,"icflag":4, "pdamt":parseFloat($("#useonaccount").data("useonaccount")).toFixed(2), "custid":$("#custid").val()};
+    usedasadvance = {"payflag":1,"icflag":4, "pdamt":parseFloat($("#useasadvance").val()), "custid":$("#custid").val()};
+    usedonaccount = {"payflag":15,"icflag":4, "pdamt":parseFloat($("#useonaccount").val()), "custid":$("#custid").val()};
     billwisedata.push(usedasadvance);
     billwisedata.push(usedonaccount);
-    
-    //If amount paid equals Debit/Credit amount AJAX request below is sent to the front-end view. Alert is displayed when the requast is successful.
-    $.ajax({
+      //If amount adjusted equals Debit/Credit amount AJAX request below is sent to the front-end view. Alert is displayed when the requast is successful.
+      if (allow == 1) {
+	  allow = 0;
+	$.ajax({
       url: '/invoice?action=updatepayment',
       type: 'POST',
       async: false,
@@ -574,25 +623,32 @@ $(document).ready(function() {
       },
       success: function(jsonObj) {
 	var status = jsonObj["gkstatus"];
-	if (status == 0) {
+	  if (status == 0) {
+	      $(".alert").hide();
 	  $("#bwamount-success-alert").alert();
 	  $("#bwamount-success-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#bwamount-success-alert").hide();
 	    if ($("#customerselect").length == 0) {
-	      $("#bwtable").modal("hide");
+		$("#bwtable").modal("hide");
+		$("#bwtableload").html("");
 	    }
 	    else {
 	      $("#showbillwiseaccounting").click();
 	    }
 	  });
+	      return false;
 	}
-	else {
+	  else {
+	      $(".alert").hide();
 	  $("#bwfailure-alert").alert();
 	  $("#bwfailure-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#bwfailure-alert").hide();
 	  });
+	      return false;
 	}
       }
     });
+    }
+      return false;
   });
 });
