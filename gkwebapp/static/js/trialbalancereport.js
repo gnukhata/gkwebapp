@@ -30,6 +30,7 @@ This script is for the report page of Trial balance.
 $(document).ready(function() {
 	$(".fixed-table-loading").remove(); // Remove unwanted symbol of loading from bootstrap-table
 	$("#msspinmodal").modal("hide");
+	$("#ntbclearfields").hide(); //Hide Clear Search button
 	$('.trialbaltable tbody tr:first-child td:eq(1) a').focus(); // Set focus on first row on load.
 	$('.trialbaltable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 
@@ -219,11 +220,26 @@ $(document).ready(function() {
 	$('#ntbclearfields').click(function(){
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
   });
-  $(".search").children(".form-control").keyup(function(event){
-    if (event.keyCode == 27) {
-      $(this).val("");
-    }
+
+	//Code for Clear Search button
+	$('#ntbclearfields').click(function(){
+    $(".search").children(".form-control").val("");
+		$("#ntbclearfields").hide();
+		$(".search").children(".form-control").focus();
   });
+	$(".search").children(".form-control").keyup(function(event){
+		$("#ntbclearfields").show();
+	    if (event.keyCode == 27) {
+	      $(this).val("");
+				$("#ntbclearfields").hide();
+	    }
+			else if (event.which == 13) {
+				$(".accname:visible").first().focus();
+			}
+			else if ($(this).val() == "") {
+				$("#ntbclearfields").hide();
+			}
+	  });
 
 		$("#printbutton").click(function(event) {
 			// this function creates a spreadsheet of the report.
