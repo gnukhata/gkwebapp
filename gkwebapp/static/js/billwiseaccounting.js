@@ -104,6 +104,7 @@ $(document).ready(function() {
       else {
 	//Alert is displayed when Amount Adjusted is blank
 	  if ($("#latable tbody tr:eq("+curindex+") td:eq(4) input").val()=="") {
+	      $("#latable tbody tr:eq("+curindex+") td:eq(4) input").val(parseFloat(0).toFixed(2)).focus().select();
 	  $(".alert").hide();
 	  $("#bwamount-blank-alert").alert();
 	  $("#bwamount-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -193,7 +194,16 @@ $(document).ready(function() {
 	totalpending = totalpending + pending;
       }
       $('#latable tfoot tr:eq(0) td:eq(2)').html('<div class="form-control" disabled>'+parseFloat(totalpending).toFixed(2)+'</div');
-      $(".billamount").html("<b>"+parseFloat(totalap).toFixed(2)+"</b>");
+	$(".billamount").html("<b>"+parseFloat(totalap).toFixed(2)+"</b>");
+      //Alert is displayed when sum of total amount paid and sum of unadjusted amounts is more than sum of Debit/Credit amount and previous unadjusted amounts.
+      if (parseFloat((totalap + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > (parseFloat(sessionStorage.customeramount) + parseFloat($("#useasadvance").val()) + parseFloat($("#useonaccount").val()))) {
+	  $(".alert").hide();
+      $("#bwamount-alert").alert();
+      $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#bwamount-alert").hide();
+      });
+      return false;
+    }
     }, doneTypingInterval);
   });
   $(document).off('keydown', '#useasadvance').on('keydown', '#useasadvance', function(event) {
@@ -453,10 +463,11 @@ $(document).ready(function() {
     $("#btasadv").show();  //Button for As Advance is shown.
     $(".amountpaid:first").focus().select();  //Focus on input field.
   });
-  
+    var allow = 1;
   //Actions that occur on click of 'Done' button.
   $(document).off('click', '#btclose').on('click', '#btclose', function(event) {
-    event.preventDefault();
+      event.preventDefault();
+      event.stopPropagation();
     var billwisedata = [];  //List to store data.
     var totalamountpaid = 0;  //Variable to store total amount paid. Total is recalculated here to avoid errors.
     //Dictionaries are created to store unadjusted amounts along with payflag , icflag and custid.
@@ -559,6 +570,16 @@ $(document).ready(function() {
         $("#bwamount-less-alert").hide();
       });
       return false;
+      }
+
+      //Alert is displayed when sum of total amount paid and sum of unadjusted amounts is more than sum of Debit/Credit amount and previous unadjusted amounts.
+      if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > (parseFloat(sessionStorage.customeramount) + parseFloat($("#useasadvance").val()) + parseFloat($("#useonaccount").val()))) {
+	  $(".alert").hide();
+      $("#bwamount-alert").alert();
+      $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#bwamount-alert").hide();
+      });
+      return false;
     }
 
     if (parseFloat($("#useasadvance").val()) > parseFloat($("#asadvancelabel").data("asadvance"))) {
@@ -587,9 +608,10 @@ $(document).ready(function() {
     usedonaccount = {"payflag":15,"icflag":4, "pdamt":parseFloat($("#useonaccount").val()), "custid":$("#custid").val()};
     billwisedata.push(usedasadvance);
     billwisedata.push(usedonaccount);
-    
-    //If amount adjusted equals Debit/Credit amount AJAX request below is sent to the front-end view. Alert is displayed when the requast is successful.
-    $.ajax({
+      //If amount adjusted equals Debit/Credit amount AJAX request below is sent to the front-end view. Alert is displayed when the requast is successful.
+      if (allow == 1) {
+	  allow = 0;
+	$.ajax({
       url: '/invoice?action=updatepayment',
       type: 'POST',
       async: false,
@@ -607,12 +629,14 @@ $(document).ready(function() {
 	  $("#bwamount-success-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#bwamount-success-alert").hide();
 	    if ($("#customerselect").length == 0) {
-	      $("#bwtable").modal("hide");
+		$("#bwtable").modal("hide");
+		$("#bwtableload").html("");
 	    }
 	    else {
 	      $("#showbillwiseaccounting").click();
 	    }
 	  });
+	      return false;
 	}
 	  else {
 	      $(".alert").hide();
@@ -620,8 +644,11 @@ $(document).ready(function() {
 	  $("#bwfailure-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#bwfailure-alert").hide();
 	  });
+	      return false;
 	}
       }
     });
+    }
+      return false;
   });
 });
