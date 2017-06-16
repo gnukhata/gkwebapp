@@ -32,19 +32,19 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <label for="rejectionnote_noteno">{% trans %}Note No{% endtrans %} :</label>
-                        <input class="form-control input-sm" id="rejectionnote_noteno" placeholder="{% trans %}Enter Note No{% endtrans %}" accesskey="a">
+                        <input class="form-control input-sm" id="rejectionnote_noteno" placeholder="{% trans %}Enter Note No{% endtrans %}" accesskey="a" disabled>
                     </div>
                     <div class="col-xs-6">
                         <label for="rejectionnote_date">{% trans %}Note Date{% endtrans %} :</label>
                         <div class="form-inline">
                             <div class="form-group ">
-                                <input type="text" class="form-control input-sm rndate" size="2" maxlength="2" placeholder="DD" id="rejectionnote_date" accesskey="v">
+                                <input type="text" class="form-control input-sm rndate" size="2" maxlength="2" placeholder="DD" id="rejectionnote_date" accesskey="v" disabled>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control input-sm rndate" size="2" maxlength="2" placeholder="MM" id="rejectionnote_month" accesskey="v">
+                                <input type="text" class="form-control input-sm rndate" size="2" maxlength="2" placeholder="MM" id="rejectionnote_month" accesskey="v" disabled>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control input-sm rndate" size="4" maxlength="4" placeholder="YYYY" id="rejectionnote_year" accesskey="v">
+                                <input type="text" class="form-control input-sm rndate" size="4" maxlength="4" placeholder="YYYY" id="rejectionnote_year" accesskey="v" disabled>
                             </div>
                         </div>
                     </div>
@@ -56,17 +56,13 @@
                     <label for="rejectionnote_invoice">
                       {% trans %}Invoice{% endtrans %} :
                     </label>
-                    <select class="form-control input-sm" id="rejectionnote_invoice" accesskey="">
-                      <option value="" dcno = "" >None</option>
-                    </select>
+                    <input class="form-control input-sm" id="rejectionnote_invoice" placeholder="None" accesskey="" disabled>
                   </div>
                   <div class="col-xs-6">
                     <label for="rejectionnote_deliverynote">
                       {% trans %}Delivery Note{% endtrans %} :
                     </label>
-                    <select class="form-control input-sm" id="rejectionnote_deliverynote" accesskey="">
-                      <option value="" dcno = "" >None</option>
-                    </select>
+                    <input class="form-control input-sm" id="rejectionnote_deliverynote" placeholder="None" accesskey="" disabled>
                   </div>
               </div>
             </div>
@@ -124,24 +120,17 @@
                 <table id="rejectionnote_product_table" class="table shadow table-condensed table-bordered fixed-table">
                     <thead class="bg-primary">
                         <tr>
-                            <th class="col-xs-5">{% trans %}Product{% endtrans %}</th>
-                            <th class="col-xs-3 text-center">{% trans %}Total Quantity{% endtrans %}</th>
-                            <th class="col-xs-3 text-center">{% trans %}Rejected Quantity{% endtrans %}</th>
+                            <th class="col-xs-">{% trans %}Product{% endtrans %}</th>
+                            <th class="col-xs-5 text-center">{% trans %}Rejected Quantity{% endtrans %}</th>
                             <th class="col-xs-1"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="col-xs-5">
+                            <td class="col-xs-6">
                                 <input class="form-control input-sm product_name" placeholder="None" disabled>
                             </td>
-                            <td class="col-xs-3">
-                                <div class="input-group">
-                                    <input type="text" class="rejectionnote_product_quantity form-control input-sm text-right" value="0.00" disabled>
-                                    <span class="input-group-addon input-sm" id="unitaddon"></span>
-                                </div>
-                            </td>
-                            <td class="col-xs-3">
+                            <td class="col-xs-5">
                                 <div class="input-group">
                                     <input type="text" class="rejectionnote_product_rejected_quantity form-control input-sm text-right" value="0.00">
                                     <span class="input-group-addon input-sm" id="unitaddon"></span>
