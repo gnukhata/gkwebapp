@@ -32,7 +32,7 @@
 </head>
 <body>
   <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
-   
+
     <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
 
       {% trans %}Something went wrong!{% endtrans %}
@@ -45,17 +45,17 @@
 
             <label >{% trans %}Please Enter Date{% endtrans %}</label>
           </div>
-          
+
              <div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
 
             <label >{% trans %}Please enter date in proper format!{% endtrans %}</label>
           </div>
-          
+
           <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
 
             {% trans %}Received date cannot be before Transfer Note Date!{% endtrans %}
           </div>
-                    
+
           <div class="alert alert-success" id="rec-confirm-alert"  aria-live="rude" role="alert" hidden>
 
             <label >{% trans %}Transfer Note received! {% endtrans %}</label>
@@ -71,7 +71,7 @@
                 <option value="{{tn['transfernoteid']}}">{{tn["transfernoteno"]}} , {{tn["transfernotedate"]}}</option>
                 {% endfor %}>
               </select>
-              
+
             </div>
             <div class="form-group hidden-load" hidden>
               <label >{% trans %}Transfer Note No:{% endtrans %}</label>  <label id="rec_transfernote_no"></label>
@@ -89,10 +89,10 @@
 
 		   <small >   <b> days</b></small>
 		    </div>
-		    
+
               </br>
 	      </br>
-	     
+
 	      </div>
 	      <div class="form-group"  >
        <div class="form-inline">
@@ -205,9 +205,9 @@
       </table>
 
       <div class="panel-footer hidden-load" hidden>
-    <button id="rec_received" class="btn btn-success btn-sm" >{% trans %}Received{% endtrans %}</button>
-   
-    <button id="tn_editprint" class="btn btn-primary btn-sm" >{% trans %}Print{% endtrans %}</button>
+    <button id="rec_received" class="btn btn-success btn-sm" >{% trans %}<i class="fa fa-check" aria-hidden="true"></i> Received{% endtrans %}</button>
+    <button id="rec_cancel" class="btn btn-danger btn-sm" >{% trans %}<i class="fa fa-arrow-left" aria-hidden="true"></i> Cancel{% endtrans %}</button>
+    <button id="tn_editprint" class="btn btn-primary btn-sm" >{% trans %}<i class="fa fa-print" aria-hidden="true"></i> Print{% endtrans %}</button>
       </div>
     </div>
     <div id="confirm_yes" class="modal fade" tabindex="-1" role="dialog">
@@ -222,15 +222,15 @@
               <p>{% trans %}Are you sure?{% endtrans %}</p>
             </div>
             <div class="modal-footer">
-              <button type="button" id ="tn_no" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
-              <button type="button" id="tn_yes" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
+              <button type="button" id ="tn_no" class="btn btn-warning" data-dismiss="modal">{% trans %}<i class="fa fa-times" aria-hidden="true"></i> No{% endtrans %}</button>
+              <button type="button" id="tn_yes" data-dismiss="modal" class="btn btn-success">{% trans %}<i class="fa fa-check" aria-hidden="true"></i> Yes{% endtrans %}</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div>
     </div><!-- /.modal -->
 
-   
+
 
   </div>
 </div>

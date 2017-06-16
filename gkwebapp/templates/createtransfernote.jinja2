@@ -243,9 +243,9 @@
 	 
 	    </div>
       <div class="panel-footer">
-        <button class="btn btn-success btn-sm" id="transfernote_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}">{% trans %}Save{% endtrans %}</button>
-        <button id="transfernote_reset" class="btn btn-warning btn-sm">{% trans %}Reset{% endtrans %}</button>
-        <button id="tn_saveprint" class="btn btn-primary btn-sm" >{% trans %} Save & Print{% endtrans %}</button>
+        <button class="btn btn-success btn-sm" id="transfernote_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i> Save{% endtrans %}</button>
+        <button id="transfernote_reset" class="btn btn-warning btn-sm">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> Reset{% endtrans %}</button>
+        <button id="tn_saveprint" class="btn btn-primary btn-sm" >{% trans %}<i class="fa fa-print" aria-hidden="true"></i> Save & Print{% endtrans %}</button>
       </div>
 
     <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
@@ -260,8 +260,8 @@
               <p>{% trans %}Are you sure?{% endtrans %}</p>
             </div>
             <div class="modal-footer">
-              <button type="button" id ="tn_save_no" class="btn btn-warning" data-dismiss="modal">{% trans %}NO{% endtrans %}</button>
-              <button type="button" id="tn_save_yes" data-dismiss="modal" class="btn btn-success">{% trans %}YES{% endtrans %}</button>
+              <button type="button" id ="tn_save_no" class="btn btn-warning" data-dismiss="modal">{% trans %}<i class="fa fa-times" aria-hidden="true"></i> NO{% endtrans %}</button>
+              <button type="button" id="tn_save_yes" data-dismiss="modal" class="btn btn-success">{% trans %}<i class="fa fa-check" aria-hidden="true"></i> YES{% endtrans %}</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -279,8 +279,8 @@
               <p>{% trans %}Are you sure?{% endtrans %}</p>
             </div>
             <div class="modal-footer">
-              <button type="button" id ="tn_save_noprint" class="btn btn-warning" data-dismiss="modal">{% trans %}NO{% endtrans %}</button>
-              <button type="button" id="tn_save_yesprint" data-dismiss="modal" class="btn btn-success">{% trans %}YES{% endtrans %}</button>
+              <button type="button" id ="tn_save_noprint" class="btn btn-warning" data-dismiss="modal">{% trans %}<i class="fa fa-times" aria-hidden="true"></i> NO{% endtrans %}</button>
+              <button type="button" id="tn_save_yesprint" data-dismiss="modal" class="btn btn-success">{% trans %}<i class="fa fa-check" aria-hidden="true"></i> YES{% endtrans %}</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
