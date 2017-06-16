@@ -2034,6 +2034,7 @@ $("#instrument_year").blur(function(event) {
     event.preventDefault();
     $("#instrumentno").focus();
     }
+    $('#instrumentbtn2').hide();
 
   });
 
