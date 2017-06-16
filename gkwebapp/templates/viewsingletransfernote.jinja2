@@ -22,13 +22,17 @@
       <table id="transfernote_product_table" class="table table-condensed table-borderd fixed-table">
 	<thead class="bg-primary">
           <tr>
-            <th class="col-xs-9">{% trans %}Product{% endtrans %}</th>
-            <th class="col-xs-3">{% trans %}Quantity{% endtrans %}</th>
-
+            <th class="col-sm-9">{% trans %}Product{% endtrans %}</th>
+            <th class="col-sm-3">{% trans %}Quantity{% endtrans %}</th>
           </tr>
 	</thead>
 	<tbody>
-
+	  {% for product in transfernote["productdetails"] %}
+	    <tr>
+	      <td class="col-sm-9">{{transfernote["productdetails"][product]["productdesc"]}}</td>
+	      <td class="col-sm-3">{{transfernote["productdetails"][product]["unitname"]}}</td>
+	    </tr>
+	  {% endfor %}
 	</tbody>
       </table>
     </div>
@@ -41,39 +45,39 @@
             </br>
             <table class="table" border="0">
               <tbody>
-		  <tr>
-		    <td>
-                      <label>{% trans %} Number of Packets :{% endtrans %}</label>
-                    </td>
-                    <td>
-                      <label  id="rec_no_of_packet" ></label>
+		<tr>
+		  <td>
+                    <label>{% trans %} Number of Packets :{% endtrans %}</label>
+                  </td>
+                  <td>
+                    <label  id="rec_no_of_packet" >{% if transfernote["nopkt"] %} {{transfernote["nopkt"]}}{% else %} N/A{% endif %}</label>
                     </td>
                   </tr>
 		  <tr>
 		    <td><label >{% trans %} From Godown : {% endtrans %}</label>
 		    </td>
-		    <td> <label id="rec_tn_from_godown"></label>
+		    <td> <label id="rec_tn_from_godown">{{transfernote["fromgodown"]}} ({{transfernote["fromgodownaddr"]}})</label>
 		    </td>
 		  </tr>
-		    <tr>
-		      <td><label >{% trans %} To Godown : {% endtrans %}</label>
-		      </td>
-		      <td> <label id="rec_tn_to_godown"></label>
+		  <tr>
+		    <td><label >{% trans %} To Godown : {% endtrans %}</label>
+		    </td>
+		    <td> <label id="rec_tn_to_godown">{{transfernote["togodown"]}} ({{transfernote["togodownaddr"]}})</label>
 		      </td>
 		    </tr>
 		    <tr>
                       <td><label>{% trans %} Mode of Transport : {% endtrans %}</label></td>
-		      <td> <label  id="rec_transport_mode"></label></td>
+		      <td> <label  id="rec_transport_mode">{% if transfernote["transportationmode"] %} {{transfernote["transportationmode"]}}{% else %} N/A{% endif %}</label></td>
 		    </tr>
 		    <tr>
 		      <td><label>{% trans %} Name of Issuer :{% endtrans %}</label></td>
-		      <td> <label  id="rec_name_issuer"></label></td>
+		      <td> <label  id="rec_name_issuer">{% if transfernote["issuername"] %} {{transfernote["issuername"]}}{% else %} N/A{% endif %}</label></td>
 		    </tr>
 		    <tr>
-		      <td><label >{% trans %} Designation : {% endtrans %}</label></td><td> <label id="rec_designation"></label></td>
+		      <td><label >{% trans %} Designation : {% endtrans %}</label></td><td> <label id="rec_designation">{% if transfernote["designation"] %} {{transfernote["designation"]}}{% else %} N/A{% endif %}</label></td>
 		    </tr>
 		    <tr>
-		      <td><label >{% trans %} Status : {% endtrans %}</label></td><td> <label id="recstatus"></label></td>
+		      <td><label >{% trans %} Status : {% endtrans %}</label></td><td> <label id="recstatus">{% if transfernote["recieved"] %} Received{% else %} Pending{% endif %}</label></td>
 		    </tr>
 	      </tbody>
 	    </table>
