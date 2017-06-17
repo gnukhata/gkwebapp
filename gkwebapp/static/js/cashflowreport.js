@@ -27,16 +27,14 @@ Contributors:
 */
 
 $(document).ready(function() {
+	$("#msspinmodal").modal("hide");
 	$(".fixed-table-loading").remove();
-	$("#cflclearfields").hide();
-	$("#cfrclearfields").hide();
 	$('#rctable tbody tr:first-child td:eq(1) a').focus();
 	$('#rctable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
-	var rcindex = 0
-	var pyindex = 0
+	var rcindex = 0;
+	var pyindex = 0;
 
 	$(document).off('focus' ,'.rcaccname').on('focus' ,'.rcaccname',function() {
-		$('#rctable tr').removeClass('selected');
 		$(this).closest('tr').addClass('selected');
 	});
 
@@ -151,12 +149,17 @@ $(document).ready(function() {
 	});
 
 	$(".search").children(".form-control").keyup(function(event){
-		if ($(this).parent(".search").hasClass("pull-right")) {
-$("#cflclearfields").show();
+		if ($(this).parent(".search").hasClass("pull-right") && $(this).val() !="") {
+			$("#cflclearfields").show();
 		}
-		else if($(this).parent(".search").hasClass("pull-left")) {
-
-			$("#cfrclearfields").show();
+		else {
+			$("#cflclearfields").hide();
+		}
+	 if($(this).parent(".search").hasClass("pull-left")&& $(this).val() !="") {
+		 $("#cfrclearfields").show();
+		}
+		else {
+			$("#cfrclearfields").hide();
 		}
       if (event.keyCode == 27) {
 				if ($(this).parent(".search").hasClass("pull-right")) {
@@ -167,7 +170,8 @@ $("#cflclearfields").show();
 				}
         $(this).val("");
   			$("#cflclearfields").hide();
-      }
+				$("#cfrclearfields").hide();
+			}
   		else if (event.which == 13) {
 				if ($(this).parent(".search").hasClass("pull-right")) {
 					$(".rcaccname:visible").first().focus();
