@@ -49,7 +49,42 @@
      .srnowrap {
 	 width:6%;
      }
+     .modaltext {
+	 font-size: 0.8em;
+     }
+
+     .table-borderless > tbody > tr > td,
+     .table-borderless > tbody > tr > th,
+     .table-borderless > tfoot > tr > td,
+     .table-borderless > tfoot > tr > th,
+     .table-borderless > thead > tr > td,
+     .table-borderless > thead > tr > th {
+	 border: none;
+     }
+
+     #transfernote_product_table td {
+	 font-size: 75%;
+	 padding: 4 !important;
+	 margin: 4 !important;
+     }
+
+     #transfernote_product_table th {
+	 font-size: 85%;
+     }
      
+     #transfernote_product_table tbody {
+	 display:block;
+	 height: 155px;
+	 overflow-y:scroll;
+     }
+     #transfernote_product_table thead,#transfernote_product_table tbody tr {
+	 display:table;
+	 width:100%;
+	 table-layout:fixed;
+     }
+     #transfernote_product_table thead {
+	 width: calc( 100% - 0.65em );
+     }
 
     </style>
   </head>
@@ -97,7 +132,7 @@
 	{% for transfernote in transfernotes %}
 	  <tr data-transfernoteid="{{transfernote["transfernoteid"]}}">
 	    <td class="srnowrap text-center">{{transfernote["srno"]}}</td>
-	    <td class="smwrap text-center">{{transfernote["transfernoteno"]}}</td>
+	    <td class="smwrap text-center"><a class="libgname" href="">{{transfernote["transfernoteno"]}}</a></td>
 	    <td class="smwrap text-center">{{transfernote["transfernotedate"]}}</td>
 	    <td class="bigwrap text-left">{{transfernote["fromgodown"]}}</td>
 	    <td class="bigwrap text-left">{{transfernote["togodown"]}}</td>

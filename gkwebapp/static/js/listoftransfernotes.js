@@ -30,7 +30,7 @@ $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $(".modal-backdrop").remove();
   $(".fixed-table-loading").remove();
-
+    var currentrow = 0;
 
   $('#latable tbody tr:first-child td:eq(1) a').focus();
   $('#latable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
@@ -127,9 +127,20 @@ $(document).ready(function() {
 
   });
 
+  $("#latable").off('keydown','tr').on('keydown','tr',function(e){
+    var id = $(this).data("transfernoteid");
+    var currindex = $(this).index();
+    if(e.which==13)
+      {
+	e.preventDefault();
+      $('#latable tbody tr:eq('+currindex+')').dblclick() ;
+    }
+  });
+
   $("#latable").off('dblclick','tr').on('dblclick','tr',function(e){
   // This function opens a modal of the selected voucher.
-  // It shows the complete details of the selected voucher along with option to edit, delete and clone.
+      // It shows the complete details of the selected voucher along with option to edit, delete and clone.
+      currentrow = $(this).index();
     e.preventDefault();
       var id = "";
       id = $(this).data("transfernoteid");
@@ -161,6 +172,10 @@ $(document).ready(function() {
       $('#tnview').modal('show');
       });
   });
+    $("#tnview").on('hidden.bs.modal', function(event) {
+	$('#latable tbody tr:eq('+currentrow+') td:eq(1) a').focus();
+	$('#latable tbody tr:eq('+currentrow+') td:eq(1) a').closest('tr').addClass('selected');
+    });
   $("#print").click(function(event) {
     event.preventDefault();
       var xhr = new XMLHttpRequest();
