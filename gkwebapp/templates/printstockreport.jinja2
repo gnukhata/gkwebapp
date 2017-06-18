@@ -100,6 +100,9 @@
 							{% trans %}TN No{% endtrans %}
 						</th>
 						{% endif %}
+						<th class="col-xs-1 calign" >
+		          {% trans %}RN No{% endtrans %}
+		        </th>
             <th class="col-xs-1 rightlist" >
               {% trans %}Inward{% endtrans %}
             </th>
@@ -133,6 +136,8 @@
 	        <td class="col-xs-1" >
 	        </td>
 	        {% endif %}
+					<td class="col-xs-1 calign" >
+	        </td>
 	        <td class="col-xs-1 rightlist">
 	          {{record["inward"]}}
 	        </td>
@@ -142,55 +147,66 @@
 	        </td>
 	      </tr>
 	      {% endif %}
-				{% if record["particulars"] !="Total" and (record["dcno"]!="" or record["invno"]!="" or record["tnno"]!="") and record["date"]!="" %}
-				{% if record["dcno"]!= "" %}
+				{% if record["particulars"] !="Total" and (record["dcno"]!="" or record["invno"]!="" or record["tnno"]!="" or record["rnno"] != "") and record["date"]!="" %}
+	      {% if record["dcno"]!= "" %}
 	      <tr value="{{record["dcid"]}}">
 	      {% elif record["invno"]!= "" %}
 	      <tr value="{{record["invid"]}}">
+	      {% elif record["rnno"]!= "" %}
+	      <tr value="{{record["rnid"]}}">
 	      {% else %}
 	      <tr value="{{record["tnid"]}}"> <!-- check once-->
 	      {% endif %}
-	        <td class="col-xs-1 " >
+	        <td class="col-xs-1 calign" >
 	          {{record["date"]}}
 	        </td>
-					{% if godown == "" %}
-	        <td class="col-xs-4">
+	        {% if godown == "" %}
+	        <td class="col-xs-3">
 	        {% else %}
 	        <td class="col-xs-3">
 	        {% endif %}
 	          {{record["particulars"]}}
 	        </td>
-	        <td class="col-xs-2" >
+	        <td class="col-xs-2 calign" >
 	          {% if record["trntype"] == "delchal" %}
 	              Delivery Note
 	          {% endif %}
 	          {% if record["trntype"] == "invoice" %}
 	              Invoice
 	          {% endif %}
-						{% if record["trntype"] == "delchal&invoice" %}
+	          {% if record["trntype"] == "delchal&invoice" %}
 	              Delivery Note & Invoice
 	          {% endif %}
-						{% if record["trntype"] == "transfer note" %}
+	          {% if record["trntype"] == "transfer note" %}
 	              Transfer Note
 	          {% endif %}
+	          {% if record["trntype"] == "Rejection Note" %}
+	              Rejection Note
+	          {% endif %}
+
 	        </td>
-	        <td value="{{record["dcid"]}}" class="col-xs-1" >
-					{% if record["dcno"]!="" %}
-						{{record["dcno"]}}
-					{% endif %}
+	        <td value="{{record["dcid"]}}" class="col-xs-2 calign" >
+	          {% if record["dcno"]!="" %}
+	            {{record["dcno"]}}
+	          {% endif %}
 	        </td>
-					<td value="{{record["invid"]}}" class="col-xs-1" >
-					{% if record["invno"]!="" %}
-						{{record["invno"]}}
-					{% endif %}
+	        <td value="{{record["invid"]}}" class="col-xs-1 calign" >
+	          {% if record["invno"]!="" %}
+	            {{record["invno"]}}
+	          {% endif %}
 	        </td>
-					{% if godown != "" %}
-	        <td value="{{record["tnid"]}}" class="col-xs-1" >
+	        {% if godown != "" %}
+	        <td value="{{record["tnid"]}}" class="col-xs-1 calign" >
 	          {% if record["tnno"] != "" %}
 	            {{record["tnno"]}}
 	          {% endif %}
 	        </td>
 	        {% endif %}
+	        <td value="{{record["rnid"]}}" class="col-xs-1 calign" >
+	          {% if record["rnno"] != "" %}
+	            {{record["rnno"]}}
+	          {% endif %}
+	        </td>
 	        <td class="col-xs-1 rightlist">
 	          {{record["inwardqty"]}}
 	        </td>
@@ -202,6 +218,7 @@
 	        </td>
 	      </tr>
 	      {% endif %}
+
 	      {% if record["particulars"] =="Total" and record["dcno"]=="" and record["invno"]=="" and record["date"]=="" %}
 	      <tr>
 	        <td class="col-xs-1 " >
@@ -223,6 +240,8 @@
 	        <td class="col-xs-1" >
 	        </td>
 	        {% endif %}
+					<td class="col-xs-1 calign" >
+	        </td>
 	        <td class="col-xs-1 rightlist">
 	          {{record["totalinwardqty"]}}
 	        </td>
