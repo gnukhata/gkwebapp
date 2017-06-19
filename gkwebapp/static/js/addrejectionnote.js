@@ -28,7 +28,7 @@ Contributors:
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $('.rndate').autotab('number');
-  $("#rejectionnote_noteno").focus().select();
+  $("#rejectionnote_invoice").focus();
   $("#rejectionnote_date").numeric();
   $("#rejectionnote_month").numeric();
   $("#rejectionnote_year").numeric();
@@ -86,10 +86,34 @@ $(document).ready(function() {
     $(this).val(yearpad($(this).val(),4));
   });
   // events for shifting focus. Enter shifts to next element and up arrow shifts to previous
+  $("#rejectionnote_invoice").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#rejectionnote_deliverynote").focus();
+    }
+    /*if (event.which==38 && document.getElementById('rejectionnote_invoice').selectedIndex==0) {
+      event.preventDefault();
+      $('#rejectionnote_year').focus().select();
+    }*/
+  });
+  $("#rejectionnote_deliverynote").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $('#rejectionnote_noteno').focus().select();
+    }
+    if (event.which==38 && (document.getElementById('rejectionnote_deliverynote').selectedIndex==0 || document.getElementById('rejectionnote_deliverynote').selectedIndex==1)) {
+      event.preventDefault();
+      $("#rejectionnote_invoice").focus();
+    }
+  });
   $("#rejectionnote_noteno").keydown(function(event) {
     if (event.which==13 && $("#rejectionnote_noteno").val()) {
       event.preventDefault();
       $("#rejectionnote_date").focus().select();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#rejectionnote_deliverynote").focus().select();
     }
   });
   $("#rejectionnote_date").keydown(function(event) {
@@ -115,31 +139,11 @@ $(document).ready(function() {
   $("#rejectionnote_year").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#rejectionnote_invoice").focus().select();
+      $('#rejectionnote_product_table tbody tr:first td:eq(2) input').focus().select();
     }
     if (event.which==38) {
       event.preventDefault();
       $("#rejectionnote_month").focus().select();
-    }
-  });
-  $("#rejectionnote_invoice").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#rejectionnote_deliverynote").focus();
-    }
-    if (event.which==38 && document.getElementById('rejectionnote_invoice').selectedIndex==0) {
-      event.preventDefault();
-      $('#rejectionnote_year').focus().select();
-    }
-  });
-  $("#rejectionnote_deliverynote").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $('#rejectionnote_product_table tbody tr:first td:eq(2) input').focus().select();
-    }
-    if (event.which==38 && document.getElementById('rejectionnote_deliverynote').selectedIndex==0) {
-      event.preventDefault();
-      $("#rejectionnote_invoice").focus();
     }
   });
   $(document).off('blur', '.rejectionnote_product_rejected_quantity').on('blur', '.rejectionnote_product_rejected_quantity', function(event) {
@@ -193,7 +197,7 @@ $(document).ready(function() {
     if (event.which==38) {
       event.preventDefault();
       if($(this).closest("tr").is(":first-child")){
-        $("#rejectionnote_deliverynote").focus();
+        $("#rejectionnote_year").focus();
       }
       else{
         var ind = $(this).closest("tr").index() - 1;
