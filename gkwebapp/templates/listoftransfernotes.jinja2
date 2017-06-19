@@ -133,8 +133,8 @@
 	    <td class="smwrap text-center">{{transfernote["transfernotedate"]}}</td>
 	    <td class="bigwrap text-left">{{transfernote["fromgodown"]}}</td>
 	    <td class="bigwrap text-left">{{transfernote["togodown"]}}</td>
-	    <td class="bigwrap text-left">{% for productqty in transfernote["productqty"] %}<p>{{productqty["productdesc"]}}</p>{% endfor %}</td>
-	    <td class="qtywrap text-right">{% for productqty in transfernote["productqty"] %}<p>{{productqty["quantity"]}} {{productqty["uom"]}}</p>{% endfor %}</td>
+	    <td class="bigwrap text-left">{{transfernote["productqty"][0]["productdesc"]}}{% if transfernote["numberofproducts"] > 1 %} + {{transfernote["numberofproducts"] - 1}}{% endif %}</td>
+	    <td class="qtywrap text-right">{{transfernote["productqty"][0]["quantity"]}} {{transfernote["productqty"][0]["uom"]}}</td>
 	  </tr>
 	{% endfor %}
       </tbody>
