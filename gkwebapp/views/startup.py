@@ -85,17 +85,12 @@ def createorg(request):
 @view_config(route_name="createadmin", renderer="gkwebapp:templates/createadmin.jinja2")
 def createadmin(request):
 	orgname = request.params["orgname"]
-
 	orgtype = request.params["orgtype"]
-
 	invflag = request.params["invflag"]
-
 	fromdate = request.params["fdate"]
-
 	todate = request.params["tdate"]
 	invsflag=request.params["invsflag"]
 	billflag=request.params["billflag"]
-
 	return {"orgname":orgname, "orgtype":orgtype, "fromdate":fromdate, "todate":todate, "invflag":invflag,"invsflag":invsflag,"billflag":billflag}
 
 @view_config(route_name="createorglogin",renderer="json")
