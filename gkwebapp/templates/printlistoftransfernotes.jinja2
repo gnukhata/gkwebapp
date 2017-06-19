@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% trans %}GNUKhata{% endtrans %} | {{projectname}} {% trans %}Statement{% endtrans %}</title>
+    <style type="text/css">
+
+     td {
+  	 font-size: 65%;
+  	 color: black;
+     }
+
+     th {
+  	 font-size: 70%;
+     }
+
+     @page {
+	 size : 21cm 29.7cm;
+	 margin : 10mm 10mm 20mm 10mm
+     }
+     thead{
+	 display: table-header-group;
+     }
+     tfoot{
+	 display: table-footer-group;
+     }
+     .bigwrap {
+	 width:20%;
+     }
+     .smwrap {
+	 width:9%;
+     }
+     .qtywrap {
+	 width:13%
+     }
+     .srnowrap {
+	 width:6%;
+     }
+
+    </style>
+  </head>
+  <body>
+    <div class="hidden-print">
+      <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="startdate" data-startdate="{{startdate}}">{{startdate}}</strong> {% trans %}to{% endtrans %} <strong id="enddate" data-enddate="{{enddate}}">{{enddate}}</strong></span>
+      <span style="margin-left: 46.4%;"><strong>{% trans %}List of Transfer Notes{% endtrans %}</strong></span>
+      {% if godownname!="" and godownname!="" %}
+	<input type="text" id="godownselect" value="1" hidden></input>
+	<span style="margin:auto; display:table; width: 100%;text-align: center"><i>{% trans %}Name of Godown{% endtrans %}: </i><strong id="goid" data-goid="{{goid}}">{{godownname}}</strong> <i>{% trans %}Godown Address{% endtrans %}: </i><strong>{{godownaddress}}</strong></span>
+      {% else %}
+	<input type="text" id="godownselect" value="0" hidden></input>
+      {% endif %}
+    </div>
+
+    <div class="table-responsive printorgdetails">
+      <table class="table table-condensed table-bordered table-striped shadow">
+	<thead class="bg-primary">
+          <tr class="visible-print">
+            <th colspan="8" style="text-align:center; font-size:80%;">
+              {% trans %}List of Transfer Notes{% endtrans %}
+	      <br>
+	      <i>{% trans %}Period{% endtrans %}</i> : <strong id="startdate" data-startdate="{{startdate}}">{{startdate}}</strong> {% trans %}to{% endtrans %} <strong id="enddate" data-enddate="{{enddate}}">{{enddate}}</strong>
+	      {% if godownname!="" and godownname!="" %}
+		<br>
+		<i>{% trans %}Name of Godown{% endtrans %}: </i><strong>{{godownname}}</strong> <i>{% trans %}Godown Address{% endtrans %}: </i><strong>{{godownaddress}}</strong>
+	      {% endif %}
+            </th>
+          </tr>
+	  <tr>
+            <th class="srnowrap text-center" >
+              {% trans %}Sr.No.{% endtrans %}
+            </th>
+            <th class="smwrap text-center" >
+              {% trans %}TN No.{% endtrans %}
+            </th>
+            <th class="smwrap text-center" >
+	      {% trans %}Date{% endtrans %}
+            </th>
+            <th class="bigwrap text-center" >
+	      {% trans %}Dispatched From{% endtrans %}
+            </th>
+            <th class="bigwrap text-center" >
+	      {% trans %}To be Delivered At{% endtrans %}
+            </th>
+            <th class="bigwrap text-center" >
+	      {% trans %}Products{% endtrans %}
+            </th>
+            <th class="qtywrap text-right" >
+	      {% trans %}Quantity{% endtrans %}
+            </th>
+	    <th class="srnowrap text-center" >
+	      {% trans %}Status{% endtrans %}
+            </th>
+	  </tr>
+	</thead>
+	<tbody>
+	  {% for transfernote in transfernotes %}
+	    <tr data-transfernoteid="{{transfernote["transfernoteid"]}}">
+	      <td class="srnowrap text-center">{{transfernote["srno"]}}</td>
+	      <td class="smwrap text-center">{{transfernote["transfernoteno"]}}</td>
+	      <td class="smwrap text-center">{{transfernote["transfernotedate"]}}</td>
+	      <td class="bigwrap text-left">{{transfernote["fromgodown"]}}</td>
+	      <td class="bigwrap text-left">{{transfernote["togodown"]}}</td>
+	      <td class="bigwrap text-left">{% for productqty in transfernote["productqty"] %}<p>{{productqty["productdesc"]}}</p>{% endfor %}</td>
+	      <td class="qtywrap text-right">{% for productqty in transfernote["productqty"] %}<p>{{productqty["quantity"]}} {{productqty["uom"]}}</p>{% endfor %}</td>
+	      {% if transfernote["receivedflag"] %}
+		<td class="srnowrap text-center text-success">{% trans %}Received{% endtrans %}</td>
+	      {% else %}
+		<td class="srnowrap text-center text-danger">{% trans %}Pending{% endtrans %}</td>
+	      {% endif %}
+	    </tr>
+	  {% endfor %}
+	</tbody>
+      </table>
+      <span style="margin:auto; display:table;">
+  	<button type="button" class="btn btn-sm btn-danger hidden-print" id="loaback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+  	<button type="button" class="btn btn-sm btn-info hidden-print" id="loaprint" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
+      </span>
+    </div>
+    <script type="text/javascript">
+     $(document).ready(function() {
+
+       oninvoice = 0;
+
+       $("#msspinmodal").modal("hide");
+
+       $("title").html("GNUKhata")
+       $("#loaprint").click(function(event) {
+         window.print();
+       });
+       $("#loaback").click(function(event) {
+         $("#msspinmodal").modal("show");
+	 var dataset = {"startdate":$("#startdate").data("startdate"),"enddate":$("#enddate").data("enddate")};
+	 if ($("#godownselect").val() == 1) {
+	   dataset["goid"] = $("#goid").data("goid");
+	 }
+	 $.ajax(
+	   {
+	     type: "POST",
+	     url: "/transfernotes?action=showlist",
+	     global: false,
+	     async: false,
+	     datatype: "text/html",
+	     data: dataset,
+	     beforeSend: function(xhr)
+	     {
+	       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	     },
+	   })
+	  .done(function(resp)
+	    {
+	      $("#info").html(resp);
+	    }
+	  );
+       });
+     });
+    </script>
+
+  </body>
+</html>

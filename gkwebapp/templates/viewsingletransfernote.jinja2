@@ -1,0 +1,99 @@
+<div class="col-sm-6">
+  <table class="table table-borderless table-condensed" border="0">
+    <tbody>
+      <tr>
+	<td class="col-sm-8">
+          <label class="modaltext">{% trans %}Transfer Note No :{% endtrans %}</label>
+        </td>
+        <td class="col-sm-4">
+          <label class="modaltext">{{transfernote["transfernoteno"]}}</label>
+        </td>
+      </tr>
+      <tr>
+	<td class="col-sm-8"><label class="modaltext">{% trans %}Date :{% endtrans %} {{transfernote["transfernotedate"]}}</label>
+	</td>
+	<td class="col-sm-4"> <label class="modaltext">{{transfernote["transfernotedate"]}}</label>
+	</td>
+      </tr>
+      <tr>
+	<td class="col-sm-8"><label class="modaltext">{% trans %}Expected Date of Receipt :{% endtrans %}</label>
+	</td>
+	<td class="col-sm-4"> <label  class="modaltext"> {% if transfernote["duedate"] %} {{transfernote["duedate"]}}{% else %} N/A{% endif %}</label>
+	</td>
+      </tr>
+      <tr>
+        <td class="col-sm-8"><label class="modaltext">{% trans %}Grace Period :{% endtrans %}</label></td>
+	<td class="col-sm-4"><label class="modaltext">{% if transfernote["grace"] %} {{transfernote["grace"]}}
+	  <small >   <b> days</b></small>{% else %} N/A{% endif %}</label></td>
+      </tr>
+      <tr>
+	<td class="col-sm-8"><label  class="modaltext">{% trans %}Received Date :{% endtrans %}</label></td>
+	<td class="col-sm-4"> <label class="modaltext">{% if transfernote["receiveddate"] %} {{transfernote["receiveddate"]}}{% else %} N/A{% endif %}</label></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="panel">
+    <table id="transfernote_product_table" class="table table-condensed table-borderd fixed-table">
+      <thead class="bg-primary">
+        <tr>
+          <th class="col-sm-8 modaltext">{% trans %}Product{% endtrans %}</th>
+          <th class="col-sm-4 modaltext">{% trans %}Quantity{% endtrans %}</th>
+        </tr>
+      </thead>
+      <tbody>
+	{% for product in transfernote["productdetails"] %}
+	  <tr>
+	    <td class="col-sm-8 modaltext">{{transfernote["productdetails"][product]["productdesc"]}}</td>
+	    <td class="col-sm-4 modaltext">{{transfernote["productdetails"][product]["qty"]}} ({{transfernote["productdetails"][product]["unitname"]}})</td>
+	  </tr>
+	{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+</div>
+
+
+<div class="col-md-6" id="rec_transfernote_godown_div">
+  <table class="table table-borderless table-condensed" border="0">
+    <tbody>
+      <tr>
+	<td class="col-sm-4">
+          <label class="modaltext">{% trans %} Number of Packets :{% endtrans %}</label>
+        </td>
+        <td class="col-sm-8">
+                    <label  id="rec_no_of_packet" class="modaltext">{% if transfernote["nopkt"] %} {{transfernote["nopkt"]}}{% else %} N/A{% endif %}</label>
+                  </td>
+                </tr>
+		<tr>
+		  <td class="col-sm-4"><label class="modaltext">{% trans %} From Godown : {% endtrans %}</label>
+		  </td>
+		  <td class="col-sm-8"> <label id="rec_tn_from_godown" class="modaltext">{{transfernote["fromgodown"]}} ({{transfernote["fromgodownaddr"]}})</label>
+		  </td>
+		</tr>
+		<tr>
+		  <td class="col-sm-4"><label class="modaltext">{% trans %} To Godown : {% endtrans %}</label>
+		  </td>
+		  <td class="col-sm-8"> <label id="rec_tn_to_godown" class="modaltext">{{transfernote["togodown"]}} ({{transfernote["togodownaddr"]}})</label>
+		  </td>
+		</tr>
+		<tr>
+                  <td class="col-sm-4"><label class="modaltext">{% trans %} Mode of Transport : {% endtrans %}</label></td>
+		  <td class="col-sm-8"> <label  id="rec_transport_mode" class="modaltext">{% if transfernote["transportationmode"] %} {{transfernote["transportationmode"]}}{% else %} N/A{% endif %}</label></td>
+		</tr>
+		<tr>
+		  <td class="col-sm-4"><label class="modaltext">{% trans %} Name of Issuer :{% endtrans %}</label></td>
+		  <td class="col-sm-8"> <label class="modaltext" id="rec_name_issuer">{% if transfernote["issuername"] %} {{transfernote["issuername"]}}{% else %} N/A{% endif %}</label></td>
+		</tr>
+		<tr>
+		  <td class="col-sm-4"><label class="modaltext">{% trans %} Designation : {% endtrans %}</label></td>
+		  <td class="col-sm-8"> <label class="modaltext" id="rec_designation">{% if transfernote["designation"] %} {{transfernote["designation"]}}{% else %} N/A{% endif %}</label></td>
+		</tr>
+		<tr>
+		  <td class="col-sm-4"><label class="modaltext">{% trans %} Status : {% endtrans %}</label></td>
+		  <td class="col-sm-8"> <label class="modaltext" id="recstatus">{% if transfernote["recieved"] %} Received{% else %} Pending{% endif %}</label></td>
+		    </tr>
+	      </tbody>
+	    </table>
+</div>
