@@ -28,8 +28,6 @@ Contributors:
 
 $(document).ready(function() {
 	$("#msspinmodal").modal("hide");
-	$("#cflclearfields").hide();
-	$("#cfrclearfields").hide();
 	$(".fixed-table-loading").remove();
 	$('#rctable tbody tr:first-child td:eq(1) a').focus();
 	$('#rctable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
@@ -151,7 +149,19 @@ $(document).ready(function() {
 	});
 
 	$(".search").children(".form-control").keyup(function(event){
-		if ($(this).parent(".search").hasClass("pull-right") && $(this).val() !="") {
+		if (event.which == 13) {
+			event.preventDefault();
+      if ($(this).parent(".search").hasClass("pull-right")) {
+        $(".rcaccname:visible").first().focus();
+      }
+      else if($(this).parent(".search").hasClass("pull-left")) {
+        $(".pyaccname:visible").first().focus();
+      }
+    }
+	});
+
+	$(".search").children(".form-control").keyup(function(event){
+		/*if ($(this).parent(".search").hasClass("pull-right") && $(this).val() !="") {
 			$("#cflclearfields").show();
 		}
 		else {
@@ -162,30 +172,22 @@ $(document).ready(function() {
 		}
 		else {
 			$("#cfrclearfields").hide();
-		}
+		}*/
       if (event.keyCode == 27) {
-				if ($(this).parent(".search").hasClass("pull-right")) {
-					$(".rcaccname:visible").first().focus();
-				}
-				else if($(this).parent(".search").hasClass("pull-left")) {
-					$(".pyaccname:visible").first().focus();
-				}
         $(this).val("");
   			$("#cflclearfields").hide();
 				$("#cfrclearfields").hide();
 			}
-  		else if (event.which == 13) {
-				if ($(this).parent(".search").hasClass("pull-right")) {
-					$(".rcaccname:visible").first().focus();
-				}
-				else if($(this).parent(".search").hasClass("pull-left")) {
-					$(".pyaccname:visible").first().focus();
-				}
-  		}
-  		else if ($(this).val() == "") {
-  			$("#cflclearfields").hide();
+			else if ($(this).parent(".search").hasClass("pull-right") && $(this).val() !="") {
+				$("#cflclearfields").show();
+			}
+			else if($(this).parent(".search").hasClass("pull-left")&& $(this).val() !="") {
+	 		 $("#cfrclearfields").show();
+	 		}
+			else {
+				$("#cflclearfields").hide();
 				$("#cfrclearfields").hide();
-  		}
+			}
     });
 	$("#viewprintableversion").click(function(event) {
 		$("#msspinmodal").modal("show");

@@ -288,11 +288,7 @@ $(document).ready(function() {
         $(".pyaccname:visible").first().focus();
       }
     }
-    else if ($(this).val() == "") {
-      $("#pllclearfields").hide();
-      $("#plrclearfields").hide();
-    }
-  });
+    });
 
   $("#print").click(function(event){
 // Function to serve spreadsheet of the report.
