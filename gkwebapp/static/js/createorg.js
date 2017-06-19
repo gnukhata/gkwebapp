@@ -227,6 +227,24 @@ $(document).ready(function()
       });
       $("#invflag").keydown(function(event) {
         if (event.which==13) {
+          if ($("#invsflag").is(":checked"))
+          {
+                $('#billflag').focus();
+        }
+        else {
+          $('#invsflag').focus();
+        }
+      }
+      });
+
+      $("#invsflag").keydown(function(event) {
+        if (event.which==13) {
+          $('#billflag').focus();
+        }
+      });
+
+      $("#billflag").keydown(function(event) {
+        if (event.which==13) {
           $("#btnsubmit").click();
 
         }
@@ -356,13 +374,32 @@ $(document).ready(function()
         var fadate = $("#fromday").val()+"-"+$("#frommonth").val()+"-"+$("#fromyear").val();
         var tadate = $("#today").val()+"-"+$("#tomonth").val()+"-"+$("#toyear").val();
         var invflag;
+        var invsflag;
+        var billflag;
         if ($("#invflag").is(":checked"))
         {
           invflag=1;
+
         }
         else
         {
           invflag=0;
+        }
+        if ($("#invsflag").is(":checked"))
+        {
+          invsflag=1;
+        }
+        else
+        {
+          invsflag=0;
+        }
+        if ($("#billflag").is(":checked"))
+        {
+          billflag=1;
+        }
+        else
+        {
+          billflag=0;
         }
         sessionStorage.setItem('orgn', $("#orgname").val());
         sessionStorage.setItem('orgt', otype);
@@ -371,6 +408,8 @@ $(document).ready(function()
         sessionStorage.setItem('yyyymmddyear1', fdate );
         sessionStorage.setItem('yyyymmddyear2', tdate );
         sessionStorage.setItem('invflag', invflag );
+        sessionStorage.setItem('invsflag', invsflag );
+        sessionStorage.setItem('billflag', billflag );
         $.ajax({
           url: '/oexists',
           type: 'POST',
@@ -391,7 +430,7 @@ $(document).ready(function()
           }
           else
           {
-          $("#createorg").load("/createadmin?orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate+"&invflag="+invflag );
+          $("#createorg").load("/createadmin?orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate+"&invflag="+invflag+"&invsflag="+invsflag+"&billflag="+billflag);
           }
           console.log("success");
         })
@@ -405,4 +444,16 @@ $(document).ready(function()
 
 
       });
+
+      $("#invflag").change(function() {
+        if($(this).is(":checked")) {
+        $('#invsflag').attr('checked', true);
+        $('#invsflag').attr('disabled',true);
+       }
+       else {
+         $('#invsflag').attr('checked', false);
+         $('#invsflag').attr('disabled',false);
+       }
+      });
+
     });

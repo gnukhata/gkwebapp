@@ -26,6 +26,7 @@ Contributors:
 
 $(document).ready(function()
 {
+  console.log($("#loginform").serialize());
   $("#username").focus();
   var orname = sessionStorage.getItem('orgn');
   var ortype = sessionStorage.getItem('orgt');
