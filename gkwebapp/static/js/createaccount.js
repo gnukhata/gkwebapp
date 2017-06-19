@@ -101,32 +101,34 @@ $(document).ready(function()
     }
 
     var groups = $("#groupname option:selected").val();
-    $.ajax({
-      type: "POST",
-      url: "/getsubgroup",
-      data: {"groupcode":groups},
-      global: false,
-      async: false,
-      dataType: "json",
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-      },
-      success: function(jsonObj) {
-        subgroups = jsonObj["gkresult"],
-        $('#subgroupname').empty();
-        for (i in subgroups ) {
-          $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</option>');
-        }
-        var grpnam=$("#groupname option:selected").text();
-        if (grpnam=="Direct Expense" || grpnam=="Indirect Expense" || grpnam=="Direct Income" || grpnam=="Indirect Income" || grpnam=="Loans(Asset)" || grpnam=="Reserves" || grpnam=="Capital" || grpnam=="Miscellaneous Expenses(Asset)" || grpnam=="Corpus")
+    if (groups != '') {
+      $.ajax({
+        type: "POST",
+        url: "/getsubgroup",
+        data: {"groupcode":groups},
+        global: false,
+        async: false,
+        dataType: "json",
+        beforeSend: function(xhr)
         {
-          $('#subgroupname').prepend('<option value="None">None</option>');
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(jsonObj) {
+          subgroups = jsonObj["gkresult"],
+          $('#subgroupname').empty();
+          for (i in subgroups ) {
+            $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</option>');
+          }
+          var grpnam=$("#groupname option:selected").text();
+          if (grpnam=="Direct Expense" || grpnam=="Indirect Expense" || grpnam=="Direct Income" || grpnam=="Indirect Income" || grpnam=="Loans(Asset)" || grpnam=="Reserves" || grpnam=="Capital" || grpnam=="Miscellaneous Expenses(Asset)" || grpnam=="Corpus")
+          {
+            $('#subgroupname').prepend('<option value="None">None</option>');
+          }
+          $('#subgroupname').append('<option value="New">New Sub-Group</option>');
         }
-        $('#subgroupname').append('<option value="New">New Sub-Group</option>');
-      }
 
-    });
+      });
+    }
   });
 
   $("#nsgp").hide();
@@ -156,7 +158,7 @@ $(document).ready(function()
 
 $("#accountform").submit(function(e)
 {
-  
+
   if ($.trim($("#accountname").val())=="") {
     $("#blank-alert").alert();
     $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
