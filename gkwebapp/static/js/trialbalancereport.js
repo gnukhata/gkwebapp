@@ -30,9 +30,6 @@ This script is for the report page of Trial balance.
 $(document).ready(function() {
 	$(".fixed-table-loading").remove(); // Remove unwanted symbol of loading from bootstrap-table
 	$("#msspinmodal").modal("hide");
-	$("#ntbclearfields").hide(); //Hide Clear Search button
-	$("#gtbclearfields").hide();
-	$("#etbclearfields").hide();
 	$('.trialbaltable tbody tr:first-child td:eq(1) a').focus(); // Set focus on first row on load.
 	$('.trialbaltable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 
