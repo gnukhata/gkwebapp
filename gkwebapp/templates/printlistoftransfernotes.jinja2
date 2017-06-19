@@ -24,13 +24,13 @@
 	 display: table-footer-group;
      }
      .bigwrap {
-	 width:21%;
+	 width:20%;
      }
      .smwrap {
 	 width:9%;
      }
      .qtywrap {
-	 width:17%
+	 width:13%
      }
      .srnowrap {
 	 width:6%;
@@ -86,6 +86,9 @@
             <th class="qtywrap text-right" >
 	      {% trans %}Quantity{% endtrans %}
             </th>
+	    <th class="srnowrap text-right" >
+	      {% trans %}Status{% endtrans %}
+            </th>
 	  </tr>
 	</thead>
 	<tbody>
@@ -98,6 +101,11 @@
 	      <td class="bigwrap text-left">{{transfernote["togodown"]}}</td>
 	      <td class="bigwrap text-left">{% for productqty in transfernote["productqty"] %}<p>{{productqty["productdesc"]}}</p>{% endfor %}</td>
 	      <td class="qtywrap text-right">{% for productqty in transfernote["productqty"] %}<p>{{productqty["quantity"]}} {{productqty["uom"]}}</p>{% endfor %}</td>
+	      {% if transfernote["receivedflag"] %}
+		<td class="srnowrap text-center text-success">{% trans %}Received{% endtrans %}</td>
+	      {% else %}
+		<td class="srnowrap text-center text-danger">{% trans %}Pending{% endtrans %}</td>
+	      {% endif %}
 	    </tr>
 	  {% endfor %}
 	</tbody>
