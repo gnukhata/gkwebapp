@@ -32,8 +32,8 @@ $(document).ready(function() {
   $(".fixed-table-loading").remove();
     var currentrow = 0;
 
-  $('#latable tbody tr:first-child td:eq(1) a').focus();
-  $('#latable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
+    $('#latable tbody tr:first td:eq(1) a').focus();
+    $('#latable tbody tr:first td:eq(1) a').addClass('selected');
 
 
   $(document).off('focus' ,'.libgname').on('focus' ,'.libgname',function() {
@@ -54,6 +54,13 @@ $(document).ready(function() {
     if (event.keyCode == 27) {
       $(this).val("");
     }
+  });
+
+  $(".search").children(".form-control").keydown(function(event){
+    if (event.which == 13) {
+	  event.preventDefault();
+	  $('#latable tbody tr:eq('+currentrow+') td:eq(1) a').focus();
+      }
   });
 
   var curindex ;
@@ -112,6 +119,9 @@ $(document).ready(function() {
         event.preventDefault();
         $('#latable tbody tr:eq('+previndex+') td:eq(1) a').focus();
       }
+	else {
+	    $(".search").children(".form-control").focus().select();
+	}
     }
 
   });
