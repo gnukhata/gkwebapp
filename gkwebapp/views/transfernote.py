@@ -104,13 +104,13 @@ def listoftransfernotesspreadsheet(request):
     sheet.getRow(0).setHeight("23pt")
 
     sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("16pt")
-    ods.content.mergeCells(0,0,8,1)
+    ods.content.mergeCells(0,0,7,1)
     sheet.getRow(1).setHeight("18pt")
     sheet.getCell(0,1).stringValue("List Of Transfer Notes").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-    ods.content.mergeCells(0,1,8,1)
+    ods.content.mergeCells(0,1,7,1)
     sheet.getRow(2).setHeight("16pt")
     sheet.getCell(0,2).stringValue("Period: " + startDate + " to " + endDate).setBold(True).setFontSize("12pt").setAlignHorizontal("center")
-    ods.content.mergeCells(0,2,8,1)
+    ods.content.mergeCells(0,2,7,1)
     titlerow = 3
     if request.params.has_key("goid"):
         goid = int(request.params["goid"])
@@ -119,7 +119,7 @@ def listoftransfernotesspreadsheet(request):
         godownname = godown.json()["gkresult"]["goname"]
         godownaddress = godown.json()["gkresult"]["goaddr"]
         nameofgodown = "Name of Godown: "+godownname+" Godown Address: "+godownaddress
-        ods.content.mergeCells(0,3,8,1)
+        ods.content.mergeCells(0,3,7,1)
         sheet.getRow(3).setHeight("16pt")
         sheet.getCell(0,3).stringValue(nameofgodown).setBold(True).setFontSize("12pt").setAlignHorizontal("center")
         titlerow = 4
@@ -141,7 +141,6 @@ def listoftransfernotesspreadsheet(request):
     sheet.getCell(4,titlerow).stringValue("To be Delivered At").setBold(True).setAlignHorizontal("center")
     sheet.getCell(5,titlerow).stringValue("Products").setBold(True).setAlignHorizontal("center")
     sheet.getCell(6,titlerow).stringValue("Quantity").setBold(True).setAlignHorizontal("right")
-    sheet.getCell(7,titlerow).stringValue("Status").setBold(True).setAlignHorizontal("center")
     row = titlerow + 1
     for transfernote in transfernotes:
         sheet.getCell(0, row).stringValue(transfernote["srno"])
@@ -151,13 +150,9 @@ def listoftransfernotesspreadsheet(request):
         sheet.getCell(4, row).stringValue(transfernote["togodown"])
         subrow = row
         for productqty in transfernote["productqty"]:
-            sheet.getCell(5, subrow).stringValue(productqty["productdesc"] + " " + productqty["uom"])
-            sheet.getCell(6, subrow).stringValue(productqty["quantity"]).setAlignHorizontal("right")
+            sheet.getCell(5, subrow).stringValue(productqty["productdesc"])
+            sheet.getCell(6, subrow).stringValue(productqty["quantity"] + " " + productqty["uom"]).setAlignHorizontal("right")
             subrow +=1
-        if transfernote["receivedflag"]:
-            sheet.getCell(7, row).stringValue("Received").setAlignHorizontal("center")
-        else:
-            sheet.getCell(7, row).stringValue("Pending").setAlignHorizontal("center")
         if subrow == row:
             row += 1
         else:

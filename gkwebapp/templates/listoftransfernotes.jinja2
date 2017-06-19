@@ -38,13 +38,13 @@
 	 width: calc( 100% - 0.65em );
      }
      .bigwrap {
-	 width:20%;
+	 width:23%;
      }
      .smwrap {
 	 width:9%;
      }
      .qtywrap {
-	 width:8%
+	 width:11%
      }
      .srnowrap {
 	 width:6%;
@@ -123,9 +123,6 @@
           <th class="qtywrap text-right" >
 	    {% trans %}Quantity{% endtrans %}
           </th>
-	  <th class="qtywrap text-center" >
-	    {% trans %}Status{% endtrans %}
-          </th>
 	</tr>
       </thead>
       <tbody>
@@ -136,13 +133,8 @@
 	    <td class="smwrap text-center">{{transfernote["transfernotedate"]}}</td>
 	    <td class="bigwrap text-left">{{transfernote["fromgodown"]}}</td>
 	    <td class="bigwrap text-left">{{transfernote["togodown"]}}</td>
-	    <td class="bigwrap text-left">{% for productqty in transfernote["productqty"] %}<p>{{productqty["productdesc"]}} {{productqty["uom"]}}</p>{% endfor %}</td>
-	    <td class="qtywrap text-right">{% for productqty in transfernote["productqty"] %}<p>{{productqty["quantity"]}}</p>{% endfor %}</td>
-	    {% if transfernote["receivedflag"] %}
-	      <td class="qtywrap text-center text-success">{% trans %}Received{% endtrans %}</td>
-	    {% else %}
-	      <td class="qtywrap text-center text-danger">{% trans %}Pending{% endtrans %}</td>
-	    {% endif %}
+	    <td class="bigwrap text-left">{% for productqty in transfernote["productqty"] %}<p>{{productqty["productdesc"]}}</p>{% endfor %}</td>
+	    <td class="qtywrap text-right">{% for productqty in transfernote["productqty"] %}<p>{{productqty["quantity"]}} {{productqty["uom"]}}</p>{% endfor %}</td>
 	  </tr>
 	{% endfor %}
       </tbody>
