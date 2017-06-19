@@ -498,10 +498,10 @@ $(document).ready(function() {
       return false;
     }
 
-    var curdate1= new Date($("#rejectionnote_date").val(), $("#rejectionnote_month").val(), $("#rejectionnote_year").val());
+    var curdate1= new Date($("#rejectionnote_year").val(), $("#rejectionnote_month").val()-1, $("#rejectionnote_date").val());
     if($("#rejectionnote_invoice option:selected")){
       var invdatearray = $("#rejectionnote_invoice option:selected").data("invoicedate").split(/\s*\-\s*/g);
-      var invdate = new Date(invdatearray[2], invdatearray[1], invdatearray[0]);
+      var invdate = new Date(invdatearray[2], invdatearray[1]-1, invdatearray[0]);
       if (curdate1 < invdate) {
         $("#between-inv-date-alert").alert();
         $("#between-inv-date-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -513,7 +513,7 @@ $(document).ready(function() {
     }
     else{
       var dcdatearray = $("#rejectionnote_deliverynote option:selected").data("dcdate").split(/\s*\-\s*/g);
-      var dcdate = new Date(dcdatearray[2], dcdatearray[1], dcdatearray[0]);
+      var dcdate = new Date(dcdatearray[2], dcdatearray[1]-1, dcdatearray[0]);
       if (curdate1 < dcdate) {
         $("#between-dc-date-alert").alert();
         $("#between-dc-date-alert").fadeTo(2250, 500).slideUp(500, function(){
