@@ -52,8 +52,15 @@ $(document).ready(function() {
 
   $(".search").children(".form-control").keyup(function(event){
     if (event.keyCode == 27) {
-      $(this).val("");
+	$(this).val("");
+	$("#laclearfields").hide();
     }
+      else if ($(this).val()!="") {
+	    $("#laclearfields").show();
+	}
+	else {
+	    $("#laclearfields").hide();
+	}
   });
 
   $(".search").children(".form-control").keydown(function(event){

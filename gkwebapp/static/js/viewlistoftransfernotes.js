@@ -23,7 +23,7 @@ Contributors:
 "Abhijith Balan" <abhijithb21@openmailbox.org>
 */
 /*
-This script is for the view page of stock report.
+This script is for the view page of list of transfer note
 */
 $(document).ready(function() {
     $("#msspinmodal").modal("hide");
@@ -214,7 +214,7 @@ $(document).ready(function() {
 			$("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
 				$("#between-date-alert").hide();
 			});
-			$('#viewstock_fromdate').focus().select();
+			$('#viewlist_fromdate').focus().select();
 			return false;
 		}
 		if(!Date.parseExact(todate, "yyyyMMdd")){
@@ -230,7 +230,7 @@ $(document).ready(function() {
 			$("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
 				$("#between-date-alert").hide();
 			});
-			$('#viewstock_todate').focus().select();
+			$('#viewlist_todate').focus().select();
 			return false;
 		}
 		if (Date.parseExact(fromdate,"yyyyMMdd").compareTo(Date.parseExact(todate,"yyyyMMdd"))==1) {
