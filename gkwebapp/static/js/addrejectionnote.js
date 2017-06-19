@@ -87,9 +87,13 @@ $(document).ready(function() {
   });
   // events for shifting focus. Enter shifts to next element and up arrow shifts to previous
   $("#rejectionnote_invoice").keydown(function(event) {
-    if (event.which==13) {
+    if (event.which==13 && $("#rejectionnote_invoice option:selected").val() == "") {
       event.preventDefault();
       $("#rejectionnote_deliverynote").focus();
+    }
+    else if(event.which==13){
+      event.preventDefault();
+      $("#rejectionnote_noteno").focus();
     }
     /*if (event.which==38 && document.getElementById('rejectionnote_invoice').selectedIndex==0) {
       event.preventDefault();
