@@ -1282,7 +1282,25 @@ var userrole1;
   $('#createtransfernote').click(function (e) {// calls base transfer note page.
     $("#info").load("/transfernotes");
   });
-
+  $('#rejectionnote').click(function (e) {// calls route rejectionnote and loads show page.
+    $.ajax(
+      {
+      type: "POST",
+      url: "/rejectionnote",
+      global: false,
+      async: false,
+      datatype: "text/html",
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+      success: function(resp)
+      {
+        $("#info").html(resp);
+      }
+      }
+    );
+  });
   $('#deliverychallan').click(function (e) {// calls base deliverychallan page.
 
     $.ajax(

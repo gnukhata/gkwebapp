@@ -1,0 +1,157 @@
+<body>
+  <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
+
+    <div class="panel shadow rejectionnote_view_panel">
+      <div class="panel-body">
+        <div class="container-fluid row">
+
+          <div class="form-group col-md-5">
+            <label for="rejectionnote_view_list">{% trans %}Rejection Note{% endtrans %} :</label>
+            <select class="form-control input-sm" id="rejectionnote_view_list">
+              <option value="" disabled selected hidden>{% trans %}Select Rejection Note{% endtrans %}</option>
+              <optgroup label="Rejection In" id="rejin">
+                {% for rn in rejectionnotes %}
+                {% if rn['inout'] == 9 %}
+                  <option value="{{rn['rnid']}}">{{rn["rnno"]}}, {{rn["rndate"]}}</option>
+                {% endif %}
+                {% endfor %}
+              </optgroup>
+              <optgroup label="Rejection Out" id="rejout">
+                {% for rn in rejectionnotes %}
+                {% if rn['inout'] == 15 %}
+                  <option value="{{rn['rnid']}}">{{rn["rnno"]}}, {{rn["rndate"]}}</option>
+                {% endif %}
+                {% endfor %}
+              </optgroup>
+            </select>
+
+          </div>
+        </div>
+        <div class="col-md-5 leftcolumn" hidden>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <label for="rejectionnote_noteno">{% trans %}Note No{% endtrans %} :</label>
+                        <input class="form-control input-sm" id="rejectionnote_noteno" placeholder="{% trans %}Enter Note No{% endtrans %}" accesskey="a" disabled>
+                    </div>
+                    <div class="col-xs-6">
+                        <label for="rejectionnote_date">{% trans %}Note Date{% endtrans %} :</label>
+                        <div class="form-inline">
+                            <div class="form-group ">
+                                <input type="text" class="form-control input-sm rndate" size="2" maxlength="2" placeholder="DD" id="rejectionnote_date" accesskey="v" disabled>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control input-sm rndate" size="2" maxlength="2" placeholder="MM" id="rejectionnote_month" accesskey="v" disabled>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control input-sm rndate" size="4" maxlength="4" placeholder="YYYY" id="rejectionnote_year" accesskey="v" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                  <div class="col-xs-6">
+                    <label for="rejectionnote_invoice">
+                      {% trans %}Invoice{% endtrans %} :
+                    </label>
+                    <input class="form-control input-sm" id="rejectionnote_invoice" placeholder="None" accesskey="" disabled>
+                  </div>
+                  <div class="col-xs-6">
+                    <label for="rejectionnote_deliverynote">
+                      {% trans %}Delivery Note{% endtrans %} :
+                    </label>
+                    <input class="form-control input-sm" id="rejectionnote_deliverynote" placeholder="None" accesskey="" disabled>
+                  </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                  <div class="col-xs-6">
+                    <label for="rejectionnote_customer" id = "clabel" hidden>
+                        {% trans %}Customer Name{% endtrans %} :
+                    </label>
+                    <label for="rejectionnote_customer" id = "slabel" hidden>
+                        {% trans %}Supplier Name{% endtrans %} :
+                    </label>
+                    <input class="form-control input-sm" id="rejectionnote_customer" placeholder="None" accesskey="" disabled>
+                  </div>
+                  <div class="col-xs-6">
+                      <label for="rejectionnote_customer" id = "stinlabel" hidden>
+                        {% trans %}Supplier TIN{% endtrans %} :
+                      </label>
+                      <label for="rejectionnote_customer" id = "ctinlabel" hidden>
+                        {% trans %}Customer TIN{% endtrans %} :
+                      </label>
+                    <input class="form-control input-sm" id="rejectionnote_customertin" placeholder="None" accesskey="" disabled>
+                  </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="rejectionnote_customeraddr" id="caddr" hidden>
+                    {% trans %}Customer Address{% endtrans %} :
+                </label>
+                <label for="rejectionnote_supplieraddr" id ="saddr" hidden>
+                    {% trans %}Supplier Address{% endtrans %} :
+                </label>
+                <input class="form-control input-sm" id="rejectionnote_customeraddr" placeholder="{% trans %}None{% endtrans %}" accesskey="" disabled>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-xs-6">
+                      <label for="rejectionnote_godown" id="rgodown" hidden>
+                            {% trans %}Received At{% endtrans %} :
+                          </label>
+                      <label for="rejectionnote_godown" id="dgodown" hidden>
+                            {% trans %}Dispatched From{% endtrans %} :
+                      </label>
+                        <input class="form-control input-sm" id="rejectionnote_godown" placeholder="None" data-goid ="" disabled>
+                    </div>
+                    <div class="col-xs-6">
+                        <label for="rejectionnote_consignment">Type of Transaction:</label>
+                        <input class="form-control input-sm" id="rejectionnote_consignment" placeholder="None" accesskey="" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7" id="rejectionnote_product_div" hidden>
+            <div class="panel">
+                <table id="rejectionnote_product_table" class="table shadow table-condensed table-bordered fixed-table">
+                    <thead class="bg-primary">
+                        <tr>
+                            <th class="col-xs-">{% trans %}Product{% endtrans %}</th>
+                            <th class="col-xs-5 text-center">{% trans %}Rejected Quantity{% endtrans %}</th>
+                            <th class="col-xs-1"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="col-xs-6">
+                                <input class="form-control input-sm product_name" placeholder="None" disabled>
+                            </td>
+                            <td class="col-xs-5">
+                                <div class="input-group">
+                                    <input type="text" class="rejectionnote_product_rejected_quantity form-control input-sm text-right" value="0.00">
+                                    <span class="input-group-addon input-sm" id="unitaddon"></span>
+                                </div>
+                            </td>
+                            <td class="col-xs-1">
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+      <div class="panel-footer" hidden>
+        <div class="container-fluid">
+          <button id="rejectionnote_viewprint" class="btn btn-primary btn-sm" >{% trans %}Print{% endtrans %}</button>
+          <button class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">{% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewrejectionnote.js')}}"></script>
+</body>
