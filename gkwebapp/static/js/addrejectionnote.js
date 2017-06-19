@@ -436,6 +436,14 @@ $(document).ready(function() {
       // save event to save rejection note.
     event.stopPropagation();
     // below are all the validation checks
+    if (!($("#rejectionnote_invoice").val()) && !($("#rejectionnote_deliverynote").val())) {
+      $("#dcinv-blank-alert").alert();
+      $("#dcinv-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#dcinv-blank-alert").hide();
+      });
+      $('#rejectionnote_invoice').focus().select();
+      return false;
+    }
     if ($.trim($('#rejectionnote_noteno').val())=="") {
       $("#noteno-blank-alert").alert();
       $("#noteno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -485,13 +493,31 @@ $(document).ready(function() {
       $('#rejectionnote_date').focus().select();
       return false;
     }
-    if (!($("#rejectionnote_invoice").val()) && !($("#rejectionnote_deliverynote").val())) {
-      $("#dcinv-blank-alert").alert();
-      $("#dcinv-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#dcinv-blank-alert").hide();
-      });
-      $('#rejectionnote_invoice').focus().select();
-      return false;
+
+    var curdate1= new Date($("#rejectionnote_date").val(), $("#rejectionnote_month").val(), $("#rejectionnote_year").val());
+    if($("#rejectionnote_invoice option:selected")){
+      var invdatearray = $("#rejectionnote_invoice option:selected").data("invoicedate").split(/\s*\-\s*/g);
+      var invdate = new Date(invdatearray[2], invdatearray[1], invdatearray[0]);
+      if (curdate1 < invdate) {
+        $("#between-inv-date-alert").alert();
+        $("#between-inv-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#between-inv-date-alert").hide();
+        });
+        $('#rejectionnote_date').focus().select();
+        return false;
+      }
+    }
+    else{
+      var dcdatearray = $("#rejectionnote_deliverynote option:selected").data("dcdate").split(/\s*\-\s*/g);
+      var dcdate = new Date(dcdatearray[2], dcdatearray[1], dcdatearray[0]);
+      if (curdate1 < dcdate) {
+        $("#between-dc-date-alert").alert();
+        $("#between-dc-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#between-dc-date-alert").hide();
+        });
+        $('#rejectionnote_date').focus().select();
+        return false;
+      }
     }
     var products = {}; // dictionary containing product code with rejected quantity.
     var i = 0;
