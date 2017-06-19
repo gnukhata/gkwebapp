@@ -25,6 +25,7 @@ Contributors:
 $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $(".modal-backdrop").remove();
+  $("#luclearfields").hide();
   $(".fixed-table-loading").remove();
 
   $('#lutable tbody tr:first-child td:eq(1) a').focus();
@@ -32,13 +33,20 @@ $(document).ready(function() {
 
   $('#luclearfields').click(function(){
     $(".search").children(".form-control").val("");
+    $("#luclearfields").hide();
+		$(".search").children(".form-control").focus();
   });
 
   $(".search").children(".form-control").keyup(function(event){
-    if (event.keyCode == 27) {
-      $(this).val("");
-    }
-  });
+  	$("#luclearfields").show();
+      if (event.keyCode == 27) {
+        $(this).val("");
+  			$("#luclearfields").hide();
+      }
+  		else if ($(this).val() == "") {
+  			$("#luclearfields").hide();
+  		}
+    });
 
   $("#lutable").off('click','tr').on('click','tr',function(e){
     e.preventDefault();

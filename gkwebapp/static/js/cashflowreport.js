@@ -28,6 +28,8 @@ Contributors:
 
 $(document).ready(function() {
 	$("#msspinmodal").modal("hide");
+	$("#cflclearfields").hide();
+	$("#cfrclearfields").hide();
 	$(".fixed-table-loading").remove();
 	$('#rctable tbody tr:first-child td:eq(1) a').focus();
 	$('#rctable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
@@ -182,6 +184,7 @@ $(document).ready(function() {
   		}
   		else if ($(this).val() == "") {
   			$("#cflclearfields").hide();
+				$("#cfrclearfields").hide();
   		}
     });
 	$("#viewprintableversion").click(function(event) {

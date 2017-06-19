@@ -31,6 +31,8 @@ $(document).ready(function() {
   $(".fixed-table-loading").remove();
   $('.modal-backdrop').remove();
   $("#msspinmodal").modal("hide");
+  $("#plrclearfields").hide();
+  $("#pllclearfields").hide();
   $("#realprintpnl").hide();
   $('#expensetbl tbody tr:first-child td:eq(1) a').focus();
   $('#expensetbl tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
@@ -245,14 +247,50 @@ $(document).ready(function() {
 // Functions to clear search fields.
   $('#plrclearfields').click(function(){
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
+    $("#plrclearfields").hide();
+		$(".search").children(".form-control").focus();
   });
   $('#pllclearfields').click(function(){
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
+    $("#pllclearfields").hide();
+		$(".search").children(".form-control").focus();
   });
 
   $(".search").children(".form-control").keyup(function(event){
+		if ($(this).parent(".search").hasClass("pull-right") && $(this).val() !="") {
+			$("#pllclearfields").show();
+		}
+		else {
+			$("#pllclearfields").hide();
+		}
+    if($(this).parent(".search").hasClass("pull-left")&& $(this).val() !="") {
+ 		 $("#plrclearfields").show();
+ 		}
+ 		else {
+ 			$("#plrclearfields").hide();
+ 		}
     if (event.keyCode == 27) {
+      if ($(this).parent(".search").hasClass("pull-right")) {
+        $(".rcaccname:visible").first().focus();
+      }
+      else if($(this).parent(".search").hasClass("pull-left")) {
+        $(".pyaccname:visible").first().focus();
+      }
       $(this).val("");
+      $("#pllclearfields").hide();
+      $("#plrclearfields").hide();
+    }
+    else if (event.which == 13) {
+      if ($(this).parent(".search").hasClass("pull-right")) {
+        $(".rcaccname:visible").first().focus();
+      }
+      else if($(this).parent(".search").hasClass("pull-left")) {
+        $(".pyaccname:visible").first().focus();
+      }
+    }
+    else if ($(this).val() == "") {
+      $("#pllclearfields").hide();
+      $("#plrclearfields").hide();
     }
   });
 

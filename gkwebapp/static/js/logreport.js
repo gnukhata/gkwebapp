@@ -25,12 +25,30 @@ Contributors:
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#msspinmodal").modal("hide");
+  $("#lclearfields").hide();
   $(".fixed-table-loading").remove();
   $('#lclearfields').click(function(){
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
   });
   $("#anotherlog").click(function(event) {
     $("#showviewlog").click();
+  });
+
+  $('#lclearfields').click(function(){
+    $(".search").children(".form-control").val("");
+		$("#lclearfields").hide();
+		$(".search").children(".form-control").focus();
+  });
+
+$(".search").children(".form-control").keyup(function(event){
+	$("#lclearfields").show();
+    if (event.keyCode == 27) {
+      $(this).val("");
+			$("#lclearfields").hide();
+    }
+		else if ($(this).val() == "") {
+			$("#lclearfields").hide();
+		}
   });
 
   $('#viewprintablelogreport').click(function (e) {

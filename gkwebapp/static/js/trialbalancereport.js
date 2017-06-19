@@ -31,6 +31,8 @@ $(document).ready(function() {
 	$(".fixed-table-loading").remove(); // Remove unwanted symbol of loading from bootstrap-table
 	$("#msspinmodal").modal("hide");
 	$("#ntbclearfields").hide(); //Hide Clear Search button
+	$("#gtbclearfields").hide();
+	$("#etbclearfields").hide();
 	$('.trialbaltable tbody tr:first-child td:eq(1) a').focus(); // Set focus on first row on load.
 	$('.trialbaltable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 
@@ -213,10 +215,42 @@ $(document).ready(function() {
 
 	$('#gtbclearfields').click(function(){
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
+		$("#gtbclearfields").hide();
+		$(".search").children(".form-control").focus();
   });
+	$(".search").children(".form-control").keyup(function(event){
+		$("#gtbclearfields").show();
+	    if (event.keyCode == 27) {
+	      $(this).val("");
+				$("#gtbclearfields").hide();
+	    }
+			else if (event.which == 13) {
+				$(".accname:visible").first().focus();
+			}
+			else if ($(this).val() == "") {
+				$("#gtbclearfields").hide();
+			}
+	  });
+
 	$('#etbclearfields').click(function(){
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
+		$("#etbclearfields").hide();
+		$(".search").children(".form-control").focus();
   });
+	$(".search").children(".form-control").keyup(function(event){
+		$("#etbclearfields").show();
+	    if (event.keyCode == 27) {
+	      $(this).val("");
+				$("#etbclearfields").hide();
+	    }
+			else if (event.which == 13) {
+				$(".accname:visible").first().focus();
+			}
+			else if ($(this).val() == "") {
+				$("#etbclearfields").hide();
+			}
+	  });
+
 	$('#ntbclearfields').click(function(){
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
   });
