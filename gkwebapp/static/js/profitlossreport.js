@@ -31,8 +31,6 @@ $(document).ready(function() {
   $(".fixed-table-loading").remove();
   $('.modal-backdrop').remove();
   $("#msspinmodal").modal("hide");
-  $("#plrclearfields").hide();
-  $("#pllclearfields").hide();
   $("#realprintpnl").hide();
   $('#expensetbl tbody tr:first-child td:eq(1) a').focus();
   $('#expensetbl tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');

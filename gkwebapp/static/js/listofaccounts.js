@@ -29,7 +29,6 @@ Contributors:
 $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $(".modal-backdrop").remove();
-  $("#laclearfields").hide();
   $(".fixed-table-loading").remove();
 
 
