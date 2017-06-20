@@ -93,8 +93,8 @@
       {% elif ledgerheader2["projectname"]!="" %}
       <span  class="pull-left" style="margin:auto; display:table;"><i id="prjnamelbl2">{% trans %}Project{% endtrans %}</i> : <strong>None</strong></span><br>
       {% endif %}
-      <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none" id="llclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
-      <table id="ledgertable1" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
+      <button class="btn btn-sm btn-danger pull-left" type="button" style="margin-left: 15px;display:none" id="llclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+      <table id="ledgertable1" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="right" data-buttons-align="right" data-search="true">
         <thead class="bg-primary">
           <tr>
             <th  class="calign mdwrap">{% trans %}Date{% endtrans %}</th>

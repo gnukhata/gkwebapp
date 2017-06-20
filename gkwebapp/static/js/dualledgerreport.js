@@ -375,13 +375,13 @@ $(document).ready(function() {
   });
 
   $(".search").children(".form-control").keyup(function(event){
-		if ($(this).parent(".search").hasClass("pull-right") && $(this).val() !="") {
+		if ($(this).parent(".search").hasClass("pull-left") && $(this).val() !="") {
 			$("#lrclearfields").show();
 		}
 		else {
 			$("#lrclearfields").hide();
 		}
-    if($(this).parent(".search").hasClass("pull-left")&& $(this).val() !="") {
+    if($(this).parent(".search").hasClass("pull-right")&& $(this).val() !="") {
  		 $("#llclearfields").show();
  		}
  		else {

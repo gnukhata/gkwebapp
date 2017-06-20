@@ -28,7 +28,7 @@ Contributors:
 
 $(document).ready(function() {
   $(".modal-backdrop").remove();
-  $("#laclearfields").hide();
+
   $(".fixed-table-loading").remove();
 
   $('#latable tbody tr:first-child td:eq(1) a').focus();

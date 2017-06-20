@@ -25,7 +25,6 @@ Contributors:
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#msspinmodal").modal("hide");
-  $("#lclearfields").hide();
   $(".fixed-table-loading").remove();
   $('#lclearfields').click(function(){
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
