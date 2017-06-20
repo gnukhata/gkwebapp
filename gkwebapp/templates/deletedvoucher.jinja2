@@ -52,7 +52,7 @@
   <span style="margin:auto; display:table;"><b>{% trans %}List of Deleted Vouchers{% endtrans %}</b></span>
   </br>
   <div class="row">
-    <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="clearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+    <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="clearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
     <table id="deletedvouchertable" class=" table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
       <thead class="bg-primary">
         <tr>
@@ -148,7 +148,7 @@
           <span aria-hidden="true">&times;</span>
         </button> </div>
       <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-       
+
        <p>   <font color=" #566573"> {%trans%}
 This report gives a chronological list of all vouchers deleted during the year.</br>
 Operators cannot view this report.
@@ -156,7 +156,7 @@ Operators cannot view this report.
 
         </p>
       </div>
-      
+
     </div>
   </div>
 </div>

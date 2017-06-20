@@ -25,9 +25,8 @@ Contributors:
 $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $(".modal-backdrop").remove();
-  $("#luclearfields").hide();
-  $(".fixed-table-loading").remove();
 
+  $(".fixed-table-loading").remove();
   $('#lutable tbody tr:first-child td:eq(1) a').focus();
   $('#lutable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 

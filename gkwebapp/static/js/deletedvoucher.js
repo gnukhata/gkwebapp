@@ -30,7 +30,7 @@ $(document).ready(function() {
     $(".projecth").text("Cost Center");
   }
   $("#msspinmodal").modal("hide");
-  $("#clearfields").hide();
+  
 $(".fixed-table-loading").remove();
 
   $(' #deletedvouchertable tbody tr:first-child td:eq(1) a').focus();
