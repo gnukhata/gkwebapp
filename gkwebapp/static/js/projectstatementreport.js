@@ -30,7 +30,6 @@ $(document).ready(function() {
   oninvoice = 0;
 
   $("#msspinmodal").modal("hide");
-
   $(".fixed-table-loading").remove();
 
   $(' #prjsttable tbody tr:first-child td:eq(1) a').focus();
@@ -126,15 +125,25 @@ $(document).ready(function() {
 
   });
   $('#psclearfields').click(function(){
-// Clear search field.
+    // Clear search field.
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
+    $("#psclearfields").hide();
+		$(".search").children(".form-control").focus();
   });
 
   $(".search").children(".form-control").keyup(function(event){
-    if (event.keyCode == 27) {
-      $(this).val("");
-    }
-  });
+  	$("#psclearfields").show();
+      if (event.keyCode == 27) {
+        $(this).val("");
+  			$("#psclearfields").hide();
+      }
+  		else if (event.which == 13) {
+  			$(".prjstaccs:visible").first().focus();
+  		}
+  		else if ($(this).val() == "") {
+  			$("#psclearfields").hide();
+  		}
+    });
   $("#print").click(function(event) {
 // Function to serve a spreadsheet of the project statement.
     var date = $("#calculateto").val().split("-");

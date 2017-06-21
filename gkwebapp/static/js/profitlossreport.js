@@ -245,16 +245,48 @@ $(document).ready(function() {
 // Functions to clear search fields.
   $('#plrclearfields').click(function(){
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
+    $("#plrclearfields").hide();
+		$(".search").children(".form-control").focus();
   });
   $('#pllclearfields').click(function(){
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
+    $("#pllclearfields").hide();
+		$(".search").children(".form-control").focus();
   });
 
   $(".search").children(".form-control").keyup(function(event){
+		if ($(this).parent(".search").hasClass("pull-right") && $(this).val() !="") {
+			$("#pllclearfields").show();
+		}
+		else {
+			$("#pllclearfields").hide();
+		}
+    if($(this).parent(".search").hasClass("pull-left")&& $(this).val() !="") {
+ 		 $("#plrclearfields").show();
+ 		}
+ 		else {
+ 			$("#plrclearfields").hide();
+ 		}
     if (event.keyCode == 27) {
+      if ($(this).parent(".search").hasClass("pull-right")) {
+        $(".rcaccname:visible").first().focus();
+      }
+      else if($(this).parent(".search").hasClass("pull-left")) {
+        $(".pyaccname:visible").first().focus();
+      }
       $(this).val("");
+      $("#pllclearfields").hide();
+      $("#plrclearfields").hide();
     }
-  });
+    else if (event.which == 13) {
+      if ($(this).parent(".search").hasClass("pull-right")) {
+        $(".rcaccname:visible").first().focus();
+      }
+      else if($(this).parent(".search").hasClass("pull-left")) {
+        $(".pyaccname:visible").first().focus();
+      }
+    }
+    });
 
   $("#print").click(function(event){
 // Function to serve spreadsheet of the report.

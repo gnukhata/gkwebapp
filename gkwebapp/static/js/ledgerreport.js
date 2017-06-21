@@ -385,13 +385,20 @@ $("#dualledger").click(function(event) {
 
 $('#lclearfields').click(function(){
   $(this).siblings(".bootstrap-table").find(".form-control").val("");
+  $("#lclearfields").hide();
+  $(".search").children(".form-control").focus();
 });
 
 $(".search").children(".form-control").keyup(function(event){
-  if (event.keyCode == 27) {
-    $(this).val("");
-  }
-});
+	$("#lclearfields").show();
+    if (event.keyCode == 27) {
+      $(this).val("");
+			$("#lclearfields").hide();
+    }
+		else if ($(this).val() == "") {
+			$("#lclearfields").hide();
+		}
+  });
 
 $("#printledger").click(function(event) {
   // shows printable version of the report.

@@ -30,6 +30,7 @@ $(document).ready(function() {
     $(".projecth").text("Cost Center");
   }
   $("#msspinmodal").modal("hide");
+  
 $(".fixed-table-loading").remove();
 
   $(' #deletedvouchertable tbody tr:first-child td:eq(1) a').focus();
@@ -37,13 +38,23 @@ $(".fixed-table-loading").remove();
 
   $('#clearfields').click(function(){
     $(".search").children(".form-control").val("");
+    $("#clearfields").hide();
+		$(".search").children(".form-control").focus();
   });
 
   $(".search").children(".form-control").keyup(function(event){
-    if (event.keyCode == 27) {
-      $(this).val("");
-    }
-  });
+  	$("#clearfields").show();
+      if (event.keyCode == 27) {
+        $(this).val("");
+  			$("#clearfields").hide();
+      }
+  		else if (event.which == 13) {
+  			$(".vno:visible").first().focus();
+  		}
+  		else if ($(this).val() == "") {
+  			$("#clearfields").hide();
+  		}
+    });
 
   $(document).off('focus' ,'.vno').on('focus' ,'.vno',function() {
     $('#deletedvouchertable tr').removeClass('selected');

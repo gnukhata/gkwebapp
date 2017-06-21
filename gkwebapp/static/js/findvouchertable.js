@@ -183,11 +183,18 @@ $("#viewprintableversion").click(function(event) {
 
 $('#fvclearfields').click(function(){
   $(".search").children(".form-control").val("");
+  $("#fvclearfields").hide();
+  $(".search").children(".form-control").focus();
 });
 
 $(".search").children(".form-control").keyup(function(event){
+  $("#fvclearfields").show();
   if (event.keyCode == 27) {
     $(this).val("");
+    $("#fvclearfields").hide();
+  }
+  else if ($(this).val() == "") {
+    $("#fvclearfields").hide();
   }
 });
 

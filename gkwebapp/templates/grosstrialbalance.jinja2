@@ -45,7 +45,7 @@
 	.calign{
 		text-align:center;
 	}
-	
+
 	.smwrap{
 	width:4%
 	}
@@ -65,7 +65,7 @@
 <body>
 	<span style="margin:auto; display:table;"><strong>{% trans %}Gross Trial Balance{% endtrans %}</strong> {% trans %}for the period from{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
 	<div class="row">
-		<button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="gtbclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+		<button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="gtbclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
 		<table id="gtbtable" class="table shadow table-bordered trialbaltable" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
 			<thead class="bg-primary">
 				<tr>

@@ -48,13 +48,23 @@ $(document).ready(function() {
 
   $('#laclearfields').click(function(){
     $(".search").children(".form-control").val("");
+    $("#laclearfields").hide();
+		$(".search").children(".form-control").focus();
   });
 
   $(".search").children(".form-control").keyup(function(event){
-    if (event.keyCode == 27) {
-      $(this).val("");
-    }
-  });
+  	$("#laclearfields").show();
+      if (event.keyCode == 27) {
+        $(this).val("");
+  			$("#laclearfields").hide();
+      }
+  		else if (event.which == 13) {
+  			$(".accountname:visible").first().focus();
+  		}
+  		else if ($(this).val() == "") {
+  			$("#laclearfields").hide();
+  		}
+    });
 
   var curindex ;
   var nextindex;

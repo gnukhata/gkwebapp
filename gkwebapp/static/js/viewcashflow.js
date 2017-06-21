@@ -35,7 +35,7 @@ $(document).ready(function() {
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   if (sessionStorage.orgt=="Not For Profit") {
     $(".panel-title").html("View Receipt & Payment"+' <i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" data-target="#CashFModal"></i>');
-    
+
   }
 
 	// Setting default date to financialstart and end.
@@ -95,8 +95,10 @@ $(document).ready(function() {
   });
   $("#cashfl_toyear").keydown(function(event) {
     if (event.which == 13) {
+      event.preventDefault();
       $(this).val(yearpad($(this).val(),4));
       $("#cashfl_view").click();
+      event.stopPropagation();
     }
   });
   $('input:text:enabled').keydown( function(e) { // function for shifting focus on enter and up arrow key.
@@ -123,7 +125,7 @@ $(document).ready(function() {
       }
     });
 
-  $("#cashfl_view").click(function(event) {
+  $(document).off('click' ,'#cashfl_view').on('click' ,'#cashfl_view', function(event) {
     // --------------------starting validations------------------
     if ($("#cashfl_fromyear").val()==0 ||$("#cashfl_frommonth").val()==0 ||$("#cashfl_fromdate").val()==0 ) {
       $("#date-alert").alert();
@@ -184,6 +186,7 @@ $(document).ready(function() {
       return false;
     }
     // -----------------------end of validations---------------------
+    $("#msspinmodal").modal("show");
     $.ajax(
       {
         type: "POST",

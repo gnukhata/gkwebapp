@@ -212,18 +212,65 @@ $(document).ready(function() {
 
 	$('#gtbclearfields').click(function(){
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
+		$("#gtbclearfields").hide();
+		$(".search").children(".form-control").focus();
   });
+	$(".search").children(".form-control").keyup(function(event){
+		$("#gtbclearfields").show();
+	    if (event.keyCode == 27) {
+	      $(this).val("");
+				$("#gtbclearfields").hide();
+	    }
+			else if (event.which == 13) {
+				$(".accname:visible").first().focus();
+			}
+			else if ($(this).val() == "") {
+				$("#gtbclearfields").hide();
+			}
+	  });
+
 	$('#etbclearfields').click(function(){
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
+		$("#etbclearfields").hide();
+		$(".search").children(".form-control").focus();
   });
+	$(".search").children(".form-control").keyup(function(event){
+		$("#etbclearfields").show();
+	    if (event.keyCode == 27) {
+	      $(this).val("");
+				$("#etbclearfields").hide();
+	    }
+			else if (event.which == 13) {
+				$(".accname:visible").first().focus();
+			}
+			else if ($(this).val() == "") {
+				$("#etbclearfields").hide();
+			}
+	  });
+
 	$('#ntbclearfields').click(function(){
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
   });
-  $(".search").children(".form-control").keyup(function(event){
-    if (event.keyCode == 27) {
-      $(this).val("");
-    }
+
+	//Code for Clear Search button
+	$('#ntbclearfields').click(function(){
+    $(".search").children(".form-control").val("");
+		$("#ntbclearfields").hide();
+		$(".search").children(".form-control").focus();
   });
+	$(".search").children(".form-control").keyup(function(event){
+		$("#ntbclearfields").show();
+	    if (event.keyCode == 27) {
+	      $(this).val("");
+				$("#ntbclearfields").hide();
+	    }
+			else if (event.which == 13) {
+				$(".accname:visible").first().focus();
+			}
+			else if ($(this).val() == "") {
+				$("#ntbclearfields").hide();
+			}
+	  });
 
 		$("#printbutton").click(function(event) {
 			// this function creates a spreadsheet of the report.
