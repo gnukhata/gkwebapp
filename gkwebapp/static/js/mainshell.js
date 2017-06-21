@@ -911,6 +911,28 @@ var userrole1;
     );
   });
 
+  $('#listofinvoices').click(function (e) {
+    // calls list of stock items report.
+    $.ajax(
+      {
+
+        type: "POST",
+        url: "/invoices?action=viewlist",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+      }
+    );
+  });
+
   $('#listoftransfernotes').click(function (e) {
     // calls list of stock items report.
     $.ajax(
