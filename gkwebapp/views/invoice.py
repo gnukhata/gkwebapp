@@ -46,7 +46,7 @@ def showviewregister(request):
 
 @view_config(route_name="invoice", request_param="action=viewlist", renderer="gkwebapp:templates/viewlistofinvoices.jinja2")
 def showlistofinv(request):
-    result = requests.get("http://127.0.0.1:6543/invoice?inv=all", headers=header)
+	result = requests.get("http://127.0.0.1:6543/invoice?inv=all", headers=header)
 	return {"status":True, "numberofinvoices": len(result.json()["gkresult"])}
 
 @view_config(route_name="invoice",request_param="action=showadd",renderer="gkwebapp:templates/addinvoice.jinja2")
@@ -147,7 +147,7 @@ def getInvoiceDetails(request):
 
 @view_config(route_name="invoice", request_param="action=showlist", renderer="gkwebapp:templates/listofinvoices.jinja2")
 def listofinv(request):
-    result = requests.get("http://127.0.0.1:6543/invoice?type=list&flag=%s&fromdate=%s&todate=%s"%(request.params["flag"], request.params["fromdate"], request.params["todate"]), headers=header)
+	result = requests.get("http://127.0.0.1:6543/invoice?type=list&flag=%s&fromdate=%s&todate=%s"%(request.params["flag"], request.params["fromdate"], request.params["todate"]), headers=header)
 	return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "flag": request.params["flag"], "fromdate": request.params["fromdate"], "todate": request.params["todate"]}
 
 @view_config(route_name="invoice",request_param="action=cancel",renderer="json")
