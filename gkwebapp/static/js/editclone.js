@@ -1781,7 +1781,7 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
 
                 }
               }
-              //console.log("Rohini "+$("#bankflag").);
+            
       form_data.append("vdetails",JSON.stringify(details));
       form_data.append("transactions",JSON.stringify(output));
       $.ajax({

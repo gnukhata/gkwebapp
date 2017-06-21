@@ -115,11 +115,7 @@ def addvoucher(request):
 		gkdata["bankname"]=vdetails["bankname"]
 		gkdata["branchname"]=vdetails["branchname"]
 		gkdata["instrumentdate"] = vdetails["instrumentdate"]
-	else:
-		gkdata["instrumentno"]=None
-		gkdata["bankname"]=None
-		gkdata["branchname"]=None
-		gkdata["instrumentdate"] =None
+	
 
 	try:
 		files = {}
