@@ -642,7 +642,7 @@ var userrole1;
      });
   });
 
-  /*$('#purchaseorder').click(function (e) {
+  $('#purchaseorder').click(function (e) {
 
     console.log("jdh");
     $.ajax({
@@ -667,7 +667,7 @@ var userrole1;
      });
   });
 
-  $("#searchcategory").click(function (e){
+  /*$("#searchcategory").click(function (e){
     // opens a modal showing the topmost categories.
     $.ajax({
       url: '/catsearch?type=topcat',
