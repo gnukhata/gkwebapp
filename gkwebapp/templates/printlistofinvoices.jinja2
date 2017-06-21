@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>{% trans %}GNUKhata{% endtrans %} | List of Invoices{% endtrans %}</title>
+    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}List of Invoices{% endtrans %}</title>
     <style type="text/css">
 
      td {
@@ -55,7 +55,7 @@
             <th colspan="8" style="text-align:center; font-size:80%;">
               List of <i>{%if flag == "0" %}All{%elif flag == "1" %}Sales{%elif flag == "2" %}Purchase{% endif %}</i> Invoices
 	      <br>
-	      <i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{displayfromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{displaytodate}}">{{todate}}</strong>
+	      <i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{displayfromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{displaytodate}}</strong>
             </th>
           </tr>
 	  <tr>
