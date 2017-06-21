@@ -21,6 +21,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
 
 Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
+"Bhavesh Bawadhane" <bbhavesh07@gmail.com>
 "Mohd. Talha Pawaty" <mtalha456@gmail.com>
 """
 
@@ -41,6 +42,10 @@ def showinvoice(request):
 
 @view_config(route_name="invoice", request_param="action=showviewregister", renderer="gkwebapp:templates/viewregister.jinja2")
 def showviewregister(request):
+	return {"status":True}
+
+@view_config(route_name="invoice", request_param="action=viewlist", renderer="gkwebapp:templates/viewlistofinvoices.jinja2")
+def showlistofinv(request):
 	return {"status":True}
 
 @view_config(route_name="invoice",request_param="action=showadd",renderer="gkwebapp:templates/addinvoice.jinja2")
