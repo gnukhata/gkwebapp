@@ -162,7 +162,6 @@ def printlistofinv(request):
 def showsingleinvoice(request):
 	header={"gktoken":request.headers["gktoken"]}
 	invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
-	print invoicedata.json()["gkresult"]
 	return {"gkstatus": invoicedata.json()["gkstatus"],"gkresult": invoicedata.json()["gkresult"]}
 
 @view_config(route_name="invoice",request_param="action=cancel",renderer="json")
