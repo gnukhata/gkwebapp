@@ -46,7 +46,7 @@
          width:8%
          }
          .srnowrap {
-         width:6%;
+         width:7%;
          }
          .modaltext {
          font-size: 0.8em;
@@ -96,18 +96,18 @@
          <thead class="bg-primary">
             <tr>
                <th class="srnowrap text-center" >
-                  {% trans %}Sr. No.{% endtrans %}
+                  {% trans %}Sr.No.{% endtrans %}
                </th>
-               <th class="smwrap text-center" >
+               <th class="srnowrap text-center" >
                   {% trans %}INV No.{% endtrans %}
                </th>
-               <th class="mdwrap text-center" >
+               <th class="smwrap text-center" >
                   {% trans %}INV Date{% endtrans %}
                </th>
-               <th class="smwrap text-center" >
+               <th class="srnowrap text-center" >
                   {% trans %}DC No.{% endtrans %}
                </th>
-               <th class="mdwrap text-center" >
+               <th class="smwrap text-center" >
                   {% trans %}DC Date{% endtrans %}
                </th>
                <th class="mdwrap text-center" >
@@ -116,13 +116,13 @@
                <th class="mdwrap text-center" >
                   {% trans %}TIN{% endtrans %}
                </th>
-               <th class="mdwrap text-right" >
+               <th class="smwrap text-right" >
                   {% trans %}Gross Amt{% endtrans %}
                </th>
-               <th class="mdwrap text-right" >
+               <th class="smwrap text-right" >
                   {% trans %}Net Amt{% endtrans %}
                </th>
-               <th class="mdwrap text-right" >
+               <th class="smwrap text-right" >
                   {% trans %}TAX Amt{% endtrans %}
                </th>
                <th class="mdwrap text-center" >
@@ -134,15 +134,15 @@
             {% for invoice in gkresult %}
             <tr data-invid="{{invoice["invid"]}}">
             <td class="srnowrap text-center">{{invoice["srno"]}}</td>
-            <td class="smwrap text-center"><a class="libgname" href="">{{invoice["invoiceno"]}}</a></td>
-            <td class="mdwrap text-center">{{invoice["invoicedate"]}}</td>
-            <td class="smwrap text-center">{{invoice["dcno"]}}</td>
-            <td class="mdwrap text-center">{{invoice["dcdate"]}}</td>
+            <td class="srnowrap text-center"><a class="libgname" href="">{{invoice["invoiceno"]}}</a></td>
+            <td class="smwrap text-center">{{invoice["invoicedate"]}}</td>
+            <td class="srnowrap text-center">{{invoice["dcno"]}}</td>
+            <td class="smwrap text-center">{{invoice["dcdate"]}}</td>
             <td class="mdwrap text-center">{{invoice["custname"]}}</td>
             <td class="mdwrap text-center">{{invoice["custtin"]}}</td>
-            <td class="mdwrap text-right">{{invoice["grossamt"]}}</td>
-            <td class="mdwrap text-right">{{invoice["netamt"]}}</td>
-            <td class="mdwrap text-right">{{invoice["taxamt"]}}</td>
+            <td class="smwrap text-right">{{invoice["grossamt"]}}</td>
+            <td class="smwrap text-right">{{invoice["netamt"]}}</td>
+            <td class="smwrap text-right">{{invoice["taxamt"]}}</td>
             <td class="mdwrap text-center">{{invoice["godown"]}}</td>
             </tr>
             {% endfor %}
