@@ -84,8 +84,8 @@
    </head>
    <body>
       <input type="text" id="invoicetypeselect" value={{flag}} hidden></input>
-      <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{fromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{todate}}</strong></span>
-      <span style="margin-left: 46.4%;"><strong>{% trans %}List of <i>{%if flag == 0 %}All{%elif flag == 1 %}Sales{%elif flag == 2 %}Purchase{% endif %}</i> Invoices{% endtrans %}</strong></span>
+      <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{displayfromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{displaytodate}}</strong></span>
+      <span style="margin-left: 46.4%;"><strong>List of <i>{%if flag == "0" %}All{%elif flag == "1" %}Sales{%elif flag == "2" %}Purchase{% endif %}</i> Invoices</strong></span>
       <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px; display:none" id="laclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
       <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
          <thead class="bg-primary">
@@ -106,18 +106,18 @@
                   {% trans %}DC Date{% endtrans %}
                </th>
                <th class="mdwrap text-center" >
-                  {% trans %}{%if flag == 0 %}Cust/Supp Name{%elif flag == 1 %}Customer Name{%elif flag == 2 %}Supplier Name{% endif %}{% endtrans %}
+                  {%if flag == "0" %}{% trans %}Cust/Supp Name{% endtrans %}{%elif flag == "1" %}{% trans %}Customer Name{% endtrans %}{%elif flag == "2" %}{% trans %}Supplier Name{% endtrans %}{% endif %}
                </th>
                <th class="mdwrap text-center" >
                   {% trans %}TIN{% endtrans %}
                </th>
-               <th class="mdwrap text-center" >
+               <th class="mdwrap text-right" >
                   {% trans %}Gross Amt{% endtrans %}
                </th>
-               <th class="mdwrap text-center" >
+               <th class="mdwrap text-right" >
                   {% trans %}Net Amt{% endtrans %}
                </th>
-               <th class="mdwrap text-center" >
+               <th class="mdwrap text-right" >
                   {% trans %}TAX Amt{% endtrans %}
                </th>
                <th class="mdwrap text-center" >
