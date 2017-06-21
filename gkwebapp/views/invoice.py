@@ -46,6 +46,7 @@ def showviewregister(request):
 
 @view_config(route_name="invoice", request_param="action=viewlist", renderer="gkwebapp:templates/viewlistofinvoices.jinja2")
 def showlistofinv(request):
+	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/invoice?inv=all", headers=header)
 	return {"status":True, "numberofinvoices": len(result.json()["gkresult"])}
 
