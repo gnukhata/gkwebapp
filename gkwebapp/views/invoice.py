@@ -145,6 +145,11 @@ def getInvoiceDetails(request):
 	invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
 	return {"gkstatus": invoicedata.json()["gkstatus"],"invoicedata": invoicedata.json()["gkresult"]}
 
+@view_config(route_name="invoice", request_param="action=showlist", renderer="gkwebapp:templates/listofinvoices.jinja2")
+def listofinv(request):
+    result = requests.get("http://127.0.0.1:6543/invoice?type=list&flag=%s&fromdate=%s&todate=%s"%(request.params["flag"], request.params["fromdate"], request.params["todate"]), headers=header)
+	return {"gkstatus":result.json()["gkstatus"], "gkresult": len(result.json()["gkresult"])}
+
 @view_config(route_name="invoice",request_param="action=cancel",renderer="json")
 def Invoicedelete(request):
 	header={"gktoken":request.headers["gktoken"]}
