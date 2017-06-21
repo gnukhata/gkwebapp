@@ -1,0 +1,165 @@
+<div class="panel-body">
+  <div class="container-fluid row">
+
+<div class="col-md-3 invdetails" >
+
+  <div class="form-group">
+    <label for="invoice_deliverynote">
+      {% trans %}Delivery Note{% endtrans %} :
+    </label>
+    {% if gkresult["dcno"] %}
+      <input class="form-control input-sm" id="invoice_deliverynote" value="{{gkresult["dcno"]}}" disabled>
+      {% else %}
+      <input class="form-control input-sm" id="invoice_deliverynote" value="N/A" disabled>
+      {% endif %}
+  </div>
+</div>
+
+<div class="col-md-2 invdetails" >
+  <div class="form-group">
+    <label for="invoice_challanno">{% trans %}Invoice No{% endtrans %} :</label>
+    <input class="form-control input-sm" id="invoice_challanno" data-invid = {{gkresult["invid"]}} value={{gkresult["invoiceno"]}} disabled>
+  </div>
+</div>
+<div class="col-md-2 invdetails"  >
+
+  <div class="form-group">
+    <label for="invoice_date">{% trans %}Invoice Date{% endtrans %} :</label>
+      <input type="text" class="form-control input-sm invoicedate" id="invoice_date" value={{gkresult["invoicedate"]}} disabled>
+  </div>
+
+</div>
+
+<div class=" col-md-12 invdetails">
+  <div class="form-group">
+  </div>
+</div>
+
+<div class="col-md-3 invdetails"  >
+
+  <div class="form-group">
+    <label for="invoice_customer" class="supp" >
+      {% if gkresult["csflag"] == 19 %}
+      {% trans %}Supplier{% endtrans %} :
+      {% else %}
+      {% trans %}Customer{% endtrans %} :
+      {% endif %}
+    </label>
+    <input class="form-control input-sm" id="invoice_customer" value={{gkresult["custname"]}} disabled>
+  </div>
+</div>
+
+<div class="col-md-3 invdetails" >
+  <div class="form-group">
+      <label for="invoice_customeraddr" class = "addr" >
+        {% trans %}Address{% endtrans %} :
+      </label>
+      <input class="form-control input-sm" id="invoice_customeraddr"  value={{gkresult["custaddr"]}} disabled>
+  </div>
+</div>
+
+          <div class="col-md-2 invdetails" >
+  <div class="form-group">
+      <label for="invoice_customertin" class = "tin" >
+        {% trans %}TIN{% endtrans %} :
+      </label>
+      <input class="form-control input-sm" id="invoice_customertin" value={{gkresult["custtin"]}} disabled>
+  </div>
+</div>
+{% if gkresult["csflag"] == 3 %}
+<div class="col-md-2 invstate" >
+
+  <div class="form-group">
+    <label for="invoice_state">{% trans %}Vat for{% endtrans %} :</label>
+    <input class="form-control input-sm" id="invoice_taxstate" value={{gkresult["taxstate"]}} disabled>
+  </div>
+
+</div>
+{% endif %}
+</div>
+
+
+<div class="container-fluid invdetails" id="invoice_product_div"  >
+<div class="panel">
+
+  <table id="invoice_table" class="shadow table table-condensed table-bordered fixed-table">
+    <thead class="bg-primary">
+      <tr>
+        <th class="col-sm-3 text-center">{% trans %}Product{% endtrans %}</th>
+        <th class="col-sm-2 text-center">{% trans %}Quantity{% endtrans %}</th>
+        <th class="col-sm-2 text-center">{% trans %}Free Quantity{% endtrans %}</th>
+        <th class="col-sm-2 text-center">{% trans %}Price Per Unit{% endtrans %}</th>
+        <th class="col-sm-1 text-center">{% trans %}Tax Rate{% endtrans %}</th>
+        <th class="col-sm-1 text-center">{% trans %}Tax Amt{% endtrans %}</th>
+        <th class="col-sm-2 text-center">{% trans %}Total{% endtrans %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in gkresult["contents"] %}
+      <tr>
+        <td class="col-sm-3">
+          <input class="form-control input-sm" value="{{gkresult["contents"][product]["productdesc"]}}" disabled>
+        </td>
+        <td class="col-sm-2">
+          <div class="input-group">
+          <input type="text" class="invoice_product_quantity form-control input-sm text-right" value="{{gkresult["contents"][product]["qty"]}}" disabled>
+          <span class="input-group-addon ">{{gkresult["contents"][product]["unitname"]}}</span>
+        </div>
+        </td>
+        <td class="col-sm-2">
+          <div class="input-group">
+            <input type="text" class="invoice_product_freequantity form-control input-sm text-right" value="{{gkresult["freeqty"][product]}}" disabled>
+            <span class="input-group-addon">{{gkresult["contents"][product]["unitname"]}}</span>
+          </div>
+        </td>
+        <td class="col-sm-2">
+          <input type="text" class="invoice_product_per_price form-control input-sm text-right numtype" value="{{gkresult["contents"][product]["priceperunit"]}}" disabled>
+        </td>
+        <td class="col-sm-1">
+          <input type="text" class="invoice_product_tax_rate form-control input-sm text-right numtype" value="{{gkresult["contents"][product]["taxamount"]}}" disabled>
+        </td>
+        <td class="col-sm-1">
+          <input type="text" class="invoice_product_tax_amount form-control input-sm text-right numtype" value="{{gkresult["contents"][product]["tottax"]}}" disabled>
+        </td>
+        <td class="col-sm-2">
+          <input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="{{gkresult["contents"][product]["totalamt"]}}" disabled>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td class="col-xs-10 text-right" colspan="6">
+          <input type="text" class=" form-control input-sm text-right" value="{% trans %}Total{% endtrans %}" placeholder="" disabled>
+        </td>
+        <td class="col-xs-2">
+          <input type="text" class=" form-control deliverychallan_edit_disable input-sm text-right" value="{{gkresult["invoicetotal"]}}" disabled>
+        </td>
+      </tr>
+    </tfoot>
+
+  </table>
+</div>
+</div>
+{% if gkresult["csflag"]==3 %}
+<div class="form-group invoice_issuer" >
+
+<div class=" col-md-6">
+
+  <div class="form-group">
+    <label for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
+  <input class="form-control input-sm" id="invoice_issuer_name" value={{gkresult["issuername"]}}>
+</div>
+</div>
+
+<div class="col-md-6">
+
+  <div class="form-group">
+    <label for="invoice_issuer_designation">{% trans %}Designation{% endtrans %} :</label>
+    <input class="form-control input-sm" id="invoice_issuer_designation" value={{gkresult["issuername"]}} >
+  </div>
+</div>
+</div>
+{% endif %}
+
+</div>
