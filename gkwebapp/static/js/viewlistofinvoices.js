@@ -242,7 +242,7 @@ $(document).ready(function() {
         // creating dataset for retrieving report from the server.
         var dataset = {};
         dataset = {
-            "flag": $("invoicetypeselect option:selected").val(),
+            "flag": $("#invoicetypeselect option:selected").val(),
             "fromdate": $("#viewlist_fromyear").val() + "-" + $("#viewlist_frommonth").val() + "-" + $("#viewlist_fromdate").val(),
             "todate": $("#viewlist_toyear").val() + "-" + $("#viewlist_tomonth").val() + "-" + $("#viewlist_todate").val()
         };
