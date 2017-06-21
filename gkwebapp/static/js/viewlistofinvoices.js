@@ -43,7 +43,7 @@ $(document).ready(function() {
     $("#viewlist_todate").val(todatearray[2]);
     $("#viewlist_tomonth").val(todatearray[1]);
     $("#viewlist_toyear").val(todatearray[0]);
-    $("#viewlist_fromdate").focus().select();
+    $("#invoicetypeselect").focus();
 
     function pad(str, max) { //to add leading zeros in date
         str = str.toString();
