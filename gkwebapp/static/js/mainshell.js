@@ -666,38 +666,7 @@ var userrole1;
        console.log("complete");
      });
   });
-
-  /*$("#searchcategory").click(function (e){
-    // opens a modal showing the topmost categories.
-    $.ajax({
-      url: '/catsearch?type=topcat',
-      type: "POST",
-      datatype: 'text/html',
-      beforeSend: function(xhr)
-      {
-	xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      }
-    })
-     .done(function(resp) {
-
-       $('#catsearchmodal').html(resp);
-       $("#m_serachcat").modal();
-       $("#m_serachcat").on('shown.bs.modal', function(event) {
-	 $("#catsearchtab tbody tr:first td:first select").focus();
-
-       });
-     })
-     .fail(function() {
-       console.log("error");
-     })
-     .always(function() {
-       console.log("complete");
-     });
-  });*/
-
-
-
-
+  
   $("#showeditorg").click(function (e){
     // calls edit organisation page.
     $("#msspinmodal").modal("show");
