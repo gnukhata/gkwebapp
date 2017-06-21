@@ -23,190 +23,182 @@ Contributors:
 */
 // This script is for list of invoices report.
 $(document).ready(function() {
-  $("#msspinmodal").modal("hide");
-  $(".modal-backdrop").remove();
-  $(".fixed-table-loading").remove();
+    $("#msspinmodal").modal("hide");
+    $(".modal-backdrop").remove();
+    $(".fixed-table-loading").remove();
     var currentrow = 0;
 
     $('#latable tbody tr:first td:eq(1) a').focus();
     $('#latable tbody tr:first td:eq(1) a').addClass('selected');
 
 
-  $(document).off('focus' ,'.libgname').on('focus' ,'.libgname',function() {
-    $('#latable tr').removeClass('selected');
-    $(this).closest('tr').addClass('selected');
-  });
+    $(document).off('focus', '.libgname').on('focus', '.libgname', function() {
+        $('#latable tr').removeClass('selected');
+        $(this).closest('tr').addClass('selected');
+    });
 
-  $(document).off('blur' ,'.libgname').on('blur' ,'.libgname',function() {
-    $('#latable tr').removeClass('selected');
+    $(document).off('blur', '.libgname').on('blur', '.libgname', function() {
+        $('#latable tr').removeClass('selected');
 
-  });
+    });
 
-  $('#laclearfields').click(function(){
-    $(".search").children(".form-control").val("");
-  });
+    $('#laclearfields').click(function() {
+        $(".search").children(".form-control").val("");
+    });
 
-  $(".search").children(".form-control").keyup(function(event){
-    if (event.keyCode == 27) {
-	$(this).val("");
-	$("#laclearfields").hide();
-    }
-      else if ($(this).val()!="") {
-	    $("#laclearfields").show();
-	}
-	else {
-	    $("#laclearfields").hide();
-	}
-  });
+    $(".search").children(".form-control").keyup(function(event) {
+        if (event.keyCode == 27) {
+            $(this).val("");
+            $("#laclearfields").hide();
+        } else if ($(this).val() != "") {
+            $("#laclearfields").show();
+        } else {
+            $("#laclearfields").hide();
+        }
+    });
 
-  $(".search").children(".form-control").keydown(function(event){
-    if (event.which == 13) {
-	  event.preventDefault();
-	  $('#latable tbody tr:eq('+currentrow+') td:eq(1) a').focus();
-      }
-  });
+    $(".search").children(".form-control").keydown(function(event) {
+        if (event.which == 13) {
+            event.preventDefault();
+            $('#latable tbody tr:eq(' + currentrow + ') td:eq(1) a').focus();
+        }
+    });
 
-  var curindex ;
-  var nextindex;
-  var previndex;
+    var curindex;
+    var nextindex;
+    var previndex;
 
     $('#viewanotherlist').click(function(e) {
-	e.preventDefault();
-	$("#msspinmodal").modal("show");
-	$("#listofinvoices").click();
+        e.preventDefault();
+        $("#msspinmodal").modal("show");
+        $("#listofinvoices").click();
     });
 
-  $('#viewprintableversion').click(function (e) {
-      $("#msspinmodal").modal("show");
-      var dataset = {"flag": $("#invoicetypeselect option:selected").val(), "fromdate":$("#fromdate").data("fromdate"),"todate":$("#todate").data("todate")};
-    $.ajax({
-      type: "POST",
-      url: "/invoice?action=printlist",
-      global: false,
-	async: false,
-	data: dataset,
-      datatype: "text/html",
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-      },
-    })
-    .done(function(resp) {
-      $("#info").html(resp);
-    })
-    .fail(function() {
-      console.log("error");
-    })
-    .always(function() {
-      console.log("complete");
+    $('#viewprintableversion').click(function(e) {
+        $("#msspinmodal").modal("show");
+        var dataset = {
+            "flag": $("#invoicetypeselect option:selected").val(),
+            "fromdate": $("#fromdate").data("fromdate"),
+            "todate": $("#todate").data("todate")
+        };
+        $.ajax({
+                type: "POST",
+                url: "/invoice?action=printlist",
+                global: false,
+                async: false,
+                data: dataset,
+                datatype: "text/html",
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                },
+            })
+            .done(function(resp) {
+                $("#info").html(resp);
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
     });
-  });
 
 
-  $(document).off('keydown' ,'.libgname').on('keydown' ,'.libgname',function(event) {
-    curindex = $(this).closest('tr').index();
-    nextindex = curindex+1;
-    previndex = curindex-1;
-    if (event.which==40)
-    {
-      event.preventDefault();
-      $('#latable tbody tr:eq('+nextindex+') td:eq(1) a').focus();
-    }
-    else if (event.which==38)
-    {
-      if(previndex>-1)
-      {
-        event.preventDefault();
-        $('#latable tbody tr:eq('+previndex+') td:eq(1) a').focus();
-      }
-	else {
-	    $(".search").children(".form-control").focus().select();
-	}
-    }
-
-  });
-
-
-  $("#latable").off('click','tr').on('click','tr',function(e){
-    e.preventDefault();
-    var id = $(this).attr('value');
-    var currindex = $(this).index();
-    $('#latable tr').removeClass('selected');
-    $(this).toggleClass('selected');
-    $('#latable tbody tr:eq('+currindex+') a').focus();
-
-  });
-
-  $("#latable").off('keydown','tr').on('keydown','tr',function(e){
-    var id = $(this).data("invid");
-    var currindex = $(this).index();
-    if(e.which==13)
-      {
-	e.preventDefault();
-      $('#latable tbody tr:eq('+currindex+')').dblclick() ;
-    }
-  });
-
-  $("#latable").off('dblclick','tr').on('dblclick','tr',function(e){
-  // This function opens a modal of the selected voucher.
-      // It shows the complete details of the selected voucher along with option to edit, delete and clone.
-      currentrow = $(this).index();
-    e.preventDefault();
-      var id = "";
-      id = $(this).data("invid");
-    if (id=="")
-    {
-      return false;
-    }
-    $.ajax(
-      {
-
-        type: "POST",
-        url: "/invoice?action=showinv",
-        global: false,
-        async: false,
-        datatype: "text/html",
-        data : {"invid":id},
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    $(document).off('keydown', '.libgname').on('keydown', '.libgname', function(event) {
+        curindex = $(this).closest('tr').index();
+        nextindex = curindex + 1;
+        previndex = curindex - 1;
+        if (event.which == 40) {
+            event.preventDefault();
+            $('#latable tbody tr:eq(' + nextindex + ') td:eq(1) a').focus();
+        } else if (event.which == 38) {
+            if (previndex > -1) {
+                event.preventDefault();
+                $('#latable tbody tr:eq(' + previndex + ') td:eq(1) a').focus();
+            } else {
+                $(".search").children(".form-control").focus().select();
+            }
         }
-      }
-    )
-    .done(function(resp)
-    {
-      $("#invload").html("");
-      $('.modal-backdrop').remove();
-      $('.modal').modal('hide');
-      $("#invload").html(resp);
-      $('#invview').modal('show');
-      });
-  });
-    $("#invview").on('hidden.bs.modal', function(event) {
-	$('#latable tbody tr:eq('+currentrow+') td:eq(1) a').focus();
-	$('#latable tbody tr:eq('+currentrow+') td:eq(1) a').closest('tr').addClass('selected');
+
     });
-  $("#print").click(function(event) {
-    event.preventDefault();
-      var xhr = new XMLHttpRequest();
-      var linvurlstring = '&flag='+$("#invoicetypeselect option:selected").val()+'&fromdate='+$("#fromdate").data("fromdate")+'&todate='+$("#todate").data("todate");
-      console.log(linvurlstring);
-      xhr.open('GET', '/invoice?action=listofinvspreadsheet&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2')+linvurlstring, true);
-    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-    xhr.responseType = 'blob';
-
-    xhr.onload = function(e) {
-      if (this.status == 200) {
-        // get binary data as a response
-        var blob = this.response;
-        var url = window.URL.createObjectURL(blob);
-          window.location.assign(url);
-      }
-    };
-
-    xhr.send();
 
 
-  });
+    $("#latable").off('click', 'tr').on('click', 'tr', function(e) {
+        e.preventDefault();
+        var id = $(this).attr('value');
+        var currindex = $(this).index();
+        $('#latable tr').removeClass('selected');
+        $(this).toggleClass('selected');
+        $('#latable tbody tr:eq(' + currindex + ') a').focus();
+
+    });
+
+    $("#latable").off('keydown', 'tr').on('keydown', 'tr', function(e) {
+        var id = $(this).data("invid");
+        var currindex = $(this).index();
+        if (e.which == 13) {
+            e.preventDefault();
+            $('#latable tbody tr:eq(' + currindex + ')').dblclick();
+        }
+    });
+
+    $("#latable").off('dblclick', 'tr').on('dblclick', 'tr', function(e) {
+        // This function opens a modal of the selected voucher.
+        // It shows the complete details of the selected voucher along with option to edit, delete and clone.
+        currentrow = $(this).index();
+        e.preventDefault();
+        var id = "";
+        id = $(this).data("invid");
+        if (id == "") {
+            return false;
+        }
+        $.ajax({
+
+                type: "POST",
+                url: "/invoice?action=showinv",
+                global: false,
+                async: false,
+                datatype: "text/html",
+                data: {
+                    "invid": id
+                },
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+            })
+            .done(function(resp) {
+                $("#invload").html("");
+                $('.modal-backdrop').remove();
+                $('.modal').modal('hide');
+                $("#invload").html(resp);
+                $('#invview').modal('show');
+            });
+    });
+    $("#invview").on('hidden.bs.modal', function(event) {
+        $('#latable tbody tr:eq(' + currentrow + ') td:eq(1) a').focus();
+        $('#latable tbody tr:eq(' + currentrow + ') td:eq(1) a').closest('tr').addClass('selected');
+    });
+    $("#print").click(function(event) {
+        event.preventDefault();
+        var xhr = new XMLHttpRequest();
+        var linvurlstring = '&flag=' + $("#invoicetypeselect option:selected").val() + '&fromdate=' + $("#fromdate").data("fromdate") + '&todate=' + $("#todate").data("todate");
+        console.log(linvurlstring);
+        xhr.open('GET', '/invoice?action=listofinvspreadsheet&fystart=' + sessionStorage.getItem('year1') + '&orgname=' + sessionStorage.getItem('orgn') + '&fyend=' + sessionStorage.getItem('year2') + linvurlstring, true);
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        xhr.responseType = 'blob';
+
+        xhr.onload = function(e) {
+            if (this.status == 200) {
+                // get binary data as a response
+                var blob = this.response;
+                var url = window.URL.createObjectURL(blob);
+                window.location.assign(url);
+            }
+        };
+
+        xhr.send();
+
+
+    });
 
 });
