@@ -146,5 +146,125 @@ $(document).ready(function() {
 				$("#viewlist_tomonth").focus().select();
 			}
 		});
-	
+    $("#viewlist_submit").click(function(event) {
+  		// --------------------starting validations------------------
+  		if ($("#viewlist_fromdate").val()==0 ) {
+  			$("#date-alert").alert();
+  			$("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+  				$("#date-alert").hide();
+  			});
+  			$('#viewlist_fromdate').focus().select();
+  			return false;
+  		}
+  	        if ($("#viewlist_frommonth").val()==0) {
+  			$("#date-alert").alert();
+  			$("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+  				$("#date-alert").hide();
+  			});
+  			$('#viewlist_frommonth').focus().select();
+  			return false;
+  		}
+  	        if ($("#viewlist_fromyear").val()==0) {
+  			$("#date-alert").alert();
+  			$("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+  				$("#date-alert").hide();
+  			});
+  			$('#viewlist_fromyear').focus().select();
+  			return false;
+  		}
+  		if ($("#viewlist_todate").val()==0) {
+  			$("#date-alert").alert();
+  			$("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+  				$("#date-alert").hide();
+  			});
+  			$('#viewlist_todate').focus().select();
+  			return false;
+  		}
+  	        if ($("#viewlist_tomonth").val()==0) {
+  			$("#date-alert").alert();
+  			$("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+  				$("#date-alert").hide();
+  			});
+  			$('#viewlist_tomonth').focus().select();
+  			return false;
+  		}
+  	        if ($("#viewlist_toyear").val() ==0) {
+  			$("#date-alert").alert();
+  			$("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+  				$("#date-alert").hide();
+  			});
+  			$('#viewlist_toyear').focus().select();
+  			return false;
+  		}
+  		var todate = $("#viewlist_toyear").val()+$("#viewlist_tomonth").val()+$("#viewlist_todate").val();
+  		var fromdate = $("#viewlist_fromyear").val()+$("#viewlist_frommonth").val()+$("#viewlist_fromdate").val();
+  		if(!Date.parseExact(fromdate,"yyyyMMdd")){
+  			$("#date-alert").alert();
+  			$("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+  				$("#date-alert").hide();
+  			});
+  			$('#viewlist_fromdate').focus().select();
+  			return false;
+  		}
+  		if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,financialend)) {
+  			$("#between-date-alert").alert();
+  			$("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
+  				$("#between-date-alert").hide();
+  			});
+  			$('#viewlist_fromdate').focus().select();
+  			return false;
+  		}
+  		if(!Date.parseExact(todate, "yyyyMMdd")){
+  			$("#date-alert").alert();
+  			$("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+  				$("#date-alert").hide();
+  			});
+  			$('#viewlist_todate').focus().select();
+  			return false;
+  		}
+  		if (!Date.parseExact(todate,"yyyyMMdd").between(financialstart,financialend)) {
+  			$("#between-date-alert").alert();
+  			$("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
+  				$("#between-date-alert").hide();
+  			});
+  			$('#viewlist_todate').focus().select();
+  			return false;
+  		}
+  		if (Date.parseExact(fromdate,"yyyyMMdd").compareTo(Date.parseExact(todate,"yyyyMMdd"))==1) {
+  			$("#compare-date-alert").alert();
+  			$("#compare-date-alert").fadeTo(2250, 400).slideUp(500, function(){
+  				$("#compare-date-alert").hide();
+  			});
+  			$('#viewlist_todate').focus().select();
+  			return false;
+  		}
+  		// -----------------------end of validations---------------------
+
+  		// creating dataset for retrieving report from the server.
+  	    var dataset = {};
+  	    dataset = {"fromdate":$("#viewlist_fromyear").val()+"-"+$("#viewlist_frommonth").val()+"-"+$("#viewlist_fromdate").val(),"todate":$("#viewlist_toyear").val()+"-"+$("#viewlist_tomonth").val()+"-"+$("#viewlist_todate").val()};
+  	    $("#msspinmodal").modal("show");
+  		$.ajax(
+  			{
+  				type: "POST",
+  				url: "/invoice?action=showlist",
+  				global: false,
+  				async: false,
+  				datatype: "text/html",
+  				data: dataset,
+  				beforeSend: function(xhr)
+  				{
+  					xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+  				},
+  			})
+  				.done(function(resp)
+  				{
+  					$("#info").html(resp);
+  				}
+  			);
+  	});
+
+  	$("#viewlist_reset").click(function(event) {
+  		$("#listofinvoices").click();
+  	});
 	});
