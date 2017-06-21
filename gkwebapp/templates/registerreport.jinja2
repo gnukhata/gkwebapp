@@ -80,20 +80,20 @@
   <table id="registertable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
     <thead class="bg-primary">
         <tr>
-          <th class="smwrap calign" >{% trans %}Sr. No.{% endtrans %}</th>
-          <th class="smwrap calign" >{% trans %}Invoice Number{% endtrans %}</th>
-          <th class="dtwrap calign" >{% trans %}Invoice Date{% endtrans %}</th>
+          <th class="smwrap calign" >{% trans %}Sr.No.{% endtrans %}</th>
+          <th class="smwrap calign" >{% trans %}Inv No.{% endtrans %}</th>
+          <th class="dtwrap calign" >{% trans %}Inv Date{% endtrans %}</th>
           {% if registerheader["flag"] == "0" %}
-          <th class="dtwrap calign">{% trans %}Customer Name{% endtrans %}</th>
-          <th class="dtwrap calign">{% trans %}Customer TIN{% endtrans %}</th>
+          <th class="dtwrap calign">{% trans %}Cust Name{% endtrans %}</th>
+          <th class="dtwrap calign">{% trans %}Cust TIN{% endtrans %}</th>
           {% else %}
-          <th class="dtwrap calign">{% trans %}Supplier Name{% endtrans %}</th>
-          <th class="dtwrap calign">{% trans %}Supplier TIN{% endtrans %}</th>
+          <th class="dtwrap calign">{% trans %}Suppl Name{% endtrans %}</th>
+          <th class="dtwrap calign">{% trans %}Suppl TIN{% endtrans %}</th>
           {% endif %}
-          <th class="dtwrap calign">{% trans %}Gross Amount{% endtrans %}</th>
+          <th class="dtwrap calign">{% trans %}Gross Amt{% endtrans %}</th>
           <th class="dtwrap calign">{% trans %}TAX Free{% endtrans %}</th>
           {% for tax in taxcolumns %}
-            <th class="dtwrap calign">{% trans %}Net @{{tax}}%{% endtrans %}</th>
+            <th class="dtwrap calign">{% trans %}Net @ {{tax}}%{% endtrans %}</th>
           {% endfor %}
           {% for tax in taxcolumns %}
             <th class="dtwrap calign">{% trans %}{{tax}}% TAX{% endtrans %}</th>
