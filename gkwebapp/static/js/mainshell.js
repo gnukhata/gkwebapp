@@ -642,7 +642,7 @@ var userrole1;
      });
   });
 
-  $('#purchaseorder').click(function (e) {
+  /*$('#purchaseorder').click(function (e) {
 
     console.log("jdh");
     $.ajax({
@@ -693,7 +693,7 @@ var userrole1;
      .always(function() {
        console.log("complete");
      });
-  });
+  });*/
 
 
 
