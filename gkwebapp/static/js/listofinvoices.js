@@ -77,7 +77,7 @@ $(document).ready(function() {
     $('#viewprintableversion').click(function(e) {
         $("#msspinmodal").modal("show");
         var dataset = {
-            "flag": $("#invoicetypeselect option:selected").val(),
+            "flag": $("#invoicetypeselect").val(),
             "fromdate": $("#fromdate").data("fromdate"),
             "todate": $("#todate").data("todate")
         };
@@ -181,7 +181,7 @@ $(document).ready(function() {
     $("#print").click(function(event) {
         event.preventDefault();
         var xhr = new XMLHttpRequest();
-        var linvurlstring = '&flag=' + $("#invoicetypeselect option:selected").val() + '&fromdate=' + $("#fromdate").data("fromdate") + '&todate=' + $("#todate").data("todate");
+        var linvurlstring = '&flag=' + $("#invoicetypeselect").val() + '&fromdate=' + $("#fromdate").data("fromdate") + '&todate=' + $("#todate").data("todate");
         console.log(linvurlstring);
         xhr.open('GET', '/invoice?action=listofinvspreadsheet&fystart=' + sessionStorage.getItem('year1') + '&orgname=' + sessionStorage.getItem('orgn') + '&fyend=' + sessionStorage.getItem('year2') + linvurlstring, true);
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -195,10 +195,6 @@ $(document).ready(function() {
                 window.location.assign(url);
             }
         };
-
         xhr.send();
-
-
     });
-
 });
