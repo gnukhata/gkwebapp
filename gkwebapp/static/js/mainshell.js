@@ -912,12 +912,12 @@ var userrole1;
   });
 
   $('#listofinvoices').click(function (e) {
-    // calls list of stock items report.
+    // calls list of invoices report
     $.ajax(
       {
 
         type: "POST",
-        url: "/invoices?action=viewlist",
+        url: "/invoice?action=viewlist",
         global: false,
         async: false,
         datatype: "text/html",
