@@ -52,7 +52,7 @@
       <table class="table table-condensed table-bordered table-striped shadow">
 	<thead class="bg-primary">
           <tr class="visible-print">
-            <th colspan="8" style="text-align:center; font-size:80%;">
+            <th colspan="11" style="text-align:center; font-size:80%;">
               List of <i>{%if flag == "0" %}All{%elif flag == "1" %}Sales{%elif flag == "2" %}Purchase{% endif %}</i> Invoices
 	      <br>
 	      <i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{displayfromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{displaytodate}}</strong>
@@ -98,7 +98,7 @@
     {% for invoice in gkresult %}
     <tr data-invid="{{invoice["invid"]}}">
     <td class="srnowrap text-center">{{invoice["srno"]}}</td>
-    <td class="smwrap text-center"><a class="libgname" href="">{{invoice["invoiceno"]}}</a></td>
+    <td class="smwrap text-center">{{invoice["invoiceno"]}}</td>
     <td class="mdwrap text-center">{{invoice["invoicedate"]}}</td>
     <td class="smwrap text-center">{{invoice["dcno"]}}</td>
     <td class="mdwrap text-center">{{invoice["dcdate"]}}</td>
