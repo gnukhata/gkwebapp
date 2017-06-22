@@ -346,6 +346,37 @@ var userrole1;
       $("#lang").click();
     }
   });
+  //default focuses on first option of dropdowns.
+  $('#masterdropdown').on('shown.bs.dropdown', function () {
+    $("#addaccount").focus();
+  });
+  $('#inventorydropdown').on('shown.bs.dropdown', function () {
+    $("#product").focus();
+  });
+  $('#transactiondropdown').on('shown.bs.dropdown', function () {
+    $("#showreceipt").focus();
+  });
+  $('#reportdropdown').on('shown.bs.dropdown', function () {
+    $("#showviewledger").focus();
+  });
+  $('#administrationdropdown').on('shown.bs.dropdown', function () {
+    $("#createuser").focus();
+  });
+  $('#helpdropdown').on('shown.bs.dropdown', function () {
+    $("#manual").focus();
+  });
+  $('#signoutdropdown').on('shown.bs.dropdown', function () {
+    $("#logout").focus();
+  });
+  $('#themesdropdown').on('shown.bs.dropdown', function () {
+    $("#Default").focus();
+  });
+  $('#langdropdown').on('shown.bs.dropdown', function () {
+    $("#eng").focus();
+  });
+  $('#toolbardropdown').on('shown.bs.dropdown', function () {
+    $("#addaccounttb").focus();
+  });
   $("#toolbar").click(function(){
     // Expands the toolbar on click to the height slightly less than the windowheight.
     var windowheight = window.innerHeight;
@@ -666,7 +697,7 @@ var userrole1;
        console.log("complete");
      });
   });
-  
+
   $("#showeditorg").click(function (e){
     // calls edit organisation page.
     $("#msspinmodal").modal("show");
