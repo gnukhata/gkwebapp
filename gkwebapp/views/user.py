@@ -205,7 +205,7 @@ def listofusersspreadsheet(request):
 	sheet.getCell(0,2).stringValue("Sr. No.").setBold(True)
 	sheet.getCell(1,2).stringValue("User Name").setBold(True)
 	sheet.getCell(2,2).stringValue("User Role").setBold(True)
-	sheet.getCell(3,2).stringValue("Associated Godowns").setBold(True)
+	sheet.getCell(3,2).stringValue("Associated Godown(s)").setBold(True)
 	row = 3
 	for user in result:
 		sheet.getCell(0, row).stringValue(user["srno"])
