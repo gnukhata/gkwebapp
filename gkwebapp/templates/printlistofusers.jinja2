@@ -67,7 +67,7 @@
           {% trans %}User Role{% endtrans %}
         </th>
         <th class="lngwrap lalign">
-          {% trans %}Associated Godowns{% endtrans %}
+          {% trans %}Associated Godown(s){% endtrans %}
         </th>
       </tr>
     </thead>
@@ -99,8 +99,8 @@
     </tbody>
   </table>
   <span style="margin:auto; display:table;">
-    <button type="button" class="btn btn-sm btn-danger hidden-print" id="louback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
-    <button type="button" class="btn btn-sm btn-info hidden-print" id="louprint" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
+    <button type="button" class="btn btn-sm btn-danger hidden-print" id="louback" accesskey="b"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}<u>B</u>ack{% endtrans %}</button>
+    <button type="button" class="btn btn-sm btn-info hidden-print" id="louprint" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
   </span>
   <script type="text/javascript">
     $(document).ready(function() {

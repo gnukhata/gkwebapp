@@ -77,7 +77,7 @@
           {% trans %}User Role{% endtrans %}
         </th>
         <th class="lngwrap lalign">
-          {% trans %}Associated Godowns{% endtrans %}
+          {% trans %}Associated Godown(s){% endtrans %}
         </th>
       </tr>
     </thead>
@@ -109,8 +109,8 @@
     </tbody>
   </table>
   <span style="margin:auto; display:table;">
-    <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">{% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
-      <button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="t">{% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
+    <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
+      <button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
   </span>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/listofusers.js')}}"></script>
