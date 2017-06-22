@@ -9,6 +9,7 @@ $(document).ready(function() {
   var selectedgodown;
   var selectedtaxname;
   var selectedtaxstate = 0;
+  $(".numtype").numeric({negative: false});
   $("#moresmall").on('shown.bs.collapse', function(event) {
     event.preventDefault();
     $("#smalllink").html('See less. <span class="glyphicon glyphicon-triangle-top"></span>');
@@ -22,7 +23,6 @@ $(document).ready(function() {
   {
     $("#addproddesc").focus();
   }
-  $("#openingstock").numeric();
   $("#godownflag").click(function(e){
     if ($(this).is(":checked")) {
       godownflag = 1;
@@ -38,11 +38,11 @@ $(document).ready(function() {
     }
   });
 
-$(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
+/*$(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
   event.preventDefault();
-  /* Act on the event */
+  // Act on the event
   $(".numtype").numeric();
-});
+});*/
 $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
   event.preventDefault();
   /* Act on the event */
