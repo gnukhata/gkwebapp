@@ -173,7 +173,7 @@
 
 
     <form id="voucher" name="voucher">
-      <div class="row col-sm-12" style="margin:0 !important;" >
+      <div class="row " style="margin:0 !important;" >
 <center>
         <input id="vouchertype" type="text" value="{{vtype}}" hidden>
         <div class="form-group col-sm-12 " style="margin-top:10px; margin-bottom:0 !important; padding-bottom:0 !important;">
@@ -203,7 +203,7 @@
         </center>
 </div>
 
-      <div class="form-inline well well-sm invhide">
+      <div class="form-inline well well-sm ">
           <div class="form-inline ">
             <div class="form-inline">
             <div class="form-group " style="width:25%;">
@@ -213,7 +213,7 @@
 
           {% if invoicedata!=0 %}
           {% if invoicecount!=0 %}
-            <div class="form-group  " style="width:30%;">
+            <div class="form-group invhide " style="width:30%;">
               <input id="invhide" value="1" hidden="">
               <label for="invsel">{% trans %}Select Invoice {% endtrans %} :</label>
             </br>
