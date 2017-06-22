@@ -32,7 +32,7 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="dropdown closebooks">
+          <li id="masterdropdown" class="dropdown closebooks">
             <a href="" id="master" class="dropdown-toggle mastermenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>M</u>aster{% endtrans %}</a>
             <ul class="dropdown-menu">
               <li><a  class="mastermenu" data-toggle="tab" id="addaccount" href="">{% trans %}Create Account{% endtrans %}</a></li>
@@ -43,7 +43,7 @@
               <li><a class="mastermenu" data-toggle="tab" id="BRS" href="">{% trans %}Bank Reconciliation Statement{% endtrans %}</a></li>
             </ul>
           </li>
-          <li class="dropdown closebooks inventory_hide">
+          <li id="inventorydropdown" class="dropdown closebooks inventory_hide">
             <a href="" id="inventory" class="dropdown-toggle inventorymenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>I</u>nventory{% endtrans %}</a>
             <ul class="dropdown-menu">
               <li><a  class="inventorymenu" data-toggle="tab" id="product" href="">Product</a></li>
@@ -59,7 +59,7 @@
               <li><a class="inventorymenu" data-toggle="tab" id="purchaseorder" href="">{% trans %}Purchase/Sales Order{% endtrans %}</a></li>
             </ul>
           </li>
-          <li class="dropdown">
+          <li id="transactiondropdown" class="dropdown">
             <a href="" id="transaction" class="dropdown-toggle transactionmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>V</u>oucher{% endtrans %}</a>
             <ul class="dropdown-menu">
               <li><a class="transactionmenu closebooks" data-toggle="tab" id="showreceipt" href="">{% trans %}Receipt{% endtrans %}</a></li>
@@ -73,10 +73,10 @@
               <li><a class="transactionmenu closebooks" data-toggle="tab" id="showcreditnote" href="">{% trans %}Credit Note{% endtrans %}</a></li>
               <li><a class="transactionmenu closebooks" data-toggle="tab" id="showdebitnote" href="">{% trans %}Debit Note{% endtrans %}</a></li>
               <li><a class="transactionmenu" href="" data-toggle="tab" id="fevoucher">{% trans %}Find/Edit Voucher{% endtrans %}</a></li>
-	      <li><a class="transactionmenu" href="" data-toggle="tab" id="showbillwiseaccounting">{% trans %}Unadjusted Amounts{% endtrans %}</a></li>
+	            <li><a class="transactionmenu" href="" data-toggle="tab" id="showbillwiseaccounting">{% trans %}Unadjusted Amounts{% endtrans %}</a></li>
             </ul>
           </li>
-          <li class="dropdown">
+          <li id="reportdropdown" class="dropdown">
             <a href="" id="report" class="dropdown-toggle reportmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>R</u>eport{% endtrans %}</a>
             <ul class="dropdown-menu">
               <li><a class="reportmenu" href="" data-toggle="tab" id="showviewledger">{% trans %}Ledger{% endtrans %}</a></li>
@@ -102,7 +102,7 @@
               <li><a class="reportmenu hideoperator hidemanager" href="" data-toggle="tab" id="showviewlog">Activity Log</a></li>
             </ul>
           </li>
-          <li class="dropdown">
+          <li id="administrationdropdown" class="dropdown">
             <a href="" id="administration" class="dropdown-toggle administrationmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}A<u>d</u>ministration{% endtrans %}</a>
             <ul class="dropdown-menu">
               <li class="hideoperator closebooks"><a class="administrationmenu" data-toggle="tab" id="createuser" href="">{% trans %}New User{% endtrans %}</a></li>
@@ -115,7 +115,7 @@
               <li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="tab" id="tallyimport" href="">{% trans %}Import Data{% endtrans %}</a></li>
             </ul>
           </li>
-          <li class="dropdown">
+          <li id="helpdropdown" class="dropdown">
             <a href="" id="help" class="dropdown-toggle helpmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>H</u>elp{% endtrans %}</a>
             <ul class="dropdown-menu">
               <li><a class="helpmenu" id="manual" target="_blank" href="http://gnukhata.in/manual.pdf">{% trans %}Manual{% endtrans %}</a></li>
@@ -128,14 +128,14 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
         <li id="nt"><a class="newtabmenu" id="newt" target="_blank" href="/">{% trans %}New Ta<u>b</u>{% endtrans%}</a></li>
-          <li class="dropdown">
+          <li id="signoutdropdown" class="dropdown">
             <a href="" id="signout" class="dropdown-toggle signoutmenu"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>S</u>ign Out{% endtrans %}</a>
             <ul class="dropdown-menu">
               <li><a class="signoutmenu" data-toggle="tab" id="logout" href="">{% trans %}Logout{% endtrans %}</a></li>
               <li><a class="signoutmenu" data-toggle="tab" id="changeorg" href="">{% trans %}Change Organisation{% endtrans %}</a></li>
             </ul>
           </li>
-          <li class="dropdown">
+          <li id="themesdropdown" class="dropdown">
             <a href="" id="themes" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Theme{% endtrans %}</a>
             <ul class="dropdown-menu scrollable">
               <li><a class="themesmenu" id="Default" href="">{% trans %}Default{% endtrans %}<span id="Defaultspan"  class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
@@ -157,15 +157,15 @@
               <li><a class="themesmenu" id="Yeti" href="">{% trans %}Yeti{% endtrans %}<span id="Yetispan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
             </ul>
           </li>
-          <li class="dropdown">
+          <li id="langdropdown" class="dropdown">
             <a href="" id="lang" class="dropdown-toggle langmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Lan<u>g</u>uage{% endtrans %}</a>
             <ul class="dropdown-menu">
-              <li><a  class="langmenu" id="mar" href="/locale?language=en">{% trans %}English{% endtrans %}</a></li>
+              <li><a  class="langmenu" id="eng" href="/locale?language=en">{% trans %}English{% endtrans %}</a></li>
               <li><a  class="langmenu" id="mar" href="/locale?language=mr">{% trans %}मराठी{% endtrans %}</a></li>
-              <li><a  class="langmenu" id="mar" href="/locale?language=ml">{% trans %}മലയാളം{% endtrans %}</a></li>
+              <li><a  class="langmenu" id="mal" href="/locale?language=ml">{% trans %}മലയാളം{% endtrans %}</a></li>
             </ul>
           </li>
-          <li class="dropdown">
+          <li id="toolbardropdown" class="dropdown">
             <a href="" id="toolbar" class="dropdown-toggle toolbarmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Toolbar{% endtrans %}</a>
             <ul class="dropdown-menu scrollable">
               <li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="addaccounttb" href="">{% trans %}Create Account{% endtrans %} - F2</a></li>

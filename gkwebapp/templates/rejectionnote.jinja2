@@ -36,10 +36,10 @@
 <body>
   <div class="container-fluid row" >
     <ul class="nav nav-pills nav-tabs" role="tablist">
-      <li role="presentation" class="active"><a href="" id="rejectionnote_in" role="tab" data-toggle="tab">{% trans %}Rejection In{% endtrans %}</a></li>
-      <li role="presentation" ><a href="" id="rejectionnote_out" role="tab" data-toggle="tab">{% trans %}Rejection Out{% endtrans %}</a></li>
+      <li role="presentation" class="active"><a href="" id="rejectionnote_in" role="tab" data-toggle="tab" accesskey="1">{% trans %}Rejection In{% endtrans %}</a></li>
+      <li role="presentation" ><a href="" id="rejectionnote_out" role="tab" data-toggle="tab" accesskey="2">{% trans %}Rejection Out{% endtrans %}</a></li>
       {%if noofrejectionnotes > 0 %}
-        <li role="presentation"><a href="" id="rejectionnote_view" role="tab" data-toggle="tab">{% trans %}View Rejection Note{% endtrans %}</a></li>
+        <li role="presentation"><a href="" id="rejectionnote_view" role="tab" data-toggle="tab" accesskey="3">{% trans %}View Rejection Note{% endtrans %}</a></li>
       {%endif%}
     </ul>
     <div class="tab-content">

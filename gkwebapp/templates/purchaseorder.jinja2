@@ -90,13 +90,13 @@
 <body>
   <div class="container-fluid row">
     <ul class="nav nav-pills nav-tabs " role="tablist">
-      <li role="presentation" class="active nopadding" role="presentation"><a href="" id="purchaseorder_create" role="tab" data-toggle="pill">{% trans %}Add Purchase Order{% endtrans %}</a></li>
-      <li role="presentation" class="nopadding" role="presentation"><a href="" id="salesorder_create"  data-toggle="pill">{% trans %}Add Sales Order{% endtrans %}</a></li>
+      <li role="presentation" class="active nopadding" role="presentation"><a href="" id="purchaseorder_create" role="tab" data-toggle="pill" accesskey="1">{% trans %}Add Purchase Order{% endtrans %}</a></li>
+      <li role="presentation" class="nopadding" role="presentation"><a href="" id="salesorder_create"  data-toggle="pill" accesskey="2">{% trans %}Add Sales Order{% endtrans %}</a></li>
       {% if numberofpurchaseorders > 0 %}
-          <li role="presentation" class="nopadding" role="presentation"><a href="" id="purchaseorder_view"   data-toggle="pill">{% trans %}View Purchase Order{% endtrans %}</a></li>
+          <li role="presentation" class="nopadding" role="presentation"><a href="" id="purchaseorder_view"   data-toggle="pill" accesskey="3">{% trans %}View Purchase Order{% endtrans %}</a></li>
       {% endif %}
       {% if numberofsalesorders > 0 %}
-        <li role="presentation" class="nopadding" role="presentation"><a href="" id="salesorder_view"   data-toggle="pill">{% trans %}View Sales Order{% endtrans %}</a></li>
+        <li role="presentation" class="nopadding" role="presentation"><a href="" id="salesorder_view"   data-toggle="pill" accesskey="4">{% trans %}View Sales Order{% endtrans %}</a></li>
       {% endif %}
 
     </ul>
