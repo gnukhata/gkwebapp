@@ -149,10 +149,10 @@
         </div>
         <div class="panel-footer" hidden>
           <div class="container-fluid">
-          <button class="btn btn-primary btn-sm" id="category_edit_edit">{% trans %}<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit{% endtrans %}</button>
+          <button class="btn btn-primary btn-sm" id="category_edit_edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans %}Edit{% endtrans %}</button>
           <button class="btn btn-success category_edit_disable btn-sm" id="category_edit_savespecs" disabled data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert key anywhere on the current screen to save{% endtrans %}">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i> Save{% endtrans %}</button>
-          <button class="btn btn-danger btn-sm" id="category_edit_delete">{% trans %}<i class="fa fa-trash-o" aria-hidden="true"></i> Delete{% endtrans %}</button>
-          <button class="btn btn-warning btn-sm" id="category_edit_reset" accesskey="">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> Reset{% endtrans %}</button>
+          <button class="btn btn-danger btn-sm" id="category_edit_delete"><i class="fa fa-trash-o" aria-hidden="true"></i> {% trans %}Delete{% endtrans %}</button>
+          <button class="btn btn-warning btn-sm" id="category_edit_reset" accesskey=""><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
         </div>
         </div>
       </div>
@@ -169,8 +169,8 @@
                 <p>{% trans %}Are you sure?{% endtrans %}</p>
               </div>
               <div class="modal-footer">
-                <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-                <button type="button" id="accdel" data-dismiss="modal" class="btn btn-danger">{% trans %}Delete{% endtrans %}</button>
+                <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}No{% endtrans %}</button>
+                <button type="button" id="accdel" data-dismiss="modal" class="btn btn-danger"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Yes{% endtrans %}</button>
               </div>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->

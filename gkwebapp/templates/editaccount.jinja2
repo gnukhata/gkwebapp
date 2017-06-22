@@ -97,10 +97,10 @@ th {
 							</br>
 							<input type="hidden" id="accountcode" class="form-control" name="accountcode" ></input>
 
-							<button type="submit" class="btn btn-primary btn-sm" id="submit" name="submit" accesskey="s">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i> <u>S</u>ave{% endtrans %}</button>
-							<button id="reset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> R<u>e</u>set{% endtrans %}</button>
-							<button id="delete" class="btn btn-danger btn-sm" accesskey="d">{% trans %}<i class="fa fa-trash-o" aria-hidden="true"></i> <u>D</u>elete{% endtrans %}</button>
-							<button id="edit" class="btn btn-primary btn-sm" accesskey="t">{% trans %}<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edi<u>t</u>{% endtrans %}</button>
+							<button type="submit" class="btn btn-primary btn-sm" id="submit" name="submit" accesskey="s"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
+							<button id="reset" class="btn btn-warning btn-sm" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
+							<button id="delete" class="btn btn-danger btn-sm" accesskey="d"><i class="fa fa-trash-o" aria-hidden="true"></i> {% trans %}<u>D</u>elete{% endtrans %}</button>
+							<button id="edit" class="btn btn-primary btn-sm" accesskey="t"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans %}Edi<u>t</u>{% endtrans %}</button>
 
 						</div>
 					</form>
@@ -143,8 +143,8 @@ Note you can't change the group or sub-group of an account. {% endtrans %}</font
 										<p>{% trans %}Are you sure?{% endtrans %}</p>
 									</div>
 									<div class="modal-footer">
-										<button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-										<button type="button" id="accdel" data-dismiss="modal" class="btn btn-danger">{% trans %}Delete{% endtrans %}</button>
+										<button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}No{% endtrans %}</button>
+										<button type="button" id="accdel" data-dismiss="modal" class="btn btn-danger"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Yes{% endtrans %}</button>
 									</div>
 								</div><!-- /.modal-content -->
 							</div><!-- /.modal-dialog -->
