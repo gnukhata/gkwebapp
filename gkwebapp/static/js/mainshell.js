@@ -644,7 +644,89 @@ var userrole1;
 	 });
       });
   });
-  
+
+  $("#orgpref").click(function (e){
+    // creates a modal(dialog box) asking user to activate inventory or not.
+    $("#orgprefmodal").on('shown.bs.modal', function(event) {
+      $("#inventory").focus();
+
+    });
+    $('#orgprefmodal').modal('show').one('click', '#inv_no', function (e)
+      {
+	// If users selects no option then the modal is closed.
+	$('#orgprefmodal').modal("hide");
+      });
+    $('#orgprefmodal').modal('show').one('click', function (e)
+      {
+        var form_data = new FormData();
+        var invflag;
+        var invsflag;
+        var billflag;
+        if ($("#invflag").is(":checked"))
+        {
+          invflag=1;
+
+        }
+        else
+        {
+          invflag=0;
+        }
+        if ($("#invsflag").is(":checked"))
+        {
+          invsflag=1;
+        }
+        else
+        {
+          invsflag=0;
+        }
+        if ($("#billflag").is(":checked"))
+        {
+          billflag=1;
+        }
+        else
+        {
+          billflag=0;
+        }
+
+        form_data.append("invflag",invflag);
+        form_data.append("invsflag",invflag);
+        form_data.append("billflag",invflag);
+	// if yes then inventory is activated.
+$("#orgprefsave").click(function(event){
+                  $.ajax({
+                          url: '/editorganisation?action=orgpref',
+                          type: "POST",
+                          datatype: 'json',
+                          global: false,
+                          async: false,
+                          data: form_data,
+                          beforeSend: function(xhr)
+                          {
+                            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                          }
+                	})
+                	 .done(function(resp) {
+
+                           if (resp['gkstatus']==0)
+                             {
+                          sessionStorage.setItem('invflag', invflag );
+                          sessionStorage.setItem('invsflag', invsflag );
+                          sessionStorage.setItem('billflag', billflag );
+
+                          location.reload();// page is reloaded if inventory is successfully activated, so that inventory menu shows up.
+                             }
+                	 })
+                	 .fail(function() {
+                           console.log("error");
+                	 })
+                	 .always(function() {
+                           console.log("complete");
+                	 });
+
+                 });
+      });
+  });
+
 
   $("#exportdata").on('shown.bs.modal', function(event) {
     $("#exportbutton").focus();
