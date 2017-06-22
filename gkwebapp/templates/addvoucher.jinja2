@@ -173,77 +173,87 @@
 
 
     <form id="voucher" name="voucher">
-      <div class="form-inline col-md-12" style="margin:0 !important;" >
+      <div class="row col-sm-12" style="margin:0 !important;" >
 <center>
         <input id="vouchertype" type="text" value="{{vtype}}" hidden>
-        <div class="form-group ">
+        <div class="form-group col-sm-12 " style="margin-top:10px; margin-bottom:0 !important; padding-bottom:0 !important;">
           {% if vtype=="contra" %}
-          <label><i>{% trans %}Contra{% endtrans %}</i></label>
+          <label style="font-size: 16;"><i>{% trans %}Contra{% endtrans %}</i></label>
           {% elif vtype == "payment" %}
-          <label><i>{% trans %}Payment{% endtrans %}</i></label>
+          <label style="font-size: 16;"><i>{% trans %}Payment{% endtrans %}</i></label>
           {% elif vtype == "receipt" %}
-          <label><i>{% trans %}Receipt{% endtrans %}</i></label>
+          <label style="font-size: 16;"><i>{% trans %}Receipt{% endtrans %}</i></label>
           {% elif vtype == "journal" %}
-          <label><i>{% trans %}Journal{% endtrans %}</i></label>
+          <label style="font-size: 16;"><i>{% trans %}Journal{% endtrans %}</i></label>
           {% elif vtype == "sales" %}
-          <label><i>{% trans %}Sales{% endtrans %}</i></label>
+          <label style="font-size: 16;"><i>{% trans %}Sales{% endtrans %}</i></label>
           {% elif vtype == "purchase" %}
-          <label><i>{% trans %}Purchase{% endtrans %}</i></label>
+          <label style="font-size: 16;"><i>{% trans %}Purchase{% endtrans %}</i></label>
           {% elif vtype == "creditnote" %}
-          <label><i>{% trans %}Credit Note{% endtrans %}</i></label>
+          <label style="font-size: 16;"><i>{% trans %}Credit Note{% endtrans %}</i></label>
           {% elif vtype == "debitnote" %}
-          <label><i>{% trans %}Debit Note{% endtrans %}</i></label>
+          <label style="font-size: 16;"><i>{% trans %}Debit Note{% endtrans %}</i></label>
           {% elif vtype == "salesreturn" %}
-          <label><i>{% trans %}Sale Return{% endtrans %}</i></label>
+          <label style="font-size: 16;"><i>{% trans %}Sale Return{% endtrans %}</i></label>
           {% elif vtype == "purchasereturn" %}
-          <label><i>{% trans %}Purchase Return{% endtrans %}</i></label>
+          <label style="font-size: 16;"><i>{% trans %}Purchase Return{% endtrans %}</i></label>
           {% endif %}
+          <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#vchModal"></i>
         </div>
         </center>
-
-  <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#vchModal"></i>
-<br>
 </div>
 
-      <div class="form-inline well well-sm invhide ">
-          <div class="form-group">
-            <label for="vno">{% trans %}<u>V</u>oucher No.{% endtrans %} :</label><label for="vno" style="color:red;font-size: 120%;">*</label>
-            <input type="text" class="form-control input-sm" value="{{lastdetails['vno']}}" name="vno" id="vno" size="10" accesskey="v">
+      <div class="form-inline well well-sm invhide">
+          <div class="form-inline ">
+            <div class="form-inline">
+            <div class="form-group " style="width:25%;">
+              <label for="vno">{% trans %}<u>V</u>oucher No.{% endtrans %} :</label><label for="vno" style="color:red;font-size: 120%;">*</label>
+              <div><input type="text" class="form-control input-sm" value="{{lastdetails['vno']}}" name="vno" id="vno" size="10" accesskey="v"></div>
+            </div>
+
+          {% if invoicedata!=0 %}
+          {% if invoicecount!=0 %}
+            <div class="form-group  " style="width:30%;">
+              <input id="invhide" value="1" hidden="">
+              <label for="invsel">{% trans %}Select Invoice {% endtrans %} :</label>
+            </br>
+              <select id="invsel" class="form-control input-sm  invoice_no" >
+              <option value="" selected total="">{% trans %}None{% endtrans %}</option>
+              {% for invoice in invoicedata %}
+              {% if vtype == "purchase" and invoice["csflag"]|int == 19 %}
+                <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}" invdate={{invoice["invoicedate"]}} >{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
+              {% elif vtype == "sales" and invoice["csflag"]|int == 3 %}
+                <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}" invdate={{invoice["invoicedate"]}}>{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
+              {% endif %}
+              {% endfor %}
+              </select>
           </div>
-        {% if invoicedata!=0 %}
-        {% if invoicecount!=0 %}
-          <div class="form-group ">
-            <input id="invhide" value="1" hidden="">
-            <label for="invsel">{% trans %}Select Invoice {% endtrans %} :</label>
-            <select id="invsel" class="form-control input-sm invoice_no" >
-            <option value="" selected total="">{% trans %}None{% endtrans %}</option>
-            {% for invoice in invoicedata %}
-            {% if vtype == "purchase" and invoice["csflag"]|int == 19 %}
-              <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}" invdate={{invoice["invoicedate"]}} >{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
-            {% elif vtype == "sales" and invoice["csflag"]|int == 3 %}
-              <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}" invdate={{invoice["invoicedate"]}}>{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
-            {% endif %}
-            {% endfor %}
-            </select>
-        </div>
-        <div class="form-group" >
-          <label for="invtotal">{% trans %}Total Invoice Amount {% endtrans %} :</label>
-          <input type="text" id="invtotal" class="form-control input-sm" value="0.00" placeholder="" disabled>
-        </div>
+          <div class="form-group " style="width:25%;" >
+            <label for="invtotal">{% trans %}Total Invoice Amount {% endtrans %} :</label>
+            <div>
+            <input type="text" id="invtotal" class="form-control input-sm" value="0.00" size="15" placeholder="" disabled>
+          </div>
+          </div>
+
 
 
       {% else %}
       <input id="invhide" value="0" hidden="">
       {% endif %}
       {% endif %}
-      <div class=" form-group">
+      <div class=" form-group pull-right " style="width:15%;">
         <label for="vdate">{% trans %}<u>D</u>ate{% endtrans %} :</label><label for="vdate" style="color:red;font-size: 120%;">*</label>
+        <div>
         <input type="text" class="vdate form-control input-sm" id="vdate" value="{{lastdetails['vdate'][0:2]}}" size="2" maxlength="2" placeholder="DD" accesskey="d">
         <input type="text" id="vmonth" class="vdate form-control input-sm" value="{{lastdetails['vdate'][3:5]}}" size="2" maxlength="2" placeholder="MM">
         <input type="text" id="vyear" class="vdate form-control input-sm" value="{{lastdetails['vdate'][6:]}}" size="4" maxlength="4" placeholder="YYYY">
+      </div>
+      </div>
 
       </div>
       </div>
+    </div>
+
       <div class="panel flow shadow ">
         <div class="table-responsive">
           <table id="vtable" class="table table-condensed table-fixedheader">
@@ -272,7 +282,7 @@
             {% if invoicedata!= 0 %}
             <tbody style="height: 20%;">
             {% else %}
-            <tbody style="height: 35%;">
+            <tbody style="height: 20%;">
             {% endif %}
               <tr>
                 <td class="col-xs-1">

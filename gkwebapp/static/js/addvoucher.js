@@ -279,6 +279,18 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       $("#postdate-alert").hide();
     }
 
+          if (details.invid!="")
+    	     {
+
+              if (Date.parseExact($("#invsel option:selected").attr("invdate"), "dd-MM-yyyy").compareTo(curdate)==1) {
+                $("#inv-date-alert").alert();
+                $("#inv-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#inv-date-alert").hide();
+                });
+                $('#vdate').focus().select();
+                return false;
+              }
+            }
 
   });
 
@@ -296,10 +308,26 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   $('#vno').keydown(function(event) {
     if(event.which==13 && $('#vno').val()!=""){
       navflag =1;
-      $('#vdate').select().focus();
+      //$('#vdate').select().focus();
+//roh
+
+      if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invflag ==1)
+      {
+        if($("#invhide").val()==1)
+       {
+        $("#invsel").focus();
+      }
+      else {
+        $('#vdate').focus().select();
+      }
+      }
+      else
+      {
+        $('#vdate').focus().select();
+      }
+        event.preventDefault();
+
     }
-  });
-  $('#vno').keydown(function(event) {
     if (event.which==190 && event.ctrlKey) {
       $("#vdate").focus().select();
       event.preventDefault();
@@ -334,9 +362,11 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 
   $('#vmonth').keyup(function(event) {
     if(event.which==13 && $('#vmonth').val()!=""){
+      event.preventDefault();
       $('#vyear').select().focus();
     }
     if (event.which==38) {
+      event.preventDefault();
       $("#vdate").select().focus();
     }
   });
@@ -353,27 +383,33 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 
   $("#invsel").keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-      $('#vyear').focus().select();
+      $('#vno').focus().select();//roh
       event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-      $('#vtable tbody tr:first select:enabled').focus();
+      $('#vdate').focus().select();//roh
       event.preventDefault();
+    }
+    if (event.which==13) {
+      event.preventDefault();
+      $('#vdate').focus().select();
     }
   });
 
+//roh invsel
+/*$("#invsel").keyup(function(event) {
 
-$("#invsel").keyup(function(event) {
-  /* Act on the event */
   if (event.which==13) {
-
-    $('#vtable tbody tr:first select:enabled').focus();
+    event.preventDefault();
+    $('#vdate').focus().select();
   }
-});
+});*/
 
   $('#vyear').keyup(function(event) {
     if(event.which==13 && $('#vyear').val()!=""){
-      if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invflag ==1)
+      $('#vtable tbody tr:first select:enabled').focus();
+      event.preventDefault();
+    /*  if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invflag ==1)
       {
         if($("#invhide").val()==1)
        {
@@ -386,7 +422,8 @@ $("#invsel").keyup(function(event) {
       else
       {
         $('#vtable tbody tr:first select:enabled').focus();
-      }
+      }*/
+
     }
     if (event.which==38) {
       $("#vmonth").select().focus();
@@ -401,15 +438,10 @@ $("#invsel").keyup(function(event) {
       event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-      if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invflag ==1)
-      {
-        $("#invsel").focus();
-      }
-      else
-      {
+      console.log("roh");
+  event.preventDefault();
         $('#vtable tbody tr:first select:enabled').focus();
-      }
-      event.preventDefault();
+
     }
   });
 
@@ -1481,7 +1513,7 @@ $("#invsel").keyup(function(event) {
       }
 
       if (details.invid!="")
-	{
+	     {
 
           if (Date.parseExact($("#invsel option:selected").attr("invdate"), "dd-MM-yyyy").compareTo(curdate)==1) {
             $("#inv-date-alert").alert();
