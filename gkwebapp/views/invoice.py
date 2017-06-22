@@ -21,6 +21,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
 
 Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
+"Bhavesh Bawadhane" <bbhavesh07@gmail.com>
 "Mohd. Talha Pawaty" <mtalha456@gmail.com>
 """
 
@@ -42,6 +43,12 @@ def showinvoice(request):
 @view_config(route_name="invoice", request_param="action=showviewregister", renderer="gkwebapp:templates/viewregister.jinja2")
 def showviewregister(request):
 	return {"status":True}
+
+@view_config(route_name="invoice", request_param="action=viewlist", renderer="gkwebapp:templates/viewlistofinvoices.jinja2")
+def showlistofinv(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/invoice?inv=all", headers=header)
+	return {"status":True, "numberofinvoices": len(result.json()["gkresult"])}
 
 @view_config(route_name="invoice",request_param="action=showadd",renderer="gkwebapp:templates/addinvoice.jinja2")
 def showaddinvoice(request):
@@ -139,6 +146,24 @@ def getInvoiceDetails(request):
 	invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
 	return {"gkstatus": invoicedata.json()["gkstatus"],"invoicedata": invoicedata.json()["gkresult"]}
 
+@view_config(route_name="invoice", request_param="action=showlist", renderer="gkwebapp:templates/listofinvoices.jinja2")
+def listofinv(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/invoice?type=list&flag=%s&fromdate=%s&todate=%s"%(request.params["flag"], request.params["fromdate"], request.params["todate"]), headers=header)
+	return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "flag": request.params["flag"], "fromdate": request.params["fromdate"], "todate": request.params["todate"], "displayfromdate": datetime.strptime(request.params["fromdate"],'%Y-%m-%d').strftime('%d-%m-%Y'), "displaytodate": datetime.strptime(request.params["todate"],'%Y-%m-%d').strftime('%d-%m-%Y')}
+
+@view_config(route_name="invoice", request_param="action=printlist", renderer="gkwebapp:templates/printlistofinvoices.jinja2")
+def printlistofinv(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/invoice?type=list&flag=%s&fromdate=%s&todate=%s"%(request.params["flag"], request.params["fromdate"], request.params["todate"]), headers=header)
+	return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "flag": request.params["flag"], "fromdate": request.params["fromdate"], "todate": request.params["todate"], "displayfromdate": datetime.strptime(request.params["fromdate"],'%Y-%m-%d').strftime('%d-%m-%Y'), "displaytodate": datetime.strptime(request.params["todate"],'%Y-%m-%d').strftime('%d-%m-%Y')}
+
+@view_config(route_name="invoice",request_param="action=showinv",renderer="gkwebapp:templates/viewsingleinvoice.jinja2")
+def showsingleinvoice(request):
+	header={"gktoken":request.headers["gktoken"]}
+	invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
+	return {"gkstatus": invoicedata.json()["gkstatus"],"gkresult": invoicedata.json()["gkresult"]}
+
 @view_config(route_name="invoice",request_param="action=cancel",renderer="json")
 def Invoicedelete(request):
 	header={"gktoken":request.headers["gktoken"]}
@@ -201,6 +226,84 @@ def showregisterreport(request):
 	result = requests.get("http://127.0.0.1:6543/report?type=register&flag=%d&calculatefrom=%s&calculateto=%s"%(int(request.params["flag"]), str(request.params["calculatefrom"]), str(request.params["calculateto"])), headers=header)
 	registerheader = {"flag": request.params["flag"], "calculatefrom": request.params["calculatefrom"], "calculateto": request.params["calculateto"]}
 	return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "totalrow": result.json()["totalrow"], "taxcolumns":result.json()["taxcolumns"], "registerheader": registerheader}
+
+@view_config(route_name="invoice",request_param="action=listofinvspreadsheet", renderer="")
+def listofinvspreadsheet(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/invoice?type=list&flag=%s&fromdate=%s&todate=%s"%(request.params["flag"], request.params["fromdate"], request.params["todate"]), headers=header)
+	result = result.json()["gkresult"]
+	fystart = str(request.params["fystart"]);
+	fyend = str(request.params["fyend"]);
+	orgname = str(request.params["orgname"])
+	orgname += " (FY: " + fystart+" to "+fyend +")"
+	ods = ODS()
+	sheet = ods.content.getSheet(0)
+	ods.content.mergeCells(0,0,11,1)
+	ods.content.mergeCells(0,1,11,1)
+	sheet.getRow(0).setHeight("23pt")
+	sheet.getRow(1).setHeight("18pt")
+	sheet.getRow(2).setHeight("15pt")
+	sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("16pt")
+	ods.content.mergeCells(0,2,11,1)
+	sheet.getCell(0,2).stringValue("Period: "+datetime.strptime(request.params["fromdate"],'%Y-%m-%d').strftime('%d-%m-%Y')+" To "+datetime.strptime(request.params["todate"],'%Y-%m-%d').strftime('%d-%m-%Y')).setBold(True).setAlignHorizontal("center").setFontSize("12pt")
+	if request.params["flag"] == "0":
+		   sheet.setSheetName("List of All Invoices")
+		   sheet.getCell(0,1).stringValue("List of All Invoices").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+	elif request.params["flag"] == "1":
+		sheet.setSheetName("List of Sales Invoices")
+		sheet.getCell(0,1).stringValue("List of Sales Invoices").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+	elif request.params["flag"] == "2":
+		sheet.setSheetName("List of Purchase Invoices")
+		sheet.getCell(0,1).stringValue("List of Purchase Invoices").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+	sheet.getColumn(0).setWidth("2cm")
+	sheet.getColumn(1).setWidth("2cm")
+	sheet.getColumn(2).setWidth("3cm")
+	sheet.getColumn(3).setWidth("2cm")
+	sheet.getColumn(4).setWidth("3cm")
+	sheet.getColumn(5).setWidth("4cm")
+	sheet.getColumn(6).setWidth("4cm")
+	sheet.getColumn(7).setWidth("3cm")
+	sheet.getColumn(8).setWidth("3cm")
+	sheet.getColumn(9).setWidth("3cm")
+	sheet.getColumn(10).setWidth("5cm")
+	sheet.getCell(0,3).stringValue("Sr. No.").setBold(True)
+	sheet.getCell(1,3).stringValue("INV No.").setBold(True)
+	sheet.getCell(2,3).stringValue("INV Date").setBold(True)
+	sheet.getCell(3,3).stringValue("DC No.").setBold(True)
+	sheet.getCell(4,3).stringValue("DC Date").setBold(True)
+	if request.params["flag"] == "0":
+		   sheet.getCell(5,3).stringValue("Cust/Suppl Name").setBold(True)
+	elif request.params["flag"] == "1":
+		sheet.getCell(5,3).stringValue("Customer Name").setBold(True)
+	elif request.params["flag"] == "2":
+		sheet.getCell(5,3).stringValue("Supplier Name").setBold(True)
+	sheet.getCell(6,3).stringValue("TIN").setBold(True)
+	sheet.getCell(7,3).stringValue("Gross Amt.").setBold(True)
+	sheet.getCell(8,3).stringValue("Net Amt.").setBold(True)
+	sheet.getCell(9,3).stringValue("TAX Amt.").setBold(True)
+	sheet.getCell(10,3).stringValue("Godown").setBold(True)
+	row = 4
+	for invoice in result:
+		sheet.getCell(0, row).stringValue(invoice["srno"])
+		sheet.getCell(1, row).stringValue(invoice["invoiceno"])
+		sheet.getCell(2, row).stringValue(invoice["invoicedate"])
+		sheet.getCell(3, row).stringValue(invoice["dcno"])
+		sheet.getCell(4, row).stringValue(invoice["dcdate"])
+		sheet.getCell(5, row).stringValue(invoice["custname"])
+		sheet.getCell(6, row).stringValue(invoice["custtin"])
+		sheet.getCell(7, row).stringValue(invoice["grossamt"])
+		sheet.getCell(8, row).stringValue(invoice["netamt"])
+		sheet.getCell(9, row).stringValue(invoice["taxamt"])
+		sheet.getCell(10, row).stringValue(invoice["godown"])
+		row += 1
+	ods.save("response.ods")
+	repFile = open("response.ods")
+	rep = repFile.read()
+	repFile.close()
+	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+	os.remove("response.ods")
+	return Response(rep, headerlist=headerList.items())
+
 
 @view_config(route_name="invoice",request_param="type=spreadsheet", renderer="")
 def registerspreadsheet(request):

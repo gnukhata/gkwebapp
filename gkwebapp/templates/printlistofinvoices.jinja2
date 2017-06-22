@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}List of Invoices{% endtrans %}</title>
+    <style type="text/css">
+
+     td {
+  	 font-size: 65%;
+  	 color: black;
+     }
+
+     th {
+  	 font-size: 70%;
+     }
+
+     @page {
+	 size : 21cm 29.7cm;
+	 margin : 10mm 10mm 20mm 10mm
+     }
+     thead{
+	 display: table-header-group;
+     }
+     tfoot{
+	 display: table-footer-group;
+     }
+     .bigwrap {
+     width:20%;
+     }
+     .mdwrap {
+     width:12%;
+     }
+     .smwrap {
+     width:9%;
+     }
+     .qtywrap {
+     width:8%
+     }
+     .srnowrap {
+     width:6%;
+     }
+
+    </style>
+  </head>
+  <body>
+    <input type="text" id="invoicetypeselect" value={{flag}} hidden></input>
+    <div class="hidden-print">
+      <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{displayfromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{displaytodate}}</strong></span>
+      <span style="margin-left: 46.4%;"><strong>List of <i>{%if flag == "0" %}All{%elif flag == "1" %}Sales{%elif flag == "2" %}Purchase{% endif %}</i> Invoices</strong></span>
+    </div>
+
+    <div class="table-responsive printorgdetails">
+      <table class="table table-condensed table-bordered table-striped shadow">
+	<thead class="bg-primary">
+          <tr class="visible-print">
+            <th colspan="11" style="text-align:center; font-size:80%;">
+              List of <i>{%if flag == "0" %}All{%elif flag == "1" %}Sales{%elif flag == "2" %}Purchase{% endif %}</i> Invoices
+	      <br>
+	      <i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{displayfromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{displaytodate}}</strong>
+            </th>
+          </tr>
+	  <tr>
+      <th class="srnowrap text-center" >
+         {% trans %}Sr. No.{% endtrans %}
+      </th>
+      <th class="smwrap text-center" >
+         {% trans %}INV No.{% endtrans %}
+      </th>
+      <th class="mdwrap text-center" >
+         {% trans %}INV Date{% endtrans %}
+      </th>
+      <th class="smwrap text-center" >
+         {% trans %}DC No.{% endtrans %}
+      </th>
+      <th class="mdwrap text-center" >
+         {% trans %}DC Date{% endtrans %}
+      </th>
+      <th class="mdwrap text-center" >
+         {%if flag == "0" %}{% trans %}Cust/Supp Name{% endtrans %}{%elif flag == "1" %}{% trans %}Customer Name{% endtrans %}{%elif flag == "2" %}{% trans %}Supplier Name{% endtrans %}{% endif %}
+      </th>
+      <th class="mdwrap text-center" >
+         {% trans %}TIN{% endtrans %}
+      </th>
+      <th class="mdwrap text-right" >
+         {% trans %}Gross Amt{% endtrans %}
+      </th>
+      <th class="mdwrap text-right" >
+         {% trans %}Net Amt{% endtrans %}
+      </th>
+      <th class="mdwrap text-right" >
+         {% trans %}TAX Amt{% endtrans %}
+      </th>
+      <th class="mdwrap text-center" >
+         {% trans %}Godown{% endtrans %}
+      </th>
+	  </tr>
+	</thead>
+	<tbody>
+    {% for invoice in gkresult %}
+    <tr data-invid="{{invoice["invid"]}}">
+    <td class="srnowrap text-center">{{invoice["srno"]}}</td>
+    <td class="smwrap text-center">{{invoice["invoiceno"]}}</td>
+    <td class="mdwrap text-center">{{invoice["invoicedate"]}}</td>
+    <td class="smwrap text-center">{{invoice["dcno"]}}</td>
+    <td class="mdwrap text-center">{{invoice["dcdate"]}}</td>
+    <td class="mdwrap text-center">{{invoice["custname"]}}</td>
+    <td class="mdwrap text-center">{{invoice["custtin"]}}</td>
+    <td class="mdwrap text-right">{{invoice["grossamt"]}}</td>
+    <td class="mdwrap text-right">{{invoice["netamt"]}}</td>
+    <td class="mdwrap text-right">{{invoice["taxamt"]}}</td>
+    <td class="mdwrap text-center">{{invoice["godown"]}}</td>
+    </tr>
+    {% endfor %}
+	</tbody>
+      </table>
+      <span style="margin:auto; display:table;">
+  	<button type="button" class="btn btn-sm btn-danger hidden-print" id="loiback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+  	<button type="button" class="btn btn-sm btn-info hidden-print" id="loiprint" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
+      </span>
+    </div>
+    <script type="text/javascript">
+     $(document).ready(function() {
+
+       oninvoice = 0;
+
+       $("#msspinmodal").modal("hide");
+
+       $("title").html("GNUKhata")
+       $("#loiprint").click(function(event) {
+         window.print();
+       });
+       $("#loiback").click(function(event) {
+         $("#msspinmodal").modal("show");
+	 var dataset = {"flag":$("#invoicetypeselect").val(), "fromdate":$("#fromdate").data("fromdate"),"todate":$("#todate").data("todate")};
+	 $.ajax(
+	   {
+	     type: "POST",
+	     url: "/invoice?action=showlist",
+	     global: false,
+	     async: false,
+	     datatype: "text/html",
+	     data: dataset,
+	     beforeSend: function(xhr)
+	     {
+	       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	     },
+	   })
+	  .done(function(resp)
+	    {
+	      $("#info").html(resp);
+	    }
+	  );
+       });
+     });
+    </script>
+
+  </body>
+</html>
