@@ -401,8 +401,8 @@ var userrole1;
     $("#showbalancesheet").text("Statement of Affairs");
     $("#showcashflow").text("Receipt & Payment");
     $("#cashflowtb").text("Receipt & Payment - CTRL+6");
-    $("#showproject").text("Create & Edit Project");
-    $("#projecttb").text("Create & Edit Project - ALT+P");
+    $("#showproject").text("Project");
+    $("#projecttb").text("Project - ALT+P");
     $("#showprjstate").text("Project Statement");
     $("#projectstatementtb").text("Project Statement - CTRL+5");
   }
