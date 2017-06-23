@@ -110,7 +110,8 @@ def selectorglogin(request):
 	if result.json()["gkstatus"]==0:
 		header = result.json()["token"]
 		result1 = requests.get("http://127.0.0.1:6543/organisation",headers={"gktoken":header})
-		return  {"gktoken":result.json()["token"], "gkstatus":result.json()["gkstatus"],"invflag":result1.json()["gkdata"]["invflag"]}
+		print result1.json()["gkdata"]
+		return  {"gktoken":result.json()["token"], "gkstatus":result.json()["gkstatus"],"invflag":result1.json()["gkdata"]["invflag"],"invsflag":result1.json()["gkdata"]["invsflag"],"billflag":result1.json()["gkdata"]["billflag"]}
 	else:
 		return  {"gkstatus":result.json()["gkstatus"]}
 

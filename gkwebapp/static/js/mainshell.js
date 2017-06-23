@@ -346,37 +346,6 @@ var userrole1;
       $("#lang").click();
     }
   });
-  //default focuses on first option of dropdowns.
-  $('#masterdropdown').on('shown.bs.dropdown', function () {
-    $("#addaccount").focus();
-  });
-  $('#inventorydropdown').on('shown.bs.dropdown', function () {
-    $("#product").focus();
-  });
-  $('#transactiondropdown').on('shown.bs.dropdown', function () {
-    $("#showreceipt").focus();
-  });
-  $('#reportdropdown').on('shown.bs.dropdown', function () {
-    $("#showviewledger").focus();
-  });
-  $('#administrationdropdown').on('shown.bs.dropdown', function () {
-    $("#createuser").focus();
-  });
-  $('#helpdropdown').on('shown.bs.dropdown', function () {
-    $("#manual").focus();
-  });
-  $('#signoutdropdown').on('shown.bs.dropdown', function () {
-    $("#logout").focus();
-  });
-  $('#themesdropdown').on('shown.bs.dropdown', function () {
-    $("#Default").focus();
-  });
-  $('#langdropdown').on('shown.bs.dropdown', function () {
-    $("#eng").focus();
-  });
-  $('#toolbardropdown').on('shown.bs.dropdown', function () {
-    $("#addaccounttb").focus();
-  });
   $("#toolbar").click(function(){
     // Expands the toolbar on click to the height slightly less than the windowheight.
     var windowheight = window.innerHeight;
@@ -654,86 +623,134 @@ var userrole1;
       // creates a modal(dialog box) asking user to activate inventory or not.
       $("#orgprefmodal").on('shown.bs.modal', function(event) {
         $("#invflag").focus();
-          var invflag=sessionStorage.getItem('invflag');
-          var invsflag=sessionStorage.getItem('invsflag');
-          var billflag=sessionStorage.getItem('billflag');
-          console.log(invflag);
-          console.log(invsflag);
-          console.log(billflag);
-          if (invflag==0) {
-          $('#invflag').attr('checked', false);
-          }
-          if(invflag!=0){
-            $('#invflag').attr('checked', true);
-            $('#invsflag').attr('checked', true);
-            invsflag=1;
-          }
-          if(invsflag==0)
-          {
-          $('#invsflag').attr('checked', false);
-          }
-          if(invsflag!=0){
-            $('#invsflag').attr('checked', true);
-          }
-          if(billflag==0)
-          {
-          $('#billflag').attr('checked', false);
-          }
-          if(billflag!=0) {
-            $('#billflag').attr('checked', true);
-          }
+          var invflag;
+          var invsflag;
+          var billflag;
 
-                $("#invflag").change(function(e) {
-                  if($(this).is(":checked")) {
-                    event.preventDefault();
+          console.log(sessionStorage.invflag);
+          console.log(sessionStorage.invsflag);
+          console.log(sessionStorage.billflag);
+              if (sessionStorage.invflag==1) {
+                $('#invflag').attr('checked', true);
+                $('#invsflag').attr('checked', true);
 
+                }
+                if (sessionStorage.invsflag==1) {
                   $('#invsflag').attr('checked', true);
-                  invsflag=1;
-                  $('#invsflag').attr('disabled',true);
-                 }
-                 else {
-                   invsflag=0;
-                   $('#invsflag').attr('checked', false);
-                   $('#invsflag').attr('disabled',false);
-                 }
+                  $('#invsflag').attr('disabled', true);
+
+                  }
+                  if (sessionStorage.billflag==1) {
+                    $('#billflag').attr('checked', true);
+                    }
+
+                    $("#invflag").keydown(function(event) {
+                        if (event.which==13) {
+                          event.preventDefault();
+
+                          if ($("#invsflag").is(":checked"))
+                          {
+
+                                $('#billflag').focus();
+                        }
+                        else {
+                          invflag=0;
+                          $('#invsflag').focus();
+                        }
+                      }
+                      });
+
+
+
+                      $("#invsflag").keydown(function(event) {
+                        if (event.which==13) {
+                          event.preventDefault();
+                          $('#billflag').focus();
+                        }
+                      });
+
+                      $("#billflag").keydown(function(event) {
+                        if (event.which==13) {
+                          $("#orgprefsave").click();
+
+                        }
+                      });
+  $(document).off("click","#invflag").on("click", "#invflag", function(event)
+                            {
+                              if($(this).is(":checked")) {
+
+                              $('#invsflag').attr('checked', true);
+                              $('#invsflag').attr('disabled',true);
+                             }
+                             else {
+                               $('#invsflag').attr('checked', false);
+                               $('#invsflag').attr('disabled',false);
+                             }
+                            });
+
+
+
+       $("#orgprefsave").click(function(event){
+         if ($("#invflag").is(":checked"))
+         {
+           invflag=1;
+       }
+       else {
+         invflag=0;
+
+       }
+       if ($("#invsflag").is(":checked"))
+       {
+         invsflag=1;
+     }
+     else {
+       invsflag=0;
+
+     }
+     if ($("#billflag").is(":checked"))
+     {
+       billflag=1;
+   }
+   else {
+     billflag=0;
+
+   }
+               $.ajax({
+                       url: '/editorganisation?action=orgpref',
+                       type: "POST",
+                       datatype: 'json',
+                       global: false,
+                       async: false,
+                       data: {"invflag":invflag,"invsflag":invsflag,"billflag":billflag},
+                       beforeSend: function(xhr)
+                       {
+                         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                       }
+                      })
+                      .done(function(resp) {
+
+                              if (resp['gkstatus']==0)
+                                {
+
+                             console.log("DATa saved");
+                             console.log(sessionStorage.invflag);
+                             console.log(sessionStorage.invsflag);
+                             console.log(sessionStorage.billflag);
+                             location.reload();// page is reloaded if inventory is successfully activated, so that inventory menu shows up.
+                                }
+                      })
+                      .fail(function() {
+                              console.log("error");
+                      })
+                      .always(function() {
+                              console.log("complete");
+                      });
+
+
                 });
 
 
-          $("#orgprefsave").click(function(event){
-                      event.preventDefault();
-                  $.ajax({
-                          url: '/editorganisation?action=orgpref',
-                          type: "POST",
-                          datatype: 'json',
-                          global: false,
-                          async: false,
-                          data: {"invflag":invflag,"invsflag":invsflag,"billflag":billflag},
-                          beforeSend: function(xhr)
-                          {
-                            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                          }
-                	       })
-                      	 .done(function(resp) {
-
-                                 if (resp['gkstatus']==0)
-                                   {
-                                sessionStorage.setItem('invflag', invflag );
-                                sessionStorage.setItem('invsflag', invsflag );
-                                sessionStorage.setItem('billflag', billflag );
-
-                                location.reload();// page is reloaded if inventory is successfully activated, so that inventory menu shows up.
-                                   }
-                      	 })
-                      	 .fail(function() {
-                                 console.log("error");
-                      	 })
-                      	 .always(function() {
-                                 console.log("complete");
-                      	 });
-
-
-                   });
-        });
+                  });
     });
 
 
@@ -791,6 +808,37 @@ var userrole1;
        console.log("complete");
      });
   });
+
+  $("#searchcategory").click(function (e){
+    // opens a modal showing the topmost categories.
+    $.ajax({
+      url: '/catsearch?type=topcat',
+      type: "POST",
+      datatype: 'text/html',
+      beforeSend: function(xhr)
+      {
+	xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+    })
+     .done(function(resp) {
+
+       $('#catsearchmodal').html(resp);
+       $("#m_serachcat").modal();
+       $("#m_serachcat").on('shown.bs.modal', function(event) {
+	 $("#catsearchtab tbody tr:first td:first select").focus();
+
+       });
+     })
+     .fail(function() {
+       console.log("error");
+     })
+     .always(function() {
+       console.log("complete");
+     });
+  });
+
+
+
 
   $("#showeditorg").click(function (e){
     // calls edit organisation page.
@@ -1021,50 +1069,6 @@ var userrole1;
 
         type: "POST",
         url: "/product?type=list",
-        global: false,
-        async: false,
-        datatype: "text/html",
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-        success: function(resp)
-        {
-          $("#info").html(resp);
-        }
-      }
-    );
-  });
-
-  $('#listofinvoices').click(function (e) {
-    // calls list of invoices report
-    $.ajax(
-      {
-
-        type: "POST",
-        url: "/invoice?action=viewlist",
-        global: false,
-        async: false,
-        datatype: "text/html",
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-        success: function(resp)
-        {
-          $("#info").html(resp);
-        }
-      }
-    );
-  });
-
-  $('#listoftransfernotes').click(function (e) {
-    // calls list of stock items report.
-    $.ajax(
-      {
-
-        type: "POST",
-        url: "/transfernotes?action=viewlist",
         global: false,
         async: false,
         datatype: "text/html",
@@ -1420,25 +1424,7 @@ var userrole1;
   $('#createtransfernote').click(function (e) {// calls base transfer note page.
     $("#info").load("/transfernotes");
   });
-  $('#rejectionnote').click(function (e) {// calls route rejectionnote and loads show page.
-    $.ajax(
-      {
-      type: "POST",
-      url: "/rejectionnote",
-      global: false,
-      async: false,
-      datatype: "text/html",
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-      },
-      success: function(resp)
-      {
-        $("#info").html(resp);
-      }
-      }
-    );
-  });
+
   $('#deliverychallan').click(function (e) {// calls base deliverychallan page.
 
     $.ajax(
