@@ -96,7 +96,7 @@
 	      </div>
 	      <div class="form-group"  >
        <div class="form-inline">
-              <label for="received_transfernote_date">{% trans %}Received Date:{% endtrans %}</label><label for="received_transfernote_date" style="color:red;font-size: 120%;">*</label>
+              <label for="received_transfernote_date">{% trans %}Date of Receipt:{% endtrans %}</label><label for="received_transfernote_date" style="color:red;font-size: 120%;">*</label>
 
                 <form class="form-inline">
                   <div class="form-group">
@@ -152,7 +152,7 @@
 
             <div class="form-group hidden-load" hidden>
               <tr>
-			<td><label >{% trans %} From Godown : {% endtrans %}</label>
+			<td><label >{% trans %} Dispatch From : {% endtrans %}</label>
              </td>
               <td> <label id="rec_tn_from_godown"></label>
               </td>
@@ -161,7 +161,7 @@
 
             <div class="form-group hidden-load" hidden>
               <tr>
-              <td><label >{% trans %} To Godown : {% endtrans %}</label>
+		<td><label >{% trans %} Dispatched To : {% endtrans %}</label>
               </td>
               <td> <label id="rec_tn_to_godown"></label>
               </td>
@@ -205,7 +205,7 @@
       </table>
 
       <div class="panel-footer hidden-load" hidden>
-    <button id="rec_received" class="btn btn-success btn-sm" >{% trans %}<i class="fa fa-check" aria-hidden="true"></i> Received{% endtrans %}</button>
+	<button id="rec_received" class="btn btn-success btn-sm" >{% trans %}<i class="fa fa-check" aria-hidden="true"></i>Acknowledged{% endtrans %}</button>
     <button id="tn_editprint" class="btn btn-primary btn-sm" >{% trans %}<i class="fa fa-print" aria-hidden="true"></i> Print{% endtrans %}</button>
       </div>
     </div>
