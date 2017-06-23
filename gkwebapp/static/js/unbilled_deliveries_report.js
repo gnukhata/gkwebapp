@@ -211,16 +211,16 @@ $(".search").children(".form-control").keyup(function(event){
   });
 
 
-/*
+
 		$("#printbutton").click(function(event) {
 			// this function creates a spreadsheet of the report.
 		event.preventDefault();
 		var orgname = sessionStorage.getItem('orgn');
 		var orgtype = sessionStorage.getItem('orgt');
+		var unbdelstring = '&inputdate='+$("#inputdate").val()+'&inout='+$("#inout").val()+'del_unbilled_type='+ $("#del_unbilled_type").val();
 		var xhr = new XMLHttpRequest();
-		trialbalancetype = $("#trialbaltype").val();
-
-		xhr.open('GET', '/printtrialbalance?financialstart='+sessionStorage.yyyymmddyear1+'&orgname='+orgname+'&calculateto='+newtodate+'&orgtype='+orgtype+'&trialbalancetype='+trialbalancetype+'&fyend='+sessionStorage.getItem('year2'), true);
+		console.log(unbdelstring);
+		xhr.open('GET', '/deliverychallan?action=unbillspreadsheet&financialstart='+sessionStorage.yyyymmddyear1+'&orgname='+orgname+'&orgtype='+orgtype+'&fyend='+sessionStorage.getItem('year2')+unbdelstring, true);
 		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
 		xhr.responseType = 'blob';
 
@@ -236,5 +236,5 @@ $(".search").children(".form-control").keyup(function(event){
 
 	xhr.send();
 
-});*/
+});
 });
