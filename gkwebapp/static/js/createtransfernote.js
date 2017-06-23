@@ -42,9 +42,10 @@ $(document).ready(function() {
   $("#tn_month").numeric();
   $("#tn_year").numeric();
   $("#no_of_packet").numeric();
+  $("#tn_grace").numeric({ negative : false });
 
   $('.tnduedate').autotab('number'); //Autotab in date fields.
-    //Prevents alphabets in numeric fields.
+  //Prevents alphabets in numeric fields.
   $("#tn_duedate").numeric();
   $("#tn_duemonth").numeric();
   $("#tn_dueyear").numeric();
