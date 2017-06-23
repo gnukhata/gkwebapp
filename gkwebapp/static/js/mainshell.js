@@ -612,6 +612,7 @@ var userrole1;
     $('#inventorymodal').modal('show').one('click', '#inv_yes', function (e)
       {
 	// if yes then inventory is activated.
+
 	$.ajax({
           url: '/editorganisation?edit=inventoryactivate',
           type: "POST",
@@ -645,87 +646,97 @@ var userrole1;
       });
   });
 
-  $("#orgpref").click(function (e){
-    // creates a modal(dialog box) asking user to activate inventory or not.
-    $("#orgprefmodal").on('shown.bs.modal', function(event) {
-      $("#inventory").focus();
 
-    });
-    $('#orgprefmodal').modal('show').one('click', '#inv_no', function (e)
-      {
-	// If users selects no option then the modal is closed.
-	$('#orgprefmodal').modal("hide");
-      });
-    $('#orgprefmodal').modal('show').one('click', function (e)
-      {
-        var form_data = new FormData();
-        var invflag;
-        var invsflag;
-        var billflag;
-        if ($("#invflag").is(":checked"))
-        {
-          invflag=1;
 
-        }
-        else
-        {
-          invflag=0;
-        }
-        if ($("#invsflag").is(":checked"))
-        {
-          invsflag=1;
-        }
-        else
-        {
-          invsflag=0;
-        }
-        if ($("#billflag").is(":checked"))
-        {
-          billflag=1;
-        }
-        else
-        {
-          billflag=0;
-        }
+    $("#orgpref").click(function (e){
 
-        form_data.append("invflag",invflag);
-        form_data.append("invsflag",invflag);
-        form_data.append("billflag",invflag);
-	// if yes then inventory is activated.
-$("#orgprefsave").click(function(event){
+      $("#orgprefmodal").modal('show');
+      // creates a modal(dialog box) asking user to activate inventory or not.
+      $("#orgprefmodal").on('shown.bs.modal', function(event) {
+        $("#invflag").focus();
+          var invflag=sessionStorage.getItem('invflag');
+          var invsflag=sessionStorage.getItem('invsflag');
+          var billflag=sessionStorage.getItem('billflag');
+          console.log(invflag);
+          console.log(invsflag);
+          console.log(billflag);
+          if (invflag==0) {
+          $('#invflag').attr('checked', false);
+          }
+          if(invflag!=0){
+            $('#invflag').attr('checked', true);
+            $('#invsflag').attr('checked', true);
+            invsflag=1;
+          }
+          if(invsflag==0)
+          {
+          $('#invsflag').attr('checked', false);
+          }
+          if(invsflag!=0){
+            $('#invsflag').attr('checked', true);
+          }
+          if(billflag==0)
+          {
+          $('#billflag').attr('checked', false);
+          }
+          if(billflag!=0) {
+            $('#billflag').attr('checked', true);
+          }
+
+                $("#invflag").change(function(e) {
+                  if($(this).is(":checked")) {
+                    event.preventDefault();
+
+                  $('#invsflag').attr('checked', true);
+                  invsflag=1;
+                  $('#invsflag').attr('disabled',true);
+                 }
+                 else {
+                   invsflag=0;
+                   $('#invsflag').attr('checked', false);
+                   $('#invsflag').attr('disabled',false);
+                 }
+                });
+
+
+          $("#orgprefsave").click(function(event){
+                      event.preventDefault();
                   $.ajax({
                           url: '/editorganisation?action=orgpref',
                           type: "POST",
                           datatype: 'json',
                           global: false,
                           async: false,
-                          data: form_data,
+                          data: {"invflag":invflag,"invsflag":invsflag,"billflag":billflag},
                           beforeSend: function(xhr)
                           {
                             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
                           }
-                	})
-                	 .done(function(resp) {
+                	       })
+                      	 .done(function(resp) {
 
-                           if (resp['gkstatus']==0)
-                             {
-                          sessionStorage.setItem('invflag', invflag );
-                          sessionStorage.setItem('invsflag', invsflag );
-                          sessionStorage.setItem('billflag', billflag );
+                                 if (resp['gkstatus']==0)
+                                   {
+                                sessionStorage.setItem('invflag', invflag );
+                                sessionStorage.setItem('invsflag', invsflag );
+                                sessionStorage.setItem('billflag', billflag );
 
-                          location.reload();// page is reloaded if inventory is successfully activated, so that inventory menu shows up.
-                             }
-                	 })
-                	 .fail(function() {
-                           console.log("error");
-                	 })
-                	 .always(function() {
-                           console.log("complete");
-                	 });
+                                location.reload();// page is reloaded if inventory is successfully activated, so that inventory menu shows up.
+                                   }
+                      	 })
+                      	 .fail(function() {
+                                 console.log("error");
+                      	 })
+                      	 .always(function() {
+                                 console.log("complete");
+                      	 });
 
-                 });
-      });
-  });
+
+                   });
+        });
+    });
+
+
 
 
   $("#exportdata").on('shown.bs.modal', function(event) {
