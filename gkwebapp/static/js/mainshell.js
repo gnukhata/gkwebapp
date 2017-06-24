@@ -716,13 +716,26 @@ var userrole1;
 				$('#billflag').focus();
 			    }
                         }
+			  else if (event.which == 38) {
+			      event.preventDefault();
+			      $("#invflag").focus();
+			  }
                       });
 
                       $("#billflag").keydown(function(event) {
-                        if (event.which==13) {
+                          if (event.which==13) {
+			      event.preventDefault();
                           $("#orgprefsave").focus();
-
                         }
+			  else if (event.which == 38) {
+			      event.preventDefault();
+			      if ($("#invsflag").is(":disabled")) {
+				  $("#invflag").focus();
+			      }
+			      else {
+				  $("#invsflag").focus();
+			      }
+			  }
                       });
   $(document).off("click","#invflag").on("click", "#invflag", function(event)
                             {

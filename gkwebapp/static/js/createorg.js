@@ -226,29 +226,96 @@ $(document).ready(function()
         }
       });
       $("#invflag").keydown(function(event) {
-        if (event.which==13) {
-          if ($("#invsflag").is(":checked"))
-          {
-                $('#billflag').focus();
-        }
-        else {
-          $('#invsflag').focus();
-        }
-      }
-      });
+                        if (event.which==13) {
+                          event.preventDefault();
 
-      $("#invsflag").keydown(function(event) {
-        if (event.which==13) {
-          $('#billflag').focus();
-        }
-      });
+                          if ($("#invsflag").is(":checked"))
+                          {
 
-      $("#billflag").keydown(function(event) {
-        if (event.which==13) {
-          $("#btnsubmit").click();
+                                $('#billflag').focus();
+                        }
+                        else {
+                          invflag=0;
+                          $('#invsflag').focus();
+                        }
+			}
+	  else if (event.which == 38) {
+	      event.preventDefault();
+	      $("#toyear").focus().select();
+	  }
+                    });
+	  
+                      $("#invsflag").keydown(function(event) {
+                        if (event.which==13) {
+                          event.preventDefault();
+                            if ($('#billflag').is(":disabled")) {
+			      $("#btnsubmit").focus();
+			    }
+			    else {
+				$('#billflag').focus();
+			    }
+                        }
+			  else if (event.which == 38) {
+			      event.preventDefault();
+			      if ($("#invflag").is(":disabled")) {
+				  $("#toyear").focus().select();
+			      }
+			      else {
+				  $("#invflag").focus();
+			      }
+			  }
+                      });
 
-        }
-      });
+                      $("#billflag").keydown(function(event) {
+                          if (event.which==13) {
+			      event.preventDefault();
+			      $("#btnsubmit").focus();
+                        }
+			  else if (event.which == 38) {
+			      event.preventDefault();
+			      if ($("#invsflag").is(":disabled")) {
+				  $("#invflag").focus();
+			      }
+			      else if ($("#invsflag").is(":disabled") && $("#invflag").is(":disabled")) {
+				  $("#toyear").focus().select();
+			      }
+			      else {
+				  $("#invsflag").focus();
+			      }
+			  }
+                      });
+    $(document).off("click","#invflag").on("click", "#invflag", function(event)
+                            {
+                              if($(this).is(":checked")) {
+                              $('#invsflag').prop('checked', true);
+				  $('#invsflag').prop('disabled',true);
+				  $('#billflag').prop('disabled', false);
+                             }
+				else {
+				    $('#invsflag').prop('disabled',false);
+				    $('#invsflag').prop('checked', false);
+				    if($("#invflag").is(":checked")) {
+				  $('#billflag').prop('disabled', false);
+				    }
+				    else {
+					$('#billflag').prop('disabled', true);
+				    }
+                             }
+                            });
+	  $(document).off("click","#invsflag").on("click", "#invsflag", function(event)
+                            {
+                              if($(this).is(":checked")) {
+				  $('#billflag').prop('disabled', false);
+                             }
+				else {
+				    if($("#invsflag").is(":checked")) {
+				  $('#billflag').prop('disabled', false);
+				    }
+				    else {
+					$('#billflag').prop('disabled', true);
+				    }
+                             }
+                            });
       $("#btnsubmit").click(function(event){
         event.preventDefault();
         var startday = $("#fromday").val();
