@@ -217,10 +217,10 @@ $(".search").children(".form-control").keyup(function(event){
 		event.preventDefault();
 		var orgname = sessionStorage.getItem('orgn');
 		var orgtype = sessionStorage.getItem('orgt');
-		var unbdelstring = '&inputdate='+$("#inputdate").val()+'&inout='+$("#inout").val()+'del_unbilled_type='+ $("#del_unbilled_type").val();
+		var unbdelstring = '&inputdate='+$("#inputdate").val()+'&inout='+$("#inout").val()+'&del_unbilled_type='+ $("#del_unbilled_type").val();
 		var xhr = new XMLHttpRequest();
 		console.log(unbdelstring);
-		xhr.open('GET', '/deliverychallan?action=unbillspreadsheet&financialstart='+sessionStorage.yyyymmddyear1+'&orgname='+orgname+'&orgtype='+orgtype+'&fyend='+sessionStorage.getItem('year2')+unbdelstring, true);
+		xhr.open('GET', '/deliverychallan?action=unbillspreadsheet&fystart='+sessionStorage.yyyymmddyear1+'&orgname='+orgname+'&orgtype='+orgtype+'&fyend='+sessionStorage.getItem('year2')+unbdelstring, true);
 		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
 		xhr.responseType = 'blob';
 
