@@ -1594,7 +1594,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
                 $.ajax(
                   {
                     type: "POST",
-                    url: "/addvoucher?type=showbillwisetable",
+                    url: "/billwise?type=showbillwisetable",
                     global: false,
                     async: false,
                     data:{"accountcode":sessionStorage.customeracccode, "voucherdate":sessionStorage.voucherdate},
