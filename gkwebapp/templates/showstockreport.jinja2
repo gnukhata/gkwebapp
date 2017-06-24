@@ -26,7 +26,7 @@
 
   #latable tbody {
       display:block;
-      height: calc(100vh - 18em);
+      height: calc(100vh - 20em);
       overflow-y:scroll;
   }
   #latable thead,#latable tbody tr {
@@ -252,6 +252,13 @@
       {% endfor %}
     </tbody>
   </table>
+  <div class="col-xs-12">
+    <small><b>Trn Type :</b> Transaction Type, &nbsp
+        <b>Deli Note No. : </b> Delivery Note Number, &nbsp
+        <b>INV No. :</b> Invoice Number, &nbsp
+        <b>RN No. :</b> Rejection Number<br><br>
+    </small>
+</div>
   <span style="margin:auto; display:table;">
     <nbsp><nbsp>
       <button type="button" class="btn btn-sm btn-danger" id="viewanotherstock" accesskey="w">{% trans %}<i class="fa fa-eye" aria-hidden="true"></i> Vie<u>w</u> Another Stock{% endtrans %}</button>
