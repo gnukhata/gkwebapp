@@ -115,7 +115,7 @@ def addvoucher(request):
 		gkdata["bankname"]=vdetails["bankname"]
 		gkdata["branchname"]=vdetails["branchname"]
 		gkdata["instrumentdate"] = vdetails["instrumentdate"]
-	
+
 
 	try:
 		files = {}
@@ -217,7 +217,7 @@ def getClosingBal(request):
 	else:
 		return {"gkstatus":result.json()["gkstatus"]}
 
-@view_config(route_name="addvoucher", request_param = "type=showcustomersupplierlist", renderer="gkwebapp:templates/customersupplierlist.jinja2")
+@view_config(route_name="addvoucher", request_param = "type=showcustomersupplierlist", renderer="gkwebapp:templates/unadjustedaccount.jinja2")
 def getCustomerSupplierList(request):
 	header={"gktoken":request.headers["gktoken"]}
 	customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
