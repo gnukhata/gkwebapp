@@ -626,10 +626,6 @@ var userrole1;
           var invflag;
           var invsflag;
           var billflag;
-
-          console.log(sessionStorage.invflag);
-          console.log(sessionStorage.invsflag);
-          console.log(sessionStorage.billflag);
               if (sessionStorage.invflag==1) {
                   $('#invflag').prop('checked', true);
 		  $('#invflag').prop('disabled', true);
