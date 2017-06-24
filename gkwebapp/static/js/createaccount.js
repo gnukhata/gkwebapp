@@ -114,7 +114,7 @@ $(document).ready(function()
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
         },
         success: function(jsonObj) {
-          subgroups = jsonObj["gkresult"],
+            var subgroups = jsonObj["gkresult"];
           $('#subgroupname').empty();
           for (i in subgroups ) {
             $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</option>');

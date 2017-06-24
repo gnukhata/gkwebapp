@@ -346,6 +346,48 @@ var userrole1;
       $("#lang").click();
     }
   });
+
+      //default focuses on first option of dropdowns.
+  $('#masterdropdown').on('shown.bs.dropdown', function () {
+    $("#addaccount").focus();
+  });
+  $('#inventorydropdown').on('shown.bs.dropdown', function () {
+    $("#product").focus();
+  });
+  $('#transactiondropdown').on('shown.bs.dropdown', function () {
+    $("#showreceipt").focus();
+  });
+  $('#reportdropdown').on('shown.bs.dropdown', function () {
+    $("#addaccount").focus();
+  });
+  $('#inventorydropdown').on('shown.bs.dropdown', function () {
+    $("#product").focus();
+  });
+  $('#transactiondropdown').on('shown.bs.dropdown', function () {
+    $("#showreceipt").focus();
+  });
+  $('#reportdropdown').on('shown.bs.dropdown', function () {
+    $("#showviewledger").focus();
+  });
+  $('#administrationdropdown').on('shown.bs.dropdown', function () {
+    $("#createuser").focus();
+  });
+  $('#helpdropdown').on('shown.bs.dropdown', function () {
+    $("#manual").focus();
+  });
+  $('#signoutdropdown').on('shown.bs.dropdown', function () {
+    $("#logout").focus();
+  });
+  $('#themesdropdown').on('shown.bs.dropdown', function () {
+    $("#Default").focus();
+  });
+  $('#langdropdown').on('shown.bs.dropdown', function () {
+    $("#eng").focus();
+  });
+  $('#toolbardropdown').on('shown.bs.dropdown', function () {
+    $("#addaccounttb").focus();
+  });
+    
   $("#toolbar").click(function(){
     // Expands the toolbar on click to the height slightly less than the windowheight.
     var windowheight = window.innerHeight;
@@ -834,37 +876,6 @@ var userrole1;
      });
   });
 
-  $("#searchcategory").click(function (e){
-    // opens a modal showing the topmost categories.
-    $.ajax({
-      url: '/catsearch?type=topcat',
-      type: "POST",
-      datatype: 'text/html',
-      beforeSend: function(xhr)
-      {
-	xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      }
-    })
-     .done(function(resp) {
-
-       $('#catsearchmodal').html(resp);
-       $("#m_serachcat").modal();
-       $("#m_serachcat").on('shown.bs.modal', function(event) {
-	 $("#catsearchtab tbody tr:first td:first select").focus();
-
-       });
-     })
-     .fail(function() {
-       console.log("error");
-     })
-     .always(function() {
-       console.log("complete");
-     });
-  });
-
-
-
-
   $("#showeditorg").click(function (e){
     // calls edit organisation page.
     $("#msspinmodal").modal("show");
@@ -954,7 +965,7 @@ var userrole1;
       success: function(resp)
       {
         sessionStorage.gktoken="";
-        code = resp["gkdata"]
+          var code = resp["gkdata"];
         $("body").load("/login?orgcode="+code+"&flag="+flag, setTimeout( function() {
           $("#username").focus();
         }, 500 ));
@@ -1434,6 +1445,72 @@ var userrole1;
       }
     );
   });
+
+    $('#listofinvoices').click(function (e) {
+    // calls list of invoices report
+    $.ajax(
+      {
+
+        type: "POST",
+        url: "/invoice?action=viewlist",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+      }
+    );
+  });
+
+  $('#listoftransfernotes').click(function (e) {
+    // calls list of stock items report.
+    $.ajax(
+      {
+
+        type: "POST",
+        url: "/transfernotes?action=viewlist",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+      }
+    );
+  });
+
+
+ $('#rejectionnote').click(function (e) {// calls route rejectionnote and loads show page.
+    $.ajax(
+      {
+      type: "POST",
+      url: "/rejectionnote",
+      global: false,
+      async: false,
+      datatype: "text/html",
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+      success: function(resp)
+      {
+        $("#info").html(resp);
+      }
+      }
+    );
+  });
+    
   $('#invoice').click(function (e) {// calls base invoice page.
     $("#info").load("/invoice");
   });
