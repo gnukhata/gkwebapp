@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Unadjusted Accounts{% endtrans %}</title>
+  <style type="text/css">
+   span
+   {
+       font-size: 95%;
+   }
+
+   .shadow {
+       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   }
+   #vouchertable td, #invoicetable td {
+       font-size: 75%;
+       padding: 4 !important;
+       margin: 4 !important;
+   }
+   #invoicetable th, #vouchertable{
+       font-size: 85%;
+   }
+
+   .card-view .title {
+       font-weight: bold;
+       display: inline-block;
+       min-width: 30%;
+       text-align: left !important;
+   }
+   #invoicetable tbody, #vouchertable tbody {
+       display:block;
+       height: calc(100vh - 35em);
+       overflow-y:scroll;
+   }
+   #invoicetable thead ,#vouchertable tbody tr,#vouchertable thead ,#invoicetable tbody tr {
+       display:table;
+       width:100%;
+       table-layout:fixed;
+   }
+   #invoicetable thead,#vouchertable thead {
+       width: calc( 100% - 0.65em )
+   }
+   .ralign{
+       text-align:right;
+
+   }
+   .cred{
+       color:red;
+   }
+   .calign{
+       text-align:center;
+   }
+   .mdwrap{
+       width: 13%;
+   }
+   .mdmwrap{
+       width:11%;
+   }
+  </style>
+</head>
+<body>
+  <div class="row">
+  <div class="form-group col-sm-6">
+  <label for="customerselect">{% trans %}List of Cus<u>t</u>omers{% endtrans %} :</label>
+  <select id="customerselect" class="form-control input-sm" accesskey="t">
+    <option value="0" disabled hidden selected>{% trans %}Select Customer{% endtrans %}</option>
+    {% for customer in customers %}
+                  <option value="{{customer['custid']}}">{{customer["custname"]}}</option>
+    {% endfor %}
+  </select>
+</div>
+<div class="form-group col-sm-6">
+</div>
+</div>
+</br>
+
+  <div class="row">
+    <div class="table-responsive col-md-5 ">
+
+      <table id="vouchertable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="right" data-buttons-align="right" data-search="true">
+        <thead class="bg-primary">
+          <tr>
+            <th  class="calign mdwrap">{% trans %}Date{% endtrans %}</th>
+            <th class="ralign mdmwrap">{% trans %}Voucher No.{% endtrans %}</th>
+            <th class="mdmwrap ralign" >{% trans %}Amount{% endtrans %}</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr  data-value="">
+            <td class="calign mdwrap">
+
+            </td>
+
+            <td class="ralign mdmwrap">
+              <a class="vno1" href="#"></a>
+            </td>
+            <td class="ralign mdmwrap">
+              <a class="vno1" href="#"></a>
+            </td>
+
+
+          </tr>
+
+        </tbody>
+      </table>
+
+    </div>
+    <div  class="table-responsive col-md-7 ">
+
+            <table id="invoicetable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="right" data-buttons-align="right" data-search="true">
+              <thead class="bg-primary">
+                <tr>
+                  <th  class="calign mdwrap">{% trans %}Date{% endtrans %}</th>
+                  <th class="ralign mdmwrap">{% trans %}Invoice No.{% endtrans %}</th>
+                  <th class="mdmwrap ralign" >{% trans %}Invoice Amount{% endtrans %}</th>
+                  <th class="mdmwrap ralign" >{% trans %}Balance Amount{% endtrans %}</th>
+                  <th class="mdmwrap ralign" >{% trans %}Amount Now Adjusted{% endtrans %}</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr  data-value="">
+                  <td class="calign mdwrap">
+
+                  </td>
+
+                  <td class="ralign mdmwrap">
+                    <a class="vno1" href="#"></a>
+                  </td>
+                  <td class="ralign mdmwrap">
+                    <a class="vno1" href="#"></a>
+                  </td>
+                  <td class="ralign mdmwrap">
+                    <a class="vno1" href="#"></a>
+                  </td>
+                  <td class="ralign mdmwrap">
+                    <a class="vno1" href="#"></a>
+                  </td>
+
+
+                </tr>
+
+              </tbody>
+            </table>
+    </div>
+
+
+  </div>
+
+  <div id="viewvc">
+  </div>
+  </div>
+
+  <input id="vouchernumberinput" type="text" value="0" hidden >
+
+</body>
+</html>
