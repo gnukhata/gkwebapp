@@ -187,7 +187,7 @@ $(document).ready(function() {
       $('#latable tfoot tr:eq(0) td:eq(2)').html('<div class="form-control" disabled>'+parseFloat(totalpending).toFixed(2)+'</div');
 	$(".billamount").html("<b>"+parseFloat(totalap).toFixed(2)+"</b>");
       //Alert is displayed when sum of total amount paid and sum of unadjusted amounts is more than sum of Debit/Credit amount and previous unadjusted amounts.
-      if (parseFloat(totalap) > (parseFloat(sessionStorage.customeramount)) {
+	if (parseFloat(totalap) > parseFloat(sessionStorage.customeramount)) {
 	  $(".alert").hide();
       $("#bwamount-alert").alert();
       $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -208,8 +208,8 @@ $(document).ready(function() {
     var billwisedata = [];  //List to store data.
     var totalamountpaid = 0;  //Variable to store total amount paid. Total is recalculated here to avoid errors.
     /*
-       The loop below makes a dictionaries from values stored in each row in this format - {"pdamt":amount adjusted, "invid":invoice id}.
-       It appends each dictionary into a list billwisedata.
+       The loop below makes dictionaries from values stored in each row in this format -{"vouchercode": vouchercode, "invid":invoiceid,"adjamount": adjusted amount}.
+       It appends each dictionary into a list, adjbills.
        It stores the total amount adjusted in the variable totalamountpaid which is later used for validations.
      */
     for(var i = 0; i < $("#latable tbody tr").length; i++) {
@@ -238,10 +238,10 @@ $(document).ready(function() {
 	//Creating a dictionary and appending to the list.
 	var amountpaid = parseFloat($("#latable tbody tr:eq("+i+") td:eq(4) input").val());
 	var invid = parseInt($("#latable tbody tr:eq("+i+")").data("invid"));
-	var invamount = {};
-	invamount["pdamt"] = amountpaid;
+	  var invamount = {};
+	invamount["vouchercode"] = $("#vchcode").val();  
+	invamount["adjamount"] = amountpaid;
 	invamount["invid"] = invid;
-	invamount["payflag"] = 2;
 	billwisedata.push(invamount);
 	totalamountpaid = totalamountpaid + amountpaid;
       }

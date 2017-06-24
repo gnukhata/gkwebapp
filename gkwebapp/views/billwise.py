@@ -63,7 +63,7 @@ def getBillTable(request):
                     sumofinvoiceamounts = sumofinvoiceamounts + float(bill["invoicetotal"])
                     sumofpendingamounts = sumofpendingamounts + float(bill["pendingamount"])
                     unpaidbills.append(bill)
-            return {"gkstatus":result.json()["gkstatus"], "gkresult":unpaidbills, "sumofinvoiceamounts":sumofinvoiceamounts, "sumofpendingamounts":sumofpendingamounts, "custid":custid, "onaccount":"%.2f"%customerdetails["onaccamt"], "asadvance":"%.2f"%customerdetails["advamt"]}
+            return {"gkstatus":result.json()["gkstatus"], "gkresult":unpaidbills, "sumofinvoiceamounts":sumofinvoiceamounts, "sumofpendingamounts":sumofpendingamounts, "custid":custid, "vouchercode":request.params["vouchercode"]}
     return {"gkresult":[]}
     """
 	elif request.params.has_key("custid"):

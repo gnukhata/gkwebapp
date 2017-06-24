@@ -1579,7 +1579,8 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
       },
       success: function(resp)
-      {
+	{
+	    console.log(resp);
         if(resp.gkstatus){ // if the voucher is saved show an alert and then reset the voucher form and clear all variables.
           $("#reset").click();
           $("#success-alert").alert();
@@ -1597,7 +1598,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
                     url: "/billwise?type=showbillwisetable",
                     global: false,
                     async: false,
-                    data:{"accountcode":sessionStorage.customeracccode, "voucherdate":sessionStorage.voucherdate},
+                      data:{"accountcode":sessionStorage.customeracccode, "voucherdate":sessionStorage.voucherdate,"vouchercode":resp["vouchercode"]},
                     datatype: "text/html",
                     beforeSend: function(xhr)
                     {
