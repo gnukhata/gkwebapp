@@ -631,18 +631,26 @@ var userrole1;
           console.log(sessionStorage.invsflag);
           console.log(sessionStorage.billflag);
               if (sessionStorage.invflag==1) {
-                $('#invflag').attr('checked', true);
-                $('#invsflag').attr('checked', true);
-
-                }
+                  $('#invflag').prop('checked', true);
+		  $('#invflag').prop('disabled', true);
+                  $('#invsflag').prop('checked', true);
+		  $('#invsflag').prop('disabled', true);
+              }
+	  
                 if (sessionStorage.invsflag==1) {
-                  $('#invsflag').attr('checked', true);
-                  $('#invsflag').attr('disabled', true);
-
-                  }
+                  $('#invsflag').prop('checked', true);
+                  $('#invsflag').prop('disabled', true);
+                }
+	  
                   if (sessionStorage.billflag==1) {
-                    $('#billflag').attr('checked', true);
-                    }
+                      $('#billflag').prop('checked', true);
+		      $('#invsflag').prop('checked', true);
+		      $('#invsflag').prop('disabled', true);
+                  }
+	  if (sessionStorage.invsflag==0 && sessionStorage.invflag==0) {
+                  $('#billflag').prop('checked', false);
+                  $('#billflag').prop('disabled', true);
+                }
 
                     $("#invflag").keydown(function(event) {
                         if (event.which==13) {
@@ -658,37 +666,58 @@ var userrole1;
                           $('#invsflag').focus();
                         }
                       }
-                      });
-
-
-
+                    });
+	  
                       $("#invsflag").keydown(function(event) {
                         if (event.which==13) {
                           event.preventDefault();
-                          $('#billflag').focus();
+                            if ($('#billflag').is(":disabled")) {
+			      $("#orgprefsave").focus();
+			    }
+			    else {
+				$('#billflag').focus();
+			    }
                         }
                       });
 
                       $("#billflag").keydown(function(event) {
                         if (event.which==13) {
-                          $("#orgprefsave").click();
+                          $("#orgprefsave").focus();
 
                         }
                       });
   $(document).off("click","#invflag").on("click", "#invflag", function(event)
                             {
                               if($(this).is(":checked")) {
-
-                              $('#invsflag').attr('checked', true);
-                              $('#invsflag').attr('disabled',true);
+                              $('#invsflag').prop('checked', true);
+				  $('#invsflag').prop('disabled',true);
+				  $('#billflag').prop('disabled', false);
                              }
-                             else {
-                               $('#invsflag').attr('checked', false);
-                               $('#invsflag').attr('disabled',false);
+				else {
+				    $('#invsflag').prop('disabled',false);
+				    $('#invsflag').prop('checked', false);
+				    if($("#invflag").is(":checked")) {
+				  $('#billflag').prop('disabled', false);
+				    }
+				    else {
+					$('#billflag').prop('disabled', true);
+				    }
                              }
                             });
-
-
+	  $(document).off("click","#invsflag").on("click", "#invsflag", function(event)
+                            {
+                              if($(this).is(":checked")) {
+				  $('#billflag').prop('disabled', false);
+                             }
+				else {
+				    if($("#invsflag").is(":checked")) {
+				  $('#billflag').prop('disabled', false);
+				    }
+				    else {
+					$('#billflag').prop('disabled', true);
+				    }
+                             }
+                            });
 
        $("#orgprefsave").click(function(event){
          if ($("#invflag").is(":checked"))
@@ -730,13 +759,13 @@ var userrole1;
                       .done(function(resp) {
 
                               if (resp['gkstatus']==0)
-                                {
-
-                             console.log("DATa saved");
-                             console.log(sessionStorage.invflag);
-                             console.log(sessionStorage.invsflag);
-                             console.log(sessionStorage.billflag);
-                             location.reload();// page is reloaded if inventory is successfully activated, so that inventory menu shows up.
+                          {
+			      $("#orgpref-alert").alert();
+			      $("#orgpref-alert").fadeTo(2250, 500).slideUp(500, function() {
+				  $("#orgprefmodal").modal("hide");
+                        $("#orgpref-alert").hide();
+			location.reload();
+                    });
                                 }
                       })
                       .fail(function() {
