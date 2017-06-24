@@ -176,7 +176,7 @@
       <div class="row " style="margin:0 !important;" >
 <center>
         <input id="vouchertype" type="text" value="{{vtype}}" hidden>
-        <div class="form-group col-sm-12 " style="margin-top:10px; margin-bottom:0 !important; padding-bottom:0 !important;">
+        <div class="form-group col-sm-12 " style="margin-top:0; margin-bottom:0 !important; padding:0 !important;">
           {% if vtype=="contra" %}
           <label style="font-size: 16;"><i>{% trans %}Contra{% endtrans %}</i></label>
           {% elif vtype == "payment" %}
@@ -397,7 +397,7 @@
         </div>
           <div class="form-group pull-left col-md-6">
             <label for="narration">{% trans %}Narra<u>t</u>ion{% endtrans %} :</label>
-            <textarea class="form-control" name="narration" id="narration" rows="3" cols="70" accesskey="t"></textarea>
+            <textarea class="form-control" name="narration" id="narration" rows="2" cols="70" accesskey="t"></textarea>
           </div>
 
       </div>
