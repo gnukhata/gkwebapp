@@ -66,22 +66,36 @@ def getBillTable(request):
             return {"gkstatus":result.json()["gkstatus"], "gkresult":unpaidbills, "sumofinvoiceamounts":sumofinvoiceamounts, "sumofpendingamounts":sumofpendingamounts, "custid":custid, "vouchercode":request.params["vouchercode"]}
     return {"gkresult":[]}
     """
-	elif request.params.has_key("custid"):
-		custid = int(request.params["custid"])
-		customer = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%custid, headers=header)
-		customerdetails = customer.json()["gkresult"]
-		billdetails = requests.get("http://127.0.0.1:6543/invoice?type=bwa&custid=%d"%custid, headers=header)
-		unpaidbills = []
-		sumofinvoiceamounts = 0.00
-		sumofpendingamounts = 0.00
-		if billdetails.json()["gkstatus"] == 0:
-			for bill in billdetails.json()["gkresult"]["unpaidbills"]:
-				sumofinvoiceamounts = sumofinvoiceamounts + float(bill["invoicetotal"])
-				sumofpendingamounts = sumofpendingamounts + float(bill["pendingamount"])
-				unpaidbills.append(bill)
-			return {"gkstatus":customer.json()["gkstatus"], "gkresult":unpaidbills, "sumofinvoiceamounts":sumofinvoiceamounts, "sumofpendingamounts":sumofpendingamounts, "custid":custid, "onaccount":"%.2f"%customerdetails["onaccamt"], "asadvance":"%.2f"%customerdetails["advamt"]}
-		return {"gkresult":[]}
-	else:
-		return {"gkresult":[]}
+    elif request.params.has_key("custid"):
+        custid = int(request.params["custid"])
+        customer = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%custid, headers=header)
+        customerdetails = customer.json()["gkresult"]
+        billdetails = requests.get("http://127.0.0.1:6543/invoice?type=bwa&custid=%d"%custid, headers=header)
+        unpaidbills = []
+        sumofinvoiceamounts = 0.00
+        sumofpendingamounts = 0.00
+        if billdetails.json()["gkstatus"] == 0:
+            for bill in billdetails.json()["gkresult"]["unpaidbills"]:
+                sumofinvoiceamounts = sumofinvoiceamounts + float(bill["invoicetotal"])
+                sumofpendingamounts = sumofpendingamounts + float(bill["pendingamount"])
+                unpaidbills.append(bill)
+            return {"gkstatus":customer.json()["gkstatus"], "gkresult":unpaidbills, "sumofinvoiceamounts":sumofinvoiceamounts, "sumofpendingamounts":sumofpendingamounts, "custid":custid, "onaccount":"%.2f"%customerdetails["onaccamt"], "asadvance":"%.2f"%customerdetails["advamt"]}
+        return {"gkresult":[]}
+    else:
+        return {"gkresult":[]}
 
 """
+'''
+The below function calls a function in API for invoice that updates the amount paid field in invoice table and advamt and onaccamt fields in customersupplier table.
+It receives a list of dictionaries.
+It contains a flag(payflag) to check for the type of payment. It could be settlement of a bill(payflag=2), advance payment(payflag=1) of amount or amount set as on account(payflag=15).
+For advance and on account payments an additional flag(icflag) is also sent which tells the API whether to increment organisation decrement the advamt or onaccamt fields.
+Each dictionary also has custid(id of customer or supplier) and amount.
+'''
+@view_config(route_name="invoice", request_param="action=updatepayment", renderer="json")
+def updatepayment(request):
+    header={"gktoken":request.headers["gktoken"]}
+    payments = json.loads(request.params["billwisedata"])
+    dataset = {"adjbills":payments}
+    result = requests.post("http://127.0.0.1:6543/billwise",data=json.dumps(dataset),headers = header)
+    return {"gkstatus":result.json()["gkstatus"]}

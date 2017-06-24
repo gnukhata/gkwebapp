@@ -248,7 +248,7 @@ $(document).ready(function() {
     }
       //Validations.
      //Alert is displayed when no changes have been made.
-      if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) == 0) {
+      if (parseFloat(totalamountpaid ) === 0) {
 	  $(".alert").hide();
 	  $("#nochange-alert").alert();
 	  $("#nochange-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -256,8 +256,8 @@ $(document).ready(function() {
 	  });
 	  return false;
     }
-    //Alert is displayed when sum of total amount adjusted and sum of unadjusted amounts is greater than sum of Debit/Credit amount(retrieved from session storage) and previous unadjusted amounts. See addvoucher.js to see when the amount is stored in session storage.
-      if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > (parseFloat(sessionStorage.customeramount) + parseFloat($("#asadvancelabel").data("asadvance")) + parseFloat($("#onaccountlabel").data("onaccount")))) {
+    //Alert is displayed when  total amount adjusted and sum of unadjusted amounts is greater than sum of Debit/Credit amount(retrieved from session storage) and previous unadjusted amounts. See addvoucher.js to see when the amount is stored in session storage.
+      if (parseFloat(totalamountpaid) > (parseFloat(sessionStorage.customeramount))) {
 	  $(".alert").hide();
       $("#bwamount-alert").alert();
       $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -265,79 +265,9 @@ $(document).ready(function() {
       });
       return false;
     }
-    if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > parseFloat(sessionStorage.customeramount) && ($("#useasadvance").val()=="" || $("#useasadvance").val()==0) && ($("#useonaccount").val()=="" || $("#useonaccount").val()==0)) {
-	if ($("#customerselect").length == 0) {
-	    $(".alert").hide();
-	$("#bwvamount-alert").alert();
-	$("#bwvamount-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#bwvamount-alert").hide();
-	});
-	return false;
-      }
-	else {
-	    $(".alert").hide();
-	$("#bwamount-alert").alert();
-      $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#bwamount-alert").hide();
-      });
-	return false;
-      }
-    }
-      if (parseFloat((parseFloat($("#useasadvance").val()) + parseFloat($("#useonaccount").val()))) > parseFloat(parseFloat($("#asadvancelabel").data("asadvance")) + parseFloat($("#onaccountlabel").data("onaccount")) + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) {
-	  $(".alert").hide();
-      $("#bwadvac-alert").alert();
-      $("#bwadvac-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#bwadvac-alert").hide();
-      });
-      return false;
-    }
-    //Alert is displayed when sum of total amount paid and sum of unadjusted amounts is less than sum of Debit/Credit amount and previous unadjusted amounts.
-      if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) < (parseFloat(sessionStorage.customeramount) + parseFloat($("#useasadvance").val()) + parseFloat($("#useonaccount").val()))) {
-	  $(".alert").hide();
-      $("#bwamount-less-alert").alert();
-      $("#bwamount-less-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#bwamount-less-alert").hide();
-      });
-      return false;
-      }
-
-      //Alert is displayed when sum of total amount paid and sum of unadjusted amounts is more than sum of Debit/Credit amount and previous unadjusted amounts.
-      if (parseFloat((totalamountpaid + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > (parseFloat(sessionStorage.customeramount) + parseFloat($("#useasadvance").val()) + parseFloat($("#useonaccount").val()))) {
-	  $(".alert").hide();
-      $("#bwamount-alert").alert();
-      $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#bwamount-alert").hide();
-      });
-      return false;
-    }
-
-    if (parseFloat($("#useasadvance").val()) > parseFloat($("#asadvancelabel").data("asadvance"))) {
-	$("#useasadvance").focus().select();
-	$(".alert").hide();
-      $("#asadvance-alert").alert();
-      $("#asadvance-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#asadvance-alert").hide();
-      });
-      return false;
-    }
-
-    if (parseFloat($("#useonaccount").val()) > parseFloat($("#onaccountlabel").data("onaccount"))) {
-	$("#useonaccount").focus.select();
-	$(".alert").hide();
-      $("#onaccount-alert").alert();
-      $("#onaccount-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#onaccount-alert").hide();
-      });
-      return false;
-    }
-
-    var usedasadvance = {};
-    var usedonaccount = {};
-    usedasadvance = {"payflag":1,"icflag":4, "pdamt":parseFloat($("#useasadvance").val()), "custid":$("#custid").val()};
-    usedonaccount = {"payflag":15,"icflag":4, "pdamt":parseFloat($("#useonaccount").val()), "custid":$("#custid").val()};
-    billwisedata.push(usedasadvance);
-    billwisedata.push(usedonaccount);
-      //If amount adjusted equals Debit/Credit amount AJAX request below is sent to the front-end view. Alert is displayed when the requast is successful.
+  
+  
+      //If amount adjusted equals Debit/Credit amount AJAX request below is sent to the front-end view. Alert is displayed when the request is successful.
       if (allow == 1) {
 	  allow = 0;
 	$.ajax({

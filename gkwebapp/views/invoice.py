@@ -187,31 +187,6 @@ def getattachment(request):
 	result = requests.get("http://127.0.0.1:6543/invoice?attach=image&invid=%d"%(int(request.params["invid"])), headers=header)
 	return {"attachment":result.json()["gkresult"],"invid":request.params["invid"], "cancelflag":result.json()["cancelflag"],"userrole":result.json()["userrole"],"invoiceno":result.json()["invoiceno"]}
 
-'''
-The below function calls a function in API for invoice that updates the amount paid field in invoice table and advamt and onaccamt fields in customersupplier table.
-It receives a list of dictionaries.
-It contains a flag(payflag) to check for the type of payment. It could be settlement of a bill(payflag=2), advance payment(payflag=1) of amount or amount set as on account(payflag=15).
-For advance and on account payments an additional flag(icflag) is also sent which tells the API whether to increment organisation decrement the advamt or onaccamt fields.
-Each dictionary also has custid(id of customer or supplier) and amount.
-'''
-@view_config(route_name="invoice", request_param="action=updatepayment", renderer="json")
-def updatepayment(request):
-	header={"gktoken":request.headers["gktoken"]}
-	payments = json.loads(request.params["billwisedata"])
-	for payment in payments:
-		payflag = int(payment["payflag"])
-		if payflag == 1 or payflag == 15:
-		   custid = int(payment["custid"])
-		   pdamt = float(payment["pdamt"])
-		   icflag = int(payment["icflag"])
-		   result = requests.put("http://127.0.0.1:6543/invoice?type=bwa&payflag=%d&icflag=%d&custid=%d&pdamt=%f"%(payflag, icflag, custid, pdamt), headers=header)
-
-		elif payflag == 2:
-		   invid = int(payment["invid"])
-		   pdamt = float(payment["pdamt"])
-		   result = requests.put("http://127.0.0.1:6543/invoice?type=bwa&payflag=%d&invid=%d&pdamt=%f"%(payflag, invid, pdamt), headers=header)
-
-	return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="invoice", request_param="action=getdelinvprods", renderer="json")
 def getdelinvproducts(request):
