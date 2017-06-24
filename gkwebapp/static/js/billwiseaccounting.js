@@ -5,7 +5,7 @@
    GNUKhata is Free Software; you can redistribute it and/or modify
    it under the terms of the GNU Affero General Public License as
    published by the Free Software Foundation; either version 3 of
-   the License, or (at your option) any later version.and old.stockflag = 's'
+   the License, or (at your option) any later version.
 
    GNUKhata is distributed in the hope that it will be useful, but
    WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,6 +23,7 @@
    "Abhijith Balan" <abhijithb21@openmailbox.org.in>
    "Prajkta Patkar" <prajkta@dff.org.in>
    "Arun Kelkar" <arunkelkar@dff.org.in>
+   "Rohini Baraskar"<robaraskar@dff.org.in>
  */
 
 // This script is for bill wise accounting
@@ -74,17 +75,7 @@ $(document).ready(function() {
       $("#latable tbody tr:eq("+curindex+") td:eq(4) input").val(originalvalue);
     }
   });
-  ////When focus shifts from As Advance or On Account amount fields value entererd is converted to float.
-  $(document).off('focusout', '#onaccount, #asadvance').on('focusout', '#onaccount, #asadvance', function(event) {
-    event.preventDefault();
-    if ($(this).val() == "") {
-      $(this).val("0.00");
-    }
-    else {
-      var originalvalue = parseFloat($(this).val()).toFixed(2);
-      $(this).val(originalvalue);
-    }
-  });
+  
   //Actions to be triggered when a key is pressed down.
   $(document).off('keydown', '.amountpaid').on('keydown', '.amountpaid', function(event) {
     /* Act on the event */
@@ -124,7 +115,7 @@ $(document).ready(function() {
     else if (event.which == 35) {
       event.preventDefault();
       //If 'End' key is pressed focus shifts to buttons in footer.
-      $(".footerbutton:visible").first().focus();
+      $("#btclose").focus();
     }
     else if(event.which == 45) {
       event.preventDefault();
@@ -196,7 +187,7 @@ $(document).ready(function() {
       $('#latable tfoot tr:eq(0) td:eq(2)').html('<div class="form-control" disabled>'+parseFloat(totalpending).toFixed(2)+'</div');
 	$(".billamount").html("<b>"+parseFloat(totalap).toFixed(2)+"</b>");
       //Alert is displayed when sum of total amount paid and sum of unadjusted amounts is more than sum of Debit/Credit amount and previous unadjusted amounts.
-      if (parseFloat((totalap + parseFloat($("#asadvance").val()) + parseFloat($("#onaccount").val()))) > (parseFloat(sessionStorage.customeramount) + parseFloat($("#useasadvance").val()) + parseFloat($("#useonaccount").val()))) {
+      if (parseFloat(totalap) > (parseFloat(sessionStorage.customeramount)) {
 	  $(".alert").hide();
       $("#bwamount-alert").alert();
       $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -206,263 +197,9 @@ $(document).ready(function() {
     }
     }, doneTypingInterval);
   });
-  $(document).off('keydown', '#useasadvance').on('keydown', '#useasadvance', function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-	if (parseFloat($("#useasadvance").val()) > parseFloat($("#asadvancelabel").data("asadvance"))) {
-	    $(".alert").hide();
-	$("#asadvance-alert").alert();
-	$("#asadvance-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#asadvance-alert").hide();
-	});
-	return false;
-      }
-      $("#useonaccount").focus().select();
-    }
-      else if(event.which == 38) {
-      event.preventDefault();
-	  if ($("#customerselect").length > 0) {
-	      if ($("#supplierselect option:selected").val() != 0) {
-		  $("#supplierselect").focus();
-	      }
-	      else {
-		  $("#customerselect").focus();
-	      }
-      }
-    }
-    else if(event.which == 45) {
-      event.preventDefault();
-      //Pressing 'Insert' key triggers click event of 'Done' button.
-      $("#btclose").click();
-      return false;
-    }
-  });
-  $(document).off('keydown', '#useonaccount').on('keydown', '#useonaccount', function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-	if (parseFloat($("#useonaccount").val()) > parseFloat($("#onaccountlabel").data("onaccount"))) {
-	    $(".alert").hide();
-	$("#onaccount-alert").alert();
-	$("#onaccount-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#onaccount-alert").hide();
-	});
-	return false;
-      }
-      $(".amountpaid:first").focus().select();
-    }
-    else if(event.which == 38) {
-	event.preventDefault();
-	$("#useasadvance").focus().select();
-    }
-    else if(event.which == 45) {
-      event.preventDefault();
-      //Pressing 'Insert' key triggers click event of 'Done' button.
-      $("#btclose").click();
-      return false;
-    }
-  });
-  $(document).off('focusout', '#useasadvance').on('focusout', '#useasadvance', function(event) {
-    /* Act on the event */
-    if ($("#useasadvance").val() == "") {
-      $("#useasadvance").val("0.00");
-    }
-  });
-  $(document).off('keyup', '#useasadvance').on('keyup', '#useasadvance', function(event) {
-    /* Act on the event */
-    clearTimeout(typingTimer);
-    if ($("#useasadvance").val() == "") {
-      $("#useasadvance").val("0.00");
-    }
-      if (parseFloat($("#useasadvance").val()) > parseFloat($("#asadvancelabel").data("asadvance"))) {
-	  $(".alert").hide();
-      $("#asadvance-alert").alert();
-      $("#asadvance-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#asadvance-alert").hide();
-      });
-      return false;
-    }
-    var newadvance = parseFloat($("#asadvancelabel").data("asadvance")) - parseFloat($("#useasadvance").val());
-    $("#asadvancelabel").html("<b>"+parseFloat(newadvance).toFixed(2)+"</b");
-    typingTimer = setTimeout(function(){
-      
-    }, doneTypingInterval);
-  });
-  $(document).off('focusout', '#useonaccount').on('focusout', '#useonaccount', function(event) {
-    /* Act on the event */
-    if ($("#useonaccount").val() == "") {
-      $("#useonaccount").val("0.00");
-    }
-  });
-  $(document).off('keyup', '#useonaccount').on('keyup', '#useonaccount', function(event) {
-    /* Act on the event */
-    clearTimeout(typingTimer);
-    if ($("#useonaccount").val() == "") {
-      $("#useonaccount").val("0.00");
-    }
-      if (parseFloat($("#useonaccount").val()) > parseFloat($("#onaccountlabel").data("onaccount"))) {
-	  $(".alert").hide();
-      $("#onaccount-alert").alert();
-      $("#onaccount-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#onaccount-alert").hide();
-      });
-      return false;
-    }
-    var newonaccount = parseFloat($("#onaccountlabel").data("onaccount")) - parseFloat($("#useonaccount").val());
-    $("#onaccountlabel").html("<b>"+parseFloat(newonaccount).toFixed(2)+"</b");
-    typingTimer = setTimeout(function(){
-      
-    }, doneTypingInterval);
-  });
-  $(document).off('focusout', '#onaccount, #asadvance').on('focusout', '#onaccount, #asadvance', function(event) {
-    if ($(this).val() == "") {
-      $(this).val("0.00");
-    }
-  });
-  $(document).off('keydown', '#onaccount, #asadvance').on('keydown', '#onaccount, #asadvance', function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-      $("#useasadvance").focus().select();
-    }
-    if(event.which == 45) {
-      event.preventDefault();
-      //Pressing 'Insert' key triggers click event of 'Done' button.
-      $("#btclose").click();
-      return false;
-    }
-  });
-  $(document).off('keydown', '#onaccount').on('keydown', '#onaccount', function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-      $(".footerbutton:visible").first().focus();
-    }
-    if(event.which == 45) {
-      event.preventDefault();
-      //Pressing 'Insert' key triggers click event of 'Done' button.
-      $("#btclose").click();
-      return false;
-    }
-  });
-  $(document).off('keydown', '#asadvance').on('keydown', '#asadvance', function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-      $(".footerbutton:visible").first().focus();
-    }
-    if(event.which == 45) {
-      event.preventDefault();
-      //Pressing 'Insert' key triggers click event of 'Done' button.
-      $("#btclose").click();
-      return false;
-    }
-  });
-    //Key Events for navigating through buttons
-    $(document).off('keydown', '#btasadv').on('keydown', '#btasadv', function(event) {
-    if (event.which == 39) {
-	event.preventDefault();
-	if ($("#btonacc").is(":visible")) {
-	  $("#btonacc").focus();  
-	}
-	else{
-	    $("#btbillwise").focus();
-	}
-    }
-    else if(event.which == 37) {
-      event.preventDefault();
-      $("#btclose").focus();
-    }
-    });
-    $(document).off('keydown', '#btonacc').on('keydown', '#btonacc', function(event) {
-    if (event.which == 39) {
-      event.preventDefault();
-	if ($("#btbillwise").is(":visible")) {
-	  $("#btbillwise").focus();  
-	}
-	else{
-	    $("#btclose").focus();
-	}
-    }
-    else if(event.which == 37) {
-      event.preventDefault();
-      if ($("#btasadv").is(":visible")) {
-	  $("#btasadv").focus();  
-	}
-	else{
-	    $("#btclose").focus();
-	}
-    }
-    });
-    $(document).off('keydown', '#btbillwise').on('keydown', '#btbillwise', function(event) {
-    if (event.which == 39) {
-      event.preventDefault();
-	$("#btclose").focus();
-    }
-    else if(event.which == 37) {
-      event.preventDefault();
-      if ($("#btonacc").is(":visible")) {
-	  $("#btonacc").focus();  
-	}
-	else{
-	    $("#btasadv").focus();
-	}
-    }
-    });
-    $(document).off('keydown', '#btclose').on('keydown', '#btclose', function(event) {
-    if (event.which == 39) {
-      event.preventDefault();
-	if ($(this).next().is(":visible")) {
-	  $(this).next().focus();  
-	}
-	else {
-	    $("#btonacc").focus();
-	}
-    }
-    else if(event.which == 37) {
-      event.preventDefault();
-	if ($("#btbillwise").is(":visible")) {
-	  $("#btbillwise").focus();  
-	}
-	else {
-	    $("#btonacc").focus();
-	}
-    }
-  });   
-  //Actions that occur when On Account is clicked.
-  $(document).off('click', '#btonacc').on('click', '#btonacc', function(event) {
-    event.preventDefault();
-    $("#latable").hide();  //Bill wise table is hidden
-    $("#asadvancediv").hide();  //Field for entering As Advance amount is hiddden.
-    $("#txtareahelp2").hide();  //Helper text for navigation amount paid is hidden.
-    $("#onaccdiv").show();  //Field for entering On Account amount is shown.
-    $("#btbillwise").show();  //Button for viewing billwisedata is shown.
-    $("#btonacc").hide();  //This button is hiddden.
-    $("#btasadv").show();  //Button for As Advance is shown.
-    $("#onaccount").focus().select();  //Focus on input field.
-  });
-
-  //Actions that occur when As Advance is clicked.
-  $(document).off('click', '#btasadv').on('click', '#btasadv', function(event) {
-    event.preventDefault();
-    $("#latable").hide();  //Bill wise table is hidden
-    $("#onaccdiv").hide();  //Field for entering On Account amount is hiddden.
-    $("#txtareahelp2").hide();  //Helper text for navigation amount paid is hidden.
-    $("#asadvancediv").show();  //Field for entering As Advance amount is shown.
-    $("#btbillwise").show();  //Button for viewing billwisedata is shown.
-    $("#btonacc").show();  //Button for On Account is shown.
-    $("#btasadv").hide();  //This button is hiddden.
-    $("#asadvance").focus().select();  //Focus on input field.
-  });
-
-  //Actions that occur when Bill Wise button is clicked.
-  $(document).off('click', '#btbillwise').on('click', '#btbillwise', function(event) {
-    event.preventDefault();
-    $("#onaccdiv").hide();  //Field for entering On Account amount is hiddden.
-    $("#asadvancediv").hide();  //Field for entering As Advance amount is 
-    $("#txtareahelp2").show();  //Helper text for navigation amount paid is shown.
-    $("#latable").show();  //Bill wise table is shown.
-    $("#btbillwise").hide();  //This button is hiddden.
-    $("#btonacc").show();  //Button for On Account is shown.
-    $("#btasadv").show();  //Button for As Advance is shown.
-    $(".amountpaid:first").focus().select();  //Focus on input field.
-  });
+    
+  
+  
     var allow = 1;
   //Actions that occur on click of 'Done' button.
   $(document).off('click', '#btclose').on('click', '#btclose', function(event) {
@@ -470,14 +207,6 @@ $(document).ready(function() {
       event.stopPropagation();
     var billwisedata = [];  //List to store data.
     var totalamountpaid = 0;  //Variable to store total amount paid. Total is recalculated here to avoid errors.
-    //Dictionaries are created to store unadjusted amounts along with payflag , icflag and custid.
-    //For As Advance payflag=1 and for on account payflag=15. Since these amounts are to be incremented icflag is set to 9.
-    var asadvance = {};
-    var onaccount = {};
-    asadvance = {"payflag":1,"icflag":9, "pdamt":parseFloat($("#asadvance").val()), "custid":$("#custid").val()};
-    onaccount = {"payflag":15,"icflag":9, "pdamt":parseFloat($("#onaccount").val()), "custid":$("#custid").val()};
-    billwisedata.push(asadvance);
-    billwisedata.push(onaccount);
     /*
        The loop below makes a dictionaries from values stored in each row in this format - {"pdamt":amount adjusted, "invid":invoice id}.
        It appends each dictionary into a list billwisedata.
