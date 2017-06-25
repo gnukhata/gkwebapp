@@ -99,3 +99,16 @@ def updatepayment(request):
     dataset = {"adjbills":payments}
     result = requests.post("http://127.0.0.1:6543/billwise",data=json.dumps(dataset),headers = header)
     return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="billwise", request_param = "action=showcustomersupplierlist", renderer="gkwebapp:templates/customersupplierlist.jinja2")
+def getCustomerSupplierList(request):
+	header={"gktoken":request.headers["gktoken"]}
+	customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
+	suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
+	return {"customers": customers.json()["gkresult"], "suppliers": suppliers.json()["gkresult"]}
+
+@view_config(route_name="billwise", request_param = "action=showunadjustedamounts", renderer="gkwebapp:templates/unadjustedamount.jinja2")
+def getunadjustedamounts(request):
+	header={"gktoken":request.headers["gktoken"]}
+	unadjustedamounts = requests.get("http://127.0.0.1:6543/billwise?csid=%d&csflag=%d"%(int(request.params["csid"]), int(request.params["csflag"])), headers=header)
+	return {"invoices":unadjustedamounts.json()["invoices"], "vouchers":unadjustedamounts.json()["vouchers"]}

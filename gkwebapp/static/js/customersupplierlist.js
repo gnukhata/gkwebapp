@@ -63,10 +63,10 @@ $(document).ready(function() {
     $.ajax(
       {
         type: "POST",
-        url: "/addvoucher?type=showbillwisetable",
+        url: "/billwise?action=showunadjustedamounts",
         global: false,
         async: false,
-        data:{"custid":$("#customerselect").val()},
+          data:{"csid":$("#customerselect").val(), "csflag":3},
         datatype: "text/html",
         beforeSend: function(xhr)
         {
@@ -106,10 +106,10 @@ $(document).ready(function() {
     $.ajax(
       {
         type: "POST",
-        url: "/addvoucher?type=showbillwisetable",
+        url: "/billwise?action=showunadjustedamounts",
         global: false,
         async: false,
-        data:{"custid":$("#supplierselect").val()},
+          data:{"csid":$("#supplierselect").val(), "csflag": 19},
         datatype: "text/html",
         beforeSend: function(xhr)
         {

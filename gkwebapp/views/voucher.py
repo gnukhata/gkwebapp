@@ -216,11 +216,3 @@ def getClosingBal(request):
 		return {"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"]}
 	else:
 		return {"gkstatus":result.json()["gkstatus"]}
-
-@view_config(route_name="addvoucher", request_param = "type=showcustomersupplierlist", renderer="gkwebapp:templates/unadjustedaccount.jinja2")
-def getCustomerSupplierList(request):
-	header={"gktoken":request.headers["gktoken"]}
-	customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
-	suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
-	return {"customers": customers.json()["gkresult"], "suppliers": suppliers.json()["gkresult"]}
-

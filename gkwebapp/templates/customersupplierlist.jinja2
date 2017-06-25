@@ -11,36 +11,45 @@
 	  <strong>Unadjusted Bills</strong><strong><span id="cstitle" hidden> for </span><span id="csname"></span></strong>
 	</div>
 	<div class="panel-body">
-	  <div class="container-fluid col-sm-12" style="margin-top:10px;">
-	      <form class="form-inline">
-		<div class="form-group col-sm-6">
-		  <label for="customerselect">{% trans %}List of Cus<u>t</u>omers{% endtrans %} :</label>
-		  <select id="customerselect" class="form-control input-sm" accesskey="t">
-		    <option value="0" disabled hidden selected>{% trans %}Select Customer{% endtrans %}</option>
-		    {% for customer in customers %}
-                      <option value="{{customer['custid']}}">{{customer["custname"]}}</option>
-		    {% endfor %}
-		  </select>
-	      </div>
+	  <div class="container-fluid col-sm-12">
+	    <form class="form-inline">
 	      <div class="form-group col-sm-6">
-		<label for="supplierselect">{% trans %}List of <u>S</u>uppliers{% endtrans %} :</label>
-		  <select id="supplierselect" class="form-control input-sm" accesskey="s">
-		    <option value="0" disabled hidden selected>{% trans %}Select Supplier{% endtrans %}</option>
-		    {% for supplier in suppliers %}
-                      <option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
-		    {% endfor %}
-		  </select>
+		<div class="radio">
+		  <label><input type="radio" class="cussup" name="cussup" id="custradio" aria-label="Customer" checked> Customer</label>
+		</div>
+		<div class="radio">
+		  <label><input type="radio" class="cussup" name="cussup" id="supradio" aria-label="Supplier"> Supplier</label>
+		</div>
 	      </div>
-	      </form>
-	    </div>
-	    <div class="container-fluid row" id="billwisediv">
-	    </div>
-	    <small id="txtareahelp" class="form-text text-muted" hidden>Press 'Insert' key from any field on the screen to save changes. Press 'End' key from last input field to shift focus to buttons.</small>
+	      <div class="form-group col-sm-6" id="custselectdiv">
+		<label for="customerselect">{% trans %}List of Cus<u>t</u>omers{% endtrans %} :</label>
+		<select id="customerselect" class="form-control input-sm" accesskey="t">
+		  <option value="0" disabled hidden selected>{% trans %}Select Customer{% endtrans %}</option>
+		  {% for customer in customers %}
+                    <option value="{{customer['custid']}}">{{customer["custname"]}}</option>
+		  {% endfor %}
+		</select>
+	      </div>
+	      <div class="form-group col-sm-6" style="display:none;" id="supselectdiv">
+		<label for="supplierselect">{% trans %}List of <u>S</u>uppliers{% endtrans %} :</label>
+		<select id="supplierselect" class="form-control input-sm" accesskey="s">
+		  <option value="0" disabled hidden selected>{% trans %}Select Supplier{% endtrans %}</option>
+		  {% for supplier in suppliers %}
+                    <option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
+		  {% endfor %}
+		</select>
+	      </div>
+	    </form>
 	  </div>
-	  <div class="panel-footer" hidden>
-            <button type="button" id ="btclose" class="btn footerbutton btn-success">{% trans %}Done{% endtrans %}</button>
-          </div>
+	  <br>
+	  <div class="container-fluid row" id="billwisediv">
+	  </div>
+	  <small id="txtareahelp" class="form-text text-muted" hidden>Press 'Insert' key from any field on the screen to save changes. Press 'End' key from last input field to shift focus to buttons.</small>
 	</div>
+	<div class="panel-footer" hidden>
+          <button type="button" id ="btclose" class="btn footerbutton btn-success">{% trans %}Done{% endtrans %}</button>
+        </div>
+      </div>
     </div>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/customersupplierlist.js')}}"></script>
   </body>
