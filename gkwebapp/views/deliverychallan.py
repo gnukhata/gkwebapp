@@ -172,7 +172,7 @@ def unbillspreadsheet(request):
 	orgname = str(request.params["orgname"])
 	orgname += " (FY: " + fystart+" to "+fyend +")"
 	inputdate = request.params["inputdate"]
-	del_unbilled_type = request.params["del_unbilled_type"];
+	del_unbilled_type = str(request.params["del_unbilled_type"]);
 	if del_unbilled_type == "All":
 		del_unbilled_type = "0"
 	elif del_unbilled_type == "Approval":
@@ -189,9 +189,11 @@ def unbillspreadsheet(request):
 	if inout == "9":
 		result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled&inout=i", data = json.dumps(gkdata), headers=header)
 		headingtext="Inward Deliveries - Invoices Not Received"
+		title = "Supplier Name"
 	elif inout == "15":
 		result = requests.get("http://127.0.0.1:6543/report?type=del_unbilled&inout=o", data = json.dumps(gkdata), headers=header)
-		headingtext = "Inward Deliveries - Invoices Not Received"
+		headingtext = "Outward Deliveries - Invoices Not Received"
+		title = "Customer Name"
 	result = result.json()["gkresult"]
 	ods = ODS()
 	sheet = ods.content.getSheet(0)
@@ -205,12 +207,12 @@ def unbillspreadsheet(request):
 	sheet.getCell(0,1).stringValue(headingtext).setBold(True).setAlignHorizontal("center").setFontSize("12pt")
 	ods.content.mergeCells(0,2,6,1)
 	sheet.getCell(0,2).stringValue("As on Date: "+inputdate).setBold(True).setAlignHorizontal("center").setFontSize("12pt")
-	if request.params["del_unbilled_type"] == "0":
+	'''if request.params["del_unbilled_type"] == "9":
 		sheet.setSheetName("Deliveries In")
 		sheet.getCell(0,1).stringValue("Deliveries In").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-	elif request.params["del_unbilled_type"] == "1":
+	elif request.params["del_unbilled_type"] == "15":
 		sheet.setSheetName("Deliveries Out")
-		sheet.getCell(0,1).stringValue("Deliveries Out").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+		sheet.getCell(0,1).stringValue("Deliveries Out").setBold(True).setFontSize("14pt").setAlignHorizontal("center")'''
 	sheet.getColumn(0).setWidth("2cm")
 	sheet.getColumn(1).setWidth("3cm")
 	sheet.getColumn(2).setWidth("3cm")
@@ -220,13 +222,10 @@ def unbillspreadsheet(request):
 	sheet.getCell(0,3).stringValue("Sr. No.").setBold(True)
 	sheet.getCell(1,3).stringValue("Delchal No.").setBold(True)
 	sheet.getCell(2,3).stringValue("Delchal Date").setBold(True)
-	if del_unbilled_type == "0":
-		sheet.getCell(3,3).stringValue("Supplier Name").setBold(True)
-	elif del_unbilled_type == "1":
-		sheet.getCell(3,3).stringValue("Customer Name").setBold(True)
+	sheet.getCell(3,3).stringValue(title).setBold(True)
 	sheet.getCell(4,3).stringValue("Godown Name").setBold(True)
-	if del_unbilled_type == "All":
-		sheet.getCell(5,3),stringValue("Delivery Type").setBold(True)
+	if str(del_unbilled_type) == "All":
+		sheet.getCell(5,3).stringValue("Delivery Type").setBold(True)
 	row = 4
 	for deliverychallan in result:
 		sheet.getCell(0, row).stringValue(deliverychallan["srno"])
@@ -234,8 +233,8 @@ def unbillspreadsheet(request):
 		sheet.getCell(2, row).stringValue(deliverychallan["dcdate"])
 		sheet.getCell(3, row).stringValue(deliverychallan["custname"])
 		sheet.getCell(4, row).stringValue(deliverychallan["goname"])
-		if del_unbilled_type == "All":
-			sheet.getCell(5, row),stringValue(deliverychallan["del_unbilled_type"])
+		if str(del_unbilled_type) == "All":
+			sheet.getCell(5, row).stringValue(deliverychallan["del_unbilled_type"])
 	ods.save("response.ods")
 	repFile = open("response.ods")
 	rep = repFile.read()
