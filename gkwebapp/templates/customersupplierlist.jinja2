@@ -12,6 +12,52 @@
 	</div>
 	<div class="panel-body">
 	  <div class="container-fluid col-sm-12">
+	    <div class="row">
+	      <div class="alert alert-warning" id="nochange-alert"  aria-live="rude" role="alert" hidden>
+
+		{% trans %}No changes made!{% endtrans %}
+	      </div>
+	      <div class="alert alert-danger" id="bwamount-alert"  aria-live="rude" role="alert" hidden>
+
+		{% trans %}Total amount Adjusted is more than available amount!{% endtrans %}
+	      </div>
+	      <div class="alert alert-danger" id="asadvance-alert"  aria-live="rude" role="alert" hidden>
+
+		{% trans %}Advance amount used is more than available amount!{% endtrans %}
+	      </div>
+	      <div class="alert alert-danger" id="onaccount-alert"  aria-live="rude" role="alert" hidden>
+
+		{% trans %}On Account amount used is more than available!{% endtrans %}
+	      </div>
+	      <div class="alert alert-danger" id="bwvamount-alert"  aria-live="rude" role="alert" hidden>
+
+		{% trans %}Total amount adjusted is more than available amount. Please enter remaining amount using Unadjusted Amounts!{% endtrans %}
+	      </div>
+	      <div class="alert alert-danger" id="bwadvac-alert"  aria-live="rude" role="alert" hidden>
+
+		{% trans %}Sum of as advance and on account amounts used is more than that is available!{% endtrans %}
+	      </div>
+	      <div class="alert alert-danger" id="bwinvamount-alert"  aria-live="rude" role="alert" hidden>
+
+		{% trans %}Amount Paid is more than Amount Pending for Invoice!{% endtrans %}
+	      </div>
+	      <div class="alert alert-danger" id="bwamount-less-alert"  aria-live="rude" role="alert" hidden>
+
+		{% trans %}Total Amount Adjusted is less than Amount to be adjusted!{% endtrans %}
+	      </div>
+	      <div class="alert alert-danger" id="bwamount-blank-alert"  aria-live="rude" role="alert" hidden>
+
+		{% trans %}Please enter Amount Paid.{% endtrans %}
+	      </div>
+	      <div class="alert alert-warning" id="bwfailure-alert"  aria-live="rude" role="alert" hidden>
+
+		{% trans %}Something went wrong.{% endtrans %}
+	      </div>
+	      <div class="alert alert-success" id="bwamount-success-alert"  aria-live="rude" role="alert" hidden>
+
+		{% trans %}Receipt/Payment Updated!{% endtrans %}
+	      </div>
+	    </div>
 	    <form class="form-inline">
 	      <div class="form-group col-sm-6">
 		<div class="radio">
