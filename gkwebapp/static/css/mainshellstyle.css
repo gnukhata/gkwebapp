@@ -39,3 +39,5 @@ a:focus,
 #msspinmodalcontent {
 	background: inherit;
 }
+input[type="radio"]:focus {outline: 2px #1f0e5e solid !important;}
+input[type="checkbox"]:focus {outline: 2px #1f0e5e solid !important;}

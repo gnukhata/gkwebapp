@@ -65,7 +65,7 @@ $(document).ready(function() {
       }
   });
 
-  //Actions that occur when key is pressed down while at list of customers.  
+  //Actions that occur when key is pressed down while at list of customers.
   $(document).off('keydown', '#customerselect').on('keydown', '#customerselect', function(event) {
     if (event.which == 13) {
 	event.preventDefault();
@@ -107,17 +107,5 @@ $(document).ready(function() {
     );
       }
   });
-  //Key events for list of suppliers which is similar to that of list of customers.
-  $(document).off('keydown', '#supplierselect').on('keydown', '#supplierselect', function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-      $("#useasadvance").focus().select();
-    }
-    else if (event.which == 38) {
-	  event.preventDefault();
-	  if ($("#supplierselect option:selected").val() == 0) {
-	      $("#customerselect").focus();
-	  }
-      }
-  });
+
 });
