@@ -5,7 +5,7 @@
    GNUKhata is Free Software; you can redistribute it and/or modify
    it under the terms of the GNU Affero General Public License as
    published by the Free Software Foundation; either version 3 of
-   the License, or (at your option) any later version.and old.stockflag = 's'
+   the License, or (at your option) any later version.
 
    GNUKhata is distributed in the hope that it will be useful, but
    WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -28,7 +28,29 @@
 //Events that take place as soon as the template is loaded.
 $(document).ready(function() {
   //When the page is ready focus must be on the first select field.
-  $("select:first").focus();
+    $("#custradio").focus();
+    $("#supselectdiv").hide();
+    $(document).off('change', '.cussup').on('change', '.cussup', function(event) {
+	if ($("#custradio").is(":checked")) {
+	    $("#custselectdiv").show();
+	    $("#supselectdiv").hide();
+	}
+	else if ($("#supradio").is(":checked")) {
+	    $("#custselectdiv").hide();
+	    $("#supselectdiv").show();
+	}
+    });
+    $(document).off('keydown', '.cussup').on('keydown', '.cussup', function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    if ($("#custradio").is(":checked")) {
+		$("#customerselect").focus();
+	    }
+	    else if ($("#supradio").is(":checked")) {
+		$("#supplierselect").focus();
+	    }
+	}
+    });
   //Actions that happen after change in the list of customers. This implies a customer or supplier has been selected.
 
   /*
@@ -65,17 +87,17 @@ $(document).ready(function() {
       }
   });
 
-  //Actions that occur when key is pressed down while at list of customers.
+  //Actions that occur when key is pressed down while at list of customers.  
   $(document).off('keydown', '#customerselect').on('keydown', '#customerselect', function(event) {
     if (event.which == 13) {
 	event.preventDefault();
-	if ($("#customerselect option:selected").val() == 0) {
-	  $("#supplierselect").focus();
-	}
-	else {
-	    $("#useasadvance").focus().select();
-	}
+	$("#useasadvance").focus().select();
     }
+     else if (event.which == 38) {
+	 if ($("#customerselect option:visible").first().is(":selected") || $("#customerselect option").first().is(":selected")) {
+	     $("#custradio").focus();
+	 }
+     }
   });
   //This is similar to the change event of list of customers.
   $(document).off('change', '#supplierselect').on('change', '#supplierselect', function(event) {
@@ -107,5 +129,16 @@ $(document).ready(function() {
     );
       }
   });
-
+  //Key events for list of suppliers which is similar to that of list of customers.
+  $(document).off('keydown', '#supplierselect').on('keydown', '#supplierselect', function(event) {
+    if (event.which == 13) {
+	event.preventDefault();
+	$("#useasadvance").focus().select();
+    }
+     else if (event.which == 38) {
+	 if ($("#customerselect option:visible").first().is(":selected") || $("#customerselect option").first().is(":selected")) {
+	     $("#supradio").focus();
+	 }
+     }
+  });
 });
