@@ -271,7 +271,7 @@ $(document).ready(function() {
       if (allow == 1) {
 	  allow = 0;
 	$.ajax({
-      url: '/invoice?action=updatepayment',
+      url: '/billwise?action=updatepayment',
       type: 'POST',
       async: false,
       dataType: 'json',

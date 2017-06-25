@@ -92,7 +92,7 @@ It contains a flag(payflag) to check for the type of payment. It could be settle
 For advance and on account payments an additional flag(icflag) is also sent which tells the API whether to increment organisation decrement the advamt or onaccamt fields.
 Each dictionary also has custid(id of customer or supplier) and amount.
 '''
-@view_config(route_name="invoice", request_param="action=updatepayment", renderer="json")
+@view_config(route_name="billwise", request_param="action=updatepayment", renderer="json")
 def updatepayment(request):
     header={"gktoken":request.headers["gktoken"]}
     payments = json.loads(request.params["billwisedata"])
