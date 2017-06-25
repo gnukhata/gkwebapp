@@ -40,7 +40,7 @@ In case of unadjusted amounts module custid is received instead of account code 
 The details of bills, sum of invoice and pending amounts and custid are then returned.
 '''
 
-@view_config(route_name="billwise", request_param = "type=showbillwisetable", renderer="gkwebapp:templates/billwiseaccounting.jinja2")
+@view_config(route_name="billwise", request_param = "type=vchbillwise", renderer="gkwebapp:templates/billwiseaccounting.jinja2")
 def getBillTable(request):
     header={"gktoken":request.headers["gktoken"]}
     accountcode = int(request.params["accountcode"])

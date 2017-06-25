@@ -5,7 +5,7 @@
    GNUKhata is Free Software; you can redistribute it and/or modify
    it under the terms of the GNU Affero General Public License as
    published by the Free Software Foundation; either version 3 of
-   the License, or (at your option) any later version.and old.stockflag = 's'
+   the License, or (at your option) any later version.
 
    GNUKhata is distributed in the hope that it will be useful, but
    WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -1595,7 +1595,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
                 $.ajax(
                   {
                     type: "POST",
-                    url: "/billwise?type=showbillwisetable",
+                    url: "/billwise?type=vchbillwise",
                     global: false,
                     async: false,
                       data:{"accountcode":sessionStorage.customeracccode, "voucherdate":sessionStorage.voucherdate,"vouchercode":resp["vouchercode"]},
