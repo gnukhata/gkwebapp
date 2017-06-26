@@ -50,6 +50,7 @@ var userrole1;
 	if (sessionStorage.invsflag==0) {  //If Invoice flag is also set to 0 menu items related to Invoice and Bill Wise Accounting are also removed.
 	    $('.invoicemenu').remove();
 	    $("#showbillwiseaccounting").remove();
+	    $("#customersupplier").remove();
 	}
     }
     else if (sessionStorage.invsflag==0) { //If Inventory flag is set to 1 but Invoice flag is set to 0 only menu items related to invoicing and billwise acounting are hidden.
