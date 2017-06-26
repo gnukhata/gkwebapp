@@ -123,7 +123,10 @@ $(document).ready(function()
         var gt = resp['gktoken'];
         // on successfull login a token is received as response which is stored in sessionstorage.
         sessionStorage.gktoken = gt;
-        sessionStorage.invflag = resp["invflag"]
+        sessionStorage.invflag = resp["invflag"];
+        sessionStorage.invsflag = resp["invsflag"];
+        sessionStorage.billflag = resp["billflag"];
+        
         // Theme is fetched for the user and stored in sessionstorage.
         $.ajax({
           url: '/theme',

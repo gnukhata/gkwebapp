@@ -42,19 +42,26 @@ var userrole1;
       location.reload();
     }
   var oninvoice = 0;// This variable is set to 1 only when its in the print page of invoice, cashmemo or deliverychallan or transfernote. Reason: The organisation details that appear in all print pages of GNUKhata is not required in the pages where its set to 1.
-  $("#msspinmodal").modal("hide");
-  if (sessionStorage.invflag ==1)// If inventory is already activated for this organisation than the option to activate inventory is removed.
-    {
-      $("#act_inv").remove();
+    $("#msspinmodal").modal("hide"); //Hides the loading spinner.
+    //Checking flags set according organisation preferences.
+    if (sessionStorage.invflag==0) {  //When Inventory flag is set to 0 Inventory menu is removed.
+	$('.inventorymenu').remove();
+	$('.inventory_hide').remove();
+	if (sessionStorage.invsflag==0) {  //If Invoice flag is also set to 0 menu items related to Invoice and Bill Wise Accounting are also removed.
+	    $('.invoicemenu').remove();
+	    $("#showbillwiseaccounting").remove();
+	    $("#customersupplier").remove();
+	}
     }
-  else
-    {
-      $(".inventorymenu").remove();
-      $(".inventory_hide").remove();
+    else if (sessionStorage.invsflag==0) { //If Inventory flag is set to 1 but Invoice flag is set to 0 only menu items related to invoicing and billwise acounting are hidden.
+	$('.invoicemenu').remove();
+	$("#showbillwiseaccounting").remove();
+    }
+    else if (sessionStorage.billflag==0) {  //If both Inventory flag and Invoice flag are set to 1 but Billflag is set to 0  only Unadjusted Amounts is hidden
+	$("#showbillwiseaccounting").remove();
     }
   $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');// set the theme depending on users previous choice.
   $("#"+sessionStorage.gktheme+"span").show();
-
 
   $(document).keydown(function(event) {
     // Shortcuts
@@ -346,8 +353,18 @@ var userrole1;
       $("#lang").click();
     }
   });
-  //default focuses on first option of dropdowns.
+
+      //default focuses on first option of dropdowns.
   $('#masterdropdown').on('shown.bs.dropdown', function () {
+    $("#addaccount").focus();
+  });
+  $('#inventorydropdown').on('shown.bs.dropdown', function () {
+    $("#product").focus();
+  });
+  $('#transactiondropdown').on('shown.bs.dropdown', function () {
+    $("#showreceipt").focus();
+  });
+  $('#reportdropdown').on('shown.bs.dropdown', function () {
     $("#addaccount").focus();
   });
   $('#inventorydropdown').on('shown.bs.dropdown', function () {
@@ -377,6 +394,7 @@ var userrole1;
   $('#toolbardropdown').on('shown.bs.dropdown', function () {
     $("#addaccounttb").focus();
   });
+    
   $("#toolbar").click(function(){
     // Expands the toolbar on click to the height slightly less than the windowheight.
     var windowheight = window.innerHeight;
@@ -612,6 +630,7 @@ var userrole1;
     $('#inventorymodal').modal('show').one('click', '#inv_yes', function (e)
       {
 	// if yes then inventory is activated.
+
 	$.ajax({
           url: '/editorganisation?edit=inventoryactivate',
           type: "POST",
@@ -644,6 +663,185 @@ var userrole1;
 	 });
       });
   });
+
+
+
+    $("#orgpref").click(function (e){
+
+      $("#orgprefmodal").modal('show');
+      // creates a modal(dialog box) asking user to activate inventory or not.
+      $("#orgprefmodal").on('shown.bs.modal', function(event) {
+        $("#invflag").focus();
+          var invflag;
+          var invsflag;
+          var billflag;
+              if (sessionStorage.invflag==1) {
+                  $('#invflag').prop('checked', true);
+		  $('#invflag').prop('disabled', true);
+                  $('#invsflag').prop('checked', true);
+		  $('#invsflag').prop('disabled', true);
+              }
+	  
+                if (sessionStorage.invsflag==1) {
+                  $('#invsflag').prop('checked', true);
+                  $('#invsflag').prop('disabled', true);
+                }
+	  
+                  if (sessionStorage.billflag==1) {
+                      $('#billflag').prop('checked', true);
+		      $('#invsflag').prop('checked', true);
+		      $('#invsflag').prop('disabled', true);
+                  }
+	  if (sessionStorage.invsflag==0 && sessionStorage.invflag==0) {
+                  $('#billflag').prop('checked', false);
+                  $('#billflag').prop('disabled', true);
+                }
+
+                    $("#invflag").keydown(function(event) {
+                        if (event.which==13) {
+                          event.preventDefault();
+
+                          if ($("#invsflag").is(":checked"))
+                          {
+
+                                $('#billflag').focus();
+                        }
+                        else {
+                          invflag=0;
+                          $('#invsflag').focus();
+                        }
+                      }
+                    });
+	  
+                      $("#invsflag").keydown(function(event) {
+                        if (event.which==13) {
+                          event.preventDefault();
+                            if ($('#billflag').is(":disabled")) {
+			      $("#orgprefsave").focus();
+			    }
+			    else {
+				$('#billflag').focus();
+			    }
+                        }
+			  else if (event.which == 38) {
+			      event.preventDefault();
+			      $("#invflag").focus();
+			  }
+                      });
+
+                      $("#billflag").keydown(function(event) {
+                          if (event.which==13) {
+			      event.preventDefault();
+                          $("#orgprefsave").focus();
+                        }
+			  else if (event.which == 38) {
+			      event.preventDefault();
+			      if ($("#invsflag").is(":disabled")) {
+				  $("#invflag").focus();
+			      }
+			      else {
+				  $("#invsflag").focus();
+			      }
+			  }
+                      });
+  $(document).off("click","#invflag").on("click", "#invflag", function(event)
+                            {
+                              if($(this).is(":checked")) {
+                              $('#invsflag').prop('checked', true);
+				  $('#invsflag').prop('disabled',true);
+				  $('#billflag').prop('disabled', false);
+                             }
+				else {
+				    $('#invsflag').prop('disabled',false);
+				    $('#invsflag').prop('checked', false);
+				    if($("#invflag").is(":checked")) {
+				  $('#billflag').prop('disabled', false);
+				    }
+				    else {
+					$('#billflag').prop('disabled', true);
+				    }
+                             }
+                            });
+	  $(document).off("click","#invsflag").on("click", "#invsflag", function(event)
+                            {
+                              if($(this).is(":checked")) {
+				  $('#billflag').prop('disabled', false);
+                             }
+				else {
+				    if($("#invsflag").is(":checked")) {
+				  $('#billflag').prop('disabled', false);
+				    }
+				    else {
+					$('#billflag').prop('disabled', true);
+				    }
+                             }
+                            });
+
+       $("#orgprefsave").click(function(event){
+         if ($("#invflag").is(":checked"))
+         {
+           invflag=1;
+       }
+       else {
+         invflag=0;
+
+       }
+       if ($("#invsflag").is(":checked"))
+       {
+         invsflag=1;
+     }
+     else {
+       invsflag=0;
+
+     }
+     if ($("#billflag").is(":checked"))
+     {
+       billflag=1;
+   }
+   else {
+     billflag=0;
+
+   }
+               $.ajax({
+                       url: '/editorganisation?action=orgpref',
+                       type: "POST",
+                       datatype: 'json',
+                       global: false,
+                       async: false,
+                       data: {"invflag":invflag,"invsflag":invsflag,"billflag":billflag},
+                       beforeSend: function(xhr)
+                       {
+                         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                       }
+                      })
+                      .done(function(resp) {
+
+                              if (resp['gkstatus']==0)
+                          {
+			      $("#orgpref-alert").alert();
+			      $("#orgpref-alert").fadeTo(2250, 500).slideUp(500, function() {
+				  $("#orgprefmodal").modal("hide");
+                        $("#orgpref-alert").hide();
+			location.reload();
+                    });
+                                }
+                      })
+                      .fail(function() {
+                              console.log("error");
+                      })
+                      .always(function() {
+                              console.log("complete");
+                      });
+
+
+                });
+
+
+                  });
+    });
+
+
+
 
   $("#exportdata").on('shown.bs.modal', function(event) {
     $("#exportbutton").focus();
@@ -787,7 +985,7 @@ var userrole1;
       success: function(resp)
       {
         sessionStorage.gktoken="";
-        code = resp["gkdata"]
+          var code = resp["gkdata"];
         $("body").load("/login?orgcode="+code+"&flag="+flag, setTimeout( function() {
           $("#username").focus();
         }, 500 ));
@@ -927,50 +1125,6 @@ var userrole1;
 
         type: "POST",
         url: "/product?type=list",
-        global: false,
-        async: false,
-        datatype: "text/html",
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-        success: function(resp)
-        {
-          $("#info").html(resp);
-        }
-      }
-    );
-  });
-
-  $('#listofinvoices').click(function (e) {
-    // calls list of invoices report
-    $.ajax(
-      {
-
-        type: "POST",
-        url: "/invoice?action=viewlist",
-        global: false,
-        async: false,
-        datatype: "text/html",
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-        success: function(resp)
-        {
-          $("#info").html(resp);
-        }
-      }
-    );
-  });
-
-  $('#listoftransfernotes').click(function (e) {
-    // calls list of stock items report.
-    $.ajax(
-      {
-
-        type: "POST",
-        url: "/transfernotes?action=viewlist",
         global: false,
         async: false,
         datatype: "text/html",
@@ -1311,22 +1465,53 @@ var userrole1;
       }
     );
   });
-  $('#invoice').click(function (e) {// calls base invoice page.
-    $("#info").load("/invoice");
+
+    $('#listofinvoices').click(function (e) {
+    // calls list of invoices report
+    $.ajax(
+      {
+
+        type: "POST",
+        url: "/invoice?action=viewlist",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+      }
+    );
   });
-  $('#customersupplier').click(function (e) {// calls base customersupplier page.
-    $("#info").load("/customersuppliers");
+
+  $('#listoftransfernotes').click(function (e) {
+    // calls list of stock items report.
+    $.ajax(
+      {
+
+        type: "POST",
+        url: "/transfernotes?action=viewlist",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+      }
+    );
   });
-  $('#addunit').click(function (e) {// calls base unitofmeasurements page.
-    $("#info").load("/unitofmeasurements");
-  });
-  $('#addcashmemo').click(function (e) {// calls base cash memo page.
-    $("#info").load("/cashmemos");
-  });
-  $('#createtransfernote').click(function (e) {// calls base transfer note page.
-    $("#info").load("/transfernotes");
-  });
-  $('#rejectionnote').click(function (e) {// calls route rejectionnote and loads show page.
+
+
+ $('#rejectionnote').click(function (e) {// calls route rejectionnote and loads show page.
     $.ajax(
       {
       type: "POST",
@@ -1345,6 +1530,23 @@ var userrole1;
       }
     );
   });
+    
+  $('#invoice').click(function (e) {// calls base invoice page.
+    $("#info").load("/invoice");
+  });
+  $('#customersupplier').click(function (e) {// calls base customersupplier page.
+    $("#info").load("/customersuppliers");
+  });
+  $('#addunit').click(function (e) {// calls base unitofmeasurements page.
+    $("#info").load("/unitofmeasurements");
+  });
+  $('#addcashmemo').click(function (e) {// calls base cash memo page.
+    $("#info").load("/cashmemos");
+  });
+  $('#createtransfernote').click(function (e) {// calls base transfer note page.
+    $("#info").load("/transfernotes");
+  });
+
   $('#deliverychallan').click(function (e) {// calls base deliverychallan page.
 
     $.ajax(

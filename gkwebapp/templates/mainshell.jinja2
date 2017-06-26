@@ -38,8 +38,10 @@
               <li><a  class="mastermenu" data-toggle="tab" id="addaccount" href="">{% trans %}Create Account{% endtrans %}</a></li>
               <li><a  class="mastermenu" data-toggle="tab" href="" id="editaccount">{% trans %}Edit Account{% endtrans %}</a></li>
               <li><a class="mastermenu" data-toggle="tab" href="" id="showeditorg">{% trans %}Edit Organisation Particulars{% endtrans %}</a></li>
-              <li><a class="inventorymenu" data-toggle="tab" id="customersupplier" href="">{% trans %}Customer and Supplier{% endtrans %}</a></li>
-              <li><a class="mastermenu" data-toggle="tab" id="showproject" href="">{% trans %}Cost Center{% endtrans %}</a></li>
+
+              <li><a class="mastermenu" data-toggle="tab" id="customersupplier" href="">{% trans %}Customer and Supplier{% endtrans %}</a></li>
+              <li><a class="mastermenu" data-toggle="tab" id="showproject" href="">{% trans %}Create & Edit Cost Center{% endtrans %}</a></li>
+
               <li><a class="mastermenu" data-toggle="tab" id="BRS" href="">{% trans %}Bank Reconciliation Statement{% endtrans %}</a></li>
             </ul>
           </li>
@@ -50,9 +52,6 @@
               <li><a class="inventorymenu" data-toggle="tab" id="addcategory" href="">{% trans %}Category{% endtrans %}</a></li>
               <li><a class="inventorymenu" data-toggle="tab" id="addunit" href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
               <li><a class="inventorymenu" data-toggle="tab" id="deliverychallan" href="">{% trans %}Delivery Note{% endtrans %}</a></li>
-              <li><a  class="inventorymenu" data-toggle="tab" id="invoice" href="">Invoice</a></li>
-              <li><a class="inventorymenu" data-toggle="tab" id="addcashmemo" href="">{% trans %}Cash Memo{% endtrans %}</a></li>
-
               <li><a  class="inventorymenu" data-toggle="tab" id="godown" href="">{% trans %}Godown{% endtrans %}</a></li>
               <li><a class="inventorymenu" data-toggle="tab" id="createtransfernote" href="">{% trans %}Transfer Note{% endtrans %}</a></li>
               <li><a class="inventorymenu" data-toggle="tab" id="rejectionnote" href="">{% trans %}Rejection Note{% endtrans %}</a></li>
@@ -73,7 +72,10 @@
               <li><a class="transactionmenu closebooks" data-toggle="tab" id="showcreditnote" href="">{% trans %}Credit Note{% endtrans %}</a></li>
               <li><a class="transactionmenu closebooks" data-toggle="tab" id="showdebitnote" href="">{% trans %}Debit Note{% endtrans %}</a></li>
               <li><a class="transactionmenu" href="" data-toggle="tab" id="fevoucher">{% trans %}Find/Edit Voucher{% endtrans %}</a></li>
-	            <li><a class="transactionmenu" href="" data-toggle="tab" id="showbillwiseaccounting">{% trans %}Unadjusted Amounts{% endtrans %}</a></li>
+	      <li><a class="transactionmenu" href="" data-toggle="tab" id="showbillwiseaccounting">{% trans %}Unadjusted Amounts{% endtrans %}</a></li>
+
+	      <li><a  class="transactionmenu invoicemenu" data-toggle="tab" id="invoice" href="">Invoice</a></li>
+	      <li><a class="transactionmenu invoicemenu" data-toggle="tab" id="addcashmemo" href="">{% trans %}Cash Memo{% endtrans %}</a></li>
             </ul>
           </li>
           <li id="reportdropdown" class="dropdown">
@@ -96,7 +98,7 @@
               <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listofgodowns">{% trans %}List of Godowns{% endtrans %}</a></li>
               <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listofcategories">{% trans %}List of Categories{% endtrans %}</a></li>
               <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listofstockitems">{% trans %}List of Products{% endtrans %}</a></li>
-              <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listofinvoices">{% trans %}List of Invoices{% endtrans %}</a></li>
+              <li><a class="reportmenu invoicemenu" href="" data-toggle="tab" id="listofinvoices">{% trans %}List of Invoices{% endtrans %}</a></li>
               <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listoftransfernotes">{% trans %}List of Transfer Notes{% endtrans %}</a></li>
               <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="show_unbilled_deliveries">{% trans %}Unbilled Deliveries{% endtrans %}</a></li>
               <li><a class="reportmenu hideoperator hidemanager" href="" data-toggle="tab" id="showviewlog">Activity Log</a></li>
@@ -109,7 +111,7 @@
               <li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="tab" id="REMOVEuser" href="">{% trans %}Remove User{% endtrans %}</a></li>
               <li><a class="administrationmenu" data-toggle="tab" id="showedituser" href="">{% trans %}Change Password{% endtrans %}</a></li>
               <li class="hideoperator hidemanager rollover"><a class="administrationmenu" data-toggle="tab" id="showclosebooks" href="">{% trans %}Close Books/Roll Over{% endtrans %}</a></li>
-              <li class="hideoperator hidemanager rollover"><a class="administrationmenu closebooks" data-toggle="tab" id="act_inv" href="">{% trans %}Activate Inventory{% endtrans %}</a></li>
+              <li class="hideoperator hidemanager "><a class="administrationmenu closebooks" data-toggle="tab" id="orgpref" href="">{% trans %}Organisation Preferences{% endtrans %}</a></li>
               <li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="modal" data-target="#exportdata" id="exportledger" href="">{% trans %}Export Data{% endtrans %}</a></li>
               <li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="tab" id="deleteorg" href="">{% trans %}Delete Organisation{% endtrans %}</a></li>
               <li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="tab" id="tallyimport" href="">{% trans %}Import Data{% endtrans %}</a></li>
@@ -239,6 +241,39 @@
         </div>
         <button type="button" class="btn btn-danger" data-dismiss="modal" id ="inv_no"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}No{% endtrans %}</button>
         <button type="button" class="btn btn-primary" id ="inv_yes"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Yes{% endtrans %}</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="orgprefmodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="margin-left: auto;margin-right: auto;">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="">Organisation Preferences</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success" id="orgpref-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}Organisation Preferences updated.{% endtrans %}
+        </div>
+        <div class="form-group">
+          <input type="checkbox" name="invflag" id="invflag" value="">
+          <label class="" for="invflag">{% trans %}Inventory{% endtrans %}</label>
+
+        </div>
+        <div class="form-group">
+          <input type="checkbox" name="invsflag" id="invsflag" value="">
+          <label class="" for="invsflag">{% trans %}Invoice{% endtrans %}</label>
+
+        </div>
+        <div class="form-group">
+          <input type="checkbox" name="billflag" id="billflag" value="">
+          <label class="" for="billflag">{% trans %}Billwise Accounting{% endtrans %}</label>
+
+        </div>
+        <button type="button" class="btn btn-success" id ="orgprefsave" accesskey="s"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
+	<button type="button" class="btn btn-danger" data-dismiss="modal" id ="inv_no" accesskey="a"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}C<u>a</u>ncel{% endtrans %}</button>
       </div>
 
     </div>
