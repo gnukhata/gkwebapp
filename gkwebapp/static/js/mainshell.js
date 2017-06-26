@@ -466,6 +466,7 @@ var userrole1;
        $("#deleteorg").remove();
        $("#tallyimport").remove();
        $("#showviewlog").remove();
+       $("#orgpref").remove();
      }
      if(resp["gkresult"]["userrole"]==-1 || resp["gkresult"]["userrole"]==0){
        $("listofusers").remove();
@@ -473,13 +474,16 @@ var userrole1;
      if(resp["gkresult"]["userrole"]==1){
        $(".hideoperator").remove();
        $("#showviewlog").remove();
+       $("#orgpref").remove();
      }
      if(resp["gkresult"]["userrole"]==0){
        $(".hidemanager").remove();
        $("#showviewlog").remove();
+       $("#orgpref").remove();
      }
      if(resp["gkresult"]["userrole"]==2) {
        $("#showviewlog").remove();
+       $("#orgpref").remove();
      }
      if (resp["gkresult"]["booksclosedflag"]==1) {
        $(".closebooks").remove();
@@ -819,11 +823,21 @@ var userrole1;
                           if (invflag==1){
                           sessionStorage.invflag=1;
                           }
+
+                          if (invflag==0){
+                          sessionStorage.invflag=0;
+                          }
                           if (invsflag==1){
                           sessionStorage.invsflag=1;
                           }
+                          if (invsflag==0){
+                          sessionStorage.invsflag=0;
+                          }
                           if (billflag==1){
                           sessionStorage.billflag=1;
+                          }
+                          if (billflag==0){
+                          sessionStorage.billflag=0;
                           }
 
 
