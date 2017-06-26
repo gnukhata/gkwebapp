@@ -32,7 +32,7 @@
    When Receipt/Payment vouchers are created a modal appears asking if user wants to continue to bill wise accounting.  
    When confirmed a table is presented with fields Invoice No, Invoice Date, Invoice Amount, Amount Pending and Amount to be Adjusted(input by user).  
    Account name and Debit/Credit amount are displayed on the title bar of the modal.  
-   Total amount paid is displayed in table footer.  
+   Total amount Adjusted is displayed in table footer.  
    As user enters Amount Adjusted it is reduced from Amount Pending until Amount Pending is zero.  
 
    In case the user does not intend to settle any bills the debit/credit amount can be set as "On Account".

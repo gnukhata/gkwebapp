@@ -26,25 +26,16 @@
    "Rohini Baraskar"<robaraskar@dff.org.in>
  */
 
-// This script is for bill wise accounting
+// This script is for Unadjusted Amounts modules
 
 /* 
-   When Receipt/Payment vouchers are created a modal appears asking if user wants to continue to bill wise accounting.  
-   When confirmed a table is presented with fields Invoice No, Invoice Date, Invoice Amount, Amount Pending and Amount to be Adjusted(input by user).  
-   Account name and Debit/Credit amount are displayed on the title bar of the modal.  
-   Total amount paid is displayed in table footer.  
+   The user is presented with two tables - one with a list of Amounts to be adjusted(Vouchers) and another with a list of uncleared invoices.
+   The user has to select a voucher. The selection is confirmed by pressing enter key which shifts focus to Amount Adjusted field in list of Invoices.
+   Total amount adjusted is displayed in table footer.  
    As user enters Amount Adjusted it is reduced from Amount Pending until Amount Pending is zero.  
-
-   In case the user does not intend to settle any bills the debit/credit amount can be set as "On Account".
-   To make advance payments the amount can be set as "As Advance".
-   A user may choose to set some amount as advance, some on account and the remaining may be used to settle bills.
-   
-   At a later point Unadjusted Amounts module can be activated to use the advance or on account amounts to settle bills.
-   It can also be done when bill wise accounting is activated again another voucher is made.
-
    
    Validations :-  
-   Sum of Total Amount Adjusted, On Account amount and As Advance amount must be equal to the sum of Debit/Credit Amount and previous unadjusted amounts.  
+   Total Amount Adjusted must be less then or equal to Debit/Credit Amount.  
    Amount Adjusted cannot be blank.
  */ 
 
@@ -58,8 +49,8 @@ $(document).ready(function() {
   //Actions to be triggered when focus is on amount adjusted field
     $(".numtype").numeric({ negative : false });
 
+    //Function to find Total Amount Adjusted.
     function totalamountadjusted(){
-	//Total Amount Adjusted is found out.
       var totalap = 0.00;
       var ap = 0.00;
       for(var i = 0; i < $("#invtable tbody tr").length; i++) {
@@ -75,8 +66,8 @@ $(document).ready(function() {
 	return totalap;
     }
 
+    //Function to find Total Amount Pending.
     function totalamountpending(){
-      //Total Amount Pending is found out.
       var totalpending = 0.00;
       var pending = 0.00;
       for(var i = 0; i < $("#invtable tbody tr").length; i++) {
@@ -86,15 +77,17 @@ $(document).ready(function() {
 	return totalpending;
     }
 
+    //Function to clear Amount Adjusted.
     function clearamounts() {
 	for(var i = 0; i < $("#invtable tbody tr").length; i++) {
-	    //All Amount Adjusted fields are cleared.
 	    $("#invtable tbody tr:eq("+i+") td:eq(4) input").val("0.00");
+	    //Amount pending is reset when Amount Asjusted is cleared.
 	    var originalvalue = parseFloat($("#invtable tbody tr:eq("+i+") td:eq(3)").data("amountpending")).toFixed(2);
 	    $("#invtable tbody tr:eq("+i+") td:eq(3)").html('<div class="form-control">'+parseFloat(originalvalue).toFixed(2)+'</div');
 	}
     }
 
+    //Events to change selection in Voucher table. The '.selected' class is added to indicate a row is selected by changing its color.
     $(document).off('focus' ,'.vouchernumber').on('focus' ,'.vouchernumber',function() {
     $('#vouchertable tr').removeClass('selected');
     $(this).closest('tr').addClass('selected');
@@ -106,30 +99,29 @@ $(document).ready(function() {
     }
   });
 
+    //Voucher number is shown inside '<a></a>' tags because we need to shift focus when Up/Down arrow keys are pressed. They are given a class "vouchernumber".
+    //Key events are written taking the class 'vouchernumber' into consideration.
     $(document).off('keydown' ,'.vouchernumber').on('keydown' ,'.vouchernumber',function(event) {
     var curindex = $(this).closest('tr').index();
     var nextindex = curindex+1;
     var previndex = curindex-1;
-    if (event.which==40)
+    if (event.which==40)  //Actions that take place when Down Arrow is pressed.
     {
       event.preventDefault();
-      $('#vouchertable tbody tr:eq('+nextindex+') td:eq(1) a').focus();
+      $('#vouchertable tbody tr:eq('+nextindex+') td:eq(1) a').focus();  //Focus shifts to next row.
     }
-    else if (event.which==38)
+    else if (event.which==38)  //Actions that take place when Up Arrow is pressed.
     {
       if(previndex>-1)
       {
         event.preventDefault();
-        $('#vouchertable tbody tr:eq('+previndex+') td:eq(1) a').focus();
+        $('#vouchertable tbody tr:eq('+previndex+') td:eq(1) a').focus();  //Focus shifts to previous row.
       }
-	else {
-	    $(".search").children(".form-control").focus().select();
-	}
     }
 
   });
 
-
+  //Actions that take place when a row in voucher table is clicked.
   $("#vouchertable").off('click','tr').on('click','tr',function(e){
     e.preventDefault();
     var currindex = $(this).index();
@@ -138,6 +130,7 @@ $(document).ready(function() {
     $('#vouchertable tbody tr:eq('+currindex+') a').focus();
   });
 
+    //To confirm a voucher is selected enter key is to be pressed. A flag 'enter' is set to 1 to prevent selected class from being removed when blur event triggers.
     $("#vouchertable").off('keydown','tr').on('keydown','tr',function(e){
 	if (e.which == 13) {
 	    e.preventDefault();
@@ -149,13 +142,6 @@ $(document).ready(function() {
   });
     
     $(document).off('focus', '.amountpaid').on('focus', '.amountpaid', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    //Preventing input of alphabets and negative numbers in Amount Adjusted
-    clearTimeout(typingTimer);
-    $(".numtype").numeric({ negative : false });
-  });
-  $(document).off('focus', '.amountpaid').on('focus', '.amountpaid', function(event) {
     event.preventDefault();
     /* Act on the event */
     //Preventing input of alphabets and negative numbers in Amount Adjusted
