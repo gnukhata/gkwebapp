@@ -111,7 +111,7 @@
 
    #vouchertable tbody {
        display:block;
-       height: calc(100vh - 23.5em);
+       height: calc(100vh - 20.5em);
        overflow-y:scroll;
    }
 
@@ -125,7 +125,7 @@
 
    #invtable tbody {
        display:block;
-       height: calc(100vh - 27em);
+       height: calc(100vh - 24em);
        overflow-y:scroll;
    }
 
@@ -170,8 +170,9 @@
 </head>
 <body>
   <div class="row">
-    <div class="table-responsive col-sm-5"  style="margin-top:10px;">
+    <div class="table-responsive col-sm-5"  style="margin-top:5px;">
       <input type="text" id="selectedvoucher" hidden value="0.00">
+      <label>Amounts to be adjusted</label>
       <table id="vouchertable" class="table shadow nopadding table-bordered table-condensed table-fixedheader">
         <thead class="bg-primary">
           <tr>
@@ -203,9 +204,10 @@
       </table>
 
     </div>
-    <div  class="table-responsive col-sm-7"  style="margin-top:10px;">
+    <div  class="table-responsive col-sm-7"  style="margin-top:5px;">
 
       <table id="invtable" class="table shadow nopadding table-bordered table-condensed table-fixedheader">
+	<label>Uncleared Invoices</label>
         <thead class="bg-primary">
           <tr>
             <th class="mdwrap calign">
@@ -266,17 +268,17 @@
                          </td>
                          <td class="lngwrap ralign">
                            <div class="form-control" disabled>
-
+			     0.00
                            </div>
                          </td>
                          <td class="lngwrap ralign">
                            <div class="form-control" disabled>
-
+			     0.00
                            </div>
                          </td>
                          <td class="lngwrap ralign">
                            <div class="form-control" disabled>
-
+			     0.00
                            </div>
                          </td>
                         </tr>

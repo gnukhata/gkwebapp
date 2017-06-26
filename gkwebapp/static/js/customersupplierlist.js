@@ -143,4 +143,8 @@ $(document).ready(function() {
 	 }
      }
   });
+    //Reset button reloads page
+    $("#btreset").click(function(){
+	$("#showbillwiseaccounting").click();
+    });
 });

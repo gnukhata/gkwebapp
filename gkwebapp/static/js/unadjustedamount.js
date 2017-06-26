@@ -139,8 +139,8 @@ $(document).ready(function() {
   });
 
     $("#vouchertable").off('keydown','tr').on('keydown','tr',function(e){
-	e.preventDefault();
 	if (e.which == 13) {
+	    e.preventDefault();
 	    enter = 1;
 	    var id = $(this).data('value');
 	    $(".amountpaid:first").focus().select();
@@ -225,6 +225,12 @@ $(document).ready(function() {
       if (event.shiftKey && event.which == 13) {
 	  event.preventDefault();
 	  clearamounts();
+	  //Total Amount Adjusted is found out and displayed on the footer.
+	  var totalap = totalamountadjusted();
+	  $('#invtable tfoot tr:eq(0) td:eq(3)').html('<div class="form-control" disabled>'+parseFloat(totalap).toFixed(2)+'</div');
+	  //Total Amount Pending is found out and displayed on the footer.
+	  var totalpending = totalamountpending();
+	  $('#invtable tfoot tr:eq(0) td:eq(2)').html('<div class="form-control" disabled>'+parseFloat(totalpending).toFixed(2)+'</div');
 	  $("#vouchertable tbody tr:first a").focus();
 	  $("#vouchertable tbody tr:first").addClass("selected");
       }
@@ -396,7 +402,7 @@ $(document).ready(function() {
 	}
       }
     });
-    }
+      }
       return false;
   });
 });
