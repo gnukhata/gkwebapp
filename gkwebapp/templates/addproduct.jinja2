@@ -15,20 +15,23 @@
                 <select class = "form-control input-sm"  name = "catselect" id="addcatselect" >
                   <option value="" selected >{% trans %}None{% endtrans %}</option>
                   {% for cat in gkresult["category"] %}
-                  <option value="{{cat['categorycode']}}">{{cat["categoryname"]}}({{cat["subcount"]}})</option>
+                    <option value="{{cat['categorycode']}}">{{cat["categoryname"]}}({{cat["subcount"]}})</option>
                   {% endfor %}
                 </select>
               </div>
+	      <div class="form-group col-sm-11">
+		<small id="txtareahelp" class="form-text text-muted">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
+	      </div>
               {% else %}
               <div class="form-group col-sm-11" id="categorydiv">
                 <label class="" for="addcatselect">{% trans %}Select Category{% endtrans %} :</label>
                 <select class = "form-control input-sm"  name = "catselect" id="addcatselect" >
                   <option value="" selected >{% trans %}None{% endtrans %}</option>
                   {% for cat in gkresult["category"] %}
-                  <option value="{{cat['categorycode']}}">{{cat["categoryname"]}}({{cat["subcount"]}})</option>
+                    <option value="{{cat['categorycode']}}">{{cat["categoryname"]}}({{cat["subcount"]}})</option>
                   {% endfor %}
                 </select>
-                <small id="txtareahelp" class="form-text text-muted">{% trans %}If you want to put this product under a category/sub-category,You must create a category first.{% endtrans %}</small>
+		<small id="txtareahelp" class="form-text text-muted">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
               </div>
               {% endif %}
               </div>

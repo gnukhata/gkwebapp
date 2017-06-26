@@ -2,9 +2,14 @@
 <div class="editpr">
   <div class="row">
     <div class="form-group col-sm-11 pd">
-    <label for="editproddesc" class="">{% trans %}New Name of Product{% endtrans %} :</label><label for="editproddesc" style="color:red;font-size: 120%;">*</label>
-<input type='text' class="form-control input-sm" name="editproddesc"  id="editproddesc" value="{{proddesc['productdesc']}}" placeholder="Alphanumeric">
-</div>
+      <label for="editproddesc" class="">{% trans %}New Name of Product{% endtrans %} :</label><label for="editproddesc" style="color:red;font-size: 120%;">*</label>
+      <input type='text' class="form-control input-sm" name="editproddesc"  id="editproddesc" value="{{proddesc['productdesc']}}" placeholder="Alphanumeric">
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-sm-11">
+      <small id="txtareahelp" class="form-text text-muted">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
+    </div>
   </div>
   {% if category|length > 0 %}
   <div class="row">
