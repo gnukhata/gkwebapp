@@ -91,7 +91,8 @@ $(document).ready(function() {
   $(document).off('keydown', '#customerselect').on('keydown', '#customerselect', function(event) {
     if (event.which == 13) {
 	event.preventDefault();
-	$("#useasadvance").focus().select();
+	$("#vouchertable tbody tr:first a").focus();
+	$("#vouchertable tbody tr:first").addClass("selected");
     }
      else if (event.which == 38) {
 	 if ($("#customerselect option:visible").first().is(":selected") || $("#customerselect option").first().is(":selected")) {
@@ -133,7 +134,8 @@ $(document).ready(function() {
   $(document).off('keydown', '#supplierselect').on('keydown', '#supplierselect', function(event) {
     if (event.which == 13) {
 	event.preventDefault();
-	$("#useasadvance").focus().select();
+	$("#vouchertable tbody tr:first a").focus();
+	$("#vouchertable tbody tr:first").addClass("selected");
     }
      else if (event.which == 38) {
 	 if ($("#customerselect option:visible").first().is(":selected") || $("#customerselect option").first().is(":selected")) {

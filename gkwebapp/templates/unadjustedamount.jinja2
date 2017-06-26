@@ -175,9 +175,9 @@
       <table id="vouchertable" class="table shadow nopadding table-bordered table-condensed table-fixedheader">
         <thead class="bg-primary">
           <tr>
-            <th  class="col-sm-4 text-center">{% trans %}Date{% endtrans %}</th>
+            <th  class="col-sm-3 text-center">{% trans %}Date{% endtrans %}</th>
             <th class="col-sm-4 text-center">{% trans %}Voucher No.{% endtrans %}</th>
-            <th class="col-sm-4 text-right">{% trans %}Adjustable Amount{% endtrans %}</th>
+            <th class="col-sm-5 text-right">{% trans %}Adjustable Amount{% endtrans %}</th>
           </tr>
         </thead>
 	<tbody>
@@ -186,20 +186,14 @@
           {% endif %}
 	  {% for voucher in vouchers %}
 	    <tr  data-value="{{voucher['vouchercode']}}">
-	      <td class="col-sm-4 text-center" >
-                <div class="form-control">
+	      <td class="col-sm-3 text-center" >
 		  {{voucher['voucherdate']}}
-                </div>
               </td>
               <td class="col-sm-4 text-center" >
-                <div class="form-control">
-		  {{voucher['vouchernumber']}}
-                </div>
+		  <a href="" class="vouchernumber">{{voucher['vouchernumber']}}</a>
               </td>
-              <td class="col-sm-4 text-right" data-voucheramount="{{voucher['amtadj']}}">
-                <div class="form-control">
+              <td class="col-sm-5 text-right" data-voucheramount="{{voucher['amtadj']}}">
 		  {{voucher['amtadj']}}
-                </div>
               </td>
 
             </tr>

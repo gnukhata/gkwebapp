@@ -55,7 +55,59 @@ $(document).ready(function() {
   var doneTypingInterval = 100; //typing interval
   clearTimeout(typingTimer);  //clearing timeout
   //Actions to be triggered when focus is on amount adjusted field
-  $(".numtype").numeric({ negative : false });
+    $(".numtype").numeric({ negative : false });
+
+    $(document).off('focus' ,'.vouchernumber').on('focus' ,'.vouchernumber',function() {
+    $('#vouchertable tr').removeClass('selected');
+    $(this).closest('tr').addClass('selected');
+  });
+
+  $(document).off('blur' ,'.libgname').on('blur' ,'.libgname',function() {
+    $('#vouchertable tr').removeClass('selected');
+
+  });
+
+    $(document).off('keydown' ,'.vouchernumber').on('keydown' ,'.vouchernumber',function(event) {
+    curindex = $(this).closest('tr').index();
+    nextindex = curindex+1;
+    previndex = curindex-1;
+    if (event.which==40)
+    {
+      event.preventDefault();
+      $('#vouchertable tbody tr:eq('+nextindex+') td:eq(1) a').focus();
+    }
+    else if (event.which==38)
+    {
+      if(previndex>-1)
+      {
+        event.preventDefault();
+        $('#vouchertable tbody tr:eq('+previndex+') td:eq(1) a').focus();
+      }
+	else {
+	    $(".search").children(".form-control").focus().select();
+	}
+    }
+
+  });
+
+
+  $("#vouchertable").off('click','tr').on('click','tr',function(e){
+    e.preventDefault();
+    var id = $(this).attr('value');
+    var currindex = $(this).index();
+    $('#vouchertable tr').removeClass('selected');
+    $(this).toggleClass('selected');
+    $('#vouchertable tbody tr:eq('+currindex+') a').focus();
+
+  });
+    
+    $(document).off('focus', '.amountpaid').on('focus', '.amountpaid', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    //Preventing input of alphabets and negative numbers in Amount Adjusted
+    clearTimeout(typingTimer);
+    $(".numtype").numeric({ negative : false });
+  });
   $(document).off('focus', '.amountpaid').on('focus', '.amountpaid', function(event) {
     event.preventDefault();
     /* Act on the event */
