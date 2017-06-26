@@ -42,19 +42,25 @@ var userrole1;
       location.reload();
     }
   var oninvoice = 0;// This variable is set to 1 only when its in the print page of invoice, cashmemo or deliverychallan or transfernote. Reason: The organisation details that appear in all print pages of GNUKhata is not required in the pages where its set to 1.
-  $("#msspinmodal").modal("hide");
-  if (sessionStorage.invflag ==1)// If inventory is already activated for this organisation than the option to activate inventory is removed.
-    {
-      $("#act_inv").remove();
+    $("#msspinmodal").modal("hide"); //Hides the loading spinner.
+    //Checking flags set according organisation preferences.
+    if (sessionStorage.invflag==0) {  //When Inventory flag is set to 0 Inventory menu is removed.
+	$('.inventorymenu').remove();
+	$('.inventory_hide').remove();
+	if (sessionStorage.invsflag==0) {  //If Invoice flag is also set to 0 menu items related to Invoice and Bill Wise Accounting are also removed.
+	    $('.invoicemenu').remove();
+	    $("#showbillwiseaccounting").remove();
+	}
     }
-  else
-    {
-      $(".inventorymenu").remove();
-      $(".inventory_hide").remove();
+    else if (sessionStorage.invsflag==0) { //If Inventory flag is set to 1 but Invoice flag is set to 0 only menu items related to invoicing and billwise acounting are hidden.
+	$('.invoicemenu').remove();
+	$("#showbillwiseaccounting").remove();
+    }
+    else if (sessionStorage.billflag==0) {  //If both Inventory flag and Invoice flag are set to 1 but Billflag is set to 0  only Unadjusted Amounts is hidden
+	$("#showbillwiseaccounting").remove();
     }
   $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');// set the theme depending on users previous choice.
   $("#"+sessionStorage.gktheme+"span").show();
-
 
   $(document).keydown(function(event) {
     // Shortcuts
