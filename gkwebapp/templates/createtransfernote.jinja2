@@ -146,122 +146,122 @@
 
               </div>
               <div class="form-group col-sm-6">
-                <label for="tn_to_godown">{% trans %} Received At{% endtrans %} :</label><label for="tn_to_godown" style="color:red;font-size: 120%;">*</label>
+                <label for="tn_to_godown">{% trans %} Dispatched To{% endtrans %} :</label><label for="tn_to_godown" style="color:red;font-size: 120%;">*</label>
                 <select class="form-control input-sm" id="tn_to_godown" accesskey="">
                   <option value=""  disabled  hidden selected>{% trans %}Select Godown{% endtrans %}</option>
                   {% for godown in godowns %}
-                  <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
+                    <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
                   {% endfor %}
                 </select>
 
               </div>
             </div>
-          </div>
-                </form>
-            <div class="form-group nopadding">
-              <div class="panel">
-                <table id="transfernote_product_table" class="table table-condensed shadow table-borderd fixed-table">
-                  <thead class="bg-primary">
-                    <tr>
-                      <th class="col-xs-7" for="prod_name">{% trans %}Product{% endtrans %}</th>
-                      <th class="col-xs-4 text-center" for="prod_quantity">{% trans %}Quantity{% endtrans %}</th>
-                      <th class="col-xs-1"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="col-xs-7">
-                        <select class="form-control input-sm product_name">
-                          <option value="" disabled hidden selected>Select Product</option>
-                           {% for product in products %}
-                          <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
-                          {% endfor %}
-                        </select>
-                      </td>
-                      <td class="col-xs-4">
-                        <div class="input-group">
-                          <input type="text" class="transfernote_product_quantity form-control input-sm text-right" value="">
-                          <span class="input-group-addon input-sm" id="unitaddon"></span>
-                        </div>
-                      </td>
-                      <td class="col-xs-1">
+            </div>
+         </form>
+         <div class="form-group nopadding">
+           <div class="panel">
+             <table id="transfernote_product_table" class="table table-condensed shadow table-borderd fixed-table">
+               <thead class="bg-primary">
+                 <tr>
+                   <th class="col-xs-7" for="prod_name">{% trans %}Product{% endtrans %}</th>
+                   <th class="col-xs-4 text-center" for="prod_quantity">{% trans %}Quantity{% endtrans %}</th>
+                   <th class="col-xs-1"></th>
+                 </tr>
+               </thead>
+               <tbody>
+                 <tr>
+                   <td class="col-xs-7">
+                     <select class="form-control input-sm product_name">
+                       <option value="" disabled hidden selected>Select Product</option>
+                       {% for product in products %}
+                         <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
+                       {% endfor %}
+                     </select>
+                   </td>
+                   <td class="col-xs-4">
+                     <div class="input-group">
+                       <input type="text" class="transfernote_product_quantity form-control input-sm text-right" value="">
+                       <span class="input-group-addon input-sm" id="unitaddon"></span>
+                     </div>
+                   </td>
+                   <td class="col-xs-1">
 
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <small id="txtareahelp" class="form-text text-muted">Press Esc to Enter No of Packets.</small>
-              </div>
-            </div>
+                   </td>
+                 </tr>
+               </tbody>
+             </table>
+             <small id="txtareahelp" class="form-text text-muted">Press Esc to Enter No of Packets.</small>
+           </div>
+         </div>
+        </div>
+        <div class="col-md-6" id="transfernote_godown_div">
+          <div class="form-group">
+            <label for="no_of_packet">{% trans %} Number of Packets :{% endtrans %}</label>
+            <input class="form-control input-sm" id="no_of_packet">
           </div>
-            <div class="col-md-6" id="transfernote_godown_div">
-              <div class="form-group">
-                <label for="no_of_packet">{% trans %} Number of Packets :{% endtrans %}</label>
-                <input class="form-control input-sm" id="no_of_packet">
-              </div>
-            <div class="form-group">
-              <label for="transport_mode">{% trans %} Mode of Transport :{% endtrans %}</label>
-              <input class="form-control input-sm" id="transport_mode">
-            </div>
+          <div class="form-group">
+            <label for="transport_mode">{% trans %} Mode of Transport :{% endtrans %}</label>
+            <input class="form-control input-sm" id="transport_mode">
+          </div>
 
           <div class="form-group">
             <label for="name_issuer">{% trans %} Name of Issuer :{% endtrans %}</label>
             <input class="form-control input-sm" id="name_issuer">
           </div>
-        <div class="form-group">
-          <label for="designation">{% trans %} Designation :{% endtrans %}</label>
-          <input class="form-control input-sm" id="designation">
-        </div>
+          <div class="form-group">
+            <label for="designation">{% trans %} Designation :{% endtrans %}</label>
+            <input class="form-control input-sm" id="designation">
+          </div>
 
-	<div "class=" form-group">
-	  <form class="form-inline">
-            <label for="transfernote_duedate">{% trans %}Expected Date of Reciept :{% endtrans %}</label>
-            
-            <form class="form-inline nopadding">
-              <div class="form-group ">
-                <input type="text" class="form-control input-sm tnduedate" size="2" maxlength="2" placeholder="DD" id="tn_duedate" accesskey="v">
-              </div>
-              <div class="form-group ">
-                <input type="text" class="form-control input-sm tnduedate" size="2" maxlength="2" placeholder="MM" id="tn_duemonth" accesskey="v">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control input-sm tnduedate" size="4" maxlength="4" placeholder="YYYY" id="tn_dueyear" accesskey="v">
-              </div>
-            </form>
-	  </form>
+	  <div "class=" form-group">
+	    <form class="form-inline">
+              <label for="transfernote_duedate">{% trans %}Expected Date of Reciept :{% endtrans %}</label>
+              
+              <form class="form-inline nopadding">
+		<div class="form-group ">
+                  <input type="text" class="form-control input-sm tnduedate" size="2" maxlength="2" placeholder="DD" id="tn_duedate" accesskey="v">
+		</div>
+		<div class="form-group ">
+                  <input type="text" class="form-control input-sm tnduedate" size="2" maxlength="2" placeholder="MM" id="tn_duemonth" accesskey="v">
+		</div>
+		<div class="form-group">
+                  <input type="text" class="form-control input-sm tnduedate" size="4" maxlength="4" placeholder="YYYY" id="tn_dueyear" accesskey="v">
+		</div>
+              </form>
+	    </form>
+	  </div>
+	  <div>
+	    <form class="form-inline nopadding">
+	      <div class="form-group ">
+		<label for="tn_grace">{% trans %} Grace Period :{% endtrans %}</label>
+		
+		<input type="text" class="form-control input-sm " size="2" maxlength="2" id="tn_grace"><small> <b>days</b></small>
+		
+	      </div>
+	  </div>
 	</div>
-	<div>
-	  <form class="form-inline nopadding">
-	    <div class="form-group ">
-	      <label for="tn_grace">{% trans %} Grace Period :{% endtrans %}</label>
-	      
-	      <input type="text" class="form-control input-sm " size="2" maxlength="2" id="tn_grace"><small> <b>days</b></small>
-	      
-	    </div>
-	</div>
-	    </div>
-	 
-	    </div>
+	
+      </div>
       <div class="panel-footer">
         <button class="btn btn-success btn-sm" id="transfernote_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i> Save{% endtrans %}</button>
         <button id="transfernote_reset" class="btn btn-warning btn-sm">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> Reset{% endtrans %}</button>
         <button id="tn_saveprint" class="btn btn-primary btn-sm" >{% trans %}<i class="fa fa-print" aria-hidden="true"></i> Save & Print{% endtrans %}</button>
       </div>
 
-    <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
-      <div class="vertical-alignment-helper">
-        <div class="modal-dialog modal-sm vertical-align-center">
-          <div class="modal-content">
-            <div class="modal-header">
+      <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
+	<div class="vertical-alignment-helper">
+          <div class="modal-dialog modal-sm vertical-align-center">
+            <div class="modal-content">
+              <div class="modal-header">
 
-              <h4 class="modal-title">{% trans %}Save?{% endtrans %}</h4>
-            </div>
-            <div class="modal-body">
-              <p>{% trans %}Are you sure?{% endtrans %}</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" id ="tn_save_no" class="btn btn-warning" data-dismiss="modal">{% trans %}<i class="fa fa-times" aria-hidden="true"></i> NO{% endtrans %}</button>
-              <button type="button" id="tn_save_yes" data-dismiss="modal" class="btn btn-success">{% trans %}<i class="fa fa-check" aria-hidden="true"></i> YES{% endtrans %}</button>
+		<h4 class="modal-title">{% trans %}Save?{% endtrans %}</h4>
+              </div>
+              <div class="modal-body">
+		<p>{% trans %}Are you sure?{% endtrans %}</p>
+              </div>
+              <div class="modal-footer">
+		<button type="button" id ="tn_save_no" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i>{% trans %} NO{% endtrans %}</button>
+		<button type="button" id="tn_save_yes" data-dismiss="modal" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i>{% trans %} YES{% endtrans %}</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
