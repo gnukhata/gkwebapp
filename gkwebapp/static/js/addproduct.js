@@ -107,13 +107,6 @@ $("#addproddesc").keydown(function(event) {
       });
       return false;
     }
-    if ($("#addcatselect option").length < 2) {
-      $("#nocategory-alert").alert();
-      $("#nocategory-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#adduom").focus();
-        $("#nocategory-alert").hide();
-      });
-    }
     else {
       $("#adduom").focus();
     }
@@ -177,12 +170,6 @@ $(document).off('keydown', '#addcatselect').on('keydown', '#addcatselect',functi
   if (event.which==13) {
     event.preventDefault();
     $("#addproddesc").focus().select();
-    if ($(this).val()=="") {
-      $("#nocategory-alert").alert();
-      $("#nocategory-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#nocategory-alert").hide();
-      });
-    }
   }
 });
 $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
