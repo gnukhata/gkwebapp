@@ -52,25 +52,64 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#btbillwise").hide();
   var typingTimer;                //timer identifier
-  var doneTypingInterval = 100; //typing interval
+    var doneTypingInterval = 100; //typing interval
+    var enter = 0;
   clearTimeout(typingTimer);  //clearing timeout
   //Actions to be triggered when focus is on amount adjusted field
     $(".numtype").numeric({ negative : false });
+
+    function totalamountadjusted(){
+	//Total Amount Adjusted is found out.
+      var totalap = 0.00;
+      var ap = 0.00;
+      for(var i = 0; i < $("#invtable tbody tr").length; i++) {
+	//Empty fields are treated as fields with value 0.00
+	if ($("#invtable tbody tr:eq("+i+") td:eq(4) input").val()=="") {
+	  ap = 0.00;
+	}
+	else {
+	  ap = parseFloat($("#invtable tbody tr:eq("+i+") td:eq(4) input").val());
+	}
+	totalap = totalap + ap;
+      }
+	return totalap;
+    }
+
+    function totalamountpending(){
+      //Total Amount Pending is found out.
+      var totalpending = 0.00;
+      var pending = 0.00;
+      for(var i = 0; i < $("#invtable tbody tr").length; i++) {
+	pending = parseFloat($("#invtable tbody tr:eq("+i+") td:eq(3) div").text());
+	totalpending = totalpending + pending;
+      }
+	return totalpending;
+    }
+
+    function clearamounts() {
+	for(var i = 0; i < $("#invtable tbody tr").length; i++) {
+	    //All Amount Adjusted fields are cleared.
+	    $("#invtable tbody tr:eq("+i+") td:eq(4) input").val("0.00");
+	    var originalvalue = parseFloat($("#invtable tbody tr:eq("+i+") td:eq(3)").data("amountpending")).toFixed(2);
+	    $("#invtable tbody tr:eq("+i+") td:eq(3)").html('<div class="form-control">'+parseFloat(originalvalue).toFixed(2)+'</div');
+	}
+    }
 
     $(document).off('focus' ,'.vouchernumber').on('focus' ,'.vouchernumber',function() {
     $('#vouchertable tr').removeClass('selected');
     $(this).closest('tr').addClass('selected');
   });
 
-  $(document).off('blur' ,'.libgname').on('blur' ,'.libgname',function() {
-    $('#vouchertable tr').removeClass('selected');
-
+  $(document).off('blur' ,'.vouchernumber').on('blur' ,'.vouchernumber',function() {
+    if (enter == 0) {
+	$('#vouchertable tr').removeClass('selected');
+    }
   });
 
     $(document).off('keydown' ,'.vouchernumber').on('keydown' ,'.vouchernumber',function(event) {
-    curindex = $(this).closest('tr').index();
-    nextindex = curindex+1;
-    previndex = curindex-1;
+    var curindex = $(this).closest('tr').index();
+    var nextindex = curindex+1;
+    var previndex = curindex-1;
     if (event.which==40)
     {
       event.preventDefault();
@@ -93,12 +132,20 @@ $(document).ready(function() {
 
   $("#vouchertable").off('click','tr').on('click','tr',function(e){
     e.preventDefault();
-    var id = $(this).attr('value');
     var currindex = $(this).index();
     $('#vouchertable tr').removeClass('selected');
     $(this).toggleClass('selected');
     $('#vouchertable tbody tr:eq('+currindex+') a').focus();
+  });
 
+    $("#vouchertable").off('keydown','tr').on('keydown','tr',function(e){
+	e.preventDefault();
+	if (e.which == 13) {
+	    enter = 1;
+	    var id = $(this).data('value');
+	    $(".amountpaid:first").focus().select();
+	    $("#selectedvoucher").val(id);
+	}
   });
     
     $(document).off('focus', '.amountpaid').on('focus', '.amountpaid', function(event) {
@@ -175,6 +222,12 @@ $(document).ready(function() {
       $("#btclose").click();
       return false;
     }
+      if (event.shiftKey && event.which == 13) {
+	  event.preventDefault();
+	  clearamounts();
+	  $("#vouchertable tbody tr:first a").focus();
+	  $("#vouchertable tbody tr:first").addClass("selected");
+      }
   });
 
   //Actions that take place when key is released from Amount Adjusted field.
@@ -216,30 +269,14 @@ $(document).ready(function() {
 	}
       }
       //Total Amount Adjusted is found out and displayed on the foooter.
-      var totalap = 0.00;
-      var ap = 0.00;
-      for(var i = 0; i < $("#invtable tbody tr").length; i++) {
-	//Empty fields are treated as fields with value 0.00
-	if ($("#invtable tbody tr:eq("+i+") td:eq(4) input").val()=="") {
-	  ap = 0.00;
-	}
-	else {
-	  ap = parseFloat($("#invtable tbody tr:eq("+i+") td:eq(4) input").val());
-	}
-	totalap = totalap + ap;
-      }
+	var totalap = totalamountadjusted();
       $('#invtable tfoot tr:eq(0) td:eq(3)').html('<div class="form-control" disabled>'+parseFloat(totalap).toFixed(2)+'</div');
       //Total Amount Pending is found out and displayed on the foooter.
-      var totalpending = 0.00;
-      var pending = 0.00;
-      for(var i = 0; i < $("#invtable tbody tr").length; i++) {
-	pending = parseFloat($("#invtable tbody tr:eq("+i+") td:eq(3) div").text());
-	totalpending = totalpending + pending;
-      }
+	var totalpending = totalamountpending();
       $('#invtable tfoot tr:eq(0) td:eq(2)').html('<div class="form-control" disabled>'+parseFloat(totalpending).toFixed(2)+'</div');
 	$(".billamount").html("<b>"+parseFloat(totalap).toFixed(2)+"</b>");
       //Alert is displayed when sum of total amount paid and sum of unadjusted amounts is more than sum of Debit/Credit amount and previous unadjusted amounts.
-	if (parseFloat(totalap) > parseFloat(sessionStorage.customeramount)) {
+	if (parseFloat(totalap) > parseFloat($("#selectedvoucher").val())) {
 	  $(".alert").hide();
       $("#bwamount-alert").alert();
       $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -291,7 +328,7 @@ $(document).ready(function() {
 	var amountpaid = parseFloat($("#invtable tbody tr:eq("+i+") td:eq(4) input").val());
 	var invid = parseInt($("#invtable tbody tr:eq("+i+")").data("invid"));
 	  var invamount = {};
-	invamount["vouchercode"] = $("#vchcode").val();  
+	invamount["vouchercode"] = $("#selectedvoucher").val();  
 	invamount["adjamount"] = amountpaid;
 	invamount["invid"] = invid;
 	billwisedata.push(invamount);
@@ -309,7 +346,7 @@ $(document).ready(function() {
 	  return false;
     }
     //Alert is displayed when  total amount adjusted and sum of unadjusted amounts is greater than sum of Debit/Credit amount(retrieved from session storage) and previous unadjusted amounts. See addvoucher.js to see when the amount is stored in session storage.
-      if (parseFloat(totalamountpaid) > (parseFloat(sessionStorage.customeramount))) {
+      if (parseFloat(totalamountpaid) > (parseFloat($("#selectedvoucher").val()))) {
 	  $(".alert").hide();
       $("#bwamount-alert").alert();
       $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){

@@ -19,35 +19,15 @@
 	      </div>
 	      <div class="alert alert-danger" id="bwamount-alert"  aria-live="rude" role="alert" hidden>
 
-		{% trans %}Total amount Adjusted is more than available amount!{% endtrans %}
-	      </div>
-	      <div class="alert alert-danger" id="asadvance-alert"  aria-live="rude" role="alert" hidden>
-
-		{% trans %}Advance amount used is more than available amount!{% endtrans %}
-	      </div>
-	      <div class="alert alert-danger" id="onaccount-alert"  aria-live="rude" role="alert" hidden>
-
-		{% trans %}On Account amount used is more than available!{% endtrans %}
-	      </div>
-	      <div class="alert alert-danger" id="bwvamount-alert"  aria-live="rude" role="alert" hidden>
-
-		{% trans %}Total amount adjusted is more than available amount. Please enter remaining amount using Unadjusted Amounts!{% endtrans %}
-	      </div>
-	      <div class="alert alert-danger" id="bwadvac-alert"  aria-live="rude" role="alert" hidden>
-
-		{% trans %}Sum of as advance and on account amounts used is more than that is available!{% endtrans %}
+		{% trans %}Total amount Adjusted is more than Adjustable Amount!{% endtrans %}
 	      </div>
 	      <div class="alert alert-danger" id="bwinvamount-alert"  aria-live="rude" role="alert" hidden>
 
-		{% trans %}Amount Paid is more than Amount Pending for Invoice!{% endtrans %}
-	      </div>
-	      <div class="alert alert-danger" id="bwamount-less-alert"  aria-live="rude" role="alert" hidden>
-
-		{% trans %}Total Amount Adjusted is less than Amount to be adjusted!{% endtrans %}
+		{% trans %}Amount Adjusted is more than Amount Pending for Invoice!{% endtrans %}
 	      </div>
 	      <div class="alert alert-danger" id="bwamount-blank-alert"  aria-live="rude" role="alert" hidden>
 
-		{% trans %}Please enter Amount Paid.{% endtrans %}
+		{% trans %}Please enter Amount Adjusted.{% endtrans %}
 	      </div>
 	      <div class="alert alert-warning" id="bwfailure-alert"  aria-live="rude" role="alert" hidden>
 
@@ -55,7 +35,7 @@
 	      </div>
 	      <div class="alert alert-success" id="bwamount-success-alert"  aria-live="rude" role="alert" hidden>
 
-		{% trans %}Receipt/Payment Updated!{% endtrans %}
+		{% trans %}Amounts Adjusted Successfully!{% endtrans %}
 	      </div>
 	    </div>
 	    <form class="form-inline">
@@ -93,7 +73,7 @@
 	  <small id="txtareahelp" class="form-text text-muted" hidden>Press 'Insert' key from any field on the screen to save changes. Press 'End' key from last input field to shift focus to buttons.</small>
 	</div>
 	<div class="panel-footer" hidden>
-          <button type="button" id ="btclose" class="btn footerbutton btn-success">{% trans %}Done{% endtrans %}</button>
+          <button type="button" id ="btclose" class="btn footerbutton btn-success"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Done{% endtrans %}</button>
         </div>
       </div>
     </div>
