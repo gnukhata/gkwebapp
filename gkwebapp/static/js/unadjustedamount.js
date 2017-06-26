@@ -45,6 +45,7 @@ $(document).ready(function() {
   var typingTimer;                //timer identifier
     var doneTypingInterval = 100; //typing interval
     var enter = 0;
+    var voucherrow = 0;
   clearTimeout(typingTimer);  //clearing timeout
   //Actions to be triggered when focus is on amount adjusted field
     $(".numtype").numeric({ negative : false });
@@ -136,8 +137,11 @@ $(document).ready(function() {
 	    e.preventDefault();
 	    enter = 1;
 	    var id = $(this).data('value');
+	    var voucheramount = $(this).data('voucheramount');
+	    voucherrow = $(this).index();
 	    $(".amountpaid:first").focus().select();
 	    $("#selectedvoucher").val(id);
+	    $("#selectedvoucheramount").val(voucheramount);
 	}
   });
     
@@ -210,6 +214,7 @@ $(document).ready(function() {
     }
       if (event.shiftKey && event.which == 13) {
 	  event.preventDefault();
+	   $("#vouchertable tbody tr:eq("+voucherrow+") td:eq(2)").html(parseFloat($("#selectedvoucheramount").val()).toFixed(2)).removeClass("text-success");
 	  clearamounts();
 	  //Total Amount Adjusted is found out and displayed on the footer.
 	  var totalap = totalamountadjusted();
@@ -257,7 +262,7 @@ $(document).ready(function() {
 	else {
 	  //When Amount Adjusted is not empty and less than Amount Pending the below snippet finds the difference and updates Amount Pending.
 	  var bwdiff = parseFloat(parseFloat($("#invtable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending")) - parseFloat($("#invtable tbody tr:eq("+curindex1+") td:eq(4) input").val()));
-	  $("#invtable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">'+parseFloat(bwdiff).toFixed(2)+'</div');
+	    $("#invtable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">'+parseFloat(bwdiff).toFixed(2)+'</div');
 	}
       }
       //Total Amount Adjusted is found out and displayed on the foooter.
@@ -267,15 +272,19 @@ $(document).ready(function() {
 	var totalpending = totalamountpending();
       $('#invtable tfoot tr:eq(0) td:eq(2)').html('<div class="form-control" disabled>'+parseFloat(totalpending).toFixed(2)+'</div');
 	$(".billamount").html("<b>"+parseFloat(totalap).toFixed(2)+"</b>");
-      //Alert is displayed when sum of total amount paid and sum of unadjusted amounts is more than sum of Debit/Credit amount and previous unadjusted amounts.
-	if (parseFloat(totalap) > parseFloat($("#selectedvoucher").val())) {
+	var vdiff = parseFloat(parseFloat($("#selectedvoucheramount").val()) - parseFloat(totalap));
+	if (parseFloat(vdiff) >= 0) {
+	    $("#vouchertable tbody tr:eq("+voucherrow+") td:eq(2)").html(parseFloat(vdiff).toFixed(2)).addClass("text-success");
+	}
+	//Alert is displayed when sum of total amount paid and sum of unadjusted amounts is more than sum of Debit/Credit amount and previous unadjusted amounts.
+	if (parseFloat(totalap) > parseFloat($("#selectedvoucheramount").val())) {
 	  $(".alert").hide();
       $("#bwamount-alert").alert();
       $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#bwamount-alert").hide();
       });
       return false;
-    }
+	}
     }, doneTypingInterval);
   });
     
@@ -338,7 +347,7 @@ $(document).ready(function() {
 	  return false;
     }
     //Alert is displayed when  total amount adjusted and sum of unadjusted amounts is greater than sum of Debit/Credit amount(retrieved from session storage) and previous unadjusted amounts. See addvoucher.js to see when the amount is stored in session storage.
-      if (parseFloat(totalamountpaid) > (parseFloat($("#selectedvoucher").val()))) {
+      if (parseFloat(totalamountpaid) > (parseFloat($("#selectedvoucheramount").val()))) {
 	  $(".alert").hide();
       $("#bwamount-alert").alert();
       $("#bwamount-alert").fadeTo(2250, 500).slideUp(500, function(){

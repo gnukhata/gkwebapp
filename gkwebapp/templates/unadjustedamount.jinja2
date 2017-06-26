@@ -172,6 +172,7 @@
   <div class="row">
     <div class="table-responsive col-sm-5"  style="margin-top:5px;">
       <input type="text" id="selectedvoucher" hidden value="0.00">
+      <input type="text" id="selectedvoucheramount" hidden value="0.00">
       <label>Amounts to be adjusted</label>
       <table id="vouchertable" class="table shadow nopadding table-bordered table-condensed table-fixedheader">
         <thead class="bg-primary">
@@ -186,14 +187,14 @@
 	    <tr><td style="width:100%">No Data Found.</td></tr>
           {% endif %}
 	  {% for voucher in vouchers %}
-	    <tr  data-value="{{voucher['vouchercode']}}">
+	    <tr  data-value="{{voucher['vouchercode']}}" data-voucheramount="{{voucher['amtadj']}}">
 	      <td class="col-sm-3 text-center" >
-		  {{voucher['voucherdate']}}
+		{{voucher['voucherdate']}}
               </td>
               <td class="col-sm-4 text-center" >
-		  <a href="" class="vouchernumber">{{voucher['vouchernumber']}}</a>
+		<a href="" class="vouchernumber">{{voucher['vouchernumber']}}</a>
               </td>
-              <td class="col-sm-5 text-right" data-voucheramount="{{voucher['amtadj']}}">
+              <td class="col-sm-5 text-right">
 		  {{voucher['amtadj']}}
               </td>
 
@@ -268,12 +269,12 @@
                          </td>
                          <td class="lngwrap ralign">
                            <div class="form-control" disabled>
-			     0.00
+			     {{totalinv}}
                            </div>
                          </td>
                          <td class="lngwrap ralign">
                            <div class="form-control" disabled>
-			     0.00
+			     {{totalamtpending}}
                            </div>
                          </td>
                          <td class="lngwrap ralign">

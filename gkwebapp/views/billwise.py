@@ -110,4 +110,11 @@ def getCustomerSupplierList(request):
 def getunadjustedamounts(request):
     header={"gktoken":request.headers["gktoken"]}
     unadjustedamounts = requests.get("http://127.0.0.1:6543/billwise?csid=%d&csflag=%d"%(int(request.params["csid"]), int(request.params["csflag"])), headers=header)
-    return {"invoices":unadjustedamounts.json()["invoices"], "vouchers":unadjustedamounts.json()["vouchers"]}
+    invs = unadjustedamounts.json()["invoices"]
+    totalinv = 0.00
+    totalamtpending = 0.00
+    for inv in invs:
+        totalinv = totalinv + float(inv["invoiceamount"])
+        totalamtpending = totalamtpending + float(inv["balanceamount"])
+        
+    return {"invoices":invs, "vouchers":unadjustedamounts.json()["vouchers"],"totalinv":"%.2f"%(totalinv),"totalamtpending":"%.2f"%(totalamtpending)}
