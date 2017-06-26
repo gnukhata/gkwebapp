@@ -45,7 +45,7 @@
 $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $(".modal-backdrop").remove();
-  if (sessionStorage.invflag==0)
+  if (sessionStorage.invsflag==0)
   {
     $(".invhide").hide();
   }
@@ -156,14 +156,14 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   var value = $('#invsel option:selected').attr("customername");
   $(".dramt:first").val(parseFloat(inv).toFixed(2));
   $(".cramt:eq(1)").val(parseFloat(inv).toFixed(2));
-  if (($('#vtype').val()=="sales") && sessionStorage.invflag ==1)
+  if (($('#vtype').val()=="sales") && sessionStorage.invsflag ==1)
   {
   $(".accs:first option").filter(function() {return this.text == value;}).attr('selected', true);
   var e = jQuery.Event("keydown");
   e.which = 13; // # Some key code value
   $(".dramt").trigger(e);
   }
-  if (($('#vtype').val()=="purchase") && sessionStorage.invflag ==1)
+  if (($('#vtype').val()=="purchase") && sessionStorage.invsflag ==1)
  {
       $(".accs:eq(1) option").filter(function() {return this.text == value;}).attr('selected', true);
   }
@@ -310,7 +310,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       navflag =1;
 
 
-      if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invflag ==1)
+      if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invsflag ==1)
       {
         if($("#invhide").val()==1)
        {
@@ -682,7 +682,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       }
       if (curindex==0) {
         event.preventDefault();
-        if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invflag ==1)
+        if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invsflag ==1)
         {
           $("#invsel").focus();
         }
@@ -698,7 +698,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       event.preventDefault();
       if (curindex==0) {
         event.preventDefault();
-        if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invflag ==1)
+        if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invsflag ==1)
         {
           $("#invsel").focus();
         }
@@ -1476,7 +1476,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     for (var i = 0; i < files.length; i++) {
       form_data.append("file"+i,files[i])
     }
-    if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invflag ==1)
+    if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.billflag ==1)
     {
       if ($("#invsel").length > 0) {
 	details.invid = $("#invsel option:selected").val();
@@ -1587,7 +1587,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
           $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#success-alert").hide();
             //Modal asking the user if he wants to do bill wise accounting or not?
-            if (($("#vouchertype").val() == "receipt" || $("#vouchertype").val() == "payment") && sessionStorage.invflag == 1 && numberofcustomers == 1) {
+            if (($("#vouchertype").val() == "receipt" || $("#vouchertype").val() == "payment") && sessionStorage.billflag == 1 && numberofcustomers == 1) {
               $("#confirm_yes_billwise").modal("show");
               $("#bwno").focus(); //Focus is on "No" when the model opens.
               $(document).off('click', '#bwyes').on('click', '#bwyes', function(event) {
