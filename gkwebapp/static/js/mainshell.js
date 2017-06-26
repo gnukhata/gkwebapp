@@ -394,7 +394,7 @@ var userrole1;
   $('#toolbardropdown').on('shown.bs.dropdown', function () {
     $("#addaccounttb").focus();
   });
-    
+
   $("#toolbar").click(function(){
     // Expands the toolbar on click to the height slightly less than the windowheight.
     var windowheight = window.innerHeight;
@@ -681,12 +681,12 @@ var userrole1;
                   $('#invsflag').prop('checked', true);
 		  $('#invsflag').prop('disabled', true);
               }
-	  
+
                 if (sessionStorage.invsflag==1) {
                   $('#invsflag').prop('checked', true);
                   $('#invsflag').prop('disabled', true);
                 }
-	  
+
                   if (sessionStorage.billflag==1) {
                       $('#billflag').prop('checked', true);
 		      $('#invsflag').prop('checked', true);
@@ -712,7 +712,7 @@ var userrole1;
                         }
                       }
                     });
-	  
+
                       $("#invsflag").keydown(function(event) {
                         if (event.which==13) {
                           event.preventDefault();
@@ -815,6 +815,17 @@ var userrole1;
                        }
                       })
                       .done(function(resp) {
+
+                          if (invflag==1){
+                          sessionStorage.invflag=1;
+                          }
+                          if (invsflag==1){
+                          sessionStorage.invsflag=1;
+                          }
+                          if (billflag==1){
+                          sessionStorage.billflag=1;
+                          }
+
 
                               if (resp['gkstatus']==0)
                           {
@@ -1530,7 +1541,7 @@ var userrole1;
       }
     );
   });
-    
+
   $('#invoice').click(function (e) {// calls base invoice page.
     $("#info").load("/invoice");
   });
