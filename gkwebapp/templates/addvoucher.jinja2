@@ -1,289 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Voucher{% endtrans %}</title>
-  <style media="screen">
-  .rightJustified {
-    text-align: right;
-  }
-  /*
-  Force table width to 100%
-  */
-  table.table-fixedheader {
-    width: 100%;
-  }
-  /*
-  Set table elements to block mode.  (Normally they are inline).
-  This allows a responsive table, such as one where columns can be stacked
-  if the display is narrow.
-  */
-  table.table-fixedheader, table.table-fixedheader>thead, table.table-fixedheader>tbody, table.table-fixedheader>tfoot, table.table-fixedheader>thead>tr, table.table-fixedheader>tbody>tr, table.table-fixedheader>tfoot>tr, table.table-fixedheader>thead>tr>th, table.table-fixedheader>tbody>tr>td, table.table-fixedheader>tfoot>tr>td {
-    display: block;
-  }
-  table.table-fixedheader>thead>tr:after, table.table-fixedheader>tbody>tr:after, table.table-fixedheader>tfoot>tr:after  {
-    content:' ';
-    display: block;
-    visibility: hidden;
-    clear: both;
-  }
-  /*
-  When scrolling the table, actually it is only the tbody portion of the
-  table that scrolls (not the entire table: we want the thead to remain
-  fixed).  We must specify an explicit height for the tbody.  We include
-  100px as a default, but it can be overridden elsewhere.
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Voucher{% endtrans %}</title>
+    <style media="screen">
+     .rightJustified {
+	 text-align: right;
+     }
+     /*
+	Force table width to 100%
+      */
+     table.table-fixedheader {
+	 width: 100%;
+     }
+     /*
+	Set table elements to block mode.  (Normally they are inline).
+	This allows a responsive table, such as one where columns can be stacked
+	if the display is narrow.
+      */
+     table.table-fixedheader, table.table-fixedheader>thead, table.table-fixedheader>tbody, table.table-fixedheader>tfoot, table.table-fixedheader>thead>tr, table.table-fixedheader>tbody>tr, table.table-fixedheader>tfoot>tr, table.table-fixedheader>thead>tr>th, table.table-fixedheader>tbody>tr>td, table.table-fixedheader>tfoot>tr>td {
+	 display: block;
+     }
+     table.table-fixedheader>thead>tr:after, table.table-fixedheader>tbody>tr:after, table.table-fixedheader>tfoot>tr:after  {
+	 content:' ';
+	 display: block;
+	 visibility: hidden;
+	 clear: both;
+     }
+     /*
+	When scrolling the table, actually it is only the tbody portion of the
+	table that scrolls (not the entire table: we want the thead to remain
+	fixed).  We must specify an explicit height for the tbody.  We include
+	100px as a default, but it can be overridden elsewhere.
 
-  Also, we force the scrollbar to always be displayed so that the usable
-  width for the table contents doesn't change (such as becoming narrower
-  when a scrollbar is visible and wider when it is not).
-  */
-  table.table-fixedheader>tbody {
-    overflow-y: scroll;
+	Also, we force the scrollbar to always be displayed so that the usable
+	width for the table contents doesn't change (such as becoming narrower
+	when a scrollbar is visible and wider when it is not).
+      */
+     table.table-fixedheader>tbody {
+	 overflow-y: scroll;
 
-  }
-  /*
-  We really don't want to scroll the thead contents, but we want to force
-  a scrollbar to be displayed anyway so that the usable width of the thead
-  will exactly match the tbody.
-  */
-  table.table-fixedheader>thead {
-    overflow-y: scroll;
-    height: 26px;
-  }
-  table.table-fixedheader>tfoot {
+     }
+     /*
+	We really don't want to scroll the thead contents, but we want to force
+	a scrollbar to be displayed anyway so that the usable width of the thead
+	will exactly match the tbody.
+      */
+     table.table-fixedheader>thead {
+	 overflow-y: scroll;
+	 height: 26px;
+     }
+     table.table-fixedheader>tfoot {
 
-    height: 38px;
-  }
-  /*
-  For browsers that support it (webkit), we set the background color of
-  the unneeded scrollbar in the thead to make it invisible.  (Setting
-  visiblity: hidden defeats the purpose, as this alters the usable width
-  of the thead.)
-  */
-  table.table-fixedheader>thead::-webkit-scrollbar {
-    background-color: inherit;
-  }
+	 height: 38px;
+     }
+     /*
+	For browsers that support it (webkit), we set the background color of
+	the unneeded scrollbar in the thead to make it invisible.  (Setting
+	visiblity: hidden defeats the purpose, as this alters the usable width
+	of the thead.)
+      */
+     table.table-fixedheader>thead::-webkit-scrollbar {
+	 background-color: inherit;
+     }
 
 
-  table.table-fixedheader>thead>tr>th:after, table.table-fixedheader>tbody>tr>td:after, table.table-fixedheader>tfoot>tr>td:after {
-    content:' ';
-    display: table-cell;
-    visibility: hidden;
-    clear: both;
-  }
+     table.table-fixedheader>thead>tr>th:after, table.table-fixedheader>tbody>tr>td:after, table.table-fixedheader>tfoot>tr>td:after {
+	 content:' ';
+	 display: table-cell;
+	 visibility: hidden;
+	 clear: both;
+     }
 
-  /*
-  We want to set <th> and <td> elements to float left.
-  We also must explicitly set the width for each column (both for the <th>
-  and the <td>).  We set to 20% here a default placeholder, but it can be
-  overridden elsewhere.
-  */
+     /*
+	We want to set <th> and <td> elements to float left.
+	We also must explicitly set the width for each column (both for the <th>
+	and the <td>).  We set to 20% here a default placeholder, but it can be
+	overridden elsewhere.
+      */
 
-  table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.table-fixedheader>tfoot tr td {
-    float: left;
+     table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.table-fixedheader>tfoot tr td {
+	 float: left;
 
-  }
+     }
 
-  .shadow {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  td {
-    font-size: 80%;
-  }
+     .shadow {
+	 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+     }
+     td {
+	 font-size: 80%;
+     }
 
-  th {
-    font-size: 75%;
-  }
-  .nopadding {
+     th {
+	 font-size: 75%;
+     }
+     .nopadding {
   	 padding: 0 !important;
   	 margin: 0 !important;
-  }
-  #narration {
-    max-height: 90px;
-  }
+     }
+     #narration {
+	 max-height: 90px;
+     }
 
-.modal-body {
-    max-height: calc(100vh - 212px);
-    overflow-y: auto;
-}
-  </style>
-</head>
-<body>
-  <div class="container-fluid">
-    <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
+     .modal-body {
+	 max-height: calc(100vh - 212px);
+	 overflow-y: auto;
+     }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Voucher saved.{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="account-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Voucher saved.{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="account-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      <label for="vno">{% trans %}Please select an account!{% endtrans %}</label>
-    </div>
-    <div class="alert alert-danger" id="failure-alert" aria-live="rude" role="alert" hidden>
+	<label for="vno">{% trans %}Please select an account!{% endtrans %}</label>
+      </div>
+      <div class="alert alert-danger" id="failure-alert" aria-live="rude" role="alert" hidden>
 
-      {% trans %}Voucher could not be saved. {% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="balance-alert" aria-live="rude" role="alert" hidden>
+	{% trans %}Voucher could not be saved. {% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="balance-alert" aria-live="rude" role="alert" hidden>
 
-      {% trans %}Totals misbalance!{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="invoicebalance-alert" aria-live="rude" role="alert" hidden>
+	{% trans %}Totals misbalance!{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="invoicebalance-alert" aria-live="rude" role="alert" hidden>
 
-      {% trans %}Voucher total cannot be greater than Invoice total!{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="zero-alert" aria-live="rude" role="alert" hidden>
+	{% trans %}Voucher total cannot be greater than Invoice total!{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="zero-alert" aria-live="rude" role="alert" hidden>
 
-      {% trans %}Voucher amount cannot be zero!{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="zerorow-alert" aria-live="rude" role="alert" hidden>
+	{% trans %}Voucher amount cannot be zero!{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="zerorow-alert" aria-live="rude" role="alert" hidden>
 
-      {% trans %}Voucher with zero amount cannot be saved!{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="accs-alert" aria-live="rude" role="alert" hidden>
+	{% trans %}Voucher with zero amount cannot be saved!{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="accs-alert" aria-live="rude" role="alert" hidden>
 
-      {% trans %}An account can be selected only once!{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="vno-alert" aria-live="rude" role="alert" hidden>
+	{% trans %}An account can be selected only once!{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="vno-alert" aria-live="rude" role="alert" hidden>
 
-      {% trans %}Please enter voucher number!{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
+	{% trans %}Please enter voucher number!{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
 
-      {% trans %}Please enter voucher date in proper format!{% endtrans %}
-    </div>
-    <div class="alert alert-warning nopadding" id="postdate-alert" aria-live="rude" role="alert" hidden>
-      <strong>{% trans %}You are entering a post-dated transaction!{% endtrans %}</strong>
-    </div>
-    <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
+	{% trans %}Please enter voucher date in proper format!{% endtrans %}
+      </div>
+      <div class="alert alert-warning nopadding" id="postdate-alert" aria-live="rude" role="alert" hidden>
+	<strong>{% trans %}You are entering a post-dated transaction!{% endtrans %}</strong>
+      </div>
+      <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
 
-      {% trans %}Please enter voucher date from within the financial year!{% endtrans %}
-    </div>
+	{% trans %}Please enter voucher date from within the financial year!{% endtrans %}
+      </div>
 
-    <div class="alert alert-danger" id="inv-date-alert" aria-live="rude" role="alert" hidden>
+      <div class="alert alert-danger" id="inv-date-alert" aria-live="rude" role="alert" hidden>
 
-      {% trans %}Transaction date cannot be prior to Invoice date!{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="customer-more-alert"  aria-live="rude" role="alert" hidden>
-      {% trans %}Only one customer can be selected.{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="bankdetails-alert" aria-live="rude" role="alert" hidden>
-     {% trans %}Enter Complete Bank Details!{% endtrans %}
-   </div>
+	{% trans %}Transaction date cannot be prior to Invoice date!{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="customer-more-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Only one customer can be selected.{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="bankdetails-alert" aria-live="rude" role="alert" hidden>
+	{% trans %}Enter Complete Bank Details!{% endtrans %}
+      </div>
 
 
-    <form id="voucher" name="voucher">
-      <div class="row " style="margin:0 !important;" >
-<center>
-        <input id="vouchertype" type="text" value="{{vtype}}" hidden>
-        <div class="form-group col-sm-12 " style="margin-top:10px; margin-bottom:0 !important; padding-bottom:0 !important;">
-          {% if vtype=="contra" %}
-          <label style="font-size: 16;"><i>{% trans %}Contra{% endtrans %}</i></label>
-          {% elif vtype == "payment" %}
-          <label style="font-size: 16;"><i>{% trans %}Payment{% endtrans %}</i></label>
-          {% elif vtype == "receipt" %}
-          <label style="font-size: 16;"><i>{% trans %}Receipt{% endtrans %}</i></label>
-          {% elif vtype == "journal" %}
-          <label style="font-size: 16;"><i>{% trans %}Journal{% endtrans %}</i></label>
-          {% elif vtype == "sales" %}
-          <label style="font-size: 16;"><i>{% trans %}Sales{% endtrans %}</i></label>
-          {% elif vtype == "purchase" %}
-          <label style="font-size: 16;"><i>{% trans %}Purchase{% endtrans %}</i></label>
-          {% elif vtype == "creditnote" %}
-          <label style="font-size: 16;"><i>{% trans %}Credit Note{% endtrans %}</i></label>
-          {% elif vtype == "debitnote" %}
-          <label style="font-size: 16;"><i>{% trans %}Debit Note{% endtrans %}</i></label>
-          {% elif vtype == "salesreturn" %}
-          <label style="font-size: 16;"><i>{% trans %}Sale Return{% endtrans %}</i></label>
-          {% elif vtype == "purchasereturn" %}
-          <label style="font-size: 16;"><i>{% trans %}Purchase Return{% endtrans %}</i></label>
-          {% endif %}
-          <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#vchModal"></i>
-        </div>
-        </center>
-</div>
+      <form id="voucher" name="voucher">
+	<div class="row " style="margin:0 !important;" >
+	  <center>
+            <input id="vouchertype" type="text" value="{{vtype}}" hidden>
+            <div class="form-group col-sm-12 " style="margin-top:0; margin-bottom:0 !important; padding:0 !important;">
+              {% if vtype=="contra" %}
+		<label style="font-size: 16;"><i>{% trans %}Contra{% endtrans %}</i></label>
+              {% elif vtype == "payment" %}
+		<label style="font-size: 16;"><i>{% trans %}Payment{% endtrans %}</i></label>
+              {% elif vtype == "receipt" %}
+		<label style="font-size: 16;"><i>{% trans %}Receipt{% endtrans %}</i></label>
+              {% elif vtype == "journal" %}
+		<label style="font-size: 16;"><i>{% trans %}Journal{% endtrans %}</i></label>
+              {% elif vtype == "sales" %}
+		<label style="font-size: 16;"><i>{% trans %}Sales{% endtrans %}</i></label>
+              {% elif vtype == "purchase" %}
+		<label style="font-size: 16;"><i>{% trans %}Purchase{% endtrans %}</i></label>
+              {% elif vtype == "creditnote" %}
+		<label style="font-size: 16;"><i>{% trans %}Credit Note{% endtrans %}</i></label>
+              {% elif vtype == "debitnote" %}
+		<label style="font-size: 16;"><i>{% trans %}Debit Note{% endtrans %}</i></label>
+              {% elif vtype == "salesreturn" %}
+		<label style="font-size: 16;"><i>{% trans %}Sale Return{% endtrans %}</i></label>
+              {% elif vtype == "purchasereturn" %}
+		<label style="font-size: 16;"><i>{% trans %}Purchase Return{% endtrans %}</i></label>
+              {% endif %}
+              <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#vchModal"></i>
+            </div>
+          </center>
+	</div>
 
-      <div class="form-inline well well-sm ">
+	<div class="form-inline well well-sm ">
           <div class="form-inline ">
             <div class="form-inline">
-            <div class="form-group " style="width:25%;">
-              <label for="vno">{% trans %}<u>V</u>oucher No.{% endtrans %} :</label><label for="vno" style="color:red;font-size: 120%;">*</label>
-              <div><input type="text" class="form-control input-sm" value="{{lastdetails['vno']}}" name="vno" id="vno" size="10" accesskey="v"></div>
-            </div>
+              <div class="form-group " style="width:25%;">
+		<label for="vno">{% trans %}<u>V</u>oucher No.{% endtrans %} :</label><label for="vno" style="color:red;font-size: 120%;">*</label>
+		<div><input type="text" class="form-control input-sm" value="{{lastdetails['vno']}}" name="vno" id="vno" size="10" accesskey="v"></div>
+              </div>
 
-          {% if invoicedata!=0 %}
-          {% if invoicecount!=0 %}
-            <div class="form-group invhide " style="width:30%;">
-              <input id="invhide" value="1" hidden="">
-              <label for="invsel">{% trans %}Select Invoice {% endtrans %} :</label>
+              {% if invoicedata!=0 %}
+		{% if invoicecount!=0 %}
+		  <div class="form-group invhide " style="width:30%;">
+		    <input id="invhide" value="1" hidden="">
+		    <label for="invsel">{% trans %}Select Invoice {% endtrans %} :</label>
             </br>
-              <select id="invsel" class="form-control input-sm  invoice_no" >
+            <select id="invsel" class="form-control input-sm  invoice_no" >
               <option value="" selected total="">{% trans %}None{% endtrans %}</option>
               {% for invoice in invoicedata %}
-              {% if vtype == "purchase" and invoice["csflag"]|int == 19 %}
-                <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}" invdate={{invoice["invoicedate"]}} >{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
-              {% elif vtype == "sales" and invoice["csflag"]|int == 3 %}
-                <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}" invdate={{invoice["invoicedate"]}}>{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
-              {% endif %}
+		{% if vtype == "purchase" and invoice["csflag"]|int == 19 %}
+                  <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}" invdate={{invoice["invoicedate"]}} >{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
+		{% elif vtype == "sales" and invoice["csflag"]|int == 3 %}
+                  <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}" invdate={{invoice["invoicedate"]}}>{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
+		{% endif %}
               {% endfor %}
-              </select>
-          </div>
-          <div class="form-group " style="width:25%;" >
-            <label for="invtotal">{% trans %}Total Invoice Amount {% endtrans %} :</label>
-            <div>
-            <input type="text" id="invtotal" class="form-control input-sm" value="0.00" size="15" placeholder="" disabled>
-          </div>
-          </div>
+            </select>
+		  </div>
+		  <div class="form-group " style="width:25%;" >
+		    <label for="invtotal">{% trans %}Total Invoice Amount {% endtrans %} :</label>
+		    <div>
+		      <input type="text" id="invtotal" class="form-control input-sm" value="0.00" size="15" placeholder="" disabled>
+		    </div>
+		  </div>
 
 
 
-      {% else %}
-      <input id="invhide" value="0" hidden="">
-      {% endif %}
-      {% endif %}
-      <div class=" form-group pull-right " style="width:15%;">
-        <label for="vdate">{% trans %}<u>D</u>ate{% endtrans %} :</label><label for="vdate" style="color:red;font-size: 120%;">*</label>
-        <div>
-        <input type="text" class="vdate form-control input-sm" id="vdate" value="{{lastdetails['vdate'][0:2]}}" size="2" maxlength="2" placeholder="DD" accesskey="d">
-        <input type="text" id="vmonth" class="vdate form-control input-sm" value="{{lastdetails['vdate'][3:5]}}" size="2" maxlength="2" placeholder="MM">
-        <input type="text" id="vyear" class="vdate form-control input-sm" value="{{lastdetails['vdate'][6:]}}" size="4" maxlength="4" placeholder="YYYY">
-      </div>
-      </div>
+		{% else %}
+		  <input id="invhide" value="0" hidden="">
+		{% endif %}
+	      {% endif %}
+	      <div class=" form-group pull-right " style="width:15%;">
+		<label for="vdate">{% trans %}<u>D</u>ate{% endtrans %} :</label><label for="vdate" style="color:red;font-size: 120%;">*</label>
+		<div>
+		  <input type="text" class="vdate form-control input-sm" id="vdate" value="{{lastdetails['vdate'][0:2]}}" size="2" maxlength="2" placeholder="DD" accesskey="d">
+		  <input type="text" id="vmonth" class="vdate form-control input-sm" value="{{lastdetails['vdate'][3:5]}}" size="2" maxlength="2" placeholder="MM">
+		  <input type="text" id="vyear" class="vdate form-control input-sm" value="{{lastdetails['vdate'][6:]}}" size="4" maxlength="4" placeholder="YYYY">
+		</div>
+	      </div>
 
-      </div>
-      </div>
-    </div>
+	    </div>
+	  </div>
+	</div>
 
-      <div class="panel flow shadow ">
-        <div class="table-responsive">
-          <table id="vtable" class="table table-condensed table-fixedheader">
-            <thead class="bg-primary">
-              <tr>
-                <th class="col-xs-1">
-                  {% trans %}Cr/Dr{% endtrans %}
-                </th>
-                <th class="col-xs-4">
-                  {% trans %}Account Name{% endtrans %}
-                </th>
-                <th class="col-xs-2 rightJustified">
-                  {% trans %}Balance{% endtrans %}
-                </th>
-                <th class="col-xs-2 rightJustified">
-                  {% trans %}Dr Amount{% endtrans %}
-                </th>
-                <th class="col-xs-2 rightJustified">
-                  {% trans %}Cr Amount{% endtrans %}
-                </th>
-                <th class="col-xs-1">
-                  {% trans %}Remove{% endtrans %}
-                </th>
-              </tr>
-            </thead>
-            {% if invoicedata!= 0 %}
-            <tbody style="height: 20%;">
-            {% else %}
-            <tbody style="height: 20%;">
-            {% endif %}
+	<div class="panel flow shadow ">
+          <div class="table-responsive">
+            <table id="vtable" class="table table-condensed table-fixedheader">
+              <thead class="bg-primary">
+		<tr>
+                  <th class="col-xs-1">
+                    {% trans %}Cr/Dr{% endtrans %}
+                  </th>
+                  <th class="col-xs-4">
+                    {% trans %}Account Name{% endtrans %}
+                  </th>
+                  <th class="col-xs-2 rightJustified">
+                    {% trans %}Balance{% endtrans %}
+                  </th>
+                  <th class="col-xs-2 rightJustified">
+                    {% trans %}Dr Amount{% endtrans %}
+                  </th>
+                  <th class="col-xs-2 rightJustified">
+                    {% trans %}Cr Amount{% endtrans %}
+                  </th>
+                  <th class="col-xs-1">
+                    {% trans %}Remove{% endtrans %}
+                  </th>
+		</tr>
+              </thead>
+              {% if invoicedata!= 0 %}
+		<tbody style="height: 20%;">
+              {% else %}
+		  <tbody style="height: 20%;">
+              {% endif %}
               <tr>
                 <td class="col-xs-1">
                   <select class="form-control input-sm crdr" disabled>
@@ -294,7 +294,7 @@
                 <td class="col-xs-4">
                   <select class="form-control input-sm accs">
                     {% for acc in draccounts %}
-                    <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
+                      <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
                     {% endfor %}
                   </select>
                 </td>
@@ -321,7 +321,7 @@
                 <td class="col-xs-4">
                   <select class="form-control input-sm accs">
                     {% for acc in craccounts %}
-                    <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
+                      <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
                     {% endfor %}
                   </select>
                 </td>
@@ -338,259 +338,257 @@
 
                 </td>
               </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td class="col-xs-5" colspan="2">
-                  <input type="text" class="form-control input-sm" value="Total" disabled>
-                </td>
-                <td class="col-xs-3">
-                  <input id="drtotal" class="form-control input-sm rightJustified" type="text" value="0.00" disabled>
-                </td>
-                <td class="col-xs-3">
-                  <input id="crtotal" class="form-control input-sm rightJustified" type="text" value="0.00" disabled>
-                </td>
-                <td class="col-xs-1">
+		  </tbody>
+		  <tfoot>
+		    <tr>
+                      <td class="col-xs-5" colspan="2">
+			<input type="text" class="form-control input-sm" value="Total" disabled>
+                      </td>
+                      <td class="col-xs-3">
+			<input id="drtotal" class="form-control input-sm rightJustified" type="text" value="0.00" disabled>
+                      </td>
+                      <td class="col-xs-3">
+			<input id="crtotal" class="form-control input-sm rightJustified" type="text" value="0.00" disabled>
+                      </td>
+                      <td class="col-xs-1">
 
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="form-group col-md-6 pull-right">
-      {% if  projects %}
-          <label for="project">{% trans %}Pr<u>o</u>ject{% endtrans %} :</label>
-            <div class="form-group">
+                      </td>
+		    </tr>
+		  </tfoot>
+            </table>
+          </div>
+	</div>
+	<div class="form-group">
+          <div class="form-group col-md-6 pull-right">
+	    {% if  projects %}
+              <label for="project">{% trans %}Pr<u>o</u>ject{% endtrans %} :</label>
+              <div class="form-group">
 
-          <select class="form-control input-sm" id="project" accesskey="o">
-            <option value="">{% trans %}None{% endtrans %}</option>
-            {% for project in projects %}
-            <option value="{{project['projectcode']}}">{{project['projectname']}}</option>
-            {% endfor %}}
-          </select>
-        </div>
-      {% endif %}
-          <div class="form-inline" >
+		<select class="form-control input-sm" id="project" accesskey="o">
+		  <option value="">{% trans %}None{% endtrans %}</option>
+		  {% for project in projects %}
+		    <option value="{{project['projectcode']}}">{{project['projectname']}}</option>
+		  {% endfor %}}
+		</select>
+              </div>
+	    {% endif %}
+            <div class="form-inline" >
               <button class="btn btn-primary" type="button" id="instrumentbtn" accesskey="k">{% trans %}Ban<u>k</u> Details{% endtrans %}</button>
               <button type="button" id="save" name="submit" class="btn btn-success" accesskey="s">
                 <i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}
               </button>
-            <div class="form-group">
-              <button type="button" id="reset" class="btn btn-danger" accesskey="e">
-                <i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}
-              </button>
-            </div>
-            <div class="form-group">
-              <button type="button" id="popup" class="btn btn-primary" accesskey="o">
-                <i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Acc<u>o</u>unt{% endtrans %}
-              </button>
-            </div>
-                  <label class="btn btn-primary" for="my-file-selector">
-                    <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
-                    <i class="fa fa-paperclip" aria-hidden="true"></i> {% trans %}Attac<u>h</u>{% endtrans %}
-                  </label>
+              <div class="form-group">
+		<button type="button" id="reset" class="btn btn-danger" accesskey="e">
+                  <i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}
+		</button>
+              </div>
+              <div class="form-group">
+		<button type="button" id="popup" class="btn btn-primary" accesskey="o">
+                  <i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Acc<u>o</u>unt{% endtrans %}
+		</button>
+              </div>
+              <label class="btn btn-primary" for="my-file-selector">
+                <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
+                <i class="fa fa-paperclip" aria-hidden="true"></i> {% trans %}Attac<u>h</u>{% endtrans %}
+              </label>
 
-                  <span class='label label-info' id="upload-file-info"></span>
+              <span class='label label-info' id="upload-file-info"></span>
             </div>
-        </div>
+          </div>
           <div class="form-group pull-left col-md-6">
             <label for="narration">{% trans %}Narra<u>t</u>ion{% endtrans %} :</label>
-            <textarea class="form-control" name="narration" id="narration" rows="3" cols="70" accesskey="t"></textarea>
+            <textarea class="form-control" name="narration" id="narration" rows="2" cols="70" accesskey="t"></textarea>
           </div>
 
-      </div>
-      <input type="hidden" id="vtype" name="vtype" value="{{vtype}}">
-      </div>
-    </form>
+	</div>
+	<input type="hidden" id="vtype" name="vtype" value="{{vtype}}">
+    </div>
+      </form>
 
     </div>
-  </div>
-   <div id="vchModal"  tabindex="-1" class="modal fade" role="dialog"style=" margin-top: 50px; margin-left:100px;"  aria-hidden="true">
-  <div class="modal-dialog bgcolor " >
-    <div class="modal-content ">
-    <div class="modal-header">
-      {% trans %}<strong>Help!</strong>{% endtrans %}
-   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button> </div>
-      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+    </div>
+    <div id="vchModal"  tabindex="-1" class="modal fade" role="dialog"style=" margin-top: 50px; margin-left:100px;"  aria-hidden="true">
+      <div class="modal-dialog bgcolor " >
+	<div class="modal-content ">
+	  <div class="modal-header">
+	    {% trans %}<strong>Help!</strong>{% endtrans %}
+	    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button> </div>
+	  <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
 
-       <p>   <font color=" #566573"> {%trans%}
-Book Keeping is recording of transactions. Since transactions are of different kinds, GNUKhata has a voucher type for recording every kind of transaction.
-The Voucher Types are given below.</br>
-<b>Receipt</b></br>
-Used for recording amounts received by cash or cheque or through NEFT.
-Accounts from the Sub-Groups Cash and Bank of the Group Current Assets can only be debited and cannot be credited.</br>
-Payment
-Used for recording payments made by cash or cheque or through NEFT.
-Accounts from the Sub-Groups Cash and Bank of the Group Current Assets can only be credited and cannot be debited.
-</br>
-<b>Sale </b></br>
-Used for recording sale of raw materials, semi-finished goods or finished goods or services.
-Accounts from the Sub-Groups Sundry Debtors, Cash and Bank of the Group Current Assets can only be debited and accounts from the Group Direct Income, Indirect Income and Current Liabilities can only be credited.
-</br>
-<b>Purchase </b></br>
-Used for recording purchase of raw materials, semi-finished goods or finished goods.
-Accounts from the Groups Direct Expense, Indirect Expense and Current Liabilities can only be debited. Accounts from the Sub-Groups Cash and Bank of the Group Current Assets and from the Sub-Group Creditors for Purchase of the Group Current Liabilities can only be credited.
-</br>
-<b>Contra </b></br>
-Used for recording deposits or withdrawals of cash from bank or transfer of funds from one bank account to another.
-Only accounts from the Sub-Groups Cash and Bank of the Group Current Assets can be debited and credited.
-<br>
-<b>Journal</b></br>
-Used for recording rectification entries, transfer of amounts from one account to another, adjustment entries, recording discount received and given, purchase or sale of asset.
-Accounts from the Sub-Groups Cash and Bank of the Group Current Assets cannot be debited or credited.
-<br>
-<b>Sale Return </b></br>
-Used for recording return of goods by a customer by crediting his account.
-Accounts from the Group Direct Income and Current Liabilities can only be debited and accounts from the SubGroup Sundry Debtors of the Group Current Assets can only be credited.
-<br>
-<b>Purchase Return </b></br>
-Used for recording return of goods to a supplier by debiting his account.
-Accounts from the Sub Group Sundry Creditors for Purchase of the Group Current Liabilities can only be debited and accounts from the Group Direct Expense, Indirect Expense can only be credited.
-<br>
-<b>Credit Note</b></br>
-Used for recording reduction in the price charged to a customer (without return of goods).
-The accounts that can be debited and credited are similar to those of Sales Return.
-<br>
-<b>Debit Note </b></br>
-Used for recording reduction in the price charged by a supplier (without return of goods).
-The accounts that can be debited and credited are similar to those of Purchase Return voucher.
-</br>In case of Sale Return, Purchase Return, Debit Note and Credit Note types of vouchers, accounts from the Sub-Groups Cash and Bank of the Group Current Assets cannot be debited and credited.
-<br></br>
-The user interface for all types of vouchers is the same.
-Whatever the type of a voucher be, in voucher entry Debit entry is to be recorded first then the Credit entry. There after any number of Debit and or Credit entries can be recorded.
-A cross sign will appear in each row in the Remove Column from the third row onwards. Click on the cross sign to delete an unwanted row.
-Project / Cost Center, Document Attachment and Narration fields are optional.
-A voucher can be saved only if the total of the Debit amounts and the total of the Credit amounts are the same.
-The field Balance displays the balance of the account selected as on the date of voucher.
+	    <p>   <font color=" #566573"> {%trans%}
+	      Book Keeping is recording of transactions. Since transactions are of different kinds, GNUKhata has a voucher type for recording every kind of transaction.
+	      The Voucher Types are given below.</br>
+	      <b>Receipt</b></br>
+	    Used for recording amounts received by cash or cheque or through NEFT.
+	    Accounts from the Sub-Groups Cash and Bank of the Group Current Assets can only be debited and cannot be credited.</br>
+	    Payment
+	    Used for recording payments made by cash or cheque or through NEFT.
+	    Accounts from the Sub-Groups Cash and Bank of the Group Current Assets can only be credited and cannot be debited.
+	    </br>
+	    <b>Sale </b></br>
+	    Used for recording sale of raw materials, semi-finished goods or finished goods or services.
+	    Accounts from the Sub-Groups Sundry Debtors, Cash and Bank of the Group Current Assets can only be debited and accounts from the Group Direct Income, Indirect Income and Current Liabilities can only be credited.
+	    </br>
+	    <b>Purchase </b></br>
+	    Used for recording purchase of raw materials, semi-finished goods or finished goods.
+	    Accounts from the Groups Direct Expense, Indirect Expense and Current Liabilities can only be debited. Accounts from the Sub-Groups Cash and Bank of the Group Current Assets and from the Sub-Group Creditors for Purchase of the Group Current Liabilities can only be credited.
+	    </br>
+	    <b>Contra </b></br>
+	    Used for recording deposits or withdrawals of cash from bank or transfer of funds from one bank account to another.
+	    Only accounts from the Sub-Groups Cash and Bank of the Group Current Assets can be debited and credited.
+	    <br>
+	    <b>Journal</b></br>
+	    Used for recording rectification entries, transfer of amounts from one account to another, adjustment entries, recording discount received and given, purchase or sale of asset.
+	    Accounts from the Sub-Groups Cash and Bank of the Group Current Assets cannot be debited or credited.
+	    <br>
+	    <b>Sale Return </b></br>
+	    Used for recording return of goods by a customer by crediting his account.
+	    Accounts from the Group Direct Income and Current Liabilities can only be debited and accounts from the SubGroup Sundry Debtors of the Group Current Assets can only be credited.
+	    <br>
+	    <b>Purchase Return </b></br>
+	    Used for recording return of goods to a supplier by debiting his account.
+	    Accounts from the Sub Group Sundry Creditors for Purchase of the Group Current Liabilities can only be debited and accounts from the Group Direct Expense, Indirect Expense can only be credited.
+	    <br>
+	    <b>Credit Note</b></br>
+	    Used for recording reduction in the price charged to a customer (without return of goods).
+	    The accounts that can be debited and credited are similar to those of Sales Return.
+	    <br>
+	    <b>Debit Note </b></br>
+	    Used for recording reduction in the price charged by a supplier (without return of goods).
+	    The accounts that can be debited and credited are similar to those of Purchase Return voucher.
+	    </br>In case of Sale Return, Purchase Return, Debit Note and Credit Note types of vouchers, accounts from the Sub-Groups Cash and Bank of the Group Current Assets cannot be debited and credited.
+	    <br></br>
+	    The user interface for all types of vouchers is the same.
+	    Whatever the type of a voucher be, in voucher entry Debit entry is to be recorded first then the Credit entry. There after any number of Debit and or Credit entries can be recorded.
+	    A cross sign will appear in each row in the Remove Column from the third row onwards. Click on the cross sign to delete an unwanted row.
+	    Project / Cost Center, Document Attachment and Narration fields are optional.
+	    A voucher can be saved only if the total of the Debit amounts and the total of the Credit amounts are the same.
+	    The field Balance displays the balance of the account selected as on the date of voucher.
 {% endtrans %} </font>
 
-        </p>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-  <input type="hidden" id="selpopupaccount" value="">
-  <div id="viewacc">
-
-  </div>
-  <div id="bwtable" class="modal" tabindex="-1" role="dialog">
-    <div class="vertical-alignment-helper">
-      <div class="modal-dialog modal-lg vertical-align-center">
-        <div class="modal-content">
-          <div class="modal-header">
-	    <button type="button" class="close" data-dismiss="modal" style="margin-left:15px;">&times;</button>
-            <h4 class="modal-title" id="bwtabletitle">{% trans %}Unpaid/Partially Paid Bills for {% endtrans %}</h4>
-          </div>
-          <div class="modal-body">
-	    <div class="row">
-	      <div id="bwtableload"></div>
-	    </div>
-	    <small id="txtareahelp" class="form-text text-muted">Press 'Insert' key from any field on the screen to save changes. Press 'End' key from last input field to shift focus to buttons.</small><br>
-	    <small id="txtareahelp2" class="form-text text-muted">You can use left and right arrows to navigate along buttons.</small>
-          </div>
-          <div class="modal-footer">
-	    <button type="button" id ="btclose" class="btn footerbutton btn-success">{% trans %}Done{% endtrans %}</button>
-	    <button type="button" id ="btasadv" class="btn footerbutton btn-primary" accesskey="a">{% trans %}<u>A</u>dd As Advance{% endtrans %}</button>
-	    <button type="button" id ="btonacc" class="btn footerbutton btn-danger" accesskey="n">{% trans %}Add On Accou<u>n</u>t{% endtrans %}</button>
-	    <button type="button" id ="btbillwise" class="btn footerbutton btn-info" accesskey="b">{% trans %}<u>B</u>ill Wise Accounting{% endtrans %}</button>
+            </p>
 	  </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div>
-  </div><!-- /.modal -->
-  <div id="confirm_yes_billwise" class="modal" tabindex="-1" role="dialog">
-    <div class="vertical-alignment-helper">
-      <div class="modal-dialog modal-sm vertical-align-center">
-        <div class="modal-content">
-          <div class="modal-header">
 
-            <h4 class="modal-title">{% trans %}Bill Wise Accounting{% endtrans %}</h4>
-          </div>
-          <div class="modal-body">
-            <p>{% trans %}Do you want to do Bill Wise Accounting?{% endtrans %}</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" id ="bwno" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
-            <button type="button" id="bwyes" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
+	</div>
+      </div>
     </div>
-  </div><!-- /.modal -->
 
-  <!-- instrument details popup modal-->
-  <div id="instrumentmodal" class="modal " tabindex="-1" role="dialog">
+    <input type="hidden" id="selpopupaccount" value="">
+    <div id="viewacc">
+
+    </div>
+    <div id="bwtable" class="modal" tabindex="-1" role="dialog">
+      <div class="vertical-alignment-helper">
+	<div class="modal-dialog modal-lg vertical-align-center">
+          <div class="modal-content">
+            <div class="modal-header">
+	      <button type="button" class="close" data-dismiss="modal" style="margin-left:15px;">&times;</button>
+              <h4 class="modal-title" id="bwtabletitle">{% trans %}Unpaid/Partially Paid Bills for {% endtrans %}</h4>
+            </div>
+            <div class="modal-body">
+	      <div class="row">
+		<div id="bwtableload"></div>
+	      </div>
+	      <small id="txtareahelp" class="form-text text-muted">Press 'Insert' key from any field on the screen to save changes. Press 'End' key from last input field to shift focus to buttons.</small><br>
+	      <small id="txtareahelp2" class="form-text text-muted">You can use left and right arrows to navigate along buttons.</small>
+            </div>
+            <div class="modal-footer">
+	      <button type="button" id ="btclose" class="btn footerbutton btn-success"><i class="fa fa-check" aria-hidden="true"></i>{% trans %}Done{% endtrans %}</button>
+	      
+	    </div>
+          </div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+      </div>
+    </div><!-- /.modal -->
+    <div id="confirm_yes_billwise" class="modal" tabindex="-1" role="dialog">
+      <div class="vertical-alignment-helper">
+	<div class="modal-dialog modal-sm vertical-align-center">
+          <div class="modal-content">
+            <div class="modal-header">
+
+              <h4 class="modal-title">{% trans %}Bill Wise Accounting{% endtrans %}</h4>
+            </div>
+            <div class="modal-body">
+              <p>{% trans %}Do you want to do Bill Wise Accounting?{% endtrans %}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id ="bwno" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i>{% trans %}No{% endtrans %}</button>
+              <button type="button" id="bwyes" data-dismiss="modal" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i>{% trans %}Yes{% endtrans %}</button>
+            </div>
+          </div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+      </div>
+    </div><!-- /.modal -->
+
+    <!-- instrument details popup modal-->
+    <div id="instrumentmodal" class="modal " tabindex="-1" role="dialog">
       <div class="modal-dialog ">
         <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title">
-          {% trans %}Bank Details{% endtrans %}
-        </div>
-      </div>
-
-      <div class="modal-body">
-        <div class="panel shadow">
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="alert alert-danger" id="instrumentno-alert" aria-live="rude" role="alert" hidden>
-                 {% trans %}Enter Instrument No.!{% endtrans %}
-               </div>
-                  <div class="alert alert-danger" id="bankname-alert" aria-live="rude" role="alert" hidden>
-                   {% trans %}Enter Bank Name!{% endtrans %}
-                 </div>
-                 <div class="alert alert-danger" id="branchname-alert" aria-live="rude" role="alert" hidden>
-                  {% trans %}Enter Branch Name!{% endtrans %}
-                </div>
-                <div class="alert alert-danger" id="instrdate-alert" aria-live="rude" role="alert" hidden>
-                 {% trans %}Enter Proper Instrument Date!{% endtrans %}
-               </div>
-                 <div class="form-group form-inline">
-                   <label for="instrumentno">{% trans %}Instrument No{% endtrans %} :</label>
-                   <input class="form-control input-sm" id="instrumentno" placeholder="{% trans %}Enter Instrument no{% endtrans %}" >
-                 </div>
-                 <div class="form-group form-inline">
-                   <label for="bankname">{% trans %}Bank Name{% endtrans %} :</label>
-                   <input class="form-control input-sm" id="bankname" placeholder="{% trans %}Enter Bank Name{% endtrans %}" >
-                 </div>
-                 <div class="form-group form-inline">
-                   <label for="branchname">{% trans %}Branch Name{% endtrans %} :</label>
-                   <input class="form-control input-sm" id="branchname" placeholder="{% trans %}Enter Branch Name{% endtrans %}" >
-                 </div>
-                 <div class="form-inline">
-                        <label for="instrument_date">{% trans %}Instrument Date:{% endtrans %}</label>
-
-
-                            <div class="form-group">
-                              <input type="text" class="form-control input-sm instrdate" size="2" maxlength="2" placeholder="DD" id="instrument_date" >
-                            </div>
-                            <div class="form-group">
-                              <input type="text" class="form-control input-sm instrdate" size="2" maxlength="2" placeholder="MM" id="instrument_month">
-                            </div>
-                            <div class="form-group">
-                              <input type="text" class="form-control input-sm instrdate" size="4" maxlength="4" placeholder="YYYY" id="instrument_year">
-                            </div>
-
-                  </div>
-               </div>
+	  <div class="modal-header">
+            <div class="modal-title">
+              {% trans %}Bank Details{% endtrans %}
             </div>
-        </div>
-      </div>
-      <small id="exithelp" class="form-text text-muted">{% trans %}Press Esc key when you are done. {% endtrans %}</small><br>
-    </div>
-    <div class="modal-footer">
-          <button type="button"  id="donebutton" class="btn btn-sm btn-success pull-left" data-dismiss="modal">Done</button>
-        </div>
-  </div>
-  </div>
-</div>
+	  </div>
 
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addvoucher.js')}}"></script>
+	  <div class="modal-body">
+            <div class="panel shadow">
+              <div class="panel-body">
+		<div class="row">
+		  <div class="col-sm-12">
+                    <div class="alert alert-danger" id="instrumentno-alert" aria-live="rude" role="alert" hidden>
+                      {% trans %}Enter Instrument No.!{% endtrans %}
+		    </div>
+                    <div class="alert alert-danger" id="bankname-alert" aria-live="rude" role="alert" hidden>
+                      {% trans %}Enter Bank Name!{% endtrans %}
+                    </div>
+                    <div class="alert alert-danger" id="branchname-alert" aria-live="rude" role="alert" hidden>
+                      {% trans %}Enter Branch Name!{% endtrans %}
+                    </div>
+                    <div class="alert alert-danger" id="instrdate-alert" aria-live="rude" role="alert" hidden>
+                      {% trans %}Enter Proper Instrument Date!{% endtrans %}
+		    </div>
+                    <div class="form-group form-inline">
+                      <label for="instrumentno">{% trans %}Instrument No{% endtrans %} :</label>
+                      <input class="form-control input-sm" id="instrumentno" placeholder="{% trans %}Enter Instrument no{% endtrans %}" >
+                    </div>
+                    <div class="form-group form-inline">
+                      <label for="bankname">{% trans %}Bank Name{% endtrans %} :</label>
+                      <input class="form-control input-sm" id="bankname" placeholder="{% trans %}Enter Bank Name{% endtrans %}" >
+                    </div>
+                    <div class="form-group form-inline">
+                      <label for="branchname">{% trans %}Branch Name{% endtrans %} :</label>
+                      <input class="form-control input-sm" id="branchname" placeholder="{% trans %}Enter Branch Name{% endtrans %}" >
+                    </div>
+                    <div class="form-inline">
+                      <label for="instrument_date">{% trans %}Instrument Date:{% endtrans %}</label>
+
+
+                      <div class="form-group">
+                        <input type="text" class="form-control input-sm instrdate" size="2" maxlength="2" placeholder="DD" id="instrument_date" >
+                      </div>
+                      <div class="form-group">
+                        <input type="text" class="form-control input-sm instrdate" size="2" maxlength="2" placeholder="MM" id="instrument_month">
+                      </div>
+                      <div class="form-group">
+                        <input type="text" class="form-control input-sm instrdate" size="4" maxlength="4" placeholder="YYYY" id="instrument_year">
+                      </div>
+
+                    </div>
+		  </div>
+		</div>
+              </div>
+	    </div>
+	    <small id="exithelp" class="form-text text-muted">{% trans %}Press Esc key when you are done. {% endtrans %}</small><br>
+	  </div>
+	  <div class="modal-footer">
+            <button type="button"  id="donebutton" class="btn btn-sm btn-success pull-left" data-dismiss="modal">Done</button>
+          </div>
+	</div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addvoucher.js')}}"></script>
 </body>
 </html>

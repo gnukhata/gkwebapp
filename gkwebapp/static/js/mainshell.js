@@ -562,7 +562,7 @@ var userrole1;
   $('#showbillwiseaccounting').click(function (e) {
     // Loads customerlist page in the main div.
     $.ajax({
-      url: '/addvoucher?type=showcustomersupplierlist',
+      url: '/billwise?action=showcustomersupplierlist',
       type: 'POST',
       global: false,
       async: false,
