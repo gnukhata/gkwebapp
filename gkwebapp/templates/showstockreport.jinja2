@@ -26,7 +26,7 @@
 
   #latable tbody {
       display:block;
-      height: calc(100vh - 18em);
+      height: calc(100vh - 20em);
       overflow-y:scroll;
   }
   #latable thead,#latable tbody tr {
@@ -87,18 +87,18 @@
           {% trans %}Trn Type{% endtrans %}
         </th>
         <th class="col-xs-2 calign" >
-          {% trans %}Deli. Note No.{% endtrans %}
+          {% trans %}Deli Note No.{% endtrans %}
         </th>
         <th class="col-xs-1 calign" >
           {% trans %}INV No.{% endtrans %}
         </th>
         {% if godown != "" %}
         <th class="col-xs-1 calign" >
-          {% trans %}TN No{% endtrans %}
+          {% trans %}TN No.{% endtrans %}
         </th>
         {% endif %}
         <th class="col-xs-1 calign" >
-          {% trans %}RN No{% endtrans %}
+          {% trans %}RN No.{% endtrans %}
         </th>
         <th class="col-xs-1 rightlist" >
           {% trans %}Inward{% endtrans %}
@@ -252,6 +252,13 @@
       {% endfor %}
     </tbody>
   </table>
+  <div class="col-xs-12">
+    <small><b>Trn Type :</b> Transaction Type, &nbsp
+        <b>Deli Note No. : </b> Delivery Note Number, &nbsp
+        <b>INV No. :</b> Invoice Number, &nbsp
+        <b>RN No. :</b> Rejection Number<br><br>
+    </small>
+</div>
   <span style="margin:auto; display:table;">
     <nbsp><nbsp>
       <button type="button" class="btn btn-sm btn-danger" id="viewanotherstock" accesskey="w">{% trans %}<i class="fa fa-eye" aria-hidden="true"></i> Vie<u>w</u> Another Stock{% endtrans %}</button>
