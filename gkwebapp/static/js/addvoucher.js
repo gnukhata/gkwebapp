@@ -1476,11 +1476,11 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     for (var i = 0; i < files.length; i++) {
       form_data.append("file"+i,files[i])
     }
-    if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.billflag ==1)
-    {
-      if ($("#invsel").length > 0) {
-	details.invid = $("#invsel option:selected").val();
-	var invoicetotal= $("#invsel option:selected").attr("total");
+    if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase"))
+      { 
+	if ($("#invsel").length > 0) {
+	  details.invid = $("#invsel option:selected").val();
+	  var invoicetotal= $("#invsel option:selected").attr("total");
 	var vtotal=0;
 	$(".cramt").each(function(){
           vtotal += +$(this).val();
