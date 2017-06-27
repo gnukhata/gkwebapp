@@ -674,139 +674,76 @@ var userrole1;
 
       $("#orgprefmodal").modal('show');
       // creates a modal(dialog box) asking user to activate inventory or not.
+
       $("#orgprefmodal").on('shown.bs.modal', function(event) {
-        $("#invflag").focus();
-          var invflag;
-          var invsflag;
-          var billflag;
-              if (sessionStorage.invflag==1) {
-                  $('#invflag').prop('checked', true);
-		  $('#invflag').prop('disabled', true);
-                  $('#invsflag').prop('checked', true);
-		  $('#invsflag').prop('disabled', true);
-              }
+        console.log(sessionStorage.invflag);
+        console.log(sessionStorage.invsflag);
+        console.log(sessionStorage.billflag);
+        if (sessionStorage.invflag==1 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
+          $('#invinvsbillradio').prop('checked', true);
+        }
+        if (sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
+          $('#invsbillradio').prop('checked', true);
+        }
+        if (sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==0) {
+          $('#onlyinvsradio').prop('checked', true);
+        }
+        $("#invinvsbillradio").focus();
 
-                if (sessionStorage.invsflag==1) {
-                  $('#invsflag').prop('checked', true);
-                  $('#invsflag').prop('disabled', true);
-                }
 
-                  if (sessionStorage.billflag==1) {
-                      $('#billflag').prop('checked', true);
-		      $('#invsflag').prop('checked', true);
-		      $('#invsflag').prop('disabled', true);
-                  }
-	  if (sessionStorage.invsflag==0 && sessionStorage.invflag==0) {
-                  $('#billflag').prop('checked', false);
-                  $('#billflag').prop('disabled', true);
-                }
-
-                    $("#invflag").keydown(function(event) {
+                    $("#invinvsbillradio").keydown(function(event) {
                         if (event.which==13) {
                           event.preventDefault();
+                          $('#invsbillradio').focus();
 
-                          if ($("#invsflag").is(":checked"))
-                          {
-
-                                $('#billflag').focus();
-                        }
-                        else {
-                          invflag=0;
-                          $('#invsflag').focus();
-                        }
                       }
                     });
 
-                      $("#invsflag").keydown(function(event) {
+                      $("#invsbillradio").keydown(function(event) {
                         if (event.which==13) {
                           event.preventDefault();
-                            if ($('#billflag').is(":disabled")) {
-			      $("#orgprefsave").focus();
-			    }
-			    else {
-				$('#billflag').focus();
-			    }
+                          $('#onlyinvsradio').focus();
                         }
-			  else if (event.which == 38) {
+			  if (event.which == 38) {
 			      event.preventDefault();
-			      $("#invflag").focus();
+			      $("#invinvsbillradio").focus();
 			  }
                       });
 
-                      $("#billflag").keydown(function(event) {
+                      $("#onlyinvsradio").keydown(function(event) {
                           if (event.which==13) {
 			      event.preventDefault();
                           $("#orgprefsave").focus();
                         }
-			  else if (event.which == 38) {
+			   if (event.which == 38) {
 			      event.preventDefault();
-			      if ($("#invsflag").is(":disabled")) {
-				  $("#invflag").focus();
-			      }
-			      else {
-				  $("#invsflag").focus();
-			      }
+			      $('#invsbillradio').focus();
+
 			  }
                       });
-  $(document).off("click","#invflag").on("click", "#invflag", function(event)
-                            {
-                              if($(this).is(":checked")) {
-                              $('#invsflag').prop('checked', true);
-				  $('#invsflag').prop('disabled',true);
-				  $('#billflag').prop('disabled', false);
-                             }
-				else {
-				    $('#invsflag').prop('disabled',false);
-				    $('#invsflag').prop('checked', false);
-				    if($("#invflag").is(":checked")) {
-				  $('#billflag').prop('disabled', false);
-				    }
-				    else {
-					$('#billflag').prop('disabled', true);
-				    }
-                             }
-                            });
-	  $(document).off("click","#invsflag").on("click", "#invsflag", function(event)
-                            {
-                              if($(this).is(":checked")) {
-				  $('#billflag').prop('disabled', false);
-                             }
-				else {
-				    if($("#invsflag").is(":checked")) {
-				  $('#billflag').prop('disabled', false);
-				    }
-				    else {
-					$('#billflag').prop('disabled', true);
-				    }
-                             }
-                            });
 
        $("#orgprefsave").click(function(event){
-         if ($("#invflag").is(":checked"))
+         if ($("#invinvsbillradio").is(":checked"))
          {
            invflag=1;
+           invsflag=1;
+           billflag=1;
        }
-       else {
-         invflag=0;
 
-       }
-       if ($("#invsflag").is(":checked"))
+       if ($("#invsbillradio").is(":checked"))
        {
+         invflag=0;
          invsflag=1;
+         billflag=1;
      }
-     else {
-       invsflag=0;
-
-     }
-     if ($("#billflag").is(":checked"))
+     if ($("#onlyinvsradio").is(":checked"))
      {
-       billflag=1;
-   }
-   else {
-     billflag=0;
+       invflag=0;
+       invsflag=1;
+       billflag=0;
 
    }
-               $.ajax({
+                $.ajax({
                        url: '/editorganisation?action=orgpref',
                        type: "POST",
                        datatype: 'json',

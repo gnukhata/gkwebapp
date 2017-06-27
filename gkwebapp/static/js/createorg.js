@@ -225,22 +225,27 @@ $(document).ready(function()
       $("#toyear").keydown(function(event) {
         if (event.which==13) {
           $(this).val(yearpad($(this).val(),4));
-
+          $('#invinvsbillradio').focus();
         }
       });
-                                  $(document).off('change', '.iib').on('change', '.iib', function(event) {
+
+              $(document).off('change', '.iib').on('change', '.iib', function(event) {
                           if ($("#invinvsbillradio").is(":checked")) {
+                            event.preventDefault();
                               invflag=1;
                               invsflag=1;
                               billflag=1;
                           }
-                          if ($("invsbillradio").is(":checked")) {
+                          if ($("#invsbillradio").is(":checked")) {
+                            event.preventDefault();
                               invflag=0
                               invsflag=1;
                             billflag=1;
+                            console.log("Rohini");
                           }
 
-                            if ($("onlyinvsradio").is(":checked")) {
+                            if ($("#onlyinvsradio").is(":checked")) {
+                              event.preventDefault();
                                 invflag=0;
                                 invsflag=1;
                               billflag=0;
@@ -372,6 +377,23 @@ $(document).ready(function()
         var fadate = $("#fromday").val()+"-"+$("#frommonth").val()+"-"+$("#fromyear").val();
         var tadate = $("#today").val()+"-"+$("#tomonth").val()+"-"+$("#toyear").val();
 
+        if ($("#invinvsbillradio").is(":checked")) {
+            invflag=1;
+            invsflag=1;
+            billflag=1;
+        }
+        if ($("#invsbillradio").is(":checked")) {
+            invflag=0
+            invsflag=1;
+          billflag=1;
+          console.log("rohini");
+        }
+
+          if ($("#onlyinvsradio").is(":checked")) {
+              invflag=0;
+              invsflag=1;
+            billflag=0;
+          }
 
         sessionStorage.setItem('orgn', $("#orgname").val());
         sessionStorage.setItem('orgt', otype);
@@ -417,15 +439,5 @@ $(document).ready(function()
 
       });
 
-      $("#invflag").change(function() {
-        if($(this).is(":checked")) {
-        $('#invsflag').attr('checked', true);
-        $('#invsflag').attr('disabled',true);
-       }
-       else {
-         $('#invsflag').attr('checked', false);
-         $('#invsflag').attr('disabled',false);
-       }
-      });
 
     });

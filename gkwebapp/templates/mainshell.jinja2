@@ -257,21 +257,20 @@
         <div class="alert alert-success" id="orgpref-alert"  aria-live="rude" role="alert" hidden>
           {% trans %}Organisation Preferences updated.{% endtrans %}
         </div>
-        <div class="form-group">
-          <input type="checkbox" name="invflag" id="invflag" value="">
-          <label class="" for="invflag">{% trans %}Inventory{% endtrans %}</label>
 
-        </div>
-        <div class="form-group">
-          <input type="checkbox" name="invsflag" id="invsflag" value="">
-          <label class="" for="invsflag">{% trans %}Invoice{% endtrans %}</label>
+                        <div class="form-group">
+                		<div class="radio">
+                		  <label><input type="radio" class="iib" name="orgpref" id="invinvsbillradio" aria-label="" checked>Inventory, Invoices and Billwise Accounting</label>
+                		</div>
+                		<div class="radio">
+                		  <label><input type="radio" class="iib" name="orgpref" id="invsbillradio" aria-label=""> Invoices and Billwise</label>
+                		</div>
 
-        </div>
-        <div class="form-group">
-          <input type="checkbox" name="billflag" id="billflag" value="">
-          <label class="" for="billflag">{% trans %}Billwise Accounting{% endtrans %}</label>
+                		<div class="radio">
+                		  <label><input type="radio" class="iib" name="orgpref" id="onlyinvsradio" aria-label=""> Only Invoicing</label>
+                		</div>
+                	      </div>
 
-        </div>
         <button type="button" class="btn btn-success" id ="orgprefsave" accesskey="s"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
 	<button type="button" class="btn btn-danger" data-dismiss="modal" id ="inv_no" accesskey="a"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}C<u>a</u>ncel{% endtrans %}</button>
       </div>
