@@ -154,7 +154,12 @@ $(document).ready(function()
   }
 );
 
-
+$("#openbal").keydown(function(event){
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#submit").click();
+	}
+    });
 
 $("#accountform").submit(function(e)
 {
@@ -226,11 +231,11 @@ $("#accountform").submit(function(e)
       {
         if(resp["gkstatus"]==0)
         {
-          $("#reset").click();
           $('.modal-backdrop').remove();
           $("#success-alert").alert();
-          $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#success-alert").hide();
+            $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#success-alert").hide();
+		$("#reset").click();
           });
         }
         else if(resp["gkstatus"]==1)
