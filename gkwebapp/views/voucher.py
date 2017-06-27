@@ -98,7 +98,6 @@ def cjaccounts(request):
 @view_config(route_name="addvoucher", renderer="json")
 def addvoucher(request):
     vdetails = json.loads(request.params["vdetails"])
-    print vdetails
     rowdetails= json.loads(request.params["transactions"])
     crs={}
     drs={}
@@ -108,7 +107,6 @@ def addvoucher(request):
         gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"]}
     if vdetails["vtype"] == "purchase" or vdetails["vtype"] == "sales":
         if vdetails["invid"] != "":
-            print vdetails["invid"]
             gkdata["invid"] = vdetails["invid"]
         else:
             gkdata["invid"] = None
