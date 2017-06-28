@@ -2,6 +2,7 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" media="screen" href="{{request.static_url('gkwebapp:static/css/bootstrap.min.css')}}" />
+    <link href="{{request.static_url('gkwebapp:static/css/mainshellstyle.css')}}" rel="stylesheet" type="text/css">
   <style>
   .content{ margin-top:4%
   }
@@ -9,6 +10,7 @@
     .mainbox {
       margin-top: 50px;
     }
+
   }
   </style>
 
@@ -97,21 +99,19 @@
 
                 </div>
                 <br>
-                <div class="form-group">
-                  <input type="checkbox" name="invflag" id="invflag" value="">
-                  <label class="" for="invflag">{% trans %}Inventory{% endtrans %}</label>
 
-                </div>
                 <div class="form-group">
-                  <input type="checkbox" name="invsflag" id="invsflag" value="">
-                  <label class="" for="invsflag">{% trans %}Invoice{% endtrans %}</label>
+        		<div class="radio">
+        		  <label><input type="radio" class="iib" name="iib" id="invinvsbillradio" aria-label="" checked>&nbsp Inventory with Invoicing and Billwise Accounting.</label>
+        		</div>
+        		<div class="radio">
+        		  <label><input type="radio" class="iib" name="iib" id="invsbillradio" aria-label="">&nbsp Invoicing with Billwise Accounting.</label>
+        		</div>
 
-                </div>
-                <div class="form-group">
-                  <input type="checkbox" name="billflag" id="billflag" value="">
-                  <label class="" for="billflag">{% trans %}Billwise Accounting{% endtrans %}</label>
-
-                </div>
+        		<div class="radio">
+        		  <label><input type="radio" class="iib" name="iib" id="onlyinvsradio" aria-label="">&nbsp Invoicing only.</label>
+        		</div>
+        	      </div>
 
                 <button class="btn btn-success" id="btnsubmit" type="submit" accesskey="p"><span class="glyphicon glyphicon-arrow-right"></span>{% trans %}<u>P</u>roceed{% endtrans %}</button>
               </div>

@@ -26,6 +26,9 @@ Contributors:
 
 $(document).ready(function()
 {
+  var invflag;
+  var invsflag;
+  var billflag;
   $("#orgname").focus();
   var sel1 = 0;
   var sel2 = 0;
@@ -222,100 +225,33 @@ $(document).ready(function()
       $("#toyear").keydown(function(event) {
         if (event.which==13) {
           $(this).val(yearpad($(this).val(),4));
-
+          $('#invinvsbillradio').focus();
         }
       });
-      $("#invflag").keydown(function(event) {
-                        if (event.which==13) {
-                          event.preventDefault();
 
-                          if ($("#invsflag").is(":checked"))
-                          {
+              $(document).off('change', '.iib').on('change', '.iib', function(event) {
+                          if ($("#invinvsbillradio").is(":checked")) {
+                            event.preventDefault();
+                              invflag=1;
+                              invsflag=1;
+                              billflag=1;
+                          }
+                          if ($("#invsbillradio").is(":checked")) {
+                            event.preventDefault();
+                              invflag=0
+                              invsflag=1;
+                            billflag=1;
+                            console.log("Rohini");
+                          }
 
-                                $('#billflag').focus();
-                        }
-                        else {
-                          invflag=0;
-                          $('#invsflag').focus();
-                        }
-			}
-	  else if (event.which == 38) {
-	      event.preventDefault();
-	      $("#toyear").focus().select();
-	  }
-                    });
-	  
-                      $("#invsflag").keydown(function(event) {
-                        if (event.which==13) {
-                          event.preventDefault();
-                            if ($('#billflag').is(":disabled")) {
-			      $("#btnsubmit").focus();
-			    }
-			    else {
-				$('#billflag').focus();
-			    }
-                        }
-			  else if (event.which == 38) {
-			      event.preventDefault();
-			      if ($("#invflag").is(":disabled")) {
-				  $("#toyear").focus().select();
-			      }
-			      else {
-				  $("#invflag").focus();
-			      }
-			  }
-                      });
-
-                      $("#billflag").keydown(function(event) {
-                          if (event.which==13) {
-			      event.preventDefault();
-			      $("#btnsubmit").focus();
-                        }
-			  else if (event.which == 38) {
-			      event.preventDefault();
-			      if ($("#invsflag").is(":disabled")) {
-				  $("#invflag").focus();
-			      }
-			      else if ($("#invsflag").is(":disabled") && $("#invflag").is(":disabled")) {
-				  $("#toyear").focus().select();
-			      }
-			      else {
-				  $("#invsflag").focus();
-			      }
-			  }
-                      });
-    $(document).off("click","#invflag").on("click", "#invflag", function(event)
-                            {
-                              if($(this).is(":checked")) {
-                              $('#invsflag').prop('checked', true);
-				  $('#invsflag').prop('disabled',true);
-				  $('#billflag').prop('disabled', false);
-                             }
-				else {
-				    $('#invsflag').prop('disabled',false);
-				    $('#invsflag').prop('checked', false);
-				    if($("#invflag").is(":checked")) {
-				  $('#billflag').prop('disabled', false);
-				    }
-				    else {
-					$('#billflag').prop('disabled', true);
-				    }
-                             }
+                            if ($("#onlyinvsradio").is(":checked")) {
+                              event.preventDefault();
+                                invflag=0;
+                                invsflag=1;
+                              billflag=0;
+                            }
                             });
-	  $(document).off("click","#invsflag").on("click", "#invsflag", function(event)
-                            {
-                              if($(this).is(":checked")) {
-				  $('#billflag').prop('disabled', false);
-                             }
-				else {
-				    if($("#invsflag").is(":checked")) {
-				  $('#billflag').prop('disabled', false);
-				    }
-				    else {
-					$('#billflag').prop('disabled', true);
-				    }
-                             }
-                            });
+
       $("#btnsubmit").click(function(event){
         event.preventDefault();
         var startday = $("#fromday").val();
@@ -440,34 +376,25 @@ $(document).ready(function()
         var otype = $("#orgtype option:selected").val();
         var fadate = $("#fromday").val()+"-"+$("#frommonth").val()+"-"+$("#fromyear").val();
         var tadate = $("#today").val()+"-"+$("#tomonth").val()+"-"+$("#toyear").val();
-        var invflag;
-        var invsflag;
-        var billflag;
-        if ($("#invflag").is(":checked"))
-        {
-          invflag=1;
 
+        if ($("#invinvsbillradio").is(":checked")) {
+            invflag=1;
+            invsflag=1;
+            billflag=1;
         }
-        else
-        {
-          invflag=0;
-        }
-        if ($("#invsflag").is(":checked"))
-        {
-          invsflag=1;
-        }
-        else
-        {
-          invsflag=0;
-        }
-        if ($("#billflag").is(":checked"))
-        {
+        if ($("#invsbillradio").is(":checked")) {
+            invflag=0
+            invsflag=1;
           billflag=1;
+          console.log("rohini");
         }
-        else
-        {
-          billflag=0;
-        }
+
+          if ($("#onlyinvsradio").is(":checked")) {
+              invflag=0;
+              invsflag=1;
+            billflag=0;
+          }
+
         sessionStorage.setItem('orgn', $("#orgname").val());
         sessionStorage.setItem('orgt', otype);
         sessionStorage.setItem('year1', fadate);
@@ -512,15 +439,5 @@ $(document).ready(function()
 
       });
 
-      $("#invflag").change(function() {
-        if($(this).is(":checked")) {
-        $('#invsflag').attr('checked', true);
-        $('#invsflag').attr('disabled',true);
-       }
-       else {
-         $('#invsflag').attr('checked', false);
-         $('#invsflag').attr('disabled',false);
-       }
-      });
 
     });
