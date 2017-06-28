@@ -1476,11 +1476,11 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     for (var i = 0; i < files.length; i++) {
       form_data.append("file"+i,files[i])
     }
-    if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.billflag ==1)
-    {
-      if ($("#invsel").length > 0) {
-	details.invid = $("#invsel option:selected").val();
-	var invoicetotal= $("#invsel option:selected").attr("total");
+    if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase"))
+      { 
+	if ($("#invsel").length > 0) {
+	  details.invid = $("#invsel option:selected").val();
+	  var invoicetotal= $("#invsel option:selected").attr("total");
 	var vtotal=0;
 	$(".cramt").each(function(){
           vtotal += +$(this).val();
@@ -1524,7 +1524,6 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       //details.instrumentdate="";
       if($("#instrumentno").val())
       {
-        console.log("instrumentno");
         details.instrumentno=$("#instrumentno").val();
         if(!$("#bankname").val()){
           $("#bankdetails-alert").show();
@@ -1580,7 +1579,6 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       },
       success: function(resp)
 	{
-	    console.log(resp);
         if(resp.gkstatus){ // if the voucher is saved show an alert and then reset the voucher form and clear all variables.
           $("#reset").click();
           $("#success-alert").alert();
