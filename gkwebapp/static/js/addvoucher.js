@@ -1524,7 +1524,6 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       //details.instrumentdate="";
       if($("#instrumentno").val())
       {
-        console.log("instrumentno");
         details.instrumentno=$("#instrumentno").val();
         if(!$("#bankname").val()){
           $("#bankdetails-alert").show();
@@ -1580,7 +1579,6 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       },
       success: function(resp)
 	{
-	    console.log(resp);
         if(resp.gkstatus){ // if the voucher is saved show an alert and then reset the voucher form and clear all variables.
           $("#reset").click();
           $("#success-alert").alert();
