@@ -271,16 +271,17 @@ $(document).ready(function() {
       dataType: 'json',
       async : false,
       data: {"custid": $("#edit_cussup_list option:selected").val(),
-      "custname": $("#edit_cussup_name").val(),
-      "custaddr": $.trim($("#edit_cussup_address").val()),
-      "custphone": $("#edit_cussup_phone").val(),
-      "custemail": $("#edit_cussup_email").val(),
-      "custfax": $("#edit_cussup_fax").val(),
-      "custpan": $("#edit_cussup_pan").val(),
-      "custtan": $("#edit_cussup_tan").val(),
-      "state"  : $("#edit_state").val(),
-      "oldcustname" : $("#edit_cussup_list option:selected").text()
-    /*  "csflag": $("#edit_cussup option:selected").val()*/},
+	     "custname": $("#edit_cussup_name").val(),
+	     "custaddr": $.trim($("#edit_cussup_address").val()),
+	     "custphone": $("#edit_cussup_phone").val(),
+	     "custemail": $("#edit_cussup_email").val(),
+	     "custfax": $("#edit_cussup_fax").val(),
+	     "custpan": $("#edit_cussup_pan").val(),
+	     "custtan": $("#edit_cussup_tan").val(),
+	     "state"  : $("#edit_state").val(),
+	     "oldcustname" : $("#edit_cussup_list option:selected").text(),
+	     "csflag":$("edit_cussup_list").closest('optgroup').attr('label'));
+		/*  "csflag": $("#edit_cussup option:selected").val()*/},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -384,10 +385,7 @@ $("#cussup_delete").click(function(event) {
             }
           }
 
-
-        
-
-	if (resp["gkstatus"]==5) {
+	  if (resp["gkstatus"]==5) {
           $("#customersupplier_edit").click();
           if (resp["csflag"] == 3) {
             $("#cus-failure-alert").alert();
