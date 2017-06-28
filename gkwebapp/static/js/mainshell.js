@@ -53,11 +53,11 @@ var userrole1;
 	    $("#customersupplier").remove();
 	}
     }
-    else if (sessionStorage.invsflag==0) { //If Inventory flag is set to 1 but Invoice flag is set to 0 only menu items related to invoicing and billwise acounting are hidden.
+    if (sessionStorage.invsflag==0) { //If Inventory flag is set to 1 but Invoice flag is set to 0 only menu items related to invoicing and billwise acounting are hidden.
 	$('.invoicemenu').remove();
 	$("#showbillwiseaccounting").remove();
     }
-    else if (sessionStorage.billflag==0) {  //If both Inventory flag and Invoice flag are set to 1 but Billflag is set to 0  only Unadjusted Amounts is hidden
+    if (sessionStorage.billflag==0) {  //If both Inventory flag and Invoice flag are set to 1 but Billflag is set to 0  only Unadjusted Amounts is hidden
 	$("#showbillwiseaccounting").remove();
     }
   $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');// set the theme depending on users previous choice.
