@@ -346,6 +346,7 @@ $(document).ready(function() {
 $("#cussup_delete").click(function(event) {
   event.preventDefault();
   var custsupdat=$("#edit_cussup option:selected").val();
+  console.log(custsupdat);
   $('.modal-backdrop').remove();
   $('.modal').modal('hide');
   $('#confirm_del').modal('show').one('click', '#accdel', function (e)
@@ -363,10 +364,11 @@ $("#cussup_delete").click(function(event) {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
         },
         success: function(resp)
+	
         {
           if (resp["gkstatus"]==0) {
             $("#customersupplier_edit").click();
-            if (custsupdat == '3') {
+            if (resp["csflag"] == 3) {
               $("#cus-delsuccess-alert").alert();
               $("#cus-delsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#cus-delsuccess-alert").hide();
@@ -383,9 +385,30 @@ $("#cussup_delete").click(function(event) {
           }
 
 
+        
+
+	if (resp["gkstatus"]==5) {
+          $("#customersupplier_edit").click();
+          if (resp["csflag"] == 3) {
+            $("#cus-failure-alert").alert();
+            $("#cus-failure-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#cus-failure-alert").hide();
+            });
+            return false;
+          }
+          else  {
+            $("#sup-failure-alert").alert();
+            $("#sup-failure-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#sup-failure-alert").hide();
+            });
+            return false;
+          }
         }
 
-      });
+
+      }
+
+  });
 
   });
 });
