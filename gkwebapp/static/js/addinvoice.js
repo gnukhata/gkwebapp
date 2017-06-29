@@ -46,6 +46,9 @@ $(document).ready(function() {
   var dctaxstate;
   var custstate;
   var producstate;
+  if(sessionStorage.invflag==0){
+    $("#delnotediv").hide();
+  }
   if ($("#status").val() == '15') {
     $(".invoice_issuer").show();
     $(".invstate").show();

@@ -86,9 +86,18 @@
 
             {% trans %}Invoice cannot be prior to Devivery Note!{% endtrans %}
           </div>
-
           <div class="col-md-3">
+            <label for="invoice_item">
+              {% trans %}Item Type{% endtrans %} :
+            </label>
+            <select class="form-control input-sm" id="itemtypeselect" accesskey="">
+              <option value="" disabled hidden selected>Select Product/Service</option>
+              <option value="16" >Product</option>
+              <option value="19" >Service</option>
+            </select>
 
+          </div>
+          <div class="col-md-3" id="delnotediv">
             <div class="form-group">
               <label for="invoice_deliverynote">
                 {% trans %}Delivery Note{% endtrans %} :
@@ -111,7 +120,6 @@
           </div>
 
           <div class="col-md-2">
-
             <div class="form-group">
               <label for="invoice_challanno">{% trans %}Invoice No{% endtrans %} :</label>
               <input class="form-control input-sm" id="invoice_challanno" placeholder="{% trans %}Enter invoice no{% endtrans %}" accesskey="a">
@@ -137,12 +145,9 @@
                 </div>
               </div>
             </div>
-
           </div>
-
-          <div class=" col-md-12">
-
-          </div>
+<div class="col-md-12">
+</div>
 
           <div class="col-md-3">
 
@@ -287,7 +292,7 @@
                   <th class="col-xs-2 text-center">{% trans %}Free Quantity{% endtrans %}</th>
                   <th class="col-xs-2 text-center">{% trans %}Price Per Unit{% endtrans %}</th>
                   <th class="col-xs-1 text-center">{% trans %}Tax Rate%{% endtrans %}</th>
-                  <th class="col-xs-1 text-center">{% trans %}Tax Amount{% endtrans %}</th>
+                  <th class="col-xs-1 text-center">{% trans %}Tax Amt{% endtrans %}</th>
                   <th class="col-xs-2 text-center">{% trans %}Total{% endtrans %}</th>
                   <th class="col-xs-1" style="width: 3%;"></th>
                 </tr>
@@ -369,17 +374,17 @@
 
           <div class=" col-md-6">
 
-            <div class="form-group">
+            <div class="form-inline">
               <label for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
-              <input class="form-control input-sm" id="invoice_issuer_name" placeholder="{% trans %}Issuer's name{% endtrans %}" accesskey="a">
+              <input class="form-control  input-sm" size="40" id="invoice_issuer_name" placeholder="{% trans %}Issuer's name{% endtrans %}" accesskey="a">
             </div>
           </div>
 
           <div class="col-md-6">
 
-            <div class="form-group">
+            <div class="form-inline">
               <label for="invoice_issuer_designation">{% trans %}Designation{% endtrans %} :</label>
-              <input class="form-control input-sm" id="invoice_issuer_designation" placeholder="{% trans %}Issuer's designation{% endtrans %}" accesskey="a">
+              <input class="form-control input-sm" id="invoice_issuer_designation" size="35" placeholder="{% trans %}Issuer's designation{% endtrans %}" accesskey="a">
             </div>
           </div>
         </div>
