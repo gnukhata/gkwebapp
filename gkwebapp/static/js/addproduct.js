@@ -18,11 +18,23 @@ $(document).ready(function() {
     event.preventDefault();
     $("#smalllink").html('See more. <span class="glyphicon glyphicon-triangle-bottom"></span>');
   });
-  $("#addcatselect").focus();
+  $("#additem").focus();
+  /*$("#addcatselect").focus();
   if($("#addcatselect").is(':hidden'))
   {
     $("#addproddesc").focus();
-  }
+  }*/
+  $("#additem").change(function(event) {
+    if($("#additem option:selected").val() == '16') {
+      $("#addservice").hide();
+      $("#addcatselect").show();
+      $("#addproddesc").show();
+      $("#adduom").show();
+      $("#product_tax_table").show();
+      $(".serviceclass").hide();
+    }
+  });
+
   $("#godownflag").click(function(e){
     if ($(this).is(":checked")) {
       godownflag = 1;

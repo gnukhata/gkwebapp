@@ -8,9 +8,20 @@
         <form id="addprodform">
           <div class="col-sm-6" >
             <div class="row">
+            <div class="form-group col-sm-11 pd">
+              <label for="additem">{% trans %}Item Type{% endtrans %} :</label><label for="additem" style="color:red;font-size: 120%;">*</label>
+              <select class="form-control input-sm" id="additem" accesskey="">
+                <option value="" disabled hidden selected>Select Product/Service</option>
+                <option value="16" id=sel_product>Product</option>
+                <option value="19" id=sel_service>Service</option>
+              </select>
+            </div>
+            </div>
+          
+            <div class="row">
 
               {% if not gkresult["category"] %}
-              <div class="form-group col-sm-11" id="categorydiv" hidden>
+              <div class="form-group col-sm-11 productclass" id="categorydiv" hidden>
                 <label class="" for="addcatselect">{% trans %}Select Category{% endtrans %} :</label>
                 <select class = "form-control input-sm"  name = "catselect" id="addcatselect" >
                   <option value="" selected >{% trans %}None{% endtrans %}</option>
@@ -36,11 +47,17 @@
               {% endif %}
               </div>
               <div class="row">
-              <div class="form-group col-sm-11 pd">
+              <div class="form-group col-sm-11 pd productclass">
                 <label for="addproddesc" class="">{% trans %}Product Name{% endtrans %} :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
                 <input type='text' class="form-control input-sm" name="addproddesc"  id="addproddesc" placeholder="Alphanumeric">
               </div>
             </div>
+            <div class="row">
+            <div class="form-group col-sm-11 pd serviceclass">
+              <label for="addproddesc" class="">{% trans %}Service Name{% endtrans %} :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
+              <input type='text' class="form-control input-sm" name="addproddesc"  id="addproddesc" placeholder="Alphanumeric">
+            </div>
+          </div>
             <div class="row">
               <div class="form-group col-sm-11 pds olduom">
                 <label for="uom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label><label for="uom" style="color:red;font-size: 120%;">*</label>
