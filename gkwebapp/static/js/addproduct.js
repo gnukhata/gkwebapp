@@ -1,4 +1,7 @@
 $(document).ready(function() {
+$(".serviceclass").hide();
+$(".productclass").hide();
+
   var godownflag = 0;
   $('.modal-backdrop').remove();
   var specday;
@@ -26,12 +29,17 @@ $(document).ready(function() {
   }*/
   $("#additem").change(function(event) {
     if($("#additem option:selected").val() == '16') {
-      $("#addservice").hide();
+      /*$("#addservice").hide();
       $("#addcatselect").show();
       $("#addproddesc").show();
       $("#adduom").show();
-      $("#product_tax_table").show();
+      $("#product_tax_table").show();*/
       $(".serviceclass").hide();
+      $(".productclass").show();
+    }
+    if($("#additem option:selected").val() == '19'){
+      $(".productclass").hide();
+      $(".serviceclass").show();
     }
   });
 

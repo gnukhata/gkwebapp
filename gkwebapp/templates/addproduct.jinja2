@@ -17,7 +17,7 @@
               </select>
             </div>
             </div>
-          
+
             <div class="row">
 
               {% if not gkresult["category"] %}
@@ -34,7 +34,7 @@
 		<small id="txtareahelp" class="form-text text-muted">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
 	      </div>
               {% else %}
-              <div class="form-group col-sm-11" id="categorydiv">
+              <div class="form-group col-sm-11 productclass" id="categorydiv">
                 <label class="" for="addcatselect">{% trans %}Select Category{% endtrans %} :</label>
                 <select class = "form-control input-sm"  name = "catselect" id="addcatselect" >
                   <option value="" selected >{% trans %}None{% endtrans %}</option>
@@ -51,14 +51,24 @@
                 <label for="addproddesc" class="">{% trans %}Product Name{% endtrans %} :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
                 <input type='text' class="form-control input-sm" name="addproddesc"  id="addproddesc" placeholder="Alphanumeric">
               </div>
+
+              <div class="form-group col-sm-11 pd productclass">
+                <label for="addproddesc" class="">{% trans %}HSN No.{% endtrans %} :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
+                <input type='text' class="form-control input-sm" name="hsnno"  id="hsnnoorserviceno" placeholder="Alphanumeric">
+              </div>
             </div>
             <div class="row">
             <div class="form-group col-sm-11 pd serviceclass">
               <label for="addproddesc" class="">{% trans %}Service Name{% endtrans %} :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
               <input type='text' class="form-control input-sm" name="addproddesc"  id="addproddesc" placeholder="Alphanumeric">
             </div>
+
+                          <div class="form-group col-sm-11 pd serviceclass">
+                            <label for="addproddesc" class="">{% trans %}Service Account No.{% endtrans %} :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
+                            <input type='text' class="form-control input-sm" name="hsnno"  id="hsnnoorserviceno" placeholder="Alphanumeric">
+                          </div>
           </div>
-            <div class="row">
+            <div class="row productclass">
               <div class="form-group col-sm-11 pds olduom">
                 <label for="uom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label><label for="uom" style="color:red;font-size: 120%;">*</label>
                 <select class = "form-control input-sm sel"  name = "uom" id="adduom" aria-describedby="txtareahelp">
@@ -76,7 +86,7 @@
                 <small id="textareahelp" class="form-text text-muted">{% trans %}Press 'Enter' key to save and 'Esc' key to cancel.{% endtrans %}</small>
               </div>
             </div>
-            <div class="row" id="specdiv" hidden>
+            <div class="row productclass" id="specdiv" hidden>
         </div>
       </div>
             <div class="col-sm-6" id="rightdiv">
@@ -154,7 +164,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row productclass">
           <div class="row">
               {% if not godown %}
               <div id="newgodownadded" hidden>
@@ -288,7 +298,7 @@ you can also enter the details of taxes for the product. {%endtrans %} </font>
       <div class="container-fluid">
         <button class="btn btn-success btn-sm" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i> <u>S</u>ave{% endtrans %}</button>
         <button id="apreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> R<u>e</u>set{% endtrans %}</button>
-        <button id="addgodown" class="btn btn-info btn-sm" accesskey="a">{% trans %}<i class="fa fa-plus" aria-hidden="true"></i> <u>A</u>dd Godown{% endtrans %}</button>
+        <button id="addgodown" class="btn btn-info btn-sm productclass" accesskey="a">{% trans %}<i class="fa fa-plus" aria-hidden="true"></i> <u>A</u>dd Godown{% endtrans %}</button>
       </div>
     </div>
   </div>
