@@ -1,6 +1,7 @@
 $(document).ready(function() {
 $(".serviceclass").hide();
 $(".productclass").hide();
+$("#proservlabel").text("Product Name :");
 
   var godownflag = 0;
   $('.modal-backdrop').remove();
@@ -33,12 +34,12 @@ $(".productclass").hide();
 
       $(".serviceclass").hide();
       $(".productclass").show();
-
+      $("#proservlabel").text("Product Name :");
     }
     if($("#additem option:selected").val() == '19'){
       $(".productclass").hide();
       $(".serviceclass").show();
-
+      $("#proservlabel").text("Service Name :");
     }
   });
 
@@ -1057,14 +1058,14 @@ if($("#additem option:selected").val()=='7'){
     }
   });
 
-var  addformdata = $("#addprodform").serializeArray();
+  var  addformdata = $("#addprodform").serializeArray();
 
 
 
   if ($("#hsnno").val()!=""){
   addformdata.push("gscode",$("#hsnno").val());
   }
-  addformdata.push("addproddesc",$("#addproddescservice").val());
+
   addformdata.push("gsflag",$("#additem option:selected").val());
   addformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
   addformdata.push({name: 'specs', value: JSON.stringify(specs)});
