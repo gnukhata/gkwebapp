@@ -27,19 +27,18 @@ $(".productclass").hide();
   {
     $("#addproddesc").focus();
   }*/
+
   $("#additem").change(function(event) {
-    if($("#additem option:selected").val() == '16') {
-      /*$("#addservice").hide();
-      $("#addcatselect").show();
-      $("#addproddesc").show();
-      $("#adduom").show();
-      $("#product_tax_table").show();*/
+    if($("#additem option:selected").val() == '7') {
+
       $(".serviceclass").hide();
       $(".productclass").show();
+
     }
     if($("#additem option:selected").val() == '19'){
       $(".productclass").hide();
       $(".serviceclass").show();
+
     }
   });
 
@@ -951,7 +950,8 @@ $("#addgodown").click(function() {
 $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
   event.preventDefault();
   /* Act on the event */
-  if ($("#addproddesc").val()=="")
+
+  /*if ($("#addproddesc").val()=="")
   {
     $('.modal-backdrop').remove();
     $("#blank-alert").alert();
@@ -961,7 +961,8 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
     $("#addproddesc").focus();
     $("#addproddesc").select();
     return false;
-  }
+  }*/
+if($("#additem option:selected").val()=='7'){
   if ($("#adduom option:selected").val()=="")
   {
     $('.modal-backdrop').remove();
@@ -973,6 +974,8 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
     $("#adduom").select();
     return false;
   }
+}
+
   if ($("#openingstock").val()=="")
   {
     $('.modal-backdrop').remove();
@@ -1053,14 +1056,23 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
       }
     }
   });
-  var addformdata = $("#addprodform").serializeArray();
 
+var  addformdata = $("#addprodform").serializeArray();
+
+
+
+  if ($("#hsnno").val()!=""){
+  addformdata.push("gscode",$("#hsnno").val());
+  }
+  addformdata.push("addproddesc",$("#addproddescservice").val());
+  addformdata.push("gsflag",$("#additem option:selected").val());
   addformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
   addformdata.push({name: 'specs', value: JSON.stringify(specs)});
   if ($("#godownflag").val() == 1) {
     addformdata.push({name: 'godowns', value: JSON.stringify(gobj)}); //Pushing taxes and specs into addformdata
 
   }
+  console.log(addformdata);
   $.ajax({
     url: '/product?type=save',
     type: 'POST',
@@ -1071,6 +1083,7 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
     beforeSend: function(xhr)
     {
       xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        console.log(addformdata);
     }
   })
   .done(function(resp) {

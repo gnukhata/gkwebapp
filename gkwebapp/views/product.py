@@ -138,6 +138,13 @@ def saveproduct(request):
 		else:
 			proddetails["specs"]= json.loads(request.params["specs"])
 
+	print proddetails
+	print request
+	print request.params["gscode"]
+	if request.params["gscode"]:
+		proddetails["gscode"]=request.params["gscode"]
+	if request.params["gsflag"]:
+		proddetails["gsflag"]=request.params["gsflag"]
 
 	productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
 	if godownflag == True:

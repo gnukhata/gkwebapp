@@ -10,9 +10,9 @@
             <div class="row">
             <div class="form-group col-sm-11 pd">
               <label for="additem">{% trans %}Item Type{% endtrans %} :</label><label for="additem" style="color:red;font-size: 120%;">*</label>
-              <select class="form-control input-sm" id="additem" accesskey="">
+              <select name="gsflag" class="form-control input-sm" id="additem" accesskey="">
                 <option value="" disabled hidden selected>Select Product/Service</option>
-                <option value="16" id=sel_product>Product</option>
+                <option value="7" id=sel_product>Product</option>
                 <option value="19" id=sel_service>Service</option>
               </select>
             </div>
@@ -48,30 +48,30 @@
               </div>
               <div class="row">
               <div class="form-group col-sm-11 pd productclass">
-                <label for="addproddesc" class="">{% trans %}Product Name{% endtrans %} :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
-                <input type='text' class="form-control input-sm" name="addproddesc"  id="addproddesc" placeholder="Alphanumeric">
+                <label for="addproddesc" class="productclass">{% trans %}Product Name{% endtrans %} :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
+                <input type='text' class="form-control input-sm productclass" name="addproddesc"  id="addproddesc" placeholder="Alphanumeric">
               </div>
 
               <div class="form-group col-sm-11 pd productclass">
                 <label for="addproddesc" class="">{% trans %}HSN No.{% endtrans %} :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
-                <input type='text' class="form-control input-sm" name="hsnno"  id="hsnnoorserviceno" placeholder="Alphanumeric">
+                <input type='text' class="form-control input-sm productclass" name="gscode"  id="hsnno" placeholder="Alphanumeric">
               </div>
             </div>
             <div class="row">
             <div class="form-group col-sm-11 pd serviceclass">
-              <label for="addproddesc" class="">{% trans %}Service Name{% endtrans %} :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
-              <input type='text' class="form-control input-sm" name="addproddesc"  id="addproddesc" placeholder="Alphanumeric">
+              <label for="addproddesc" class=" serviceclass">{% trans %}Service Name{% endtrans %} :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
+              <input type='text' class="form-control input-sm serviceclass" name="addproddesc"  id="addproddescservice" placeholder="Alphanumeric">
             </div>
 
                           <div class="form-group col-sm-11 pd serviceclass">
-                            <label for="addproddesc" class="">{% trans %}Service Account No.{% endtrans %} :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
-                            <input type='text' class="form-control input-sm" name="hsnno"  id="hsnnoorserviceno" placeholder="Alphanumeric">
+                            <label for="addproddesc" class="serviceclass">{% trans %}Service Account No.{% endtrans %} :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
+                            <input type='text' class="form-control input-sm serviceclass" name="gscodeservice"  id="serviceno" placeholder="Alphanumeric">
                           </div>
           </div>
             <div class="row productclass">
               <div class="form-group col-sm-11 pds olduom">
                 <label for="uom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label><label for="uom" style="color:red;font-size: 120%;">*</label>
-                <select class = "form-control input-sm sel"  name = "uom" id="adduom" aria-describedby="txtareahelp">
+                <select class = "form-control input-sm sel productclass"  name = "uom" id="adduom" aria-describedby="txtareahelp">
                   <option value="" disabled selected hidden>{% trans %}Select Unit of Measurement{% endtrans %}</option>
                   {% for uom in gkresult["uom"] %}
                   <option value="{{uom['uomid']}}">{{uom["unitname"]}}</option>
@@ -81,8 +81,8 @@
                 <small id="txtareahelp" class="form-text text-muted">{% trans %}Press Space Bar to add a new unit.{% endtrans %}</small>
               </div>
               <div class="form-group col-sm-11 pds newuom" hidden>
-                <label for="newuom" class=""  style="font-size:13px">{% trans %}New Unit of Measurement{% endtrans %} :</label>
-                <input type='text' class="form-control input-sm" name="newuom"  id="newuom" placeholder="Name of the new unit" aria-describedby="textareahelp">
+                <label for="newuom" class="productclass"  style="font-size:13px">{% trans %}New Unit of Measurement{% endtrans %} :</label>
+                <input type='text' class="form-control input-sm productclass" name="newuom"  id="newuom" placeholder="Name of the new unit" aria-describedby="textareahelp">
                 <small id="textareahelp" class="form-text text-muted">{% trans %}Press 'Enter' key to save and 'Esc' key to cancel.{% endtrans %}</small>
               </div>
             </div>
