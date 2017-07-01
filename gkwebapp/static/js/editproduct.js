@@ -131,14 +131,17 @@ $(document).ready(function() {
       else if ($("#editcatselect").is(':disabled')) {
         $("#edituom").focus();
       }
-      else {
-        $("#editcatselect").focus();
-      }
+        else {
+          $("#editcatselect").focus();
+        }
     }
     if (event.which==38) {
       event.preventDefault();
       $("#prodselect").focus();
     }
+  });
+  $(document).on('keydown', '#gscode', function(event) {
+
   });
 
   $(document).on('keydown', '#editopeningstock', function(event) {
@@ -373,6 +376,7 @@ $(document).ready(function() {
       if (prodcode!="")
       {
         $("#epedit").click();
+
       }
 
     }
@@ -440,7 +444,7 @@ $(document).ready(function() {
     $("#addgodown").show();
     $("#editproddesc").focus();
     $("#editproddesc").select();
-    
+
     $(".godownflag").show();
     catcode= $("#editcatselect option:selected").val();
     $(".product_cat_tax_disable").prop('disabled',false);

@@ -2,10 +2,26 @@
 <div class="editpr">
   <div class="row">
     <div class="form-group col-sm-11 pd">
-      <label for="editproddesc" class="">{% trans %}New Name of Product{% endtrans %} :</label><label for="editproddesc" style="color:red;font-size: 120%;">*</label>
+      {% if proddesc["gsflag"]==7 %}
+      <label for="editproddesc" class="" id="prodlabel">New Name of Product :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
+      {%else%}
+      <label for="editproddesc" class="" id="servicelabel">New Name of Service :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
+      {%endif%}
       <input type='text' class="form-control input-sm" name="editproddesc"  id="editproddesc" value="{{proddesc['productdesc']}}" placeholder="Alphanumeric">
     </div>
   </div>
+  <div class="row">
+  <div class="form-group col-sm-11 pd ">
+    {% if proddesc["gsflag"]==7 %}
+    <label for="edithsn" class="" id="hsnorservnolabel">New HSN No. :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
+    {%else%}
+    <label for="addproddesc" class="" id="hsnorservnolabel">New Accounting Code for Service :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
+    {%endif%}
+    <input type='text' class="form-control input-sm " name="gscode"  id="gscode" placeholder="Alphanumeric" value="{{proddesc['gscode']}}">
+  </div>
+</div>
+
+<input hidden id="gsflag" name="gsflag" value="{{proddesc["gsflag"]}}">
   <div class="row">
     <div class="form-group col-sm-11">
       <small id="txtareahelp" class="form-text text-muted">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>

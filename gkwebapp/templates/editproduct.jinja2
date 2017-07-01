@@ -12,9 +12,9 @@
 
 
       <div class="form-group col-sm-11" style="margin-left: -6%; width: 212%;">
-      <label for="prodselect" id="prodselect_lbl">{% trans %}List of Products {% endtrans %} :</label>
+      <label for="prodselect" id="prodselect_lbl">{% trans %}List of Products/Service {% endtrans %} :</label>
         <select class = "form-control input-sm"  name = "productcode" id="prodselect" >
-          <option value="" disabled selected hidden>{% trans %}Select Product{% endtrans %}</option>
+          <option value="" disabled selected hidden>{% trans %}Select Product/Service{% endtrans %}</option>
           {% for prod in gkresult %}
           <option value="{{prod['productcode']}}">{{prod["productdesc"]}}</option>
           {% endfor %}

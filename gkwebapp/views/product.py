@@ -206,6 +206,11 @@ def editproduct(request):
 			godowns = json.loads(request.params["godowns"])
 		else:
 			proddetails["specs"]= json.loads(request.params["specs"])
+	if request.params["gscode"]:
+		proddetails["gscode"]=request.params["gscode"]
+	if request.params["gsflag"]:
+		proddetails["gsflag"]=request.params["gsflag"]
+
 	productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
 	result = requests.put("http://127.0.0.1:6543/products", data=json.dumps(productdetails),headers=header)
 
@@ -258,14 +263,22 @@ def productdetails(request):
 	header={"gktoken":request.headers["gktoken"]}
 	prodspecs={}
 	result = requests.get("http://127.0.0.1:6543/products?qty=single&productcode=%d"%(int(request.params['productcode'])),headers=header)
-	if result.json()["gkresult"]["categorycode"]!=None:
-		result1 = requests.get("http://127.0.0.1:6543/categoryspecs?categorycode=%d"%(int(result.json()["gkresult"]["categorycode"])), headers=header)
-		prodspecs = result1.json()["gkresult"]
-	result2 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
-	result3 = requests.get("http://127.0.0.1:6543/categories", headers=header)
-	result4 = requests.get("http://127.0.0.1:6543/godown", headers=header)
-	numberofgodowns = int(result.json()["numberofgodowns"])
-	return{"proddesc":result.json()["gkresult"],"prodspecs":prodspecs,"uom":result2.json()["gkresult"],"category":result3.json()["gkresult"],"godown":result4.json()["gkresult"],"numberofgodowns":numberofgodowns,"gkstatus":result.json()["gkstatus"]}
+	print result.json()
+	
+	if result.json()["gkresult"]["gsflag"]==7:
+
+		if result.json()["gkresult"]["categorycode"]!=None:
+			result1 = requests.get("http://127.0.0.1:6543/categoryspecs?categorycode=%d"%(int(result.json()["gkresult"]["categorycode"])), headers=header)
+			prodspecs = result1.json()["gkresult"]
+		result2 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
+		print result2.json()
+		result3 = requests.get("http://127.0.0.1:6543/categories", headers=header)
+		result4 = requests.get("http://127.0.0.1:6543/godown", headers=header)
+		numberofgodowns = int(result.json()["numberofgodowns"])
+		return{"proddesc":result.json()["gkresult"],"prodspecs":prodspecs,"uom":result2.json()["gkresult"],"category":result3.json()["gkresult"],"godown":result4.json()["gkresult"],"numberofgodowns":numberofgodowns,"gkstatus":result.json()["gkstatus"]}
+	else:
+		return{"proddesc":result.json()["gkresult"]}
+
 
 @view_config(route_name="product",request_param="type=list", renderer="gkwebapp:templates/listofstockitems.jinja2")
 def listofstockitems(request):
