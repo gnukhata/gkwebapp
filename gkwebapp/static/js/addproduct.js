@@ -1187,7 +1187,9 @@ if($("#additem option:selected").val()=='7'){
       $("#addproduct-success-alert").alert();
       $("#addproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#addproduct-success-alert").hide();
+
       });
+
     }
     else if (resp["gkstatus"] ==1)
     {
