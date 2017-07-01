@@ -65,17 +65,29 @@ margin-bottom: 0px;
           {% endif %}
         </ul>
         <div class='tab-content '>
-          <div class="alert alert-success" id="addsuccess-alert"  aria-live="rude" role="alert" hidden>
+          <div class="alert alert-success" id="addproduct-success-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}Product saved successfully.{% endtrans %}
           </div>
-          <div class="alert alert-success" id="editsuccess-alert"  aria-live="rude" role="alert" hidden>
+          <div class="alert alert-success" id="addservice-success-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Service saved successfully.{% endtrans %}
+          </div>
+          <div class="alert alert-success" id="editproduct-success-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}Product edited successfully.{% endtrans %}
           </div>
-          <div class="alert alert-success" id="deletesuccess-alert"  aria-live="rude" role="alert" hidden>
+          <div class="alert alert-success" id="editservice-success-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Service edited successfully.{% endtrans %}
+          </div>
+          <div class="alert alert-success" id="deleteproduct-success-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}Product deleted successfully.{% endtrans %}
+          </div>
+          <div class="alert alert-success" id="deleteservice-success-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Service deleted successfully.{% endtrans %}
           </div>
           <div class="alert alert-danger" id="duplicate-unit-alert"  aria-live="rude" role="alert" hidden>
 
@@ -89,9 +101,25 @@ margin-bottom: 0px;
 
             {% trans %}You can create products under categories.{% endtrans %}
           </div>
-          <div class="alert alert-danger" id="blank-alert"  aria-live="rude" role="alert" hidden>
+          <div class="alert alert-danger" id="item-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please select Item!{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="product-blank-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}Product name cannot be blank.{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="hsnno-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}HSN No. cannot be blank.{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="serviceno-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Accounting Code for Services cannot be blank.{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="service-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Service name cannot be blank.{% endtrans %}
           </div>
           <div class="alert alert-danger" id="os-blank-alert"  aria-live="rude" role="alert" hidden>
 
