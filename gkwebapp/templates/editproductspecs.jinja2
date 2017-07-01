@@ -22,11 +22,13 @@
 </div>
 
 <input hidden id="gsflag" name="gsflag" value="{{proddesc["gsflag"]}}">
+  {% if proddesc["gsflag"]==7 %}
   <div class="row">
     <div class="form-group col-sm-11">
       <small id="txtareahelp" class="form-text text-muted">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
     </div>
   </div>
+  {%endif%}
   {% if category|length > 0 %}
   <div class="row">
     <div class="form-group col-sm-11" id="categorydiv">
@@ -46,6 +48,7 @@
 </div>
   </div>
   {% endif %}
+  {% if proddesc["gsflag"]==7 %}
   <div class="row">
     <div class="form-group col-sm-11 pds olduom">
     <label for="edituom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label><label for="edituom" style="color:red;font-size: 120%;">*</label>
@@ -60,6 +63,7 @@
     </select>
   </div>
   </div>
+  {%endif%}
   <div id="extsp" class="row">
     <input type="text" id="numberofspecs" value="{{proddesc["specs"]|length}}" hidden>
         {% if proddesc["specs"]|length > 0 %}
@@ -190,6 +194,7 @@
     </div>
   </div>
   </div>
+    {% if proddesc["gsflag"]==7 %}
   <div class="row">
     {% if not godown %}
     <input type="text" name="godownflag" id="editgodownflag" value="0" hidden>
@@ -332,4 +337,5 @@
     </div>
     <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
 </div>
+{%endif%}
 </div>
