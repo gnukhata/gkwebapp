@@ -1,6 +1,7 @@
 $(document).ready(function() {
 $(".serviceclass").hide();
 $(".productclass").hide();
+$(".common").hide();
 $("#proservlabel").text("Product Name :");
 
   var godownflag = 0;
@@ -35,11 +36,13 @@ $("#proservlabel").text("Product Name :");
       $(".serviceclass").hide();
       $(".productclass").show();
       $("#proservlabel").text("Product Name :");
+      $(".common").show();
     }
     if($("#additem option:selected").val() == '19'){
       $(".productclass").hide();
       $(".serviceclass").show();
       $("#proservlabel").text("Service Name :");
+      $(".common").show();
     }
   });
 

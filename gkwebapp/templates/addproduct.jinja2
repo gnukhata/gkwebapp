@@ -31,7 +31,7 @@
                 </select>
               </div>
 	      <div class="form-group col-sm-11">
-		<small id="txtareahelp" class="form-text text-muted">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
+		<small id="txtareahelp" class="form-text text-muted common">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
 	      </div>
               {% else %}
               <div class="form-group col-sm-11 productclass" id="categorydiv">
@@ -42,14 +42,14 @@
                     <option value="{{cat['categorycode']}}">{{cat["categoryname"]}}({{cat["subcount"]}})</option>
                   {% endfor %}
                 </select>
-		<small id="txtareahelp" class="form-text text-muted">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
+		<small id="txtareahelp" class="form-text text-muted productclass">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
               </div>
               {% endif %}
               </div>
               <div class="row">
               <div class="form-group col-sm-11 pd ">
-                <label for="addproddesc" class="" id="proservlabel"></label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
-                <input type='text' class="form-control input-sm " name="addproddesc"  id="addproddesc" placeholder="Alphanumeric">
+                <label for="addproddesc" class="common" id="proservlabel"></label><label for="addproddesc" class="common" style="color:red;font-size: 120%;">*</label>
+                <input type='text' class="form-control input-sm common" name="addproddesc"  id="addproddesc" placeholder="Alphanumeric">
               </div>
 
               <div class="form-group col-sm-11 pd productclass">
@@ -86,12 +86,12 @@
             <div class="row productclass" id="specdiv" hidden>
         </div>
       </div>
-            <div class="col-sm-6" id="rightdiv">
+            <div class="col-sm-6 common" id="rightdiv">
              <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#CatModal"></i>
               <div class="row">
                 <div class="form-group" style="margin-top: 3%;">
             <div class="panel">
-              <table id="product_tax_table" class="table table-condensed table-bordered fixed-table">
+              <table id="product_tax_table" class="table table-condensed table-bordered fixed-table common">
                 <thead class="bg-primary input-sm">
                   <tr>
                     <th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
@@ -161,8 +161,8 @@
             </div>
           </div>
         </div>
-        <div class="row productclass">
-          <div class="row">
+        <div class="row ">
+          <div class="row productclass">
               {% if not godown %}
               <div id="newgodownadded" hidden>
                 <div class="form-group">
@@ -280,21 +280,23 @@ you can also enter the details of taxes for the product. {%endtrans %} </font>
   </div>
 </div>
             </div>
-            <small id="taxhelp3" class="form-text text-muted">When on Tax Rate or Tax Name press 'Esc' key to shift focus to Godown Name or from Godown Opening Stock to 'Save' button.</small><br>
-            <small id="taxhelp4" class="form-text text-muted">Press 'Insert' key from anywhere on the screen to save changes.</small>
-            <div class="collapse" id="moresmall">
-              <small id="taxhelp2" class="form-text text-muted">Press 'Ctrl + >' to move forward or 'Ctrl + <' to move backward within a row in the Tax or Godown table.</small><br>
-              <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to move backward within a Column in the Tax or Godown table.</small>
+            <small id="taxhelp3" class="form-text text-muted productclass">When on Tax Rate or Tax Name press 'Esc' key to shift focus to Godown Name or from Godown Opening Stock to 'Save' button.</small><br>
+            <small id="taxhelp3" class="form-text text-muted serviceclass">When on Tax Rate or Tax Name press 'Esc' key to shift focus to 'Save' button.</small><br>
+            <small id="taxhelp4" class="form-text text-muted common">Press 'Insert' key from anywhere on the screen to save changes.</small>
+            <div class="collapse  " id="moresmall">
+            </br>
+              <small id="taxhelp2" class="form-text text-muted productclass ">Press 'Ctrl + >' to move forward or 'Ctrl + <' to move backward within a row in the Tax or Godown table.</small><br>
+              <small id="taxhelp" class="form-text text-muted productclass">Press 'Shift + <' to move backward within a Column in the Tax or Godown table.</small>
             </div>
-            <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+            <a data-toggle="collapse"class ="productclass" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
           </div>
         </div>
       </div>
       </form>
     <div class="btn-group-sm panel-footer">
       <div class="container-fluid">
-        <button class="btn btn-success btn-sm" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i> <u>S</u>ave{% endtrans %}</button>
-        <button id="apreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> R<u>e</u>set{% endtrans %}</button>
+        <button class="btn btn-success btn-sm common" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i> <u>S</u>ave{% endtrans %}</button>
+        <button id="apreset" class="btn btn-warning btn-sm common" accesskey="e">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> R<u>e</u>set{% endtrans %}</button>
         <button id="addgodown" class="btn btn-info btn-sm productclass" accesskey="a">{% trans %}<i class="fa fa-plus" aria-hidden="true"></i> <u>A</u>dd Godown{% endtrans %}</button>
       </div>
     </div>
