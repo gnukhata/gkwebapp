@@ -84,6 +84,7 @@ def savecustomersupplier(request):
 @view_config(route_name="customersuppliers",request_param="action=edit",renderer="json")
 def editcustomersupplier(request):
     header={"gktoken":request.headers["gktoken"]}
+    print request.params["custsup"]
     dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"custpan":request.params["custpan"],"state":request.params["state"],"custtan":request.params["custtan"],"custid":int(request.params["custid"])}
     result=requests.put("http://127.0.0.1:6543/customersupplier",data=json.dumps(dataset),headers=header)
     if result.json()["gkstatus"] == 0:
@@ -93,7 +94,7 @@ def editcustomersupplier(request):
                 gkdata = {"accountname":request.params["custname"],"openingbal":acc["openingbal"],"accountcode":acc["accountcode"]}
                 resulteditacc = requests.put("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
                 break
-    return {"gkstatus": result.json()["gkstatus"]}
+    return {"gkstatus": result.json()["gkstatus"],"custsup":request.params["custsup"]}
 
 @view_config(route_name="customersuppliers", request_param="action=delete",renderer="json")
 def deletecustomersupplier(request):

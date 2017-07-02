@@ -211,7 +211,7 @@ $(document).ready(function() {
   $("#edit_cussup_btn").click(function(event) {
     $("#edit_cussup_btn").hide();
     $("#cussup_edit_save").show();
-    $("#edit_cussup").prop("disabled", false);
+    $("#edit_cussup").prop("disabled", true);
     $("#edit_cussup").focus().select();
     $("#edit_cussup_name").prop("disabled", false);
     $("#edit_cussup_email").prop("disabled", false);
@@ -280,8 +280,8 @@ $(document).ready(function() {
 	     "custtan": $("#edit_cussup_tan").val(),
 	     "state"  : $("#edit_state").val(),
 	     "oldcustname" : $("#edit_cussup_list option:selected").text(),
-	     "csflag":$("edit_cussup_list").closest('optgroup').attr('label'));
-		/*  "csflag": $("#edit_cussup option:selected").val()*/},
+	     "custsup":$("#edit_cussup").val()
+	     },
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -290,17 +290,17 @@ $(document).ready(function() {
     .done(function(resp) {
       if(resp["gkstatus"] == 0){
         $("#customersupplier_edit").click();
-        if (custsupdat == '3') {
-          $("#cus-success-alert").alert();
-          $("#cus-success-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#cus-success-alert").hide();
+        if (resp["custsup"] == 'Customer') {
+          $("#cus-edit-alert").alert();
+          $("#cus-edit-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#cus-edit-alert").hide();
           });
           return false;
         }
         else  {
-          $("#sup-success-alert").alert();
-          $("#sup-success-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#sup-success-alert").hide();
+          $("#sup-edit-alert").alert();
+          $("#sup-edit-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#sup-edit-alert").hide();
           });
           return false;
         }
@@ -328,7 +328,7 @@ $(document).ready(function() {
       }
       else {
         alert(resp["gkstatus"]);
-        $("#edit_cussup").focus();
+        $("#edit_cussup_list").focus();
         $("#failure-alert").alert();
         $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#failure-alert").hide();
@@ -346,8 +346,7 @@ $(document).ready(function() {
 });
 $("#cussup_delete").click(function(event) {
   event.preventDefault();
-  var custsupdat=$("#edit_cussup option:selected").val();
-  console.log(custsupdat);
+ 
   $('.modal-backdrop').remove();
   $('.modal').modal('hide');
   $('#confirm_del').modal('show').one('click', '#accdel', function (e)
