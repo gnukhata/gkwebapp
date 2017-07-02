@@ -20,7 +20,7 @@ $(document).ready(function() {
       $(".hidden-load").show();
       $("#edit_cussup").val(result["csflag"]);
       if(result["csflag"] == 3){
-
+	
     	  $("#edit_cussup").val("Customer");
       }
       else {
@@ -63,8 +63,8 @@ $(document).ready(function() {
       event.preventDefault();
       $("#edit_cussup_btn").hide();
       $("#cussup_edit_save").show();
-      $("#edit_cussup").prop("disabled", false);
-      $("#edit_cussup").focus().select();
+      $("#edit_cussup").prop("disabled", true);
+     // $("#edit_cussup").focus().select();
       $("#edit_cussup_name").prop("disabled", false);
       $("#edit_cussup_email").prop("disabled", false);
       $("#edit_cussup_phone").prop("disabled", false);
@@ -212,7 +212,7 @@ $(document).ready(function() {
     $("#edit_cussup_btn").hide();
     $("#cussup_edit_save").show();
     $("#edit_cussup").prop("disabled", true);
-    $("#edit_cussup").focus().select();
+    $("#edit_cussup_list").focus().select();
     $("#edit_cussup_name").prop("disabled", false);
     $("#edit_cussup_email").prop("disabled", false);
     $("#edit_cussup_phone").prop("disabled", false);
@@ -230,7 +230,7 @@ $(document).ready(function() {
     }
   });
   $("#cussup_edit_save").click(function(event) {
-    var custsupdat=$("#edit_cussup option:selected").val();
+   
     if ($.trim($("#edit_cussup_name").val())=="") {
       $("#name-blank-alert").alert();
       $("#name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
