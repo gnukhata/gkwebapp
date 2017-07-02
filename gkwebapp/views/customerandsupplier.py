@@ -117,7 +117,6 @@ def deletecustomersupplier(request):
         else:
             gkdata = {"activity":custdetails["custname"] + " supplier deleted"}
         resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
-    print result.json()["gkstatus"]
     return {"gkstatus":result.json()["gkstatus"],"csflag":custdetails["csflag"]}
 
 @view_config(route_name='customersuppliers', request_param='action=getallcusts',renderer ='json')
