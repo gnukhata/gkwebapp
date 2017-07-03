@@ -263,15 +263,15 @@ def productdetails(request):
 	header={"gktoken":request.headers["gktoken"]}
 	prodspecs={}
 	result = requests.get("http://127.0.0.1:6543/products?qty=single&productcode=%d"%(int(request.params['productcode'])),headers=header)
-	print result.json()
-	
+
+
 	if result.json()["gkresult"]["gsflag"]==7:
 
 		if result.json()["gkresult"]["categorycode"]!=None:
 			result1 = requests.get("http://127.0.0.1:6543/categoryspecs?categorycode=%d"%(int(result.json()["gkresult"]["categorycode"])), headers=header)
 			prodspecs = result1.json()["gkresult"]
 		result2 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
-		print result2.json()
+		
 		result3 = requests.get("http://127.0.0.1:6543/categories", headers=header)
 		result4 = requests.get("http://127.0.0.1:6543/godown", headers=header)
 		numberofgodowns = int(result.json()["numberofgodowns"])
