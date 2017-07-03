@@ -57,7 +57,7 @@ $(document).ready(function() {
         $("#editproddesc").focus().select();
       }
       else {
-        $("#editcatselect").focus();
+        $("#gscode").focus();
       }
     }
   });
@@ -121,19 +121,13 @@ $(document).ready(function() {
   $(document).on('keydown', '#editproddesc', function(event) {
     if (event.which==13) {
       event.preventDefault();
-      if ($("#editcatselect").length < 1) {
-        $("#nocategory-alert").alert();
-        $("#nocategory-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#edituom").focus();
-          $("#nocategory-alert").hide();
-        });
-      }
-      else if ($("#editcatselect").is(':disabled')) {
-        $("#edituom").focus();
+      $("#gscode").focus();
+     /*if ($("#editcatselect").is(':disabled')) {
+        $("#gscode").focus();
       }
         else {
           $("#editcatselect").focus();
-        }
+        }*/
     }
     if (event.which==38) {
       event.preventDefault();
@@ -141,7 +135,21 @@ $(document).ready(function() {
     }
   });
   $(document).on('keydown', '#gscode', function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      if($("#gsflag").val()=='7'){
+        if ($("#editcatselect").is(':disabled')) {
+           $("#edituom").focus();
+         }
+           else {
+             $("#editcatselect").focus();
+           }
+      }
 
+         else{
+$("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
+         }
+    }
   });
 
   $(document).on('keydown', '#editopeningstock', function(event) {
@@ -632,17 +640,23 @@ $(document).ready(function() {
     }
     else if (event.which==27) {
       event.preventDefault();
-      if ($("#editgodownpresence").val() == 0) {
-        $("#editopeningstock").focus().select();
-      }
-      else {
-        if ($("#editgodownflag").val() == 1) {
-          $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
+      if($("#gsflag").val()=='7'){
+        if ($("#editgodownpresence").val() == 0) {
+          $("#editopeningstock").focus().select();
         }
-        else if ($("#editgodownflag").val() == 0) {
-          $("#editgodownflag").focus().select();
+        else {
+          if ($("#editgodownflag").val() == 1) {
+            $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
+          }
+          else if ($("#editgodownflag").val() == 0) {
+            $("#editgodownflag").focus().select();
+          }
         }
       }
+      else{
+        $("#epsubmit").focus();
+      }
+
     }
   });
 
@@ -807,16 +821,22 @@ $(document).ready(function() {
     }
     else if (event.which==27) {
       event.preventDefault();
-      if ($("#editgodownpresence").val() == 0) {
-        $("#editopeningstock").focus().select();
+      if($('#gsflag').val() == '7') {
+        if ($("#editgodownpresence").val() == 0) {
+          $("#editopeningstock").focus().select();
+        }
+        else {
+          if ($("#editgodownflag").val() == 1) {
+            $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
+          }
+          else if ($("#editgodownflag").val() == 0) {
+            $("#editgodownflag").focus().select();
+          }
+      }
+
       }
       else {
-        if ($("#editgodownflag").val() == 1) {
-          $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
-        }
-        else if ($("#editgodownflag").val() == 0) {
-          $("#editgodownflag").focus().select();
-        }
+        $("#epsubmit").focus();
       }
     }
 
