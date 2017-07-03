@@ -1044,18 +1044,28 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
   event.preventDefault();
   /* Act on the event */
 
-  /*if ($("#addproddesc").val()=="")
+
+
+if($("#additem option:selected").val()=='7'){
+  if ($("#addproddesc").val()=="")
   {
     $('.modal-backdrop').remove();
-    $("#blank-alert").alert();
-    $("#blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-      $("#blank-alert").hide();
+    $("#product-blank-alert").alert();
+    $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#product-blank-alert").hide();
     });
     $("#addproddesc").focus();
     $("#addproddesc").select();
     return false;
-  }*/
-if($("#additem option:selected").val()=='7'){
+  }
+  if ($("#hsnno").val()=="") {
+    $("#hsnno-blank-alert").alert();
+    $("#hsnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#hsnno-blank-alert").hide();
+  });
+    $("#hsnno").focus();
+    return false;
+  }
   if ($("#adduom option:selected").val()=="")
   {
     $('.modal-backdrop').remove();
@@ -1066,6 +1076,29 @@ if($("#additem option:selected").val()=='7'){
     $("#adduom").focus();
     $("#adduom").select();
     return false;
+  }
+
+}
+else{
+  if ($("#addproddesc").val()=="")
+  {
+    $('.modal-backdrop').remove();
+    $("#service-blank-alert").alert();
+    $("#service-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#service-blank-alert").hide();
+    });
+    $("#addproddesc").focus();
+    $("#addproddesc").select();
+    return false;
+  }
+  if($("#serviceno").val()==""){
+
+      $("#serviceno-blank-alert").alert();
+      $("#serviceno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#serviceno-blank-alert").hide();
+    });
+      $("#serviceno").focus();
+      return false;
   }
 }
 
