@@ -37,12 +37,11 @@
 			{% trans %}Supplier deleted successfully with its Account.{% endtrans %}
 		</div>
     <div class="alert alert-danger" id="cus-failure-alert"  aria-live="rude" role="alert" hidden>
-
-      {% trans %}Customer cannot be deleted!{% endtrans %}
+      {% trans %}This customer cannot be deleted, As there are invoices / delivery notes associated.{% endtrans %}
     </div>
     <div class="alert alert-danger" id="sup-failure-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Supplier cannot be deleted!{% endtrans %}
+      {% trans %}This supplier cannot be deleted, As there are invoices / delivery notes associated.{% endtrans %}
     </div>
 
     <div class="alert alert-danger" id="name-blank-alert"  aria-live="rude" role="alert" hidden>
