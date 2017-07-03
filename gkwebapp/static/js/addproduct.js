@@ -1182,7 +1182,7 @@ if($("#additem option:selected").val()=='7'){
   .done(function(resp) {
     if (resp["gkstatus"] ==0) {
 
-      $("#product").click();
+      $("#addproduct").click();
       $('.modal-backdrop').remove();
       $("#addproduct-success-alert").alert();
       $("#addproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){

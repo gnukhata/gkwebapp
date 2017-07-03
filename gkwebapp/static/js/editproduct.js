@@ -1152,9 +1152,9 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
     .done(function(resp) {
       if (resp["gkstatus"] ==0) {
         $('.modal-backdrop').remove();
-        $("#editsuccess-alert").alert();
-        $("#editsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#editsuccess-alert").hide();
+        $("#editproduct-success-alert").alert();
+        $("#editproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#editproduct-success-alert").hide();
         });
         $("#editproduct").click();
         return false;
