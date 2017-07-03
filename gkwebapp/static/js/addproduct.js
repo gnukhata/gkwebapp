@@ -787,6 +787,12 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
   }
   else if (event.which==27) {
     event.preventDefault();
+
+    if($("#additem option:selected").val()=='19'){
+    $("#apsubmit").focus();
+    }
+    else{
+
       if ($("#godownpresence").val()==0) {
         $("#openingstock").focus().select();
       }
@@ -794,6 +800,8 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
       {
         $("#godownflag").focus().select();
       }
+    }
+
   }
 
 });
