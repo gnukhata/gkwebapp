@@ -228,9 +228,11 @@ $("#openingstock").focus(function(event) {
 $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
   if (event.which == 13) {
     if (specspresent == 1) {
+      event.preventDefault();
       $("#spec_table tbody tr:first td:eq(1) input:first").focus();
     }
     else {
+      event.preventDefault();
       $("#product_tax_table tbody tr:first td:eq(0) select").focus();
     }
   }
@@ -243,6 +245,7 @@ $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
     $("#newuom").focus();
   }
   else if (event.which==38 && (document.getElementById('adduom').selectedIndex==1||document.getElementById('adduom').selectedIndex==0)) {
+    event.preventDefault();
     $("#addproddesc").focus().select();
   }
 
@@ -606,6 +609,7 @@ $(document).off("keydown",".tax_name").on("keydown",".tax_name",function(event)
   }
   else if (event.which==27) {
     event.preventDefault();
+    if ($("#additem option:selected").val()=='7'){
       if ($("#godownpresence").val()==0) {
         $("#openingstock").focus().select();
       }
@@ -613,6 +617,11 @@ $(document).off("keydown",".tax_name").on("keydown",".tax_name",function(event)
       {
         $("#godownflag").focus().select();
       }
+    }
+    else{
+      $("#apsubmit").focus();
+    }
+
   }
 });
 
@@ -1170,7 +1179,7 @@ if($("#additem option:selected").val()=='7'){
       $("#addproduct-success-alert").alert();
       $("#addproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#addproduct-success-alert").hide();
-      });      
+      });
     }
     else if (resp["gkstatus"] ==1)
     {
