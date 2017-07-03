@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
   $('.modal-backdrop').remove();
   var specday;
   var specmonth;
@@ -114,14 +115,19 @@ $(document).ready(function() {
   });
 
   $("#prodselect").keydown(function(event) {
+
     if (event.which==13) {
+      event.preventDefault();
       $("#editproddesc").focus().select();
+
           }
+
   });
   $(document).on('keydown', '#editproddesc', function(event) {
     if (event.which==13) {
       event.preventDefault();
       $("#gscode").focus();
+
      /*if ($("#editcatselect").is(':disabled')) {
         $("#gscode").focus();
       }
@@ -448,8 +454,12 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
     /* Act on the event */
     $('#proddetails').find('input, textarea, button, select').prop('disabled',false);
     $("#epsubmit").show();
+
     $("#epedit").hide();
+    if($("#gsflag").val()=='7'){
     $("#addgodown").show();
+  }
+    
     $("#editproddesc").focus();
     $("#editproddesc").select();
 
@@ -1242,9 +1252,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
 
   });
 
-  $(document).on('click', '#epreset', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    $("#editproduct").click();
-  });
+  $("#epreset").unbind().click(function() {
+  $("#editproduct").click();
+});
 });

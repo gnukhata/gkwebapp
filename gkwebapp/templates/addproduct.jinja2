@@ -17,7 +17,7 @@
               </select>
             </div>
             </div>
-
+  {% if category|length > 0 %}
             <div class="row">
 
               {% if not gkresult["category"] %}
@@ -46,6 +46,7 @@
               </div>
               {% endif %}
               </div>
+            {% endif %}
               <div class="row">
               <div class="form-group col-sm-11 pd ">
                 <label for="addproddesc" class="common" id="proservlabel"></label><label for="addproddesc" class="common" style="color:red;font-size: 120%;">*</label>
