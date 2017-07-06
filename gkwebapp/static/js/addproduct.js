@@ -137,12 +137,20 @@ $("#additem").keydown(function(event) {
     $("#addproddesc").focus().select();
   }
   else {
-    if($("#addcatselect").is(':hidden'))
+    if(!$("#addcatselect").is(':hidden'))
     {
-      $("#addproddesc").focus();
+        console.log("not hidden");
+            $("#addproddesc").focus();
+            event.preventDefault();
+
     }
+    else{
+      console.log("hidden");
+      $("#addcatselect").focus();
       event.preventDefault();
-    $("#addcatselect").focus();
+
+    }
+
   }
 
   }
