@@ -16,6 +16,9 @@ $(document).ready(function() {
     /* Act on the event */
     $(".numtype").numeric();
   });
+  if(sessionStorage.invflag==0){
+  $("#categorydiv").hide();
+  }
   $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
     event.preventDefault();
     /* Act on the event */
@@ -456,10 +459,11 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
     $("#epsubmit").show();
 
     $("#epedit").hide();
+
     if($("#gsflag").val()=='7'){
     $("#addgodown").show();
   }
-    
+
     $("#editproddesc").focus();
     $("#editproddesc").select();
 
