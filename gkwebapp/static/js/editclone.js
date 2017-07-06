@@ -728,7 +728,7 @@ $(document).ready(function()
       event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-      $('#vyear').focus().select();
+      $('#vyear').focus();
       event.preventDefault();
     }
   });
@@ -743,7 +743,7 @@ $(document).ready(function()
   });
   $("#invsel").keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-      $('#vyear').focus().select();
+      $('#vyear').focus();
       event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
@@ -968,7 +968,7 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
         }
         else
         {
-          $("#vyear").focus().select();
+          $("#vyear").focus();
 
         }
       }
@@ -1010,7 +1010,7 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
         }
         else
         {
-          $("#vyear").focus().select();
+          $("#vyear").focus();
 
         }
       }
@@ -1781,7 +1781,7 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
 
                 }
               }
-            
+
       form_data.append("vdetails",JSON.stringify(details));
       form_data.append("transactions",JSON.stringify(output));
       $.ajax({

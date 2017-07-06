@@ -166,6 +166,51 @@
           {% endif %}
         </tfoot>
       </table>
+
+      <div id="sale-purchase">
+        <div class="col-md-6">
+          <label>{% trans %}Invoice Details{% endtrans %}</label>
+          <div class = "row">
+            <div class="col-xs-12">
+              <table class="stable table-condensed table-bordered table-striped shadow" >
+                <tbody>
+                  <tr style="height:10px;">
+
+
+                  <td class="mdwrap">{% trans %}Invoice No{% endtrans %} :</td>
+
+                  {% for invoice in invoicedata %}
+
+
+                  {% if voucher["invid"]|int== invoice['invid']|int %}
+
+                  <td>{{invoice['invoiceno']}}<td>
+
+                  <td class="mdwrap">{% trans %}Name{% endtrans %} :</td>
+                  <td>{{invoice["custname"]}}</td>
+                 </tr>
+                 <tr>
+                   <td class="mdwrap">{% trans %}INV Total Amount{% endtrans %} :</td>
+                   <td>{{invoice['invoicetotal']}}</td>
+
+                   <td class="mdwrap">{% trans %}INV Date{% endtrans %} :</td>
+                   <div class="form-inline">
+                     <div class="form-group">
+                         {{invoice['invoicedate'][:2]}}&nbsp-{{invoice['invoicedate'][3:5]}}&nbsp-{{invoice['invoicedate'][6:]}}
+                     </div>
+                  </div>
+                 </tr>
+                 {% endif %}
+
+                 {% endfor %}
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div id="bankdetails">
       <div class=" col-md-6">
       <input type="hidden" id="m_vtype" name="m_vtype" value="{{vtype}}">

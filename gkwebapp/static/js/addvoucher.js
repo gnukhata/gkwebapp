@@ -362,7 +362,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   $('#vmonth').keyup(function(event) {
     if(event.which==13 && $('#vmonth').val()!=""){
       event.preventDefault();
-      $('#vyear').select().focus();
+      $('#vyear').focus().select();
     }
     if (event.which==38) {
       event.preventDefault();
@@ -375,7 +375,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-      $('#vyear').focus().select();
+      $('#vyear').focus();
       event.preventDefault();
     }
   });
@@ -416,7 +416,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-      
+
   event.preventDefault();
         $('#vtable tbody tr:first select:enabled').focus();
 
@@ -688,7 +688,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
         }
         else
         {
-          $("#vyear").focus().select();
+          $("#vyear").focus();
 
         }
       }
@@ -704,7 +704,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
         }
         else
         {
-          $("#vyear").focus().select();
+          $("#vyear").focus();
 
         }
       }
@@ -1477,7 +1477,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       form_data.append("file"+i,files[i])
     }
     if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase"))
-      { 
+      {
 	if ($("#invsel").length > 0) {
 	  details.invid = $("#invsel option:selected").val();
 	  var invoicetotal= $("#invsel option:selected").attr("total");
