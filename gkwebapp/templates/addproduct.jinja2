@@ -19,7 +19,7 @@
             </div>
 {%if gkresult["category"]|length != 0 %}
             <div class="row noinventory">
-
+<input value="1" id="catg" hidden>
               {% if not gkresult["category"] %}
               <div class="form-group col-sm-11 productclass" id="categorydiv" hidden>
                 <label class="" for="addcatselect">{% trans %}Select Category{% endtrans %} :</label>
@@ -75,7 +75,7 @@
                   {% endfor %}
                 </select>
 
-                <small id="txtareahelp" class="form-text text-muted">{% trans %}Press Space Bar to add a new unit.{% endtrans %}</small>
+                <small id="txtareahelp" class="form-text text-muted">{% trans %}Press Space Bar to add a new unit of measurement and press enter.{% endtrans %}</small>
               </div>
               <div class="form-group col-sm-11 pds newuom" hidden>
                 <label for="newuom" class="productclass"  style="font-size:13px">{% trans %}New Unit of Measurement{% endtrans %} :</label>

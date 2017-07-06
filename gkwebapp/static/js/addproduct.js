@@ -148,20 +148,37 @@ $("#additem").keydown(function(event) {
     $("#addproddesc").focus().select();
   }
   else {
+    if ($("#catg").val()=='1'){
+      $("#addcatselect").focus();
+      event.preventDefault();
+
+    }
+    else{
+      $("#addproddesc").focus();
+      event.preventDefault();
+
+    }
+
     if(!$("#addcatselect").is(':hidden'))
     {
-        console.log("not hidden");
+
         $("#addcatselect").focus();
         event.preventDefault();
 
     }
+    else{
+      $("#addproddesc").focus();
+      event.preventDefault();
+
+    }
     if($("#addcatselect").is(':hidden') || sessionStorage.invflag==0){
-        console.log("hidden");
+        
 
                   $("#addproddesc").focus();
                   event.preventDefault();
 
     }
+
 
   }
 
