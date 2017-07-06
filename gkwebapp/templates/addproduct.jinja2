@@ -17,8 +17,8 @@
               </select>
             </div>
             </div>
-  {% if category|length > 0 %}
-            <div class="row">
+{%if gkresult["category"]|length != 0 %}
+            <div class="row noinventory">
 
               {% if not gkresult["category"] %}
               <div class="form-group col-sm-11 productclass" id="categorydiv" hidden>
@@ -46,7 +46,7 @@
               </div>
               {% endif %}
               </div>
-            {% endif %}
+{%endif%}
 
               <div class="row">
               <div class="form-group col-sm-11 pd ">

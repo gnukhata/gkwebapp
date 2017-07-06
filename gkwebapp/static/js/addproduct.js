@@ -2,6 +2,9 @@ $(document).ready(function() {
 $(".serviceclass").hide();
 $(".productclass").hide();
 $(".common").hide();
+if (sessionStorage.invflag==0){
+  $(".noinventory").hide();
+}
 //$("#proservlabel").text("Product Name :");
 
   var godownflag = 0;
@@ -140,14 +143,15 @@ $("#additem").keydown(function(event) {
     if(!$("#addcatselect").is(':hidden'))
     {
         console.log("not hidden");
-            $("#addproddesc").focus();
-            event.preventDefault();
+        $("#addcatselect").focus();
+        event.preventDefault();
 
     }
-    else{
-      console.log("hidden");
-      $("#addcatselect").focus();
-      event.preventDefault();
+    if($("#addcatselect").is(':hidden') || sessionStorage.invflag==0){
+        console.log("hidden");
+
+                  $("#addproddesc").focus();
+                  event.preventDefault();
 
     }
 
