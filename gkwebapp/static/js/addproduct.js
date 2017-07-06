@@ -630,12 +630,16 @@ $(document).off("keydown",".tax_name").on("keydown",".tax_name",function(event)
   else if (event.which==27) {
     event.preventDefault();
     if ($("#additem option:selected").val()=='7'){
+
       if ($("#godownpresence").val()==0) {
         $("#openingstock").focus().select();
       }
       if ($("#godownpresence").val()==1)
       {
         $("#godownflag").focus().select();
+      }
+      if(sessionStorage.invflag==0){
+        $("#apsubmit").focus();
       }
     }
     else{
@@ -819,6 +823,9 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
       if ($("#godownpresence").val()==1)
       {
         $("#godownflag").focus().select();
+      }
+      if(sessionStorage.invflag==0){
+        $("#apsubmit").focus();
       }
     }
 
