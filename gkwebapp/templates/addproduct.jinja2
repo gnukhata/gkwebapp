@@ -159,12 +159,13 @@
                 </tbody>
               </table>
 
-              <small id="taxhelp3" class="form-text text-muted productclass">When on Tax Rate or Tax Name press 'Esc' key to shift focus to Godown Name or from Godown Opening Stock to 'Save' button.</small>
+              <small  class="form-text text-muted  " id="nogodownmsg" hidden>When on Tax Rate or Tax Name press 'Esc' key to shift focus to 'Save' button.</small>
+              <small  class="form-text text-muted " id="godownmsg" hidden>When on Tax Rate or Tax Name press 'Esc' key to shift focus to Godown Name or from Godown Opening Stock to 'Save' button.</small>
               <small id="taxhelp3" class="form-text text-muted serviceclass">When on Tax Rate or Tax Name press 'Esc' key to shift focus to 'Save' button.</small><br>
             </div>
           </div>
         </div>
-        <div class="row ">
+        <div class="row noinventory ">
           <div class="row productclass">
               {% if not godown %}
               <div id="newgodownadded" hidden>

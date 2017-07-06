@@ -3,7 +3,15 @@ $(".serviceclass").hide();
 $(".productclass").hide();
 $(".common").hide();
 if (sessionStorage.invflag==0){
+    console.log("inv =0 product=yes");
   $(".noinventory").hide();
+  $("#nogodownmsg").show();
+}
+if (sessionStorage.invflag=='1' ){
+  console.log("inv =1 product=yes");
+  $("#nogodownmsg").hide();
+
+  $("#godownmsg").show();
 }
 //$("#proservlabel").text("Product Name :");
 
