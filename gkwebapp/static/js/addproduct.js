@@ -172,7 +172,7 @@ $("#additem").keydown(function(event) {
 
     }
     if($("#addcatselect").is(':hidden') || sessionStorage.invflag==0){
-        
+
 
                   $("#addproddesc").focus();
                   event.preventDefault();
@@ -1259,7 +1259,13 @@ else{
   .done(function(resp) {
     if (resp["gkstatus"] ==0) {
 
-      $("#addproduct").click();
+      //$("#addproduct").click();
+      if(sessionStorage.invflag==0){
+        $("#product").click();
+      }
+      else{
+        $("#productinmaster").click();
+      }
       $('.modal-backdrop').remove();
       $("#addproduct-success-alert").alert();
       $("#addproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
