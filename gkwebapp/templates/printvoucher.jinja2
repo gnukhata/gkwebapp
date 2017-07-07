@@ -169,6 +169,7 @@
 
 <!--Invoice Details table for Print Voucher-->
 {% if vtype == "purchase" or  vtype == "sales" %}
+  {% if voucher['invid'] %}
       <div id="sale-purchase">
         <div class="col-md-6">
           <label>{% trans %}Invoice Details{% endtrans %}</label>
@@ -199,12 +200,14 @@
                  {% endif %}
 
                  {% endfor %}
+
                 </tbody>
               </table>
 
             </div>
           </div>
         </div>
+        {% endif %}
         {%endif%}
       </div>
 
