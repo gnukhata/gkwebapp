@@ -147,11 +147,17 @@ $(document).ready(function() {
     if (event.which==13) {
       event.preventDefault();
       if($("#gsflag").val()=='7'){
-        if ($("#editcatselect").is(':disabled')) {
+        if ($("#editcatselect").is(':hidden')) {
            $("#edituom").focus();
          }
            else {
              $("#editcatselect").focus();
+           }
+           if($("#catg").val()){
+             $("#editcatselect").focus();
+           }
+           else{
+             $("#edituom").focus();
            }
       }
 
