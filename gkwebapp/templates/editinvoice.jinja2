@@ -61,6 +61,7 @@
 
             {% trans %}Invoice cannot be cancelled!{% endtrans %}<br>
           </div>
+	  <!-- if taxflag==22(VAT) then only show this format of invoice -->
           <div class="form-group col-md-12">
             <label for="invoice_deliverynote">
               {% trans %}Invoice{% endtrans %} :
@@ -306,9 +307,10 @@
             </div>
           </div>
         </div>
-
-
       </div>
+      <!-- following code is for GST -->
+
+      
       <div class="panel-footer">
         <div class="container-fluid btndisablediv" hidden>
 
