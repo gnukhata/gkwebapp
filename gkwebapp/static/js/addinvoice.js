@@ -30,6 +30,23 @@
 
 
 $(document).ready(function() {
+
+  $('input,select').keydown( function(e) {
+    var n = $("input,select").length;
+    var f = $('input,select');
+    if (e.which == 13)
+    {
+      console.log("getting called");
+      var nextIndex = f.index(this) + 1;
+      if(nextIndex < n){
+        e.preventDefault();
+        f[nextIndex].focus();
+        f[nextIndex].select();
+
+      }
+      }
+
+    });
   $('.modal-backdrop').remove();
   $('.invoicedate').autotab('number');
   $("#invoice_deliverynote").focus();
@@ -215,11 +232,11 @@ $(document).ready(function() {
      .done(function(resp) {
        console.log("success");
        if (resp["gkstatus"] == 0) {
-         $("#invoice_customerstate").val(resp["gkresult"]["state"]);
-         $("#invoice_supplierstate").val(resp["gkresult"]["state"]);
+         $("#invoice_customerstate").text(resp["gkresult"]["state"]);
+         $("#invoice_supplierstate").text(resp["gkresult"]["state"]);
          $("#invoice_customeraddr").val(resp["gkresult"]["custaddr"]);
-         $("#invoice_supplieraddr").val(resp["gkresult"]["custaddr"]);
-         $("#invoice_customertin").val(resp["gkresult"]["custtan"]);
+         $("#invoice_supplieraddr").text(resp["gkresult"]["custaddr"]);
+         $("#invoice_customertin").text(resp["gkresult"]["custtan"]);
          $("#invoice_suppliertin").val(resp["gkresult"]["custtan"]);
        }
      })

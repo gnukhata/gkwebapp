@@ -4,6 +4,7 @@
 
  td {
  font-size: 65%;
+ width: 10%;
  color: black;
  }
 
@@ -221,7 +222,7 @@ text-align: right;
                               <div class ="form-inline " >
                                 <td>
                     	      <label for="stcode">{% trans %}State Code{% endtrans %} :</label>
-                    	      <input type="text" class="form-control input-sm stcd" size="2" id="stcd" disabled>
+                    	      <label id="statecodeforinvoice" >{% trans %} {% endtrans %} </label>
                           </td>
                     	    </div>
 
@@ -234,49 +235,54 @@ text-align: right;
 <div class="col-md-6">
   <table class="table  table-condensed table-bordered table-striped">
     <tbody>
-
-  	    <div class="form-inline">
-  	      <label for="transportationmode" class="col-sm-4 col-form-label col-form-label-sm" id="transmode">{% trans %}Transportation Mode{% endtrans %} :</label>
+<tr>      <td>
+  	      <label for="transportationmode" id="transmode">{% trans %}Transportation Mode{% endtrans %} :</label>
+        </td>
+        <td>
   	      <input type="text" id="rvc" class=" form-control input-sm" name="rvc" ></input>
-  	    </div>
-  	    <br>
-  	    <div class =" form-inline">
-  	      <label for="inv" class="col-sm-3 col-form-label col-form-label-sm">{% trans %}Vehicle No.{% endtrans %} :</label>
+
+      </td>
+    </tr>
+      <td>
+
+  	      <label for="inv" >{% trans %}Vehicle No.{% endtrans %} :</label>
+            </td>
+            <td>
   	      <input type="text" id="vehicleno" class="form-control input-sm" name="vehicleno"></input>
-  	    </div>
-  	    <br>
-  	    <div class =" form-inline">
-  	      <label for="supply_date" class="col-sm-3 col-form-label col-form-label-sm">{% trans %}Date of Supply{% endtrans %} :</label>
+
+      </td>
+      <tr>
+      <td>
+
+  	      <label for="supply_date" >{% trans %}Date of Supply{% endtrans %} :</label>
+        </td>
+        <td>
                 <div class="form-group">
                   <input type="text" class="form-control input-sm supplydate" size="2" maxlength="2" placeholder="DD" id="supply_date" accesskey="v">
-                </div>
-                <div class="form-group">
+
                   <input type="text" class="form-control input-sm supplydate" size="2" maxlength="2" placeholder="MM" id="supply_month" accesskey="v">
-                </div>
-                <div class="form-group">
+
                   <input type="text" class="form-control input-sm supplydate" size="4" maxlength="4" placeholder="YYYY" id="supply_year" accesskey="v">
   	      </div>
-  	    </div>
-  	    <br>
+      </td>
+</tr>
 
-        <div class =" form-inline">
-          <label for="inv" class="col-sm-3 col-form-label col-form-label-sm">{% trans %}Reverse Charge {% endtrans %} :</label>
-          <input type="text" id="reversecharge" class="form-control input-sm" name="reversecharge"></input>
-        </div>
+<tr>
 
+        <td>  <label for="inv" >{% trans %}Reverse Charge {% endtrans %} :</label></td>
+          <td><input type="text" id="reversecharge" class="form-control input-sm" name="reversecharge"></input></td>
+
+</tr>
     </tbody>
   </table>
 </div>
-<div class="col-md-12">
+
   <div class="col-md-6">
     <table class="table  table-condensed table-bordered table-striped">
       <tbody>
-    <h5>Details of Reciever | Billed to: </h5>
+    <h4>Details of Reciever | Billed to: </h4>
     <tr>
-
-
       <td>
-
         <label for="invoice_customer">
                 {% if gkstatus=="in" %}
                 {% trans %}Supplier{% endtrans %} :
@@ -284,7 +290,7 @@ text-align: right;
                 {% trans %}Customer{% endtrans %} :
                 {% endif %}
               </label></td>
-              <td><select class="form-control input-sm" id="invoice_customer" accesskey="">
+              <td colspan="2"><select class="form-control input-sm" id="invoice_customer" accesskey="">
                 <option value="" disabled hidden selected>
                   {% if gkstatus=="in" %}
                   {% trans %}Select Supplier{% endtrans %}
@@ -297,40 +303,40 @@ text-align: right;
                 {% endfor %}
               </select>
             </td>
-
     </tr>
-
     <tr>
 
+      <td>  <label for="gstin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN / TIN:{% endtrans %}</label></td>
+        <td colspan="2"><input type="text" id="gstin" class=" form-control input-sm" name="gstin" ></input></td>
+
+      </tr>
+    <tr>
         {% if gkstatus == "in" %}
       <td>        <label for="invoice_supplieraddr">
                 {% trans %}Supplier Address{% endtrans %} :
               </label>
             </td>
-              <td><input class="form-control input-sm" id="invoice_supplieraddr" placeholder="{% trans %}Select Supplier to see Address{% endtrans %}" accesskey="" disabled></td>
+              <td colspan="2"><label id="invoice_supplieraddr" >{% trans %} {% endtrans %} </label></td>
               {% else %}
                 <td><label for="invoice_customeraddr">
                   {% trans %}Customer Address{% endtrans %} :
                 </label></td>
-                <td>
-                <input class="form-control input-sm" id="invoice_customeraddr" placeholder="{% trans %}Select Customer to see Address{% endtrans %}" accesskey="" disabled>
+                <td colspan="2">
+
+                <label id="invoice_customeraddr" >{% trans %} {% endtrans %} </label>
               </td>
               {% endif %}
       </td>
     </tr>
-    <tr>
 
-      <td>  <label for="gstin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN / TIN:{% endtrans %}</label></td>
-        <td><input type="text" id="gstin" class=" form-control input-sm" name="gstin" ></input></td>
-
-      </tr>
     <tr>
       {% if gkstatus == "in" %}
             <td>  <label for="invoice_supplierstate">
                 {% trans %}Supplier State{% endtrans %} :
               </label></td>
             <td>
-              <input class="form-control input-sm" id="invoice_supplierstate" placeholder="{% trans %}Select Supplier to see State{% endtrans %}" accesskey="" disabled>
+
+              <label id="invoice_supplierstate" >{% trans %} {% endtrans %} </label>
               </td>
               {% else %}
               <td>
@@ -340,13 +346,14 @@ text-align: right;
               </td>
 
               <td>
-                <input class="form-control input-sm" id="invoice_customerstate" placeholder="{% trans %}Select Customer to see State{% endtrans %}" accesskey="" disabled>
+                <label id="invoice_customerstate" >{% trans %} {% endtrans %} </label>
+
               </td>
               {% endif %}
               <div class ="form-inline " >
                 <td>
             <label for="stcode">{% trans %}State Code{% endtrans %} :</label>
-            <input type="text" class="form-control input-sm stcd" size="2" id="stcd" disabled>
+            <label id="statecodeofcustomer" >{% trans %} {% endtrans %} </label>
           </td>
           </div>
 
@@ -355,23 +362,23 @@ text-align: right;
 </table>
   </div>
   <div class="col-md-6">
-    <h5>Details of Consignee | Shipped to: </h5>
+    <h4>Details of Consignee | Shipped to: </h4>
     <table class="table  table-condensed table-bordered table-striped">
       <tbody>
 <tr>
               <td>  <label for="consignee" class=" col-form-label col-form-label-sm" id="consigneelbl">{% trans %}Name :{% endtrans %}</label></td>
-                <td><input type="text" id="consigneename" class=" form-control input-sm" name="consigneename" ></input></td>
+                <td colspan="2"><input type="text" id="consigneename" class=" form-control input-sm" name="consigneename" ></input></td>
               </tr>
               <tr>
 
                 <td>  <label for="gstinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN / TIN :{% endtrans %}</label></td>
-                  <td><input type="text" id="gstinconsignee" class=" form-control input-sm" name="gstinconsignee" ></input></td>
+                  <td colspan="2"><input type="text" id="gstinconsignee" class=" form-control input-sm" name="gstinconsignee" ></input></td>
 
                 </tr>
         <tr>
 
                       <td>  <label for="consigneeaddress" class=" col-form-label col-form-label-sm" id="consigneeaddress">{% trans %}Address :{% endtrans %}</label></td>
-                        <td><input type="text" id="consigneeaddress" class=" form-control input-sm" name="consigneeaddress" ></input></td>
+                        <td colspan="2"><input type="text" id="consigneeaddress" class=" form-control input-sm" name="consigneeaddress" ></input></td>
 </tr>
 <tr>
                                              	    <div class ="form-inline " >
@@ -423,7 +430,7 @@ text-align: right;
                                                         <div class ="form-inline " >
                                                           <td>
                                                       <label for="stcode">{% trans %}State Code{% endtrans %} :</label>
-                                                      <input type="text" class="form-control input-sm stcd" size="2" id="stcd" disabled>
+                                                      <label id="statecodeofconsignee" >{% trans %} {% endtrans %} </label>
                                                     </td>
                                                     </div>
 
@@ -432,16 +439,28 @@ text-align: right;
     </table>
 </div>
 <div class="col-md-12">
-<div class="col-md-6 row">
+<div class="col-md-3 row">
   <label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
   <select class="form-control input-sm"  id="taxapplicable" accesskey="">
     <option value="22" selected>VAT</option>
     <option value="7" selected>GST</option>
   </select>
 </div>
-</div>
-<div class="col-md-12">
+<div class="col-md-3">
+            <label for="invoice_item">
+              {% trans %}Item Type{% endtrans %} :
+            </label>
+            <select class="form-control input-sm" id="itemtypeselect" accesskey="">
+              <option value="" disabled hidden selected>Select Product/Service</option>
+              <option value="16" >Product</option>
+              <option value="19" >Service</option>
+            </select>
 
+          </div>
+</div>
+
+
+<div class="col-md-12">
             {% if gkstatus=="in" %}
             <input type="hidden" id="status" value="9">
             {% else %}
@@ -478,31 +497,32 @@ text-align: right;
                     </td>
                     <td class="col-xs-1">
                       <div class="input-group">
-                        <input type="text" class="invoice_product_quantity form-control input-sm text-right numtype" value="0" placeholder="0" aria-describedby="unitaddon">
+                        <input type="text" class="invoice_product_quantity form-control input-sm text-right numtype" value="0" placeholder="0" size="8" aria-describedby="unitaddon">
                         <span class="input-group-addon input-sm" id="unitaddon"></span>
                       </div>
                     </td>
                     <td class="col-xs-1">
                       <div class="input-group">
-                        <input type="text" class="invoice_product_freequantity form-control input-sm text-right numtype" value="0" placeholder="0" aria-describedby="unitaddon">
+                        <input type="text" class="invoice_product_freequantity form-control input-sm text-right numtype" value="0" placeholder="0" size="8" aria-describedby="unitaddon">
                         <span class="input-group-addon input-sm" id="freeunitaddon"></span>
                       </div>
                     </td>
                     <td class="col-xs-1">
-                      <input type="text" class="invoice_product_per_price form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
+                      <input type="text" class="invoice_product_per_price form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8">
                     </td>
                     <td class="col-xs-1">
-                        <input type="text" class="invoice_product_discount form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
+                        <input type="text" class="invoice_product_discount form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8">
                     </td>
 
                     <td class="col-xs-1">
-                        <input type="text" class="invoice_product_taxablevalue form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
+                        <input type="text" class="invoice_product_taxablevalue form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8">
                     </td>
                     <td class="col-xs-1">
-                        <input type="text" class="invoice_product_tax_rate form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
+                        <input type="text" class="invoice_product_tax_rate form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8">
                     </td>
                     <td class="col-xs-1">
-                      <input type="text" class="invoice_product_tax_amount form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
+
+                      <label  size="8" class="invoice_product_tax_amount  text-right numtype"  value="0.00" placeholder="0.00">{% trans %} {% endtrans %} </label>
                     </td>
                     <td class="col-xs-1">
                       <input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
