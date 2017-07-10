@@ -243,22 +243,18 @@
      </div>
       <div class="panel-footer">
         <div class="container-fluid">
-        <button class="btn btn-success btn-sm" id="deliverychallan_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save anywhere on the current screen">{% trans %}
-        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+        <button class="btn btn-success btn-sm" id="deliverychallan_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save anywhere on the current screen"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}
 Save{% endtrans %}</button>
-        <button class="btn btn-warning btn-sm" id="deliverychallan_reset">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i>
+        <button class="btn btn-warning btn-sm" id="deliverychallan_reset"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}
 Reset{% endtrans %}</button>
         {% if gkstatus=="out" %}
-        <button id="deliverychallan_saveprint" class="btn btn-primary btn-sm" >{% trans %}
-
-<i class="fa fa-print" aria-hidden="true"></i>
+        <button id="deliverychallan_saveprint" class="btn btn-primary btn-sm" ><i class="fa fa-print" aria-hidden="true"></i> {% trans %}
 Save & Print{% endtrans %}</button>
-        <button id="deliverychallan_addcust" class="btn btn-info btn-sm">{% trans %}
-        <i class="fa fa-user-plus" aria-hidden="true"></i>
+        <button id="deliverychallan_addcust" class="btn btn-info btn-sm"><i class="fa fa-user-plus" aria-hidden="true"></i> {% trans %}
 Add Customer{% endtrans %}</button>
           {% else %}
-          <button id="deliverychallan_addcust" class="btn btn-info btn-sm">{% trans %}
-          <i class="fa fa-user-plus" aria-hidden="true"></i>
+          <button id="deliverychallan_addcust" class="btn btn-info btn-sm"><i class="fa fa-user-plus" aria-hidden="true"></i> {% trans %}
+
 Add Supplier{% endtrans %}</button>
        {% endif %}
        <label class="btn btn-primary btn-sm" for="my-file-selector">
