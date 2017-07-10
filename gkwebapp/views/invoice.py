@@ -110,7 +110,7 @@ def saveinvoice(request):
         return {"gkstatus":result.json()["gkstatus"]}
 @view_config(route_name="invoice",request_param="action=getdeliverynote",renderer="json")
 def getdeliverynote(request):
-    header={"gktoken":request.headers["gktoken"]} 
+    header={"gktoken":request.headers["gktoken"]}
     delchal = requests.get("http://127.0.0.1:6543/delchal?delchal=single&dcid=%d"%(int(request.params["dcid"])), headers=header)
     return {"gkstatus": delchal.json()["gkstatus"],"delchal": delchal.json()["gkresult"]}
 
@@ -142,7 +142,7 @@ def getproduct(request):
         return {"gkstatus": result.json()["gkstatus"],"unitname":data["unitname"],"gsflag":data["gsflag"],"gscode":data["gscode"]}
     else:
         return {"gkstatus": result.json()["gkstatus"],"gsflag":data["gsflag"],"gscode":data["gscode"]}
-    
+
 
 
 @view_config(route_name="invoice",request_param="action=showedit",renderer="gkwebapp:templates/editinvoice.jinja2")
