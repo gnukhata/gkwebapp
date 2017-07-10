@@ -432,6 +432,8 @@ $(document).ready(function() {
      .done(function(resp) {
        console.log("success");
        if (resp["gkstatus"] == 0) {
+         console.log(resp["gscode"]);
+         $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(1) .invoice_product_hsncode').text(resp["gscode"]);
          $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(1) span').text(resp["unitname"]);
          $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(2) span').text(resp["unitname"]);
        }
