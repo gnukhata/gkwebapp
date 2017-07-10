@@ -129,7 +129,7 @@ def getstatetax(request):
 def getappliedtax(request):
     header={"gktoken":request.headers["gktoken"]}
     taxdetails = requests.get("http://127.0.0.1:6543/invoice?productcode=%d&source=%s&destination=%s"%(int(request.params["productcode"]),request.params["source"],request.params["destination"]), headers=header)
-    data = taxdetails.json()
+    data = taxdetails.json()["gkresult"]
     return{"gkstatus":taxdetails.json()["gkstatus"],"taxname":data["taxname"],"taxrate":data["taxrate"]}
 
 
