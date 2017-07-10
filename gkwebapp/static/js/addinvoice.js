@@ -529,10 +529,12 @@ $(document).ready(function() {
        if (resp["gkstatus"] == 0) {
 
          $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(1) .invoice_product_hsncode').text(resp["gscode"]);
-
+         if (resp["gsflag"]==7){
            $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) span').text(resp["unitname"]);
            $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) span').text(resp["unitname"]);
-         
+
+         }
+
 
        }
 
@@ -1465,6 +1467,9 @@ $(document).ready(function() {
       $("#invoice_issuer_name").focus().select();
     }
   });
+    $(document).off("keydown", ".invoice_product_taxablevalue").on("keydown", ".invoice_product_taxablevalue", function(event) {
+//write your code here
+    });
 
   $(document).off('change', '.invoice_product_tax_rate').on('change', '.invoice_product_tax_rate', function(event) {
     event.preventDefault();
