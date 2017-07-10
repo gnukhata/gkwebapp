@@ -133,6 +133,7 @@ $(document).ready(function() {
 
   $("#invoice_date").keydown(function(event) {
     if (event.which == 13) {
+      console.log("it is also getting called");
       event.preventDefault();
       $("#invoice_month").focus().select();
     }
@@ -2373,4 +2374,74 @@ $(document).ready(function() {
     $("#confirm_yes_print").on('hidden.bs.modal', function(event) {
         $("#invoice_challanno").focus();
     });
+    //new invoice code
+
+    $(document).off('change', '#taxapplicable').on('change', '#taxapplicable', function(event) {
+        event.preventDefault();
+        if ($("#taxapplicable option:selected").val() == 22) {
+    $("#itemtypediv").hide();
+
+        }
+        else{
+          $("#itemtypediv").show();
+        }
+        if ($("#taxapplicable option:selected").val() == 22 ) {
+          //VAT
+          $("#invoice_product_table_gst").hide();
+          $("#invoice_product_table_vat").show();
+          $("#invoice_service_table").hide();
+          console.log("//VAT");
+        }
+
+      });
+      $(document).off('change', '#itemtypeselect').on('change', '#itemtypeselect', function(event) {
+      if ($("#taxapplicable option:selected").val() == 7 && $("#itemtypeselect option:selected").val() == 16) {
+        //GST WITH PRODUCT
+        $("#invoice_product_table_gst").show();
+          $("#invoice_product_table_vat").hide();
+          $("#invoice_service_table").hide();
+
+      }
+      if ($("#taxapplicable option:selected").val() == 7 && $("#itemtypeselect option:selected").val() == 19) {
+        //GST WITH SERVICE
+        $("#invoice_service_table").show();
+          $("#invoice_product_table_vat").hide();
+          $("#invoice_product_table_gst").hide();
+
+      }
+      if (event.which == 13) {
+        event.preventDefault();
+        console.log("before");
+      if ($("#invoice_product_table_gst").is(":hidden") && $("#invoice_service_table").is(":hidden")) {
+        $('#invoice_product_table_vat tbody tr:first td:eq(0) select').focus();
+    console.log("desh");
+      }
+    }
+
+});
+/*$("#taxapplicable").keydown(function(event) {
+  console.log("before");
+  if (event.which == 13) {
+    event.preventDefault();
+    console.log("after");
+  if ($("#invoice_product_table_gst").is(":hidden")&& $("#invoice_service_table").is(":hidden") ) {
+    $('#invoice_product_table_vat tbody tr:first td:eq(0) select').focus();
+console.log("desh");
+  }
+}
+}); not working*/
+
+$("#itemtypeselect").keydown(function(event) {
+  if (event.which == 13) {
+    event.preventDefault();
+    if ($("#invoice_product_table_vat").is(":hidden") && $("#invoice_service_table").is(":hidden")) {
+      $('#invoice_product_table_gst tbody tr:first td:eq(0) select').focus();
+
+    }
+    if ($("#invoice_product_table_gst").is(":hidden") && $("#invoice_product_table_vat").is(":hidden")) {
+      $('#invoice_service_table tbody tr:first td:eq(0) select').focus();
+
+    }
+  }
+});
 });
