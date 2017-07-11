@@ -798,6 +798,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
           '<option value="" selected hidden disabled>Select Tax</option>'+
           '<option value="VAT">VAT</option>'+
           '<option value="CVAT">CVAT</option>'+
+          '<option value="GST">GST</option>'+
         '</select>'+
         '</td>'+
         '<td class="col-xs-4">'+
