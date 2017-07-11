@@ -255,6 +255,7 @@ $(document).ready(function() {
       "custfax": $("#add_cussup_fax").val(),
       "custpan": $("#add_cussup_pan").val(),
       "custtan": $("#add_cussup_tan").val(),
+	     "gstin": $("#add_cussup_gstin").val(),    
       "state" : $("#add_state").val(),
       "csflag": $("#add_cussup option:selected").val()},
       beforeSend: function(xhr)
