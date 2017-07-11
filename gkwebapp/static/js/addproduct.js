@@ -407,6 +407,7 @@ $("#addcatselect").change(function(event) {
           '<option value="" selected>Select Tax</option>'+
           '<option value="VAT">VAT</option>'+
           '<option value="CVAT">CVAT</option>'+
+          '<option value="GST">GST</option>'+
           '</select>'+
           '</td>'+
           '<td class="col-xs-4">'+
@@ -480,6 +481,7 @@ $("#addcatselect").change(function(event) {
     '<option value="" selected>Select Tax</option>'+
     '<option value="VAT">VAT</option>'+
     '<option value="CVAT">CVAT</option>'+
+    '<option value="GST">GST</option>'+
     '</select>'+
     '</td>'+
     '<td class="col-xs-4">'+
@@ -784,6 +786,7 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
       '<option value="" selected>Select Tax</option>'+
       '<option value="VAT">VAT</option>'+
       '<option value="CVAT">CVAT</option>'+
+      '<option value="GST">GST</option>'+
       '</select>'+
       '</td>'+
       '<td class="col-xs-4">'+
