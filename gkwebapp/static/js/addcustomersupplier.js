@@ -149,24 +149,31 @@ $(document).ready(function() {
       $("#add_cussup_fax").focus().select();
     }
   });
-  $("#add_cussup_tan").keydown(function(event) {
+
+    $("#add_cussup_tan").keydown(function(event) {
     if (event.which==13) {
-    	if ($.trim($("#add_cussup_tan").val())=="") {
-            $("#tin-blank-alert").alert();
-            $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-              $("#tin-blank-alert").hide();
-            });
-            $("#add_cussup_tan").focus();
-            return false;
-          }
-          event.preventDefault();
-          $("#cussup_save").click();
-        }
-        if (event.which==38) {
-          event.preventDefault();
-          $("#add_cussup_pan").focus().select();
-        }
-      });
+      event.preventDefault();
+      $("#add_cussup_gstin").focus().select();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#add_cussup_fax").focus().select();
+    }
+    });
+
+      $("#add_cussup_gstin").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#cussup_save").focus().select();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#add_cussup_tan").focus().select();
+    }
+  });
+
+
+    
   $("#add_cussup_reset").click(function(event) {
       // click the customer/supplier create tab to reload the current page in tab creating a reset effect
     $("#customersupplier_create").click();
@@ -225,14 +232,16 @@ $(document).ready(function() {
       $("#add_cussup_address").focus();
       return false;
     }
-    if ($.trim($("#add_cussup_tan").val())=="") {
-      $("#tin-blank-alert").alert();
-      $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#tin-blank-alert").hide();
+    if ($.trim($("#add_cussup_tan").val())=="" && $.trim($("#add_cussup_gstin").val())=="" ) {
+      $("#both-blank-alert").alert();
+      $("#both-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#both-blank-alert").hide();
       });
       $("#add_cussup_tan").focus();
       return false;
     }
+
+      
     // ajax call for saving the customer/supplier
     $.ajax({
       url: '/customersuppliers?action=save',

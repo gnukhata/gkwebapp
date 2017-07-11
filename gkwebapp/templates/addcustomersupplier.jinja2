@@ -26,9 +26,14 @@
       {% trans %}Please enter name!{% endtrans %}
     </div>
 
-     <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
+    <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
 
       {% trans %}Please select State!{% endtrans %}
+
+    </div>
+    <div class="alert alert-danger" id="both-blank-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Please enter TIN!{% endtrans %}
 
     </div>
 
@@ -121,7 +126,7 @@
                 <label for="add_cussup_address"> Address:
                 </label><label for="add_cussup_address" style="color:red;font-size: 120%;">*</label>
                 <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#accModal"></i>
-                <textarea class="form-control" rows="3" cols="40" id="add_cussup_address" aria-describedby="textareahelp"></textarea>
+                <textarea class="form-control" rows="1" cols="40" id="add_cussup_address" aria-describedby="textareahelp"></textarea>
                 <small id="textareahelp" class="form-text text-muted">Press Enter key twice to shift focus to Fax</small>
               </div>
 
@@ -137,6 +142,12 @@
               <label for="add_cussup_tan">{% trans %}TIN:{% endtrans %}</label><label for="add_cussup_tan" style="color:red;font-size: 120%;">*</label>
               <input class="form-control input-sm" type="text" id="add_cussup_tan"></input>
             </div>
+	    <div class="form-group">
+              <label for="add_cussup_gstin">{% trans %}GSTIN:{% endtrans %}</label><label for="add_cussup_gstin" style="color:red;font-size: 120%;">*</label>
+              <input class="form-control input-sm" type="text" id="add_cussup_gstin"></input>
+            </div>
+
+	    
           </div>
         </div>
   <div id="accModal"  tabindex="-1" class="modal fade " role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
