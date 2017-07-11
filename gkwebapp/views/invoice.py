@@ -128,8 +128,9 @@ def getstatetax(request):
 @view_config(route_name="invoice",request_param="action=getappliedtax",renderer="json")
 def getappliedtax(request):
     header={"gktoken":request.headers["gktoken"]}
-    taxdetails = requests.get("http://127.0.0.1:6543/invoice?productcode=%d&source=%s&destination=%s"%(int(request.params["productcode"]),request.params["source"],request.params["destination"]), headers=header)
+    taxdetails = requests.get("http://127.0.0.1:6543/invoice?type=caltax&productcode=%d&source=%s&destination=%s&taxflag=%d"%(int(request.params["productcode"]),request.params["source"],request.params["destination"],int(request.params["taxflag"])), headers=header)
     data = taxdetails.json()["gkresult"]
+    print data["taxname"]
     return{"gkstatus":taxdetails.json()["gkstatus"],"taxname":data["taxname"],"taxrate":data["taxrate"]}
 
 
@@ -396,4 +397,3 @@ def registerspreadsheet(request):
     headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
     os.remove("response.ods")
     return Response(rep, headerlist=headerList.items())
-
