@@ -464,7 +464,7 @@ $(document).ready(function() {
     /* Act on the event */
     var productcode = $(this).find('option:selected').val();
     var curindex = $(this).closest('tbody tr').index();
-    var state = $("#invoice_state option:selected").val();
+  //  var state = $("#invoice_state option:selected").val();
 /*    if ($("#status").val() == '15') {//please check this code
       $.ajax({
         url: '/product?type=prodtax',
@@ -569,10 +569,14 @@ $(document).ready(function() {
   });
 
 
+//checkpoint5 error in File "/home/rohini/workspace/gkwebapp/gkwebapp/views/invoice.py", line 209, in getdelinvproducts
+
 
                   $("#invoice_deliverynote").change(function(event) {
                     if ($("#invoice_deliverynote option:selected").val() != '') {
-                      $("#invoice_state").prop("disabled", true);
+                      //$("#invoice_state").prop("disabled", true);
+                      console.log("delchal");
+
                                         $.ajax({
                                           url: '/invoice?action=getdeliverynote',
                                           type: 'POST',
@@ -640,50 +644,58 @@ $(document).ready(function() {
                                              .done(function(resp) {
                                                  console.log("success");
                                                  if (resp["gkstatus"] == 0) {
-                                                   $.each(resp.items, function(key, value) {
-                                                     $('#invoice_product_table_vat tbody').append('<tr>' +
-                                                         '<td class="col-xs-3">' +
-                                                         '<select class="form-control deliverychallan_edit_disable input-sm product_name">' +
-                                                         '<option value="' + key + '">' + value.productdesc + '</option>' +
-                                                         '</select>' +
-                                                         '</td>' +
-                                                         '<td class="col-xs-2">' +
-                                                         '<div class="input-group">' +
-                                                         '<input type="text" class="invoice_product_quantity form-control deliverychallan_edit_disable input-sm numtype text-right" data="' + value.qty + '" value="' + value.qty + '">' +
-                                                         '<span class="input-group-addon input-sm" id="unitaddon">' + value.unitname + '</span>' +
-                                                         '</div>' +
-                                                         '</td>' +
-                                        						      '<td class="col-xs-2">' +
-                                        						      '<div class="input-group">' +
-                                        						      '<input type="text" class="invoice_product_freequantity form-control deliverychallan_edit_disable input-sm numtype text-right" value="' + 0 + '">' +
-                                        						      '<span class="input-group-addon input-sm" id="freeunitaddon">' + value.unitname + '</span>' +
-                                        						      '</div>' +
-                                        						      '</td>' +
-                                                          '<td class="col-xs-2">' +
-                                                          '<input type="text" class="invoice_product_per_price form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00">' +
-                                                          '</td>' +
-                                                          '<td class="col-xs-1">' +
-                                                          '<input type="text" class="invoice_product_tax_rate form-control input-sm numtype text-right" value="0.00">' +
-                                                          '</td>' +
-                                                          '<td class="col-xs-1">'+
-                                                              '<input type="text" class="invoice_product_discount form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8">'+
-                                                          '</td>'+
-                                                          '<td class="col-xs-1">' +
-                                                          '<input type="text" class="invoice_product_tax_amount form-control input-sm numtype text-right" value="0.00" disabled>' +
-                                                          '</td>' +
-                                                          '<td class="col-xs-2">' +
-                                                          '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00" disabled>' +
-                                                          '</td>' +
-                                        						      '<td class="col-xs-1" style="width: 3%;">' +
-                                                          '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
-                                        						      '</td>' +
-                                        						      '</tr>');
-                                                     totqty += +value.qty;
-                                                   });
-                                                   if ($("#invoice_product_table_vat tbody tr").length == 1) {
-                                                     $("#invoice_product_table_vat tbody tr:eq(0) td:eq(7)").empty();
+                                                   if(!$("#invoice_product_table_vat").is(":hidden")){
+                                                     $.each(resp.items, function(key, value) {
+                                                       console.log("delchal coding");
+
+                                                       $('#invoice_product_table_vat tbody').append('<tr>' +
+                                                           '<td class="col-xs-3">' +
+                                                           '<select class="form-control deliverychallan_edit_disable input-sm product_name">' +
+                                                           '<option value="' + key + '">' + value.productdesc + '</option>' +
+                                                           '</select>' +
+                                                           '</td>' +
+                                                           '<td class="col-xs-2">' +
+                                                           '<div class="input-group">' +
+                                                           '<input type="text" class="invoice_product_quantity form-control deliverychallan_edit_disable input-sm numtype text-right" data="' + value.qty + '" value="' + value.qty + '">' +
+                                                           '<span class="input-group-addon input-sm" id="unitaddon">' + value.unitname + '</span>' +
+                                                           '</div>' +
+                                                           '</td>' +
+                                          						      '<td class="col-xs-2">' +
+                                          						      '<div class="input-group">' +
+                                          						      '<input type="text" class="invoice_product_freequantity form-control deliverychallan_edit_disable input-sm numtype text-right" value="' + 0 + '">' +
+                                          						      '<span class="input-group-addon input-sm" id="freeunitaddon">' + value.unitname + '</span>' +
+                                          						      '</div>' +
+                                          						      '</td>' +
+                                                            '<td class="col-xs-2">' +
+                                                            '<input type="text" class="invoice_product_per_price form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00">' +
+                                                            '</td>' +
+                                                            '<td class="col-xs-1">' +
+                                                            '<input type="text" class="invoice_product_tax_rate form-control input-sm numtype text-right" value="0.00">' +
+                                                            '</td>' +
+                                                            '<td class="col-xs-1">'+
+                                                                '<input type="text" class="invoice_product_discount form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8">'+
+                                                            '</td>'+
+                                                            '<td class="col-xs-1">' +
+                                                            '<input type="text" class="invoice_product_tax_amount form-control input-sm numtype text-right" value="0.00" disabled>' +
+                                                            '</td>' +
+                                                            '<td class="col-xs-2">' +
+                                                            '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00" disabled>' +
+                                                            '</td>' +
+                                          						      '<td class="col-xs-1" style="width: 3%;">' +
+                                                            '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
+                                          						      '</td>' +
+                                          						      '</tr>');
+                                                       totqty += +value.qty;
+                                                     });
+                                                     if ($("#invoice_product_table_vat tbody tr").length == 1) {
+                                                       $("#invoice_product_table_vat tbody tr:eq(0) td:eq(7)").empty();
+                                                     }
                                                    }
-                                                 }
+                                                   if(!$("#invoice_product_table_gst").is(":hidden")){
+                                                     //write a code which will bring product details of delchal
+                                                   }
+
+                                                 }//success ends
                                              })
                                              .fail(function() {
                                                  console.log("error");
@@ -692,7 +704,7 @@ $(document).ready(function() {
                                                  console.log("complete");
                                              });
 
-                           var state = $("#invoice_state option:selected").val();
+                        var state = $("#invoice_state option:selected").val();
                            var productcode;
                            $(".product_name").each(function() {
                              var curindex = $(this).closest('tbody tr').index();
@@ -715,7 +727,7 @@ $(document).ready(function() {
                                 .done(function(resp) {
                                   console.log("success");
                                   if (resp["gkstatus"] == 0) {
-                                    $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val(parseFloat(resp['taxdata']).toFixed(2));
+                                    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val(parseFloat(resp['taxdata']).toFixed(2));
                                   }
 
                                 })
@@ -830,9 +842,9 @@ $(document).ready(function() {
     var previndex = curindex - 1;
     if (event.which == 13) {
       event.preventDefault();
-      $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(1) input').focus().select();
+      $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').focus().select();
     } else if (event.which == 190 && event.shiftKey) {
-      $('#invoice_product_table tbody tr:eq(' + nextindex + ') td:eq(0) select').focus();
+      $('#invoice_product_table_vat tbody tr:eq(' + nextindex + ') td:eq(0) select').focus();
     } else if (event.which == 188 && event.shiftKey) {
       if (previndex > -1) {
         event.preventDefault();
@@ -936,7 +948,7 @@ $(document).ready(function() {
       $(this).val(parseFloat(0).toFixed(2));
     }
   });
-//checkpoint3
+//checkpoint3 product qty
   $(document).off('change', '.invoice_product_quantity').on('change', '.invoice_product_quantity', function(event) {
     event.preventDefault();
     /* Act on the event */
@@ -948,8 +960,9 @@ $(document).ready(function() {
     var rowfreeqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
     var rowprice = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
     var rowtaxrate = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
-    var taxpercentamount = (rowqty - rowfreeqty) * rowprice * (rowtaxrate / 100);
-    var rowtotal = ((rowqty - rowfreeqty) * rowprice) + taxpercentamount;
+    var rowdiscount =parseFloat($('#invoice_product_table_vat tbody tr:eq('+curindex+')) td:eq(5) input').val()).tofixed(2);
+    var taxpercentamount = (rowqty - rowfreeqty) * (rowprice-rowdiscount) * (rowtaxrate / 100);
+    var rowtotal = ((rowqty - rowfreeqty) * (rowprice-rowdiscount)) + taxpercentamount;
     $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(taxpercentamount).toFixed(2));
     $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtotal).toFixed(2));
 
@@ -977,6 +990,59 @@ $(document).ready(function() {
       // jquery enables us to select specific elements inside a table easily like below.
       $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
     });
+
+  });
+  //same code for quantity from gst table
+
+  $(document).off('change', '.invoice_product_quantity_gst').on('change', '.invoice_product_quantity_gst', function(event) {
+    event.preventDefault();
+
+    /* Act on the event */
+    if ($(this).val() == "") {
+      $(this).val(0);
+    }
+console.log("sadal");
+    var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
+    var rowqty = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2);
+    var rowfreeqty = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
+    var rowprice = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
+    //var rowtaxrate = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
+    //var rowdiscount =parseFloat($('#invoice_product_table_gst tbody tr:eq('+curindex+') td:eq(5) input').val()).tofixed(2);
+    //var taxpercentamount = (rowqty - rowfreeqty) * (rowprice-rowdiscount) * (rowtaxrate / 100);
+    //var rowtaxableamount=(rowqty - rowfreeqty) * (rowprice-rowdiscount);
+    //$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtaxableamount).toFixed(2));
+  console.log("safal");
+  //console.log(rowtaxableamount);
+    //var rowtotal = ((rowqty - rowfreeqty) * (rowprice-rowdiscount)) + taxpercentamount;
+    //$('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(taxpercentamount).toFixed(2));
+    //$('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtotal).toFixed(2));
+
+    pqty = 0.00;
+    ptaxamt = 0.00;
+    ptotal = 0.00;
+var var_invoice_product_taxablevalue_gst;
+    $(".invoice_product_quantity_gst").each(function() {
+      pqty += +$(this).val();
+
+      // jquery enables us to select specific elements inside a table easily like below.
+      $('#invoice_product_table_gst tfoot tr:last td:eq(1) input').val(parseFloat(pqty).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
+    });
+
+    /* rohini $(".invoice_product_taxablevalue_gst").each(function() {
+      var_invoice_product_taxablevalue_gst += +parseFloat($(this).val()).toFixed(2);
+
+      // jquery enables us to select specific elements inside a table easily like below.
+      $('#invoice_product_table_gst tfoot tr:last td:eq(6) span').val(parseFloat(var_invoice_product_taxablevalue_gst).toFixed(2));
+
+    });
+    console.log(var_invoice_product_taxablevalue_gst);
+
+    $(".invoice_product_total").each(function() {
+      ptotal += +$(this).val();
+
+      // jquery enables us to select specific elements inside a table easily like below.
+      $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
+    });*/
 
   });
 
@@ -2591,35 +2657,35 @@ if (event.which == 27) {
        if (resp["gkstatus"] == 0) {
          console.log("append");
          $('#invoice_product_table_gst tbody').append(
-             '<tr>'+ '<td class="col-xs-3">'+
+             '<tr>'+ '<td class="">'+
                  '<select class="form-control input-sm product_name_gst">'+
                                 '</select>'+
                '</td>'+
-               '<td class="col-xs-2">'+
+               '<td class="">'+
 
                     '<label class="invoice_product_hsncode" ></label>'+
                '</td>'+
-               '<td class="col-xs-2">'+
+               '<td class="">'+
                  '<div class="input-group">'+
-                   '<input type="text" class="invoice_product_quantity form-control input-sm text-right numtype"size="5" value="0" placeholder="0" aria-describedby="unitaddon">'+
+                   '<input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype"size="5" value="0" placeholder="0" aria-describedby="unitaddon">'+
                    '<span class="input-group-addon input-sm" id="unitaddon"></span>'+
                  '</div>'+
                '</td>'+
-               '<td class="col-xs-2">'+
+               '<td class="">'+
                  '<div class="input-group">'+
-                   '<input type="text" class="invoice_product_freequantity form-control input-sm text-right numtype" size="5" value="0" placeholder="0" aria-describedby="unitaddon">'+
+                   '<input type="text" class="invoice_product_freequantity_gst form-control input-sm text-right numtype" size="5" value="0" placeholder="0" aria-describedby="unitaddon">'+
                    '<span class="input-group-addon input-sm" id="freeunitaddon"></span>'+
                  '</div>'+
                '</td>'+
 
-'               <td class="col-xs-2">'+
-                 '<input type="text" class="invoice_product_per_price form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00">'+
+'               <td class="">'+
+                 '<input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00">'+
                '</td>'+
-               '<td class="col-xs-2">'+
-                 '<input type="text" class="invoice_product_discount form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00">'+
+               '<td class="">'+
+                 '<input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00">'+
                '</td>'+
-               '<td class="col-xs-2">'+
-                 '<input type="text" class="invoice_product_taxablevalue form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00" disabled>'+
+               '<td class="">'+
+                 '<input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00" disabled>'+
                '</td>'+
 
             '<td><input type="text" class="invoice_product_cgstrate  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled></td>'+
@@ -2635,10 +2701,10 @@ if (event.which == 27) {
                  '<input type="text" class="invoice_product_igstrate  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled></td>'+
                  '<td><input type="text" class="invoice_product_igstamount  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled>'+
                '</td>'+
-               '<td class="col-xs-2">'+
+               '<td class="">'+
                  '<input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" size="5" placeholder="0.00" disabled>'+
                '</td>'+
-               '<td class="col-xs-1" style="width: 3%;">'+
+               '<td class="" style="width: 3%;">'+
                '</td>'+
              '</tr>');
 
@@ -2712,44 +2778,6 @@ if (event.which == 27) {
 }
 });
 //
-$(document).off('change', '.product_name_gst').on('change', '.product_name_gst', function(event) {
-  event.preventDefault();
-  console.log("NAME GST");
-  /* Act on the event */
-  var productcode = $(this).find('option:selected').val();
-  sourcestate=$("#invoicestate option:selected").val();
-  destinationstate=$("#consigneestate option:selected").val();
-  taxflag=$("#taxapplicable option:selected").val();
-
-console.log("ajax cal tax");
-        //AJAX FOR calculating tax.
-        $.ajax({
-          url: '/invoice?action=getappliedtax',
-          type: 'POST',
-          dataType: 'json',
-          async: false,
-          data: { "productcode": productcode, "source": sourcestate,"destination": destinationstate,"taxflag":taxflag },
-          beforeSend: function(xhr) {
-            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-          }
-        })
-         .done(function(resp) {
-           console.log("success");
-           console.log("CAL TAX");
-           if (resp["gkstatus"] == 0) {
-             console.log("taxrate"+resp['taxrate']);
-             $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(resp['taxrate']).toFixed(2));
-           }
-
-         })
-         .fail(function() {
-           console.log("error");
-         })
-         .always(function() {
-           console.log("complete");
-         });
-
-});
 
 //
 });
