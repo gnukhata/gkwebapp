@@ -161,6 +161,8 @@ $(document).ready(function() {
     }
   });
 
+    if (year >= 2017){
+
     $("#add_cussup_tan").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
@@ -182,7 +184,21 @@ $(document).ready(function() {
       $("#add_cussup_tan").focus().select();
     }
   });
+    }
 
+    else{
+	$("#add_cussup_tan").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#cussup_save").focus().select();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#add_cussup_fax").focus().select();
+    }
+    });
+	
+    }
 
     
   $("#add_cussup_reset").click(function(event) {
@@ -243,6 +259,8 @@ $(document).ready(function() {
       $("#add_cussup_address").focus();
       return false;
     }
+          
+
     if ($.trim($("#add_cussup_tan").val())=="" && $.trim($("#add_cussup_gstin").val())=="" ) {
       $("#both-blank-alert").alert();
       $("#both-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -251,6 +269,7 @@ $(document).ready(function() {
       $("#add_cussup_tan").focus();
       return false;
     }
+	  
 
       
     // ajax call for saving the customer/supplier
