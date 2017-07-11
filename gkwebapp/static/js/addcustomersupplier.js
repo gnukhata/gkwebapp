@@ -29,9 +29,17 @@ Contributors:
 
 $(document).ready(function() {
     //All the navigation events where pressing enter shifts focus to the next element and pressing the up arrow key focuses the previous element
-    var styear = sessionStorage.getItem('year1');
-    var enyear = sessionStorage.getItem('year2');
-    console.log(typeof(styear));
+    
+
+    var todatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
+    var year = (todatearray[0])
+   
+    if (year >= 2017){
+	
+		$("#gstin").show();
+    }
+    
+    
   $("#add_cussup").focus().select();
   $("#add_cussup").keydown(function(event) {
     if (event.which==13) {
