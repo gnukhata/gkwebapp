@@ -28,7 +28,10 @@ Contributors:
 // This script is for the addcustomer/supplier.jinja2
 
 $(document).ready(function() {
-//All the navigation events where pressing enter shifts focus to the next element and pressing the up arrow key focuses the previous element
+    //All the navigation events where pressing enter shifts focus to the next element and pressing the up arrow key focuses the previous element
+    var styear = sessionStorage.getItem('year1');
+    var enyear = sessionStorage.getItem('year2');
+    console.log(typeof(styear));
   $("#add_cussup").focus().select();
   $("#add_cussup").keydown(function(event) {
     if (event.which==13) {

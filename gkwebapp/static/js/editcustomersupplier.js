@@ -369,7 +369,7 @@ $("#cussup_delete").click(function(event) {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
         },
         success: function(resp)
-	
+	  
         {
           if (resp["gkstatus"]==0) {
             $("#customersupplier_edit").click();
