@@ -42,7 +42,9 @@ $(document).ready(function() {
       $("#edit_cussup_pan").val(result["custpan"]);
       $("#edit_cussup_pan").prop("disabled", true);
       $("#edit_cussup_tan").val(result["custtan"]);
-      $("#edit_cussup_tan").prop("disabled", true);
+	$("#edit_cussup_tan").prop("disabled", true);
+	$("#edit_cussup_gstin").val(result["gstin"]);
+	$("#edit_cussup_gstin").prop("disabled",true);
       $(".panel-footer").show();
       $("#cus_innerdiv").show();
       $("#cussup_edit_save").hide();
@@ -71,7 +73,8 @@ $(document).ready(function() {
       $("#edit_cussup_address").prop("disabled", false);
       $("#edit_cussup_fax").prop("disabled", false);
       $("#edit_cussup_pan").prop("disabled", false);
-      $("#edit_cussup_tan").prop("disabled", false);
+	$("#edit_cussup_tan").prop("disabled", false);
+	$("#edit_cussup_gstin").prop("disabled",false);
       $("#edit_state").prop("disabled", false);
 
     }
@@ -219,7 +222,8 @@ $(document).ready(function() {
     $("#edit_cussup_address").prop("disabled", false);
     $("#edit_cussup_fax").prop("disabled", false);
     $("#edit_cussup_pan").prop("disabled", false);
-    $("#edit_cussup_tan").prop("disabled", false);
+      $("#edit_cussup_tan").prop("disabled", false);
+      $("#edit_cussup_gtin").prop("disabled",false);
     $("#edit_state").prop("disabled", false);
   });
   $(document).keyup(function(event) {
@@ -256,10 +260,10 @@ $(document).ready(function() {
       $("#edit_cussup_address").focus();
       return false;
     }
-    if ($.trim($("#edit_cussup_tan").val())=="") {
-      $("#tin-blank-alert").alert();
-      $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#tin-blank-alert").hide();
+      if ($.trim($("#edit_cussup_tan").val())==""&& $.trim($("#edit_cussup_gstin").val())==""){
+      $("#both-blank-alert").alert();
+      $("#both-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#both-blank-alert").hide();
       });
       $("#edit_cussup_tan").focus();
       return false;
@@ -278,6 +282,7 @@ $(document).ready(function() {
 	     "custfax": $("#edit_cussup_fax").val(),
 	     "custpan": $("#edit_cussup_pan").val(),
 	     "custtan": $("#edit_cussup_tan").val(),
+	        "gstin" :$("#edit_cussup_gstin").val(),
 	     "state"  : $("#edit_state").val(),
 	     "oldcustname" : $("#edit_cussup_list option:selected").text(),
 	     "custsup":$("#edit_cussup").val()

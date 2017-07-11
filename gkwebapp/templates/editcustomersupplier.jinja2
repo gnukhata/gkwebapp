@@ -59,8 +59,15 @@
     </div>
     <div class="alert alert-danger" id="tin-blank-alert"  aria-live="rude" role="alert" hidden>
 
-	{% trans %}Please Enter TIN!{% endtrans %}
+      {% trans %}Please Enter TIN!{% endtrans %}
     </div>
+
+    <div class="alert alert-danger" id="both-blank-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Please enter TIN / GSTIN!{% endtrans %}
+
+    </div>
+
 
 
     <div class="panel shadow usomersupplier_panel">
@@ -153,7 +160,7 @@
             <div class="col-md-6">
               <div class="form-group hidden-load " hidden>
                 <label for="edit_cussup_address">Address:</label></label><label for="edit_cussup_address" style="color:red;font-size: 120%;">*</label>
-                <textarea class="form-control" rows="2" cols="40" id="edit_cussup_address" aria-describedby="textareahelp"></textarea>
+                <textarea class="form-control" rows="1" cols="40" id="edit_cussup_address" aria-describedby="textareahelp"></textarea>
                 <small id="textareahelp" class="form-text text-muted">Press Enter Key twice to shift focus to Fax</small>
               </div>
 
@@ -169,6 +176,11 @@
               <label for="edit_cussup_tan">{% trans %}TIN:{% endtrans %}</label><label for="edit_cussup_tan" style="color:red;font-size: 120%;">*</label>
               <input class="form-control input-sm" type="text" id="edit_cussup_tan"></input>
             </div>
+	    <div class="form-group hidden-load" hidden>
+              <label for="edit_cussup_gstin">{% trans %}GSTIN:{% endtrans %}</label><label for="edit_cussup_gstin" style="color:red;font-size: 120%;">*</label>
+              <input class="form-control input-sm" type="text" id="edit_cussup_gstin"></input>
+            </div>
+
           </div>
       </div>
 
