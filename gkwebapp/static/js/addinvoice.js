@@ -458,9 +458,108 @@ $(document).ready(function() {
   });
   //checkpoint1
 
+  $(document).off('change', '.product_name_gst').on('change', '.product_name_gst', function(event) {
+    console.log("product_name_gst");
+    event.preventDefault();
+    /* Act on the event */
+    var productcode = $(this).find('option:selected').val();
+    var curindex = $(this).closest('tbody tr').index();
+    var state = $("#invoice_state option:selected").val();
+/*    if ($("#status").val() == '15') {//please check this code
+      $.ajax({
+        url: '/product?type=prodtax',
+        type: 'POST',
+        dataType: 'json',
+        async: false,
+        data: { "productcode": productcode },
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+       .done(function(resp) {
+         console.log("success");
+         if (resp["gkresult"].length == 0) {
+     $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val("0.00");
+           $("#notax-alert").alert();
+           $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
+             $("#notax-alert").hide();
+           });
+           return false;
+         }
+
+       })
+       .fail(function() {
+         console.log("error");
+       })
+       .always(function() {
+         console.log("complete");
+       });
+*/
 
 
 
+/*      $.ajax({
+        url: '/invoice?action=gettax',
+        type: 'POST',
+        dataType: 'json',
+        async: false,
+        data: { "productcode": productcode, "state": state },
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+       .done(function(resp) {
+         console.log("success");
+         if (resp["gkstatus"] == 0) {
+     $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val(parseFloat(resp['taxdata']).toFixed(2));
+           $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').prop("disabled", false);
+         }
+       })
+       .fail(function() {
+         console.log("error");
+       })
+       .always(function() {
+         console.log("complete");
+       });
+
+    }*/
+    $.ajax({
+      url: '/invoice?action=getproduct',
+      type: 'POST',
+      dataType: 'json',
+      async: false,
+      data: { "productcode": productcode },
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+    })
+     .done(function(resp) {
+       console.log("success");
+       if (resp["gkstatus"] == 0) {
+
+         $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(1) .invoice_product_hsncode').text(resp["gscode"]);
+         if (resp["gsflag"]==7){
+           $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) span').text(resp["unitname"]);
+           $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) span').text(resp["unitname"]);
+
+         }
+
+
+       }
+
+     })
+     .fail(function() {
+       console.log("error");
+     })
+     .always(function() {
+       console.log("complete");
+     });
+
+
+  });
+
+
+//checkpoint4
   $(document).off("keyup").on("keyup", function(event) {
     if (event.which == 45) {
       event.preventDefault();
@@ -2615,6 +2714,7 @@ if (event.which == 27) {
 //
 $(document).off('change', '.product_name_gst').on('change', '.product_name_gst', function(event) {
   event.preventDefault();
+  console.log("NAME GST");
   /* Act on the event */
   var productcode = $(this).find('option:selected').val();
   sourcestate=$("#invoicestate option:selected").val();
@@ -2651,104 +2751,5 @@ console.log("ajax cal tax");
 
 });
 
-$(document).off('change', '.product_name_gst').on('change', '.product_name_gst', function(event) {
-  console.log("product_name_gst");
-  event.preventDefault();
-  /* Act on the event */
-  var productcode = $(this).find('option:selected').val();
-  var curindex = $(this).closest('tbody tr').index();
-  var state = $("#invoice_state option:selected").val();
-  if ($("#status").val() == '15') {
-    $.ajax({
-      url: '/product?type=prodtax',
-      type: 'POST',
-      dataType: 'json',
-      async: false,
-      data: { "productcode": productcode },
-      beforeSend: function(xhr) {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      }
-    })
-     .done(function(resp) {
-       console.log("success");
-       if (resp["gkresult"].length == 0) {
-   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val("0.00");
-         $("#notax-alert").alert();
-         $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
-           $("#notax-alert").hide();
-         });
-         return false;
-       }
-
-     })
-     .fail(function() {
-       console.log("error");
-     })
-     .always(function() {
-       console.log("complete");
-     });
-
-
-
-
-    $.ajax({
-      url: '/invoice?action=gettax',
-      type: 'POST',
-      dataType: 'json',
-      async: false,
-      data: { "productcode": productcode, "state": state },
-      beforeSend: function(xhr) {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      }
-    })
-     .done(function(resp) {
-       console.log("success");
-       if (resp["gkstatus"] == 0) {
-   $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val(parseFloat(resp['taxdata']).toFixed(2));
-         $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').prop("disabled", false);
-       }
-     })
-     .fail(function() {
-       console.log("error");
-     })
-     .always(function() {
-       console.log("complete");
-     });
-
-  }
-  $.ajax({
-    url: '/invoice?action=getproduct',
-    type: 'POST',
-    dataType: 'json',
-    async: false,
-    data: { "productcode": productcode },
-    beforeSend: function(xhr) {
-      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-    }
-  })
-   .done(function(resp) {
-     console.log("success");
-     if (resp["gkstatus"] == 0) {
-
-       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(1) .invoice_product_hsncode').text(resp["gscode"]);
-       if (resp["gsflag"]==7){
-         $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) span').text(resp["unitname"]);
-         $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) span').text(resp["unitname"]);
-
-       }
-
-
-     }
-
-   })
-   .fail(function() {
-     console.log("error");
-   })
-   .always(function() {
-     console.log("complete");
-   });
-
-
-});
 //
 });

@@ -24,14 +24,17 @@ border-right: none;
     width: 89%
 		height: calc(99vh - 22em);
 		overflow-y:scroll;
+		overflow-x:scroll;
 }
+
 #invoice_product_table_gst thead {
   display:table;
-   width: 99%;
+
+	 overflow-x:scroll;
 }
 #invoice_product_table_gst tfoot {
   display:table;
-   width: 99%;
+
 }
 #invoice_product_table_vat tfoot {
   display:table;
@@ -549,7 +552,7 @@ text-align: right;
                 </tfoot>
 
               </table>
-              <table id="invoice_product_table_gst" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" >
+              <table id="invoice_product_table_gst" class=" table table-condensed table-bordered fixed-table " >
                 <thead class="bg-primary">
                   <tr>
                     <th rowspan="2"class="col-xs-3 text-center color">{% trans %}Product{% endtrans %}</th>
