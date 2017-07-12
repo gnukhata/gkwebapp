@@ -1,66 +1,11 @@
 <body>
-  <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
-    <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Invoice saved.{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
-
-      {% trans %}Something went wrong!{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="duplicate-alert"  aria-live="rude" role="alert" hidden>
-
-      {% trans %}Duplicate invoice no.!{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="product-blank-alert"  aria-live="rude" role="alert" hidden>
-
-      <label for="vno">{% trans %}Please select a product!{% endtrans %}</label>
-    </div>
-    <div class="alert alert-danger" id="quantity-blank-alert"  aria-live="rude" role="alert" hidden>
-
-      <label for="vno">{% trans %}Please enter quantity!{% endtrans %}</label>
-    </div>
-    <div class="alert alert-danger" id="price-blank-alert"  aria-live="rude" role="alert" hidden>
-
-      <label for="vno">{% trans %}Please enter the price per unit!{% endtrans %}</label>
-    </div>
+  
     <div class="panel invoice_panel shadow">
       <div class="panel-body">
         <div class="container-fluid row">
-          <div class="alert alert-danger" id="custsup-blank-alert"  aria-live="rude" role="alert" hidden>
-
-            <label for="vno">
-              {% if gkresult[""]=="in" %}
-              {% trans %}Please select a supplier!{% endtrans %}
-              {% else %}
-              {% trans %}Please select a customer!{% endtrans %}
-              {% endif %}
-            </label>
-          </div>
-          <div class="alert alert-danger" id="date-blank-alert"  aria-live="rude" role="alert" hidden>
-
-            <label for="vno">{% trans %}Please enter date!{% endtrans %}</label>
-          </div>
-          <div class="alert alert-danger" id="challanno-blank-alert"  aria-live="rude" role="alert" hidden>
-
-            <label for="vno">{% trans %}Please enter invoice no.!{% endtrans %}</label>
-          </div>
-          <div class="alert alert-danger" id="issuer-blank-alert"  aria-live="rude" role="alert" hidden>
-
-            <label for="vno">{% trans %}Please enter issuer's name!{% endtrans %}</label>
-          </div>
-          <div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
-
-            <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
-          </div>
-          <div class="alert alert-success" id="invoicecancelsuccess-alert"  aria-live="rude" role="alert" hidden>
-
-            {% trans %}Invoice successfully cancelled.{% endtrans %}
-          </div>
-          <div class="alert alert-danger" id="failure-delete-alert"  aria-live="rude" role="alert" hidden>
-
-            {% trans %}Invoice cannot be cancelled!{% endtrans %}<br>
-          </div>
+         
+        
 	  <!-- if taxflag==22(VAT) then only show this format of invoice -->
           <div class="form-group col-md-12">
             <label for="invoice_deliverynote">
