@@ -1,263 +1,436 @@
+
+
+
+<!DOCTYPE html>
+<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}INVOICE{% endtrans %}</title>
+<style type="text/css">
+
+ .color {
+     background-color: 787878
+ }
+ #invoice_product_table_gst td {
+     border-left: 1px solid #000;
+     border-right: 1px solid #000;
+ }
+
+ #invoice_product_table_gst td:first-child {
+     border-left: none;
+ }
+
+ #invoice_product_table_gst td:last-child {
+     border-right: none;
+ }
+ #invoice_product_table_gst tbody {
+
+     display:table;
+     width: 89%
+     height: calc(99vh - 22em);
+     overflow-y:scroll;
+ }
+ #invoice_product_table_gst thead {
+     display:table;
+     width: 99%;
+ }
+ #invoice_product_table_gst tfoot {
+     display:table;
+     width: 99%;
+ }
+ #invoice_product_table_vat tfoot {
+     display:table;
+     width: 95%;
+ }
+
+ .nopadding{
+     padidng:0 !important;
+     padding:0 !important;
+ }
+ td {
+     font-size: 65%;
+     width: 10%;
+     color: black;
+ }
+
+ th {
+     font-size: 10%;
+ }
+
+ @page {
+     size : 21cm 29.7cm;
+     margin : 10mm 10mm 20mm 10mm
+ }
+ thead{
+     display: table-header-group;
+ }
+ tfoot{
+     display: table-footer-group;
+ }
+ .narwrap{
+     width :10%;
+ }
+ .lngwrap{
+     width:50%;
+ }
+ .mdwrap{
+     width:25%;
+ }
+ .vlngwrap{
+     width:80%;
+ }
+ .totalwrap {
+     width:28%;
+ }
+ .rightJustified {
+     text-align: right;
+ }
+
+</style>
+
+
 <body>
 
   
-    <div class="panel invoice_panel shadow">
-      <div class="panel-body">
-        <div class="container-fluid row">
-         
+  <div class="panel invoice_panel shadow">
+    <div class="panel-body">
+      <div class="container-fluid row">
         
-	  <!-- if taxflag==22(VAT) then only show this format of invoice -->
-          <div class="form-group col-md-12">
-            <label for="invoice_deliverynote">
-              {% trans %}Invoice{% endtrans %} :
-            </label>
-            <select class="form-control input-sm" id="invoice_all_no" accesskey="">
-              <option value="" disabled hidden selected>{% trans %}Select Invoice{% endtrans %}</option>
-              {% for invoice in gkresult %}
+        
+	<!-- if taxflag==22(VAT) then only show this format of invoice -->
+        <div class="form-group col-md-12">
+          <label for="invoice_deliverynote">
+            {% trans %}Invoice{% endtrans %} :
+          </label>
+          <select class="form-control input-sm" id="invoice_all_no" accesskey="">
+            <option value="" disabled hidden selected>{% trans %}Select Invoice{% endtrans %}</option>
+            {% for invoice in gkresult %}
               <option value="{{invoice['invid']}}">{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
-              {% endfor %}
-            </select>
-            <div class="alert alert-danger nopadding" id="cancelmsg"  aria-live="rude" role="alert" hidden>
-              <strong id="alertstrong"></strong>
-            </div>
+            {% endfor %}
+          </select>
+          <div class="alert alert-danger nopadding" id="cancelmsg"  aria-live="rude" role="alert" hidden>
+            <strong id="alertstrong"></strong>
           </div>
+        </div>
 
-          <div class="col-md-3 invdetails" hidden>
+        <div class="col-md-3 invdetails" hidden>
 
-            <div class="form-group">
-              <label for="invoice_deliverynote">
-                {% trans %}Delivery Note{% endtrans %} :
-              </label>
-              <input class="form-control input-sm" id="invoice_deliverynote">
-            </div>
+          <div class="form-group">
+            <label for="invoice_deliverynote">
+              {% trans %}Delivery Note{% endtrans %} :
+            </label>
+            <input class="form-control input-sm" id="invoice_deliverynote">
           </div>
+        </div>
 
-          <div class="col-md-2 invdetails" hidden>
+        <div class="col-md-2 invdetails" hidden>
 
-            <div class="form-group">
-              <label for="invoice_challanno">{% trans %}Invoice No{% endtrans %} :</label>
-              <input class="form-control input-sm" id="invoice_challanno" placeholder="{% trans %}Enter invoice no{% endtrans %}" accesskey="a">
-            </div>
+          <div class="form-group">
+            <label for="invoice_challanno">{% trans %}Invoice No{% endtrans %} :</label>
+            <input class="form-control input-sm" id="invoice_challanno" placeholder="{% trans %}Enter invoice no{% endtrans %}" accesskey="a">
           </div>
-          <div class="col-md-2 invdetails"  hidden>
+        </div>
+        <div class="col-md-2 invdetails"  hidden>
 
-            <div class="form-group">
-              <label for="invoice_date">{% trans %}Date{% endtrans %} :</label>
-              <div class="form-inline ">
-                <div class="form-group">
-                  <input type="text" class="form-control input-sm invoicedate" size="2" maxlength="2" placeholder="DD" id="invoice_date" accesskey="v">
-                </div>
-                <div class="form-group">
-                  <input type="text" class="form-control input-sm invoicedate" size="2" maxlength="2" placeholder="MM" id="invoice_month" accesskey="v">
-                </div>
-                <div class="form-group">
-                  <input type="text" class="form-control input-sm invoicedate" size="4" maxlength="4" placeholder="YYYY" id="invoice_year" accesskey="v">
-                </div>
+          <div class="form-group">
+            <label for="invoice_date">{% trans %}Date{% endtrans %} :</label>
+            <div class="form-inline ">
+              <div class="form-group">
+                <input type="text" class="form-control input-sm invoicedate" size="2" maxlength="2" placeholder="DD" id="invoice_date" accesskey="v">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control input-sm invoicedate" size="2" maxlength="2" placeholder="MM" id="invoice_month" accesskey="v">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control input-sm invoicedate" size="4" maxlength="4" placeholder="YYYY" id="invoice_year" accesskey="v">
               </div>
             </div>
-
           </div>
 
-          <div class=" col-md-12 invdetails">
-            <div class="form-group">
-            </div>
+        </div>
+
+        <div class=" col-md-12 invdetails">
+          <div class="form-group">
+          </div>
+        </div>
+
+        <div class="col-md-3 invdetails"  hidden>
+
+          <div class="form-group">
+            <label for="invoice_customer" class="supp" hidden>
+              {% trans %}Supplier{% endtrans %} :
+            </label>
+            <label for="invoice_customer" class="cust" hidden>
+              {% trans %}Customer{% endtrans %} :
+
+            </label>
+            <select class="form-control input-sm" id="invoice_customer" accesskey="">
+
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-3 invdetails" hidden>
+          <div class="form-group">
+            <label for="invoice_customeraddr" class = "addr" hidden>
+              {% trans %}Address{% endtrans %} :
+            </label>
+            <input class="form-control input-sm" id="invoice_customeraddr"  accesskey="" disabled>
+          </div>
+        </div>
+
+        <div class="col-md-2 invdetails" hidden>
+          <div class="form-group">
+            <label for="invoice_customertin" class = "tin" hidden>
+              {% trans %}TIN{% endtrans %} :
+            </label>
+            <input class="form-control input-sm" id="invoice_customertin" accesskey="" disabled>
+          </div>
+        </div>
+
+        <div class="col-md-2 invstate" hidden>
+
+          <div class="form-group">
+            <label for="invoice_state">{% trans %}Vat for{% endtrans %} :</label>
+            <select class="form-control input-sm tax_state product_new_state" id="invoice_state">
+              <option value="none">None</option>
+              <option value="">Central</option>
+              <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
+              <option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>
+              <option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option>
+              <option value="Assam" stateid="4">Assam</option>
+              <option value="Bihar" stateid="5">Bihar</option>
+              <option value="Chandigarh" stateid="6">Chandigarh</option>
+              <option value="Chhattisgarh" stateid="7">Chhattisgarh</option>
+              <option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option>
+              <option value="Daman and Diu" stateid="9">Daman and Diu</option>
+              <option value="Delhi" stateid="10">Delhi</option>
+              <option value="Goa" stateid="11">Goa</option>
+              <option value="Gujarat" stateid="12">Gujarat</option>
+              <option value="Haryana" stateid="13">Haryana</option>
+              <option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option>
+              <option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option>
+              <option value="Jharkhand" stateid="16">Jharkhand</option>
+              <option value="Karnataka" stateid="17">Karnataka</option>
+              <option value="Kerala" stateid="19">Kerala</option>
+              <option value="Lakshadweep" stateid="20">Lakshadweep</option>
+              <option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option>
+              <option value="Maharashtra" stateid="22">Maharashtra</option>
+              <option value="Manipur" stateid="23">Manipur</option>
+              <option value="Meghalaya" stateid="24">Meghalaya</option>
+              <option value="Mizoram" stateid="25">Mizoram</option>
+              <option value="Nagaland" stateid="26">Nagaland</option>
+              <option value="Odisha" stateid="29">Odisha</option>
+              <option value="Pondicherry" stateid="31">Pondicherry</option>
+              <option value="Punjab" stateid="32">Punjab</option>
+              <option value="Rajasthan" stateid="33">Rajasthan</option>
+              <option value="Sikkim" stateid="34">Sikkim</option>
+              <option value="Tamil Nadu" stateid="35">Tamil Nadu</option>
+              <option value="Telangana" stateid="36">Telangana</option>
+              <option value="Tripura" stateid="37">Tripura</option>
+              <option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option>
+              <option value="Uttarakhand" stateid="39">Uttarakhand</option>
+              <option value="West Bengal" stateid="41">West Bengal</option>
+            </select>
           </div>
 
-          <div class="col-md-3 invdetails"  hidden>
-
-            <div class="form-group">
-              <label for="invoice_customer" class="supp" hidden>
-                {% trans %}Supplier{% endtrans %} :
-                </label>
-                <label for="invoice_customer" class="cust" hidden>
-                {% trans %}Customer{% endtrans %} :
-
-              </label>
-              <select class="form-control input-sm" id="invoice_customer" accesskey="">
-
-              </select>
-            </div>
-          </div>
-
-          <div class="col-md-3 invdetails" hidden>
-            <div class="form-group">
-                <label for="invoice_customeraddr" class = "addr" hidden>
-                  {% trans %}Address{% endtrans %} :
-                </label>
-                <input class="form-control input-sm" id="invoice_customeraddr"  accesskey="" disabled>
-            </div>
-          </div>
-
-                    <div class="col-md-2 invdetails" hidden>
-            <div class="form-group">
-                <label for="invoice_customertin" class = "tin" hidden>
-                  {% trans %}TIN{% endtrans %} :
-                </label>
-                <input class="form-control input-sm" id="invoice_customertin" accesskey="" disabled>
-            </div>
-          </div>
-
-          <div class="col-md-2 invstate" hidden>
-
-            <div class="form-group">
-              <label for="invoice_state">{% trans %}Vat for{% endtrans %} :</label>
-              <select class="form-control input-sm tax_state product_new_state" id="invoice_state">
-                <option value="none">None</option>
-                <option value="">Central</option>
-                <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
-                <option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>
-                <option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option>
-                <option value="Assam" stateid="4">Assam</option>
-                <option value="Bihar" stateid="5">Bihar</option>
-                <option value="Chandigarh" stateid="6">Chandigarh</option>
-                <option value="Chhattisgarh" stateid="7">Chhattisgarh</option>
-                <option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option>
-                <option value="Daman and Diu" stateid="9">Daman and Diu</option>
-                <option value="Delhi" stateid="10">Delhi</option>
-                <option value="Goa" stateid="11">Goa</option>
-                <option value="Gujarat" stateid="12">Gujarat</option>
-                <option value="Haryana" stateid="13">Haryana</option>
-                <option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option>
-                <option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option>
-                <option value="Jharkhand" stateid="16">Jharkhand</option>
-                <option value="Karnataka" stateid="17">Karnataka</option>
-                <option value="Kerala" stateid="19">Kerala</option>
-                <option value="Lakshadweep" stateid="20">Lakshadweep</option>
-                <option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option>
-                <option value="Maharashtra" stateid="22">Maharashtra</option>
-                <option value="Manipur" stateid="23">Manipur</option>
-                <option value="Meghalaya" stateid="24">Meghalaya</option>
-                <option value="Mizoram" stateid="25">Mizoram</option>
-                <option value="Nagaland" stateid="26">Nagaland</option>
-                <option value="Odisha" stateid="29">Odisha</option>
-                <option value="Pondicherry" stateid="31">Pondicherry</option>
-                <option value="Punjab" stateid="32">Punjab</option>
-                <option value="Rajasthan" stateid="33">Rajasthan</option>
-                <option value="Sikkim" stateid="34">Sikkim</option>
-                <option value="Tamil Nadu" stateid="35">Tamil Nadu</option>
-                <option value="Telangana" stateid="36">Telangana</option>
-                <option value="Tripura" stateid="37">Tripura</option>
-                <option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option>
-                <option value="Uttarakhand" stateid="39">Uttarakhand</option>
-                <option value="West Bengal" stateid="41">West Bengal</option>
-              </select>
-            </div>
-
-          </div>
+        </div>
 
 
 
-          {% if gkstatus=="in" %}
+        {% if gkstatus=="in" %}
           <input type="hidden" id="status" value="9">
-          {% else %}
+        {% else %}
           <input type="hidden" id="status" value="15">
-          {% endif %}
-        </div>
+        {% endif %}
+      </div>
 
 
-        <div class="container-fluid invdetails" id="invoice_product_div"  hidden>
-          <div class="panel">
+      <div class="container-fluid invdetails" id="invoice_product_div"  hidden>
+        <div class="panel">
 
-            <table id="edit_invoice_product_table" class="shadow table table-condensed table-bordered fixed-table">
-              <thead class="bg-primary">
-                <tr>
-                  <th class="col-xs-3 text-center">{% trans %}Product{% endtrans %}</th>
-                  <th class="col-xs-2 text-center">{% trans %}Quantity{% endtrans %}</th>
-                  <th class="col-xs-2 text-center">{% trans %}Free Quantity{% endtrans %}</th>
-                  <th class="col-xs-2 text-center">{% trans %}Price Per Unit{% endtrans %}</th>
-                  <th class="col-xs-1 text-center">{% trans %}Tax Rate{% endtrans %}</th>
-                  <th class="col-xs-1 text-center">{% trans %}Tax Amt{% endtrans %}</th>
-                  <th class="col-xs-2 text-center">{% trans %}Total{% endtrans %}</th>
-                  <th class="col-xs-1" style="width: 3%;"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="col-xs-3">
-                    <select class="form-control input-sm product_name">
-                      <option value="" disabled hidden selected>Select Product</option>
-                      {% for product in products %}
+          <table id="edit_invoice_product_table" class="shadow table table-condensed table-bordered fixed-table">
+            <thead class="bg-primary">
+              <tr>
+                <th class="col-xs-3 text-center">{% trans %}Product{% endtrans %}</th>
+                <th class="col-xs-2 text-center">{% trans %}Quantity{% endtrans %}</th>
+                <th class="col-xs-2 text-center">{% trans %}Free Quantity{% endtrans %}</th>
+                <th class="col-xs-2 text-center">{% trans %}Price Per Unit{% endtrans %}</th>
+                <th class="col-xs-1 text-center">{% trans %}Tax Rate{% endtrans %}</th>
+                <th class="col-xs-1 text-center">{% trans %}Tax Amt{% endtrans %}</th>
+                <th class="col-xs-2 text-center">{% trans %}Total{% endtrans %}</th>
+                <th class="col-xs-1" style="width: 3%;"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="col-xs-3">
+                  <select class="form-control input-sm product_name">
+                    <option value="" disabled hidden selected>Select Product</option>
+                    {% for product in products %}
                       <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
-                      {% endfor %}
-                    </select>
-                  </td>
-                  <td class="col-xs-2">
-                    <input type="text" class="invoice_product_quantity form-control input-sm text-right" value="0" placeholder="0">
-                  </td>
-                  <td class="col-xs-2">
-                    <input type="text" class="invoice_product_freequantity form-control input-sm text-right" value="0" placeholder="0">
-                  </td>
-                  <td class="col-xs-2">
-                    <input type="text" class="invoice_product_per_price form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
-                  </td>
-                  <td class="col-xs-1">
-                    <input type="text" class="invoice_product_tax_rate form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
-                  </td>
-                  <td class="col-xs-1">
-                    <input type="text" class="invoice_product_tax_amount form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
-                  </td>
-                  <td class="col-xs-2">
-                    <input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
-                  </td>
-                  <td class="col-xs-1" style="width: 3%;">
+                    {% endfor %}
+                  </select>
+                </td>
+                <td class="col-xs-2">
+                  <input type="text" class="invoice_product_quantity form-control input-sm text-right" value="0" placeholder="0">
+                </td>
+                <td class="col-xs-2">
+                  <input type="text" class="invoice_product_freequantity form-control input-sm text-right" value="0" placeholder="0">
+                </td>
+                <td class="col-xs-2">
+                  <input type="text" class="invoice_product_per_price form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
+                </td>
+                <td class="col-xs-1">
+                  <input type="text" class="invoice_product_tax_rate form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
+                </td>
+                <td class="col-xs-1">
+                  <input type="text" class="invoice_product_tax_amount form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
+                </td>
+                <td class="col-xs-2">
+                  <input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
+                </td>
+                <td class="col-xs-1" style="width: 3%;">
 
-                  </td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td class="col-xs-9 text-right">
-                    <input type="text" class=" form-control input-sm text-right" value="{% trans %}Total{% endtrans %}" placeholder="" disabled>
-                  </td>
-                  <td class="col-xs-2" style="display:none">
-                    <input type="text" class=" form-control input-sm text-right" value="0" placeholder="" disabled>
-                  </td>
-                  <td class="col-xs-2" style="display:none">
-                    <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
-                  </td>
-                  <td class="col-xs-1" style="display:none">
-                    <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
-                  </td>
-                  <td class="col-xs-1" style="display:none">
-                    <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
-                  </td>
-                  <td class="col-xs-2" style="width: 13%;">
-                    <input type="text" class=" form-control deliverychallan_edit_disable input-sm text-right" value="0.00" disabled>
-                  </td>
-                  <td class="col-xs-1" style="width: 3%;">
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td class="col-xs-9 text-right">
+                  <input type="text" class=" form-control input-sm text-right" value="{% trans %}Total{% endtrans %}" placeholder="" disabled>
+                </td>
+                <td class="col-xs-2" style="display:none">
+                  <input type="text" class=" form-control input-sm text-right" value="0" placeholder="" disabled>
+                </td>
+                <td class="col-xs-2" style="display:none">
+                  <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
+                </td>
+                <td class="col-xs-1" style="display:none">
+                  <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
+                </td>
+                <td class="col-xs-1" style="display:none">
+                  <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
+                </td>
+                <td class="col-xs-2" style="width: 13%;">
+                  <input type="text" class=" form-control deliverychallan_edit_disable input-sm text-right" value="0.00" disabled>
+                </td>
+                <td class="col-xs-1" style="width: 3%;">
 
-                  </td>
-                </tr>
-              </tfoot>
+                </td>
+              </tr>
+            </tfoot>
 
-            </table>
+          </table>
+        </div>
+      </div>
+
+      <div class="form-group invoice_issuer" hidden>
+
+        <div class=" col-md-6">
+
+          <div class="form-group">
+            <label for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
+            <input class="form-control input-sm" id="invoice_issuer_name" placeholder="{% trans %}Issuer's name{% endtrans %}" accesskey="a">
           </div>
         </div>
 
-        <div class="form-group invoice_issuer" hidden>
+        <div class="col-md-6">
 
-          <div class=" col-md-6">
-
-            <div class="form-group">
-              <label for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
-              <input class="form-control input-sm" id="invoice_issuer_name" placeholder="{% trans %}Issuer's name{% endtrans %}" accesskey="a">
-            </div>
-          </div>
-
-          <div class="col-md-6">
-
-            <div class="form-group">
-              <label for="invoice_issuer_designation">{% trans %}Designation{% endtrans %} :</label>
-              <input class="form-control input-sm" id="invoice_issuer_designation" placeholder="{% trans %}Issuer's designation{% endtrans %}" accesskey="a">
-            </div>
+          <div class="form-group">
+            <label for="invoice_issuer_designation">{% trans %}Designation{% endtrans %} :</label>
+            <input class="form-control input-sm" id="invoice_issuer_designation" placeholder="{% trans %}Issuer's designation{% endtrans %}" accesskey="a">
           </div>
         </div>
       </div>
-      <!-- following code is for GST -->
+    </div>
+    <!-- following code is for GST -->
+    <form class="form-inline" >
+      <div class="col-md-4">
+	<h5>Details of Invoice: </h5>
+	<table class="table  table-condensed table-bordered table-striped " >
+          <tbody>
 
-      
-      <div class="panel-footer">
-        <div class="container-fluid btndisablediv" hidden>
+            <tr style="height:1px;">
+              <td><label class="normal" for="deliverynoteno">{% trans %}Delivery No{% endtrans %} :</label></td>
+              <td colspan="2"> <label                       id="invoice_deliverynote" for="deliverynoteno">
+              </td>
+            </tr>
+            <tr>
+              <td><label class="normal"for="invoiceno">{% trans %}Invoice No.{% endtrans %} :</label></td>
+              <td colspan="2"><label                                         id="invoice_challanno"  ></td>
+            </tr>
+
+            <tr>
+              <td><label for="invoicedate    " class="normal">{% trans %}Invoice Date:{% endtrans %}</label></td>
+              <td colspan="2">
+		<label for="invoicedate    " class="normal">
+                
+              </td>
+
+            </tr>
+            <tr>
+
+              <div class ="form-inline " >
+                <td>
+                  <label for="orgstate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} :</label>
+                </td>
+                <td>
+                  <select class="form-control input-sm tax_state" id="invoicestate" >
+                    <option value="Andaman and Nicobar Islands" stateid="35">Andaman and Nicobar Islands</option>
+                    <option value="Andhra Pradesh" stateid="28">Andhra Pradesh</option>
+                    <option value="Andhra Pradesh New" stateid="37">Andhra Pradesh (New)</option>
+                    <option value="Arunachal Pradesh" stateid="12">Arunachal Pradesh</option>
+                    <option value="Assam" stateid="18">Assam</option>
+                    <option value="Bihar" stateid="10">Bihar</option>
+                    <option value="Chandigarh" stateid="4">Chandigarh</option>
+                    <option value="Chhattisgarh" stateid="22">Chhattisgarh</option>
+                    <option value="Dadra and Nagar Haveli" stateid="26">Dadra and Nagar Haveli</option>
+                    <option value="Daman and Diu" stateid="25">Daman and Diu</option>
+                    <option value="Delhi" stateid="7">Delhi</option>
+                    <option value="Goa" stateid="20">Goa</option>
+                    <option value="Gujarat" stateid="29">Gujarat</option>
+                    <option value="Haryana" stateid="6">Haryana</option>
+                    <option value="Himachal Pradesh" stateid="2">Himachal Pradesh</option>
+                    <option value="Jammu and Kashmir" stateid="1">Jammu and Kashmir</option>
+                    <option value="Jharkhand" stateid="20">Jharkhand</option>
+                    <option value="Karnataka" stateid="29">Karnataka</option>
+                    <option value="Kerala" stateid="32">Kerala</option>
+                    <option value="Lakshadweep" stateid="31">Lakshadweep</option>
+                    <option value="Madhya Pradesh" stateid="23">Madhya Pradesh</option>
+                    <option value="Maharashtra" stateid="27">Maharashtra</option>
+                    <option value="Manipur" stateid="14">Manipur</option>
+                    <option value="Meghalaya" stateid="17">Meghalaya</option>
+                    <option value="Mizoram" stateid="15">Mizoram</option>
+                    <option value="Nagaland" stateid="13">Nagaland</option>
+                    <option value="Odisha" stateid="21">Odisha</option>
+                    <option value="Pondicherry" stateid="34">Pondicherry</option>
+                    <option value="Punjab" stateid="3">Punjab</option>
+                    <option value="Rajasthan" stateid="8">Rajasthan</option>
+                    <option value="Sikkim" stateid="11">Sikkim</option>
+                    <option value="Tamil Nadu" stateid="33">Tamil Nadu</option>
+                    <option value="Telangana" stateid="36">Telangana</option>
+                    <option value="Tripura" stateid="16">Tripura</option>
+                    <option value="Uttar Pradesh" stateid="9">Uttar Pradesh</option>
+                    <option value="Uttarakhand" stateid="5">Uttarakhand</option>
+                    <option value="West Bengal" stateid="19">West Bengal</option>
+                  </select>
+                </td>
+              </div>
+              <div class ="form-inline " >
+                <td>
+                  <label for="stcode">{% trans %}State Code{% endtrans %} :</label>
+                  <label id="statecodeforinvoice" >{% trans %} {% endtrans %} </label>
+                </td>
+              </div>
+
+            </tr>
+      </div>
+
+          </tbody>
+        </table>
+  </div>
+
+  
+  <div class="panel-footer">
+    <div class="container-fluid btndisablediv" hidden>
 
           <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save">{% trans %}Save{% endtrans %}</button>
 <!--          <button id="invcl" class="btn btn-danger btn-sm" accesskey="d">{% trans %}Cancel{% endtrans %}</button>-->
