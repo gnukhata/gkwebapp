@@ -373,7 +373,7 @@
                   <label for="orgstate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} :</label>
                 </td>
                 <td>
-                  <label for="orgstate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} :</label>
+                  <label for="orgstate" class="col-form-label col-form-label-sm"></label>
                 </td>
               </div>
               <div class ="form-inline " >
@@ -403,18 +403,8 @@
                 {% trans %}Customer{% endtrans %} :
               {% endif %}
             </label></td>
-          <td colspan="2"><select class="form-control input-sm" id="invoice_customer" accesskey="">
-            <option value="" disabled hidden selected>
-              {% if gkstatus=="in" %}
-                {% trans %}Select Supplier{% endtrans %}
-              {% else %}
-                {% trans %}Select Customer{% endtrans %}
-              {% endif %}
-            </option>
-            {% for supplier in suppliers %}
-              <option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
-            {% endfor %}
-          </select>
+          <td colspan="2">
+	    <label for="invoice_customer" id ="custsupname" ></label>
           </td>
 	</tr>
 	<tr>
@@ -466,13 +456,350 @@
           <div class ="form-inline " >
             <td>
               <label for="stcode">{% trans %}State Code{% endtrans %} :</label>
-              <label id="statecodeofcustomer" >{% trans %} {% endtrans %} </label>
+              <label for="stcode" id="statecodeofcustomer" > </label>
             </td>
           </div>
 
 	</tr>
       </tbody>
     </table>
+  </div>
+
+  <div class="col-md-4">
+    <h5>Details of Consignee | Shipped to: </h5>
+    <table class="table  table-condensed table-bordered table-striped">
+      <tbody>
+	<tr>
+          <td>  <label for="consignee" class=" col-form-label col-form-label-sm" id="consigneelbl">{% trans %}Name :{% endtrans %}</label></td>
+          <td colspan="2"><label for="consigneename" type="text" id="consigneename"  name="consigneename" ></label></td>
+        </tr>
+        <tr>
+
+          <td>  <label for="gstinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN / TIN :{% endtrans %}</label></td>
+          <td colspan="2"><label type="text" id="gstinconsignee"  name="gstinconsignee" ></label></td>
+
+        </tr>
+        <tr>
+
+          <td>  <label for="consigneeaddress" class=" col-form-label col-form-label-sm" id="consigneeaddress">{% trans %}Address :{% endtrans %}</label></td>
+          <td colspan="2"><label type="text" id="consigneeaddress" name="consigneeaddress" ></label></td>
+	</tr>
+	<tr>
+
+          <td>
+            <label for="consignee_state" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} :</label>
+          </td>
+          <td>
+	    <label for="consignee_state" id="consignee_state"></label>
+          </td>
+  </div>
+  <div class ="form-inline " >
+    <td>
+      <label for="stcode">{% trans %}State Code{% endtrans %} :</label>
+      <label id="statecodeofconsignee" >{% trans %} {% endtrans %} </label>
+    </td>
+  </div>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+		</label>
+
+    <div class="col-md-12">
+      {% if gkstatus=="in" %}
+        <input type="hidden" id="status" value="9">
+      {% else %}
+        <input type="hidden" id="status" value="15">
+      {% endif %}
+    </div>
+    <!-- if condition needs to be added whether it is gst invoice or vat -->
+    <div class="container-fluid invdetails" id="invoice_product_div"  hidden>
+      <div class="panel">
+
+        <table id="edit_invoice_product_table" class="shadow table table-condensed table-bordered fixed-table">
+          <thead class="bg-primary">
+            <tr>
+              <th class="col-xs-3 text-center">{% trans %}Product{% endtrans %}</th>
+              <th class="col-xs-2 text-center">{% trans %}Quantity{% endtrans %}</th>
+              <th class="col-xs-2 text-center">{% trans %}Free Quantity{% endtrans %}</th>
+              <th class="col-xs-2 text-center">{% trans %}Price Per Unit{% endtrans %}</th>
+              <th class="col-xs-1 text-center">{% trans %}Tax Rate{% endtrans %}</th>
+              <th class="col-xs-1 text-center">{% trans %}Tax Amt{% endtrans %}</th>
+              <th class="col-xs-2 text-center">{% trans %}Total{% endtrans %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-xs-3">
+		
+                <select class="form-control input-sm product_name">
+                  <option value="" disabled hidden selected>Select Product</option>
+                  {% for product in products %}
+                    <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
+                  {% endfor %}
+                </select>
+              </td>
+              <td class="col-xs-2">
+                <input type="text" class="invoice_product_quantity  input-sm text-right" value="0" placeholder="0">
+              </td>
+              <td class="col-xs-2">
+                <input type="text" class="invoice_product_freequantity form-control input-sm text-right" value="0" placeholder="0">
+              </td>
+              <td class="col-xs-2">
+                <input type="text" class="invoice_product_per_price form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
+              </td>
+              <td class="col-xs-1">
+                <input type="text" class="invoice_product_tax_rate form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
+              </td>
+              <td class="col-xs-1">
+                <input type="text" class="invoice_product_tax_amount form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
+              </td>
+              <td class="col-xs-2">
+                <input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
+		
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td class="col-xs-9 text-right">
+                <input type="text" class=" form-control input-sm text-right" value="{% trans %}Total{% endtrans %}" placeholder="" disabled>
+              </td>
+              <td class="col-xs-2" style="display:none">
+                <input type="text" class=" form-control input-sm text-right" value="0" placeholder="" disabled>
+              </td>
+              <td class="col-xs-2" style="display:none">
+                <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
+              </td>
+              <td class="col-xs-1" style="display:none">
+                <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
+              </td>
+              <td class="col-xs-1" style="display:none">
+                <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
+              </td>
+              <td class="col-xs-2" style="width: 13%;">
+                <input type="text" class=" form-control deliverychallan_edit_disable input-sm text-right" value="0.00" disabled>
+              </td>
+              
+            </tr>
+          </tfoot>
+
+        </table>
+      </div>
+      
+      <table id="invoice_product_table_gst" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" >
+        <thead class="bg-primary">
+          <tr>
+            <th rowspan="2"class="col-xs-3 text-center color">{% trans %}Product{% endtrans %}</th>
+            <th rowspan="2"class="col-xs-2 text-center">{% trans %}HSN Code{% endtrans %}</th>
+            <th rowspan="2"class="col-xs-2 text-center color">{% trans %}Quantity{% endtrans %}</th>
+            <th rowspan="2"class="col-xs-2 text-center">{% trans %}Free Quantity{% endtrans %}</th>
+            <th rowspan="2"class="col-xs-2 text-center color">{% trans %}Rate{% endtrans %}</th>
+            <th rowspan="2"class="col-xs-2 text-center">{% trans %}Discount{% endtrans %}</th>
+            <th rowspan="2"class="col-xs-2 text-center color">{% trans %}Taxable Value {% endtrans %}</th>
+            <th colspan="2" class="col-xs-3 text-center">{% trans %}CGST{% endtrans %}</th>
+
+            <th colspan="2" class="col-xs-3 text-center color">{% trans %}SGST{% endtrans %}</th>
+            <th colspan="2" class="col-xs-3 text-center">{% trans %}IGST{% endtrans %}</th>
+
+            <th rowspan="2"class="col-xs-2 text-center color">{% trans %}Total{% endtrans %}</th>
+
+          </tr>
+          <tr>
+            <th>Rate%</th>
+            <th>Amt</th>
+            <th class="color">Rate%</th>
+            <th class="color">Amt</th>
+            <th>Rate%</th>
+            <th>Amt</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-xs-3 color">
+              <select class="form-control input-sm product_name_gst">
+                <option value="" disabled hidden selected> Product</option>
+                {% for product in products %}
+                  <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
+                {% endfor %}
+              </select>
+            </td>
+            <td class="col-xs-2">
+
+              <label class="invoice_product_hsncode" >{% trans %} {% endtrans %} </label>
+            </td>
+            <td class="col-xs-2 color">
+              <div class="input-group">
+                <input type="text" class="invoice_product_quantity form-control input-sm text-right numtype"size="5" value="0" placeholder="0" aria-describedby="unitaddon">
+                <span class="input-group-addon input-sm" id="unitaddon"></span>
+              </div>
+            </td>
+            <td class="col-xs-2">
+              <div class="input-group">
+                <input type="text" class="invoice_product_freequantity form-control input-sm text-right numtype" size="5" value="0" placeholder="0" aria-describedby="unitaddon">
+                <span class="input-group-addon input-sm" id="freeunitaddon"></span>
+              </div>
+            </td>
+
+            <td class="col-xs-2 color">
+              <input type="text" class="invoice_product_per_price form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00">
+            </td>
+            <td class="col-xs-2">
+              <input type="text" class="invoice_product_discount form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00">
+            </td>
+            <td class="col-xs-2 color">
+              <input type="text" class="invoice_product_taxablevalue form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00" disabled>
+            </td>
+
+            <td><input type="text" class="invoice_product_cgstrate  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled></td>
+            <td><input type="text" class="invoice_product_cgstamount  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled></td>
+
+
+
+
+            <td class="color"><input type="text" class="invoice_product_sgstrate  text-right numtype " size="4" value="0.00" placeholder="0.00" disabled></td>
+            <td class="color"><input type="text" class="invoice_product_sgstamount  text-right numtype " size="4" value="0.00" placeholder="0.00" disabled></td>
+
+            <td>
+              <input type="text" class="invoice_product_igstrate  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled></td>
+              <td><input type="text" class="invoice_product_igstamount  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled>
+              </td>
+              <td class="col-xs-2 color">
+                <input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" size="5" placeholder="0.00" disabled>
+              </td>
+              <td class="col-xs-1" style="width: 3%;">
+              </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+	    <td rowspan="2"class="col-xs-3 text-center"></td>
+	    <td rowspan="2"class="col-xs-2 text-center" size="16"></td>
+	    <td rowspan="2"class="col-xs-2 text-center"></td>
+	    <td rowspan="2"class="col-xs-2 text-center"></td>
+	    <td rowspan="2"class="col-xs-2 text-center"></td>
+	    <td rowspan="2"class="col-xs-2 text-center">  <span id="discounttotal_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+	    <td rowspan="2"class="col-xs-2 text-center"><span id="taxablevaluetotal_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+	    <td colspan="2" class="col-xs-2 text-center"><span id="totalcgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+
+	    <td colspan="2" class="col-xs-2 text-center"><span id="totalsgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+	    <td colspan="2" class="col-xs-2 text-center"><span id="totaligst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+
+	    <td rowspan="2"class="col-xs-1 text-center"><span id="total_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+	    
+          </tr>
+        </tfoot>
+
+      </table>
+
+      <div class="col-md-12">
+	<div class="col-md-4">
+	  <table class="table  table-condensed table-bordered table-striped">
+	    <tbody>
+	      <h5>Bank Details:</h5>
+	      
+	      <tr>
+		<td>  <label for="Bank Name" class=" col-form-label col-form-label-sm" id="bankname">{% trans %}Bank Name :{% endtrans %}</label></td>
+		<td colspan="2"><lable  for ="Bank Name" class=" col-form-label col-form-label-sm" id="bankname"></lable></td>
+	      </tr>
+	      <tr>
+		<td>  <label for="Branch IFSC code" class=" col-form-label col-form-label-sm" id="ifsc">{% trans %}Branch{% endtrans %}:</label></td>
+		<td colspan="2"><lable  for ="Bank Name" class=" col-form-label col-form-label-sm" id="bankname">shivajipark</lable></td>
+
+	      </tr>
+	      
+		<tr>
+		  <td>  <label for="Account Number" class=" col-form-label col-form-label-sm" id="accountno">{% trans %}Account No. :{% endtrans %}</label></td>
+		  <td colspan="2"><lable  for ="Account Number" class=" col-form-label col-form-label-sm" id="account_no"></lable>
+		  </td>
+		</tr>
+
+	      <tr>
+
+		<td>  <label for="Bank Branch IFSC code" class=" col-form-label col-form-label-sm" id="ifsc">{% trans %}Bank Branch IFSC code :{% endtrans %}</label></td>
+		<td colspan="2"><input type="text" id="ifsc" class=" form-control input-sm" name="ifsc" ></input></td>
+
+	      </tr>
+	    </tbody>
+	  </table>
+
+	</div>
+	<div class="col-md-8" >
+	  <h5>Total</h5>
+	  <table class="table  table-condensed table-bordered table-striped">
+	    <tbody>
+
+	      <tr>
+		<td>  <label style="font-size: 125%" for="total invoice value" class=" col-form-label col-form-label-sm" id="totalinvoicevalue">{% trans %}Total Invoice Value :{% endtrans %}</label></td>
+		<td colspan="2"></td>
+	      </tr>
+	      <tr>
+
+		<td>  <label style="font-size: 125%"for="total invoice value in words" class=" col-form-label col-form-label-sm" id="totalinwords">{% trans %}Total Invoice Value ( Words ) :{% endtrans %}</label></td>
+		<td colspan="2"><label id="valueinwords"></label></td>
+
+	      </tr>
+	      <tr>
+
+
+	    </tbody>
+	  </table>
+
+	</div>
+      </div>
+      <div >
+	<div class="col-md-4">
+	  <table class="table  table-condensed table-bordered table-striped">
+	    <tbody>
+	      <tr>      <td>
+  		<label for="transportationmode" id="transmode">{% trans %}Transportation Mode{% endtrans %} :</label>
+              </td>
+              <td>
+  		<input type="text" id="transportationmode" class=" form-control input-sm" name="rvc" ></input>
+
+	      </td>
+	      </tr>
+	      <td>
+
+  		<label for="inv" >{% trans %}Vehicle No.{% endtrans %} :</label>
+              </td>
+              <td>
+  		<input type="text" id="vehicleno" class="form-control input-sm" name="vehicleno"></input>
+
+	      </td>
+	      <tr>
+		<td>
+
+  		  <label for="supply_date" >{% trans %}Date of Supply{% endtrans %} :</label>
+		</td>
+		<td>
+                  <div class="form-group">
+                    <input type="text" class="form-control input-sm supplydate" size="2" maxlength="2" placeholder="DD" id="supply_date" accesskey="v">
+
+                    <input type="text" class="form-control input-sm supplydate" size="2" maxlength="2" placeholder="MM" id="supply_month" accesskey="v">
+
+                    <input type="text" class="form-control input-sm supplydate" size="4" maxlength="4" placeholder="YYYY" id="supply_year" accesskey="v">
+  		  </div>
+		</td>
+	      </tr>
+
+	      <tr>
+
+		<td>  <label for="inv" >{% trans %}Reverse Charge {% endtrans %} :</label></td>
+		<td><input type="text" id="reversecharge" class="form-control input-sm" name="reversecharge"></input></td>
+
+	      </tr>
+	    </tbody>
+	  </table>
+	</div>
+      </div>
+
+
+
+
+
+
+    
   </div>
   
   <div class="panel-footer">
