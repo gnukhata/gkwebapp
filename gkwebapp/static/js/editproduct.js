@@ -516,7 +516,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
     $(".product_cat_tax_disable").prop('disabled',false);
     $(".product_tax_disable").prop('disabled',false);
     $("#product_edit_tax_table tbody tr").each(function() {
-      if($('td:eq(0) select option:selected', this).val() == 'CVAT'){
+      if($('td:eq(0) select option:selected', this).val() == 'CVAT' || $('td:eq(0) select option:selected', this).val() =='GST' ){
         $('td:eq(1) select', this).prop('disabled', true);
       }
     });
@@ -668,11 +668,11 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
       $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
       event.preventDefault();
     }
-    else if (($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='CVAT') && event.which==13 ) {
+    else if (($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='CVAT' || $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val() =='GST' ) && event.which==13 ) {
         event.preventDefault();
         var types = [];
         $('#product_edit_tax_table tbody tr').each(function(){
-          if ($(".tax_name",this).val()=='CVAT') {
+          if ($(".tax_name",this).val()=='CVAT' || $(".tax_name",this).val()=='GST') {
           types.push($(".tax_name",this).val());
           }
         });
@@ -765,7 +765,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
       if (curindex > 0) {
         for (var i = 1; i < curindex+1; i++) {
           for (var j = 0; j < curindex; j++) {
-            if ($("#product_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "CVAT") {
+            if ($("#product_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "CVAT" || $("#product_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "GST") {
               i = i + 1;
             }
             selectedtaxstate = $("#product_edit_tax_table tbody tr:eq("+j+") td:eq(1) select option:selected").attr("stateid");
@@ -925,7 +925,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
         '</td>'+
         '</tr>');
         $(".tax_rate").numeric();
-        if (selectedtaxname == "CVAT") {
+        if (selectedtaxname == "CVAT" || selectedtaxname == "GST") {
           $('#product_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedtaxname+']').prop('hidden', true).prop('disabled', true);
         }
         $('#product_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
