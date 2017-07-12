@@ -271,7 +271,7 @@ def productdetails(request):
 			result1 = requests.get("http://127.0.0.1:6543/categoryspecs?categorycode=%d"%(int(result.json()["gkresult"]["categorycode"])), headers=header)
 			prodspecs = result1.json()["gkresult"]
 		result2 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
-		
+
 		result3 = requests.get("http://127.0.0.1:6543/categories", headers=header)
 		result4 = requests.get("http://127.0.0.1:6543/godown", headers=header)
 		numberofgodowns = int(result.json()["numberofgodowns"])

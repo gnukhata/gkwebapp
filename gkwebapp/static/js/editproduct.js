@@ -276,7 +276,44 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
           '</td>'+
           '<td class="col-xs-4">'+
           '<select class="form-control product_tax_disable input-sm tax_state" >'+
-          '<option value="">None</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>'+
+          '<option value="">None</option>'+
+            '<option value="Andaman and Nicobar Islands" stateid="35">Andaman and Nicobar Islands</option>'+
+          '<option value="Andhra Pradesh" stateid="28">Andhra Pradesh</option>'+
+          '<option value="Andhra Pradesh New" stateid="37">Andhra Pradesh (New)</option>'+
+          '<option value="Arunachal Pradesh" stateid="12">Arunachal Pradesh</option>'+
+          '<option value="Assam" stateid="18">Assam</option>'+
+          '<option value="Bihar" stateid="10">Bihar</option>'+
+          '<option value="Chandigarh" stateid="4">Chandigarh</option>'+
+          '<option value="Chhattisgarh" stateid="22">Chhattisgarh</option>'+
+          '<option value="Dadra and Nagar Haveli" stateid="26">Dadra and Nagar Haveli</option>'+
+          '<option value="Daman and Diu" stateid="25">Daman and Diu</option>'+
+          '<option value="Delhi" stateid="7">Delhi</option>'+
+          '<option value="Goa" stateid="20">Goa</option>'+
+          '<option value="Gujarat" stateid="29">Gujarat</option>'+
+          '<option value="Haryana" stateid="6">Haryana</option>'+
+          '<option value="Himachal Pradesh" stateid="2">Himachal Pradesh</option>'+
+          '<option value="Jammu and Kashmir" stateid="1">Jammu and Kashmir</option>'+
+          '<option value="Jharkhand" stateid="20">Jharkhand</option>'+
+          '<option value="Karnataka" stateid="29">Karnataka</option>'+
+          '<option value="Kerala" stateid="32">Kerala</option>'+
+          '<option value="Lakshadweep" stateid="31">Lakshadweep</option>'+
+          '<option value="Madhya Pradesh" stateid="23">Madhya Pradesh</option>'+
+          '<option value="Maharashtra" stateid="27">Maharashtra</option>'+
+          '<option value="Manipur" stateid="14">Manipur</option>'+
+          '<option value="Meghalaya" stateid="17">Meghalaya</option>'+
+          '<option value="Mizoram" stateid="15">Mizoram</option>'+
+          '<option value="Nagaland" stateid="13">Nagaland</option>'+
+          '<option value="Odisha" stateid="21">Odisha</option>'+
+          '<option value="Pondicherry" stateid="34">Pondicherry</option>'+
+          '<option value="Punjab" stateid="3">Punjab</option>'+
+          '<option value="Rajasthan" stateid="8">Rajasthan</option>'+
+          '<option value="Sikkim" stateid="11">Sikkim</option>'+
+          '<option value="Tamil Nadu" stateid="33">Tamil Nadu</option>'+
+          '<option value="Telangana" stateid="36">Telangana</option>'+
+          '<option value="Tripura" stateid="16">Tripura</option>'+
+          '<option value="Uttar Pradesh" stateid="9">Uttar Pradesh</option>'+
+          '<option value="Uttarakhand" stateid="5">Uttarakhand</option>'+
+          '<option value="West Bengal" stateid="19">West Bengal</option>'+
           '</select>'+
           '</td>'+
           '<td class="col-xs-3">'+
@@ -687,7 +724,44 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
     var previndex = curindex -1;
     if ($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='VAT') {
       $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select").empty();
-      $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select").append('<option value="" stateid="" selected hidden disabled>Select State</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>').prop('disabled', false);
+      $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select").append('<option value="">None</option>'+
+        '<option value="Andaman and Nicobar Islands" stateid="35">Andaman and Nicobar Islands</option>'+
+      '<option value="Andhra Pradesh" stateid="28">Andhra Pradesh</option>'+
+      '<option value="Andhra Pradesh New" stateid="37">Andhra Pradesh (New)</option>'+
+      '<option value="Arunachal Pradesh" stateid="12">Arunachal Pradesh</option>'+
+      '<option value="Assam" stateid="18">Assam</option>'+
+      '<option value="Bihar" stateid="10">Bihar</option>'+
+      '<option value="Chandigarh" stateid="4">Chandigarh</option>'+
+      '<option value="Chhattisgarh" stateid="22">Chhattisgarh</option>'+
+      '<option value="Dadra and Nagar Haveli" stateid="26">Dadra and Nagar Haveli</option>'+
+      '<option value="Daman and Diu" stateid="25">Daman and Diu</option>'+
+      '<option value="Delhi" stateid="7">Delhi</option>'+
+      '<option value="Goa" stateid="20">Goa</option>'+
+      '<option value="Gujarat" stateid="29">Gujarat</option>'+
+      '<option value="Haryana" stateid="6">Haryana</option>'+
+      '<option value="Himachal Pradesh" stateid="2">Himachal Pradesh</option>'+
+      '<option value="Jammu and Kashmir" stateid="1">Jammu and Kashmir</option>'+
+      '<option value="Jharkhand" stateid="20">Jharkhand</option>'+
+      '<option value="Karnataka" stateid="29">Karnataka</option>'+
+      '<option value="Kerala" stateid="32">Kerala</option>'+
+      '<option value="Lakshadweep" stateid="31">Lakshadweep</option>'+
+      '<option value="Madhya Pradesh" stateid="23">Madhya Pradesh</option>'+
+      '<option value="Maharashtra" stateid="27">Maharashtra</option>'+
+      '<option value="Manipur" stateid="14">Manipur</option>'+
+      '<option value="Meghalaya" stateid="17">Meghalaya</option>'+
+      '<option value="Mizoram" stateid="15">Mizoram</option>'+
+      '<option value="Nagaland" stateid="13">Nagaland</option>'+
+      '<option value="Odisha" stateid="21">Odisha</option>'+
+      '<option value="Pondicherry" stateid="34">Pondicherry</option>'+
+      '<option value="Punjab" stateid="3">Punjab</option>'+
+      '<option value="Rajasthan" stateid="8">Rajasthan</option>'+
+      '<option value="Sikkim" stateid="11">Sikkim</option>'+
+      '<option value="Tamil Nadu" stateid="33">Tamil Nadu</option>'+
+      '<option value="Telangana" stateid="36">Telangana</option>'+
+      '<option value="Tripura" stateid="16">Tripura</option>'+
+      '<option value="Uttar Pradesh" stateid="9">Uttar Pradesh</option>'+
+      '<option value="Uttarakhand" stateid="5">Uttarakhand</option>'+
+      '<option value="West Bengal" stateid="19">West Bengal</option>').prop('disabled', false);
       if (curindex > 0) {
         for (var i = 1; i < curindex+1; i++) {
           for (var j = 0; j < curindex; j++) {
@@ -803,7 +877,44 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
         '</td>'+
         '<td class="col-xs-4">'+
         '<select class="form-control input-sm tax_state product_new_state" >'+
-        '<option value="">None</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>'+
+        '<option value="">None</option>'+
+          '<option value="Andaman and Nicobar Islands" stateid="35">Andaman and Nicobar Islands</option>'+
+        '<option value="Andhra Pradesh" stateid="28">Andhra Pradesh</option>'+
+        '<option value="Andhra Pradesh New" stateid="37">Andhra Pradesh (New)</option>'+
+        '<option value="Arunachal Pradesh" stateid="12">Arunachal Pradesh</option>'+
+        '<option value="Assam" stateid="18">Assam</option>'+
+        '<option value="Bihar" stateid="10">Bihar</option>'+
+        '<option value="Chandigarh" stateid="4">Chandigarh</option>'+
+        '<option value="Chhattisgarh" stateid="22">Chhattisgarh</option>'+
+        '<option value="Dadra and Nagar Haveli" stateid="26">Dadra and Nagar Haveli</option>'+
+        '<option value="Daman and Diu" stateid="25">Daman and Diu</option>'+
+        '<option value="Delhi" stateid="7">Delhi</option>'+
+        '<option value="Goa" stateid="20">Goa</option>'+
+        '<option value="Gujarat" stateid="29">Gujarat</option>'+
+        '<option value="Haryana" stateid="6">Haryana</option>'+
+        '<option value="Himachal Pradesh" stateid="2">Himachal Pradesh</option>'+
+        '<option value="Jammu and Kashmir" stateid="1">Jammu and Kashmir</option>'+
+        '<option value="Jharkhand" stateid="20">Jharkhand</option>'+
+        '<option value="Karnataka" stateid="29">Karnataka</option>'+
+        '<option value="Kerala" stateid="32">Kerala</option>'+
+        '<option value="Lakshadweep" stateid="31">Lakshadweep</option>'+
+        '<option value="Madhya Pradesh" stateid="23">Madhya Pradesh</option>'+
+        '<option value="Maharashtra" stateid="27">Maharashtra</option>'+
+        '<option value="Manipur" stateid="14">Manipur</option>'+
+        '<option value="Meghalaya" stateid="17">Meghalaya</option>'+
+        '<option value="Mizoram" stateid="15">Mizoram</option>'+
+        '<option value="Nagaland" stateid="13">Nagaland</option>'+
+        '<option value="Odisha" stateid="21">Odisha</option>'+
+        '<option value="Pondicherry" stateid="34">Pondicherry</option>'+
+        '<option value="Punjab" stateid="3">Punjab</option>'+
+        '<option value="Rajasthan" stateid="8">Rajasthan</option>'+
+        '<option value="Sikkim" stateid="11">Sikkim</option>'+
+        '<option value="Tamil Nadu" stateid="33">Tamil Nadu</option>'+
+        '<option value="Telangana" stateid="36">Telangana</option>'+
+        '<option value="Tripura" stateid="16">Tripura</option>'+
+        '<option value="Uttar Pradesh" stateid="9">Uttar Pradesh</option>'+
+        '<option value="Uttarakhand" stateid="5">Uttarakhand</option>'+
+        '<option value="West Bengal" stateid="19">West Bengal</option>'+
         '</select>'+
         '</td>'+
         '<td class="col-xs-3">'+
@@ -1131,7 +1242,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
       curindex = $(this).index();
       if ($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()!="") {
         obj.taxrowid = $("#product_edit_tax_table tbody tr:eq("+curindex+")").attr('value');
-        obj.taxname = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val();
+        obj.taxname = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select option:selected").val();
         obj.state = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select option:selected").val();
         obj.taxrate = parseFloat($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(2) input").val()).toFixed(2);
         taxes.push(obj);
