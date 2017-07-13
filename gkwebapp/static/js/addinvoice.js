@@ -77,6 +77,12 @@ $(document).ready(function() {
 	var taxamount = 0.00;
 	var rowtaxableamount=(rowqty - rowfreeqty) * (rowprice-rowdiscount);
 	var rowtotal = 0.00;
+	var totalamount = 0.00;
+	var totalcgst = 0.00;
+	var totalsgst = 0.00;
+	var tottaligst = 0.00;
+	var totaldiscount = 0.00;
+	var totaltaxable = 0.00;
 	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtaxableamount).toFixed(2));
 	taxamount = (rowtaxableamount * taxdetails["taxrate"])/100;
 	if (taxdetails["taxname"] == "IGST") {
@@ -90,6 +96,12 @@ $(document).ready(function() {
 	    rowtotal = rowtaxableamount + (2*taxamount);
 	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val(parseFloat(rowtotal).toFixed(2));
 	}
+	for(var i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
+	    totaldiscount = totaldiscount + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val()).toFixed(2);
+	    totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(6) input').val()).toFixed(2);
+	}
+	$('#discounttotal_product_gst').text(parseFloat(totaldiscount).toFixed(2));
+	$('#taxablevaluetotal_product_gst').text(parseFloat(totaltaxable).toFixed(2));
     } 
   if(sessionStorage.invflag==0){
     $("#delnotediv").hide();
