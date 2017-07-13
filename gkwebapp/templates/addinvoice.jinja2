@@ -533,7 +533,7 @@
 		      <th colspan="2" class="taxwrap text-center">{% trans %}CGST{% endtrans %}</th>
 		      <th colspan="2" class="taxwrap text-center">{% trans %}SGST{% endtrans %}</th>
 		      <th colspan="2" class="taxwrap text-center">{% trans %}IGST{% endtrans %}</th>
-		      <th rowspan="2" class="mdwrap text-center">{% trans %}Total{% endtrans %}</th>
+		      <th rowspan="2" class="smwrap text-center">{% trans %}Total{% endtrans %}</th>
 		      </tr>
 
 		    <tr>
@@ -583,18 +583,18 @@
 			<input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00" disabled>
 		      </td>
 
-		      <td class="ratewrap"><input type="text" class="invoice_product_cgstrate form-control input-sm text-right numtype" size="6" value="0.00" placeholder="0.00" disabled></td>
-		      <td class="smwrap"><input type="text" class="invoice_product_cgstamount form-control input-sm text-right numtype" size="6" value="0.00" placeholder="0.00" disabled></td>
+		      <td class="ratewrap"><input type="text" class="invoice_product_cgstrate form-control input-sm text-right numtype ratewrap" size="6" value="0.00" placeholder="0.00" disabled></td>
+		      <td class="smwrap"><input type="text" class="invoice_product_cgstamount form-control input-sm text-right numtype smwrap" size="6" value="0.00" placeholder="0.00" disabled></td>
 
-		      <td class="ratewrap"><input type="text" class="invoice_product_sgstrate  form-control input-sm text-right numtype " size="6" value="0.00" placeholder="0.00" disabled></td>
-		      <td class="smwrap"><input type="text" class="invoice_product_sgstamount  input-sm form-control text-right numtype " size="6" value="0.00" placeholder="0.00" disabled></td>
+		      <td class="ratewrap"><input type="text" class="invoice_product_sgstrate  form-control input-sm text-right numtype ratewrap" size="6" value="0.00" placeholder="0.00" disabled></td>
+		      <td class="smwrap"><input type="text" class="invoice_product_sgstamount  input-sm form-control text-right numtype smwrap" size="6" value="0.00" placeholder="0.00" disabled></td>
 
 		      <td class="ratewrap">
-			<input type="text" class="invoice_product_igstrate  input-sm text-right form-control numtype" size="6" value="0.00" placeholder="0.00" disabled></td>
-			<td class="smwrap"><input type="text" class="invoice_product_igstamount form-control input-sm text-right numtype" size="6" value="0.00" placeholder="0.00" disabled>
+			<input type="text" class="invoice_product_igstrate  input-sm text-right form-control numtype ratewrap" size="6" value="0.00" placeholder="0.00" disabled></td>
+			<td class="smwrap"><input type="text" class="invoice_product_igstamount form-control input-sm text-right numtype smwrap" size="6" value="0.00" placeholder="0.00" disabled>
 			</td>
 			<td class="smwrap">
-			  <input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" size="5" placeholder="0.00" disabled>
+			  <input type="text" class="invoice_product_total form-control input-sm text-right numtype smwrap" value="0.00" size="10" placeholder="0.00" disabled>
 			</td>
 			<td style="width: 20px;">
 			</td>
