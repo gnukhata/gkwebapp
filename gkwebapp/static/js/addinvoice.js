@@ -24,6 +24,7 @@
    "Navin Karkera" <navin@dff.org.in>
    "Prajkta Patkar"<prajkta.patkar007@gmail.com>
    "Vaibhav Kurhe" <vaibhav.kurhe@gmail.com>
+   "Abhijith Balan" <abhijith@dff.org.in>
  */
 
 // This script is for the addinvoice.jinja2
@@ -2074,7 +2075,8 @@ console.log("quantity");
     var contents = {};
     var freeqty = {};
     var stock = {};
-    var items = {};
+      var items = {};
+      var discount = {};
     var productcodes = [];
     var productqtys = [];
     for (var i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
@@ -2172,13 +2174,25 @@ console.log("quantity");
       }
       var obj = {};
       if (parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()) > 0) {
-        var productcode = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
+          if ($("#taxapplicable").val() == 22) {
+	var productcode = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
         var ppu = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val();
         obj[ppu] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val();
         tax[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val();
         contents[productcode] = obj;
         items[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val();
         freeqty[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val();
+	discount[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val();
+	}
+	else if ($("#taxapplicable").val() == 7) {
+	var productcode = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
+        var ppu = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val();
+        obj[ppu] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
+        contents[productcode] = obj;
+        items[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val();
+        freeqty[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val();
+	discount[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(5) input").val();    
+	}
       }
 
     }
@@ -2232,6 +2246,8 @@ console.log("quantity");
     form_data.append("invtotal", $('#invoice_product_table_vat tfoot tr:last td:eq(5) input').val());
     form_data.append("taxstate", $("#invoice_state option:selected").val());
     form_data.append("freeqty", JSON.stringify(freeqty));
+    form_data.append("discount", JSON.stringify(discount));
+    form_data.append("taxflag", $("#taxapplicable").val());  
     var files = $("#my-file-selector")[0].files
     var filelist = [];
     for (var i = 0; i < files.length; i++) {

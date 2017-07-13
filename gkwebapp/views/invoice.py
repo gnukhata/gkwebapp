@@ -73,6 +73,7 @@ def getproducts(request):
 @view_config(route_name="invoice",request_param="action=save",renderer="json")
 def saveinvoice(request):
 	header={"gktoken":request.headers["gktoken"]}
+	print request.params
 
 	invoicedata = {"invoiceno":request.params["invoiceno"],"taxstate":request.params["taxstate"],"invoicedate":request.params["invoicedate"],
 		"tax":json.loads(request.params["tax"]),"custid":request.params["custid"],"invoicetotal":request.params["invtotal"],
