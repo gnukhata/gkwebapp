@@ -1372,6 +1372,7 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
         var stock = {};
         var freeqty = {};
         var items = {};
+        if ($("#taxapplicable option:selected").val() == 22) {
         for (var i = 0; i < $("#invoice_product_table tbody tr").length; i++) {
             if ($("#invoice_product_table tbody tr:eq(" + i + ") td:eq(0) select option:selected").val() == "") {
                 $("#product-blank-alert").alert();
@@ -1409,6 +1410,23 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
             items[productcode] = $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(1) input").val();
             freeqty[productcode] = $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(2) input").val();
         }
+      }
+       if ($("#taxapplicable option:selected").val() == 7) {
+         productqtys.push(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()));
+     	  var obj = {};
+     	for (var i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
+     	productcode = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
+             ppu = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val();
+             obj[ppu] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
+     	    obj["discount"] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();
+     	    console.log("OBJ" + obj);
+             contents[productcode] = obj;
+          //rohini   items[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
+        //rohini     freeqty[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val();  
+     	}
+     	  invoicetotal = $('#total_product_gst').val();
+
+       }
         stock["items"] = items;
 
 
