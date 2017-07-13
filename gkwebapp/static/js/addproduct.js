@@ -1379,12 +1379,13 @@ else{
 
   var  addformdata = $("#addprodform").serializeArray();
 
-
-
-  if ($("#hsnno").val()!=""){
+if ($("#additem option:selected").val() == 7){
   addformdata.push("gscode",$("#hsnno").val());
-  }
+}
+else{
+  addformdata.push("gscode",$("#serviceno").val());
 
+}
   addformdata.push("gsflag",$("#additem option:selected").val());
   addformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
   addformdata.push({name: 'specs', value: JSON.stringify(specs)});
