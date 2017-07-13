@@ -74,10 +74,21 @@ $(document).ready(function() {
 	var rowprice = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
 	var rowdiscount = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val()).toFixed(2);
 	var taxdetails = $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').data("taxdetails");
+	var taxamount = 0.00;
 	var rowtaxableamount=(rowqty - rowfreeqty) * (rowprice-rowdiscount);
+	var rowtotal = 0.00;
 	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtaxableamount).toFixed(2));
+	taxamount = (rowtaxableamount * taxdetails["taxrate"])/100;
 	if (taxdetails["taxname"] == "IGST") {
-	    
+	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(12) input').val(parseFloat(taxamount).toFixed(2));
+	    rowtotal = rowtaxableamount + taxamount;
+	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val(parseFloat(rowtotal).toFixed(2));
+	}
+	else if (taxdetails["taxname"] == "SGST") {
+	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(taxamount).toFixed(2));
+	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(10) input').val(parseFloat(taxamount).toFixed(2));
+	    rowtotal = rowtaxableamount + (2*taxamount);
+	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val(parseFloat(rowtotal).toFixed(2));
 	}
     } 
   if(sessionStorage.invflag==0){
