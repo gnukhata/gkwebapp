@@ -138,10 +138,11 @@ $(document).ready(function() {
     $("#invoice_state").keydown(function(event) {
         if (event.which == 13) {
             event.preventDefault();
-            $('#invoice_product_table tbody tr:first td:eq(0) select').focus();
+            //$('#invoice_product_table tbody tr:first td:eq(0) select').focus();
+            $('#taxapplicable').focus();
 
         }
-        if (event.which == 38 && (document.getElementById('invoice_state').selectedIndex == 0)) {
+        if (event.which == 38 && (document.getElementById('#invoice_state').selectedIndex == 0)) {
             event.preventDefault();
 
 
@@ -150,6 +151,48 @@ $(document).ready(function() {
 
         }
     });
+    $("#taxapplicable").keydown(function(event) {
+        if (event.which == 13) {
+            event.preventDefault();
+              if ($("#taxapplicable option:selected").val() == 22 ) {
+            $('#invoice_product_table tbody tr:first td:eq(0) select').focus();
+          }
+          else{
+            $('#invoice_product_table_gst tbody tr:first td:eq(0) select').focus();
+          }
+
+
+        }
+        if (event.which == 38 && (document.getElementById('#taxapplicable').selectedIndex == 0)) {
+            event.preventDefault();
+
+
+            $("#invoice_state").focus();
+
+
+        }
+    });
+    $(document).off('change', '#taxapplicable').on('change', '#taxapplicable', function(event) {
+        event.preventDefault();
+
+        if ($("#taxapplicable option:selected").val() == 22 ) {
+          //VAT
+          $("#gstproducttable").hide();
+          $("#invoice_product_table").show();
+
+          console.log("//VAT");
+        }
+        if ($("#taxapplicable option:selected").val() == 7 ) {
+          //VAT
+          $("#gstproducttable").show();
+          $("#invoice_product_table").hide();
+
+          console.log("//gst");
+        }
+
+
+      });
+
 
     $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
         event.preventDefault();

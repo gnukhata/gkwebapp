@@ -4,6 +4,64 @@
   <meta charset="utf-8">
   <title>{% trans %}GNUKhata | Cash Memo{% endtrans %}</title>
   <style media="screen">
+  #gstproducttable {
+      overflow-x: scroll;
+      overflow-y: scroll;
+      height: calc(100vh - 28em);
+  }
+  #invoice_product_table_gst tbody {
+      height: calc(100vh - 31em);
+  }
+  #invoice_product_table_vat tfoot {
+      display:table;
+      width: 95%;
+  }
+
+  .nopadding{
+      padidng:0 !important;
+      padding:0 !important;
+  }
+  td {
+      font-size: 65%;
+      color: black;
+  }
+
+  th {
+      font-size: 75%;
+  }
+
+  @page {
+      size : 21cm 29.7cm;
+      margin : 10mm 10mm 20mm 10mm
+  }
+  thead{
+      display: table-header-group;
+  }
+  tfoot{
+      display: table-footer-group;
+  }
+  .ratewrap{
+      width :80px;
+  }
+  .taxwrap {
+      width: 180px;
+  }
+  .lngwrap{
+      width:200px;
+  }
+  .mdwrap{
+      width:160px;
+  }
+  .smwrap{
+      width:100px;
+  }
+  .totalwrap {
+      width:820px;
+  }
+  .rightJustified {
+      text-align: right;
+  }
+
   .fixed-table td {
       font-size: 75%;
       padding: 4 !important;
@@ -107,14 +165,14 @@
             {% trans %}Please enter date within the financial year!{% endtrans %}
           </div>
 
-          <div class="col-md-4">
+          <div class="col-md-3">
 
             <div class="form-group">
               <label for="invoice_challanno">{% trans %}Cash Memo No{% endtrans %} :</label>
               <input class="form-control input-sm" id="invoice_challanno" placeholder="{% trans %}Enter Cash Memo No{% endtrans %}" accesskey="a">
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3">
 
             <div class="form-group">
               <label for="invoice_date">{% trans %}Date{% endtrans %} :</label>
@@ -135,13 +193,12 @@
 
 
 
-          <div class="col-md-4 invstate" >
+          <div class="col-md-3 invstate" >
 
             <div class="form-group">
-              <label for="invoice_state">{% trans %}VAT Applicable{% endtrans %} :</label>
+              <label for="invoice_state">{% trans %}State{% endtrans %} :</label>
               <select class="form-control input-sm tax_state product_new_state" id="invoice_state">
-                <option value="none">None</option>
-                <option value="">Central</option>
+
                 <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
                 <option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>
                 <option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option>
@@ -182,6 +239,13 @@
             </div>
 
           </div>
+          <div class="col-md-3">
+     <label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
+     <select class="form-control input-sm"  id="taxapplicable" accesskey="">
+       <option value="7" selected>GST</option>
+       <option value="22">VAT</option>
+     </select>
+         </div>
 
 
 
@@ -193,9 +257,9 @@
 
 
         <div class="container-fluid" id="invoice_product_div">
-          <div class="panel">
+          
 
-            <table id="invoice_product_table" class="shadow table table-condensed table-bordered fixed-table fixed-tablepurchase">
+            <table id="invoice_product_table" class="shadow table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
               <thead class="bg-primary">
                 <tr>
                   <th class="col-xs-3 text-center">{% trans %}Product{% endtrans %}</th>
@@ -274,7 +338,108 @@
               </tfoot>
 
             </table>
-          </div>
+
+
+  	      <div id="gstproducttable">
+  		<table id="invoice_product_table_gst" style="table-layout:fixed;" class=" table table-condensed table-bordered" >
+  		  <thead class="bg-primary">
+  		    <tr>
+  		      <th rowspan="2" class="lngwrap text-center">{% trans %}Product{% endtrans %}</th>
+  		      <th rowspan="2" class="smwrap text-center">{% trans %}HSN Code{% endtrans %}</th>
+  		      <th rowspan="2" class="mdwrap text-center">{% trans %}Quantity{% endtrans %}</th>
+  		      <th rowspan="2" class="mdwrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
+  		      <th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
+  		      <th rowspan="2" class="smwrap text-center">{% trans %}Discount{% endtrans %}</th>
+  		      <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
+  		      <th colspan="2" class="taxwrap text-center">{% trans %}CGST{% endtrans %}</th>
+  		      <th colspan="2" class="taxwrap text-center">{% trans %}SGST{% endtrans %}</th>
+  		      <th colspan="2" class="taxwrap text-center">{% trans %}IGST{% endtrans %}</th>
+  		      <th rowspan="2" class="smwrap text-center">{% trans %}Total{% endtrans %}</th>
+  		      </tr>
+
+  		    <tr>
+  		      <th>Rate%</th>
+  		      <th>Amt</th>
+  		      <th>Rate%</th>
+  		      <th>Amt</th>
+  		      <th>Rate%</th>
+  		      <th>Amt</th>
+
+  		    </tr>
+  		  </thead>
+  		  <tbody>
+  		    <tr>
+  		      <td class="lngwrap">
+  			<select class="form-control input-sm product_name_gst">
+  			  <option value="" disabled hidden selected> Product</option>
+  			  {% for product in products %}
+  			    <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
+  			  {% endfor %}
+  			</select>
+  		      </td>
+  		      <td class="smwrap">
+
+  			<label class="invoice_product_hsncode" >{% trans %} {% endtrans %} </label>
+  		      </td>
+  		      <td class="mdwrap">
+  			<div class="input-group">
+  			  <input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype"size="5" value="0" placeholder="0" aria-describedby="unitaddon">
+  			  <span class="input-group-addon input-sm" id="unitaddon"></span>
+  			</div>
+  		      </td>
+  		      <td class="mdwrap">
+  			<div class="input-group">
+  			  <input type="text" class="invoice_product_freequantity_gst form-control input-sm text-right numtype" size="5" value="0" placeholder="0" aria-describedby="unitaddon">
+  			  <span class="input-group-addon input-sm" id="freeunitaddon"></span>
+  			</div>
+  		      </td>
+
+  		      <td class="mdwrap">
+  			<input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00">
+  		      </td>
+  		      <td class="mdwrap">
+  			<input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00">
+  		      </td>
+  		      <td class="smwrap">
+  			<input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00" disabled>
+  		      </td>
+
+  		      <td class="ratewrap"><input type="text" class="invoice_product_cgstrate form-control input-sm text-right numtype ratewrap" size="6" value="0.00" placeholder="0.00" disabled></td>
+  		      <td class="smwrap"><input type="text" class="invoice_product_cgstamount form-control input-sm text-right numtype smwrap" size="6" value="0.00" placeholder="0.00" disabled></td>
+
+  		      <td class="ratewrap"><input type="text" class="invoice_product_sgstrate  form-control input-sm text-right numtype ratewrap" size="6" value="0.00" placeholder="0.00" disabled></td>
+  		      <td class="smwrap"><input type="text" class="invoice_product_sgstamount  input-sm form-control text-right numtype smwrap" size="6" value="0.00" placeholder="0.00" disabled></td>
+
+  		      <td class="ratewrap">
+  			<input type="text" class="invoice_product_igstrate  input-sm text-right form-control numtype ratewrap" size="6" value="0.00" placeholder="0.00" disabled></td>
+  			<td class="smwrap"><input type="text" class="invoice_product_igstamount form-control input-sm text-right numtype smwrap" size="6" value="0.00" placeholder="0.00" disabled>
+  			</td>
+  			<td class="smwrap">
+  			  <input type="text" class="invoice_product_total form-control input-sm text-right numtype smwrap" value="0.00" size="10" placeholder="0.00" disabled>
+  			</td>
+  			<td style="width: 20px;">
+  			</td>
+  		    </tr>
+  		  </tbody>
+  		  <tfoot>
+  		    <tr>
+  		      <td colspan="5" class="text-right" style="vertical-align:middle; font-size:75%">Total</td>
+  		      <td class="text-center">  <span id="discounttotal_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+  		      <td class="text-center"><span id="taxablevaluetotal_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+  		      <td colspan="2" class="text-center"><span id="totalcgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+
+  		      <td colspan="2" class="text-center"><span id="totalsgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+  		      <td colspan="2" class="text-center"><span id="totaligst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+
+  		      <td class="text-center"><span id="total_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+  		      <td class=""></td>
+
+  		    </tr>
+  		  </tfoot>
+
+  		</table>
+  	      </div>
+
         </div>
 
 
