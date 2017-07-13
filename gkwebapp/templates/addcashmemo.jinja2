@@ -257,7 +257,7 @@
 
 
         <div class="container-fluid" id="invoice_product_div">
-          
+
 
             <table id="invoice_product_table" class="shadow table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
               <thead class="bg-primary">
@@ -275,7 +275,7 @@
               <tbody>
                 <tr>
                   <td class="col-xs-3">
-                    <select class="form-control input-sm product_name">
+                    <select class="form-control input-sm product_name_vat">
                       <option value="" disabled hidden selected>Select Product</option>
                       {% for product in products %}
                       <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
