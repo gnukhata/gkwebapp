@@ -407,7 +407,7 @@ $("#addcatselect").change(function(event) {
           '<option value="" selected>Select Tax</option>'+
           '<option value="VAT">VAT</option>'+
           '<option value="CVAT">CVAT</option>'+
-          '<option value="GST">GST</option>'+
+          '<option value="IGST">IGST</option>'+
           '</select>'+
           '</td>'+
           '<td class="col-xs-4">'+
@@ -518,7 +518,7 @@ $("#addcatselect").change(function(event) {
     '<option value="" selected>Select Tax</option>'+
     '<option value="VAT">VAT</option>'+
     '<option value="CVAT">CVAT</option>'+
-    '<option value="GST">GST</option>'+
+    '<option value="IGST">IGST</option>'+
     '</select>'+
     '</td>'+
     '<td class="col-xs-4">'+
@@ -692,11 +692,11 @@ $(document).off("keydown",".tax_name").on("keydown",".tax_name",function(event)
     $('#product_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
     event.preventDefault();
   }
-  else if (($("#product_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='CVAT' || $("#product_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='GST') && event.which==13 ) {
+  else if (($("#product_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='CVAT' || $("#product_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='IGST') && event.which==13 ) {
     event.preventDefault();
     var types = [];
     $('#product_tax_table tbody tr').each(function(){
-      if ($(".tax_name",this).val()=='CVAT' || $(".tax_name",this).val()=='GST' ) {
+      if ($(".tax_name",this).val()=='CVAT' || $(".tax_name",this).val()=='IGST' ) {
         types.push($(".tax_name",this).val());
       }
     });
@@ -789,7 +789,7 @@ $(document).off("change",".tax_name").on("change",".tax_name",function(event)
     if (curindex > 0) {
       for (var i = 1; i < curindex+1; i++) {
         for (var j = 0; j < curindex; j++) {
-          if ($("#product_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "CVAT" || $("#product_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "GST" ) {
+          if ($("#product_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "CVAT" || $("#product_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "IGST" ) {
             i = i + 1;
           }
           selectedtaxstate = $("#product_tax_table tbody tr:eq("+j+") td:eq(1) select option:selected").attr("stateid");
@@ -897,7 +897,7 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
       '<option value="" selected>Select Tax</option>'+
       '<option value="VAT">VAT</option>'+
       '<option value="CVAT">CVAT</option>'+
-      '<option value="GST">GST</option>'+
+      '<option value="IGST">IGST</option>'+
       '</select>'+
       '</td>'+
       '<td class="col-xs-4">'+
@@ -950,7 +950,7 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
       '</td>'+
       '</tr>');
       $(".tax_rate").numeric();
-      if (selectedtaxname == "CVAT" || selectedtaxname == "GST" ) {
+      if (selectedtaxname == "CVAT" || selectedtaxname == "IGST" ) {
         $('#product_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedtaxname+']').prop('hidden', true).prop('disabled', true);
       }
       $('#product_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
