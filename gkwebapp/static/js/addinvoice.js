@@ -2091,7 +2091,9 @@ console.log("quantity");
       consignee["gstinconsignee"] = $("#gstinconsignee").val();
       consignee["consigneeaddress"] = $("#consigneeaddress").val();
       consignee["consigneestate"] = $("#consigneestate").val();
-      bankdetails["accountno"] = $("#")
+      bankdetails["accountno"] = $("#accountno").val();
+      bankdetails["bankname"] = $("#bankname").val();
+      bankdetails["ifsc"] = $("#ifsc").val();
     if ($("#taxapplicable option:selected").val() == 22) {
     for (var i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
       productqtys.push(parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()));
@@ -2266,9 +2268,14 @@ console.log("quantity");
     form_data.append("invtotal", invoicetotal);
     form_data.append("taxstate", $("#invoicestate option:selected").val());
     form_data.append("freeqty", JSON.stringify(freeqty));
-    form_data.append("consignee", JSON.stringify(consignee));  
-    form_data.append("taxflag", $("#taxapplicable").val());  
-      var files = $("#my-file-selector")[0].files;
+    form_data.append("consignee", JSON.stringify(consignee));
+    form_data.append("bankdetails", JSON.stringify(bankdetails));    
+    form_data.append("taxflag", $("#taxapplicable").val());
+    form_data.append("transportationmode", $("#transportationmode").val());
+    form_data.append("vehicleno", $("#vehicleno").val());
+    form_data.append("dateofsupply", $("#supply_date").val() + '-' + $("#supply_month").val() + '-' + $("#supply_year").val());
+    form_data.append("reversecharge", $("#reversecharge").val());
+    var files = $("#my-file-selector")[0].files;
     var filelist = [];
     for (var i = 0; i < files.length; i++) {
       form_data.append("file" + i, files[i])
