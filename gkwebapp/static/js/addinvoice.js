@@ -1908,11 +1908,14 @@ console.log("quantity");
         $('#invoice_product_table_vat tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
       });
     });
-
+      $("#invoice_product_table_vat tbody tr:first td:eq(0) select").focus();
   }
   //console.log("previndex = "+previndex);
   //$("#invoice_product_table tbody tr:eq(' + previndex + ') td:eq(0) select").focus();
-  $("#invoice_product_table_vat tbody tr:first td:eq(0) select").focus();
+      
+      if ($("#invoice_product_table_gst tbody tr").length > 1) {
+	  $(this).closest('tr').remove();
+      }
   });
 
   $("#invoice_addcust").click(function() {
@@ -2077,8 +2080,19 @@ console.log("quantity");
     var stock = {};
       var items = {};
       var discount = {};
+      var consignee = {};
+      var bankdetails = {};
+      var obj = {};
+      var invoicetotal = 0.00;
     var productcodes = [];
-    var productqtys = [];
+      var productqtys = [];
+
+      consignee["consigneename"] = $("#consigneename").val();
+      consignee["gstinconsignee"] = $("#gstinconsignee").val();
+      consignee["consigneeaddress"] = $("#consigneeaddress").val();
+      consignee["consigneestate"] = $("#consigneestate").val();
+      bankdetails["accountno"] = $("#")
+    if ($("#taxapplicable option:selected").val() == 22) {
     for (var i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
       productqtys.push(parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()));
       if ($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val() == "") {
@@ -2172,30 +2186,36 @@ console.log("quantity");
           return false;
         }
       }
-      var obj = {};
       if (parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()) > 0) {
-          if ($("#taxapplicable").val() == 22) {
 	var productcode = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
         var ppu = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val();
         obj[ppu] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val();
+	obj["discount"] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val();
         tax[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val();
         contents[productcode] = obj;
         items[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val();
         freeqty[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val();
-	discount[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val();
 	}
-	else if ($("#taxapplicable").val() == 7) {
-	var productcode = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
-        var ppu = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val();
-        obj[ppu] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
-        contents[productcode] = obj;
-        items[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val();
-        freeqty[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val();
-	discount[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(5) input").val();    
-	}
-      }
+    }
+	invoicetotal = $('#invoice_product_table_vat tfoot tr:last td:eq(5) input').val();
 
     }
+
+      else if ($("#taxapplicable option:selected").val() == 7) {
+	  productqtys.push(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()));
+	  var obj = {};
+	for (var i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
+	productcode = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
+        ppu = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val();
+        obj[ppu] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
+	    obj["discount"] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();
+	    console.log("OBJ" + obj);
+        contents[productcode] = obj;
+        items[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val();
+        freeqty[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val();  
+	}
+	  invoicetotal = $('#total_product_gst').val();
+      }
 
     //if all product quantities are zero, ask user, why are you creating an invoice?
     var zeroflag = 1;
@@ -2243,12 +2263,12 @@ console.log("quantity");
     form_data.append("stock", JSON.stringify(stock));
     form_data.append("issuername", issuername);
     form_data.append("designation", designation);
-    form_data.append("invtotal", $('#invoice_product_table_vat tfoot tr:last td:eq(5) input').val());
-    form_data.append("taxstate", $("#invoice_state option:selected").val());
+    form_data.append("invtotal", invoicetotal);
+    form_data.append("taxstate", $("#invoicestate option:selected").val());
     form_data.append("freeqty", JSON.stringify(freeqty));
-    form_data.append("discount", JSON.stringify(discount));
+    form_data.append("consignee", JSON.stringify(consignee));  
     form_data.append("taxflag", $("#taxapplicable").val());  
-    var files = $("#my-file-selector")[0].files
+      var files = $("#my-file-selector")[0].files;
     var filelist = [];
     for (var i = 0; i < files.length; i++) {
       form_data.append("file" + i, files[i])
@@ -2791,7 +2811,8 @@ if (event.which == 13) {
                '<td class="">'+
                  '<input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" size="5" placeholder="0.00" disabled>'+
                '</td>'+
-               '<td class="" style="width: 3%;">'+
+		 '<td class="" style="width: 20px;">'+
+		 '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
                '</td>'+
              '</tr>');
 

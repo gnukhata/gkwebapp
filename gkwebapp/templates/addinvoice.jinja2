@@ -721,7 +721,13 @@
 		<button id="invoice_addcust" class="btn btn-info btn-sm">{% trans %}Add Customer{% endtrans %}</button>
               {% else %}
 		<button id="invoice_addcust" class="btn btn-info btn-sm">{% trans %}Add Supplier{% endtrans %}</button>
-          {% endif %}
+              {% endif %}
+	      <label class="btn btn-primary btn-sm" for="my-file-selector">
+		<input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
+		<i class="fa fa-paperclip" aria-hidden="true"></i>
+		{% trans %}Attac<u>h</u>{% endtrans %}
+	      </label>
+	      <span class='label label-info' id="upload-file-info"></span>
         </div>
 			</div>
       <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
