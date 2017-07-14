@@ -1454,7 +1454,7 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
            discount[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();
      	}
       console.log(discount);
-     	    invoicetotal = $('#total_product_gst').val();
+     	    invoicetotal = $('#total_product_gst').text();
 
        }
         stock["items"] = items;
@@ -1472,20 +1472,21 @@ if ($("#taxapplicable option:selected").val() == 7) {
         form_data.append("contents", JSON.stringify(contents));
         form_data.append("tax", JSON.stringify(tax));
         form_data.append("stock", JSON.stringify(stock));
-        form_data.append("invtotal", invoicetotal);
+        form_data.append("invoicetotal", invoicetotal);
         form_data.append("taxstate", $("#invoicestate option:selected").val());
+        form_data.append("taxflag", $("#taxapplicable option:selected").val());
         form_data.append("freeqty", JSON.stringify(freeqty));
         form_data.append("discount", JSON.stringify(discount));
 
-        form_data.append("taxflag", $("#taxapplicable").val());
 
-        event.preventDefault();
+
+
         $('.modal-backdrop').remove();
         $('.modal').modal('hide');
         $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function(e) {
           console.log("action=save");
           $.ajax({
-            url: '/invoice?action=save',
+            url: '/cashmemos?action=save',
             type: 'POST',
             global: false,
             contentType: false,
@@ -1923,9 +1924,9 @@ if ($("#taxapplicable option:selected").val() == 22) {
 
                    '<td class="">'+
                      '<input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" size="5" placeholder="0.00" disabled>'+
-                   '</td>'+
-                   '<td class="" style="width: 3%;">'+
-                   '</td>'+
+                   '</td>'+'<td class="col-xs-1" style="width: 5%">' +
+                   '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
+                   '</td>' +
                  '</tr>');
                  console.log("after row");
 
