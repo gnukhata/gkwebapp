@@ -31,16 +31,11 @@
 
 $(document).ready(function() {
 
-  $('input,select').keydown( function(e) {
-    var n = $("input,select").length;
-    var f = $('input,select');
-    var disab = $('input,select').prop("disabled");
-    console.log("disbled");
-    console.log(disab);
-    if(!$('input,select').prop("disabled")){
+  $('input:visible,select:visible').keydown( function(e) {
+    var n = $("input:visible,select:visible").length;
+    var f = $('input:visible,select:visible');
       if (e.which == 13)
       {
-        console.log("getting called");
         var nextIndex = f.index(this) + 1;
         if(nextIndex < n){
           e.preventDefault();
@@ -49,8 +44,6 @@ $(document).ready(function() {
 
         }
     }
-
-      }
 
     });
   $('.modal-backdrop').remove();
@@ -2211,12 +2204,11 @@ console.log("quantity");
         ppu = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val();
         obj[ppu] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
 	    obj["discount"] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();
-	    console.log("OBJ" + obj);
         contents[productcode] = obj;
         items[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val();
         freeqty[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val();  
 	}
-	  invoicetotal = $('#total_product_gst').val();
+	  invoicetotal = $('#total_product_gst').html();
       }
 
     //if all product quantities are zero, ask user, why are you creating an invoice?
@@ -2278,7 +2270,7 @@ console.log("quantity");
     var files = $("#my-file-selector")[0].files;
     var filelist = [];
     for (var i = 0; i < files.length; i++) {
-      form_data.append("file" + i, files[i])
+	form_data.append("file" + i, files[i]);
     }
     event.preventDefault();
     $('.modal-backdrop').remove();

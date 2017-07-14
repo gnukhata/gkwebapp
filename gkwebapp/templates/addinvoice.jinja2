@@ -195,7 +195,7 @@
 		    <tr>
 
                       <td>
-                    	<label for="orgstate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} :</label>
+                    	<label for="invoicestate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} :</label>
                       </td>
                       <td>
                     	<select class="form-control input-sm tax_state" id="invoicestate" >
@@ -243,6 +243,14 @@
                     	<label id="statecodeforinvoice" >{% trans %} {% endtrans %} </label>
                       </td>
 
+		    </tr>
+		    <tr class="invoice_issuer" style="display:none;">
+		      <td>
+			<label for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
+		      </td>
+		      <td>
+			  <input class="form-control input-sm" id="invoice_issuer_name" placeholder="{% trans %}Issuer's name{% endtrans %}" accesskey="a">
+		      </td>
 		    </tr>
                   </tbody>
 		</table>
