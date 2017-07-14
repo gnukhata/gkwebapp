@@ -22,11 +22,35 @@ Contributors:
 "Krishnakant Mane" <kk@gmail.com>
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
+"Rohini Baraskar" <robaraskar@gmail.com>
 */
 
 // This script is for the add cashmemo page
 
 $(document).ready(function() {
+
+    $('input,select').keydown( function(e) {
+      var n = $("input,select").length;
+      var f = $('input,select');
+      var disab = $('input,select').prop("disabled");
+      console.log("disbled");
+      console.log(disab);
+      if(!$('input,select').prop("disabled")){
+        if (e.which == 13)
+        {
+          console.log("getting called");
+          var nextIndex = f.index(this) + 1;
+          if(nextIndex < n){
+            e.preventDefault();
+            f[nextIndex].focus();
+            f[nextIndex].select();
+
+          }
+      }
+
+        }
+
+      });
     $('.modal-backdrop').remove();
     $('.invoicedate').autotab('number');
     $("#invoice_challanno").focus();
@@ -1422,7 +1446,7 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
      	    console.log("OBJ" + obj);
              contents[productcode] = obj;
           //rohini   items[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
-        //rohini     freeqty[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val();  
+        //rohini     freeqty[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val();
      	}
      	  invoicetotal = $('#total_product_gst').val();
 
