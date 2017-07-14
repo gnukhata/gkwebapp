@@ -1183,13 +1183,17 @@ console.log("quantity");
           return false;
         }
       }
-      var rowqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2);
-      var rowfreeqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
-      var rowprice = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
-      var rowtaxrate = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
-      var rowdiscount =parseFloat($('#invoice_product_table_vat tbody tr:eq('+ curindex + ') td:eq(5) input').val()).tofixed(2);
-      var taxpercentamount = (rowqty - rowfreeqty) * (rowprice-rowdiscount) * (rowtaxrate / 100);
-      var rowtotal = ((rowqty - rowfreeqty) * (rowprice-rowdiscount)) + taxpercentamount;
+    var rowqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2);
+    var rowfreeqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
+    var rowprice = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
+    var rowtaxrate = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val()).toFixed(2);
+    var rowdiscount = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
+    var taxablevalue = (rowqty - rowfreeqty) * (rowprice-rowdiscount);  
+    var taxpercentamount = (rowqty - rowfreeqty) * (rowprice-rowdiscount) * (rowtaxrate / 100);
+    var rowtotal = ((rowqty - rowfreeqty) * (rowprice-rowdiscount)) + taxpercentamount;
+    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(taxpercentamount).toFixed(2));
+    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(taxablevalue).toFixed(2));
+    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(rowtotal).toFixed(2));
 
       if (parseFloat(parseFloat($(this).val()).toFixed(2)) > parseFloat(parseFloat($(this).attr("data")).toFixed(2))) {
           $("#quantity-exceed-alert").alert();
@@ -1267,13 +1271,14 @@ console.log("quantity");
     var rowqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2);
     var rowfreeqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
     var rowprice = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
-    var rowtaxrate = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
-    var rowdiscount =parseFloat($('#invoice_product_table_vat tbody tr:eq('+curindex+')) td:eq(5) input').val()).tofixed(2);
+    var rowtaxrate = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val()).toFixed(2);
+    var rowdiscount = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
+    var taxablevalue = (rowqty - rowfreeqty) * (rowprice-rowdiscount);  
     var taxpercentamount = (rowqty - rowfreeqty) * (rowprice-rowdiscount) * (rowtaxrate / 100);
     var rowtotal = ((rowqty - rowfreeqty) * (rowprice-rowdiscount)) + taxpercentamount;
     $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(taxpercentamount).toFixed(2));
+    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(taxablevalue).toFixed(2));
     $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(rowtotal).toFixed(2));
-
     pqty = 0.00;
     ptaxamt = 0.00;
     ptotal = 0.00;
@@ -1343,7 +1348,7 @@ console.log("quantity");
 
 
   $(document).off('change', '.invoice_product_per_price').on('change', '.invoice_product_per_price', function(event) {
-    event.preventDefault();
+      event.preventDefault();
     /* Act on the event */
     if ($(this).val() == "") {
       $(this).val(0);
@@ -1352,12 +1357,14 @@ console.log("quantity");
     var rowqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2);
     var rowfreeqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
     var rowprice = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
-    var rowtaxrate = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
+    var rowtaxrate = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val()).toFixed(2);
+    var rowdiscount = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
+    var taxablevalue = (rowqty - rowfreeqty) * (rowprice-rowdiscount);  
     var taxpercentamount = (rowqty - rowfreeqty) * (rowprice-rowdiscount) * (rowtaxrate / 100);
     var rowtotal = ((rowqty - rowfreeqty) * (rowprice-rowdiscount)) + taxpercentamount;
-    $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(taxpercentamount).toFixed(2));
-
-    $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(rowtotal).toFixed(2));
+    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(taxpercentamount).toFixed(2));
+    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(taxablevalue).toFixed(2));
+    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(rowtotal).toFixed(2));
     perprice = 0.00;
     ptaxamt = 0.00;
     ptotal = 0.00;

@@ -59,6 +59,9 @@
  .rightJustified {
      text-align: right;
  }
+ select {
+     max-width: 190px !important;
+ }
 
 </style>
 <body style="padding-right:1%;">
@@ -248,8 +251,16 @@
 		      <td>
 			<label for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
 		      </td>
-		      <td>
+		      <td colspan="2">
 			  <input class="form-control input-sm" id="invoice_issuer_name" placeholder="{% trans %}Issuer's name{% endtrans %}" accesskey="a">
+		      </td>
+		    </tr>
+		    <tr class="invoice_issuer" style="display:none">
+		      <td>
+			<label for="invoice_issuer_designation">{% trans %}Designation{% endtrans %} :</label>
+		      </td>
+		      <td colspan="2">
+			<input class="form-control input-sm" id="invoice_issuer_designation" placeholder="{% trans %}Issuer's designation{% endtrans %}" accesskey="a">
 		      </td>
 		    </tr>
                   </tbody>
@@ -325,7 +336,7 @@
 			</td>
 
 			<td>
-			  <label id="invoice_customerstate" >{% trans %} {% endtrans %} </label>
+			  <label id="invoice_customerstate">{% trans %} {% endtrans %} </label>
 
 			</td>
 		      {% endif %}
@@ -478,14 +489,14 @@
 		    </td>
 
 		    <td class="col-xs-1">
-		      <input type="text" class="invoice_product_taxablevalue form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8">
+		      <input type="text" class="invoice_product_taxablevalue form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8" disabled>
 		    </td>
 		    <td class="col-xs-1">
 		      <input type="text" class="invoice_product_tax_rate form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8">
 		    </td>
 		    <td class="col-xs-1">
 
-		      <label  size="8" class="invoice_product_tax_amount  text-right numtype"  value="0.00" placeholder="0.00">{% trans %} {% endtrans %} </label>
+		      <input  size="8" class="invoice_product_tax_amount form-control text-right numtype"  value="0.00" placeholder="0.00" disabled>
 		    </td>
 		    <td class="col-xs-1">
 		      <input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
@@ -718,8 +729,9 @@
 		</div>
 	      </div>
 	    </div>
-	</div>
 	  </form>
+	</div>
+      </div>
 	  <div class="panel-footer ">
             <div class="container-fluid">
               <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save">{% trans %}Save{% endtrans %}</button>
@@ -737,7 +749,8 @@
 	      </label>
 	      <span class='label label-info' id="upload-file-info"></span>
         </div>
-			</div>
+	  </div>
+    </div>
       <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
         <div class="vertical-alignment-helper">
           <div class="modal-dialog modal-sm vertical-align-center">
@@ -753,7 +766,10 @@
                 <button type="button" id ="tn_save_no" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
                 <button type="button" id="tn_save_yes" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
               </div>
-
+	    </div>
+	  </div>
+	</div>
+      </div>
 
 
 
