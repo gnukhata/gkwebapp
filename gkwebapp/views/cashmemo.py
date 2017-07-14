@@ -53,15 +53,16 @@ def getproducts(request):
 
 
 @view_config(route_name="cashmemos",request_param="action=save",renderer="json")
-def saveinvoice(request):
+def savecashmemo(request):
 	header={"gktoken":request.headers["gktoken"]}
-
+	print request.params
 	cashmemodata = {"invoiceno":request.params["invoiceno"],"invoicetotal":request.params["invoicetotal"],"icflag":3,"taxstate":request.params["taxstate"],"invoicedate":request.params["invoicedate"],
 		"tax":json.loads(request.params["tax"]),
-		"contents":json.loads(request.params["contents"]),"freeqty":json.loads(request.params["freeqty"])}
-
+		"contents":json.loads(request.params["contents"]),"freeqty":json.loads(request.params["freeqty"]),"discount":json.loads(request.params["discount"])}
+	print cashmemodata
 	stock = json.loads(request.params["stock"])
 	invoicewholedata = {"invoice":cashmemodata,"stock":stock}
+	print invoicewholedata
 	result=requests.post("http://127.0.0.1:6543/invoice",data=json.dumps(invoicewholedata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 
