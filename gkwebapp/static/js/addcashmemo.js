@@ -85,16 +85,16 @@ var rowtotal = 0.00;
 var totalamount = 0.00;
 var totalcgst = 0.00;
 var totalsgst = 0.00;
-var totaligst = 0.00;
+
 var totaldiscount = 0.00;
 var totaltaxable = 0.00;
 $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtaxableamount).toFixed(2));
 taxamount = (rowtaxableamount * taxdetails["taxrate"])/100;
-if (taxdetails["taxname"] == "IGST") {
-  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(taxamount/2).toFixed(2));
-  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(10) input').val(parseFloat(taxamount/2).toFixed(2));
+if (taxdetails["taxname"] == "SGST") {
+  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(taxamount).toFixed(2));
+  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(10) input').val(parseFloat(taxamount).toFixed(2));
     rowtotal = rowtaxableamount + taxamount;
-    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val(parseFloat(rowtotal).toFixed(2));
+    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(rowtotal).toFixed(2));
 }
 
 for(var i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
@@ -102,14 +102,14 @@ for(var i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
     totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(6) input').val());
     totalcgst = totalcgst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(8) input').val());
     totalsgst = totalsgst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(10) input').val());
-    totaligst = totaligst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(12) input').val());
-    totalamount = totalamount + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(13) input').val());
+
+    totalamount = totalamount + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(11) input').val());
 }
 $('#discounttotal_product_gst').text(parseFloat(totaldiscount).toFixed(2));
 $('#taxablevaluetotal_product_gst').text(parseFloat(totaltaxable).toFixed(2));
 $('#totalcgst_product_gst').text(parseFloat(totalcgst).toFixed(2));
 $('#totalsgst_product_gst').text(parseFloat(totalsgst).toFixed(2));
-$('#totaligst_product_gst').text(parseFloat(totaligst).toFixed(2));
+
 $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
   }
 
@@ -467,9 +467,9 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
                      if (resp["gkstatus"] == 0) {
         		 console.log("yo yo");
         		 $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').data("taxdetails", {taxname: resp["taxname"], taxrate:resp["taxrate"]});
-                       if(resp['taxname']=='IGST'){
-                          $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(resp['taxrate']/2).toFixed(2));
-                          $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(resp['taxrate']/2).toFixed(2));
+                       if(resp['taxname']=='SGST'){
+                          $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(resp['taxrate']).toFixed(2));
+                          $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(resp['taxrate']).toFixed(2));
                        }
 
 
@@ -1907,22 +1907,19 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
                      '<input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00">'+
                    '</td>'+
                    '<td class="">'+
-                     '<input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00" disabled>'+
+                     '<input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype " value="0.00" size="8" placeholder="0.00" disabled>'+
                    '</td>'+
 
-                '<td><input type="text" class="invoice_product_cgstrate  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled></td>'+
-                '<td><input type="text" class="invoice_product_cgstamount  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled></td>'+
+                '<td><input type="text" class="invoice_product_cgstrate form-control text-right ratewrap numtype" size="4" value="0.00" placeholder="0.00" disabled></td>'+
+                '<td><input type="text" class="invoice_product_cgstamount form-control text-right numtype smwrap" size="4" value="0.00" placeholder="0.00" disabled></td>'+
 
 
 
 
-                 '<td><input type="text" class="invoice_product_sgstrate  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled></td>'+
-    '                 <td><input type="text" class="invoice_product_sgstamount  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled></td>'+
+                 '<td><input type="text" class="invoice_product_sgstrate  text-right form-control numtype ratewrap" size="4" value="0.00" placeholder="0.00" disabled></td>'+
+    '                 <td><input type="text" class="invoice_product_sgstamount  text-right form-control numtype smwrap" size="4" value="0.00" placeholder="0.00" disabled></td>'+
 
-                   '<td>'+
-                     '<input type="text" class="invoice_product_igstrate  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled></td>'+
-                     '<td><input type="text" class="invoice_product_igstamount  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled>'+
-                   '</td>'+
+
                    '<td class="">'+
                      '<input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" size="5" placeholder="0.00" disabled>'+
                    '</td>'+
