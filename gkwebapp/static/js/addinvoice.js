@@ -2192,11 +2192,11 @@ console.log("quantity");
 	var productcode = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
         var ppu = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val();
         obj[ppu] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val();
-	obj["discount"] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val();
         tax[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val();
         contents[productcode] = obj;
         items[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val();
         freeqty[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val();
+	discount[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val();  
 	}
     }
 	invoicetotal = $('#invoice_product_table_vat tfoot tr:last td:eq(5) input').val();
@@ -2210,10 +2210,10 @@ console.log("quantity");
 	productcode = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
         ppu = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val();
         obj[ppu] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
-	    obj["discount"] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();
         contents[productcode] = obj;
-        items[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val();
-        freeqty[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val();  
+        items[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
+        freeqty[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val();
+	discount[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();    
 	}
 	  invoicetotal = $('#total_product_gst').html();
       }
@@ -2267,6 +2267,7 @@ console.log("quantity");
     form_data.append("invtotal", invoicetotal);
     form_data.append("taxstate", $("#invoicestate option:selected").val());
     form_data.append("freeqty", JSON.stringify(freeqty));
+    form_data.append("discount", JSON.stringify(discount));  
     form_data.append("consignee", JSON.stringify(consignee));
     form_data.append("bankdetails", JSON.stringify(bankdetails));    
     form_data.append("taxflag", $("#taxapplicable").val());
