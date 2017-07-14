@@ -353,7 +353,7 @@
   		      <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
   		      <th colspan="2" class="taxwrap text-center">{% trans %}CGST{% endtrans %}</th>
   		      <th colspan="2" class="taxwrap text-center">{% trans %}SGST{% endtrans %}</th>
-  		      <th colspan="2" class="taxwrap text-center">{% trans %}IGST{% endtrans %}</th>
+
   		      <th rowspan="2" class="smwrap text-center">{% trans %}Total{% endtrans %}</th>
   		      </tr>
 
@@ -410,10 +410,6 @@
   		      <td class="ratewrap"><input type="text" class="invoice_product_sgstrate  form-control input-sm text-right numtype ratewrap" size="6" value="0.00" placeholder="0.00" disabled></td>
   		      <td class="smwrap"><input type="text" class="invoice_product_sgstamount  input-sm form-control text-right numtype smwrap" size="6" value="0.00" placeholder="0.00" disabled></td>
 
-  		      <td class="ratewrap">
-  			<input type="text" class="invoice_product_igstrate  input-sm text-right form-control numtype ratewrap" size="6" value="0.00" placeholder="0.00" disabled></td>
-  			<td class="smwrap"><input type="text" class="invoice_product_igstamount form-control input-sm text-right numtype smwrap" size="6" value="0.00" placeholder="0.00" disabled>
-  			</td>
   			<td class="smwrap">
   			  <input type="text" class="invoice_product_total form-control input-sm text-right numtype smwrap" value="0.00" size="10" placeholder="0.00" disabled>
   			</td>
@@ -429,7 +425,7 @@
   		      <td colspan="2" class="text-center"><span id="totalcgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
 
   		      <td colspan="2" class="text-center"><span id="totalsgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
-  		      <td colspan="2" class="text-center"><span id="totaligst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+  		     
 
   		      <td class="text-center"><span id="total_product_gst" class="input-group-addon input-sm" size="8"></span></td>
   		      <td class=""></td>

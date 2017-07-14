@@ -1395,7 +1395,9 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
         var contents = {};
         var stock = {};
         var freeqty = {};
+        var productqtys=[];
         var items = {};
+        var discount = {};
         if ($("#taxapplicable option:selected").val() == 22) {
         for (var i = 0; i < $("#invoice_product_table tbody tr").length; i++) {
             if ($("#invoice_product_table tbody tr:eq(" + i + ") td:eq(0) select option:selected").val() == "") {
@@ -1439,22 +1441,104 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
          productqtys.push(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()));
      	  var obj = {};
      	for (var i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
+        obj={};
      	productcode = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
              ppu = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val();
              obj[ppu] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
      	    obj["discount"] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();
+          console.log(obj["discount"]);
      	    console.log("OBJ" + obj);
              contents[productcode] = obj;
-          //rohini   items[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
-        //rohini     freeqty[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val();
+          items[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
+           freeqty[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val();
+           discount[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();
      	}
-     	  invoicetotal = $('#total_product_gst').val();
+      console.log(discount);
+     	    invoicetotal = $('#total_product_gst').val();
 
        }
         stock["items"] = items;
 
 
         stock["inout"] = 15;
+
+
+
+       var form_data = new FormData();
+
+
+        form_data.append("invoiceno", $("#invoice_challanno").val());
+        form_data.append("invoicedate", $("#invoice_year").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_date").val());
+        form_data.append("contents", JSON.stringify(contents));
+        form_data.append("tax", JSON.stringify(tax));
+        form_data.append("stock", JSON.stringify(stock));
+        form_data.append("invtotal", invoicetotal);
+        form_data.append("taxstate", $("#invoicestate option:selected").val());
+        form_data.append("freeqty", JSON.stringify(freeqty));
+        form_data.append("discount", JSON.stringify(discount));
+
+
+        form_data.append("taxflag", $("#taxapplicable").val());
+
+        event.preventDefault();
+        $('.modal-backdrop').remove();
+        $('.modal').modal('hide');
+        $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function(e) {
+          console.log("action=save");
+          $.ajax({
+            url: '/invoice?action=save',
+            type: 'POST',
+            global: false,
+            contentType: false,
+            cache: false,
+            processData: false,
+            dataType: 'json',
+            async: false,
+            data: form_data,
+            beforeSend: function(xhr) {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+          })
+           .done(function(resp) {
+             if (resp["gkstatus"] == 0) {
+               if ($("#status").val() == '9') {
+                 $("#invoice_record").click();
+               } else {
+                 $("#invoice_create").click();
+               }
+               $("#success-alert").alert();
+               $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
+                 $("#success-alert").hide();
+               });
+               return false;
+             } else if (resp["gkstatus"] == 1) {
+               $("#invoice_challanno").focus();
+               $("#duplicate-alert").alert();
+               $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
+                 $("#duplicate-alert").hide();
+               });
+               return false;
+             } else {
+               $("#invoice_deliverynote").focus();
+               $("#failure-alert").alert();
+               $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {
+                 $("#failure-alert").hide();
+               });
+               return false;
+             }
+           })
+           .fail(function() {
+             console.log("error");
+           })
+           .always(function() {
+             console.log("complete");
+           });
+
+          return false;
+        });
+
+
+
 
 
         event.preventDefault();
