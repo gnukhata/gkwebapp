@@ -4,11 +4,18 @@
 <style type="text/css">
  #gstproducttable {
      overflow-x: scroll;
-     overflow-y: scroll;
      height: calc(100vh - 28em);
  }
  #invoice_product_table_gst tbody {
+     display:table;
+     width:1570px;
+     height: calc(100vh - 33em);
+     overflow-y:scroll;
+ }
+ #invoice_product_table_vat tbody {
+     display:block;
      height: calc(100vh - 31em);
+     overflow-y:scroll;
  }
  #invoice_product_table_vat tfoot {
      display:table;
@@ -499,7 +506,7 @@
 		      <input  size="8" class="invoice_product_tax_amount form-control text-right numtype"  value="0.00" placeholder="0.00" disabled>
 		    </td>
 		    <td class="col-xs-1">
-		      <input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
+		      <input size="8" type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
 		    </td>
 		    <td class="col-xs-1" style="width: 3%;">
 		    </td>

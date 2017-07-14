@@ -2704,14 +2704,14 @@ console.log("quantity");
         }
         if ($("#taxapplicable option:selected").val() == 22 ) {
           //VAT
-          $("#invoice_product_table_gst").hide();
+          $("#invoice_product_table_gst, #gstproducttable").hide();
           $("#invoice_product_table_vat").show();
 
           console.log("//VAT");
         }
         if ($("#taxapplicable option:selected").val() == 7 ) {
           //VAT
-          $("#invoice_product_table_gst").show();
+          $("#invoice_product_table_gst, #gstproducttable").show();
           $("#invoice_product_table_vat").hide();
 
           console.log("//gst");
