@@ -3,13 +3,17 @@
 <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}INVOICE{% endtrans %}</title>
 <style type="text/css">
  #gstproducttable {
+     overflow-y:auto;
      overflow-x: scroll;
      height: calc(100vh - 28em);
  }
+ #invoice_product_table_gst {
+     margin:0 !important;
+     margin:0 !important;
+ }
  #invoice_product_table_gst tbody {
-     display:table;
-     width:1570px;
-     height: calc(100vh - 33em);
+     height: calc(100vh - 32em);
+     overflow-x:auto;
      overflow-y:scroll;
  }
  #invoice_product_table_vat tbody {
