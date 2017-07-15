@@ -267,6 +267,7 @@
                   <th class="col-xs-2 text-center">{% trans %}Free Quantity{% endtrans %}</th>
                   <th class="col-xs-2 text-center">{% trans %}Price Per Unit{% endtrans %}</th>
                   <th class="col-xs-1 text-center">{% trans %}Discount{% endtrans %}</th>
+                   <th class="col-xs-1 text-center">{% trans %}Taxable Value{% endtrans %}</th>
                   <th class="col-xs-1 text-center">{% trans %}Tax Rate{% endtrans %}</th>
                   <th class="col-xs-1 text-center">{% trans %}Tax Amount{% endtrans %}</th>
                   <th class="col-xs-2 text-center">{% trans %}Total{% endtrans %}</th>
@@ -301,6 +302,9 @@
                   <td class="col-xs-1">
                     <input type="text" class="invoice_product_discount form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8">
                   </td>
+                  <td class="col-xs-1">
+          		      <input type="text" class="invoice_product_taxablevalue form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8" disabled>
+          		    </td>
                   <td class="col-xs-1">
                     <input type="text" class="invoice_product_tax_rate form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
                   </td>
