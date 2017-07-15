@@ -962,6 +962,9 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
                                 '<td class="col-xs-2">' +
                                 '<input type="text" class="invoice_product_per_price form-control input-sm numtype text-right" value="0.00">' +
                                 '</td>' +
+                                '<td class="col-xs-1">'+
+                                  '<input type="text" class="invoice_product_discount form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8">'+
+                                '</td>'+
                                 '<td class="col-xs-1">' +
                                 '<input type="text" class="invoice_product_tax_rate form-control input-sm numtype text-right" value="0.00">' +
                                 '</td>' +
@@ -1206,6 +1209,9 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
                                 '<td class="col-xs-2">' +
                                 '<input type="text" class="invoice_product_per_price form-control input-sm numtype text-right" value="0.00">' +
                                 '</td>' +
+                                '<td class="col-xs-1">'+
+                                  '<input type="text" class="invoice_product_discount form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8">'+
+                                '</td>'+
                                 '<td class="col-xs-1">' +
                                 '<input type="text" class="invoice_product_tax_rate form-control input-sm numtype text-right" value="0.00">' +
                                 '</td>' +
