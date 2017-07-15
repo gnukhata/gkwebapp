@@ -903,6 +903,7 @@ $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(8) input').val(par
     });
 
     $(document).off("keydown", ".invoice_product_discount").on("keydown", ".invoice_product_discount", function(event) {
+      console.log("KEYDOWN DISC");
         var curindex = $(this).closest('tr').index();
         var nextindex = curindex + 1;
         var previndex = curindex - 1;
@@ -1092,7 +1093,8 @@ $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(8) input').val(par
                                 $('#invoice_product_table tfoot tr:last td:eq(7) input').val(parseFloat(ptotal).toFixed(2));
                             });
 
-                            $('#invoice_product_table tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
+                            //$('#invoice_product_table tbody tr:eq(' + nextindex + ') td:eq(0) select').focus();
+                            console.log("NEXTINDEX PRODUCT");
                             $('.invoice_product_quantity').numeric({ negative: false });
                             $('.invoice_product_freequantity').numeric({ negative: false });
                             $('.invoice_product_per_price').numeric({ negative: false });
@@ -1176,6 +1178,20 @@ $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(8) input').val(par
         });
 
     });
+///
+$(document).off("keydown", ".invoice_product_per_price").on("keydown", ".invoice_product_per_price", function(event) {
+  var curindex1 = $(this).closest('tr').index();
+  var nextindex1 = curindex1 + 1;
+  var previndex1 = curindex1 - 1;
+  if (event.which == 13) {
+    event.preventDefault();
+      $('#invoice_product_table tbody tr:eq(' + curindex1 + ') td:eq(4) input').focus().select();
+      console.log("per price to disc ");
+
+  }
+});
+
+///
 
     $(document).off("keydown", ".invoice_product_tax_rate").on("keydown", ".invoice_product_tax_rate", function(event) {
         var curindex1 = $(this).closest('tr').index();
