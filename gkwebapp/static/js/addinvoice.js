@@ -405,7 +405,9 @@ $(document).ready(function() {
       var productcode = $(this).find('option:selected').val();
       console.log("VAT"+productcode);
     var curindex = $(this).closest('tbody tr').index();
-    var state = $("#invoice_state option:selected").val();
+    var sourcestate=$("#invoicestate option:selected").val();
+    var destinationstate=$("#consigneestate option:selected").val();
+    var taxflag=$("#taxapplicable option:selected").val();
     if ($("#status").val() == '15') {
       $.ajax({
         url: '/product?type=prodtax',
@@ -420,7 +422,7 @@ $(document).ready(function() {
        .done(function(resp) {
          console.log("success");
          if (resp["gkresult"].length == 0) {
-	   $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val("0.00");
+	   $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val("0.00");
            $("#notax-alert").alert();
            $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
              $("#notax-alert").hide();
@@ -436,22 +438,21 @@ $(document).ready(function() {
          console.log("complete");
        });
 
-
       $.ajax({
-        url: '/invoice?action=gettax',
+        url: '/invoice?action=getappliedtax',
         type: 'POST',
         dataType: 'json',
         async: false,
-        data: { "productcode": productcode, "state": state },
+        data: { "productcode": productcode, "source": sourcestate,"destination":destinationstate,"taxflag":taxflag },
         beforeSend: function(xhr) {
           xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
         }
       })
        .done(function(resp) {
-         console.log("success");
+         console.log("success" + resp);
          if (resp["gkstatus"] == 0) {
-	   $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val(parseFloat(resp['taxdata']).toFixed(2));
-           $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').prop("disabled", false);
+	   $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['taxrate']).toFixed(2));
+           $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').prop("disabled", true);
          }
        })
        .fail(function() {

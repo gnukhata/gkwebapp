@@ -129,7 +129,8 @@ def getstatetax(request):
 @view_config(route_name="invoice",request_param="action=getappliedtax",renderer="json")
 def getappliedtax(request):
 	header={"gktoken":request.headers["gktoken"]}
-	taxdetails = requests.get("http://127.0.0.1:6543/invoice?type=caltax&productcode=%d&source=%s&destination=%s&taxflag=%d"%(int(request.params["productcode"]),request.params["source"],request.params["destination"],int(request.params["taxflag"])), headers=header)
+	print request.params
+	taxdetails = requests.get("http://127.0.0.1:6543/products?type=pt&productcode=%d&source=%s&destination=%s&taxflag=%d"%(int(request.params["productcode"]),request.params["source"],request.params["destination"],int(request.params["taxflag"])), headers=header)
 	data = taxdetails.json()["gkresult"]
 	print data
 	return{"gkstatus":taxdetails.json()["gkstatus"],"taxname":data["taxname"],"taxrate":data["taxrate"]}
