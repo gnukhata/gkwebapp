@@ -681,7 +681,7 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
             ptotal += +$(this).val();
 
             // jquery enables us to select specific elements inside a table easily like below.
-            $('#invoice_product_table tfoot tr:last td:eq(7) input').val(parseFloat(ptotal).toFixed(2));
+            $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
         });
 
     });
@@ -739,7 +739,7 @@ $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(8) input').val(par
                 ptotal += +$(this).val();
 
                 // jquery enables us to select specific elements inside a table easily like below.
-                $('#invoice_product_table tfoot tr:last td:eq(7) input').val(parseFloat(ptotal).toFixed(2));
+                $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
             });
 
 
@@ -954,7 +954,7 @@ $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(8) input').val(par
                 ptotal += +$(this).val();
 
                 // jquery enables us to select specific elements inside a table easily like below.
-                $('#invoice_product_table tfoot tr:last td:eq(6) input').val(parseFloat(ptotal).toFixed(2));
+                $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
             });
 
             if (curindex != ($("#invoice_product_table tbody tr").length - 1)) {
@@ -1090,7 +1090,7 @@ $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(8) input').val(par
                                 ptotal += +$(this).val();
 
                                 // jquery enables us to select specific elements inside a table easily like below.
-                                $('#invoice_product_table tfoot tr:last td:eq(7) input').val(parseFloat(ptotal).toFixed(2));
+                                $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
                             });
 
                             //$('#invoice_product_table tbody tr:eq(' + nextindex + ') td:eq(0) select').focus();
@@ -1174,7 +1174,7 @@ $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(8) input').val(par
             ptotal += +$(this).val();
 
             // jquery enables us to select specific elements inside a table easily like below.
-            $('#invoice_product_table tfoot tr:last td:eq(7) input').val(parseFloat(ptotal).toFixed(2));
+            $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
         });
 
     });
@@ -1354,7 +1354,7 @@ $(document).off("keydown", ".invoice_product_per_price").on("keydown", ".invoice
                                 ptotal += +$(this).val();
 
                                 // jquery enables us to select specific elements inside a table easily like below.
-                                $('#invoice_product_table tfoot tr:last td:eq(7) input').val(parseFloat(ptotal).toFixed(2));
+                                $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
                             });
 
                             $('#invoice_product_table tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
