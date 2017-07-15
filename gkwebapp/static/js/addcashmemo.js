@@ -251,13 +251,15 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
 
         if ($("#taxapplicable option:selected").val() == 22 ) {
           //VAT
+          console.log("show VAT");
           $("#gstproducttable").hide();
           $("#invoice_product_table").show();
 
           console.log("//VAT");
         }
         if ($("#taxapplicable option:selected").val() == 7 ) {
-          //VAT
+
+          console.log("GST");
           $("#gstproducttable").show();
           $("#invoice_product_table").hide();
 
@@ -1339,6 +1341,7 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
     $("#invoice_save").click(function(event) {
         // validations start below
         event.stopPropagation();
+
         var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
         if ($.trim($('#invoice_challanno').val()) == "") {
             $("#challanno-blank-alert").alert();
@@ -1398,6 +1401,10 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
         var productqtys=[];
         var items = {};
         var discount = {};
+          var bankdetails = {};
+          bankdetails["accountno"] = $("#accountno").val();
+          bankdetails["bankname"] = $("#bankname").val();
+          bankdetails["ifsc"] = $("#ifsc").val();
         if ($("#taxapplicable option:selected").val() == 22) {
         for (var i = 0; i < $("#invoice_product_table tbody tr").length; i++) {
             if ($("#invoice_product_table tbody tr:eq(" + i + ") td:eq(0) select option:selected").val() == "") {
@@ -1477,6 +1484,7 @@ if ($("#taxapplicable option:selected").val() == 7) {
         form_data.append("taxflag", $("#taxapplicable option:selected").val());
         form_data.append("freeqty", JSON.stringify(freeqty));
         form_data.append("discount", JSON.stringify(discount));
+        form_data.append("bankdetails", JSON.stringify(bankdetails));
 
 
 
@@ -1560,7 +1568,8 @@ if ($("#taxapplicable option:selected").val() == 22) {
                         "taxstate": $("#invoice_state option:selected").val(),
                         "tax": JSON.stringify(tax),
                         "stock": JSON.stringify(stock),
-                        "freeqty": JSON.stringify(freeqty)
+                        "freeqty": JSON.stringify(freeqty),
+                        "bankdetails": JSON.stringify(bankdetails)
                     },
                     beforeSend: function(xhr) {
                         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);

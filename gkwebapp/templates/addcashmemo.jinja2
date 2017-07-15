@@ -435,6 +435,39 @@
 
   		</table>
   	      </div>
+          <div class="col-md-4">
+          <table class="table  table-condensed table-bordered table-striped">
+          <tbody>
+          <h5>Bank Details:</h5>
+          <tr>
+            <td>  <label for="Account Number" class=" col-form-label col-form-label-sm" id="accountno">{% trans %}Account No. :{% endtrans %}</label></td>
+            <td colspan="2"><input type="text" id="accountno" class=" form-control input-sm" name="accountno" ></input></td>
+          </tr>
+          <tr>
+            <td>  <label for="Bank Name" class=" col-form-label col-form-label-sm" id="bankname">{% trans %}Bank Name :{% endtrans %}</label></td>
+            <td colspan="2"><input type="text" id="bankname" class=" form-control input-sm" name="bankname" ></input></td>
+          </tr>
+          <tr>
+
+            <td>  <label for="Bank Branch IFSC code" class=" col-form-label col-form-label-sm" id="ifsc">{% trans %}Bank Branch IFSC code :{% endtrans %}</label></td>
+            <td colspan="2"><input type="text" id="ifsc" class=" form-control input-sm" name="ifsc" ></input></td>
+
+          </tr>
+          </tbody>
+          </table>
+
+          </div>
+          <div class="col-md-8" >
+  		<h5>Total</h5>
+  		<table class="table  table-condensed table-bordered table-striped">
+  		  <tbody>
+
+  		    <tr>
+  		      <td>  <label style="font-size: 125%" for="total invoice value" class=" col-form-label col-form-label-sm" id="totalinvoicevalue">{% trans %}Total Amount :{% endtrans %}</label></td>
+  		      <td colspan="2"></td>
+  		    </tr>
+  		  </tbody>
+  		</table>
 
         </div>
 
