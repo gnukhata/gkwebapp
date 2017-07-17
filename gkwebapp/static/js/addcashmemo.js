@@ -336,6 +336,7 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
                     })
                     .fail(function() {
                         console.log("error");
+                          $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(0.0).toFixed(2));
                     })
                     .always(function() {
                         console.log("complete");
@@ -349,6 +350,7 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
 
     // if the selected product is changed the tax rate is again retrieved from the database, again using the combination of product code and state
     $(document).off('change', '.product_name_vat').on('change', '.product_name_vat', function(event) {
+      console.log("CHANGE VAT PROD NAME");
         event.preventDefault();
         /* Act on the event */
       var sourcestate=$("#invoice_state option:selected").val();
@@ -384,6 +386,7 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
                 })
                 .fail(function() {
                     console.log("error in getappliedtax");
+                    $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(0.0).toFixed(2));
                 })
                 .always(function() {
                     console.log("complete");
@@ -425,6 +428,7 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
       var curindex = $(this).closest('tr').index();
       var nextindex = curindex + 1;
       var previndex = curindex - 1;
+      $(".product_name_vat").change();
       if (event.which == 13) {
         event.preventDefault();
         $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
@@ -829,7 +833,7 @@ $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(8) input').val(par
                 ptotal += +$(this).val();
 
                 // jquery enables us to select specific elements inside a table easily like below.
-                $('#invoice_product_table tfoot tr:last td:eq(7) input').val(parseFloat(ptotal).toFixed(2));
+                $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
             });
 
 
@@ -1071,6 +1075,7 @@ $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(8) input').val(par
                                     })
                                     .fail(function() {
                                         console.log("error");
+                                        $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(0.0).toFixed(2));
                                     })
                                     .always(function() {
                                         console.log("complete");
@@ -1335,6 +1340,7 @@ $(document).off("keydown", ".invoice_product_per_price").on("keydown", ".invoice
                                     })
                                     .fail(function() {
                                         console.log("error");
+                                        $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(0.0).toFixed(2));
                                     })
                                     .always(function() {
                                         console.log("complete");
