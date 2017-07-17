@@ -79,6 +79,7 @@ var rowfreeqty = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curind
 var rowprice = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
 var rowdiscount = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val()).toFixed(2);
 var taxdetails = $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').data("taxdetails");
+console.log(taxdetails);
 var taxamount = 0.00;
 var rowtaxableamount=(rowqty - rowfreeqty) * (rowprice-rowdiscount);
 var rowtotal = 0.00;
@@ -431,6 +432,7 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
       $(".product_name_vat").change();
       if (event.which == 13) {
         event.preventDefault();
+        $(".product_name_vat").change();
         $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
       } else if (event.which == 190 && event.shiftKey) {
         $('#invoice_product_table_gst tbody tr:eq(' + nextindex + ') td:eq(0) select').focus();
@@ -1941,7 +1943,7 @@ if ($("#taxapplicable option:selected").val() == 22) {
     console.log("discount");
     if (event.which == 13) {
       event.preventDefault();
-
+      $(".product_name_vat").change();
       var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
       console.log("discount gst keydown");
        calculategstaxamt(curindex);
