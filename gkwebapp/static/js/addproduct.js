@@ -47,12 +47,14 @@ if (sessionStorage.invflag=='1' ){
       $(".serviceclass").hide();
       $(".productclass").show();
       $("#proservlabel").text("Product Name :");
+      $("#gscodelabel").text("HSN Code :");
       $(".common").show();
     }
     if($("#additem option:selected").val() == '19'){
       $(".productclass").hide();
       $(".serviceclass").show();
       $("#proservlabel").text("Service Name :");
+            $("#gscodelabel").text("Accounting Code for Service :");
       $(".common").show();
     }
   });
@@ -205,13 +207,10 @@ $("#addproddesc").keydown(function(event) {
       return false;
     }
     else {
-      if($("#additem option:selected").val() == '7')
-      {
+      
           $("#hsnno").focus();
-      }
-      else{
-        $("#serviceno").focus();
-      }
+
+
     }
   }
   if (event.which==38) {
@@ -1381,11 +1380,14 @@ else{
 
 if ($("#additem option:selected").val() == 7){
   addformdata.push("gscode",$("#hsnno").val());
+  console.log("GSCODE OF 7"+addformdata['gscode']);
 }
 else{
   addformdata.push("gscode",$("#serviceno").val());
 
 }
+console.log("addformdata");
+console.log(addformdata);
   addformdata.push("gsflag",$("#additem option:selected").val());
   addformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
   addformdata.push({name: 'specs', value: JSON.stringify(specs)});

@@ -54,17 +54,12 @@
                 <input type='text' class="form-control input-sm common" name="addproddesc"  id="addproddesc" placeholder="Alphanumeric">
               </div>
 
-              <div class="form-group col-sm-11 pd productclass">
-                <label for="addproddesc" class="" >{% trans %}HSN No.{% endtrans %} :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
-                <input type='text' class="form-control input-sm productclass" name="gscode"  id="hsnno" placeholder="Alphanumeric">
+              <div class="form-group col-sm-11 pd ">
+                <label for="addproddesc" class="common" id="gscodelabel" >{% trans %}{% endtrans %} :</label><label for="gscode" class="common" style="color:red;font-size: 120%;">*</label>
+                <input type='text' class="form-control input-sm common" name="gscode"  id="hsnno" placeholder="Alphanumeric">
               </div>
             </div>
-            <div class="row">
-              <div class="form-group col-sm-11 pd serviceclass">
-                <label for="addproddesc" class="serviceclass">{% trans %}Accounting Code for Services{% endtrans %} :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
-                <input type='text' class="form-control input-sm serviceclass" name="gscode"  id="serviceno" placeholder="Alphanumeric">
-              </div>
-          </div>
+
             <div class="row productclass">
               <div class="form-group col-sm-11 pds olduom">
                 <label for="uom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label><label for="uom" style="color:red;font-size: 120%;">*</label>
