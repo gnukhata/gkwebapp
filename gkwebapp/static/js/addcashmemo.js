@@ -305,21 +305,24 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
     $(document).off('change', '#invoice_state').on('change', '#invoice_state', function(event) {
         event.preventDefault();
         /* Act on the event */
-        var state = $("#invoice_state option:selected").val();
+
+        var sourcestate=$("#invoice_state option:selected").val();
+        var destinationstate=$("#invoice_state option:selected").val();
+        var taxflag=$("#taxapplicable option:selected").val();
         var productcode;
         $(".product_name_vat").each(function() {
             var curindex = $(this).closest('tbody tr').index();
             productcode = $(this).find('option:selected').val();
-            if (state == "none") {
-                $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val(parseFloat(0).toFixed(2));
+            if (sourcestate == "none") {
+                $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(0).toFixed(2));
             } else {
 
                 $.ajax({
-                        url: '/invoice?action=gettax',
+                        url: '/invoice?action=getappliedtax',
                         type: 'POST',
                         dataType: 'json',
                         async: false,
-                        data: { "productcode": productcode, "state": state },
+                        data: { "productcode": productcode, "source": sourcestate,"destination":destinationstate,"taxflag":taxflag },
                         beforeSend: function(xhr) {
                             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
                         }
@@ -327,7 +330,7 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
                     .done(function(resp) {
                         console.log("success");
                         if (resp["gkstatus"] == 0) {
-                            $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val(parseFloat(resp['taxdata']).toFixed(2));
+                            $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['taxrate']).toFixed(2));
                         }
 
                     })
@@ -348,33 +351,39 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
     $(document).off('change', '.product_name_vat').on('change', '.product_name_vat', function(event) {
         event.preventDefault();
         /* Act on the event */
+      var sourcestate=$("#invoice_state option:selected").val();
+      var destinationstate=$("#invoice_state option:selected").val();
+      var taxflag=$("#taxapplicable option:selected").val();
         var productcode = $(this).find('option:selected').val();
         var curindex = $(this).closest('tbody tr').index();
+        console.log("VAT"+productcode);
 
-        var state = $("#invoice_state option:selected").val();
-        if (state == "none") {
-            $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val(parseFloat(0).toFixed(2));
+        if (sourcestate == "none") {
+            $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(0).toFixed(2));
         } else {
 
             $.ajax({
-                    url: '/invoice?action=gettax',
+                    url: '/invoice?action=getappliedtax',
                     type: 'POST',
                     dataType: 'json',
                     async: false,
-                    data: { "productcode": productcode, "state": state },
+                    data: { "productcode": productcode, "source": sourcestate,"destination":destinationstate,"taxflag":taxflag },
                     beforeSend: function(xhr) {
                         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
                     }
                 })
                 .done(function(resp) {
                     console.log("success");
+                    console.log("getappliedtax called");
                     if (resp["gkstatus"] == 0) {
-                        $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val(parseFloat(resp['taxdata']).toFixed(2));
+                        $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['taxrate']).toFixed(2));
+                        console.log(resp);
+
                     }
 
                 })
                 .fail(function() {
-                    console.log("error");
+                    console.log("error in getappliedtax");
                 })
                 .always(function() {
                     console.log("complete");
@@ -1030,23 +1039,25 @@ $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(8) input').val(par
 
 
 
-
-                            var state = $("#invoice_state option:selected").val();
+                            var sourcestate=$("#invoice_state option:selected").val();
+                            var destinationstate=$("#invoice_state option:selected").val();
+                            var taxflag=$("#taxapplicable option:selected").val();
                             var productcode = $('#invoice_product_table tbody tr:last td:eq(0) select option:selected').val();
-
+                            console.log("BEFORE AJX getappliedtax");
                             var curindex = $(this).closest('tbody tr').index();
-                            if (state == "none") {
-                                $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val(parseFloat(0).toFixed(2));
+                            if (sourcestate == "none") {
+                                $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(0).toFixed(2));
+                                console.log("none");
                             } else {
 
                                 //tax rate is retrieved from the database with the combination of state and product code
 
                                 $.ajax({
-                                        url: '/invoice?action=gettax',
+                                        url: '/invoice?action=getappliedtax',
                                         type: 'POST',
                                         dataType: 'json',
                                         async: false,
-                                        data: { "productcode": productcode, "state": state },
+                                        data: { "productcode": productcode, "source": sourcestate,"destination":destinationstate,"taxflag":taxflag },
                                         beforeSend: function(xhr) {
                                             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
                                         }
@@ -1054,7 +1065,7 @@ $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(8) input').val(par
                                     .done(function(resp) {
                                         console.log("success");
                                         if (resp["gkstatus"] == 0) {
-                                            $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val(parseFloat(resp['taxdata']).toFixed(2));
+                                            $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['taxrate']).toFixed(2));
                                         }
 
                                     })
@@ -1294,23 +1305,23 @@ $(document).off("keydown", ".invoice_product_per_price").on("keydown", ".invoice
                                 $('#invoice_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' + product.productdesc + '</option>');
                             }
 
-
-
-                            var state = $("#invoice_state option:selected").val();
+                            var sourcestate=$("#invoice_state option:selected").val();
+                            var destinationstate=$("#invoice_state option:selected").val();
+                            var taxflag=$("#taxapplicable option:selected").val();
                             var productcode = $('#invoice_product_table tbody tr:last td:eq(0) select option:selected').val();
-
+                            console.log("befor ajax getappliedtax");
                             var curindex = $(this).closest('tbody tr').index();
-                            if (state == "none") {
-                                $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val(parseFloat(0).toFixed(2));
+                            if (sourcestate == "none") {
+                                $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(0).toFixed(2));
                             } else {
                                 //tax rate is retrieved from the database with the combination of state and product code
 
                                 $.ajax({
-                                        url: '/invoice?action=gettax',
+                                        url: '/invoice?action=getappliedtax',
                                         type: 'POST',
                                         dataType: 'json',
                                         async: false,
-                                        data: { "productcode": productcode, "state": state },
+                                        data: { "productcode": productcode, "source": sourcestate,"destination":destinationstate,"taxflag":taxflag },
                                         beforeSend: function(xhr) {
                                             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
                                         }
@@ -1318,7 +1329,7 @@ $(document).off("keydown", ".invoice_product_per_price").on("keydown", ".invoice
                                     .done(function(resp) {
                                         console.log("success");
                                         if (resp["gkstatus"] == 0) {
-                                            $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val(parseFloat(resp['taxdata']).toFixed(2));
+                                            $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['taxrate']).toFixed(2));
                                         }
 
                                     })
