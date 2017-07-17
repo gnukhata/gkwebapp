@@ -8,7 +8,10 @@
      table-layout:fixed;
  }
  #invoice_product_table_gst thead {
-     width: calc( 100% - 0.70em )
+     width: calc( 100% - 0.75em )
+ }
+ #invoice_product_table_gst tfoot {
+     width: calc( 100% - 0.75em )
  }
  #invoice_product_table_gst tbody {
      display:block;
@@ -57,7 +60,7 @@
      width:6%
  }
  .totalwrap {
-     width:19.5%;
+     width:43%;
  }
  .unitaddon {
      overflow:hidden;
@@ -639,7 +642,7 @@
 		  </tbody>
 		  <tfoot>
 		    <tr>
-		      <td colspan="5" class="text-right" style="vertical-align:middle; font-size:75%">Total</td>
+		      <td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
 		      <td class="text-center">  <span id="discounttotal_product_gst" class="input-group-addon input-sm" size="8"></span></td>
 		      <td class="text-center"><span id="taxablevaluetotal_product_gst" class="input-group-addon input-sm" size="8"></span></td>
 		      <td colspan="2" class="text-center"><span id="totalcgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
