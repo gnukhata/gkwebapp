@@ -44,13 +44,28 @@
  .mdwrap{
      width:13%;
  }
+ .qtywrap {
+     width:9%
+ }
  .smwrap{
      width:6.5%;
+ }
+ .taxwrap{
+     width:12%
+ }
+ .taxcell {
+     width:6%
  }
  .totalwrap {
      width:19.5%;
  }
-
+ .unitaddon {
+     overflow:hidden;
+     text-overflow:clip;
+     white-space:nowrap;
+     max-width:20px;
+ }
+ 
  @page {
      size : 21cm 29.7cm;
      margin : 10mm 10mm 20mm 10mm
@@ -60,13 +75,12 @@
  }
  tfoot{
      display: table-footer-group;
- }
- 
+ } 
  .rightJustified {
      text-align: right;
  }
  select {
-     max-width: 155px !important;
+     max-width: 150px !important;
  }
 
 </style>
@@ -549,14 +563,14 @@
 		  <tr>
 		    <th rowspan="2" class="mdwrap text-center">{% trans %}Product{% endtrans %}</th>
 		    <th rowspan="2" class="smwrap text-center">{% trans %}HSN Code{% endtrans %}</th>
-		      <th rowspan="2" class="smwrap text-center">{% trans %}Quantity{% endtrans %}</th>
-		      <th rowspan="2" class="smwrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
+		      <th rowspan="2" class="qtywrap text-center">{% trans %}Quantity{% endtrans %}</th>
+		      <th rowspan="2" class="qtywrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
 		      <th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
 		      <th rowspan="2" class="smwrap text-center">{% trans %}Discount{% endtrans %}</th>
 		      <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
-		      <th colspan="2" class="mdwrap text-center">{% trans %}CGST{% endtrans %}</th>
-		      <th colspan="2" class="mdwrap text-center">{% trans %}SGST{% endtrans %}</th>
-		      <th colspan="2" class="mdwrap text-center">{% trans %}IGST{% endtrans %}</th>
+		      <th colspan="2" class="taxwrap text-center">{% trans %}CGST{% endtrans %}</th>
+		      <th colspan="2" class="taxwrap text-center">{% trans %}SGST{% endtrans %}</th>
+		      <th colspan="2" class="taxwrap text-center">{% trans %}IGST{% endtrans %}</th>
 		      <th rowspan="2" class="smwrap text-center">{% trans %}Total{% endtrans %}</th>
 		      <th rowspan="2" class="crosswrap text-center"></th>
 		      </tr>
@@ -581,42 +595,42 @@
 			  {% endfor %}
 			</select>
 		      </td>
-		      <td>
+		      <td class="smwrap">
 			<input type="text" class="invoice_product_hsncode form-control input-sm text-right numtype" size="7" value="0.00" placeholder="0.00">
 		      </td>
-		      <td>
+		      <td class="qtywrap">
 			<div class="input-group">
-			  <input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype smwrap" size="5" value="0" placeholder="0" aria-describedby="unitaddon">
-			  <span class="input-group-addon input-sm" id="unitaddon"></span>
+			  <input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype" size="5" value="0" placeholder="0" aria-describedby="unitaddon">
+			  <span class="input-group-addon input-sm unitaddon"></span>
 			</div>
 		      </td>
-		      <td>
+		      <td class="qtywrap">
 			<div class="input-group">
 			  <input type="text" class="invoice_product_freequantity_gst form-control input-sm text-right numtype smwrap" size="5" value="0" placeholder="0" aria-describedby="unitaddon">
-			  <span class="input-group-addon input-sm" id="freeunitaddon"></span>
+			  <span class="input-group-addon input-sm unitaddon"></span>
 			</div>		      </td>
 
-		      <td>
+		      <td class="smwrap">
 			<input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype smwrap" size="7" value="0.00" placeholder="0.00">
 		      </td>
-		      <td>
+		      <td class="smwrap">
 			<input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype smwrap" value="0.00" size="7" placeholder="0.00">
 		      </td>
-		      <td>
+		      <td class="smwrap">
 			<input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype smwrap" value="0.00" size="7" placeholder="0.00" disabled>
 		      </td>
 
-		      <td><input type="text" class="invoice_product_cgstrate form-control input-sm text-right numtype smwrap" size="7" value="0.00" placeholder="0.00" disabled></td>
-		      <td><input type="text" class="invoice_product_cgstamount form-control input-sm text-right numtype smwrap" size="7" value="0.00" placeholder="0.00" disabled></td>
+		      <td class="taxcell"><input type="text" class="invoice_product_cgstrate form-control input-sm text-right numtype taxcell" size="6" value="0.00" placeholder="0.00" disabled></td>
+		      <td class="taxcell"><input type="text" class="invoice_product_cgstamount form-control input-sm text-right numtype taxcell" size="6" value="0.00" placeholder="0.00" disabled></td>
 
-		      <td><input type="text" class="invoice_product_sgstrate  form-control input-sm text-right numtype smwrap" size="7" value="0.00" placeholder="0.00" disabled></td>
-		      <td><input type="text" class="invoice_product_sgstamount  input-sm form-control text-right numtype smwrap" size="7" value="0.00" placeholder="0.00" disabled></td>
+		      <td class="taxcell"><input type="text" class="invoice_product_sgstrate  form-control input-sm text-right numtype taxcell" size="6" value="0.00" placeholder="0.00" disabled></td>
+		      <td class="taxcell"><input type="text" class="invoice_product_sgstamount  input-sm form-control text-right numtype taxcell" size="6" value="0.00" placeholder="0.00" disabled></td>
 
-		      <td>
-			<input type="text" class="invoice_product_igstrate  input-sm text-right form-control numtype smwrap" size="7" value="0.00" placeholder="0.00" disabled></td>
-			<td><input type="text" class="invoice_product_igstamount form-control input-sm text-right numtype smwrap" size="7" value="0.00" placeholder="0.00" disabled>
+		      <td class="taxcell">
+			<input type="text" class="invoice_product_igstrate  input-sm text-right form-control numtype taxcell" size="6" value="0.00" placeholder="0.00" disabled></td>
+			<td class="taxcell"><input type="text" class="invoice_product_igstamount form-control input-sm text-right numtype taxcell" size="6" value="0.00" placeholder="0.00" disabled>
 			</td>
-			<td>
+			<td class="smwrap">
 			  <input type="text" class="invoice_product_total form-control input-sm text-right numtype smwrap" value="0.00" size="7" placeholder="0.00" disabled>
 			</td>
 			<td class="crosswrap text-center">
