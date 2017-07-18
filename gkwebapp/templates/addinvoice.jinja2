@@ -2,20 +2,18 @@
 <!DOCTYPE html>
 <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}INVOICE{% endtrans %}</title>
 <style type="text/css">
+ #gstproducttable{
+     overflow-x:scroll;
+     height: calc(100vh - 29em);
+ }
  #invoice_product_table_gst thead,#invoice_product_table_gst tbody tr {
      display:table;
-     width:100%;
+     width:150%;
      table-layout:fixed;
  }
- #invoice_product_table_gst thead {
-     width: calc( 100% - 0.75em )
- }
- #invoice_product_table_gst tfoot {
-     width: calc( 100% - 0.75em )
- }
  #invoice_product_table_gst tbody {
-     display:block;
-     height: calc(100vh - 31em);
+     display:table;
+     height: calc(100vh - 35em);
      overflow-y:scroll;
  }
  #invoice_product_table_vat tbody {
@@ -25,7 +23,7 @@
  }
  #invoice_product_table_vat tfoot {
      display:table;
-     width: 95%;
+     width: calc( 100% - 0.75em );
  }
 
  .nopadding{
@@ -61,6 +59,12 @@
  }
  .totalwrap {
      width:43%;
+ }
+ .mdvwrap{
+     width:19.5%;
+ }
+ .smvwrap{
+     width:9.75%;
  }
  .unitaddon {
      overflow:hidden;
@@ -467,24 +471,25 @@
 	      {% endif %}
 	    </div>
 	    <div class="col-md-12">
+	      <br>
 	      <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
 		<thead class="bg-primary">
 		  <tr>
-		    <th class="col-xs-2 text-center">{% trans %}Product{% endtrans %}</th>
-		    <th class="col-xs-1 text-center">{% trans %}Quantity{% endtrans %}</th>
-		    <th class="col-xs-1 text-center">{% trans %}Free Quantity{% endtrans %}</th>
-		    <th class="col-xs-1 text-center">{% trans %}Rate{% endtrans %}</th>
-		    <th class="col-xs-1 text-center">{% trans %}Discount{% endtrans %}</th>
-		    <th class="col-xs-1 text-center">{% trans %}Taxable Value{% endtrans %}</th>
-		    <th class="col-xs-1 text-center">{% trans %}Tax Rate%{% endtrans %}</th>
-		    <th class="col-xs-1 text-center">{% trans %}Tax Amt{% endtrans %}</th>
-		    <th class="col-xs-1 text-center">{% trans %}Total{% endtrans %}</th>
-		    <th class="col-xs-1" style="width: 3%;"></th>
+		    <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
+		    <th class="smvwrap text-center">{% trans %}Quantity{% endtrans %}</th>
+		    <th class="smvwrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
+		    <th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
+		    <th class="smvwrap text-center">{% trans %}Discount{% endtrans %}</th>
+		    <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
+		    <th class="smvwrap text-center">{% trans %}Tax Rate%{% endtrans %}</th>
+		    <th class="smvwrap text-center">{% trans %}Tax Amt{% endtrans %}</th>
+		    <th class="smvwrap text-center">{% trans %}Total{% endtrans %}</th>
+		    <th class="crosswrap"></th>
 		  </tr>
 		</thead>
 		<tbody>
 		  <tr>
-		    <td class="col-xs-2">
+		    <td class="mdvwrap">
 		      <select class="form-control input-sm product_name_vat">
 			<option value="" disabled hidden selected>Select Product</option>
 			{% for product in products %}
@@ -492,75 +497,59 @@
 			{% endfor %}
 		      </select>
 		    </td>
-		    <td class="col-xs-1">
+		    <td class="smvwrap">
 		      <div class="input-group">
 			<input type="text" class="invoice_product_quantity form-control input-sm text-right numtype" value="0" placeholder="0" size="8" aria-describedby="unitaddon">
 			<span class="input-group-addon input-sm" id="unitaddon"></span>
 		      </div>
 		    </td>
-		    <td class="col-xs-1">
+		    <td class="smvwrap">
 		      <div class="input-group">
 			<input type="text" class="invoice_product_freequantity form-control input-sm text-right numtype" value="0" placeholder="0" size="8" aria-describedby="unitaddon">
 			<span class="input-group-addon input-sm" id="freeunitaddon"></span>
 		      </div>
 		    </td>
-		    <td class="col-xs-1">
+		    <td class="smvwrap">
 		      <input type="text" class="invoice_product_per_price form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8">
 		    </td>
-		    <td class="col-xs-1">
+		    <td class="smvwrap">
 		      <input type="text" class="invoice_product_discount form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8">
 		    </td>
 
-		    <td class="col-xs-1">
+		    <td class="smvwrap">
 		      <input type="text" class="invoice_product_taxablevalue form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8" disabled>
 		    </td>
-		    <td class="col-xs-1">
+		    <td class="smvwrap">
 		      <input type="text" class="invoice_product_tax_rate form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8">
 		    </td>
-		    <td class="col-xs-1">
+		    <td class="smvwrap">
 
 		      <input  size="8" class="invoice_product_tax_amount form-control text-right numtype"  value="0.00" placeholder="0.00" disabled>
 		    </td>
-		    <td class="col-xs-1">
-		      <input size="8" type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
+		    <td class="smvwrap">
+		      <input size="10" type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
 		    </td>
-		    <td class="col-xs-1" style="width: 3%;">
+		    <td class="crosswrap">
 		    </td>
 		  </tr>
 		</tbody>
 		<tfoot>
 		  <tr>
-		    <td class="col-xs-9 text-right">
-		      <input type="text" class=" form-control input-sm text-right" value="{% trans %}Total{% endtrans %}" placeholder="" disabled>
-		    </td>
-		    <!--  Product Quantity : pqty       -->
-		    <td class="col-xs-2" style="display:none;">
-		      <input type="text" class=" form-control input-sm text-right" value="0" placeholder="" disabled>
-		    </td>
-		    <!--  Price Per Unit or Tax Rate : taxrate or perprice?       -->
-		    <td class="col-xs-2" style="display:none;">
-		      <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
-		    </td>
-		    <!--  Price per Unit or Tax Rate : taxrate or perprice?       -->
-		    <td class="col-xs-1" style="display:none;">
-		      <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
-		    </td>
-		    <!--  Tax Amount : ptaxamt       -->
-		    <td class="col-xs-1" style="display:none;">
-		      <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
+		    <td colspan="8" class="text-right">
+		      {% trans %}Total{% endtrans %}
 		    </td>
 		    <!--  Total : ptotal       -->
-		    <td class="col-xs-2" style="width: 13%;">
-		      <input type="text" class=" form-control deliverychallan_edit_disable input-sm text-right" value="0.00" disabled>
+		    <td class="smvwrap">
+		      <input type="text" class=" form-control deliverychallan_edit_disable input-sm text-right" value="0.00" size="10" disabled>
 		    </td>
-		    <td class="col-xs-1" style="width: 2.6%;">
+		    <td class="crosswrap">
 
 		    </td>
 		  </tr>
 		</tfoot>
 
 	      </table>
-	      <br/>
+	      <div class="col-sm-12" id="gstproducttable">
 	      <table id="invoice_product_table_gst" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" >
 		<thead class="bg-primary">
 		  <tr>
@@ -656,7 +645,8 @@
 		    </tr>
 		  </tfoot>
 
-		</table>
+	      </table>
+	      </div>
 	    </div>
 
 	    <div class="col-md-12">
