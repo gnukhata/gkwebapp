@@ -706,58 +706,51 @@ $(document).ready(function() {
                                                   $.each(resp.items, function(key, value) {
                                                     console.log("delchal coding GST");
 
-                                                    $('#invoice_product_table_gst tbody').append('<tr>' +
-                                                        '<td class="col-xs-2">' +
+                                                      $('#invoice_product_table_gst tbody').append('<tr>'+
+												   '<td class="mdwrap">'+
                                                         '<select class="form-control deliverychallan_edit_disable input-sm product_name">' +
                                                         '<option value="' + key + '">' + value.productdesc + '</option>' +
                                                         '</select>' +
                                                           '</td>'+
-                                                          '<td class="">'+
-
-                                                               '<label class="invoice_product_hsncode" ></label>'+
-                                                          '</td>'+
-                                                          '<td class="">'+
-                                                            '<div class="input-group">'+
-                                                              '<input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype"size="5" value="0" placeholder="0" aria-describedby="unitaddon">'+
-                                                              '<span class="input-group-addon input-sm" id="unitaddon">'+ value.unitname +'</span>'+
-                                                            '</div>'+
-                                                          '</td>'+
-                                                          '<td class="">'+
-                                                            '<div class="input-group">'+
-                                                              '<input type="text" class="invoice_product_freequantity_gst form-control input-sm text-right numtype" size="5" value="0" placeholder="0" aria-describedby="unitaddon">'+
-                                                              '<span class="input-group-addon input-sm" id="freeunitaddon">'+ value.unitname + '</span>'+
-                                                            '</div>'+
-                                                          '</td>'+
-
-                                           '               <td class="">'+
-                                                            '<input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00">'+
-                                                          '</td>'+
-                                                          '<td class="">'+
-                                                            '<input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00">'+
-                                                          '</td>'+
-                                                          '<td class="">'+
-                                                            '<input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00" disabled>'+
-                                                          '</td>'+
-
-                                                       '<td><input type="text" class="invoice_product_cgstrate  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled></td>'+
-                                                       '<td><input type="text" class="invoice_product_cgstamount  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled></td>'+
-
-
-
-
-                                                        '<td><input type="text" class="invoice_product_sgstrate  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled></td>'+
-                                           '                 <td><input type="text" class="invoice_product_sgstamount  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled></td>'+
-
-                                                          '<td>'+
-                                                            '<input type="text" class="invoice_product_igstrate  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled></td>'+
-                                                            '<td><input type="text" class="invoice_product_igstamount  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled>'+
-                                                          '</td>'+
-                                                          '<td class="">'+
-                                                            '<input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" size="5" placeholder="0.00" disabled>'+
-                                                          '</td>'+
-                                                          '<td class="" style="width: 3%;">'+
-                                                          '</td>'+
-                                                        '</tr>');
+                                                          '<td class="smwrap">'+
+			'<input type="text" class="invoice_product_hsncode form-control input-sm text-right numtype" size="7" value="0.00" placeholder="0.00">'+
+		      '</td>'+
+		      '<td class="qtywrap">'+
+			'<div class="input-group">'+
+			  '<input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype" size="5" value="0" placeholder="0" aria-describedby="unitaddon">'+
+			  '<span class="input-group-addon input-sm unitaddon"></span>'+
+			'</div>'+
+		      '</td>'+
+		      '<td class="qtywrap">'+
+			'<div class="input-group">'+
+			  '<input type="text" class="invoice_product_freequantity_gst form-control input-sm text-right numtype smwrap" size="5" value="0" placeholder="0" aria-describedby="unitaddon">'+
+			  '<span class="input-group-addon input-sm unitaddon"></span>'+
+			'</div>'+
+			'</td>'+
+		      '<td class="smwrap">'+
+			'<input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype smwrap" size="7" value="0.00" placeholder="0.00">'+
+		      '</td>'+
+		      '<td class="smwrap">'+
+			'<input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype smwrap" value="0.00" size="7" placeholder="0.00">'+
+		      '</td>'+
+		      '<td class="smwrap">'+
+			'<input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype smwrap" value="0.00" size="7" placeholder="0.00" disabled>'+
+		      '</td>'+
+		      '<td class="taxcell"><input type="text" class="invoice_product_cgstrate form-control input-sm text-right numtype taxcell" size="6" value="0.00" placeholder="0.00" disabled></td>'+
+		      '<td class="taxcell"><input type="text" class="invoice_product_cgstamount form-control input-sm text-right numtype taxcell" size="6" value="0.00" placeholder="0.00" disabled></td>'+
+		      '<td class="taxcell"><input type="text" class="invoice_product_sgstrate  form-control input-sm text-right numtype taxcell" size="6" value="0.00" placeholder="0.00" disabled></td>'+
+		      '<td class="taxcell"><input type="text" class="invoice_product_sgstamount  input-sm form-control text-right numtype taxcell" size="6" value="0.00" placeholder="0.00" disabled></td>'+
+		      '<td class="taxcell">'+
+			'<input type="text" class="invoice_product_igstrate  input-sm text-right form-control numtype taxcell" size="6" value="0.00" placeholder="0.00" disabled></td>'+
+			'<td class="taxcell"><input type="text" class="invoice_product_igstamount form-control input-sm text-right numtype taxcell" size="6" value="0.00" placeholder="0.00" disabled>'+
+			'</td>'+
+			'<td class="smwrap">'+
+			  '<input type="text" class="invoice_product_total form-control input-sm text-right numtype smwrap" value="0.00" size="7" placeholder="0.00" disabled>'+
+			'</td>'+
+			'<td class="crosswrap text-center">'+
+			'<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
+			'</td>'+
+		    '</tr>');
                                                     totqty += +value.qty;
                                                   });
                                                   if ($("#invoice_product_table_gst tbody tr").length == 1) {
@@ -2772,57 +2765,50 @@ if (event.which == 13) {
        if (resp["gkstatus"] == 0) {
          console.log("append");
          $('#invoice_product_table_gst tbody').append(
-             '<tr>'+ '<td class="">'+
-                 '<select class="form-control input-sm product_name_gst">'+
-                                '</select>'+
-               '</td>'+
-               '<td class="">'+
-
-                    '<label class="invoice_product_hsncode" ></label>'+
-               '</td>'+
-               '<td class="">'+
-                 '<div class="input-group">'+
-                   '<input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype"size="5" value="0" placeholder="0" aria-describedby="unitaddon">'+
-                   '<span class="input-group-addon input-sm" id="unitaddon"></span>'+
-                 '</div>'+
-               '</td>'+
-               '<td class="">'+
-                 '<div class="input-group">'+
-                   '<input type="text" class="invoice_product_freequantity_gst form-control input-sm text-right numtype" size="5" value="0" placeholder="0" aria-describedby="unitaddon">'+
-                   '<span class="input-group-addon input-sm" id="freeunitaddon"></span>'+
-                 '</div>'+
-               '</td>'+
-
-'               <td class="">'+
-                 '<input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00">'+
-               '</td>'+
-               '<td class="">'+
-                 '<input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00">'+
-               '</td>'+
-               '<td class="">'+
-                 '<input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00" disabled>'+
-               '</td>'+
-
-            '<td><input type="text" class="invoice_product_cgstrate  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled></td>'+
-            '<td><input type="text" class="invoice_product_cgstamount  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled></td>'+
-
-
-
-
-             '<td><input type="text" class="invoice_product_sgstrate  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled></td>'+
-'                 <td><input type="text" class="invoice_product_sgstamount  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled></td>'+
-
-               '<td>'+
-                 '<input type="text" class="invoice_product_igstrate  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled></td>'+
-                 '<td><input type="text" class="invoice_product_igstamount  text-right numtype" size="4" value="0.00" placeholder="0.00" disabled>'+
-               '</td>'+
-               '<td class="">'+
-                 '<input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" size="5" placeholder="0.00" disabled>'+
-               '</td>'+
-		 '<td class="" style="width: 20px;">'+
-		 '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
-               '</td>'+
-             '</tr>');
+             '<tr>'+
+		      '<td class="mdwrap">'+
+			'<select class="form-control input-sm product_name_gst">'+
+			'</select>'+
+		      '</td>'+
+		      '<td class="smwrap">'+
+			'<input type="text" class="invoice_product_hsncode form-control input-sm text-right numtype" size="7" value="0.00" placeholder="0.00">'+
+		      '</td>'+
+		      '<td class="qtywrap">'+
+			'<div class="input-group">'+
+			  '<input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype" size="5" value="0" placeholder="0" aria-describedby="unitaddon">'+
+			  '<span class="input-group-addon input-sm unitaddon"></span>'+
+			'</div>'+
+		      '</td>'+
+		      '<td class="qtywrap">'+
+			'<div class="input-group">'+
+			  '<input type="text" class="invoice_product_freequantity_gst form-control input-sm text-right numtype smwrap" size="5" value="0" placeholder="0" aria-describedby="unitaddon">'+
+			  '<span class="input-group-addon input-sm unitaddon"></span>'+
+			'</div>'+
+			'</td>'+
+		      '<td class="smwrap">'+
+			'<input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype smwrap" size="7" value="0.00" placeholder="0.00">'+
+		      '</td>'+
+		      '<td class="smwrap">'+
+			'<input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype smwrap" value="0.00" size="7" placeholder="0.00">'+
+		      '</td>'+
+		      '<td class="smwrap">'+
+			'<input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype smwrap" value="0.00" size="7" placeholder="0.00" disabled>'+
+		      '</td>'+
+		      '<td class="taxcell"><input type="text" class="invoice_product_cgstrate form-control input-sm text-right numtype taxcell" size="6" value="0.00" placeholder="0.00" disabled></td>'+
+		      '<td class="taxcell"><input type="text" class="invoice_product_cgstamount form-control input-sm text-right numtype taxcell" size="6" value="0.00" placeholder="0.00" disabled></td>'+
+		      '<td class="taxcell"><input type="text" class="invoice_product_sgstrate  form-control input-sm text-right numtype taxcell" size="6" value="0.00" placeholder="0.00" disabled></td>'+
+		      '<td class="taxcell"><input type="text" class="invoice_product_sgstamount  input-sm form-control text-right numtype taxcell" size="6" value="0.00" placeholder="0.00" disabled></td>'+
+		      '<td class="taxcell">'+
+			'<input type="text" class="invoice_product_igstrate  input-sm text-right form-control numtype taxcell" size="6" value="0.00" placeholder="0.00" disabled></td>'+
+			'<td class="taxcell"><input type="text" class="invoice_product_igstamount form-control input-sm text-right numtype taxcell" size="6" value="0.00" placeholder="0.00" disabled>'+
+			'</td>'+
+			'<td class="smwrap">'+
+			  '<input type="text" class="invoice_product_total form-control input-sm text-right numtype smwrap" value="0.00" size="7" placeholder="0.00" disabled>'+
+			'</td>'+
+			'<td class="crosswrap text-center">'+
+			'<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
+			'</td>'+
+		    '</tr>');
 
         var temp_list = [];
         for (let i = 0; i <= curindex1; i++) {
