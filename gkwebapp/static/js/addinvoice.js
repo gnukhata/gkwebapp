@@ -115,9 +115,6 @@ $(document).ready(function() {
     $(".fixed-table").addClass('fixed-tablesale');
 
   }
-  if ($("#status").val() == '9') {
-    $("#invoice_product_table tbody tr:eq(0) td:eq(4) input").prop("disabled", false);
-  }
 
   $("#invoice_date").numeric({ negative: false });
   $("#invoice_month").numeric({ negative: false });
@@ -717,14 +714,14 @@ $(document).ready(function() {
 		      '</td>'+
 		      '<td class="qtywrap">'+
 			'<div class="input-group">'+
-			  '<input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype" size="5" value="0" placeholder="0" aria-describedby="unitaddon">'+
-			  '<span class="input-group-addon input-sm unitaddon"></span>'+
+			  '<input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype" size="5" value="'+value.qty+'" placeholder="0" aria-describedby="unitaddon">'+
+			  '<span class="input-group-addon input-sm unitaddon">'+value.unitname+'</span>'+
 			'</div>'+
 		      '</td>'+
 		      '<td class="qtywrap">'+
 			'<div class="input-group">'+
 			  '<input type="text" class="invoice_product_freequantity_gst form-control input-sm text-right numtype smwrap" size="5" value="0" placeholder="0" aria-describedby="unitaddon">'+
-			  '<span class="input-group-addon input-sm unitaddon"></span>'+
+			  '<span class="input-group-addon input-sm unitaddon">'+value.unitname+'</span>'+
 			'</div>'+
 			'</td>'+
 		      '<td class="smwrap">'+
