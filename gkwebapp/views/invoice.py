@@ -78,7 +78,7 @@ def saveinvoice(request):
 	invoicedata = {"invoiceno":request.params["invoiceno"],"taxstate":request.params["taxstate"],"invoicedate":request.params["invoicedate"],
 		"tax":json.loads(request.params["tax"]),"custid":request.params["custid"],"invoicetotal":request.params["invtotal"],
 		"contents":json.loads(request.params["contents"]),
-				   "issuername":request.params["issuername"],"designation":request.params["designation"],"freeqty":json.loads(request.params["freeqty"]), "discount":json.loads(request.params["discount"])}
+				   "issuername":request.params["issuername"],"designation":request.params["designation"],"freeqty":json.loads(request.params["freeqty"]), "discount":json.loads(request.params["discount"]),"bankdetails":json.loads(request.params["bankdetails"]),"sourcestate":json.loads(request.params["sourcestate"])}
 
 	try:
 		files = {}
