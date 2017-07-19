@@ -58,13 +58,15 @@ def savecashmemo(request):
 	print request.params
 	cashmemodata = {"invoiceno":request.params["invoiceno"],"invoicetotal":request.params["invoicetotal"],"icflag":3,"taxstate":request.params["taxstate"],"invoicedate":request.params["invoicedate"],
 		"tax":json.loads(request.params["tax"]),
-		"contents":json.loads(request.params["contents"]),"freeqty":json.loads(request.params["freeqty"])}
+		"contents":json.loads(request.params["contents"]),"freeqty":json.loads(request.params["freeqty"]),"taxflag":request.params["taxflag"]}
 
 	if request.params.has_key("discount"):
 		cashmemodata["discount"]=json.loads(request.params["discount"])
 	if request.params.has_key("bankdetails"):
 		cashmemodata["bankdetails"]=json.loads(request.params["bankdetails"])
 	print cashmemodata
+	print "taxflag"
+	print cashmemodata["taxflag"]
 	stock = json.loads(request.params["stock"])
 	invoicewholedata = {"invoice":cashmemodata,"stock":stock}
 	print invoicewholedata

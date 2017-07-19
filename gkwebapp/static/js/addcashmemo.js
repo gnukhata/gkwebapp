@@ -1559,10 +1559,10 @@ $(document).off("keydown", ".invoice_product_per_price").on("keydown", ".invoice
 
         stock["inout"] = 15;
 
-
+console.log("tax apllicable ::"+$("#taxapplicable option:selected").val());
 if ($("#taxapplicable option:selected").val() == 7) {
        var form_data = new FormData();
-
+       console.log("tax apllicable ::"+$("#taxapplicable option:selected").val());
 
         form_data.append("invoiceno", $("#invoice_challanno").val());
         form_data.append("invoicedate", $("#invoice_year").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_date").val());
@@ -1571,7 +1571,7 @@ if ($("#taxapplicable option:selected").val() == 7) {
         form_data.append("stock", JSON.stringify(stock));
         form_data.append("invoicetotal", invoicetotal);
         form_data.append("taxstate", $("#invoicestate option:selected").val());
-        form_data.append("taxflag", $("#taxapplicable option:selected").val());
+        form_data.append("taxflag",$("#taxapplicable option:selected").val() );
         form_data.append("freeqty", JSON.stringify(freeqty));
         form_data.append("discount", JSON.stringify(discount));
         form_data.append("bankdetails", JSON.stringify(bankdetails));
@@ -1659,7 +1659,8 @@ if ($("#taxapplicable option:selected").val() == 22) {
                         "tax": JSON.stringify(tax),
                         "stock": JSON.stringify(stock),
                         "freeqty": JSON.stringify(freeqty),
-                        "bankdetails": JSON.stringify(bankdetails)
+                        "bankdetails": JSON.stringify(bankdetails),
+                        "taxflag":$("#taxapplicable option:selected").val()
                     },
                     beforeSend: function(xhr) {
                         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -1826,7 +1827,8 @@ if ($("#taxapplicable option:selected").val() == 22) {
                         "taxstate": $("#invoice_state option:selected").val(),
                         "tax": JSON.stringify(tax),
                         "stock": JSON.stringify(stock),
-                        "freeqty": JSON.stringify(freeqty)
+                        "freeqty": JSON.stringify(freeqty),
+                        "taxflag":$("#taxapplicable option:selected").val()
                     },
                     beforeSend: function(xhr) {
                         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
