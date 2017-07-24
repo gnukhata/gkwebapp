@@ -64,13 +64,14 @@ $(document).ready(function() {
     var producstate;
     //Function to calculate gst tax amount
     function calculategstaxamt(curindex) {
+	//Initialising variables to zero and getting values from various input fileds.
 	var rowqty = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
 	var rowfreeqty = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
 	var rowprice = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
 	var rowdiscount = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val()).toFixed(2);
 	var taxdetails = $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').data("taxdetails");
 	var taxamount = 0.00;
-	var rowtaxableamount=(rowqty - rowfreeqty) * (rowprice-rowdiscount);
+	var rowtaxableamount=(rowqty - rowfreeqty) * (rowprice-rowdiscount); //Taxable amount for each row is calculated.
 	var rowtotal = 0.00;
 	var totalamount = 0.00;
 	var totalcgst = 0.00;
@@ -78,8 +79,9 @@ $(document).ready(function() {
 	var totaligst = 0.00;
 	var totaldiscount = 0.00;
 	var totaltaxable = 0.00;
-	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtaxableamount).toFixed(2));
-	taxamount = (rowtaxableamount * taxdetails["taxrate"])/100;
+	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtaxableamount).toFixed(2)); //Taxable amount is displayed.
+	taxamount = (rowtaxableamount * taxdetails["taxrate"])/100;  //Amount of tax to be applied is found out.
+	//Checks if TAX is IGST or SGST + CGST. Amount of tax to be applied is then displayed accordingly along with calculated total amount.
 	if (taxdetails["taxname"] == "IGST") {
 	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(12) input').val(parseFloat(taxamount).toFixed(2));
 	    rowtotal = rowtaxableamount + taxamount;
@@ -91,6 +93,7 @@ $(document).ready(function() {
 	    rowtotal = rowtaxableamount + (2*taxamount);
 	    $('#invoice_product_table_total tbody tr:eq(' + curindex + ') td:eq(0) input').val(parseFloat(rowtotal).toFixed(2));
 	}
+	//Total of discount, taxable amount, tax amounts and total are found out
 	for(var i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
 	    totaldiscount = totaldiscount + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val());
 	    totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(6) input').val());
@@ -99,6 +102,7 @@ $(document).ready(function() {
 	    totaligst = totaligst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(12) input').val());
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
 	}
+	//Total of various columns are displayed on the footer.
 	$('#discounttotal_product_gst').text(parseFloat(totaldiscount).toFixed(2));
 	$('#taxablevaluetotal_product_gst').text(parseFloat(totaltaxable).toFixed(2));
 	$('#totalcgst_product_gst').text(parseFloat(totalcgst).toFixed(2));
