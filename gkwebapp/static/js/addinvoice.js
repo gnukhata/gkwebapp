@@ -30,11 +30,11 @@
 // This script is for the addinvoice.jinja2
 
 $(document).ready(function() {
-
+//Events to help user navigate along fileds that are not hidden
   $('input:visible,select:visible').keydown( function(e) {
-    var n = $("input:visible,select:visible").length;
-    var f = $('input:visible,select:visible');
-      if (e.which == 13)
+    var n = $("input:visible,select:visible").length; //Length of all elements that are visible is found out
+    var f = $('input:visible,select:visible'); //Setting selector for all visible input/select elements
+      if (e.which == 13)  //Checking if key pressed down is enter key
       {
         var nextIndex = f.index(this) + 1;
         if(nextIndex < n){
@@ -44,11 +44,11 @@ $(document).ready(function() {
 
         }
     }
-
+//Write key events for navigating backwards.
     });
   $('.modal-backdrop').remove();
   $('.invoicedate').autotab('number');
-  $("#invoice_deliverynote").focus();
+  $(".input-sm:first").focus();  //Focus on the first element when the page loads
   $("#invoice_state").change();
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
@@ -61,7 +61,8 @@ $(document).ready(function() {
   var ptotal = 0.00;
   var dctaxstate;
   var custstate;
-  var producstate;
+    var producstate;
+    //Function to calculate gst tax amount
     function calculategstaxamt(curindex) {
 	var rowqty = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
 	var rowfreeqty = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
@@ -82,13 +83,13 @@ $(document).ready(function() {
 	if (taxdetails["taxname"] == "IGST") {
 	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(12) input').val(parseFloat(taxamount).toFixed(2));
 	    rowtotal = rowtaxableamount + taxamount;
-	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val(parseFloat(rowtotal).toFixed(2));
+	    $('#invoice_product_table_total tbody tr:eq(' + curindex + ') td:eq(0) input').val(parseFloat(rowtotal).toFixed(2));
 	}
 	else if (taxdetails["taxname"] == "SGST") {
 	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(taxamount).toFixed(2));
 	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(10) input').val(parseFloat(taxamount).toFixed(2));
 	    rowtotal = rowtaxableamount + (2*taxamount);
-	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val(parseFloat(rowtotal).toFixed(2));
+	    $('#invoice_product_table_total tbody tr:eq(' + curindex + ') td:eq(0) input').val(parseFloat(rowtotal).toFixed(2));
 	}
 	for(var i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
 	    totaldiscount = totaldiscount + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val());
@@ -96,7 +97,7 @@ $(document).ready(function() {
 	    totalcgst = totalcgst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(8) input').val());
 	    totalsgst = totalsgst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(10) input').val());
 	    totaligst = totaligst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(12) input').val());
-	    totalamount = totalamount + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(13) input').val());
+	    totalamount = totalamount + parseFloat($('#invoice_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
 	}
 	$('#discounttotal_product_gst').text(parseFloat(totaldiscount).toFixed(2));
 	$('#taxablevaluetotal_product_gst').text(parseFloat(totaltaxable).toFixed(2));
