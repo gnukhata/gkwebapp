@@ -643,6 +643,7 @@ $(document).ready(function() {
 			    });
 			$('#invoice_product_table_vat tbody').empty();
 			$('#invoice_product_table_gst tbody').empty();
+			$('#invoice_product_table_total tbody').empty();
 			var totqty = 0;
 			$.ajax({
 			    url: '/invoice?action=getdelinvprods',
@@ -702,7 +703,6 @@ $(document).ready(function() {
 				    if ($("#invoice_product_table_vat tbody tr").length == 1) {
 					$("#invoice_product_table_vat tbody tr:eq(0) td:eq(7)").empty();
 				    }
-				}
 				$.each(resp.items, function(key, value) {
 				    $('#invoice_product_table_gst tbody').append('<tr>'+
 										 '<td class="mdwrap">'+
@@ -710,8 +710,8 @@ $(document).ready(function() {
 										 '<option value="' + key + '">' + value.productdesc + '</option>' +
 										 '</select>' +
 										 '</td>'+
-										 '<td class="smwrap">'+
-										 '<input type="text" class="invoice_product_hsncode form-control input-sm text-right numtype" size="7" value="0.00" placeholder="0.00">'+
+										 '<td class="smwrap text-center">'+
+										 '<label class="invoice_product_hsncode text-center"{% trans %} {% endtrans %} </label>'+
 										 '</td>'+
 										 '<td class="qtywrap">'+
 										 '<div class="input-group">'+
@@ -743,6 +743,14 @@ $(document).ready(function() {
 										 '<td class="taxcell"><input type="text" class="invoice_product_igstamount form-control input-sm text-right numtype taxcell" size="6" value="0.00" placeholder="0.00" disabled>'+
 										 '</td>'+
 										 '</tr>');
+				    $("#invoice_product_table_total tbody").append('<tr>'+
+										   '<td class="smwrap">'+
+										   '<input type="text" class="invoice_product_total form-control input-sm text-right numtype smwrap" value="0.00" size="7" placeholder="0.00" disabled>'+
+										   '</td>'+
+										   '<td class="crosswrap text-center">'+
+										   '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
+										   '</td>'+
+										   '</tr>');
 				    totqty += +value.qty;
 				});
 				if ($("#invoice_product_table_gst tbody tr").length == 1) {
