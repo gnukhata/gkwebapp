@@ -33,8 +33,6 @@ $(document).ready(function() {
       var n = $("input,select").length;
       var f = $('input,select');
       var disab = $('input,select').prop("disabled");
-      console.log("disbled");
-      console.log(disab);
       if(!$('input,select').prop("disabled")){
         if (e.which == 13)
         {
@@ -434,7 +432,7 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
       $(".product_name_vat").change();
       if (event.which == 13) {
         event.preventDefault();
-        $(".product_name_vat").change();
+        $(".product_name_gst").change();
         $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
       } else if (event.which == 190 && event.shiftKey) {
         $('#invoice_product_table_gst tbody tr:eq(' + nextindex + ') td:eq(0) select').focus();
@@ -1214,6 +1212,8 @@ $(document).off("keydown", ".invoice_product_per_price").on("keydown", ".invoice
 
 ///
 
+///
+
     $(document).off("keydown", ".invoice_product_tax_rate").on("keydown", ".invoice_product_tax_rate", function(event) {
         var curindex1 = $(this).closest('tr').index();
         var nextindex1 = curindex1 + 1;
@@ -1418,8 +1418,12 @@ $(document).off("keydown", ".invoice_product_per_price").on("keydown", ".invoice
 
         }
     });
+    ///
 
 
+
+
+///
     $(document).off("click", ".product_del").on("click", ".product_del", function() {
         $(this).closest('tr').fadeOut(200, function() {
             $(this).closest('tr').remove(); //closest method gives the closest element productified
@@ -1571,6 +1575,7 @@ if ($("#taxapplicable option:selected").val() == 7) {
         form_data.append("stock", JSON.stringify(stock));
         form_data.append("invoicetotal", invoicetotal);
         form_data.append("taxstate", $("#invoicestate option:selected").val());
+        form_data.append("sourcestate", $("#invoicestate option:selected").val());
         form_data.append("taxflag",$("#taxapplicable option:selected").val() );
         form_data.append("freeqty", JSON.stringify(freeqty));
         form_data.append("discount", JSON.stringify(discount));
@@ -1912,6 +1917,28 @@ if ($("#taxapplicable option:selected").val() == 22) {
     $("#confirm_yes_print").on('hidden.bs.modal', function(event) {
         $("#invoice_challanno").focus();
     });
+    $(document).off('keydown', '.invoice_product_quantity_gst').on('keydown', '.invoice_product_quantity_gst', function(event) {
+      if (event.which == 13) {
+          event.preventDefault();
+          console.log("enter on gst qty");
+          $(".invoice_product_freequantity_gst").focus().select();
+      }
+    });
+    $(document).off('keydown', '.invoice_product_freequantity_gst').on('keydown', '.invoice_product_freequantity_gst', function(event) {
+      if (event.which == 13) {
+          event.preventDefault();
+          console.log("enter on gst freeqty to priceperunit");
+          $(".invoice_product_per_price_gst").focus().select();
+      }
+    });
+    $(document).off('keydown', '.invoice_product_per_price_gst').on('keydown', '.invoice_product_per_price_gst', function(event) {
+      if (event.which == 13) {
+          event.preventDefault();
+          console.log("enter on gst freeqty to priceperunit");
+          $(".invoice_product_discount_gst").focus().select();
+      }
+    });
+
 
     $(document).off('change', '.invoice_product_quantity_gst').on('change', '.invoice_product_quantity_gst', function(event) {
       event.preventDefault();
@@ -1920,6 +1947,8 @@ if ($("#taxapplicable option:selected").val() == 22) {
       if ($(this).val() == "") {
         $(this).val(0);
       }
+
+
   console.log("quantity");
       var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
       console.log("before change qty gst");
@@ -1940,8 +1969,6 @@ if ($("#taxapplicable option:selected").val() == 22) {
       });
 
     });
-
-
     $(document).off("keydown", ".invoice_product_discount_gst").on("keydown", ".invoice_product_discount_gst", function(event) {
     //write your code here
     var curindex1 = $(this).closest('tr').index();
@@ -1950,7 +1977,7 @@ if ($("#taxapplicable option:selected").val() == 22) {
     console.log("discount");
     if (event.which == 13) {
       event.preventDefault();
-      $(".product_name_vat").change();
+
       var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
       console.log("discount gst keydown");
        calculategstaxamt(curindex);
