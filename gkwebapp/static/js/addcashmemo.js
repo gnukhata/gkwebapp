@@ -1604,9 +1604,12 @@ if ($("#taxapplicable option:selected").val() == 7) {
           })
            .done(function(resp) {
              if (resp["gkstatus"] == 0) {
+               $("#cashmemo_create").click();
                if ($("#status").val() == '9') {
                  $("#invoice_record").click();
+
                } else {
+
                  $("#invoice_create").click();
                }
                $("#success-alert").alert();
