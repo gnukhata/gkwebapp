@@ -47,7 +47,7 @@ $(document).ready(function() {
 //Write key events for navigating backwards.
     });
   $('.modal-backdrop').remove();
-  $('.invoicedate').autotab('number');
+  $('.invoicedate, .supplydate').autotab('number');
   $(".input-sm:first").focus();  //Focus on the first element when the page loads
   $("#invoice_state").change();
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
