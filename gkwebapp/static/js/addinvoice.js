@@ -407,8 +407,22 @@ $(document).ready(function() {
       var productcode = $(this).find('option:selected').val();
       console.log("VAT"+productcode);
     var curindex = $(this).closest('tbody tr').index();
-    var sourcestate=$("#invoicestate option:selected").val();
-    var destinationstate=$("#consigneestate option:selected").val();
+    var destinationstate = "";
+      var sourcestate = "";
+      if ($("#status").val() == 9) {
+	  destinationstate = $("#invoicestate option:selected").val();
+	  sourcestate = $("#invoice_supplierstate").text();
+	  if ($("#gstinconsignee").val() != "") {
+	   sourcestate = $("#consigneestate option:selected").val();   
+	  }
+      }
+      else if ($("#status").val() ==  15) {
+	  destinationstate = $("#invoicestate option:selected").val();
+	  sourcestate = $("#invoice_supplierstate").text();
+	  if ($("#gstinconsignee").val() != "") {
+	   taxstate = $("#consigneestate option:selected").val();   
+	  }
+      }
     var taxflag=$("#taxapplicable option:selected").val();
     if ($("#status").val() == '15') {
       $.ajax({
@@ -505,8 +519,16 @@ $(document).ready(function() {
     /* Act on the event */
     var productcode = $(this).find('option:selected').val();
     var curindex = $(this).closest('tbody tr').index();
-    var sourcestate=$("#invoicestate option:selected").val();
-    var destinationstate=$("#consigneestate option:selected").val();
+    var destinationstate = "";
+      var sourcestate = "";
+      if ($("#status").val() == 9) {
+	  destinationstate = $("#invoicestate option:selected").val();
+	  sourcestate = $("#invoice_supplierstate").text();
+      }
+      else if ($("#status").val() ==  15) {
+	  destinationstate = $("#invoicestate option:selected").val();
+	  sourcestate = $("#invoice_supplierstate").text();
+      }
     var taxflag=$("#taxapplicable option:selected").val();
 
     $.ajax({
@@ -2853,8 +2875,22 @@ if (event.which == 13) {
      .always(function() {
        console.log("complete");
      });
-     var sourcestate=$("#invoicestate option:selected").val();
-    var destinationstate=$("#consigneestate option:selected").val();
+    var destinationstate = "";
+      var sourcestate = "";
+      if ($("#status").val() == 9) {
+	  destinationstate = $("#invoicestate option:selected").val();
+	  sourcestate = $("#invoice_supplierstate").text();
+	  if ($("#gstinconsignee").val() != "") {
+	   sourcestate = $("#consigneestate option:selected").val();   
+	  }
+      }
+      else if ($("#status").val() ==  15) {
+	  destinationstate = $("#invoicestate option:selected").val();
+	  sourcestate = $("#invoice_supplierstate").text();
+	  if ($("#gstinconsignee").val() != "") {
+	   taxstate = $("#consigneestate option:selected").val();   
+	  }
+      }
     var taxflag=$("#taxapplicable option:selected").val();
 
     $.ajax({
