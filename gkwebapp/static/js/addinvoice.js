@@ -2112,9 +2112,11 @@ console.log("quantity");
       consignee["gstinconsignee"] = $("#gstinconsignee").val();
       consignee["consigneeaddress"] = $("#consigneeaddress").val();
       consignee["consigneestate"] = $("#consigneestate").val();
+      console.log("Hello! I'm working.");
       bankdetails["accountno"] = $("#accountno").val();
       bankdetails["bankname"] = $("#bankname").val();
       bankdetails["ifsc"] = $("#ifsc").val();
+      console.log($("#accountno").val());
     if ($("#taxapplicable option:selected").val() == 22) {
     for (var i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
       productqtys.push(parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()));
