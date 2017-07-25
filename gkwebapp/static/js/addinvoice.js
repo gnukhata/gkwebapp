@@ -418,7 +418,7 @@ $(document).ready(function() {
       }
       else if ($("#status").val() ==  15) {
 	  destinationstate = $("#invoicestate option:selected").val();
-	  sourcestate = $("#invoice_supplierstate").text();
+	  sourcestate = $("#invoice_customerstate").text();
 	  if ($("#gstinconsignee").val() != "") {
 	   taxstate = $("#consigneestate option:selected").val();   
 	  }
@@ -524,10 +524,16 @@ $(document).ready(function() {
       if ($("#status").val() == 9) {
 	  destinationstate = $("#invoicestate option:selected").val();
 	  sourcestate = $("#invoice_supplierstate").text();
+	  if ($("#gstinconsignee").val() != "") {
+	   sourcestate = $("#consigneestate option:selected").val();   
+	  }
       }
       else if ($("#status").val() ==  15) {
 	  destinationstate = $("#invoicestate option:selected").val();
-	  sourcestate = $("#invoice_supplierstate").text();
+	  sourcestate = $("#invoice_customerstate").text();
+	  if ($("#gstinconsignee").val() != "") {
+	   taxstate = $("#consigneestate option:selected").val();   
+	  }
       }
     var taxflag=$("#taxapplicable option:selected").val();
 
@@ -2280,7 +2286,13 @@ console.log("quantity");
     form_data.append("issuername", issuername);
     form_data.append("designation", designation);
     form_data.append("invtotal", invoicetotal);
-    form_data.append("taxstate", $("#invoicestate option:selected").val());
+    form_data.append("sourcestate", $("#invoicestate option:selected").val());
+    if ($("#status").val() == 9) {  
+	form_data.append("taxstate", $("#invoice_supplierstate").text());
+    }
+    else if ($("#status").val() ==  15) {
+	form_data.append("taxstate", $("#invoice_customerstate").text());
+    }
     form_data.append("freeqty", JSON.stringify(freeqty));
     form_data.append("discount", JSON.stringify(discount));  
     form_data.append("consignee", JSON.stringify(consignee));
@@ -2886,7 +2898,7 @@ if (event.which == 13) {
       }
       else if ($("#status").val() ==  15) {
 	  destinationstate = $("#invoicestate option:selected").val();
-	  sourcestate = $("#invoice_supplierstate").text();
+	  sourcestate = $("#invoice_customerstate").text();
 	  if ($("#gstinconsignee").val() != "") {
 	   taxstate = $("#consigneestate option:selected").val();   
 	  }
