@@ -1556,6 +1556,7 @@ $(document).off("keydown", ".invoice_product_per_price").on("keydown", ".invoice
      	}
       console.log(discount);
      	    invoicetotal = $('#total_product_gst').text();
+          console.log("inv total "+invoicetotal);
 
        }
         stock["items"] = items;
@@ -1574,14 +1575,14 @@ if ($("#taxapplicable option:selected").val() == 7) {
         form_data.append("tax", JSON.stringify(tax));
         form_data.append("stock", JSON.stringify(stock));
         form_data.append("invoicetotal", invoicetotal);
-        form_data.append("taxstate", $("#invoicestate option:selected").val());
-        form_data.append("sourcestate", $("#invoicestate option:selected").val());
+        form_data.append("taxstate", $("#invoice_state option:selected").val());
+        form_data.append("sourcestate", $("#invoice_state option:selected").val());
         form_data.append("taxflag",$("#taxapplicable option:selected").val() );
         form_data.append("freeqty", JSON.stringify(freeqty));
         form_data.append("discount", JSON.stringify(discount));
         form_data.append("bankdetails", JSON.stringify(bankdetails));
-
-
+console.log("sourcestate"+$("#invoice_state option:selected").val());
+console.log("taxstate"+$("#invoice_state option:selected").val());
 
 
         $('.modal-backdrop').remove();
