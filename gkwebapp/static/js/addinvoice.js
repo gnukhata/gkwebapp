@@ -852,7 +852,7 @@ $(document).ready(function() {
                       $("#invoice_state").prop("disabled", false);
                       $("#invoice_state").val("none");
                       $.ajax({
-                        url: '/invoice?action=getproducts',
+                        url: '/invoice?action=getproducts&taxflag=22',
                         type: 'POST',
                         dataType: 'json',
                         async: false,
@@ -1470,7 +1470,7 @@ console.log("quantity");
             }
 
             $.ajax({
-              url: '/invoice?action=getproducts',
+              url: '/invoice?action=getproducts&taxflag=22',
               type: 'POST',
               dataType: 'json',
               async: false,
@@ -1740,7 +1740,7 @@ console.log("quantity");
           return false;
         }
         $.ajax({
-          url: '/invoice?action=getproducts',
+          url: '/invoice?action=getproducts&taxflag=22',
           type: 'POST',
           dataType: 'json',
           async: false,
@@ -1751,38 +1751,44 @@ console.log("quantity");
          .done(function(resp) {
            console.log("success");
            if (resp["gkstatus"] == 0) {
-             $('#invoice_product_table_vat tbody').append('<tr>' +
-						      '<td class="col-xs-3">' +
-						      '<select class="form-control input-sm product_name_vat"></select>' +
-						      '</td>' +
-						      '<td class="col-xs-2">' +
-						      '<div class="input-group">' +
-						      '<input type="text" class="invoice_product_quantity form-control input-sm numtype text-right" value="0">' +
-						      '<span class="input-group-addon input-sm" id="unitaddon"></span>' +
-						      '</div>' +
-						      '</td>' +
-						      '<td class="col-xs-2">' +
-						      '<div class="input-group">' +
-						      '<input type="text" class="invoice_product_freequantity form-control input-sm numtype text-right" value="0">' +
-						      '<span class="input-group-addon input-sm" id="freeunitaddon"></span>' +
-						      '</div>' +
-						      '</td>' +
-						      '<td class="col-xs-2">' +
-						      '<input type="text" class="invoice_product_per_price form-control input-sm numtype text-right" value="0.00">' +
-						      '</td>' +
-						      '<td class="col-xs-1">' +
-						      '<input type="text" class="invoice_product_tax_rate form-control input-sm numtype text-right" value="0.00">' +
-						      '</td>' +
-						      '<td class="col-xs-1">' +
-						      '<input type="text" class="invoice_product_tax_amount form-control input-sm numtype text-right" value="0.00" disabled>' +
-						      '</td>' +
-						      '<td class="col-xs-2">' +
-						      '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00" disabled>' +
-						      '</td>' +
-						      '<td class="col-xs-1" style="width: 3%;">' +
-						      '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
-						      '</td>' +
-						      '</tr>');
+               $('#invoice_product_table_vat tbody').append('<tr>' +
+							    '<td class="mdvwrap">' +
+							    '<select class="form-control input-sm product_name_vat">'+
+							    '</select>'+
+							    '</td>'+
+							    '<td class="smvwrap">'+
+							    '<div class="input-group">'+
+							    '<input type="text" class="invoice_product_quantity form-control input-sm text-right numtype" value="0" placeholder="0" size="8" aria-describedby="unitaddon">'+
+							    '<span class="input-group-addon input-sm" id="unitaddon"></span>'+
+							    '</div>'+
+							    '</td>'+
+							    '<td class="smvwrap">'+
+							    '<div class="input-group">'+
+							    '<input type="text" class="invoice_product_freequantity form-control input-sm text-right numtype" value="0" placeholder="0" size="8" aria-describedby="unitaddon">'+
+							    '<span class="input-group-addon input-sm" id="freeunitaddon"></span>'+
+							    '</div>'+
+							    '</td>'+
+							    '<td class="smvwrap">'+
+							    '<input type="text" class="invoice_product_per_price form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8">'+
+							    '</td>'+
+							    '<td class="smvwrap">'+
+							    '<input type="text" class="invoice_product_discount form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8">'+
+							    '</td>'+
+							    '<td class="smvwrap">'+
+							    '<input type="text" class="invoice_product_taxablevalue form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8" disabled>'+
+							    '</td>'+
+							    '<td class="smvwrap">'+
+							    '<input type="text" class="invoice_product_tax_rate form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8">'+
+							    '</td>'+
+							    '<td class="smvwrap">'+
+							    '<input  size="8" class="invoice_product_tax_amount form-control text-right numtype"  value="0.00" placeholder="0.00" disabled>'+
+							    '</td>'+
+							    '<td class="smvwrap">'+
+							    '<input size="10" type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>'+
+							    '</td>'+
+							    '<td class="crosswrap">'+
+							    '</td>'+
+							    '</tr>');
 
             var temp_list = [];
             for (let i = 0; i <= curindex1; i++) {
@@ -2787,7 +2793,7 @@ if (event.which == 13) {
       return false;
     }
     $.ajax({
-      url: '/invoice?action=getproducts',
+      url: '/invoice?action=getproducts&taxflag=7',
       type: 'POST',
       dataType: 'json',
       async: false,
