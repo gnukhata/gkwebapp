@@ -1665,6 +1665,7 @@ if ($("#taxapplicable option:selected").val() == 22) {
                         "invoicetotal": $("#invoice_product_table tfoot tr:last td:eq(5) input").val(),
                         "contents": JSON.stringify(contents),
                         "taxstate": $("#invoice_state option:selected").val(),
+                        "sourcestate": $("#invoice_state option:selected").val(),
                         "tax": JSON.stringify(tax),
                         "stock": JSON.stringify(stock),
                         "freeqty": JSON.stringify(freeqty),
