@@ -39,7 +39,7 @@ $(document).ready(function() {
     var ptotal = 0.00;
     var taxrate = 0.00;
 
-    $("#invoice_all_no").change(function(event) {
+    $("#selectinvoice").change(function(event) {
         /* Act on the event */
 
         var invid = $("#invoice_all_no option:selected").val();
