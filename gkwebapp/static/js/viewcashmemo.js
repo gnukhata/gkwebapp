@@ -35,6 +35,7 @@ $(document).ready(function() {
                 })
                 .done(function(resp) {
                     if (resp["gkstatus"] == 0) {
+                      console.log("invoice?action=getinvdetails successful");
                         $(".hidden-load").show();
                         if (resp.invoicedata.cancelflag == 1) // show cancel message and alert depending on cancel flag.
                         {
@@ -54,12 +55,15 @@ $(document).ready(function() {
                         $("#invoice_date").val(invdatearray[0]);
                         $("#invoice_month").val(invdatearray[1]);
                         $("#invoice_year").val(invdatearray[2]);
+                        console.log(invdatearray);
                         $(".invdetails").show();
                         $(document).find('.invdetails input,.invdetails select, .invstate select,.invoice_issuer input').prop("disabled", true); // disable all input fields for viewing only.
                         $("#invoice_challanno").val(resp["invoicedata"]["invoiceno"]);
                         $("#footer_id").show();
                         $("#invoice_editprint").show();
-                        $("#invoice_state").val(resp["invoicedata"]["taxstate"]);
+                        $("#invoice_state").val(resp["invoicedata"]["sourcestate"]);
+                        $("#taxapplicable").val(resp["invoicedata"]["taxflag"]);
+                        console.log(resp["invoicedata"]["sourcestate"]);
                         $('#invoice_product_table tbody').empty();
                         for (content in resp["invoicedata"]["contents"]) {
                             console.log(resp["invoicedata"]["contents"][content]["priceperunit"]);

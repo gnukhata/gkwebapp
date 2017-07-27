@@ -115,14 +115,14 @@
               <strong id="alertstrong">Cash Memo cancelled on  </strong>
           </div>
           </div>
-          <div class="col-md-4 hidden-load" hidden>
+          <div class="col-md-3 hidden-load" hidden>
 
             <div class="form-group">
               <label for="invoice_challanno">{% trans %}Cash Memo No{% endtrans %} :</label>
               <input class="form-control input-sm disable" id="invoice_challanno" placeholder="{% trans %}Enter invoice no{% endtrans %}" accesskey="a">
             </div>
           </div>
-          <div class="col-md-4 hidden-load" hidden>
+          <div class="col-md-3 hidden-load" hidden>
 
             <div class="form-group">
               <label for="invoice_date">{% trans %}Date{% endtrans %} :</label>
@@ -141,15 +141,12 @@
 
           </div>
 
-
-
-          <div class="col-md-4 hidden-load" hidden >
+          <div class="col-md-3 invstate hidden-load" hidden >
 
             <div class="form-group">
-              <label for="invoice_state">{% trans %}VAT Applicable to{% endtrans %} :</label>
-              <select class="form-control input-sm tax_state product_new_state disable" id="invoice_state">
-                <option value="none">None</option>
-                <option value="">Central</option>
+              <label for="invoice_state">{% trans %}State{% endtrans %} :</label>
+              <select class="form-control input-sm tax_state product_new_state" id="invoice_state">
+
                 <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
                 <option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>
                 <option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option>
@@ -190,6 +187,14 @@
             </div>
 
           </div>
+          <div class="col-md-3 hidden-load" hidden>
+     <label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
+     <select class="form-control input-sm"  id="taxapplicable" accesskey="">
+       <option value="7" selected>GST</option>
+       <option value="22">VAT</option>
+     </select>
+         </div>
+
 
 
 
