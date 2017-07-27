@@ -422,8 +422,9 @@
   		      <td class="lngwrap">
   			<select class="form-control input-sm product_name_gst">
   			  <option value="" disabled hidden selected> Product</option>
-  			  {% for product in products %}
-  			    <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
+      {% for product in productsnservices %}
+				<option value="{{product['productcode']}}" gsflag="{{product["gsflag"]}}">{{product["productdesc"]}}</option>
+
   			  {% endfor %}
   			</select>
   		      </td>

@@ -36,8 +36,9 @@ def showinvoice(request):
 @view_config(route_name="cashmemos",request_param="action=showadd",renderer="gkwebapp:templates/addcashmemo.jinja2")
 def showaddcashmemo(request):
 	header={"gktoken":request.headers["gktoken"]}
-	products = requests.get("http://127.0.0.1:6543/products", headers=header)
-	return {"gkstatus": request.params["status"],"products": products.json()["gkresult"]}
+	productsnservices = requests.get("http://127.0.0.1:6543/products", headers=header)
+	products = requests.get("http://127.0.0.1:6543/products?invdc=4", headers=header)
+	return {"gkstatus": request.params["status"],"products": products.json()["gkresult"],"productsnservices": productsnservices.json()["gkresult"]}
 
 @view_config(route_name="cashmemos",request_param="action=showedit",renderer="gkwebapp:templates/viewcashmemo.jinja2")
 def showeditcashmemo(request):
