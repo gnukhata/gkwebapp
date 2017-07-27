@@ -49,7 +49,11 @@ def showeditcashmemo(request):
 @view_config(route_name="cashmemos",request_param="action=getproducts",renderer="json")
 def getproducts(request):
 	header={"gktoken":request.headers["gktoken"]}
-	products = requests.get("http://127.0.0.1:6543/products", headers=header)
+	if int(request.params["taxflag"]) == 7:
+		products = requests.get("http://127.0.0.1:6543/products", headers=header)
+	elif int(request.params["taxflag"]) == 22:
+		products = requests.get("http://127.0.0.1:6543/products?invdc=4", headers=header)
+
 	return {"gkstatus": products.json()["gkstatus"],"products": products.json()["gkresult"]}
 
 

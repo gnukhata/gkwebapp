@@ -985,7 +985,7 @@ $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(8) input').val(par
                 }
                 //a new row is added on pressing enter key and the list of products are appended in the select box of the 1st column of the newly generated row
                 $.ajax({
-                        url: '/invoice?action=getproducts',
+                        url: '/invoice?action=getproducts&taxflag=22',
                         type: 'POST',
                         dataType: 'json',
                         async: false,
@@ -1257,7 +1257,7 @@ $(document).off("keydown", ".invoice_product_per_price").on("keydown", ".invoice
                     return false;
                 }
                 $.ajax({
-                        url: '/invoice?action=getproducts',
+                        url: '/invoice?action=getproducts&taxflag=22',
                         type: 'POST',
                         dataType: 'json',
                         async: false,
@@ -2001,7 +2001,7 @@ if ($("#taxapplicable option:selected").val() == 22) {
           return false;
         }
         $.ajax({
-          url: '/invoice?action=getproducts',
+          url: '/invoice?action=getproducts&taxflag=7',
           type: 'POST',
           dataType: 'json',
           async: false,
