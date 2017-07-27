@@ -197,14 +197,14 @@
     </div>
     <span style="margin:auto; display:table;">
       {% if ledgerrefresh["backflag"]>0 or ledgerrefresh.side %}
-      <button class="btn btn-sm btn-danger" type="button" id="back" accesskey="b">{% trans %}<i class="fa fa-arrow-left" aria-hidden="true"></i> <u>B</u>ack{% endtrans %}</button>
+      <button class="btn btn-sm btn-danger" type="button" id="back" accesskey="b"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}<u>B</u>ack{% endtrans %}</button>
       {% endif %}
-      <button class="btn btn-sm btn-primary" type="button" id="anotherledger" accesskey="v">{% trans %}<i class="fa fa-eye" aria-hidden="true"></i> <u>V</u>iew Another Ledger{% endtrans %}</button>
-      <button class="btn btn-sm btn-primary" type="button" id="dualledger" accesskey="g">{% trans %}Dual Led<u>g</u>ers{% endtrans %}</button>
+      <button class="btn btn-sm btn-warning" type="button" id="anotherledger" accesskey="v"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}<u>V</u>iew Another Ledger{% endtrans %}</button>
+      <button class="btn btn-sm btn-info" type="button" id="dualledger" accesskey="g">{% trans %}Dual Led<u>g</u>ers{% endtrans %}</button>
       <button class="btn btn-sm btn-primary" type="button"  id="drsonly" accesskey="d">{% trans %}Only <u>D</u>rs{% endtrans %}</button>
-      <button class="btn btn-sm btn-primary" type="button"  id="crsonly" accesskey="y">{% trans %}Onl<u>y</u> Crs{% endtrans %}</button>
-      <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">{% trans %}<i class="fa fa-file-excel-o" aria-hidden="true"></i> E<u>x</u>port to Spreadsheet</u>{% endtrans %}</button>
-      <button class="btn btn-sm btn-primary" type="button"  id="printledger" accesskey="t">{% trans %}<i class="fa fa-print" aria-hidden="true"></i> View Prin<u>t</u>able Version{% endtrans %}</button>
+      <button class="btn btn-sm btn-info" type="button"  id="crsonly" accesskey="y">{% trans %}Onl<u>y</u> Crs{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet</u>{% endtrans %}</button>
+      <button class="btn btn-sm btn-info" type="button"  id="printledger" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
     </span>
 
 
