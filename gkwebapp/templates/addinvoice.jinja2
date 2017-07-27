@@ -205,7 +205,7 @@
 		<table class="table  table-condensed table-bordered table-striped " >
                   <tbody>
 
-                    <tr style="height:1px;">
+                    <tr>
                       <td><label class="normal" for="instrumentno">{% trans %}Delivery No{% endtrans %} :</label></td>
                       <td colspan="2"><select class="form-control input-sm"  id="invoice_deliverynote" accesskey="">
                         <option value="" dcno = "" selected>None</option>
@@ -316,7 +316,11 @@
 	      <div class="col-md-4">
 		<table class="table  table-condensed table-bordered table-striped">
 		  <tbody>
-		    <h5>Details of Reciever | Billed to: </h5>
+		    {% if gkstatus=="in" %}
+		      <h5>{% trans %}Details of Supplier{% endtrans %} :</h5>
+		    {% else %}
+		      <h5>{% trans %}Details of Reciever | Billed to{% endtrans %} :</h5>
+		    {% endif %}
 		    <tr>
 		      <td>
 			<label for="invoice_customer">
@@ -372,7 +376,7 @@
 			</label></td>
 			<td>
 
-			  <label id="invoice_supplierstate" >{% trans %} {% endtrans %} </label>
+			  <label id="invoice_supplierstate" style="min-width:220px;">{% trans %} {% endtrans %} </label>
 			</td>
 		      {% else %}
 			<td>
