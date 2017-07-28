@@ -432,6 +432,7 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
       $(".product_name_vat").change();
       if (event.which == 13) {
         event.preventDefault();
+
         $(".product_name_gst").change();
         $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
       } else if (event.which == 190 && event.shiftKey) {
@@ -519,6 +520,7 @@ $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
                    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) span').text(resp["unitname"]);
 
                  }
+
 
 
                }
@@ -1498,6 +1500,7 @@ $(document).off("keydown", ".invoice_product_per_price").on("keydown", ".invoice
           bankdetails["accountno"] = $("#accountno").val();
           bankdetails["bankname"] = $("#bankname").val();
           bankdetails["ifsc"] = $("#ifsc").val();
+          bankdetails["branchname"] = $("#branchname").val();
           console.log(bankdetails);
         if ($("#taxapplicable option:selected").val() == 22) {
         for (var i = 0; i < $("#invoice_product_table tbody tr").length; i++) {

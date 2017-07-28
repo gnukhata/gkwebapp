@@ -64,8 +64,10 @@ $(document).ready(function() {
                         $("#invoice_state").val(resp["invoicedata"]["sourcestate"]);
                         $("#taxapplicable").val(resp["invoicedata"]["taxflag"]);
                         console.log(resp["invoicedata"]["sourcestate"]);
+
                         $('#invoice_product_table tbody').empty();
                         for (content in resp["invoicedata"]["contents"]) {
+                            console.log(resp["invoicedata"]["invcontents"][content]["productdesc"]);
                             console.log(resp["invoicedata"]["contents"][content]["priceperunit"]);
                             // Displaying product details in table.
                             $('#invoice_product_table tbody').append('<tr>' +
