@@ -115,21 +115,26 @@
   <div class="panel invoice_panel shadow">
     <div class="panel-body">
       <div class="container-fluid row">
-	<div class="col-sm-6 form-group">
-	  <label for="invselect" id="selectinvoice">{% trans %}List of Invoices{% endtrans %} :</label>
-          <select class = "form-control input-sm wide" name = "productcode" id="invselect" >
-            <option value="" disabled selected hidden>{% trans %}Select Product / Service{% endtrans %}</option>
-            {% for invoice in gkresult %}
-              <option value="{{invoice['invid']}}">{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
-            {% endfor %}
-          </select>
+	<div class="row">
+	  <div class="col-sm-6 form-group">
+	    <label for="invselect" id="selectinvoice">{% trans %}List of Invoices{% endtrans %} :</label>
+            <select class = "form-control input-sm wide" name = "productcode" id="invselect" >
+              <option value="" disabled selected hidden>{% trans %}Select Product / Service{% endtrans %}</option>
+              {% for invoice in gkresult %}
+		<option value="{{invoice['invid']}}">{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
+              {% endfor %}
+            </select>
+	  </div>
+	</div>
+	<div class="row" id="invdetailsdiv">
+	  
 	</div>
       </div>
     </div>
   </div>
   
-  <div class="panel-footer">
-    <div class="container-fluid btndisablediv" hidden>
+  <div class="panel-footer" hidden>
+    <div class="container-fluid btndisablediv">
       <button id="invoice_editprint" class="btn btn-primary btn-sm" >{% trans %}Print{% endtrans %}</button>
       <button class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">{% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
     </div>

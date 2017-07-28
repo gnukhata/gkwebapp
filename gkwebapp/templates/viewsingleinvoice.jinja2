@@ -1,48 +1,56 @@
-
 <form class="form-inline" >
   <div class="col-md-12">
     <div class="col-md-4">
       <h5>Details of Invoice: </h5>
       <table class="table  table-condensed table-bordered table-striped " >
         <tbody>
+
           <tr>
-            <td><label class="normal">{% trans %}Delivery No{% endtrans %} :</label></td>
-            <td colspan="2"></td>
+            <td><label class="normal" for="instrumentno">{% trans %}Delivery No{% endtrans %} :</label></td>
+            <td colspan="2">{% if dcno in gkresult %}{{gkresult["dcno"]}}{% endif %}</td>
           </tr>
           <tr>
-            <td><label class="normal">{% trans %}Invoice No.{% endtrans %} :</label></td>
-            <td colspan="2">{{gkresult["invoiceno"]}}</td>
+            <td><label class="normal"for="bankname">{% trans %}Invoice No.{% endtrans %} :</label></td>
+            <td colspan="2">{{ gkresult["invoiceno"] }}</td>
           </tr>
+
           <tr>
-            <td><label class="normal">{% trans %}Invoice Date:{% endtrans %}</label></td>
-            <td colspan="2">{{gkresult["invoicedate"]}}</td>
+            <td><label for="instrument_date" class="normal">{% trans %}Invoice Date:{% endtrans %}</label></td>
+            <td colspan="2">{{ gkresult["invoicedate"] }}</td>
+
 	  </tr>
 	  <tr>
+
             <td>
               <label for="invoicestate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} :</label>
             </td>
-            <td></td>
+            <td>{% if gkresult["inoutflag"] == 15 %}{{ gkresult["sourcestate"] }}{% endif %}{% if gkresult["inoutflag"] == 9 %}{{ gkresult["destinationstate"] }}{% endif %}</td>
             <td>
               <label for="stcode">{% trans %}State Code{% endtrans %} :</label>
-              <label id="statecodeforinvoice" >{% trans %} {% endtrans %} </label>
+	      {% set sourcestate = gkresult["sourcestatecode"] %}
+	      {% set taxstate = gkresult["taxstatecode"] %}
+	      {% if gkresult["inoutflag"] == 15 %}{{ gkresult["sourcestatecode"] }}{% endif %}{% if gkresult["inoutflag"] == 9 %}{{ gkresult["taxstatecode"] }}{% endif %}
             </td>
 
 	  </tr>
-	  <tr class="invoice_issuer" style="display:none;">
+	  {% if gkresult["inoutflag"] == 15 %}
+	  <tr class="invoice_issuer">
 	    <td>
 	      <label for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
 	    </td>
 	    <td colspan="2">
-	      {{gkresult["issuername"]}}
+	      {{ gkresult["issuername"] }}
 	    </td>
 	  </tr>
-	  <tr class="invoice_issuer" style="display:none">
+	  <tr class="invoice_issuer">
 	    <td>
 	      <label for="invoice_issuer_designation">{% trans %}Designation{% endtrans %} :</label>
 	    </td>
 	    <td colspan="2">
+	      {{ gkresult["designation"] }}
 	    </td>
 	  </tr>
+	  {% endif %}
         </tbody>
       </table>
     </div>
@@ -50,7 +58,7 @@
     <div class="col-md-4">
       <table class="table  table-condensed table-bordered table-striped">
 	<tbody>
-	  {% if gkstatus=="in" %}
+	  {% if gkresult["inoutflag"] == 15 %}
 	    <h5>{% trans %}Details of Supplier{% endtrans %} :</h5>
 	  {% else %}
 	    <h5>{% trans %}Details of Reciever | Billed to{% endtrans %} :</h5>
@@ -58,32 +66,26 @@
 	  <tr>
 	    <td>
 	      <label for="invoice_customer">
-		<!--
-		     {% if gkstatus=="in" %}
-		     {% trans %}Supplier{% endtrans %} :
-		     {% else %}
-		     {% trans %}Customer{% endtrans %} :
-		     {% endif %}
-		   -->
-	      </label></td>
-	    <td colspan="2"><select class="form-control input-sm" id="invoice_customer" accesskey="">
-	      <option value="" disabled hidden selected>
-		{% if gkstatus=="in" %}
-		  {% trans %}Select Supplier{% endtrans %}
+		{% if gkresult["inoutflag"] == 15 %}
+		  {% trans %}Supplier{% endtrans %} :
 		{% else %}
-		  {% trans %}Select Customer{% endtrans %}
+		  {% trans %}Customer{% endtrans %} :
 		{% endif %}
-	      </option>
-	      {% for supplier in suppliers %}
-		<option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
-	      {% endfor %}
-	    </select>
+	      </label></td>
+	    <td colspan="2">
+	      {{ gkresult["custSupDetails"]["custname"] }}
 	    </td>
 	  </tr>
 	  <tr>
 
-	    <td>  <label for="gstin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN / TIN:{% endtrans %}</label></td>
-	    <td colspan="2"><input type="text" id="gstin" class=" form-control input-sm" name="gstin" ></input></td>
+	    <td>  <label for="tin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}TIN:{% endtrans %}</label></td>
+	    <td colspan="2">{{ gkresult["custSupDetails"]["custtin"] }}</td>
+
+	  </tr>
+	  <tr>
+
+	    <td>  <label for="gstin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN:{% endtrans %}</label></td>
+	    <td colspan="2">{% if gkresult["inoutflag"] == 15 %}{{ gkresult["custSupDetails"]["gstin"][taxstate] }}{% endif %}{% if gkresult["inoutflag"] == 9 %}{{ gkresult["custSupDetails"]["gstin"][sourcestate] }}{% endif %}</label></td>
 
 	  </tr>
 	  <tr>
@@ -92,16 +94,13 @@
 		{% trans %}Supplier Address{% endtrans %} :
 	      </label>
 	      </td>
-	      <td colspan="2"><label id="invoice_supplieraddr" >{% trans %} {% endtrans %} </label></td>
 	    {% else %}
 	      <td><label for="invoice_customeraddr">
 		{% trans %}Customer Address{% endtrans %} :
 	      </label></td>
-	      <td colspan="2">
-
-		<label id="invoice_customeraddr" >{% trans %} {% endtrans %} </label>
-	      </td>
 	    {% endif %}
+	    <td colspan="2">
+	      <label id="invoice_customeraddr" >{% trans %} {% endtrans %} </label>
 	    </td>
 	  </tr>
 
@@ -110,22 +109,23 @@
 	      <td>  <label for="invoice_supplierstate">
 		{% trans %}Supplier State{% endtrans %} :
 	      </label></td>
-	      <td>
-
-		<label id="invoice_supplierstate" style="min-width:220px;">{% trans %} {% endtrans %} </label>
-	      </td>
 	    {% else %}
 	      <td>
 		<label for="invoice_customerstate">
 		  {% trans %}Customer State{% endtrans %} :
 		</label>
 	      </td>
-
-	      <td>
-		<label id="invoice_customerstate">{% trans %} {% endtrans %} </label>
-
-	      </td>
 	    {% endif %}
+	    <td>
+	      <select id="invoice_customerstate" class="form-control input-sm" style="max-width:220px;">
+		{% for state in states %}
+		  {% for key, value in state.items() %}
+		    <option value="{{value}}" stateid="{{key}}">{{value}}</option>
+		  {% endfor %}
+		{% endfor %}
+	      </select>
+
+	    </td>
 	    <div class ="form-inline " >
 	      <td>
 		<label for="stcode">{% trans %}State Code{% endtrans %} :</label>
@@ -142,19 +142,25 @@
       <table class="table  table-condensed table-bordered table-striped">
 	<tbody>
 	  <tr>
-	    <td>  <label for="consignee" class=" col-form-label col-form-label-sm" id="consigneelbl">{% trans %}Name :{% endtrans %}</label></td>
-            <td colspan="2"><input type="text" id="consigneename" class=" form-control input-sm" name="consigneename" ></input></td>
+	    <td>  <label for="consignee" class=" col-form-label col-form-label-sm" id="consigneelbl">{% trans %}Name{% endtrans %} :</label></td>
+            <td colspan="2"><input type="text" id="consigneename" class=" form-control input-sm" name="consigneename"  style="width:100%"></input></td>
 	  </tr>
 	  <tr>
 
-            <td>  <label for="gstinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN / TIN :{% endtrans %}</label></td>
-            <td colspan="2"><input type="text" id="gstinconsignee" class=" form-control input-sm" name="gstinconsignee" ></input></td>
+            <td>  <label for="tinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}TIN{% endtrans %} :</label></td>
+            <td colspan="2"><input type="text" id="tinconsignee" class=" form-control input-sm" name="tinconsignee"  style="width:100%"></input></td>
+
+          </tr>
+	  <tr>
+
+            <td>  <label for="gstinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN{% endtrans %} :</label></td>
+            <td colspan="2"><input type="text" id="gstinconsignee" class=" form-control input-sm" name="gstinconsignee"  style="width:100%"></input></td>
 
           </tr>
 	  <tr>
 
             <td>  <label for="consigneeaddress" class=" col-form-label col-form-label-sm" id="consigneeaddress">{% trans %}Address :{% endtrans %}</label></td>
-            <td colspan="2"><input type="text" id="consigneeaddress" class=" form-control input-sm" name="consigneeaddress" ></input></td>
+            <td colspan="2"><input type="text" id="consigneeaddress" class=" form-control input-sm" name="consigneeaddress" style="width:100%" ></input></td>
 	  </tr>
 	  <tr>
 
@@ -163,43 +169,11 @@
             </td>
             <td>
               <select class="form-control input-sm tax_state" id="consigneestate" >
-                <option value="Andaman and Nicobar Islands" stateid="35">Andaman and Nicobar Islands</option>
-                <option value="Andhra Pradesh" stateid="28">Andhra Pradesh</option>
-                <option value="Andhra Pradesh New" stateid="37">Andhra Pradesh (New)</option>
-                <option value="Arunachal Pradesh" stateid="12">Arunachal Pradesh</option>
-                <option value="Assam" stateid="18">Assam</option>
-                <option value="Bihar" stateid="10">Bihar</option>
-                <option value="Chandigarh" stateid="4">Chandigarh</option>
-                <option value="Chhattisgarh" stateid="22">Chhattisgarh</option>
-                <option value="Dadra and Nagar Haveli" stateid="26">Dadra and Nagar Haveli</option>
-                <option value="Daman and Diu" stateid="25">Daman and Diu</option>
-                <option value="Delhi" stateid="7">Delhi</option>
-                <option value="Goa" stateid="20">Goa</option>
-                <option value="Gujarat" stateid="29">Gujarat</option>
-                <option value="Haryana" stateid="6">Haryana</option>
-                <option value="Himachal Pradesh" stateid="2">Himachal Pradesh</option>
-                <option value="Jammu and Kashmir" stateid="1">Jammu and Kashmir</option>
-                <option value="Jharkhand" stateid="20">Jharkhand</option>
-                <option value="Karnataka" stateid="29">Karnataka</option>
-                <option value="Kerala" stateid="32">Kerala</option>
-                <option value="Lakshadweep" stateid="31">Lakshadweep</option>
-                <option value="Madhya Pradesh" stateid="23">Madhya Pradesh</option>
-                <option value="Maharashtra" stateid="27">Maharashtra</option>
-                <option value="Manipur" stateid="14">Manipur</option>
-                <option value="Meghalaya" stateid="17">Meghalaya</option>
-                <option value="Mizoram" stateid="15">Mizoram</option>
-                <option value="Nagaland" stateid="13">Nagaland</option>
-                <option value="Odisha" stateid="21">Odisha</option>
-                <option value="Pondicherry" stateid="34">Pondicherry</option>
-                <option value="Punjab" stateid="3">Punjab</option>
-                <option value="Rajasthan" stateid="8">Rajasthan</option>
-                <option value="Sikkim" stateid="11">Sikkim</option>
-                <option value="Tamil Nadu" stateid="33">Tamil Nadu</option>
-                <option value="Telangana" stateid="36">Telangana</option>
-                <option value="Tripura" stateid="16">Tripura</option>
-                <option value="Uttar Pradesh" stateid="9">Uttar Pradesh</option>
-                <option value="Uttarakhand" stateid="5">Uttarakhand</option>
-                <option value="West Bengal" stateid="19">West Bengal</option>
+                {% for state in states %}
+		  {% for key, value in state.items() %}
+		    <option value="{{value}}" stateid="{{key}}">{{value}}</option>
+		  {% endfor %}
+		{% endfor %}
               </select>
             </td>
             <td>
