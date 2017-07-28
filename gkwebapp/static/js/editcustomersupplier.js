@@ -43,8 +43,21 @@ $(document).ready(function() {
       $("#edit_cussup_pan").prop("disabled", true);
       $("#edit_cussup_tan").val(result["custtan"]);
 	$("#edit_cussup_tan").prop("disabled", true);
-	$("#edit_cussup_gstin").val(result["gstin"]);
-	$("#edit_cussup_gstin").prop("disabled",true);
+	var rowhtml = $('#gstintable tbody tr:first').html();
+	$('#gstintable tbody').empty();
+	for(var gstin in result["gstin"]){
+	    $('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');
+	    $('#gstintable tbody tr:last td:eq(0) select option[stateid='+gstin+']').prop("selected", true);
+	    $('#gstintable tbody tr:last td:eq(1) input').val(result["gstin"][gstin]);
+	}
+	for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
+	    if (i > 0) {
+		for(var k = i-1; k >= 0; k--) {
+		    var selectedstate = $('#gstintable tbody tr:eq(' + k + ') td:eq(0) select option:selected').attr("stateid");
+		    $('#gstintable tbody tr:eq(' + i + ') td:eq(0) select option[stateid='+selectedstate+']').prop("hidden", true).prop("disabled", true);
+		}
+	    }
+	}
       $(".panel-footer").show();
       $("#cus_innerdiv").show();
       $("#cussup_edit_save").hide();
