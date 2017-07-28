@@ -2288,10 +2288,10 @@ console.log("quantity");
     form_data.append("invtotal", invoicetotal);
     form_data.append("sourcestate", $("#invoicestate option:selected").val());
     if ($("#status").val() == 9) {  
-	form_data.append("taxstate", $("#invoice_supplierstate").text());
+	form_data.append("taxstate", $("#invoice_supplierstate").val());
     }
     else if ($("#status").val() ==  15) {
-	form_data.append("taxstate", $("#invoice_customerstate").text());
+	form_data.append("taxstate", $("#invoice_customerstate").val());
     }
     form_data.append("freeqty", JSON.stringify(freeqty));
     form_data.append("discount", JSON.stringify(discount));  

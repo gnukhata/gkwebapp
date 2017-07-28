@@ -81,9 +81,7 @@ def saveinvoice(request):
     print request.params
 
     invoicedata = {"invoiceno":request.params["invoiceno"],"taxstate":request.params["taxstate"],"invoicedate":request.params["invoicedate"],
-        "tax":json.loads(request.params["tax"]),"custid":request.params["custid"],"invoicetotal":request.params["invtotal"],
-        "contents":json.loads(request.params["contents"]),
-                   "issuername":request.params["issuername"],"designation":request.params["designation"],"freeqty":json.loads(request.params["freeqty"]), "discount":json.loads(request.params["discount"]),"bankdetails":json.loads(request.params["bankdetails"]),"taxflag":request.params["taxflag"],"sourcestate":request.params["sourcestate"]}
+                   "tax":json.loads(request.params["tax"]),"custid":request.params["custid"],"invoicetotal":request.params["invtotal"], "contents":json.loads(request.params["contents"]),"issuername":request.params["issuername"],"designation":request.params["designation"],"freeqty":json.loads(request.params["freeqty"]), "discount":json.loads(request.params["discount"]), "consignee":json.loads(request.params["consignee"]),"bankdetails":json.loads(request.params["bankdetails"]),"taxflag":request.params["taxflag"],"sourcestate":request.params["sourcestate"]}
 
     try:
         files = {}

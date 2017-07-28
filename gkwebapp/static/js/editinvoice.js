@@ -30,7 +30,7 @@ Contributors:
 $(document).ready(function() {
     $('.modal-backdrop').remove();
     $('.invoicedate').autotab('number');
-    $("#invoice_all_no").focus();
+    $("#selectinvoice").focus();
     $("#invoice_editprint").hide();
     var dcno = '';
     var pqty = 0.00;
@@ -47,9 +47,9 @@ $(document).ready(function() {
 
 
             $.ajax({
-                    url: '/invoice?action=getinvdetails',
+                    url: '/invoice?action=showinv',
                     type: 'POST',
-                    dataType: 'json',
+                    dataType: 'text/html',
                     async: false,
                     data: { "invid": invid },
                     beforeSend: function(xhr) {
@@ -61,18 +61,6 @@ $(document).ready(function() {
                     if (resp["gkstatus"] == 0) {
                         $(".btndisablediv").show();
                         $(".btn-success").hide();
-                        if (resp.invoicedata.cancelflag == 1) {
-                            $("#cancelmsg").show();
-                            $("#alertstrong").html("Invoice cancelled on " + resp.invoicedata.canceldate);
-                            //$("#invcl").prop("disabled", true);
-                            //$("#invcl").hide();
-
-
-                        } else {
-                            $("#cancelmsg").hide();
-                            //$("#invcl").prop("disabled", false);
-                            //$("#invcl").show();
-                        }
                         if (resp.invoicedata.attachmentcount > 0) {
                             $("#viewattach").show();
                         } else {

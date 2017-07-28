@@ -104,7 +104,7 @@
  .rightJustified {
      text-align: right;
  }
- select {
+ select:not(".wide") {
      max-width: 240px !important;
  }
 
@@ -117,7 +117,7 @@
       <div class="container-fluid row">
 	<div class="col-sm-6 form-group">
 	  <label for="invselect" id="selectinvoice">{% trans %}List of Invoices{% endtrans %} :</label>
-          <select class = "form-control input-sm"  name = "productcode" id="prodselect" >
+          <select class = "form-control input-sm wide" name = "productcode" id="invselect" >
             <option value="" disabled selected hidden>{% trans %}Select Product / Service{% endtrans %}</option>
             {% for invoice in gkresult %}
               <option value="{{invoice['invid']}}">{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
