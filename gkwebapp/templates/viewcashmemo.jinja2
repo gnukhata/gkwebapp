@@ -309,20 +309,8 @@
                               <td class="col-xs-9 text-right">
                                 <input type="text" class=" form-control input-sm text-right" value="{% trans %}Total{% endtrans %}" placeholder="" disabled>
                               </td>
-                              <td class="col-xs-2" style="display:none">
-                                <input type="text" class=" form-control input-sm text-right" value="0" placeholder="" disabled>
-                              </td>
-                              <td class="col-xs-2" style="display:none">
-                                <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
-                              </td>
-                              <td class="col-xs-1" style="display:none">
-                                <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
-                              </td>
-                              <td class="col-xs-1" style="display:none">
-                                <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
-                              </td>
                               <td class="col-xs-2">
-                                <input type="text" class=" form-control deliverychallan_edit_disable input-sm text-right" value="0.00" disabled>
+                                <input type="text" class=" form-control deliverychallan_edit_disable input-sm text-right" value="0.00" id="total" disabled>
                               </td>
                               <td class="col-xs-1" style="width: 3.5%">
 
@@ -456,6 +444,20 @@
             </table>
 
             </div>
+            <div class="col-md-8" >
+    		<h5>Total</h5>
+    		<table class="table  table-condensed table-bordered table-striped">
+    		  <tbody>
+
+    		    <tr>
+    		      <td>  <label style="font-size: 125%" for="total invoice value" class=" col-form-label col-form-label-sm" >{% trans %}Total Amount :{% endtrans %}</label></td>
+    		      <td colspan="2"> <label style="font-size: 125%" for="total invoice value" class=" col-form-label col-form-label-sm" id="totalinvoicevalue"></td>
+    		    </tr>
+    		  </tbody>
+    		</table>
+
+          </div>
+
           </div>
         </div>
         <div class="panel-footer" id="footer_id" hidden>

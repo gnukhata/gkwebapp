@@ -67,6 +67,7 @@ $(document).ready(function() {
                         $("#totalsgst_product_gst").text(resp["invoicedata"]["totaltaxamt"]);
                         $("#totalcgst_product_gst").text(resp["invoicedata"]["totaltaxamt"]);
                         $("#total_product_gst").text(resp["invoicedata"]["invoicetotal"]);
+                        $("#totalinvoicevalue").text(resp["invoicedata"]["invoicetotal"]);
                         $("#taxapplicable").val(resp["invoicedata"]["taxflag"]);
                         console.log(resp["invoicedata"]["bankdetails"]["accountno"]);
                         $("#accountno").val(resp["invoicedata"]["bankdetails"]["accountno"]);
@@ -82,6 +83,7 @@ $(document).ready(function() {
                         var invcontents=invdata["invcontents"]
                         if (invdata["taxflag"]==22)
                         {
+                          $("#total").val(resp["invoicedata"]["invoicetotal"]);
                             $('#invoice_product_table_gst').hide();
                           for (pc in invcontents)
                           {

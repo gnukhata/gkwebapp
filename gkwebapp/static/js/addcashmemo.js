@@ -110,6 +110,8 @@ $('#totalcgst_product_gst').text(parseFloat(totalcgst).toFixed(2));
 $('#totalsgst_product_gst').text(parseFloat(totalsgst).toFixed(2));
 
 $('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
+
+$('#totalinvoicevalue').text(parseFloat(totalamount).toFixed(2));
   }
 
 
