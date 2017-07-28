@@ -234,14 +234,12 @@ label.normal {
                 {% if vtype == "purchase" and invoice["csflag"]|int == 19 %}
                 {% if voucher["invid"]|int== invoice['invid']|int %}
                 <input type="text" id="viewinvsel" class="form-control input-sm invoice_no" value="{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}" >
-                {% else %}
-                <input type="text" id="viewinvsel" class="form-control input-sm invoice_no" value="{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}" >
+
                 {% endif %}
                 {% elif vtype == "sales" and invoice["csflag"]|int == 3 %}
                 {% if voucher["invid"]|int== invoice['invid']|int %}
                 <input type="text" id="viewinvsel" class="form-control input-sm invoice_no" value="{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}" >
-                {% else %}
-                <input type="text" id="viewinvsel" class="form-control input-sm invoice_no" value="{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}" >
+
                 {% endif %}
                 {% endif %}
                 {% endfor %}
