@@ -239,31 +239,10 @@ $(document).ready(function() {
       $('#invoice_addcust').click();
     }
   });
-
-/*  $("#invoice_state").keydown(function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-      var state = $("#invoice_state option:selected").val();
-      if (state == "none") {
-	      $(".invoice_product_tax_rate").prop("disabled", true);
-	      $(".invoice_product_tax_rate").val("0.00");
-      }
-      else {
-	      $(".invoice_product_tax_rate").prop("disabled", false);
-      }
-      $('#invoice_product_table tbody tr:first td:eq(0) select').focus();
-    }
-    if (event.which == 38 && (document.getElementById('invoice_state').selectedIndex == 0)) {
-      event.preventDefault();
-      if ($("#invoice_customer").is(":disabled")) {
-        $("#invoice_year").focus().select();
-      } else {
-        $("#invoice_customer").focus().select();
-      }
-    }
-  });*/
-
-  $("#invoice_customer").change(function(event) {
+    var gstins = {};
+    var gstinflag = 0;
+    $("#invoice_customer").change(function(event) {
+	gstinflag = 0;
     $.ajax({
       url: '/customersuppliers?action=get',
       type: 'POST',
@@ -275,14 +254,15 @@ $(document).ready(function() {
       }
     })
      .done(function(resp) {
-       console.log("success");
+	 console.log("success");
+	 console.log(resp);
        if (resp["gkstatus"] == 0) {
-         $("#invoice_customerstate").text(resp["gkresult"]["state"]);
-         $("#invoice_supplierstate").val(resp["gkresult"]["state"]);
-         $("#invoice_customeraddr").val(resp["gkresult"]["custaddr"]);
-         $("#invoice_supplieraddr").text(resp["gkresult"]["custaddr"]);
-         $("#invoice_customertin").text(resp["gkresult"]["custtan"]);
-         $("#invoice_suppliertin").text(resp["gkresult"]["custtan"]);
+         $("#invoice_customerstate").val(resp["gkresult"]["state"]);
+         $("#invoice_customeraddr").text(resp["gkresult"]["custaddr"]);
+           $("#tin").text(resp["gkresult"]["custtan"]);
+	   $("#gstin").text(resp["gkresult"]["gstin"][$("#invoice_customerstate option:selected").attr("stateid")]);
+	   gstins = resp["gkresult"]["gstin"];
+	   gstinflag = 1;
        }
      })
      .fail(function() {
@@ -292,6 +272,15 @@ $(document).ready(function() {
        console.log("complete");
      });
   });
+
+    $("#invoice_customerstate").change(function(event) {
+	if ($("#invoice_customerstate option:selected").attr("stateid") in gstins) {
+	       $("#gstin").text(gstins[$("#invoice_customerstate option:selected").attr("stateid")]);
+	}
+	else {
+	    $("#gstin").text('');
+	}
+    });
 
   $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
     event.preventDefault();

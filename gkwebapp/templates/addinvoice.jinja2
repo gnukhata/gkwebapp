@@ -330,16 +330,13 @@
 			  {% trans %}Supplier Address{% endtrans %} :
 			</label>
 			</td>
-			<td colspan="2"><label id="invoice_supplieraddr" >{% trans %} {% endtrans %} </label></td>
 		      {% else %}
 			<td><label for="invoice_customeraddr">
 			  {% trans %}Customer Address{% endtrans %} :
 			</label></td>
-			<td colspan="2">
-
-			  <label id="invoice_customeraddr" >{% trans %} {% endtrans %} </label>
-			</td>
 		      {% endif %}
+		      <td colspan="2">
+			<label id="invoice_customeraddr" >{% trans %} {% endtrans %} </label>
 		      </td>
 		    </tr>
 
@@ -382,24 +379,24 @@
 		  <tbody>
 		    <tr>
 		      <td>  <label for="consignee" class=" col-form-label col-form-label-sm" id="consigneelbl">{% trans %}Name{% endtrans %} :</label></td>
-                      <td colspan="2"><input type="text" id="consigneename" class=" form-control input-sm" name="consigneename" ></input></td>
+                      <td colspan="2"><input type="text" id="consigneename" class=" form-control input-sm" name="consigneename"  style="width:100%"></input></td>
 		    </tr>
 		    <tr>
 
                       <td>  <label for="tinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}TIN{% endtrans %} :</label></td>
-                      <td colspan="2"><input type="text" id="tinconsignee" class=" form-control input-sm" name="tinconsignee" ></input></td>
+                      <td colspan="2"><input type="text" id="tinconsignee" class=" form-control input-sm" name="tinconsignee"  style="width:100%"></input></td>
 
                     </tr>
 		    <tr>
 
                       <td>  <label for="gstinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN{% endtrans %} :</label></td>
-                      <td colspan="2"><input type="text" id="gstinconsignee" class=" form-control input-sm" name="gstinconsignee" ></input></td>
+                      <td colspan="2"><input type="text" id="gstinconsignee" class=" form-control input-sm" name="gstinconsignee"  style="width:100%"></input></td>
 
                     </tr>
 		    <tr>
 
                       <td>  <label for="consigneeaddress" class=" col-form-label col-form-label-sm" id="consigneeaddress">{% trans %}Address :{% endtrans %}</label></td>
-                      <td colspan="2"><input type="text" id="consigneeaddress" class=" form-control input-sm" name="consigneeaddress" ></input></td>
+                      <td colspan="2"><input type="text" id="consigneeaddress" class=" form-control input-sm" name="consigneeaddress" style="width:100%" ></input></td>
 		    </tr>
 		    <tr>
 
