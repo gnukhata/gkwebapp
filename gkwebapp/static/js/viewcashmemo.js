@@ -64,38 +64,44 @@ $(document).ready(function() {
                         $("#invoice_state").val(resp["invoicedata"]["sourcestate"]);
                         $("#taxapplicable").val(resp["invoicedata"]["taxflag"]);
                         console.log(resp["invoicedata"]["sourcestate"]);
-
+                          console.log("contents of inv"+resp["invoicedata"]);
+                          console.log(JSON.stringify(resp));
                         $('#invoice_product_table tbody').empty();
-                        for (content in resp["invoicedata"]["contents"]) {
-                            console.log(resp["invoicedata"]["invcontents"][content]["productdesc"]);
-                            console.log(resp["invoicedata"]["contents"][content]["priceperunit"]);
+                        var invdata=resp["invoicedata"]
+                        var invcontents=invdata["invcontents"]
+
+                        for (pc in invcontents)
+                        {
+                          var productdecs=invcontents[pc]
+
+                          console.log("taxamount "+productdecs["taxamount"]);
+                          console.log("desc"+productdecs["proddesc"]);
+
                             // Displaying product details in table.
                             $('#invoice_product_table tbody').append('<tr>' +
                                 '<td class="col-xs-3">' +
-                                '<select class="form-control deliverychallan_edit_disable edit_invoice_disable input-sm product_name">' +
-                                '<option value="' + content + '">' + resp["invoicedata"]["contents"][content]["productdesc"] + '</option>' +
-                                '</select>' +
+                                '<input type="text" class="form-control deliverychallan_edit_disable edit_invoice_disable input-sm product_name" value="' + productdecs["proddesc"] + '">' +
                                 '</td>' +
                                 '<td class="col-xs-2">' +
                                 '<div class="input-group">' +
-                                '<input type="text" class="invoice_product_quantity form-control deliverychallan_edit_disable edit_invoice_disable input-sm text-right" value="' + resp["invoicedata"]["contents"][content]["qty"] + '">' +
-                                '<span class="input-group-addon input-sm" id="unitaddon">' + resp["invoicedata"]["contents"][content]["unitname"] + '</span>' +
+                                '<input type="text" class="invoice_product_quantity form-control deliverychallan_edit_disable edit_invoice_disable input-sm text-right" value="' + productdecs["qty"] + '">' +
+                                '<span class="input-group-addon input-sm" id="unitaddon">' + productdecs["uom"] + '</span>' +
                                 '</div>' +
                                 '</td>' +
                                 '<td class="col-xs-2">' +
                                 '<div class="input-group">' +
                                 '<input type="text" class="invoice_product_freequantity form-control deliverychallan_edit_disable edit_invoice_disable input-sm text-right" value="' + 0 + '">' +
-                                '<span class="input-group-addon input-sm" id="unitaddon">' + resp["invoicedata"]["contents"][content]["unitname"] + '</span>' +
+                                '<span class="input-group-addon input-sm" id="unitaddon">' + productdecs["uom"] + '</span>' +
                                 '</div>' +
                                 '</td>' +
                                 '<td class="col-xs-2">' +
-                                '<input type="text" class="invoice_product_per_price form-control deliverychallan_edit_disable edit_invoice_disable input-sm numtype text-right" value="' + resp["invoicedata"]["contents"][content]["priceperunit"] + '">' +
+                                '<input type="text" class="invoice_product_per_price form-control deliverychallan_edit_disable edit_invoice_disable input-sm numtype text-right" value="' + productdecs["priceperunit"] + '">' +
                                 '</td>' +
                                 '<td class="col-xs-1">' +
                                 '<input type="text" class="invoice_product_tax_rate form-control edit_invoice_disable input-sm numtype text-right" value="0.00">' +
                                 '</td>' +
                                 '<td class="col-xs-1">' +
-                                '<input type="text" class="invoice_product_tax_amount form-control edit_invoice_disable input-sm numtype text-right" value="' + resp["invoicedata"]["contents"][content]["taxamount"] + '" >' +
+                                '<input type="text" class="invoice_product_tax_amount form-control edit_invoice_disable input-sm numtype text-right" value="' + productdecs["taxamount"] + '" >' +
                                 '</td>' +
                                 '<td class="col-xs-2">' +
                                 '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable edit_invoice_disable input-sm numtype text-right" value="0.00" disabled>' +
@@ -103,6 +109,7 @@ $(document).ready(function() {
                                 '<td class="col-xs-1" style="width: 5%">' +
                                 '</td>' +
                                 '</tr>');
+                                /*
                             $(".edit_invoice_disable").prop("disabled", true);
                             // all the column totals are directly calculated dynamically on the change of any of the related fields in the column.
                             // all the following values are also calculated
@@ -211,7 +218,7 @@ $(document).ready(function() {
 
                                 // jquery enables us to select specific elements inside a table easily like below.
                                 $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
-                            });
+                            });*/
                         }
                     }
 
