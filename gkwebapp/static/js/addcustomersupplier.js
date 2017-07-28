@@ -154,9 +154,9 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
           return false;
         }
         if ($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val()=="") {
-          $("#os-blank-alert").alert();
-          $("#os-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#os-blank-alert").hide();
+          $("#gstin-blank-alert").alert();
+          $("#gstin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#gstin-blank-alert").hide();
           });
           $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').focus();
           return false;

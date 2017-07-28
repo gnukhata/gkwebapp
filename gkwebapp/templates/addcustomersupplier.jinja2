@@ -47,7 +47,14 @@
       {% trans %}Please enter TIN!{% endtrans %}
 
     </div>
+    <div class="alert alert-danger" id="gstin-blank-alert"  aria-live="rude" role="alert" hidden>
 
+      {% trans %}Please Enter GSTIN.{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Please select a state.{% endtrans %}
+    </div>
     <input type="hidden" id="debtgroupcode" value="{{debtgroupcode}}">
     <input type="hidden" id="credgroupcode" value="{{credgroupcode}}">
     <div class="panel shadow customersupplier_panel">
