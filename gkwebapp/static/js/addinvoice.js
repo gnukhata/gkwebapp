@@ -278,11 +278,11 @@ $(document).ready(function() {
        console.log("success");
        if (resp["gkstatus"] == 0) {
          $("#invoice_customerstate").text(resp["gkresult"]["state"]);
-         $("#invoice_supplierstate").text(resp["gkresult"]["state"]);
+         $("#invoice_supplierstate").val(resp["gkresult"]["state"]);
          $("#invoice_customeraddr").val(resp["gkresult"]["custaddr"]);
          $("#invoice_supplieraddr").text(resp["gkresult"]["custaddr"]);
          $("#invoice_customertin").text(resp["gkresult"]["custtan"]);
-         $("#invoice_suppliertin").val(resp["gkresult"]["custtan"]);
+         $("#invoice_suppliertin").text(resp["gkresult"]["custtan"]);
        }
      })
      .fail(function() {
