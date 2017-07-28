@@ -62,7 +62,17 @@ $(document).ready(function() {
                         $("#footer_id").show();
                         $("#invoice_editprint").show();
                         $("#invoice_state").val(resp["invoicedata"]["sourcestate"]);
+                        $("#taxablevaluetotal_product_gst").text(resp["invoicedata"]["totaltaxablevalue"]);
+                        $("#discounttotal_product_gst").text(resp["invoicedata"]["totaldiscount"]);
+                        $("#totalsgst_product_gst").text(resp["invoicedata"]["totaltaxamt"]);
+                        $("#totalcgst_product_gst").text(resp["invoicedata"]["totaltaxamt"]);
+                        $("#total_product_gst").text(resp["invoicedata"]["invoicetotal"]);
                         $("#taxapplicable").val(resp["invoicedata"]["taxflag"]);
+                        console.log(resp["invoicedata"]["bankdetails"]["accountno"]);
+                        $("#accountno").val(resp["invoicedata"]["bankdetails"]["accountno"]);
+                        $("#bankname").val(resp["invoicedata"]["bankdetails"]["bankname"]);
+                        $("#branchname").val(resp["invoicedata"]["bankdetails"]["branchname"]);
+                        $("#ifsc").val(resp["invoicedata"]["bankdetails"]["ifsc"]);
                         console.log(resp["invoicedata"]["sourcestate"]);
                           console.log("contents of inv"+resp["invoicedata"]);
                           console.log(JSON.stringify(resp));
@@ -245,7 +255,7 @@ $(document).ready(function() {
                                   '<input type="text" class="form-control deliverychallan_edit_disable edit_invoice_disable input-sm product_name" value="' + productdecs["proddesc"] + '">' +
                                   '</td>' +
                                   '<td class="col-xs-2">' +
-                                  '<input type="text" class="form-control deliverychallan_edit_disable edit_invoice_disable input-sm product_name" value="ACX">' +
+                                  '<input type="text" class="form-control deliverychallan_edit_disable edit_invoice_disable input-sm product_name" value="'+ productdecs["gscode"] +'">' +
                                   '</td>' +
                                   '<td class="col-xs-2">' +
                                   '<div class="input-group">' +
