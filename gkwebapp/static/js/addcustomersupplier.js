@@ -258,56 +258,16 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       $("#add_cussup_fax").focus().select();
     }
   });
-
-    if (year >= 2017){
-
     $("#add_cussup_tan").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#add_cussup_gstin").focus().select();
+	$(".gstinstate:first").focus();
     }
     if (event.which==38) {
       event.preventDefault();
-      $("#add_cussup_fax").focus().select();
+      $("#add_cussup_pan").focus().select();
     }
     });
-
-      $("#add_cussup_gstin").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#cussup_save").focus().select();
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#add_cussup_tan").focus().select();
-    }
-  });
-    }
-
-    else{
- $("#add_cussup_tan").keydown(function(event) {
-    if (event.which==13) {
-    	event.preventDefault();
-    	if ($.trim($("#add_cussup_tan").val())=="") {
-            $("#tin-blank-alert").alert();
-            $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-              $("#tin-blank-alert").hide();
-            });
-            $("#add_cussup_tan").focus();
-            return false;
-          }
-          event.preventDefault();
-          $("#cussup_save").focus().select();
-        }
-     if (event.which==38)  {
-          event.preventDefault();
-          $("#add_cussup_pan").focus().select();
-        }
-      });
-	
-    }
-
-    
   $("#add_cussup_reset").click(function(event) {
       // click the customer/supplier create tab to reload the current page in tab creating a reset effect
     $("#customersupplier_create").click();
@@ -366,24 +326,32 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       $("#add_cussup_address").focus();
       return false;
     }
-
-      
+    var gobj = {}; // Creating a dictionary for storing godown wise opening stock
+      $("#gstintable tbody tr").each(function(){
+	  var curindex1 = $(this).index();
+    if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
+      if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val())!="") {
+          gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val();
+      }
+    }
+  });
     // ajax call for saving the customer/supplier
-    $.ajax({
-      url: '/customersuppliers?action=save',
-      type: 'POST',
-      dataType: 'json',
-      async : false,
-      data: {"custname": $("#add_cussup_name").val(),
-      "custaddr": $.trim($("#add_cussup_address").val()),
-      "custphone": $("#add_cussup_phone").val(),
-      "custemail": $("#add_cussup_email").val(),
-      "custfax": $("#add_cussup_fax").val(),
-      "custpan": $("#add_cussup_pan").val(),
-      "custtan": $("#add_cussup_tan").val(),
-	     "gstin": $("#add_cussup_gstin").val(),    
-      "state" : $("#add_state").val(),
-      "csflag": $("#add_cussup option:selected").val()},
+      $.ajax({
+	  url: '/customersuppliers?action=save',
+	  type: 'POST',
+	  dataType: 'json',
+	  async : false,
+	  data: {"custname": $("#add_cussup_name").val(),
+		 "custaddr": $.trim($("#add_cussup_address").val()),
+		 "custphone": $("#add_cussup_phone").val(),
+		 "custemail": $("#add_cussup_email").val(),
+		 "custfax": $("#add_cussup_fax").val(),
+		 "custpan": $("#add_cussup_pan").val(),
+		 "custtan": $("#add_cussup_tan").val(),
+		 "gstin": JSON.stringify(gobj),
+		 "state" : $("#add_state").val(),
+		 "csflag": $("#add_cussup option:selected").val()
+		},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken); //attaching the jwt token in the header
