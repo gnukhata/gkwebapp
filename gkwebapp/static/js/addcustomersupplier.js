@@ -33,12 +33,6 @@ $(document).ready(function() {
 
     var todatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
     var year = (todatearray[0])
-   
-    if (year >= 2017){
-	
-		$("#gstin").show();
-    }
-    
     
   $("#add_cussup").focus().select();
   $("#add_cussup").keydown(function(event) {
@@ -108,7 +102,111 @@ $(document).ready(function() {
           event.preventDefault();
           $("#add_cussup_phone").focus().select();
         }
-      });
+  });
+  $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(event)
+{
+  var curindex = $(this).closest('tr').index();
+  var nextindex = curindex+1;
+  var previndex = curindex-1;
+  if(event.which==190 && event.shiftKey)
+  {
+    event.preventDefault();
+    $('#gstintable tbody tr:eq('+nextindex+') td:eq(0) select').focus().select();
+  }
+  else if (event.which==188 && event.ctrlKey) {
+    event.preventDefault();
+    $('#gstintable tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
+  }
+  else if (event.which==190 && event.ctrlKey) {
+    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
+    event.preventDefault();
+  }
+  else if (event.which==13) {
+    event.preventDefault();
+    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
+  }
+  else if (event.which==27) {
+    event.preventDefault();
+    $("#cussup_save").focus();
+  }
+});
+
+$(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
+{
+  var curindex1 = $(this).closest('tr').index();
+  var nextindex1 = curindex1+1;
+  var previndex1 = curindex1-1;
+  var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
+  var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
+  if (event.which==13) {
+    event.preventDefault();
+    if (curindex1 != ($("#gstintable tbody tr").length-1)) {
+      $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+    }
+    else {
+      if (numberofstates > 0) {
+        if ($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="") {
+          $("#state-blank-alert").alert();
+          $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#state-blank-alert").hide();
+          });
+          $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select').focus();
+          return false;
+        }
+        if ($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val()=="") {
+          $("#os-blank-alert").alert();
+          $("#os-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#os-blank-alert").hide();
+          });
+          $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').focus();
+          return false;
+        }
+        $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+        if (curindex1 == 0) {
+          $("#gstintable tbody tr:last td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+        }
+        $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
+	$('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[value=""]').prop('selected', true);
+        $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+      }
+      else {
+        $("#cussup_save").focus();
+      }
+    }
+  }
+  else if(event.which==190 && event.shiftKey)
+  {
+    event.preventDefault();
+    $('#gstintable tbody tr:eq('+nextindex1+') td:eq(1) input').focus().select();
+  }
+  else if (event.which==188 && event.shiftKey)
+  {
+    if(previndex1>-1)
+    {
+      event.preventDefault();
+      $('#gstintable tbody tr:eq('+previndex1+') td:eq(1) input').focus().select();
+    }
+  }
+  else if (event.ctrlKey && event.which==188) {
+    event.preventDefault();
+    $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select').focus();
+  }
+  else if (event.which==190 && event.ctrlKey) {
+    event.preventDefault();
+    $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
+  }
+  else if (event.which==27) {
+    event.preventDefault();
+    $("#cussup_save").focus();
+  }
+});
+$(document).off("click",".state_del").on("click", ".state_del", function() {
+  $(this).closest('tr').fadeOut(200, function(){
+    $(this).closest('tr').remove();	 //closest method gives the closest element specified
+    $('#gstintable tbody tr:last td:eq(0) select').focus().select();
+  });
+  $('#gstintable tbody tr:last td:eq(0) select').select();
+});
   var delta = 500;
   var lastKeypressTime = 0;
   /*Customer/Supplier address field being a textarea pressing enter will shift the cursor on the new line
@@ -268,29 +366,6 @@ $(document).ready(function() {
       $("#add_cussup_address").focus();
       return false;
     }
-      
-       
-    if (year >= 27){  
-    if ($.trim($("#add_cussup_tan").val())=="" && $.trim($("#add_cussup_gstin").val())=="" ) {
-      $("#both-blank-alert").alert();
-      $("#both-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#both-blank-alert").hide();
-      });
-      $("#add_cussup_tan").focus();
-      return false;
-    }
-    }
-      else{
-	       if ($.trim($("#add_cussup_tan").val())=="" ) {
-      $("#tin-blank-alert").alert();
-      $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#tin-blank-alert").hide();
-      });
-      $("#add_cussup_tan").focus();
-      return false;
-    }    
-
-      }
 
       
     // ajax call for saving the customer/supplier
