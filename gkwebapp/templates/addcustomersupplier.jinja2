@@ -77,43 +77,49 @@
               <label for="add_cussup_name">{% trans %}Name:{% endtrans %}</label><label for="add_cussup_name" style="color:red;font-size: 120%;">*</label>
               <input class="form-control input-sm" id="add_cussup_name" placeholder="{% trans %}Enter Name{% endtrans %}" accesskey="">
             </div>
-            <div class="form-group">
-              <label for="add_cussup_email">{% trans %}Email:{% endtrans %}</label>
-              <input class="form-control input-sm"type="email" id="add_cussup_email"  accesskey="">
-            </div>
-            <div class="form-group">
-              <label for="add_cussup_phone">{% trans %}Phone No:{% endtrans %}</label>
-              <input class="form-control input-sm" type="text" id="add_cussup_phone"></input>
-            </div>
-            <div class="form-group">
-              <label for="add_state">{% trans %}State:{% endtrans %}</label><label for="add_state" style="color:red;font-size: 120%;">*</label>
-              <select class="form-control input-sm add-state" id="add_state" accesskey="">
-                <option value="">Select State</option>
-                {% for state in states %}
-		  {% for key, value in state.items() %}
-		    <option value="{{value}}" stateid="{{key}}">{{value}}</option>
+            <div class="row">
+	      <div class="form-group col-sm-6">
+		<label for="add_cussup_email">{% trans %}Email:{% endtrans %}</label>
+		<input class="form-control input-sm"type="email" id="add_cussup_email"  accesskey="">
+              </div>
+              <div class="form-group col-sm-6">
+		<label for="add_cussup_phone">{% trans %}Phone No:{% endtrans %}</label>
+		<input class="form-control input-sm" type="text" id="add_cussup_phone"></input>
+              </div>
+	    </div>
+            <div class="row">
+	      <div class="form-group col-sm-6">
+		<label for="add_state">{% trans %}State:{% endtrans %}</label><label for="add_state" style="color:red;font-size: 120%;">*</label>
+		<select class="form-control input-sm add-state" id="add_state" accesskey="">
+                  <option value="">Select State</option>
+                  {% for state in states %}
+		    {% for key, value in state.items() %}
+		      <option value="{{value}}" stateid="{{key}}">{{value}}</option>
+		    {% endfor %}
 		  {% endfor %}
-		{% endfor %}
-              </select>
-            </div>
-	    <div class="form-group">
-              <label for="add_cussup_address"> Address:
-              </label><label for="add_cussup_address" style="color:red;font-size: 120%;">*</label>
-              <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#accModal"></i>
-              <textarea class="form-control" rows="1" cols="40" id="add_cussup_address" aria-describedby="textareahelp"></textarea>
-              <small id="textareahelp" class="form-text text-muted">Press Enter key twice to shift focus to Fax</small>
-            </div>
+		</select>
+              </div>
+	      <div class="form-group col-sm-6">
+		<label for="add_cussup_address"> Address:
+		</label><label for="add_cussup_address" style="color:red;font-size: 120%;">*</label>
+		<i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#accModal"></i>
+		<textarea class="form-control" rows="2" cols="40" id="add_cussup_address" aria-describedby="textareahelp"></textarea>
+		<small id="textareahelp" class="form-text text-muted">Press Enter key twice to shift focus to Fax</small>
+              </div>
+	    </div>
         </div>
         <div class="col-md-6">
-              <div class="form-group">
+          <div class="row">
+	    <div class="form-group col-sm-6">
               <label for="add_cussup_fax">{% trans %}Fax:{% endtrans %}</label>
               <input class="form-control input-sm" type="text" id="add_cussup_fax"></input>
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-6">
               <label for="add_cussup_pan">{% trans %}PAN:{% endtrans %}</label>
               <input class="form-control input-sm" type="text" id="add_cussup_pan"></input>
             </div>
-            <div class="form-group">
+	  </div>
+	    <div class="form-group">
               <label for="add_cussup_tan">{% trans %}TIN:{% endtrans %}</label><label for="add_cussup_tan" style="color:red;font-size: 120%;">*</label>
               <input class="form-control input-sm" type="text" id="add_cussup_tan"></input>
             </div>
@@ -122,14 +128,14 @@
 	      <table id="gstintable" class="table table-condensed table-bordered fixed-table">
                 <thead class="bg-primary input-sm">
                   <tr>
-                    <th class="col-xs-8 text-center">{% trans %}State{% endtrans %}</th>
-                    <th class="col-xs-3 text-center">{% trans %}GSTIN{% endtrans %}</th>
+                    <th class="col-xs-7 text-center">{% trans %}State{% endtrans %}</th>
+                    <th class="col-xs-4 text-center">{% trans %}GSTIN{% endtrans %}</th>
                     <th class="col-xs-1"></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="col-xs-8">
+                    <td class="col-xs-7">
                       <select class="form-control input-sm gstinstate">
                         <option value="" disabled hidden selected>Select State</option>
                         {% for state in states %}
@@ -139,7 +145,7 @@
 			{% endfor %}
                       </select>
                     </td>
-                    <td class="col-xs-3">
+                    <td class="col-xs-4">
                       <input class="form-control input-sm gstin">
                     </td>
                     <td class="col-xs-1">
