@@ -240,9 +240,7 @@ $(document).ready(function() {
     }
   });
     var gstins = {};
-    var gstinflag = 0;
     $("#invoice_customer").change(function(event) {
-	gstinflag = 0;
     $.ajax({
       url: '/customersuppliers?action=get',
       type: 'POST',
@@ -262,7 +260,6 @@ $(document).ready(function() {
            $("#tin").text(resp["gkresult"]["custtan"]);
 	   $("#gstin").text(resp["gkresult"]["gstin"][$("#invoice_customerstate option:selected").attr("stateid")]);
 	   gstins = resp["gkresult"]["gstin"];
-	   gstinflag = 1;
        }
      })
      .fail(function() {
@@ -400,14 +397,14 @@ $(document).ready(function() {
       var sourcestate = "";
       if ($("#status").val() == 9) {
 	  destinationstate = $("#invoicestate option:selected").val();
-	  sourcestate = $("#invoice_supplierstate").text();
+	  sourcestate = $("#invoice_customerstate").val();
 	  if ($("#gstinconsignee").val() != "") {
 	   sourcestate = $("#consigneestate option:selected").val();   
 	  }
       }
       else if ($("#status").val() ==  15) {
 	  sourcestate = $("#invoicestate option:selected").val();
-	  destinationstate = $("#invoice_customerstate").text();
+	  destinationstate = $("#invoice_customerstate").val();
 	  if ($("#gstinconsignee").val() != "") {
 	   destinationstate = $("#consigneestate option:selected").val();   
 	  }
@@ -512,14 +509,14 @@ $(document).ready(function() {
       var sourcestate = "";
       if ($("#status").val() == 9) {
 	  destinationstate = $("#invoicestate option:selected").val();
-	  sourcestate = $("#invoice_supplierstate").text();
+	  sourcestate = $("#invoice_customerstate").val();
 	  if ($("#gstinconsignee").val() != "") {
 	   sourcestate = $("#consigneestate option:selected").val();   
 	  }
       }
       else if ($("#status").val() ==  15) {
 	  sourcestate = $("#invoicestate option:selected").val();
-	  destinationstate = $("#invoice_customerstate").text();
+	  destinationstate = $("#invoice_customerstate").val();
 	  if ($("#gstinconsignee").val() != "") {
 	   destinationstate = $("#consigneestate option:selected").val();   
 	  }
@@ -2110,10 +2107,10 @@ console.log("quantity");
       var productqtys = [];
 
       consignee["consigneename"] = $("#consigneename").val();
+      consignee["tinconsignee"] = $("#tinconsignee").val();
       consignee["gstinconsignee"] = $("#gstinconsignee").val();
       consignee["consigneeaddress"] = $("#consigneeaddress").val();
       consignee["consigneestate"] = $("#consigneestate").val();
-      console.log("Hello! I'm working.");
       bankdetails["accountno"] = $("#accountno").val();
       bankdetails["bankname"] = $("#bankname").val();
       bankdetails["ifsc"] = $("#ifsc").val();
@@ -2894,14 +2891,14 @@ if (event.which == 13) {
       var sourcestate = "";
       if ($("#status").val() == 9) {
 	  destinationstate = $("#invoicestate option:selected").val();
-	  sourcestate = $("#invoice_supplierstate").text();
+	  sourcestate = $("#invoice_customerstate").val();
 	  if ($("#gstinconsignee").val() != "") {
 	   sourcestate = $("#consigneestate option:selected").val();   
 	  }
       }
       else if ($("#status").val() ==  15) {
 	  sourcestate = $("#invoicestate option:selected").val();
-	  destinationstate = $("#invoice_customerstate").text();
+	  destinationstate = $("#invoice_customerstate").val();
 	  if ($("#gstinconsignee").val() != "") {
 	   destinationstate = $("#consigneestate option:selected").val();   
 	  }
