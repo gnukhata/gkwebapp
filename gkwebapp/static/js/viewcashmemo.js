@@ -58,6 +58,11 @@ $(document).ready(function() {
                         console.log(invdatearray);
                         $(".invdetails").show();
                         $(document).find('.invdetails input,.invdetails select, .invstate select,.invoice_issuer input').prop("disabled", true); // disable all input fields for viewing only.
+
+
+                        $(document).find('input, textarea, button, select').attr('disabled',true);
+
+
                         $("#invoice_challanno").val(resp["invoicedata"]["invoiceno"]);
                         $("#footer_id").show();
                         $("#invoice_editprint").show();
