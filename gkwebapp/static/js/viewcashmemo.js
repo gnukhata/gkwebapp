@@ -67,159 +67,329 @@ $(document).ready(function() {
                           console.log("contents of inv"+resp["invoicedata"]);
                           console.log(JSON.stringify(resp));
                         $('#invoice_product_table tbody').empty();
+                          $('#invoice_product_table_gst tbody').empty();
                         var invdata=resp["invoicedata"]
                         var invcontents=invdata["invcontents"]
-
-                        for (pc in invcontents)
+                        if (invdata["taxflag"]==22)
                         {
-                          var productdecs=invcontents[pc]
+                            $('#invoice_product_table_gst').hide();
+                          for (pc in invcontents)
+                          {
+                            var productdecs=invcontents[pc]
 
-                          console.log("taxamount "+productdecs["taxamount"]);
-                          console.log("desc"+productdecs["proddesc"]);
+                            console.log("taxamount "+productdecs["taxamount"]);
+                            console.log("desc"+productdecs["proddesc"]);
 
-                            // Displaying product details in table.
-                            $('#invoice_product_table tbody').append('<tr>' +
-                                '<td class="col-xs-3">' +
-                                '<input type="text" class="form-control deliverychallan_edit_disable edit_invoice_disable input-sm product_name" value="' + productdecs["proddesc"] + '">' +
-                                '</td>' +
-                                '<td class="col-xs-2">' +
-                                '<div class="input-group">' +
-                                '<input type="text" class="invoice_product_quantity form-control deliverychallan_edit_disable edit_invoice_disable input-sm text-right" value="' + productdecs["qty"] + '">' +
-                                '<span class="input-group-addon input-sm" id="unitaddon">' + productdecs["uom"] + '</span>' +
-                                '</div>' +
-                                '</td>' +
-                                '<td class="col-xs-2">' +
-                                '<div class="input-group">' +
-                                '<input type="text" class="invoice_product_freequantity form-control deliverychallan_edit_disable edit_invoice_disable input-sm text-right" value="' + 0 + '">' +
-                                '<span class="input-group-addon input-sm" id="unitaddon">' + productdecs["uom"] + '</span>' +
-                                '</div>' +
-                                '</td>' +
-                                '<td class="col-xs-2">' +
-                                '<input type="text" class="invoice_product_per_price form-control deliverychallan_edit_disable edit_invoice_disable input-sm numtype text-right" value="' + productdecs["priceperunit"] + '">' +
-                                '</td>' +
-                                '<td class="col-xs-1">' +
-                                '<input type="text" class="invoice_product_tax_rate form-control edit_invoice_disable input-sm numtype text-right" value="0.00">' +
-                                '</td>' +
-                                '<td class="col-xs-1">' +
-                                '<input type="text" class="invoice_product_tax_amount form-control edit_invoice_disable input-sm numtype text-right" value="' + productdecs["taxamount"] + '" >' +
-                                '</td>' +
-                                '<td class="col-xs-2">' +
-                                '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable edit_invoice_disable input-sm numtype text-right" value="0.00" disabled>' +
-                                '</td>' +
-                                '<td class="col-xs-1" style="width: 5%">' +
-                                '</td>' +
-                                '</tr>');
-                                /*
-                            $(".edit_invoice_disable").prop("disabled", true);
-                            // all the column totals are directly calculated dynamically on the change of any of the related fields in the column.
-                            // all the following values are also calculated
-                            // Tax amount= qty*price per unit*(taxrate/100)
-                            // Row total = (qty*price per unit)+tax amount.
-                            var curindex = $(this).closest('#invoice_product_table tbody tr').index();
-                            var rowqty = parseFloat($('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2);
-                            var rowfreeqty = parseFloat($('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
-                            var rowprice = parseFloat($('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
-                            var rowtaxrate = parseFloat($('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
-                            var taxpercentamount = (rowqty - rowfreeqty) * rowprice * (rowtaxrate / 100);
-                            var rowtotal = ((rowqty - rowfreeqty) * rowprice) + taxpercentamount;
-                            $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(taxpercentamount).toFixed(2));
-                            $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtotal).toFixed(2));
+                              // Displaying product details in table.
+                              $('#invoice_product_table tbody').append('<tr>' +
+                                  '<td class="col-xs-2">' +
+                                  '<input type="text" class="form-control deliverychallan_edit_disable edit_invoice_disable input-sm product_name" value="' + productdecs["proddesc"] + '">' +
+                                  '</td>' +
+                                  '<td class="col-xs-2">' +
+                                  '<div class="input-group">' +
+                                  '<input type="text" class="invoice_product_quantity form-control deliverychallan_edit_disable edit_invoice_disable input-sm text-right" value="' + productdecs["qty"] + '">' +
+                                  '<span class="input-group-addon input-sm" id="unitaddon">' + productdecs["uom"] + '</span>' +
+                                  '</div>' +
+                                  '</td>' +
+                                  '<td class="col-xs-2">' +
+                                  '<div class="input-group">' +
+                                  '<input type="text" class="invoice_product_freequantity form-control deliverychallan_edit_disable edit_invoice_disable input-sm text-right" value="' + productdecs["freeqty"] + '">' +
+                                  '<span class="input-group-addon input-sm" id="unitaddon">' + productdecs["uom"] + '</span>' +
+                                  '</div>' +
+                                  '</td>' +
+                                  '<td class="col-xs-2">' +
+                                  '<input type="text" class="invoice_product_per_price form-control deliverychallan_edit_disable edit_invoice_disable input-sm numtype text-right" value="' + productdecs["priceperunit"] + '">' +
+                                  '</td>' +
+                                  '<td class="col-xs-1">'+
+                                  '<input type="text" class="invoice_product_discount form-control input-sm text-right numtype" value="' + productdecs["discount"] + '" size="8" placeholder="0.00">'+
+                                  '</td>'+
+                                  '<td class="col-xs-1">'+
+                                  '<input type="text" class="invoice_product_taxablevalue form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00">'+
+                                  '</td>'+
+                                  '<td class="col-xs-1">' +
+                                  '<input type="text" class="invoice_product_tax_rate form-control edit_invoice_disable input-sm numtype text-right" value="' + productdecs["discount"] + '">' +
+                                  '</td>' +
+                                  '<td class="col-xs-1">' +
+                                  '<input type="text" class="invoice_product_tax_amount form-control edit_invoice_disable input-sm numtype text-right" value="' + productdecs["taxamount"] + '" >' +
+                                  '</td>' +
+                                  '<td class="col-xs-2">' +
+                                  '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable edit_invoice_disable input-sm numtype text-right" value="0.00" disabled>' +
+                                  '</td>' +
+                                  '<td class="col-xs-1" style="width: 5%">' +
+                                  '</td>' +
+                                  '</tr>');
+                                  /*
+                              $(".edit_invoice_disable").prop("disabled", true);
+                              // all the column totals are directly calculated dynamically on the change of any of the related fields in the column.
+                              // all the following values are also calculated
+                              // Tax amount= qty*price per unit*(taxrate/100)
+                              // Row total = (qty*price per unit)+tax amount.
+                              var curindex = $(this).closest('#invoice_product_table tbody tr').index();
+                              var rowqty = parseFloat($('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2);
+                              var rowfreeqty = parseFloat($('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
+                              var rowprice = parseFloat($('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
+                              var rowtaxrate = parseFloat($('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
+                              var taxpercentamount = (rowqty - rowfreeqty) * rowprice * (rowtaxrate / 100);
+                              var rowtotal = ((rowqty - rowfreeqty) * rowprice) + taxpercentamount;
+                              $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(taxpercentamount).toFixed(2));
+                              $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtotal).toFixed(2));
 
-                            pqty = 0;
-                            ptaxamt = 0.00;
-                            ptotal = 0.00;
-                            perprice = 0.00;
-                            taxrate = 0.00;
+                              pqty = 0;
+                              ptaxamt = 0.00;
+                              ptotal = 0.00;
+                              perprice = 0.00;
+                              taxrate = 0.00;
 
-                            $(".invoice_product_quantity").each(function() {
-                                pqty += +$(this).val();
+                              $(".invoice_product_quantity").each(function() {
+                                  pqty += +$(this).val();
 
-                                // jquery enables us to select specific elements inside a table easily like below.
-                                $('#invoice_product_table tfoot tr:last td:eq(1) input').val(pqty); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
-                            });
+                                  // jquery enables us to select specific elements inside a table easily like below.
+                                  $('#invoice_product_table tfoot tr:last td:eq(1) input').val(pqty); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
+                              });
 
-                            $(".invoice_product_per_price").each(function() {
-                                perprice += +$(this).val();
+                              $(".invoice_product_per_price").each(function() {
+                                  perprice += +$(this).val();
 
-                                // jquery enables us to select specific elements inside a table easily like below.
-                                $('#invoice_product_table tfoot tr:last td:eq(2) input').val(parseFloat(perprice).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
-                            });
+                                  // jquery enables us to select specific elements inside a table easily like below.
+                                  $('#invoice_product_table tfoot tr:last td:eq(2) input').val(parseFloat(perprice).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
+                              });
 
-                            $(".invoice_product_tax_rate").each(function() {
-                                taxrate += +$(this).val();
+                              $(".invoice_product_tax_rate").each(function() {
+                                  taxrate += +$(this).val();
 
-                                // jquery enables us to select specific elements inside a table easily like below.
-                                $('#invoice_product_table tfoot tr:last td:eq(3) input').val(parseFloat(taxrate).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
-                            });
+                                  // jquery enables us to select specific elements inside a table easily like below.
+                                  $('#invoice_product_table tfoot tr:last td:eq(3) input').val(parseFloat(taxrate).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
+                              });
 
-                            $(".invoice_product_tax_amount").each(function() {
-                                ptaxamt += +$(this).val();
+                              $(".invoice_product_tax_amount").each(function() {
+                                  ptaxamt += +$(this).val();
 
-                                // jquery enables us to select specific elements inside a table easily like below.
-                                $('#invoice_product_table tfoot tr:last td:eq(4) input').val(parseFloat(ptaxamt).toFixed(2));
-                            });
+                                  // jquery enables us to select specific elements inside a table easily like below.
+                                  $('#invoice_product_table tfoot tr:last td:eq(4) input').val(parseFloat(ptaxamt).toFixed(2));
+                              });
 
-                            $(".invoice_product_total").each(function() {
-                                ptotal += +$(this).val();
+                              $(".invoice_product_total").each(function() {
+                                  ptotal += +$(this).val();
 
-                                // jquery enables us to select specific elements inside a table easily like below.
-                                $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
-                            });
+                                  // jquery enables us to select specific elements inside a table easily like below.
+                                  $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
+                              });
+                          }
+                          for (var i = 0; i < $('#invoice_product_table tbody tr').length; i++) {
+                              var Pcode = $('#invoice_product_table tbody tr:eq(' + i + ') td:eq(0) select').val();
+                              var freeqtyv = resp["invoicedata"]["freeqty"][Pcode];
+                              //rowfreeqty=freeqty;
+                              $('#invoice_product_table tbody tr:eq(' + i + ') td:eq(2) input').val(freeqtyv);
+                              var rowqty = parseFloat($('#invoice_product_table tbody tr:eq(' + i + ') td:eq(1) input').val()).toFixed(2);
+                              var rowprice = parseFloat($('#invoice_product_table tbody tr:eq(' + i + ') td:eq(3) input').val()).toFixed(2);
+                              var rowtaxrate = parseFloat($('#invoice_product_table tbody tr:eq(' + i + ') td:eq(4) input').val()).toFixed(2);
+                              var taxpercentamount = (rowqty - freeqtyv) * rowprice * (rowtaxrate / 100);
+                              var rowtotal = ((rowqty - freeqtyv) * rowprice) + taxpercentamount;
+                              $('#invoice_product_table tbody tr:eq(' + i + ') td:eq(5) input').val(parseFloat(taxpercentamount).toFixed(2));
+                              $('#invoice_product_table tbody tr:eq(' + i + ') td:eq(6) input').val(parseFloat(rowtotal).toFixed(2));
+
+                              pqty = 0;
+                              ptaxamt = 0.00;
+                              ptotal = 0.00;
+                              perprice = 0.00;
+                              taxrate = 0.00;
+
+                              $(".invoice_product_quantity").each(function() {
+                                  pqty += +$(this).val();
+
+                                  // jquery enables us to select specific elements inside a table easily like below.
+                                  $('#invoice_product_table tfoot tr:last td:eq(1) input').val(pqty); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
+                              });
+
+                              $(".invoice_product_per_price").each(function() {
+                                  perprice += +$(this).val();
+
+                                  // jquery enables us to select specific elements inside a table easily like below.
+                                  $('#invoice_product_table tfoot tr:last td:eq(2) input').val(parseFloat(perprice).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
+                              });
+
+                              $(".invoice_product_tax_rate").each(function() {
+                                  taxrate += +$(this).val();
+
+                                  // jquery enables us to select specific elements inside a table easily like below.
+                                  $('#invoice_product_table tfoot tr:last td:eq(3) input').val(parseFloat(taxrate).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
+                              });
+
+                              $(".invoice_product_tax_amount").each(function() {
+                                  ptaxamt += +$(this).val();
+
+                                  // jquery enables us to select specific elements inside a table easily like below.
+                                  $('#invoice_product_table tfoot tr:last td:eq(4) input').val(parseFloat(ptaxamt).toFixed(2));
+                              });
+
+                              $(".invoice_product_total").each(function() {
+                                  ptotal += +$(this).val();
+
+                                  // jquery enables us to select specific elements inside a table easily like below.
+                                  $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
+                              });*/
+                          }
                         }
-                        for (var i = 0; i < $('#invoice_product_table tbody tr').length; i++) {
-                            var Pcode = $('#invoice_product_table tbody tr:eq(' + i + ') td:eq(0) select').val();
-                            var freeqtyv = resp["invoicedata"]["freeqty"][Pcode];
-                            //rowfreeqty=freeqty;
-                            $('#invoice_product_table tbody tr:eq(' + i + ') td:eq(2) input').val(freeqtyv);
-                            var rowqty = parseFloat($('#invoice_product_table tbody tr:eq(' + i + ') td:eq(1) input').val()).toFixed(2);
-                            var rowprice = parseFloat($('#invoice_product_table tbody tr:eq(' + i + ') td:eq(3) input').val()).toFixed(2);
-                            var rowtaxrate = parseFloat($('#invoice_product_table tbody tr:eq(' + i + ') td:eq(4) input').val()).toFixed(2);
-                            var taxpercentamount = (rowqty - freeqtyv) * rowprice * (rowtaxrate / 100);
-                            var rowtotal = ((rowqty - freeqtyv) * rowprice) + taxpercentamount;
-                            $('#invoice_product_table tbody tr:eq(' + i + ') td:eq(5) input').val(parseFloat(taxpercentamount).toFixed(2));
-                            $('#invoice_product_table tbody tr:eq(' + i + ') td:eq(6) input').val(parseFloat(rowtotal).toFixed(2));
+                        else{
+                            $('#invoice_product_table').hide();
+                          for (pc in invcontents)
+                          {
+                            var productdecs=invcontents[pc]
 
-                            pqty = 0;
-                            ptaxamt = 0.00;
-                            ptotal = 0.00;
-                            perprice = 0.00;
-                            taxrate = 0.00;
+                            console.log("taxamount "+productdecs["taxamount"]);
+                            console.log("desc"+productdecs["proddesc"]);
 
-                            $(".invoice_product_quantity").each(function() {
-                                pqty += +$(this).val();
+                              // Displaying product details in table.
+                              $('#invoice_product_table_gst tbody').append('<tr>' +
+                                  '<td class="col-xs-2">' +
+                                  '<input type="text" class="form-control deliverychallan_edit_disable edit_invoice_disable input-sm product_name" value="' + productdecs["proddesc"] + '">' +
+                                  '</td>' +
+                                  '<td class="col-xs-2">' +
+                                  '<div class="input-group">' +
+                                  '<input type="text" class="invoice_product_quantity form-control deliverychallan_edit_disable edit_invoice_disable input-sm text-right" value="' + productdecs["qty"] + '">' +
+                                  '<span class="input-group-addon input-sm" id="unitaddon">' + productdecs["uom"] + '</span>' +
+                                  '</div>' +
+                                  '</td>' +
+                                  '<td class="col-xs-2">' +
+                                  '<div class="input-group">' +
+                                  '<input type="text" class="invoice_product_freequantity form-control deliverychallan_edit_disable edit_invoice_disable input-sm text-right" value="' + 0 + '">' +
+                                  '<span class="input-group-addon input-sm" id="unitaddon">' + productdecs["uom"] + '</span>' +
+                                  '</div>' +
+                                  '</td>' +
+                                  '<td class="col-xs-2">' +
+                                  '<input type="text" class="invoice_product_per_price form-control deliverychallan_edit_disable edit_invoice_disable input-sm numtype text-right" value="' + productdecs["priceperunit"] + '">' +
+                                  '</td>' +
+                                  '<td class="col-xs-1">'+
+                                  '<input type="text" class="invoice_product_discount form-control input-sm text-right numtype" value="' + productdecs["discount"] + '" size="8" placeholder="0.00">'+
+                                  '</td>'+
+                                  '<td class="col-xs-1">'+
+                                  '<input type="text" class="invoice_product_taxablevalue form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00">'+
+                                  '</td>'+
+                                  '<td class="col-xs-1">' +
+                                  '<input type="text" class="invoice_product_tax_rate form-control edit_invoice_disable input-sm numtype text-right" value="0.00">' +
+                                  '</td>' +
+                                  '<td class="col-xs-1">' +
+                                  '<input type="text" class="invoice_product_tax_amount form-control edit_invoice_disable input-sm numtype text-right" value="' + productdecs["taxamount"] + '" >' +
+                                  '</td>' +
+                                  '<td class="col-xs-2">' +
+                                  '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable edit_invoice_disable input-sm numtype text-right" value="0.00" disabled>' +
+                                  '</td>' +
+                                  '<td class="col-xs-1" style="width: 5%">' +
+                                  '</td>' +
+                                  '</tr>');
+                                  /*
+                              $(".edit_invoice_disable").prop("disabled", true);
+                              // all the column totals are directly calculated dynamically on the change of any of the related fields in the column.
+                              // all the following values are also calculated
+                              // Tax amount= qty*price per unit*(taxrate/100)
+                              // Row total = (qty*price per unit)+tax amount.
+                              var curindex = $(this).closest('#invoice_product_table tbody tr').index();
+                              var rowqty = parseFloat($('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2);
+                              var rowfreeqty = parseFloat($('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
+                              var rowprice = parseFloat($('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
+                              var rowtaxrate = parseFloat($('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
+                              var taxpercentamount = (rowqty - rowfreeqty) * rowprice * (rowtaxrate / 100);
+                              var rowtotal = ((rowqty - rowfreeqty) * rowprice) + taxpercentamount;
+                              $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(taxpercentamount).toFixed(2));
+                              $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtotal).toFixed(2));
 
-                                // jquery enables us to select specific elements inside a table easily like below.
-                                $('#invoice_product_table tfoot tr:last td:eq(1) input').val(pqty); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
-                            });
+                              pqty = 0;
+                              ptaxamt = 0.00;
+                              ptotal = 0.00;
+                              perprice = 0.00;
+                              taxrate = 0.00;
 
-                            $(".invoice_product_per_price").each(function() {
-                                perprice += +$(this).val();
+                              $(".invoice_product_quantity").each(function() {
+                                  pqty += +$(this).val();
 
-                                // jquery enables us to select specific elements inside a table easily like below.
-                                $('#invoice_product_table tfoot tr:last td:eq(2) input').val(parseFloat(perprice).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
-                            });
+                                  // jquery enables us to select specific elements inside a table easily like below.
+                                  $('#invoice_product_table tfoot tr:last td:eq(1) input').val(pqty); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
+                              });
 
-                            $(".invoice_product_tax_rate").each(function() {
-                                taxrate += +$(this).val();
+                              $(".invoice_product_per_price").each(function() {
+                                  perprice += +$(this).val();
 
-                                // jquery enables us to select specific elements inside a table easily like below.
-                                $('#invoice_product_table tfoot tr:last td:eq(3) input').val(parseFloat(taxrate).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
-                            });
+                                  // jquery enables us to select specific elements inside a table easily like below.
+                                  $('#invoice_product_table tfoot tr:last td:eq(2) input').val(parseFloat(perprice).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
+                              });
 
-                            $(".invoice_product_tax_amount").each(function() {
-                                ptaxamt += +$(this).val();
+                              $(".invoice_product_tax_rate").each(function() {
+                                  taxrate += +$(this).val();
 
-                                // jquery enables us to select specific elements inside a table easily like below.
-                                $('#invoice_product_table tfoot tr:last td:eq(4) input').val(parseFloat(ptaxamt).toFixed(2));
-                            });
+                                  // jquery enables us to select specific elements inside a table easily like below.
+                                  $('#invoice_product_table tfoot tr:last td:eq(3) input').val(parseFloat(taxrate).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
+                              });
 
-                            $(".invoice_product_total").each(function() {
-                                ptotal += +$(this).val();
+                              $(".invoice_product_tax_amount").each(function() {
+                                  ptaxamt += +$(this).val();
 
-                                // jquery enables us to select specific elements inside a table easily like below.
-                                $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
-                            });*/
+                                  // jquery enables us to select specific elements inside a table easily like below.
+                                  $('#invoice_product_table tfoot tr:last td:eq(4) input').val(parseFloat(ptaxamt).toFixed(2));
+                              });
+
+                              $(".invoice_product_total").each(function() {
+                                  ptotal += +$(this).val();
+
+                                  // jquery enables us to select specific elements inside a table easily like below.
+                                  $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
+                              });
+                          }
+                          for (var i = 0; i < $('#invoice_product_table tbody tr').length; i++) {
+                              var Pcode = $('#invoice_product_table tbody tr:eq(' + i + ') td:eq(0) select').val();
+                              var freeqtyv = resp["invoicedata"]["freeqty"][Pcode];
+                              //rowfreeqty=freeqty;
+                              $('#invoice_product_table tbody tr:eq(' + i + ') td:eq(2) input').val(freeqtyv);
+                              var rowqty = parseFloat($('#invoice_product_table tbody tr:eq(' + i + ') td:eq(1) input').val()).toFixed(2);
+                              var rowprice = parseFloat($('#invoice_product_table tbody tr:eq(' + i + ') td:eq(3) input').val()).toFixed(2);
+                              var rowtaxrate = parseFloat($('#invoice_product_table tbody tr:eq(' + i + ') td:eq(4) input').val()).toFixed(2);
+                              var taxpercentamount = (rowqty - freeqtyv) * rowprice * (rowtaxrate / 100);
+                              var rowtotal = ((rowqty - freeqtyv) * rowprice) + taxpercentamount;
+                              $('#invoice_product_table tbody tr:eq(' + i + ') td:eq(5) input').val(parseFloat(taxpercentamount).toFixed(2));
+                              $('#invoice_product_table tbody tr:eq(' + i + ') td:eq(6) input').val(parseFloat(rowtotal).toFixed(2));
+
+                              pqty = 0;
+                              ptaxamt = 0.00;
+                              ptotal = 0.00;
+                              perprice = 0.00;
+                              taxrate = 0.00;
+
+                              $(".invoice_product_quantity").each(function() {
+                                  pqty += +$(this).val();
+
+                                  // jquery enables us to select specific elements inside a table easily like below.
+                                  $('#invoice_product_table tfoot tr:last td:eq(1) input').val(pqty); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
+                              });
+
+                              $(".invoice_product_per_price").each(function() {
+                                  perprice += +$(this).val();
+
+                                  // jquery enables us to select specific elements inside a table easily like below.
+                                  $('#invoice_product_table tfoot tr:last td:eq(2) input').val(parseFloat(perprice).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
+                              });
+
+                              $(".invoice_product_tax_rate").each(function() {
+                                  taxrate += +$(this).val();
+
+                                  // jquery enables us to select specific elements inside a table easily like below.
+                                  $('#invoice_product_table tfoot tr:last td:eq(3) input').val(parseFloat(taxrate).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
+                              });
+
+                              $(".invoice_product_tax_amount").each(function() {
+                                  ptaxamt += +$(this).val();
+
+                                  // jquery enables us to select specific elements inside a table easily like below.
+                                  $('#invoice_product_table tfoot tr:last td:eq(4) input').val(parseFloat(ptaxamt).toFixed(2));
+                              });
+
+                              $(".invoice_product_total").each(function() {
+                                  ptotal += +$(this).val();
+
+                                  // jquery enables us to select specific elements inside a table easily like below.
+                                  $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
+                              });*/
+                          }
                         }
+
                     }
 
                     console.log("success");
