@@ -204,7 +204,7 @@
           {% endif %}
         </div>
 
-        <div class="container-fluid hidden-load"  id="invoice_product_div">
+        <div class="container-fluid hidden-load"  id="invoice_product_div" hidden>
       <!--  <div class="container-fluid hidden-load" hidden  id="invoice_product_div">-->
           <div class="panel">
 
@@ -371,7 +371,7 @@
                         </table>
 
 
-    		<table id="invoice_product_table_gst" style="table-layout:fixed;" class=" table table-condensed table-bordered" >
+    		<table id="invoice_product_table_gst" style="table-layout:fixed;" class=" table table-condensed table-bordered hidden-load" hidden >
     		  <thead class="bg-primary">
     		    <tr>
     		      <th rowspan="2" class="lngwrap text-center">{% trans %}Product/Service{% endtrans %}</th>
@@ -467,7 +467,7 @@
 
     	      </div>
             <div class="col-md-4">
-            <table class="table  table-condensed table-bordered table-striped">
+            <table class="table  table-condensed table-bordered table-striped hidden-load" hidden>
             <tbody>
             <h5>Bank Details:</h5>
             <tr>

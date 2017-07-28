@@ -104,16 +104,16 @@ $(document).ready(function() {
                                   '<input type="text" class="invoice_product_discount form-control input-sm text-right numtype" value="' + productdecs["discount"] + '" size="8" placeholder="0.00">'+
                                   '</td>'+
                                   '<td class="col-xs-1">'+
-                                  '<input type="text" class="invoice_product_taxablevalue form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00">'+
+                                  '<input type="text" class="invoice_product_taxablevalue form-control input-sm text-right numtype" value="' + productdecs["taxableamount"] + '" size="8" placeholder="0.00">'+
                                   '</td>'+
                                   '<td class="col-xs-1">' +
-                                  '<input type="text" class="invoice_product_tax_rate form-control edit_invoice_disable input-sm numtype text-right" value="' + productdecs["discount"] + '">' +
+                                  '<input type="text" class="invoice_product_tax_rate form-control edit_invoice_disable input-sm numtype text-right" value="' + productdecs["taxrate"] + '">' +
                                   '</td>' +
                                   '<td class="col-xs-1">' +
                                   '<input type="text" class="invoice_product_tax_amount form-control edit_invoice_disable input-sm numtype text-right" value="' + productdecs["taxamount"] + '" >' +
                                   '</td>' +
                                   '<td class="col-xs-2">' +
-                                  '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable edit_invoice_disable input-sm numtype text-right" value="0.00" disabled>' +
+                                  '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable edit_invoice_disable input-sm numtype text-right" value="'+ productdecs["totalAmount"] +'" disabled>' +
                                   '</td>' +
                                   '<td class="col-xs-1" style="width: 5%">' +
                                   '</td>' +
@@ -245,6 +245,9 @@ $(document).ready(function() {
                                   '<input type="text" class="form-control deliverychallan_edit_disable edit_invoice_disable input-sm product_name" value="' + productdecs["proddesc"] + '">' +
                                   '</td>' +
                                   '<td class="col-xs-2">' +
+                                  '<input type="text" class="form-control deliverychallan_edit_disable edit_invoice_disable input-sm product_name" value="ACX">' +
+                                  '</td>' +
+                                  '<td class="col-xs-2">' +
                                   '<div class="input-group">' +
                                   '<input type="text" class="invoice_product_quantity form-control deliverychallan_edit_disable edit_invoice_disable input-sm text-right" value="' + productdecs["qty"] + '">' +
                                   '<span class="input-group-addon input-sm" id="unitaddon">' + productdecs["uom"] + '</span>' +
@@ -263,16 +266,22 @@ $(document).ready(function() {
                                   '<input type="text" class="invoice_product_discount form-control input-sm text-right numtype" value="' + productdecs["discount"] + '" size="8" placeholder="0.00">'+
                                   '</td>'+
                                   '<td class="col-xs-1">'+
-                                  '<input type="text" class="invoice_product_taxablevalue form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00">'+
+                                  '<input type="text" class="invoice_product_taxablevalue form-control input-sm text-right numtype" value="' + productdecs["taxableamount"] + '" size="8" placeholder="0.00">'+
                                   '</td>'+
                                   '<td class="col-xs-1">' +
-                                  '<input type="text" class="invoice_product_tax_rate form-control edit_invoice_disable input-sm numtype text-right" value="0.00">' +
+                                  '<input type="text" class="invoice_product_tax_rate form-control edit_invoice_disable input-sm numtype text-right" value="' + productdecs["taxrate"] + '">' +
+                                  '</td>' +
+                                  '<td class="col-xs-1">' +
+                                  '<input type="text" class="invoice_product_tax_amount form-control edit_invoice_disable input-sm numtype text-right" value="' + productdecs["taxamount"] + '" >' +
+                                  '</td>' +
+                                  '<td class="col-xs-1">' +
+                                  '<input type="text" class="invoice_product_tax_rate form-control edit_invoice_disable input-sm numtype text-right" value="' + productdecs["taxrate"] + '">' +
                                   '</td>' +
                                   '<td class="col-xs-1">' +
                                   '<input type="text" class="invoice_product_tax_amount form-control edit_invoice_disable input-sm numtype text-right" value="' + productdecs["taxamount"] + '" >' +
                                   '</td>' +
                                   '<td class="col-xs-2">' +
-                                  '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable edit_invoice_disable input-sm numtype text-right" value="0.00" disabled>' +
+                                  '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable edit_invoice_disable input-sm numtype text-right" value="'+ productdecs["totalAmount"] +'" disabled>' +
                                   '</td>' +
                                   '<td class="col-xs-1" style="width: 5%">' +
                                   '</td>' +
