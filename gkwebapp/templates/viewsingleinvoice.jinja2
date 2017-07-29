@@ -27,29 +27,27 @@
             <td>{% if gkresult["inoutflag"] == 15 %}{{ gkresult["sourcestate"] }}{% endif %}{% if gkresult["inoutflag"] == 9 %}{{ gkresult["destinationstate"] }}{% endif %}</td>
             <td>
               <label for="stcode">{% trans %}State Code{% endtrans %} :</label>
-	      {% set sourcestate = gkresult["sourcestatecode"] %}
-	      {% set taxstate = gkresult["taxstatecode"] %}
 	      {% if gkresult["inoutflag"] == 15 %}{{ gkresult["sourcestatecode"] }}{% endif %}{% if gkresult["inoutflag"] == 9 %}{{ gkresult["taxstatecode"] }}{% endif %}
             </td>
 
 	  </tr>
 	  {% if gkresult["inoutflag"] == 15 %}
-	  <tr class="invoice_issuer">
-	    <td>
-	      <label for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
-	    </td>
-	    <td colspan="2">
-	      {{ gkresult["issuername"] }}
-	    </td>
-	  </tr>
-	  <tr class="invoice_issuer">
-	    <td>
-	      <label for="invoice_issuer_designation">{% trans %}Designation{% endtrans %} :</label>
-	    </td>
-	    <td colspan="2">
-	      {{ gkresult["designation"] }}
-	    </td>
-	  </tr>
+	    <tr class="invoice_issuer">
+	      <td>
+		<label for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
+	      </td>
+	      <td colspan="2">
+		{{ gkresult["issuername"] }}
+	      </td>
+	    </tr>
+	    <tr class="invoice_issuer">
+	      <td>
+		<label for="invoice_issuer_designation">{% trans %}Designation{% endtrans %} :</label>
+	      </td>
+	      <td colspan="2">
+		{{ gkresult["designation"] }}
+	      </td>
+	    </tr>
 	  {% endif %}
         </tbody>
       </table>
@@ -58,7 +56,7 @@
     <div class="col-md-4">
       <table class="table  table-condensed table-bordered table-striped">
 	<tbody>
-	  {% if gkresult["inoutflag"] == 15 %}
+	  {% if gkresult["inoutflag"] == 9 %}
 	    <h5>{% trans %}Details of Supplier{% endtrans %} :</h5>
 	  {% else %}
 	    <h5>{% trans %}Details of Reciever | Billed to{% endtrans %} :</h5>
@@ -66,7 +64,7 @@
 	  <tr>
 	    <td>
 	      <label for="invoice_customer">
-		{% if gkresult["inoutflag"] == 15 %}
+		{% if gkresult["inoutflag"] == 9 %}
 		  {% trans %}Supplier{% endtrans %} :
 		{% else %}
 		  {% trans %}Customer{% endtrans %} :
@@ -85,11 +83,11 @@
 	  <tr>
 
 	    <td>  <label for="gstin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN:{% endtrans %}</label></td>
-	    <td colspan="2">{% if gkresult["inoutflag"] == 15 %}{{ gkresult["custSupDetails"]["gstin"][taxstate] }}{% endif %}{% if gkresult["inoutflag"] == 9 %}{{ gkresult["custSupDetails"]["gstin"][sourcestate] }}{% endif %}</label></td>
+	    <td colspan="2">{% if gkresult["inoutflag"] == 15 %}{{ gkresult["custSupDetails"]["gstin"] }}{% endif %}{% if gkresult["inoutflag"] == 9 %}{{ gkresult["custSupDetails"]["custgstin"] }}{% endif %}</label></td>
 
 	  </tr>
 	  <tr>
-	    {% if gkstatus == "in" %}
+	    {% if gkresult["inoutflag"] == 9 %}
 	      <td>        <label for="invoice_supplieraddr">
 		{% trans %}Supplier Address{% endtrans %} :
 	      </label>
@@ -100,12 +98,12 @@
 	      </label></td>
 	    {% endif %}
 	    <td colspan="2">
-	      <label id="invoice_customeraddr" >{% trans %} {% endtrans %} </label>
+	      {{ gkresult["custSupDetails"]["custaddr"] }}
 	    </td>
 	  </tr>
 
 	  <tr>
-	    {% if gkstatus == "in" %}
+	    {% if gkresult["inoutflag"] == 9 %}
 	      <td>  <label for="invoice_supplierstate">
 		{% trans %}Supplier State{% endtrans %} :
 	      </label></td>
@@ -117,19 +115,11 @@
 	      </td>
 	    {% endif %}
 	    <td>
-	      <select id="invoice_customerstate" class="form-control input-sm" style="max-width:220px;">
-		{% for state in states %}
-		  {% for key, value in state.items() %}
-		    <option value="{{value}}" stateid="{{key}}">{{value}}</option>
-		  {% endfor %}
-		{% endfor %}
-	      </select>
-
-	    </td>
-	    <div class ="form-inline " >
-	      <td>
-		<label for="stcode">{% trans %}State Code{% endtrans %} :</label>
-		<label id="statecodeofcustomer" >{% trans %} {% endtrans %} </label>
+	      {% if gkresult["inoutflag"] == 9 %}{{ gkresult["sourcestate"] }}{% endif %}{% if gkresult["inoutflag"] == 15 %}{{ gkresult["destinationstate"] }}{% endif %}	    </td>
+	      <div class ="form-inline " >
+		<td>
+		  <label for="stcode">{% trans %}State Code{% endtrans %} :</label>
+		  {% if gkresult["inoutflag"] == 15 %}{{ gkresult["sourcestatecode"] }}{% endif %}{% if gkresult["inoutflag"] == 9 %}{{ gkresult["taxstatecode"] }}{% endif %}
 	      </td>
 	    </div>
 
@@ -143,24 +133,24 @@
 	<tbody>
 	  <tr>
 	    <td>  <label for="consignee" class=" col-form-label col-form-label-sm" id="consigneelbl">{% trans %}Name{% endtrans %} :</label></td>
-            <td colspan="2"><input type="text" id="consigneename" class=" form-control input-sm" name="consigneename"  style="width:100%"></input></td>
+            <td colspan="2">{% if gkresult["consignee"]["consigneename"] %}{{ gkresult["consignee"]["consigneename"] }}{% else %}N/A{% endif %}</td>
 	  </tr>
 	  <tr>
 
             <td>  <label for="tinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}TIN{% endtrans %} :</label></td>
-            <td colspan="2"><input type="text" id="tinconsignee" class=" form-control input-sm" name="tinconsignee"  style="width:100%"></input></td>
+            <td colspan="2">{% if gkresult["consignee"]["tinconsignee"] %}{{ gkresult["consignee"]["tinconsignee"] }}{% else %}N/A{% endif %}</td>
 
           </tr>
 	  <tr>
 
             <td>  <label for="gstinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN{% endtrans %} :</label></td>
-            <td colspan="2"><input type="text" id="gstinconsignee" class=" form-control input-sm" name="gstinconsignee"  style="width:100%"></input></td>
+            <td colspan="2">{% if gkresult["consignee"]["tinconsignee"] %}{{ gkresult["consignee"]["tinconsignee"] }}{% else %}N/A{% endif %}</td>
 
           </tr>
 	  <tr>
 
             <td>  <label for="consigneeaddress" class=" col-form-label col-form-label-sm" id="consigneeaddress">{% trans %}Address :{% endtrans %}</label></td>
-            <td colspan="2"><input type="text" id="consigneeaddress" class=" form-control input-sm" name="consigneeaddress" style="width:100%" ></input></td>
+            <td colspan="2">{% if gkresult["consignee"]["consigneeaddress"] %}{{ gkresult["consignee"]["consigneeaddress"] }}{% else %}N/A{% endif %}</td>
 	  </tr>
 	  <tr>
 
@@ -168,40 +158,24 @@
               <label for="orgstate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} :</label>
             </td>
             <td>
-              <select class="form-control input-sm tax_state" id="consigneestate" >
-                {% for state in states %}
-		  {% for key, value in state.items() %}
-		    <option value="{{value}}" stateid="{{key}}">{{value}}</option>
-		  {% endfor %}
-		{% endfor %}
-              </select>
+              {% if gkresult["consignee"]["consigneestate"] %}{{ gkresult["consignee"]["consigneestate"] }}{% else %}N/A{% endif %}
             </td>
             <td>
 	      <label for="stcode">{% trans %}State Code{% endtrans %} :</label>
-	      <label id="statecodeofconsignee" >{% trans %} {% endtrans %} </label>
+	      {% if gkresult["consignee"]["consigneestatecode"] %}{{ gkresult["consignee"]["consigneestatecode"] }}{% else %}N/A{% endif %}
             </td>
           </tr>
 	</tbody>
       </table>
     </div>
   </div>
+  {% if gkresult["taxflag"] == 22 %}
   <div class="col-md-12">
     <div class="col-md-3">
       <label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
-      <select class="form-control input-sm"  id="taxapplicable" accesskey="">
-	<option value="7" selected>GST</option>
-	<option value="22">VAT</option>
+      VAT
       </select>
     </div>
-
-
-
-
-    {% if gkstatus=="in" %}
-      <input type="hidden" id="status" value="9">
-    {% else %}
-      <input type="hidden" id="status" value="15">
-    {% endif %}
   </div>
   <div class="col-md-12">
     <br>
@@ -282,131 +256,128 @@
       </tfoot>
 
     </table>
-    <div class="row" id="gstproducttable">
-      <div class="col-sm-10" style="overflow-x:scroll;">
-	<div class="row">
-	  <table id="invoice_product_table_gst_heading" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase">
-	    <thead class="bg-primary">
-	      <tr>
-		<th rowspan="2" class="mdwrap text-center">{% trans %}Product{% endtrans %}</th>
-		<th rowspan="2" class="smwrap text-center">{% trans %}HSN Code/ ACS Code{% endtrans %}</th>
-		<th rowspan="2" class="qtywrap text-center">{% trans %}Quantity{% endtrans %}</th>
-		<th rowspan="2" class="qtywrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
-		<th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
-		<th rowspan="2" class="smwrap text-center">{% trans %}Discount{% endtrans %}</th>
-		<th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
-		<th colspan="2" class="taxwrap text-center">{% trans %}CGST{% endtrans %}</th>
-		<th colspan="2" class="taxwrap text-center">{% trans %}SGST{% endtrans %}</th>
-		<th colspan="2" class="taxwrap text-center">{% trans %}IGST{% endtrans %}</th>
-	      </tr>
+  {% else %}
+    <div class="col-md-12">
+      <div class="col-md-3">
+	<label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
+	GST
+      </select>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <br>
+      <div class="row col-md-12" id="gstproducttable">
+	<div class="col-sm-10" style="overflow-x:scroll;">
+	  <div class="row">
+	    <table id="invoice_product_table_gst_heading" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase">
+	      <thead class="bg-primary">
+		<tr>
+		  <th rowspan="2" class="mdwrap text-center">{% trans %}Product{% endtrans %}</th>
+		  <th rowspan="2" class="smwrap text-center">{% trans %}HSN Code/ ACS Code{% endtrans %}</th>
+		  <th rowspan="2" class="qtywrap text-center">{% trans %}Quantity{% endtrans %}</th>
+		  <th rowspan="2" class="qtywrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
+		  <th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
+		  <th rowspan="2" class="smwrap text-center">{% trans %}Discount{% endtrans %}</th>
+		  <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
+		  <th colspan="2" class="taxwrap text-center">{% trans %}CGST{% endtrans %}</th>
+		  <th colspan="2" class="taxwrap text-center">{% trans %}SGST{% endtrans %}</th>
+		  <th colspan="2" class="taxwrap text-center">{% trans %}IGST{% endtrans %}</th>
+		</tr>
 
+		<tr>
+		  <th>Rate%</th>
+		  <th>Amt</th>
+		  <th>Rate%</th>
+		  <th>Amt</th>
+		  <th>Rate%</th>
+		  <th>Amt</th>
+		</tr>
+	      </thead>
+	    </table>
+	  </div>
+	  <div class="row">
+	    <table id="invoice_product_table_gst" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%; overflow-x:hidden;overflow-y:scroll;">
+	      <tbody>
+		<tr>
+		  {% for product in gkresult["invcontents"] %}
+		    <td class="mdwrap">
+		      {{ gkresult["invcontents"][product]["proddesc"] }}
+		    </td>
+		    <td class="smwrap text-center">
+		      {{ gkresult["invcontents"][product]["gscode"] }}
+		    </td>
+		    <td class="qtywrap">
+		      {{ gkresult["invcontents"][product]["qty"] }} {{ gkresult["invcontents"][product]["uom"] }}
+		  </td>
+		  <td class="qtywrap">
+		    {{ gkresult["invcontents"][product]["freeqty"] }} {{ gkresult["invcontents"][product]["uom"] }}
+		  </td>
+
+		  <td class="smwrap">
+		    {{ gkresult["invcontents"][product]["priceperunit"] }}
+		  </td>
+		  <td class="smwrap">
+		    {{ gkresult["invcontents"][product]["discount"] }}
+		  </td>
+		  <td class="smwrap">
+		    {{ gkresult["invcontents"][product]["taxableamount"] }}
+		  </td>
+
+		  <td class="taxcell">{% if gkresult["invcontents"][product]["taxname"]=='SGST' %}{{ gkresult["invcontents"][product]["taxrate"] }}{% endif %}</td>
+		  <td class="taxcell">{% if gkresult["invcontents"][product]["taxname"]=='SGST' %}{{ gkresult["invcontents"][product]["taxamount"] }}{% endif %}</td>
+
+		  <td class="taxcell">{% if gkresult["invcontents"][product]["taxname"]=='SGST' %}{{ gkresult["invcontents"][product]["taxrate"] }}{% endif %}</td>
+		  <td class="taxcell">{% if gkresult["invcontents"][product]["taxname"]=='SGST' %}{{ gkresult["invcontents"][product]["taxamount"] }}{% endif %}</td>
+
+		  <td class="taxcell">{% if gkresult["invcontents"][product]["taxname"]=='IGST' %}{{ gkresult["invcontents"][product]["taxrate"] }}{% set taxname = 'IGST' %}{% endif %}</td>
+		  <td class="taxcell">{% if gkresult["invcontents"][product]["taxname"]=='IGST' %}{{ gkresult["invcontents"][product]["taxamount"] }}{% endif %}</td>
+		</tr>
+		  {% endfor %}
+	      </tbody>
+	    </table>
+	  </div>
+	  <div class="row">
+	    <table id="invoice_product_table_gst_tfoot" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%;">
+	      <tfoot>
+		<tr>
+		  <td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
+		  <td class="text-right">{{ gkresult["totaldiscount"] }}</td>
+		  <td class="text-right">{{ gkresult["totaltaxablevalue"] }}</td>
+		  <td colspan="2" class="text-right"></td>
+
+		  <td colspan="2" class="text-right"></td>
+		  <td colspan="2" class="text-right"></td>
+	      </tfoot>
+	    </table>
+	  </div>
+	</div>
+	<div class="col-sm-2 nopadding">
+	  <table id="invoice_product_table_total" class="table table-condensed table-bordered fixed-table fixed-tablepurchase">
+	    <thead>
 	      <tr>
-		<th>Rate%</th>
-		<th>Amt</th>
-		<th>Rate%</th>
-		<th>Amt</th>
-		<th>Rate%</th>
-		<th>Amt</th>
+		<th style="line-height:380% !important; text-align:center;" class="col-xs-8">Total</th>
 	      </tr>
 	    </thead>
-	  </table>
-	</div>
-	<div class="row">
-	  <table id="invoice_product_table_gst" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%; overflow-x:hidden;overflow-y:scroll;">
 	    <tbody>
+	      {% for product in gkresult["invcontents"] %}
 	      <tr>
-		<td class="mdwrap">
-		  <select class="form-control input-sm product_name_gst">
-		    <option value="" disabled hidden selected>Select Product</option>
-		    {% for product in productsnservices %}
-		      <option value="{{product['productcode']}}" gsflag="{{product["gsflag"]}}">{{product["productdesc"]}}</option>
-		    {% endfor %}
-		  </select>
-		</td>
-		<td class="smwrap text-center">
-		  <label class="invoice_product_hsncode text-center"{% trans %} {% endtrans %} </label>
-		</td>
-		<td class="qtywrap">
-		  <div class="input-group">
-		    <input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype" size="8" value="0" placeholder="0" aria-describedby="unitaddon">
-		    <span class="input-group-addon input-sm unitaddon"></span>
-		  </div>
-		</td>
-		<td class="qtywrap">
-		  <div class="input-group">
-		    <input type="text" class="invoice_product_freequantity_gst form-control input-sm text-right numtype smwrap" size="8" value="0" placeholder="0" aria-describedby="unitaddon">
-		    <span class="input-group-addon input-sm unitaddon"></span>
-		  </div>		      </td>
-
-		<td class="smwrap">
-		  <input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype smwrap" size="9" value="0.00" placeholder="0.00">
-		</td>
-		<td class="smwrap">
-		  <input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype smwrap" value="0.00" size="9" placeholder="0.00">
-		</td>
-		<td class="smwrap">
-		  <input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype smwrap" value="0.00" size="9" placeholder="0.00" disabled>
-		</td>
-
-		<td class="taxcell"><input type="text" class="invoice_product_cgstrate form-control input-sm text-right numtype taxcell" size="9" value="0.00" placeholder="0.00" disabled></td>
-		<td class="taxcell"><input type="text" class="invoice_product_cgstamount form-control input-sm text-right numtype taxcell" size="8" value="0.00" placeholder="0.00" disabled></td>
-
-		<td class="taxcell"><input type="text" class="invoice_product_sgstrate  form-control input-sm text-right numtype taxcell" size="9" value="0.00" placeholder="0.00" disabled></td>
-		<td class="taxcell"><input type="text" class="invoice_product_sgstamount  input-sm form-control text-right numtype taxcell" size="9" value="0.00" placeholder="0.00" disabled></td>
-
-		<td class="taxcell">
-		  <input type="text" class="invoice_product_igstrate  input-sm text-right form-control numtype taxcell" size="9" value="0.00" placeholder="0.00" disabled></td>
-		  <td class="taxcell"><input type="text" class="invoice_product_igstamount form-control input-sm text-right numtype taxcell" size="9" value="0.00" placeholder="0.00" disabled>
-		  </td>
+		<td class="col-xs-12 text-right">{{ gkresult["invcontents"][product]["totalAmount"] }}</td>
 	      </tr>
+		{% endfor %}
 	    </tbody>
-	  </table>
-	</div>
-	<div class="row">
-	  <table id="invoice_product_table_gst_tfoot" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%;">
 	    <tfoot>
-	      <tr>
-		<td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
-		<td class="text-center">  <span id="discounttotal_product_gst" class="input-group-addon input-sm" size="8"></span></td>
-		<td class="text-center"><span id="taxablevaluetotal_product_gst" class="input-group-addon input-sm" size="8"></span></td>
-		<td colspan="2" class="text-center"><span id="totalcgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
-
-		<td colspan="2" class="text-center"><span id="totalsgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
-		<td colspan="2" class="text-center"><span id="totaligst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+	      <td class="col-xs-12 text-right">
+		{{ gkresult["invoicetotal"] }}
+	      </td>
 	    </tfoot>
 	  </table>
 	</div>
       </div>
-      <div class="col-sm-2 nopadding">
-	<table id="invoice_product_table_total" class="table table-condensed table-bordered fixed-table fixed-tablepurchase">
-	  <thead>
-	    <tr>
-	      <th style="line-height:380% !important; text-align:center;" class="col-xs-8">Total</th>
-	      <th class="col-xs-4"></th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	    <tr>
-	      <td class="col-xs-8"><input type="text" class="invoice_product_total form-control input-sm text-right numtype smwrap" value="0.00" size="14" placeholder="0.00" disabled></td>
-	      <td class="col-xs-4 text-center">
-	      </td>
-	    </tr>
-	  </tbody>
-	  <tfoot>
-	    <td class="col-xs-8">
-	      <span id="total_product_gst" class="input-group-addon input-sm" size="9"></span>
-	    </td>
-	    <td class="col-xs-4">
-	      
-	    </td>
-	  </tfoot>
-	</table>
-      </div>
+  {% endif %}
     </div>
-  </div>
 
-  <div class="col-md-12">
-    <div class="col-md-4">
+    <div class="col-md-12">
+      <div class="col-md-4">
       <table class="table  table-condensed table-bordered table-striped">
 	<tbody>
 	  <h5>Bank Details:</h5>

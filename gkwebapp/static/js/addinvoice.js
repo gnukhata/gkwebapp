@@ -61,7 +61,10 @@ $(document).ready(function() {
   var ptotal = 0.00;
   var dctaxstate;
   var custstate;
-    var producstate;
+  var producstate;
+    var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();
+    var vathtml = $('#invoice_product_table_vat tbody tr:first').html();
+
     //Function to calculate gst tax amount
     function calculategstaxamt(curindex) {
 	//Initialising variables to zero and getting values from various input fileds.
@@ -71,7 +74,7 @@ $(document).ready(function() {
 	var rowdiscount = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val()).toFixed(2);
 	var taxdetails = $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').data("taxdetails");
 	var taxamount = 0.00;
-	var rowtaxableamount=(rowqty - rowfreeqty) * (rowprice-rowdiscount); //Taxable amount for each row is calculated.
+	var rowtaxableamount=(rowqty - rowfreeqty) * (rowprice) - rowdiscount; //Taxable amount for each row is calculated.
 	var rowtotal = 0.00;
 	var totalamount = 0.00;
 	var totalcgst = 0.00;
@@ -109,6 +112,38 @@ $(document).ready(function() {
 	$('#totalsgst_product_gst').text(parseFloat(totalsgst).toFixed(2));
 	$('#totaligst_product_gst').text(parseFloat(totaligst).toFixed(2));
 	$('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
+    }
+    function calculatevataxamt(curindex) {
+	//Initialising variables to zero and getting values from various input fileds.
+	var rowqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2);
+	var rowfreeqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
+	var rowprice = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
+	var rowdiscount = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
+	var rowtaxrate = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val()).toFixed(2);
+	var taxamount = 0.00;
+	var rowtaxableamount=(rowqty - rowfreeqty) * (rowprice) - rowdiscount; //Taxable amount for each row is calculated.
+	var rowtotal = 0.00;
+	var totalamount = 0.00;
+	var totaltax = 0.00;
+	var totaldiscount = 0.00;
+	var totaltaxable = 0.00;
+	$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(rowtaxableamount).toFixed(2)); //Taxable amount is displayed.
+	taxamount = (rowtaxableamount * rowtaxrate)/100;  //Amount of tax to be applied is found out.
+	 $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(taxamount).toFixed(2));
+	 rowtotal = rowtaxableamount + taxamount;
+	 $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(rowtotal).toFixed(2));
+	//Total of discount, taxable amount, tax amounts and total are found out
+	for(var i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
+	    totaldiscount = totaldiscount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(4) input').val());
+	    totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(5) input').val());
+	    totaltax = totaltax + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(6) input').val());
+	    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
+	}
+	//Total of various columns are displayed on the footer.
+	$('#discounttotal_product_vat').text(parseFloat(totaldiscount).toFixed(2));
+	$('#taxablevaluetotal_product_vat').text(parseFloat(totaltaxable).toFixed(2));
+	$('#totalvat_product_vat').text(parseFloat(totaltax).toFixed(2));
+	$('#total_product_vat').text(parseFloat(totalamount).toFixed(2));
     }
   if(sessionStorage.invflag==0){
     $("#delnotediv").hide();
@@ -1071,8 +1106,8 @@ $(document).ready(function() {
     var rowprice = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
     var rowtaxrate = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
     var rowdiscount =parseFloat($('#invoice_product_table_vat tbody tr:eq('+curindex+')) td:eq(5) input').val()).tofixed(2);
-    var taxpercentamount = (rowqty - rowfreeqty) * (rowprice-rowdiscount) * (rowtaxrate / 100);
-    var rowtotal = ((rowqty - rowfreeqty) * (rowprice-rowdiscount)) + taxpercentamount;
+      var taxpercentamount = (((rowqty - rowfreeqty) * rowprice) -rowdiscount) * (rowtaxrate / 100);
+    var rowtotal = (((rowqty - rowfreeqty) * rowprice) -rowdiscount) + taxpercentamount;
     $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(7) label').val(parseFloat(taxpercentamount).toFixed(2));
     $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(rowtotal).toFixed(2));
 
@@ -1196,9 +1231,9 @@ console.log("quantity");
     var rowprice = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
     var rowtaxrate = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val()).toFixed(2);
     var rowdiscount = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
-    var taxablevalue = (rowqty - rowfreeqty) * (rowprice-rowdiscount);  
-    var taxpercentamount = (rowqty - rowfreeqty) * (rowprice-rowdiscount) * (rowtaxrate / 100);
-    var rowtotal = ((rowqty - rowfreeqty) * (rowprice-rowdiscount)) + taxpercentamount;
+    var taxablevalue = (((rowqty - rowfreeqty) * rowprice) -rowdiscount);  
+    var taxpercentamount = (((rowqty - rowfreeqty) * rowprice) -rowdiscount) * (rowtaxrate / 100);
+    var rowtotal = (((rowqty - rowfreeqty) * rowprice) -rowdiscount) + taxpercentamount;
     $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(taxpercentamount).toFixed(2));
     $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(taxablevalue).toFixed(2));
     $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(rowtotal).toFixed(2));
@@ -1281,9 +1316,9 @@ console.log("quantity");
     var rowprice = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
     var rowtaxrate = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val()).toFixed(2);
     var rowdiscount = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
-    var taxablevalue = (rowqty - rowfreeqty) * (rowprice-rowdiscount);  
-    var taxpercentamount = (rowqty - rowfreeqty) * (rowprice-rowdiscount) * (rowtaxrate / 100);
-    var rowtotal = ((rowqty - rowfreeqty) * (rowprice-rowdiscount)) + taxpercentamount;
+    var taxablevalue = (((rowqty - rowfreeqty) * rowprice) -rowdiscount);  
+    var taxpercentamount = (((rowqty - rowfreeqty) * rowprice) -rowdiscount) * (rowtaxrate / 100);
+    var rowtotal = (((rowqty - rowfreeqty) * rowprice) -rowdiscount) + taxpercentamount;
     $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(taxpercentamount).toFixed(2));
     $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(taxablevalue).toFixed(2));
     $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(rowtotal).toFixed(2));
@@ -1367,9 +1402,9 @@ console.log("quantity");
     var rowprice = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
     var rowtaxrate = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val()).toFixed(2);
     var rowdiscount = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
-    var taxablevalue = (rowqty - rowfreeqty) * (rowprice-rowdiscount);  
-    var taxpercentamount = (rowqty - rowfreeqty) * (rowprice-rowdiscount) * (rowtaxrate / 100);
-    var rowtotal = ((rowqty - rowfreeqty) * (rowprice-rowdiscount)) + taxpercentamount;
+    var taxablevalue = (((rowqty - rowfreeqty) * rowprice) -rowdiscount);  
+    var taxpercentamount = (((rowqty - rowfreeqty) * rowprice) -rowdiscount) * (rowtaxrate / 100);
+    var rowtotal = (((rowqty - rowfreeqty) * rowprice) -rowdiscount) + taxpercentamount;
     $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(taxpercentamount).toFixed(2));
     $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(taxablevalue).toFixed(2));
     $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(rowtotal).toFixed(2));
@@ -1413,8 +1448,8 @@ console.log("quantity");
         var rowprice = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
         var rowtaxrate = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
         var rowdiscount =parseFloat($('#invoice_product_table_vat tbody tr:eq('+curindex+')) td:eq(5) input').val()).tofixed(2);
-        var taxpercentamount = (rowqty - rowfreeqty) * (rowprice-rowdiscount) * (rowtaxrate / 100);
-        var rowtotal = ((rowqty - rowfreeqty) * (rowprice-rowdiscount)) + taxpercentamount;
+        var taxpercentamount = (((rowqty - rowfreeqty) * rowprice) -rowdiscount) * (rowtaxrate / 100);
+        var rowtotal = (((rowqty - rowfreeqty) * rowprice) -rowdiscount) + taxpercentamount;
         $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(taxpercentamount).toFixed(2));
 
         $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtotal).toFixed(2));
@@ -1665,9 +1700,9 @@ console.log("quantity");
     var rowprice = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
     var rowtaxrate = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val()).toFixed(2);
     var rowdiscount = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
-    var taxablevalue = (rowqty - rowfreeqty) * (rowprice-rowdiscount);  
-    var taxpercentamount = (rowqty - rowfreeqty) * (rowprice-rowdiscount) * (rowtaxrate / 100);
-    var rowtotal = ((rowqty - rowfreeqty) * (rowprice-rowdiscount)) + taxpercentamount;
+    var taxablevalue = (((rowqty - rowfreeqty) * rowprice) -rowdiscount);  
+    var taxpercentamount = (((rowqty - rowfreeqty) * rowprice) -rowdiscount) * (rowtaxrate / 100);
+    var rowtotal = (((rowqty - rowfreeqty) * rowprice) -rowdiscount) + taxpercentamount;
     $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(taxpercentamount).toFixed(2));
     $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(taxablevalue).toFixed(2));
     $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(rowtotal).toFixed(2));
@@ -1712,8 +1747,8 @@ console.log("quantity");
       var rowprice = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
       var rowtaxrate = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
       var rowdiscount =parseFloat($('#invoice_product_table_vat tbody tr:eq('+curindex+')) td:eq(5) input').val()).tofixed(2);
-      var taxpercentamount = (rowqty - rowfreeqty) * (rowprice-rowdiscount) * (rowtaxrate / 100);
-      var rowtotal = ((rowqty - rowfreeqty) * (rowprice-rowdiscount)) + taxpercentamount;
+      var taxpercentamount = (((rowqty - rowfreeqty) * rowprice) -rowdiscount) * (rowtaxrate / 100);
+      var rowtotal = (((rowqty - rowfreeqty) * rowprice) -rowdiscount) + taxpercentamount;
       $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(taxpercentamount).toFixed(2));
 
       $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(rowtotal).toFixed(2));
@@ -1747,19 +1782,18 @@ console.log("quantity");
                $('#invoice_product_table_vat tbody').append('<tr>' +
 										     '<td class="col-xs-2">' +
 										     '<select class="form-control deliverychallan_edit_disable input-sm product_name_vat">' +
-										     '<option value="' + key + '">' + value.productdesc + '</option>' +
 										     '</select>' +
 										     '</td>' +
 										     '<td class="col-xs-1">' +
 										     '<div class="input-group">' +
-										     '<input type="text" class="invoice_product_quantity form-control deliverychallan_edit_disable input-sm numtype text-right" data="' + value.qty + '" value="' + value.qty + '">' +
-										     '<span class="input-group-addon input-sm" id="unitaddon">' + value.unitname + '</span>' +
+										     '<input type="text" class="invoice_product_quantity form-control deliverychallan_edit_disable input-sm numtype text-right" data="" value="0.00">' +
+										     '<span class="input-group-addon input-sm" id="unitaddon"></span>' +
 										     '</div>' +
 										     '</td>' +
 										     '<td class="col-xs-1">' +
 										     '<div class="input-group">' +
-										     '<input type="text" class="invoice_product_freequantity form-control deliverychallan_edit_disable input-sm numtype text-right" value="' + 0 + '">' +
-										     '<span class="input-group-addon input-sm" id="freeunitaddon">' + value.unitname + '</span>' +
+										     '<input type="text" class="invoice_product_freequantity form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00">' +
+										     '<span class="input-group-addon input-sm" id="freeunitaddon"></span>' +
 										     '</div>' +
 										     '</td>' +
 										     '<td class="col-xs-1">' +
