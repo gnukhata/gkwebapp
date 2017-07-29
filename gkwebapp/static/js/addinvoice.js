@@ -47,7 +47,8 @@ $(document).ready(function() {
 //Write key events for navigating backwards.
     });
   $('.modal-backdrop').remove();
-  $('.invoicedate, .supplydate').autotab('number');
+    $('.invoicedate').autotab('number');
+    $('.supplydate').autotab('number');
   $(".input-sm:first").focus();  //Focus on the first element when the page loads
   $("#invoice_state").change();
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
@@ -296,6 +297,11 @@ $(document).ready(function() {
            $("#tin").text(resp["gkresult"]["custtan"]);
 	   $("#gstin").text(resp["gkresult"]["gstin"][$("#invoice_customerstate option:selected").attr("stateid")]);
 	   gstins = resp["gkresult"]["gstin"];
+	   $("#statecodeofcustomer").text($("#invoice_customerstate option:selected").attr("stateid"));
+	   if ($("#status").val() == 15) {
+	       $("#consigneestate").val(resp["gkresult"]["state"]);
+	       $("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));
+	   }
        }
      })
      .fail(function() {
@@ -307,12 +313,25 @@ $(document).ready(function() {
   });
 
     $("#invoice_customerstate").change(function(event) {
+	event.preventDefault();
+	$("#statecodeofcustomer").text($("#invoice_customerstate option:selected").attr("stateid"));
 	if ($("#invoice_customerstate option:selected").attr("stateid") in gstins) {
 	       $("#gstin").text(gstins[$("#invoice_customerstate option:selected").attr("stateid")]);
 	}
 	else {
 	    $("#gstin").text('');
 	}
+	if ($("#status").val() == 15) {
+	    $("#consigneestate").val($("#invoice_customerstate option:selected").val());
+	   }
+    });
+
+    $("#consigneestate").change(function(event) {
+	event.preventDefault();
+	$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));
+	if ($("#status").val() == 15) {
+	    $("#invoice_customerstate").val($("#consigneestate option:selected").val());
+	   }
     });
 
   $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
@@ -343,85 +362,10 @@ $(document).ready(function() {
     }
   });
 
-  /*$(document).off('change', '#invoice_state').on('change', '#invoice_state', function(event) {
-    event.preventDefault();
-
-    var state = $("#invoice_state option:selected").val();
-    if (state == "none") {
-      $(".invoice_product_tax_rate").prop("disabled", true);
-      $(".invoice_product_tax_rate").val("0.00");
-    }
-    else {
-      $(".invoice_product_tax_rate").prop("disabled", false);
-      var state = $("#invoice_state option:selected").val();
-      var productcode;
-      $(".product_name").each(function() {
-	var curindex = $(this).closest('tbody tr').index();
-	productcode = $(this).find('option:selected').val();
-
-	if (productcode != "") {
-
-          $.ajax({
-            url: '/product?type=prodtax',
-            type: 'POST',
-            dataType: 'json',
-            async: false,
-            data: { "productcode": productcode },
-            beforeSend: function(xhr) {
-              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-            }
-          })
-           .done(function(resp) {
-             console.log("success");
-             if (resp["gkresult"].length == 0) {
-	       $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val("0.00");
-               $("#notax-alert").alert();
-               $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
-		 $("#notax-alert").hide();
-               });
-               return false;
-             }
-
-           })
-           .fail(function() {
-             console.log("error");
-           })
-           .always(function() {
-             console.log("complete");
-           });
-
-          $.ajax({
-            url: '/invoice?action=gettax',
-            type: 'POST',
-            dataType: 'json',
-            async: false,
-            data: { "productcode": productcode, "state": state },
-            beforeSend: function(xhr) {
-              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-            }
-          })
-           .done(function(resp) {
-             console.log("success");
-             if (resp["gkstatus"] == 0) {
-               $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(4) input').val(parseFloat(resp['taxdata']).toFixed(2));
-             }
-
-           })
-           .fail(function() {
-             console.log("error");
-           })
-           .always(function() {
-             console.log("complete");
-           });
-
-
-	}
-
-      });
-      $(".invoice_product_tax_rate").change();
-    }
-
-  });*/
+  $(document).off('change', '#invoicestate').on('change', '#invoicestate', function(event) {
+      event.preventDefault();
+      $("#statecodeforinvoice").text($("#invoicestate option:selected").attr("stateid"));
+  });
 
   $(document).off('change', '.product_name_vat').on('change', '.product_name_vat', function(event) {
     event.preventDefault();
@@ -2067,6 +2011,7 @@ console.log("quantity");
       bankdetails["accountno"] = $("#accountno").val();
       bankdetails["bankname"] = $("#bankname").val();
       bankdetails["ifsc"] = $("#ifsc").val();
+      bankdetails["branch"] = $("#branch").val();
       console.log($("#accountno").val());
     if ($("#taxapplicable option:selected").val() == 22) {
     for (var i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {

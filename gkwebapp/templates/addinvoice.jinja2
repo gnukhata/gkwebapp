@@ -255,11 +255,14 @@
 			  {% endfor %}
                         </select>
                       </td>
-                      <td>
+		    </tr>
+		    <tr>
+		      <td>
                     	<label for="stcode">{% trans %}State Code{% endtrans %} :</label>
-                    	<label id="statecodeforinvoice" >{% trans %} {% endtrans %} </label>
                       </td>
-
+		      <td>
+			<label id="statecodeforinvoice" >{% trans %} {% endtrans %} </label>
+		      </td>
 		    </tr>
 		    <tr class="invoice_issuer" style="display:none;">
 		      <td>
@@ -313,6 +316,37 @@
 		      </td>
 		    </tr>
 		    <tr>
+		      {% if gkstatus == "in" %}
+			<td>  <label for="invoice_supplierstate">
+			  {% trans %}Supplier State{% endtrans %} :
+			</label></td>
+		      {% else %}
+			<td>
+			  <label for="invoice_customerstate">
+			    {% trans %}Customer State{% endtrans %} :
+			  </label>
+			</td>
+		      {% endif %}
+		      <td>
+			<select id="invoice_customerstate" class="form-control input-sm" style="max-width:220px;">
+			  {% for state in states %}
+			    {% for key, value in state.items() %}
+			      <option value="{{value}}" stateid="{{key}}">{{value}}</option>
+			    {% endfor %}
+			  {% endfor %}
+			</select>
+
+		      </td>
+		    </tr>
+		    <tr>
+		      <td>
+			<label for="stcode">{% trans %}State Code{% endtrans %} :</label>
+		      </td>
+		      <td>
+			<label id="statecodeofcustomer" >{% trans %} {% endtrans %} </label>
+		      </td>
+		    </tr>
+		    <tr>
 
 		      <td>  <label for="tin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}TIN:{% endtrans %}</label></td>
 		      <td colspan="2"><label type="text" id="tin" style="min-width:100%" name="tin" ></label></td>
@@ -339,37 +373,6 @@
 			<label id="invoice_customeraddr" >{% trans %} {% endtrans %} </label>
 		      </td>
 		    </tr>
-
-		    <tr>
-		      {% if gkstatus == "in" %}
-			<td>  <label for="invoice_supplierstate">
-			  {% trans %}Supplier State{% endtrans %} :
-			</label></td>
-		      {% else %}
-			<td>
-			  <label for="invoice_customerstate">
-			    {% trans %}Customer State{% endtrans %} :
-			  </label>
-			</td>
-		      {% endif %}
-		      <td>
-			<select id="invoice_customerstate" class="form-control input-sm" style="max-width:220px;">
-			  {% for state in states %}
-			    {% for key, value in state.items() %}
-			      <option value="{{value}}" stateid="{{key}}">{{value}}</option>
-			    {% endfor %}
-			  {% endfor %}
-			</select>
-
-		      </td>
-		      <div class ="form-inline " >
-			<td>
-			  <label for="stcode">{% trans %}State Code{% endtrans %} :</label>
-			  <label id="statecodeofcustomer" >{% trans %} {% endtrans %} </label>
-			</td>
-		      </div>
-
-		    </tr>
 		  </tbody>
 		</table>
 	      </div>
@@ -380,6 +383,29 @@
 		    <tr>
 		      <td>  <label for="consignee" class=" col-form-label col-form-label-sm" id="consigneelbl">{% trans %}Name{% endtrans %} :</label></td>
                       <td colspan="2"><input type="text" id="consigneename" class=" form-control input-sm" name="consigneename"  style="width:100%"></input></td>
+		    </tr>
+		    <tr>
+
+                      <td>
+                        <label for="orgstate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} :</label>
+                      </td>
+                      <td>
+                        <select class="form-control input-sm tax_state" id="consigneestate" >
+                          {% for state in states %}
+			    {% for key, value in state.items() %}
+			      <option value="{{value}}" stateid="{{key}}">{{value}}</option>
+			    {% endfor %}
+			  {% endfor %}
+                        </select>
+                      </td>
+                    </tr>
+		    <tr>
+		      <td>
+			<label for="stcode">{% trans %}State Code{% endtrans %} :</label>
+                      </td>
+		      <td>
+			<label id="statecodeofconsignee" >{% trans %} {% endtrans %} </label>
+		      </td>
 		    </tr>
 		    <tr>
 
@@ -398,25 +424,6 @@
                       <td>  <label for="consigneeaddress" class=" col-form-label col-form-label-sm" id="consigneeaddress">{% trans %}Address :{% endtrans %}</label></td>
                       <td colspan="2"><input type="text" id="consigneeaddress" class=" form-control input-sm" name="consigneeaddress" style="width:100%" ></input></td>
 		    </tr>
-		    <tr>
-
-                      <td>
-                        <label for="orgstate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} :</label>
-                      </td>
-                      <td>
-                        <select class="form-control input-sm tax_state" id="consigneestate" >
-                          {% for state in states %}
-			    {% for key, value in state.items() %}
-			      <option value="{{value}}" stateid="{{key}}">{{value}}</option>
-			    {% endfor %}
-			  {% endfor %}
-                        </select>
-                      </td>
-                      <td>
-			<label for="stcode">{% trans %}State Code{% endtrans %} :</label>
-			<label id="statecodeofconsignee" >{% trans %} {% endtrans %} </label>
-                      </td>
-                    </tr>
 		  </tbody>
 		</table>
 	      </div>
@@ -668,7 +675,13 @@
 		    </tr>
 		    <tr>
 
-		      <td>  <label for="Bank Branch IFSC code" class=" col-form-label col-form-label-sm">{% trans %}Bank Branch IFSC code :{% endtrans %}</label></td>
+		      <td>  <label for="branch" class=" col-form-label col-form-label-sm">{% trans %}Bank Branch Name :{% endtrans %}</label></td>
+		      <td colspan="2"><input type="text" id="branch" class=" form-control input-sm" ></input></td>
+
+		    </tr>
+		    <tr>
+
+		      <td>  <label for="ifsc" class=" col-form-label col-form-label-sm">{% trans %}Bank Branch IFSC code :{% endtrans %}</label></td>
 		      <td colspan="2"><input type="text" id="ifsc" class=" form-control input-sm" name="ifsc" ></input></td>
 
 		    </tr>
