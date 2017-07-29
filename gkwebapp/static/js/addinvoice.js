@@ -1596,59 +1596,14 @@ console.log("quantity");
   if ($("#invoice_product_table_vat tbody tr").length > 1) {
     $(this).closest('tr').fadeOut(200, function() {
       $(this).closest('tr').remove(); //closest method gives the closest element productified
-      if ($("#invoice_product_table_vat tbody tr").length == 1) {
-        $("#invoice_product_table_vat tbody tr:eq(0) td:eq(7)").empty();
-      }
-      //$('#invoice_product_table tbody tr:last td:eq(0) input').focus().select();
-      pqty = 0.00;
-      ptaxamt = 0.00;
-      ptotal = 0.00;
-      perprice = 0.00;
-      taxrate = 0.00;
-
-      $(".invoice_product_quantity").each(function() {
-        pqty += +$(this).val();
-
-        // jquery enables us to select specific elements inside a table easily like below.
-        $('#invoice_product_table_vat tfoot tr:last td:eq(1) input').val(pqty); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
-      });
-
-      $(".invoice_product_per_price").each(function() {
-        perprice += +$(this).val();
-
-        // jquery enables us to select specific elements inside a table easily like below.
-        $('#invoice_product_table_vat tfoot tr:last td:eq(2) input').val(parseFloat(perprice).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
-      });
-
-      $(".invoice_product_tax_rate").each(function() {
-        taxrate += +$(this).val();
-
-        // jquery enables us to select specific elements inside a table easily like below.
-        $('#invoice_product_table_vat tfoot tr:last td:eq(3) input').val(parseFloat(taxrate).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
-      });
-
-      $(".invoice_product_tax_amount").each(function() {
-        ptaxamt += +$(this).val();
-
-        // jquery enables us to select specific elements inside a table easily like below.
-        $('#invoice_product_table_vat tfoot tr:last td:eq(4) input').val(parseFloat(ptaxamt).toFixed(2));
-      });
-
-      $(".invoice_product_total").each(function() {
-        ptotal += +$(this).val();
-
-        // jquery enables us to select specific elements inside a table easily like below.
-        $('#invoice_product_table_vat tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
-      });
-    });
       $("#invoice_product_table_vat tbody tr:first td:eq(0) select").focus();
+    });
   }
-  //console.log("previndex = "+previndex);
-  //$("#invoice_product_table tbody tr:eq(' + previndex + ') td:eq(0) select").focus();
       
       if ($("#invoice_product_table_gst tbody tr").length > 1) {
 	  $(this).closest('tr').remove();
 	  $("#invoice_product_table_gst tbody tr:eq("+curindex+")").remove();
+	  $("#invoice_product_table_gst tbody tr:first td:eq(0) select").focus();
       }
   });
 
