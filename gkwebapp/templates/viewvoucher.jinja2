@@ -236,6 +236,7 @@ label.normal {
                 <div class="form-group pull-right" id="invtotaldiv">
                   <label for="invtotalvvi">{% trans %} Invoice Total Amount {% endtrans %} :</label>
                   <input type="text" id="invtotalvvi" class="form-control input-sm" value="{{voucher["vvi"]["invoicetotal"]}}"  disabled>
+                  <input id="selinv" value="{{voucher["vvi"]["invid"]}}" hidden>
                 </div>
               </div>
                 {% endif %}
@@ -261,7 +262,7 @@ label.normal {
                 </select>
                 <div class="form-group pull-right" id="selinvtotal">
                   <label for="invtotal">{% trans %} Invoice Total Amount {% endtrans %} :</label>
-                  <input type="text" id="invtotal" class="form-control input-sm" value="0.00"  disabled>
+                  <input type="text" id="invtotal" class="form-control input-sm" value="{{invoice['invoicetotal']}}"  disabled>
                 </div>
               </div>
 

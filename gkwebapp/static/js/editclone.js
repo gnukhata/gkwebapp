@@ -319,6 +319,9 @@ $(document).ready(function()
     $("#invtotaldiv").hide();
     $("#invsel").show();
     $("#invsel").prop('disabled', false);
+    $("#invsel").append('<option value ="'+$('#selinv').val()+'">'+$('#viewinvsel').val()+'</option>');
+    $('#invsel').val($('#selinv').val());
+    console.log($('#selinv').val());
     $("#selinvtotal").show();
     $("#selinvtotal").prop('disabled', false);
     $("#vdate").focus().select();
