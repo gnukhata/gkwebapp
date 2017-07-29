@@ -143,7 +143,6 @@ def getappliedtax(request):
 def getproduct(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/products?qty=single&productcode=%d"%(int(request.params['productcode'])),headers=header)
-    print result
     data = result.json()["gkresult"]
     if data.has_key("unitname"):
         return {"gkstatus": result.json()["gkstatus"],"unitname":data["unitname"],"gsflag":data["gsflag"],"gscode":data["gscode"]}
