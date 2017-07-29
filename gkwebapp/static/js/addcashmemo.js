@@ -72,6 +72,7 @@ var dctaxstate;
 var custstate;
 var producstate;
   function calculategstaxamt(curindex) {
+
 var rowqty = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
 var rowfreeqty = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
 var rowprice = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
@@ -79,7 +80,16 @@ var rowdiscount = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curin
 var taxdetails = $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').data("taxdetails");
 console.log(taxdetails);
 var taxamount = 0.00;
-var rowtaxableamount=((rowqty - rowfreeqty) * rowprice)-rowdiscount;
+if (prodservflag==1)
+{
+  var rowtaxableamount=rowprice-rowdiscount;
+  console.log("prodservflag=1");
+}
+else{
+  var rowtaxableamount=((rowqty - rowfreeqty) * rowprice)-rowdiscount;
+  console.log("prodservflag=0");
+}
+
 var rowtotal = 0.00;
 var totalamount = 0.00;
 var totalcgst = 0.00;
@@ -2160,7 +2170,7 @@ if ($("#taxapplicable option:selected").val() == 22) {
     });
       $(document).off('keydown', '#ifsc').on('keydown', '#ifsc', function(event) {
         if(event.which==13){
-        $("#invoice_save").focus();  
+        $("#invoice_save").focus();
         }
 
       })
