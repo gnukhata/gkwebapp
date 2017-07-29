@@ -244,7 +244,11 @@
 		    <tr>
 
                       <td>
-                    	<label for="invoicestate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} :</label>
+			{% if gkstatus=="in" %}
+                    	  <label for="invoicestate" class="col-form-label col-form-label-sm">{% trans %}State of Delivery{% endtrans %} :</label>
+			{% else %}
+			  <label for="invoicestate" class="col-form-label col-form-label-sm">{% trans %}State of Delivery{% endtrans %} :</label>
+			{% endif %}
                       </td>
                       <td>
                     	<select class="form-control input-sm tax_state" id="invoicestate" >

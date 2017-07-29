@@ -351,12 +351,12 @@ $(document).ready(function() {
     }
   });
 
-  $(document).off('focus', '.invoice_product_quantity').on('focus', '.invoice_product_quantity', function(event) {
+  $(document).off('focus', '.invoice_product_quantity_vat').on('focus', '.invoice_product_quantity', function(event) {
     event.preventDefault();
     /* Act on the event */
     $(".numtype").numeric({ negative: false });
   });
-  $(document).off('blur', '.invoice_product_quantity').on('blur', '.invoice_product_quantity', function(event) {
+  $(document).off('blur', '.invoice_product_quantity_vat').on('blur', '.invoice_product_quantity', function(event) {
     event.preventDefault();
     /* Act on the event */
     if ($(this).val() == "") {
@@ -392,7 +392,6 @@ $(document).ready(function() {
 	  }
       }
     var taxflag=$("#taxapplicable option:selected").val();
-    if ($("#status").val() == '15') {
       $.ajax({
         url: '/product?type=prodtax',
         type: 'POST',
@@ -436,7 +435,6 @@ $(document).ready(function() {
          console.log("success" + resp);
          if (resp["gkstatus"] == 0) {
 	   $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['taxrate']).toFixed(2));
-           $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').prop("disabled", true);
          }
        })
        .fail(function() {
@@ -445,8 +443,6 @@ $(document).ready(function() {
        .always(function() {
          console.log("complete");
        });
-
-    }
     $.ajax({
       url: '/invoice?action=getproduct',
       type: 'POST',
