@@ -151,7 +151,7 @@
           </div>
           <div class="col-md-3 hidden-load" hidden>
      <label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
-     <select class="form-control input-sm"  id="taxapplicable" accesskey="">
+     <select class="form-control input-sm"  id="taxapplicable" accesskey="" disabled>
        <option value="7" selected>GST</option>
        <option value="22">VAT</option>
      </select>
@@ -271,34 +271,35 @@
                               </td>
                               <td class="col-xs-2">
                                 <div class="input-group">
-                                  <input type="text" class="invoice_product_quantity form-control input-sm text-right" value="0" placeholder="0" aria-describedby="unitaddon">
+                                  <input type="text" class="invoice_product_quantity form-control input-sm text-right invdetails" value="0" placeholder="0" aria-describedby="unitaddon">
                                   <span class="input-group-addon input-sm" id="unitaddon"></span>
                                 </div>
                               </td>
                               <td class="col-xs-2">
                                 <div class="input-group">
-                                  <input type="text" class="invoice_product_freequantity form-control input-sm text-right" value="0" placeholder="0" aria-describedby="unitaddon">
+                                  <input type="text" class="invoice_product_freequantity form-control input-sm text-right invdetails" value="0" placeholder="0" aria-describedby="unitaddon">
                                   <span class="input-group-addon input-sm" id="freeunitaddon"></span>
                                 </div>
                               </td>
                               <td class="col-xs-2">
-                                <input type="text" class="invoice_product_per_price form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
+                                <input type="text" class="invoice_product_per_price form-control input-sm text-right numtype invdetails" value="0.00" placeholder="0.00">
                               </td>
                               <td class="col-xs-1">
-                                <input type="text" class="invoice_product_discount form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8">
+                                <input type="text" class="invoice_product_discount form-control input-sm text-right numtype invdetails" value="0.00" placeholder="0.00" size="8">
                               </td>
                               <td class="col-xs-1">
-                      		      <input type="text" class="invoice_product_taxablevalue form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8" disabled>
+                      		      <input type="text" class="invoice_product_taxablevalue form-control input-sm text-right numtype invdetails" value="0.00" placeholder="0.00" size="8" disabled>
                       		    </td>
                               <td class="col-xs-1">
-                                <input type="text" class="invoice_product_tax_rate form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
+                                <input type="text" class="invoice_product_tax_rate form-control input-sm text-right numtype invdetails" value="0.00" placeholder="0.00" disabled>
                               </td>
                               <td class="col-xs-1">
-                                <input type="text" class="invoice_product_tax_amount form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
+                                <input type="text" class="invoice_product_tax_amount form-control input-sm text-right numtype invdetails" value="0.00" placeholder="0.00" disabled>
                               </td>
                               <td class="col-xs-2">
-                                <input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
+                                <input type="text" class="invoice_product_total form-control input-sm text-right numtype " value="0.00" placeholder="0.00" disabled>
                               </td>
+
                               <td class="col-xs-1" style="width: 5%">
 
                               </td>
@@ -310,7 +311,7 @@
                                 <input type="text" class=" form-control input-sm text-right" value="{% trans %}Total{% endtrans %}" placeholder="" disabled>
                               </td>
                               <td class="col-xs-2">
-                                <input type="text" class=" form-control deliverychallan_edit_disable input-sm text-right" value="0.00" id="total" disabled>
+                                <input type="text" class=" form-control deliverychallan_edit_disable input-sm text-right invdetails" value="0.00" id="total" disabled>
                               </td>
                               <td class="col-xs-1" style="width: 3.5%">
 
@@ -362,35 +363,35 @@
     		      </td>
     		      <td class="mdwrap">
     			<div class="input-group">
-    			  <input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype"size="5" value="0" placeholder="0" aria-describedby="unitaddon">
+    			  <input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype invdetails"size="5" value="0" placeholder="0" aria-describedby="unitaddon">
     			  <span class="input-group-addon input-sm" id="unitaddon"></span>
     			</div>
     		      </td>
     		      <td class="mdwrap">
     			<div class="input-group">
-    			  <input type="text" class="invoice_product_freequantity_gst form-control input-sm text-right numtype" size="5" value="0" placeholder="0" aria-describedby="unitaddon">
+    			  <input type="text" class="invoice_product_freequantity_gst form-control input-sm text-right numtype invdetails" size="5" value="0" placeholder="0" aria-describedby="unitaddon">
     			  <span class="input-group-addon input-sm" id="freeunitaddon"></span>
     			</div>
     		      </td>
 
     		      <td class="mdwrap">
-    			<input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00">
+    			<input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype invdetails" size="8" value="0.00" placeholder="0.00">
     		      </td>
     		      <td class="mdwrap">
-    			<input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00">
+    			<input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype invdetails" value="0.00" size="8" placeholder="0.00">
     		      </td>
     		      <td class="smwrap">
-    			<input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00" disabled>
+    			<input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype invdetails" value="0.00" size="8" placeholder="0.00" disabled>
     		      </td>
 
-    		      <td class="ratewrap"><input type="text" class="invoice_product_cgstrate form-control input-sm text-right numtype ratewrap" size="6" value="0.00" placeholder="0.00" disabled></td>
-    		      <td class="smwrap"><input type="text" class="invoice_product_cgstamount form-control input-sm text-right numtype smwrap" size="6" value="0.00" placeholder="0.00" disabled></td>
+    		      <td class="ratewrap"><input type="text" class="invoice_product_cgstrate form-control input-sm text-right invdetails numtype ratewrap" size="6" value="0.00" placeholder="0.00" disabled></td>
+    		      <td class="smwrap"><input type="text" class="invoice_product_cgstamount form-control input-sm text-right numtype invdetails smwrap" size="6" value="0.00" placeholder="0.00" disabled></td>
 
-    		      <td class="ratewrap"><input type="text" class="invoice_product_sgstrate  form-control input-sm text-right numtype ratewrap" size="6" value="0.00" placeholder="0.00" disabled></td>
-    		      <td class="smwrap"><input type="text" class="invoice_product_sgstamount  input-sm form-control text-right numtype smwrap" size="6" value="0.00" placeholder="0.00" disabled></td>
+    		      <td class="ratewrap"><input type="text" class="invoice_product_sgstrate  form-control input-sm text-right numtype ratewrap invdetails" size="6" value="0.00" placeholder="0.00" disabled></td>
+    		      <td class="smwrap"><input type="text" class="invoice_product_sgstamount  input-sm form-control text-right numtype smwrap invdetails" size="6" value="0.00" placeholder="0.00" disabled></td>
 
     			<td class="smwrap">
-    			  <input type="text" class="invoice_product_total form-control input-sm text-right numtype smwrap" value="0.00" size="10" placeholder="0.00" disabled>
+    			  <input type="text" class="invoice_product_total form-control input-sm invdetails text-right numtype smwrap" value="0.00" size="10" disabled>
     			</td>
           <td class="col-xs-1" style="width: 5%">
 

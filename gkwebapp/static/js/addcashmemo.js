@@ -2051,13 +2051,13 @@ if ($("#taxapplicable option:selected").val() == 22) {
                    '</td>'+
 
                 '<td><input type="text" class="invoice_product_cgstrate form-control text-right ratewrap numtype" size="4" value="0.00" placeholder="0.00" disabled></td>'+
-                '<td><input type="text" class="invoice_product_cgstamount form-control text-right numtype smwrap" size="4" value="0.00" placeholder="0.00" disabled></td>'+
+                '<td><input type="text" class="invoice_product_cgstamount form-control text-right numtype ratewrap" size="4" value="0.00" placeholder="0.00" disabled></td>'+
 
 
 
 
                  '<td><input type="text" class="invoice_product_sgstrate  text-right form-control numtype ratewrap" size="4" value="0.00" placeholder="0.00" disabled></td>'+
-    '                 <td><input type="text" class="invoice_product_sgstamount  text-right form-control numtype smwrap" size="4" value="0.00" placeholder="0.00" disabled></td>'+
+    '                 <td><input type="text" class="invoice_product_sgstamount  text-right form-control numtype ratewrap" size="4" value="0.00" placeholder="0.00" disabled></td>'+
 
 
                    '<td class="">'+
