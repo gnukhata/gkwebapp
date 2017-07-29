@@ -663,9 +663,11 @@ $(document).ready(function() {
 					$('#invoice_product_table_vat tbody tr:last td:eq(1) input').val(value.qty);
 					$('#invoice_product_table_vat tbody tr:last td:eq(1) span').text(value.unitname);
 					$('#invoice_product_table_vat tbody tr:last td:eq(2) span').text(value.unitname);
+					$('.invoice_product_quantity_vat').numeric({ negative: false });
+					$('.invoice_product_per_price_vat').numeric({ negative: false });
 				    });
 				    if ($("#invoice_product_table_vat tbody tr").length == 1) {
-					$("#invoice_product_table_vat tbody tr:eq(0) td:eq(7)").empty();
+					$("#invoice_product_table_vat tbody tr:eq(0) td:eq(9)").empty();
 				    }
 				$.each(resp.items, function(key, value) {
 				    $('#invoice_product_table_gst tbody').append('<tr>'+
@@ -787,77 +789,14 @@ $(document).ready(function() {
 
                       $("#invoice_state").prop("disabled", false);
                       $("#invoice_state").val("none");
-                      $.ajax({
-                        url: '/invoice?action=getproducts&taxflag=22',
-                        type: 'POST',
-                        dataType: 'json',
-                        async: false,
-                        beforeSend: function(xhr) {
-                          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                        }
-                      })
-                       .done(function(resp) {
-                         console.log("success");
-                         $("#invoice_customer").prop("disabled", false);
-                         if (resp["gkstatus"] == 0) {
-                           $('#invoice_product_table_vat tbody').empty();
-                           $('#invoice_product_table_vat tbody').append('<tr>' +
-										     '<td class="col-xs-2">' +
-										     '<select class="form-control deliverychallan_edit_disable input-sm product_name_vat">' +
-										     '<option value="' + key + '">' + value.productdesc + '</option>' +
-										     '</select>' +
-										     '</td>' +
-										     '<td class="col-xs-1">' +
-										     '<div class="input-group">' +
-										     '<input type="text" class="invoice_product_quantity form-control deliverychallan_edit_disable input-sm numtype text-right" data="' + value.qty + '" value="' + value.qty + '">' +
-										     '<span class="input-group-addon input-sm" id="unitaddon">' + value.unitname + '</span>' +
-										     '</div>' +
-										     '</td>' +
-										     '<td class="col-xs-1">' +
-										     '<div class="input-group">' +
-										     '<input type="text" class="invoice_product_freequantity form-control deliverychallan_edit_disable input-sm numtype text-right" value="' + 0 + '">' +
-										     '<span class="input-group-addon input-sm" id="freeunitaddon">' + value.unitname + '</span>' +
-										     '</div>' +
-										     '</td>' +
-										     '<td class="col-xs-1">' +
-										     '<input type="text" class="invoice_product_per_price form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00">' +
-										     '</td>' +
-										     '<td class="col-xs-1">' +
-										     '<input type="text" class="invoice_product_tax_rate form-control input-sm numtype text-right" value="0.00">' +
-										     '</td>' +
-										     '<td class="col-xs-1">'+
-										     '<input type="text" class="invoice_product_discount form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8">'+
-										     '</td>'+
-										     '<td class="col-xs-1">' +
-										     '<input type="text" class="invoice_product_tax_amount form-control input-sm numtype text-right" value="0.00" disabled>' +
-										     '</td>' +
-										     '<td class="col-xs-1">' +
-										     '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00" disabled>' +
-										     '</td>' +
-										     '<td class="col-xs-1" style="width: 3%;">' +
-										     '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
-										     '</td>' +
-										     '</tr>');
-                                if ($("#invoice_product_table_vat tbody tr").length == 1) {
-                                  $("#invoice_product_table_vat tbody tr:eq(0) td:eq(7)").empty();
-                                }
-                           for (product of resp["products"]) {
-                             $('#invoice_product_table_vat tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' + product.productdesc + '</option>');
-                           }
-                           $('#invoice_product_table_vat tbody tr:last td:eq(0) select').prepend(('<option value="" selected>None</option>'));
-
-                           $('.invoice_product_quantity').numeric({ negative: false });
-                           $('.invoice_product_per_price').numeric({ negative: false });
-                         }
-                         $('#invoice_product_table_vat tfoot tr:last td:eq(1) input').val(parseFloat(0).toFixed(2));
-                       })
-                       .fail(function() {
-                         console.log("error");
-                       })
-                       .always(function() {
-                         console.log("complete");
-                       });
-
+			$('#invoice_product_table_vat tbody').empty();
+			$('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
+			$('#invoice_product_table_vat tbody tr:last td:first select').val(key).prop("disabled", true);
+			$('#invoice_product_table_vat tbody tr:last td:eq(1) input').val(value.qty);
+			$('#invoice_product_table_vat tbody tr:last td:eq(1) span').text(value.unitname);
+			$('#invoice_product_table_vat tbody tr:last td:eq(2) span').text(value.unitname);
+			$('.invoice_product_quantity_vat').numeric({ negative: false });
+			$('.invoice_product_per_price_vat').numeric({ negative: false });
                     }
 
                   });
@@ -1567,11 +1506,17 @@ console.log("quantity");
       $("#invoice_product_table_vat tbody tr:first td:eq(0) select").focus();
     });
   }
+      if ($("#invoice_product_table_vat tbody tr").length == 1) {
+	  $("#invoice_product_table_vat tbody tr:eq(0) td:eq(9)").empty();
+      }
       
       if ($("#invoice_product_table_gst tbody tr").length > 1) {
 	  $(this).closest('tr').remove();
 	  $("#invoice_product_table_gst tbody tr:eq("+curindex+")").remove();
 	  $("#invoice_product_table_gst tbody tr:first td:eq(0) select").focus();
+      }
+      if ($("#invoice_product_table_gst tbody tr").length == 1) {
+	  $("#invoice_product_table_total tbody tr:eq(0) td:eq(1)").empty();
       }
   });
 
