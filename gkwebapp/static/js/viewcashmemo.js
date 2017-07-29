@@ -91,6 +91,7 @@ $(document).ready(function() {
                         {
                           $("#total").val(resp["invoicedata"]["invoicetotal"]);
                             $('#invoice_product_table_gst').hide();
+                            $('#invoice_product_table').show();
                           for (pc in invcontents)
                           {
                             var productdecs=invcontents[pc]
@@ -142,6 +143,7 @@ $(document).ready(function() {
                         }
                         else{
                             $('#invoice_product_table').hide();
+                            $('#invoice_product_table_gst').show();
                           for (pc in invcontents)
                           {
                             var productdecs=invcontents[pc]
@@ -196,7 +198,7 @@ $(document).ready(function() {
                                   '<td class="col-xs-1" style="width: 5%">' +
                                   '</td>' +
                                   '</tr>');
-                                
+
                           }
                         }
 

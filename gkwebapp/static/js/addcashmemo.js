@@ -425,7 +425,7 @@ $('#totalinvoicevalue').text(parseFloat(totalamount).toFixed(2));
 
     });
 
-
+var prodservflag=0;
     //Key events for GST Product Table
     $(document).off("keydown", ".product_name_gst").on("keydown", ".product_name_gst", function(event) {
       var curindex = $(this).closest('tr').index();
@@ -436,7 +436,14 @@ $('#totalinvoicevalue').text(parseFloat(totalamount).toFixed(2));
         event.preventDefault();
 
         $(".product_name_gst").change();
+        if (prodservflag==1){
+        $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').focus().select();
+        }
+        else{
         $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
+        }
+
+
       } else if (event.which == 190 && event.shiftKey) {
         $('#invoice_product_table_gst tbody tr:eq(' + nextindex + ') td:eq(0) select').focus();
       } else if (event.which == 188 && event.shiftKey) {
@@ -521,6 +528,20 @@ $('#totalinvoicevalue').text(parseFloat(totalamount).toFixed(2));
                    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) span').text(resp["unitname"]);
                    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) span').text(resp["unitname"]);
 
+                 }
+
+                 if (resp["gsflag"]!=7){
+                   prodservflag=1;
+                   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').prop("disabled", true);
+                   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').prop("disabled", true);
+                   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) span').text("");
+                   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) span').text("");
+
+
+                   console.log("not goods");
+                 }
+                 else{
+                   prodservflag=0;
                  }
 
 
@@ -2137,6 +2158,12 @@ if ($("#taxapplicable option:selected").val() == 22) {
       }
     }
     });
+      $(document).off('keydown', '#ifsc').on('keydown', '#ifsc', function(event) {
+        if(event.which==13){
+        $("#invoice_save").focus();  
+        }
+
+      })
 
 
 
