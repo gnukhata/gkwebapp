@@ -124,6 +124,7 @@ def viewvoucher(request):
 	gkdata = {"code":int(vcode)}
 	result = requests.get("http://127.0.0.1:6543/transaction?code=%d"%(int(request.params["id"])),headers=header)
 	vc=result.json()["gkresult"]
+	print vc
 	type = vc["vouchertype"]
 	projects = requests.get("http://127.0.0.1:6543/projects", headers=header)
 	if type=="contra" or type=="journal":
@@ -149,7 +150,13 @@ def viewvoucher(request):
 
 
 	if result.json()["gkstatus"]==0:
-
+		print vc["invid"]
+		if vc["invid"]!=None:
+			viewinvdata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(vc["invid"]), headers=header)
+			vvi=viewinvdata.json()["gkresult"]
+			print vvi
+			print "rohini"
+			vc["vvi"]=vvi
 		if type=="sales" or type=="purchase":
 			invdata = requests.get("http://127.0.0.1:6543/invoice?forvoucher", headers=header)
 			if invdata.json()["gkstatus"]==0:

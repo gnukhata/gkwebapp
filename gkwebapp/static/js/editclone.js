@@ -153,7 +153,9 @@ $(document).ready(function()
   $("#demovctable").find("input,select,textarea,button").prop("disabled",true);
   $("#vno").prop('disabled', true);
   $("#viewinvsel").prop('disabled', true);
+  $("#invtotaldiv").prop('disabled', true);
   $("#invsel").hide();
+  $("#selinvtotal").hide();
   $(".vdate").prop('disabled', true);
   $("#narr").prop('disabled', true);
   $("#project").prop('disabled', true);
@@ -314,8 +316,11 @@ $(document).ready(function()
     $(".ttl").prop('disabled', true);
     $(".vdate").prop('disabled', false);
     $("#viewinvsel").hide();
+    $("#invtotaldiv").hide();
     $("#invsel").show();
     $("#invsel").prop('disabled', false);
+    $("#selinvtotal").show();
+    $("#selinvtotal").prop('disabled', false);
     $("#vdate").focus().select();
     $("#vctable").show();
     $("#demovctable").hide();
@@ -412,8 +417,11 @@ $(document).ready(function()
     $("#save").show();
     $("#vno").prop('disabled', false);
     $("#viewinvsel").hide();
+    $("#invtotaldiv").hide();
     $("#invsel").show();
     $("#invsel").prop('disabled', false);
+    $("#selinvtotal").show();
+    $("#selinvtotal").prop('disabled', false);
     $("#vno").focus().select();
     $("#vctable").show();
     $("#demovctable").hide();
