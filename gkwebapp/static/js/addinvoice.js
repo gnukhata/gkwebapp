@@ -77,6 +77,9 @@ $(document).ready(function() {
 	var taxdetails = $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').data("taxdetails");
 	var taxamount = 0.00;
 	var rowtaxableamount=(rowqty - rowfreeqty) * (rowprice) - rowdiscount; //Taxable amount for each row is calculated.
+	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').is(":disabled") && $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').is(":disabled")) {
+	    rowtaxableamount = rowprice - rowdiscount;
+	}
 	var rowtotal = 0.00;
 	var totalamount = 0.00;
 	var totalcgst = 0.00;
