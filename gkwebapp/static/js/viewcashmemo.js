@@ -134,8 +134,7 @@ $(document).ready(function() {
                                   '<td class="col-xs-2">' +
                                   '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable edit_invoice_disable input-sm numtype invdetails text-right" value="'+ productdecs["totalAmount"] +'" disabled>' +
                                   '</td>' +
-                                  '<td class="col-xs-1" style="width: 5%">' +
-                                  '</td>' +
+
                                   '</tr>');
 
 
@@ -195,8 +194,7 @@ $(document).ready(function() {
                                   '<td class="col-xs-2">' +
                                   '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable edit_invoice_disable input-sm numtype invdetails text-right" value="'+ productdecs["totalAmount"] +'" disabled>' +
                                   '</td>' +
-                                  '<td class="col-xs-1" style="width: 5%">' +
-                                  '</td>' +
+                                
                                   '</tr>');
 
                           }
