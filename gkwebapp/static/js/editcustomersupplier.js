@@ -42,7 +42,24 @@ $(document).ready(function() {
       $("#edit_cussup_pan").val(result["custpan"]);
       $("#edit_cussup_pan").prop("disabled", true);
       $("#edit_cussup_tan").val(result["custtan"]);
-      $("#edit_cussup_tan").prop("disabled", true);
+	$("#edit_cussup_tan").prop("disabled", true);
+	var rowhtml = $('#gstintable tbody tr:first').html();
+	$('#gstintable tbody').empty();
+	for(var gstin in result["gstin"]){
+	    $('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');
+	    $('#gstintable tbody tr:last td:eq(0) select option[stateid='+gstin+']').prop("selected", true);
+	    $('#gstintable tbody tr:last td:eq(1) input').val(result["gstin"][gstin]);
+	}
+	for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
+	    if (i > 0) {
+		$("#gstintable tbody tr:eq(" + i +") td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+		for(var k = i-1; k >= 0; k--) {
+		    var selectedstate = $('#gstintable tbody tr:eq(' + k + ') td:eq(0) select option:selected').attr("stateid");
+		    $('#gstintable tbody tr:eq(' + i + ') td:eq(0) select option[stateid='+selectedstate+']').prop("hidden", true).prop("disabled", true);
+		}
+	    }
+	}
+	$(".gstinstate, .gstin").prop("disabled", true);
       $(".panel-footer").show();
       $("#cus_innerdiv").show();
       $("#cussup_edit_save").hide();
@@ -61,19 +78,7 @@ $(document).ready(function() {
 
     if (event.which==13) {
       event.preventDefault();
-      $("#edit_cussup_btn").hide();
-      $("#cussup_edit_save").show();
-      $("#edit_cussup").prop("disabled", true);
-     // $("#edit_cussup").focus().select();
-      $("#edit_cussup_name").prop("disabled", false);
-      $("#edit_cussup_email").prop("disabled", false);
-      $("#edit_cussup_phone").prop("disabled", false);
-      $("#edit_cussup_address").prop("disabled", false);
-      $("#edit_cussup_fax").prop("disabled", false);
-      $("#edit_cussup_pan").prop("disabled", false);
-      $("#edit_cussup_tan").prop("disabled", false);
-      $("#edit_state").prop("disabled", false);
-
+      $("#edit_cussup_btn").click();
     }
 
   });
@@ -198,13 +203,117 @@ $(document).ready(function() {
             return false;
           }
           event.preventDefault();
-          $("#cussup_edit_save").click();
+          $(".gstinstate:first").focus();
         }
         if (event.which==38) {
           event.preventDefault();
           $("#edit_cussup_pan").focus().select();
         }
-      });
+  });
+  $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(event)
+{
+  var curindex = $(this).closest('tr').index();
+  var nextindex = curindex+1;
+  var previndex = curindex-1;
+  if(event.which==190 && event.shiftKey)
+  {
+    event.preventDefault();
+    $('#gstintable tbody tr:eq('+nextindex+') td:eq(0) select').focus().select();
+  }
+  else if (event.which==188 && event.ctrlKey) {
+    event.preventDefault();
+    $('#gstintable tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
+  }
+  else if (event.which==190 && event.ctrlKey) {
+    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
+    event.preventDefault();
+  }
+  else if (event.which==13) {
+    event.preventDefault();
+    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
+  }
+  else if (event.which==27) {
+    event.preventDefault();
+    $("#cussup_edit_save").focus();
+  }
+});
+
+$(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
+{
+  var curindex1 = $(this).closest('tr').index();
+  var nextindex1 = curindex1+1;
+  var previndex1 = curindex1-1;
+  var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
+  var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
+  if (event.which==13) {
+    event.preventDefault();
+    if (curindex1 != ($("#gstintable tbody tr").length-1)) {
+      $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+    }
+    else {
+      if (numberofstates > 0) {
+        if ($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="") {
+          $("#state-blank-alert").alert();
+          $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#state-blank-alert").hide();
+          });
+          $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select').focus();
+          return false;
+        }
+        if ($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val()=="") {
+          $("#gstin-blank-alert").alert();
+          $("#gstin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#gstin-blank-alert").hide();
+          });
+          $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').focus();
+          return false;
+        }
+        $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+        if (curindex1 == 0) {
+          $("#gstintable tbody tr:last td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+        }
+        $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
+	$('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[value=""]').prop('selected', true);
+        $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+      }
+      else {
+        $("#cussup_edit_save").focus();
+      }
+    }
+  }
+  else if(event.which==190 && event.shiftKey)
+  {
+    event.preventDefault();
+    $('#gstintable tbody tr:eq('+nextindex1+') td:eq(1) input').focus().select();
+  }
+  else if (event.which==188 && event.shiftKey)
+  {
+    if(previndex1>-1)
+    {
+      event.preventDefault();
+      $('#gstintable tbody tr:eq('+previndex1+') td:eq(1) input').focus().select();
+    }
+  }
+  else if (event.ctrlKey && event.which==188) {
+    event.preventDefault();
+    $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select').focus();
+  }
+  else if (event.which==190 && event.ctrlKey) {
+    event.preventDefault();
+    $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
+  }
+  else if (event.which==27) {
+    event.preventDefault();
+    $("#cussup_edit_save").focus();
+  }
+});
+$(document).off("click",".state_del").on("click", ".state_del", function() {
+  $(this).closest('tr').fadeOut(200, function(){
+    $(this).closest('tr').remove();	 //closest method gives the closest element specified
+    $('#gstintable tbody tr:last td:eq(0) select').focus().select();
+  });
+  $('#gstintable tbody tr:last td:eq(0) select').select();
+});
   $("#edit_cussup_reset").click(function(event) {
     $("#customersupplier_edit").click();
   });
@@ -219,7 +328,8 @@ $(document).ready(function() {
     $("#edit_cussup_address").prop("disabled", false);
     $("#edit_cussup_fax").prop("disabled", false);
     $("#edit_cussup_pan").prop("disabled", false);
-    $("#edit_cussup_tan").prop("disabled", false);
+      $("#edit_cussup_tan").prop("disabled", false);
+      $(".gstinstate, .gstin").prop("disabled",false);
     $("#edit_state").prop("disabled", false);
   });
   $(document).keyup(function(event) {
@@ -256,15 +366,23 @@ $(document).ready(function() {
       $("#edit_cussup_address").focus();
       return false;
     }
-    if ($.trim($("#edit_cussup_tan").val())=="") {
-      $("#tin-blank-alert").alert();
-      $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#tin-blank-alert").hide();
+      if ($.trim($("#edit_cussup_tan").val())==""&& $.trim($("#edit_cussup_gstin").val())==""){
+      $("#both-blank-alert").alert();
+      $("#both-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#both-blank-alert").hide();
       });
       $("#edit_cussup_tan").focus();
       return false;
+      }
+      var gobj = {}; // Creating a dictionary for storing godown wise opening stock
+      $("#gstintable tbody tr").each(function(){
+	  var curindex1 = $(this).index();
+    if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
+      if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val())!="") {
+          gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val();
+      }
     }
-
+  });
     $.ajax({
       url: '/customersuppliers?action=edit',
       type: 'POST',
@@ -278,6 +396,7 @@ $(document).ready(function() {
 	     "custfax": $("#edit_cussup_fax").val(),
 	     "custpan": $("#edit_cussup_pan").val(),
 	     "custtan": $("#edit_cussup_tan").val(),
+	     "gstin": JSON.stringify(gobj),
 	     "state"  : $("#edit_state").val(),
 	     "oldcustname" : $("#edit_cussup_list option:selected").text(),
 	     "custsup":$("#edit_cussup").val()
@@ -364,7 +483,7 @@ $("#cussup_delete").click(function(event) {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
         },
         success: function(resp)
-	
+	  
         {
           if (resp["gkstatus"]==0) {
             $("#customersupplier_edit").click();

@@ -2,16 +2,36 @@
 <div class="editpr">
   <div class="row">
     <div class="form-group col-sm-11 pd">
-      <label for="editproddesc" class="">{% trans %}New Name of Product{% endtrans %} :</label><label for="editproddesc" style="color:red;font-size: 120%;">*</label>
+      <input hidden value="{{proddesc["gsflag"]}}">
+      {% if proddesc["gsflag"]==7 %}
+      <label for="editproddesc" class="" id="prodlabel">New Name of Product :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
+      {%else%}
+      <label for="editproddesc" class="" id="servicelabel">New Name of Service :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
+      {%endif%}
       <input type='text' class="form-control input-sm" name="editproddesc"  id="editproddesc" value="{{proddesc['productdesc']}}" placeholder="Alphanumeric">
+      <input hidden id="gsflag" name="gsflag" value="{{proddesc["gsflag"]}}">
+        {% if proddesc["gsflag"]==7 %}
+        <div class="row">
+          <div class="form-group col-sm-11">
+            <small id="txtareahelp" class="form-text text-muted">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
+          </div>
+        </div>
+        {%endif%}
     </div>
   </div>
   <div class="row">
-    <div class="form-group col-sm-11">
-      <small id="txtareahelp" class="form-text text-muted">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
-    </div>
+  <div class="form-group col-sm-11 pd ">
+    {% if proddesc["gsflag"]==7 %}
+    <label for="edithsn" class="" id="hsnorservnolabel">New HSN No. :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
+    {%else%}
+    <label for="addproddesc" class="" id="hsnorservnolabel">New Accounting Code for Service :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
+    {%endif%}
+    <input type='text' class="form-control input-sm " name="gscode"  id="gscode" placeholder="Alphanumeric" value="{{proddesc['gscode']}}">
   </div>
-  {% if category|length > 0 %}
+</div>
+{%if category|length > 0 %}
+
+<input hidden value="1" id="catg">
   <div class="row">
     <div class="form-group col-sm-11" id="categorydiv">
     <label id="editcatselectlabel" for="editcatselect" class="">{% trans %}Category{% endtrans %} :</label>
@@ -29,7 +49,8 @@
 </select>
 </div>
   </div>
-  {% endif %}
+  {%endif%}
+  {% if proddesc["gsflag"]==7 %}
   <div class="row">
     <div class="form-group col-sm-11 pds olduom">
     <label for="edituom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label><label for="edituom" style="color:red;font-size: 120%;">*</label>
@@ -44,6 +65,7 @@
     </select>
   </div>
   </div>
+  {%endif%}
   <div id="extsp" class="row">
     <input type="text" id="numberofspecs" value="{{proddesc["specs"]|length}}" hidden>
         {% if proddesc["specs"]|length > 0 %}
@@ -119,6 +141,7 @@
               <option value="" selected disable hidden>Select Tax</option>
               <option value="VAT">VAT</option>
               <option value="CVAT">CVAT</option>
+              <option value="IGST">IGST</option>
             </select>
           </td>
           <td class="col-xs-4">
@@ -171,9 +194,15 @@
         </tr>
       </tbody>
     </table>
+{%if  proddesc["gsflag"]==7  %}
+                  <small id="taxhelp3" class="form-text text-muted ">When on Tax Rate or Tax Name press 'Esc' key to shift focus to Godown Name or from Godown Opening Stock to 'Save' button.</small>
+{%else%}
+                  <small id="taxhelp3" class="form-text text-muted ">When on Tax Rate or Tax Name press 'Esc' key to shift focus to 'Save' button.</small><br>
+  {%endif%}
     </div>
   </div>
   </div>
+    {% if proddesc["gsflag"]==7 %}
   <div class="row">
     {% if not godown %}
     <input type="text" name="godownflag" id="editgodownflag" value="0" hidden>
@@ -316,4 +345,5 @@
     </div>
     <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
 </div>
+{%endif%}
 </div>

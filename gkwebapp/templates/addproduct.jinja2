@@ -8,9 +8,20 @@
         <form id="addprodform">
           <div class="col-sm-6" >
             <div class="row">
-
+            <div class="form-group col-sm-11 pd">
+              <label for="additem">{% trans %}Item Type{% endtrans %} :</label><label for="additem" style="color:red;font-size: 120%;">*</label>
+              <select name="gsflag" class="form-control input-sm" id="additem" accesskey="">
+                <option value="" disabled hidden selected>Select Product/Service</option>
+                <option value="7" id=sel_product>Product</option>
+                <option value="19" id=sel_service>Service</option>
+              </select>
+            </div>
+            </div>
+{%if gkresult["category"]|length != 0 %}
+            <div class="row noinventory">
+<input value="1" id="catg" hidden>
               {% if not gkresult["category"] %}
-              <div class="form-group col-sm-11" id="categorydiv" hidden>
+              <div class="form-group col-sm-11 productclass" id="categorydiv" hidden>
                 <label class="" for="addcatselect">{% trans %}Select Category{% endtrans %} :</label>
                 <select class = "form-control input-sm"  name = "catselect" id="addcatselect" >
                   <option value="" selected >{% trans %}None{% endtrans %}</option>
@@ -20,10 +31,10 @@
                 </select>
               </div>
 	      <div class="form-group col-sm-11">
-		<small id="txtareahelp" class="form-text text-muted">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
+		<small id="txtareahelp" class="form-text text-muted common">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
 	      </div>
               {% else %}
-              <div class="form-group col-sm-11" id="categorydiv">
+              <div class="form-group col-sm-11 productclass" id="categorydiv">
                 <label class="" for="addcatselect">{% trans %}Select Category{% endtrans %} :</label>
                 <select class = "form-control input-sm"  name = "catselect" id="addcatselect" >
                   <option value="" selected >{% trans %}None{% endtrans %}</option>
@@ -31,43 +42,51 @@
                     <option value="{{cat['categorycode']}}">{{cat["categoryname"]}}({{cat["subcount"]}})</option>
                   {% endfor %}
                 </select>
-		<small id="txtareahelp" class="form-text text-muted">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
+		<small id="txtareahelp" class="form-text text-muted productclass">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
               </div>
               {% endif %}
               </div>
+{%endif%}
+
               <div class="row">
-              <div class="form-group col-sm-11 pd">
-                <label for="addproddesc" class="">{% trans %}Product Name{% endtrans %} :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
-                <input type='text' class="form-control input-sm" name="addproddesc"  id="addproddesc" placeholder="Alphanumeric">
+              <div class="form-group col-sm-11 pd ">
+                <label for="addproddesc" class="common" id="proservlabel"></label><label for="addproddesc" class="common" style="color:red;font-size: 120%;">*</label>
+                <input type='text' class="form-control input-sm common" name="addproddesc"  id="addproddesc" placeholder="Alphanumeric">
+              </div>
+
+              <div class="form-group col-sm-11 pd ">
+                <label for="addproddesc" class="common" id="gscodelabel" >{% trans %}{% endtrans %} :</label><label for="gscode" class="common" style="color:red;font-size: 120%;">*</label>
+                <input type='text' class="form-control input-sm common" name="gscode"  id="hsnno" placeholder="Alphanumeric">
               </div>
             </div>
-            <div class="row">
+
+            <div class="row productclass">
               <div class="form-group col-sm-11 pds olduom">
                 <label for="uom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label><label for="uom" style="color:red;font-size: 120%;">*</label>
-                <select class = "form-control input-sm sel"  name = "uom" id="adduom" aria-describedby="txtareahelp">
+                <select class = "form-control input-sm sel productclass"  name = "uom" id="adduom" aria-describedby="txtareahelp">
                   <option value="" disabled selected hidden>{% trans %}Select Unit of Measurement{% endtrans %}</option>
                   {% for uom in gkresult["uom"] %}
                   <option value="{{uom['uomid']}}">{{uom["unitname"]}}</option>
                   {% endfor %}
                 </select>
 
-                <small id="txtareahelp" class="form-text text-muted">{% trans %}Press Space Bar to add a new unit.{% endtrans %}</small>
+                <small id="txtareahelp" class="form-text text-muted">{% trans %}Press Space Bar to add a new unit of measurement and press enter.{% endtrans %}</small>
               </div>
               <div class="form-group col-sm-11 pds newuom" hidden>
-                <label for="newuom" class=""  style="font-size:13px">{% trans %}New Unit of Measurement{% endtrans %} :</label>
-                <input type='text' class="form-control input-sm" name="newuom"  id="newuom" placeholder="Name of the new unit" aria-describedby="textareahelp">
+                <label for="newuom" class="productclass"  style="font-size:13px">{% trans %}New Unit of Measurement{% endtrans %} :</label>
+                <input type='text' class="form-control input-sm productclass" name="newuom"  id="newuom" placeholder="Name of the new unit" aria-describedby="textareahelp">
                 <small id="textareahelp" class="form-text text-muted">{% trans %}Press 'Enter' key to save and 'Esc' key to cancel.{% endtrans %}</small>
               </div>
             </div>
-            <div class="row" id="specdiv" hidden>
+            <div class="row productclass" id="specdiv" hidden>
         </div>
       </div>
-            <div class="col-sm-6" id="rightdiv">
+            <div class="col-sm-6 common" id="rightdiv">
              <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#CatModal"></i>
               <div class="row">
                 <div class="form-group" style="margin-top: 3%;">
             <div class="panel">
-              <table id="product_tax_table" class="table table-condensed table-bordered fixed-table">
+              <table id="product_tax_table" class="table table-condensed table-bordered fixed-table common">
                 <thead class="bg-primary input-sm">
                   <tr>
                     <th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
@@ -83,6 +102,7 @@
                         <option value="" selected hidden disabled>Select Tax</option>
                         <option value="VAT">VAT</option>
                         <option value="CVAT">CVAT</option>
+                        <option value="IGST">IGST</option>
                       </select>
                     </td>
                     <td class="col-xs-4">
@@ -134,11 +154,15 @@
                   </tr>
                 </tbody>
               </table>
+
+              <small  class="form-text text-muted  " id="nogodownmsg" hidden>When on Tax Rate or Tax Name press 'Esc' key to shift focus to 'Save' button.</small>
+              <small  class="form-text text-muted " id="godownmsg" hidden>When on Tax Rate or Tax Name press 'Esc' key to shift focus to Godown Name or from Godown Opening Stock to 'Save' button.</small>
+              <small id="taxhelp3" class="form-text text-muted serviceclass">When on Tax Rate or Tax Name press 'Esc' key to shift focus to 'Save' button.</small><br>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="row">
+        <div class="row noinventory ">
+          <div class="row productclass">
               {% if not godown %}
               <div id="newgodownadded" hidden>
                 <div class="form-group">
@@ -230,6 +254,7 @@
                   </tbody>
                 </table>
               </div>
+
             </div>
             {% endif %}
             <div id="CatModal"  tabindex="-1" class="modal fade " role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
@@ -256,22 +281,23 @@ you can also enter the details of taxes for the product. {%endtrans %} </font>
   </div>
 </div>
             </div>
-            <small id="taxhelp3" class="form-text text-muted">When on Tax Rate or Tax Name press 'Esc' key to shift focus to Godown Name or from Godown Opening Stock to 'Save' button.</small><br>
-            <small id="taxhelp4" class="form-text text-muted">Press 'Insert' key from anywhere on the screen to save changes.</small>
-            <div class="collapse" id="moresmall">
-              <small id="taxhelp2" class="form-text text-muted">Press 'Ctrl + >' to move forward or 'Ctrl + <' to move backward within a row in the Tax or Godown table.</small><br>
-              <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to move backward within a Column in the Tax or Godown table.</small>
+
+            <small id="taxhelp4" class="form-text text-muted common">Press 'Insert' key from anywhere on the screen to save changes.</small>
+            <div class="collapse  " id="moresmall">
+            </br>
+              <small id="taxhelp2" class="form-text text-muted productclass ">Press 'Ctrl + >' to move forward or 'Ctrl + <' to move backward within a row in the Tax or Godown table.</small><br>
+              <small id="taxhelp" class="form-text text-muted productclass">Press 'Shift + <' to move backward within a Column in the Tax or Godown table.</small>
             </div>
-            <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+            <a data-toggle="collapse"class ="productclass" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
           </div>
         </div>
       </div>
       </form>
     <div class="btn-group-sm panel-footer">
       <div class="container-fluid">
-        <button class="btn btn-success btn-sm" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i> <u>S</u>ave{% endtrans %}</button>
-        <button id="apreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> R<u>e</u>set{% endtrans %}</button>
-        <button id="addgodown" class="btn btn-info btn-sm" accesskey="a">{% trans %}<i class="fa fa-plus" aria-hidden="true"></i> <u>A</u>dd Godown{% endtrans %}</button>
+        <button class="btn btn-success btn-sm common" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
+        <button id="apreset" class="btn btn-warning btn-sm common" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
+        <button id="addgodown" class="btn btn-info btn-sm productclass" accesskey="a"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}<u>A</u>dd Godown{% endtrans %}</button>
       </div>
     </div>
   </div>

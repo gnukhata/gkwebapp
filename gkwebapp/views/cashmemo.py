@@ -36,8 +36,9 @@ def showinvoice(request):
 @view_config(route_name="cashmemos",request_param="action=showadd",renderer="gkwebapp:templates/addcashmemo.jinja2")
 def showaddcashmemo(request):
 	header={"gktoken":request.headers["gktoken"]}
-	products = requests.get("http://127.0.0.1:6543/products", headers=header)
-	return {"gkstatus": request.params["status"],"products": products.json()["gkresult"]}
+	productsnservices = requests.get("http://127.0.0.1:6543/products", headers=header)
+	products = requests.get("http://127.0.0.1:6543/products?invdc=4", headers=header)
+	return {"gkstatus": request.params["status"],"products": products.json()["gkresult"],"productsnservices": productsnservices.json()["gkresult"]}
 
 @view_config(route_name="cashmemos",request_param="action=showedit",renderer="gkwebapp:templates/viewcashmemo.jinja2")
 def showeditcashmemo(request):
@@ -48,20 +49,30 @@ def showeditcashmemo(request):
 @view_config(route_name="cashmemos",request_param="action=getproducts",renderer="json")
 def getproducts(request):
 	header={"gktoken":request.headers["gktoken"]}
-	products = requests.get("http://127.0.0.1:6543/products", headers=header)
+	if int(request.params["taxflag"]) == 7:
+		products = requests.get("http://127.0.0.1:6543/products", headers=header)
+	elif int(request.params["taxflag"]) == 22:
+		products = requests.get("http://127.0.0.1:6543/products?invdc=4", headers=header)
+
 	return {"gkstatus": products.json()["gkstatus"],"products": products.json()["gkresult"]}
 
 
 @view_config(route_name="cashmemos",request_param="action=save",renderer="json")
-def saveinvoice(request):
+def savecashmemo(request):
 	header={"gktoken":request.headers["gktoken"]}
 
-	cashmemodata = {"invoiceno":request.params["invoiceno"],"invoicetotal":request.params["invoicetotal"],"icflag":3,"taxstate":request.params["taxstate"],"invoicedate":request.params["invoicedate"],
+	cashmemodata = {"invoiceno":request.params["invoiceno"],"invoicetotal":request.params["invoicetotal"],"icflag":3,"taxstate":request.params["taxstate"],"sourcestate":request.params["sourcestate"],"invoicedate":request.params["invoicedate"],
 		"tax":json.loads(request.params["tax"]),
-		"contents":json.loads(request.params["contents"]),"freeqty":json.loads(request.params["freeqty"])}
+		"contents":json.loads(request.params["contents"]),"freeqty":json.loads(request.params["freeqty"]),"taxflag":request.params["taxflag"]}
+
+	if request.params.has_key("discount"):
+		cashmemodata["discount"]=json.loads(request.params["discount"])
+	if request.params.has_key("bankdetails"):
+		cashmemodata["bankdetails"]=json.loads(request.params["bankdetails"])
 
 	stock = json.loads(request.params["stock"])
 	invoicewholedata = {"invoice":cashmemodata,"stock":stock}
+
 	result=requests.post("http://127.0.0.1:6543/invoice",data=json.dumps(invoicewholedata),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 
@@ -84,6 +95,7 @@ def getstatetax(request):
 def getInvoiceDetails(request):
 	header={"gktoken":request.headers["gktoken"]}
 	invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
+	
 	return {"gkstatus": invoicedata.json()["gkstatus"],"invoicedata": invoicedata.json()["gkresult"]}
 
 @view_config(route_name="cashmemos",request_param="action=cancel",renderer="json")

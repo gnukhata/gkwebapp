@@ -36,6 +36,10 @@ var username1;
 var userrole1;
   $('.modal-backdrop').remove();
 
+  if(sessionStorage.invflag==1){
+    $(".productinmaster").hide();
+  }
+
   if (sessionStorage.reload == 1)// The mainshell when loads for the first time its reloaded so that the javascript file can be fully loaded.
     {
       sessionStorage.reload = 0;
@@ -810,6 +814,31 @@ var userrole1;
   });
 
   $("#product").click(function (e){
+    e.preventDefault();
+    // calls product page.
+    $.ajax({
+      url: '/product?type=tab',
+      type: "POST",
+      datatype: 'text/html',
+      global: false,
+      async: false,
+      beforeSend: function(xhr)
+      {
+	xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+    })
+     .done(function(resp) {
+       $('#info').html(resp);
+     })
+     .fail(function() {
+       console.log("error");
+     })
+     .always(function() {
+       console.log("complete");
+     });
+  });
+  $("#productinmaster").click(function (e){
+    e.preventDefault();
     // calls product page.
     $.ajax({
       url: '/product?type=tab',

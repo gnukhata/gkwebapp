@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
   $('.modal-backdrop').remove();
   var specday;
   var specmonth;
@@ -15,6 +16,9 @@ $(document).ready(function() {
     /* Act on the event */
     $(".numtype").numeric();
   });
+  if(sessionStorage.invflag==0){
+  $("#categorydiv").hide();
+  }
   $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
     event.preventDefault();
     /* Act on the event */
@@ -57,7 +61,7 @@ $(document).ready(function() {
         $("#editproddesc").focus().select();
       }
       else {
-        $("#editcatselect").focus();
+        $("#gscode").focus();
       }
     }
   });
@@ -114,30 +118,52 @@ $(document).ready(function() {
   });
 
   $("#prodselect").keydown(function(event) {
+
     if (event.which==13) {
+      event.preventDefault();
       $("#editproddesc").focus().select();
+
           }
+
   });
   $(document).on('keydown', '#editproddesc', function(event) {
     if (event.which==13) {
       event.preventDefault();
-      if ($("#editcatselect").length < 1) {
-        $("#nocategory-alert").alert();
-        $("#nocategory-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#edituom").focus();
-          $("#nocategory-alert").hide();
-        });
+      $("#gscode").focus();
+
+     /*if ($("#editcatselect").is(':disabled')) {
+        $("#gscode").focus();
       }
-      else if ($("#editcatselect").is(':disabled')) {
-        $("#edituom").focus();
-      }
-      else {
-        $("#editcatselect").focus();
-      }
+        else {
+          $("#editcatselect").focus();
+        }*/
     }
     if (event.which==38) {
       event.preventDefault();
       $("#prodselect").focus();
+    }
+  });
+  $(document).on('keydown', '#gscode', function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      if($("#gsflag").val()=='7'){
+        if ($("#editcatselect").is(':hidden')) {
+           $("#edituom").focus();
+         }
+           else {
+             $("#editcatselect").focus();
+           }
+           if($("#catg").val()){
+             $("#editcatselect").focus();
+           }
+           else{
+             $("#edituom").focus();
+           }
+      }
+
+         else{
+$("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
+         }
     }
   });
 
@@ -245,11 +271,49 @@ $(document).ready(function() {
             '<option value="" selected disabled hidden>Select Tax</option>'+
             '<option value="VAT">VAT</option>'+
             '<option value="CVAT">CVAT</option>'+
+            '<option value="IGST">IGST</option>'+
           '</select>'+
           '</td>'+
           '<td class="col-xs-4">'+
           '<select class="form-control product_tax_disable input-sm tax_state" >'+
-          '<option value="">None</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>'+
+          '<option value="">None</option>'+
+            '<option value="Andaman and Nicobar Islands" stateid="35">Andaman and Nicobar Islands</option>'+
+          '<option value="Andhra Pradesh" stateid="28">Andhra Pradesh</option>'+
+          '<option value="Andhra Pradesh New" stateid="37">Andhra Pradesh (New)</option>'+
+          '<option value="Arunachal Pradesh" stateid="12">Arunachal Pradesh</option>'+
+          '<option value="Assam" stateid="18">Assam</option>'+
+          '<option value="Bihar" stateid="10">Bihar</option>'+
+          '<option value="Chandigarh" stateid="4">Chandigarh</option>'+
+          '<option value="Chhattisgarh" stateid="22">Chhattisgarh</option>'+
+          '<option value="Dadra and Nagar Haveli" stateid="26">Dadra and Nagar Haveli</option>'+
+          '<option value="Daman and Diu" stateid="25">Daman and Diu</option>'+
+          '<option value="Delhi" stateid="7">Delhi</option>'+
+          '<option value="Goa" stateid="20">Goa</option>'+
+          '<option value="Gujarat" stateid="29">Gujarat</option>'+
+          '<option value="Haryana" stateid="6">Haryana</option>'+
+          '<option value="Himachal Pradesh" stateid="2">Himachal Pradesh</option>'+
+          '<option value="Jammu and Kashmir" stateid="1">Jammu and Kashmir</option>'+
+          '<option value="Jharkhand" stateid="20">Jharkhand</option>'+
+          '<option value="Karnataka" stateid="29">Karnataka</option>'+
+          '<option value="Kerala" stateid="32">Kerala</option>'+
+          '<option value="Lakshadweep" stateid="31">Lakshadweep</option>'+
+          '<option value="Madhya Pradesh" stateid="23">Madhya Pradesh</option>'+
+          '<option value="Maharashtra" stateid="27">Maharashtra</option>'+
+          '<option value="Manipur" stateid="14">Manipur</option>'+
+          '<option value="Meghalaya" stateid="17">Meghalaya</option>'+
+          '<option value="Mizoram" stateid="15">Mizoram</option>'+
+          '<option value="Nagaland" stateid="13">Nagaland</option>'+
+          '<option value="Odisha" stateid="21">Odisha</option>'+
+          '<option value="Pondicherry" stateid="34">Pondicherry</option>'+
+          '<option value="Punjab" stateid="3">Punjab</option>'+
+          '<option value="Rajasthan" stateid="8">Rajasthan</option>'+
+          '<option value="Sikkim" stateid="11">Sikkim</option>'+
+          '<option value="Tamil Nadu" stateid="33">Tamil Nadu</option>'+
+          '<option value="Telangana" stateid="36">Telangana</option>'+
+          '<option value="Tripura" stateid="16">Tripura</option>'+
+          '<option value="Uttar Pradesh" stateid="9">Uttar Pradesh</option>'+
+          '<option value="Uttarakhand" stateid="5">Uttarakhand</option>'+
+          '<option value="West Bengal" stateid="19">West Bengal</option>'+
           '</select>'+
           '</td>'+
           '<td class="col-xs-3">'+
@@ -373,6 +437,7 @@ $(document).ready(function() {
       if (prodcode!="")
       {
         $("#epedit").click();
+
       }
 
     }
@@ -436,17 +501,22 @@ $(document).ready(function() {
     /* Act on the event */
     $('#proddetails').find('input, textarea, button, select').prop('disabled',false);
     $("#epsubmit").show();
+
     $("#epedit").hide();
+
+    if($("#gsflag").val()=='7'){
     $("#addgodown").show();
+  }
+
     $("#editproddesc").focus();
     $("#editproddesc").select();
-    
+
     $(".godownflag").show();
     catcode= $("#editcatselect option:selected").val();
     $(".product_cat_tax_disable").prop('disabled',false);
     $(".product_tax_disable").prop('disabled',false);
     $("#product_edit_tax_table tbody tr").each(function() {
-      if($('td:eq(0) select option:selected', this).val() == 'CVAT'){
+      if($('td:eq(0) select option:selected', this).val() == 'CVAT' || $('td:eq(0) select option:selected', this).val() =='IGST' ){
         $('td:eq(1) select', this).prop('disabled', true);
       }
     });
@@ -598,11 +668,11 @@ $(document).ready(function() {
       $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
       event.preventDefault();
     }
-    else if (($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='CVAT') && event.which==13 ) {
+    else if (($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='CVAT' || $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val() =='IGST' ) && event.which==13 ) {
         event.preventDefault();
         var types = [];
         $('#product_edit_tax_table tbody tr').each(function(){
-          if ($(".tax_name",this).val()=='CVAT') {
+          if ($(".tax_name",this).val()=='CVAT' || $(".tax_name",this).val()=='IGST') {
           types.push($(".tax_name",this).val());
           }
         });
@@ -628,17 +698,23 @@ $(document).ready(function() {
     }
     else if (event.which==27) {
       event.preventDefault();
-      if ($("#editgodownpresence").val() == 0) {
-        $("#editopeningstock").focus().select();
-      }
-      else {
-        if ($("#editgodownflag").val() == 1) {
-          $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
+      if($("#gsflag").val()=='7'){
+        if ($("#editgodownpresence").val() == 0) {
+          $("#editopeningstock").focus().select();
         }
-        else if ($("#editgodownflag").val() == 0) {
-          $("#editgodownflag").focus().select();
+        else {
+          if ($("#editgodownflag").val() == 1) {
+            $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
+          }
+          else if ($("#editgodownflag").val() == 0) {
+            $("#editgodownflag").focus().select();
+          }
         }
       }
+      else{
+        $("#epsubmit").focus();
+      }
+
     }
   });
 
@@ -648,11 +724,48 @@ $(document).ready(function() {
     var previndex = curindex -1;
     if ($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='VAT') {
       $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select").empty();
-      $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select").append('<option value="" stateid="" selected hidden disabled>Select State</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>').prop('disabled', false);
+      $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select").append('<option value="">None</option>'+
+        '<option value="Andaman and Nicobar Islands" stateid="35">Andaman and Nicobar Islands</option>'+
+      '<option value="Andhra Pradesh" stateid="28">Andhra Pradesh</option>'+
+      '<option value="Andhra Pradesh New" stateid="37">Andhra Pradesh (New)</option>'+
+      '<option value="Arunachal Pradesh" stateid="12">Arunachal Pradesh</option>'+
+      '<option value="Assam" stateid="18">Assam</option>'+
+      '<option value="Bihar" stateid="10">Bihar</option>'+
+      '<option value="Chandigarh" stateid="4">Chandigarh</option>'+
+      '<option value="Chhattisgarh" stateid="22">Chhattisgarh</option>'+
+      '<option value="Dadra and Nagar Haveli" stateid="26">Dadra and Nagar Haveli</option>'+
+      '<option value="Daman and Diu" stateid="25">Daman and Diu</option>'+
+      '<option value="Delhi" stateid="7">Delhi</option>'+
+      '<option value="Goa" stateid="20">Goa</option>'+
+      '<option value="Gujarat" stateid="29">Gujarat</option>'+
+      '<option value="Haryana" stateid="6">Haryana</option>'+
+      '<option value="Himachal Pradesh" stateid="2">Himachal Pradesh</option>'+
+      '<option value="Jammu and Kashmir" stateid="1">Jammu and Kashmir</option>'+
+      '<option value="Jharkhand" stateid="20">Jharkhand</option>'+
+      '<option value="Karnataka" stateid="29">Karnataka</option>'+
+      '<option value="Kerala" stateid="32">Kerala</option>'+
+      '<option value="Lakshadweep" stateid="31">Lakshadweep</option>'+
+      '<option value="Madhya Pradesh" stateid="23">Madhya Pradesh</option>'+
+      '<option value="Maharashtra" stateid="27">Maharashtra</option>'+
+      '<option value="Manipur" stateid="14">Manipur</option>'+
+      '<option value="Meghalaya" stateid="17">Meghalaya</option>'+
+      '<option value="Mizoram" stateid="15">Mizoram</option>'+
+      '<option value="Nagaland" stateid="13">Nagaland</option>'+
+      '<option value="Odisha" stateid="21">Odisha</option>'+
+      '<option value="Pondicherry" stateid="34">Pondicherry</option>'+
+      '<option value="Punjab" stateid="3">Punjab</option>'+
+      '<option value="Rajasthan" stateid="8">Rajasthan</option>'+
+      '<option value="Sikkim" stateid="11">Sikkim</option>'+
+      '<option value="Tamil Nadu" stateid="33">Tamil Nadu</option>'+
+      '<option value="Telangana" stateid="36">Telangana</option>'+
+      '<option value="Tripura" stateid="16">Tripura</option>'+
+      '<option value="Uttar Pradesh" stateid="9">Uttar Pradesh</option>'+
+      '<option value="Uttarakhand" stateid="5">Uttarakhand</option>'+
+      '<option value="West Bengal" stateid="19">West Bengal</option>').prop('disabled', false);
       if (curindex > 0) {
         for (var i = 1; i < curindex+1; i++) {
           for (var j = 0; j < curindex; j++) {
-            if ($("#product_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "CVAT") {
+            if ($("#product_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "CVAT" || $("#product_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "IGST") {
               i = i + 1;
             }
             selectedtaxstate = $("#product_edit_tax_table tbody tr:eq("+j+") td:eq(1) select option:selected").attr("stateid");
@@ -759,11 +872,49 @@ $(document).ready(function() {
           '<option value="" selected hidden disabled>Select Tax</option>'+
           '<option value="VAT">VAT</option>'+
           '<option value="CVAT">CVAT</option>'+
+          '<option value="IGST">IGST</option>'+
         '</select>'+
         '</td>'+
         '<td class="col-xs-4">'+
         '<select class="form-control input-sm tax_state product_new_state" >'+
-        '<option value="">None</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>'+
+        '<option value="">None</option>'+
+          '<option value="Andaman and Nicobar Islands" stateid="35">Andaman and Nicobar Islands</option>'+
+        '<option value="Andhra Pradesh" stateid="28">Andhra Pradesh</option>'+
+        '<option value="Andhra Pradesh New" stateid="37">Andhra Pradesh (New)</option>'+
+        '<option value="Arunachal Pradesh" stateid="12">Arunachal Pradesh</option>'+
+        '<option value="Assam" stateid="18">Assam</option>'+
+        '<option value="Bihar" stateid="10">Bihar</option>'+
+        '<option value="Chandigarh" stateid="4">Chandigarh</option>'+
+        '<option value="Chhattisgarh" stateid="22">Chhattisgarh</option>'+
+        '<option value="Dadra and Nagar Haveli" stateid="26">Dadra and Nagar Haveli</option>'+
+        '<option value="Daman and Diu" stateid="25">Daman and Diu</option>'+
+        '<option value="Delhi" stateid="7">Delhi</option>'+
+        '<option value="Goa" stateid="20">Goa</option>'+
+        '<option value="Gujarat" stateid="29">Gujarat</option>'+
+        '<option value="Haryana" stateid="6">Haryana</option>'+
+        '<option value="Himachal Pradesh" stateid="2">Himachal Pradesh</option>'+
+        '<option value="Jammu and Kashmir" stateid="1">Jammu and Kashmir</option>'+
+        '<option value="Jharkhand" stateid="20">Jharkhand</option>'+
+        '<option value="Karnataka" stateid="29">Karnataka</option>'+
+        '<option value="Kerala" stateid="32">Kerala</option>'+
+        '<option value="Lakshadweep" stateid="31">Lakshadweep</option>'+
+        '<option value="Madhya Pradesh" stateid="23">Madhya Pradesh</option>'+
+        '<option value="Maharashtra" stateid="27">Maharashtra</option>'+
+        '<option value="Manipur" stateid="14">Manipur</option>'+
+        '<option value="Meghalaya" stateid="17">Meghalaya</option>'+
+        '<option value="Mizoram" stateid="15">Mizoram</option>'+
+        '<option value="Nagaland" stateid="13">Nagaland</option>'+
+        '<option value="Odisha" stateid="21">Odisha</option>'+
+        '<option value="Pondicherry" stateid="34">Pondicherry</option>'+
+        '<option value="Punjab" stateid="3">Punjab</option>'+
+        '<option value="Rajasthan" stateid="8">Rajasthan</option>'+
+        '<option value="Sikkim" stateid="11">Sikkim</option>'+
+        '<option value="Tamil Nadu" stateid="33">Tamil Nadu</option>'+
+        '<option value="Telangana" stateid="36">Telangana</option>'+
+        '<option value="Tripura" stateid="16">Tripura</option>'+
+        '<option value="Uttar Pradesh" stateid="9">Uttar Pradesh</option>'+
+        '<option value="Uttarakhand" stateid="5">Uttarakhand</option>'+
+        '<option value="West Bengal" stateid="19">West Bengal</option>'+
         '</select>'+
         '</td>'+
         '<td class="col-xs-3">'+
@@ -774,7 +925,7 @@ $(document).ready(function() {
         '</td>'+
         '</tr>');
         $(".tax_rate").numeric();
-        if (selectedtaxname == "CVAT") {
+        if (selectedtaxname == "CVAT" || selectedtaxname == "IGST") {
           $('#product_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedtaxname+']').prop('hidden', true).prop('disabled', true);
         }
         $('#product_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
@@ -803,16 +954,22 @@ $(document).ready(function() {
     }
     else if (event.which==27) {
       event.preventDefault();
-      if ($("#editgodownpresence").val() == 0) {
-        $("#editopeningstock").focus().select();
+      if($('#gsflag').val() == '7') {
+        if ($("#editgodownpresence").val() == 0) {
+          $("#editopeningstock").focus().select();
+        }
+        else {
+          if ($("#editgodownflag").val() == 1) {
+            $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
+          }
+          else if ($("#editgodownflag").val() == 0) {
+            $("#editgodownflag").focus().select();
+          }
+      }
+
       }
       else {
-        if ($("#editgodownflag").val() == 1) {
-          $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
-        }
-        else if ($("#editgodownflag").val() == 0) {
-          $("#editgodownflag").focus().select();
-        }
+        $("#epsubmit").focus();
       }
     }
 
@@ -1085,7 +1242,7 @@ $(document).ready(function() {
       curindex = $(this).index();
       if ($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()!="") {
         obj.taxrowid = $("#product_edit_tax_table tbody tr:eq("+curindex+")").attr('value');
-        obj.taxname = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val();
+        obj.taxname = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select option:selected").val();
         obj.state = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select option:selected").val();
         obj.taxrate = parseFloat($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(2) input").val()).toFixed(2);
         taxes.push(obj);
@@ -1128,9 +1285,9 @@ $(document).ready(function() {
     .done(function(resp) {
       if (resp["gkstatus"] ==0) {
         $('.modal-backdrop').remove();
-        $("#editsuccess-alert").alert();
-        $("#editsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#editsuccess-alert").hide();
+        $("#editproduct-success-alert").alert();
+        $("#editproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#editproduct-success-alert").hide();
         });
         $("#editproduct").click();
         return false;
@@ -1218,9 +1375,7 @@ $(document).ready(function() {
 
   });
 
-  $(document).on('click', '#epreset', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    $("#editproduct").click();
-  });
+  $("#epreset").unbind().click(function() {
+  $("#editproduct").click();
+});
 });
