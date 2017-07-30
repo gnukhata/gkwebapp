@@ -2572,14 +2572,7 @@ if (event.which == 13) {
      });
 
   }
-  else {
-    if ($("#status").val() == '9')  {
-      $("#invoice_save").click();
-    }
-    else if ($("#status").val() == '15') {
-      //$("#invoice_issuer_name").focus();
-    }
-  }
+    $(".product_name_gst").change();
 }
 });
 //
