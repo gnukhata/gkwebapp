@@ -329,22 +329,22 @@
             <tbody>
             <h5>Bank Details:</h5>
             <tr>
-              <td>  <label for="Account Number" class=" col-form-label col-form-label-sm" id="accountnolabel">{% trans %}Account No. :{% endtrans %}</label></td>
+              <td>  <label for="Account Number" style="font-size: 75%" class=" col-form-label col-form-label-sm" id="accountnolabel">{% trans %}Account No. :{% endtrans %}</label></td>
               <td colspan="2"><input type="text" id="accountno" class=" form-control input-sm" name="accountno" ></input></td>
             </tr>
             <tr>
-              <td>  <label for="Bank Name" class=" col-form-label col-form-label-sm" id="banknamelabel">{% trans %}Bank Name :{% endtrans %}</label></td>
+              <td>  <label for="Bank Name" style="font-size: 75%" class=" col-form-label col-form-label-sm" id="banknamelabel">{% trans %}Bank Name :{% endtrans %}</label></td>
               <td colspan="2"><input type="text" id="bankname" class=" form-control input-sm" name="bankname" ></input></td>
             </tr>
             <tr>
 
-              <td>  <label for="Bank Branch " class=" col-form-label col-form-label-sm" id="branchlabel">{% trans %}Branch Name:{% endtrans %}</label></td>
+              <td>  <label style="font-size: 75%" for="Bank Branch " class=" col-form-label col-form-label-sm" id="branchlabel">{% trans %}Branch Name:{% endtrans %}</label></td>
               <td colspan="2"><input type="text" id="branchname" class=" form-control input-sm" name="branchnae" ></input></td>
 
             </tr>
             <tr>
 
-              <td>  <label for="IFSC code" class=" col-form-label col-form-label-sm" id="ifsclabel">{% trans %}IFSC code :{% endtrans %}</label></td>
+              <td>  <label style="font-size: 75%" for="IFSC code" class=" col-form-label col-form-label-sm" id="ifsclabel">{% trans %}IFSC code :{% endtrans %}</label></td>
               <td colspan="2"><input type="text" id="ifsc" class=" form-control input-sm" name="ifsc" ></input></td>
 
             </tr>
@@ -358,9 +358,9 @@
     		  <tbody>
 
     		    <tr>
-    		      <td>  <label style="font-size: 125%" for="total invoice value" class=" col-form-label col-form-label-sm" >{% trans %}Total Amount :{% endtrans %}</label></td>
-    		      <td colspan="2"> <label style="font-size: 125%" for="total invoice value" class=" col-form-label col-form-label-sm" id="totalinvoicevalue"></td>
-    		    </tr>
+    		      <td>  <label style="font-size: 105%" for="total invoice value" class=" col-form-label col-form-label-sm" >{% trans %}Total Amount :{% endtrans %}</label></td>
+    		      <td colspan="2"> <label style="font-size: 105%" for="total invoice value" class=" col-form-label col-form-label-sm" id="totalinvoicevalue"></td>
+    		    </tr
     		  </tbody>
     		</table>
 
@@ -368,32 +368,7 @@
 
           </div>
         </div>
-        <div class="panel-footer" id="footer_id" hidden>
-          <div class="container-fluid">
 
-            <button class="btn btn-danger btn-sm hidden-load" id="invcl" data-toggle="tooltip" data-placement="top" >{% trans %}<i class="fa fa-times" aria-hidden="true"></i> Cancel{% endtrans %}</button>
-            <button id="invoice_editprint" class="btn btn-primary btn-sm" >{% trans %}<i class="fa fa-print" aria-hidden="true"></i> Print{% endtrans %}</button>
-          </div>
-        </div>
-        <div id="confirm_del" class="modal fade" tabindex="-1" role="dialog">
-          <div class="vertical-alignment-helper">
-            <div class="modal-dialog modal-sm vertical-align-center">
-              <div class="modal-content">
-                <div class="modal-header">
-
-                  <h4 class="modal-title">{% trans %}Cancel?{% endtrans %}</h4>
-                </div>
-                <div class="modal-body">
-                  <p>{% trans %}Are you sure?{% endtrans %}</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
-                  <button type="button" id="accdel" data-dismiss="modal" class="btn btn-danger">{% trans %}Yes{% endtrans %}</button>
-                </div>
-              </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-          </div>
-        </div><!-- /.mod-->
 
 
 
