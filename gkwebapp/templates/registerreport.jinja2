@@ -56,7 +56,7 @@
  	width:80px
  }
  .lngwrap{
- 	width:460px
+ 	width:560px
  }
  .mdwrap{
  	width:120px
@@ -86,9 +86,11 @@
           {% if registerheader["flag"] == "0" %}
           <th class="dtwrap calign">{% trans %}Cust Name{% endtrans %}</th>
           <th class="dtwrap calign">{% trans %}Cust TIN{% endtrans %}</th>
+	  <th class="dtwrap calign">{% trans %}Cust GSTIN{% endtrans %}</th>
           {% else %}
           <th class="dtwrap calign">{% trans %}Suppl Name{% endtrans %}</th>
           <th class="dtwrap calign">{% trans %}Suppl TIN{% endtrans %}</th>
+	  <th class="dtwrap calign">{% trans %}Suppl GSTIN{% endtrans %}</th>
           {% endif %}
           <th class="dtwrap calign">{% trans %}Gross Amt{% endtrans %}</th>
           <th class="dtwrap calign">{% trans %}TAX Free{% endtrans %}</th>
@@ -119,6 +121,9 @@
             <td class="dtwrap calign">
               {{record['customertin']}}
             </td>
+	    <td class="dtwrap calign">
+              {{record['custgstin']}}
+            </td>
             <td class="dtwrap calign">
               {{record['grossamount']}}
             </td>
@@ -147,7 +152,7 @@
           {% endfor %}
           <!-- Description: This is for last row i.e. Total of transactions -->
         <tr>
-          <td class="lngwrap calign" colspan="5">
+          <td class="lngwrap calign" colspan="6">
             <strong> <i>Total </i></strong>
           </td>
           <td class="dtwrap calign">

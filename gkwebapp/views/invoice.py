@@ -333,18 +333,21 @@ def registerspreadsheet(request):
     sheet.getColumn(5).setWidth("4cm")
     sheet.getColumn(6).setWidth("4cm")
     sheet.getColumn(7).setWidth("4cm")
+    sheet.getColumn(8).setWidth("4cm")
     sheet.getCell(0,3).stringValue("Sr. No.").setBold(True)
     sheet.getCell(1,3).stringValue("Invoice No.").setBold(True)
     sheet.getCell(2,3).stringValue("Invoice Dt.").setBold(True)
     if request.params["flag"] == "0":
            sheet.getCell(3,3).stringValue("Cust. Name").setBold(True)
            sheet.getCell(4,3).stringValue("Cust. TIN").setBold(True)
+           sheet.getCell(5,3).stringValue("Cust. GSTIN").setBold(True)
     else:
         sheet.getCell(3,3).stringValue("Suppl. Name").setBold(True)
         sheet.getCell(4,3).stringValue("Suppl. TIN").setBold(True)
-    sheet.getCell(5,3).stringValue("Gross Amt.").setBold(True)
-    sheet.getCell(6,3).stringValue("TAX Free").setBold(True)
-    i = 8
+        sheet.getCell(5,3).stringValue("Suppl. GSTIN").setBold(True)
+    sheet.getCell(6,3).stringValue("Gross Amt.").setBold(True)
+    sheet.getCell(7,3).stringValue("TAX Free").setBold(True)
+    i = 9
     for taxc in taxcolumns:
         sheet.getColumn(i).setWidth("4cm")
         sheet.getCell(i-1,3).stringValue("Net @" + taxc + "%").setBold(True)
@@ -360,9 +363,14 @@ def registerspreadsheet(request):
         sheet.getCell(2, row).stringValue(invoice["invoicedate"])
         sheet.getCell(3, row).stringValue(invoice["customername"])
         sheet.getCell(4, row).stringValue(invoice["customertin"])
-        sheet.getCell(5, row).stringValue(invoice["grossamount"])
-        sheet.getCell(6, row).stringValue(invoice["taxfree"])
-        i = 7
+        if invoice.has_key("custgstin"):
+           sheet.getCell(5, row).stringValue(invoice["custgstin"])
+        else:
+            sheet.getCell(5, row).stringValue("")
+
+        sheet.getCell(6, row).stringValue(invoice["grossamount"])
+        sheet.getCell(7, row).stringValue(invoice["taxfree"])
+        i = 8
         for taxc in taxcolumns:
             if taxc in invoice["tax"]:
                 sheet.getCell(i,row).stringValue(invoice["tax"][taxc])
@@ -377,10 +385,10 @@ def registerspreadsheet(request):
             i += 1
         row += 1
     sheet.getCell(0, row).stringValue("Total").setBold(True)
-    ods.content.mergeCells(0,row,5,1)
-    sheet.getCell(5, row).stringValue(totalrow["grossamount"]).setBold(True)
-    sheet.getCell(6, row).stringValue(totalrow["taxfree"]).setBold(True)
-    i = 7
+    ods.content.mergeCells(0,row,6,1)
+    sheet.getCell(6, row).stringValue(totalrow["grossamount"]).setBold(True)
+    sheet.getCell(7, row).stringValue(totalrow["taxfree"]).setBold(True)
+    i = 8
     for taxc in taxcolumns:
         if taxc in totalrow["tax"]:
             sheet.getCell(i,row).stringValue(totalrow["tax"][taxc]).setBold(True)
