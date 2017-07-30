@@ -324,6 +324,7 @@ $(document).ready(function()
     console.log($('#selinv').val());
     $("#selinvtotal").show();
     $("#selinvtotal").prop('disabled', false);
+    $("#invtotal").val($('#invtotalvvi').val());
     $("#vdate").focus().select();
     $("#vctable").show();
     $("#demovctable").hide();

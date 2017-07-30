@@ -154,8 +154,6 @@ def viewvoucher(request):
 		if vc["invid"]!=None:
 			viewinvdata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(vc["invid"]), headers=header)
 			vvi=viewinvdata.json()["gkresult"]
-			print vvi
-			print "rohini"
 			vc["vvi"]=vvi
 		if type=="sales" or type=="purchase":
 			invdata = requests.get("http://127.0.0.1:6543/invoice?forvoucher", headers=header)
