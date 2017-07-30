@@ -1145,6 +1145,7 @@ $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(8) input').val(par
 
                                 // jquery enables us to select specific elements inside a table easily like below.
                                 $('#invoice_product_table tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
+                                $('#totalinvoicevalue').text(parseFloat(ptotal).toFixed(2));
                             });
 
                             //$('#invoice_product_table tbody tr:eq(' + nextindex + ') td:eq(0) select').focus();
