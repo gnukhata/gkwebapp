@@ -2356,6 +2356,11 @@ console.log("desh");
 }
 });
 
+    $(document).off("change", ".invoice_product_discount_gst").on("change", ".invoice_product_discount_gst", function(event) {
+	var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
+	calculategstaxamt(curindex);
+    });
+
 $(document).off("keydown", ".invoice_product_discount_gst").on("keydown", ".invoice_product_discount_gst", function(event) {
 //write your code here
 var curindex1 = $(this).closest('tr').index();
@@ -2364,8 +2369,7 @@ var previndex1 = curindex1 - 1;
 console.log("discount");
 if (event.which == 13) {
   event.preventDefault();
-  var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
-   calculategstaxamt(curindex);
+   calculategstaxamt(curindex1);
   //$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtotal).toFixed(2));
   console.log("hey rohini");
 
