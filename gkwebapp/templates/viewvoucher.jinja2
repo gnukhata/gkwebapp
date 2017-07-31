@@ -233,7 +233,8 @@ label.normal {
 
                 <label for="invsel">{% trans %}Invoice {% endtrans %} :</label>
 
-                <input id="viewinvsel" value="{{voucher["vvi"]["invoiceno"]}},{{voucher["vvi"]["invoicedate"]}},{{voucher["vvi"]["custname"]}}">
+                <input id="viewinvsel" value="{{voucher["vvi"]["invoiceno"]}},{{voucher["vvi"]["invoicedate"]}},{{voucher["vvi"]["custSupDetails"]["custname"]}}">
+                
 
               </div>
               <div class="form-group pull-right" id="invtotaldiv">
