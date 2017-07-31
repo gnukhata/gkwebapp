@@ -207,7 +207,7 @@ $("#addproddesc").keydown(function(event) {
       return false;
     }
     else {
-      
+
           $("#hsnno").focus();
 
 
@@ -1413,7 +1413,7 @@ console.log(addformdata);
     if (resp["gkstatus"] ==0) {
 
       //$("#addproduct").click();
-      if(sessionStorage.invflag==0){
+      if(sessionStorage.invflag==1){
         $("#product").click();
       }
       else{

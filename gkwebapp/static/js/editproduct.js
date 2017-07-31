@@ -238,6 +238,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
         if(sessionStorage.invflag==0){
         $("#categorydiv").hide();
         $(".noinventory").hide();
+        $("#invflag").val("0")
           $("#taxhelp3").hide();
           $("#taxhelp5").show();
 
@@ -710,6 +711,9 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
     }
     else if (event.which==27) {
       event.preventDefault();
+      if ($("#invflag").val()==0){
+          $("#epsubmit").focus();
+      }
       if($("#gsflag").val()=='7'){
         if ($("#editgodownpresence").val() == 0) {
           $("#editopeningstock").focus().select();
@@ -966,6 +970,9 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
     }
     else if (event.which==27) {
       event.preventDefault();
+      if ($("#invflag").val()==0){
+          $("#epsubmit").focus();
+      }
       if($('#gsflag').val() == '7') {
         if ($("#editgodownpresence").val() == 0) {
           $("#editopeningstock").focus().select();
