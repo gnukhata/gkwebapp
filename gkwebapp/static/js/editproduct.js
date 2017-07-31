@@ -18,7 +18,12 @@ $(document).ready(function() {
   });
   if(sessionStorage.invflag==0){
   $("#categorydiv").hide();
+  $(".noinventory").hide();
+    $("#taxhelp3").hide();
+    $("#taxhelp4").show();
+  console.log("invflag=0 rohini");
   }
+
   $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
     event.preventDefault();
     /* Act on the event */
@@ -230,6 +235,13 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
       {
         $("#proddetails").html("");
         $("#proddetails").html(resp);
+        if(sessionStorage.invflag==0){
+        $("#categorydiv").hide();
+        $(".noinventory").hide();
+          $("#taxhelp3").hide();
+          $("#taxhelp5").show();
+
+        }
         $("#unitaddon").html($("#edituom option:selected").text());
         $(".pbutn").show();
         $("#epsubmit").hide();
