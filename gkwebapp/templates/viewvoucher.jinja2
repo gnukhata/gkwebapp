@@ -226,21 +226,26 @@ label.normal {
               </div>
             </div>
 
-              {% if voucher["vvi"] %}
             <div class="form-inline well well-sm invhide">
-              <div class="form-group ">
+
+              {% if voucher["vvi"] %}
+              <div class="form-group" id="viewdiv">
 
                 <label for="invsel">{% trans %}Invoice {% endtrans %} :</label>
 
                 <input id="viewinvsel" value="{{voucher["vvi"]["invoiceno"]}},{{voucher["vvi"]["invoicedate"]}},{{voucher["vvi"]["custname"]}}">
-                <div class="form-group pull-right" id="invtotaldiv">
-                  <label for="invtotalvvi">{% trans %} Invoice Total Amount {% endtrans %} :</label>
-                  <input type="text" id="invtotalvvi" class="form-control input-sm" value="{{voucher["vvi"]["invoicetotal"]}}"  disabled>
-                  <input id="selinv" value="{{voucher["vvi"]["invid"]}}" hidden>
-                </div>
+
+              </div>
+              <div class="form-group pull-right" id="invtotaldiv">
+                <label for="invtotalvvi">{% trans %} Invoice Total Amount {% endtrans %} :</label>
+                <input type="text" id="invtotalvvi" class="form-control input-sm" value="{{voucher["vvi"]["invoicetotal"]}}"  disabled>
+                <input id="selinv" value="{{voucher["vvi"]["invid"]}}" hidden>
               </div>
                 {% endif %}
                 {% if invoicedata!=0 %}
+                <div class="form-group" div="editdiv">
+
+                  <label id="editinv">{% trans %}Invoice {% endtrans %} :</label>
                 <select id="invsel" class="form-control input-sm invoice_no" hidden>
                   <option value="" total="">{% trans %}None{% endtrans %}</option>
                   {% for invoice in invoicedata %}
@@ -260,14 +265,13 @@ label.normal {
                   {% endfor %}
 
                 </select>
+              </div>
+              {% endif %}
                 <div class="form-group pull-right" id="selinvtotal">
                   <label for="invtotal">{% trans %} Invoice Total Amount {% endtrans %} :</label>
                   <input type="text" id="invtotal" class="form-control input-sm" value="0.00"  disabled>
                 </div>
               </div>
-
-
-            {% endif %}
 
             <div class="table-responsive" id="demovctable">
               <table class="table table-condensed">

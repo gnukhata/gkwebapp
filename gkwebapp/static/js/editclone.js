@@ -152,8 +152,11 @@ $(document).ready(function()
 
   $("#demovctable").find("input,select,textarea,button").prop("disabled",true);
   $("#vno").prop('disabled', true);
+  $("#viewdiv").show();
   $("#viewinvsel").prop('disabled', true);
   $("#invtotaldiv").prop('disabled', true);
+  $("#editdiv").hide();
+  $("#editinv").hide();
   $("#invsel").hide();
   $("#selinvtotal").hide();
   $(".vdate").prop('disabled', true);
@@ -315,13 +318,15 @@ $(document).ready(function()
     $("#vno").prop('disabled', true);
     $(".ttl").prop('disabled', true);
     $(".vdate").prop('disabled', false);
+    $("#viewdiv").hide();
     $("#viewinvsel").hide();
     $("#invtotaldiv").hide();
+    $("#editdiv").show();
+    $("#editinv").show();
     $("#invsel").show();
     $("#invsel").prop('disabled', false);
     $("#invsel").append('<option value ="'+$('#selinv').val()+'">'+$('#viewinvsel').val()+'</option>');
     $('#invsel').val($('#selinv').val());
-    console.log($('#selinv').val());
     $("#selinvtotal").show();
     $("#selinvtotal").prop('disabled', false);
     $("#invtotal").val($('#invtotalvvi').val());
@@ -420,8 +425,11 @@ $(document).ready(function()
     $(".ttl").prop('disabled', true);
     $("#save").show();
     $("#vno").prop('disabled', false);
+    $("#viewdiv").hide();
     $("#viewinvsel").hide();
     $("#invtotaldiv").hide();
+    $("#editdiv").show();
+    $("#editinv").show();
     $("#invsel").show();
     $("#invsel").prop('disabled', false);
     $("#selinvtotal").show();
