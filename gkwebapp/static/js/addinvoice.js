@@ -1458,7 +1458,6 @@ console.log("quantity");
 	$('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
 	  $('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 	  for (let i = 0; i <= curindex1; i++) {
-              console.log("value : "+$("#invoice_product_table_vat tbody tr:eq("+ i +") td:eq(0) select").val());
               var selectedproduct = $("#invoice_product_table_vat tbody tr:eq("+ i +") td:eq(0) select option:selected").val();
 	      $("#invoice_product_table_vat tbody tr:eq("+ nextindex1 +") td:eq(0) select option[value = " + selectedproduct + "]").prop("disabled", true).prop("hidden", true);
           }
@@ -2384,201 +2383,18 @@ if (event.which == 13) {
       $('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select').focus();
       return false;
     }
-    $.ajax({
-      url: '/invoice?action=getproducts&taxflag=7',
-      type: 'POST',
-      dataType: 'json',
-      async: false,
-      beforeSend: function(xhr) {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      }
-    })
-     .done(function(resp) {
-       console.log("success");
-       if (resp["gkstatus"] == 0) {
-         console.log("append");
-         $('#invoice_product_table_gst tbody').append(
-             '<tr>'+
-		      '<td class="mdwrap">'+
-			'<select class="form-control input-sm product_name_gst">'+
-			'</select>'+
-		      '</td>'+
-		      '<td class="smwrap text-center">'+
-			'<label class="invoice_product_hsncode text-center"></label>'+
-		      '</td>'+
-		      '<td class="qtywrap">'+
-			'<div class="input-group">'+
-			  '<input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype" size="8" value="0" placeholder="0" aria-describedby="unitaddon">'+
-			  '<span class="input-group-addon input-sm unitaddon"></span>'+
-			'</div>'+
-		      '</td>'+
-		      '<td class="qtywrap">'+
-			'<div class="input-group">'+
-			  '<input type="text" class="invoice_product_freequantity_gst form-control input-sm text-right numtype smwrap" size="8" value="0" placeholder="0" aria-describedby="unitaddon">'+
-			  '<span class="input-group-addon input-sm unitaddon"></span>'+
-			'</div>'+
-			'</td>'+
-		      '<td class="smwrap">'+
-			'<input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype smwrap" size="9" value="0.00" placeholder="0.00">'+
-		      '</td>'+
-		      '<td class="smwrap">'+
-			'<input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype smwrap" value="0.00" size="9" placeholder="0.00">'+
-		      '</td>'+
-		      '<td class="smwrap">'+
-			'<input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype smwrap" value="0.00" size="9" placeholder="0.00" disabled>'+
-		      '</td>'+
-		      '<td class="taxcell"><input type="text" class="invoice_product_cgstrate form-control input-sm text-right numtype taxcell" size="9" value="0.00" placeholder="0.00" disabled></td>'+
-		      '<td class="taxcell"><input type="text" class="invoice_product_cgstamount form-control input-sm text-right numtype taxcell" size="9" value="0.00" placeholder="0.00" disabled></td>'+
-		      '<td class="taxcell"><input type="text" class="invoice_product_sgstrate  form-control input-sm text-right numtype taxcell" size="9" value="0.00" placeholder="0.00" disabled></td>'+
-		      '<td class="taxcell"><input type="text" class="invoice_product_sgstamount  input-sm form-control text-right numtype taxcell" size="9" value="0.00" placeholder="0.00" disabled></td>'+
-		      '<td class="taxcell">'+
-			'<input type="text" class="invoice_product_igstrate  input-sm text-right form-control numtype taxcell" size="9" value="0.00" placeholder="0.00" disabled></td>'+
-			'<td class="taxcell"><input type="text" class="invoice_product_igstamount form-control input-sm text-right numtype taxcell" size="9" value="0.00" placeholder="0.00" disabled>'+
-			'</td>'+
-		 '</tr>');
-	   $("#invoice_product_table_total tbody").append('<tr>'+
-										   '<td class="col-xs-8">'+
-										   '<input type="text" class="invoice_product_total form-control input-sm text-right numtype smwrap" value="0.00" size="14" placeholder="0.00" disabled>'+
-										   '</td>'+
-										   '<td class="col-xs-4 text-center">'+
-										   '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
-										   '</td>'+
-							  '</tr>');
-        
-        var temp_list = [];
-        for (let i = 0; i <= curindex1; i++) {
-          console.log("value : "+$("#invoice_product_table_gst tbody tr:eq("+ i +") td:eq(0) select").val());
-          temp_list.push($("#invoice_product_table_gst tbody tr:eq("+ i +") td:eq(0) select option:selected").val());
-        }
-        var noflag = 0;
-        for (product of resp["products"]) {
-          noflag = 0;
-          for (element of temp_list) {
-            if (product.productcode == element) {
-              noflag = 1;
-              break;
-            }
+      $('#invoice_product_table_gst tbody').append('<tr>' + gsthtml + '</tr>');
+      $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
+	  $('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+	  for (let i = 0; i <= curindex1; i++) {
+              var selectedproduct = $("#invoice_product_table_gst tbody tr:eq("+ i +") td:eq(0) select option:selected").val();
+	      $("#invoice_product_table_gst tbody tr:eq("+ nextindex1 +") td:eq(0) select option[value = " + selectedproduct + "]").prop("disabled", true).prop("hidden", true);
           }
-          if (noflag == 0) {
-            $('#invoice_product_table_gst tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' + product.productdesc + '</option>');
-          }
-        }
-	   var productcode = $('#invoice_product_table_gst tbody tr:last td:eq(0) select option:selected').val();
-	 $.ajax({
-      url: '/invoice?action=getproduct',
-      type: 'POST',
-      dataType: 'json',
-      async: false,
-      data: { "productcode": productcode },
-      beforeSend: function(xhr) {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      }
-    })
-     .done(function(resp) {
-       console.log("success");
-       if (resp["gkstatus"] == 0) {
-         $('#invoice_product_table_gst tbody tr:last td:eq(1) .invoice_product_hsncode').text(resp["gscode"]);
-       }
-
-     })
-     .fail(function() {
-       console.log("error");
-     })
-     .always(function() {
-       console.log("complete");
-     });
-    var destinationstate = "";
-      var sourcestate = "";
-      if ($("#status").val() == 9) {
-	  destinationstate = $("#invoicestate option:selected").val();
-	  sourcestate = $("#invoice_customerstate").val();
-	  if ($("#gstinconsignee").val() != "") {
-	   sourcestate = $("#consigneestate option:selected").val();   
-	  }
-      }
-      else if ($("#status").val() ==  15) {
-	  sourcestate = $("#invoicestate option:selected").val();
-	  destinationstate = $("#invoice_customerstate").val();
-	  if ($("#gstinconsignee").val() != "") {
-	   destinationstate = $("#consigneestate option:selected").val();   
-	  }
-      }
-    var taxflag=$("#taxapplicable option:selected").val();
-
-    $.ajax({
-            url: '/invoice?action=getappliedtax',
-            type: 'POST',
-            dataType: 'json',
-            async: false,
-            data: { "productcode": productcode, "source": sourcestate,"destination":destinationstate,"taxflag":taxflag },
-            beforeSend: function(xhr) {
-              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-            }
-          })
-           .done(function(resp) {
-             console.log(resp);
-             if (resp["gkstatus"] == 0) {
-		 console.log("yo yo");
-		 $('#invoice_product_table_gst tbody tr:last td:eq(0) select').data("taxdetails", {taxname: resp["taxname"], taxrate:resp["taxrate"]});
-               if(resp['taxname']=='SGST'){
-                  $('#invoice_product_table_gst tbody tr:last td:eq(7) input').val(parseFloat(resp['taxrate']).toFixed(2));
-                  $('#invoice_product_table_gst tbody tr:last td:eq(9) input').val(parseFloat(resp['taxrate']).toFixed(2));
-               }
-               else{
-                 $('#invoice_product_table_gst tbody tr:last td:eq(11) input').val(parseFloat(resp['taxrate']).toFixed(2));
-               }
-
-               //$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').prop("disabled", false);
-             }
-           })
-           .fail(function() {
-             console.log("error");
-           })
-           .always(function() {
-             console.log("complete");
-           });
-        console.log("currentindex: "+curindex1+"temp_list: "+temp_list+"noflag: "+noflag);
-
-         taxrate = 0.00;
-         ptaxamt = 0.00;
-         ptotal = 0.00;
-
-
-         $(".invoice_product_tax_rate").each(function() {
-           taxrate += +$(this).val();
-           // jquery enables us to select specific elements inside a table easily like below.
-           $('#invoice_product_table_gst tfoot tr:last td:eq(3) input').val(parseFloat(taxrate).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
-         });
-
-         $(".invoice_product_tax_amount").each(function() {
-           ptaxamt += +$(this).val();
-
-           // jquery enables us to select specific elements inside a table easily like below.
-           $('#invoice_product_table_gst tfoot tr:last td:eq(4) input').val(parseFloat(ptaxamt).toFixed(2));
-         });
-
-         $(".invoice_product_total").each(function() {
-           ptotal += +$(this).val();
-
-           // jquery enables us to select specific elements inside a table easily like below.
-           $('#invoice_product_table_gst tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
-         });
-
-         $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
-         $('.invoice_product_quantity').numeric({ negative: false });
-         $('.invoice_product_per_price').numeric({ negative: false });
-       }
-     })
-     .fail(function() {
-       console.log("error");
-     })
-     .always(function() {
-       console.log("complete");
-     });
-
+      $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
+      $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);;
+      $(".product_name_gst").change();
   }
-    $(".product_name_gst").change();
-}
+  }
 });
 //
 
