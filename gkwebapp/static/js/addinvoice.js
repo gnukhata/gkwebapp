@@ -1362,7 +1362,6 @@ if (event.which == 13) {
       var discount = {};
       var consignee = {};
       var bankdetails = {};
-      var obj = {};
       var invoicetotal = 0.00;
     var productcodes = [];
       var productqtys = [];
@@ -1469,8 +1468,8 @@ if (event.which == 13) {
           return false;
         }
       }
-      if (parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()) > 0) {
-	var productcode = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
+	if (parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()) > 0) {
+	    var obj = {};
         var ppu = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val();
         obj[ppu] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val();
         tax[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val();
@@ -1486,10 +1485,10 @@ if (event.which == 13) {
 
       else if ($("#taxapplicable option:selected").val() == 7) {
 	  productqtys.push(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()));
-	  obj = {};
-	for (var i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
+	  for (var i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
+	      var obj = {};
 	productcode = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
-        ppu = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val();
+        var ppu = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val();
         obj[ppu] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
         contents[productcode] = obj;
 	    tax[productcode] = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(7) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(9) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(11) input").val());
