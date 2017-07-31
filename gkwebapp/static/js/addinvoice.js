@@ -30,39 +30,14 @@
 // This script is for the addinvoice.jinja2
 
 $(document).ready(function() {
-//Events to help user navigate along fileds that are not hidden
-  $('input:visible,select:visible').keydown( function(e) {
-    var n = $("input:visible,select:visible").length; //Length of all elements that are visible is found out
-    var f = $('input:visible,select:visible'); //Setting selector for all visible input/select elements
-      if (e.which == 13)  //Checking if key pressed down is enter key
-      {
-        var nextIndex = f.index(this) + 1;
-        if(nextIndex < n){
-          e.preventDefault();
-          f[nextIndex].focus();
-          f[nextIndex].select();
-
-        }
-    }
-//Write key events for navigating backwards.
-    });
-  $('.modal-backdrop').remove();
-    $('.invoicedate').autotab('number');
+    //Events to help user navigate along fileds that are not hidden
+    $('.modal-backdrop').remove();  //Removed backdrop of modal that contains loading spinner.
+    $('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
     $('.supplydate').autotab('number');
-  $(".input-sm:first").focus();  //Focus on the first element when the page loads
-  $("#invoice_state").change();
-  var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
-  var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
-  var issuername;
-  var designation;
-  var pqty = 0.00;
-  var perprice = 0.00;
-  var taxrate = 0.00;
-  var ptaxamt = 0.00;
-  var ptotal = 0.00;
-  var dctaxstate;
-  var custstate;
-  var producstate;
+    $(".input-sm:first").focus();  //Focus on the first element when the page loads
+    var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");  //Start of financial year is saved in a variable.
+    var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
+    //Declaration and Initialisation of variables.
     var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();
     var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();
     var vathtml = $('#invoice_product_table_vat tbody tr:first').html();
@@ -512,8 +487,6 @@ console.log("desh");
 		.done(function(resp) {
 		    if (resp["gkstatus"] == 0) {
 			$("#invoice_customer").val(resp["delchal"]["delchaldata"]["custid"]);
-			dctaxstate = resp["delchal"]["delchaldata"]["gostate"];
-			//$("#invoice_supplieraddr").val(resp[])
 			$("#invoice_customer").prop("disabled", true);
 			$.ajax({
 			    url: '/customersuppliers?action=get',
@@ -528,21 +501,12 @@ console.log("desh");
 			    .done(function(resp) {
 				console.log("success");
 				if (resp["gkstatus"] == 0) {
-				    custstate = resp["gkresult"]["state"];
 				    $("#invoice_customerstate").val(resp["gkresult"]["state"]);
 				    $("#invoice_supplierstate").val(resp["gkresult"]["state"]);
 				    $("#invoice_customeraddr").val(resp["gkresult"]["custaddr"]);
 				    $("#invoice_supplieraddr").val(resp["gkresult"]["custaddr"]);
 				    $("#invoice_customertin").val(resp["gkresult"]["custtan"]);
 				    $("#invoice_suppliertin").val(resp["gkresult"]["custtan"]);
-				    if (custstate == dctaxstate) {
-					$("#invoice_state").val(custstate);
-					producstate = $("#invoice_state").val();
-				    }
-				    else {
-					$("#invoice_state").val("");
-					producstate = "";
-				    }
 				}
 			    })
 			    .fail(function() {
@@ -698,7 +662,6 @@ console.log("desh");
                       $("#invoice_state").val("none");
 			$('#invoice_product_table_vat tbody').empty();
 			$('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
-			$('#invoice_product_table_vat tbody tr:last td:first select').prop("disabled", true);
 			$('.invoice_product_quantity_vat').numeric({ negative: false });
 			$('.invoice_product_per_price_vat').numeric({ negative: false });
 			$('#invoice_product_table_gst tbody').empty();
@@ -752,34 +715,6 @@ console.log("desh");
       $(this).val(0);
     }
       calculatevataxamt(curindex);
-  });
-  //same code for quantity from gst table
-
-  $(document).off('change', '.invoice_product_quantity_gst').on('change', '.invoice_product_quantity_gst', function(event) {
-    event.preventDefault();
-
-    /* Act on the event */
-    if ($(this).val() == "") {
-      $(this).val(0);
-    }
-
-    var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
-    calculategstaxamt(curindex);
-   /* var rowtotal = ((rowqty - rowfreeqty) * (rowprice-rowdiscount)) + taxpercentamount;
-    $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(taxpercentamount).toFixed(2));
-    $('#invoice_product_table tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtotal).toFixed(2));*/
-
-    pqty = 0.00;
-    ptaxamt = 0.00;
-    ptotal = 0.00;
-    var var_invoice_product_taxablevalue_gst;
-    $(".invoice_product_quantity_gst").each(function() {
-      pqty += +$(this).val();
-
-      // jquery enables us to select specific elements inside a table easily like below.
-      $('#invoice_product_table_gst tfoot tr:last td:eq(1) input').val(parseFloat(pqty).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
-    });
-
   });
 
   $(document).off("keydown", ".invoice_product_quantity_vat").on("keydown", ".invoice_product_quantity_vat", function(event) {
@@ -879,7 +814,6 @@ console.log("desh");
       event.preventDefault();
     }
   });
-
 
   $(document).off('change', '.invoice_product_per_price_vat').on('change', '.invoice_product_per_price_vat', function(event) {
       event.preventDefault();
@@ -1000,8 +934,8 @@ console.log("desh");
   });
 
     //GST events start here
+    //Change event for Product Name field.
     $(document).off('change', '.product_name_gst').on('change', '.product_name_gst', function(event) {
-    console.log("product_name_gst");
     event.preventDefault();
     /* Act on the event */
     var productcode = $(this).find('option:selected').val();
@@ -1134,6 +1068,20 @@ console.log("desh");
 	var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
 	calculategstaxamt(curindex);
     });
+
+    
+  $(document).off('change', '.invoice_product_quantity_gst').on('change', '.invoice_product_quantity_gst', function(event) {
+    event.preventDefault();
+
+    /* Act on the event */
+    if ($(this).val() == "") {
+      $(this).val(0);
+    }
+
+    var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
+    calculategstaxamt(curindex);
+  });
+
 
 $(document).off("keydown", ".invoice_product_discount_gst").on("keydown", ".invoice_product_discount_gst", function(event) {
 //write your code here
