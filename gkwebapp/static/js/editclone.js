@@ -325,7 +325,9 @@ $(document).ready(function()
     $("#editinv").show();
     $("#invsel").show();
     $("#invsel").prop('disabled', false);
-    $("#invsel").append('<option value ="'+$('#selinv').val()+'">'+$('#viewinvsel').val()+'</option>');
+    if ($('#selinv').length > 0) {
+      $("#invsel").append('<option value ="'+$('#selinv').val()+'">'+$('#viewinvsel').val()+'</option>');
+    }
     $('#invsel').val($('#selinv').val());
     $("#selinvtotal").show();
     $("#selinvtotal").prop('disabled', false);
