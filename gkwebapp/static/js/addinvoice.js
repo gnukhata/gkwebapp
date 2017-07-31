@@ -1038,53 +1038,18 @@ console.log("quantity");
     }
   });
 
-  $(document).off('change', '.invoice_product_freequantity').on('change', '.invoice_product_freequantity', function(event) {
+  $(document).off('change', '.invoice_product_freequantity_vat').on('change', '.invoice_product_freequantity_vat', function(event) {
     event.preventDefault();
     /* Act on the event */
     if ($(this).val() == "") {
       $(this).val(0);
     }
-    var curindex = $(this).closest('#invoice_product_table_vat tbody tr').index();
-    var rowqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2);
-    var rowfreeqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
-    var rowprice = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
-    var rowtaxrate = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val()).toFixed(2);
-    var rowdiscount = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
-    var taxablevalue = (((rowqty - rowfreeqty) * rowprice) -rowdiscount);  
-    var taxpercentamount = (((rowqty - rowfreeqty) * rowprice) -rowdiscount) * (rowtaxrate / 100);
-    var rowtotal = (((rowqty - rowfreeqty) * rowprice) -rowdiscount) + taxpercentamount;
-    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(taxpercentamount).toFixed(2));
-    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(taxablevalue).toFixed(2));
-    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(rowtotal).toFixed(2));
-    pqty = 0.00;
-    ptaxamt = 0.00;
-    ptotal = 0.00;
-
-    $(".invoice_product_quantity").each(function() {
-      pqty += +$(this).val();
-
-      // jquery enables us to select specific elements inside a table easily like below.
-      $('#invoice_product_table_vat tfoot tr:last td:eq(1) input').val(parseFloat(pqty).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
-    });
-
-    $(".invoice_product_tax_amount").each(function() {
-      ptaxamt += +$(this).val();
-
-      // jquery enables us to select specific elements inside a table easily like below.
-      $('#invoice_product_table_vat tfoot tr:last td:eq(4) input').val(parseFloat(ptaxamt).toFixed(2));
-    });
-
-    $(".invoice_product_total").each(function() {
-      ptotal += +$(this).val();
-
-      // jquery enables us to select specific elements inside a table easily like below.
-      $('#invoice_product_table_vat tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
-    });
-
+      var curindex = $(this).closest('#invoice_product_table_vat tbody tr').index();
+      calculatevataxamt(curindex);
   });
 
 
-  $(document).off("keydown", ".invoice_product_freequantity").on("keydown", ".invoice_product_freequantity", function(event) {
+  $(document).off("keydown", ".invoice_product_freequantity_vat").on("keydown", ".invoice_product_freequantity_vat", function(event) {
     var curindex = $(this).closest('tr').index();
     var nextindex = curindex + 1;
     var previndex = curindex - 1;
