@@ -34,13 +34,18 @@ $(document).ready(function() {
     $('.modal-backdrop').remove();  //Removed backdrop of modal that contains loading spinner.
     $('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
     $('.supplydate').autotab('number');
-    $(".input-sm:first").focus();  //Focus on the first element when the page loads
+    $(".input-sm:visible").first().focus();  //Focus on the first element when the page loads
+    $("#invoicestate").change(function(event) {
+	event.preventDefault();
+	$("#statecodeforinvoice").text($("#invoicestate option:selected").attr("stateid"));
+    });
+    $("#invoicestate").change();
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");  //Start of financial year is saved in a variable.
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
-    //Declaration and Initialisation of variables.
-    var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();
-    var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();
-    var vathtml = $('#invoice_product_table_vat tbody tr:first').html();
+    //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
+    var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
+    var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();  //HTML for table displaying totals in GST Product Table.
+    var vathtml = $('#invoice_product_table_vat tbody tr:first').html();  //HTML for VAT Product Table row.
 
     //Function to calculate gst tax amount
     function calculategstaxamt(curindex) {
@@ -55,6 +60,7 @@ $(document).ready(function() {
 	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').is(":disabled") && $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').is(":disabled")) {
 	    rowtaxableamount = rowprice - rowdiscount;
 	}
+	//Initialising variables for calculating total of Discount, Taxable Amount, Tax Amounts, and Total Amounts.
 	var rowtotal = 0.00;
 	var totalamount = 0.00;
 	var totalcgst = 0.00;
@@ -120,7 +126,6 @@ $(document).ready(function() {
 	    totaltax = totaltax + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
 	}
-	console.log("Totals" + totaldiscount + ' ' + totaltaxable + ' ' + totaltax + ' ' + totalamount);
 	//Total of various columns are displayed on the footer.
 	$('#discounttotal_product_vat').val(parseFloat(totaldiscount).toFixed(2));
 	$('#taxablevaluetotal_product_vat').val(parseFloat(totaltaxable).toFixed(2));
@@ -128,26 +133,22 @@ $(document).ready(function() {
 	$('#total_product_vat').val(parseFloat(totalamount).toFixed(2));
 	$("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
     }
-  if(sessionStorage.invflag==0){
-    $("#delnotediv").hide();
-  }
-  if ($("#status").val() == '15') {
-    $(".invoice_issuer").show();
-    $(".invstate").show();
-    $(".fixed-table").removeClass('fixed-tablepurchase');
-    $(".fixed-table").addClass('fixed-tablesale');
-
-  }
-
-  $("#invoice_date").numeric({ negative: false });
-  $("#invoice_month").numeric({ negative: false });
-  $("#invoice_year").numeric({ negative: false });
-  $('.invoice_product_quantity').numeric({ negative: false });
-  $('.invoice_product_per_price').numeric({ negative: false });
-  $("#invoice_deliverynote").keydown(function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-      $("#invoice_challanno").focus().select();
+    if(sessionStorage.invflag==0){
+	$("#deliverynoterow").hide();
+    }
+    if ($("#status").val() == '15') {
+	$(".invoice_issuer").show();
+	$(".invstate").show();
+	$(".fixed-table").removeClass('fixed-tablepurchase');
+	$(".fixed-table").addClass('fixed-tablesale');
+    }
+    $("#invoice_date").numeric({ negative: false });
+    $("#invoice_month").numeric({ negative: false });
+    $("#invoice_year").numeric({ negative: false });
+    $("#invoice_deliverynote").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#invoice_challanno").focus().select();
     }
   });
 
