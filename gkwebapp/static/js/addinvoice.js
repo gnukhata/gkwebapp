@@ -120,7 +120,6 @@ $(document).ready(function() {
 	$("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
     }
     function calculatevataxamt(curindex) {
-	console.log("HI");
 	//Initialising variables to zero and getting values from various input fileds.
 	var rowqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2);
 	var rowfreeqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
@@ -134,7 +133,6 @@ $(document).ready(function() {
 	var totaltax = 0.00;
 	var totaldiscount = 0.00;
 	var totaltaxable = 0.00;
-	console.log("VAT :- " + rowqty + ' ' + rowfreeqty + ' ' + rowprice + ' ' + rowdiscount + ' ' + rowtaxrate);
 	$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(rowtaxableamount).toFixed(2)); //Taxable amount is displayed.
 	taxamount = (rowtaxableamount * rowtaxrate)/100;  //Amount of tax to be applied is found out.
 	 $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(taxamount).toFixed(2));
@@ -824,31 +822,14 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-        if ($("#invoice_state").is(":hidden") || $("#invoice_state").is(":disabled")) {
-	  if ($("#invoice_customer").is(":disabled")) {
-            $('#invoice_date').focus().select();
-	  } else {
-            $("#invoice_customer").focus();
-	  }
-          $('#invoice_customer').focus();
-        } else {
-          $("#invoice_state").focus();
-        }
+          $("#taxapplicable").focus();
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
       if (curindex == 0) {
-        if ($("#invoice_state").is(":hidden") || $("#invoice_state").is(":disabled")) {
-          if ($("#invoice_customer").is(":disabled")) {
-            $('#invoice_date').focus().select();
-	  } else {
-            $("#invoice_customer").focus().select();
-	  }
-        } else {
-          $("#invoice_state").focus();
-        }
+        $("#taxapplicable").focus();
       } else {
-        $('#invoice_product_table_vat tbody tr:eq(' + previndex + ') td:eq(4) input').focus().select();
+        $('#invoice_product_table_vat tbody tr:eq(' + previndex + ') td:eq(6) input').focus().select();
       }
     } else if (event.which == 190 && event.ctrlKey) {
 	event.preventDefault();
