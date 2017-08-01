@@ -202,7 +202,7 @@ def Invoiceprint(request):
 def getattachment(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/invoice?attach=image&invid=%d"%(int(request.params["invid"])), headers=header)
-    return {"attachment":result.json()["gkresult"],"invid":request.params["invid"], "cancelflag":result.json()["cancelflag"],"userrole":result.json()["userrole"],"invoiceno":result.json()["invoiceno"]}
+    return {"attachment":result.json()["gkresult"],"invid":request.params["invid"], "userrole":result.json()["userrole"],"invoiceno":result.json()["invoiceno"]}
 
 
 @view_config(route_name="invoice", request_param="action=getdelinvprods", renderer="json")

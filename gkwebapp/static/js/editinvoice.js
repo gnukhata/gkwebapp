@@ -59,22 +59,30 @@ $(document).ready(function() {
       },
     success: function(resp)
     {
-      $("#invdetailsdiv").html(resp);
+	$("#invdetailsdiv").html(resp);
+	$("#viewinvfooter").show();
+	if ($("#attachmentcount").val() > 0) {
+	$("#viewattach").show();
+    }
+    else {
+	$("#viewattach").hide();
+    }
     }
     }
   );
         }
 
     });
+    
     $("#viewattach").click(function(event) {
         $.ajax({
                 url: '/invoice?action=getattachment',
                 type: 'POST',
-                datatype: 'json',
+            datatype: 'json',
+	    data: { "invid": $("#invselect option:selected").val() },
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
                 },
-                data: { "invid": $("#invoice_all_no option:selected").val() },
             })
             .done(function(resp) {
                 var x = window.open();
