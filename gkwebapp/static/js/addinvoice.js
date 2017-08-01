@@ -25,6 +25,7 @@
    "Prajkta Patkar"<prajkta.patkar007@gmail.com>
    "Vaibhav Kurhe" <vaibhav.kurhe@gmail.com>
    "Abhijith Balan" <abhijith@dff.org.in>
+   "Rohini Baraskar" <robaraskar@gmail.com>
  */
 
 // This script is for the addinvoice.jinja2
@@ -35,11 +36,9 @@ $(document).ready(function() {
     $('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
     $('.supplydate').autotab('number');
     $(".input-sm:visible").first().focus();  //Focus on the first element when the page loads
-    $("#invoicestate").change(function(event) {
-	event.preventDefault();
-	$("#statecodeforinvoice").text($("#invoicestate option:selected").attr("stateid"));
-    });
-    $("#invoicestate").change();
+
+    var issuername;
+    var designation;
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");  //Start of financial year is saved in a variable.
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
     //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
@@ -100,6 +99,9 @@ $(document).ready(function() {
 	$('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
 	$("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
     }
+
+    //Function to calculate Tax Amount and Total of Discount, Taxable Amount, Tax Amounts and Total Amount.
+    //This is similar to the function above.
     function calculatevataxamt(curindex) {
 	//Initialising variables to zero and getting values from various input fileds.
 	var rowqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2);
@@ -133,237 +135,405 @@ $(document).ready(function() {
 	$('#total_product_vat').val(parseFloat(totalamount).toFixed(2));
 	$("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
     }
+
+    //Delivery Note number select field is hidden when inventory is disabled.
     if(sessionStorage.invflag==0){
 	$("#deliverynoterow").hide();
     }
-    if ($("#status").val() == '15') {
-	$(".invoice_issuer").show();
-	$(".invstate").show();
-	$(".fixed-table").removeClass('fixed-tablepurchase');
+
+    //Certain fields are hidden in the case of Purchase Invoice. They are shown in Sale Invoice.
+    if ($("#status").val() == '15') {  //In/Out flag is saved in a hidden field. 15 is OUT(Sale Invoice) and 9 is IN(Purchase Invoice).
+	$(".invoice_issuer").show();  //Issuer Name is shown in Sale Invoice. Purchase Invoice is only recorded, not created by an organisation.
+	$(".fixed-table").removeClass('fixed-tablepurchase');  //CSS class for adjusting style properties.
 	$(".fixed-table").addClass('fixed-tablesale');
     }
+
+    //Preventing characters in numeric fields.
     $("#invoice_date").numeric({ negative: false });
     $("#invoice_month").numeric({ negative: false });
     $("#invoice_year").numeric({ negative: false });
+
+    //Key event for select combo of Delivery Note.
     $("#invoice_deliverynote").keydown(function(event) {
+	if (event.which == 13) {  //Events triggered when Enter key is pressed down.
+	    event.preventDefault();
+	    $("#invoice_challanno").focus().select();  //Focus shifts to Invoice Number.
+	}
+    });
+
+    //Key Event for Invoice Number.
+    $("#invoice_challanno").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    $("#invoice_challanno").focus().select();
-    }
-  });
-
-  $("#invoice_challanno").keydown(function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-      $("#invoice_date").focus().select();
-    }
-    if (event.which == 38) {
-      event.preventDefault();
-      $("#invoice_deliverynote").focus().select();
-    }
-  });
-
-
-  function pad(str, max) { //to add leading zeros in date
-    str = str.toString();
-    if (str.length == 1) {
-      return str.length < max ? pad("0" + str, max) : str;
-    } else {
-      return str;
-    }
-  }
-
-  function yearpad(str, max) {
-    str = str.toString();
-    if (str.length == 1) {
-      return str.length < max ? pad("200" + str, max) : str;
-    } else if (str.length == 2) {
-      return str.length < max ? pad("20" + str, max) : str;
-    } else {
-      return str;
-    }
-  }
-  $("#invoice_date").blur(function(event) {
-    $(this).val(pad($(this).val(), 2));
-  });
-  $("#invoice_month").blur(function(event) {
-    $(this).val(pad($(this).val(), 2));
-  });
-
-  $("#invoice_year").blur(function(event) {
-    $(this).val(yearpad($(this).val(), 4));
-  });
-
-  $("#invoice_date").keydown(function(event) {
-    if (event.which == 13) {
-      console.log("it is also getting called");
-      event.preventDefault();
-      $("#invoice_month").focus().select();
-    }
-    if (event.which == 38) {
-      event.preventDefault();
-      $("#invoice_challanno").focus().select();
-    }
-  });
-  $("#invoice_month").keydown(function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-      $("#invoice_year").focus().select();
-    }
-    if (event.which == 38) {
-      event.preventDefault();
-      $("#invoice_date").focus().select();
-    }
-  });
-
-  $("#invoice_year").keydown(function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-      if ($("#invoice_customer").is(":disabled")) {
-        if ($("#invoice_state").is(":hidden") || $("#invoice_state").is(":disabled")) {
-          $('#invoice_product_table tbody tr:first td:eq(0) select').focus();
-	} else {
-          $("#invoice_state").focus();
+	    $("#invoice_date").focus().select();  //Focus shifts to Invoice Date when Enter key is pressed down.
 	}
-      } else {
-        $("#invoice_customer").focus().select();
-      }
-    }
-    if (event.which == 38) {
-      event.preventDefault();
-      $("#invoice_month").focus().select();
-    }
-  });
+	if (event.which == 38) {
+	    event.preventDefault();
+	    $("#invoice_deliverynote").focus();  //Focus shifts to Delivery Note field when Up Arrow Key is pressed down.
+	}
+    });
 
-  $("#invoice_customer").keydown(function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-      if ($("#invoice_state").is(":hidden") || $("#invoice_state").is(":disabled")) {
-        $('#invoice_product_table tbody tr:first td:eq(0) select').focus();
-      } else {
-        $("#invoice_state").focus();
-      }
-
-    }
-    if (event.which == 38 && (document.getElementById('invoice_customer').selectedIndex == 1 || document.getElementById('invoice_customer').selectedIndex == 0)) {
-      event.preventDefault();
-
-
-      $("#invoice_year").focus().select();
-
-
-    }
-    if (event.which == 32) {
-      event.preventDefault();
-      $('#invoice_addcust').click();
-    }
-  });
-    var gstins = {};
-    $("#invoice_customer").change(function(event) {
-    $.ajax({
-      url: '/customersuppliers?action=get',
-      type: 'POST',
-      dataType: 'json',
-      async: false,
-      data: { "custid": $("#invoice_customer option:selected").val() },
-      beforeSend: function(xhr) {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      }
-    })
-     .done(function(resp) {
-	 console.log("success");
-	 console.log(resp);
-       if (resp["gkstatus"] == 0) {
-         $("#invoice_customerstate").val(resp["gkresult"]["state"]);
-         $("#invoice_customeraddr").text(resp["gkresult"]["custaddr"]);
-           $("#tin").text(resp["gkresult"]["custtan"]);
-	   $("#gstin").text(resp["gkresult"]["gstin"][$("#invoice_customerstate option:selected").attr("stateid")]);
-	   gstins = resp["gkresult"]["gstin"];
-	   $("#statecodeofcustomer").text($("#invoice_customerstate option:selected").attr("stateid"));
-	   if ($("#status").val() == 15) {
-	       $("#consigneestate").val(resp["gkresult"]["state"]);
-	       $("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));
-	   }
-       }
-     })
-     .fail(function() {
-       console.log("error");
-     })
-     .always(function() {
-       console.log("complete");
-     });
-  });
-
-    $("#invoice_customerstate").change(function(event) {
-	event.preventDefault();
-	$("#statecodeofcustomer").text($("#invoice_customerstate option:selected").attr("stateid"));
-	if ($("#invoice_customerstate option:selected").attr("stateid") in gstins) {
-	       $("#gstin").text(gstins[$("#invoice_customerstate option:selected").attr("stateid")]);
+    //Function to add leading zeros in date and month fields.
+    function pad(str, max) { //to add leading zeros in date
+	str = str.toString();
+	if (str.length == 1) {
+	    return str.length < max ? pad("0" + str, max) : str;
 	}
 	else {
-	    $("#gstin").text('');
+	    return str;
+	}
+    }
+
+    //Function to add leading numbers in year fields.
+    function yearpad(str, max) {
+	str = str.toString();
+	if (str.length == 1) {
+	    return str.length < max ? pad("200" + str, max) : str;
+	}
+	else if (str.length == 2) {
+	    return str.length < max ? pad("20" + str, max) : str;
+	}
+	else {
+	    return str;
+	}
+    }
+
+    //Padding functions are called on blur events.
+    $("#invoice_date").blur(function(event) {
+	$(this).val(pad($(this).val(), 2));
+    });
+    $("#invoice_month").blur(function(event) {
+	$(this).val(pad($(this).val(), 2));
+    });
+    $("#invoice_year").blur(function(event) {
+	$(this).val(yearpad($(this).val(), 4));
+    });
+    $("#supply_date").blur(function(event) {
+	$(this).val(pad($(this).val(), 2));
+    });
+    $("#supply_month").blur(function(event) {
+	$(this).val(pad($(this).val(), 2));
+    });
+    $("#supply_year").blur(function(event) {
+	$(this).val(yearpad($(this).val(), 4));
+    });
+
+    //Key Event for Invoice Date Field.
+    $("#invoice_date").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#invoice_month").focus().select();  //Focus shifts to Month field
+	}
+	if (event.which == 38) {
+	    event.preventDefault();
+	    $("#invoice_challanno").focus().select();  //Focus shifts to Invoice Number.
+	}
+    }); 
+
+    //Key Event for Invoice Month field.
+    $("#invoice_month").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#invoice_year").focus().select();  //Focus Shifts to Year field.
+	}
+	if (event.which == 38) {
+	    event.preventDefault();
+	    $("#invoice_date").focus().select();  //Focus Shifts to Date field.
+	}
+    });
+
+    //Key Event for Invoice Year field.
+    $("#invoice_year").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#invoicestate").focus();  //Focus shifts to State of Origin/Delivery.
+	}
+	if (event.which == 38) {
+	    event.preventDefault();
+	    $("#invoice_month").focus().select();  //Focus shifts to month field.
+	}
+    });
+
+    //Change Event For State of Origin/Delivery.
+    $("#invoicestate").change(function(event) {
+	event.preventDefault();
+	$("#statecodeforinvoice").text($("#invoicestate option:selected").attr("stateid"));
+    });
+    $("#invoicestate").change();
+
+    //Key Event for State of Origin/Delivery.
+    
+    $("#invoicestate").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    if ($("#status").val()  == 15) {
+		$("#invoice_issuer_name").focus().select();  //Focus shifts to Issuer Name.
+	    }
+	    else {
+		if ($("#invoice_customer").is(":disabled")) {
+		    $("#consigneename").focus().select();  //Focus shifts to Consignee Name as Customer's fields are disabled when delivery note is selected.
+		}
+		else {
+		    $("#invoice_customer").focus();  //Focus shifts to Customer.
+		}
+	    }
+	}
+	else if (event.which == 38) {
+	    if ($("#invoicestate option:visible").first().is(":selected")) {
+		$("#invoice_year").focus();
+	    }
+	}
+    });
+
+    //Key Events for Issuer Name.
+    $("#invoice_issuer_name").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#invoice_issuer_designation").focus().select();  //Focus shifts to Designation of Issuer.
+	}
+	else if (event.which == 38) {
+	    $("#invoicestate").focus();  //Focus shifts to State of Origin/Delivery.
+	}
+    });
+
+    //Key Events for Designation of Issuer.
+    $("#invoice_issuer_designation").keydown(function(event){
+	if (event.which == 13) {
+	    event.preventDefault();
+	    if ($("#invoice_customer").is(":disabled")) {
+		$("#consigneename").focus().select();  //Focus shifts to Consignee Name as Customer's fields are disabled when delivery note is selected.
+	    }
+	    else {
+		$("#invoice_customer").focus();  //Focus shifts to Customer.
+	    }
+	}
+	else if (event.which == 38) {
+	    $("#invoice_issuer_name").focus().select();  //Focus shifts to Issuer Name
+	}
+    });
+
+    //Key Events for Customer fields.
+    $("#invoice_customer").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#invoice_customerstate").focus();  //Focus shifts to Customer State.
+	}
+	if (event.which == 38) {
+	    if ($("#invoice_customer option:visible").first().is(":selected") || $("#invoice_customer option:first").is(":selected")) {
+		if ($("#status").val() == 15) {
+		    $("#invoice_issuer_designation").focus().select();  //Focus shifts to Designation of Issuer.
+		}
+		else {
+		    $("#invoicestate").focus();  //Focus Shifts to Invoice State.
+		}
+	    }
+	}
+	if (event.which == 32) {
+	    event.preventDefault();
+	    $('#invoice_addcust').click();  //Hitting space from Customer field opens a popup to add customer.
+	}
+    });
+
+    //A dictionary to store GSTINs of a customer.
+    var gstins = {};
+    //Change Event for Customer.
+    $("#invoice_customer").change(function(event) {
+	//AJAX to get details of customer.
+	$.ajax({
+	    url: '/customersuppliers?action=get',
+	    type: 'POST',
+	    dataType: 'json',
+	    async: false,
+	    data: { "custid": $("#invoice_customer option:selected").val() },  //Customer ID is sent.
+	    beforeSend: function(xhr) {
+		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+	    }
+	})
+	    .done(function(resp) {
+		console.log("success");
+		if (resp["gkstatus"] == 0) {
+		    $("#invoice_customerstate").val(resp["gkresult"]["state"]);  //State of Customer is selected automatically.
+		    $("#invoice_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
+		    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
+		    //GSTIN of customer in default state is selected.
+		    $("#gstin").text(resp["gkresult"]["gstin"][$("#invoice_customerstate option:selected").attr("stateid")]);
+		    //All GSTINs of this customer are 
+		    gstins = resp["gkresult"]["gstin"];
+		    //State Code of Customer State is loaded.
+		    $("#statecodeofcustomer").text($("#invoice_customerstate option:selected").attr("stateid"));
+		    //Consignee State is synced with Customer State.
+		    if ($("#status").val() == 15) {
+			$("#consigneestate").val(resp["gkresult"]["state"]);
+			$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));
+		    }
+		}
+	    })
+	    .fail(function() {
+		console.log("error");
+	    })
+	    .always(function() {
+		console.log("complete");
+	    });
+    });
+
+    //Change event for customer state.
+    $("#invoice_customerstate").change(function(event) {
+	event.preventDefault();
+	$("#statecodeofcustomer").text($("#invoice_customerstate option:selected").attr("stateid"));  //State code is loaded.
+	if ($("#invoice_customerstate option:selected").attr("stateid") in gstins) {
+	       $("#gstin").text(gstins[$("#invoice_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
+	}
+	else {
+	    $("#gstin").text('');  //If GSTIN is not available it is set as blank.
 	}
 	if ($("#status").val() == 15) {
-	    $("#consigneestate").val($("#invoice_customerstate option:selected").val());
-	   }
+	    $("#consigneestate").val($("#invoice_customerstate option:selected").val());  //Consignee State is synced with customer state.
+	}
     });
 
+    //Key down event for Customer State.
+    $("#invoice_customerstate").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#consigneename").focus().select();  //Focus Shifts to Consignee Name.
+	}
+	if (event.which == 38) {
+	    if ($("#invoice_customerstate option:visible").first.is(":selected")) {
+		$("#invoice_customer").select();  //Focus shifts to Customer.
+	    }
+	}
+    });
+
+    //Change event for Consignee State.
     $("#consigneestate").change(function(event) {
 	event.preventDefault();
-	$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));
+	$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
 	if ($("#status").val() == 15) {
-	    $("#invoice_customerstate").val($("#consigneestate option:selected").val());
-	   }
+	    $("#invoice_customerstate").val($("#consigneestate option:selected").val());  //Customer State is synced with state of consignee.
+	}
     });
 
+    //Key down event for Consignee Name.
+    $("#consigneename").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#consigneestate").focus();
+	}
+	else if (event.which == 38) {
+	    if ($("#invoice_customerstate").is(":disabled")) {
+		if ($("#status").val() == 15) {
+		    $("#invoice_issuer_designation").focus().select();  //Focus shifts to Designation of Issuer in Sale Invoice if Delivery Note is selected.
+		}
+		else {
+		    $("#invoicestate").focus();  //Focus Shifts to Invoice State in Purchase Invoice if Delivery Note is selected.
+		}
+	    }
+	    else {
+		$("#invoice_customerstate").focus();  //Focus shifts to Customer State.
+	    }
+	}
+    });
+
+    //Key Event for Consignee State
+    $("#consigneestate").keydown(function(event) {
+	if (event.which == 13) {
+	    $("#tinconsignee").focus().select();  //Focus shifts to TIN of Consignee.
+	}
+	else if (event.which == 38) {
+	    if ($("#consigneestate option:visible").first().is(":selected")) {
+		$("#consigneename").focus().select();  //Focus Shifts to Consignee Name.
+	    }
+	}
+    });
+
+    //Key Event for Consignee TIN.
+    $("#tinconsignee").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#gstinconsignee").focus().select();  //Focus Shift to GSTIN of Consignee.
+	}
+	else if (event.which == 38) {
+	    $("#consigneestate").focus();  //Focus Shifts to State of Consignee.
+	}
+    });
+
+    //Key Event for Consignee GSTIN.
+    $("#gstinconsignee").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
+	}
+	else if (event.which == 38) {
+	    $("#tinconsignee").focus();  //Focus Shifts to TIN of Consignee.
+	}
+    });
+
+    //Key Event for Consignee Address.
+    $("#consigneeaddress").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#taxapplicable").focus().select();  //Focus Shift to Tax Applicable field.
+	}
+	else if (event.which == 38) {
+	    $("#gstinconsignee").focus();  //Focus Shifts to GSTIN of Consignee.
+	}
+    });
+
+    //Change Event for Tax Applicable field.
+    $("#taxapplicable").change(function(event){
+	if ($("#taxapplicable option:selected").val() == 7) {
+	    $("#gstproducttable").show();  //Shows GST Product table.
+	    $("#invoice_product_table_vat").hide();  //Hides VAT Product table.
+	}
+	else {
+	    $("#gstproducttable").hide();
+	    $("#invoice_product_table_vat").show();
+	}
+    });
+
+    //Key Event for Tax Applicable Field.
     $(document).off('keydown', '#taxapplicable').on('keydown', '#taxapplicable', function(event) {
-  if (event.which == 13) {
-    event.preventDefault();
-    console.log("before");
-  if ($("#invoice_product_table_gst").is(":hidden") ) {
-    $('#invoice_product_table_vat tbody tr:first td:eq(0) select').focus();
-console.log("desh");
-  }
-  else{
-    $('#invoice_product_table_gst tbody tr:first td:eq(0) select').focus();
-  }
-}
-});
+	if (event.which == 13) {
+	    if ($("#taxapplicable option:selected").val() == 7) {
+		$('#invoice_product_table_gst tbody tr:first td:eq(0) select').focus();  //Focus shifts to Product Name of GST Ptoduct Table.
+	    }
+	    else{
+		$('#invoice_product_table_vat tbody tr:first td:eq(0) select').focus();  //Focus shifts to Product Name of VAT Product Table.
+	    }
+	}
+	else if (event.which == 38) {
+	    if ($("#taxapplicable option:selected").val() == 7) {
+		$('#consigneeaddress').focus().select();  //Focus shifts to Consignee Address.
+	    }
+	}
+    });
 
-  $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    $(".numtype").numeric({ negative: false });
-  });
-  $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    if ($(this).val() == "") {
-      $(this).val(parseFloat(0).toFixed(2));
-    } else {
-      $(this).val(parseFloat($(this).val()).toFixed(2));
-    }
-  });
+    //When focus is on an element which has numtype class entering characters and negative integers is disabled.
+    $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
+	event.preventDefault();
+	/* Act on the event */
+	$(".numtype").numeric({ negative: false });
+    });
 
-  $(document).off('focus', '.invoice_product_quantity_vat').on('focus', '.invoice_product_quantity', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    $(".numtype").numeric({ negative: false });
-  });
-  $(document).off('blur', '.invoice_product_quantity_vat').on('blur', '.invoice_product_quantity', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    if ($(this).val() == "") {
-      $(this).val(0);
-    }
-  });
+    //When an element of numtype looses focus and is blank it is set to 0.00.
+    $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
+	event.preventDefault();
+	/* Act on the event */
+	if ($(this).val() == "") {
+	    $(this).val(parseFloat(0).toFixed(2));
+	} else {
+	    $(this).val(parseFloat($(this).val()).toFixed(2));
+	}
+    });
 
-  $(document).off('change', '.product_name_vat').on('change', '.product_name_vat', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-      var productcode = $(this).find('option:selected').val();
-      console.log("VAT"+productcode);
-    var curindex = $(this).closest('tbody tr').index();
+    //VAT Table events start here
+
+    //Change event for Product Name.
+    $(document).off('change', '.product_name_vat').on('change', '.product_name_vat', function(event) {
+	event.preventDefault();
+	/* Act on the event */
+	var productcode = $(this).find('option:selected').val();
+	var curindex = $(this).closest('tbody tr').index();
     var destinationstate = "";
       var sourcestate = "";
       if ($("#status").val() == 9) {
@@ -474,7 +644,6 @@ console.log("desh");
     $("#invoice_deliverynote").change(function(event) {
 	if ($("#invoice_deliverynote option:selected").val() != '') {
 	    //$("#invoice_state").prop("disabled", true);
-	    console.log("delchal");
 	    $.ajax({
 		url: '/invoice?action=getdeliverynote',
 		type: 'POST',
@@ -552,7 +721,6 @@ console.log("desh");
     var taxflag=$("#taxapplicable option:selected").val();
 				    // if($("#invoice_product_table_vat").is(":not(:hidden)")){
 				    $.each(resp.items, function(key, value) {
-					console.log("delchal coding");
 					$('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
 					$('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 					$('#invoice_product_table_vat tbody tr:last td:first select').val(key).prop("disabled", true);
@@ -560,8 +728,6 @@ console.log("desh");
 					$('#invoice_product_table_vat tbody tr:last td:eq(1) input').val(value.qty).attr("data", value.qty);
 					$('#invoice_product_table_vat tbody tr:last td:eq(1) span').text(value.unitname);
 					$('#invoice_product_table_vat tbody tr:last td:eq(2) span').text(value.unitname);
-					$('.invoice_product_quantity_vat').numeric({ negative: false });
-					$('.invoice_product_per_price_vat').numeric({ negative: false });
 				    });
 				    $("#invoice_product_table_vat tbody tr:first td:eq(9)").empty();
 				    var productcode;
@@ -903,8 +1069,6 @@ console.log("desh");
           }
 	  $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
 	  $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);;
-             $('.invoice_product_quantity').numeric({ negative: false });
-             $('.invoice_product_per_price').numeric({ negative: false });
              $(".product_name_vat").change();
               }
       else {
@@ -1884,7 +2048,7 @@ if (event.which == 13) {
                "designation": $("#invoice_issuer_designation").val(),
                "subtotal": parseFloat(subtotal).toFixed(2),
                "taxtotal": $("#invoice_product_table tfoot tr:first td:eq(4) input").val(),
-               "gtotal": $("#invoice_product_table tfoot tr:first td:eq(5) input").val(),
+		 "gtotal": $("#invoice_product_table tfoot tr:first td:eq(5) input").val()
              },
              beforeSend: function(xhr) {
                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -1934,36 +2098,4 @@ if (event.which == 13) {
     $("#confirm_yes_print").on('hidden.bs.modal', function(event) {
         $("#invoice_challanno").focus();
     });
-    //new invoice code
-
-    $(document).off('change', '#taxapplicable').on('change', '#taxapplicable', function(event) {
-        event.preventDefault();
-	$("#totalinvoicevalue").text("");
-        if ($("#taxapplicable option:selected").val() == 22) {
-    $("#itemtypediv").hide();
-
-        }
-        else{
-          $("#itemtypediv").show();
-        }
-        if ($("#taxapplicable option:selected").val() == 22 ) {
-          //VAT
-          $("#invoice_product_table_gst, #gstproducttable").hide();
-          $("#invoice_product_table_vat").show();
-
-          console.log("//VAT");
-        }
-        if ($("#taxapplicable option:selected").val() == 7 ) {
-          //VAT
-          $("#invoice_product_table_gst, #gstproducttable").show();
-          $("#invoice_product_table_vat").hide();
-
-          console.log("//gst");
-        }
-
-
-      });
-//
-
-//
 });
