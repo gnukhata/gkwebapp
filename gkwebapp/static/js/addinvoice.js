@@ -1009,17 +1009,58 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-        $("#invoice_schedule").focus().select();//What is this?
+        $("#taxapplicable").focus().select();//What is this?
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
-
-
       $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
 
     } else if (event.which == 190 && event.ctrlKey) {
       event.preventDefault();
       $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').focus().select();
+
+    } else if (event.which == 27) {
+      event.preventDefault();
+      $("#accountno").focus().select();
+    }
+  });
+
+    $(document).off('change', '.invoice_product_discount_vat').on('change', '.invoice_product_discount_vat', function(event) {
+      event.preventDefault();
+    /* Act on the event */
+    if ($(this).val() == "") {
+      $(this).val(0);
+    }
+    var curindex = $(this).closest('#invoice_product_table_vat tbody tr').index();
+      calculatevataxamt(curindex);
+  });
+
+  $(document).off("keydown", ".invoice_product_discount_vat").on("keydown", ".invoice_product_discount_vat", function(event) {
+    var curindex = $(this).closest('tr').index();
+    var nextindex = curindex + 1;
+    var previndex = curindex - 1;
+    if (event.which == 13) {
+	event.preventDefault();
+	$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').focus().select();
+    } else if (event.which == 190 && event.shiftKey) {
+      event.preventDefault();
+      $('#invoice_product_table_vat tbody tr:eq(' + nextindex + ') td:eq(4) input').focus();
+    } else if (event.which == 188 && event.shiftKey) {
+      if (previndex > -1) {
+        event.preventDefault();
+        $('#invoice_product_table_vat tbody tr:eq(' + previndex + ') td:eq(4) input').focus();
+      }
+      if (curindex == 0) {
+        event.preventDefault();
+        $("#taxapplicable").focus().select();
+      }
+    } else if (event.which == 188 && event.ctrlKey) {
+      event.preventDefault();
+      $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').focus().select();
+
+    } else if (event.which == 190 && event.ctrlKey) {
+      event.preventDefault();
+      $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').focus().select();
 
     } else if (event.which == 27) {
       event.preventDefault();
@@ -1090,7 +1131,7 @@ $(document).ready(function() {
       $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus().select();
       event.preventDefault();
     } else if (event.ctrlKey && event.which == 188) {
-      $('#invoice_product_table_vat tbody tr:eq(' + curindex1 + ') td:eq(3) input').focus();
+      $('#invoice_product_table_vat tbody tr:eq(' + curindex1 + ') td:eq(4) input').focus();
       event.preventDefault();
     } else if (event.which == 27) {
       event.preventDefault();
