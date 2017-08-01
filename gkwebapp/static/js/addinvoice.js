@@ -1512,6 +1512,39 @@ if (event.which == 13) {
       }
   });
 
+    //Events for last fields - Bank Details, Reverse charge etc..
+    $(document).off("keydown", ".lastfield").on("keydown", ".lastfield", function(event) {
+	var n = $("input.lastfield").length;
+	var f = $('input.lastfield');
+	if (event.which == 13)
+	{
+	    var nextIndex = f.index(this) + 1;
+	    if(nextIndex < n){
+		event.preventDefault();
+		f[nextIndex].focus();
+		f[nextIndex].select();
+	    }
+	    else if (nextIndex == n) {
+		$("invoice_save").focus();
+	    }
+	}
+	else if (event.which == 38) {
+	    var previndex = f.index(this) - 1;
+	    if(previndex > -1) {
+		f[previndex].focus();
+		f[previndex].select();
+	    }
+	    else if (previndex == -1) {
+		if ($("#taxapplicable option:selected").val() == 7) {
+		    $(".invoice_product_discount_gst:last").focus().select();
+		}
+		else {
+		    $(".invoice_product_discount_vat:last").focus().select();
+		}
+	    }
+	}
+    });
+
   $("#invoice_addcust").click(function() {
     var statusinout;
     if ($("#status").val() == '9') {
