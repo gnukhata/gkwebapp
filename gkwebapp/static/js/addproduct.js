@@ -222,28 +222,28 @@ $("#addproddesc").keydown(function(event) {
 $("#hsnno").keydown(function(event) {
   if(event.which==13) {
     event.preventDefault();
-    if ($(this).val()=="") {
+  /*  if ($(this).val()=="") {
       $("#hsnno-blank-alert").alert();
       $("#hsnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#hsnno-blank-alert").hide();
     });
       $("#hsnno").focus();
       return false;
-    }
+    }*/
     $("#adduom").focus();
   }
 });
 $("#serviceno").keydown(function(event) {
   if(event.which==13) {
     event.preventDefault();
-    if ($(this).val()=="") {
+    /*if ($(this).val()=="") {
       $("#serviceno-blank-alert").alert();
       $("#serviceno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#serviceno-blank-alert").hide();
     });
       $("#serviceno").focus();
       return false;
-  }
+  }*/
     $("#product_tax_table tbody tr:first td:eq(0) select").focus();
   }
 });
@@ -1270,14 +1270,14 @@ if($("#additem option:selected").val()=='7'){
     $("#addproddesc").select();
     return false;
   }
-  if ($("#hsnno").val()=="") {
+/*  if ($("#hsnno").val()=="") {
     $("#hsnno-blank-alert").alert();
     $("#hsnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#hsnno-blank-alert").hide();
   });
     $("#hsnno").focus();
     return false;
-  }
+  }*/
   if ($("#adduom option:selected").val()=="")
   {
     $('.modal-backdrop').remove();
@@ -1303,7 +1303,7 @@ else{
     $("#addproddesc").select();
     return false;
   }
-  if($("#serviceno").val()==""){
+/*  if($("#serviceno").val()==""){
 
       $("#serviceno-blank-alert").alert();
       $("#serviceno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -1311,7 +1311,7 @@ else{
     });
       $("#serviceno").focus();
       return false;
-  }
+  }*/
 }
 
   if ($("#openingstock").val()=="")
