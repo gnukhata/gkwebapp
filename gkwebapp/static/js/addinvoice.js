@@ -570,13 +570,15 @@ $(document).ready(function() {
          if (resp["gkstatus"] == 0) {
 	   $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['taxrate']).toFixed(2));
          }
+	  else if (resp["gkstatus"] == 1) {
+	      $("#notax-alert").alert();
+	      $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
+		  $("#notax-alert").hide();
+	      });
+	  }
        })
        .fail(function() {
            console.log("error");
-	   $("#notax-alert").alert();
-	   $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
-	       $("#notax-alert").hide();
-	   });
        })
        .always(function() {
          console.log("complete");
@@ -636,6 +638,7 @@ $(document).ready(function() {
 		    if (resp["gkstatus"] == 0) {
 			$("#invoice_customer").val(resp["delchal"]["delchaldata"]["custid"]);
 			$("#invoice_customer").prop("disabled", true);
+			$("#invoice_customerstate").prop("disabled", true);
 			$.ajax({
 			    url: '/customersuppliers?action=get',
 			    type: 'POST',
@@ -680,23 +683,6 @@ $(document).ready(function() {
 			    .done(function(resp) {
 				console.log("success");
 				if (resp["gkstatus"] == 0) {
-				    var destinationstate = "";
-      var sourcestate = "";
-      if ($("#status").val() == 9) {
-	  destinationstate = $("#invoicestate option:selected").val();
-	  sourcestate = $("#invoice_customerstate").val();
-	  if ($("#gstinconsignee").val() != "") {
-	   sourcestate = $("#consigneestate option:selected").val();   
-	  }
-      }
-      else if ($("#status").val() ==  15) {
-	  sourcestate = $("#invoicestate option:selected").val();
-	  destinationstate = $("#invoice_customerstate").val();
-	  if ($("#gstinconsignee").val() != "") {
-	   destinationstate = $("#consigneestate option:selected").val();   
-	  }
-      }
-    var taxflag=$("#taxapplicable option:selected").val();
 				    // if($("#invoice_product_table_vat").is(":not(:hidden)")){
 				    $.each(resp.items, function(key, value) {
 					$('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
@@ -709,36 +695,6 @@ $(document).ready(function() {
 				    });
 				    $("#invoice_product_table_vat tbody tr:first td:eq(9)").empty();
 				    var productcode;
-                           $(".product_name_vat").each(function() {
-                             var curindex = $(this).closest('tbody tr').index();
-                             productcode = $(this).find('option:selected').val();
-				    $.ajax({
-        url: '/invoice?action=getappliedtax',
-        type: 'POST',
-        dataType: 'json',
-        async: false,
-        data: { "productcode": productcode, "source": sourcestate,"destination":destinationstate,"taxflag":taxflag },
-        beforeSend: function(xhr) {
-          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-        }
-      })
-       .done(function(resp) {
-         console.log("success" + resp);
-         if (resp["gkstatus"] == 0) {
-	   $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['taxrate']).toFixed(2));
-         }
-       })
-       .fail(function() {
-           console.log("error");
-	   $("#notax-alert").alert();
-	   $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
-	       $("#notax-alert").hide();
-	   });
-       })
-       .always(function() {
-         console.log("complete");
-       });
-			       });
 				    $.each(resp.items, function(key, value) {
 					$('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
 					$('#invoice_product_table_gst tbody tr:last td:first select').val(key).prop("disabled", true);
@@ -752,60 +708,8 @@ $(document).ready(function() {
 					$("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 					$('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 				    });
-				$("#invoice_product_table_total tbody tr:first td:last").empty();
-				    $(".product_name_gst").each(function() {
-                             var curindex = $(this).closest('tbody tr').index();
-                             productcode = $(this).find('option:selected').val();
-                             $.ajax({
-            url: '/invoice?action=getappliedtax',
-            type: 'POST',
-            dataType: 'json',
-            async: false,
-            data: { "productcode": productcode, "source": sourcestate,"destination":destinationstate,"taxflag":taxflag },
-            beforeSend: function(xhr) {
-              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-            }
-          })
-           .done(function(resp) {
-             console.log(resp);
-             if (resp["gkstatus"] == 0) {
-		 console.log("yo yo");
-		 $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').data("taxdetails", {taxname: resp["taxname"], taxrate:resp["taxrate"]});
-               if(resp['taxname']=='SGST'){
-                  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(resp['taxrate']).toFixed(2));
-                  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(resp['taxrate']).toFixed(2));
-               }
-               else{
-                 $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(resp['taxrate']).toFixed(2));
-               }
-
-               //$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').prop("disabled", false);
-             }
-           })
-           .fail(function() {
-             console.log("error");
-           })
-           .always(function() {
-             console.log("complete");
-           });
-                           });
-			    }//success ends
-				 })
-			.fail(function() {
-			    console.log("error");
-			})
-			.always(function() {
-			    console.log("complete");
-			});
-                         }
-                       })
-                       .fail(function() {
-                         console.log("error");
-                       })
-                       .always(function() {
-                         console.log("complete");
-                       });
-
+				    $("#invoice_product_table_total tbody tr:first td:last").empty();
+				    $(".product_name_gst, .product_name_vat").change();
                     } else {
                       $("#invoice_state").prop("disabled", false);
                       $("#invoice_state").val("none");
@@ -821,7 +725,11 @@ $(document).ready(function() {
 			$("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
                     }
 
-                  });
+			    });
+		    }
+		});
+	}
+    });
 
 //VAT events start here
   $(document).off("keydown", ".product_name_vat").on("keydown", ".product_name_vat", function(event) {
@@ -1172,16 +1080,16 @@ $(document).ready(function() {
 		   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(0).toFixed(2));
                    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(0).toFixed(2));
                }
-
-               //$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').prop("disabled", false);
              }
+	       else if (resp["gkstatus"] == 1) {
+		   $("#notax-alert").alert();
+		   $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
+		       $("#notax-alert").hide();
+		   });
+	       }
            })
            .fail(function() {
                console.log("error");
-	       $("#notax-alert").alert();
-	   $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
-	       $("#notax-alert").hide();
-	   });
            })
            .always(function() {
              console.log("complete");
@@ -2323,4 +2231,5 @@ if (event.which == 13) {
     $("#confirm_yes_print").on('hidden.bs.modal', function(event) {
         $("#invoice_challanno").focus();
     });
-});
+		    });
+		      
