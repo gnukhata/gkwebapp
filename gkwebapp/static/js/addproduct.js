@@ -230,23 +230,16 @@ $("#hsnno").keydown(function(event) {
       $("#hsnno").focus();
       return false;
     }*/
+    if($("#additem option:selected").val() == '7')
+    {
     $("#adduom").focus();
   }
-});
-$("#serviceno").keydown(function(event) {
-  if(event.which==13) {
-    event.preventDefault();
-    /*if ($(this).val()=="") {
-      $("#serviceno-blank-alert").alert();
-      $("#serviceno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#serviceno-blank-alert").hide();
-    });
-      $("#serviceno").focus();
-      return false;
-  }*/
+  else{
     $("#product_tax_table tbody tr:first td:eq(0) select").focus();
   }
+  }
 });
+
 
 
 $("#adduom").change(function(event) {
@@ -1233,30 +1226,43 @@ $("#addgodown").click(function() {
   );
 });
 ///
-var igstflag=0;
+
 $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
   event.preventDefault();
   /* Act on the event */
   ///
-  var curindex = $("#product_tax_table tbody tr:first").index();
-     var lastindex = $("#product_tax_table tbody tr:last").index();
-  $("#product_tax_table tbody tr").each(function(index){
+  var igstflag=0;
+  var taxflag=0;
+$("#product_tax_table tbody tr").each(function(index){
+      if ($.trim($('#product_tax_table tbody tr:eq('+index+') td:eq(0) select option:selected').val())=="") {
+    taxflag=1;
+    console.log("taxflag"+taxflag);
+    }
 
 if ($.trim($('#product_tax_table tbody tr:eq('+index+') td:eq(0) select option:selected').val())=="IGST") {
 igstflag=1;
 }
 console.log(index);
 });
+console.log("taxflag"+taxflag);
 
 console.log("igstflag"+igstflag);
-if(!igstflag){
+if(taxflag){
+  $("#tax-alert").alert();
+  $("#tax-alert").fadeTo(2250, 500).slideUp(500, function(){
+    $("#tax-alert").hide();
+});
+  $("#product_tax_table tbody tr:eq(0) td:eq(0) select").focus();
+  return false;
+}
+/*if(!igstflag){
   $("#igst-alert").alert();
   $("#igst-alert").fadeTo(2250, 500).slideUp(500, function(){
     $("#igst-alert").hide();
 });
   $("#product_tax_table tbody tr:eq(0) td:eq(0) select").focus();
   return false;
-}
+}*/
 ///
 if($("#additem option:selected").val()=='7'){
   if ($("#addproddesc").val()=="")

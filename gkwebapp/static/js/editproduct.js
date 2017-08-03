@@ -1232,6 +1232,39 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
       $("#editproddesc").select();
       return false;
     }
+    var igstflag=0;
+    var taxflag=0;
+  $("#product_edit_tax_table tbody tr").each(function(index){
+        if ($.trim($('#product_edit_tax_table tbody tr:eq('+index+') td:eq(0) select option:selected').val())=="") {
+      taxflag=1;
+      console.log("taxflag"+taxflag);
+      }
+
+  if ($.trim($('#product_edit_tax_table tbody tr:eq('+index+') td:eq(0) select option:selected').val())=="IGST") {
+  igstflag=1;
+  }
+  console.log(index);
+  });
+  console.log("taxflag"+taxflag);
+
+  console.log("igstflag"+igstflag);
+  if(taxflag){
+    $("#tax-alert").alert();
+    $("#tax-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#tax-alert").hide();
+  });
+    $("#product_edit_tax_table tbody tr:eq(0) td:eq(0) select").focus();
+    return false;
+  }
+  /*if(!igstflag){
+    $("#igst-alert").alert();
+    $("#igst-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#igst-alert").hide();
+  });
+    $("#product_edit_tax_table tbody tr:eq(0) td:eq(0) select").focus();
+    return false;
+  }*/
+  ///
     var specs = {};      /*This is spec dictionary having spcode as a key and specval as its value*/
     $("#spec_table tbody tr").each(function(){
       if ($(".spec_value",this).hasClass('datevalue')) {

@@ -146,6 +146,10 @@ margin-bottom: 0px;
 
             {% trans %}This tax has already been applied.{% endtrans %}
           </div>
+          <div class="alert alert-danger" id="tax-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please Specify Tax for product.{% endtrans %}
+          </div>
           <div class="alert alert-danger" id="cvat-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}CVAT/IGST can be applied only once.{% endtrans %}
