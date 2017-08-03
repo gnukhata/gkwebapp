@@ -236,7 +236,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
         $("#proddetails").html("");
         $("#proddetails").html(resp);
         if(sessionStorage.invflag==0){
-        $("#categorydiv").hide();
+        //$("#categorydiv").hide();
         $(".noinventory").hide();
         $("#invflag").val("0")
           $("#taxhelp3").hide();
