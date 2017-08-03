@@ -1,7 +1,13 @@
 $(document).ready(function() {
+
 $(".serviceclass").hide();
 $(".productclass").hide();
 $(".common").hide();
+console.log(""+$("#gstorvatflag").val());
+if ($("#gstorvatflag").val()==22){
+  var selectedtaxname = 'CVAT';
+  $('#product_tax_table tbody tr:first td:eq(0) select option[value='+selectedtaxname+']').prop('hidden', true).prop('disabled', true);
+}
 if (sessionStorage.invflag==0){
     console.log("inv =0 product=yes");
   $(".noinventory").hide();
@@ -846,7 +852,6 @@ $(document).off("keydown",".tax_state").on("keydown",".tax_state",function(event
     $('#product_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
   }
 });
-
 $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
 {
   var curindex1 = $(this).closest('tr').index();
@@ -883,7 +888,10 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
         return false;
       }
 
-      $('#product_tax_table tbody').append('<tr>'+
+      var taxhtml = $('#product_tax_table tbody tr:first').html();
+      
+      $('#product_tax_table tbody').append('<tr>'+ taxhtml + '</tr>');
+      /*$('#product_tax_table tbody').append('<tr>'+
       '<td class="col-xs-4">'+
       '<select class="form-control input-sm tax_name product_new_name">'+
       '<option value="" selected>Select Tax</option>'+
@@ -940,7 +948,8 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
       '<td class="col-xs-1">'+
       '<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
       '</td>'+
-      '</tr>');
+      '</tr>');*/
+      console.log("rooo"+taxhtml);
       $(".tax_rate").numeric();
       if (selectedtaxname == "CVAT" || selectedtaxname == "IGST" ) {
         $('#product_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedtaxname+']').prop('hidden', true).prop('disabled', true);

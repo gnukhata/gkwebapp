@@ -3,6 +3,7 @@
   <div class="container-fluid " style="padding:1 !important; margin:0 !important;" >
 
     <div class=' addprod panel'>
+      <input value="{{vatorgstflag}}" id="vatorgstflag">
 
       <div class="panel-body">
         <form id="addprodform">
@@ -100,9 +101,13 @@
                     <td class="col-xs-4">
                       <select class="form-control input-sm tax_name product_new_name">
                         <option value="" selected hidden disabled>Select Tax</option>
+                        {%if vatorgstflag=='22' or vatorgstflag=='29' %}
                         <option value="VAT">VAT</option>
                         <option value="CVAT">CVAT</option>
+
+                        {%elif vatorgstflag=='7' or vatorgstflag=='29'%}
                         <option value="IGST">IGST</option>
+                        {%endif%}
                       </select>
                     </td>
                     <td class="col-xs-4">
