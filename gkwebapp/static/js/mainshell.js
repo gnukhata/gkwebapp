@@ -39,6 +39,7 @@ var userrole1;
   if(sessionStorage.invflag==1){
     $(".productinmaster").hide();
       $(".categoryinmaster").hide();
+      $(".uominmaster").hide();
   }
 
   if (sessionStorage.reload == 1)// The mainshell when loads for the first time its reloaded so that the javascript file can be fully loaded.
@@ -1530,6 +1531,9 @@ var userrole1;
     $("#info").load("/customersuppliers");
   });
   $('#addunit').click(function (e) {// calls base unitofmeasurements page.
+    $("#info").load("/unitofmeasurements");
+  });
+  $('#uominmaster').click(function (e) {// calls base unitofmeasurements page.
     $("#info").load("/unitofmeasurements");
   });
   $('#addcashmemo').click(function (e) {// calls base cash memo page.
