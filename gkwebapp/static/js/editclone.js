@@ -70,13 +70,11 @@ $(document).ready(function()
     else
     {
       $("#invtotal").val(parseFloat(0).toFixed(2));
+        $(".invhide").hide();
     }
 
   }
-  else
-  {
-      $(".invhide").hide();
-  }
+  
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   $("#vctable").hide();
@@ -113,6 +111,9 @@ $(document).ready(function()
     if ($.trim(inv)!="")
     {
       $("#invtotal").val(parseFloat(inv).toFixed(2));
+      $(".dramt:first:enabled:visible").val(inv);
+      console.log($(".dramt:first").val() + "INV" + inv);
+
     }
     else
     {
@@ -151,6 +152,12 @@ $(document).ready(function()
 
 
   $("#demovctable").find("input,select,textarea,button").prop("disabled",true);
+  /**if ($("#invsel").val() == "") {
+    $("#invhide").hide();
+  }
+  else {
+    $("#invhide").show();
+  }**/
   $("#vno").prop('disabled', true);
   $("#viewdiv").show();
   $("#viewinvsel").prop('disabled', true);
@@ -317,14 +324,14 @@ $(document).ready(function()
     $("#delete").hide();
     $("#vno").prop('disabled', true);
     $(".ttl").prop('disabled', true);
-    $(".vdate").prop('disabled', false);
+    $(".vdate").prop('disabled', true);
     $("#viewdiv").hide();
     $("#viewinvsel").hide();
     $("#invtotaldiv").hide();
     $("#editdiv").show();
     $("#editinv").show();
     $("#invsel").show();
-    $("#invsel").prop('disabled', false);
+    $("#invsel").prop('disabled', true);
     if ($('#selinv').length > 0) {
       $("#invsel").append('<option value ="'+$('#selinv').val()+'">'+$('#viewinvsel').val()+'</option>');
     }

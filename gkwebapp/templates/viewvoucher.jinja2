@@ -225,7 +225,7 @@ label.normal {
                 </div>
               </div>
             </div>
-
+            {% if invoicedata %}
             <div class="form-inline well well-sm invhide">
 
               {% if voucher["vvi"] %}
@@ -234,7 +234,7 @@ label.normal {
                 <label for="invsel">{% trans %}Invoice {% endtrans %} :</label>
 
                 <input id="viewinvsel" value="{{voucher["vvi"]["invoiceno"]}},{{voucher["vvi"]["invoicedate"]}},{{voucher["vvi"]["custSupDetails"]["custname"]}}">
-                
+
 
               </div>
               <div class="form-group pull-right" id="invtotaldiv">
@@ -243,7 +243,6 @@ label.normal {
                 <input id="selinv" value="{{voucher["vvi"]["invid"]}}" hidden>
               </div>
                 {% endif %}
-                {% if invoicedata!=0 %}
                 <div class="form-group" div="editdiv">
 
                   <label id="editinv">{% trans %}Invoice {% endtrans %} :</label>
@@ -267,12 +266,12 @@ label.normal {
 
                 </select>
               </div>
-              {% endif %}
                 <div class="form-group pull-right" id="selinvtotal">
                   <label for="invtotal">{% trans %} Invoice Total Amount {% endtrans %} :</label>
                   <input type="text" id="invtotal" class="form-control input-sm" value="0.00"  disabled>
                 </div>
               </div>
+              {% endif %}
 
             <div class="table-responsive" id="demovctable">
               <table class="table table-condensed">
