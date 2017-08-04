@@ -94,6 +94,10 @@ margin-bottom: 0px;
 
             {% trans %}Duplicate Product under same category.{% endtrans %}
           </div>
+          <div class="alert alert-danger" id="igst-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please Specify IGST tax.{% endtrans %}
+          </div>
           <!-- <div class="alert alert-info" id="nocategory-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}You can create products under categories.{% endtrans %}
@@ -141,6 +145,10 @@ margin-bottom: 0px;
           <div class="alert alert-danger" id="tax-same-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}This tax has already been applied.{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="tax-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please Specify Tax for product.{% endtrans %}
           </div>
           <div class="alert alert-danger" id="cvat-alert"  aria-live="rude" role="alert" hidden>
 

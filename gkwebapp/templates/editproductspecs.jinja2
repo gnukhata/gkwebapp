@@ -194,21 +194,25 @@
         </tr>
       </tbody>
     </table>
+      <input type="text" name="inv" id="invflag" value="1" hidden>
 {%if  proddesc["gsflag"]==7  %}
-                  <small id="taxhelp3" class="form-text text-muted ">When on Tax Rate or Tax Name press 'Esc' key to shift focus to Godown Name or from Godown Opening Stock to 'Save' button.</small>
+
+                  <small id="taxhelp3" class="form-text text-muted noinventory ">When on Tax Rate or Tax Name press 'Esc' key to shift focus to Godown Name or from Godown Opening Stock to 'Save' button.</small>
+                    <small id="taxhelp5" class="form-text text-muted " hidden>When on Tax Rate or Tax Name press 'Esc' key to shift focus to 'Save' button.</small><br>
 {%else%}
-                  <small id="taxhelp3" class="form-text text-muted ">When on Tax Rate or Tax Name press 'Esc' key to shift focus to 'Save' button.</small><br>
+                  <small id="taxhelp4" class="form-text text-muted ">When on Tax Rate or Tax Name press 'Esc' key to shift focus to 'Save' button.</small><br>
   {%endif%}
     </div>
   </div>
   </div>
     {% if proddesc["gsflag"]==7 %}
-  <div class="row">
+  <div class="row noinventory">
+
     {% if not godown %}
     <input type="text" name="godownflag" id="editgodownflag" value="0" hidden>
     <input type="text" id="editgodownpresence" value="0" hidden>
     <div class="form-group pds" id ="beforeaddingfirstgodown">
-      <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+      <label for="editopeningstock" class="invsbill">{% trans %}Opening Stock{% endtrans %} :</label>
       <div class="input-group col-sm-6">
         <input type='text' class="form-control text-right input-sm" name="openingstock"  id="editopeningstock" value="{{proddesc['openingstock']}}" aria-describedby="unitaddon">
         <span class="input-group-addon input-sm" id="unitaddon"></span>
