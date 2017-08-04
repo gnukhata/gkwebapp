@@ -70,11 +70,10 @@ $(document).ready(function()
     else
     {
       $("#invtotal").val(parseFloat(0).toFixed(2));
-        $(".invhide").hide();
     }
 
   }
-  
+
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   $("#vctable").hide();
@@ -112,6 +111,9 @@ $(document).ready(function()
     {
       $("#invtotal").val(parseFloat(inv).toFixed(2));
       $(".dramt:first:enabled:visible").val(inv);
+      $(".cramt:eq(1)").val(inv);
+      $("#drtotal:first").val(inv);
+      $("#crtotal:first").val(inv);
       console.log($(".dramt:first").val() + "INV" + inv);
 
     }
@@ -441,8 +443,13 @@ $(document).ready(function()
     $("#editinv").show();
     $("#invsel").show();
     $("#invsel").prop('disabled', false);
+    if ($('#selinv').length > 0) {
+      $("#invsel").append('<option value ="'+$('#selinv').val()+'">'+$('#viewinvsel').val()+'</option>');
+    }
+    $('#invsel').val($('#selinv').val());
     $("#selinvtotal").show();
     $("#selinvtotal").prop('disabled', false);
+    $("#invtotal").val($('#invtotalvvi').val());
     $("#vno").focus().select();
     $("#vctable").show();
     $("#demovctable").hide();
