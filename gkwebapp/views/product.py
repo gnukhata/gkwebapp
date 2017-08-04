@@ -265,7 +265,7 @@ def productdetails(request):
 	header={"gktoken":request.headers["gktoken"]}
 	prodspecs={}
 	result = requests.get("http://127.0.0.1:6543/products?qty=single&productcode=%d"%(int(request.params['productcode'])),headers=header)
-
+	resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
 
 	if result.json()["gkresult"]["gsflag"]==7:
 
@@ -277,9 +277,9 @@ def productdetails(request):
 		result3 = requests.get("http://127.0.0.1:6543/categories", headers=header)
 		result4 = requests.get("http://127.0.0.1:6543/godown", headers=header)
 		numberofgodowns = int(result.json()["numberofgodowns"])
-		return{"proddesc":result.json()["gkresult"],"prodspecs":prodspecs,"uom":result2.json()["gkresult"],"category":result3.json()["gkresult"],"godown":result4.json()["gkresult"],"numberofgodowns":numberofgodowns,"gkstatus":result.json()["gkstatus"]}
+		return{"proddesc":result.json()["gkresult"],"prodspecs":prodspecs,"uom":result2.json()["gkresult"],"category":result3.json()["gkresult"],"godown":result4.json()["gkresult"],"numberofgodowns":numberofgodowns,"gkstatus":result.json()["gkstatus"],"vatorgstflag":resultgstvat.json()["gkresult"]}
 	else:
-		return{"proddesc":result.json()["gkresult"]}
+		return{"proddesc":result.json()["gkresult"],"vatorgstflag":resultgstvat.json()["gkresult"]}
 
 
 @view_config(route_name="product",request_param="type=list", renderer="gkwebapp:templates/listofstockitems.jinja2")

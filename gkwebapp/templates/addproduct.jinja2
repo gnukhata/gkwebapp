@@ -104,8 +104,8 @@
                         {%if vatorgstflag=='22' or vatorgstflag=='29' %}
                         <option value="VAT">VAT</option>
                         <option value="CVAT">CVAT</option>
-
-                        {%elif vatorgstflag=='7' or vatorgstflag=='29'%}
+                        {%endif%}
+                        {%if vatorgstflag=='7' or vatorgstflag=='29'%}
                         <option value="IGST">IGST</option>
                         {%endif%}
                       </select>

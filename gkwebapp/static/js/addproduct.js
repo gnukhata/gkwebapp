@@ -860,7 +860,7 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
   if (event.which==13) {
     $('#product_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').val(parseFloat($('#product_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').val()).toFixed(2));
     event.preventDefault();
-    if ($('#product_tax_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="IGST") {
+    if ($('#product_tax_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="IGST" && $("#vatorgstflag").val()!='29') {
       console.log("yes yes");
       if($("#additem option:selected").val()=='19'){
       $("#apsubmit").focus();
