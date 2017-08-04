@@ -1,3 +1,4 @@
+<link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css">
 <form class="form-inline" >
   <div class="col-md-12">
     <div class="col-md-4">
@@ -209,10 +210,10 @@
 	    <td class="mdvwrap">
 	      {{ gkresult["invcontents"][product]["proddesc"] }}
 	    </td>
-	    <td class="smvwrap">
+	    <td class="smvwrap text-right">
 	      {{ gkresult["invcontents"][product]["qty"] }} {{ gkresult["invcontents"][product]["uom"] }}
 	    </td>
-	    <td class="smvwrap">
+	    <td class="smvwrap text-right">
 	      {{ gkresult["invcontents"][product]["freeqty"] }} {{ gkresult["invcontents"][product]["uom"] }}
 	    </td>
 
@@ -314,20 +315,20 @@
 		    <td class="smwrap text-center">
 		      {{ gkresult["invcontents"][product]["gscode"] }}
 		    </td>
-		    <td class="qtywrap">
+		    <td class="qtywrap text-right">
 		      {{ gkresult["invcontents"][product]["qty"] }} {{ gkresult["invcontents"][product]["uom"] }}
 		    </td>
-		    <td class="qtywrap">
+		    <td class="qtywrap text-right">
 		      {{ gkresult["invcontents"][product]["freeqty"] }} {{ gkresult["invcontents"][product]["uom"] }}
 		    </td>
 
-		    <td class="smwrap">
+		    <td class="smwrap text-right">
 		      {{ gkresult["invcontents"][product]["priceperunit"] }}
 		    </td>
-		    <td class="smwrap">
+		    <td class="smwrap text-right">
 		      {{ gkresult["invcontents"][product]["discount"] }}
 		    </td>
-		    <td class="smwrap">
+		    <td class="smwrap text-right">
 		      {{ gkresult["invcontents"][product]["taxableamount"] }}
 		    </td>
 

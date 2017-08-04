@@ -1,115 +1,7 @@
 
 <!DOCTYPE html>
 <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}INVOICE{% endtrans %}</title>
-<style type="text/css">
- #invoice_product_table_gst tbody tr {
-     display:table;
-     width:100%;
-     table-layout:fixed;
- }
- #invoice_product_table_gst tbody {
-     display:block;
-     width:100%;
-     height: calc(100vh - 31em);
- }
- #invoice_product_table_gst_heading thead {
-     display:table;
-     width: calc( 140% - 0.75em );
-     table-layout:fixed;
- }
- #invoice_product_table_gst_tfoot tfoot {
-     display:block;
-     width: calc( 100% - 0.75em );
- }
- #invoice_product_table_total tbody {
-     display:block;
-     height: calc(100vh - 31em);
-     overflow-y:scroll;
- }
- #invoice_product_table_total tbody tr {
-     display:table;
-     width:100%;
-     table-layout:fixed;
- }
- #invoice_product_table_total tfoot {
-     display:block;
-     width:calc( 100% - 0.75em );
- }
- #invoice_product_table_vat tbody {
-     display:block;
-     height: calc(100vh - 31em);
-     overflow-y:scroll;
- }
- #invoice_product_table_vat tfoot {
-     display:table;
-     width: calc( 100% - 0.75em );
- }
-
- .nopadding{
-     padidng:0 !important;
-     padding:0 !important;
- }
- td {
-     font-size: 65%;
-     color: black;
- }
-
- th {
-     font-size: 75%;
- }
-
- .crosswrap{
-     width :2.5%;
- }
- .mdwrap{
-     width:16%;
- }
- .qtywrap {
-     width:9%
- }
- .smwrap{
-     width:6%;
- }
- .taxwrap{
-     width:12%
- }
- .taxcell {
-     width:6%
- }
- .totalwrap {
-     width:49%;
- }
- .mdvwrap{
-     width:19.5%;
- }
- .smvwrap{
-     width:9.75%;
- }
- .unitaddon {
-     overflow:hidden;
-     text-overflow:clip;
-     white-space:nowrap;
-     max-width:35px;
- }
- 
- @page {
-     size : 21cm 29.7cm;
-     margin : 10mm 10mm 20mm 10mm
- }
- thead{
-     display: table-header-group;
- }
- tfoot{
-     display: table-footer-group;
- } 
- .rightJustified {
-     text-align: right;
- }
- select {
-     max-width: 240px !important;
- }
-
-</style>
+<link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css">
 <body style="padding-right:1%;">
   <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
     <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
@@ -198,252 +90,175 @@
 
             {% trans %}Invoice cannot be prior to Devivery Note!{% endtrans %}
           </div>
-	  <form class="form-inline" >
+	  <form class="form-horizontal" >
 	    <div class="col-md-12">
 	      <div class="col-md-4">
-		<h5>Details of Invoice: </h5>
-		<table class="table  table-condensed table-bordered table-striped " >
-                  <tbody>
-
-                    <tr id="deliverynoterow">
-                      <td><label class="normal" for="instrumentno">{% trans %}Delivery No{% endtrans %} :</label></td>
-                      <td colspan="2"><select class="form-control input-sm"  id="invoice_deliverynote" accesskey="">
-                        <option value="" dcno = "" selected>None</option>
-                        {% for deliverynote in deliverynotes %}
-                          {% if gkstatus=="in" %}
-                            {% if deliverynote['csflag']==19 %}
-                              <option value="{{deliverynote['dcid']}}" dcno = "{{deliverynote["dcno"]}}" dcdate="{{deliverynote['dcdate']}}">{{deliverynote["dcno"]}}, {{deliverynote['dcdate']}}, {{deliverynote["custname"]}}</option>
-                            {% endif %}
-                          {% else %}
-                            {% if deliverynote['csflag']==3 %}
-                              <option value="{{deliverynote['dcid']}}" dcno = "{{deliverynote["dcno"]}}" dcdate="{{deliverynote['dcdate']}}">{{deliverynote["dcno"]}}, {{deliverynote['dcdate']}}, {{deliverynote["custname"]}}</option>
-                            {% endif %}
+		  <h5>Details of Invoice: </h5>
+		  <div class="form-group form-inline" id="deliverynoterow">
+		    <label class="col-sm-4" for="invoice_deliverynote">{% trans %}Delivery No{% endtrans %} :</label>
+		    <select class="form-control input-sm col-sm-8"  id="invoice_deliverynote">
+                      <option value="" dcno = "" selected>None</option>
+                      {% for deliverynote in deliverynotes %}
+                        {% if gkstatus=="in" %}
+                          {% if deliverynote['csflag']==19 %}
+                            <option value="{{deliverynote['dcid']}}" dcno = "{{deliverynote["dcno"]}}" dcdate="{{deliverynote['dcdate']}}">{{deliverynote["dcno"]}}, {{deliverynote['dcdate']}}, {{deliverynote["custname"]}}</option>
                           {% endif %}
-                        {% endfor %}
-                      </select></td>
-                    </tr>
-                    <tr>
-                      <td><label class="normal"for="bankname">{% trans %}Invoice No.{% endtrans %} :</label></td>
-                      <td colspan="2"><input class="form-control input-sm" size="15" id="invoice_challanno"  ></td>
-                    </tr>
-
-                    <tr>
-                      <td><label for="instrument_date" class="normal">{% trans %}Invoice Date:{% endtrans %}</label></td>
-                      <td colspan="2">
-                        <div class="form-inline">
-                          <div class="form-group">
-
-                            <input type="text" class="form-control input-sm invoicedate" size="2" maxlength="2" placeholder="DD" id="invoice_date" accesskey="v">
-                            <input type="text" class="form-control input-sm invoicedate" size="2" maxlength="2" placeholder="MM" id="invoice_month" accesskey="v">
-                            <input type="text" class="form-control input-sm invoicedate" size="4" maxlength="4" placeholder="YYYY" id="invoice_year" accesskey="v">
-                          </div>
-                        </div>
-		      </td>
-
-		    </tr>
-		    <tr>
-
-                      <td>
-			{% if gkstatus=="in" %}
-                    	  <label for="invoicestate" class="col-form-label col-form-label-sm">{% trans %}State of Delivery{% endtrans %} :</label>
-			{% else %}
-			  <label for="invoicestate" class="col-form-label col-form-label-sm">{% trans %}State of Origin{% endtrans %} :</label>
-			{% endif %}
-                      </td>
-                      <td>
-                    	<select class="form-control input-sm tax_state" id="invoicestate" >
-                          {% for state in states %}
-			    {% for key, value in state.items() %}
-			      <option value="{{value}}" stateid="{{key}}">{{value}}</option>
-			    {% endfor %}
-			  {% endfor %}
-                        </select>
-                      </td>
-		    </tr>
-		    <tr>
-		      <td>
-                    	<label for="stcode">{% trans %}State Code{% endtrans %} :</label>
-                      </td>
-		      <td>
-			<label id="statecodeforinvoice" >{% trans %} {% endtrans %} </label>
-		      </td>
-		    </tr>
-		    <tr class="invoice_issuer" style="display:none;">
-		      <td>
-			<label for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
-		      </td>
-		      <td colspan="2">
-			<input class="form-control input-sm" id="invoice_issuer_name" placeholder="{% trans %}Issuer's name{% endtrans %}" accesskey="a">
-		      </td>
-		    </tr>
-		    <tr class="invoice_issuer" style="display:none">
-		      <td>
-			<label for="invoice_issuer_designation">{% trans %}Designation{% endtrans %} :</label>
-		      </td>
-		      <td colspan="2">
-			<input class="form-control input-sm" id="invoice_issuer_designation" placeholder="{% trans %}Issuer's designation{% endtrans %}" accesskey="a">
-		      </td>
-		    </tr>
-                  </tbody>
-		</table>
+                        {% else %}
+                          {% if deliverynote['csflag']==3 %}
+                            <option value="{{deliverynote['dcid']}}" dcno = "{{deliverynote["dcno"]}}" dcdate="{{deliverynote['dcdate']}}">{{deliverynote["dcno"]}}, {{deliverynote['dcdate']}}, {{deliverynote["custname"]}}</option>
+                          {% endif %}
+                        {% endif %}
+                      {% endfor %}
+                    </select>
+		  </div>
+		  <div class="form-group form-inline">
+		    <label class="col-sm-4" for="invoice_challanno">{% trans %}Invoice No:{% endtrans %}</label>
+		    <input class="form-control input-sm col-sm-8" size="15" id="invoice_challanno"  >
+		  </div>
+		  <div class="form-group form-inline">
+		    <label for="invoice_date" class="col-sm-4">{% trans %}Invoice Date:{% endtrans %}</label>
+		    <input type="text" class="form-control input-sm invoicedate" size="2" maxlength="2" placeholder="DD" id="invoice_date" accesskey="v">
+                    <input type="text" class="form-control input-sm invoicedate" size="2" maxlength="2" placeholder="MM" id="invoice_month" accesskey="v">
+                    <input type="text" class="form-control input-sm invoicedate" size="4" maxlength="4" placeholder="YYYY" id="invoice_year" accesskey="v">
+                  </div>
+		  <div class="form-group form-inline">
+		    {% if gkstatus=="in" %}
+                      <label for="invoicestate" class="col-sm-4">{% trans %}State of Delivery{% endtrans %} :</label>
+		    {% else %}
+		      <label for="invoicestate" class="col-sm-4">{% trans %}State of Origin{% endtrans %} :</label>
+		    {% endif %}
+		    <select class="form-control input-sm col-sm-8" id="invoicestate" aria-describedby="statecodeforinvoice">
+                      {% for state in states %}
+			{% for key, value in state.items() %}
+			  <option value="{{value}}" stateid="{{key}}">{{value}}</option>
+			{% endfor %}
+		      {% endfor %}
+                    </select>
+		  </div>
+		  <div class="form-group form-inline">
+		    <label class="col-sm-4" for="statecodeforinvoice">{% trans %}State Code{% endtrans %} :</label>
+		    <label class="col-sm-8" id="statecodeforinvoice"></label>
+		  </div>
+		  <div class="form-group form-inline invoice_issuer" hidden>
+		    <label class="col-sm-4" for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
+		    <input class="form-control input-sm col-sm-8" id="invoice_issuer_name" placeholder="{% trans %}Issuer's name{% endtrans %}" accesskey="a" aria-label="{% trans %}Issuer's Name{% endtrans %}">
+		  </div>
+		  <div class="form-inline form-group">
+		    <label class="col-sm-4">{% trans %}Designation{% endtrans %} :</label>
+		    <input class="form-control input-sm col-sm-8" id="invoice_issuer_designation" aria-label="{% trans %}Designation{% endtrans %}" placeholder="{% trans %}Issuer's designation{% endtrans %}">
+		  </div>
               </div>
 
 	      <div class="col-md-4">
-		<table class="table  table-condensed table-bordered table-striped">
-		  <tbody>
-		    {% if gkstatus=="in" %}
-		      <h5>{% trans %}Details of Supplier{% endtrans %} :</h5>
-		    {% else %}
-		      <h5>{% trans %}Details of Reciever | Billed to{% endtrans %} :</h5>
-		    {% endif %}
-		    <tr>
-		      <td>
-			<label for="invoice_customer">
-			  {% if gkstatus=="in" %}
-			    {% trans %}Supplier{% endtrans %} :
-			  {% else %}
-			    {% trans %}Customer{% endtrans %} :
-			  {% endif %}
-			</label></td>
-		      <td colspan="2"><select class="form-control input-sm" id="invoice_customer" accesskey="">
-			<option value="" disabled hidden selected>
-			  {% if gkstatus=="in" %}
-			    {% trans %}Select Supplier{% endtrans %}
-			  {% else %}
-			    {% trans %}Select Customer{% endtrans %}
-			  {% endif %}
-			</option>
-			{% for supplier in suppliers %}
-			  <option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
+		  {% if gkstatus=="in" %}
+		    <h5>{% trans %}Details of Supplier{% endtrans %} :</h5>
+		  {% else %}
+		    <h5>{% trans %}Details of Receiver | Billed to{% endtrans %} :</h5>
+		  {% endif %}
+		  <div class="form-group form-inline">
+		    <label class="col-sm-4" for="invoice_customer">
+		      {% if gkstatus=="in" %}
+			{% trans %}Supplier{% endtrans %} :
+		      {% else %}
+			{% trans %}Customer{% endtrans %} :
+		      {% endif %}
+		    </label>
+		    <select class="form-control input-sm col-sm-8" id="invoice_customer" accesskey="">
+		      <option value="" disabled hidden selected>
+			{% if gkstatus=="in" %}
+			  {% trans %}Select Supplier{% endtrans %}
+			{% else %}
+			  {% trans %}Select Customer{% endtrans %}
+			{% endif %}
+		      </option>
+		      {% for supplier in suppliers %}
+			<option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
+		      {% endfor %}
+		    </select>
+		  </div>
+		  <div class="form-group form-inline">
+		    <label for="invoice_customerstate" class="col-sm-4">
+		      {% if gkstatus == "in" %}
+			{% trans %}Supplier State{% endtrans %}:
+		      {% else %}
+			{% trans %}Customer State{% endtrans %}:
+		      {% endif %}
+		    </label>
+		    <select id="invoice_customerstate" class="form-control input-sm col-sm-8">
+		      {% for state in states %}
+			{% for key, value in state.items() %}
+			  <option value="{{value}}" stateid="{{key}}">{{value}}</option>
 			{% endfor %}
-		      </select>
-		      </td>
-		    </tr>
-		    <tr>
+		      {% endfor %}
+		    </select>
+		  </div>
+		  <div class="form-group form-inline">
+		    <label for="statecodeofcustomer" class="col-sm-4">{% trans %}State Code{% endtrans %} :</label>
+		    <label id="statecodeofcustomer" class="col-sm-8">{% trans %} {% endtrans %} </label>
+		  </div>
+		  <div class="form-group form-inline">
+		    <label for="tin" class="col-sm-4">{% trans %}TIN:{% endtrans %}</label>
+		    <label type="text" id="tin" class="col-sm-8"></label>
+		  </div>
+		  <div class="form-group form-inline">
+		    <label for="gstin" class="col-sm-4">{% trans %}GSTIN:{% endtrans %}</label>
+		    <label type="text" id="gstin" class="col-sm-8" name="gstin" ></label>
+		  </div>
+		  <div class="form-group form-inline">
+		    <label class="col-sm-4" for="invoice_customeraddr">
 		      {% if gkstatus == "in" %}
-			<td>  <label for="invoice_supplierstate">
-			  {% trans %}Supplier State{% endtrans %} :
-			</label></td>
+			{% trans %}Supplier Address{% endtrans %} :
 		      {% else %}
-			<td>
-			  <label for="invoice_customerstate">
-			    {% trans %}Customer State{% endtrans %} :
-			  </label>
-			</td>
+			{% trans %}Customer Address{% endtrans %} :
 		      {% endif %}
-		      <td>
-			<select id="invoice_customerstate" class="form-control input-sm" style="max-width:220px;">
-			  {% for state in states %}
-			    {% for key, value in state.items() %}
-			      <option value="{{value}}" stateid="{{key}}">{{value}}</option>
-			    {% endfor %}
-			  {% endfor %}
-			</select>
-
-		      </td>
-		    </tr>
-		    <tr>
-		      <td>
-			<label for="stcode">{% trans %}State Code{% endtrans %} :</label>
-		      </td>
-		      <td>
-			<label id="statecodeofcustomer" >{% trans %} {% endtrans %} </label>
-		      </td>
-		    </tr>
-		    <tr>
-
-		      <td>  <label for="tin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}TIN:{% endtrans %}</label></td>
-		      <td colspan="2"><label type="text" id="tin" style="min-width:100%" name="tin" ></label></td>
-
-		    </tr>
-		    <tr>
-
-		      <td>  <label for="gstin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN:{% endtrans %}</label></td>
-		      <td colspan="2"><label type="text" id="gstin" style="min-width:100%" name="gstin" ></label></td>
-
-		    </tr>
-		    <tr>
-		      {% if gkstatus == "in" %}
-			<td>        <label for="invoice_supplieraddr">
-			  {% trans %}Supplier Address{% endtrans %} :
-			</label>
-			</td>
-		      {% else %}
-			<td><label for="invoice_customeraddr">
-			  {% trans %}Customer Address{% endtrans %} :
-			</label></td>
-		      {% endif %}
-		      <td colspan="2">
-			<label id="invoice_customeraddr" >{% trans %} {% endtrans %} </label>
-		      </td>
-		    </tr>
-		  </tbody>
-		</table>
+		    </label>
+		    <label class="col-sm-8" id="invoice_customeraddr" ></label>
+		  </div>
 	      </div>
 	      <div class="col-md-4">
 		<h5>Details of Consignee | Shipped to: </h5>
-		<table class="table  table-condensed table-bordered table-striped">
-		  <tbody>
-		    <tr>
-		      <td>  <label for="consignee" class=" col-form-label col-form-label-sm" id="consigneelbl">{% trans %}Name{% endtrans %} :</label></td>
-                      <td colspan="2"><input type="text" id="consigneename" class=" form-control input-sm" name="consigneename"  style="width:100%"></input></td>
-		    </tr>
-		    <tr>
-
-                      <td>
-                        <label for="orgstate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} :</label>
-                      </td>
-                      <td>
-                        <select class="form-control input-sm tax_state" id="consigneestate" >
-                          {% for state in states %}
-			    {% for key, value in state.items() %}
-			      <option value="{{value}}" stateid="{{key}}">{{value}}</option>
-			    {% endfor %}
-			  {% endfor %}
-                        </select>
-                      </td>
-                    </tr>
-		    <tr>
-		      <td>
-			<label for="stcode">{% trans %}State Code{% endtrans %} :</label>
-                      </td>
-		      <td>
-			<label id="statecodeofconsignee" >{% trans %} {% endtrans %} </label>
-		      </td>
-		    </tr>
-		    <tr>
-
-                      <td>  <label for="tinconsignee" class=" col-form-label col-form-label-sm">{% trans %}TIN{% endtrans %} :</label></td>
-                      <td colspan="2"><input type="text" id="tinconsignee" class=" form-control input-sm" name="tinconsignee"  style="width:100%"></input></td>
-
-                    </tr>
-		    <tr>
-
-                      <td>  <label for="gstinconsignee" class=" col-form-label col-form-label-sm" >{% trans %}GSTIN{% endtrans %} :</label></td>
-                      <td colspan="2"><input type="text" id="gstinconsignee" class=" form-control input-sm" name="gstinconsignee"  style="width:100%"></input></td>
-
-                    </tr>
-		    <tr>
-
-                      <td>  <label for="consigneeaddress" class=" col-form-label col-form-label-sm">{% trans %}Address :{% endtrans %}</label></td>
-                      <td colspan="2"><input type="text" id="consigneeaddress" class=" form-control input-sm" name="consigneeaddress" style="width:100%" ></input></td>
-		    </tr>
-		  </tbody>
-		</table>
+		<div class="form-group form-inline">
+		  <label for="consigneename" class="col-sm-4">{% trans %}Name{% endtrans %} :</label>
+		  <input type="text" id="consigneename" class="col-sm-8 form-control input-sm"></input>
+		</div>
+		<div class="form-group form-inline">
+		  <label for="consigneestate" class="col-sm-4">{% trans %}State{% endtrans %} :</label>
+		  <select class="form-control input-sm tax_state col-sm-8" id="consigneestate" >
+                    {% for state in states %}
+		      {% for key, value in state.items() %}
+			<option value="{{value}}" stateid="{{key}}">{{value}}</option>
+		      {% endfor %}
+		    {% endfor %}
+                  </select>
+		</div>
+		<div class="form-group form-inline">
+		  <label for="statecodeofconsignee" class="col-sm-4">{% trans %}State Code{% endtrans %} :</label>
+		  <label id="statecodeofconsignee" class="col-sm-8"></label>
+		</div>
+		<div class="form-group form-inline">
+		  <label for="tinconsignee" class="col-sm-4">{% trans %}TIN{% endtrans %} :</label>
+		  <input type="text" id="tinconsignee" class="col-sm-8 form-control input-sm" name="tinconsignee"></input>
+		</div>
+		<div class="form-group form-inline">
+		  <label for="gstinconsignee" class="col-sm-4" >{% trans %}GSTIN{% endtrans %} :</label>
+		  <input type="text" id="gstinconsignee" class="col-sm-8 form-control input-sm" name="gstinconsignee"></input>
+		</div>
+		<div class="form-group form-inline">
+		  <label for="consigneeaddress" class="col-sm-4">{% trans %}Address :{% endtrans %}</label>
+		  <input type="text" id="consigneeaddress" class="col-sm-8 form-control input-sm" name="consigneeaddress"></input>
+		</div>
+		
 	      </div>
 	    </div>
+	    <a id="taxapplicablescroll"></a>
 	    <div class="col-md-12">
 	      <div class="col-md-3">
-		<label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
+		<label for="taxapplicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
 		<select class="form-control input-sm"  id="taxapplicable" accesskey="">
 		  <option value="7" selected>GST</option>
 		  <option value="22">VAT</option>
 		</select>
 	      </div>
-
-
-
-
 	      {% if gkstatus=="in" %}
 		<input type="hidden" id="status" value="9">
 	      {% else %}
@@ -599,24 +414,24 @@
 			    </div>		      </td>
 
 			  <td class="smwrap">
-			    <input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype smwrap" size="9" value="0.00" placeholder="0.00">
+			    <input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00">
 			  </td>
 			  <td class="smwrap">
-			    <input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype smwrap" value="0.00" size="9" placeholder="0.00">
+			    <input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00">
 			  </td>
 			  <td class="smwrap">
-			    <input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype smwrap" value="0.00" size="9" placeholder="0.00" disabled>
+			    <input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00" disabled>
 			  </td>
 
-			  <td class="taxcell"><input type="text" class="invoice_product_cgstrate form-control input-sm text-right numtype taxcell" size="9" value="0.00" placeholder="0.00" disabled></td>
-			  <td class="taxcell"><input type="text" class="invoice_product_cgstamount form-control input-sm text-right numtype taxcell" size="8" value="0.00" placeholder="0.00" disabled></td>
+			  <td class="taxcell"><input type="text" class="invoice_product_cgstrate form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
+			  <td class="taxcell"><input type="text" class="invoice_product_cgstamount form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00" disabled></td>
 
-			  <td class="taxcell"><input type="text" class="invoice_product_sgstrate  form-control input-sm text-right numtype taxcell" size="9" value="0.00" placeholder="0.00" disabled></td>
-			  <td class="taxcell"><input type="text" class="invoice_product_sgstamount  input-sm form-control text-right numtype taxcell" size="9" value="0.00" placeholder="0.00" disabled></td>
+			  <td class="taxcell"><input type="text" class="invoice_product_sgstrate  form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
+			  <td class="taxcell"><input type="text" class="invoice_product_sgstamount  input-sm form-control text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
 
 			  <td class="taxcell">
-			    <input type="text" class="invoice_product_igstrate  input-sm text-right form-control numtype taxcell" size="9" value="0.00" placeholder="0.00" disabled></td>
-			    <td class="taxcell"><input type="text" class="invoice_product_igstamount form-control input-sm text-right numtype taxcell" size="9" value="0.00" placeholder="0.00" disabled>
+			    <input type="text" class="invoice_product_igstrate  input-sm text-right form-control numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
+			    <td class="taxcell"><input type="text" class="invoice_product_igstamount form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled>
 			    </td>
 			</tr>
 		      </tbody>
@@ -647,7 +462,7 @@
 		    </thead>
 		    <tbody>
 		      <tr>
-			<td class="col-xs-8"><input type="text" class="invoice_product_total form-control input-sm text-right numtype smwrap" value="0.00" size="14" placeholder="0.00" disabled></td>
+			<td class="col-xs-8"><input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" size="14" placeholder="0.00" disabled></td>
 			<td class="col-xs-4 text-center">
 			</td>
 		      </tr>
@@ -667,95 +482,57 @@
 
 	    <div class="col-md-12">
 	      <div class="col-md-4">
-		<table class="table  table-condensed table-bordered table-striped">
-		  <tbody>
-		    <h5>Bank Details:</h5>
-		    <tr>
-		      <td>  <label for="Account Number" class=" col-form-label col-form-label-sm">{% trans %}Account No. :{% endtrans %}</label></td>
-		      <td colspan="2"><input type="text" id="accountno" class="lastfield form-control input-sm" name="accountno" ></input></td>
-		    </tr>
-		    <tr>
-		      <td>  <label for="Bank Name" class=" col-form-label col-form-label-sm">{% trans %}Bank Name :{% endtrans %}</label></td>
-		      <td colspan="2"><input type="text" id="bankname" class="lastfield form-control input-sm" name="bankname" ></input></td>
-		    </tr>
-		    <tr>
-
-		      <td>  <label for="branch" class=" col-form-label col-form-label-sm">{% trans %}Bank Branch Name :{% endtrans %}</label></td>
-		      <td colspan="2"><input type="text" id="branch" class="lastfield form-control input-sm" ></input></td>
-
-		    </tr>
-		    <tr>
-
-		      <td>  <label for="ifsc" class=" col-form-label col-form-label-sm">{% trans %}Bank Branch IFSC code :{% endtrans %}</label></td>
-		      <td colspan="2"><input type="text" id="ifsc" class="lastfield form-control input-sm" name="ifsc" ></input></td>
-
-		    </tr>
-		  </tbody>
-		</table>
-
+		<h5>Bank Details:</h5>
+		<div class="form-group form-inline">
+		  <label for="accountno" class="col-sm-4">{% trans %}Account No.{% endtrans %} :</label>
+		  <input type="text" id="accountno" class="lastfield form-control input-sm col-sm-8"></input>
+		</div>
+		<div class="form-group form-inline">
+		  <label for="bankname" class="col-sm-4">{% trans %}Bank Name{% endtrans %} :</label>
+		  <input type="text" id="bankname" class="lastfield form-control input-sm" name="bankname" ></input>
+		</div>
+		<div class="form-group form-inline">
+		  <label for="branch" class="col-sm-4">{% trans %}Bank Branch Name{% endtrans %} :</label>
+		  <input type="text" id="branch" class="lastfield form-control input-sm col-sm-8" ></input>
+		</div>
+		<div class="form-group form-inline">
+		  <label for="ifsc" class="col-sm-4">{% trans %}Bank Branch IFSC code{% endtrans %} :</label>
+		  <input type="text" id="ifsc" class="col-sm-8 lastfield form-control input-sm" name="ifsc" ></input> 
+		</div>
 	      </div>
 	      <div class="col-md-8" >
 		<h5>Total</h5>
-		<table class="table  table-condensed table-bordered table-striped">
-		  <tbody>
-
-		    <tr>
-		      <td>  <label style="font-size: 125%" for="totalinvoicevalue" class=" col-form-label col-form-label-sm">{% trans %}Total Invoice Value :{% endtrans %}</label><label style="font-size: 125%" class=" col-form-label col-form-label-sm" id="totalinvoicevalue"></label></td>
-		    </tr>
-		  </tbody>
-		</table>
+		<div class="form-group form-inline">
+		  <label for="totalinvoicevalue" class="col-sm-4">{% trans %}Total Invoice Value{% endtrans %} :</label>
+		  <label class="col-sm-8" id="totalinvoicevalue"></label>
+		</div>
 		<div class="row">
 		  <div class="col-md-6">
-		    <table class="table  table-condensed table-bordered table-striped">
-		      <tbody>
-			<tr>      <td>
-  			  <label for="transportationmode" id="transmode">{% trans %}Transportation Mode{% endtrans %} :</label>
-			</td>
-			<td>
-  			  <input type="text" id="transportationmode" class="lastfield form-control input-sm" name="rvc" ></input>
-
-			</td>
-			</tr>
-			<tr>
-			  <td>
-
-  			    <label for="inv" >{% trans %}Vehicle No.{% endtrans %} :</label>
-			  </td>
-			  <td>
-  			    <input type="text" id="vehicleno" class="lastfield form-control input-sm" name="vehicleno"></input>
-
-			  </td>
-			</tr>
-		      </tbody>
-		    </table>
+		    <div class="form-inline form-group">
+		      <label for="transportationmode" class="col-sm-4" id="transmode">{% trans %}Transportation Mode{% endtrans %} :</label>
+		      <input type="text" id="transportationmode" class="col-sm-8 lastfield form-control input-sm" name="rvc" ></input>
+		    </div>
+		    <div class="form-inline form-group">
+		      <label for="inv" class="col-sm-4">{% trans %}Vehicle No.{% endtrans %} :</label>
+		      <input type="text" id="vehicleno" class="col-sm-8 lastfield form-control input-sm" name="vehicleno"></input>
+		    </div>
 		  </div>
 		  <div class="col-md-6">
-		    <table class="table  table-condensed table-bordered table-striped">
-		      <tbody>
-			<tr>
-			  <td>
+		    <div class="form-group form-inline">
+		      <label for="supply_date" class="col-sm-4">{% trans %}Date of Supply{% endtrans %}:</label>
+		      <div class="form-group col-sm-8">
+			<input type="text" class="lastfield form-control input-sm supplydate" size="2" maxlength="2" placeholder="DD" id="supply_date" accesskey="v">
 
-  			    <label for="supply_date" >{% trans %}Date of Supply{% endtrans %} :</label>
-			  </td>
-			  <td>
-			    <div class="form-group">
-			      <input type="text" class="lastfield form-control input-sm supplydate" size="2" maxlength="2" placeholder="DD" id="supply_date" accesskey="v">
+			<input type="text" class="lastfield form-control input-sm supplydate" size="2" maxlength="2" placeholder="MM" id="supply_month" accesskey="v">
 
-			      <input type="text" class="lastfield form-control input-sm supplydate" size="2" maxlength="2" placeholder="MM" id="supply_month" accesskey="v">
+			<input type="text" class="lastfield form-control input-sm supplydate" size="4" maxlength="4" placeholder="YYYY" id="supply_year" accesskey="v">
+  		      </div>
+		    </div>
 
-			      <input type="text" class="lastfield form-control input-sm supplydate" size="4" maxlength="4" placeholder="YYYY" id="supply_year" accesskey="v">
-  			    </div>
-			  </td>
-			</tr>
-
-			<tr>
-
-			  <td>  <label for="inv" >{% trans %}Reverse Charge {% endtrans %} :</label></td>
-			  <td><input type="text" id="reversecharge" class="lastfield form-control input-sm" name="reversecharge"></input></td>
-
-			</tr>
-		      </tbody>
-		    </table>
+		    <div class="form-group form-inline">
+		      <label for="inv" class="col-sm-4">{% trans %}Reverse Charge{% endtrans %}:</label>
+		      <input type="text" id="reversecharge" class="col-sm-8 lastfield form-control input-sm" name="reversecharge"></input>
+		    </div>
 		  </div>
 		</div>
 	      </div>

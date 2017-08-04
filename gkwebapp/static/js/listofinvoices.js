@@ -168,10 +168,9 @@ $(document).ready(function() {
             })
             .done(function(resp) {
                 $("#invload").html("");
-                $('.modal-backdrop').remove();
-                $('.modal').modal('hide');
                 $("#invload").html(resp);
-                $('#invview').modal('show');
+                $('#listdiv').hide();
+		$("#viewinvdiv").show();
             });
     });
     $("#invview").on('hidden.bs.modal', function(event) {

@@ -476,6 +476,7 @@ $(document).ready(function() {
 	if (event.which == 13) {
 	    event.preventDefault();
 	    $("#taxapplicable").focus().select();  //Focus Shift to Tax Applicable field.
+	    $('html,body').animate({scrollTop: $("#taxapplicablescroll").offset().top},'slow');
 	}
 	else if (event.which == 38) {
 	    $("#gstinconsignee").focus();  //Focus Shifts to GSTIN of Consignee.
