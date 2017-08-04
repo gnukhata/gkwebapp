@@ -808,7 +808,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
     var previndex1 = curindex1-1;
     if (event.which==13) {
       event.preventDefault();
-      if ($('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="IGST") {
+      if ($('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="IGST" && $("#vatorgstflag").val()!='29') {
         if ($("#invflag").val()==0){
             $("#epsubmit").focus();
         }
