@@ -134,14 +134,19 @@
           <th class=""></th>
         </tr>
       </thead>
+<input value="{{vatorgstflag}}" id="vatorgstflag" hidden>
       <tbody>
         <tr class="blank" value="new">
           <td class="col-xs-4">
             <select class="form-control input-sm product_tax_disable tax_name product_new_name">
               <option value="" selected disable hidden>Select Tax</option>
+              {%if vatorgstflag=='22' or vatorgstflag=='29' %}
               <option value="VAT">VAT</option>
               <option value="CVAT">CVAT</option>
+              {%endif%}
+              {%if vatorgstflag=='7' or vatorgstflag=='29'%}
               <option value="IGST">IGST</option>
+              {%endif%}
             </select>
           </td>
           <td class="col-xs-4">
@@ -197,8 +202,8 @@
       <input type="text" name="inv" id="invflag" value="1" hidden>
 {%if  proddesc["gsflag"]==7  %}
 
-                  <small id="taxhelp3" class="form-text text-muted noinventory ">When on Tax Rate or Tax Name press 'Esc' key to shift focus to Godown Name or from Godown Opening Stock to 'Save' button.</small>
-                    <small id="taxhelp5" class="form-text text-muted " hidden>When on Tax Rate or Tax Name press 'Esc' key to shift focus to 'Save' button.</small><br>
+                <small id="taxhelp3" class="form-text text-muted noinventory ">When on Tax Rate or Tax Name press 'Esc' key to shift focus to Godown Name or from Godown Opening Stock to 'Save' button.</small>
+                <small id="taxhelp5" class="form-text text-muted " hidden>When on Tax Rate or Tax Name press 'Esc' key to shift focus to 'Save' button.</small><br>
 {%else%}
                   <small id="taxhelp4" class="form-text text-muted ">When on Tax Rate or Tax Name press 'Esc' key to shift focus to 'Save' button.</small><br>
   {%endif%}

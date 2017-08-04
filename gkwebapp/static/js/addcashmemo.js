@@ -441,7 +441,11 @@ var prodservflag=0;
       var curindex = $(this).closest('tr').index();
       var nextindex = curindex + 1;
       var previndex = curindex - 1;
-      $(".product_name_vat").change();
+      $(".product_name_gst").change();
+      if (event.which == 38 || event.which == 40) {
+        event.preventDefault();
+          $(".product_name_gst").change();
+      }
       if (event.which == 13) {
         event.preventDefault();
 
@@ -535,6 +539,8 @@ var prodservflag=0;
 
                  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(1) .invoice_product_hsncode').text(resp["gscode"]);
                  if (resp["gsflag"]==7){
+                   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').prop("disabled", false);
+                   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').prop("disabled", false);
                    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) span').text(resp["unitname"]);
                    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) span').text(resp["unitname"]);
 
@@ -552,6 +558,7 @@ var prodservflag=0;
                  }
                  else{
                    prodservflag=0;
+
                  }
 
 
