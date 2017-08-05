@@ -325,6 +325,8 @@ $(document).ready(function()
     $("#clone").hide();
     $("#delete").hide();
     $("#vno").prop('disabled', true);
+    $(".dramt").prop('disabled', true);
+    $(".cramt").prop('disabled', true);
     $(".ttl").prop('disabled', true);
     $(".vdate").prop('disabled', true);
     $("#viewdiv").hide();
