@@ -152,6 +152,7 @@ $("#additem").keydown(function(event) {
   else {
     if ($("#catg").val()=='1'){
       $("#addcatselect").focus();
+      console.log("here ro");
       event.preventDefault();
 
     }
@@ -309,7 +310,29 @@ $("#godownflag").keydown(function(event){
 $(document).off('keydown', '#addcatselect').on('keydown', '#addcatselect',function(event) {
   if (event.which==13) {
     event.preventDefault();
+    //$("#addproddesc").focus().select();
+    if($("#additem option:selected").val() == '19')
+    {
+        event.preventDefault();
     $("#addproddesc").focus().select();
+  }
+  else {
+    if ($("#catg").val()=='1'){
+      $("#addcatselect").focus();
+      console.log("here ro");
+      event.preventDefault();
+
+    }
+    else{
+      $("#addproddesc").focus();
+      event.preventDefault();
+
+    }
+
+  
+
+
+  }
   }
 });
 $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {

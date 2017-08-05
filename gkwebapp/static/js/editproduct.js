@@ -275,6 +275,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
         console.log("success");
         if (resp["gkresult"].length > 0) {
           var taxhtml = $('#product_edit_tax_table tbody tr:first').html();
+
           $('#product_edit_tax_table tbody tr').remove();
 
           //var taxhtml = $('#product_edit_tax_table tbody tr:first').html();
@@ -283,7 +284,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
           //$('#product_edit_tax_table tbody tr:last td:last').append('<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 
         for (tax of resp["gkresult"]) {
-          $('#product_edit_tax_table tbody').append('<tr>'+ taxhtml + '</tr>');
+          $('#product_edit_tax_table tbody').append('<tr value="'+tax["taxid"]+'">'+ taxhtml + '</tr>');
           $('#product_edit_tax_table tbody tr:last td:last').append('<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 
           $(".product_tax_disable").prop('disabled',true);
@@ -644,7 +645,10 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
         event.preventDefault();
         var types = [];
         $('#product_edit_tax_table tbody tr').each(function(){
-          if ($(".tax_name",this).val()=='CVAT' || $(".tax_name",this).val()=='IGST') {
+          if($(".tax_name",this).val()=='IGST') {
+          types.push($(".tax_name",this).val());
+        }
+          if ($(".tax_name",this).val()=='CVAT') {
           types.push($(".tax_name",this).val());
           }
         });
