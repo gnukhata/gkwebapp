@@ -61,7 +61,13 @@ $(document).ready(function()
 
   if (($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase") && sessionStorage.invflag==1)
   {
-    $(".invhide").show();
+    if ($("#viewinvsel").length > 0){
+      $(".invhide").show();
+    }
+    else {
+      $(".invhide").hide();
+    }
+
     var inv = $("#invsel option:selected").attr("total");
     if ($.trim(inv)!="")
     {
@@ -114,7 +120,20 @@ $(document).ready(function()
       $(".cramt:eq(1)").val(inv);
       $("#drtotal:first").val(inv);
       $("#crtotal:first").val(inv);
-      console.log($(".dramt:first").val() + "INV" + inv);
+      var value = $('#invsel option:selected').attr("customername");
+      $(".dramt:first").val(parseFloat(inv).toFixed(2));
+      $(".cramt:eq(1)").val(parseFloat(inv).toFixed(2));
+      if (($('#m_vtype').val()=="sales") && sessionStorage.invsflag ==1)
+      {
+      $(".accs:first option").filter(function() {return this.text == value;}).attr('selected', true);
+      var e = jQuery.Event("keydown");
+      e.which = 13; // # Some key code value
+      $(".dramt").trigger(e);
+      }
+      if (($('#vtype').val()=="purchase") && sessionStorage.invsflag ==1)
+     {
+          $(".accs:eq(1) option").filter(function() {return this.text == value;}).attr('selected', true);
+      }
 
     }
     else
@@ -154,12 +173,6 @@ $(document).ready(function()
 
 
   $("#demovctable").find("input,select,textarea,button").prop("disabled",true);
-  /**if ($("#invsel").val() == "") {
-    $("#invhide").hide();
-  }
-  else {
-    $("#invhide").show();
-  }**/
   $("#vno").prop('disabled', true);
   $("#viewdiv").show();
   $("#viewinvsel").prop('disabled', true);
@@ -321,6 +334,8 @@ $(document).ready(function()
     $("#save").show();
     $("#removediv").show();
     $("#lock").hide();
+    $(".crdr").prop('disabled', true);
+    $(".accs").prop('disabled', true);
     $("#edit").hide();
     $("#clone").hide();
     $("#delete").hide();
@@ -433,6 +448,7 @@ $(document).ready(function()
     $(".lblec").prepend('<i>Cloning </i>');
     $("#lock").hide();
     $("#clone").hide();
+    $(".invhide").show();
     $("#edit").hide();
     $("#delete").hide();
     $(".ttl").prop('disabled', true);
