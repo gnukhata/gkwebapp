@@ -32,7 +32,7 @@
                 </select>
               </div>
 	      <div class="form-group col-sm-11">
-		<small id="txtareahelp" class="form-text text-muted common">{% trans %}If you want to put this product under a category/sub-category, you must create/select a category first.{% endtrans %}</small>
+		<small id="txtareahelp" class="form-text text-muted common">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
 	      </div>
               {% else %}
               <div class="form-group col-sm-11 productclass" id="categorydiv">
@@ -43,7 +43,7 @@
                     <option value="{{cat['categorycode']}}">{{cat["categoryname"]}}({{cat["subcount"]}})</option>
                   {% endfor %}
                 </select>
-		<small id="txtareahelp" class="form-text text-muted productclass">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
+		<small id="txtareahelp" class="form-text text-muted productclass">{% trans %}If you want to put this product under a category/sub-category, you must create/select a category first.{% endtrans %}</small>
               </div>
               {% endif %}
               </div>
@@ -54,11 +54,12 @@
                 <label for="addproddesc" class="common" id="proservlabel"></label><label for="addproddesc" class="common" style="color:red;font-size: 120%;">*</label>
                 <input type='text' class="form-control input-sm common" name="addproddesc"  id="addproddesc" placeholder="Alphanumeric">
               </div>
-
-              <div class="form-group col-sm-11 pd ">
-                <label for="addproddesc" class="common" id="gscodelabel" >{% trans %}{% endtrans %} :</label><label for="gscode" class="common" style="color:red;font-size: 120%;">*</label>
+	      {%if vatorgstflag=='7' or vatorgstflag=='29'%}
+		<div class="form-group col-sm-11 pd ">
+                <label for="addproddesc" class="common" id="gscodelabel" >{% trans %}HSN code{% endtrans %} :</label><label for="gscode" class="common" ></label>
                 <input type='text' class="form-control input-sm common" name="gscode"  id="hsnno" placeholder="Alphanumeric">
-              </div>
+		</div>
+		{% endif %}
             </div>
 
             <div class="row productclass">
