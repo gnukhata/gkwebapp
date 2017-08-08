@@ -218,6 +218,25 @@ $(document).ready(function() {
 	$(this).val(yearpad($(this).val(), 4));
     });
 
+    $(".invoicedate").change(function(event){
+	var invoicedate = Date.parseExact($("#invoice_date").val() + $("#invoice_month").val() + $("#invoice_year").val(), "ddMMyyyy");
+	var gstdate = Date.parseExact('01072017', "ddMMyyyy");
+	if (invoicedate) {
+	    if (invoicedate >= gstdate) {
+		$("#taxapplicabletext").text("GST");
+		$("#taxapplicable").val("7");
+		$("#gstproducttable").show();  //Shows GST Product table.
+		$("#invoice_product_table_vat").hide();  //Hides VAT Product table.
+	    }
+	    else {
+		$("#taxapplicabletext").text("VAT");
+		$("#taxapplicable").val("22");
+		$("#gstproducttable").hide();
+		$("#invoice_product_table_vat").show();
+	    }
+	}
+    });
+
     //Key Event for Invoice Date Field.
     $("#invoice_date").keydown(function(event) {
 	if (event.which == 13) {
@@ -483,35 +502,6 @@ $(document).ready(function() {
 	}
     });
 
-    //Change Event for Tax Applicable field.
-    $("#taxapplicable").change(function(event){
-	if ($("#taxapplicable option:selected").val() == 7) {
-	    $("#gstproducttable").show();  //Shows GST Product table.
-	    $("#invoice_product_table_vat").hide();  //Hides VAT Product table.
-	}
-	else {
-	    $("#gstproducttable").hide();
-	    $("#invoice_product_table_vat").show();
-	}
-    });
-
-    //Key Event for Tax Applicable Field.
-    $(document).off('keydown', '#taxapplicable').on('keydown', '#taxapplicable', function(event) {
-	if (event.which == 13) {
-	    if ($("#taxapplicable option:selected").val() == 7) {
-		$('#invoice_product_table_gst tbody tr:first td:eq(0) select').focus();  //Focus shifts to Product Name of GST Ptoduct Table.
-	    }
-	    else{
-		$('#invoice_product_table_vat tbody tr:first td:eq(0) select').focus();  //Focus shifts to Product Name of VAT Product Table.
-	    }
-	}
-	else if (event.which == 38) {
-	    if ($("#taxapplicable option:selected").val() == 7) {
-		$('#consigneeaddress').focus().select();  //Focus shifts to Consignee Address.
-	    }
-	}
-    });
-
     //When focus is on an element which has numtype class entering characters and negative integers is disabled.
     $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
 	event.preventDefault();
@@ -554,7 +544,7 @@ $(document).ready(function() {
 	   destinationstate = $("#consigneestate option:selected").val();   
 	  }
       }
-	var taxflag=$("#taxapplicable option:selected").val();
+	var taxflag=$("#taxapplicable").val();
 	if (productcode != "") {
 	    $.ajax({
         url: '/invoice?action=getappliedtax',
@@ -1057,7 +1047,7 @@ $(document).ready(function() {
 	   destinationstate = $("#consigneestate option:selected").val();   
 	  }
       }
-    var taxflag=$("#taxapplicable option:selected").val();
+    var taxflag=$("#taxapplicable").val();
 
     if (productcode != "") {
 	$.ajax({
@@ -1439,7 +1429,7 @@ if (event.which == 13) {
 		f[previndex].select();
 	    }
 	    else if (previndex == -1) {
-		if ($("#taxapplicable option:selected").val() == 7) {
+		if ($("#taxapplicable").val() == 7) {
 		    $(".invoice_product_discount_gst:last").focus().select();
 		}
 		else {
@@ -1626,7 +1616,7 @@ if (event.which == 13) {
       bankdetails["bankname"] = $("#bankname").val();
       bankdetails["ifsc"] = $("#ifsc").val();
       bankdetails["branch"] = $("#branch").val();
-    if ($("#taxapplicable option:selected").val() == 22) {
+    if ($("#taxapplicable").val() == 22) {
     for (var i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
       productqtys.push(parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()));
       if ($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val() == "") {
@@ -1734,7 +1724,7 @@ if (event.which == 13) {
 
     }
 
-      else if ($("#taxapplicable option:selected").val() == 7) {
+      else if ($("#taxapplicable").val() == 7) {
 	  productqtys.push(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()));
 	  for (var i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
 	      var obj = {};
@@ -1944,7 +1934,7 @@ if (event.which == 13) {
       $('#invoice_date').focus().select();
       return false;
     }
-    var curdate = Date.parseExact($("#invoice_year").val() + $("#invoice_month").val() + $("#invoice_date").val(), "yyyyMMdd")
+      var curdate = Date.parseExact($("#invoice_year").val() + $("#invoice_month").val() + $("#invoice_date").val(), "yyyyMMdd");
     if (!curdate.between(financialstart, financialend)) {
       $("#between-date-alert").alert();
       $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function() {

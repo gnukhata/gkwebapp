@@ -112,11 +112,11 @@
                     </select>
 		  </div>
 		  <div class="form-group form-inline">
-		    <label class="col-sm-4" for="invoice_challanno">{% trans %}Invoice No:{% endtrans %}</label>
+		    <label class="col-sm-4" for="invoice_challanno">{% trans %}Invoice No{% endtrans %} :</label>
 		    <input class="form-control input-sm col-sm-8" size="15" id="invoice_challanno"  >
 		  </div>
 		  <div class="form-group form-inline">
-		    <label for="invoice_date" class="col-sm-4">{% trans %}Invoice Date:{% endtrans %}</label>
+		    <label for="invoice_date" class="col-sm-4">{% trans %}Invoice Date{% endtrans %} :</label>
 		    <input type="text" class="form-control input-sm invoicedate" size="2" maxlength="2" placeholder="DD" id="invoice_date" accesskey="v">
                     <input type="text" class="form-control input-sm invoicedate" size="2" maxlength="2" placeholder="MM" id="invoice_month" accesskey="v">
                     <input type="text" class="form-control input-sm invoicedate" size="4" maxlength="4" placeholder="YYYY" id="invoice_year" accesskey="v">
@@ -197,11 +197,11 @@
 		    <label id="statecodeofcustomer" class="col-sm-8">{% trans %} {% endtrans %} </label>
 		  </div>
 		  <div class="form-group form-inline">
-		    <label for="tin" class="col-sm-4">{% trans %}TIN:{% endtrans %}</label>
+		    <label for="tin" class="col-sm-4">{% trans %}TIN{% endtrans %} :</label>
 		    <label type="text" id="tin" class="col-sm-8"></label>
 		  </div>
 		  <div class="form-group form-inline">
-		    <label for="gstin" class="col-sm-4">{% trans %}GSTIN:{% endtrans %}</label>
+		    <label for="gstin" class="col-sm-4">{% trans %}GSTIN{% endtrans %} :</label>
 		    <label type="text" id="gstin" class="col-sm-8" name="gstin" ></label>
 		  </div>
 		  <div class="form-group form-inline">
@@ -253,11 +253,9 @@
 	    <a id="taxapplicablescroll"></a>
 	    <div class="col-md-12">
 	      <div class="col-md-3">
-		<label for="taxapplicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
-		<select class="form-control input-sm"  id="taxapplicable" accesskey="">
-		  <option value="7" selected>GST</option>
-		  <option value="22">VAT</option>
-		</select>
+		<label for="taxapplicabletext" name="taxflag">{% trans %}Tax Applicable{% endtrans %} : </label>
+		<label id="taxapplicabletext">GST</label>
+		<input type="text"  id="taxapplicable" value="7" accesskey="" hidden>
 	      </div>
 	      {% if gkstatus=="in" %}
 		<input type="hidden" id="status" value="9">
