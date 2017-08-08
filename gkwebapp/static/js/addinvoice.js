@@ -225,14 +225,18 @@ $(document).ready(function() {
 	    if (invoicedate >= gstdate) {
 		$("#taxapplicabletext").text("GST");
 		$("#taxapplicable").val("7");
+		$("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
+		$(".tinfiled").hide();
 		$("#gstproducttable").show();  //Shows GST Product table.
-		$("#invoice_product_table_vat").hide();  //Hides VAT Product table.
+		$(".gstinfield").show();
 	    }
 	    else {
 		$("#taxapplicabletext").text("VAT");
 		$("#taxapplicable").val("22");
 		$("#gstproducttable").hide();
+		$(".gstinfield").hide();
 		$("#invoice_product_table_vat").show();
+		$(".tinfield").show();
 	    }
 	}
     });
@@ -277,6 +281,14 @@ $(document).ready(function() {
     $("#invoicestate").change(function(event) {
 	event.preventDefault();
 	$("#statecodeforinvoice").text($("#invoicestate option:selected").attr("stateid"));
+	if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
+	    $(".igstfield").hide();
+	    $(".sgstfield").show();
+	}
+	else {
+	    $(".sgstfield").hide();
+	    $(".igstfield").show();
+	}
 	$(".product_name_vat, .product_name_gst").change();
     });
     $("#invoicestate").change();
@@ -398,7 +410,6 @@ $(document).ready(function() {
 
     //Change event for customer state.
     $("#invoice_customerstate").change(function(event) {
-	event.preventDefault();
 	$("#statecodeofcustomer").text($("#invoice_customerstate option:selected").attr("stateid"));  //State code is loaded.
 	if ($("#invoice_customerstate option:selected").attr("stateid") in gstins) {
 	       $("#gstin").text(gstins[$("#invoice_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
@@ -409,8 +420,17 @@ $(document).ready(function() {
 	if ($("#status").val() == 15) {
 	    $("#consigneestate").val($("#invoice_customerstate option:selected").val());  //Consignee State is synced with customer state.
 	}
+	if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
+	    $(".igstfield").hide();
+	    $(".sgstfield").show();
+	}
+	else {
+	    $(".sgstfield").hide();
+	    $(".igstfield").show();
+	}
 	$(".product_name_vat, .product_name_gst").change();
     });
+    $("#invoice_customerstate").change();
 
     //Key down event for Customer State.
     $("#invoice_customerstate").keydown(function(event) {
@@ -431,9 +451,18 @@ $(document).ready(function() {
 	$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
 	if ($("#status").val() == 15) {
 	    $("#invoice_customerstate").val($("#consigneestate option:selected").val());  //Customer State is synced with state of consignee.
+	    if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
+		$(".igstfield").hide();
+		$(".sgstfield").show();
+	    }
+	    else {
+		$(".sgstfield").hide();
+		$(".igstfield").show();
+	    }
 	}
 	$(".product_name_vat, .product_name_gst").change();
     });
+    $("#consigneestate").change();
 
     //Key down event for Consignee Name.
     $("#consigneename").keydown(function(event) {
@@ -633,7 +662,7 @@ $(document).ready(function() {
 			$("#invoice_customer").val(resp["delchal"]["delchaldata"]["custid"]);
 			$("#invoice_customer").prop("disabled", true);
 			$("#invoice_customerstate").prop("disabled", true);
-			$("#invoice_customerstate").change();
+			$("#invoice_customer").change();
 			$.ajax({
 			    url: '/customersuppliers?action=get',
 			    type: 'POST',

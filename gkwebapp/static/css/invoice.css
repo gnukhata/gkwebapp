@@ -101,7 +101,8 @@
  .rightJustified {
      text-align: right;
  }
- select:not(.wide) {
-     max-width: 240px !important;
-     width: 240px !important;
+ .product_name_gst,.product_name_vat {
+     max-width: 100% !important;
+     min-width: 100% !important;
+     width: 100% !important;
  }
