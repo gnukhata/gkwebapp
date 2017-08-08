@@ -624,7 +624,10 @@ $(document).ready(function() {
   });
     $("#invoice_deliverynote").change(function(event) {
 	if ($("#invoice_deliverynote option:selected").val() != '') {
-	    //$("#invoice_state").prop("disabled", true);
+	    var deliverydate = $("#invoice_deliverynote option:selected").attr("dcdate");
+	    $("#supply_date").val(deliverydate[0] + deliverydate[1]).prop("disabled", true);
+	    $("#supply_month").val(deliverydate[3] + deliverydate[4]).prop("disabled", true);
+	    $("#supply_year").val(deliverydate[6] + deliverydate[7] + deliverydate[8] + deliverydate[9]).prop("disabled", true);
 	    $.ajax({
 		url: '/invoice?action=getdeliverynote',
 		type: 'POST',
@@ -640,6 +643,7 @@ $(document).ready(function() {
 			$("#invoice_customer").val(resp["delchal"]["delchaldata"]["custid"]);
 			$("#invoice_customer").prop("disabled", true);
 			$("#invoice_customerstate").prop("disabled", true);
+			$("#invoice_customerstate").change();
 			$.ajax({
 			    url: '/customersuppliers?action=get',
 			    type: 'POST',
