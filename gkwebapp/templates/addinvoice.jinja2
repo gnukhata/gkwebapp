@@ -440,12 +440,12 @@
 		      <tfoot>
 			<tr>
 			  <td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
-			  <td class="text-center">  <span id="discounttotal_product_gst" class="input-group-addon input-sm" size="8"></span></td>
-			  <td class="text-center"><span id="taxablevaluetotal_product_gst" class="input-group-addon input-sm" size="8"></span></td>
-			  <td colspan="2" class="text-center sgstfield"><span id="totalcgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+			  <td class="text-center smwrap">  <span id="discounttotal_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+			  <td class="text-center smwrap"><span id="taxablevaluetotal_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+			  <td colspan="2" class="text-center sgstfield taxwrap"><span id="totalcgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
 
-			  <td colspan="2" class="text-center sgstfield"><span id="totalsgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
-			  <td colspan="2" class="text-center igstfield" hidden><span id="totaligst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+			  <td colspan="2" class="text-center sgstfield taxwrap"><span id="totalsgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+			  <td colspan="2" class="text-center igstfield taxwrap" hidden><span id="totaligst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
 		      </tfoot>
 		    </table>
 		  </div>
@@ -508,9 +508,15 @@
 		  <div class="col-md-6">
 		    <div class="form-inline form-group">
 		      <label for="transportationmode" class="col-sm-4" id="transmode">{% trans %}Transportation Mode{% endtrans %} :</label>
-		      <input type="text" id="transportationmode" class="col-sm-8 lastfield form-control input-sm" name="rvc" ></input>
+		      <select type="text" id="transportationmode" class="col-sm-8 lastfield form-control input-sm">
+			<option value="{% trans %}Road{% endtrans %}">{% trans %}Road{% endtrans %}</option>
+			<option value="{% trans %}Rail{% endtrans %}">{% trans %}Rail{% endtrans %}</option>
+			<option value="{% trans %}Air{% endtrans %}">{% trans %}Air{% endtrans %}</option>
+			<option value="{% trans %}Ship{% endtrans %}">{% trans %}Ship{% endtrans %}</option>
+			<option value="{% trans %}Other{% endtrans %}">{% trans %}Other{% endtrans %}</option>
+		      </select>
 		    </div>
-		    <div class="form-inline form-group">
+		    <div class="form-inline form-group" id="vehiclenodiv" hidden>
 		      <label for="inv" class="col-sm-4">{% trans %}Vehicle No.{% endtrans %} :</label>
 		      <input type="text" id="vehicleno" class="col-sm-8 lastfield form-control input-sm" name="vehicleno"></input>
 		    </div>

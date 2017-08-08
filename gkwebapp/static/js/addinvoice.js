@@ -1435,6 +1435,17 @@ if (event.which == 13) {
       }
   });
 
+    //Vehicle Number is to be entered only when Transportation Mode is Road.
+    $("#transportationmode").change(function(event){
+	if ($(this).val() == 'Road') {
+	    $("#vehiclenodiv").show();
+	}
+	else {
+	    $("#vehiclenodiv").hide();
+	}
+    });
+    $("#transportationmode").change();
+
     //Events for last fields - Bank Details, Reverse charge etc..
     $(document).off("keydown", ".lastfield").on("keydown", ".lastfield", function(event) {
 	var n = $("input.lastfield").length;
