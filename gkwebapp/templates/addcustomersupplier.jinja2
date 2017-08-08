@@ -123,6 +123,8 @@
               <label for="add_cussup_tan">{% trans %}TIN:{% endtrans %}</label><label for="add_cussup_tan" style="color:red;font-size: 120%;">*</label>
               <input class="form-control input-sm" type="text" id="add_cussup_tan"></input>
             </div>
+	  
+	    {% if vatorgstflag == '29' or vatorgstflag == '7' %}
 	    <div class="form-group"  id ="gstin">
               <label for="gstin">{% trans %}GSTIN:{% endtrans %}</label><label for="add_cussup_gstin" style="color:red;font-size: 120%;">*</label>
 	      <table id="gstintable" class="table table-condensed table-bordered fixed-table">
@@ -154,7 +156,7 @@
                 </tbody>
               </table>
             </div>
-
+	    {% endif %}
 	    
           </div>
         </div>

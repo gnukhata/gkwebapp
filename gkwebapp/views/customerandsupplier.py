@@ -42,9 +42,11 @@ def showaddcustomersupplier(request):
     suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
     groups = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist", headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
+    resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+    print resultgstvat.json()["gkresult"]
     debtgroupcode = groups.json()["gkresult"]["Sundry Debtors"]
     credgroupcode = groups.json()["gkresult"]["Sundry Creditors for Purchase"]
-    return {"customers": customers.json()["gkresult"], "suppliers": suppliers.json()["gkresult"], "debtgroupcode":debtgroupcode, "credgroupcode":credgroupcode, "states":states.json()["gkresult"]}
+    return {"customers": customers.json()["gkresult"], "suppliers": suppliers.json()["gkresult"], "debtgroupcode":debtgroupcode, "credgroupcode":credgroupcode, "states":states.json()["gkresult"],"vatorgstflag":resultgstvat.json()["gkresult"]}
 
 @view_config(route_name="customersuppliers",request_param="action=showaddpopup",renderer="gkwebapp:templates/createcustsuppopup.jinja2")
 def showaddcustomersupplierpopup(request):
