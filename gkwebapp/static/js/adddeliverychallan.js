@@ -81,6 +81,17 @@ $(document).ready(function() {
   $("#deliverychallan_customer").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
+      if ($.trim($('#deliverychallan_customer option:selected').val())=="") {
+        $("#custsup-blank-alert").alert();
+        $("#custsup-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#custsup-blank-alert").hide();
+        });
+        $('#deliverychallan_customer').focus();
+        return false;
+      }
+      else {
+        $("#deliverychallan_consignment").focus().select();
+      }
       if ($("#deliverychallan_godown").length == 0){
     	  $("#deliverychallan_consignment").focus().select();
 
