@@ -440,12 +440,12 @@
 		      <tfoot>
 			<tr>
 			  <td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
-			  <td class="text-center smwrap">  <span id="discounttotal_product_gst" class="input-group-addon input-sm" size="8"></span></td>
-			  <td class="text-center smwrap"><span id="taxablevaluetotal_product_gst" class="input-group-addon input-sm" size="8"></span></td>
-			  <td colspan="2" class="text-center sgstfield taxwrap"><span id="totalcgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+			  <td class="text-right smwrap">  <span id="discounttotal_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+			  <td class="text-right smwrap"><span id="taxablevaluetotal_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+			  <td colspan="2" class="text-right sgstfield taxwrap"><span id="totalcgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
 
-			  <td colspan="2" class="text-center sgstfield taxwrap"><span id="totalsgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
-			  <td colspan="2" class="text-center igstfield taxwrap" hidden><span id="totaligst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+			  <td colspan="2" class="text-right sgstfield taxwrap"><span id="totalsgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+			  <td colspan="2" class="text-right igstfield taxwrap" hidden><span id="totaligst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
 		      </tfoot>
 		    </table>
 		  </div>
@@ -494,12 +494,11 @@
 		  <input type="text" id="branch" class="lastfield form-control input-sm col-sm-8" ></input>
 		</div>
 		<div class="form-group form-inline">
-		  <label for="ifsc" class="col-sm-4">{% trans %}Bank Branch IFSC code{% endtrans %} :</label>
+		  <label for="ifsc" class="col-sm-4">{% trans %}IFSC code{% endtrans %} :</label>
 		  <input type="text" id="ifsc" class="col-sm-8 lastfield form-control input-sm" name="ifsc" ></input> 
 		</div>
 	      </div>
 	      <div class="col-md-8" >
-		<h5>Total</h5>
 		<div class="form-group form-inline">
 		  <label for="totalinvoicevalue" class="col-sm-4">{% trans %}Total Invoice Value{% endtrans %} :</label>
 		  <label class="col-sm-8" id="totalinvoicevalue"></label>
