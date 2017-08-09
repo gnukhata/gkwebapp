@@ -3,180 +3,114 @@
   <div class="col-md-12">
     <div class="col-md-4">
       <h5>Details of Invoice: </h5>
-      <table class="table  table-condensed table-bordered table-striped " >
-        <tbody>
-          <tr>
-            <td><label class="normal" for="instrumentno">{% trans %}Delivery No{% endtrans %} :</label></td>
-            <td colspan="2">{% if gkresult["dcno"] %}{{gkresult["dcno"]}}{% endif %}</td>
-          </tr>
-          <tr>
-            <td><label class="normal"for="bankname">{% trans %}Invoice No.{% endtrans %} :</label></td>
-            <td colspan="2">{{ gkresult["invoiceno"] }}</td>
-          </tr>
-
-          <tr>
-            <td><label for="instrument_date" class="normal">{% trans %}Invoice Date:{% endtrans %}</label></td>
-            <td colspan="2">{{ gkresult["invoicedate"] }}</td>
-
-	  </tr>
-	  <tr>
-
-            <td>
-              <label for="invoicestate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} :</label>
-            </td>
-            <td>{% if gkresult["inoutflag"] == 15 %}{{ gkresult["sourcestate"] }}{% endif %}{% if gkresult["inoutflag"] == 9 %}{{ gkresult["destinationstate"] }}{% endif %}</td>
-	  </tr>
-	  <tr>
-	    <td>
-	      <td>
-		<label for="stcode">{% trans %}State Code{% endtrans %} :</label>
-              </td>
-	      <td>
-		{% if gkresult["inoutflag"] == 15 %}{{ gkresult["sourcestatecode"] }}{% endif %}{% if gkresult["inoutflag"] == 9 %}{{ gkresult["taxstatecode"] }}{% endif %}
-	      </td>
-	    </td>
-	  </tr>
-	  {% if gkresult["inoutflag"] == 15 %}
-	    <tr class="invoice_issuer">
-	      <td>
-		<label for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
-	      </td>
-	      <td colspan="2">
-		{{ gkresult["issuername"] }}
-	      </td>
-	    </tr>
-	    <tr class="invoice_issuer">
-	      <td>
-		<label for="invoice_issuer_designation">{% trans %}Designation{% endtrans %} :</label>
-	      </td>
-	      <td colspan="2">
-		{{ gkresult["designation"] }}
-	      </td>
-	    </tr>
-	  {% endif %}
-        </tbody>
-      </table>
+      <div class="form-group form-inline col-sm-12 nopadding">
+	{% if gkresult["dcno"] %}
+	  <label class="normal" for="instrumentno">{% trans %}Delivery No{% endtrans %} : </label>
+	  {{gkresult["dcno"]}}
+	{% endif %}
+      </div>
+      <div class="form-group form-inline col-sm-12 nopadding">
+	<label class="normal"for="bankname">{% trans %}Invoice No.{% endtrans %} : </label>
+	{{ gkresult["invoiceno"] }}
+      </div>
+      <div class="form-group form-inline col-sm-12 nopadding">
+	<label for="instrument_date" class="normal">{% trans %}Invoice Date{% endtrans %} : </label>
+	{{ gkresult["invoicedate"] }}
+      </div>
+      <div class="form-group form-inline col-sm-12 nopadding">
+	<label for="invoicestate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} : </label>
+	{% if gkresult["inoutflag"] == 15 %}{{ gkresult["sourcestate"] }}{% endif %}{% if gkresult["inoutflag"] == 9 %}{{ gkresult["destinationstate"] }}{% endif %}
+      </div>
+      <div class="form-group form-inline col-sm-12 nopadding">
+	<label for="stcode">{% trans %}State Code{% endtrans %} : </label>
+	{% if gkresult["inoutflag"] == 15 %}{{ gkresult["sourcestatecode"] }}{% endif %}{% if gkresult["inoutflag"] == 9 %}{{ gkresult["taxstatecode"] }}{% endif %}
+      </div>
+      {% if gkresult["inoutflag"] == 15 %}
+	<div class="form-group form-inline col-sm-12 nopadding">
+	  <label for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} : </label>{{ gkresult["issuername"] }}
+	</div>
+	<div class="form-group form-inline col-sm-12 nopadding">
+	  <label for="invoice_issuer_designation">{% trans %}Designation{% endtrans %} : </label>
+	  {{ gkresult["designation"] }}
+	</div>
+      {% endif %}
     </div>
 
     <div class="col-md-4">
-      <table class="table  table-condensed table-bordered table-striped">
-	<tbody>
+      {% if gkresult["inoutflag"] == 9 %}
+	<h5>{% trans %}Details of Supplier{% endtrans %} :</h5>
+      {% else %}
+	<h5>{% trans %}Details of Reciever | Billed to{% endtrans %} :</h5>
+      {% endif %}
+      <div class="form-group form-inline col-sm-12 nopadding">
+	<label for="invoice_customer">
 	  {% if gkresult["inoutflag"] == 9 %}
-	    <h5>{% trans %}Details of Supplier{% endtrans %} :</h5>
+	    {% trans %}Supplier{% endtrans %} : 
 	  {% else %}
-	    <h5>{% trans %}Details of Reciever | Billed to{% endtrans %} :</h5>
+	    {% trans %}Customer{% endtrans %} : 
 	  {% endif %}
-	  <tr>
-	    <td>
-	      <label for="invoice_customer">
-		{% if gkresult["inoutflag"] == 9 %}
-		  {% trans %}Supplier{% endtrans %} :
-		{% else %}
-		  {% trans %}Customer{% endtrans %} :
-		{% endif %}
-	      </label></td>
-	    <td colspan="2">
-	      {{ gkresult["custSupDetails"]["custname"] }}
-	    </td>
-	  </tr>
-	  <tr>
-
-	    <td>  <label for="tin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}TIN:{% endtrans %}</label></td>
-	    <td colspan="2">{{ gkresult["custSupDetails"]["custtin"] }}</td>
-
-	  </tr>
-	  <tr>
-
-	    <td>  <label for="gstin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN:{% endtrans %}</label></td>
-	    <td colspan="2">{% if gkresult["inoutflag"] == 15 %}{{ gkresult["custSupDetails"]["gstin"] }}{% endif %}{% if gkresult["inoutflag"] == 9 %}{{ gkresult["custSupDetails"]["custgstin"] }}{% endif %}</label></td>
-
-	  </tr>
-	  <tr>
-	    {% if gkresult["inoutflag"] == 9 %}
-	      <td>        <label for="invoice_supplieraddr">
-		{% trans %}Supplier Address{% endtrans %} :
-	      </label>
-	      </td>
-	    {% else %}
-	      <td><label for="invoice_customeraddr">
-		{% trans %}Customer Address{% endtrans %} :
-	      </label></td>
-	    {% endif %}
-	    <td colspan="2">
-	      {{ gkresult["custSupDetails"]["custaddr"] }}
-	    </td>
-	  </tr>
-
-	  <tr>
-	    {% if gkresult["inoutflag"] == 9 %}
-	      <td>  <label for="invoice_supplierstate">
-		{% trans %}Supplier State{% endtrans %} :
-	      </label></td>
-	    {% else %}
-	      <td>
-		<label for="invoice_customerstate">
-		  {% trans %}Customer State{% endtrans %} :
-		</label>
-	      </td>
-	    {% endif %}
-	    <td>
-	      {% if gkresult["inoutflag"] == 9 %}{{ gkresult["sourcestate"] }}{% endif %}{% if gkresult["inoutflag"] == 15 %}{{ gkresult["destinationstate"] }}{% endif %}	    </td>
-	  </tr>
-	  <tr>
-	    <td>
-	      <label for="stcode">{% trans %}State Code{% endtrans %} :</label>
-	    </td>
-	    <td>
-	      {% if gkresult["inoutflag"] == 15 %}{{ gkresult["sourcestatecode"] }}{% endif %}{% if gkresult["inoutflag"] == 9 %}{{ gkresult["taxstatecode"] }}{% endif %}
-	    </td>
-	  </tr>
-	</tbody>
-      </table>
+	</label>
+	{{ gkresult["custSupDetails"]["custname"] }}
+      </div>
+      <div class="form-group form-inline col-sm-12 nopadding">
+	<label for="tin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}TIN{% endtrans %} : </label>
+	{{ gkresult["custSupDetails"]["custtin"] }}
+      </div>
+      <div class="form-group form-inline col-sm-12 nopadding">
+	<label for="gstin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN{% endtrans %} : </label>
+	{{ gkresult["custSupDetails"]["custgstin"] }}
+      </div>
+      <div class="form-group form-inline col-sm-12 nopadding">
+	<label>
+	  {% if gkresult["inoutflag"] == 9 %}
+	    {% trans %}Supplier State{% endtrans %} :
+	  {% else %}
+	    {% trans %}Customer State{% endtrans %} :
+	  {% endif %}
+	</label>
+	{% if gkresult["inoutflag"] == 9 %}{{ gkresult["sourcestate"] }}{% endif %}{% if gkresult["inoutflag"] == 15 %}{{ gkresult["destinationstate"] }}{% endif %}
+      </div>
+      <div class="form-inline form-group col-sm-12 nopadding">
+	<label for="stcode">{% trans %}State Code{% endtrans %} : </label>
+	{% if gkresult["inoutflag"] == 15 %}{{ gkresult["sourcestatecode"] }}{% endif %}{% if gkresult["inoutflag"] == 9 %}{{ gkresult["taxstatecode"] }}{% endif %}
+      </div>
+      <div class="form-inline form-group col-sm-12 nopadding">
+	<label>
+	  {% if gkresult["inoutflag"] == 9 %}
+	    {% trans %}Supplier Address{% endtrans %} : 
+	  {% else %}
+	    {% trans %}Customer Address{% endtrans %} :
+	  {% endif %}
+	</label>
+	{{ gkresult["custSupDetails"]["custaddr"] }}
+      </div>
     </div>
     <div class="col-md-4">
       <h5>Details of Consignee | Shipped to: </h5>
-      <table class="table  table-condensed table-bordered table-striped">
-	<tbody>
-	  <tr>
-	    <td>  <label for="consignee" class=" col-form-label col-form-label-sm" id="consigneelbl">{% trans %}Name{% endtrans %} :</label></td>
-            <td colspan="2">{% if gkresult["consignee"]["consigneename"] %}{{ gkresult["consignee"]["consigneename"] }}{% else %}N/A{% endif %}</td>
-	  </tr>
-	  <tr>
-
-            <td>  <label for="tinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}TIN{% endtrans %} :</label></td>
-            <td colspan="2">{% if gkresult["consignee"]["tinconsignee"] %}{{ gkresult["consignee"]["tinconsignee"] }}{% else %}N/A{% endif %}</td>
-
-          </tr>
-	  <tr>
-
-            <td>  <label for="gstinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN{% endtrans %} :</label></td>
-            <td colspan="2">{% if gkresult["consignee"]["tinconsignee"] %}{{ gkresult["consignee"]["tinconsignee"] }}{% else %}N/A{% endif %}</td>
-
-          </tr>
-	  <tr>
-
-            <td>  <label for="consigneeaddress" class=" col-form-label col-form-label-sm" id="consigneeaddress">{% trans %}Address :{% endtrans %}</label></td>
-            <td colspan="2">{% if gkresult["consignee"]["consigneeaddress"] %}{{ gkresult["consignee"]["consigneeaddress"] }}{% else %}N/A{% endif %}</td>
-	  </tr>
-	  <tr>
-
-            <td>
-              <label for="orgstate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} :</label>
-            </td>
-            <td>
-              {% if gkresult["consignee"]["consigneestate"] %}{{ gkresult["consignee"]["consigneestate"] }}{% else %}N/A{% endif %}
-            </td>
-          </tr>
-	  <tr>
-	    <td>
-	      <label for="stcode">{% trans %}State Code{% endtrans %} :</label>
-            </td>
-	    <td>
-	      {% if gkresult["consignee"]["consigneestatecode"] %}{{ gkresult["consignee"]["consigneestatecode"] }}{% else %}N/A{% endif %}
-	    </td>
-	  </tr>
-	</tbody>
-      </table>
+      <div class="form-inline form-group col-sm-12 nopadding">
+	<label for="consignee" class=" col-form-label col-form-label-sm" id="consigneelbl">{% trans %}Name{% endtrans %} : </label>
+	{% if gkresult["consignee"]["consigneename"] %}{{ gkresult["consignee"]["consigneename"] }}{% else %}N/A{% endif %}
+      </div>
+      <div class="form-inline form-group col-sm-12 nopadding">
+	<label for="tinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}TIN{% endtrans %} :</label>
+	{% if gkresult["consignee"]["tinconsignee"] %}{{ gkresult["consignee"]["tinconsignee"] }}{% else %}N/A{% endif %}
+      </div>
+      <div class="form-inline form-group col-sm-12 nopadding">
+	<label for="gstinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN{% endtrans %} :</label>
+	{% if gkresult["consignee"]["tinconsignee"] %}{{ gkresult["consignee"]["tinconsignee"] }}{% else %}N/A{% endif %}
+      </div>
+      <div class="form-inline form-group  col-sm-12 nopadding">
+	<label for="consigneeaddress" class=" col-form-label col-form-label-sm" id="consigneeaddress">{% trans %}Address :{% endtrans %}</label>
+	{% if gkresult["consignee"]["consigneeaddress"] %}{{ gkresult["consignee"]["consigneeaddress"] }}{% else %}N/A{% endif %}
+      </div>
+      <div class="form-inline form-group col-sm-12 nopadding">
+	<label for="orgstate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} :</label>
+	{% if gkresult["consignee"]["consigneestate"] %}{{ gkresult["consignee"]["consigneestate"] }}{% else %}N/A{% endif %}
+      </div>
+      <div class="form-inline form-group col-sm-12 nopadding">
+	<label for="stcode">{% trans %}State Code{% endtrans %} :</label>
+	{% if gkresult["consignee"]["consigneestatecode"] %}{{ gkresult["consignee"]["consigneestatecode"] }}{% else %}N/A{% endif %}
+      </div>
     </div>
   </div>
   {% if gkresult["taxflag"] == 22 %}
@@ -287,18 +221,18 @@
 		  <th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
 		  <th rowspan="2" class="smwrap text-center">{% trans %}Discount{% endtrans %}</th>
 		  <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
-		  <th colspan="2" class="taxwrap text-center">{% trans %}CGST{% endtrans %}</th>
-		  <th colspan="2" class="taxwrap text-center">{% trans %}SGST{% endtrans %}</th>
-		  <th colspan="2" class="taxwrap text-center">{% trans %}IGST{% endtrans %}</th>
+		  {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}CGST{% endtrans %}</th>{% endif %}
+		  {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}SGST{% endtrans %}</th>{% endif %}
+		  {% if gkresult["taxname"]=='IGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}IGST{% endtrans %}</th>{% endif %}
 		</tr>
 
 		<tr>
-		  <th>Rate%</th>
-		  <th>Amt</th>
-		  <th>Rate%</th>
-		  <th>Amt</th>
-		  <th>Rate%</th>
-		  <th>Amt</th>
+		  {% if gkresult["taxname"]=='SGST' %}<th>Rate%</th>{% endif %}
+		  {% if gkresult["taxname"]=='SGST' %}<th>Amt</th>{% endif %}
+		  {% if gkresult["taxname"]=='SGST' %}<th>Rate%</th>{% endif %}
+		  {% if gkresult["taxname"]=='SGST' %}<th>Amt</th>{% endif %}
+		  {% if gkresult["taxname"]=='IGST' %}<th>Rate%</th>{% endif %}
+		  {% if gkresult["taxname"]=='IGST' %}<th>Amt</th>{% endif %}
 		</tr>
 	      </thead>
 	    </table>
@@ -331,14 +265,14 @@
 		      {{ gkresult["invcontents"][product]["taxableamount"] }}
 		    </td>
 
-		    <td class="taxcell">{% if gkresult["invcontents"][product]["taxname"]=='SGST' %}{{ gkresult["invcontents"][product]["taxrate"] }}{% endif %}</td>
-		    <td class="taxcell">{% if gkresult["invcontents"][product]["taxname"]=='SGST' %}{{ gkresult["invcontents"][product]["taxamount"] }}{% endif %}</td>
+		    {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="taxcell">{{ gkresult["invcontents"][product]["taxrate"] }}</td>{% endif %}
+		    {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="taxcell">{{ gkresult["invcontents"][product]["taxamount"] }}</td>{% endif %}
 
-		    <td class="taxcell">{% if gkresult["invcontents"][product]["taxname"]=='SGST' %}{{ gkresult["invcontents"][product]["taxrate"] }}{% endif %}</td>
-		    <td class="taxcell">{% if gkresult["invcontents"][product]["taxname"]=='SGST' %}{{ gkresult["invcontents"][product]["taxamount"] }}{% endif %}</td>
+		    {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="taxcell">{{ gkresult["invcontents"][product]["taxrate"] }}</td>{% endif %}
+		    {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="taxcell">{{ gkresult["invcontents"][product]["taxamount"] }}</td>{% endif %}
 
-		    <td class="taxcell">{% if gkresult["invcontents"][product]["taxname"]=='IGST' %}{{ gkresult["invcontents"][product]["taxrate"] }}{% set taxname = 'IGST' %}{% endif %}</td>
-		    <td class="taxcell">{% if gkresult["invcontents"][product]["taxname"]=='IGST' %}{{ gkresult["invcontents"][product]["taxamount"] }}{% endif %}</td>
+		    {% if gkresult["invcontents"][product]["taxname"]=='IGST' %}<td class="taxcell">{{ gkresult["invcontents"][product]["taxrate"] }}</td>{% endif %}
+		    {% if gkresult["invcontents"][product]["taxname"]=='IGST' %}<td class="taxcell">{{ gkresult["invcontents"][product]["taxamount"] }}</td>{% endif %}
 		</tr>
 		  {% endfor %}
 	      </tbody>
@@ -351,10 +285,9 @@
 		  <td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
 		  <td class="text-right">{{ gkresult["totaldiscount"] }}</td>
 		  <td class="text-right">{{ gkresult["totaltaxablevalue"] }}</td>
-		  <td colspan="2" class="text-right">{% if gkresult["taxname"]=='SGST' %}{{ gkresult["totaltaxamt"] }}{% endif %}</td>
-
-		  <td colspan="2" class="text-right">{% if gkresult["taxname"]=='SGST' %}{{ gkresult["totaltaxamt"] }}{% endif %}</td>
-		  <td colspan="2" class="text-right">{% if gkresult["taxname"]=='IGST' %}{{ gkresult["totaltaxamt"] }}{% endif %}</td>
+		  {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
+		  {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
+		  {% if gkresult["taxname"]=='IGST' %}<td colspan="2" class="text-right">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
 	      </tfoot>
 	    </table>
 	  </div>

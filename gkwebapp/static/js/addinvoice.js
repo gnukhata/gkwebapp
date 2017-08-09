@@ -1522,12 +1522,13 @@ if (event.which == 13) {
               $('#invoice_customer').focus();
               return false;
             }
-            if ($("#status").val() == '9') {
-		var urlcustsup = "/customersuppliers?action=getallsups";
-            }
+            var urlcustsup = "/customersuppliers?action=getallsups";
             if ($("#status").val() == '15') {
-		var urlcustsup = "/customersuppliers?action=getallcusts";
+		urlcustsup = "/customersuppliers?action=getallcusts";
             }
+	      else {
+		  urlcustsup = "/customersuppliers?action=getallsups";
+	      }
             $.ajax({
               type: "POST",
               url: urlcustsup,
