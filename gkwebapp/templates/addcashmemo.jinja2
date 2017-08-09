@@ -38,6 +38,10 @@
        width:100%;
        table-layout:fixed;
    }
+   #invoice_product_table_total tfoot {
+       display:block;
+       width:calc( 100% - 0.75em );
+   }
   #invoice_product_table_vat tfoot {
       display:table;
       width: 95%;
@@ -66,9 +70,7 @@
   tfoot{
       display: table-footer-group;
   }
-  .ratewrap{
-      width :80px;
-  }
+
   .taxwrap {
       width: 12%;
   }
@@ -81,89 +83,20 @@
   .smwrap{
       width:6%;
   }
+  .taxcell {
+      width:6%
+  }
   .totalwrap {
-      width:820px;
+      width:49%;
+  }
+  .unitaddon {
+      overflow:hidden;
+      text-overflow:clip;
+      white-space:nowrap;
+      max-width:35px;
   }
   .rightJustified {
       text-align: right;
-  }
-
-  .fixed-table td {
-      font-size: 75%;
-      padding: 4 !important;
-      margin: 4 !important;
-    }
-  .fixed-table th {
-      font-size: 85%;
-  }
-
-  .fixed-tablepurchase tbody {
-      display:block;
-      height: calc(100vh - 25.5em);
-      min-height: 160px;
-      overflow-y:scroll;
-  }
-
-  .fixed-tablesale tbody {
-      display:block;
-      height: calc(100vh - 29em);
-      min-height: 140px;
-      overflow-y:scroll;
-  }
-
-
-
-  .fixed-table thead ,.fixed-table tbody tr,.fixed-table tfoot tr {
-      display:table;
-      width:100%;
-      table-layout:fixed;
-  }
-  .fixed-table thead {
-      width: calc( 100% - 0.75em );
-  }
-
-  .fixed-table tfoot {
-    display:block;
-    width: calc( 100% - 0.75em );
-  }
-
-  .fixed-table td {
-      font-size: 75%;
-      padding: 4 !important;
-      margin: 4 !important;
-    }
-  .fixed-table th {
-      font-size: 85%;
-  }
-
-  .fixed-tablepurchase tbody {
-      display:block;
-      height: calc(100vh - 25.5em);
-      min-height: 160px;
-      overflow-y:scroll;
-  }
-
-  .fixed-tablesale tbody {
-      display:block;
-      height: calc(100vh - 29em);
-      min-height: 140px;
-      overflow-y:scroll;
-  }
-
-
-
-  .fixed-table thead ,.fixed-table tbody tr,.fixed-table tfoot tr {
-      display:table;
-      width:100%;
-      table-layout:fixed;
-  }
-  .fixed-table thead {
-      width: calc( 100% - 0.75em );
-  }
-
-  .fixed-table tfoot {
-    display:block;
-    width: calc( 100% - 0.75em );
   }
 
   </style>
@@ -443,7 +376,7 @@
        		    <table id="invoice_product_table_gst" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%; overflow-x:hidden;overflow-y:scroll;">
        		      <tbody>
        			<tr>
-       			  <td class="mdwrap">
+       			  <td class="lngwrap">
        			    <select class="form-control input-sm product_name_gst">
        			      <option value="" disabled hidden selected>Select Product</option>
        			      {% for product in productsnservices %}
@@ -454,13 +387,13 @@
        			  <td class="smwrap text-center">
        			    <label class="invoice_product_hsncode text-center"{% trans %} {% endtrans %} </label>
        			  </td>
-       			  <td class="qtywrap">
+       			  <td class="mdwrap">
        			    <div class="input-group">
        			      <input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype" size="8" value="0" placeholder="0" aria-describedby="unitaddon">
        			      <span class="input-group-addon input-sm unitaddon"></span>
        			    </div>
        			  </td>
-       			  <td class="qtywrap">
+       			  <td class="mdwrap">
        			    <div class="input-group">
        			      <input type="text" class="invoice_product_freequantity_gst form-control input-sm text-right numtype smwrap" size="8" value="0" placeholder="0" aria-describedby="unitaddon">
        			      <span class="input-group-addon input-sm unitaddon"></span>
@@ -482,6 +415,9 @@
        			  <td class="taxcell"><input type="text" class="invoice_product_sgstrate  form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
        			  <td class="taxcell"><input type="text" class="invoice_product_sgstamount  input-sm form-control text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
        			</tr>
+          </tbody>
+        </table>
+      </div>
             <div class="row">
       		    <table id="invoice_product_table_gst_tfoot" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%;">
       		      <tfoot>
@@ -492,6 +428,7 @@
       			  <td colspan="2" class="text-center"><span id="totalcgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
 
       			  <td colspan="2" class="text-center"><span id="totalsgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+            </tr>
       		      </tfoot>
       		    </table>
       		  </div>
@@ -524,51 +461,50 @@
       		</div>
         </div>
         </div>
-          <div class="col-md-4">
-          <table class="table  table-condensed table-bordered table-striped">
-          <tbody>
-          <h5>Bank Details:</h5>
-          <tr>
-            <td>  <label for="Account Number" class=" col-form-label col-form-label-sm" id="accountnolabel">{% trans %}Account No. :{% endtrans %}</label></td>
-            <td colspan="2"><input type="text" id="accountno" class=" form-control input-sm" name="accountno" ></input></td>
-          </tr>
-          <tr>
-            <td>  <label for="Bank Name" class=" col-form-label col-form-label-sm" id="banknamelabel">{% trans %}Bank Name :{% endtrans %}</label></td>
-            <td colspan="2"><input type="text" id="bankname" class=" form-control input-sm" name="bankname" ></input></td>
-          </tr>
-          <tr>
+          <div class="row">
+            <div class="col-md-4">
+            <table class="table  table-condensed table-bordered table-striped">
+            <tbody>
+            <h5>Bank Details:</h5>
+            <tr>
+              <td>  <label for="Account Number" class=" col-form-label col-form-label-sm" id="accountnolabel">{% trans %}Account No. :{% endtrans %}</label></td>
+              <td colspan="2"><input type="text" id="accountno" class=" form-control input-sm" name="accountno" ></input></td>
+            </tr>
+            <tr>
+              <td>  <label for="Bank Name" class=" col-form-label col-form-label-sm" id="banknamelabel">{% trans %}Bank Name :{% endtrans %}</label></td>
+              <td colspan="2"><input type="text" id="bankname" class=" form-control input-sm" name="bankname" ></input></td>
+            </tr>
+            <tr>
 
-            <td>  <label for="Branch Name" class=" col-form-label col-form-label-sm" id="branchnamelabel">{% trans %}Branch Name :{% endtrans %}</label></td>
-            <td colspan="2"><input type="text" id="branchname" class=" form-control input-sm" name="ifsc" ></input></td>
+              <td>  <label for="Branch Name" class=" col-form-label col-form-label-sm" id="branchnamelabel">{% trans %}Branch Name :{% endtrans %}</label></td>
+              <td colspan="2"><input type="text" id="branchname" class=" form-control input-sm" name="ifsc" ></input></td>
 
-          </tr>
-          <tr>
+            </tr>
+            <tr>
 
-            <td>  <label for="IFSC code" class=" col-form-label col-form-label-sm" id="ifsclabel">{% trans %}IFSC code :{% endtrans %}</label></td>
-            <td colspan="2"><input type="text" id="ifsc" class=" form-control input-sm" name="ifsc" ></input></td>
+              <td>  <label for="IFSC code" class=" col-form-label col-form-label-sm" id="ifsclabel">{% trans %}IFSC code :{% endtrans %}</label></td>
+              <td colspan="2"><input type="text" id="ifsc" class=" form-control input-sm" name="ifsc" ></input></td>
 
-          </tr>
+            </tr>
 
-          </tbody>
-          </table>
+            </tbody>
+            </table>
+
+            </div>
+            <div class="col-md-8" >
+    		<h5>Total</h5>
+    		<table class="table  table-condensed table-bordered table-striped">
+    		  <tbody>
+
+    		    <tr>
+    		      <td>  <label style="font-size: 125%" for="total invoice value" class=" col-form-label col-form-label-sm" >{% trans %}Total Amount :{% endtrans %}</label></td>
+    		      <td colspan="2"> <label style="font-size: 175%" for="total invoice value" class=" col-form-label col-form-label-sm" id="totalinvoicevalue"></td>
+    		    </tr>
+    		  </tbody>
+    		</table>
 
           </div>
-          <div class="col-md-8" >
-  		<h5>Total</h5>
-  		<table class="table  table-condensed table-bordered table-striped">
-  		  <tbody>
-
-  		    <tr>
-  		      <td>  <label style="font-size: 125%" for="total invoice value" class=" col-form-label col-form-label-sm" >{% trans %}Total Amount :{% endtrans %}</label></td>
-  		      <td colspan="2"> <label style="font-size: 175%" for="total invoice value" class=" col-form-label col-form-label-sm" id="totalinvoicevalue"></td>
-  		    </tr>
-  		  </tbody>
-  		</table>
-
-        </div>
-
-
-
+          </div>
       </div>
       <div class="panel-footer">
         <div class="container-fluid">
