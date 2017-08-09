@@ -9,9 +9,35 @@
       overflow-y: scroll;
       height: calc(100vh - 28em);
   }
-  #invoice_product_table_gst tbody {
-      height: calc(100vh - 31em);
-  }
+  #invoice_product_table_gst tbody tr {
+       display:table;
+       width:100%;
+       table-layout:fixed;
+   }
+   #invoice_product_table_gst tbody {
+       display:block;
+       width:100%;
+       height: calc(100vh - 31em);
+   }
+   #invoice_product_table_gst_heading thead {
+       display:table;
+       width: calc( 140% - 0.75em );
+       table-layout:fixed;
+   }
+   #invoice_product_table_gst_tfoot tfoot {
+       display:block;
+       width: calc( 100% - 0.75em );
+   }
+   #invoice_product_table_total tbody {
+       display:block;
+       height: calc(100vh - 31em);
+       overflow-y:scroll;
+   }
+   #invoice_product_table_total tbody tr {
+       display:table;
+       width:100%;
+       table-layout:fixed;
+   }
   #invoice_product_table_vat tfoot {
       display:table;
       width: 95%;
@@ -139,7 +165,7 @@
     display:block;
     width: calc( 100% - 0.75em );
   }
-  
+
   </style>
 </head>
 
@@ -488,11 +514,11 @@
       		    </tbody>
       		    <tfoot>
       		      <td class="col-xs-8">
-      			<span id="total_product_gst" class="input-group-addon input-sm" size="9"></span>
+      			         <span id="total_product_gst" class="input-group-addon input-sm" size="9"></span>
       		      </td>
       		      <td class="col-xs-4">
 
-      			</td>
+      			    </td>
       		      </tfoot>
       		  </table>
       		</div>
