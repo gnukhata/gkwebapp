@@ -166,6 +166,51 @@
           {% endif %}
         </tfoot>
       </table>
+
+<!--Invoice Details table for Print Voucher-->
+{% if vtype == "purchase" or  vtype == "sales" %}
+  {% if voucher['invid'] %}
+      <div id="sale-purchase">
+        <div class="col-md-6">
+          <label>{% trans %}Invoice Details{% endtrans %}</label>
+          <div class = "row">
+            <div class="col-xs-12">
+              <table class="stable table-condensed table-bordered table-striped shadow" >
+                <tbody>
+                  <tr>
+                  <th class="mdwrap">{% trans %}Invoice No{% endtrans %} :</th>
+                  {% for invoice in invoicedata %}
+                  {% if voucher['invid']|int== invoice['invid']|int %}
+                  <td>{{invoice['invoiceno']}}</td>
+                  </tr>
+                  <tr>
+                    <th class="mdwrap">{% trans %}INV Date{% endtrans %} :</th>
+                    <td>{{invoice['invoicedate'][:2]}}&nbsp-{{invoice['invoicedate'][3:5]}}&nbsp-{{invoice['invoicedate'][6:]}}</td>
+                  </tr>
+                  <tr>
+                    <th class="mdwrap">{% trans %}Name{% endtrans %} :</th>
+                    <td>{{invoice["custname"]}}</td>
+                  </tr>
+                  <tr>
+                    <th class="mdwrap">{% trans %}INV Total Amount{% endtrans %} :</th>
+                    <td>{{invoice['invoicetotal']}}</td>
+                  </tr>
+                  </div>
+
+                 {% endif %}
+
+                 {% endfor %}
+
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {%endif%}
+      </div>
+
       <div id="bankdetails">
       <div class=" col-md-6">
       <input type="hidden" id="m_vtype" name="m_vtype" value="{{vtype}}">
@@ -216,8 +261,8 @@
 <br>
 <br>
       <span style="margin:auto; display:table;">
-  	<button type="button" class="btn btn-sm btn-danger hidden-print" id="loaback" accesskey="k" name="button">{% trans %}Bac<u>k</u>{% endtrans %}</button>
-  	<button type="button" class="btn btn-sm btn-info hidden-print" id="loaprint" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
+  	<button type="button" class="btn btn-sm btn-danger hidden-print" id="loaback" accesskey="k" name="button"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}Bac<u>k</u>{% endtrans %}</button>
+  	<button type="button" class="btn btn-sm btn-info hidden-print" id="loaprint" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
       </span>
     </center>
     </div>
