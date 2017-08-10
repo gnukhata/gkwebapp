@@ -22,17 +22,13 @@ Contributors:
 "Krishnakant Mane" <kk@gmail.com>
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
-"Prajkta Patkar"<prajkta.patkar007@gmail.com>
+"Prajkta Patkar"<prajakta@dff.org.in>
 */
 
 // This script is for the addcustomer/supplier.jinja2
 
 $(document).ready(function() {
     //All the navigation events where pressing enter shifts focus to the next element and pressing the up arrow key focuses the previous element
-    
-
-    var todatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
-    var year = (todatearray[0])
     
   $("#add_cussup").focus().select();
   $("#add_cussup").keydown(function(event) {
@@ -103,6 +99,41 @@ $(document).ready(function() {
           $("#add_cussup_phone").focus().select();
         }
   });
+
+$("#add_state").keydown(function(event) {
+    if (event.which==13) {
+    	event.preventDefault();
+    	if ($.trim($("#add_state").val())=="") {
+            $("#state-blank-alert").alert();
+            $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#state-blank-alert").hide();
+            });
+            $("#add_state").focus();
+            return false;
+          }
+          event.preventDefault();
+          $("#add_cussup_address").focus().select();
+        }
+        if (event.which==38 && $("#add_state option:selected").index()==0)  {
+          event.preventDefault();
+          $("#add_cussup_phone").focus().select();
+        }
+  });
+  
+
+    
+$("#add_cussup_tan").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+$("#cussup_save").focus();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#add_cussup_pan").focus().select();
+    }
+    });	
+    
+    
   $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(event)
 {
   var curindex = $(this).closest('tr').index();
@@ -260,9 +291,15 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
   });
     $("#add_cussup_tan").keydown(function(event) {
     if (event.which==13) {
-      event.preventDefault();
+	event.preventDefault();
+	if($("#vatorgstflag") == '29'){
+          $("#cussup_save").focus();
+}
+else{
 	$(".gstinstate:first").focus();
-    }
+ }
+
+   }
     if (event.which==38) {
       event.preventDefault();
       $("#add_cussup_pan").focus().select();

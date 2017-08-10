@@ -1,116 +1,5 @@
 <!DOCTYPE html>
 <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}INVOICE{% endtrans %}</title>
-<style type="text/css">
- #invoice_product_table_gst tbody tr {
-     display:table;
-     width:100%;
-     table-layout:fixed;
- }
- #invoice_product_table_gst tbody {
-     display:block;
-     width:100%;
-     height: calc(100vh - 31em);
- }
- #invoice_product_table_gst_heading thead {
-     display:table;
-     width: calc( 140% - 0.75em );
-     table-layout:fixed;
- }
- #invoice_product_table_gst_tfoot tfoot {
-     display:block;
-     width: calc( 100% - 0.75em );
- }
- #invoice_product_table_total tbody {
-     display:block;
-     height: calc(100vh - 31em);
-     overflow-y:scroll;
- }
- #invoice_product_table_total tbody tr {
-     display:table;
-     width:100%;
-     table-layout:fixed;
- }
- #invoice_product_table_total tfoot {
-     display:block;
-     width:calc( 100% - 0.75em );
- }
- #invoice_product_table_vat tbody {
-     display:block;
-     height: calc(100vh - 31em);
-     overflow-y:scroll;
- }
- #invoice_product_table_vat tfoot {
-     display:table;
-     width: calc( 100% - 0.75em );
- }
-
- .nopadding{
-     padidng:0 !important;
-     padding:0 !important;
- }
- td {
-     font-size: 65%;
-     color: black;
- }
-
- th {
-     font-size: 75%;
- }
-
- .crosswrap{
-     width :2.5%;
- }
- .mdwrap{
-     width:16%;
- }
- .qtywrap {
-     width:9%
- }
- .smwrap{
-     width:6%;
- }
- .taxwrap{
-     width:12%
- }
- .taxcell {
-     width:6%
- }
- .totalwrap {
-     width:49%;
- }
- .mdvwrap{
-     width:19.5%;
- }
- .smvwrap{
-     width:9.75%;
- }
- .unitaddon {
-     overflow:hidden;
-     text-overflow:clip;
-     white-space:nowrap;
-     max-width:35px;
- }
- 
- @page {
-     size : 21cm 29.7cm;
-     margin : 10mm 10mm 20mm 10mm
- }
- thead{
-     display: table-header-group;
- }
- tfoot{
-     display: table-footer-group;
- } 
- .rightJustified {
-     text-align: right;
- }
- select:not(".wide") {
-     max-width: 240px !important;
- }
-
-</style>
-
-
 <body>
   <div class="panel invoice_panel shadow">
     <div class="panel-body">
@@ -133,7 +22,7 @@
     </div>
   </div>
   
-  <div class="panel-footer" hidden>
+  <div class="panel-footer" id="viewinvfooter" hidden>
     <div class="container-fluid btndisablediv">
       <button id="invoice_editprint" class="btn btn-primary btn-sm" >{% trans %}Print{% endtrans %}</button>
       <button class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">{% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
@@ -147,18 +36,18 @@
           <div class="modal-header">
 
             <h4 class="modal-title">{% trans %}Cancel?{% endtrans %}</h4>
-              </div>
-              <div class="modal-body">
-                <p>{% trans %}Are you sure?{% endtrans %}</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
-                <button type="button" id="invcancel" data-dismiss="modal" class="btn btn-danger">{% trans %}Yes{% endtrans %}</button>
-              </div>
-            </div><!-- /.modal-content -->
-          </div><!-- /.modal-dialog -->
-        </div>
-      </div><!-- /.modal -->
+          </div>
+          <div class="modal-body">
+            <p>{% trans %}Are you sure?{% endtrans %}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
+            <button type="button" id="invcancel" data-dismiss="modal" class="btn btn-danger">{% trans %}Yes{% endtrans %}</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+  </div><!-- /.modal -->
 
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editinvoice.js')}}"></script>
 </body>

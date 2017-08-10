@@ -1,192 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}List of Invoices{% endtrans %}</title>
-      <style type="text/css">
-       .shadow {
-           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-       }
-       #latable td {
-           font-size: 75%;
-           padding: 4 !important;
-           margin: 4 !important;
-       }
-       #latable th {
-           font-size: 85%;
-       }
-       .card-view .title {
-           font-weight: bold;
-           display: inline-block;
-           min-width: 30%;
-           text-align: left !important;
-       }
-       #latable tbody {
-           display:block;
-           height: calc(100vh - 18em);
-           overflow-y:scroll;
-       }
-       #latable thead,#latable tbody tr {
-           display:table;
-           width:100%;
-           table-layout:fixed;
-       }
-       #latable thead {
-           width: calc( 100% - 0.65em );
-       }
-       .biglwrap {
-           width:20%;
-       }
-       .mdlwrap {
-           width:12%;
-       }
-       .smlwrap {
-           width:9%;
-       }
-       .qtylwrap {
-           width:8%
-       }
-       .srnowrap {
-           width:7%;
-       }
-       .modaltext {
-           font-size: 0.8em;
-       }
-       .table-borderless > tbody > tr > td,
-       .table-borderless > tbody > tr > th,
-       .table-borderless > tfoot > tr > td,
-       .table-borderless > tfoot > tr > th,
-       .table-borderless > thead > tr > td,
-       .table-borderless > thead > tr > th {
-           border: none;
-       }
-       #invoice_table td {
-           font-size: 75%;
-           padding: 4 !important;
-           margin: 4 !important;
-       }
-       #invoice_table th {
-           font-size: 85%;
-       }
-       #invoice_table tbody {
-           display:block;
-           height: 155px;
-           overflow-y:scroll;
-       }
-       #invoice_table thead,#invoice_table tbody tr {
-           display:table;
-           width:100%;
-           table-layout:fixed;
-       }
-       #invoice_table thead {
-           width: calc( 100% - 0.65em );
-       }
-       #invoice_table tfoot {
-           display: block;
-           width: calc( 100% - 0.65em );
-       }
-       #invoice_product_table_gst tbody tr {
-	   display:table;
-	   width:100%;
-	   table-layout:fixed;
-       }
-       #invoice_product_table_gst tbody {
-	   display:block;
-	   width:100%;
-	   height: calc(100vh - 31em);
-       }
-       #invoice_product_table_gst_heading thead {
-	   display:table;
-	   width: calc( 140% - 0.75em );
-	   table-layout:fixed;
-       }
-       #invoice_product_table_gst_tfoot tfoot {
-	   display:block;
-	   width: calc( 100% - 0.75em );
-       }
-       #invoice_product_table_total tbody {
-	   display:block;
-	   height: calc(100vh - 31em);
-	   overflow-y:scroll;
-       }
-       #invoice_product_table_total tbody tr {
-	   display:table;
-	   width:100%;
-	   table-layout:fixed;
-       }
-       #invoice_product_table_total tfoot {
-	   display:block;
-	   width:calc( 100% - 0.75em );
-       }
-       #invoice_product_table_vat tbody {
-	   display:block;
-	   height: calc(100vh - 31em);
-	   overflow-y:scroll;
-       }
-       #invoice_product_table_vat tfoot {
-	   display:table;
-	   width: calc( 100% - 0.75em );
-       }
-
-       .nopadding{
-	   padidng:0 !important;
-	   padding:0 !important;
-       }
-       td {
-	   font-size: 65%;
-	   color: black;
-       }
-
-       th {
-	   font-size: 75%;
-       }
-
-       .crosswrap{
-	   width :2.5%;
-       }
-       .mdwrap{
-	   width:16%;
-       }
-       .qtywrap {
-	   width:9%
-       }
-       .smwrap{
-	   width:6%;
-       }
-       .taxwrap{
-	   width:12%
-       }
-       .taxcell {
-	   width:6%
-       }
-       .totalwrap {
-	   width:49%;
-       }
-       .mdvwrap{
-	   width:19.5%;
-       }
-       .smvwrap{
-	   width:9.75%;
-       }
-       .unitaddon {
-	   overflow:hidden;
-	   text-overflow:clip;
-	   white-space:nowrap;
-	   max-width:35px;
-       }
-       
-       @page {
-	   size : 21cm 29.7cm;
-	   margin : 10mm 10mm 20mm 10mm
-       } 
-       .rightJustified {
-	   text-align: right;
-       }
-       select {
-	   max-width: 240px !important;
-       }
-      </style>
+  <head>
+    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}List of Invoices{% endtrans %}</title>
+    <style type="text/css">
+     .shadow {
+         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+     }
+     #latable td {
+         font-size: 75%;
+         padding: 4 !important;
+         margin: 4 !important;
+     }
+     #latable th {
+         font-size: 85%;
+     }
+     .card-view .title {
+         font-weight: bold;
+         display: inline-block;
+         min-width: 30%;
+         text-align: left !important;
+     }
+     #latable tbody {
+         display:block;
+         height: calc(100vh - 18em);
+         overflow-y:scroll;
+     }
+     #latable thead,#latable tbody tr {
+         display:table;
+         width:100%;
+         table-layout:fixed;
+     }
+     #latable thead {
+         width: calc( 100% - 0.65em );
+     }
+     .biglwrap {
+         width:20%;
+     }
+     .mdlwrap {
+         width:12%;
+     }
+     .smlwrap {
+         width:9%;
+     }
+     .qtylwrap {
+         width:8%
+     }
+     .srnowrap {
+         width:7%;
+     }
+     .modaltext {
+         font-size: 0.8em;
+     }
+    </style>
+    <link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css">
    </head>
    <body>
+     <div id="listdiv">
       <input type="text" id="invoicetypeselect" value={{flag}} hidden></input>
       <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{displayfromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{displaytodate}}</strong></span>
       <span style="margin-left: 46.4%;"><strong>List of <i>{%if flag == "0" %}All{%elif flag == "1" %}Sales{%elif flag == "2" %}Purchase{% endif %}</i> Invoices</strong></span>
@@ -255,29 +124,17 @@
          <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
          <button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
       </span>
-      <div id="invview" class="modal" tabindex="-1" role="dialog">
-         <div class="vertical-alignment-helper">
-            <div class="modal-dialog modal-lg vertical-align-center">
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <button type="button" class="close" data-dismiss="modal" style="margin-left:15px;">&times;</button>
-                     <h4 class="modal-title">{% trans %}View Invoice{% endtrans %}</h4>
-                  </div>
-                  <div class="modal-body" style="overflow-y:scroll">
-                    <div class="row">
-                      <div id="invload"></div>
-                     </div>
-                  </div>
-                  <!--<div class="modal-footer">
-                     <button type="button" id ="btclose" class="btn footerbutton btn-danger" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
-                  </div> -->
-               </div>
-               <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-         </div>
-      </div>
-      <!-- /.modal -->
+     </div>
+     <div id="viewinvdiv" hidden>
+     <div class="row">
+       <div class="col-sm-12">
+	 <button type="button" class="btn btn-sm btn-danger pull-right" id="backbutton">Back</button>
+       </div>
+     </div>
+       <div id="invload">
+	 
+       </div>
+     </div>     
       <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
       <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/listofinvoices.js')}}"></script>
    </body>
