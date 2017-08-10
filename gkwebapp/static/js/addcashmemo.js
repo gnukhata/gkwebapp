@@ -2047,118 +2047,16 @@ if ($("#taxapplicable option:selected").val() == 22) {
           $('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select').focus();
           return false;
         }
-        $.ajax({
-          url: '/invoice?action=getproducts&taxflag=7',
-          type: 'POST',
-          dataType: 'json',
-          async: false,
-          beforeSend: function(xhr) {
-            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-          }
-        })
-         .done(function(resp) {
-           console.log("success getproducts");
-           if (resp["gkstatus"] == 0) {
-             console.log("append");
-             $('#invoice_product_table_gst tbody').append(
-                 '<tr>'+ '<td class="">'+
-                     '<select class="form-control input-sm product_name_gst">'+
-                                    '</select>'+
-                   '</td>'+
-                   '<td class="">'+
-
-                        '<label class="invoice_product_hsncode" ></label>'+
-                   '</td>'+
-                   '<td class="">'+
-                     '<div class="input-group">'+
-                       '<input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype"size="5" value="0" placeholder="0" aria-describedby="unitaddon">'+
-                       '<span class="input-group-addon input-sm" id="unitaddon"></span>'+
-                     '</div>'+
-                   '</td>'+
-                   '<td class="">'+
-                     '<div class="input-group">'+
-                       '<input type="text" class="invoice_product_freequantity_gst form-control input-sm text-right numtype" size="5" value="0" placeholder="0" aria-describedby="unitaddon">'+
-                       '<span class="input-group-addon input-sm" id="freeunitaddon"></span>'+
-                     '</div>'+
-                   '</td>'+
-
-    '               <td class="">'+
-                     '<input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00">'+
-                   '</td>'+
-                   '<td class="">'+
-                     '<input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="8" placeholder="0.00">'+
-                   '</td>'+
-                   '<td class="">'+
-                     '<input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype " value="0.00" size="8" placeholder="0.00" disabled>'+
-                   '</td>'+
-
-                '<td><input type="text" class="invoice_product_cgstrate form-control text-right ratewrap numtype" size="4" value="0.00" placeholder="0.00" disabled></td>'+
-                '<td><input type="text" class="invoice_product_cgstamount form-control text-right numtype ratewrap" size="4" value="0.00" placeholder="0.00" disabled></td>'+
-
-
-
-
-                 '<td><input type="text" class="invoice_product_sgstrate  text-right form-control numtype ratewrap" size="4" value="0.00" placeholder="0.00" disabled></td>'+
-    '                 <td><input type="text" class="invoice_product_sgstamount  text-right form-control numtype ratewrap" size="4" value="0.00" placeholder="0.00" disabled></td>'+
-
-
-                   '<td class="">'+
-                     '<input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" size="5" placeholder="0.00" disabled>'+
-                   '</td>'+'<td class="col-xs-1" style="width: 5%">' +
-                   '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
-                   '</td>' +
-                 '</tr>');
-                 console.log("after row");
-
-            var temp_list = [];
-            for (let i = 0; i <= curindex1; i++) {
-              console.log("value : "+$("#invoice_product_table_gst tbody tr:eq("+ i +") td:eq(0) select").val());
-              temp_list.push($("#invoice_product_table_gst tbody tr:eq("+ i +") td:eq(0) select option:selected").val());
+        $('#invoice_product_table_gst tbody').append('<tr>' + gsthtml + '</tr>');
+        $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
+  	  $('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+  	  for (let i = 0; i <= curindex1; i++) {
+                var selectedproduct = $("#invoice_product_table_gst tbody tr:eq("+ i +") td:eq(0) select option:selected").val();
+  	      $("#invoice_product_table_gst tbody tr:eq("+ nextindex1 +") td:eq(0) select option[value = " + selectedproduct + "]").prop("disabled", true).prop("hidden", true);
             }
-            var noflag = 0;
-            for (product of resp["products"]) {
-              noflag = 0;
-              for (element of temp_list) {
-                if (product.productcode == element) {
-                  noflag = 1;
-                  break;
-                }
-              }
-              if (noflag == 0) {
-                $('#invoice_product_table_gst tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' + product.productdesc + '</option>');
-              }
-            }
-            console.log("currentindex: "+curindex1+"temp_list: "+temp_list+"noflag: "+noflag);
-
-             taxrate = 0.00;
-             ptaxamt = 0.00;
-             ptotal = 0.00;
-
-
-             $(".invoice_product_tax_rate").each(function() {
-               taxrate += +$(this).val();
-               // jquery enables us to select specific elements inside a table easily like below.
-               $('#invoice_product_table_gst tfoot tr:last td:eq(3) input').val(parseFloat(taxrate).toFixed(2)); // tofixed function formats the number to have the specified number of digits after decimal, in this case 2
-             });
-
-             $(".invoice_product_tax_amount").each(function() {
-               ptaxamt += +$(this).val();
-
-               // jquery enables us to select specific elements inside a table easily like below.
-               $('#invoice_product_table_gst tfoot tr:last td:eq(4) input').val(parseFloat(ptaxamt).toFixed(2));
-             });
-
-             $(".invoice_product_total").each(function() {
-               ptotal += +$(this).val();
-
-               // jquery enables us to select specific elements inside a table easily like below.
-               $('#invoice_product_table_gst tfoot tr:last td:eq(5) input').val(parseFloat(ptotal).toFixed(2));
-             });
-
-             $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
-             $('.invoice_product_quantity').numeric({ negative: false });
-             $('.invoice_product_per_price').numeric({ negative: false });
-             $(".product_name_vat").change();
+        $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
+        $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);;
+        $(".product_name_gst").change();
            }
          })
          .fail(function() {
