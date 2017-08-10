@@ -56,6 +56,9 @@ $(document).ready(function() {
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
     var issuername;
     var designation;
+    //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
+    var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
+    var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();  //HTML for table displaying totals in GST Product Table.
     var pqty = 0.00;
     var ptaxamt = 0.00;
     var perprice = 0.00;
