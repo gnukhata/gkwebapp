@@ -2055,18 +2055,9 @@ if ($("#taxapplicable option:selected").val() == 22) {
   	      $("#invoice_product_table_gst tbody tr:eq("+ nextindex1 +") td:eq(0) select option[value = " + selectedproduct + "]").prop("disabled", true).prop("hidden", true);
             }
         $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
-        $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);;
+        $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);
         $(".product_name_gst").change();
            }
-         })
-         .fail(function() {
-           console.log("error");
-         })
-         .always(function() {
-           console.log("complete");
-         });
-
-      }
       else {
         if ($("#status").val() == '9')  {
           $("#invoice_save").click();
