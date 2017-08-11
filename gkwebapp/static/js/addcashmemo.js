@@ -28,27 +28,6 @@ Contributors:
 // This script is for the add cashmemo page
 
 $(document).ready(function() {
-
-    $('input,select').keydown( function(e) {
-      var n = $("input,select").length;
-      var f = $('input,select');
-      var disab = $('input,select').prop("disabled");
-      if(!$('input,select').prop("disabled")){
-        if (e.which == 13)
-        {
-          console.log("getting called");
-          var nextIndex = f.index(this) + 1;
-          if(nextIndex < n){
-            e.preventDefault();
-            f[nextIndex].focus();
-            f[nextIndex].select();
-
-          }
-      }
-
-        }
-
-      });
     $('.modal-backdrop').remove();
     $('.invoicedate').autotab('number');
     $("#invoice_challanno").focus();
@@ -77,7 +56,6 @@ var producstate;
   function calculategstaxamt(curindex) {
 
 var rowqty = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
-var rowfreeqty = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
 var rowprice = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
 var rowdiscount = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val()).toFixed(2);
 var taxdetails = $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').data("taxdetails");
@@ -89,7 +67,7 @@ if (prodservflag==1)
   console.log("prodservflag=1");
 }
 else{
-  var rowtaxableamount=((rowqty - rowfreeqty) * rowprice)-rowdiscount;
+  var rowtaxableamount=(rowqty  * rowprice)-rowdiscount;
   console.log("prodservflag=0");
 }
 
