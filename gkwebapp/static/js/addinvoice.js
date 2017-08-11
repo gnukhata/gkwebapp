@@ -31,7 +31,7 @@
 // This script is for the addinvoice.jinja2
 
 $(document).ready(function() {
-    //Events to help user navigate along fileds that are not hidden
+    //Events that are triggered when the page for creating an invoice is loaded.
     $('.modal-backdrop').remove();  //Removed backdrop of modal that contains loading spinner.
     $('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
     $('.supplydate').autotab('number');
@@ -40,7 +40,7 @@ $(document).ready(function() {
     var issuername;
     var designation;
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");  //Start of financial year is saved in a variable.
-    var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
+    var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");  //End of financial year is saved in a variable.
     //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
     var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
     var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();  //HTML for table displaying totals in GST Product Table.
@@ -50,12 +50,11 @@ $(document).ready(function() {
     function calculategstaxamt(curindex) {
 	//Initialising variables to zero and getting values from various input fileds.
 	var rowqty = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
-	var rowfreeqty = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
 	var rowprice = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
 	var rowdiscount = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val()).toFixed(2);
 	var taxdetails = $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').data("taxdetails");
 	var taxamount = 0.00;
-	var rowtaxableamount=(rowqty - rowfreeqty) * (rowprice) - rowdiscount; //Taxable amount for each row is calculated.
+	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
 	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').is(":disabled") && $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').is(":disabled")) {
 	    rowtaxableamount = rowprice - rowdiscount;
 	}
@@ -105,12 +104,11 @@ $(document).ready(function() {
     function calculatevataxamt(curindex) {
 	//Initialising variables to zero and getting values from various input fileds.
 	var rowqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2);
-	var rowfreeqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
 	var rowprice = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
 	var rowdiscount = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
 	var rowtaxrate = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val()).toFixed(2);
 	var taxamount = 0.00;
-	var rowtaxableamount=(rowqty - rowfreeqty) * (rowprice) - rowdiscount; //Taxable amount for each row is calculated.
+	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
 	var rowtotal = 0.00;
 	var totalamount = 0.00;
 	var totaltax = 0.00;
@@ -283,10 +281,12 @@ $(document).ready(function() {
 	$("#statecodeforinvoice").text($("#invoicestate option:selected").attr("stateid"));
 	if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 	    $(".igstfield").hide();
+	    $(".igstfield").css('border','');
 	    $(".sgstfield").show();
 	}
 	else {
 	    $(".sgstfield").hide();
+	    $(".sgstfield").css('border','');
 	    $(".igstfield").show();
 	}
 	$(".product_name_vat, .product_name_gst").change();
