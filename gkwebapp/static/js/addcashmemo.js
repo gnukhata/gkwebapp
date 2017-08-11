@@ -28,16 +28,17 @@ Contributors:
 // This script is for the add cashmemo page
 
 $(document).ready(function() {
-    $('.modal-backdrop').remove();
-    $('.invoicedate').autotab('number');
-    $("#invoice_challanno").focus();
+//Events data triggered when the page for creating cashmemo is loaded.
+    $('.modal-backdrop').remove(); //Removes backdrop of modal that contains loading spinner.
+    $('.invoicedate').autotab('number'); // Focus shift from fields among date field.
+    $("#invoice_challanno").focus(); // Focus on the cashmemo no. when the page loads.
+
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
-    var issuername;
-    var designation;
     //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
     var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
     var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();  //HTML for table displaying totals in GST Product Table.
+    var vathtml = $('#invoice_product_table_vat tbody tr:first').html();  //HTML for VAT Product Table row.
     var pqty = 0.00;
     var ptaxamt = 0.00;
     var perprice = 0.00;
