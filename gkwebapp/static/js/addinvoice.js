@@ -226,7 +226,7 @@ $(document).ready(function() {
 		$("#taxapplicabletext").text("GST");
 		$("#taxapplicable").val("7");
 		$("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
-		$(".tinfiled").hide();
+		$(".tinfield").hide();
 		$("#gstproducttable").show();  //Shows GST Product table.
 		$(".gstinfield").show();
 	    }
@@ -1166,8 +1166,13 @@ $(document).ready(function() {
     var nextindex = curindex + 1;
     var previndex = curindex - 1;
     if (event.which == 13) {
-      event.preventDefault();
-      $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
+	event.preventDefault();
+	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').is(":disabled")) {
+	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').focus().select();
+	}
+	else {
+	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
+	}
     } else if (event.which == 190 && event.shiftKey) {
       $('#invoice_product_table_gst tbody tr:eq(' + nextindex + ') td:eq(0) select').focus();
     } else if (event.which == 188 && event.shiftKey) {
@@ -1332,8 +1337,13 @@ $(document).ready(function() {
         $("#taxapplicable").focus().select();
       }
     } else if (event.which == 188 && event.ctrlKey) {
-      event.preventDefault();
-      $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').focus().select();
+	event.preventDefault();
+	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').is(":disabled")) {
+	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').focus();
+	}
+	else {
+	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').focus().select();
+	}
 
     } else if (event.which == 190 && event.ctrlKey) {
       event.preventDefault();
