@@ -358,7 +358,7 @@
 		<div class="col-sm-12"><small id="txtareahelp" class="form-text text-muted">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</small></div>
 		<div class="col-sm-10" style="overflow-x:scroll;">
 		  <div class="row">
-		    <table id="invoice_product_table_gst_heading" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase">
+		    <table id="invoice_product_table_gst_heading" class="nopadding table table-condensed table-bordered" style="width:140%; max-width:140%">
 		      <thead class="bg-primary">
 			<tr>
 			  <th rowspan="2" class="mdwrap text-center">{% trans %}Product/ Service{% endtrans %}</th>
@@ -370,7 +370,7 @@
 			  <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
 			  <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}CGST{% endtrans %}</th>
 			  <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}SGST{% endtrans %}</th>
-			  <th colspan="2" class="taxwrap text-center igstfield" hidden>{% trans %}IGST{% endtrans %}</th>
+			  <th colspan="2" class="taxwrap text-center igstfield">{% trans %}IGST{% endtrans %}</th>
 			</tr>
 
 			<tr>
@@ -378,8 +378,8 @@
 			  <th class="sgstfield">Amt</th>
 			  <th class="sgstfield">Rate%</th>
 			  <th class="sgstfield">Amt</th>
-			  <th class="igstfield" hidden>Rate%</th>
-			  <th class="igstfield" hidden>Amt</th>
+			  <th class="igstfield">Rate%</th>
+			  <th class="igstfield">Amt</th>
 			</tr>
 		      </thead>
 		    </table>
@@ -427,9 +427,9 @@
 			  <td class="taxcell  sgstfield"><input type="text" class="invoice_product_sgstrate  form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
 			  <td class="taxcell sgstfield"><input type="text" class="invoice_product_sgstamount  input-sm form-control text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
 
-			  <td class="taxcell igstfield" hidden>
+			  <td class="taxcell igstfield">
 			    <input type="text" class="invoice_product_igstrate  input-sm text-right form-control numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
-			    <td class="taxcell igstfield" hidden><input type="text" class="invoice_product_igstamount form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled>
+			    <td class="taxcell igstfield"><input type="text" class="invoice_product_igstamount form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled>
 			    </td>
 			</tr>
 		      </tbody>

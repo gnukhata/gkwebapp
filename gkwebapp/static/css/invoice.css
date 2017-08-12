@@ -10,7 +10,7 @@
  }
  #invoice_product_table_gst_heading thead {
      display:table;
-     width: calc( 140% - 0.75em );
+     width: calc( 100% - 0.75em );
      table-layout:fixed;
  }
  #invoice_product_table_gst_tfoot tfoot {
