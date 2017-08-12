@@ -220,6 +220,14 @@ $(document).ready(function() {
 	var invoicedate = Date.parseExact($("#invoice_date").val() + $("#invoice_month").val() + $("#invoice_year").val(), "ddMMyyyy");
 	var gstdate = Date.parseExact('01072017', "ddMMyyyy");
 	if (invoicedate) {
+	    if (!invoicedate.between(financialstart, financialend)) {
+		$("#between-date-alert").alert();
+		$("#between-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#between-date-alert").hide();
+		});
+		$('#invoice_date').focus().select();
+		return false;
+	    }
 	    if (invoicedate >= gstdate) {
 		$("#taxapplicabletext").text("GST");
 		$("#taxapplicable").val("7");
@@ -1394,7 +1402,8 @@ if (event.which == 13) {
 	      $("#invoice_product_table_gst tbody tr:eq("+ nextindex1 +") td:eq(0) select option[value = " + selectedproduct + "]").prop("disabled", true).prop("hidden", true);
           }
       $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
-      $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);;
+      $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);
+      $("#invoicestate").change();
       $(".product_name_gst").change();
   }
 }
@@ -1576,9 +1585,6 @@ if (event.which == 13) {
             $("#selectedcustsup").val("");
             $("#invoice_customer").focus();
           });
-
-
-
       }
     });
   });
