@@ -8,14 +8,6 @@
 
       {% trans %}Invoice saved.{% endtrans %}
     </div>
-    <div class="alert alert-warning" id="notax-alert"  aria-live="rude" role="alert" hidden>
-
-      {% trans %}You have not entered tax for this product!{% endtrans %}
-    </div>
-    <div class="alert alert-warning" id="sometax-alert"  aria-live="rude" role="alert" hidden>
-
-      {% trans %}You have not entered tax for one of the products!{% endtrans %}
-    </div>
     <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
 
       {% trans %}Something went wrong!{% endtrans %}
@@ -23,34 +15,6 @@
     <div class="alert alert-danger" id="duplicate-alert"  aria-live="rude" role="alert" hidden>
 
       {% trans %}Duplicate invoice no.!{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="product-blank-alert"  aria-live="rude" role="alert" hidden>
-
-      <label >{% trans %}Please select a product!{% endtrans %}</label>
-    </div>
-    <div class="alert alert-danger" id="product-duplicate-alert"  aria-live="rude" role="alert" hidden>
-
-      <label >{% trans %}Each product can be entered only once!{% endtrans %}</label>
-    </div>
-    <div class="alert alert-danger" id="quantity-blank-alert"  aria-live="rude" role="alert" hidden>
-
-      <label >{% trans %}Quantity cannot be blank zero and / or negative!{% endtrans %}</label>
-    </div>
-    <div class="alert alert-danger" id="allquantities-blank-alert"  aria-live="rude" role="alert" hidden>
-
-      <label >{% trans %}All product quantities cannot be zero!{% endtrans %}</label>
-    </div>
-    <div class="alert alert-danger" id="quantity-exceed-alert"  aria-live="rude" role="alert" hidden>
-
-      <label >{% trans %}Quantity cannot be greater than that specified in the delivery note!{% endtrans %}</label>
-    </div>
-    <div class="alert alert-danger" id="quantity-freeqty-alert"  aria-live="rude" role="alert" hidden>
-
-      <label >{% trans %}Free Quantity cannot be more than Quantity!{% endtrans %}</label>
-    </div>
-    <div class="alert alert-danger" id="price-blank-alert"  aria-live="rude" role="alert" hidden>
-
-      <label >{% trans %}Price per unit cannot be empty zero and / or negative!{% endtrans %}</label>
     </div>
     <div class="panel invoice_panel shadow">
       <div class="panel-body">
@@ -264,6 +228,42 @@
 	      {% endif %}
 	    </div>
 	    <div class="col-md-12">
+	      <div class="alert alert-warning" id="notax-alert"  aria-live="rude" role="alert" hidden>
+
+		{% trans %}You have not entered tax for this product!{% endtrans %}
+	      </div>
+	      <div class="alert alert-warning" id="sometax-alert"  aria-live="rude" role="alert" hidden>
+
+		{% trans %}You have not entered tax for one of the products!{% endtrans %}
+	      </div>
+	      <div class="alert alert-danger" id="product-blank-alert"  aria-live="rude" role="alert" hidden>
+
+		<label >{% trans %}Please select a product/service!{% endtrans %}</label>
+	      </div>
+	      <div class="alert alert-danger" id="product-duplicate-alert"  aria-live="rude" role="alert" hidden>
+
+		<label >{% trans %}A product/service can be selected only once!{% endtrans %}</label>
+	      </div>
+	      <div class="alert alert-danger" id="quantity-blank-alert"  aria-live="rude" role="alert" hidden>
+
+		<label >{% trans %}Quantity cannot be blank zero and / or negative!{% endtrans %}</label>
+	      </div>
+	      <div class="alert alert-danger" id="allquantities-blank-alert"  aria-live="rude" role="alert" hidden>
+
+		<label >{% trans %}All product quantities cannot be zero!{% endtrans %}</label>
+	      </div>
+	      <div class="alert alert-danger" id="quantity-exceed-alert"  aria-live="rude" role="alert" hidden>
+
+		<label >{% trans %}Quantity cannot be greater than that specified in the delivery note!{% endtrans %}</label>
+	      </div>
+	      <div class="alert alert-danger" id="quantity-freeqty-alert"  aria-live="rude" role="alert" hidden>
+
+		<label >{% trans %}Free Quantity cannot be more than Quantity!{% endtrans %}</label>
+	      </div>
+	      <div class="alert alert-danger" id="price-blank-alert"  aria-live="rude" role="alert" hidden>
+
+		<label >{% trans %}Price per unit cannot be empty zero and / or negative!{% endtrans %}</label>
+	      </div>
 	      <br>
 	      <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
 		<thead class="bg-primary">
@@ -526,14 +526,28 @@
 		    </div>
 		</div>
 		<div class="row">
+		  <div class="col-sm-12">
+		    <div class="alert alert-danger" id="supply-date-alert" aria-live="rude" role="alert" hidden>
+
+		      {% trans %}Supply Date cannot be before Invoice Date!{% endtrans %}
+		    </div>
+		    <div class="alert alert-danger" id="supbetween-date-alert" aria-live="rude" role="alert" hidden>
+
+		      {% trans %}Please enter date within the financial year!{% endtrans %}
+		    </div>
+		    <div class="alert alert-danger" id="supplydate-alert"  aria-live="rude" role="alert" hidden>
+
+		      <label >{% trans %}Please enter date in proper format!{% endtrans %}</label>
+		    </div>
+		  </div>
 		  <div class="form-group form-inline col-sm-6 nopadding">
 		    <label for="supply_date" class="col-sm-5">{% trans %}Date of Supply{% endtrans %}:</label>
 		    <div class="form-group col-sm-7 nopadding">
-		      <input type="text" class="lastfield form-control input-sm supplydate" size="2" maxlength="2" placeholder="DD" id="supply_date" accesskey="v">
+		      <input type="text" class="lastfield form-control input-sm supplydate" size="2" maxlength="2" placeholder="DD" id="supply_date">
 
-		      <input type="text" class="lastfield form-control input-sm supplydate" size="2" maxlength="2" placeholder="MM" id="supply_month" accesskey="v">
+		      <input type="text" class="lastfield form-control input-sm supplydate" size="2" maxlength="2" placeholder="MM" id="supply_month">
 
-		      <input type="text" class="lastfield form-control input-sm supplydate" size="4" maxlength="4" placeholder="YYYY" id="supply_year" accesskey="v">
+		      <input type="text" class="lastfield form-control input-sm supplydate" size="4" maxlength="4" placeholder="YYYY" id="supply_year">
   		    </div>
 		  </div>
 

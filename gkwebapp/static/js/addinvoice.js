@@ -171,6 +171,38 @@ $(document).ready(function() {
 	}
     });
 
+    var invoicedatestring = $("#invoice_date").val() + $("#invoice_month").val() + $("#invoice_year").val();
+    var invoicedate = Date.parseExact(invoicedatestring, "ddMMyyyy");
+    var gstdate = Date.parseExact('01072017', "ddMMyyyy");
+    $(".invoicedate").change(function(event){
+	if (invoicedate) {
+	    if (!invoicedate.between(financialstart, financialend)) {
+		$("#between-date-alert").alert();
+		$("#between-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#between-date-alert").hide();
+		});
+		$('#invoice_date').focus().select();
+		return false;
+	    }
+	    if (invoicedate >= gstdate) {
+		$("#taxapplicabletext").text("GST");
+		$("#taxapplicable").val("7");
+		$("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
+		$(".tinfield").hide();
+		$("#gstproducttable").show();  //Shows GST Product table.
+		$(".gstinfield").show();
+	    }
+	    else {
+		$("#taxapplicabletext").text("VAT");
+		$("#taxapplicable").val("22");
+		$("#gstproducttable").hide();
+		$(".gstinfield").hide();
+		$("#invoice_product_table_vat").show();
+		$(".tinfield").show();
+	    }
+	}
+    });
+
     //Function to add leading zeros in date and month fields.
     function pad(str, max) { //to add leading zeros in date
 	str = str.toString();
@@ -198,53 +230,32 @@ $(document).ready(function() {
 
     //Padding functions are called on blur events.
     $("#invoice_date").blur(function(event) {
+	$(".invoicedate").change();
 	$(this).val(pad($(this).val(), 2));
     });
     $("#invoice_month").blur(function(event) {
+	$(".invoicedate").change();
 	$(this).val(pad($(this).val(), 2));
     });
     $("#invoice_year").blur(function(event) {
-	$(this).val(yearpad($(this).val(), 4));
-    });
-    $("#supply_date").blur(function(event) {
-	$(this).val(pad($(this).val(), 2));
-    });
-    $("#supply_month").blur(function(event) {
-	$(this).val(pad($(this).val(), 2));
-    });
-    $("#supply_year").blur(function(event) {
-	$(this).val(yearpad($(this).val(), 4));
-    });
-
-    $(".invoicedate").change(function(event){
-	var invoicedate = Date.parseExact($("#invoice_date").val() + $("#invoice_month").val() + $("#invoice_year").val(), "ddMMyyyy");
-	var gstdate = Date.parseExact('01072017', "ddMMyyyy");
-	if (invoicedate) {
-	    if (!invoicedate.between(financialstart, financialend)) {
-		$("#between-date-alert").alert();
-		$("#between-date-alert").fadeTo(2250, 500).slideUp(500, function() {
-		    $("#between-date-alert").hide();
-		});
-		$('#invoice_date').focus().select();
-		return false;
-	    }
-	    if (invoicedate >= gstdate) {
-		$("#taxapplicabletext").text("GST");
-		$("#taxapplicable").val("7");
-		$("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
-		$(".tinfield").hide();
-		$("#gstproducttable").show();  //Shows GST Product table.
-		$(".gstinfield").show();
-	    }
-	    else {
-		$("#taxapplicabletext").text("VAT");
-		$("#taxapplicable").val("22");
-		$("#gstproducttable").hide();
-		$(".gstinfield").hide();
-		$("#invoice_product_table_vat").show();
-		$(".tinfield").show();
-	    }
+	if (invoicedatestring.length == 0) {
+	    $("#date-blank-alert").alert();
+	    $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$("#date-blank-alert").hide();
+	    });
+	    $("#invoice_date").focus().select();
+	    return false;
 	}
+	else if (!invoicedate && invoicedatestring.length == 8) {
+	    $("#date-alert").alert();
+	    $("#date-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$("#date-alert").hide();
+	    });
+	    $("#invoice_date").focus().select();
+	    return false;
+	}
+	$(".invoicedate").change();
+	$(this).val(yearpad($(this).val(), 4));
     });
 
     //Key Event for Invoice Date Field.
@@ -1469,6 +1480,53 @@ if (event.which == 13) {
 	}
     });
     $("#transportationmode").change();
+
+    $(".supplydate").change(function(event){
+	var supplydate = Date.parseExact($("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val(), "ddMMyyyy");
+	if (supplydate) {
+	    if (!supplydate.between(financialstart, financialend)) {
+		$("#supbetween-date-alert").alert();
+		$("#supbetween-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#supbetween-date-alert").hide();
+		});
+		$('#supply_date').focus().select();
+		return false;
+	    }
+	    if (invoicedate) {
+		if (supplydate < invoicedate) {
+		    $("#supply-date-alert").alert();
+		    $("#supply-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+			$("#supply-date-alert").hide();
+		    });
+		    $('#supply_date').focus().select();
+		    return false;
+		}
+	    }
+	}
+	
+    });
+
+    $("#supply_date").blur(function(event) {
+	$(".supplydate").change();
+	$(this).val(pad($(this).val(), 2));
+    });
+    $("#supply_month").blur(function(event) {
+	$(".supplydate").change();
+	$(this).val(pad($(this).val(), 2));
+    });
+    $("#supply_year").blur(function(event) {
+	var supplydatestring = $("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val();
+	if ((supplydatestring.length == 8) && (!Date.parseExact(supplydatestring, "ddMMyyyy"))) {
+	    $("#supplydate-alert").alert();
+	    $("#supplydate-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$("#supplydate-alert").hide();
+	    });
+	    $('#supply_date').focus().select();
+	    return false;
+	}
+	$(this).val(yearpad($(this).val(), 4));
+	$(".supplydate").change();
+    });
 
     //Events for last fields - Bank Details, Reverse charge etc..
     $(document).off("keydown", ".lastfield").on("keydown", ".lastfield", function(event) {
