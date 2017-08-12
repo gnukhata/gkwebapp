@@ -106,3 +106,7 @@
      min-width: 100% !important;
      width: 100% !important;
  }
+ .borderdiv {
+     border-right-style:solid;
+     border-width: 1px;
+ }
