@@ -523,7 +523,12 @@ $(document).ready(function() {
     $("#consigneeaddress").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    $("#taxapplicable").focus().select();  //Focus Shift to Tax Applicable field.
+	    if ($("#taxapplicable").val() == 7) {
+		$(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
+	    }
+	    else {
+		$(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
+	    }
 	    $('html,body').animate({scrollTop: $("#taxapplicablescroll").offset().top},'slow');
 	}
 	else if (event.which == 38) {
@@ -772,12 +777,12 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-          $("#taxapplicable").focus();
+          $("#consigneeaddress").focus().select();
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
       if (curindex == 0) {
-        $("#taxapplicable").focus();
+          $("#consigneeaddress").focus().select();
       } else {
         $('#invoice_product_table_vat tbody tr:eq(' + previndex + ') td:eq(6) input').focus().select();
       }
@@ -828,7 +833,7 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-        $("#taxapplicable").focus();
+        $("#consigneeaddress").focus().select();
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
@@ -884,7 +889,7 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-        $("#taxapplicable").focus().select();//What is this?
+        $("#consigneeaddress").focus().select();
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
@@ -923,7 +928,7 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-        $("#taxapplicable").focus().select();//What is this?
+        $("#consigneeaddress").focus().select();
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
@@ -966,7 +971,7 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-        $("#taxapplicable").focus().select();
+        $("#consigneeaddress").focus().select();
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
@@ -1039,7 +1044,7 @@ $(document).ready(function() {
       }
       if (curindex1 == 0) {
         event.preventDefault();
-        $("#taxapplicable").focus().select();//What is this?
+        $("#consigneeaddress").focus().select();
       }
     } else if (event.which == 190 && event.ctrlKey) {
       $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus().select();
@@ -1182,13 +1187,13 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-          $("#taxapplicable").focus();
+          $("#consigneeaddress").focus().select();
         }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
       if (curindex == 0) {
         event.preventDefault();
-          $("#taxapplicable").focus();
+          $("#consigneeaddress").focus().select();
         } else {
         $('#invoice_product_table_gst tbody tr:eq(' + previndex + ') td:eq(5) input').focus().select();
       }
@@ -1239,7 +1244,7 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-        $("#taxapplicable").focus();
+        $("#consigneeaddress").focus().select();
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
@@ -1295,7 +1300,7 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-        $("#taxapplicable").focus().select();
+        $("#consigneeaddress").focus().select();
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
@@ -1334,7 +1339,7 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-        $("#taxapplicable").focus().select();
+        $("#consigneeaddress").focus().select();
       }
     } else if (event.which == 188 && event.ctrlKey) {
 	event.preventDefault();
@@ -1403,7 +1408,7 @@ if (event.which == 13) {
       }
       if (curindex == 0) {
         event.preventDefault();
-        $("#taxapplicable").focus().select();
+        $("#consigneeaddress").focus().select();
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
@@ -1458,8 +1463,8 @@ if (event.which == 13) {
 
     //Events for last fields - Bank Details, Reverse charge etc..
     $(document).off("keydown", ".lastfield").on("keydown", ".lastfield", function(event) {
-	var n = $("input.lastfield").length;
-	var f = $('input.lastfield');
+	var n = $(".lastfield").length;
+	var f = $('.lastfield');
 	if (event.which == 13)
 	{
 	    var nextIndex = f.index(this) + 1;
@@ -1475,8 +1480,16 @@ if (event.which == 13) {
 	else if (event.which == 38) {
 	    var previndex = f.index(this) - 1;
 	    if(previndex > -1) {
-		f[previndex].focus();
-		f[previndex].select();
+		if ($(this).is("select")) {
+		    if ($(this).val() == "Road") {
+			f[previndex].focus();
+			f[previndex].select();
+		    }
+		}
+		else {
+		    f[previndex].focus();
+		    f[previndex].select();
+		}
 	    }
 	    else if (previndex == -1) {
 		if ($("#taxapplicable").val() == 7) {
