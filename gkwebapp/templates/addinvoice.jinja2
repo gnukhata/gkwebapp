@@ -483,65 +483,64 @@
 		<label id="totalinvoicevalue"></label>
 	      </div>
 	    </div>
-	    <div class="col-md-12">
+	    <div class="col-sm-12">
 	      <h4>Bank Details:</h4>
-	      <div class="col-md-6 nopadding borderdiv">
-		<div class="col-sm-6 nopadding">
-		  <div class="form-group form-inline">
+	      <div class="col-sm-6 nopadding borderdiv">
+		<div class="row">
+		  <div class="form-group form-inline col-sm-6 nopadding">
 		    <label for="accountno" class="col-sm-5">{% trans %}Account No.{% endtrans %} :</label>
-		    <input type="text" id="accountno" class="nopadding lastfield form-control input-sm col-sm-7"></input>
+		    <input type="text" id="accountno" class="lastfield form-control input-sm col-sm-7 nopadding"></input>
 		  </div>
-		  <div class="form-group form-inline">
-		    <label for="branch" class="col-sm-5">{% trans %}Branch Name{% endtrans %} :</label>
-		    <input type="text" id="branch" class="lastfield form-control input-sm col-sm-7 nopadding" ></input>
-		  </div>
-		</div>
-		<div class="col-sm-6 nopadding">
-		  <div class="form-group form-inline">
+		  <div class="form-group form-inline col-sm-6 nopadding">
 		    <label for="bankname" class="col-sm-5">{% trans %}Bank Name{% endtrans %} :</label>
 		    <input type="text" id="bankname" class="lastfield form-control input-sm col-sm-7 nopadding" name="bankname" ></input>
 		  </div>
-		  <div class="form-group form-inline">
+		</div>
+		<br>
+		<div class="row">
+		  <div class="form-group form-inline col-sm-6 nopadding">
+		    <label for="branch" class="col-sm-5">{% trans %}Branch Name{% endtrans %} :</label>
+		    <input type="text" id="branch" class="lastfield form-control input-sm col-sm-7 nopadding" ></input>
+		  </div>
+		  <div class="form-group form-inline col-sm-6 nopadding">
 		    <label for="ifsc" class="col-sm-5">{% trans %}IFSC code{% endtrans %} :</label>
 		    <input type="text" id="ifsc" class="lastfield form-control input-sm col-sm-7 nopadding" name="ifsc" ></input> 
 		  </div>
 		</div>
 	      </div>
-	      <div class="col-md-6 nopadding">
+	      <div class="col-sm-6">
 		<div class="row">
-		  <div class="col-md-6 nopadding">
-		    <div class="form-inline form-group">
-		      <label for="transportationmode" class="col-sm-5" id="transmode">{% trans %}Transportation Mode{% endtrans %} :</label>
-		      <select type="text" id="transportationmode" class="col-sm-7 lastfield form-control input-sm nopadding">
-			<option value="Road">{% trans %}Road{% endtrans %}</option>
-			<option value="Rail">{% trans %}Rail{% endtrans %}</option>
-			<option value="Air">{% trans %}Air{% endtrans %}</option>
-			<option value="Ship">{% trans %}Ship{% endtrans %}</option>
-			<option value="Other">{% trans %}Other{% endtrans %}</option>
-		      </select>
-		    </div>
-		    <div class="form-inline form-group" id="vehiclenodiv" hidden>
+		  <div class="form-inline form-group col-sm-6 nopadding">
+		    <label for="transportationmode" class="col-sm-5" id="transmode">{% trans %}Transportation Mode{% endtrans %} :</label>
+		    <select type="text" id="transportationmode" class="col-sm-7 lastfield form-control input-sm nopadding">
+		      <option value="Road">{% trans %}Road{% endtrans %}</option>
+		      <option value="Rail">{% trans %}Rail{% endtrans %}</option>
+		      <option value="Air">{% trans %}Air{% endtrans %}</option>
+		      <option value="Ship">{% trans %}Ship{% endtrans %}</option>
+		      <option value="Other">{% trans %}Other{% endtrans %}</option>
+		    </select>
+		  </div>
+		  <div class="form-inline form-group col-sm-6 nopadding" id="vehiclenodiv" hidden>
 		      <label for="inv" class="col-sm-5">{% trans %}Vehicle No.{% endtrans %} :</label>
 		      <input type="text" id="vehicleno" class="col-sm-7 lastfield form-control input-sm nopadding" name="vehicleno"></input>
 		    </div>
+		</div>
+		<div class="row">
+		  <div class="form-group form-inline col-sm-6 nopadding">
+		    <label for="supply_date" class="col-sm-5">{% trans %}Date of Supply{% endtrans %}:</label>
+		    <div class="form-group col-sm-7 nopadding">
+		      <input type="text" class="lastfield form-control input-sm supplydate" size="2" maxlength="2" placeholder="DD" id="supply_date" accesskey="v">
+
+		      <input type="text" class="lastfield form-control input-sm supplydate" size="2" maxlength="2" placeholder="MM" id="supply_month" accesskey="v">
+
+		      <input type="text" class="lastfield form-control input-sm supplydate" size="4" maxlength="4" placeholder="YYYY" id="supply_year" accesskey="v">
+  		    </div>
 		  </div>
-		  <div class="col-md-6 nopadding">
-		    <div class="form-group form-inline">
-		      <label for="supply_date" class="col-sm-5">{% trans %}Date of Supply{% endtrans %}:</label>
-		      <div class="form-group col-sm-7 nopadding">
-			<input type="text" class="lastfield form-control input-sm supplydate" size="2" maxlength="2" placeholder="DD" id="supply_date" accesskey="v">
 
-			<input type="text" class="lastfield form-control input-sm supplydate" size="2" maxlength="2" placeholder="MM" id="supply_month" accesskey="v">
-
-			<input type="text" class="lastfield form-control input-sm supplydate" size="4" maxlength="4" placeholder="YYYY" id="supply_year" accesskey="v">
-  		      </div>
-		    </div>
-
-		    <div class="form-group form-inline">
+		  <div class="form-group form-inline col-sm-6 nopadding">
 		      <label for="inv" class="col-sm-5">{% trans %}Reverse Charge{% endtrans %}:</label>
 		      <input type="text" id="reversecharge" class="col-sm-7 lastfield form-control input-sm nopadding" name="reversecharge"></input>
 		    </div>
-		  </div>
 		</div>
 	      </div>
 	    </div>
