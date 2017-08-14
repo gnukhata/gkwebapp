@@ -1730,6 +1730,7 @@ if (event.which == 13) {
       consignee["gstinconsignee"] = $("#gstinconsignee").val();
       consignee["consigneeaddress"] = $("#consigneeaddress").val();
       consignee["consigneestate"] = $("#consigneestate").val();
+      consignee["consigneestatecode"] = $("#statecodeofconsignee").text();
       bankdetails["accountno"] = $("#accountno").val();
       bankdetails["bankname"] = $("#bankname").val();
       bankdetails["ifsc"] = $("#ifsc").val();

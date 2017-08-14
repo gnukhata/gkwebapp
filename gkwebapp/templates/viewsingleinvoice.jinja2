@@ -151,7 +151,7 @@
 	    <th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
 	    <th class="smvwrap text-center">{% trans %}Discount{% endtrans %}</th>
 	    <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
-	    <th class="smvwrap text-center">{% trans %}Tax Rate%{% endtrans %}</th>
+	    <th class="smvwrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
 	    <th class="smvwrap text-center">{% trans %}Tax Amt{% endtrans %}</th>
 	    <th class="smvwrap text-center">{% trans %}Total{% endtrans %}</th>
 	  </tr>
@@ -246,12 +246,12 @@
 		  </tr>
 
 		  <tr>
-		    {% if gkresult["taxname"]=='SGST' %}<th>Rate%</th>{% endif %}
-		    {% if gkresult["taxname"]=='SGST' %}<th>Amt</th>{% endif %}
-		    {% if gkresult["taxname"]=='SGST' %}<th>Rate%</th>{% endif %}
-		    {% if gkresult["taxname"]=='SGST' %}<th>Amt</th>{% endif %}
-		    {% if gkresult["taxname"]=='IGST' %}<th>Rate%</th>{% endif %}
-		    {% if gkresult["taxname"]=='IGST' %}<th>Amt</th>{% endif %}
+		    {% if gkresult["taxname"]=='SGST' %}<th>{% trans %}Rate{% endtrans %} %</th>{% endif %}
+		    {% if gkresult["taxname"]=='SGST' %}<th>{% trans %}Amt{% endtrans %}</th>{% endif %}
+		    {% if gkresult["taxname"]=='SGST' %}<th>{% trans %}Rate{% endtrans %} %</th>{% endif %}
+		    {% if gkresult["taxname"]=='SGST' %}<th>{% trans %}Amt{% endtrans %}</th>{% endif %}
+		    {% if gkresult["taxname"]=='IGST' %}<th>{% trans %}Rate{% endtrans %} %</th>{% endif %}
+		    {% if gkresult["taxname"]=='IGST' %}<th>{% trans %}Amt{% endtrans %}</th>{% endif %}
 		  </tr>
 		</thead>
 	      </table>
