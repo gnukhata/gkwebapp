@@ -682,9 +682,7 @@ var userrole1;
       // creates a modal(dialog box) asking user to activate inventory or not.
 
       $("#orgprefmodal").on('shown.bs.modal', function(event) {
-        console.log(sessionStorage.invflag);
-        console.log(sessionStorage.invsflag);
-        console.log(sessionStorage.billflag);
+      
         if (sessionStorage.invflag==1 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
           $('#invinvsbillradio').prop('checked', true);
         }
@@ -889,7 +887,7 @@ var userrole1;
      });
   });
 
-  $("#showeditorg").click(function (e){
+  $("#editorg").click(function (e){
     // calls edit organisation page.
     $("#msspinmodal").modal("show");
     $.ajax({
