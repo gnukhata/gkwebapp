@@ -2,7 +2,11 @@
 <form class="form-inline" >
   <div class="col-md-12">
     <div class="col-md-4">
-      <h4>Details of Invoice: </h4>
+      {% if gkresult["inoutflag"] == 9 %}
+	<h4>Details of Purchase Invoice: </h4>
+      {% else %}
+	<h4>Details of Sale Invoice: </h4>
+	{% endif %}
       <div class="form-group form-inline col-sm-12 nopadding">
 	{% if gkresult["dcno"] %}
 	  <label class="normal" for="instrumentno">{% trans %}Delivery No{% endtrans %} : </label>
