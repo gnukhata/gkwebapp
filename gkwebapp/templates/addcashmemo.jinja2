@@ -208,11 +208,16 @@
 
           </div>
           <div class="col-md-3">
+            <div class="form-group">
 	    <label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
-	    <select class="form-control input-sm"  id="taxapplicable" accesskey="">
-	      <option value="7" selected>GST</option>
-	      <option value="22">VAT</option>
-	    </select>
+      {% if resultgstvat == '29' or resultgstvat == '7' %}
+  		  <label class="form-control" id="taxapplicabletext">GST</label>
+  		  <input type="text"  id="taxapplicable" value="7" accesskey="" hidden>
+  		{% else %}
+  		  <label class="form-control" id="taxapplicabletext">VAT</label>
+  		  <input type="text"  id="taxapplicable" value="22" accesskey="" hidden>
+  		  {% endif %}
+      </div>
           </div>
 
 
@@ -225,9 +230,12 @@
 
 
         <div class="container-fluid" id="invoice_product_div">
-
-
-          <table id="invoice_product_table" class="shadow table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
+          {% if resultgstvat == '29' or resultgstvat == '22' %}
+  		{% if resultgstvat == '22' %}
+          <table id="invoice_product_table" class="shadow table table-condensed table-bordered fixed-table fixed-tablepurchase" >
+            {% else %}
+            <table id="invoice_product_table" class="shadow table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
+              {% endif %}
             <thead class="bg-primary">
               <tr>
                 <th class="col-xs-3 text-center">{% trans %}Product{% endtrans %}</th>
@@ -314,7 +322,9 @@
             </tfoot>
 
           </table>
+          {% endif %}
 
+           {% if resultgstvat == '29' or resultgstvat == '7' %}
 
   	  <div class="row" id="gstproducttable">
 	    <div class="col-sm-12"><small id="txtareahelp" class="form-text text-muted">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</small></div>
@@ -336,9 +346,9 @@
 		    </tr>
 
 		    <tr>
-		      <th class="sgstfield">Rate%</th>
+		      <th class="sgstfield">Rate %</th>
 		      <th class="sgstfield">Amt</th>
-		      <th class="sgstfield">Rate%</th>
+		      <th class="sgstfield">Rate %</th>
 		      <th class="sgstfield">Amt</th>
 
 		    </tr>
@@ -438,6 +448,7 @@
 	      </table>
 	    </div>
 	  </div>
+    {% endif %}
 	</div>
 
 
