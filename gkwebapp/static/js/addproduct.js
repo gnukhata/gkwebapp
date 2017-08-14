@@ -1,19 +1,21 @@
 $(document).ready(function() {
 $(".serviceclass").hide();
 $(".productclass").hide();
-$(".common").hide();
+  $(".common").hide();
+  
 if (sessionStorage.invflag==0){
-    console.log("inv =0 product=yes");
   $(".noinventory").hide();
   $("#nogodownmsg").show();
 }
 if (sessionStorage.invflag=='1' ){
-  console.log("inv =1 product=yes");
   $("#nogodownmsg").hide();
 
   $("#godownmsg").show();
 }
-//$("#proservlabel").text("Product Name :");
+  if(sessionStorage.vatorgstflag == '7'){
+    $(".taxclass").hide(); 
+  }
+  //$("#proservlabel").text("Product Name :");
 
   var godownflag = 0;
   $('.modal-backdrop').remove();
