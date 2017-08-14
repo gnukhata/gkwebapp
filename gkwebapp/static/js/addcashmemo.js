@@ -1449,11 +1449,24 @@ $(document).off("keydown", ".invoice_product_per_price").on("keydown", ".invoice
 
 ///
     $(document).off("click", ".product_del").on("click", ".product_del", function() {
+      if ($("#invoice_product_table tbody tr").length > 1) {
         $(this).closest('tr').fadeOut(200, function() {
-            $(this).closest('tr').remove(); //closest method gives the closest element productified
-            $('#invoice_product_table tbody tr:last td:eq(0) input').focus().select();
+          $(this).closest('tr').remove(); //closest method gives the closest element productified
+          $("#invoice_product_table tbody tr:first td:eq(0) select").focus();
         });
-        $('#invoice_product_table tbody tr:last td:eq(0) input').select();
+      }
+      if ($("#invoice_product_table tbody tr").length == 1) {
+	  $("#invoice_product_table tbody tr:eq(0) td:eq(9)").empty();
+      }
+
+      if ($("#invoice_product_table_gst tbody tr").length > 1) {
+	  $(this).closest('tr').remove();
+	  $("#invoice_product_table_gst tbody tr:eq("+curindex+")").remove();
+	  $("#invoice_product_table_gst tbody tr:first td:eq(0) select").focus();
+      }
+      if ($("#invoice_product_table_gst tbody tr").length == 1) {
+	  $("#invoice_product_table_total tbody tr:eq(0) td:eq(1)").empty();
+      }
     });
     $("#invoice_save").click(function(event) {
         // validations start below
