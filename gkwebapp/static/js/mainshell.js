@@ -514,7 +514,8 @@ var userrole1;
        userrole1="<i>Godown In Charge</i>";
      }
      sessionStorage.setItem('booksclosedflag', resp["gkresult"]["booksclosedflag"]);
-     sessionStorage.setItem('roflag', resp["gkresult"]["roflag"]);
+       sessionStorage.setItem('roflag', resp["gkresult"]["roflag"]);
+       sessionStorage.setItem('vatorgstflag' , resp["vatorgstflag"] );
    });
   // for getting username who is logged in
   $.ajax({
