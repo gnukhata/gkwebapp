@@ -9,7 +9,7 @@
 	{% endif %}
       <div class="form-group form-inline col-sm-12 nopadding">
 	{% if gkresult["dcno"] %}
-	  <label class="normal" for="instrumentno">{% trans %}Delivery No{% endtrans %} : </label>
+	  <label class="normal" for="instrumentno">{% trans %}Delivery Note No{% endtrans %} : </label>
 	  {{gkresult["dcno"]}}
 	{% endif %}
       </div>
@@ -67,12 +67,14 @@
 	  <label for="tin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}TIN{% endtrans %} : </label>
 	  {{ gkresult["custSupDetails"]["custtin"] }}
 	</div>
+	<input type="text"  id="taxapplicable" value="22" accesskey="" hidden>
       {% endif %}
       {% if gkresult["taxflag"] == 7 %}
       <div class="form-group form-inline col-sm-12 nopadding">
 	<label for="gstin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN{% endtrans %} : </label>
 	{{ gkresult["custSupDetails"]["custgstin"] }}
       </div>
+      <input type="text"  id="taxapplicable" value="7" accesskey="" hidden>
       {% endif %}
       <div class="form-group form-inline col-sm-12 nopadding">
 	<label>
@@ -136,7 +138,6 @@
       <div class="col-md-3">
 	<label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
 	VAT
-      </select>
       </div>
     </div>
     <div class="col-md-12">

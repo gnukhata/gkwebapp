@@ -42,7 +42,6 @@ $(document).ready(function() {
     $("#invselect").change(function(event) {
         /* Act on the event */
         var invid = $("#invselect option:selected").val();
-	console.log("Invid" + invid);
         if (invid != "") {
 	    $.ajax(
     {
@@ -61,11 +60,17 @@ $(document).ready(function() {
     {
 	$("#invdetailsdiv").html(resp);
 	$("#viewinvfooter").show();
-	if ($("#attachmentcount").val() > 0) {
+	if (parseInt($("#attachmentcount").val()) > 0) {
 	$("#viewattach").show();
     }
     else {
 	$("#viewattach").hide();
+    }
+	if ($("#status").val() == 9) {
+	$("#invoice_editprint").hide();
+    }
+    else {
+	$("#invoice_editprint").show();
     }
     }
     }
@@ -121,38 +126,11 @@ $(document).ready(function() {
     });
 
     $("#invoice_editprint").click(function(event) {
-        printset = [];
-        subtotal = 0;
-        for (var i = 0; i < $("#edit_invoice_product_table tbody tr").length; i++) {
-            var obj = {};
-
-            obj.productdesc = $("#edit_invoice_product_table tbody tr:eq(" + i + ") td:eq(0) select option:selected").text();
-            obj.qty = $("#edit_invoice_product_table tbody tr:eq(" + i + ") td:eq(1) input").val();
-            obj.unitname = $("#edit_invoice_product_table tbody tr:eq(" + i + ") td:eq(1) span").text();
-            obj.freeqty = $("#edit_invoice_product_table tbody tr:eq(" + i + ") td:eq(2) input").val();
-            obj.ppu = $("#edit_invoice_product_table tbody tr:eq(" + i + ") td:eq(3) input").val();
-            subtotal += +((obj.qty - obj.freeqty) * obj.ppu);
-            obj.taxrate = $("#edit_invoice_product_table tbody tr:eq(" + i + ") td:eq(4) input").val();
-            obj.taxamt = $("#edit_invoice_product_table tbody tr:eq(" + i + ") td:eq(5) input").val();
-            obj.rowtotal = $("#edit_invoice_product_table tbody tr:eq(" + i + ") td:eq(6) input").val();
-            printset.push(obj);
-        }
         $.ajax({
                 url: '/invoice?action=print',
                 type: 'POST',
                 dataType: 'html',
-                data: {
-                    "dc": dcno,
-                    "custid": $("#invoice_customer option:selected").val(),
-                    "invoiceno": $("#invoice_challanno").val(),
-                    "invoicedate": $("#invoice_date").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_year").val(),
-                    "printset": JSON.stringify(printset),
-                    "issuername": $("#invoice_issuer_name").val(),
-                    "designation": $("#invoice_issuer_designation").val(),
-                    "subtotal": parseFloat(subtotal).toFixed(2),
-                    "taxtotal": $("#edit_invoice_product_table tfoot tr:first td:eq(4) input").val(),
-                    "gtotal": $("#edit_invoice_product_table tfoot tr:first td:eq(5) input").val(),
-                },
+            data: {"invid":$("#invselect option:selected").val()},
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
                 }

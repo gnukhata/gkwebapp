@@ -27,7 +27,7 @@ Contributors:
 
 $(document).ready(function() {
   oninvoice = 1;
-  $("title").html("GNUKhata")
+    $("title").html("GNUKhata");
   /*$("#subject").focus();// Focus is set to subject field on load.
 
   $("#subject").keydown(function(event) {

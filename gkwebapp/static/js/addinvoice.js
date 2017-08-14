@@ -640,8 +640,8 @@ $(document).ready(function() {
          console.log(resp["gsflag"]);
 
 
+           $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) span').text(resp["unitname"]);
            $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) span').text(resp["unitname"]);
-           $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').text(resp["unitname"]);
 
 
        }

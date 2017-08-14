@@ -195,12 +195,8 @@ def Invoicedelete(request):
 def Invoiceprint(request):
     header={"gktoken":request.headers["gktoken"]}
     org = requests.get("http://127.0.0.1:6543/organisation", headers=header)
-    cust = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(request.params["custid"])), headers=header)
-    tableset = json.loads(request.params["printset"])
-    return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"cust":cust.json()["gkresult"],
-    "tableset":tableset,"invoiceno":request.params["invoiceno"],"invoicedate":request.params["invoicedate"],"dcno":request.params["dc"],
-    "issuername":request.params["issuername"],"designation":request.params["designation"],"subtotal":request.params["subtotal"],
-    "taxtotal":request.params["taxtotal"],"gtotal":request.params["gtotal"]}
+    invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
+    return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":invoicedata.json()["gkresult"]}
 
 @view_config(route_name="invoice", request_param="action=getattachment", renderer="gkwebapp:templates/viewinvoiceattachment.jinja2")
 def getattachment(request):
