@@ -25,6 +25,10 @@ Contributors:
 */
 // This script is for the product base page.
 $(document).ready(function() {
+    if (sessionStorage.vatorgstflag == '22'){
+	$("#addProduct").text("Create Product");
+	$("#editProduct").text("Edit Product");
+    }
   $("#addproduct").click(function(event)
   {
     /* Tab to load add product page. */
