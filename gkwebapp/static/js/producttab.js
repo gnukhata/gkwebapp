@@ -29,11 +29,21 @@ $(document).ready(function() {
 	$("#addProduct").text("Create Product");
 	$("#editProduct").text("Edit Product");
     }
-  $("#addproduct").click(function(event)
-  {
+
+   
+    $("#addproduct").click(function(event){
+	var call;
+      if(sessionStorage.vatorgstflag == '7' || sessionStorage.vatorgstflag == '29'){
+	   call = '/product?type=addtab';
+      }
+
+      else{
+	   call = '/product?type=addtabvat';
+      }
+      
     /* Tab to load add product page. */
     $.ajax({
-      url: '/product?type=addtab',
+      url: call,
       type: 'POST',
       datatype: 'text/html',
       beforeSend: function(xhr)
@@ -56,10 +66,18 @@ $(document).ready(function() {
   });
 
   $("#editproduct").click(function(event)
-  {
+			  {
+      var call;
+      if(sessionStorage.vatorgstflag == '7' || sessionStorage.vatorgstflag == '29'){
+	   call = '/product?type=edittab';
+      }
+
+      else{
+	   call = '/product?type=edittabvat';
+      }
     /* Tab to load edit product page. */
     $.ajax({
-      url: '/product?type=edittab',
+      url: call,
       type: 'POST',
       global: false,
       async: false,

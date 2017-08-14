@@ -101,9 +101,9 @@ $("#addproddesc").keydown(function(event) {
   if (event.which==13) {
     event.preventDefault();
     if ($(this).val()=="") {
-      $("#blank-alert").alert();
-      $("#blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#blank-alert").hide();
+      $("#product-blank-alert").alert();
+      $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#product-blank-alert").hide();
       });
       return false;
     }

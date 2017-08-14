@@ -42,8 +42,16 @@ from odslib import ODS
 def showproducttab(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/products",headers=header)
-	resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
-	return{"numberofproducts":len(result.json()["gkresult"]),"gkstatus":result.json()["gkstatus"],"vatorgstflag":resultgstvat.json()["gkresult"]}
+	return{"numberofproducts":len(result.json()["gkresult"]),"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="product",request_param="type=addtabvat", renderer="gkwebapp:templates/addproductvat.jinja2")
+def addProductTabVat(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/categories", headers=header)
+	result1 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
+	result2 = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	return{"gkresult":{"category":result.json()["gkresult"],"uom":result1.json()["gkresult"]},"godown":result2.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
+
 
 @view_config(route_name="product",request_param="type=addtab", renderer="gkwebapp:templates/addproduct.jinja2")
 def addproducttab(request):
@@ -260,8 +268,37 @@ def editproducttab(request):
 	resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
 	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"],"vatorgstflag":resultgstvat.json()["gkresult"]}
 
+@view_config(route_name="product",request_param="type=edittabvat", renderer="gkwebapp:templates/editproductvat.jinja2")
+def editProductTabVat(request):
+	header={"gktoken":request.headers["gktoken"]}
+	result = requests.get("http://127.0.0.1:6543/products",headers=header)
+	resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"],"vatorgstflag":resultgstvat.json()["gkresult"]}
+
+
 @view_config(route_name="product",request_param="type=details", renderer="gkwebapp:templates/editproductspecs.jinja2")
 def productdetails(request):
+	header={"gktoken":request.headers["gktoken"]}
+	prodspecs={}
+	result = requests.get("http://127.0.0.1:6543/products?qty=single&productcode=%d"%(int(request.params['productcode'])),headers=header)
+	resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+
+	if result.json()["gkresult"]["gsflag"]==7:
+
+		if result.json()["gkresult"]["categorycode"]!=None:
+			result1 = requests.get("http://127.0.0.1:6543/categoryspecs?categorycode=%d"%(int(result.json()["gkresult"]["categorycode"])), headers=header)
+			prodspecs = result1.json()["gkresult"]
+		result2 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
+
+		result3 = requests.get("http://127.0.0.1:6543/categories", headers=header)
+		result4 = requests.get("http://127.0.0.1:6543/godown", headers=header)
+		numberofgodowns = int(result.json()["numberofgodowns"])
+		return{"proddesc":result.json()["gkresult"],"prodspecs":prodspecs,"uom":result2.json()["gkresult"],"category":result3.json()["gkresult"],"godown":result4.json()["gkresult"],"numberofgodowns":numberofgodowns,"gkstatus":result.json()["gkstatus"],"vatorgstflag":resultgstvat.json()["gkresult"]}
+	else:
+		return{"proddesc":result.json()["gkresult"],"vatorgstflag":resultgstvat.json()["gkresult"]}
+
+@view_config(route_name="product",request_param="type=detailsvat", renderer="gkwebapp:templates/editproductspecsvat.jinja2")
+def productDetailsVat(request):
 	header={"gktoken":request.headers["gktoken"]}
 	prodspecs={}
 	result = requests.get("http://127.0.0.1:6543/products?qty=single&productcode=%d"%(int(request.params['productcode'])),headers=header)
