@@ -516,6 +516,12 @@ var userrole1;
      sessionStorage.setItem('booksclosedflag', resp["gkresult"]["booksclosedflag"]);
        sessionStorage.setItem('roflag', resp["gkresult"]["roflag"]);
        sessionStorage.setItem('vatorgstflag' , resp["vatorgstflag"] );
+       if (resp["vatorgstflag"] == 22){
+	   $("#productinmaster").text("Product");
+	    $("#product").text("Product");
+	   $("#productinmaster").text("Product");
+	   $("#listofstockitems").text("List of Products");
+       }
    });
   // for getting username who is logged in
   $.ajax({
