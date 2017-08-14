@@ -226,10 +226,8 @@
     <form class="form-inline" >
       {% if gkresult["taxflag"] == 22 %}
 	<div class="row">
-	  <div class="col-xs-3">
 	    <label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
 	    VAT
-	  </div>
 	</div>
 	<div class="row">
 	  <br>
@@ -309,14 +307,11 @@
 	</div>
       {% else %}
 	  <div class="row">
-	    <div class="col-xs-3">
 	      <label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
 	      GST
-      </select>
-	    </div>
 	  </div>
 		<div class="row">
-		  <table id="invoice_product_table_gst_heading" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%;">
+		  <table id="invoice_product_table_gst" class="table table-condensed table-bordered">
 		    <thead class="bg-primary">
 		      <tr>
 			<th rowspan="2" class="mdwrap text-center">{% trans %}Product{% endtrans %}</th>
@@ -329,7 +324,7 @@
 			{% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}CGST{% endtrans %}</th>{% endif %}
 			{% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}SGST{% endtrans %}</th>{% endif %}
 			{% if gkresult["taxname"]=='IGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}IGST{% endtrans %}</th>{% endif %}
-			<th class="text-center">Total</th>
+			<th rowspan="2" class="text-center">Total</th>
 		      </tr>
 
 		      <tr>
@@ -341,10 +336,6 @@
 			{% if gkresult["taxname"]=='IGST' %}<th>Amt</th>{% endif %}
 		      </tr>
 		    </thead>
-		  </table>
-		</div>
-		<div class="row">
-		  <table id="invoice_product_table_gst" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase" style="overflow-x:hidden;overflow-y:scroll;width:140%; max-width:140%;">
 		    <tbody>
 		      {% for product in gkresult["invcontents"] %}
 			<tr>
@@ -379,7 +370,7 @@
 
 			  {% if gkresult["invcontents"][product]["taxname"]=='IGST' %}<td class="taxcell text-right">{{ gkresult["invcontents"][product]["taxrate"] }}</td>{% endif %}
 			  {% if gkresult["invcontents"][product]["taxname"]=='IGST' %}<td class="taxcell text-right">{{ gkresult["invcontents"][product]["taxamount"] }}</td>{% endif %}
-			  <td class="col-xs-12 text-right">{{ gkresult["invcontents"][product]["totalAmount"] }}</td>
+			  <td class="text-right">{{ gkresult["invcontents"][product]["totalAmount"] }}</td>
 			</tr>
 		      {% endfor %}
 		    </tbody>
@@ -391,9 +382,10 @@
 			{% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
 			{% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
 			{% if gkresult["taxname"]=='IGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
-			<td class="col-xs-12 text-right">
+			<td class="text-right">
 			  {{ gkresult["invoicetotal"] }}
 			</td>
+		      </tr>
 		    </tfoot>
 		  </table>
 		</div>
