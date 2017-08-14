@@ -58,14 +58,18 @@
 	</label>
 	{{ gkresult["custSupDetails"]["custname"] }}
       </div>
-      <div class="form-group form-inline col-sm-12 nopadding">
-	<label for="tin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}TIN{% endtrans %} : </label>
-	{{ gkresult["custSupDetails"]["custtin"] }}
-      </div>
+      {% if gkresult["taxflag"] == 22 %}
+	<div class="form-group form-inline col-sm-12 nopadding">
+	  <label for="tin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}TIN{% endtrans %} : </label>
+	  {{ gkresult["custSupDetails"]["custtin"] }}
+	</div>
+      {% endif %}
+      {% if gkresult["taxflag"] == 7 %}
       <div class="form-group form-inline col-sm-12 nopadding">
 	<label for="gstin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN{% endtrans %} : </label>
 	{{ gkresult["custSupDetails"]["custgstin"] }}
       </div>
+      {% endif %}
       <div class="form-group form-inline col-sm-12 nopadding">
 	<label>
 	  {% if gkresult["inoutflag"] == 9 %}
@@ -97,14 +101,18 @@
 	<label for="consignee" class=" col-form-label col-form-label-sm" id="consigneelbl">{% trans %}Name{% endtrans %} : </label>
 	{% if gkresult["consignee"]["consigneename"] %}{{ gkresult["consignee"]["consigneename"] }}{% else %}N/A{% endif %}
       </div>
-      <div class="form-inline form-group col-sm-12 nopadding">
-	<label for="tinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}TIN{% endtrans %} :</label>
-	{% if gkresult["consignee"]["tinconsignee"] %}{{ gkresult["consignee"]["tinconsignee"] }}{% else %}N/A{% endif %}
-      </div>
+      {% if gkresult["taxflag"] == 22 %}
+	<div class="form-inline form-group col-sm-12 nopadding">
+	  <label for="tinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}TIN{% endtrans %} :</label>
+	  {% if gkresult["consignee"]["tinconsignee"] %}{{ gkresult["consignee"]["tinconsignee"] }}{% else %}N/A{% endif %}
+	</div>
+      {% endif %}
+	{% if gkresult["taxflag"] == 7 %}
       <div class="form-inline form-group col-sm-12 nopadding">
 	<label for="gstinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN{% endtrans %} :</label>
 	{% if gkresult["consignee"]["tinconsignee"] %}{{ gkresult["consignee"]["tinconsignee"] }}{% else %}N/A{% endif %}
       </div>
+      {% endif %}
       <div class="form-inline form-group  col-sm-12 nopadding">
 	<label for="consigneeaddress" class=" col-form-label col-form-label-sm" id="consigneeaddress">{% trans %}Address :{% endtrans %}</label>
 	{% if gkresult["consignee"]["consigneeaddress"] %}{{ gkresult["consignee"]["consigneeaddress"] }}{% else %}N/A{% endif %}
