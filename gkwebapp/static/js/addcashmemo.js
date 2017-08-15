@@ -1292,44 +1292,7 @@ $(document).off("keydown", ".invoice_product_per_price").on("keydown", ".invoice
                     .done(function(resp) {
                         console.log("success");
                         if (resp["gkstatus"] == 0) {
-                            $('#invoice_product_table tbody').append('<tr>' +
-                                '<td class="col-xs-3">' +
-                                '<select class="form-control input-sm product_name_vat"></select>' +
-                                '</td>' +
-                                '<td class="col-xs-2">' +
-                                '<div class="input-group">' +
-                                '<input type="text" class="invoice_product_quantity form-control input-sm text-right" value="0">' +
-                                '<span class="input-group-addon input-sm" id="unitaddon"></span>' +
-                                '</div>' +
-                                '</td>' +
-                                '<td class="col-xs-2">' +
-                                '<div class="input-group">' +
-                                '<input type="text" class="invoice_product_freequantity form-control input-sm text-right" value="0" placeholder="0" aria-describedby="unitaddon">' +
-                                '<span class="input-group-addon input-sm" id="freeunitaddon"></span>' +
-                                '</div>' +
-                                '</td>' +
-                                '<td class="col-xs-2">' +
-                                '<input type="text" class="invoice_product_per_price form-control input-sm numtype text-right" value="0.00">' +
-                                '</td>' +
-                                '<td class="col-xs-1">'+
-                                  '<input type="text" class="invoice_product_discount form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8">'+
-                                '</td>'+
-                                '<td class="col-xs-1">'+
-                                  '<input type="text" class="invoice_product_taxablevalue form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8" disabled>'+
-                                '</td>'+
-                                '<td class="col-xs-1">' +
-                                '<input type="text" class="invoice_product_tax_rate form-control input-sm numtype text-right" value="0.00">' +
-                                '</td>' +
-                                '<td class="col-xs-1">' +
-                                '<input type="text" class="invoice_product_tax_amount form-control input-sm numtype text-right" value="0.00" disabled>' +
-                                '</td>' +
-                                '<td class="col-xs-2">' +
-                                '<input type="text" class="invoice_product_total form-control deliverychallan_edit_disable input-sm numtype text-right" value="0.00" disabled>' +
-                                '</td>' +
-                                '<td class="col-xs-1" style="width: 5%">' +
-                                '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
-                                '</td>' +
-                                '</tr>');
+                            $('#invoice_product_table tbody').append('<tr>' + vathtml + '</tr>');
 
                             $(".invoice_product_tax_rate").prop("disabled", true);
 
