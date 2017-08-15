@@ -173,8 +173,11 @@ $(document).ready(function() {
 		$("#viewinvdiv").show();
             });
     });
-    $("#invview").on('hidden.bs.modal', function(event) {
-        $('#latable tbody tr:eq(' + currentrow + ') td:eq(1) a').focus();
+    $("#backbutton").click(function(event){
+	$("#invload").html("");
+	$("#viewinvdiv").hide();
+	$('#listdiv').show();
+	$('#latable tbody tr:eq(' + currentrow + ') td:eq(1) a').focus();
         $('#latable tbody tr:eq(' + currentrow + ') td:eq(1) a').closest('tr').addClass('selected');
     });
     $("#print").click(function(event) {
