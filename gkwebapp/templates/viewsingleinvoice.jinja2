@@ -1,5 +1,6 @@
 <link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css">
 <form class="form-inline" >
+  <input id="status" type="hidden" value="{{ gkresult["inoutflag"] }}">
   <div class="col-md-12">
     <div class="col-md-4">
       {% if gkresult["inoutflag"] == 9 %}
@@ -23,7 +24,7 @@
       </div>
       <div class="form-group form-inline col-sm-12 nopadding">
 	<label>
-	{% if gkstatus=="in" %}
+	{% if gkresult["inoutflag"] == 9 %}
           {% trans %}State of Destination{% endtrans %} :
 	{% else %}
 	  {% trans %}State of Origin{% endtrans %} :

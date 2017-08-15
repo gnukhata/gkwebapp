@@ -66,7 +66,8 @@ $(document).ready(function() {
     else {
 	$("#viewattach").hide();
     }
-	if ($("#status").val() == 9) {
+	console.log($("#status").val());
+	if ($("#status").val() == '9') {
 	$("#invoice_editprint").hide();
     }
     else {
