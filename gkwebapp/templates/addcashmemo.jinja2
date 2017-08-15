@@ -232,96 +232,98 @@
         <div class="container-fluid" id="invoice_product_div">
           {% if resultgstvat == '29' or resultgstvat == '22' %}
   		{% if resultgstvat == '22' %}
-          <table id="invoice_product_table" class="shadow table table-condensed table-bordered fixed-table fixed-tablepurchase" >
-            {% else %}
-            <table id="invoice_product_table" class="shadow table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
-              {% endif %}
-            <thead class="bg-primary">
-              <tr>
-                <th class="col-xs-3 text-center">{% trans %}Product{% endtrans %}</th>
-                <th class="col-xs-2 text-center">{% trans %}Billed Quantity{% endtrans %}</th>
-                <th class="col-xs-2 text-center">{% trans %}Free Quantity{% endtrans %}</th>
-                <th class="col-xs-2 text-center">{% trans %}Price Per Unit{% endtrans %}</th>
-                <th class="col-xs-1 text-center">{% trans %}Discount{% endtrans %}</th>
-                <th class="col-xs-1 text-center">{% trans %}Taxable Value{% endtrans %}</th>
-                <th class="col-xs-1 text-center">{% trans %}Tax Rate{% endtrans %}</th>
-                <th class="col-xs-1 text-center">{% trans %}Tax Amount{% endtrans %}</th>
-                <th class="col-xs-2 text-center">{% trans %}Total{% endtrans %}</th>
-                <th class="col-xs-1" style="width: 5%"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="col-xs-3">
-                  <select class="form-control input-sm product_name_vat">
-                    <option value="" disabled hidden selected>Select Product</option>
-                    {% for product in products %}
-                      <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
-                    {% endfor %}
-                  </select>
-                </td>
-                <td class="col-xs-2">
-                  <div class="input-group">
-                    <input type="text" class="invoice_product_quantity form-control input-sm text-right" value="0" placeholder="0" aria-describedby="unitaddon">
-                    <span class="input-group-addon input-sm" id="unitaddon"></span>
-                  </div>
-                </td>
-                <td class="col-xs-2">
-                  <div class="input-group">
-                    <input type="text" class="invoice_product_freequantity form-control input-sm text-right" value="0" placeholder="0" aria-describedby="unitaddon">
-                    <span class="input-group-addon input-sm" id="freeunitaddon"></span>
-                  </div>
-                </td>
-                <td class="col-xs-2">
-                  <input type="text" class="invoice_product_per_price form-control input-sm text-right numtype" value="0.00" placeholder="0.00">
-                </td>
-                <td class="col-xs-1">
-                  <input type="text" class="invoice_product_discount form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8">
-                </td>
-                <td class="col-xs-1">
-          	  <input type="text" class="invoice_product_taxablevalue form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="8" disabled>
-          	</td>
-                <td class="col-xs-1">
-                  <input type="text" class="invoice_product_tax_rate form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
-                </td>
-                <td class="col-xs-1">
-                  <input type="text" class="invoice_product_tax_amount form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
-                </td>
-                <td class="col-xs-2">
-                  <input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
-                </td>
-                <td class="col-xs-1" style="width: 5%">
+  		  <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase">
+  		{% else %}
+  		    <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
+  		{% endif %}
+  		<thead class="bg-primary">
+  		  <tr>
+  		    <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
+  		    <th class="smvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
+  		    <th class="smvwrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
+  		    <th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
+  		    <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
+  		    <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
+  		    <th class="smvwrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
+  		    <th class="smvwrap text-center">{% trans %}Tax Amt{% endtrans %}</th>
+  		    <th class="smvwrap text-center">{% trans %}Total{% endtrans %}</th>
+  		    <th class="crosswrap"></th>
+  		  </tr>
+  		</thead>
+  		<tbody>
+  		  <tr>
+  		    <td class="mdvwrap">
+  		      <select class="form-control input-sm product_name_vat">
+  			<option value="" disabled hidden selected>Select Product</option>
+  			{% for product in products %}
+  			  <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
+  			{% endfor %}
+  		      </select>
+  		    </td>
+  		    <td class="smvwrap">
+  		      <div class="input-group">
+  			<input type="text" class="invoice_product_quantity_vat form-control input-sm text-right numtype" value="0.00" placeholder="0" size="10" aria-describedby="unitaddon">
+  			<span class="input-group-addon input-sm unitaddon"></span>
+  		      </div>
+  		    </td>
+  		    <td class="smvwrap">
+  		      <div class="input-group">
+  			<input type="text" class="invoice_product_freequantity_vat form-control input-sm text-right numtype" value="0.00" placeholder="0" size="10" aria-describedby="unitaddon">
+  			<span class="input-group-addon input-sm unitaddon"></span>
+  		      </div>
+  		    </td>
+  		    <td class="smvwrap">
+  		      <input type="text" class="invoice_product_per_price_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
+  		    </td>
+  		    <td class="smvwrap">
+  		      <input type="text" class="invoice_product_discount_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
+  		    </td>
 
-                </td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td class="col-xs-9 text-right">
-                  <input type="text" class=" form-control input-sm text-right" value="{% trans %}Total{% endtrans %}" placeholder="" disabled>
-                </td>
-                <td class="col-xs-2" style="display:none">
-                  <input type="text" class=" form-control input-sm text-right" value="0" placeholder="" disabled>
-                </td>
-                <td class="col-xs-2" style="display:none">
-                  <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
-                </td>
-                <td class="col-xs-1" style="display:none">
-                  <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
-                </td>
-                <td class="col-xs-1" style="display:none">
-                  <input type="text" class=" form-control input-sm text-right" value="0.00" placeholder="" disabled>
-                </td>
-                <td class="col-xs-2">
-                  <input type="text" class=" form-control deliverychallan_edit_disable input-sm text-right" value="0.00" disabled>
-                </td>
-                <td class="col-xs-1" style="width: 3.5%">
+  		    <td class="smvwrap">
+  		      <input type="text" class="invoice_product_taxablevalue_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
+  		    </td>
+  		    <td class="smvwrap">
+  		      <input type="text" class="invoice_product_tax_rate_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
+  		    </td>
+  		    <td class="smvwrap">
 
-                </td>
-              </tr>
-            </tfoot>
+  		      <input  size="10" class="invoice_product_tax_amount_vat form-control text-right numtype"  value="0.00" placeholder="0.00" disabled>
+  		    </td>
+  		    <td class="smvwrap">
+  		      <input size="10" type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
+  		    </td>
+  		    <td class="crosswrap">
+  		    </td>
+  		  </tr>
+  		</tbody>
+  		<tfoot>
+  		  <tr>
+  		    <td colspan="4" class="text-right">
+  		      {% trans %}Total{% endtrans %}
+  		    </td>
+  		    <!--  Total : ptotal       -->
+  		    <td class="smvwrap">
+  		      <input type="text" id="discounttotal_product_vat" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
+  		    </td>
+  		    <td class="smvwrap">
+  		      <input type="text" id="taxablevaluetotal_product_vat" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
+  		    </td>
+  		    <td class="smvwrap">
 
-          </table>
+  		    </td>
+  		    <td class="smvwrap">
+  		      <input type="text" id="totaltax" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
+  		    </td>
+  		    <td class="smvwrap">
+  		      <input type="text" id="total_product_vat" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
+  		    </td>
+  		    <td class="crosswrap">
+
+  		    </td>
+  		  </tr>
+  		</tfoot>
+
+  		    </table>
           {% endif %}
 
            {% if resultgstvat == '29' or resultgstvat == '7' %}
