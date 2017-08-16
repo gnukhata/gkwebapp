@@ -443,29 +443,40 @@
 	</table>
       </div>
       <div class="col-xs-6">
-	<div class="row">
-	  <div class="form-inline form-group col-xs-6 nopadding">
-	    <label for="transportationmode" class="col-xs-5" id="transmode">{% trans %}Transportation Mode{% endtrans %} :</label>
-	    {% if gkresult["transportationmode"] %}{{ gkresult["transportationmode"] }}{% else %}N/A{% endif %}
-	  </div>
-	  <div class="form-inline form-group col-xs-6 nopadding" id="vehiclenodiv" hidden>
-	    <label for="inv" class="col-xs-5">{% trans %}Vehicle No.{% endtrans %} :</label>
-	    {% if gkresult["vehicleno"] %}{{ gkresult["vehicleno"] }}{% else %}N/A{% endif %}
-	  </div>
-	</div>
-	<div class="row">
-	  <div class="form-group form-inline col-xs-6 nopadding">
-	    <label for="supply_date" class="col-xs-5">{% trans %}Date of Supply{% endtrans %}:</label>
-	    <div class="form-group col-xs-7 nopadding">
-	      {% if gkresult["dateofsupply"] %}{{ gkresult["dateofsupply"] }}{% else %}N/A{% endif %}
-  	    </div>
-	  </div>
-
-	  <div class="form-group form-inline col-xs-6 nopadding">
-	    <label for="inv" class="col-xs-5">{% trans %}Reverse Charge{% endtrans %}:</label>
-	    {% if gkresult["reversecharge"] %}{{ gkresult["reversecharge"] }}{% else %}N/A{% endif %}
-	  </div>
-	</div>
+	<table class="table table-bordered table-condensed">
+	  <tbody>
+	    <tr>
+	      <td>
+		<label for="transportationmode" id="transmode">{% trans %}Transportation Mode{% endtrans %} :</label>
+	      </td>
+	      <td>
+		{% if gkresult["transportationmode"] %}{{ gkresult["transportationmode"] }}{% else %}N/A{% endif %}
+	      </td>
+	      {% if gkresult["vehicleno"] %}
+	      <td>
+		<label for="inv">{% trans %}Vehicle No.{% endtrans %} :</label>
+	      </td>
+	      <td>
+		{{ gkresult["vehicleno"] }}
+	      </td>
+	      {% endif %}
+	    </tr>
+	    <tr>
+	      <td>
+		<label for="supply_date">{% trans %}Date of Supply{% endtrans %}:</label>
+	      </td>
+	      <td>
+		{% if gkresult["dateofsupply"] %}{{ gkresult["dateofsupply"] }}{% else %}N/A{% endif %}
+	      </td>
+	      <td>
+		<label for="inv">{% trans %}Reverse Charge{% endtrans %}:</label>
+	      </td>
+	      <td>
+		{% if gkresult["reversecharge"] %}{{ gkresult["reversecharge"] }}{% else %}N/A{% endif %}
+	      </td>
+	    </tr>
+	  </tbody>
+	</table>
       </div>
     </div>
     <br>
