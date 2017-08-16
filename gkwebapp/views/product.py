@@ -298,6 +298,9 @@ def productdetails(request):
     else:
         return{"proddesc":result.json()["gkresult"],"vatorgstflag":resultgstvat.json()["gkresult"]}
 
+
+
+
 @view_config(route_name="product",request_param="type=detailsvat", renderer="gkwebapp:templates/editproductspecsvat.jinja2")
 def productDetailsVat(request):
     header={"gktoken":request.headers["gktoken"]}

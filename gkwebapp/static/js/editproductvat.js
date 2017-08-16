@@ -15,6 +15,14 @@ $(document).ready(function() {
     /* Act on the event */
     $(".numtype").numeric();
   });
+ if(sessionStorage.invflag==0){
+  $(".noinventory").hide();
+    $("#taxhelp3").hide();
+    $("#taxhelp4").show();
+  
+  }
+
+    
   $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
     event.preventDefault();
     /* Act on the event */
@@ -189,7 +197,7 @@ $(document).ready(function() {
     /* Act on the event */
     prodcode= $("#prodselect option:selected").val();
       $.ajax({
-        url: '/product?type=details',
+        url: '/product?type=detailsvat',
         type: 'POST',
         global: false,
         async: false,

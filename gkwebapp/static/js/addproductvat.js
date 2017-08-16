@@ -1,4 +1,16 @@
 $(document).ready(function() {
+
+if (sessionStorage.invflag==0){
+  $(".noinventory").hide();
+  $("#nogodownmsg").show();
+}
+if (sessionStorage.invflag=='1' ){
+  $("#nogodownmsg").hide();
+
+  $("#godownmsg").show();
+}
+
+
   var godownflag = 0;
   $('.modal-backdrop').remove();
   var specday;

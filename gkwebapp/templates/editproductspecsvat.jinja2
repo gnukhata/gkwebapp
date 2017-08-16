@@ -169,6 +169,7 @@
     </div>
   </div>
   </div>
+  <div class ="noinventory">
   <div class="row">
     {% if not godown %}
     <input type="text" name="godownflag" id="editgodownflag" value="0" hidden>
@@ -185,7 +186,7 @@
         <input type="checkbox" name="godownflag" id="editgodownflag" value="1">
         <label class="" for="editgodownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
       </div>
-      <div id="editnogodown" class="form-group pds">
+      <div id="editnogodown" class="form-group pds noinventory">
         <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
         <div class="input-group col-sm-6">
           <input type='text' class="form-control text-right input-sm" name="openingstock"  id="editopeningstock" value="{{proddesc['openingstock']}}" aria-describedby="unitaddon">
@@ -310,5 +311,6 @@
       <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to navigate within a column in tax or godown table.</small>
     </div>
     <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
-</div>
+  </div>
+  </div>
 </div>

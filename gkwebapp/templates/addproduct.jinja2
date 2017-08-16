@@ -82,13 +82,15 @@
                 <small id="textareahelp" class="form-text text-muted">{% trans %}Press 'Enter' key to save and 'Esc' key to cancel.{% endtrans %}</small>
               </div>
             </div>
-            <div class="row productclass" id="specdiv" hidden>
-            </div>
+           
 	  </div>
           <div class="col-sm-6 common" id="rightdiv">
-            <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#CatModal"></i>
+	    <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#CatModal"></i>
+	    <div class="row productclass" id="specdiv" style="margin-top: 3%;" hidden>
+            </div>
+            
             <div class="row">
-              <div class="form-group" style="margin-top: 3%;">
+              <div class="form-group" ">
 		<div class="panel taxclass">
 		  <table id="product_tax_table" class="table table-condensed table-bordered fixed-table common">
                     <thead class="bg-primary input-sm">
@@ -167,24 +169,24 @@
 		</div>
 	      </div>
 	    
-		<div class="form-group col-xs-8" style="margin-top: 3%;">
+		<div class="form-group col-xs-8 igsttax" style="padding-top: 1%;" hidden>
 		  <div class="panel">
-		    <table id="product_tax_table" class="table table-condensed table-bordered table-responsivecommon">
+		    <table id="igst_tax_table" class="table table-condensed table-bordered">
                       <thead class="bg-primary input-sm">
 			<tr>
-			  <th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
+			  <th class="col-xs-6 text-center">{% trans %}Tax Name{% endtrans %}</th>
 			  
-			  <th class="col-xs-3 text-center">{% trans %}Rate %{% endtrans %}</th>
+			  <th class="col-xs-6 text-center">{% trans %}Rate %{% endtrans %}</th>
 			  
 			</tr>
                       </thead>
 		      <tbody>
 			<tr>
-			  <td class="col-xs-4 text-center">
-			    <label class="" for="igst">{% trans %}IGST{% endtrans %}</label>
+			  <td class="col-xs-6 text-center">
+			    <label class="input-sm" for="igst"><h5>{% trans %}IGST{% endtrans %}</h5></label>
 			  </td>
-			  <td class="">
-			    <input type="text" id="godownpresence" value="0">
+			  <td class="col-xs-6">
+			    <input class="form-control input-sm tax_rate text-right product_new_rate numtype" id ="igstrate"  placeholder="Rate" value="0.00">
 			  </td>
 			</tr>
 		      </tbody>
@@ -251,7 +253,7 @@
       <input type="text" id="godownpresence" value="1" hidden="">
       <label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
 		  </div>
-		  <div id="nogodown" class="form-group pds col-sm-6">
+		  <div id="nogodown" class="form-group pds col-sm-6 noinventory">
 		    <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
 		    <div class="input-group">
                       <input type='text' class="form-control text-right input-sm numtype" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">

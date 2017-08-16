@@ -17,7 +17,6 @@ $(document).ready(function() {
     $(".numtype").numeric();
   });
   if(sessionStorage.invflag==0){
-  $("#categorydiv").hide();
   $(".noinventory").hide();
     $("#taxhelp3").hide();
     $("#taxhelp4").show();

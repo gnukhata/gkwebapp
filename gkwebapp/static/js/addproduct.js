@@ -13,7 +13,8 @@ if (sessionStorage.invflag=='1' ){
   $("#godownmsg").show();
 }
   if(sessionStorage.vatorgstflag == '7'){
-    $(".taxclass").hide(); 
+      $(".taxclass").hide();
+      $(".igsttax").hide();
   }
   //$("#proservlabel").text("Product Name :");
 
