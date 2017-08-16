@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    
   $('.modal-backdrop').remove();
   var specday;
   var specmonth;
@@ -14,6 +15,7 @@ $(document).ready(function() {
     event.preventDefault();
     /* Act on the event */
     $(".numtype").numeric();
+
   });
 
     console.log(sessionStorage.invflag);
@@ -24,7 +26,6 @@ $(document).ready(function() {
     $("#taxhelp4").show();
   
   }
-
     
   $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
     event.preventDefault();
@@ -133,10 +134,7 @@ $(document).ready(function() {
     if (event.which==13) {
       event.preventDefault();
       if ($("#editcatselect").length < 1) {
-       
-     
           $("#edituom").focus();
-        
       }
       else if ($("#editcatselect").is(':disabled')) {
         $("#edituom").focus();

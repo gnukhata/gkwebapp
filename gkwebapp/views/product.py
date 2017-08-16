@@ -149,10 +149,12 @@ def saveproduct(request):
         else:
             proddetails["specs"]= json.loads(request.params["specs"])
 
-    if request.params["gscode"]:
+    if request.params.has_key("gscode"):
         proddetails["gscode"]=request.params["gscode"]
-    if request.params["gsflag"]:
+    if request.params.has_key("gsflag"):
         proddetails["gsflag"]=request.params["gsflag"]
+    else:
+        proddetails["gsflag"] = 7
 
     productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
     if godownflag == True:
@@ -164,13 +166,16 @@ def saveproduct(request):
                 if j != len(godowns):
                     godnames += ", "
                 j += 1
+    print productdetails
     result = requests.post("http://127.0.0.1:6543/products",data=json.dumps(productdetails),headers=header)
+    print result.json
     if result.json()["gkstatus"] == 0:
         if godownflag == True:
             gkdata = {"activity":proddetails["productdesc"] + " product created in " + godnames + " godowns"}
         else:
             gkdata = {"activity":proddetails["productdesc"] + " product created"}
         resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
+
     if len(taxes)>0:
         for tax in taxes:
             if len(tax)!=0:

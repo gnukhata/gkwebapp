@@ -1075,9 +1075,9 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
 
       $("#product").click();
       $('.modal-backdrop').remove();
-      $("#addsuccess-alert").alert();
-      $("#addsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#addsuccess-alert").hide();
+      $("#addproduct-success-alert").alert();
+      $("#addproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#addproduct-success-alert").hide();
       });
       return false;
     }

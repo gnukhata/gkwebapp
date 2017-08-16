@@ -1418,8 +1418,6 @@ else{
   addformdata.push("gscode",$("#serviceno").val());
 
 }
-console.log("addformdata");
-console.log(addformdata);
   addformdata.push("gsflag",$("#additem option:selected").val());
   addformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
   addformdata.push({name: 'specs', value: JSON.stringify(specs)});
@@ -1427,7 +1425,7 @@ console.log(addformdata);
     addformdata.push({name: 'godowns', value: JSON.stringify(gobj)}); //Pushing taxes and specs into addformdata
 
   }
-  console.log(addformdata);
+ 
   $.ajax({
     url: '/product?type=save',
     type: 'POST',
@@ -1438,7 +1436,7 @@ console.log(addformdata);
     beforeSend: function(xhr)
     {
       xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-        console.log(addformdata);
+ 
     }
   })
   .done(function(resp) {
@@ -1461,11 +1459,14 @@ console.log(addformdata);
     }
     else if (resp["gkstatus"] ==1)
     {
-      $('.modal-backdrop').remove();
+	$('.modal-backdrop').remove();
+	console.log($("#additem option:selected").val());
+	if ($("#additem option:selected").val() == 7){
       $("#duplicate-alert").alert();
       $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#duplicate-alert").hide();
       });
+	}
       $("#addproddesc").focus();
       $("#addproddesc").select();
       return false;
