@@ -16,6 +16,8 @@ $(document).ready(function() {
     /* Act on the event */
     $(".numtype").numeric();
   });
+
+   
   if(sessionStorage.invflag==0){
   $(".noinventory").hide();
     $("#taxhelp3").hide();

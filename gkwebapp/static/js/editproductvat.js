@@ -15,8 +15,11 @@ $(document).ready(function() {
     /* Act on the event */
     $(".numtype").numeric();
   });
- if(sessionStorage.invflag==0){
-  $(".noinventory").hide();
+
+    console.log(sessionStorage.invflag);
+    if(sessionStorage.invflag==0){
+	console.log("hii");
+  $("#noinventory").hide();
     $("#taxhelp3").hide();
     $("#taxhelp4").show();
   
@@ -130,11 +133,10 @@ $(document).ready(function() {
     if (event.which==13) {
       event.preventDefault();
       if ($("#editcatselect").length < 1) {
-        $("#nocategory-alert").alert();
-        $("#nocategory-alert").fadeTo(2250, 500).slideUp(500, function(){
+       
+     
           $("#edituom").focus();
-          $("#nocategory-alert").hide();
-        });
+        
       }
       else if ($("#editcatselect").is(':disabled')) {
         $("#edituom").focus();
