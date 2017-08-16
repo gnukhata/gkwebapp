@@ -251,7 +251,7 @@
 	      </div>
 	      <div class="alert alert-danger" id="quantity-blank-alert"  aria-live="rude" role="alert" hidden>
 
-		<label >{% trans %}Quantity cannot be blank zero and / or negative!{% endtrans %}</label>
+		<label >{% trans %}Both Billed Quantity and Free Quantity cannot be zero!{% endtrans %}</label>
 	      </div>
 	      <div class="alert alert-danger" id="allquantities-blank-alert"  aria-live="rude" role="alert" hidden>
 
@@ -261,15 +261,10 @@
 
 		<label >{% trans %}Quantity cannot be greater than that specified in the delivery note!{% endtrans %}</label>
 	      </div>
-	      <div class="alert alert-danger" id="quantity-freeqty-alert"  aria-live="rude" role="alert" hidden>
-
-		<label >{% trans %}Free Quantity cannot be more than Quantity!{% endtrans %}</label>
-	      </div>
 	      <div class="alert alert-danger" id="price-blank-alert"  aria-live="rude" role="alert" hidden>
 
-		<label >{% trans %}Price per unit cannot be empty zero and / or negative!{% endtrans %}</label>
+		<label >{% trans %}Price per unit cannot be empty zero!{% endtrans %}</label>
 	      </div>
-	      <br>
 	      {% if resultgstvat == '29' or resultgstvat == '22' %}
 		{% if resultgstvat == '22' %}
 		  <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase">
@@ -279,12 +274,12 @@
 		<thead class="bg-primary">
 		  <tr>
 		    <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
-		    <th class="smvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
-		    <th class="smvwrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
+		    <th class="qtyvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
+		    <th class="qtyvwrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
 		    <th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
 		    <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 		    <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
-		    <th class="smvwrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
+		    <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
 		    <th class="smvwrap text-center">{% trans %}Tax Amt{% endtrans %}</th>
 		    <th class="smvwrap text-center">{% trans %}Total{% endtrans %}</th>
 		    <th class="crosswrap"></th>
@@ -300,13 +295,13 @@
 			{% endfor %}
 		      </select>
 		    </td>
-		    <td class="smvwrap">
+		    <td class="qtyvwrap">
 		      <div class="input-group">
 			<input type="text" class="invoice_product_quantity_vat form-control input-sm text-right numtype" value="0.00" placeholder="0" size="10" aria-describedby="unitaddon">
 			<span class="input-group-addon input-sm unitaddon"></span>
 		      </div>
 		    </td>
-		    <td class="smvwrap">
+		    <td class="qtyvwrap">
 		      <div class="input-group">
 			<input type="text" class="invoice_product_freequantity_vat form-control input-sm text-right numtype" value="0.00" placeholder="0" size="10" aria-describedby="unitaddon">
 			<span class="input-group-addon input-sm unitaddon"></span>
@@ -322,7 +317,7 @@
 		    <td class="smvwrap">
 		      <input type="text" class="invoice_product_taxablevalue_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
 		    </td>
-		    <td class="smvwrap">
+		    <td class="ratewrap">
 		      <input type="text" class="invoice_product_tax_rate_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
 		    </td>
 		    <td class="smvwrap">
@@ -367,7 +362,7 @@
 	      {% endif %}
 	      {% if resultgstvat == '29' or resultgstvat == '7' %}
 		<div class="row" id="gstproducttable">
-		  <div class="col-sm-12"><small id="txtareahelp" class="form-text text-muted">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</small></div>
+		  <div class="col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
 		  <div class="col-sm-10" style="overflow-x:scroll;">
 		    <div class="row">
 		      <table id="invoice_product_table_gst_heading" class="nopadding table table-condensed table-bordered" style="width:140%; max-width:140%">
