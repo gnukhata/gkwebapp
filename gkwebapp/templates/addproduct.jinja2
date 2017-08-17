@@ -20,19 +20,11 @@
 
               </div>
             </div>
-	    {%if gkresult["category"]|length != 0 %}
+	    
               <div class="row ">
 		<input value="1" id="catg" hidden>
 		{% if not gkresult["category"] %}
-		  <div class="form-group col-sm-11 productclass" id="categorydiv" hidden>
-                    <label class="" for="addcatselect">{% trans %}Select Category{% endtrans %} :</label>
-                    <select class = "form-control input-sm"  name = "catselect" id="addcatselect" >
-                      <option value="" selected >{% trans %}None{% endtrans %}</option>
-                      {% for cat in gkresult["category"] %}
-			<option value="{{cat['categorycode']}}">{{cat["categoryname"]}}({{cat["subcount"]}})</option>
-                      {% endfor %}
-                    </select>
-		  </div>
+		  
 		  <div class="form-group col-sm-11">
 		    <small id="txtareahelp" class="form-text text-muted common">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
 		  </div>
@@ -49,7 +41,7 @@
 		  </div>
 		{% endif %}
               </div>
-	    {%endif%}
+	    
 
             <div class="row">
               <div class="form-group col-sm-11 pd ">
