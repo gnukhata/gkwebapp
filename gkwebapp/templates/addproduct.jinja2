@@ -21,14 +21,15 @@
               </div>
             </div>
 	    
-              <div class="row ">
-		<input value="1" id="catg" hidden>
-		{% if not gkresult["category"] %}
-		  
-		  <div class="form-group col-sm-11">
+            <div class="row productclass">
+	      
+	      {% if not gkresult["category"] %}
+		
+		<div class="form-group col-sm-11" >
 		    <small id="txtareahelp" class="form-text text-muted common">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
 		  </div>
 		{% else %}
+		  <input value="1" id="catg" hidden>
 		  <div class="form-group col-sm-11 productclass" id="categorydiv">
                     <label class="" for="addcatselect">{% trans %}Select Category{% endtrans %} :</label>
                     <select class = "form-control input-sm"  name = "catselect" id="addcatselect" >
@@ -174,8 +175,8 @@
                       </thead>
 		      <tbody>
 			<tr>
-			  <td class="col-xs-6 text-center">
-			    <label class="input-sm" for="igst"><h5>{% trans %}IGST{% endtrans %}</h5></label>
+			  <td class="col-xs-6 text-center" style = "vertical-align:middle;" >
+			    <label class="input-sm" for="igst" ><h5>{% trans %}IGST{% endtrans %}</h5></label>
 			  </td>
 			  <td class="col-xs-6">
 			    <input class="form-control input-sm tax_rate text-right product_new_rate numtype" id ="igstrate"  placeholder="Rate" value="0.00">

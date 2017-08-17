@@ -14,7 +14,7 @@ if (sessionStorage.invflag=='1' ){
 }
   if(sessionStorage.vatorgstflag == '7'){
       $(".taxclass").hide();
-      $(".igsttax").hide();
+      $(".igsttax").show();
   }
   //$("#proservlabel").text("Product Name :");
 
@@ -61,6 +61,8 @@ if (sessionStorage.invflag=='1' ){
       $(".common").show();
     }
   });
+
+    
 
   $("#godownflag").click(function(e){
     if ($(this).is(":checked")) {
@@ -152,40 +154,17 @@ $("#additem").keydown(function(event) {
         event.preventDefault();
     $("#addproddesc").focus().select();
   }
-  else {
-    if ($("#catg").val()=='1'){
-      $("#addcatselect").focus();
-      console.log("here ro");
-      event.preventDefault();
-
-    }
-    else{
-      $("#addproddesc").focus();
-      event.preventDefault();
-
-    }
-
-    if(!$("#addcatselect").is(':hidden'))
+      else {
+    if($("#addcatselect").is(':visible') && $("#addcatselect").length > 0)
     {
-
         $("#addcatselect").focus();
         event.preventDefault();
-
     }
     else{
       $("#addproddesc").focus();
       event.preventDefault();
 
     }
-    if($("#addcatselect").is(':hidden') || sessionStorage.invflag==0){
-
-
-                  $("#addproddesc").focus();
-                  event.preventDefault();
-
-    }
-
-
   }
 
   }
@@ -277,9 +256,13 @@ $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
       event.preventDefault();
       $("#spec_table tbody tr:first td:eq(1) input:first").focus();
     }
-    else {
-      event.preventDefault();
-      $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+      else if(sessionStorage.vatorgstflag == '7') {
+	  event.preventDefault();
+	  $("#igstrate").focus().select();
+
+      }
+      else {
+	  $("#product_tax_table tbody tr:first td:eq(0) select").focus();
     }
   }
   else if (event.which==32)
@@ -322,7 +305,6 @@ $(document).off('keydown', '#addcatselect').on('keydown', '#addcatselect',functi
   else {
     if ($("#catg").val()=='1'){
       $("#addcatselect").focus();
-      console.log("here ro");
       event.preventDefault();
 
     }
@@ -1412,7 +1394,6 @@ else{
 
 if ($("#additem option:selected").val() == 7){
   addformdata.push("gscode",$("#hsnno").val());
-  console.log("GSCODE OF 7"+addformdata['gscode']);
 }
 else{
   addformdata.push("gscode",$("#serviceno").val());
@@ -1460,7 +1441,7 @@ else{
     else if (resp["gkstatus"] ==1)
     {
 	$('.modal-backdrop').remove();
-	console.log($("#additem option:selected").val());
+	
 	if ($("#additem option:selected").val() == 7){
       $("#duplicate-alert").alert();
       $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
