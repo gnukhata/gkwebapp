@@ -143,7 +143,7 @@ $("#openingstock").focus(function(event) {
 
 $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
   if (event.which == 13) {
-    if (specspresent == 1) {
+    if (!$("#specdiv").is(":hidden")) {
       $("#spec_table tbody tr:first td:eq(1) input:first").focus();
     }
     else {
@@ -717,6 +717,9 @@ $(document).off("click",".tax_del").on("click", ".tax_del", function() {
   });
   $('#product_tax_table tbody tr:last td:eq(0) select').select();
 });
+
+
+    
 /* -----------------------Tax key events end----------------------------------------- */
 $(document).off('keydown', '#openingstock').on('keydown', '#openingstock', function(event) {
   if (event.which == 13) {

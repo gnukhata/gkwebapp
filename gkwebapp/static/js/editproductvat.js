@@ -18,14 +18,6 @@ $(document).ready(function() {
 
   });
 
-    console.log(sessionStorage.invflag);
-    if(sessionStorage.invflag==0){
-	console.log("hii");
-  $("#noinventory").hide();
-    $("#taxhelp3").hide();
-    $("#taxhelp4").show();
-  
-  }
     
   $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
     event.preventDefault();
@@ -223,7 +215,16 @@ $(document).ready(function() {
         catcode= $("#editcatselect option:selected").val();
         $(".specdate").autotab('number');
         $(".specdate").numeric();
-        console.log("success");
+console.log( $("#noinventory").html());
+    if(sessionStorage.invflag==0){
+	console.log("hii");
+  $("#noinventory").hide();
+    $("#taxhelp3").hide();
+    $("#taxhelp4").show();
+  
+  }
+	  
+	  console.log("success");
       })
       .fail(function() {
         console.log("error");
