@@ -267,8 +267,16 @@
 	      </div>
 	      {% if resultgstvat == '29' or resultgstvat == '22' %}
 		{% if resultgstvat == '22' %}
+		  <div class="col-sm-12" style="margin-bottom:10px; padding:5;">
+		    <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
+		    <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Invoice. Press 'Esc' key to exit from the table.</small>
+		  </div>
 		  <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase">
 		{% else %}
+		    <div class="col-sm-12" style="margin-bottom:10px; padding:5;" id="vathelp" hidden>
+		      <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
+		      <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Invoice. Press 'Esc' key to exit from the table.</small>
+		    </div>
 		    <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
 		{% endif %}
 		<thead class="bg-primary">
@@ -361,8 +369,12 @@
 		    </table>
 	      {% endif %}
 	      {% if resultgstvat == '29' or resultgstvat == '7' %}
-		<div class="row" id="gstproducttable">
-		  <div class="col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
+		<div class="row col-sm-12" id="gstproducttable">
+		  <div class="col-sm-12 bg-info" style="margin-bottom:10px;">
+		    <div class="row col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
+		    <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
+		    <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Invoice. Press 'Esc' key to exit from the table.</small>
+		  </div>
 		  <div class="col-sm-10" style="overflow-x:scroll;">
 		    <div class="row">
 		      <table id="invoice_product_table_gst_heading" class="nopadding table table-condensed table-bordered" style="width:140%; max-width:140%">

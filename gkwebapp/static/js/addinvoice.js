@@ -249,6 +249,7 @@ $(document).ready(function() {
 		$("#taxapplicabletext").text("GST");
 		$("#taxapplicable").val("7");
 		$("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
+		$("#vathelp").hide();
 		$(".tinfield").hide();
 		$("#gstproducttable").show();  //Shows GST Product table.
 		$(".gstinfield").show();
@@ -260,6 +261,7 @@ $(document).ready(function() {
 		$(".gstinfield").hide();
 		$("#invoice_product_table_vat").show();
 		$(".tinfield").show();
+		$("#vathelp").show();
 	    }
 	}
 	$(this).val(yearpad($(this).val(), 4));
