@@ -1357,9 +1357,19 @@ else{
   });
 
 
-  var taxes = []; //Taxes list to store dictionaries created
+    var taxes = []; //Taxes list to store dictionaries created
+    if (sessionStorage.vatorgstflag =='7'){
+	console.log("hello");
+	var obj = {};
+	  obj.taxname = "IGST";
+	  obj.state = "";
+	obj.taxrate = $("#igstrate").val();
+	taxes.push(obj);
+	console.log(taxes);
+    }
+    else{
   $("#product_tax_table tbody tr").each(function(){
-    var obj = {}; // dict for storing tax details
+      var obj = {}; // dict for storing tax details
     if ($.trim($("select option:selected", this).val()) != "") {
         obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
         obj.state = $.trim($("td:eq(1) select option:selected", this).val());
@@ -1367,8 +1377,8 @@ else{
         taxes.push(obj);
     }
 
-
   });
+    }
   var gobj = {}; // Creating a dictionary for storing godown wise opening stock
   $("#godown_ob_table tbody tr").each(function(){
     if ($.trim($(".godown_name",this).val())!="") {

@@ -48,7 +48,6 @@ def showproducttab(request):
 def addProductTabVat(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/categories", headers=header)
-    print result.json()["gkresult"]
     result1 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
     result2 = requests.get("http://127.0.0.1:6543/godown", headers=header)
     return{"gkresult":{"category":result.json()["gkresult"],"uom":result1.json()["gkresult"]},"godown":result2.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
@@ -166,9 +165,9 @@ def saveproduct(request):
                 if j != len(godowns):
                     godnames += ", "
                 j += 1
-    print productdetails
+    
     result = requests.post("http://127.0.0.1:6543/products",data=json.dumps(productdetails),headers=header)
-    print result.json
+    
     if result.json()["gkstatus"] == 0:
         if godownflag == True:
             gkdata = {"activity":proddetails["productdesc"] + " product created in " + godnames + " godowns"}
@@ -179,11 +178,11 @@ def saveproduct(request):
     if result.json()["gkstatus"] == 0:
         if len(taxes)>0:
             for tax in taxes:
-                if len(tax)!=0:
-                    taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":result.json()["gkresult"]}
-                    if tax["state"]!='':
-                        taxdata["state"]=tax["state"]
-                        taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
+                taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":result.json()["gkresult"]}
+                if tax["state"]!='':
+                    taxdata["state"]=tax["state"]
+                    
+                taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
     return {"gkstatus": result.json()["gkstatus"]}
 
 
