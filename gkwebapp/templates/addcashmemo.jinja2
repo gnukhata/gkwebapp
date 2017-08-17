@@ -4,104 +4,6 @@
   <meta charset="utf-8">
   <title>{% trans %}GNUKhata | Cash Memo{% endtrans %}</title>
   <link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css">
-  <!--
-       <style media="screen">
-       #gstproducttable {
-       overflow-x: scroll;
-       overflow-y: scroll;
-       height: calc(100vh - 28em);
-       }
-       #invoice_product_table_gst tbody tr {
-       display:table;
-       width:100%;
-       table-layout:fixed;
-       }
-       #invoice_product_table_gst tbody {
-       display:block;
-       width:100%;
-       height: calc(100vh - 31em);
-       }
-       #invoice_product_table_gst_heading thead {
-       display:table;
-       width: calc( 140% - 0.75em );
-       table-layout:fixed;
-       }
-       #invoice_product_table_gst_tfoot tfoot {
-       display:block;
-       width: calc( 100% - 0.75em );
-       }
-       #invoice_product_table_total tbody {
-       display:block;
-       height: calc(100vh - 31em);
-       overflow-y:scroll;
-       }
-       #invoice_product_table_total tbody tr {
-       display:table;
-       width:100%;
-       table-layout:fixed;
-       }
-       #invoice_product_table_total tfoot {
-       display:block;
-       width:calc( 100% - 0.75em );
-       }
-       #invoice_product_table_vat tfoot {
-       display:table;
-       width: 95%;
-       }
-
-       .nopadding{
-       padidng:0 !important;
-       padding:0 !important;
-       }
-       td {
-       font-size: 65%;
-       color: black;
-       }
-
-       th {
-       font-size: 75%;
-       }
-
-       @page {
-       size : 21cm 29.7cm;
-       margin : 10mm 10mm 20mm 10mm
-       }
-       thead{
-       display: table-header-group;
-       }
-       tfoot{
-       display: table-footer-group;
-       }
-
-       .taxwrap {
-       width: 12%;
-       }
-       .lngwrap{
-       width:19.5%;
-       }
-       .mdwrap{
-       width:9%;
-       }
-       .smwrap{
-       width:6%;
-       }
-       .taxcell {
-       width:6%
-       }
-       .totalwrap {
-       width:49%;
-       }
-       .unitaddon {
-       overflow:hidden;
-       text-overflow:clip;
-       white-space:nowrap;
-       max-width:35px;
-       }
-       .rightJustified {
-       text-align: right;
-       }
-
-       </style> -->
 </head>
 
 <body>
@@ -264,13 +166,13 @@
   			{% endfor %}
   		      </select>
   		    </td>
-  		    <td class="smvwrap">
+  		    <td class="qtyvwrap">
   		      <div class="input-group">
   			<input type="text" class="invoice_product_quantity_vat form-control input-sm text-right numtype" value="0.00" placeholder="0" size="10" aria-describedby="unitaddon">
   			<span class="input-group-addon input-sm unitaddon"></span>
   		      </div>
   		    </td>
-  		    <td class="smvwrap">
+  		    <td class="qtyvwrap">
   		      <div class="input-group">
   			<input type="text" class="invoice_product_freequantity_vat form-control input-sm text-right numtype" value="0.00" placeholder="0" size="10" aria-describedby="unitaddon">
   			<span class="input-group-addon input-sm unitaddon"></span>
@@ -286,7 +188,7 @@
   		    <td class="smvwrap">
   		      <input type="text" class="invoice_product_taxablevalue_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
   		    </td>
-  		    <td class="smvwrap">
+  		    <td class="ratewrap">
   		      <input type="text" class="invoice_product_tax_rate_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
   		    </td>
   		    <td class="smvwrap">
@@ -312,7 +214,7 @@
   		    <td class="smvwrap">
   		      <input type="text" id="taxablevaluetotal_product_vat" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
   		    </td>
-  		    <td class="smvwrap">
+  		    <td class="ratewrap">
 
   		    </td>
   		    <td class="smvwrap">

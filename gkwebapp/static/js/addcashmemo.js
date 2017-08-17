@@ -45,22 +45,6 @@ $(document).ready(function() {
     var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();  //HTML for table displaying totals in GST Product Table.
     var vathtml = $('#invoice_product_table tbody tr:first').html();  //HTML for VAT Product Table row.
 
-    var pqty = 0.00;
-    var ptaxamt = 0.00;
-    var perprice = 0.00;
-    var ptotal = 0.00;
-    var taxrate = 0.00;
-
-//for calculating tax for each row we have used following function
-
-var pqty = 0.00;
-var perprice = 0.00;
-var taxrate = 0.00;
-var ptaxamt = 0.00;
-var ptotal = 0.00;
-var dctaxstate;
-var custstate;
-var producstate;
 //Function to calculate gst tax amount
   function calculategstaxamt(curindex) {
 //Initialising variables to zero and getting values from various input fileds.
@@ -318,47 +302,7 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
     $(document).off('change', '#invoice_state').on('change', '#invoice_state', function(event) {
         event.preventDefault();
         /* Act on the event */
-
-        var sourcestate=$("#invoice_state option:selected").val();
-        var destinationstate=$("#invoice_state option:selected").val();
-        var taxflag=$("#taxapplicable").val();
-        var productcode;
-        $(".product_name_vat").each(function() {
-            var curindex = $(this).closest('tbody tr').index();
-            productcode = $(this).find('option:selected').val();
-            if (sourcestate == "none") {
-                $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(0).toFixed(2));
-            } else {
-
-                $.ajax({
-                        url: '/invoice?action=getappliedtax',
-                        type: 'POST',
-                        dataType: 'json',
-                        async: false,
-                        data: { "productcode": productcode, "source": sourcestate,"destination":destinationstate,"taxflag":taxflag },
-                        beforeSend: function(xhr) {
-                            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                        }
-                    })
-                    .done(function(resp) {
-                        console.log("success");
-                        if (resp["gkstatus"] == 0) {
-                          $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').data("taxdetails", {taxname: resp["taxname"], taxrate:resp["taxrate"]});
-                            $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['taxrate']).toFixed(2));
-                        }
-
-                    })
-                    .fail(function() {
-                        console.log("error");
-                          $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(0.0).toFixed(2));
-                    })
-                    .always(function() {
-                        console.log("complete");
-                    });
-            }
-        });
-
-
+        $(".product_name_vat").change();
     });
 
 
@@ -377,7 +321,6 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
         if (sourcestate == "none") {
             $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(0).toFixed(2));
         } else {
-          var taxflag=$("#taxapplicable").val();
           if (productcode != "") {
             $.ajax({
                     url: '/invoice?action=getappliedtax',
