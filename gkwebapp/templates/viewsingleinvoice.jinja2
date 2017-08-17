@@ -147,12 +147,12 @@
 	<thead class="bg-primary">
 	  <tr>
 	    <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
-	    <th class="smvwrap text-center">{% trans %}Blled Quantity{% endtrans %}</th>
-	    <th class="smvwrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
+	    <th class="qtyvwrap text-center">{% trans %}Blled Quantity{% endtrans %}</th>
+	    <th class="qtyvwrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
 	    <th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
 	    <th class="smvwrap text-center">{% trans %}Discount{% endtrans %}</th>
 	    <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
-	    <th class="smvwrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
+	    <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
 	    <th class="smvwrap text-center">{% trans %}Tax Amt{% endtrans %}</th>
 	    <th class="smvwrap text-center">{% trans %}Total{% endtrans %}</th>
 	  </tr>
@@ -163,10 +163,10 @@
 	      <td class="mdvwrap">
 		{{ gkresult["invcontents"][product]["proddesc"] }}
 	      </td>
-	      <td class="smvwrap text-right">
+	      <td class="qtyvwrap text-right">
 		{{ gkresult["invcontents"][product]["qty"] }} {{ gkresult["invcontents"][product]["uom"] }}
 	      </td>
-	      <td class="smvwrap text-right">
+	      <td class="qtyvwrap text-right">
 		{{ gkresult["invcontents"][product]["freeqty"] }} {{ gkresult["invcontents"][product]["uom"] }}
 	      </td>
 
@@ -180,7 +180,7 @@
 		{{ gkresult["invcontents"][product]["taxableamount"] }}
 	      </td>
 	      </td>
-	      <td class="smvwrap text-right">
+	      <td class="ratewrap text-right">
 		{{ gkresult["invcontents"][product]["taxrate"] }}
 	      </td>
 	      <td class="smvwrap text-right">
@@ -204,7 +204,7 @@
 	    <td class="smvwrap text-right">
 	      {{ gkresult["totaltaxablevalue"] }}
 	    </td>
-	    <td class="smvwrap">
+	    <td class="ratewrap">
 	      
 	    </td>
 	    <td class="smvwrap text-right">
