@@ -867,6 +867,46 @@ if ($("#invoice_product_table_vat tbody tr").length > 1) {
     }
 });
 
+$(document).off("keydown", ".lastfield").on("keydown", ".lastfield", function(event) {
+var n = $(".lastfield").length;
+var f = $('.lastfield');
+if (event.which == 13)
+{
+  var nextIndex = f.index(this) + 1;
+  if(nextIndex < n){
+event.preventDefault();
+f[nextIndex].focus();
+f[nextIndex].select();
+  }
+  else if (nextIndex == n) {
+$("invoice_save").focus();
+  }
+}
+else if (event.which == 38) {
+  var previndex = f.index(this) - 1;
+  if(previndex > -1) {
+if ($(this).is("select")) {
+    if ($(this).val() == "Road") {
+  f[previndex].focus();
+  f[previndex].select();
+    }
+}
+else {
+    f[previndex].focus();
+    f[previndex].select();
+}
+  }
+  else if (previndex == -1) {
+if ($("#taxapplicable").val() == 7) {
+    $(".invoice_product_discount_gst:last").focus().select();
+}
+else {
+    $(".invoice_product_discount_vat:last").focus().select();
+}
+  }
+}
+});
+
 $(document).off("keyup").on("keyup", function(event) {
   if (event.which == 45) {
     event.preventDefault();
@@ -1460,7 +1500,7 @@ if ($("#taxapplicable").val() == 22) {
 
     if (event.which == 13) {
       event.preventDefault();
-      
+
     	  if (curindex1 != ($("#invoice_product_table_gst tbody tr").length - 1)) {//Not a last row.
     	      $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
       } else if ($('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select option:visible').length >= 2){//Last row along with additional conditions.
