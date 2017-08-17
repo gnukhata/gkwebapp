@@ -155,7 +155,7 @@ $("#additem").keydown(function(event) {
     $("#addproddesc").focus().select();
   }
       else {
-    if($("#addcatselect").is(':visible') && $("#addcatselect").length > 0)
+	  if($("#addcatselect").is(':visible'))
     {
         $("#addcatselect").focus();
         event.preventDefault();
@@ -238,6 +238,7 @@ $("#serviceno").keydown(function(event) {
 });
 
 
+    
 $("#adduom").change(function(event) {
   if ($("#adduom option:selected").val()!='') {
     $("#unitaddon").html($("#adduom option:selected").text());
@@ -251,8 +252,15 @@ $("#openingstock").focus(function(event) {
 });
 
 $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
-  if (event.which == 13) {
-    if (specspresent == 1) {
+    if (event.which == 13) {
+	if ($("#adduom option:selected").val()==""){
+	     $("#uomblank-alert").alert();
+    $("#uomblank-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#uomblank-alert").hide();
+    });
+	    $("#adduom").focus();
+	}
+    else if (specspresent == 1) {
       event.preventDefault();
       $("#spec_table tbody tr:first td:eq(1) input:first").focus();
     }
@@ -296,28 +304,8 @@ $("#godownflag").keydown(function(event){
 $(document).off('keydown', '#addcatselect').on('keydown', '#addcatselect',function(event) {
   if (event.which==13) {
     event.preventDefault();
-    //$("#addproddesc").focus().select();
-    if($("#additem option:selected").val() == '19')
-    {
-        event.preventDefault();
     $("#addproddesc").focus().select();
-  }
-  else {
-    if ($("#catg").val()=='1'){
-      $("#addcatselect").focus();
-      event.preventDefault();
-
-    }
-    else{
-      $("#addproddesc").focus();
-      event.preventDefault();
-
-    }
-
-  
-
-
-  }
+    
   }
 });
 $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
