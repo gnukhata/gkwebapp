@@ -273,7 +273,12 @@ def listofinvspreadsheet(request):
         sheet.getCell(5,3).stringValue("Customer Name").setBold(True)
     elif request.params["flag"] == "2":
         sheet.getCell(5,3).stringValue("Supplier Name").setBold(True)
-    sheet.getCell(6,3).stringValue("TIN").setBold(True)
+    if int(resultgstvat) == 22:
+        sheet.getCell(6,3).stringValue("TIN").setBold(True)
+    elif int(resultgstvat) == 7:
+        sheet.getCell(6,3).stringValue("GSTIN").setBold(True)
+    else:
+        sheet.getCell(6,3).stringValue("TIN/GSTIN").setBold(True)
     sheet.getCell(7,3).stringValue("Gross Amt.").setBold(True)
     sheet.getCell(8,3).stringValue("Net Amt.").setBold(True)
     sheet.getCell(9,3).stringValue("TAX Amt.").setBold(True)

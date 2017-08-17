@@ -122,7 +122,13 @@
                   {%if flag == "0" %}{% trans %}Cust/Supp Name{% endtrans %}{%elif flag == "1" %}{% trans %}Customer Name{% endtrans %}{%elif flag == "2" %}{% trans %}Supplier Name{% endtrans %}{% endif %}
                </th>
                <th class="mdlwrap text-center" >
-                  {% trans %}TIN{% endtrans %}
+		 {% if resultgstvat == '7' %}
+		   {% trans %}GSTIN{% endtrans %}
+		 {% elif resultgstvat == '22' %}
+                   {% trans %}TIN{% endtrans %}
+		 {% else %}
+		   {% trans %}TIN/GSTIN{% endtrans %}
+		   {% endif %}
                </th>
                <th class="smlwrap text-right" >
                   {% trans %}Gross Amt{% endtrans %}

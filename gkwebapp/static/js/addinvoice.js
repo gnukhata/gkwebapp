@@ -1708,14 +1708,14 @@ if (event.which == 13) {
 	var f = $('.lastfield');
 	if (event.which == 13)
 	{
+	    event.preventDefault();
 	    var nextIndex = f.index(this) + 1;
 	    if(nextIndex < n){
-		event.preventDefault();
 		f[nextIndex].focus();
 		f[nextIndex].select();
 	    }
 	    else if (nextIndex == n) {
-		$("invoice_save").focus();
+		$("#invoice_save").click();
 	    }
 	}
 	else if (event.which == 38) {

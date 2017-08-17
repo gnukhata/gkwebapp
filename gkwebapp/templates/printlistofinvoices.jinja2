@@ -24,19 +24,19 @@
 	 display: table-footer-group;
      }
      .bigwrap {
-     width:20%;
+	 width:20%;
      }
      .mdwrap {
-     width:12%;
+	 width:12%;
      }
      .smwrap {
-     width:9%;
+	 width:9%;
      }
      .qtywrap {
-     width:8%
+	 width:8%
      }
      .srnowrap {
-     width:6%;
+	 width:6%;
      }
 
     </style>
@@ -59,57 +59,63 @@
             </th>
           </tr>
 	  <tr>
-      <th class="srnowrap text-center" >
-         {% trans %}Sr. No.{% endtrans %}
-      </th>
-      <th class="smwrap text-center" >
-         {% trans %}INV No.{% endtrans %}
-      </th>
-      <th class="mdwrap text-center" >
-         {% trans %}INV Date{% endtrans %}
-      </th>
-      <th class="smwrap text-center" >
-         {% trans %}DC No.{% endtrans %}
-      </th>
-      <th class="mdwrap text-center" >
-         {% trans %}DC Date{% endtrans %}
-      </th>
-      <th class="mdwrap text-center" >
-         {%if flag == "0" %}{% trans %}Cust/Supp Name{% endtrans %}{%elif flag == "1" %}{% trans %}Customer Name{% endtrans %}{%elif flag == "2" %}{% trans %}Supplier Name{% endtrans %}{% endif %}
-      </th>
-      <th class="mdwrap text-center" >
-         {% trans %}TIN{% endtrans %}
-      </th>
-      <th class="mdwrap text-right" >
-         {% trans %}Gross Amt{% endtrans %}
-      </th>
-      <th class="mdwrap text-right" >
-         {% trans %}Net Amt{% endtrans %}
-      </th>
-      <th class="mdwrap text-right" >
-         {% trans %}TAX Amt{% endtrans %}
-      </th>
-      <th class="mdwrap text-center" >
-         {% trans %}Godown{% endtrans %}
-      </th>
+	    <th class="srnowrap text-center" >
+              {% trans %}Sr. No.{% endtrans %}
+	    </th>
+	    <th class="smwrap text-center" >
+              {% trans %}INV No.{% endtrans %}
+	    </th>
+	    <th class="mdwrap text-center" >
+              {% trans %}INV Date{% endtrans %}
+	    </th>
+	    <th class="smwrap text-center" >
+              {% trans %}DC No.{% endtrans %}
+	    </th>
+	    <th class="mdwrap text-center" >
+              {% trans %}DC Date{% endtrans %}
+	    </th>
+	    <th class="mdwrap text-center" >
+              {%if flag == "0" %}{% trans %}Cust/Supp Name{% endtrans %}{%elif flag == "1" %}{% trans %}Customer Name{% endtrans %}{%elif flag == "2" %}{% trans %}Supplier Name{% endtrans %}{% endif %}
+	    </th>
+	    <th class="mdwrap text-center" >
+              {% if resultgstvat == '7' %}
+		{% trans %}GSTIN{% endtrans %}
+	      {% elif resultgstvat == '22' %}
+                {% trans %}TIN{% endtrans %}
+	      {% else %}
+		{% trans %}TIN/GSTIN{% endtrans %}
+	      {% endif %}
+	    </th>
+	    <th class="mdwrap text-right" >
+              {% trans %}Gross Amt{% endtrans %}
+	    </th>
+	    <th class="mdwrap text-right" >
+              {% trans %}Net Amt{% endtrans %}
+	    </th>
+	    <th class="mdwrap text-right" >
+              {% trans %}TAX Amt{% endtrans %}
+	    </th>
+	    <th class="mdwrap text-center" >
+              {% trans %}Godown{% endtrans %}
+	    </th>
 	  </tr>
 	</thead>
 	<tbody>
-    {% for invoice in gkresult %}
-    <tr data-invid="{{invoice["invid"]}}">
-    <td class="srnowrap text-center">{{invoice["srno"]}}</td>
-    <td class="smwrap text-center">{{invoice["invoiceno"]}}</td>
-    <td class="mdwrap text-center">{{invoice["invoicedate"]}}</td>
-    <td class="smwrap text-center">{{invoice["dcno"]}}</td>
-    <td class="mdwrap text-center">{{invoice["dcdate"]}}</td>
-    <td class="mdwrap text-center">{{invoice["custname"]}}</td>
-    <td class="mdwrap text-center">{{invoice["custtin"]}}</td>
-    <td class="mdwrap text-right">{{invoice["grossamt"]}}</td>
-    <td class="mdwrap text-right">{{invoice["netamt"]}}</td>
-    <td class="mdwrap text-right">{{invoice["taxamt"]}}</td>
-    <td class="mdwrap text-center">{{invoice["godown"]}}</td>
-    </tr>
-    {% endfor %}
+	  {% for invoice in gkresult %}
+	    <tr data-invid="{{invoice["invid"]}}">
+	      <td class="srnowrap text-center">{{invoice["srno"]}}</td>
+	      <td class="smwrap text-center">{{invoice["invoiceno"]}}</td>
+	      <td class="mdwrap text-center">{{invoice["invoicedate"]}}</td>
+	      <td class="smwrap text-center">{{invoice["dcno"]}}</td>
+	      <td class="mdwrap text-center">{{invoice["dcdate"]}}</td>
+	      <td class="mdwrap text-center">{{invoice["custname"]}}</td>
+	      <td class="mdwrap text-center">{{invoice["custtin"]}}</td>
+	      <td class="mdwrap text-right">{{invoice["grossamt"]}}</td>
+	      <td class="mdwrap text-right">{{invoice["netamt"]}}</td>
+	      <td class="mdwrap text-right">{{invoice["taxamt"]}}</td>
+	      <td class="mdwrap text-center">{{invoice["godown"]}}</td>
+	    </tr>
+	  {% endfor %}
 	</tbody>
       </table>
       <span style="margin:auto; display:table;">
