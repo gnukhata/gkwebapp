@@ -176,13 +176,14 @@ def saveproduct(request):
             gkdata = {"activity":proddetails["productdesc"] + " product created"}
         resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
 
-    if len(taxes)>0:
-        for tax in taxes:
-            if len(tax)!=0:
-                taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":result.json()["gkresult"]}
-                if tax["state"]!='':
-                    taxdata["state"]=tax["state"]
-                taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
+    if result.json()["gkstatus"] == 0:
+        if len(taxes)>0:
+            for tax in taxes:
+                if len(tax)!=0:
+                    taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":result.json()["gkresult"]}
+                    if tax["state"]!='':
+                        taxdata["state"]=tax["state"]
+                        taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
     return {"gkstatus": result.json()["gkstatus"]}
 
 
@@ -222,26 +223,29 @@ def editproduct(request):
             godowns = json.loads(request.params["godowns"])
         else:
             proddetails["specs"]= json.loads(request.params["specs"])
-    if request.params["gscode"]:
+    if request.params.has_key("gscode"):
         proddetails["gscode"]=request.params["gscode"]
-    if request.params["gsflag"]:
+    if request.params.has_key("gsflag"):
         proddetails["gsflag"]=request.params["gsflag"]
+    else:
+         proddetails["gsflag"] = 7
+        
 
     productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
     result = requests.put("http://127.0.0.1:6543/products", data=json.dumps(productdetails),headers=header)
-
-    for tax in taxes:
-        if len(tax)!=0:
-            if tax["taxrowid"]!="new":
-                taxdata["taxid"] = tax["taxrowid"]
-                taxresult = requests.delete("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
-    for tax in taxes:
-        if len(tax)!=0:
-            if tax["taxrowid"]=="new":
-                taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":proddetails["productcode"]}
-                if tax["state"]!='':
-                    taxdata["state"]=tax["state"]
-                taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
+    if result.json()["gkstatus"] == 0:
+        for tax in taxes:
+            if len(tax)!=0:
+                if tax["taxrowid"]!="new":
+                    taxdata["taxid"] = tax["taxrowid"]
+                    taxresult = requests.delete("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
+        for tax in taxes:
+            if len(tax)!=0:
+                if tax["taxrowid"]=="new":
+                    taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":proddetails["productcode"]}
+                    if tax["state"]!='':
+                        taxdata["state"]=tax["state"]
+                    taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
     return {"gkstatus": result.json()["gkstatus"]}
 
 @view_config(route_name="product",request_param="type=delete", renderer="json")
