@@ -162,8 +162,7 @@
 		</div>
 	      </div>
 	    
-		<div class="form-group col-xs-8 igsttax" style="padding-top: 1%;" hidden>
-		  <div class="panel">
+		<div class="panel col-xs-8 igsttax nopadding" hidden>
 		    <table id="igst_tax_table" class="table table-condensed table-bordered">
                       <thead class="bg-primary input-sm">
 			<tr>
@@ -175,8 +174,8 @@
                       </thead>
 		      <tbody>
 			<tr>
-			  <td class="col-xs-6 text-center" style = "vertical-align:middle;" >
-			    <label class="input-sm" for="igst" ><h5>{% trans %}IGST{% endtrans %}</h5></label>
+			  <td class="col-xs-6 text-center" style = "vertical-align:middle; font-weight: normal; font-size:90%;" >
+			    {% trans %}IGST{% endtrans %}
 			  </td>
 			  <td class="col-xs-6">
 			    <input class="form-control input-sm tax_rate text-right product_new_rate numtype" id ="igstrate"  placeholder="Rate" value="0.00">
@@ -185,7 +184,6 @@
 		      </tbody>
               	      
 		    </table>
-		  </div>
 		</div>
 		
             </div>
