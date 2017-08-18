@@ -534,7 +534,12 @@ $(document).ready(function() {
     $("#tinconsignee").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    $("#gstinconsignee").focus().select();  //Focus Shift to GSTIN of Consignee.
+	    if ($("#gstinconsignee").is(":visible")) {
+		$("#gstinconsignee").focus().select();  //Focus shifts to GSTIN of Consignee.
+	    }
+	    else {
+		$("#consigneeaddress").focus().select();  //Focus shifts to Address of Consignee.
+	    }
 	}
 	else if (event.which == 38) {
 	    $("#consigneestate").focus();  //Focus Shifts to State of Consignee.
@@ -1166,8 +1171,8 @@ $(document).ready(function() {
 	      $("#invoice_product_table_vat tbody tr:eq("+ nextindex1 +") td:eq(0) select option[value = " + selectedproduct + "]").prop("disabled", true).prop("hidden", true);
           }
 	  $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
-	  $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);;
-             $(".product_name_vat").change();
+	  $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);
+	  $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
       }
 	else if ($("#invoice_deliverynote option:selected").val() != '') {
 	    if (parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#invoice_product_table_vat tbody tr:eq(" + curindex1 + ") td:eq(1) input").attr("data")).toFixed(2))) {
@@ -1634,7 +1639,7 @@ if (event.which == 13) {
       $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
       $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);
       $("#invoicestate").change();
-      $(".product_name_gst").change();
+      $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
   }
     else if ($("#invoice_deliverynote option:selected").val() != '') {
 	    if (parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + curindex1 + ") td:eq(1) input").attr("data")).toFixed(2))) {
