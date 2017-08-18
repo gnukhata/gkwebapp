@@ -567,10 +567,20 @@ $(document).ready(function() {
 	if (event.which == 13) {
 	    event.preventDefault();
 	    if ($("#taxapplicable").val() == 7) {
-		$(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    $(".invoice_product_quantity_gst:first").focus().select();
+		}
+		else {
+		    $(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
+		}
 	    }
 	    else {
-		$(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    $(".invoice_product_quantity_vat:first").focus().select();
+		}
+		else {
+		    $(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
+		}
 	    }
 	    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
 	}
@@ -1867,12 +1877,11 @@ if (event.which == 13) {
                for (i in custs) {
                  $("#invoice_customer").append('<option value="' + custs[i].custid + '" >' + custs[i].custname + '</option>');
                }
+		 $("#invoice_customer").change();
              });
-            $("#invoice_customer option").filter(function() {
-              return this.text == text1;
-            }).attr('selected', true).trigger('change');
             $("#selectedcustsup").val("");
-            $("#invoice_customer").focus();
+              $("#invoice_customer").focus();
+	      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
           });
       }
     });
