@@ -434,6 +434,9 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
   	event.preventDefault();
         $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
       }
+      else if (event.which == 27) {
+  	  $("#accountno").focus().select();
+        }
     });
 
           $(document).off('change', '.product_name_gst').on('change', '.product_name_gst', function(event) {
@@ -559,6 +562,9 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
   	event.preventDefault();
         $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').focus().select();
       }
+      else if (event.which == 27) {
+	  $("#accountno").focus().select();
+      }
     });
 
     $(document).off('change', '.invoice_product_quantity_vat').on('change', '.invoice_product_quantity_vat', function(event) {
@@ -600,6 +606,9 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
   	event.preventDefault();
         $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
       }
+      else if (event.which == 27) {
+  	  $("#accountno").focus().select();
+        }
     });
 
 
@@ -659,6 +668,9 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
         $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').focus().select();
         event.preventDefault();
       }
+      else if (event.which == 27) {
+  	  $("#accountno").focus().select();
+        }
     });
     //.............................................................
     $(document).off('change', '.invoice_product_discount_vat').on('change', '.invoice_product_discount_vat', function(event) {
@@ -1419,12 +1431,55 @@ if ($("#taxapplicable").val() == 22) {
   	  }
         calculategstaxamt(curindex);
     });
-    $(document).off('keydown', '.invoice_product_freequantity_gst').on('keydown', '.invoice_product_freequantity_gst', function(event) {
+
+    $(document).off("keydown", ".invoice_product_freequantity_gst").on("keydown", ".invoice_product_freequantity_gst", function(event) {
+      var curindex = $(this).closest('tr').index();
+      var nextindex = curindex + 1;
+      var previndex = curindex - 1;
+
       if (event.which == 13) {
+        event.preventDefault();
+        if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select option:selected').val() == "") {
+            $("#product-blank-alert").alert();
+            $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#product-blank-alert").hide();
+            });
+            $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').focus();
+            return false;
+          }
+  	  var quantity = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + curindex + ") td:eq(2) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + curindex + ") td:eq(3) input").val());
+  	  if (parseFloat(quantity) === 0.00) {
+  	      $("#quantity-blank-alert").alert();
+  	      $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+  		  $("#quantity-blank-alert").hide();
+  	      });
+  	      $("#invoice_product_table_gst tbody tr:eq(" + curindex + ") td:eq(3) input").focus().select();
+  	      return false;
+  	  }
+        $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').focus().select();
+      } else if (event.which == 190 && event.shiftKey) {
+        $('#invoice_product_table_gst tbody tr:eq(' + nextindex + ') td:eq(3) input').focus();
+      } else if (event.which == 188 && event.shiftKey) {
+        if (previndex > -1) {
           event.preventDefault();
-          console.log("enter on gst freeqty to priceperunit");
-          $(".invoice_product_per_price_gst").focus().select();
+          $('#invoice_product_table_gst tbody tr:eq(' + previndex + ') td:eq(3) input').focus();
+        }
+        if (curindex == 0) {
+          event.preventDefault();
+            $("#invoice_state").focus().select();
+  	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+        }
+      } else if (event.which == 188 && event.ctrlKey) {
+        event.preventDefault();
+        $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
+
+      } else if (event.which == 190 && event.ctrlKey) {
+        $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').focus().select();
+        event.preventDefault();
       }
+      else if (event.which == 27) {
+  	  $("#accountno").focus().select();
+        }
     });
 
     $(document).off('change', '.invoice_product_per_price_gst').on('change', '.invoice_product_per_price_gst', function(event) {
@@ -1436,11 +1491,42 @@ if ($("#taxapplicable").val() == 22) {
       var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
         calculategstaxamt(curindex);
     });
-    $(document).off('keydown', '.invoice_product_per_price_gst').on('keydown', '.invoice_product_per_price_gst', function(event) {
+    $(document).off("keydown", ".invoice_product_per_price_gst").on("keydown", ".invoice_product_per_price_gst", function(event) {
+      var curindex = $(this).closest('tr').index();
+      var nextindex = curindex + 1;
+      var previndex = curindex - 1;
       if (event.which == 13) {
+  	event.preventDefault();
+  	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').focus().select();
+      } else if (event.which == 190 && event.shiftKey) {
+        event.preventDefault();
+        $('#invoice_product_table_gst tbody tr:eq(' + nextindex + ') td:eq(4) input').focus();
+      } else if (event.which == 188 && event.shiftKey) {
+        if (previndex > -1) {
           event.preventDefault();
-          console.log("enter on gst freeqty to priceperunit");
-          $(".invoice_product_discount_gst").focus().select();
+          $('#invoice_product_table_gst tbody tr:eq(' + previndex + ') td:eq(4) input').focus();
+        }
+        if (curindex == 0) {
+          event.preventDefault();
+            $("#invoice_state").focus().select();
+  	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+        }
+      } else if (event.which == 188 && event.ctrlKey) {
+  	event.preventDefault();
+  	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').is(":disabled")) {
+  	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').focus();
+  	}
+  	else {
+  	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').focus().select();
+  	}
+
+      } else if (event.which == 190 && event.ctrlKey) {
+        event.preventDefault();
+        $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').focus().select();
+
+      } else if (event.which == 27) {
+        event.preventDefault();
+        $("#accountno").focus().select();
       }
     });
 
@@ -1485,6 +1571,9 @@ if ($("#taxapplicable").val() == 22) {
   event.preventDefault();
       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').focus().select();
     }
+    else if (event.which == 27) {
+	  $("#accountno").focus().select();
+      }
   });
 
     $(document).off("change", ".invoice_product_discount_gst").on("change", ".invoice_product_discount_gst", function(event) {
