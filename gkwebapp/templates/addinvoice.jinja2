@@ -370,7 +370,7 @@
 	      {% endif %}
 	      {% if resultgstvat == '29' or resultgstvat == '7' %}
 		<div class="row col-sm-12" id="gstproducttable">
-		  <div class="col-sm-12 bg-info" style="margin-bottom:10px;">
+		  <div class="col-sm-12 bg-info" style="margin-bottom:10px; padding:10;">
 		    <div class="row col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
 		    <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 		    <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Invoice. Press 'Esc' key to exit from the table.</small>
@@ -494,7 +494,7 @@
 		    </tfoot>
 		  </table>
 		</div>
-	      </div>
+		</div>
 	      {% endif %}
 	    </div>
 	    <div class="col-sm-12">
@@ -541,9 +541,9 @@
 		    </select>
 		  </div>
 		  <div class="form-inline form-group col-sm-6 nopadding" id="vehiclenodiv" hidden>
-		      <label for="inv" class="col-sm-5">{% trans %}Vehicle No.{% endtrans %} :</label>
-		      <input type="text" id="vehicleno" class="col-sm-7 lastfield form-control input-sm nopadding" name="vehicleno"></input>
-		    </div>
+		    <label for="inv" class="col-sm-5">{% trans %}Vehicle No.{% endtrans %} :</label>
+		    <input type="text" id="vehicleno" class="col-sm-7 lastfield form-control input-sm nopadding" name="vehicleno"></input>
+		  </div>
 		</div>
 		<div class="row">
 		  <div class="col-sm-12">
@@ -572,24 +572,24 @@
 		  </div>
 
 		  <div class="form-group form-inline col-sm-6 nopadding">
-		      <label for="inv" class="col-sm-5">{% trans %}Reverse Charge{% endtrans %}:</label>
-		      <input type="text" id="reversecharge" class="col-sm-7 lastfield form-control input-sm nopadding" name="reversecharge"></input>
-		    </div>
+		    <label for="inv" class="col-sm-5">{% trans %}Reverse Charge{% endtrans %}:</label>
+		    <input type="text" id="reversecharge" class="col-sm-7 lastfield form-control input-sm nopadding" name="reversecharge"></input>
+		  </div>
 		</div>
 	      </div>
 	    </div>
 	  </form>
 	</div>
       </div>
-	  <div class="panel-footer ">
-            <div class="container-fluid">
-              <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save">{% trans %}Save{% endtrans %}</button>
-              <button id="invoice_reset" class="btn btn-warning btn-sm">{% trans %}Reset{% endtrans %}</button>
-              {% if gkstatus=="out" %}
-		<button id="invoice_saveprint" class="btn btn-primary btn-sm" >{% trans %}Save & Print{% endtrans %}</button>
-		<button id="invoice_addcust" class="btn btn-info btn-sm">{% trans %}Add Customer{% endtrans %}</button>
-              {% else %}
-		<button id="invoice_addcust" class="btn btn-info btn-sm">{% trans %}Add Supplier{% endtrans %}</button>
+      <div class="panel-footer ">
+        <div class="container-fluid">
+          <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
+          <button id="invoice_reset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
+          {% if gkstatus=="out" %}
+	    <button id="invoice_saveprint" class="btn btn-primary btn-sm" ><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Save & Print{% endtrans %}</button>
+	    <button id="invoice_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Customer{% endtrans %}</button>
+          {% else %}
+	    <button id="invoice_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Supplier{% endtrans %}</button>
               {% endif %}
 	      <label class="btn btn-primary btn-sm" for="my-file-selector">
 		<input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">

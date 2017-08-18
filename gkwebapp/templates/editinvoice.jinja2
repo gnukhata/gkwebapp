@@ -24,8 +24,8 @@
   
   <div class="panel-footer" id="viewinvfooter" hidden>
     <div class="container-fluid btndisablediv">
-      <button id="invoice_editprint" class="btn btn-primary btn-sm" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
-      <button class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">{% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
+      <button id="invoice_editprint" class="btn btn-primary btn-sm" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
+      <button class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
     </div>
   </div>
 
@@ -41,8 +41,8 @@
             <p>{% trans %}Are you sure?{% endtrans %}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
-            <button type="button" id="invcancel" data-dismiss="modal" class="btn btn-danger">{% trans %}Yes{% endtrans %}</button>
+            <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i> {% trans %}No{% endtrans %}</button>
+            <button type="button" id="invcancel" data-dismiss="modal" class="btn btn-danger"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Yes{% endtrans %}</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

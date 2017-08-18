@@ -370,24 +370,24 @@
 	<div class="col-sm-6 borderdiv">
 	  <div class="row">
 	    <div class="form-inline form-group col-sm-6 nopadding">
-	      <label for="transportationmode" class="col-sm-5" id="transmode">{% trans %}Transportation Mode{% endtrans %} :</label>
+	      <label for="transportationmode" class="col-sm-7" id="transmode">{% trans %}Transportation Mode{% endtrans %} :</label>
 	      {% if gkresult["transportationmode"] %}{{ gkresult["transportationmode"] }}{% else %}N/A{% endif %}
 	    </div>
 	    <div class="form-inline form-group col-sm-6 nopadding" id="vehiclenodiv" hidden>
-	      <label for="inv" class="col-sm-5">{% trans %}Vehicle No.{% endtrans %} :</label>
+	      <label for="inv" class="col-sm-7">{% trans %}Vehicle No.{% endtrans %} :</label>
 	      {% if gkresult["vehicleno"] %}{{ gkresult["vehicleno"] }}{% else %}N/A{% endif %}
 	    </div>
 	  </div>
 	  <div class="row">
 	    <div class="form-group form-inline col-sm-6 nopadding">
-	      <label for="supply_date" class="col-sm-5">{% trans %}Date of Supply{% endtrans %}:</label>
-	      <div class="form-group col-sm-7 nopadding">
+	      <label for="supply_date" class="col-sm-7">{% trans %}Date of Supply{% endtrans %}:</label>
+	      <div class="form-group nopadding">
 		{% if gkresult["dateofsupply"] %}{{ gkresult["dateofsupply"] }}{% else %}N/A{% endif %}
   	      </div>
 	    </div>
 
 	    <div class="form-group form-inline col-sm-6 nopadding">
-	      <label for="inv" class="col-sm-5">{% trans %}Reverse Charge{% endtrans %}:</label>
+	      <label for="inv" class="col-sm-7">{% trans %}Reverse Charge{% endtrans %}:</label>
 	      {% if gkresult["reversecharge"] %}{{ gkresult["reversecharge"] }}{% else %}N/A{% endif %}
 	    </div>
 	  </div>

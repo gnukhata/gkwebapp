@@ -516,7 +516,12 @@ $(document).ready(function() {
     //Key Event for Consignee State
     $("#consigneestate").keydown(function(event) {
 	if (event.which == 13) {
-	    $("#tinconsignee").focus().select();  //Focus shifts to TIN of Consignee.
+	    if ($("#tinconsignee").is(":visible")) {
+		$("#tinconsignee").focus().select();  //Focus shifts to TIN of Consignee.
+	    }
+	    else {
+		$("#gstinconsignee").focus().select();  //Focus shifts to GSTIN of Consignee.
+	    }
 	}
 	else if (event.which == 38) {
 	    if ($("#consigneestate option:visible").first().is(":selected")) {
@@ -543,7 +548,12 @@ $(document).ready(function() {
 	    $("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
 	}
 	else if (event.which == 38) {
-	    $("#tinconsignee").focus();  //Focus Shifts to TIN of Consignee.
+	    if ($("#tinconsignee").is(":visible")) {
+		$("#tinconsignee").focus().select();  //Focus shifts to TIN of Consignee.
+	    }
+	    else {
+		$("#consigneestate").focus().select();  //Focus shifts to GSTIN of Consignee.
+	    }
 	}
     });
 
@@ -560,7 +570,12 @@ $(document).ready(function() {
 	    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
 	}
 	else if (event.which == 38) {
-	    $("#gstinconsignee").focus();  //Focus Shifts to GSTIN of Consignee.
+	    if ($("#tinconsignee").is(":visible")) {
+		$("#tinconsignee").focus().select();  //Focus shifts to TIN of Consignee.
+	    }
+	    else {
+		$("#gstinconsignee").focus().select();  //Focus shifts to GSTIN of Consignee.
+	    }
 	}
     });
 
@@ -810,13 +825,16 @@ $(document).ready(function() {
       if (curindex == 0) {
         event.preventDefault();
           $("#consigneeaddress").focus().select();
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
       if (curindex == 0) {
           $("#consigneeaddress").focus().select();
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       } else {
-        $('#invoice_product_table_vat tbody tr:eq(' + previndex + ') td:eq(6) input').focus().select();
+          $('#invoice_product_table_vat tbody tr:eq(' + previndex + ') td:eq(6) input').focus().select();
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 190 && event.ctrlKey) {
 	event.preventDefault();
@@ -880,7 +898,8 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-        $("#consigneeaddress").focus().select();
+          $("#consigneeaddress").focus().select();
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
@@ -967,7 +986,8 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-        $("#consigneeaddress").focus().select();
+          $("#consigneeaddress").focus().select();
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
@@ -1009,7 +1029,8 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-        $("#consigneeaddress").focus().select();
+          $("#consigneeaddress").focus().select();
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
@@ -1052,7 +1073,8 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-        $("#consigneeaddress").focus().select();
+          $("#consigneeaddress").focus().select();
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
@@ -1170,7 +1192,8 @@ $(document).ready(function() {
       }
       if (curindex1 == 0) {
         event.preventDefault();
-        $("#consigneeaddress").focus().select();
+          $("#consigneeaddress").focus().select();
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 190 && event.ctrlKey) {
       $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus().select();
@@ -1332,12 +1355,14 @@ $(document).ready(function() {
       if (curindex == 0) {
         event.preventDefault();
           $("#consigneeaddress").focus().select();
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
         }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
       if (curindex == 0) {
         event.preventDefault();
           $("#consigneeaddress").focus().select();
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
         } else {
         $('#invoice_product_table_gst tbody tr:eq(' + previndex + ') td:eq(5) input').focus().select();
       }
@@ -1404,7 +1429,8 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-        $("#consigneeaddress").focus().select();
+          $("#consigneeaddress").focus().select();
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
@@ -1500,7 +1526,8 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-        $("#consigneeaddress").focus().select();
+          $("#consigneeaddress").focus().select();
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
@@ -1542,7 +1569,8 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-        $("#consigneeaddress").focus().select();
+          $("#consigneeaddress").focus().select();
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
 	event.preventDefault();
@@ -1632,7 +1660,8 @@ if (event.which == 13) {
       }
       if (curindex1 == 0) {
         event.preventDefault();
-        $("#consigneeaddress").focus().select();
+          $("#consigneeaddress").focus().select();
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
@@ -1931,6 +1960,8 @@ if (event.which == 13) {
       var invoicetotal = 0.00;
     var productcodes = [];
       var productqtys = [];
+      var quantity;
+      var ppu;
 
       consignee["consigneename"] = $("#consigneename").val();
       consignee["tinconsignee"] = $("#tinconsignee").val();
@@ -2002,7 +2033,7 @@ if (event.which == 13) {
           $('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(0) select').focus();
           return false;
         }
-	  var quantity = parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val()) + parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
+	  quantity = parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val()) + parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
 	  if (parseFloat(quantity) === 0.00) {
 	      $("#quantity-blank-alert").alert();
 	      $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -2025,7 +2056,7 @@ if (event.which == 13) {
       }
 	if (parseFloat(quantity) > 0) {
 	    var obj = {};
-        var ppu = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val();
+        ppu = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val();
         obj[ppu] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val();
         tax[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val();
         contents[productcode] = obj;
@@ -2047,7 +2078,7 @@ if (event.which == 13) {
       $('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select').focus();
       return false;
     }
-      var quantity = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val());
+      quantity = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val());
 	  if (parseFloat(quantity) === 0.00) {
 	      $("#quantity-blank-alert").alert();
 	      $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -2067,11 +2098,11 @@ if (event.which == 13) {
 	  }
 	  productqtys.push(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()));
 	  for (var i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
-	      var obj = {};
+	      var gobj = {};
 	productcode = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
-        var ppu = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val();
-        obj[ppu] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
-        contents[productcode] = obj;
+        ppu = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val();
+        gobj[ppu] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
+        contents[productcode] = gobj;
 	    tax[productcode] = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(7) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(9) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(11) input").val());
         items[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
         freeqty[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val();
