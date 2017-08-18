@@ -33,7 +33,7 @@
 	    <th class="smvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 	    <th class="smvwrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
 	    <th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
-	    <th class="smvwrap text-center">{% trans %}Discount{% endtrans %}</th>
+	    <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 	    <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
 	    <th class="smvwrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
 	    <th class="smvwrap text-center">{% trans %}Tax Amt{% endtrans %}</th>
@@ -115,7 +115,7 @@
 		    <th rowspan="2" class="qtywrap text-center">{% trans %}Quantity{% endtrans %}</th>
 		    <th rowspan="2" class="qtywrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
 		    <th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
-		    <th rowspan="2" class="smwrap text-center">{% trans %}Discount{% endtrans %}</th>
+		    <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 		    <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
 		    {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}CGST{% endtrans %}</th>{% endif %}
 		    {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}SGST{% endtrans %}</th>{% endif %}
@@ -212,7 +212,7 @@
 	</div>
       </div>
       <div class="col-sm-12">
-	<h4>Bank Details:</h4>
+	<h4>Bank Details :</h4>
 	<div class="col-sm-6 nopadding">
 	  <div class="row">
 	    <div class="form-group form-inline col-sm-6 nopadding">
