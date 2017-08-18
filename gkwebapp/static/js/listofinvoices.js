@@ -29,7 +29,7 @@ $(document).ready(function() {
     var currentrow = 0;
 
     $('#latable tbody tr:first td:eq(1) a').focus();
-    $('#latable tbody tr:first td:eq(1) a').addClass('selected');
+    $('#latable tbody tr:first').addClass('selected');
 
 
     $(document).off('focus', '.libgname').on('focus', '.libgname', function() {
@@ -198,5 +198,29 @@ $(document).ready(function() {
             }
         };
         xhr.send();
+    });
+    $("#printbutton").click(function(event) {
+	var invid = $("#latable tbody tr:eq(" + currentrow + ")").data("invid");
+        $.ajax({
+                url: '/invoice?action=print',
+                type: 'POST',
+                dataType: 'html',
+            data: {"invid":invid},
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+            })
+            .done(function(resp) {
+                console.log("success");
+                $('#printload').html(resp);
+		$("#invload").hide();
+		$("#buttondiv").hide();
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
     });
 });

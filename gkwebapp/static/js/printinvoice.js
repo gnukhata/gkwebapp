@@ -42,7 +42,15 @@ $(document).ready(function() {
   });
 
   $("#invback").click(function(event) {
-    $("#invoice").click();
+      if ($("#latable").length == 0) {
+	$("#invoice").click();
+      }
+      else {
+	  $('#printload').html("");
+	  $("#invload").show();
+	  $("#buttondiv").show();
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+      }
   });
   (function() {
 var beforePrint = function() {
