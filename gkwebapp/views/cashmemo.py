@@ -50,9 +50,9 @@ def showeditcashmemo(request):
 
 @view_config(route_name="cashmemos",request_param="action=showcashmemo",renderer="gkwebapp:templates/viewsinglecashmemo.jinja2")
 def showsinglecashmemo(request):
-    header={"gktoken":request.headers["gktoken"]}
-    invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
-    return {"gkstatus": invoicedata.json()["gkstatus"],"gkresult": invoicedata.json()["gkresult"]}
+	header={"gktoken":request.headers["gktoken"]}
+	invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
+	return {"gkstatus": invoicedata.json()["gkstatus"],"gkresult": invoicedata.json()["gkresult"]}
 
 
 @view_config(route_name="cashmemos",request_param="action=getproducts",renderer="json")
@@ -117,8 +117,5 @@ def getproducts(request):
 def Invoiceprint(request):
 	header={"gktoken":request.headers["gktoken"]}
 	org = requests.get("http://127.0.0.1:6543/organisation", headers=header)
-	tableset = json.loads(request.params["printset"])
-	return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],
-	"tableset":tableset,"invoiceno":request.params["invoiceno"],"invoicedate":request.params["invoicedate"],
-	"subtotal":request.params["subtotal"],
-	"taxtotal":request.params["taxtotal"],"gtotal":request.params["gtotal"]}
+	invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
+	return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":invoicedata.json()["gkresult"]}
