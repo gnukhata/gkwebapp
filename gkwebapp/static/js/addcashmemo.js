@@ -829,7 +829,7 @@ $('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
         }
   $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
   $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);;
-           $(".product_name_vat").change();
+  $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
     }
   } else if (event.which == 190 && event.shiftKey) {
     event.preventDefault();
@@ -1620,7 +1620,7 @@ if ($("#taxapplicable").val() == 22) {
           $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
           $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);
           $("#invoicestate").change();
-          $(".product_name_gst").change();
+          $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
       }
     }
         else if (event.which == 190 && event.shiftKey) {
