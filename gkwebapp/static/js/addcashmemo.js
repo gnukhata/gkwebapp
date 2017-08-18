@@ -205,14 +205,16 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
           if (invoicedate >= gstdate) {
         $("#taxapplicabletext").text("GST");
         $("#taxapplicable").val("7");
-        $("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
+              $("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
+	      $("#vathelp").hide();
         $("#gstproducttable").show();  //Shows GST Product table.
           }
           else {
         $("#taxapplicabletext").text("VAT");
         $("#taxapplicable").val("22");
         $("#gstproducttable").hide();
-        $("#invoice_product_table_vat").show();
+              $("#invoice_product_table_vat").show();
+	      $("#vathelp").show();
           }
       }
       $(this).val(yearpad($(this).val(), 4));
