@@ -2214,21 +2214,24 @@ if (event.which == 13) {
            }
            $("#success-alert").alert();
            $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
-             $("#success-alert").hide();
+               $("#success-alert").hide();
+	       $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
            });
            return false;
          } else if (resp["gkstatus"] == 1) {
            $("#invoice_challanno").focus();
            $("#duplicate-alert").alert();
            $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
-             $("#duplicate-alert").hide();
+               $("#duplicate-alert").hide();
+	       $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
            });
            return false;
          } else {
            $("#invoice_deliverynote").focus();
            $("#failure-alert").alert();
            $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {
-             $("#failure-alert").hide();
+               $("#failure-alert").hide();
+	       $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
            });
            return false;
          }
@@ -2260,7 +2263,7 @@ if (event.which == 13) {
       $("#invoice_create").click();
     }
   });
-
+/*
   $("#invoice_saveprint").click(function(event) {
     event.stopPropagation();
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
@@ -2595,5 +2598,5 @@ if (event.which == 13) {
     $("#confirm_yes_print").on('hidden.bs.modal', function(event) {
         $("#invoice_challanno").focus();
     });
-		    });
+	*/	    });
 		      
