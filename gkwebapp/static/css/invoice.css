@@ -10,7 +10,7 @@
  }
  #invoice_product_table_gst_heading thead {
      display:table;
-     width: calc( 140% - 0.75em );
+     width: calc( 100% - 0.75em );
      table-layout:fixed;
  }
  #invoice_product_table_gst_tfoot tfoot {
@@ -81,11 +81,17 @@
  .smvwrap{
      width:9.75%;
  }
+ .ratewrap {
+     width: 6.75%;
+ }
+ .qtyvwrap {
+     width: 11.25%;
+ }
  .unitaddon {
      overflow:hidden;
      text-overflow:clip;
      white-space:nowrap;
-     max-width:35px;
+     max-width:20px;
  }
  
  @page {
@@ -105,4 +111,11 @@
      max-width: 100% !important;
      min-width: 100% !important;
      width: 100% !important;
+ }
+ #invoice_customer {
+     max-width: 180px !important;
+ }
+ .borderdiv {
+     border-left-style:solid;
+     border-width: 1px;
  }

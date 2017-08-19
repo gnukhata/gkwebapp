@@ -1,20 +1,20 @@
 
 <html lang="en">
-<head>
+  <head>
   <meta charset="utf-8" />
   <title>{% trans %}GNUKhata {% endtrans %} | </title>
   <link id="bootstrap" href="{{request.static_url('gkwebapp:static/css/Default.min.css')}}" rel="stylesheet" type="text/css">
   <link rel="stylesheet" type="text/css" media="screen" href="{{request.static_url('gkwebapp:static/css/font-awesome.min.css')}}">
   <link href="{{request.static_url('gkwebapp:static/css/mainshellstyle.css')}}" rel="stylesheet" type="text/css">
-<style>
- .bgcolor{
-  	 background-color:#1b2631;
-  }
+  <style>
+   .bgcolor{
+       background-color:#1b2631;
+   }
   </style>
 
-</head>
+  </head>
 
-<body>
+  <body>
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -43,15 +43,17 @@
               <li><a class="mastermenu" data-toggle="tab" id="showproject" href="">{% trans %}Cost Center{% endtrans %}</a></li>
 
               <li><a class="mastermenu" data-toggle="tab" id="BRS" href="">{% trans %}Bank Reconciliation Statement{% endtrans %}</a></li>
-                <li><a class="addcategory categoryinmaster" data-toggle="tab" id="categoryinmaster" href="">{% trans %}Category{% endtrans %}</a></li>
+              <li><a class="addcategory categoryinmaster" data-toggle="tab" id="categoryinmaster" href="">{% trans %}Category{% endtrans %}</a></li>
                 <li><a  class="productinmaster" data-toggle="tab" id="productinmaster" href="" >Product/Service</a></li>
-                <li><a class="uominmaster" data-toggle="tab" id="uominmaster" href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
+	  
+		<li><a class="uominmaster" data-toggle="tab" id="uominmaster" href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
             </ul>
           </li>
           <li id="inventorydropdown" class="dropdown closebooks inventory_hide">
             <a href="" id="inventory" class="dropdown-toggle inventorymenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>I</u>nventory{% endtrans %}</a>
             <ul class="dropdown-menu">
-              <li><a  class="inventorymenu" data-toggle="tab" id="product" href="">Product/Service</a></li>
+		<li><a  class="inventorymenu" data-toggle="tab" id="product" href="">Product/Service</a></li>
+	      
               <li><a class="inventorymenu addcategory" data-toggle="tab" id="addcategory" href="">{% trans %}Category{% endtrans %}</a></li>
               <li><a class="inventorymenu" data-toggle="tab" id="addunit" href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
               <li><a class="inventorymenu" data-toggle="tab" id="deliverychallan" href="">{% trans %}Delivery Note{% endtrans %}</a></li>
@@ -100,7 +102,8 @@
               <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="categorywisestockonhandreport">{% trans %}Category Wise Stock on Hand{% endtrans %}</a></li>
               <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listofgodowns">{% trans %}List of Godowns{% endtrans %}</a></li>
               <li><a class="reportmenu invsbill" href="" data-toggle="tab" id="listofcategories">{% trans %}List of Categories{% endtrans %}</a></li>
-              <li><a class="reportmenu invsbill" href="" data-toggle="tab" id="listofstockitems">{% trans %}List of Products/Service{% endtrans %}</a></li>
+		<li><a class="reportmenu invsbill" href="" data-toggle="tab" id="listofstockitems">{% trans %}List of Products/Service{% endtrans %}</a></li>
+	   
               <li><a class="reportmenu invoicemenu invsbill" href="" data-toggle="tab" id="listofinvoices">{% trans %}List of Invoices{% endtrans %}</a></li>
               <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listoftransfernotes">{% trans %}List of Transfer Notes{% endtrans %}</a></li>
               <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="show_unbilled_deliveries">{% trans %}Unbilled Deliveries{% endtrans %}</a></li>
@@ -198,14 +201,15 @@
               <li><a class="toolbarmenu" data-toggle="tab" id="changepasswordtb" href="">Change Password - ALT+C</a></li>-->
               <li><a class="toolbarmenu" target="_blank" id="manualtb" href="http://gnukhata.in/manual.pdf">{% trans %}Manual{% endtrans %} - ALT+M</a></li>
               <!--<li><a class="toolbarmenu" data-toggle="tab" id="logouttb" href="">Logout - CTRL+L</a></li>
-              <li><a class="toolbarmenu" data-toggle="tab" id="changeogtb" href="">Change Organisation - CTRL+O</a></li>-->
+		   <li><a class="toolbarmenu" data-toggle="tab" id="changeogtb" href="">Change Organisation - CTRL+O</a></li>-->
             </ul>
-            </li>
+          </li>
 
         </ul>
       </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+    </div><!-- /.container-fluid -->
+  </nav>
+  
 <div class="container-fluid hidden-print">
   <ul id="mainshellticker" class="shadow" style="list-style-type: none; padding: 0; overflow: hidden; background-color: rgb(248,248,248); height: 20px; border-radius: 5px;">
     <li style="float: left;"><a data-toggle="tab" style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="orgdata" href=""></a></li>
@@ -220,7 +224,8 @@
 
     </div>
     <div style="padding-top:20px" class="panel-body" >
-          <p>{% trans %}To access Tabs of the Menu Bar press{% endtrans %} "Ctrl + Shift + {% trans %}Underlined Character".{% endtrans %}</p>
+     
+      <p>{% trans %}To access Tabs of the Menu Bar press{% endtrans %} "Ctrl + Shift + {% trans %}Underlined Character".{% endtrans %}</p>
           <p>{% trans %}To view Toolbar press  "F1".{% endtrans %}</p>
           <p> {% trans %}To use screen specific shortcuts{% endtrans %} : </p>
           <p class="shortcut">{% trans %}If using Firefox, press{% endtrans %} "Alt + Shift + {% trans %}the underlined character".{% endtrans %}</p>

@@ -1,11 +1,16 @@
 <link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css">
 <form class="form-inline" >
+  <input id="status" type="hidden" value="{{ gkresult["inoutflag"] }}">
   <div class="col-md-12">
     <div class="col-md-4">
-      <h4>Details of Invoice: </h4>
+      {% if gkresult["inoutflag"] == 9 %}
+	<h4>Details of Purchase Invoice: </h4>
+      {% else %}
+	<h4>Details of Sale Invoice: </h4>
+	{% endif %}
       <div class="form-group form-inline col-sm-12 nopadding">
 	{% if gkresult["dcno"] %}
-	  <label class="normal" for="instrumentno">{% trans %}Delivery No{% endtrans %} : </label>
+	  <label class="normal" for="instrumentno">{% trans %}Delivery Note No{% endtrans %} : </label>
 	  {{gkresult["dcno"]}}
 	{% endif %}
       </div>
@@ -18,8 +23,14 @@
 	{{ gkresult["invoicedate"] }}
       </div>
       <div class="form-group form-inline col-sm-12 nopadding">
-	<label for="invoicestate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} : </label>
-	{% if gkresult["inoutflag"] == 15 %}{{ gkresult["sourcestate"] }}{% endif %}{% if gkresult["inoutflag"] == 9 %}{{ gkresult["destinationstate"] }}{% endif %}
+	<label>
+	{% if gkresult["inoutflag"] == 9 %}
+          {% trans %}State of Destination{% endtrans %} :
+	{% else %}
+	  {% trans %}State of Origin{% endtrans %} :
+	{% endif %}
+	  </label>
+	  {% if gkresult["inoutflag"] == 15 %}{{ gkresult["sourcestate"] }}{% endif %}{% if gkresult["inoutflag"] == 9 %}{{ gkresult["destinationstate"] }}{% endif %}
       </div>
       <div class="form-group form-inline col-sm-12 nopadding">
 	<label for="stcode">{% trans %}State Code{% endtrans %} : </label>
@@ -36,7 +47,7 @@
       {% endif %}
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-4 borderdiv">
       {% if gkresult["inoutflag"] == 9 %}
 	<h4>{% trans %}Details of Supplier{% endtrans %} :</h4>
       {% else %}
@@ -52,14 +63,20 @@
 	</label>
 	{{ gkresult["custSupDetails"]["custname"] }}
       </div>
-      <div class="form-group form-inline col-sm-12 nopadding">
-	<label for="tin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}TIN{% endtrans %} : </label>
-	{{ gkresult["custSupDetails"]["custtin"] }}
-      </div>
+      {% if gkresult["taxflag"] == 22 %}
+	<div class="form-group form-inline col-sm-12 nopadding">
+	  <label for="tin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}TIN{% endtrans %} : </label>
+	  {{ gkresult["custSupDetails"]["custtin"] }}
+	</div>
+	<input type="text"  id="taxapplicable" value="22" accesskey="" hidden>
+      {% endif %}
+      {% if gkresult["taxflag"] == 7 %}
       <div class="form-group form-inline col-sm-12 nopadding">
 	<label for="gstin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN{% endtrans %} : </label>
 	{{ gkresult["custSupDetails"]["custgstin"] }}
       </div>
+      <input type="text"  id="taxapplicable" value="7" accesskey="" hidden>
+      {% endif %}
       <div class="form-group form-inline col-sm-12 nopadding">
 	<label>
 	  {% if gkresult["inoutflag"] == 9 %}
@@ -85,20 +102,24 @@
 	{{ gkresult["custSupDetails"]["custaddr"] }}
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 borderdiv">
       <h4>Details of Consignee | Shipped to: </h4>
       <div class="form-inline form-group col-sm-12 nopadding">
 	<label for="consignee" class=" col-form-label col-form-label-sm" id="consigneelbl">{% trans %}Name{% endtrans %} : </label>
 	{% if gkresult["consignee"]["consigneename"] %}{{ gkresult["consignee"]["consigneename"] }}{% else %}N/A{% endif %}
       </div>
-      <div class="form-inline form-group col-sm-12 nopadding">
-	<label for="tinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}TIN{% endtrans %} :</label>
-	{% if gkresult["consignee"]["tinconsignee"] %}{{ gkresult["consignee"]["tinconsignee"] }}{% else %}N/A{% endif %}
-      </div>
+      {% if gkresult["taxflag"] == 22 %}
+	<div class="form-inline form-group col-sm-12 nopadding">
+	  <label for="tinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}TIN{% endtrans %} :</label>
+	  {% if gkresult["consignee"]["tinconsignee"] %}{{ gkresult["consignee"]["tinconsignee"] }}{% else %}N/A{% endif %}
+	</div>
+      {% endif %}
+	{% if gkresult["taxflag"] == 7 %}
       <div class="form-inline form-group col-sm-12 nopadding">
 	<label for="gstinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN{% endtrans %} :</label>
 	{% if gkresult["consignee"]["tinconsignee"] %}{{ gkresult["consignee"]["tinconsignee"] }}{% else %}N/A{% endif %}
       </div>
+      {% endif %}
       <div class="form-inline form-group  col-sm-12 nopadding">
 	<label for="consigneeaddress" class=" col-form-label col-form-label-sm" id="consigneeaddress">{% trans %}Address :{% endtrans %}</label>
 	{% if gkresult["consignee"]["consigneeaddress"] %}{{ gkresult["consignee"]["consigneeaddress"] }}{% else %}N/A{% endif %}
@@ -118,7 +139,6 @@
       <div class="col-md-3">
 	<label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
 	VAT
-      </select>
       </div>
     </div>
     <div class="col-md-12">
@@ -127,26 +147,26 @@
 	<thead class="bg-primary">
 	  <tr>
 	    <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
-	    <th class="smvwrap text-center">{% trans %}Quantity{% endtrans %}</th>
-	    <th class="smvwrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
+	    <th class="qtyvwrap text-center">{% trans %}Blled Quantity{% endtrans %}</th>
+	    <th class="qtyvwrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
 	    <th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
-	    <th class="smvwrap text-center">{% trans %}Discount{% endtrans %}</th>
+	    <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 	    <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
-	    <th class="smvwrap text-center">{% trans %}Tax Rate%{% endtrans %}</th>
+	    <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
 	    <th class="smvwrap text-center">{% trans %}Tax Amt{% endtrans %}</th>
 	    <th class="smvwrap text-center">{% trans %}Total{% endtrans %}</th>
 	  </tr>
 	</thead>
 	<tbody>
-	  <tr>
-	    {% for product in gkresult["invcontents"] %}
+	  {% for product in gkresult["invcontents"] %}
+	    <tr>
 	      <td class="mdvwrap">
 		{{ gkresult["invcontents"][product]["proddesc"] }}
 	      </td>
-	      <td class="smvwrap text-right">
+	      <td class="qtyvwrap text-right">
 		{{ gkresult["invcontents"][product]["qty"] }} {{ gkresult["invcontents"][product]["uom"] }}
 	      </td>
-	      <td class="smvwrap text-right">
+	      <td class="qtyvwrap text-right">
 		{{ gkresult["invcontents"][product]["freeqty"] }} {{ gkresult["invcontents"][product]["uom"] }}
 	      </td>
 
@@ -160,7 +180,7 @@
 		{{ gkresult["invcontents"][product]["taxableamount"] }}
 	      </td>
 	      </td>
-	      <td class="smvwrap text-right">
+	      <td class="ratewrap text-right">
 		{{ gkresult["invcontents"][product]["taxrate"] }}
 	      </td>
 	      <td class="smvwrap text-right">
@@ -174,7 +194,7 @@
 	</tbody>
 	<tfoot>
 	  <tr>
-	    <td colspan="8" class="text-right">
+	    <td colspan="4" class="text-right">
 	      {% trans %}Total{% endtrans %}
 	    </td>
 	    <!--  Total : ptotal       -->
@@ -184,7 +204,7 @@
 	    <td class="smvwrap text-right">
 	      {{ gkresult["totaltaxablevalue"] }}
 	    </td>
-	    <td class="smvwrap">
+	    <td class="ratewrap">
 	      
 	    </td>
 	    <td class="smvwrap text-right">
@@ -211,15 +231,15 @@
 	<div class="row col-md-12" id="gstproducttable">
 	  <div class="col-sm-10" style="overflow-x:scroll;">
 	    <div class="row">
-	      <table id="invoice_product_table_gst_heading" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase">
+	      <table id="invoice_product_table_gst_heading" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%;">
 		<thead class="bg-primary">
 		  <tr>
 		    <th rowspan="2" class="mdwrap text-center">{% trans %}Product{% endtrans %}</th>
 		    <th rowspan="2" class="smwrap text-center">{% trans %}HSN Code/ ACS Code{% endtrans %}</th>
-		    <th rowspan="2" class="qtywrap text-center">{% trans %}Quantity{% endtrans %}</th>
+		    <th rowspan="2" class="qtywrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 		    <th rowspan="2" class="qtywrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
 		    <th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
-		    <th rowspan="2" class="smwrap text-center">{% trans %}Discount{% endtrans %}</th>
+		    <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 		    <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
 		    {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}CGST{% endtrans %}</th>{% endif %}
 		    {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}SGST{% endtrans %}</th>{% endif %}
@@ -227,21 +247,21 @@
 		  </tr>
 
 		  <tr>
-		    {% if gkresult["taxname"]=='SGST' %}<th>Rate%</th>{% endif %}
-		    {% if gkresult["taxname"]=='SGST' %}<th>Amt</th>{% endif %}
-		    {% if gkresult["taxname"]=='SGST' %}<th>Rate%</th>{% endif %}
-		    {% if gkresult["taxname"]=='SGST' %}<th>Amt</th>{% endif %}
-		    {% if gkresult["taxname"]=='IGST' %}<th>Rate%</th>{% endif %}
-		    {% if gkresult["taxname"]=='IGST' %}<th>Amt</th>{% endif %}
+		    {% if gkresult["taxname"]=='SGST' %}<th>{% trans %}Rate{% endtrans %} %</th>{% endif %}
+		    {% if gkresult["taxname"]=='SGST' %}<th>{% trans %}Amt{% endtrans %}</th>{% endif %}
+		    {% if gkresult["taxname"]=='SGST' %}<th>{% trans %}Rate{% endtrans %} %</th>{% endif %}
+		    {% if gkresult["taxname"]=='SGST' %}<th>{% trans %}Amt{% endtrans %}</th>{% endif %}
+		    {% if gkresult["taxname"]=='IGST' %}<th>{% trans %}Rate{% endtrans %} %</th>{% endif %}
+		    {% if gkresult["taxname"]=='IGST' %}<th>{% trans %}Amt{% endtrans %}</th>{% endif %}
 		  </tr>
 		</thead>
 	      </table>
 	    </div>
 	    <div class="row">
-	      <table id="invoice_product_table_gst" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%; overflow-x:hidden;overflow-y:scroll;">
+	      <table id="invoice_product_table_gst" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase" style="overflow-x:hidden;overflow-y:scroll;width:140%; max-width:140%;">
 		<tbody>
-		  <tr>
-		    {% for product in gkresult["invcontents"] %}
+		  {% for product in gkresult["invcontents"] %}
+		    <tr>
 		      <td class="mdwrap">
 			{{ gkresult["invcontents"][product]["proddesc"] }}
 		      </td>
@@ -316,58 +336,62 @@
 	</div>
   {% endif %}
       </div>
-
-      <div class="col-md-12">
-	<div class="col-md-4">
-	  <h4>Bank Details:</h4>
-	  <div class="form-inline form-group col-sm-12 nopadding">
-	    <label for="Account Number" class=" col-form-label col-form-label-sm">{% trans %}Account No.{% endtrans %} :</label>
-	    {% if gkresult["bankdetails"]["accountno"] %}{{ gkresult["bankdetails"]["accountno"] }}{% else %}N/A{% endif %}
-	  </div>
-	  <div class="form-inline form-group col-sm-12 nopadding">
-	    <label for="Bank Name" class=" col-form-label col-form-label-sm">{% trans %}Bank Name{% endtrans %} :</label>
-	    {% if gkresult["bankdetails"]["bankname"] %}{{ gkresult["bankdetails"]["bankname"] }}{% else %}N/A{% endif %}
-	  </div>
-	  <div class="form-inline form-group col-sm-12 nopadding">
-	    <label for="branch" class=" col-form-label col-form-label-sm">{% trans %}Bank Branch Name{% endtrans %} :</label>
-	    {% if gkresult["bankdetails"]["branch"] %}{{ gkresult["bankdetails"]["branch"] }}{% else %}N/A{% endif %}
-	  </div>
-	  <div class="form-inline form-group col-sm-12 nopadding">
-	    <label for="ifsc" class=" col-form-label col-form-label-sm">{% trans %}IFSC code{% endtrans %} :</label>
-	    {% if gkresult["bankdetails"]["ifsc"] %}{{ gkresult["bankdetails"]["ifsc"] }}{% else %}N/A{% endif %}
-	  </div>
+      <div class="col-sm-12">
+	<div class="form-group form-inline col-sm-4 pull-right">
+	  <label for="totalinvoicevalue" style="font-size:120%">{% trans %}Total Invoice Value{% endtrans %} :</label>
+	  <label id="totalinvoicevalue">{{ gkresult["invoicetotal"] }}</label>
 	</div>
-	<div class="col-md-8" >
+      </div>
+      <div class="col-sm-12">
+	<h4>Bank Details:</h4>
+	<div class="col-sm-6 nopadding">
+	  <div class="row">
+	    <div class="form-group form-inline col-sm-6 nopadding">
+	      <label for="accountno" class="col-sm-5">{% trans %}Account No.{% endtrans %} :</label>
+	      {% if gkresult["bankdetails"]["accountno"] %}{{ gkresult["bankdetails"]["accountno"] }}{% else %}N/A{% endif %}
+	    </div>
+	    <div class="form-group form-inline col-sm-6 nopadding">
+	      <label for="bankname" class="col-sm-5">{% trans %}Bank Name{% endtrans %} :</label>
+	      {% if gkresult["bankdetails"]["bankname"] %}{{ gkresult["bankdetails"]["bankname"] }}{% else %}N/A{% endif %}
+	    </div>
+	  </div>
 	  <br>
 	  <div class="row">
-	    <div class="form-group form-inline col-sm-4 pull-right nopadding">
-	      <label for="totalinvoicevalue" style="font-size:120%">{% trans %}Total Invoice Value{% endtrans %} :</label>
-	      <label style="font-size:120%">{{ gkresult["invoicetotal"] }}</label>
+	    <div class="form-group form-inline col-sm-6 nopadding">
+	      <label for="branch" class="col-sm-5">{% trans %}Branch Name{% endtrans %} :</label>
+	      {% if gkresult["bankdetails"]["branch"] %}{{ gkresult["bankdetails"]["branch"] }}{% else %}N/A{% endif %}
+	    </div>
+	    <div class="form-group form-inline col-sm-6 nopadding">
+	      <label for="ifsc" class="col-sm-5">{% trans %}IFSC code{% endtrans %} :</label>
+	      {% if gkresult["bankdetails"]["ifsc"] %}{{ gkresult["bankdetails"]["ifsc"] }}{% else %}N/A{% endif %}
+	    </div>
 	  </div>
 	</div>
-	<div class="row">
-	  <div class="col-md-6">
-	    <div class="form-inline form-group col-sm-12 nopadding">
-	      <label for="transportationmode" id="transmode">{% trans %}Transportation Mode{% endtrans %} :</label>
+	<div class="col-sm-6 borderdiv">
+	  <div class="row">
+	    <div class="form-inline form-group col-sm-6 nopadding">
+	      <label for="transportationmode" class="col-sm-7" id="transmode">{% trans %}Transportation Mode{% endtrans %} :</label>
 	      {% if gkresult["transportationmode"] %}{{ gkresult["transportationmode"] }}{% else %}N/A{% endif %}
 	    </div>
-	    <div class="form-inline form-group col-sm-12 nopadding">
-	      <label for="inv" >{% trans %}Vehicle No.{% endtrans %} :</label>
+	    <div class="form-inline form-group col-sm-6 nopadding" id="vehiclenodiv" hidden>
+	      <label for="inv" class="col-sm-7">{% trans %}Vehicle No.{% endtrans %} :</label>
 	      {% if gkresult["vehicleno"] %}{{ gkresult["vehicleno"] }}{% else %}N/A{% endif %}
 	    </div>
 	  </div>
-	  <div class="col-md-6">
-	    <div class="form-inline form-group col-sm-12 nopadding">
-	      <label for="supply_date" >{% trans %}Date of Supply{% endtrans %} :</label>
-	      {% if gkresult["dateofsupply"] %}{{ gkresult["dateofsupply"] }}{% else %}N/A{% endif %}
+	  <div class="row">
+	    <div class="form-group form-inline col-sm-6 nopadding">
+	      <label for="supply_date" class="col-sm-7">{% trans %}Date of Supply{% endtrans %}:</label>
+	      <div class="form-group nopadding">
+		{% if gkresult["dateofsupply"] %}{{ gkresult["dateofsupply"] }}{% else %}N/A{% endif %}
+  	      </div>
 	    </div>
-	    <div class="form-inline form-group col-sm-12 nopadding">
-	      <label for="inv" >{% trans %}Reverse Charge {% endtrans %} :</label>
+
+	    <div class="form-group form-inline col-sm-6 nopadding">
+	      <label for="inv" class="col-sm-7">{% trans %}Reverse Charge{% endtrans %}:</label>
 	      {% if gkresult["reversecharge"] %}{{ gkresult["reversecharge"] }}{% else %}N/A{% endif %}
 	    </div>
+	  </div>
 	</div>
       </div>
-    </div>
-  </div>
 </form>
 <input type="text" id="attachmentcount" value="{{ gkresult["attachmentcount"] }}" hidden>

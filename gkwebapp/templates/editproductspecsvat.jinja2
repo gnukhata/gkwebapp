@@ -1,58 +1,30 @@
 <div class="col-sm-6" style="margin-top: -18;">
 <div class="editpr">
   <div class="row">
-
     <div class="form-group col-sm-11 pd">
-
-      {%if category|length > 0 %}
-
-      <input hidden value="1" id="catg">
-        <div class="row">
-          <div class="form-group col-sm-11" id="categorydiv">
-          <label id="editcatselectlabel" for="editcatselect" class="">{% trans %}Category{% endtrans %} :</label>
-      <select class = "form-control input-sm "  name = "catselect" id="editcatselect" >
-        {% if proddesc["categorycode"]== None %}
-        <option value="" selected>{% trans %}None{% endtrans %}</option>
-        {% endif %}
-        {% for cat in category %}
-        {% if cat['categorycode']== proddesc["categorycode"] %}
-        <option value="{{cat['categorycode']}}" selected>{{cat["categoryname"]}}</option>
-        {% else %}
-        <option value="{{cat['categorycode']}}" >{{cat["categoryname"]}}</option>
-        {% endif %}
-        {% endfor %}
-      </select>
-      </div>
-        </div>
-        {%endif%}
-      <input hidden value="{{proddesc["gsflag"]}}">
-      {% if proddesc["gsflag"]==7 %}
-      <label for="editproddesc" class="" id="prodlabel">New Name of Product :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
-      {%else%}
-      <label for="editproddesc" class="" id="servicelabel">New Name of Service :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
-      {%endif%}
-      <input type='text' class="form-control input-sm" name="editproddesc"  id="editproddesc" value="{{proddesc['productdesc']}}" placeholder="Alphanumeric">
-      <input hidden id="gsflag" name="gsflag" value="{{proddesc["gsflag"]}}">
-        {% if proddesc["gsflag"]==7 %}
-        <div class="row">
-          <div class="form-group col-sm-11">
-            <small id="txtareahelp" class="form-text text-muted">{% trans %}If you want to put this product under a category/sub-category, you must create/select a category first.{% endtrans %}</small>
-          </div>
-        </div>
-        {%endif%}
-    </div>
-  </div>
-  <div class="row">
-  <div class="form-group col-sm-11 pd ">
-    {% if proddesc["gsflag"]==7 %}
-    <label for="edithsn" class="" id="hsnorservnolabel">New HSN No. :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
-    {%else%}
-    <label for="addproddesc" class="" id="hsnorservnolabel">New Accounting Code for Service :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
-    {%endif%}
-    <input type='text' class="form-control input-sm " name="gscode"  id="gscode" placeholder="Alphanumeric" value="{{proddesc['gscode']}}">
-  </div>
+    <label for="editproddesc" class="">{% trans %}New Name of Product{% endtrans %} :</label><label for="editproddesc" style="color:red;font-size: 120%;">*</label>
+<input type='text' class="form-control input-sm" name="editproddesc"  id="editproddesc" value="{{proddesc['productdesc']}}" placeholder="Alphanumeric">
 </div>
-  {% if proddesc["gsflag"]==7 %}
+  </div>
+  {% if category|length > 0 %}
+  <div class="row">
+    <div class="form-group col-sm-11" id="categorydiv">
+    <label id="editcatselectlabel" for="editcatselect" class="">{% trans %}Category{% endtrans %} :</label>
+<select class = "form-control input-sm "  name = "catselect" id="editcatselect" >
+  {% if proddesc["categorycode"]== None %}
+  <option value="" selected>{% trans %}None{% endtrans %}</option>
+  {% endif %}
+  {% for cat in category %}
+  {% if cat['categorycode']== proddesc["categorycode"] %}
+  <option value="{{cat['categorycode']}}" selected>{{cat["categoryname"]}}</option>
+  {% else %}
+  <option value="{{cat['categorycode']}}" >{{cat["categoryname"]}}</option>
+  {% endif %}
+  {% endfor %}
+</select>
+</div>
+  </div>
+  {% endif %}
   <div class="row">
     <div class="form-group col-sm-11 pds olduom">
     <label for="edituom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label><label for="edituom" style="color:red;font-size: 120%;">*</label>
@@ -67,7 +39,6 @@
     </select>
   </div>
   </div>
-  {%endif%}
   <div id="extsp" class="row">
     <input type="text" id="numberofspecs" value="{{proddesc["specs"]|length}}" hidden>
         {% if proddesc["specs"]|length > 0 %}
@@ -136,19 +107,13 @@
           <th class=""></th>
         </tr>
       </thead>
-<input value="{{vatorgstflag}}" id="vatorgstflag" hidden>
       <tbody>
         <tr class="blank" value="new">
           <td class="col-xs-4">
             <select class="form-control input-sm product_tax_disable tax_name product_new_name">
               <option value="" selected disable hidden>Select Tax</option>
-              {%if vatorgstflag=='22' or vatorgstflag=='29' %}
               <option value="VAT">VAT</option>
               <option value="CVAT">CVAT</option>
-              {%endif%}
-              {%if vatorgstflag=='7' or vatorgstflag=='29'%}
-              <option value="IGST">IGST</option>
-              {%endif%}
             </select>
           </td>
           <td class="col-xs-4">
@@ -201,25 +166,16 @@
         </tr>
       </tbody>
     </table>
-      <input type="text" name="inv" id="invflag" value="1" hidden>
-{%if  proddesc["gsflag"]==7  %}
-
-                <small id="taxhelp3" class="form-text text-muted noinventory ">When on Tax Rate or Tax Name press 'Esc' key to shift focus to Godown Name or from Godown Opening Stock to 'Save' button.</small>
-                <small id="taxhelp5" class="form-text text-muted " hidden>When on Tax Rate or Tax Name press 'Esc' key to shift focus to 'Save' button.</small><br>
-{%else%}
-                  <small id="taxhelp4" class="form-text text-muted ">When on Tax Rate or Tax Name press 'Esc' key to shift focus to 'Save' button.</small><br>
-  {%endif%}
     </div>
   </div>
   </div>
-    {% if proddesc["gsflag"]==7 %}
-  <div class="row noinventory">
-
+  <div id ="noinventory">
+  <div class="row">
     {% if not godown %}
     <input type="text" name="godownflag" id="editgodownflag" value="0" hidden>
     <input type="text" id="editgodownpresence" value="0" hidden>
     <div class="form-group pds" id ="beforeaddingfirstgodown">
-      <label for="editopeningstock" class="invsbill">{% trans %}Opening Stock{% endtrans %} :</label>
+      <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
       <div class="input-group col-sm-6">
         <input type='text' class="form-control text-right input-sm" name="openingstock"  id="editopeningstock" value="{{proddesc['openingstock']}}" aria-describedby="unitaddon">
         <span class="input-group-addon input-sm" id="unitaddon"></span>
@@ -230,7 +186,7 @@
         <input type="checkbox" name="godownflag" id="editgodownflag" value="1">
         <label class="" for="editgodownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
       </div>
-      <div id="editnogodown" class="form-group pds">
+      <div id="editnogodown" class="form-group pds noinventory">
         <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
         <div class="input-group col-sm-6">
           <input type='text' class="form-control text-right input-sm" name="openingstock"  id="editopeningstock" value="{{proddesc['openingstock']}}" aria-describedby="unitaddon">
@@ -346,6 +302,7 @@
       </table>
     </div>
   </div>
+  </div>
   {% endif %}
     {% endif %}
     <small id="taxhelp3" class="form-text text-muted">Press 'Esc' Key from tax rate or tax name to shift focus to godown name or from godown opening stock to 'Save' button.</small><br>
@@ -355,6 +312,5 @@
       <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to navigate within a column in tax or godown table.</small>
     </div>
     <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
-</div>
-{%endif%}
+  </div>
 </div>

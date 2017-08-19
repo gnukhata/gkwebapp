@@ -27,7 +27,8 @@ Contributors:
 // Check printransfernote js for documentation.
 $(document).ready(function() {
   oninvoice = 1;
-  $("title").html("GNUKhata");
+  $("title").html("");
+    window.scrollTo(0,0);
   $("#invprint").click(function(event) {
     window.print();
   });

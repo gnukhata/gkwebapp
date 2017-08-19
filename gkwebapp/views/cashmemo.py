@@ -38,13 +38,22 @@ def showaddcashmemo(request):
 	header={"gktoken":request.headers["gktoken"]}
 	productsnservices = requests.get("http://127.0.0.1:6543/products", headers=header)
 	products = requests.get("http://127.0.0.1:6543/products?invdc=4", headers=header)
-	return {"gkstatus": request.params["status"],"products": products.json()["gkresult"],"productsnservices": productsnservices.json()["gkresult"]}
+	states = requests.get("http://127.0.0.1:6543/state", headers=header)
+	resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+	return {"gkstatus": request.params["status"],"products": products.json()["gkresult"],"productsnservices": productsnservices.json()["gkresult"],"states": states.json()["gkresult"],"resultgstvat":resultgstvat.json()["gkresult"]}
 
 @view_config(route_name="cashmemos",request_param="action=showedit",renderer="gkwebapp:templates/viewcashmemo.jinja2")
 def showeditcashmemo(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/invoice?cash=all", headers=header)
 	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
+
+@view_config(route_name="cashmemos",request_param="action=showcashmemo",renderer="gkwebapp:templates/viewsinglecashmemo.jinja2")
+def showsinglecashmemo(request):
+	header={"gktoken":request.headers["gktoken"]}
+	invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
+	return {"gkstatus": invoicedata.json()["gkstatus"],"gkresult": invoicedata.json()["gkresult"]}
+
 
 @view_config(route_name="cashmemos",request_param="action=getproducts",renderer="json")
 def getproducts(request):
@@ -95,7 +104,7 @@ def getstatetax(request):
 def getInvoiceDetails(request):
 	header={"gktoken":request.headers["gktoken"]}
 	invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
-	
+
 	return {"gkstatus": invoicedata.json()["gkstatus"],"invoicedata": invoicedata.json()["gkresult"]}
 
 @view_config(route_name="cashmemos",request_param="action=cancel",renderer="json")
@@ -108,8 +117,5 @@ def getproducts(request):
 def Invoiceprint(request):
 	header={"gktoken":request.headers["gktoken"]}
 	org = requests.get("http://127.0.0.1:6543/organisation", headers=header)
-	tableset = json.loads(request.params["printset"])
-	return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],
-	"tableset":tableset,"invoiceno":request.params["invoiceno"],"invoicedate":request.params["invoicedate"],
-	"subtotal":request.params["subtotal"],
-	"taxtotal":request.params["taxtotal"],"gtotal":request.params["gtotal"]}
+	invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
+	return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":invoicedata.json()["gkresult"]}

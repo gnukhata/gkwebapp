@@ -1,218 +1,332 @@
 
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>GNUKhata</title>
-    <style>
-    @page {
-      size: 21cm 29.7cm;
-      margin: 10mm 3mm 15mm 10mm; /* change the margins as you want them to be. */
-    }
-    td {
-      font-size: 75%;
-      padding: 2px !important;
-      margin:  0 !important;
-    }
-    body {
+<head>
+  <meta charset="utf-8">
+  <title>GNUKhata</title>
+  <style>
+   @page {
+       size: 21cm 29.7cm;
+       margin: 10mm 3mm 15mm 10mm; /* change the margins as you want them to be. */
+   }
+   td {
+       font-size: 65%;
+       padding: 2px !important;
+       margin:  0 !important;
+   }
+   body {
        background-image: none;
    }
-    th {
-      font-size: 85%;
-      padding: 3px !important;
-      margin:  0 !important;
-    }
-		table { page-break-inside:auto }
-		tr    { page-break-inside:avoid; page-break-after:auto }
-    thead { display: table-header-group; }
-    tfoot { display: table-footer-group; }
-    </style>
-  </head>
-  <body>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-6">
-          <div class="row">
-
-        <div class="col-xs-6" id="logo_div">
-
-            <div class="img-thumbnail img-circle ">
-              <div style="position: relative; padding: 0; cursor: pointer;" type="file">
-             <img class="img-circle"  style="width: 100px; height: 100px;" id="imgbox">
-              </div>
-            </div>
-        </div>
-      <div class="col-xs-6">
-          <h4>{{org["orgname"]}}</br>
-            <small>
-              {% if org["orgaddr"]!='' %}
-              {{org["orgaddr"]}},
-              {% endif %}
-              {% if org["orgcity"]!='' %}
-              </br>{{org["orgcity"]}} - {{org["orgpincode"]}},
-              {% endif %}
-              {% if org["orgstate"]!='' %}
-            </br>{{org["orgstate"]}}.
-              {% endif %}
-              {% if org["orgtelno"]!='' %}
-            </br>Contact No.: {{org["orgtelno"]}}
-              {% endif %}
-              {% if org["orgemail"]!='' %}
-              <br>Email : {{org["orgemail"]}}
-              {% endif %}
-              {% if org["orgfax"] %}
-              <br>Fax : {{org["orgfax"]}}
-              {% endif %}
-              {% if org["orgwebsite"]!='' %}
-              <br>Website : {{org["orgwebsite"]}}
-              {% endif %}
-          <br></small></h4>
-
-      </div>
-
+   th {
+       font-size: 75%;
+       padding: 3px !important;
+       margin:  0 !important;
+   }
+   table { page-break-inside:auto }
+   tr    { page-break-inside:avoid; page-break-after:auto }
+   thead { display: table-header-group; }
+   tfoot { display: table-footer-group; }
+   .borderdiv {
+       border-left-style:solid;
+       border-width: 1px;
+   }
+   .nopadding {
+       padding: 0 !important;
+       margin: 0 !important;
+   }
+   div {
+       font-size:95%;
+   }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="hidden-print row text-center text-primary">
+      <b>{% trans %}To avoid a URL appearing on your print please set 'Title' option to 'blank' in your browser's print settings. Sample setting for{% endtrans %} <a  href="{{request.static_url('gkwebapp:static/images/print.jpg')}}" target="_blank" class="text-danger"><u>{% trans %}Mozilla Firefox{% endtrans %}</u></a>.</b>
     </div>
-    <hr style="border-color:grey;margin-top:0px; margin-bottom:0px;">
-  </div>
-
-
-      <div class="col-sm-offset-1 col-sm-5">
-        <h2 class="text-right">Cash Memo</h2><br>
-        <table class="table table-bordered">
-          <tbody>
-            <tr>
-              <td class="col-xs-5">
-                  <strong>Cash Memo No. </strong>
-              </td>
-              <td class="text-right">
-                {{invoiceno}}
-              </td>
-            </tr>
-            <tr>
-                <td class="col-xs-5">
-                  <strong>Date</strong>
-                </td>
-                <td class="text-right">
-                  {{invoicedate}}
-                </td>
-            </tr>
-            <tr>
-              <td class="col-xs-5">
-                <strong>VAT No.</strong>
-              </td>
-              <td class="text-right">
-                {{org["orgmvat"]}}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="row text-center">
+      <h5><u>CASH MEMO</u></h5>
     </div>
-
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-xs-3" id="logo_div">
 
-        <table class="table table-bordered table-condensed" style="margin-bottom:0px;">
-            <thead class="bg-primary" style="border-bottom-style:double; border-top-style:double;">
-              <tr>
-                <th>
-                  Description
-                </th>
-                <th class="text-right">
-                  Qty
-                </th>
-                <th class="text-right">
-                  Price per Unit
-                </th>
-                <th class="text-right">
-                  Tax Rate
-                </th>
-                <th class="text-right">
-                  Tax Amount
-                </th>
-                <th class="text-right">
-                  Total
-                </th>
-              </tr>
-            </thead>
-          <tbody>
-            {% for set in tableset %}
-            <tr>
-              <td>
-                {{set["productdesc"]}}
-              </td>
-              <td class="text-right">
-                {{set["qty"]}} {{set["unitname"]}}
-              </td>
-              <td class="text-right">
-                {{set["ppu"]}}
-              </td>
-              <td class="text-right">
-                {{set["taxrate"]}}
-              </td>
-              <td class="text-right">
-                {{set["taxamt"]}}
-              </td>
-              <td class="text-right">
-                {{set["rowtotal"]}}
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        <hr style="border-color:grey;margin-top:0px; margin-bottom:0px;">
-      </div>
-    </div>
-
-
-      <div class="row">
-      <div class="col-xs-7">
-        <label for="notes" class="hidden-print">Notes :</label>
-        <textarea name="name" row='3' id="notes" class="form-control hidden-print" id="notes"></textarea>
-        <p class="visible-print" id = "notespara">
-        </p>
-      </div>
-      <div class="col-xs-5 ">
-        <table class="table table-bordered">
-          <tbody>
-            <tr>
-              <td>
-                Subtotal
-              </td>
-              <td class="text-right">
-                {{subtotal}}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Tax amount
-              </td>
-              <td class="text-right">
-                {{taxtotal}}
-              </td>
-            </tr>
-            <tr>
-              <th>
-                TOTAL
-              </th>
-              <td class="text-right">
-                {{gtotal}}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      </div>
-      <br>
-      <div class="row">
-        <div class="col-xs-6">
-          <strong><i>Thank you for your business!</i></strong>
+        <div class="img-thumbnail img-circle ">
+          <div style="position: relative; padding: 0; cursor: pointer;" type="file">
+	    <img class="img-circle"  style="width: 100px; height: 100px;" id="imgbox">
+          </div>
         </div>
       </div>
-      <span style="margin:auto; display:table;">
-    		<button type="button" class="btn btn-sm btn-danger hidden-print" id="invback" accesskey="b">{% trans %}<i class="fa fa-arrow-left" aria-hidden="true"></i>
- <u>B</u>ack{% endtrans %}</button>
-    		<button type="button" class="btn btn-sm btn-info hidden-print" id="invprint" >{% trans %}<i class="fa fa-print" aria-hidden="true"></i> Prin<u>t</u>{% endtrans %}</button>
-    	</span>
+      <div class="col-xs-9 nopaddng">
+
+        <h3>{{org["orgname"]}}</h3>
+        {% if org["orgaddr"]!='' %}
+          {{org["orgaddr"]}}
+        {% endif %}
+        {% if org["orgcity"]!='' %}
+          , {{org["orgcity"]}}
+	{% endif %}
+	{% if org["orgpincode"] %}
+	  - {{org["orgpincode"]}},
+        {% endif %}
+        {% if org["orgstate"]!='' %}
+          , {{org["orgstate"]}}.
+        {% endif %}
+	<br>
+        {% if org["orgtelno"]!='' %}
+          Contact No.: {{org["orgtelno"]}}
+        {% endif %}
+        {% if org["orgemail"]!='' %}
+          Email : {{org["orgemail"]}}
+        {% endif %}
+        {% if org["orgfax"] %}
+          Fax : {{org["orgfax"]}}
+        {% endif %}
+        {% if org["orgwebsite"]!='' %}
+          Website : {{org["orgwebsite"]}}
+        {% endif %}
+      </div>
+
     </div>
-    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/printcashmemo.js')}}"></script>
-  </body>
+    <br>
+    <div class="col-sm-12">
+      <div class="form-group form-inline col-sm-3 nopadding">
+  <label class="normal"for="bankname">{% trans %}Cash Memo No{% endtrans %} : </label>
+  {{ gkresult["invoiceno"] }}
+      </div>
+      <div class="form-group form-inline col-sm-3 nopadding">
+  <label for="instrument_date" class="normal">{% trans %}Date{% endtrans %} : </label>
+  {{ gkresult["invoicedate"] }}
+      </div>
+      <div class="form-group form-inline col-sm-3 nopadding">
+  <label>{% trans %}State{% endtrans %} : </label>
+
+    {{ gkresult["sourcestate"] }}
+      </div>
+      <div class="col-sm-3">
+  	<label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
+    {% if gkresult["taxflag"] == 22 %}
+  	VAT
+    {% else %}
+    GST
+    {% endif %}
+        </div>
+      </div>
+
+{% if gkresult["taxflag"] == 22 %}
+      <div class="row">
+	<br>
+	<table id="invoice_product_table_vat" class=" table table-condensed table-bordered">
+	  <thead class="bg-primary">
+	    <tr>
+	      <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
+	      <th class="qtyvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
+	      <th class="qtyvwrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
+	      <th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
+	      <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
+	      <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
+	      <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
+	      <th class="smvwrap text-center">{% trans %}Tax Amt{% endtrans %}</th>
+	      <th class="smvwrap text-center">{% trans %}Total{% endtrans %}</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    {% for product in gkresult["invcontents"] %}
+	      <tr>
+		<td class="mdvwrap">
+		  <small>{{ gkresult["invcontents"][product]["proddesc"] }}</small>
+		</td>
+		<td class="qtyvwrap text-right">
+		  <small>{{ gkresult["invcontents"][product]["qty"] }} {{ gkresult["invcontents"][product]["uom"] }}</small>
+		</td>
+		<td class="qtyvwrap text-right">
+		  <small>{{ gkresult["invcontents"][product]["freeqty"] }} {{ gkresult["invcontents"][product]["uom"] }}</small>
+		</td>
+
+		<td class="smvwrap text-right">
+		  <small>{{ gkresult["invcontents"][product]["priceperunit"] }}</small>
+		</td>
+		<td class="smvwrap text-right">
+		  <small>{{ gkresult["invcontents"][product]["discount"] }}</small>
+		</td>
+		<td class="smvwrap text-right">
+		  <small>{{ gkresult["invcontents"][product]["taxableamount"] }}</small>
+		</td>
+	    </td>
+	    <td class="ratewrap text-right">
+	      <small>{{ gkresult["invcontents"][product]["taxrate"] }}</small>
+	    </td>
+	    <td class="smvwrap text-right">
+	      <small>{{ gkresult["invcontents"][product]["taxamount"] }}</small>
+	    </td>
+	    <td class="smvwrap text-right">
+	      {{ gkresult["invcontents"][product]["totalAmount"] }}
+	    </td>
+	      </tr>
+	    {% endfor %}
+	  </tbody>
+	  <tfoot>
+	    <tr>
+	      <td colspan="4" class="text-right">
+		{% trans %}Total{% endtrans %}
+	      </td>
+	      <td class="smvwrap text-right">
+		{{ gkresult["totaldiscount"] }}
+	      </td>
+	      <td class="smvwrap text-right">
+		{{ gkresult["totaltaxablevalue"] }}
+	      </td>
+	      <td class="ratewrap">
+
+	      </td>
+	      <td class="smvwrap text-right">
+		{{ gkresult["totaltaxamt"] }}
+	      </td>
+	      <td class="smvwrap text-right">
+		{{ gkresult["invoicetotal"] }}
+	      </td>
+	    </tr>
+	  </tfoot>
+
+	</table>
+      </div>
+ {% else %}
+   <br>
+      <div class="row">
+	<table id="invoice_product_table_gst" class="table table-condensed table-bordered">
+	  <thead class="bg-primary">
+	    <tr>
+	      <th rowspan="2" class="mdwrap text-center">{% trans %}Product{% endtrans %}</th>
+	      <th rowspan="2" class="smwrap text-center">{% trans %}HSN Code/ ACS Code{% endtrans %}</th>
+	      <th rowspan="2" class="qtywrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
+	      <th rowspan="2" class="qtywrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
+	      <th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
+	      <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
+	      <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
+	      {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}CGST{% endtrans %}</th>{% endif %}
+	      {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}SGST{% endtrans %}</th>{% endif %}
+	      <th rowspan="2" class="text-center">Total</th>
+	    </tr>
+
+	    <tr>
+	      {% if gkresult["taxname"]=='SGST' %}<th style="white-space: nowrap">{% trans %}Rate{% endtrans %} %</th>{% endif %}
+	      {% if gkresult["taxname"]=='SGST' %}<th>{% trans %}Amt{% endtrans %}</th>{% endif %}
+	      {% if gkresult["taxname"]=='SGST' %}<th style="white-space: nowrap">{% trans %}Rate{% endtrans %} %</th>{% endif %}
+	      {% if gkresult["taxname"]=='SGST' %}<th>{% trans %}Amt{% endtrans %}</th>{% endif %}
+	    </tr>
+	  </thead>
+	  <tbody>
+	    {% for product in gkresult["invcontents"] %}
+	      <tr>
+		<td class="mdwrap">
+		  <small>{{ gkresult["invcontents"][product]["proddesc"] }}</small>
+		</td>
+		<td class="smwrap text-center">
+		  <small>{{ gkresult["invcontents"][product]["gscode"] }}</small>
+		</td>
+		<td class="qtywrap text-right">
+		  <small>{{ gkresult["invcontents"][product]["qty"] }} {{ gkresult["invcontents"][product]["uom"] }}</small>
+		</td>
+		<td class="qtywrap text-right">
+		  <small>{{ gkresult["invcontents"][product]["freeqty"] }} {{ gkresult["invcontents"][product]["uom"] }}</small>
+		</td>
+
+		<td class="smwrap text-right">
+		  <small>{{ gkresult["invcontents"][product]["priceperunit"] }}</small>
+		</td>
+		<td class="smwrap text-right">
+		  <small>{{ gkresult["invcontents"][product]["discount"] }}</small>
+		</td>
+		<td class="smwrap text-right">
+		  <small>{{ gkresult["invcontents"][product]["taxableamount"] }}</small>
+		</td>
+
+		{% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="taxcell text-right"><small>{{ gkresult["invcontents"][product]["taxrate"] }}</small></td>{% endif %}
+		{% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="taxcell text-right"><small>{{ gkresult["invcontents"][product]["taxamount"] }}</small></td>{% endif %}
+
+		{% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="taxcell text-right"><small>{{ gkresult["invcontents"][product]["taxrate"] }}</td></small>{% endif %}
+		{% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="taxcell text-right"><small>{{ gkresult["invcontents"][product]["taxamount"] }}</small></td>{% endif %}
+
+		<td class="text-right">{{ gkresult["invcontents"][product]["totalAmount"] }}</td>
+	      </tr>
+	    {% endfor %}
+	  </tbody>
+	  <tfoot>
+	    <tr>
+	      <td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
+	      <td class="text-right smwrap">{{ gkresult["totaldiscount"] }}</td>
+	      <td class="text-right smwrap">{{ gkresult["totaltaxablevalue"] }}</td>
+	      {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
+	      {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
+	      <td class="text-right">
+		{{ gkresult["invoicetotal"] }}
+	      </td>
+	    </tr>
+	  </tfoot>
+	</table>
+      </div>
+    {% endif %}
+    <div class="row pull-right">
+      <label for="totalinvoicevalue" style="font-size:120%">{% trans %}Total Amount{% endtrans %} :</label>
+      <label id="totalinvoicevalue">{{ gkresult["invoicetotal"] }}</label>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+      <div class="col-xs-6 nopadding">
+	<table class="table table-bordered table-condensed">
+	  <thead>
+	    <tr>
+	      <th colspan="4">
+		Bank Details
+	      </th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr>
+	      <td>
+		<label for="accountno">{% trans %}Account No.{% endtrans %} :</label>
+	      </td>
+	      <td>
+		{% if gkresult["bankdetails"]["accountno"] %}{{ gkresult["bankdetails"]["accountno"] }}{% else %}N/A{% endif %}
+	      </td>
+	      <td>
+		<label for="bankname">{% trans %}Bank Name{% endtrans %} :</label>
+	      </td>
+	      <td>
+		{% if gkresult["bankdetails"]["bankname"] %}{{ gkresult["bankdetails"]["bankname"] }}{% else %}N/A{% endif %}
+	      </td>
+	    </tr>
+	    <tr>
+	      <td>
+		<label for="branch">{% trans %}Branch Name{% endtrans %} :</label>
+	      </td>
+	      <td>
+		{% if gkresult["bankdetails"]["branch"] %}{{ gkresult["bankdetails"]["branch"] }}{% else %}N/A{% endif %}
+	      </td>
+	      <td>
+		<label for="ifsc">{% trans %}IFSC code{% endtrans %} :</label>
+	      </td>
+	      <td>
+		{% if gkresult["bankdetails"]["ifsc"] %}{{ gkresult["bankdetails"]["ifsc"] }}{% else %}N/A{% endif %}
+	      </td>
+	    </tr>
+	  </tbody>
+	</table>
+      </div>
+
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-xs-6">
+	<strong><i>Thank you for your business!</i></strong>
+      </div>
+  </div>
+  <div class="row">
+    <span style="margin:auto; display:table;">
+      <button type="button" class="btn btn-sm btn-danger hidden-print" id="invback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+      <button type="button" class="btn btn-sm btn-info hidden-print" id="invprint" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
+    </span>
+  </div>
+</div>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/printcashmemo.js')}}"></script>
+</body>
 </html>

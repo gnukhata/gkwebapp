@@ -28,6 +28,7 @@
    "Parabjyot Singh" <parabjyot1996@gmail.com>
    "Rahul Chaurasiya" <crahul4133@gmail.com>
    "Mohd. Talha Pawaty" <mtalha456@gmail.com>
+   "prajkta Patkar" <prajakta@dff.org.in>
  */
 // This script is for the mainshell page and loads when the main page of GNUKhata is loaded.
 // Also all the external js libraries we have used is loaded along with the mainshell.
@@ -513,7 +514,14 @@ var userrole1;
        userrole1="<i>Godown In Charge</i>";
      }
      sessionStorage.setItem('booksclosedflag', resp["gkresult"]["booksclosedflag"]);
-     sessionStorage.setItem('roflag', resp["gkresult"]["roflag"]);
+       sessionStorage.setItem('roflag', resp["gkresult"]["roflag"]);
+       sessionStorage.setItem('vatorgstflag' , resp["vatorgstflag"] );
+       if (resp["vatorgstflag"] == 22){
+	   $("#productinmaster").text("Product");
+	    $("#product").text("Product");
+	   $("#productinmaster").text("Product");
+	   $("#listofstockitems").text("List of Products");
+       }
    });
   // for getting username who is logged in
   $.ajax({
@@ -682,9 +690,7 @@ var userrole1;
       // creates a modal(dialog box) asking user to activate inventory or not.
 
       $("#orgprefmodal").on('shown.bs.modal', function(event) {
-        console.log(sessionStorage.invflag);
-        console.log(sessionStorage.invsflag);
-        console.log(sessionStorage.billflag);
+      
         if (sessionStorage.invflag==1 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
           $('#invinvsbillradio').prop('checked', true);
         }
@@ -889,7 +895,7 @@ var userrole1;
      });
   });
 
-  $("#showeditorg").click(function (e){
+  $("#editorg").click(function (e){
     // calls edit organisation page.
     $("#msspinmodal").modal("show");
     $.ajax({

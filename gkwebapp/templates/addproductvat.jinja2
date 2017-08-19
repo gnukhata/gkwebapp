@@ -1,0 +1,274 @@
+<body>
+
+  <div class="container-fluid " style="padding:1 !important; margin:0 !important;" >
+
+    <div class=' addprod panel'>
+
+      <div class="panel-body">
+        <form id="addprodform">
+          <div class="col-sm-6" >
+            <div class="row">
+
+              {% if not gkresult["category"] %}
+		<div class="form-group col-sm-11" id="categorydiv">
+                  <small id="txtareahelp" class="form-text text-muted">{% trans %}If you want to put this product under a category/sub-category,You must create a category first.{% endtrans %}</small>
+		</div>
+              {% else %}
+		<div class="form-group col-sm-11" id="categorydiv">
+                  <label class="" for="addcatselect">{% trans %}Select Category{% endtrans %} :</label>
+                  <select class = "form-control input-sm"  name = "catselect" id="addcatselect" >
+                    <option value="" selected >{% trans %}None{% endtrans %}</option>
+                    {% for cat in gkresult["category"] %}
+                      <option value="{{cat['categorycode']}}">{{cat["categoryname"]}}({{cat["subcount"]}})</option>
+                  {% endfor %}
+                </select>
+               
+              </div>
+              {% endif %}
+              </div>
+              <div class="row">
+              <div class="form-group col-sm-11 pd">
+                <label for="addproddesc" class="">{% trans %}Product Name{% endtrans %} :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
+                <input type='text' class="form-control input-sm" name="addproddesc"  id="addproddesc" placeholder="Alphanumeric">
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-sm-11 pds olduom">
+                <label for="uom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label><label for="uom" style="color:red;font-size: 120%;">*</label>
+                <select class = "form-control input-sm sel"  name = "uom" id="adduom" aria-describedby="txtareahelp">
+                  <option value="" disabled selected hidden>{% trans %}Select Unit of Measurement{% endtrans %}</option>
+                  {% for uom in gkresult["uom"] %}
+                  <option value="{{uom['uomid']}}">{{uom["unitname"]}}</option>
+                  {% endfor %}
+                </select>
+
+                <small id="txtareahelp" class="form-text text-muted">{% trans %}Press Space Bar to add a new unit.{% endtrans %}</small>
+              </div>
+              <div class="form-group col-sm-11 pds newuom" hidden>
+                <label for="newuom" class=""  style="font-size:13px">{% trans %}New Unit of Measurement{% endtrans %} :</label>
+                <input type='text' class="form-control input-sm" name="newuom"  id="newuom" placeholder="Name of the new unit" aria-describedby="textareahelp">
+                <small id="textareahelp" class="form-text text-muted">{% trans %}Press 'Enter' key to save and 'Esc' key to cancel.{% endtrans %}</small>
+              </div>
+            </div>
+            <div class="row" id="specdiv" hidden>
+        </div>
+      </div>
+            <div class="col-sm-6" id="rightdiv">
+             <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#CatModal"></i>
+              <div class="row">
+                <div class="form-group" style="margin-top: 3%;">
+            <div class="panel">
+              <table id="product_tax_table" class="table table-condensed table-bordered fixed-table">
+                <thead class="bg-primary input-sm">
+                  <tr>
+                    <th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
+                    <th class="col-xs-4 text-center">{% trans %}State{% endtrans %}</th>
+                    <th class="col-xs-3 text-center">{% trans %}Rate %{% endtrans %}</th>
+                    <th class="col-xs-1"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="col-xs-4">
+                      <select class="form-control input-sm tax_name product_new_name">
+                        <option value="" selected hidden disabled>Select Tax</option>
+                        <option value="VAT">VAT</option>
+                        <option value="CVAT">CVAT</option>
+                      </select>
+                    </td>
+                    <td class="col-xs-4">
+                      <select class="form-control input-sm tax_state product_new_state" >
+                        <option value="">None</option>
+                        <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
+                        <option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>
+                        <option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option>
+                        <option value="Assam" stateid="4">Assam</option>
+                        <option value="Bihar" stateid="5">Bihar</option>
+                        <option value="Chandigarh" stateid="6">Chandigarh</option>
+                        <option value="Chhattisgarh" stateid="7">Chhattisgarh</option>
+                        <option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option>
+                        <option value="Daman and Diu" stateid="9">Daman and Diu</option>
+                        <option value="Delhi" stateid="10">Delhi</option>
+                        <option value="Goa" stateid="11">Goa</option>
+                        <option value="Gujarat" stateid="12">Gujarat</option>
+                        <option value="Haryana" stateid="13">Haryana</option>
+                        <option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option>
+                        <option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option>
+                        <option value="Jharkhand" stateid="16">Jharkhand</option>
+                        <option value="Karnataka" stateid="17">Karnataka</option>
+                        <option value="Kerala" stateid="19">Kerala</option>
+                        <option value="Lakshadweep" stateid="20">Lakshadweep</option>
+                        <option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option>
+                        <option value="Maharashtra" stateid="22">Maharashtra</option>
+                        <option value="Manipur" stateid="23">Manipur</option>
+                        <option value="Meghalaya" stateid="24">Meghalaya</option>
+                        <option value="Mizoram" stateid="25">Mizoram</option>
+                        <option value="Nagaland" stateid="26">Nagaland</option>
+                        <option value="Odisha" stateid="29">Odisha</option>
+                        <option value="Pondicherry" stateid="31">Pondicherry</option>
+                        <option value="Punjab" stateid="32">Punjab</option>
+                        <option value="Rajasthan" stateid="33">Rajasthan</option>
+                        <option value="Sikkim" stateid="34">Sikkim</option>
+                        <option value="Tamil Nadu" stateid="35">Tamil Nadu</option>
+                        <option value="Telangana" stateid="36">Telangana</option>
+                        <option value="Tripura" stateid="37">Tripura</option>
+                        <option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option>
+                        <option value="Uttarakhand" stateid="39">Uttarakhand</option>
+                        <option value="West Bengal" stateid="41">West Bengal</option>
+                      </select>
+                    </td>
+                    <td class="col-xs-3">
+                      <input class="form-control input-sm tax_rate text-right product_new_rate numtype"  placeholder="Rate" value="0.00">
+                    </td>
+                    <td class="col-xs-1">
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row noinventory">
+          <div class="row  productclass">
+            {% if not godown %}
+              <div id="newgodownadded" hidden>
+                <div class="form-group">
+                  <input type="checkbox" name="godownflag" id="godownflag" value=0>
+                </input>
+                <input type="text" id="godownpresence" value="0" hidden>
+                <label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
+              </div>
+                <div  id="openingstockdiv" class="form-group" hidden>
+                  <div class="panel">
+                    <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
+                      <thead class="bg-primary input-sm">
+                        <tr>
+                          <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
+                          <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+                          <th class="col-xs-1"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="col-xs-8">
+                            <select class="form-control input-sm godown_name">
+                              <option value="" disabled hidden selected>Select Godown</option>
+                              {% for record in godown %}
+                              <option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
+                              {% endfor %}
+                            </select>
+                          </td>
+                          <td class="col-xs-3">
+                            <input class="form-control input-sm godown_ob text-right numtype" value="0.00">
+                          </td>
+                          <td class="col-xs-1">
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            <div id="nogodown">
+              <div class="form-group pds col-sm-6">
+                <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+                <div class="input-group">
+                  <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
+                  <span class="input-group-addon input-sm" id="unitaddon"></span>
+                </div>
+              </div>
+            </div>
+              {% else %}
+              <div class="form-group col-sm-12">
+                <input type="checkbox" name="godownflag" id="godownflag" value=0>
+              </input>
+              <input type="text" id="godownpresence" value="1" hidden="">
+              <label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
+            </div>
+            <div id="nogodown" class="form-group pds col-sm-6">
+              <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+              <div class="input-group">
+                <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
+                <span class="input-group-addon input-sm" id="unitaddon"></span>
+              </div>
+            </div>
+            <div  id="openingstockdiv" class="form-group col-sm-12" hidden>
+              <div class="panel">
+                <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
+                  <thead class="bg-primary input-sm">
+                    <tr>
+                      <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
+                      <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+                      <th class="col-xs-1"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="col-xs-8">
+                        <select class="form-control input-sm godown_name">
+                          <option value="" disabled hidden selected>Select Godown</option>
+                          {% for record in godown %}
+                          <option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
+                          {% endfor %}
+                        </select>
+                      </td>
+                      <td class="col-xs-3">
+                        <input class="form-control input-sm godown_ob text-right numtype" value="0.00">
+                      </td>
+                      <td class="col-xs-1">
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            {% endif %}
+            <div id="CatModal"  tabindex="-1" class="modal fade " role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
+  <div class="modal-dialog bgcolor " >
+    <div class="modal-content ">
+    <div class="modal-header">
+      {% trans %}<strong>Help!</strong>{% endtrans %}
+   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> </div>
+      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+
+       <p>   <font color=" #566573"> {%trans%}
+This module lets you add Products.
+</br> If you have created Categories (at least one is highly recommended) you can select a suitable Category for a Product. When you select a Category the screen immediately changes and presents you the specifications list where you can enter the details pertaning to the product.
+</br>Alternatively you may create a Product without a Category and or Sub-Category with all its specifications.
+You can also create a Unit of Measurement. Note that you can choose a Unit of measurement previously created or create one. </br>
+you can also enter the details of taxes for the product. {%endtrans %} </font>
+
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+            </div>
+            <small id="taxhelp3" class="form-text text-muted">When on Tax Rate or Tax Name press 'Esc' key to shift focus to Godown Name or from Godown Opening Stock to 'Save' button.</small><br>
+            <small id="taxhelp4" class="form-text text-muted">Press 'Insert' key from anywhere on the screen to save changes.</small>
+            <div class="collapse" id="moresmall">
+              <small id="taxhelp2" class="form-text text-muted">Press 'Ctrl + >' to move forward or 'Ctrl + <' to move backward within a row in the Tax or Godown table.</small><br>
+              <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to move backward within a Column in the Tax or Godown table.</small>
+            </div>
+            <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+          </div>
+        </div>
+      </div>
+      </form>
+    <div class="btn-group-sm panel-footer">
+      <div class="container-fluid">
+        <button class="btn btn-success btn-sm" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save">{% trans %}<u>S</u>ave{% endtrans %}</button>
+        <button id="apreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+        <button id="addgodown" class="btn btn-info btn-sm" accesskey="a">{% trans %}<u>A</u>dd Godown{% endtrans %}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="addgodownpopup">
+
+</div>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addproductvat.js')}}"></script>
+</body>
