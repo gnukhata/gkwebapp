@@ -62,6 +62,8 @@ if (sessionStorage.invflag=='1' ){
     }
   });
 
+    $("#additem").change();
+
     
 
   $("#godownflag").click(function(e){
