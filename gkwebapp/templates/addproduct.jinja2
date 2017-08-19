@@ -13,7 +13,6 @@
 
 		<label for="additem">{% trans %}Item Type{% endtrans %} :</label><label for="additem" style="color:red;font-size: 120%;">*</label>
 		<select name="gsflag" class="form-control input-sm" id="additem" accesskey="">
-                  <option value="" disabled hidden selected>Select Product/Service</option>
                   <option value="7" id=sel_product>Product</option>
                   <option value="19" id=sel_service>Service</option>
 		</select>
@@ -83,7 +82,7 @@
             </div>
             
             <div class="row">
-              <div class="form-group" ">
+              <div class="form-group taxclass">
 		<div class="panel taxclass">
 		  <table id="product_tax_table" class="table table-condensed table-bordered fixed-table common">
                     <thead class="bg-primary input-sm">
@@ -155,11 +154,10 @@
                       </tr>
                     </tbody>
 		  </table>
-
-		  <small  class="form-text text-muted  " id="nogodownmsg" hidden>When on Tax Rate or Tax Name press 'Esc' key to shift focus to 'Save' button.</small>
-		  <small  class="form-text text-muted " id="godownmsg" hidden>When on Tax Rate or Tax Name press 'Esc' key to shift focus to Godown Name or from Godown Opening Stock to 'Save' button.</small>
-		  <small id="taxhelp3" class="form-text text-muted serviceclass">When on Tax Rate or Tax Name press 'Esc' key to shift focus to 'Save' button.</small><br>
 		</div>
+		<small  class="form-text text-muted  " id="nogodownmsg" hidden>When on Tax Rate or Tax Name press 'Esc' key to shift focus to 'Save' button.</small>
+		<small  class="form-text text-muted " id="godownmsg" hidden>Press 'Esc' key to shift focus from Tax Rate or Tax Name  to Godown Name or from Godown Opening Stock to 'Save' button.</small>
+		<small id="taxhelp3" class="form-text text-muted serviceclass">When on Tax Rate or Tax Name press 'Esc' key to shift focus to 'Save' button.</small><br>
 	      </div>
 	    
 		<div class="panel col-xs-8 igsttax nopadding" hidden>
