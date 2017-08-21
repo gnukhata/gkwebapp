@@ -632,57 +632,6 @@ var userrole1;
     xhr.send();
   });
 
-
-  /* $("#act_inv").click(function (e){
-    // creates a modal(dialog box) asking user to activate inventory or not.
-    $("#inventorymodal").on('shown.bs.modal', function(event) {
-      $("#inv_no").focus();
-
-    });
-    $('#inventorymodal').modal('show').one('click', '#inv_no', function (e)
-      {
-	// If users selects no option then the modal is closed.
-	$('#inventorymodal').modal("hide");
-      });
-    $('#inventorymodal').modal('show').one('click', '#inv_yes', function (e)
-      {
-	// if yes then inventory is activated.
-
-	$.ajax({
-          url: '/editorganisation?edit=inventoryactivate',
-          type: "POST",
-          datatype: 'json',
-          global: false,
-          async: false,
-          beforeSend: function(xhr)
-          {
-            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-          }
-	})
-	 .done(function(resp) {
-
-           if (resp['gkstatus']==0)
-             {
-               sessionStorage.setItem('invflag', 1 );
-               $("#inventory_activate_success-alert").alert();
-               $("#inventory_activate_success-alert").fadeTo(2250, 500).slideUp(500, function(){
-		 $("#inventory_activate_success-alert").hide();
-		 location.reload();// page is reloaded is inventory is successfully activated, so that inventory menu shows up.
-               });
-               return false;
-             }
-	 })
-	 .fail(function() {
-           console.log("error");
-	 })
-	 .always(function() {
-           console.log("complete");
-	 });
-      });
-  }); */
-
-
-
     $("#orgpref").click(function (e){
 
       $("#orgprefmodal").modal('show');
@@ -892,9 +841,8 @@ var userrole1;
        console.log("complete");
      });
   });
-console.log("tong");
+
   $("#showeditorg").click(function (e){
-    console.log("ting ");
     // calls edit organisation page.
     $("#msspinmodal").modal("show");
     $.ajax({
