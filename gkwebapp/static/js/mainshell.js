@@ -535,7 +535,6 @@ var userrole1;
     }
   })
    .done(function(resp) {
-     console.log(username1);
      username1=resp["username"];
 
    })
@@ -634,7 +633,7 @@ var userrole1;
   });
 
 
-  $("#act_inv").click(function (e){
+  /* $("#act_inv").click(function (e){
     // creates a modal(dialog box) asking user to activate inventory or not.
     $("#inventorymodal").on('shown.bs.modal', function(event) {
       $("#inv_no").focus();
@@ -680,7 +679,7 @@ var userrole1;
            console.log("complete");
 	 });
       });
-  });
+  }); */
 
 
 
@@ -690,7 +689,7 @@ var userrole1;
       // creates a modal(dialog box) asking user to activate inventory or not.
 
       $("#orgprefmodal").on('shown.bs.modal', function(event) {
-      
+
         if (sessionStorage.invflag==1 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
           $('#invinvsbillradio').prop('checked', true);
         }
@@ -872,7 +871,6 @@ var userrole1;
 
   $('#purchaseorder').click(function (e) {
 
-    console.log("jdh");
     $.ajax({
       url: '/purchaseorder?type=tab',
       type: 'POST',
@@ -894,8 +892,9 @@ var userrole1;
        console.log("complete");
      });
   });
-
-  $("#editorg").click(function (e){
+console.log("tong");
+  $("#showeditorg").click(function (e){
+    console.log("ting ");
     // calls edit organisation page.
     $("#msspinmodal").modal("show");
     $.ajax({
@@ -910,6 +909,7 @@ var userrole1;
       },
       success: function(resp)
       {
+        console.log(resp);
         $('#info').html(resp);
       }
     });
@@ -1030,7 +1030,6 @@ var userrole1;
   );
 
   $('#consolidatedbalancesheet').click(function (e) {
-    console.log("click");
     $.ajax(
       {
         type: "POST",
@@ -1741,7 +1740,6 @@ $('#show_unbilled_deliveries').click(function (e) {
 	//var del_unbilled_array = temp_str.split(/\s*\-\s*/g)
       //alert(wholedate);
       $("#info").html(resp);
-      console.log("unbilled deliveries: ajax call success");
     }
     }
   );
