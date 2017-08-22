@@ -367,7 +367,11 @@ if($("#vatorgstflag").val() == '22'){
           gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val();
       }
     }
-  });
+      });
+      var custtan  = "";
+      if ($("#add_cussup_tan").length > 0) {
+	  custtan = $("#add_cussup_tan").val();
+      }
     // ajax call for saving the customer/supplier
       $.ajax({
 	  url: '/customersuppliers?action=save',
@@ -380,7 +384,7 @@ if($("#vatorgstflag").val() == '22'){
 		 "custemail": $("#add_cussup_email").val(),
 		 "custfax": $("#add_cussup_fax").val(),
 		 "custpan": $("#add_cussup_pan").val(),
-		 "custtan": $("#add_cussup_tan").val(),
+		 "custtan": custtan,
 		 "gstin": JSON.stringify(gobj),
 		 "state" : $("#add_state").val(),
 		 "csflag": $("#add_cussup option:selected").val()
