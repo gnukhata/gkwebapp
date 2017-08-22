@@ -80,25 +80,6 @@ $(document).ready(function() {
       $("#add_cussup_email").focus().select();
     }
   });
-  $("#add_state").keydown(function(event) {
-    if (event.which==13) {
-    	event.preventDefault();
-    	if ($.trim($("#add_state").val())=="") {
-            $("#state-blank-alert").alert();
-            $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-              $("#state-blank-alert").hide();
-            });
-            $("#add_state").focus();
-            return false;
-          }
-          event.preventDefault();
-          $("#add_cussup_address").focus().select();
-        }
-        if (event.which==38 && $("#add_state option:selected").index()==0)  {
-          event.preventDefault();
-          $("#add_cussup_phone").focus().select();
-        }
-  });
 
 $("#add_state").keydown(function(event) {
     if (event.which==13) {
@@ -120,19 +101,6 @@ $("#add_state").keydown(function(event) {
         }
   });
   
-
-    
-$("#add_cussup_tan").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-$("#cussup_save").focus();
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#add_cussup_pan").focus().select();
-    }
-    });	
-    
     
   $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(event)
 {
