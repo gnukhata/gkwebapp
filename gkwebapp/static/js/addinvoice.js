@@ -649,7 +649,6 @@ $(document).ready(function() {
         }
       })
        .done(function(resp) {
-         console.log("success" + resp + resp.length);
          if (resp["gkstatus"] == 0) {
 	   $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['taxrate']).toFixed(2));
          }
@@ -1265,9 +1264,7 @@ $(document).ready(function() {
             }
           })
            .done(function(resp) {
-             console.log(resp);
              if (resp["gkstatus"] == 0) {
-		 console.log("yo yo");
 		 $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').data("taxdetails", {taxname: resp["taxname"], taxrate:resp["taxrate"]});
                if(resp['taxname']=='SGST'){
                   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(resp['taxrate']).toFixed(2));
@@ -2194,7 +2191,6 @@ if (event.which == 13) {
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
     $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function(e) {
-      console.log("action=save");
       $.ajax({
         url: '/invoice?action=save',
         type: 'POST',
