@@ -48,7 +48,8 @@ def showcategory(request):
 def showaddcategory(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/categories", headers=header)
-	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"],"categorycount":len(result.json()["gkresult"])}
+	resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"],"categorycount":len(result.json()["gkresult"]),"vatorgstflag":resultgstvat.json()["gkresult"]}
 
 @view_config(route_name="category",request_param="action=showedit",renderer="gkwebapp:templates/editcategory.jinja2")
 def showeditcategory(request):

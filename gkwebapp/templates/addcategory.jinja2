@@ -32,6 +32,7 @@
    }
 </style>
 <body>
+
    <div class="container-fluid " style="padding: 1 !important; margin: 0 !important;">
       <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
          {% trans %}Category saved.{% endtrans %}
@@ -120,8 +121,8 @@
                        </div>
                         <div class="row">
                           <div class="col-xs-12">
-                            <small id="backhelp" class="form-text text-muted">Press 'Esc'  to go back.</small><br>
-                            <small id="navigationnewparent" class="form-text text-muted">Press 'Tab'  to move forward and 'Shift + Tab'  to move backward through the fields.</small>
+                            <small id="navigationnewparent" class="form-text text-muted">Press 'Tab'  to move forward and 'Shift + Tab'  to move backward through the fields.</small><br>
+                            <small id="backhelp" class="form-text text-muted">Press 'Esc'  to go back.</small>
                           </div>
                         </div>
                      </div>
@@ -182,259 +183,306 @@
                <small id="navigation" class="form-text text-muted">Press 'Tab' to move forward and 'Shift + Tab' to move backward through the fields.</small>
             </div>
          </div>
-         <div id="child_addspecmodal" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog ">
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <div class="modal-title">
-                        {% trans %}Specification{% endtrans %}
-                     </div>
-                  </div>
-                  <div class="modal-body">
-                        <div class="panel-body">
-                           <div class="row">
-                                 <div class="alert alert-danger" id="child_spec-blank-alert"  aria-live="rude" role="alert" hidden>
-                                    <label for="vno">{% trans %}Please enter specification name!{% endtrans %}</label>
-                                 </div>
-                           </div>
-                              <table id="child_category_spec_table" class="table table-condensed table-bordered fixed-table">
-                                 <thead class="bg-primary input-sm">
-                                    <tr>
-                                       <th class="col-xs-8 text-center">{% trans %}Spec Name{% endtrans %}</th>
-                                       <th class="col-xs-4 text-center">{% trans %}Type{% endtrans %}</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody>
-                                    <tr>
-                                       <td class="col-xs-8">
-                                          <input type="text" id="child_category_spec_name" class="form-control input-sm child_spec_name" placeholder="Spec Name">
-                                       </td>
-                                       <td class="col-xs-4">
-                                          <select id="child_category_spec_type" class="form-control input-sm child_spec_type" name="">
-                                             <option value="0">Text</option>
-                                             <option value="1">Number</option>
-                                             <option value="2">Date</option>
-                                          </select>
-                                       </td>
-                                    </tr>
-                                 </tbody>
-                              </table>
-                              <div>
-                                <small id="navigation" class="form-text text-muted">Press 'Tab' to move forward and 'Shift + Tab' to move backward through the fields.</small><br>
-                                <small id="savespechelp" class="form-text text-muted">Press 'Enter' on Type of Specification to add new Specification.</small><br>
-                                <small id="donehelp" class="form-text text-muted">Press 'Esc' when you are done.</small>
-                              </div>
-                        </div>
-                  </div>
-                  <div class="panel-footer">
-                     <div class="container-fluid">
-                        <button class="btn btn-success btn-sm" id="child_done" data-toggle="tooltip" data-placement="top" ><i class="fa fa-check" aria-hidden="true"></i>{% trans %} Done{% endtrans %}</button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div id="parent_addspecmodal" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog ">
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <div class="modal-title">
-                        {% trans %}Specification{% endtrans %}
-                     </div>
-                  </div>
-                  <div class="modal-body">
-                        <div class="panel-body">
-                           <div class="row">
-                                 <div class="alert alert-danger" id="parent_spec-blank-alert"  aria-live="rude" role="alert" hidden>
-                                    <label for="vno">{% trans %}Please enter specification name!{% endtrans %}</label>
-                                 </div>
-                           </div>
-                              <table id="parent_category_spec_table" class="table table-condensed table-bordered fixed-table">
-                                 <thead class="bg-primary input-sm">
-                                    <tr>
-                                       <th class="col-xs-8 text-center">{% trans %}Spec Name{% endtrans %}</th>
-                                       <th class="col-xs-4 text-center">{% trans %}Type{% endtrans %}</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody>
-                                    <tr>
-                                       <td class="col-xs-8">
-                                          <input type="text" id="parent_category_spec_name" class="form-control input-sm parent_spec_name" placeholder="Spec Name">
-                                       </td>
-                                       <td class="col-xs-4">
-                                          <select id="parent_category_spec_type" class="form-control input-sm parent_spec_type" name="">
-                                             <option value="0">Text</option>
-                                             <option value="1">Number</option>
-                                             <option value="2">Date</option>
-                                           </select>
-                                       </td>
-                                    </tr>
-                                 </tbody>
-                              </table>
-                              <div>
-                                <small id="navigation" class="form-text text-muted">Press 'Tab'  to move forwrd and 'Shift + Tab'  to move backward through the fields.</small><br>
-                                <small id="savespechelp1" class="form-text text-muted">Press 'Enter' on Type of Specification to add new Specification.</small><br>
-                                <small id="donehelp1" class="form-text text-muted">Press 'Esc' when you are done.</small>
-                              </div>
-                        </div>
-                  </div>
-                  <div class="panel-footer">
-                     <div class="container-fluid">
-                        <button class="btn btn-success btn-sm" id="parent_done" data-toggle="tooltip" data-placement="top" ><i class="fa fa-check" aria-hidden="true"></i>{% trans %} Done{% endtrans %}</button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div id="addtaxmodal" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <div class="modal-title">
-                        {% trans %}Tax{% endtrans %}
-                     </div>
-                  </div>
-                  <div class="modal-body">
-                        <div class="alert alert-danger" id="tax-name-blank-alert"  aria-live="rude" role="alert" hidden>
-                           {% trans %}Select tax name!{% endtrans %}
-                        </div>
-                        <div class="alert alert-danger" id="tax-rate-blank-alert"  aria-live="rude" role="alert" hidden>
-                           {% trans %}Enter tax rate!{% endtrans %}
-                        </div>
-                        <div class="alert alert-danger" id="tax-duplicate-alert"  aria-live="rude" role="alert" hidden>
-                           {% trans %}Duplicate Tax!{% endtrans %}
-                        </div>
-                        <div class="panel-body">
-                              <table id="category_tax_table" class="table table-condensed table-bordered fixed-table">
-                                 <thead class="bg-primary input-sm">
-                                    <tr>
-                                       <th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
-                                       <th class="col-xs-4 text-center">{% trans %}State{% endtrans %}</th>
-                                       <th class="col-xs-4 text-center">{% trans %}Rate %{% endtrans %}</th>
-                                     </tr>
-                                 </thead>
-                                 <tbody>
-                                    <tr>
-                                       <td class="col-xs-4">
-                                          <select class="form-control input-sm tax_name">
-                                             <option value="" selected disabled hidden>Select Tax</option>
-                                             <option value="VAT">VAT</option>
-                                             <option value="CVAT">CVAT</option>
-                                          </select>
-                                       </td>
-                                       <td class="col-xs-4">
-                                          <select class="form-control input-sm tax_state" >
-                                             <option value="">None</option>
-                                             <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
-                                             <option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>
-                                             <option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option>
-                                             <option value="Assam" stateid="4">Assam</option>
-                                             <option value="Bihar" stateid="5">Bihar</option>
-                                             <option value="Chandigarh" stateid="6">Chandigarh</option>
-                                             <option value="Chhattisgarh" stateid="7">Chhattisgarh</option>
-                                             <option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option>
-                                             <option value="Daman and Diu" stateid="9">Daman and Diu</option>
-                                             <option value="Delhi" stateid="10">Delhi</option>
-                                             <option value="Goa" stateid="11">Goa</option>
-                                             <option value="Gujarat" stateid="12">Gujarat</option>
-                                             <option value="Haryana" stateid="13">Haryana</option>
-                                             <option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option>
-                                             <option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option>
-                                             <option value="Jharkhand" stateid="16">Jharkhand</option>
-                                             <option value="Karnataka" stateid="17">Karnataka</option>
-                                             <option value="Kerala" stateid="19">Kerala</option>
-                                             <option value="Lakshadweep" stateid="20">Lakshadweep</option>
-                                             <option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option>
-                                             <option value="Maharashtra" stateid="22">Maharashtra</option>
-                                             <option value="Manipur" stateid="23">Manipur</option>
-                                             <option value="Meghalaya" stateid="24">Meghalaya</option>
-                                             <option value="Mizoram" stateid="25">Mizoram</option>
-                                             <option value="Nagaland" stateid="26">Nagaland</option>
-                                             <option value="Odisha" stateid="29">Odisha</option>
-                                             <option value="Pondicherry" stateid="31">Pondicherry</option>
-                                             <option value="Punjab" stateid="32">Punjab</option>
-                                             <option value="Rajasthan" stateid="33">Rajasthan</option>
-                                             <option value="Sikkim" stateid="34">Sikkim</option>
-                                             <option value="Tamil Nadu" stateid="35">Tamil Nadu</option>
-                                             <option value="Telangana" stateid="36">Telangana</option>
-                                             <option value="Tripura" stateid="37">Tripura</option>
-                                             <option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option>
-                                             <option value="Uttarakhand" stateid="39">Uttarakhand</option>
-                                             <option value="West Bengal" stateid="41">West Bengal</option>
-                                          </select>
-                                       </td>
-                                       <td class="col-xs-4">
-                                          <input class="form-control input-sm tax_rate text-right numtype"  placeholder="Rate">
-                                       </td>
-                                    </tr>
-                                 </tbody>
-                              </table>
-                              <div>
-                                <small id="navigation" class="form-text text-muted">Press 'Tab' to move forward and 'Shift + Tab' to move backward through the fields</small><br>
-                                <small id="savespechelp2" class="form-text text-muted">Press 'Enter' on Tax Rate to add new Tax.</small><br>
-                                <small id="donehelp" class="form-text text-muted"> Press 'Esc' when you are done.</small>
-                              </div>
-                           </div>
-                  </div>
-                  <div class="panel-footer">
-                     <div class="container-fluid">
-                        <button class="btn btn-success btn-sm" id="tax_done" data-toggle="tooltip" data-placement="top" ><i class="fa fa-check" aria-hidden="true"></i>{% trans %} Done{% endtrans %}</button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div id="child_showspecmodal" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog ">
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <div class="modal-title">
-                        {% trans %}Specification{% endtrans %}
-                     </div>
-                  </div>
-                  <div class="modal-body">
-                        <div class="panel-body">
-                              <table id="child_showcategory_spec_table" class="table table-condensed table-bordered fixed-table">
-                                 <thead class="bg-primary input-sm">
-                                    <tr>
-                                       <th class="col-xs-8 text-center">{% trans %}Spec Name{% endtrans %}</th>
-                                       <th class="col-xs-4 text-center">{% trans %}Type{% endtrans %}</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody>
-                                    <tr>
-                                       <td class="col-xs-8">
-                                          <input type="text" id="child_showcategory_spec_name" class="form-control input-sm" placeholder="Spec Name" disabled>
-                                       </td>
-                                       <td class="col-xs-4">
-                                          <select id="child_showcategory_spec_type" class="form-control input-sm" name="" disabled>
-                                             <option value="0">Text</option>
-                                             <option value="1">Number</option>
-                                             <option value="2">Date</option>
-                                          </select>
-                                       </td>
-                                    </tr>
-                                 </tbody>
-                              </table>
-                              <div>
-                                <small id="donehelp" class="form-text text-muted"> Press 'Esc' when you are done.</small>
-                              </div>
-                        </div>
-                  </div>
-                  <div class="panel-footer">
-                     <div class="container-fluid">
-                        <button class="btn btn-success btn-sm" id="child_showdone" data-toggle="tooltip" data-placement="top" ><i class="fa fa-check" aria-hidden="true"></i>{% trans %} Done{% endtrans %}</button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
          <div class="panel-footer">
             <div class="container-fluid" id="doneid" hidden>
               <button class="btn btn-success btn-sm" id="done" data-toggle="tooltip" data-placement="top" accesskey="d" ><i class="fa fa-check" aria-hidden="true"></i>{% trans %} <u>D</u>one{% endtrans %}</button>
             </div>
          </div>
       </div>
+    </div>
+    <div id="child_addspecmodal" class="modal fade" tabindex="-1" role="dialog">
+       <div class="modal-dialog ">
+          <div class="modal-content">
+             <div class="modal-header">
+                <div class="modal-title">
+                   {% trans %}Specification{% endtrans %}
+                </div>
+             </div>
+             <div class="modal-body">
+                   <div class="panel-body">
+                      <div class="row">
+                            <div class="alert alert-danger" id="child_spec-blank-alert"  aria-live="rude" role="alert" hidden>
+                               <label for="vno">{% trans %}Please enter specification name!{% endtrans %}</label>
+                            </div>
+                      </div>
+                         <table id="child_category_spec_table" class="table table-condensed table-bordered fixed-table">
+                            <thead class="bg-primary input-sm">
+                               <tr>
+                                  <th class="col-xs-8 text-center">{% trans %}Spec Name{% endtrans %}</th>
+                                  <th class="col-xs-4 text-center">{% trans %}Type{% endtrans %}</th>
+                               </tr>
+                            </thead>
+                            <tbody>
+                               <tr>
+                                  <td class="col-xs-8">
+                                     <input type="text" id="child_category_spec_name" class="form-control input-sm child_spec_name" placeholder="Spec Name">
+                                  </td>
+                                  <td class="col-xs-4">
+                                     <select id="child_category_spec_type" class="form-control input-sm child_spec_type" name="">
+                                        <option value="0">Text</option>
+                                        <option value="1">Number</option>
+                                        <option value="2">Date</option>
+                                     </select>
+                                  </td>
+                               </tr>
+                            </tbody>
+                         </table>
+                         <div>
+                           <small id="navigation" class="form-text text-muted">Press 'Tab' to move forward and 'Shift + Tab' to move backward through the fields.</small><br>
+                           <small id="savespechelp" class="form-text text-muted">Press 'Enter' on Type of Specification to add new Specification.</small><br>
+                           <small id="donehelp" class="form-text text-muted">Press 'Esc' when you are done.</small>
+                         </div>
+                   </div>
+             </div>
+             <div class="panel-footer">
+                <div class="container-fluid">
+                   <button class="btn btn-success btn-sm" id="child_done" data-toggle="tooltip" data-placement="top" ><i class="fa fa-check" aria-hidden="true"></i>{% trans %} Done{% endtrans %}</button>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+    <div id="parent_addspecmodal" class="modal fade" tabindex="-1" role="dialog">
+       <div class="modal-dialog ">
+          <div class="modal-content">
+             <div class="modal-header">
+                <div class="modal-title">
+                   {% trans %}Specification{% endtrans %}
+                </div>
+             </div>
+             <div class="modal-body">
+                   <div class="panel-body">
+                      <div class="row">
+                            <div class="alert alert-danger" id="parent_spec-blank-alert"  aria-live="rude" role="alert" hidden>
+                               <label for="vno">{% trans %}Please enter specification name!{% endtrans %}</label>
+                            </div>
+                      </div>
+                         <table id="parent_category_spec_table" class="table table-condensed table-bordered fixed-table">
+                            <thead class="bg-primary input-sm">
+                               <tr>
+                                  <th class="col-xs-8 text-center">{% trans %}Spec Name{% endtrans %}</th>
+                                  <th class="col-xs-4 text-center">{% trans %}Type{% endtrans %}</th>
+                               </tr>
+                            </thead>
+                            <tbody>
+                               <tr>
+                                  <td class="col-xs-8">
+                                     <input type="text" id="parent_category_spec_name" class="form-control input-sm parent_spec_name" placeholder="Spec Name">
+                                  </td>
+                                  <td class="col-xs-4">
+                                     <select id="parent_category_spec_type" class="form-control input-sm parent_spec_type" name="">
+                                        <option value="0">Text</option>
+                                        <option value="1">Number</option>
+                                        <option value="2">Date</option>
+                                      </select>
+                                  </td>
+                               </tr>
+                            </tbody>
+                         </table>
+                         <div>
+                           <small id="navigation" class="form-text text-muted">Press 'Tab'  to move forwrd and 'Shift + Tab'  to move backward through the fields.</small><br>
+                           <small id="savespechelp1" class="form-text text-muted">Press 'Enter' on Type of Specification to add new Specification.</small><br>
+                           <small id="donehelp1" class="form-text text-muted">Press 'Esc' when you are done.</small>
+                         </div>
+                   </div>
+             </div>
+             <div class="panel-footer">
+                <div class="container-fluid">
+                   <button class="btn btn-success btn-sm" id="parent_done" data-toggle="tooltip" data-placement="top" ><i class="fa fa-check" aria-hidden="true"></i>{% trans %} Done{% endtrans %}</button>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+    <div id="addtaxmodal" class="modal fade" tabindex="-1" role="dialog">
+       <div class="modal-dialog">
+          <div class="modal-content">
+             <div class="modal-header">
+                <div class="modal-title">
+                   {% trans %}Tax{% endtrans %}
+                </div>
+             </div>
+             <div class="modal-body">
+                   <div class="alert alert-danger" id="tax-name-blank-alert"  aria-live="rude" role="alert" hidden>
+                      {% trans %}Select tax name!{% endtrans %}
+                   </div>
+                   <div class="alert alert-danger" id="tax-rate-blank-alert"  aria-live="rude" role="alert" hidden>
+                      {% trans %}Enter tax rate!{% endtrans %}
+                   </div>
+                   <div class="alert alert-danger" id="tax-duplicate-alert"  aria-live="rude" role="alert" hidden>
+                      {% trans %}Duplicate Tax!{% endtrans %}
+                   </div>
+                   <div class="panel">
+                   <div class="panel-body taxclass">
+                   {% if vatorgstflag =="22" or vatorgstflag =='29' %}
+                       <input value="{{vatorgstflag}}" id="vatorgstflag" hidden>
+                         <table id="category_tax_table" class="table table-condensed table-bordered fixed-table">
+                            <thead class="bg-primary input-sm">
+                               <tr>
+                                  <th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
+                                  <th class="col-xs-4 text-center">{% trans %}State{% endtrans %}</th>
+                                  <th class="col-xs-4 text-center">{% trans %}Rate %{% endtrans %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               <tr>
+                                  <td class="col-xs-4">
+                                     <select class="form-control input-sm tax_name">
+
+                                        <option value="" selected disabled hidden>Select Tax</option>
+                                        {% if vatorgstflag =='29' %}
+                                        <option value="VAT">VAT</option>
+                                        <option value="CVAT">CVAT</option>
+                                        <option value="IGST">IGST</option>
+                                        {% else %}
+                                        <option value="VAT">VAT</option>
+                                        <option value="CVAT">CVAT</option>
+                                        {% endif%}
+
+                                     </select>
+                                  </td>
+                                  <td class="col-xs-4">
+                                     <select class="form-control input-sm tax_state" >
+                                        <option value="">None</option>
+                                        <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
+                                        <option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>
+                                        <option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option>
+                                        <option value="Assam" stateid="4">Assam</option>
+                                        <option value="Bihar" stateid="5">Bihar</option>
+                                        <option value="Chandigarh" stateid="6">Chandigarh</option>
+                                        <option value="Chhattisgarh" stateid="7">Chhattisgarh</option>
+                                        <option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option>
+                                        <option value="Daman and Diu" stateid="9">Daman and Diu</option>
+                                        <option value="Delhi" stateid="10">Delhi</option>
+                                        <option value="Goa" stateid="11">Goa</option>
+                                        <option value="Gujarat" stateid="12">Gujarat</option>
+                                        <option value="Haryana" stateid="13">Haryana</option>
+                                        <option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option>
+                                        <option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option>
+                                        <option value="Jharkhand" stateid="16">Jharkhand</option>
+                                        <option value="Karnataka" stateid="17">Karnataka</option>
+                                        <option value="Kerala" stateid="19">Kerala</option>
+                                        <option value="Lakshadweep" stateid="20">Lakshadweep</option>
+                                        <option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option>
+                                        <option value="Maharashtra" stateid="22">Maharashtra</option>
+                                        <option value="Manipur" stateid="23">Manipur</option>
+                                        <option value="Meghalaya" stateid="24">Meghalaya</option>
+                                        <option value="Mizoram" stateid="25">Mizoram</option>
+                                        <option value="Nagaland" stateid="26">Nagaland</option>
+                                        <option value="Odisha" stateid="29">Odisha</option>
+                                        <option value="Pondicherry" stateid="31">Pondicherry</option>
+                                        <option value="Punjab" stateid="32">Punjab</option>
+                                        <option value="Rajasthan" stateid="33">Rajasthan</option>
+                                        <option value="Sikkim" stateid="34">Sikkim</option>
+                                        <option value="Tamil Nadu" stateid="35">Tamil Nadu</option>
+                                        <option value="Telangana" stateid="36">Telangana</option>
+                                        <option value="Tripura" stateid="37">Tripura</option>
+                                        <option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option>
+                                        <option value="Uttarakhand" stateid="39">Uttarakhand</option>
+                                        <option value="West Bengal" stateid="41">West Bengal</option>
+                                     </select>
+                                  </td>
+                                  <td class="col-xs-4">
+                                     <input class="form-control input-sm tax_rate text-right numtype"  placeholder="Rate">
+                                  </td>
+                               </tr>
+                            </tbody>
+                         </table>
+                         <div>
+                           <small id="navigation" class="form-text text-muted">Press 'Tab' to move forward and 'Shift + Tab' to move backward through the fields</small><br>
+                           <small id="savespechelp2" class="form-text text-muted">Press 'Enter' on Tax Rate to add new Tax.</small><br>
+                           <small id="donehelp" class="form-text text-muted"> Press 'Esc' when you are done.</small>
+                         </div>
+                      {% endif %}
+                      {% if vatorgstflag =='7' %}
+                      <div class="col-xs-12 row">
+                       <div class="col-xs-8">
+                         <table id="category_igst_tax_table" class="table table-condensed table-bordered">
+                                        <thead class="bg-primary input-sm">
+                       <tr>
+                         <th class="col-xs-6 text-center">{% trans %}Tax Name{% endtrans %}</th>
+
+                         <th class="col-xs-6 text-center">{% trans %}Rate %{% endtrans %}</th>
+
+                       </tr>
+                                        </thead>
+                           <tbody>
+                       <tr>
+                         <td class="col-xs-6 text-center" style = "vertical-align:middle; font-weight: normal; font-size:90%;" >
+                           {% trans %}IGST{% endtrans %}
+                         </td>
+                         <td class="col-xs-6">
+                           <input class="form-control input-sm tax_rate text-right product_new_rate numtype" id ="igstrate"  placeholder="Rate" value="0.00">
+                         </td>
+                       </tr>
+                           </tbody>
+
+                         </table>
+
+                     </div>
+                   </div>
+                     <div class="col-xs-12 row">
+                       <small id="navigation" class="form-text text-muted">Press 'Tab' to move forward and 'Shift + Tab' to move backward through the fields</small><br>
+                       <small id="donehelp" class="form-text text-muted"> Press 'Esc' when you are done.</small>
+                     </div>
+                   </div>
+                     {% endif %}
+                   </div>
+
+             <div class="panel-footer">
+                <div class="container-fluid">
+                   <button class="btn btn-success btn-sm" id="tax_done" data-toggle="tooltip" data-placement="top" ><i class="fa fa-check" aria-hidden="true"></i>{% trans %} Done{% endtrans %}</button>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+  </div>
+    <div id="child_showspecmodal" class="modal fade" tabindex="-1" role="dialog">
+       <div class="modal-dialog ">
+          <div class="modal-content">
+             <div class="modal-header">
+                <div class="modal-title">
+                   {% trans %}Specification{% endtrans %}
+                </div>
+             </div>
+             <div class="modal-body">
+                   <div class="panel-body">
+                         <table id="child_showcategory_spec_table" class="table table-condensed table-bordered fixed-table">
+                            <thead class="bg-primary input-sm">
+                               <tr>
+                                  <th class="col-xs-8 text-center">{% trans %}Spec Name{% endtrans %}</th>
+                                  <th class="col-xs-4 text-center">{% trans %}Type{% endtrans %}</th>
+                               </tr>
+                            </thead>
+                            <tbody>
+                               <tr>
+                                  <td class="col-xs-8">
+                                     <input type="text" id="child_showcategory_spec_name" class="form-control input-sm" placeholder="Spec Name" disabled>
+                                  </td>
+                                  <td class="col-xs-4">
+                                     <select id="child_showcategory_spec_type" class="form-control input-sm" name="" disabled>
+                                        <option value="0">Text</option>
+                                        <option value="1">Number</option>
+                                        <option value="2">Date</option>
+                                     </select>
+                                  </td>
+                               </tr>
+                            </tbody>
+                         </table>
+                         <div>
+                           <small id="donehelp" class="form-text text-muted"> Press 'Esc' when you are done.</small>
+                         </div>
+                   </div>
+             </div>
+             <div class="panel-footer">
+                <div class="container-fluid">
+                   <button class="btn btn-success btn-sm" id="child_showdone" data-toggle="tooltip" data-placement="top" ><i class="fa fa-check" aria-hidden="true"></i>{% trans %} Done{% endtrans %}</button>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
     <div id="CatModal"  tabindex="-1" class="modal fade " role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
   <div class="modal-dialog bgcolor " >
     <div class="modal-content ">
@@ -474,6 +522,5 @@ You can also optionally apply tax for a Category or a Sub-Category. Needless to 
             </table>
          </div>
       </div>
-   </div>
    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addcategory.js')}}"></script>
 </body>
