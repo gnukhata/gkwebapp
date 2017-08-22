@@ -987,7 +987,7 @@ $(document).off("keyup").on("keyup", function(event) {
           bankdetails["ifsc"] = $("#ifsc").val();
           bankdetails["branchname"] = $("#branchname").val();
         if ($("#taxapplicable").val() == 22) {
-        for (var i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
+        for (let i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
             if ($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val() == "") {
                 $("#product-blank-alert").alert();
                 $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -1005,7 +1005,7 @@ $(document).off("keyup").on("keyup", function(event) {
         	      $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").focus().select();
         	      return false;
         	  }
-            var obj = {};
+            let obj = {};
             var productcode = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
             // data is saved as dict where key is priceperunit and value is the product quantity so the below two lines of code
             var ppu = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val();
@@ -1020,9 +1020,8 @@ $(document).off("keyup").on("keyup", function(event) {
       }
        if ($("#taxapplicable").val() == 7) {
          productqtys.push(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()));
-     	  var obj = {};
-     	for (var i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
-        obj={};
+     	for (let i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
+        let obj={};
      	productcode = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
              ppu = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val();
              obj[ppu] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
@@ -1032,12 +1031,10 @@ $(document).off("keyup").on("keyup", function(event) {
            discount[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();
      	}
      	    invoicetotal = $('#total_product_gst').text();
-       }
         stock["items"] = items;
 
 
         stock["inout"] = 15;
-if ($("#taxapplicable").val() == 7) {
        var form_data = new FormData();
         form_data.append("invoiceno", $("#invoice_challanno").val());
         form_data.append("invoicedate", $("#invoice_year").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_date").val());
@@ -1101,74 +1098,6 @@ if ($("#taxapplicable").val() == 7) {
            });
 
           return false;
-        });
-      }
-
-
-
-
-if ($("#taxapplicable").val() == 22) {
-        event.preventDefault();
-        $('.modal-backdrop').remove();
-        $('.modal').modal('hide');
-        $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function(e) {
-            //ajax call to save the cash memo
-            $.ajax({
-                    url: '/cashmemos?action=save',
-                    type: 'POST',
-                    dataType: 'json',
-                    async: false,
-                    data: {
-                        "invoiceno": $("#invoice_challanno").val(),
-                        "invoicedate": $("#invoice_year").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_date").val(),
-                        "invoicetotal": $("#invoice_product_table_vat tfoot tr:last td:eq(5) input").val(),
-                        "contents": JSON.stringify(contents),
-                        "taxstate": $("#invoice_state option:selected").val(),
-                        "sourcestate": $("#invoice_state option:selected").val(),
-                        "tax": JSON.stringify(tax),
-                        "stock": JSON.stringify(stock),
-                        "freeqty": JSON.stringify(freeqty),
-                        "bankdetails": JSON.stringify(bankdetails),
-                        "taxflag":$("#taxapplicable").val()
-                    },
-                    beforeSend: function(xhr) {
-                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                    }
-                })
-                .done(function(resp) {
-                    if (resp["gkstatus"] == 0) {
-
-                        $("#cashmemo_create").click();
-
-                        $("#success-alert").alert();
-                        $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
-                            $("#success-alert").hide();
-                        });
-                        return false;
-                    } else if (resp["gkstatus"] == 1) {
-                        $("#invoice_challanno").focus();
-                        $("#duplicate-alert").alert();
-                        $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
-                            $("#duplicate-alert").hide();
-                        });
-                        return false;
-                    } else {
-                        $("#invoice_challanno").focus();
-                        $("#failure-alert").alert();
-                        $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {
-                            $("#failure-alert").hide();
-                        });
-                        return false;
-                    }
-                })
-                .fail(function() {
-                    console.log("error");
-                })
-                .always(function() {
-                    console.log("complete");
-                });
-
-            return false;
         });
       }
     });
