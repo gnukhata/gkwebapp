@@ -397,7 +397,7 @@
                       {% if vatorgstflag =='7' %}
                       <div class="col-xs-12 row">
                        <div class="col-xs-8">
-                         <table id="category_igst_tax_table" class="table table-condensed table-bordered">
+                         <table id="category_tax_table" class="table table-condensed table-bordered">
                                         <thead class="bg-primary input-sm">
                        <tr>
                          <th class="col-xs-6 text-center">{% trans %}Tax Name{% endtrans %}</th>
@@ -412,7 +412,7 @@
                            {% trans %}IGST{% endtrans %}
                          </td>
                          <td class="col-xs-6">
-                           <input class="form-control input-sm tax_rate text-right product_new_rate numtype" id ="igstrate"  placeholder="Rate" value="0.00">
+                           <input class="form-control input-sm text-right  numtype" id ="igstrate"  placeholder="Rate" value="0.00">
                          </td>
                        </tr>
                            </tbody>
@@ -422,7 +422,6 @@
                      </div>
                    </div>
                      <div class="col-xs-12 row">
-                       <small id="navigation" class="form-text text-muted">Press 'Tab' to move forward and 'Shift + Tab' to move backward through the fields</small><br>
                        <small id="donehelp" class="form-text text-muted"> Press 'Esc' when you are done.</small>
                      </div>
                    </div>
