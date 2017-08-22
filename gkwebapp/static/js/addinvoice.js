@@ -699,8 +699,10 @@ $(document).ready(function() {
   });
   $(document).off("keyup").on("keyup", function(event) {
     if (event.which == 45) {
-      event.preventDefault();
-      $("#invoice_save").click();
+	event.preventDefault();
+	if (!$("#custsupmodal").data('bs.modal').isShown) {
+	    $("#invoice_save").click();
+	}
       return false;
     }
   });
