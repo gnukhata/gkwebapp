@@ -249,8 +249,13 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
   });
   $("#add_cussup_pan").keydown(function(event) {
     if (event.which==13) {
-      event.preventDefault();
-      $("#add_cussup_tan").focus().select();
+	event.preventDefault();
+	if($("#vatorgstflag").val() == '22'){
+	    $("#add_cussup_tan").focus().select();
+	}
+	else {
+	    $(".gstinstate:first").focus();
+	}
     }
     if (event.which==38) {
       event.preventDefault();
@@ -260,7 +265,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     $("#add_cussup_tan").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
-	if($("#vatorgstflag") == '29'){
+	if($("#vatorgstflag").val() == '22'){
           $("#cussup_save").focus();
 }
 else{
