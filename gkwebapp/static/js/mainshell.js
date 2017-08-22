@@ -535,7 +535,6 @@ var userrole1;
     }
   })
    .done(function(resp) {
-     console.log(username1);
      username1=resp["username"];
 
    })
@@ -633,64 +632,13 @@ var userrole1;
     xhr.send();
   });
 
-
-  $("#act_inv").click(function (e){
-    // creates a modal(dialog box) asking user to activate inventory or not.
-    $("#inventorymodal").on('shown.bs.modal', function(event) {
-      $("#inv_no").focus();
-
-    });
-    $('#inventorymodal').modal('show').one('click', '#inv_no', function (e)
-      {
-	// If users selects no option then the modal is closed.
-	$('#inventorymodal').modal("hide");
-      });
-    $('#inventorymodal').modal('show').one('click', '#inv_yes', function (e)
-      {
-	// if yes then inventory is activated.
-
-	$.ajax({
-          url: '/editorganisation?edit=inventoryactivate',
-          type: "POST",
-          datatype: 'json',
-          global: false,
-          async: false,
-          beforeSend: function(xhr)
-          {
-            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-          }
-	})
-	 .done(function(resp) {
-
-           if (resp['gkstatus']==0)
-             {
-               sessionStorage.setItem('invflag', 1 );
-               $("#inventory_activate_success-alert").alert();
-               $("#inventory_activate_success-alert").fadeTo(2250, 500).slideUp(500, function(){
-		 $("#inventory_activate_success-alert").hide();
-		 location.reload();// page is reloaded is inventory is successfully activated, so that inventory menu shows up.
-               });
-               return false;
-             }
-	 })
-	 .fail(function() {
-           console.log("error");
-	 })
-	 .always(function() {
-           console.log("complete");
-	 });
-      });
-  });
-
-
-
     $("#orgpref").click(function (e){
 
       $("#orgprefmodal").modal('show');
       // creates a modal(dialog box) asking user to activate inventory or not.
 
       $("#orgprefmodal").on('shown.bs.modal', function(event) {
-      
+
         if (sessionStorage.invflag==1 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
           $('#invinvsbillradio').prop('checked', true);
         }
@@ -872,7 +820,6 @@ var userrole1;
 
   $('#purchaseorder').click(function (e) {
 
-    console.log("jdh");
     $.ajax({
       url: '/purchaseorder?type=tab',
       type: 'POST',
@@ -895,7 +842,7 @@ var userrole1;
      });
   });
 
-  $("#editorg").click(function (e){
+  $("#showeditorg").click(function (e){
     // calls edit organisation page.
     $("#msspinmodal").modal("show");
     $.ajax({
@@ -910,6 +857,7 @@ var userrole1;
       },
       success: function(resp)
       {
+        console.log(resp);
         $('#info').html(resp);
       }
     });
@@ -1030,7 +978,6 @@ var userrole1;
   );
 
   $('#consolidatedbalancesheet').click(function (e) {
-    console.log("click");
     $.ajax(
       {
         type: "POST",
@@ -1741,7 +1688,6 @@ $('#show_unbilled_deliveries').click(function (e) {
 	//var del_unbilled_array = temp_str.split(/\s*\-\s*/g)
       //alert(wholedate);
       $("#info").html(resp);
-      console.log("unbilled deliveries: ajax call success");
     }
     }
   );
