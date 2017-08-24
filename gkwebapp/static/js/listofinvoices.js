@@ -152,6 +152,7 @@ $(document).ready(function() {
         if (id == "") {
             return false;
         }
+	var csflag = $("#latable tbody tr:eq(" + currentrow + ")").data("csflag");
         $.ajax({
 
                 type: "POST",
@@ -170,6 +171,9 @@ $(document).ready(function() {
                 $("#invload").html("");
                 $("#invload").html(resp);
                 $('#listdiv').hide();
+		if (csflag == '19') {
+		    $("#printbutton").hide();
+		}
 		$("#viewinvdiv").show();
             });
     });
@@ -184,7 +188,6 @@ $(document).ready(function() {
         event.preventDefault();
         var xhr = new XMLHttpRequest();
         var linvurlstring = '&flag=' + $("#invoicetypeselect").val() + '&fromdate=' + $("#fromdate").data("fromdate") + '&todate=' + $("#todate").data("todate");
-        console.log(linvurlstring);
         xhr.open('GET', '/invoice?action=listofinvspreadsheet&fystart=' + sessionStorage.getItem('year1') + '&orgname=' + sessionStorage.getItem('orgn') + '&fyend=' + sessionStorage.getItem('year2') + linvurlstring, true);
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
         xhr.responseType = 'blob';
