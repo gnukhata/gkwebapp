@@ -99,8 +99,23 @@ $("#add_state").keydown(function(event) {
           event.preventDefault();
           $("#add_cussup_phone").focus().select();
         }
-  });
-  
+});
+    	if($("#vatorgstflag").val() == '22'){
+    $("#add_cussup_tan").keydown(function(event) {
+    if (event.which==13) {
+    	if ($.trim($("#add_cussup_tan").val())=="") {
+            $("#tin-blank-alert").alert();
+            $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#tin-blank-alert").hide();
+            });
+            $("#add_cussup_tan").focus();
+            return false;
+        }
+          event.preventDefault();
+          $("#add_cussup_save").focus().select();
+        }
+      });
+	}
     
   $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(event)
 {
@@ -319,6 +334,17 @@ else{
       $("#add_cussup_name").focus();
       return false;
     }
+
+ if ($.trim($("#add_cussup_tin").val())=="") {
+      $("#tin-blank-alert").alert();
+      $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#tin-blank-alert").hide();
+      });
+      $("#add_cussup_tin").focus();
+      return false;
+    }
+
+      
     if ($.trim($("#add_state").val())=="") {
       $("#state-blank-alert").alert();
       $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){

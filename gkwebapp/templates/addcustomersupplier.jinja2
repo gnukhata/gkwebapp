@@ -66,18 +66,18 @@
             <label for="vno">{% trans %}Please select a customer/supplier!{% endtrans %}</label>
           </div>
 
-            <div class="form-group">
-              <label for="add_cussup">{% trans %}Role:{% endtrans %}</label><label for="add_cussup" style="color:red;font-size: 120%;">*</label>
-              <select class="form-control input-sm" id="add_cussup" accesskey="">
-                <option value="3" id=sel_customer>Customer</option>
-                <option value="19" id=sel_supplier>Supplier</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="add_cussup_name">{% trans %}Name:{% endtrans %}</label><label for="add_cussup_name" style="color:red;font-size: 120%;">*</label>
-              <input class="form-control input-sm" id="add_cussup_name" placeholder="{% trans %}Enter Name{% endtrans %}" accesskey="">
-            </div>
-	    {% if vatorgstflag == '29' or vatorgstflag == '7' %}
+          <div class="form-group">
+            <label for="add_cussup">{% trans %}Role:{% endtrans %}</label><label for="add_cussup" style="color:red;font-size: 120%;">*</label>
+            <select class="form-control input-sm" id="add_cussup" accesskey="">
+              <option value="3" id=sel_customer>Customer</option>
+              <option value="19" id=sel_supplier>Supplier</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="add_cussup_name">{% trans %}Name:{% endtrans %}</label><label for="add_cussup_name" style="color:red;font-size: 120%;">*</label>
+            <input class="form-control input-sm" id="add_cussup_name" placeholder="{% trans %}Enter Name{% endtrans %}" accesskey="">
+          </div>
+	  {% if vatorgstflag == '29' or vatorgstflag == '7' %}
             <div class="row">
 	      <div class="form-group col-sm-6">
 		<label for="add_cussup_email">{% trans %}Email:{% endtrans %}</label>
@@ -103,7 +103,7 @@
 	      <div class="form-group col-sm-6">
 		<label for="add_cussup_address"> Address:
 		</label><label for="add_cussup_address" style="color:red;font-size: 120%;">*</label>
-		<i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#accModal"></i>
+	
 		<textarea class="form-control" rows="2" cols="40" id="add_cussup_address" aria-describedby="textareahelp"></textarea>
 		<small id="textareahelp" class="form-text text-muted">Press Enter key twice to shift focus to Fax</small>
               </div>
@@ -116,6 +116,7 @@
               <input class="form-control input-sm" type="text" id="add_cussup_fax"></input>
             </div>
             <div class="form-group col-sm-6">
+	      <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#accModal"></i>
               <label for="add_cussup_pan">{% trans %}PAN:{% endtrans %}</label>
               <input class="form-control input-sm" type="text" id="add_cussup_pan"></input>
             </div>
@@ -125,96 +126,97 @@
               <label for="add_cussup_tan">{% trans %}TIN:{% endtrans %}</label><label for="add_cussup_tan" style="color:red;font-size: 120%;">*</label>
               <input class="form-control input-sm" type="text" id="add_cussup_tan"></input>
             </div>
-	    {% endif %}
-	    <div class="form-group"  id ="gstin">
-              <label for="gstin">{% trans %}GSTIN:{% endtrans %}</label><label for="add_cussup_gstin" style="color:red;font-size: 120%;">*</label>
-	      <table id="gstintable" class="table table-condensed table-bordered fixed-table">
-                <thead class="bg-primary input-sm">
-                  <tr>
-                    <th class="col-xs-7 text-center">{% trans %}State{% endtrans %}</th>
-                    <th class="col-xs-4 text-center">{% trans %}GSTIN{% endtrans %}</th>
-                    <th class="col-xs-1"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="col-xs-7">
-                      <select class="form-control input-sm gstinstate">
-                        <option value="" disabled hidden selected>Select State</option>
-                        {% for state in states %}
-			  {% for key, value in state.items() %}
-			    <option value="{{value}}" stateid="{{key}}">{{value}}</option>
-			  {% endfor %}
+	  {% endif %}
+	  <div class="form-group"  id ="gstin">
+            <label for="gstin">{% trans %}GSTIN:{% endtrans %}</label><label for="add_cussup_gstin" style="color:red;font-size: 120%;">*</label>
+	    <table id="gstintable" class="table table-condensed table-bordered fixed-table">
+              <thead class="bg-primary input-sm">
+                <tr>
+                  <th class="col-xs-7 text-center">{% trans %}State{% endtrans %}</th>
+                  <th class="col-xs-4 text-center">{% trans %}GSTIN{% endtrans %}</th>
+                  <th class="col-xs-1"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="col-xs-7">
+                    <select class="form-control input-sm gstinstate">
+                      <option value="" disabled hidden selected>Select State</option>
+                      {% for state in states %}
+			{% for key, value in state.items() %}
+			  <option value="{{value}}" stateid="{{key}}">{{value}}</option>
 			{% endfor %}
-                      </select>
-                    </td>
-                    <td class="col-xs-4">
-                      <input class="form-control input-sm gstin">
-                    </td>
-                    <td class="col-xs-1">
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-	    {% endif %}
+		      {% endfor %}
+                    </select>
+                  </td>
+                  <td class="col-xs-4">
+                    <input class="form-control input-sm gstin">
+                  </td>
+                  <td class="col-xs-1">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+	    <small id="textareahelp" class="form-text text-muted"> Press Enter key twice to shift focus to Fax </small>
+          </div>
+	  {% endif %}
 
-	    {% if vatorgstflag == '22' %}
-	      <div class="form-group">
-		<label for="add_cussup_email">{% trans %}Email:{% endtrans %}</label>
-		<input class="form-control input-sm"type="email" id="add_cussup_email"  accesskey="">
-              </div>
-              <div class="form-group">
-		<label for="add_cussup_phone">{% trans %}Phone No:{% endtrans %}</label>
-		<input class="form-control input-sm" type="text" id="add_cussup_phone"></input>
-              </div>
-              <div class="form-group">
-		<label for="add_state">{% trans %}State:{% endtrans %}</label>
-		<select class="form-control input-sm add-state" id="add_state" accesskey="">
-                  <option value="">Select State</option>
-                  <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
-                  <option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>
-                  <option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option>
-                  <option value="Assam" stateid="4">Assam</option>
-                  <option value="Bihar" stateid="5">Bihar</option>
-                  <option value="Chandigarh" stateid="6">Chandigarh</option>
-                  <option value="Chhattisgarh" stateid="7">Chhattisgarh</option>
-                  <option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option>
-                  <option value="Daman and Diu" stateid="9">Daman and Diu</option>
-                  <option value="Delhi" stateid="10">Delhi</option>
-                  <option value="Goa" stateid="11">Goa</option>
-                  <option value="Gujarat" stateid="12">Gujarat</option>
-                  <option value="Haryana" stateid="13">Haryana</option>
-                  <option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option>
-                  <option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option>
-                  <option value="Jharkhand" stateid="16">Jharkhand</option>
-                  <option value="Karnataka" stateid="17">Karnataka</option>
-                  <option value="Kerala" stateid="19">Kerala</option>
-                  <option value="Lakshadweep" stateid="20">Lakshadweep</option>
-                  <option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option>
-                  <option value="Maharashtra" stateid="22">Maharashtra</option>
-                  <option value="Manipur" stateid="23">Manipur</option>
-                  <option value="Meghalaya" stateid="24">Meghalaya</option>
-                  <option value="Mizoram" stateid="25">Mizoram</option>
-                  <option value="Nagaland" stateid="26">Nagaland</option>
-                  <option value="Odisha" stateid="29">Odisha</option>
-                  <option value="Pondicherry" stateid="31">Pondicherry</option>
-                  <option value="Punjab" stateid="32">Punjab</option>
-                  <option value="Rajasthan" stateid="33">Rajasthan</option>
-                  <option value="Sikkim" stateid="34">Sikkim</option>
-                  <option value="Tamil Nadu" stateid="35">Tamil Nadu</option>
-                  <option value="Telangana" stateid="36">Telangana</option>
-                  <option value="Tripura" stateid="37">Tripura</option>
-                  <option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option>
-                  <option value="Uttarakhand" stateid="39">Uttarakhand</option>
-                  <option value="West Bengal" stateid="41">West Bengal</option>
-                </select>
-              </div>
+	  {% if vatorgstflag == '22' %}
+	    <div class="form-group">
+	      <label for="add_cussup_email">{% trans %}Email:{% endtrans %}</label>
+	      <input class="form-control input-sm"type="email" id="add_cussup_email"  accesskey="">
+            </div>
+            <div class="form-group">
+	      <label for="add_cussup_phone">{% trans %}Phone No:{% endtrans %}</label>
+	      <input class="form-control input-sm" type="text" id="add_cussup_phone"></input>
+            </div>
+            <div class="form-group">
+	      <label for="add_state">{% trans %}State:{% endtrans %}</label><label for="add_cussup_tan" style="color:red;font-size: 120%;">*</label>
+	      <select class="form-control input-sm add-state" id="add_state" accesskey="">
+                <option value="">Select State</option>
+                <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
+                <option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>
+                <option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option>
+                <option value="Assam" stateid="4">Assam</option>
+                <option value="Bihar" stateid="5">Bihar</option>
+                <option value="Chandigarh" stateid="6">Chandigarh</option>
+                <option value="Chhattisgarh" stateid="7">Chhattisgarh</option>
+                <option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option>
+                <option value="Daman and Diu" stateid="9">Daman and Diu</option>
+                <option value="Delhi" stateid="10">Delhi</option>
+                <option value="Goa" stateid="11">Goa</option>
+                <option value="Gujarat" stateid="12">Gujarat</option>
+                <option value="Haryana" stateid="13">Haryana</option>
+                <option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option>
+                <option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option>
+                <option value="Jharkhand" stateid="16">Jharkhand</option>
+                <option value="Karnataka" stateid="17">Karnataka</option>
+                <option value="Kerala" stateid="19">Kerala</option>
+                <option value="Lakshadweep" stateid="20">Lakshadweep</option>
+                <option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option>
+                <option value="Maharashtra" stateid="22">Maharashtra</option>
+                <option value="Manipur" stateid="23">Manipur</option>
+                <option value="Meghalaya" stateid="24">Meghalaya</option>
+                <option value="Mizoram" stateid="25">Mizoram</option>
+                <option value="Nagaland" stateid="26">Nagaland</option>
+                <option value="Odisha" stateid="29">Odisha</option>
+                <option value="Pondicherry" stateid="31">Pondicherry</option>
+                <option value="Punjab" stateid="32">Punjab</option>
+                <option value="Rajasthan" stateid="33">Rajasthan</option>
+                <option value="Sikkim" stateid="34">Sikkim</option>
+                <option value="Tamil Nadu" stateid="35">Tamil Nadu</option>
+                <option value="Telangana" stateid="36">Telangana</option>
+                <option value="Tripura" stateid="37">Tripura</option>
+                <option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option>
+                <option value="Uttarakhand" stateid="39">Uttarakhand</option>
+                <option value="West Bengal" stateid="41">West Bengal</option>
+              </select>
+            </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
             <label for="add_cussup_address"> Address:
-            </label>
+            </label> <label for="add_cussup_tan" style="color:red;font-size: 120%;">*</label>
             <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#accModal"></i>
             <textarea class="form-control" rows="3" cols="40" id="add_cussup_address" aria-describedby="textareahelp"></textarea>
             <small id="textareahelp" class="form-text text-muted">Press Enter key twice to shift focus to Fax</small>
@@ -231,42 +233,43 @@
 	  
           <div class="form-group">
             <label for="add_cussup_tan">{% trans %}TIN:{% endtrans %}</label>
+	    <label for="add_cussup_tan" style="color:red;font-size: 120%;">*</label>
             <input class="form-control input-sm" type="text" id="add_cussup_tan"></input>
           </div> 
-	      {% endif %}
-	    
-          </div>
+	  {% endif %}
+	  
         </div>
-  <div id="accModal"  tabindex="-1" class="modal fade " role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
-  <div class="modal-dialog bgcolor " >
-    <div class="modal-content ">
-    <div class="modal-header">
-      {% trans %}<strong>Help!</strong>{% endtrans %}
-   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button> </div>
-      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+      </div>
+      <div id="accModal"  tabindex="-1" class="modal fade " role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
+	<div class="modal-dialog bgcolor " >
+	  <div class="modal-content ">
+	    <div class="modal-header">
+	      {% trans %}<strong>Help!</strong>{% endtrans %}
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+              </button> </div>
+	    <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
 
-       <p>   <font color=" #566573"> {%trans%}
-This screen let's you create a customer or supplier. The module by default starts with Create Customer/Supplier mode.
-Enter all the details of a new customer or supplier.
-Pres Enter to move forward and up arrow to move backward.
+	      <p>   <font color=" #566573"> {%trans%}
+		This screen let's you create a customer or supplier. The module by default starts with Create Customer/Supplier mode.
+		Enter all the details of a new customer or supplier.
+		Pres Enter to move forward and up arrow to move backward.
 {% endtrans %} </font>
 
-        </p>
-      </div>
+              </p>
+	    </div>
 
-    </div>
-  </div>
-</div>
+	  </div>
+	</div>
+      </div>
 
       <div class="panel-footer">
         <button class="btn btn-success btn-sm" id="cussup_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}" accesskey="s">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i> <u>S</u>ave{% endtrans %}</button>
         <button id="add_cussup_reset" class="btn btn-warning btn-sm" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Res<u>e</u>t{% endtrans %}</button>
       </div>
-   </div>
+    </div>
 
 
   </div>
-<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addcustomersupplier.js')}}"></script>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addcustomersupplier.js')}}"></script>
 </body>

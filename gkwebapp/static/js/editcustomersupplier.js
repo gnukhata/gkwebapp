@@ -195,6 +195,7 @@ $(document).ready(function() {
   $("#edit_cussup_tan").keydown(function(event) {
       if (event.which==13) {
 	  event.preventDefault();
+	 if($("#vatorgstflag").val() == '22'){
     	if ($.trim($("#edit_cussup_tan").val())=="") {
             $("#tin-blank-alert").alert();
             $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -202,7 +203,7 @@ $(document).ready(function() {
             });
             $("#edit_cussup_tan").focus();
             return false;
-        }
+        }}
           if($("#vatorgstflag").val() == '22'){
 	      $("#cussup_edit_save").focus();
 	  }
@@ -371,14 +372,14 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       $("#edit_cussup_address").focus();
       return false;
     }
-      if ($.trim($("#edit_cussup_tan").val())==""&& $.trim($("#edit_cussup_gstin").val())==""){
+  /*    if ($.trim($("#edit_cussup_tan").val())==""){
       $("#both-blank-alert").alert();
       $("#both-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#both-blank-alert").hide();
       });
       $("#edit_cussup_tan").focus();
       return false;
-      }
+      } */
       var gobj = {}; // Creating a dictionary for storing godown wise opening stock
       $("#gstintable tbody tr").each(function(){
 	  var curindex1 = $(this).index();
