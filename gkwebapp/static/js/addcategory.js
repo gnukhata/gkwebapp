@@ -101,11 +101,14 @@ $(document).ready(function() {
         }
         $("#category_tax_table tbody tr:eq("+i+") td:eq(2) input").val(parenttaxes[i].taxrate);
       }
-      $("#category_tax_table tbody").append(taxfieldhtml);
-      if (sessionStorage.vatorgstflag =='7') {
+	if (sessionStorage.vatorgstflag =='7') {
+	    if (parenttaxes.length == 0){
+		$("#category_tax_table tbody").append(taxfieldhtml);
+	    }
         $("#category_tax_table tbody tr:last td:eq(1) input").focus().select();
       }
-      else {
+	else {
+	    $("#category_tax_table tbody").append(taxfieldhtml);
         $("#category_tax_table tbody tr:last td:eq(0) select").focus();
       }
     });
@@ -499,12 +502,24 @@ $(document).ready(function() {
         taxes = [];
         $("#category_tax_table tbody tr").each(function() {
             var obj = {}; // dict for storing tax details
-            if ($.trim($("select option:selected", this).val()) != "") {
-                obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
-                obj.state = $.trim($("td:eq(1) select option:selected", this).val());
-                obj.taxrate = $.trim($("input", this).val());
-                taxes.push(obj);
-            }
+	    var cattax = "";
+	    var catstate = "";
+	    var cattaxrate = 0.00;
+	    if (sessionStorage.vatorgstflag =='7') {
+		cattax = "IGST";
+		cattaxrate = $("#igstrate").val();
+	    }
+	    else {
+		if ($.trim($("select option:selected", this).val()) != "") {	
+		    cattax = $.trim($("td:eq(0) select option:selected", this).val());
+		    catstate = $.trim($("td:eq(1) select option:selected", this).val());
+		    cattaxrate = $.trim($("input", this).val());
+		}
+	    }
+	    obj.taxname = cattax;
+	    obj.state = catstate;
+	    obj.taxrate = cattaxrate;
+	    taxes.push(obj);
         });
         $.ajax({
                 url: '/category?action=save',
@@ -580,14 +595,26 @@ $(document).ready(function() {
             });
             taxes = [];
             $("#category_tax_table tbody tr").each(function() {
-                var obj = {}; // dict for storing tax details
-                if ($.trim($("select option:selected", this).val()) != "") {
-                    obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
-                    obj.state = $.trim($("td:eq(1) select option:selected", this).val());
-                    obj.taxrate = $.trim($("input", this).val());
-                    taxes.push(obj);
-                }
-            });
+            var obj = {}; // dict for storing tax details
+	    var cattax = "";
+	    var catstate = "";
+	    var cattaxrate = 0.00;
+	    if (sessionStorage.vatorgstflag =='7') {
+		cattax = "IGST";
+		cattaxrate = $("#igstrate").val();
+	    }
+	    else {
+		if ($.trim($("select option:selected", this).val()) != "") {	
+		    cattax = $.trim($("td:eq(0) select option:selected", this).val());
+		    catstate = $.trim($("td:eq(1) select option:selected", this).val());
+		    cattaxrate = $.trim($("input", this).val());
+		}
+	    }
+	    obj.taxname = cattax;
+	    obj.state = catstate;
+	    obj.taxrate = cattaxrate;
+	    taxes.push(obj);
+        });
             $.ajax({
                     url: '/category?action=save',
                     type: 'POST',
