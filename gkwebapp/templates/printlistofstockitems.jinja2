@@ -32,11 +32,14 @@
   .prdct{
      width: 59%;
   }
+  .type{
+     width: 8%;
+  }
   .categrs{
      width: 20%;
   }
   .um{
-     width: 15%;
+     width: 7%;
   }
   </style>
 </head>
@@ -55,8 +58,11 @@
           <th class="col-xs-1 srno" >
             {% trans %}Sr. No.{% endtrans %}
           </th>
-          <th class="col-xs-5 prdct" >
+          <th class="col-xs-5 prdct prdserv" >
             {% trans %}Product{% endtrans %}
+          </th>
+          <th class="col-xs-2 type" >
+            {% trans %}Type{% endtrans %}
           </th>
           <th class="col-xs-3 categrs" >
             {% trans %}Category{% endtrans %}
@@ -75,6 +81,13 @@
           </td>
           <td class="col-xs-5 prdct">
             {{record["productdesc"]}}
+          </td>
+          <td class="col-xs-3 type" >
+            {% if record['gsflag'] == 7 %}
+            Product
+            {% else %}
+            Service
+            {% endif %}
           </td>
           <td class="col-xs-3 categrs" >
             {{record["categoryname"]}}
@@ -102,6 +115,14 @@
       $("#loaback").click(function(event) {
         $("#listofstockitems").click();
       });
+      if (sessionStorage.vatorgstflag == 22) {
+        $(".type").hide();
+        $(".prdserv").text("Product");
+      }
+      else {
+        $(".type").show();
+        $(".prdserv").text("Product/Service");
+      }
     });
   </script>
 
