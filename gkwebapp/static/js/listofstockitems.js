@@ -33,6 +33,15 @@ $(document).ready(function() {
   $('#latable tbody tr:first-child td:eq(1) a').focus();
   $('#latable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 
+  if (sessionStorage.vatorgstflag == 22) {
+    $(".type").hide();
+    $(".prdserv").text("Product");
+  }
+  else {
+    $(".type").show();
+    $(".prdserv").text("Product/Service");
+  }
+
   // functions to add remove selected class on focus and blur.
   $(document).off('focus' ,'.libgname').on('focus' ,'.libgname',function() {
     $('#latable tr').removeClass('selected');

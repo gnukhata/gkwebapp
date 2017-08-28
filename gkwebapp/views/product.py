@@ -335,7 +335,6 @@ def productDetailsVat(request):
 def listofstockitems(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/products",headers=header)
-	print result.json()["gkresult"]
 	return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="product",request_param="type=printable", renderer="gkwebapp:templates/printlistofstockitems.jinja2")
