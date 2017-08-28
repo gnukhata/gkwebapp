@@ -400,16 +400,6 @@ def listofstockitemsspreadsheet(request):
 			sheet.getCell(3, row).stringValue(stock["categoryname"])
 			sheet.getCell(4, row).stringValue(stock["unitname"])
 			row += 1
-	sheet.getCell(1,2).stringValue("Product").setBold(True)
-	sheet.getCell(2,2).stringValue("Category").setBold(True)
-	sheet.getCell(3,2).stringValue("UOM").setBold(True)
-	row = 3
-	for stock in result:
-		sheet.getCell(0, row).stringValue(stock["srno"])
-		sheet.getCell(1, row).stringValue(stock["productdesc"])
-		sheet.getCell(2, row).stringValue(stock["categoryname"])
-		sheet.getCell(3, row).stringValue(stock["unitname"])
-		row += 1
 
 	ods.save("response.ods")
 	repFile = open("response.ods")
