@@ -98,10 +98,10 @@
 			<td class="col-xs-4">
 			  <select class="form-control input-sm tax_name product_new_name">
                             <option value="" selected hidden disabled>Select Tax</option>
-                            {%if vatorgstflag=='22' or vatorgstflag=='29' %}
                               <option value="VAT">VAT</option>
                               <option value="CVAT">CVAT</option>
-                              <option value="IGST">IGST</option>
+			      {%if vatorgstflag=='7' or vatorgstflag=='29' %}
+				<option value="IGST">IGST</option>
                             {%endif%}
 			  </select>
 			</td>
@@ -159,7 +159,7 @@
 		<small  class="form-text text-muted " id="godownmsg" hidden>Press 'Esc' key to shift focus from Tax Rate or Tax Name  to Godown Name or from Godown Opening Stock to 'Save' button.</small>
 		<small id="taxhelp3" class="form-text text-muted serviceclass">When on Tax Rate or Tax Name press 'Esc' key to shift focus to 'Save' button.</small><br>
 	      </div>
-	    
+	    <!--  
 		<div class="panel col-xs-8 igsttax nopadding" hidden>
 		    <table id="igst_tax_table" class="table table-condensed table-bordered">
                       <thead class="bg-primary input-sm">
@@ -183,6 +183,7 @@
               	      
 		    </table>
 		</div>
+		-->
 		
             </div>
             <div class="row noinventory ">

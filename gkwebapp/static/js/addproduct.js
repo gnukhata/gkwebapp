@@ -12,10 +12,7 @@ if (sessionStorage.invflag=='1' ){
 
   $("#godownmsg").show();
 }
-  if(sessionStorage.vatorgstflag == '7'){
-      $(".taxclass").hide();
-      $(".igsttax").show();
-  }
+
   //$("#proservlabel").text("Product Name :");
 
   var godownflag = 0;
@@ -279,11 +276,7 @@ $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
       event.preventDefault();
       $("#spec_table tbody tr:first td:eq(1) input:first").focus();
     }
-      else if(sessionStorage.vatorgstflag == '7') {
-	  event.preventDefault();
-	  $("#igstrate").focus().select();
-
-      }
+     
       else {
 	  $("#product_tax_table tbody tr:first td:eq(0) select").focus();
     }
@@ -1412,16 +1405,7 @@ else{
 
 
     var taxes = []; //Taxes list to store dictionaries created
-    if (sessionStorage.vatorgstflag =='7'){
-	console.log("hello");
-	var obj = {};
-	  obj.taxname = "IGST";
-	  obj.state = "";
-	obj.taxrate = $("#igstrate").val();
-	taxes.push(obj);
-	console.log(taxes);
-    }
-    else{
+   
   $("#product_tax_table tbody tr").each(function(){
       var obj = {}; // dict for storing tax details
     if ($.trim($("select option:selected", this).val()) != "") {
@@ -1432,7 +1416,7 @@ else{
     }
 
   });
-    }
+    
   var gobj = {}; // Creating a dictionary for storing godown wise opening stock
   $("#godown_ob_table tbody tr").each(function(){
     if ($.trim($(".godown_name",this).val())!="") {
