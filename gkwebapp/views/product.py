@@ -27,6 +27,7 @@ Contributors:
 "Prajkta Patkar" <prajkta.patkar007@gmail.com>
 "Mohd. Talha Pawaty" <mtalha456@gmail.com>
 "Ravishankar Purne" <ravismail96@gmail.com>
+"Reshma Bhatawadekar" <bhatawadekar1reshma@gmail.com>
 """
 
 from pyramid.view import view_config
@@ -348,6 +349,8 @@ def printlistofstockitems(request):
 def listofstockitemsspreadsheet(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/products", headers=header)
+	resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+	resultgstvat = resultgstvat.json()["gkresult"]
 	result = result.json()["gkresult"]
 	fystart = str(request.params["fystart"]);
 	fyend = str(request.params["fyend"]);
@@ -367,16 +370,36 @@ def listofstockitemsspreadsheet(request):
 	sheet.getColumn(2).setWidth("4cm")
 	sheet.getColumn(3).setWidth("4cm")
 	sheet.getCell(0,2).stringValue("Sr. No.").setBold(True)
-	sheet.getCell(1,2).stringValue("Product").setBold(True)
-	sheet.getCell(2,2).stringValue("Category").setBold(True)
-	sheet.getCell(3,2).stringValue("UOM").setBold(True)
-	row = 3
-	for stock in result:
-		sheet.getCell(0, row).stringValue(stock["srno"])
-		sheet.getCell(1, row).stringValue(stock["productdesc"])
-		sheet.getCell(2, row).stringValue(stock["categoryname"])
-		sheet.getCell(3, row).stringValue(stock["unitname"])
-		row += 1
+	if resultgstvat == "22":
+		sheet.getCell(1,2).stringValue("Product").setBold(True)
+		sheet.getCell(2,2).stringValue("Category").setBold(True)
+		sheet.getCell(3,2).stringValue("UOM").setBold(True)
+	else:
+		sheet.getCell(1,2).stringValue("Product / Service").setBold(True)
+		sheet.getCell(2,2).stringValue("Type").setBold(True)
+		sheet.getCell(3,2).stringValue("Category").setBold(True)
+		sheet.getCell(4,2).stringValue("UOM").setBold(True)
+
+	if resultgstvat == "22":
+		row = 3
+		for stock in result:
+			sheet.getCell(0, row).stringValue(stock["srno"])
+			sheet.getCell(1, row).stringValue(stock["productdesc"])
+			sheet.getCell(2, row).stringValue(stock["categoryname"])
+			sheet.getCell(3, row).stringValue(stock["unitname"])
+			row += 1
+	else:
+		row = 4
+		for stock in result:
+			sheet.getCell(0, row).stringValue(stock["srno"])
+			sheet.getCell(1, row).stringValue(stock["productdesc"])
+			if stock["gsflag"] == 7:
+				sheet.getCell(2, row).stringValue("Product")
+			else:
+				sheet.getCell(2, row).stringValue("Service")
+			sheet.getCell(3, row).stringValue(stock["categoryname"])
+			sheet.getCell(4, row).stringValue(stock["unitname"])
+			row += 1
 
 	ods.save("response.ods")
 	repFile = open("response.ods")

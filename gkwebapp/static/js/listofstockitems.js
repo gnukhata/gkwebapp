@@ -23,6 +23,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Abhijith Balan" <abhijithb21@openmailbox.org>
+"Reshma Bhatawadekar" <bhatawadekar1reshma@gmail.com>
 */
 // This script file is for list of stock items report.
 $(document).ready(function() {
@@ -39,7 +40,7 @@ $(document).ready(function() {
   }
   else {
     $(".type").show();
-    $(".prdserv").text("Product/Service");
+    $(".prdserv").text("Product / Service");
   }
 
   // functions to add remove selected class on focus and blur.
