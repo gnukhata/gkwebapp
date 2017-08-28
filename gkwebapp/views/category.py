@@ -56,7 +56,9 @@ def showaddcategory(request):
 def showeditcategory(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/categories", headers=header)
-    return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
+    resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+    states = requests.get("http://127.0.0.1:6543/state", headers=header)
+    return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"],"vatorgstflag":resultgstvat.json()["gkresult"], "states": states.json()["gkresult"]}
 
 @view_config(route_name="category",request_param="action=getspecs",renderer="json")
 def getspecs(request):

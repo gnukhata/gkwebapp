@@ -126,23 +126,82 @@
             </div>
             <div class="form-group">
               <div class="panel">
-                <table id="category_edit_tax_table" class="table table-condensed table-bordered fixed-edit-table">
-                  <thead class="bg-primary input-sm">
-                    <tr>
-                      <th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
-                      <th class="col-xs-4 text-center">{% trans %}State{% endtrans %}</th>
-                      <th class="col-xs-3 text-center">{% trans %}Rate %{% endtrans %}</th>
-                      <th class="col-xs-1"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
+		{% if vatorgstflag =="22" or vatorgstflag =='29' %}
+                  <input value="{{vatorgstflag}}" id="vatorgstflag" hidden>
+                  <table id="category_edit_tax_table" class="table table-condensed table-bordered fixed-edit-table">
+                    <thead class="bg-primary input-sm">
+                      <tr>
+			<th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
+			<th class="col-xs-4 text-center">{% trans %}State{% endtrans %}</th>
+			<th class="col-xs-3 text-center">{% trans %}Rate %{% endtrans %}</th>
+			<th class="col-xs-1"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+		      <tr>
+			<td class="col-xs-4">
+                          <select class="form-control input-sm tax_name">
+
+                            <option value="" selected disabled hidden>Select Tax</option>
+                            {% if vatorgstflag =='29' %}
+                              <option value="VAT">VAT</option>
+                              <option value="CVAT">CVAT</option>
+                              <option value="IGST">IGST</option>
+                            {% else %}
+                              <option value="VAT">VAT</option>
+                              <option value="CVAT">CVAT</option>
+                            {% endif%}
+
+                          </select>
+			</td>
+			<td class="col-xs-4">
+                          <select class="form-control input-sm tax_state" >
+                            <option value="">None</option>
+                            {% for state in states %}
+			      {% for key, value in state.items() %}
+				<option value="{{value}}" stateid="{{key}}">{{value}}</option>
+			      {% endfor %}
+			    {% endfor %}
+                          </select>
+			</td>
+			<td class="col-xs-4">
+                          <input class="form-control input-sm tax_rate text-right numtype"  placeholder="Rate">
+			</td>
+                      </tr>
+                    </tbody>
+                  </table>
+		  <div class="col-xs-12 row">
+		    <small id="taxtospechelp" class="form-text text-muted">{% trans %}Press 'Ctrl + <' on tax name to shift to specification name. {% endtrans %}</small>
+</br>
+<small id="taxtosavehelp" class="form-text text-muted">{% trans %}Press 'Esc' Key on Rate to shift to Save Button.{% endtrans %}</small><br>
+		  </div>
+		{% endif %}
+		{% if vatorgstflag =='7' %}
+                      <table id="category_edit_tax_table" class="table table-condensed table-bordered">
+			<thead class="bg-primary input-sm">
+			  <tr>
+                            <th class="col-xs-6 text-center">{% trans %}Tax Name{% endtrans %}</th>
+
+                            <th class="col-xs-6 text-center">{% trans %}Rate %{% endtrans %}</th>
+
+			  </tr>
+			</thead>
+			<tbody>
+			  <tr>
+                            <td class="col-xs-6 text-center" style = "vertical-align:middle; font-weight: normal; font-size:90%;" >
+                              {% trans %}IGST{% endtrans %}
+                            </td>
+                            <td class="col-xs-6">
+                              <input class="form-control input-sm text-right  numtype" id ="igstrate"  placeholder="Rate" value="0.00">
+                            </td>
+			  </tr>
+			</tbody>
+
+                      </table>
+                    <small id="donehelp" class="form-text text-muted"> Press 'Esc' when you are done.</small>
+		{% endif %}
               </div>
             </div>
-            <small id="taxtospechelp" class="form-text text-muted">{% trans %}Press 'Ctrl + <' on tax name to shift to specification name. {% endtrans %}</small>
-</br>
-            <small id="taxtosavehelp" class="form-text text-muted">{% trans %}Press 'Esc' Key on Rate to shift to Save Button.{% endtrans %}</small><br>
           </div>
           </div>
         </div>
