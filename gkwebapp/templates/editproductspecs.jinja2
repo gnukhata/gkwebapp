@@ -142,10 +142,8 @@
           <td class="col-xs-4">
             <select class="form-control input-sm product_tax_disable tax_name product_new_name">
               <option value="" selected disable hidden>Select Tax</option>
-              {%if vatorgstflag=='22' or vatorgstflag=='29' %}
               <option value="VAT">VAT</option>
               <option value="CVAT">CVAT</option>
-              {%endif%}
               {%if vatorgstflag=='7' or vatorgstflag=='29'%}
               <option value="IGST">IGST</option>
               {%endif%}
