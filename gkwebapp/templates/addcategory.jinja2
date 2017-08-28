@@ -314,7 +314,6 @@
           </div>
           <div class="panel">
             <div class="panel-body taxclass">
-              {% if vatorgstflag =="22" or vatorgstflag =='29' %}
                 <input value="{{vatorgstflag}}" id="vatorgstflag" hidden>
                 <table id="category_tax_table" class="table table-condensed table-bordered fixed-table">
                   <thead class="bg-primary input-sm">
@@ -330,13 +329,13 @@
                         <select class="form-control input-sm tax_name">
 
                           <option value="" selected disabled hidden>Select Tax</option>
-                          {% if vatorgstflag =='29' %}
+                          {% if vatorgstflag =='22' %}
                             <option value="VAT">VAT</option>
                             <option value="CVAT">CVAT</option>
-                            <option value="IGST">IGST</option>
                           {% else %}
                             <option value="VAT">VAT</option>
                             <option value="CVAT">CVAT</option>
+			    <option value="IGST">IGST</option>
                           {% endif%}
 
                         </select>
@@ -362,39 +361,6 @@
                   <small id="savespechelp2" class="form-text text-muted">Press 'Enter' on Tax Rate to add new Tax.</small><br>
                   <small id="donehelp" class="form-text text-muted"> Press 'Esc' when you are done.</small>
                 </div>
-              {% endif %}
-              {% if vatorgstflag =='7' %}
-                <div class="col-xs-12 row">
-                  <div class="col-xs-8">
-                    <table id="category_tax_table" class="table table-condensed table-bordered">
-                      <thead class="bg-primary input-sm">
-			<tr>
-                          <th class="col-xs-6 text-center">{% trans %}Tax Name{% endtrans %}</th>
-
-                          <th class="col-xs-6 text-center">{% trans %}Rate %{% endtrans %}</th>
-
-			</tr>
-                      </thead>
-                      <tbody>
-			<tr>
-                          <td class="col-xs-6 text-center" style = "vertical-align:middle; font-weight: normal; font-size:90%;" >
-                            {% trans %}IGST{% endtrans %}
-                          </td>
-                          <td class="col-xs-6">
-                            <input class="form-control input-sm text-right  numtype" id ="igstrate"  placeholder="Rate" value="0.00">
-                          </td>
-			</tr>
-                      </tbody>
-
-                    </table>
-
-                  </div>
-                </div>
-                <div class="col-xs-12 row">
-                  <small id="donehelp" class="form-text text-muted"> Press 'Esc' when you are done.</small>
-                </div>
-            </div>
-              {% endif %}
           </div>
 
           <div class="panel-footer">

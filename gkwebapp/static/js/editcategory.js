@@ -109,18 +109,11 @@ $(document).ready(function() {
       }
 	for (tax of resp["gkresult"]) {
 	    $('#category_edit_tax_table tbody').append(taxfieldhtml);
-	    $('#category_edit_tax_table tbody tr:last').attr({
-		    value: tax["taxid"]
-		});
-	    if ($("#vatorgstflag").val() == '7') {
-		$('#category_edit_tax_table tbody tr:last td:eq(1) input').val(tax["taxrate"]);
-	    }
-	    else {
-		$('#category_edit_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
-		$('#category_edit_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
-		$('#category_edit_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);
-	    }
-      }
+	    $('#category_edit_tax_table tbody tr:last').attr({value: tax["taxid"]});
+	    $('#category_edit_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
+	    $('#category_edit_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
+	    $('#category_edit_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);
+	}
     })
     .fail(function() {
       console.log("error");

@@ -102,16 +102,8 @@ $(document).ready(function() {
         }
         $("#category_tax_table tbody tr:eq("+i+") td:eq(2) input").val(parenttaxes[i].taxrate);
       }
-	if (sessionStorage.vatorgstflag =='7') {
-	    if (parenttaxes.length == 0){
-		$("#category_tax_table tbody").append(taxfieldhtml);
-	    }
-        $("#category_tax_table tbody tr:last td:eq(1) input").focus().select();
-      }
-	else {
-	    $("#category_tax_table tbody").append(taxfieldhtml);
-        $("#category_tax_table tbody tr:last td:eq(0) select").focus();
-      }
+	$("#category_tax_table tbody").append(taxfieldhtml);
+	$("#category_tax_table tbody tr:last td:eq(0) select").focus();
     });
     $(document).off("keydown", "#category_under").on("keydown", "#category_under", function(event) {
         categorycode = $("#category_under option:selected").val();
@@ -393,7 +385,7 @@ $(document).ready(function() {
             $('#category_tax_table tbody tr:last td:eq(1) select').prop('disabled', false);
             $('#category_tax_table tbody tr:last td:eq(1) select option[value=""]').prop('disabled', true);
             $('#category_tax_table tbody tr:last td:eq(1) select').val('Andaman and Nicobar Islands');
-        } else if ($('#category_tax_table tbody tr:last td:eq(0) select').val() == "CVAT") {
+        } else if ($('#category_tax_table tbody tr:last td:eq(0) select').val() != "") {
             $('#category_tax_table tbody tr:last td:eq(1) select').val('');
             $('#category_tax_table tbody tr:last td:eq(1) select').prop('disabled', true);
         }
@@ -409,8 +401,7 @@ $(document).ready(function() {
                 if ($("#category_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "CVAT") {
                   i = i + 1;
                 }
-                selectedtaxstate = $("#category_tax_table tbody tr:eq("+j+") td:eq(1) select option:selected").attr("stateid");
-      console.log(selectedtaxstate);
+                let selectedtaxstate = $("#category_tax_table tbody tr:eq("+j+") td:eq(1) select option:selected").attr("stateid");
                 $('#category_tax_table tbody tr:eq('+i+') td:eq(1) select option[stateid='+selectedtaxstate+']').prop('hidden', true).prop('disabled', true);
               }
             }
@@ -421,7 +412,7 @@ $(document).ready(function() {
           $("#category_tax_table tbody tr:eq("+curindex+") td:eq(1) select").append('<option value="">None</option>');
           $("#category_tax_table tbody tr:eq("+curindex+") td:eq(1) select").prop('disabled', true);
         }
-        selectedtaxname = $("#category_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val();
+        var selectedtaxname = $("#category_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val();
 
     });
     $(document).off("keydown", ".tax_rate").on("keydown", ".tax_rate", function(event) {
@@ -503,23 +494,9 @@ $(document).ready(function() {
         taxes = [];
         $("#category_tax_table tbody tr").each(function() {
             var obj = {}; // dict for storing tax details
-	    var cattax = "";
-	    var catstate = "";
-	    var cattaxrate = 0.00;
-	    if (sessionStorage.vatorgstflag =='7') {
-		cattax = "IGST";
-		cattaxrate = $("#igstrate").val();
-	    }
-	    else {
-		if ($.trim($("select option:selected", this).val()) != "") {	
-		    cattax = $.trim($("td:eq(0) select option:selected", this).val());
-		    catstate = $.trim($("td:eq(1) select option:selected", this).val());
-		    cattaxrate = $.trim($("input", this).val());
-		}
-	    }
-	    obj.taxname = cattax;
-	    obj.state = catstate;
-	    obj.taxrate = cattaxrate;
+	    obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
+	    obj.state = $.trim($("td:eq(1) select option:selected", this).val());
+	    obj.taxrate = $.trim($("input", this).val());
 	    taxes.push(obj);
         });
         $.ajax({
@@ -597,23 +574,9 @@ $(document).ready(function() {
             taxes = [];
             $("#category_tax_table tbody tr").each(function() {
             var obj = {}; // dict for storing tax details
-	    var cattax = "";
-	    var catstate = "";
-	    var cattaxrate = 0.00;
-	    if (sessionStorage.vatorgstflag =='7') {
-		cattax = "IGST";
-		cattaxrate = $("#igstrate").val();
-	    }
-	    else {
-		if ($.trim($("select option:selected", this).val()) != "") {	
-		    cattax = $.trim($("td:eq(0) select option:selected", this).val());
-		    catstate = $.trim($("td:eq(1) select option:selected", this).val());
-		    cattaxrate = $.trim($("input", this).val());
-		}
-	    }
-	    obj.taxname = cattax;
-	    obj.state = catstate;
-	    obj.taxrate = cattaxrate;
+	    obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
+	    obj.state = $.trim($("td:eq(1) select option:selected", this).val());
+	    obj.taxrate = $.trim($("input", this).val());
 	    taxes.push(obj);
         });
             $.ajax({
