@@ -100,22 +100,7 @@ $("#add_state").keydown(function(event) {
           $("#add_cussup_phone").focus().select();
         }
 });
-    	if($("#vatorgstflag").val() == '22'){
-    $("#add_cussup_tan").keydown(function(event) {
-    if (event.which==13) {
-    	if ($.trim($("#add_cussup_tan").val())=="") {
-            $("#tin-blank-alert").alert();
-            $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-              $("#tin-blank-alert").hide();
-            });
-            $("#add_cussup_tan").focus();
-            return false;
-        }
-          event.preventDefault();
-          $("#add_cussup_save").focus().select();
-        }
-      });
-	}
+
     
   $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(event)
 {
@@ -265,7 +250,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
   $("#add_cussup_pan").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
-	if($("#vatorgstflag").val() == '22'){
+	if($("#vatorgstflag").val() == '22' || $("#vatorgstflag").val() == '29'){
 	    $("#add_cussup_tan").focus().select();
 	}
 	else {
@@ -277,10 +262,21 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       $("#add_cussup_fax").focus().select();
     }
   });
+
+
+    
     $("#add_cussup_tan").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
 	if($("#vatorgstflag").val() == '22'){
+	    	if ($.trim($("#add_cussup_tan").val())=="") {
+            $("#tin-blank-alert").alert();
+            $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#tin-blank-alert").hide();
+            });
+            $("#add_cussup_tan").focus();
+            return false;
+        }
           $("#cussup_save").focus();
 }
 else{
@@ -335,6 +331,7 @@ else{
       return false;
     }
 
+if($("#vatorgstflag").val() == '22'){  
  if ($.trim($("#add_cussup_tin").val())=="") {
       $("#tin-blank-alert").alert();
       $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -343,7 +340,7 @@ else{
       $("#add_cussup_tin").focus();
       return false;
     }
-
+}
       
     if ($.trim($("#add_state").val())=="") {
       $("#state-blank-alert").alert();
