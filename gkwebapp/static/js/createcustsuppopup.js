@@ -23,6 +23,8 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Rohini Baraskar" <robaraskar@gmail.com>
+"Prajkta Patkar"<prajakta@dff.org.in>
+"Abhijith Balan"<abhijith@dff.org.in>
 */
 
 $(document).ready(function() {
