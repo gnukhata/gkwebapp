@@ -126,39 +126,42 @@
               <label for="add_cussup_tan">{% trans %}TIN:{% endtrans %}</label><label for="add_cussup_tan" style="color:red;font-size: 120%;">*</label>
               <input class="form-control input-sm" type="text" id="add_cussup_tan"></input>
             </div>
-	  {% endif %}
+
+	  {% endif %}      
 	  <div class="form-group"  id ="gstin">
             <label for="gstin">{% trans %}GSTIN:{% endtrans %}</label><label for="add_cussup_gstin" style="color:red;font-size: 120%;">*</label>
-	    <table id="gstintable" class="table table-condensed table-bordered fixed-table">
-              <thead class="bg-primary input-sm">
-                <tr>
-                  <th class="col-xs-7 text-center">{% trans %}State{% endtrans %}</th>
-                  <th class="col-xs-4 text-center">{% trans %}GSTIN{% endtrans %}</th>
-                  <th class="col-xs-1"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="col-xs-7">
-                    <select class="form-control input-sm gstinstate">
-                      <option value="" disabled hidden selected>Select State</option>
-                      {% for state in states %}
-			{% for key, value in state.items() %}
-			  <option value="{{value}}" stateid="{{key}}">{{value}}</option>
+	    <div class ="panel panel-default">
+	      <table id="gstintable" class="table table-condensed table-bordered fixed-table">
+                <thead class="bg-primary input-sm">
+                  <tr>
+                    <th class="col-xs-7 text-center">{% trans %}State{% endtrans %}</th>
+                    <th class="col-xs-4 text-center">{% trans %}GSTIN{% endtrans %}</th>
+                    <th class="col-xs-1"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="col-xs-7">
+                      <select class="form-control input-sm gstinstate">
+                        <option value="" disabled hidden selected>Select State</option>
+                        {% for state in states %}
+			  {% for key, value in state.items() %}
+			    <option value="{{value}}" stateid="{{key}}">{{value}}</option>
+			  {% endfor %}
 			{% endfor %}
-		      {% endfor %}
-                    </select>
-                  </td>
-                  <td class="col-xs-4">
-                    <input class="form-control input-sm gstin">
-                  </td>
-                  <td class="col-xs-1">
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-	    <small id="textareahelp" class="form-text text-muted"> Press ESC key to shift focus to 'save' button. </small>
-          </div>
+                      </select>
+                    </td>
+                    <td class="col-xs-4">
+                      <input class="form-control input-sm gstin">
+                    </td>
+                    <td class="col-xs-1">
+                    </td>
+                  </tr>
+                </tbody>
+	      </table>
+	    </div>
+	    <small id="textareahelp" class="form-text text-muted">Press Esc key from any field in the table to shift focus to Save Button</small>
+	  </div>
 	  {% endif %}
 
 	  {% if vatorgstflag == '22' %}
@@ -232,8 +235,8 @@
           </div>
 	  
           <div class="form-group">
-            <label for="add_cussup_tan">{% trans %}TIN:{% endtrans %}</label>
-	    <label for="add_cussup_tan" style="color:red;font-size: 120%;">*</label>
+            <label for="add_cussup_tan">{% trans %}TIN:{% endtrans %}</label><label for="add_cussup_tan" style="color:red;font-size: 120%;">*</label>
+
             <input class="form-control input-sm" type="text" id="add_cussup_tan"></input>
           </div> 
 	  {% endif %}
