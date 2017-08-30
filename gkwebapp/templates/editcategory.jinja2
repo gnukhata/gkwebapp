@@ -139,7 +139,7 @@
                     <tbody>
 		      <tr>
 			<td class="col-xs-4">
-                          <select class="form-control input-sm tax_name">
+                          <select class="form-control category_edit_disable input-sm tax_name">
 
                             <option value="" selected disabled hidden>Select Tax</option>
                             {% if vatorgstflag =='22' %}
@@ -154,7 +154,7 @@
                           </select>
 			</td>
 			<td class="col-xs-4">
-                          <select class="form-control input-sm tax_state" >
+                          <select class="form-control input-sm tax_state category_edit_disable" >
                             <option value="">None</option>
                             {% for state in states %}
 			      {% for key, value in state.items() %}
@@ -164,7 +164,7 @@
                           </select>
 			</td>
 			<td class="col-xs-3">
-                          <input class="form-control input-sm tax_rate text-right numtype"  placeholder="Rate">
+                          <input class="form-control input-sm tax_rate text-right numtype category_edit_disable"  placeholder="Rate">
 			</td>
 			<td class="col-xs-1">
 			  
