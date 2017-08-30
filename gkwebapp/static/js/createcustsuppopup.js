@@ -26,22 +26,8 @@ Contributors:
 */
 
 $(document).ready(function() {
-  $("#add_cussup_name").focus().select();
- // $("#add_cussup").keydown(function(event) {
- //   if (event.which==13) {
-
-//	if ($.trim($("#add_cussup").val())=="") {
-  //          $("#role-blank-alert").alert();
-    //        $("#role-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-      //        $("#role-blank-alert").hide();
-        //    });
-          //  $("#add_cussup").focus();
-            //return false;
-         // }
-         // event.preventDefault();
-         // $("#add_cussup_name").focus().select();
-      //  }
-     // });
+  $("#add_cussup_name").focus()
+ 
   $("#add_cussup_name").keydown(function(event) {
     if (event.which==13) {
     	if ($.trim($("#add_cussup_name").val())=="") {
@@ -244,7 +230,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
   $("#add_cussup_pan").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      if($("#vatorgstflag").val() == '22'){
+      if($("#vatorgstflag").val() == '22'|| $("#vatorgstflag").val() =='29' ){
 	    $("#add_cussup_tan").focus().select();
 	}
 	else {
@@ -282,9 +268,7 @@ else{
   $("#cussup_save").click(function(event) {
       //save event for saving the customer/supplier
     event.preventDefault();
-   // var custsupdata=$("#add_cussup option:selected").val(); //select with option either customer or supplier
-    // custsupdata = 3 if customer or 19 if supplier
-
+  
     var custsupval;
     if ($("#deliverychallan_gkstatus").val()=='in' || $('#status').val()=='9') {
       custsupval= 19;
@@ -292,25 +276,16 @@ else{
     else {
       custsupval = 3 ;
     }
-    // custsupdata = 3 if customer or 19 if supplier
+    // custsupval= 3 if customer or 19 if supplier
 
     var groupcode = -1;
-    if (custsupval  == '3'){
+    if (custsupval == '3'){
       groupcode = $("#debtgroupcode").val();
     }
     else {
       groupcode = $("#credgroupcode").val();
     }
-    //validations to check if none of the required fields are left blank
-   // if ($.trim($("#add_cussup option:selected").val())=="") {
-     // $("#cussup-blank-alert").alert();
-    //  $("#cussup-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-     //   $("#cussup-blank-alert").hide();
-     // });
-    //  $("#add_cussup").focus();
-     // return false;
-   // }
-
+   
     if ($.trim($("#add_cussup_name").val())=="") {
       $("#name-blank-alert").alert();
       $("#name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
