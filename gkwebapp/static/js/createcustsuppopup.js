@@ -244,6 +244,9 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       $("#add_cussup_fax").focus().select();
     }
   });
+
+
+    /*
     $("#add_cussup_tan").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
@@ -266,7 +269,33 @@ else{
       event.preventDefault();
       return false;
     }
-  });
+    }); */
+
+  $("#add_cussup_tan").keydown(function(event) {
+    if (event.which==13) {
+	event.preventDefault();
+	if($("#vatorgstflag").val() == '22'){
+	    	if ($.trim($("#add_cussup_tan").val())=="") {
+            $("#tin-blank-alert").alert();
+            $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#tin-blank-alert").hide();
+            });
+            $("#add_cussup_tan").focus();
+            return false;
+        }
+          $("#cussup_save").focus();
+}
+else{
+	$(".gstinstate:first").focus();
+ }
+
+   }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#add_cussup_pan").focus().select();
+    }
+    });
+    
   $("#cussup_save").click(function(event) {
       //save event for saving the customer/supplier
     event.preventDefault();
@@ -366,11 +395,16 @@ else{
             success: function(resp)
             {
               if(resp["gkstatus"]==0)
-              {
-                  $('#selectedcustsup').val($.trim($("#add_cussup_name").val()));
-                if (custsupval == '3') {
+		{
+		var customeradded = $("#add_cussup_name").val();
+                $('#selectedcustsup').val(customeradded);
+
+            //    $('#selectedcustsup').val($.trim($("#add_cussup_name").val()));
+                      if (custsupval == '3') {
                   $("#cus-success-alert").alert();
                   $("#cus-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $('#custsupmodal').modal('hide');
+                    $('.modal-backdrop').remove();
                     $("#cus-success-alert").hide();
                   });
 
@@ -378,19 +412,19 @@ else{
                 else  {
                   $("#sup-success-alert").alert();
                   $("#sup-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $('#custsupmodal').modal('hide');
+                    $('.modal-backdrop').remove();
                     $("#sup-success-alert").hide();
                   });
 
                 }
-                $('#custsupmodal').modal('hide');
-                $('.modal-backdrop').remove();
-                return false;
+              return false;
               }
             }
-          }
-        );
-        return false;
-      }
+          });
+          return false;
+        }
+
       if(resp["gkstatus"] ==1){
           // gkstatus 1 implies its a duplicate entry.
           $("#add_cussup_name").focus();
