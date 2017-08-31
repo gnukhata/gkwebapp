@@ -373,8 +373,9 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
             });
 
           }
+	}
 
-    });
+	});
 
     $(document).off("keyup").on("keyup", function(event) {
         if (event.which == 45) {
