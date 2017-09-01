@@ -250,6 +250,13 @@ $(document).ready(function()
                                 invsflag=1;
                               billflag=0;
                             }
+
+                            if ($("#onlyaccradio").is(":checked")) {
+                              event.preventDefault();
+                                invflag=0;
+                                invsflag=0;
+                              billflag=0;
+                            }
                             });
 
       $("#btnsubmit").click(function(event){
@@ -392,6 +399,11 @@ $(document).ready(function()
           if ($("#onlyinvsradio").is(":checked")) {
               invflag=0;
               invsflag=1;
+            billflag=0;
+          }
+          if ($("#onlyaccradio").is(":checked")) {
+              invflag=0;
+              invsflag=0;
             billflag=0;
           }
 
