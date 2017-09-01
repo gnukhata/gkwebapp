@@ -103,6 +103,14 @@ $(document).ready(function() {
         $("#category_tax_table tbody tr:eq("+i+") td:eq(2) input").val(parenttaxes[i].taxrate);
       }
 	$("#category_tax_table tbody").append(taxfieldhtml);
+	for (var i = 1; i < curindex+1; i++) {
+          for (var j = 0; j < curindex; j++) {
+              if ($("#category_edit_tax_table tbody tr:eq("+j+") td:eq(0) select").val() == "VAT") {
+		  var selectedtaxstate = $("#category_edit_tax_table tbody tr:eq("+j+") td:eq(1) select option:selected").attr("stateid");
+            $('#category_edit_tax_table tbody tr:eq('+i+') td:eq(1) select option[stateid='+selectedtaxstate+']').prop('hidden', true).prop('disabled', true);
+	      }
+          }
+        }
 	$("#category_tax_table tbody tr:last td:eq(0) select").focus();
     });
     $(document).off("keydown", "#category_under").on("keydown", "#category_under", function(event) {
@@ -193,7 +201,6 @@ $(document).ready(function() {
                         '<button class="btn form-control btn-primary btn-sm child_tax_class" id="child_tax" data-toggle="modal" data-target="#addtaxmodal"   >Tax</button>' +
                         '</td>' +
                         '</tr>');
-                      $(".mchild_spec_name:last").focus();
 
                 })
                 .fail(function() {
@@ -395,24 +402,20 @@ $(document).ready(function() {
           $("#category_tax_table tbody tr:eq("+curindex+") td:eq(1) select").empty();
           $("#category_tax_table tbody tr:eq("+curindex+") td:eq(1) select").append(stateshtml);
           $("#category_tax_table tbody tr:eq("+curindex+") td:eq(1) select").prop('disabled', false);
-          if (curindex > 0) {
-            for (var i = 1; i < curindex+1; i++) {
-              for (var j = 0; j < curindex; j++) {
-                if ($("#category_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "CVAT") {
-                  i = i + 1;
-                }
-                let selectedtaxstate = $("#category_tax_table tbody tr:eq("+j+") td:eq(1) select option:selected").attr("stateid");
-                $('#category_tax_table tbody tr:eq('+i+') td:eq(1) select option[stateid='+selectedtaxstate+']').prop('hidden', true).prop('disabled', true);
-              }
-            }
-          }
         }
         else {
           $("#category_tax_table tbody tr:eq("+curindex+") td:eq(1) select").empty();
           $("#category_tax_table tbody tr:eq("+curindex+") td:eq(1) select").append('<option value="">None</option>');
           $("#category_tax_table tbody tr:eq("+curindex+") td:eq(1) select").prop('disabled', true);
         }
-        var selectedtaxname = $("#category_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val();
+	for (var i = 1; i < curindex+1; i++) {
+          for (var j = 0; j < curindex; j++) {
+              if ($("#category_tax_table tbody tr:eq("+j+") td:eq(0) select").val() == "VAT") {
+		  var selectedtaxstate = $("#category_tax_table tbody tr:eq("+j+") td:eq(1) select option:selected").attr("stateid");
+		  $('#category_tax_table tbody tr:eq('+i+') td:eq(1) select option[stateid='+selectedtaxstate+']').prop('hidden', true).prop('disabled', true);
+	      }
+          }
+        }
 
     });
     $(document).off("keydown", ".tax_rate").on("keydown", ".tax_rate", function(event) {
@@ -449,6 +452,8 @@ $(document).ready(function() {
 
 
                 $('#category_tax_table tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus().select();
+		var selectedtax = $("#category_tax_table tbody tr:eq("+curindex1+") td:eq(0) select option:selected").val();
+		$('#category_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedtax+']').prop('hidden', true).prop('disabled', true);
 
             }
         } else if (event.which == 190 && event.shiftKey) {
