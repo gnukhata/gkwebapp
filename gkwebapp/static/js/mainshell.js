@@ -703,6 +703,12 @@ var userrole1;
        billflag=0;
 
    }
+   if ($("#onlyaccradio").is(":checked"))
+   {
+     invflag=0;
+     invsflag=0;
+     billflag=0;
+ }
                 $.ajax({
                        url: '/editorganisation?action=orgpref',
                        type: "POST",
