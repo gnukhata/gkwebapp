@@ -37,12 +37,20 @@ var username1;
 var userrole1;
   $('.modal-backdrop').remove();
 
-  if(sessionStorage.invflag==1){
+    if(sessionStorage.invflag==1 ){
     $(".productinmaster").hide();
       $(".categoryinmaster").hide();
       $(".uominmaster").hide();
   }
 
+    (sessionStorage.invflag==0 && sessionStorage.invsflag==0 && sessionStorage.billflag==0)
+    {
+	$(".productinmaster").hide();
+	$(".categoryinmaster").hide();
+	$(".uominmaster").hide();
+	$('.inventorymenu').hide();
+	$('.invsbill').hide();
+    }
   if (sessionStorage.reload == 1)// The mainshell when loads for the first time its reloaded so that the javascript file can be fully loaded.
     {
       sessionStorage.reload = 0;
@@ -648,7 +656,10 @@ var userrole1;
         if (sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==0) {
           $('#onlyinvsradio').prop('checked', true);
         }
-        $("#invinvsbillradio").focus();
+	   if (sessionStorage.invflag==0 && sessionStorage.invsflag==0 && sessionStorage.billflag==0) {
+          $('#onlyaccradio').prop('checked', true);
+        }
+        $("#onlyaccradio").focus();
 
 
                     $("#invinvsbillradio").keydown(function(event) {

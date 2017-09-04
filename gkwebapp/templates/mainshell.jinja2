@@ -43,10 +43,10 @@
               <li><a class="mastermenu" data-toggle="tab" id="showproject" href="">{% trans %}Cost Center{% endtrans %}</a></li>
 
               <li><a class="mastermenu" data-toggle="tab" id="BRS" href="">{% trans %}Bank Reconciliation Statement{% endtrans %}</a></li>
-              <li><a class="addcategory categoryinmaster" data-toggle="tab" id="categoryinmaster" href="">{% trans %}Category{% endtrans %}</a></li>
-                <li><a  class="productinmaster" data-toggle="tab" id="productinmaster" href="" >Product/Service</a></li>
+              <li><a class="addcategory categoryinmaster " data-toggle="tab" id="categoryinmaster" href="">{% trans %}Category{% endtrans %}</a></li>
+                <li><a  class="productinmaster " data-toggle="tab" id="productinmaster" href="" >Product/Service</a></li>
 
-		<li><a class="uominmaster" data-toggle="tab" id="uominmaster" href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
+		<li><a class="uominmaster " data-toggle="tab" id="uominmaster" href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
             </ul>
           </li>
           <li id="inventorydropdown" class="dropdown closebooks inventory_hide">
@@ -266,20 +266,20 @@
           {% trans %}Organisation Preferences updated.{% endtrans %}
         </div>
 
-                        <div class="form-group">
-                		<div class="radio">
-                		  <label><input type="radio" class="iib" name="orgpref" id="invinvsbillradio" aria-label="" checked> &nbsp {% trans %}Inventory with Invoicing and Billwise Accounting{% endtrans %}.</label>
+        <div class="form-group">
+	  <div class="radio">
+	    <label><input type="radio" class="iib" name="orgpref" id="onlyaccradio" aria-label="" checked>&nbsp {% trans %}Accounting only{% endtrans %}.</label>
+        </div>
+	<div class="radio">
+          <label><input type="radio" class="iib" name="orgpref" id="onlyinvsradio" aria-label="">&nbsp {% trans %}Invoicing only{% endtrans %}.</label>
+        </div>
+	<div class="radio">
+          <label><input type="radio" class="iib" name="orgpref" id="invsbillradio" aria-label="">&nbsp {% trans %}Invoicing with Billwise Accounting{% endtrans %}.</label>
+	</div>
+        <div class="radio">
+                		  <label><input type="radio" class="iib" name="orgpref" id="invinvsbillradio" aria-label=""> &nbsp {% trans %}Inventory with Invoicing and Billwise Accounting{% endtrans %}.</label>
                 		</div>
-                		<div class="radio">
-                		  <label><input type="radio" class="iib" name="orgpref" id="invsbillradio" aria-label="">&nbsp {% trans %}Invoicing with Billwise Accounting{% endtrans %}.</label>
-                		</div>
-
-                		<div class="radio">
-                		  <label><input type="radio" class="iib" name="orgpref" id="onlyinvsradio" aria-label="">&nbsp {% trans %}Invoicing only{% endtrans %}.</label>
-                		</div>
-                    <div class="radio">
-                		  <label><input type="radio" class="iib" name="orgpref" id="onlyaccradio" aria-label="">&nbsp {% trans %}Accounting only{% endtrans %}.</label>
-                		</div>
+              
                 	      </div>
 
         <button type="button" class="btn btn-success" id ="orgprefsave" accesskey="s"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
