@@ -101,20 +101,20 @@
                 <br>
 
                 <div class="form-group">
-        		<div class="radio">
-        		  <label><input type="radio" class="iib" name="iib" id="invinvsbillradio" aria-label="" checked>&nbsp {% trans %}Inventory with Invoicing and Billwise Accounting{% endtrans %}.</label>
-        		</div>
-        		<div class="radio">
-        		  <label><input type="radio" class="iib" name="iib" id="invsbillradio" aria-label="">&nbsp {% trans %}Invoicing with Billwise Accounting{% endtrans %}.</label>
-        		</div>
+		  <div class="radio">
+        	    <label><input type="radio" class="iib" name="iib" id="onlyaccradio" aria-label="" checked>&nbsp {% trans %}Accounting only{% endtrans %}.</label>
+        	  </div>
+		  <div class="radio">
+        	    <label><input type="radio" class="iib" name="iib" id="onlyinvsradio" aria-label="">&nbsp {% trans %}Invoicing only{% endtrans %}.</label>
+        	  </div>
+		  <div class="radio">
+        	    <label><input type="radio" class="iib" name="iib" id="invsbillradio" aria-label="">&nbsp {% trans %}Invoicing with Billwise Accounting{% endtrans %}.</label>
+        	  </div>
 
-        		<div class="radio">
-        		  <label><input type="radio" class="iib" name="iib" id="onlyinvsradio" aria-label="">&nbsp {% trans %}Invoicing only{% endtrans %}.</label>
+        	  <div class="radio">
+        	    <label><input type="radio" class="iib" name="iib" id="invinvsbillradio" aria-label="" >&nbsp {% trans %}Inventory with Invoicing and Billwise Accounting{% endtrans %}.</label>
         		</div>
-            <div class="radio">
-        		  <label><input type="radio" class="iib" name="iib" id="onlyaccradio" aria-label="">&nbsp {% trans %}Accounting only{% endtrans %}.</label>
-        		</div>
-        	      </div>
+               	      </div>
 
                 <button class="btn btn-success" id="btnsubmit" type="submit" accesskey="p"><span class="glyphicon glyphicon-arrow-right"></span>{% trans %}<u>P</u>roceed{% endtrans %}</button>
               </div>
