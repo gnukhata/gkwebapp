@@ -96,8 +96,9 @@
                 </div>
                 <div class="row">
                   <div class="col-xs-12">
-                    <small id="navigationnewparent" class="form-text text-muted">Press 'Tab'  to move forward and 'Shift + Tab'  to move backward through the fields.</small>
-		    <small id="backhelp" class="form-text text-muted">Press 'Esc'  to go back.</small><br>
+                    <small id="navigationnewparent" class="form-text text-muted">Press 'Tab'  to move forward and 'Shift + Tab'  to move backward through the fields.</small><br>
+		    <small id="savehelp" class="form-text text-muted">Press 'Insert'  to save.</small>
+		    <small id="backhelp" class="form-text text-muted">Press 'Esc'  to go back.</small>
                   </div>
                 </div>
               </div>
@@ -357,7 +358,7 @@
                       </td>
                       <td class="col-xs-4">
                         <select class="form-control input-sm tax_state" >
-                          <option value="">None</option>
+                          <option value="" hidden disabled selected>None</option>
                           {% for state in states %}
 			    {% for key, value in state.items() %}
 			      <option value="{{value}}" stateid="{{key}}">{{value}}</option>

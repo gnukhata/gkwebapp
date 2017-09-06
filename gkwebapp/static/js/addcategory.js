@@ -103,7 +103,8 @@ $(document).ready(function() {
         $("#category_tax_table tbody tr:eq("+i+") td:eq(2) input").val(parenttaxes[i].taxrate);
       }
 	$("#category_tax_table tbody").append(taxfieldhtml);
-	$("#category_tax_table tbody tr").each(function(){
+	if($("#category_tax_table tbody tr").length > 1){
+	    $("#category_tax_table tbody tr").each(function(){
 	    let curindex = $(this).index();
 	    let nextindex = curindex + 1;
 	    for (let j = 0; j < curindex + 1; j++) {
@@ -115,6 +116,7 @@ $(document).ready(function() {
 	      }
 	  }
 	});
+	}
 	$("#category_tax_table tbody tr:last td:eq(0) select").focus();
     });
     $(document).off("keydown", "#category_under").on("keydown", "#category_under", function(event) {
@@ -404,7 +406,8 @@ $(document).ready(function() {
         var previndex = curindex -1;
         if ($("#category_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='VAT') {
           $("#category_tax_table tbody tr:eq("+curindex+") td:eq(1) select").empty();
-          $("#category_tax_table tbody tr:eq("+curindex+") td:eq(1) select").append(stateshtml);
+            $("#category_tax_table tbody tr:eq("+curindex+") td:eq(1) select").append(stateshtml);
+	    $("#category_tax_table tbody tr:eq("+curindex+") td:eq(1) select option:visible").first().prop("selected",true);
           $("#category_tax_table tbody tr:eq("+curindex+") td:eq(1) select").prop('disabled', false);
         }
         else {

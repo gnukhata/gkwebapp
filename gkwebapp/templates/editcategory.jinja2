@@ -155,7 +155,7 @@
 			</td>
 			<td class="col-xs-4">
                           <select class="form-control input-sm tax_state category_edit_disable" >
-                            <option value="">None</option>
+                            <option value="" hidden disabled selected>None</option>
                             {% for state in states %}
 			      {% for key, value in state.items() %}
 				<option value="{{value}}" stateid="{{key}}">{{value}}</option>
