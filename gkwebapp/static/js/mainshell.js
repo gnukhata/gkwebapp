@@ -37,12 +37,6 @@ var username1;
 var userrole1;
   $('.modal-backdrop').remove();
 
-    if(sessionStorage.invflag==1 ){
-    $(".productinmaster").hide();
-      $(".categoryinmaster").hide();
-      $(".uominmaster").hide();
-  }
-
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==0 && sessionStorage.billflag==0) {
       $(".productinmaster").hide();
       $(".categoryinmaster").hide();
@@ -50,17 +44,40 @@ var userrole1;
       $('.inventorymenu').hide();
       $('.invsbill').hide();
       $("#customersupplier").hide();
-      $('.inventory_hide').hide();
+      $(".inventory_hide").hide();
       $("#showbillwiseaccounting").hide();
+      $(".invoicemenu").hide();
     }
 
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==0) {
         $('.invoicemenu').show();
         $(".productinmaster").show();
       	$(".categoryinmaster").show();
+        $(".uominmaster").show();
         $(".inventorymenu").hide();
         $('.inventory_hide').hide();
         $("#showbillwiseaccounting").hide();
+    }
+
+    if(sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
+      $(".productinmaster").show();
+      $(".categoryinmaster").show();
+      $("#customersupplier").show();
+      $(".uominmaster").show();
+      $("#showbillwiseaccounting").show();
+      $('.inventorymenu').hide();
+    	$('.inventory_hide').hide();
+    }
+
+    if(sessionStorage.invflag==1 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
+      $('.inventorymenu').show();
+      $('.invsbill').show();
+      $("#customersupplier").show();
+      $('.inventory_hide').show();
+      $("#showbillwiseaccounting").show();
+      $(".productinmaster").hide();
+      $(".categoryinmaster").hide();
+      $(".uominmaster").hide();
     }
 
   if (sessionStorage.reload == 1)// The mainshell when loads for the first time its reloaded so that the javascript file can be fully loaded.
@@ -80,7 +97,7 @@ var userrole1;
 	    $("#showbillwiseaccounting").remove();
 	    $("#customersupplier").remove();
 	}
-} */
+}
 
     if (sessionStorage.invsflag==0) { //If Inventory flag is set to 1 but Invoice flag is set to 0 only menu items related to invoicing and billwise acounting are hidden.
 	$('.invoicemenu').remove();
@@ -89,6 +106,12 @@ var userrole1;
     if (sessionStorage.billflag==0) {  //If both Inventory flag and Invoice flag are set to 1 but Billflag is set to 0  only Unadjusted Amounts is hidden
 	$("#showbillwiseaccounting").remove();
     }
+
+    if(sessionStorage.invflag==1 ){
+        $(".productinmaster").hide();
+          $(".categoryinmaster").hide();
+          $(".uominmaster").hide();
+      } */
   $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');// set the theme depending on users previous choice.
   $("#"+sessionStorage.gktheme+"span").show();
 
