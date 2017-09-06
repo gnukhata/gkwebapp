@@ -43,7 +43,7 @@ var userrole1;
       $(".uominmaster").hide();
   }
 
-    (sessionStorage.invflag==0 && sessionStorage.invsflag==0 && sessionStorage.billflag==0)
+    if(sessionStorage.invflag==0 && sessionStorage.invsflag==0 && sessionStorage.billflag==0)
     {
 	$(".productinmaster").hide();
 	$(".categoryinmaster").hide();
