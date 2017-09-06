@@ -508,11 +508,13 @@ $(document).ready(function() {
         });
         taxes = [];
         $("#category_tax_table tbody tr").each(function() {
-            var obj = {}; // dict for storing tax details
-	    obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
-	    obj.state = $.trim($("td:eq(1) select option:selected", this).val());
-	    obj.taxrate = $.trim($("input", this).val());
-	    taxes.push(obj);
+            if ($.trim($("input", this).val()) != "") {
+		var obj = {}; // dict for storing tax details
+		obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
+		obj.state = $.trim($("td:eq(1) select option:selected", this).val());
+		obj.taxrate = $.trim($("input", this).val());
+		taxes.push(obj);
+	    }
         });
         $.ajax({
                 url: '/category?action=save',
@@ -561,6 +563,13 @@ $(document).ready(function() {
             .always(function() {
                 console.log("complete");
             });
+    });
+
+    $(document).off("keydown", "#new_parent_div1").on("keydown", "#new_parent_div1", function(event) {
+	if (event.which == 45) {
+            event.preventDefault();
+	    $("#parent_save").click();
+	}
     });
 
     $(document).off("keydown", "#child_category_table").on("keydown", "#child_category_table", function(event) {
