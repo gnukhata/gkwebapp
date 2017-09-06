@@ -1268,7 +1268,12 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
           }
         });
         specdate = specyear+"-"+specmonth+"-"+specday; //Storing date in yyyyMMdd format
-        $(".spec_value",this).val(specdate); // Storing spec date in hidden filed
+        if (specyear!="" && specmonth!="" && specday!="") {
+	    $(".spec_value",this).val(specdate); // Storing spec date in hidden filed
+	  }
+	  else{
+	      $(".spec_value",this).val("");
+	  }
       }
       if ($.trim($(".spec_name",this).val())!=""){
         if ($.trim($(".spec_name",this).val())!="" && $.trim($(".spec_value",this).val())!="" ) {
@@ -1279,7 +1284,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
     var taxes = [];
     $("#product_edit_tax_table tbody tr").each(function(){
       var obj = {};
-      curindex = $(this).index();
+      let curindex = $(this).index();
       if ($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()!="") {
         obj.taxrowid = $("#product_edit_tax_table tbody tr:eq("+curindex+")").attr('value');
         obj.taxname = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select option:selected").val();
@@ -1289,7 +1294,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
       }
     });
     for (tax of existingnonetax) {
-      var obj = {};
+      let obj = {};
       obj.taxrowid = tax["taxid"];
       obj.taxname = tax["taxname"];
       obj.state = tax["state"];

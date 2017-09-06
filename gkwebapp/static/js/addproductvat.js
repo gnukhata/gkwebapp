@@ -1022,7 +1022,12 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
         }
       });
       specdate = specyear+"-"+specmonth+"-"+specday; //Storing date in yyyyMMdd format
-      $(".spec_value",this).val(specdate); // Storing spec date in hdden field
+      if (specyear!="" && specmonth!="" && specday!="") {
+	    $(".spec_value",this).val(specdate); // Storing spec date in hidden filed
+	  }
+	  else{
+	      $(".spec_value",this).val("");
+	  }
     }
     if ($.trim($(".spec_name",this).val())!=""){
       if ($.trim($(".spec_name",this).val())!="" && $.trim($(".spec_value",this).val())!="" ) {
