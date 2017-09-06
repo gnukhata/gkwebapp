@@ -43,14 +43,26 @@ var userrole1;
       $(".uominmaster").hide();
   }
 
-    if(sessionStorage.invflag==0 && sessionStorage.invsflag==0 && sessionStorage.billflag==0)
-    {
-	$(".productinmaster").hide();
-	$(".categoryinmaster").hide();
-	$(".uominmaster").hide();
-	$('.inventorymenu').hide();
-	$('.invsbill').hide();
+    if(sessionStorage.invflag==0 && sessionStorage.invsflag==0 && sessionStorage.billflag==0) {
+      $(".productinmaster").hide();
+      $(".categoryinmaster").hide();
+      $(".uominmaster").hide();
+      $('.inventorymenu').hide();
+      $('.invsbill').hide();
+      $("#customersupplier").hide();
+      $('.inventory_hide').hide();
+      $("#showbillwiseaccounting").hide();
     }
+
+    if(sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==0) {
+        $('.invoicemenu').show();
+        $(".productinmaster").show();
+      	$(".categoryinmaster").show();
+        $(".inventorymenu").hide();
+        $('.inventory_hide').hide();
+        $("#showbillwiseaccounting").hide();
+    }
+
   if (sessionStorage.reload == 1)// The mainshell when loads for the first time its reloaded so that the javascript file can be fully loaded.
     {
       sessionStorage.reload = 0;
@@ -58,8 +70,9 @@ var userrole1;
     }
   var oninvoice = 0;// This variable is set to 1 only when its in the print page of invoice, cashmemo or deliverychallan or transfernote. Reason: The organisation details that appear in all print pages of GNUKhata is not required in the pages where its set to 1.
     $("#msspinmodal").modal("hide"); //Hides the loading spinner.
+
     //Checking flags set according organisation preferences.
-    if (sessionStorage.invflag==0) {  //When Inventory flag is set to 0 Inventory menu is removed.
+    /* if (sessionStorage.invflag==0) {  //When Inventory flag is set to 0 Inventory menu is removed.
 	$('.inventorymenu').remove();
 	$('.inventory_hide').remove();
 	if (sessionStorage.invsflag==0) {  //If Invoice flag is also set to 0 menu items related to Invoice and Bill Wise Accounting are also removed.
@@ -67,7 +80,8 @@ var userrole1;
 	    $("#showbillwiseaccounting").remove();
 	    $("#customersupplier").remove();
 	}
-    }
+} */
+
     if (sessionStorage.invsflag==0) { //If Inventory flag is set to 1 but Invoice flag is set to 0 only menu items related to invoicing and billwise acounting are hidden.
 	$('.invoicemenu').remove();
 	$("#showbillwiseaccounting").remove();
