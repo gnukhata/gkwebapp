@@ -126,6 +126,17 @@
                 </tbody>
               </table>
             </div>
+            <small id="taxhelp4" class="form-text text-muted common">Press 'Insert' key from anywhere on the screen to save changes.</small>
+            <div class="collapse" id="moresmall">
+              <small id="taxhelp2" class="form-text text-muted ">Press 'Ctrl + >' to move forward or 'Ctrl + <' to move backward within a row in a table.</small><br>
+              <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to move backward within a Column in a table.</small>
+	      {% if not godown %}
+		<small  class="form-text text-muted productclass">Press 'Esc' key to shift focus from Tax Rate or Tax Name  to Opening Stock or from Opening Stock to 'Save' button.</small>
+              {% else %}
+		<small  class="form-text text-muted " id="godownmsg">Press 'Esc' key to shift focus from Tax Rate or Tax Name  to Godown Name or from Godown Opening Stock to 'Save' button.</small>
+              {% endif %}	      
+            </div>
+            <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
           </div>
         </div>
         <div class="row noinventory">
@@ -223,41 +234,11 @@
               </div>
             </div>
             {% endif %}
-            <div id="CatModal"  tabindex="-1" class="modal fade " role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
-  <div class="modal-dialog bgcolor " >
-    <div class="modal-content ">
-    <div class="modal-header">
-      {% trans %}<strong>Help!</strong>{% endtrans %}
-   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button> </div>
-      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-
-       <p>   <font color=" #566573"> {%trans%}
-This module lets you add Products.
-</br> If you have created Categories (at least one is highly recommended) you can select a suitable Category for a Product. When you select a Category the screen immediately changes and presents you the specifications list where you can enter the details pertaning to the product.
-</br>Alternatively you may create a Product without a Category and or Sub-Category with all its specifications.
-You can also create a Unit of Measurement. Note that you can choose a Unit of measurement previously created or create one. </br>
-you can also enter the details of taxes for the product. {%endtrans %} </font>
-
-        </p>
-      </div>
-
-    </div>
-  </div>
-</div>
             </div>
-            <small id="taxhelp3" class="form-text text-muted">When on Tax Rate or Tax Name press 'Esc' key to shift focus to Godown Name or from Godown Opening Stock to 'Save' button.</small><br>
-            <small id="taxhelp4" class="form-text text-muted">Press 'Insert' key from anywhere on the screen to save changes.</small>
-            <div class="collapse" id="moresmall">
-              <small id="taxhelp2" class="form-text text-muted">Press 'Ctrl + >' to move forward or 'Ctrl + <' to move backward within a row in the Tax or Godown table.</small><br>
-              <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to move backward within a Column in the Tax or Godown table.</small>
-            </div>
-            <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
-          </div>
         </div>
       </div>
-      </form>
+	</form>
+      </div>
     <div class="btn-group-sm panel-footer">
       <div class="container-fluid">
         <button class="btn btn-success btn-sm" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save">{% trans %}<u>S</u>ave{% endtrans %}</button>
@@ -265,10 +246,34 @@ you can also enter the details of taxes for the product. {%endtrans %} </font>
         <button id="addgodown" class="btn btn-info btn-sm" accesskey="a">{% trans %}<u>A</u>dd Godown{% endtrans %}</button>
       </div>
     </div>
+    </div>
+    </div>
   </div>
-</div>
-<div id="addgodownpopup">
+  <div id="addgodownpopup">
 
-</div>
-<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addproductvat.js')}}"></script>
+  </div>
+  <div id="CatModal"  tabindex="-1" class="modal fade " role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
+    <div class="modal-dialog bgcolor " >
+      <div class="modal-content ">
+        <div class="modal-header">
+          <strong>{% trans %}Help!{% endtrans %}</strong>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button> </div>
+        <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+
+          <p>   <font color=" #566573"> {%trans%}
+            This module lets you add Products.{% endtrans %}
+            </br> {% trans %}If you have created Categories (at least one is highly recommended) you can select a suitable Category for a Product. When you select a Category the screen immediately changes and presents you the specifications list where you can enter the details pertaning to the product.{% endtrans %}
+            </br>{% trans %}Alternatively you may create a Product without a Category and or Sub-Category with all its specifications.
+            You can also create a Unit of Measurement. Note that you can choose a Unit of measurement previously created or create one. </br>
+            you can also enter the details of taxes for the product. {%endtrans %} </font>
+
+          </p>
+        </div>
+
+      </div>
+    </div>
+    </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addproductvat.js')}}"></script>
 </body>

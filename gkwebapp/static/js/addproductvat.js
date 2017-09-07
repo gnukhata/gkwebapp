@@ -306,7 +306,7 @@ $("#addcatselect").change(function(event) {
           $('#product_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
           $('#product_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
         }
-
+	  $(".tax_del:first").hide();
       }
     })
     .fail(function() {
