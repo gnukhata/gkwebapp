@@ -100,9 +100,9 @@ $(document).ready(function()
   });
 
   $('.vdate').autotab('number');
-  $('input,select').keydown( function(e) {
-    var n = $("input,select").length;
-    var f = $('input,select');
+  $('input:text,select').keydown( function(e) {
+    var n = $('input:text,select').length;
+    var f = $('input:text,select');
     if (e.which == 13)
     {
 
@@ -223,36 +223,46 @@ $(document).ready(function()
         $("#toyear").val(endyear);
       });
       $("#toyear").keydown(function(event) {
-        if (event.which==13) {
+          if (event.which==13) {
+	      event.preventDefault();
           $(this).val(yearpad($(this).val(),4));
           $('#onlyaccradio').focus();
         }
       });
 
+     $(".iib").keydown(function(event) {
+          if (event.which==13) {
+	      event.preventDefault();
+          $('#btnsubmit').focus();
+        }
+      });
+
+
+    
               $(document).off('change', '.iib').on('change', '.iib', function(event) {
                           if ($("#invinvsbillradio").is(":checked")) {
-                            event.preventDefault();
+                          //  event.preventDefault();
                               invflag=1;
                               invsflag=1;
                               billflag=1;
                           }
                           if ($("#invsbillradio").is(":checked")) {
-                            event.preventDefault();
-                              invflag=0
+                            //event.preventDefault();
+                              invflag=0;
                               invsflag=1;
                             billflag=1;
-                            console.log("Rohini");
+                            
                           }
 
                             if ($("#onlyinvsradio").is(":checked")) {
-                              event.preventDefault();
+                            //  event.preventDefault();
                                 invflag=0;
                                 invsflag=1;
                               billflag=0;
                             }
 
                             if ($("#onlyaccradio").is(":checked")) {
-                              event.preventDefault();
+                              //event.preventDefault();
                                 invflag=0;
                                 invsflag=0;
                               billflag=0;
