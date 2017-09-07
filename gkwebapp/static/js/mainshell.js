@@ -661,55 +661,33 @@ var userrole1;
     $("#orgpref").click(function (e){
 
       $("#orgprefmodal").modal('show');
-      // creates a modal(dialog box) asking user to activate inventory or not.
+      // creates a modal(dialog box) asking user to choose between org preferences .
 
       $("#orgprefmodal").on('shown.bs.modal', function(event) {
 
         if (sessionStorage.invflag==1 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
-          $('#invinvsbillradio').prop('checked', true);
+            $('#invinvsbillradio').focus().prop('checked', true);
         }
         if (sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
-          $('#invsbillradio').prop('checked', true);
+            $('#invsbillradio').focus().prop('checked', true);
         }
         if (sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==0) {
-          $('#onlyinvsradio').prop('checked', true);
+            $('#onlyinvsradio').focus().prop('checked', true);
         }
 	   if (sessionStorage.invflag==0 && sessionStorage.invsflag==0 && sessionStorage.billflag==0) {
-          $('#onlyaccradio').prop('checked', true);
+               $('#onlyaccradio').focus().prop('checked', true);
         }
-        $("#onlyaccradio").focus();
+      
 
-
-                    $("#invinvsbillradio").keydown(function(event) {
+                    $(".iib").keydown(function(event) {
                         if (event.which==13) {
                           event.preventDefault();
-                          $('#invsbillradio').focus();
+                          $('#orgprefsave').focus();
 
                       }
                     });
 
-                      $("#invsbillradio").keydown(function(event) {
-                        if (event.which==13) {
-                          event.preventDefault();
-                          $('#onlyinvsradio').focus();
-                        }
-			  if (event.which == 38) {
-			      event.preventDefault();
-			      $("#invinvsbillradio").focus();
-			  }
-                      });
-
-                      $("#onlyinvsradio").keydown(function(event) {
-                          if (event.which==13) {
-			      event.preventDefault();
-                          $("#orgprefsave").focus();
-                        }
-			   if (event.which == 38) {
-			      event.preventDefault();
-			      $('#invsbillradio').focus();
-
-			  }
-                      });
+                
 
        $("#orgprefsave").click(function(event){
          if ($("#invinvsbillradio").is(":checked"))
