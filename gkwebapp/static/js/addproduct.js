@@ -5,18 +5,6 @@ $(document).ready(function() {
 $(".serviceclass").hide();
 $(".productclass").hide();
   $(".common").hide();
-  
-if (sessionStorage.invflag==0){
-  $(".noinventory").hide();
-  $("#nogodownmsg").show();
-}
-if (sessionStorage.invflag=='1' ){
-  $("#nogodownmsg").hide();
-
-  $("#godownmsg").show();
-}
-
-  //$("#proservlabel").text("Product Name :");
 
   var godownflag = 0;
   $('.modal-backdrop').remove();
