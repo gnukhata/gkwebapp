@@ -96,10 +96,8 @@
                   <label class="sr-only" for="toyear">{% trans %}Enter To Year{% endtrans %}</label>
                   <input type="text" id="toyear" name="toyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
 
-
                 </div>
-                <br>
-
+        
                 <div class="form-group">
 		  <div class="radio">
         	    <label><input type="radio" class="iib" name="iib" id="onlyaccradio" aria-label="" checked>&nbsp {% trans %}Accounting only{% endtrans %}.</label>
@@ -113,7 +111,8 @@
 
         	  <div class="radio">
         	    <label><input type="radio" class="iib" name="iib" id="invinvsbillradio" aria-label="" >&nbsp {% trans %}Inventory with Invoicing and Billwise Accounting{% endtrans %}.</label>
-        		</div>
+        	  </div>
+		  <small id="txtareahelp" class="form-text text-muted">{% trans %}Use 'Up' & 'Down' arrow keys to navigate and press 'Enter' key to proceed .{% endtrans %}</small><br>
                	      </div>
 
                 <button class="btn btn-success" id="btnsubmit" type="submit" accesskey="p"><span class="glyphicon glyphicon-arrow-right"></span>{% trans %}<u>P</u>roceed{% endtrans %}</button>

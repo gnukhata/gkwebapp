@@ -235,8 +235,14 @@ $(document).ready(function()
 	      event.preventDefault();
           $('#btnsubmit').focus();
         }
-      });
+     });
 
+     $("#onlyaccradio").keydown(function(event) {
+          if (event.which==38) {
+	      event.preventDefault();
+          $('#toyear').focus();
+        }
+     });
 
     
               $(document).off('change', '.iib').on('change', '.iib', function(event) {
