@@ -77,13 +77,15 @@ $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
 $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
   event.preventDefault();
   /* Act on the event */
-  if ($(this).val()=="")
+    if ($(this).val()=="" && !$(this).hasClass("hsn"))
   {
     $(this).val(parseFloat(0).toFixed(2));
   }
   else
-  {
-    $(this).val(parseFloat($(this).val()).toFixed(2));
+    {
+	if(!$(this).hasClass("hsn")){
+	    $(this).val(parseFloat($(this).val()).toFixed(2));
+	}
   }
 });
 
@@ -1336,7 +1338,7 @@ else{
   }
 }
 
-  if ($("#openingstock").val()=="")
+    if ($("#openingstock").val()=="")
   {
     $('.modal-backdrop').remove();
     $("#openingstock").val("0.00");

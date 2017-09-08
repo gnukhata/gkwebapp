@@ -25,7 +25,7 @@
 	      {% if not gkresult["category"] %}
 		
 		<div class="form-group col-sm-11" >
-		    <small id="txtareahelp" class="form-text text-muted common">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
+		  <small id="txtareahelp" class="form-text text-muted common">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
 		  </div>
 		{% else %}
 		  <input value="1" id="catg" hidden>
@@ -51,7 +51,7 @@
 	      {%if vatorgstflag=='7' or vatorgstflag=='29'%}
 		<div class="form-group col-sm-11 pd ">
                   <label for="addproddesc" class="common" id="gscodelabel" >{% trans %}HSN code{% endtrans %} :</label><label for="gscode" class="common" ></label>
-                  <input type='text' class="form-control input-sm common" name="gscode"  id="hsnno" placeholder="Alphanumeric">
+                  <input type='text' class="form-control input-sm common numtype hsn" name="gscode"  id="hsnno">
 		</div>
 	      {% endif %}
             </div>

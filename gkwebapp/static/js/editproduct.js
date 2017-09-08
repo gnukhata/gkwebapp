@@ -28,13 +28,15 @@ $(document).ready(function() {
   $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
     event.preventDefault();
     /* Act on the event */
-    if ($(this).val()=="")
+      if ($(this).val()=="" && !$(this).hasClass("hsn"))
     {
     $(this).val(parseFloat(0).toFixed(2));
     }
     else
     {
-      $(this).val(parseFloat($(this).val()).toFixed(2));
+	if(!$(this).hasClass("hsn")){
+            $(this).val(parseFloat($(this).val()).toFixed(2));
+        }
     }
   });
 
@@ -45,7 +47,7 @@ $(document).ready(function() {
       $("#editopeningstockdiv").show();
     }
     else {
-      $("#editgodownflag").val(0);
+	$("#editgodownflag").val(0);
       $("#editopeningstockdiv").hide();
       $("#editnogodown").show();
     }

@@ -1,7 +1,7 @@
 <div class="col-sm-6" style="margin-top: -18;">
   <div class="editpr">
   <div class="row">
-    <input type="hidden" id="gsflag" name="gsflag" value="{{proddesc["gsflag"]}}">
+    <input id="gsflag" name="gsflag" value="{{proddesc["gsflag"]}}" hidden>
     <div class="form-group col-sm-11 pd">
 
       {%if category|length > 0 %}
@@ -47,7 +47,7 @@
     {%else%}
     <label for="addproddesc" class="" id="hsnorservnolabel">New Accounting Code for Service :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
     {%endif%}
-    <input type='text' class="form-control input-sm " name="gscode"  id="gscode" placeholder="Alphanumeric" value="{{proddesc['gscode']}}">
+    <input type='text' class="form-control input-sm numtype hsn" name="gscode"  id="gscode" value="{{proddesc['gscode']}}">
   </div>
 </div>
   {% if proddesc["gsflag"]==7 %}
@@ -121,7 +121,6 @@
   <div class="row">
     <div class="form-group taxdiv">
       <div class="panel taxinnerdiv">
-	<div class="panel-body nopadding">
     <table id="product_edit_tax_table" class="table table-condensed table-bordered fixed-table">
       <thead class="bg-primary input-sm">
         <tr>
@@ -195,7 +194,6 @@
         </tr>
       </tbody>
     </table>
-    </div>
       <input type="text" name="inv" id="invflag" value="1" hidden>
     </div>
     <small id="taxhelp4" class="form-text text-muted common">Press 'Insert' key from anywhere on the screen to save changes.</small>
