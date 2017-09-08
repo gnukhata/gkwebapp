@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>{% trans %}GNUKhata v4.25 beta{% endtrans %}</title>
+  <title>{% trans %}GNUKhata v4.25{% endtrans %}</title>
   <link rel="stylesheet" type="text/css" media="screen" href="{{request.static_url('gkwebapp:static/css/bootstrap.min.css')}}">
   <link rel="stylesheet" type="text/css" media="screen" href="{{request.static_url('gkwebapp:static/css/font-awesome.min.css')}}">
 
@@ -195,9 +195,11 @@
        <p>   <font color=" #566573"> {%trans%}
 
 This screen provides you with three options: Create Organization, Select Organizations and Select Language. <br>
-If you are running GNUKhata for the first time then Creat Organization Tab will be active.</br>
+If you are running GNUKhata for the first time then Create Organization Tab will be active by default.</br>
 You can choose language at any time. Presently GNUKhata has English (default), Marathi and Malayalam languages.
-In this module you have to enter the name of organization, choose it's type (Profit Making or Not for Profit ) and then enter the financial year. To activate Inventory module click on the checkbox or use space bar.
+	 In this module you have to enter the name of organization, choose it's type (Profit Making or Not for Profit ) and then enter the financial year.
+	 You can select 4 modes of operations varying in the number of features they provide. The least features comes in the accounting only option. Choose this if you only wish to maintain books of account.
+	 
 Note that you can use enter key to move to the next field and up arrow to move to earlier field.
 Tab and Shift tab options are also available by default for navigation.</br>
 Next screen will allow you to create admin user.
