@@ -11,6 +11,7 @@
 * While creating organisation, instead of enabling/disabling inventory there are four options to choose from. These can be changed later from Organisation Preferences.
 * Provision to Add Bank Details in Vouchers, Invoice and Cash Memo.
 * Printing of Vouchers.
+
 [8-April-2017 Release 4.0 Update]
 * Enhancement in Context sensitive help.
 * Voucher now shows DR/CR along with account balance.
