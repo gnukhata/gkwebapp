@@ -35,7 +35,7 @@ $(".productclass").hide();
   $("#additem").change(function(event) {
     if($("#additem option:selected").val() == '7') {
 
-      $(".serviceclass").hide();
+	$(".serviceclass").hide();
       $(".productclass").show();
       $("#proservlabel").text("Product Name :");
       $("#gscodelabel").text("HSN Code :");
@@ -504,7 +504,7 @@ $("#addcatselect").change(function(event) {
         specspresent = 1;
       }
       else {
-        specspresent = 0;
+          specspresent = 0;
       }
     })
     .fail(function() {
@@ -1412,6 +1412,22 @@ else{
     }
 
   });
+    if(taxes.length == '0'){
+	if($("#additem option:selected").val() == 7){
+	    $("#tax-alert").alert();
+            $("#tax-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#tax-alert").hide();
+            });
+            return false;
+	}
+	else {
+	    $("#tax-service-alert").alert();
+            $("#tax-service-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#tax-service-alert").hide();
+            });
+            return false;
+	}
+    }
     
   var gobj = {}; // Creating a dictionary for storing godown wise opening stock
   $("#godown_ob_table tbody tr").each(function(){
@@ -1455,7 +1471,7 @@ else{
   .done(function(resp) {
     if (resp["gkstatus"] ==0) {
 
-      //$("#addproduct").click();
+	//$("#addproduct").click();
       if(sessionStorage.invflag==0){
         $("#product").click();
       }
@@ -1481,7 +1497,7 @@ else{
       });
 	}
       $("#addproddesc").focus();
-      $("#addproddesc").select();
+	$("#addproddesc").select();
       return false;
     }
     console.log("success");
