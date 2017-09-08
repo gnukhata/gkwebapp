@@ -1363,9 +1363,10 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
     event.stopPropagation();
   });
 
-
+    
   $('#epdelete').click(function(event) {
-    event.preventDefault();
+      event.preventDefault();
+      var gsflag = $("#gsflag").val();
     /* Act on the event */
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
@@ -1393,18 +1394,36 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
           else {
             $("#editproduct").click();
           }
-          $("#deletesuccess-alert").alert();
-          $("#deletesuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#deletesuccess-alert").hide();
+	    if(gsflag == '7'){
+		$("#deleteproduct-success-alert").alert();
+		$("#deleteproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#deleteproduct-success-alert").hide();
           });
+	    }
+	    else {
+		$("#deleteservice-success-alert").alert();
+                $("#deleteservice-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#deleteservice-success-alert").hide();
+                });
+                return false;
+	    }
         }
         else if(resp["gkstatus"] == 5) {
           $("#prodselect").focus();
-          $("#failure-delete-alert").alert();
-          $("#failure-delete-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#failure-delete-alert").hide();
-          });
-          return false;
+            if(gsflag == '7'){
+		$("#failure-delete-alert").alert();
+                $("#failure-delete-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#failure-delete-alert").hide();
+                });
+                return false;
+            }
+	    else {
+		$("#failure-service-delete-alert").alert();
+                $("#failure-service-delete-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#failure-service-delete-alert").hide();
+                });
+                return false;
+	    }
         }
       })
       .fail(function() {

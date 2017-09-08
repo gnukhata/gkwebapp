@@ -1,12 +1,12 @@
 <div class="col-sm-6" style="margin-top: -18;">
-<div class="editpr">
+  <div class="editpr">
   <div class="row">
-
+    <input type="hidden" id="gsflag" name="gsflag" value="{{proddesc["gsflag"]}}">
     <div class="form-group col-sm-11 pd">
 
       {%if category|length > 0 %}
 
-      <input hidden value="1" id="catg">
+	<input hidden value="1" id="catg">
         <div class="row">
           <div class="form-group col-sm-11" id="categorydiv">
           <label id="editcatselectlabel" for="editcatselect" class="">{% trans %}Category{% endtrans %} :</label>
@@ -25,14 +25,12 @@
       </div>
         </div>
         {%endif%}
-      <input hidden value="{{proddesc["gsflag"]}}">
       {% if proddesc["gsflag"]==7 %}
       <label for="editproddesc" class="" id="prodlabel">New Name of Product :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
       {%else%}
       <label for="editproddesc" class="" id="servicelabel">New Name of Service :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
       {%endif%}
       <input type='text' class="form-control input-sm" name="editproddesc"  id="editproddesc" value="{{proddesc['productdesc']}}" placeholder="Alphanumeric">
-      <input hidden id="gsflag" name="gsflag" value="{{proddesc["gsflag"]}}">
         {% if proddesc["gsflag"]==7 %}
         <div class="row">
           <div class="form-group col-sm-11">
@@ -134,7 +132,7 @@
           <th class=""></th>
         </tr>
       </thead>
-<input value="{{vatorgstflag}}" id="vatorgstflag" hidden>
+      <input value="{{vatorgstflag}}" id="vatorgstflag" hidden>
       <tbody>
         <tr class="blank" value="new">
           <td class="col-xs-4">
