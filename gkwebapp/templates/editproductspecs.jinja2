@@ -122,7 +122,8 @@
 <div class="col-sm-6" style="margin-top: -67;">
   <div class="row">
     <div class="form-group taxdiv">
-    <div class="panel taxinnerdiv">
+      <div class="panel taxinnerdiv">
+	<div class="panel-body nopadding">
     <table id="product_edit_tax_table" class="table table-condensed table-bordered fixed-table">
       <thead class="bg-primary input-sm">
         <tr>
@@ -196,16 +197,25 @@
         </tr>
       </tbody>
     </table>
-      <input type="text" name="inv" id="invflag" value="1" hidden>
-{%if  proddesc["gsflag"]==7  %}
-
-                <small id="taxhelp3" class="form-text text-muted noinventory ">When on Tax Rate or Tax Name press 'Esc' key to shift focus to Godown Name or from Godown Opening Stock to 'Save' button.</small>
-                <small id="taxhelp5" class="form-text text-muted " hidden>When on Tax Rate or Tax Name press 'Esc' key to shift focus to 'Save' button.</small><br>
-{%else%}
-                  <small id="taxhelp4" class="form-text text-muted ">When on Tax Rate or Tax Name press 'Esc' key to shift focus to 'Save' button.</small><br>
-  {%endif%}
     </div>
-  </div>
+      <input type="text" name="inv" id="invflag" value="1" hidden>
+    </div>
+    <small id="taxhelp4" class="form-text text-muted common">Press 'Insert' key from anywhere on the screen to save changes.</small>
+    <div class="collapse" id="moresmall">
+      <small id="taxhelp2" class="form-text text-muted ">Press 'Ctrl + >' to move forward or 'Ctrl + <' to move backward within a row in a table.</small><br/>
+      <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to move backward within a Column in a table.</small>
+      {% if  proddesc["gsflag"]==7  %}
+      {% if numberofgodowns|int > 0 %}
+        <small  class="form-text text-muted " id="godownmsg">Press 'Esc' key to shift focus from Tax Rate or Tax Name  to Godown Name or from Godown Opening Stock to 'Save' button.</small>
+      {% else %}
+	<small  class="form-text text-muted productclass">Press 'Esc' key to shift focus from Tax Rate or Tax Name  to Opening Stock or from Opening Stock to 'Save' button.</small>
+      {% endif %}
+      {% else %}
+      <small  class="form-text text-muted serviceclass">Press 'Esc' key to shift focus from Tax Rate or Tax Name to 'Save' button.</small>
+      {% endif %}
+    </div>
+    <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+    </div>
   </div>
     {% if proddesc["gsflag"]==7 %}
   <div class="row noinventory">
@@ -343,13 +353,6 @@
   </div>
   {% endif %}
     {% endif %}
-    <small id="taxhelp3" class="form-text text-muted">Press 'Esc' Key from tax rate or tax name to shift focus to godown name or from godown opening stock to 'Save' button.</small><br>
-    <small id="taxhelp4" class="form-text text-muted">Press 'Insert' Key from anywhere on the screen to save changes.</small>
-    <div class="collapse" id="moresmall">
-      <small id="taxhelp2" class="form-text text-muted">Press 'Ctrl + >' or 'Ctrl + <' to navigate within a row in tax or godown table.</small><br>
-      <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to navigate within a column in tax or godown table.</small>
-    </div>
-    <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
 </div>
 {%endif%}
 </div>

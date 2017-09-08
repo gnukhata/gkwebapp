@@ -38,7 +38,7 @@ $(document).ready(function() {
     }
   });
 
-  $(document).off('click', '#editgodownflag').on('click', '#editgodownflag', function(e){
+    $(document).off('click', '#editgodownflag').on('click', '#editgodownflag', function(e){
     if ($(this).is(":checked")) {
       $("#editgodownflag").val(1);
       $("#editnogodown").hide();
@@ -243,7 +243,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
         if(sessionStorage.invflag==0){
         //$("#categorydiv").hide();
         $(".noinventory").hide();
-        $("#invflag").val("0")
+            $("#invflag").val("0");
           $("#taxhelp3").hide();
           $("#taxhelp5").show();
 
@@ -256,7 +256,10 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
         $('#proddetails').find('input, textarea, button, select').prop('disabled',true);
         $(".product_tax_disable").prop('disabled',true);
         $(".product_cat_tax_disable").prop('disabled',true);
-        catcode= $("#editcatselect option:selected").val();
+          catcode= $("#editcatselect option:selected").val();
+	  if(catcode!=""){
+	      $("#txtareahelp").hide();
+	  }
         $(".specdate").autotab('number');
         $(".specdate").numeric();
         console.log("success");

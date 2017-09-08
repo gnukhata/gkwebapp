@@ -163,6 +163,17 @@
       </tbody>
     </table>
     </div>
+    <small id="taxhelp4" class="form-text text-muted common">Press 'Insert' key from anywhere on the screen to save changes.</small>
+    <div class="collapse" id="moresmall">
+      <small id="taxhelp2" class="form-text text-muted ">Press 'Ctrl + >' to move forward or 'Ctrl + <' to move backward within a row in a table.</small><br/>
+      <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to move backward within a Column in a table.</small>
+        {% if numberofgodowns|int > 0 %}
+          <small  class="form-text text-muted " id="godownmsg">Press 'Esc' key to shift focus from Tax Rate or Tax Name  to Godown Name or from Godown Opening Stock to 'Save' button.</small>
+        {% else %}
+          <small  class="form-text text-muted productclass">Press 'Esc' key to shift focus from Tax Rate or Tax Name  to Opening Stock or from Opening Stock to 'Save' button.</small>
+        {% endif %}
+    </div>
+    <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
   </div>
   </div>
   <div id ="noinventory">
@@ -301,12 +312,5 @@
   </div>
   {% endif %}
     {% endif %}
-    <small id="taxhelp3" class="form-text text-muted">Press 'Esc' Key from tax rate or tax name to shift focus to godown name or from godown opening stock to 'Save' button.</small><br>
-    <small id="taxhelp4" class="form-text text-muted">Press 'Insert' Key from anywhere on the screen to save changes.</small>
-    <div class="collapse" id="moresmall">
-      <small id="taxhelp2" class="form-text text-muted">Press 'Ctrl + >' or 'Ctrl + <' to navigate within a row in tax or godown table.</small><br>
-      <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to navigate within a column in tax or godown table.</small>
-    </div>
-    <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
   </div>
 </div>
