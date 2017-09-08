@@ -5,7 +5,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -100,9 +100,9 @@ $(document).ready(function()
   });
 
   $('.vdate').autotab('number');
-  $('input,select').keydown( function(e) {
-    var n = $("input,select").length;
-    var f = $('input,select');
+  $('input:text,select').keydown( function(e) {
+    var n = $('input:text,select').length;
+    var f = $('input:text,select');
     if (e.which == 13)
     {
 
@@ -223,31 +223,54 @@ $(document).ready(function()
         $("#toyear").val(endyear);
       });
       $("#toyear").keydown(function(event) {
-        if (event.which==13) {
+          if (event.which==13) {
+	      event.preventDefault();
           $(this).val(yearpad($(this).val(),4));
-          $('#invinvsbillradio').focus();
+          $('#onlyaccradio').focus();
         }
       });
 
+     $(".iib").keydown(function(event) {
+          if (event.which==13) {
+	      event.preventDefault();
+          $('#btnsubmit').focus();
+        }
+     });
+
+     $("#onlyaccradio").keydown(function(event) {
+          if (event.which==38) {
+	      event.preventDefault();
+          $('#toyear').focus();
+        }
+     });
+
+    
               $(document).off('change', '.iib').on('change', '.iib', function(event) {
                           if ($("#invinvsbillradio").is(":checked")) {
-                            event.preventDefault();
+                          //  event.preventDefault();
                               invflag=1;
                               invsflag=1;
                               billflag=1;
                           }
                           if ($("#invsbillradio").is(":checked")) {
-                            event.preventDefault();
-                              invflag=0
+                            //event.preventDefault();
+                              invflag=0;
                               invsflag=1;
                             billflag=1;
-                            console.log("Rohini");
+                            
                           }
 
                             if ($("#onlyinvsradio").is(":checked")) {
-                              event.preventDefault();
+                            //  event.preventDefault();
                                 invflag=0;
                                 invsflag=1;
+                              billflag=0;
+                            }
+
+                            if ($("#onlyaccradio").is(":checked")) {
+                              //event.preventDefault();
+                                invflag=0;
+                                invsflag=0;
                               billflag=0;
                             }
                             });
@@ -392,6 +415,11 @@ $(document).ready(function()
           if ($("#onlyinvsradio").is(":checked")) {
               invflag=0;
               invsflag=1;
+            billflag=0;
+          }
+          if ($("#onlyaccradio").is(":checked")) {
+              invflag=0;
+              invsflag=0;
             billflag=0;
           }
 

@@ -29,6 +29,7 @@
    "Rahul Chaurasiya" <crahul4133@gmail.com>
    "Mohd. Talha Pawaty" <mtalha456@gmail.com>
    "prajkta Patkar" <prajakta@dff.org.in>
+   "Reshma Bhatawadekar" <bhatawadekar1reshma@gmail.com>
  */
 // This script is for the mainshell page and loads when the main page of GNUKhata is loaded.
 // Also all the external js libraries we have used is loaded along with the mainshell.
@@ -37,11 +38,53 @@ var username1;
 var userrole1;
   $('.modal-backdrop').remove();
 
-  if(sessionStorage.invflag==1){
-    $(".productinmaster").hide();
+  //Checking flags set according organisation preferences.
+  // For Accounting Only invflag=0, invsflag=0 and billflag=0. Inventory Menu, Invoice, Cash Memo and related Reports are hidden.
+  // For Invoicing Only invflag=0, invsflag=1 and billflag=0. Inventory Menu is hidden and  sub-menus which are 'Category', 'Product/Service' and 'Unit of Measurement' under 'Master' menu.
+  // For Invoicing with Billwise Accounting invflag=0, invsflag=1 and billflag=1. Inventory Menu is hidden. Sub-menus viz., 'Category', 'Product/Service' and 'Unit of Measurement' are added under Master Menu. Also Unadjusted sub-menu is added under Voucher for Billwise Accounting.
+  // For Inventory with Invoicing and Billwise Accounting invflag=1, invsflag=1 and billflag=1. It includes Inventory, Billwise Accounting, Invoicing and extra sub-menus(viz., 'Category', 'Product/Service' and 'Unit of Measurement') will be removed from Master menu.
+    if(sessionStorage.invflag==0 && sessionStorage.invsflag==0 && sessionStorage.billflag==0) {
+      $(".productinmaster").hide();
       $(".categoryinmaster").hide();
       $(".uominmaster").hide();
-  }
+      $('.inventorymenu').hide();
+      $('.invsbill').hide();
+      $("#customersupplier").hide();
+      $(".inventory_hide").hide();
+      $("#showbillwiseaccounting").hide();
+      $(".invoicemenu").hide();
+    }
+
+    if(sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==0) {
+        $('.invoicemenu').show();
+        $(".productinmaster").show();
+      	$(".categoryinmaster").show();
+        $(".uominmaster").show();
+        $(".inventorymenu").hide();
+        $('.inventory_hide').hide();
+        $("#showbillwiseaccounting").hide();
+    }
+
+    if(sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
+      $(".productinmaster").show();
+      $(".categoryinmaster").show();
+      $("#customersupplier").show();
+      $(".uominmaster").show();
+      $("#showbillwiseaccounting").show();
+      $('.inventorymenu').hide();
+    	$('.inventory_hide').hide();
+    }
+
+    if(sessionStorage.invflag==1 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
+      $('.inventorymenu').show();
+      $('.invsbill').show();
+      $("#customersupplier").show();
+      $('.inventory_hide').show();
+      $("#showbillwiseaccounting").show();
+      $(".productinmaster").hide();
+      $(".categoryinmaster").hide();
+      $(".uominmaster").hide();
+    }
 
   if (sessionStorage.reload == 1)// The mainshell when loads for the first time its reloaded so that the javascript file can be fully loaded.
     {
@@ -49,24 +92,7 @@ var userrole1;
       location.reload();
     }
   var oninvoice = 0;// This variable is set to 1 only when its in the print page of invoice, cashmemo or deliverychallan or transfernote. Reason: The organisation details that appear in all print pages of GNUKhata is not required in the pages where its set to 1.
-    $("#msspinmodal").modal("hide"); //Hides the loading spinner.
-    //Checking flags set according organisation preferences.
-    if (sessionStorage.invflag==0) {  //When Inventory flag is set to 0 Inventory menu is removed.
-	$('.inventorymenu').remove();
-	$('.inventory_hide').remove();
-	if (sessionStorage.invsflag==0) {  //If Invoice flag is also set to 0 menu items related to Invoice and Bill Wise Accounting are also removed.
-	    $('.invoicemenu').remove();
-	    $("#showbillwiseaccounting").remove();
-	    $("#customersupplier").remove();
-	}
-    }
-    if (sessionStorage.invsflag==0) { //If Inventory flag is set to 1 but Invoice flag is set to 0 only menu items related to invoicing and billwise acounting are hidden.
-	$('.invoicemenu').remove();
-	$("#showbillwiseaccounting").remove();
-    }
-    if (sessionStorage.billflag==0) {  //If both Inventory flag and Invoice flag are set to 1 but Billflag is set to 0  only Unadjusted Amounts is hidden
-	$("#showbillwiseaccounting").remove();
-    }
+  $("#msspinmodal").modal("hide"); //Hides the loading spinner.
   $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');// set the theme depending on users previous choice.
   $("#"+sessionStorage.gktheme+"span").show();
 
@@ -635,52 +661,33 @@ var userrole1;
     $("#orgpref").click(function (e){
 
       $("#orgprefmodal").modal('show');
-      // creates a modal(dialog box) asking user to activate inventory or not.
+      // creates a modal(dialog box) asking user to choose between org preferences .
 
       $("#orgprefmodal").on('shown.bs.modal', function(event) {
 
         if (sessionStorage.invflag==1 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
-          $('#invinvsbillradio').prop('checked', true);
+            $('#invinvsbillradio').focus().prop('checked', true);
         }
         if (sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
-          $('#invsbillradio').prop('checked', true);
+            $('#invsbillradio').focus().prop('checked', true);
         }
         if (sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==0) {
-          $('#onlyinvsradio').prop('checked', true);
+            $('#onlyinvsradio').focus().prop('checked', true);
         }
-        $("#invinvsbillradio").focus();
+	   if (sessionStorage.invflag==0 && sessionStorage.invsflag==0 && sessionStorage.billflag==0) {
+               $('#onlyaccradio').focus().prop('checked', true);
+        }
+      
 
-
-                    $("#invinvsbillradio").keydown(function(event) {
+                    $(".iib").keydown(function(event) {
                         if (event.which==13) {
                           event.preventDefault();
-                          $('#invsbillradio').focus();
+                          $('#orgprefsave').focus();
 
                       }
                     });
 
-                      $("#invsbillradio").keydown(function(event) {
-                        if (event.which==13) {
-                          event.preventDefault();
-                          $('#onlyinvsradio').focus();
-                        }
-			  if (event.which == 38) {
-			      event.preventDefault();
-			      $("#invinvsbillradio").focus();
-			  }
-                      });
-
-                      $("#onlyinvsradio").keydown(function(event) {
-                          if (event.which==13) {
-			      event.preventDefault();
-                          $("#orgprefsave").focus();
-                        }
-			   if (event.which == 38) {
-			      event.preventDefault();
-			      $('#invsbillradio').focus();
-
-			  }
-                      });
+                
 
        $("#orgprefsave").click(function(event){
          if ($("#invinvsbillradio").is(":checked"))
@@ -703,6 +710,12 @@ var userrole1;
        billflag=0;
 
    }
+   if ($("#onlyaccradio").is(":checked"))
+   {
+     invflag=0;
+     invsflag=0;
+     billflag=0;
+ }
                 $.ajax({
                        url: '/editorganisation?action=orgpref',
                        type: "POST",
