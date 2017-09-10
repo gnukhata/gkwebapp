@@ -35,7 +35,6 @@ $(document).ready(function() {
     $('.modal-backdrop').remove();  //Removed backdrop of modal that contains loading spinner.
     $('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
     $('.supplydate').autotab('number');
-    $(".input-sm:visible").first().focus();  //Focus on the first element when the page loads
 
     //Initialising some variables.
     var issuername = "";
@@ -149,7 +148,8 @@ $(document).ready(function() {
 	$(".fixed-table").removeClass('fixed-tablepurchase');  //CSS class for adjusting style properties.
 	$(".fixed-table").addClass('fixed-tablesale');
     }
-
+    
+    $(".input-sm:visible").first().focus();  //Focus on the first element when the page loads
     //Preventing characters in numeric fields.
     $("#invoice_date").numeric({ negative: false });
     $("#invoice_month").numeric({ negative: false });
