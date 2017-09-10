@@ -5,8 +5,8 @@ if (sessionStorage.invflag==0){
   $("#nogodownmsg").show();
 }
 if (sessionStorage.invflag=='1' ){
-  $("#nogodownmsg").hide();
-
+    $("#nogodownmsg").hide();
+    $("#addgodown").show();
   $("#godownmsg").show();
 }
 

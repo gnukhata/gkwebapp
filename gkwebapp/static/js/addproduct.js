@@ -30,13 +30,20 @@ $(".productclass").hide();
   if($("#addcatselect").is(':hidden'))
   {
     $("#addproddesc").focus();
-  }*/
-
+    }*/
+    if(sessionStorage.invflag != 0) {
+        $("#addgodown").show();
+    }
   $("#additem").change(function(event) {
     if($("#additem option:selected").val() == '7') {
 
 	$(".serviceclass").hide();
-      $(".productclass").show();
+	if(sessionStorage.invflag != 0) {
+            $(".productclass").show();
+        }
+	else {
+	    $(".productclass").not("#addgodown").show();
+	}
       $("#proservlabel").text("Product Name :");
       $("#gscodelabel").text("HSN Code :");
       $(".common").show();

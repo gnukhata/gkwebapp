@@ -48,7 +48,7 @@ $(document).ready(function() {
     }
     else {
 	$("#editgodownflag").val(0);
-      $("#editopeningstockdiv").hide();
+	$("#editopeningstockdiv").hide();
       $("#editnogodown").show();
     }
   });
@@ -202,7 +202,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
       }
     }
     if (event.which == 38) {
-      var n = $(".editgodown_ob").index(this);
+	var n = $(".editgodown_ob").index(this);
       if (n == 0) {
         $("#editgodownflag").focus().select();
       }
@@ -477,7 +477,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
 
     $("#epedit").hide();
 
-    if($("#gsflag").val()=='7'){
+    if($("#gsflag").val()=='7' && sessionStorage.invflag == 1){
     $("#addgodown").show();
   }
 

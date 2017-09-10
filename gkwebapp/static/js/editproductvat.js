@@ -10,8 +10,9 @@ $(document).ready(function() {
   var selectedtaxstate;
   $("#prodselect").focus();
   $(".product_tax_disable").prop('disabled',true);
-  $(".product_cat_tax_disable").prop('disabled',true);
-  $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
+    $(".product_cat_tax_disable").prop('disabled',true);
+    
+    $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
     event.preventDefault();
     /* Act on the event */
     $(".numtype").numeric();
@@ -39,7 +40,7 @@ $(document).ready(function() {
       $("#editopeningstockdiv").show();
     }
     else {
-      $("#editgodownflag").val(0);
+	$("#editgodownflag").val(0);
       $("#editopeningstockdiv").hide();
       $("#editnogodown").show();
     }
@@ -215,9 +216,7 @@ $(document).ready(function() {
         catcode= $("#editcatselect option:selected").val();
         $(".specdate").autotab('number');
         $(".specdate").numeric();
-console.log( $("#noinventory").html());
     if(sessionStorage.invflag==0){
-	console.log("hii");
   $("#noinventory").hide();
     $("#taxhelp3").hide();
     $("#taxhelp4").show();
@@ -446,7 +445,9 @@ console.log( $("#noinventory").html());
     $('#proddetails').find('input, textarea, button, select').prop('disabled',false);
     $("#epsubmit").show();
     $("#epedit").hide();
-    $("#addgodown").show();
+      if (sessionStorage.invflag=='1' ){
+          $("#addgodown").show();
+      }
     $("#editproddesc").focus();
     $("#editproddesc").select();
     
