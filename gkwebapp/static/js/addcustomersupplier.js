@@ -29,7 +29,7 @@ Contributors:
 
 $(document).ready(function() {
     //All the navigation events where pressing enter shifts focus to the next element and pressing the up arrow key focuses the previous element
-    
+
   $("#add_cussup").focus().select();
   $("#add_cussup").keydown(function(event) {
     if (event.which==13) {
@@ -101,7 +101,7 @@ $("#add_state").keydown(function(event) {
         }
 });
 
-    
+
   $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(event)
 {
   var curindex = $(this).closest('tr').index();
@@ -264,7 +264,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
   });
 
 
-    
+
     $("#add_cussup_tan").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
@@ -331,8 +331,8 @@ else{
       return false;
     }
 
-if($("#vatorgstflag").val() == '22'){  
- if ($.trim($("#add_cussup_tin").val())=="") {
+if($("#vatorgstflag").val() == '22'){
+ if ($.trim($("#add_cussup_tan").val())=="") {
       $("#tin-blank-alert").alert();
       $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#tin-blank-alert").hide();
@@ -341,7 +341,7 @@ if($("#vatorgstflag").val() == '22'){
       return false;
     }
 }
-      
+
     if ($.trim($("#add_state").val())=="") {
       $("#state-blank-alert").alert();
       $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
