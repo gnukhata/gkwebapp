@@ -8,136 +8,139 @@
   <link rel="stylesheet" type="text/css" media="screen" href="{{request.static_url('gkwebapp:static/css/font-awesome.min.css')}}">
 
   <style>
-  .content{ margin-top:4%
-  }
-  .shadow {
-  	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  #ticker {
-    display: none;
-  }
-  .gknav{
-  	background-color: rgb(26,34,41);
-  }
-  .gknav .navbar-brand {
-      color: white;
-  }
-  .gknav .navbar-nav > li > a {
-      color: white;
-  }
-  .gknav .navbar-nav > li > a:hover, .gknav .navbar-nav > li > a:focus {
-      background-color: black;
-  		color: white;
-  		border-radius: 2px;
-  }
-  ul.dropdown-menu > li > a:hover, ul.dropdown-menu > li > a:focus{
-  background-color: #bfbfbf;
-  border-style: solid;
-  border-color: #2a1278;
-  border-width: 2px;
-  border-radius: 2px;
-  }
-  .gknav .navbar-nav > .open > a,
-  .gknav .navbar-nav > .open > a:hover,
-  .gknav .navbar-nav > .open > a:focus {
-      background-color: #bfbfbf;
-  		color: black;
-  		border-radius: 2px;
-  }
-  .gknav .navbar-nav > .active > a,
-  .gknav .navbar-nav > .active > a:hover,
-  .gknav .navbar-nav > .active > a:focus {
-      color: black;
-      background-color: #bfbfbf;
-  		border-radius: 2px;
-  }
-  .gknav .navbar-nav > li > a:hover,
-  .gknav .navbar-nav > li > a:focus {
-      color: #black;
-  }
-  .panel{
-  	border-color: rgb(87,93,99);
-  }
-  .panel-heading, .panel-title {
-  	background-color: rgb(87,93,99);
-  	color: white;
-  }
-  .thead {
-  	background-color: #a3a3a3;
-  }
-  .footer {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding-top: 1rem;
-  background-color: #bfbfbf;
-  text-align: center;
-  }
-  .icon-bar {
-    color: white;
-    border-color: black;
-    background-color: white;
-  }
-  @media (max-width: 767px) {
-  	.footer {
-  	  position: relative;
-  	}
-    .collapsing, .in {background-color: rgb(26,34,41); color: white;}
-  	.collapsing ul li a, .in ul li a {color: white;}
-  	.collapsing ul li a:hover, .in ul li a:hover {background-color: #bfbfbf; color: black;}
-    #selectorg{
-      background-color: white;
-      color: black;
-    }
-    #createorg{
-      background-color: white;
-      color: black;
-    }
-  }
-  .modal-header {
-  	 background-color: rgb(87,93,99);
-  	 color: white;
-  	 border-top-left-radius: 4px;
-  	 border-top-right-radius: 4px;
-  }
-  .vertical-alignment-helper {
-  	display:table;
-  	height: 100%;
-  	width: 100%;
-  	pointer-events:none; /* This makes sure that we can still click outside of the modal to close it */
-  }
-  .vertical-align-center {
-  	/* To center vertically */
-  	display: table-cell;
-  	vertical-align: middle;
-  	pointer-events:none;
-  }
-  .modal-content {
-  	/* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
-  	width:inherit;
-  	height:inherit;
-  	/* To center horizontally */
-  	margin: 0 auto;
-  	pointer-events: all;
-  }
-  .icon-bar {
-    color: white;
-    border-color: black;
-    background-color: white;
-  }
-  .close {
-      color: white;
-      opacity: 0.8;
-  }
-  .close:hover {
-      color: white;
-      opacity: 2;
-  }
+   .content{ margin-top:4%
+   }
+   .shadow {
+       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   }
+   #ticker {
+       display: none;
+   }
+   .gknav{
+       background-color: rgb(26,34,41);
+   }
+   .gknav .navbar-brand {
+       color: white;
+   }
+   .gknav .navbar-nav > li > a {
+       color: white;
+   }
+   .gknav .navbar-nav > li > a:hover, .gknav .navbar-nav > li > a:focus {
+       background-color: black;
+       color: white;
+       border-radius: 2px;
+   }
+   ul.dropdown-menu > li > a:hover, ul.dropdown-menu > li > a:focus{
+       background-color: #bfbfbf;
+       border-style: solid;
+       border-color: #2a1278;
+       border-width: 2px;
+       border-radius: 2px;
+   }
+   .gknav .navbar-nav > .open > a,
+   .gknav .navbar-nav > .open > a:hover,
+   .gknav .navbar-nav > .open > a:focus {
+       background-color: #bfbfbf;
+       color: black;
+       border-radius: 2px;
+   }
+   .gknav .navbar-nav > .active > a,
+   .gknav .navbar-nav > .active > a:hover,
+   .gknav .navbar-nav > .active > a:focus {
+       color: black;
+       background-color: #bfbfbf;
+       border-radius: 2px;
+   }
+   .gknav .navbar-nav > li > a:hover,
+   .gknav .navbar-nav > li > a:focus {
+       color: #black;
+   }
+   .panel{
+       border-color: rgb(87,93,99);
+   }
+   .panel-heading, .panel-title {
+       background-color: rgb(87,93,99);
+       color: white;
+   }
+   .thead {
+       background-color: #a3a3a3;
+   }
+   .footer {
+       position: fixed;
+       right: 0;
+       bottom: 0;
+       left: 0;
+       padding-top: 1rem;
+       background-color: #bfbfbf;
+       text-align: center;
+   }
+   .icon-bar {
+       color: white;
+       border-color: black;
+       background-color: white;
+   }
+   @media (max-width: 767px) {
+       .footer {
+  	   position: relative;
+       }
+       .collapsing, .in {background-color: rgb(26,34,41); color: white;}
+       .collapsing ul li a, .in ul li a {color: white;}
+       .collapsing ul li a:hover, .in ul li a:hover {background-color: #bfbfbf; color: black;}
+       #selectorg{
+	   background-color: white;
+	   color: black;
+       }
+       #createorg{
+	   background-color: white;
+	   color: black;
+       }
+       #containerdiv {
+	   max-width:500px !important;
+       }
+   }
+   .modal-header {
+       background-color: rgb(87,93,99);
+       color: white;
+       border-top-left-radius: 4px;
+       border-top-right-radius: 4px;
+   }
+   .vertical-alignment-helper {
+       display:table;
+       height: 100%;
+       width: 100%;
+       pointer-events:none; /* This makes sure that we can still click outside of the modal to close it */
+   }
+   .vertical-align-center {
+       /* To center vertically */
+       display: table-cell;
+       vertical-align: middle;
+       pointer-events:none;
+   }
+   .modal-content {
+       /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+       width:inherit;
+       height:inherit;
+       /* To center horizontally */
+       margin: 0 auto;
+       pointer-events: all;
+   }
+   .icon-bar {
+       color: white;
+       border-color: black;
+       background-color: white;
+   }
+   .close {
+       color: white;
+       opacity: 0.8;
+   }
+   .close:hover {
+       color: white;
+       opacity: 2;
+   }
 
-  .bgcolor{
-  	 background-color:#1b2631;
-  }
+   .bgcolor{
+       background-color:#1b2631;
+   }
   </style>
 
 
@@ -224,7 +227,7 @@ Login screen will appear after this.{% endtrans %} </font>
 
 
 
-  <div class="container-fluid" style="margin-top:50px;">
+  <div id="containerdiv" class="container-fluid" style="margin-top:50px; overflow-y:scroll;">
 <div class="row">
   <div class="col-sm-6" >
     <div class="alert alert-danger" aria-live="rude" role="alert" id="duplicate-org-alert" hidden>
@@ -257,12 +260,10 @@ Login screen will appear after this.{% endtrans %} </font>
   </div>
 </div>
 </div>
-<div class="row">
-  <div class="footer" style="background-color: rgb(87,93,99); color: white; margin-top: -10px; border-radius: 4px;">
-    <p style="text-align: center; font-size: 0.9em;">{% trans %}Copyright © Digital Freedom Foundation 2013,2014,2015,2016{% endtrans %}.{% trans %}This software is licensed under GNU AGPLv3.{% endtrans %}. {% trans %}Visit{% endtrans %} <a href="http://gnukhata.in" style="color: white;"><strong>{% trans %}gnukhata.in{% endtrans %}</strong></a> {% trans %}for more information.{% endtrans %}</p>
   </div>
-</div>
-</div>
+  <footer class="footer" style="background-color: rgb(87,93,99); color: white; margin-top: -10px; border-radius: 4px;">
+    <p style="text-align: center; font-size: 0.9em;">{% trans %}Copyright © Digital Freedom Foundation 2013,2014,2015,2016{% endtrans %}.{% trans %}This software is licensed under GNU AGPLv3.{% endtrans %}. {% trans %}Visit{% endtrans %} <a href="http://gnukhata.in" style="color: white;"><strong>{% trans %}gnukhata.in{% endtrans %}</strong></a> {% trans %}for more information.{% endtrans %}</p>
+  </footer>
   <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
   <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/index.js')}}"></script>
