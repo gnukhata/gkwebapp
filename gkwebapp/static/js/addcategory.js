@@ -37,59 +37,8 @@ $(document).ready(function() {
     var childspecs = [];
     var parenttaxes = [];
     var taxes = [];
-    var taxfieldhtml = '<tr>'+
-       '<td class="col-xs-4">'+
-          '<select class="form-control input-sm tax_name">'+
-             '<option value="" selected disabled hidden>Select Tax</option>'+
-             '<option value="VAT">VAT</option>'+
-             '<option value="CVAT">CVAT</option>'+
-          '</select>'+
-       '</td>'+
-       '<td class="col-xs-4">'+
-          '<select class="form-control input-sm tax_state" >'+
-             '<option value="">None</option>'+
-             '<option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>'+
-             '<option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>'+
-             '<option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option>'+
-             '<option value="Assam" stateid="4">Assam</option>'+
-             '<option value="Bihar" stateid="5">Bihar</option>'+
-             '<option value="Chandigarh" stateid="6">Chandigarh</option>'+
-             '<option value="Chhattisgarh" stateid="7">Chhattisgarh</option>'+
-             '<option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option>'+
-             '<option value="Daman and Diu" stateid="9">Daman and Diu</option>'+
-             '<option value="Delhi" stateid="10">Delhi</option>'+
-             '<option value="Goa" stateid="11">Goa</option>'+
-             '<option value="Gujarat" stateid="12">Gujarat</option>'+
-             '<option value="Haryana" stateid="13">Haryana</option>'+
-             '<option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option>'+
-             '<option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option>'+
-             '<option value="Jharkhand" stateid="16">Jharkhand</option>'+
-             '<option value="Karnataka" stateid="17">Karnataka</option>'+
-             '<option value="Kerala" stateid="19">Kerala</option>'+
-             '<option value="Lakshadweep" stateid="20">Lakshadweep</option>'+
-             '<option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option>'+
-             '<option value="Maharashtra" stateid="22">Maharashtra</option>'+
-             '<option value="Manipur" stateid="23">Manipur</option>'+
-             '<option value="Meghalaya" stateid="24">Meghalaya</option>'+
-             '<option value="Mizoram" stateid="25">Mizoram</option>'+
-             '<option value="Nagaland" stateid="26">Nagaland</option>'+
-             '<option value="Odisha" stateid="29">Odisha</option>'+
-             '<option value="Pondicherry" stateid="31">Pondicherry</option>'+
-             '<option value="Punjab" stateid="32">Punjab</option>'+
-             '<option value="Rajasthan" stateid="33">Rajasthan</option>'+
-             '<option value="Sikkim" stateid="34">Sikkim</option>'+
-             '<option value="Tamil Nadu" stateid="35">Tamil Nadu</option>'+
-             '<option value="Telangana" stateid="36">Telangana</option>'+
-             '<option value="Tripura" stateid="37">Tripura</option>'+
-             '<option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option>'+
-             '<option value="Uttarakhand" stateid="39">Uttarakhand</option>'+
-             '<option value="West Bengal" stateid="41">West Bengal</option>'+
-          '</select>'+
-       '</td>'+
-       '<td class="col-xs-4">'+
-          '<input class="form-control input-sm tax_rate text-right numtype"  placeholder="Rate">'+
-       '</td>'+
-    '</tr>';
+    var taxfieldhtml = $("#category_tax_table tbody").html();
+    var stateshtml = $("#category_tax_table tbody tr:first td:eq(1) select").html();
     if ($("#catcount").val() > 0) {
         $("#category_under").focus();
     } else {
@@ -142,7 +91,7 @@ $(document).ready(function() {
     });
     $('#addtaxmodal').on('shown.bs.modal', function() {
       $("#category_tax_table tbody").empty();
-      for (var i = 0; i < parenttaxes.length; i++) {
+      for (let i = 0; i < parenttaxes.length; i++) {
         $("#category_tax_table tbody").append(taxfieldhtml);
         $("#category_tax_table tbody tr:eq("+i+") td:eq(0) select").val(parenttaxes[i].taxname);
         if (parenttaxes[i].state == null) {
@@ -153,8 +102,22 @@ $(document).ready(function() {
         }
         $("#category_tax_table tbody tr:eq("+i+") td:eq(2) input").val(parenttaxes[i].taxrate);
       }
-      $("#category_tax_table tbody").append(taxfieldhtml);
-      $("#category_tax_table tbody tr:last td:eq(0) select").focus();
+	$("#category_tax_table tbody").append(taxfieldhtml);
+	if($("#category_tax_table tbody tr").length > 1){
+	    $("#category_tax_table tbody tr").each(function(){
+	    let curindex = $(this).index();
+	    let nextindex = curindex + 1;
+	    for (let j = 0; j < curindex + 1; j++) {
+	      var selectedtax = $("#category_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
+	      if(selectedtax != "VAT"){
+		  for(let i=j+1; i <= nextindex;i++){
+		      $('#category_tax_table tbody tr:eq('+i+') td:eq(0) select option[value='+selectedtax+']').prop('hidden', true).prop('disabled', true);
+		  }
+	      }
+	  }
+	});
+	}
+	$("#category_tax_table tbody tr:last td:eq(0) select").focus();
     });
     $(document).off("keydown", "#category_under").on("keydown", "#category_under", function(event) {
         categorycode = $("#category_under option:selected").val();
@@ -244,7 +207,6 @@ $(document).ready(function() {
                         '<button class="btn form-control btn-primary btn-sm child_tax_class" id="child_tax" data-toggle="modal" data-target="#addtaxmodal"   >Tax</button>' +
                         '</td>' +
                         '</tr>');
-                      $(".mchild_spec_name:last").focus();
 
                 })
                 .fail(function() {
@@ -430,12 +392,13 @@ $(document).ready(function() {
 
 
     });
+
     $(document).off("change", ".tax_name").on("change", ".tax_name", function(event) {
         if ($('#category_tax_table tbody tr:last td:eq(0) select').val() == "VAT") {
             $('#category_tax_table tbody tr:last td:eq(1) select').prop('disabled', false);
             $('#category_tax_table tbody tr:last td:eq(1) select option[value=""]').prop('disabled', true);
             $('#category_tax_table tbody tr:last td:eq(1) select').val('Andaman and Nicobar Islands');
-        } else if ($('#category_tax_table tbody tr:last td:eq(0) select').val() == "CVAT") {
+        } else if ($('#category_tax_table tbody tr:last td:eq(0) select').val() != "") {
             $('#category_tax_table tbody tr:last td:eq(1) select').val('');
             $('#category_tax_table tbody tr:last td:eq(1) select').prop('disabled', true);
         }
@@ -443,27 +406,23 @@ $(document).ready(function() {
         var previndex = curindex -1;
         if ($("#category_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='VAT') {
           $("#category_tax_table tbody tr:eq("+curindex+") td:eq(1) select").empty();
-          $("#category_tax_table tbody tr:eq("+curindex+") td:eq(1) select").append('<option value="" stateid="0" hidden disabled selected>Select State</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>');
+            $("#category_tax_table tbody tr:eq("+curindex+") td:eq(1) select").append(stateshtml);
+	    $("#category_tax_table tbody tr:eq("+curindex+") td:eq(1) select option:visible").first().prop("selected",true);
           $("#category_tax_table tbody tr:eq("+curindex+") td:eq(1) select").prop('disabled', false);
-          if (curindex > 0) {
-            for (var i = 1; i < curindex+1; i++) {
-              for (var j = 0; j < curindex; j++) {
-                if ($("#category_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "CVAT") {
-                  i = i + 1;
-                }
-                selectedtaxstate = $("#category_tax_table tbody tr:eq("+j+") td:eq(1) select option:selected").attr("stateid");
-      console.log(selectedtaxstate);
-                $('#category_tax_table tbody tr:eq('+i+') td:eq(1) select option[stateid='+selectedtaxstate+']').prop('hidden', true).prop('disabled', true);
-              }
-            }
-          }
         }
         else {
           $("#category_tax_table tbody tr:eq("+curindex+") td:eq(1) select").empty();
           $("#category_tax_table tbody tr:eq("+curindex+") td:eq(1) select").append('<option value="">None</option>');
           $("#category_tax_table tbody tr:eq("+curindex+") td:eq(1) select").prop('disabled', true);
         }
-        selectedtaxname = $("#category_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val();
+	for (let j = 0; j < curindex + 1; j++) {
+              if ($("#category_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val() == "VAT") {
+		  var selectedtaxstate = $("#category_tax_table tbody tr:eq("+j+") td:eq(1) select option:selected").attr("stateid");
+		  for (let i=j+1; i<=curindex+1;i++){
+		      $('#category_tax_table tbody tr:eq('+i+') td:eq(1) select option[stateid='+selectedtaxstate+']').prop('hidden', true).prop('disabled', true);
+		  }
+	      }
+          }
 
     });
     $(document).off("keydown", ".tax_rate").on("keydown", ".tax_rate", function(event) {
@@ -496,26 +455,18 @@ $(document).ready(function() {
                 }
                 // appending a new row for adding another tax to category
 
-                $('#category_tax_table tbody').append('<tr>' +
-                    '<td class="col-xs-4">' +
-                    '<select class="form-control input-sm tax_name">' +
-                    '<option value="" selected disabled hidden>Select Tax</option>' +
-                    '<option value="VAT">VAT</option>' +
-                    '<option value="CVAT">CVAT</option>' +
-                    '</select>' +
-                    '</td>' +
-                    '<td class="col-xs-4">' +
-                    '<select class="form-control input-sm tax_state" >' +
-                    '<option value="">None</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>' +
-                    '</select>' +
-                    '</td>' +
-                    '<td class="col-xs-4">' +
-                    '<input class="form-control input-sm tax_rate text-right"  placeholder="Rate">' +
-                    '</td>' +
-                    '</tr>');
+                $('#category_tax_table tbody').append(taxfieldhtml);
 
 
                 $('#category_tax_table tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus().select();
+		for (let j = 0; j < curindex1 + 1; j++) {
+		    var selectedtax = $("#category_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
+		    if(selectedtax != "VAT"){
+			for(let i=j+1; i <= nextindex1;i++){
+			    $('#category_tax_table tbody tr:eq('+i+') td:eq(0) select option[value='+selectedtax+']').prop('hidden', true).prop('disabled', true);
+			}
+		    }
+		}
 
             }
         } else if (event.which == 190 && event.shiftKey) {
@@ -560,13 +511,13 @@ $(document).ready(function() {
         });
         taxes = [];
         $("#category_tax_table tbody tr").each(function() {
-            var obj = {}; // dict for storing tax details
-            if ($.trim($("select option:selected", this).val()) != "") {
-                obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
-                obj.state = $.trim($("td:eq(1) select option:selected", this).val());
-                obj.taxrate = $.trim($("input", this).val());
-                taxes.push(obj);
-            }
+            if ($.trim($("input", this).val()) != "") {
+		var obj = {}; // dict for storing tax details
+		obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
+		obj.state = $.trim($("td:eq(1) select option:selected", this).val());
+		obj.taxrate = $.trim($("input", this).val());
+		taxes.push(obj);
+	    }
         });
         $.ajax({
                 url: '/category?action=save',
@@ -617,6 +568,13 @@ $(document).ready(function() {
             });
     });
 
+    $(document).off("keydown", "#new_parent_div1").on("keydown", "#new_parent_div1", function(event) {
+	if (event.which == 45) {
+            event.preventDefault();
+	    $("#parent_save").click();
+	}
+    });
+
     $(document).off("keydown", "#child_category_table").on("keydown", "#child_category_table", function(event) {
         //on Insert key press
         if (event.which == 45) {
@@ -642,14 +600,12 @@ $(document).ready(function() {
             });
             taxes = [];
             $("#category_tax_table tbody tr").each(function() {
-                var obj = {}; // dict for storing tax details
-                if ($.trim($("select option:selected", this).val()) != "") {
-                    obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
-                    obj.state = $.trim($("td:eq(1) select option:selected", this).val());
-                    obj.taxrate = $.trim($("input", this).val());
-                    taxes.push(obj);
-                }
-            });
+            var obj = {}; // dict for storing tax details
+	    obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
+	    obj.state = $.trim($("td:eq(1) select option:selected", this).val());
+	    obj.taxrate = $.trim($("input", this).val());
+	    taxes.push(obj);
+        });
             $.ajax({
                     url: '/category?action=save',
                     type: 'POST',

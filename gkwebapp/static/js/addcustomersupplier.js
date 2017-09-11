@@ -80,25 +80,6 @@ $(document).ready(function() {
       $("#add_cussup_email").focus().select();
     }
   });
-  $("#add_state").keydown(function(event) {
-    if (event.which==13) {
-    	event.preventDefault();
-    	if ($.trim($("#add_state").val())=="") {
-            $("#state-blank-alert").alert();
-            $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-              $("#state-blank-alert").hide();
-            });
-            $("#add_state").focus();
-            return false;
-          }
-          event.preventDefault();
-          $("#add_cussup_address").focus().select();
-        }
-        if (event.which==38 && $("#add_state option:selected").index()==0)  {
-          event.preventDefault();
-          $("#add_cussup_phone").focus().select();
-        }
-  });
 
 $("#add_state").keydown(function(event) {
     if (event.which==13) {
@@ -118,21 +99,8 @@ $("#add_state").keydown(function(event) {
           event.preventDefault();
           $("#add_cussup_phone").focus().select();
         }
-  });
-  
+});
 
-    
-$("#add_cussup_tan").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-$("#cussup_save").focus();
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#add_cussup_pan").focus().select();
-    }
-    });	
-    
     
   $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(event)
 {
@@ -281,18 +249,34 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
   });
   $("#add_cussup_pan").keydown(function(event) {
     if (event.which==13) {
-      event.preventDefault();
-      $("#add_cussup_tan").focus().select();
+	event.preventDefault();
+	if($("#vatorgstflag").val() == '22' || $("#vatorgstflag").val() == '29'){
+	    $("#add_cussup_tan").focus().select();
+	}
+	else {
+	    $(".gstinstate:first").focus();
+	}
     }
     if (event.which==38) {
       event.preventDefault();
       $("#add_cussup_fax").focus().select();
     }
   });
+
+
+    
     $("#add_cussup_tan").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
-	if($("#vatorgstflag") == '29'){
+	if($("#vatorgstflag").val() == '22'){
+	    	if ($.trim($("#add_cussup_tan").val())=="") {
+            $("#tin-blank-alert").alert();
+            $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#tin-blank-alert").hide();
+            });
+            $("#add_cussup_tan").focus();
+            return false;
+        }
           $("#cussup_save").focus();
 }
 else{
@@ -346,6 +330,18 @@ else{
       $("#add_cussup_name").focus();
       return false;
     }
+
+if($("#vatorgstflag").val() == '22'){  
+ if ($.trim($("#add_cussup_tin").val())=="") {
+      $("#tin-blank-alert").alert();
+      $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#tin-blank-alert").hide();
+      });
+      $("#add_cussup_tin").focus();
+      return false;
+    }
+}
+      
     if ($.trim($("#add_state").val())=="") {
       $("#state-blank-alert").alert();
       $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -371,7 +367,11 @@ else{
           gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val();
       }
     }
-  });
+      });
+      var custtan  = "";
+      if ($("#add_cussup_tan").length > 0) {
+	  custtan = $("#add_cussup_tan").val();
+      }
     // ajax call for saving the customer/supplier
       $.ajax({
 	  url: '/customersuppliers?action=save',
@@ -384,7 +384,7 @@ else{
 		 "custemail": $("#add_cussup_email").val(),
 		 "custfax": $("#add_cussup_fax").val(),
 		 "custpan": $("#add_cussup_pan").val(),
-		 "custtan": $("#add_cussup_tan").val(),
+		 "custtan": custtan,
 		 "gstin": JSON.stringify(gobj),
 		 "state" : $("#add_state").val(),
 		 "csflag": $("#add_cussup option:selected").val()

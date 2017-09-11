@@ -23,25 +23,13 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Rohini Baraskar" <robaraskar@gmail.com>
+"Prajkta Patkar"<prajakta@dff.org.in>
+"Abhijith Balan"<abhijith@dff.org.in>
 */
 
 $(document).ready(function() {
-  $("#add_cussup").focus().select();
-  $("#add_cussup").keydown(function(event) {
-    if (event.which==13) {
-
-	if ($.trim($("#add_cussup").val())=="") {
-            $("#role-blank-alert").alert();
-            $("#role-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-              $("#role-blank-alert").hide();
-            });
-            $("#add_cussup").focus();
-            return false;
-          }
-          event.preventDefault();
-          $("#add_cussup_name").focus().select();
-        }
-      });
+  $("#add_cussup_name").focus()
+ 
   $("#add_cussup_name").keydown(function(event) {
     if (event.which==13) {
     	if ($.trim($("#add_cussup_name").val())=="") {
@@ -76,26 +64,6 @@ $(document).ready(function() {
       $("#add_cussup_email").focus().select();
     }
   });
-  $("#add_state").keydown(function(event) {
-    if (event.which==13) {
-    	event.preventDefault();
-    	if ($.trim($("#add_state").val())=="") {
-            $("#state-blank-alert").alert();
-            $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-              $("#state-blank-alert").hide();
-            });
-            $("#add_state").focus();
-            return false;
-          }
-          event.preventDefault();
-          $("#add_cussup_address").focus().select();
-        }
-        if (event.which==38 && $("#add_state option:selected").index()==0)  {
-          event.preventDefault();
-          $("#add_cussup_phone").focus().select();
-        }
-  });
-
 $("#add_state").keydown(function(event) {
     if (event.which==13) {
     	event.preventDefault();
@@ -115,21 +83,7 @@ $("#add_state").keydown(function(event) {
           $("#add_cussup_phone").focus().select();
         }
   });
-  
 
-    
-$("#add_cussup_tan").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-$("#cussup_save").focus();
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#add_cussup_pan").focus().select();
-    }
-    });	
-    
-    
   $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(event)
 {
   var curindex = $(this).closest('tr').index();
@@ -278,17 +232,25 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
   $("#add_cussup_pan").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#add_cussup_tan").focus().select();
+      if($("#vatorgstflag").val() == '22'|| $("#vatorgstflag").val() =='29' ){
+	    $("#add_cussup_tan").focus().select();
+	}
+	else {
+	    $(".gstinstate:first").focus();
+	}
     }
     if (event.which==38) {
       event.preventDefault();
       $("#add_cussup_fax").focus().select();
     }
   });
+
+
+    /*
     $("#add_cussup_tan").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
-	if($("#vatorgstflag") == '29'){
+	if($("#vatorgstflag") == '22'){
           $("#cussup_save").focus();
 }
 else{
@@ -307,29 +269,54 @@ else{
       event.preventDefault();
       return false;
     }
-  });
+    }); */
+
+  $("#add_cussup_tan").keydown(function(event) {
+    if (event.which==13) {
+	event.preventDefault();
+	if($("#vatorgstflag").val() == '22'){
+	    	if ($.trim($("#add_cussup_tan").val())=="") {
+            $("#tin-blank-alert").alert();
+            $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#tin-blank-alert").hide();
+            });
+            $("#add_cussup_tan").focus();
+            return false;
+        }
+          $("#cussup_save").focus();
+}
+else{
+	$(".gstinstate:first").focus();
+ }
+
+   }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#add_cussup_pan").focus().select();
+    }
+    });
+    
   $("#cussup_save").click(function(event) {
       //save event for saving the customer/supplier
     event.preventDefault();
-    var custsupdata=$("#add_cussup option:selected").val(); //select with option either customer or supplier
-    // custsupdata = 3 if customer or 19 if supplier
+  
+    var custsupval;
+    if ($("#deliverychallan_gkstatus").val()=='in' || $('#status').val()=='9') {
+      custsupval= 19;
+    }
+    else {
+      custsupval = 3 ;
+    }
+    // custsupval= 3 if customer or 19 if supplier
+
     var groupcode = -1;
-    if (custsupdata == '3'){
+    if (custsupval == '3'){
       groupcode = $("#debtgroupcode").val();
     }
     else {
       groupcode = $("#credgroupcode").val();
     }
-    //validations to check if none of the required fields are left blank
-    if ($.trim($("#add_cussup option:selected").val())=="") {
-      $("#cussup-blank-alert").alert();
-      $("#cussup-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#cussup-blank-alert").hide();
-      });
-      $("#add_cussup").focus();
-      return false;
-    }
-
+   
     if ($.trim($("#add_cussup_name").val())=="") {
       $("#name-blank-alert").alert();
       $("#name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -355,7 +342,7 @@ else{
       $("#add_cussup_address").focus();
       return false;
     }
-    var gobj = {}; // Creating a dictionary for storing godown wise opening stock
+    var gobj = {}; // Creating a dictionary for storing statewise gstin
       $("#gstintable tbody tr").each(function(){
 	  var curindex1 = $(this).index();
     if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
@@ -363,7 +350,11 @@ else{
           gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val();
       }
     }
-  });
+      });
+      var custtan  = "";
+      if ($("#add_cussup_tan").length > 0) {
+	  custtan = $("#add_cussup_tan").val();
+      }
     // ajax call for saving the customer/supplier
       $.ajax({
 	  url: '/customersuppliers?action=save',
@@ -376,10 +367,10 @@ else{
 		 "custemail": $("#add_cussup_email").val(),
 		 "custfax": $("#add_cussup_fax").val(),
 		 "custpan": $("#add_cussup_pan").val(),
-		 "custtan": $("#add_cussup_tan").val(),
+		 "custtan": custtan,
 		 "gstin": JSON.stringify(gobj),
 		 "state" : $("#add_state").val(),
-		 "csflag": $("#add_cussup option:selected").val()
+		 "csflag": custsupval
 		},
       beforeSend: function(xhr)
       {
@@ -404,11 +395,16 @@ else{
             success: function(resp)
             {
               if(resp["gkstatus"]==0)
-              {
-                  $('#selectedcustsup').val($.trim($("#add_cussup_name").val()));
-                if (custsupdata == '3') {
+		{
+		var customeradded = $("#add_cussup_name").val();
+                $('#selectedcustsup').val(customeradded);
+
+            //    $('#selectedcustsup').val($.trim($("#add_cussup_name").val()));
+                      if (custsupval == '3') {
                   $("#cus-success-alert").alert();
                   $("#cus-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $('#custsupmodal').modal('hide');
+                    $('.modal-backdrop').remove();
                     $("#cus-success-alert").hide();
                   });
 
@@ -416,19 +412,19 @@ else{
                 else  {
                   $("#sup-success-alert").alert();
                   $("#sup-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $('#custsupmodal').modal('hide');
+                    $('.modal-backdrop').remove();
                     $("#sup-success-alert").hide();
                   });
 
                 }
-                $('#custsupmodal').modal('hide');
-                $('.modal-backdrop').remove();
-                return false;
+              return false;
               }
             }
-          }
-        );
-        return false;
-      }
+          });
+          return false;
+        }
+
       if(resp["gkstatus"] ==1){
           // gkstatus 1 implies its a duplicate entry.
           $("#add_cussup_name").focus();

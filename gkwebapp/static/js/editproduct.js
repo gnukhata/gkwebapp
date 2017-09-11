@@ -28,25 +28,27 @@ $(document).ready(function() {
   $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
     event.preventDefault();
     /* Act on the event */
-    if ($(this).val()=="")
+      if ($(this).val()=="" && !$(this).hasClass("hsn"))
     {
     $(this).val(parseFloat(0).toFixed(2));
     }
     else
     {
-      $(this).val(parseFloat($(this).val()).toFixed(2));
+	if(!$(this).hasClass("hsn")){
+            $(this).val(parseFloat($(this).val()).toFixed(2));
+        }
     }
   });
 
-  $(document).off('click', '#editgodownflag').on('click', '#editgodownflag', function(e){
+    $(document).off('click', '#editgodownflag').on('click', '#editgodownflag', function(e){
     if ($(this).is(":checked")) {
       $("#editgodownflag").val(1);
       $("#editnogodown").hide();
       $("#editopeningstockdiv").show();
     }
     else {
-      $("#editgodownflag").val(0);
-      $("#editopeningstockdiv").hide();
+	$("#editgodownflag").val(0);
+	$("#editopeningstockdiv").hide();
       $("#editnogodown").show();
     }
   });
@@ -200,7 +202,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
       }
     }
     if (event.which == 38) {
-      var n = $(".editgodown_ob").index(this);
+	var n = $(".editgodown_ob").index(this);
       if (n == 0) {
         $("#editgodownflag").focus().select();
       }
@@ -243,7 +245,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
         if(sessionStorage.invflag==0){
         //$("#categorydiv").hide();
         $(".noinventory").hide();
-        $("#invflag").val("0")
+            $("#invflag").val("0");
           $("#taxhelp3").hide();
           $("#taxhelp5").show();
 
@@ -256,7 +258,10 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
         $('#proddetails').find('input, textarea, button, select').prop('disabled',true);
         $(".product_tax_disable").prop('disabled',true);
         $(".product_cat_tax_disable").prop('disabled',true);
-        catcode= $("#editcatselect option:selected").val();
+          catcode= $("#editcatselect option:selected").val();
+	  if(catcode!=""){
+	      $("#txtareahelp").hide();
+	  }
         $(".specdate").autotab('number');
         $(".specdate").numeric();
         console.log("success");
@@ -472,7 +477,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
 
     $("#epedit").hide();
 
-    if($("#gsflag").val()=='7'){
+    if($("#gsflag").val()=='7' && sessionStorage.invflag == 1){
     $("#addgodown").show();
   }
 
@@ -1268,7 +1273,12 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
           }
         });
         specdate = specyear+"-"+specmonth+"-"+specday; //Storing date in yyyyMMdd format
-        $(".spec_value",this).val(specdate); // Storing spec date in hidden filed
+        if (specyear!="" && specmonth!="" && specday!="") {
+	    $(".spec_value",this).val(specdate); // Storing spec date in hidden filed
+	  }
+	  else{
+	      $(".spec_value",this).val("");
+	  }
       }
       if ($.trim($(".spec_name",this).val())!=""){
         if ($.trim($(".spec_name",this).val())!="" && $.trim($(".spec_value",this).val())!="" ) {
@@ -1279,7 +1289,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
     var taxes = [];
     $("#product_edit_tax_table tbody tr").each(function(){
       var obj = {};
-      curindex = $(this).index();
+      let curindex = $(this).index();
       if ($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()!="") {
         obj.taxrowid = $("#product_edit_tax_table tbody tr:eq("+curindex+")").attr('value');
         obj.taxname = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select option:selected").val();
@@ -1289,7 +1299,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
       }
     });
     for (tax of existingnonetax) {
-      var obj = {};
+      let obj = {};
       obj.taxrowid = tax["taxid"];
       obj.taxname = tax["taxname"];
       obj.state = tax["state"];
@@ -1355,9 +1365,10 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
     event.stopPropagation();
   });
 
-
+    
   $('#epdelete').click(function(event) {
-    event.preventDefault();
+      event.preventDefault();
+      var gsflag = $("#gsflag").val();
     /* Act on the event */
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
@@ -1385,18 +1396,36 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
           else {
             $("#editproduct").click();
           }
-          $("#deletesuccess-alert").alert();
-          $("#deletesuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#deletesuccess-alert").hide();
+	    if(gsflag == '7'){
+		$("#deleteproduct-success-alert").alert();
+		$("#deleteproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#deleteproduct-success-alert").hide();
           });
+	    }
+	    else {
+		$("#deleteservice-success-alert").alert();
+                $("#deleteservice-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#deleteservice-success-alert").hide();
+                });
+                return false;
+	    }
         }
         else if(resp["gkstatus"] == 5) {
           $("#prodselect").focus();
-          $("#failure-delete-alert").alert();
-          $("#failure-delete-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#failure-delete-alert").hide();
-          });
-          return false;
+            if(gsflag == '7'){
+		$("#failure-delete-alert").alert();
+                $("#failure-delete-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#failure-delete-alert").hide();
+                });
+                return false;
+            }
+	    else {
+		$("#failure-service-delete-alert").alert();
+                $("#failure-service-delete-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#failure-service-delete-alert").hide();
+                });
+                return false;
+	    }
         }
       })
       .fail(function() {

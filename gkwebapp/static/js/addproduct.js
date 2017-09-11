@@ -1,22 +1,10 @@
+
+
+
 $(document).ready(function() {
 $(".serviceclass").hide();
 $(".productclass").hide();
   $(".common").hide();
-  
-if (sessionStorage.invflag==0){
-  $(".noinventory").hide();
-  $("#nogodownmsg").show();
-}
-if (sessionStorage.invflag=='1' ){
-  $("#nogodownmsg").hide();
-
-  $("#godownmsg").show();
-}
-  if(sessionStorage.vatorgstflag == '7'){
-      $(".taxclass").hide();
-      $(".igsttax").show();
-  }
-  //$("#proservlabel").text("Product Name :");
 
   var godownflag = 0;
   $('.modal-backdrop').remove();
@@ -42,13 +30,20 @@ if (sessionStorage.invflag=='1' ){
   if($("#addcatselect").is(':hidden'))
   {
     $("#addproddesc").focus();
-  }*/
-
+    }*/
+    if(sessionStorage.invflag != 0) {
+        $("#addgodown").show();
+    }
   $("#additem").change(function(event) {
     if($("#additem option:selected").val() == '7') {
 
-      $(".serviceclass").hide();
-      $(".productclass").show();
+	$(".serviceclass").hide();
+	if(sessionStorage.invflag != 0) {
+            $(".productclass").show();
+        }
+	else {
+	    $(".productclass").not("#addgodown").show();
+	}
       $("#proservlabel").text("Product Name :");
       $("#gscodelabel").text("HSN Code :");
       $(".common").show();
@@ -89,13 +84,15 @@ $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
 $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
   event.preventDefault();
   /* Act on the event */
-  if ($(this).val()=="")
+    if ($(this).val()=="" && !$(this).hasClass("hsn"))
   {
     $(this).val(parseFloat(0).toFixed(2));
   }
   else
-  {
-    $(this).val(parseFloat($(this).val()).toFixed(2));
+    {
+	if(!$(this).hasClass("hsn")){
+	    $(this).val(parseFloat($(this).val()).toFixed(2));
+	}
   }
 });
 
@@ -279,11 +276,7 @@ $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
       event.preventDefault();
       $("#spec_table tbody tr:first td:eq(1) input:first").focus();
     }
-      else if(sessionStorage.vatorgstflag == '7') {
-	  event.preventDefault();
-	  $("#igstrate").focus().select();
-
-      }
+     
       else {
 	  $("#product_tax_table tbody tr:first td:eq(0) select").focus();
     }
@@ -520,7 +513,7 @@ $("#addcatselect").change(function(event) {
         specspresent = 1;
       }
       else {
-        specspresent = 0;
+          specspresent = 0;
       }
     })
     .fail(function() {
@@ -1352,7 +1345,7 @@ else{
   }
 }
 
-  if ($("#openingstock").val()=="")
+    if ($("#openingstock").val()=="")
   {
     $('.modal-backdrop').remove();
     $("#openingstock").val("0.00");
@@ -1400,8 +1393,13 @@ else{
           specyear = $(this).val(); //Storing specyear
         }
       });
-      specdate = specyear+"-"+specmonth+"-"+specday; //Storing date in yyyyMMdd format
-      $(".spec_value",this).val(specdate); // Storing spec date in hdden field
+	specdate = specyear+"-"+specmonth+"-"+specday; //Storing date in yyyyMMdd format
+	if (specyear!="" && specmonth!="" && specday!="") {
+	    $(".spec_value",this).val(specdate); // Storing spec date in hidden filed
+	  }
+	  else{
+	      $(".spec_value",this).val("");
+	  }
     }
     if ($.trim($(".spec_name",this).val())!=""){
       if ($.trim($(".spec_name",this).val())!="" && $.trim($(".spec_value",this).val())!="" ) {
@@ -1412,16 +1410,7 @@ else{
 
 
     var taxes = []; //Taxes list to store dictionaries created
-    if (sessionStorage.vatorgstflag =='7'){
-	console.log("hello");
-	var obj = {};
-	  obj.taxname = "IGST";
-	  obj.state = "";
-	obj.taxrate = $("#igstrate").val();
-	taxes.push(obj);
-	console.log(taxes);
-    }
-    else{
+   
   $("#product_tax_table tbody tr").each(function(){
       var obj = {}; // dict for storing tax details
     if ($.trim($("select option:selected", this).val()) != "") {
@@ -1432,7 +1421,23 @@ else{
     }
 
   });
+    if(taxes.length == '0'){
+	if($("#additem option:selected").val() == 7){
+	    $("#tax-alert").alert();
+            $("#tax-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#tax-alert").hide();
+            });
+            return false;
+	}
+	else {
+	    $("#tax-service-alert").alert();
+            $("#tax-service-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#tax-service-alert").hide();
+            });
+            return false;
+	}
     }
+    
   var gobj = {}; // Creating a dictionary for storing godown wise opening stock
   $("#godown_ob_table tbody tr").each(function(){
     if ($.trim($(".godown_name",this).val())!="") {
@@ -1475,7 +1480,7 @@ else{
   .done(function(resp) {
     if (resp["gkstatus"] ==0) {
 
-      //$("#addproduct").click();
+	//$("#addproduct").click();
       if(sessionStorage.invflag==0){
         $("#product").click();
       }
@@ -1501,7 +1506,7 @@ else{
       });
 	}
       $("#addproddesc").focus();
-      $("#addproddesc").select();
+	$("#addproddesc").select();
       return false;
     }
     console.log("success");

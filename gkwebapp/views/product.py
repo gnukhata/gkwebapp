@@ -413,7 +413,7 @@ def listofstockitemsspreadsheet(request):
 def viewstockreport(request):
 
 	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/products",headers=header)
+	result = requests.get("http://127.0.0.1:6543/products?invdc=4",headers=header)
 	result1 = requests.get("http://127.0.0.1:6543/godown",headers=header)
 	result2 = requests.get("http://127.0.0.1:6543/login", headers=header)
 	userrole = result2.json()["gkresult"]["userrole"]
@@ -630,7 +630,7 @@ def stockreportspreadsheet(request):
 def viewStockOnHandReport(request):
 
 	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/products",headers=header)
+	result = requests.get("http://127.0.0.1:6543/products?invdc=4",headers=header)
 	result1 = requests.get("http://127.0.0.1:6543/godown",headers=header)
 	result2 = requests.get("http://127.0.0.1:6543/login", headers=header)
 	userrole = result2.json()["gkresult"]["userrole"]
