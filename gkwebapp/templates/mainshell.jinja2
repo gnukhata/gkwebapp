@@ -26,7 +26,7 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href=""><img src="{{request.static_url('gkwebapp:static/images/icon.svg')}}" alt="GNUKhata Icon" style="width:42px;height:42px;margin-top: -11px" /></a>
-        <a class="navbar-brand" style="pointer-events: none;">{% trans %}GNUKhata <em>v4.25 <small>beta</small></em> {% endtrans %}</a>
+        <a class="navbar-brand" style="pointer-events: none;">{% trans %}GNUKhata <em>v4.25 </em> {% endtrans %}</a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -59,7 +59,7 @@
               <li><a class="inventorymenu" data-toggle="tab" id="deliverychallan" href="">{% trans %}Delivery Note{% endtrans %}</a></li>
               <li><a  class="inventorymenu" data-toggle="tab" id="godown" href="">{% trans %}Godown{% endtrans %}</a></li>
               <li><a class="inventorymenu" data-toggle="tab" id="createtransfernote" href="">{% trans %}Transfer Note{% endtrans %}</a></li>
-              <li><a class="inventorymenu" data-toggle="tab" id="rejectionnote" href="">{% trans %}Rejection Note{% endtrans %}</a></li>
+             
               <li><a class="inventorymenu" data-toggle="tab" id="purchaseorder" href="">{% trans %}Purchase/Sales Order{% endtrans %}</a></li>
             </ul>
           </li>
@@ -271,7 +271,7 @@
 	    <label><input type="radio" class="iib" name="orgpref" id="onlyaccradio" aria-label="" checked>&nbsp {% trans %}Accounting only{% endtrans %}.</label>
         </div>
 	<div class="radio">
-          <label><input type="radio" class="iib" name="orgpref" id="onlyinvsradio" aria-label="">&nbsp {% trans %}Invoicing only{% endtrans %}.</label>
+          <label><input type="radio" class="iib" name="orgpref" id="onlyinvsradio" aria-label="">&nbsp {% trans %}Accounting with Invoicing{% endtrans %}.</label>
         </div>
 	<div class="radio">
           <label><input type="radio" class="iib" name="orgpref" id="invsbillradio" aria-label="">&nbsp {% trans %}Invoicing with Billwise Accounting{% endtrans %}.</label>
@@ -446,7 +446,7 @@
           {% trans %}You may use a newer version of the same license.{% endtrans %} {% trans %}The libraries used in this software are licensed under their respective{% endtrans %} <a href="http://www.gnu.org/licenses/license-list.html" target="_blank">{% trans %}free software licenses{% endtrans %}</a>.
         </p>
         <p style="margin-top: 30px;">
-            {% trans %}Copyright © Digital Freedom Foundation 2013,2014,2015,2016.{% endtrans %} {% trans %}Visit{% endtrans %} <a href="http://gnukhata.in" target="_blank">{% trans %}gnukhata.in{% endtrans %}</a> {% trans %}for more information.{% endtrans %}
+            {% trans %}Copyright © Digital Freedom Foundation 2013,2014,2015,2016,2017.{% endtrans %} {% trans %}Visit{% endtrans %} <a href="http://gnukhata.in" target="_blank">{% trans %}gnukhata.in{% endtrans %}</a> {% trans %}for more information.{% endtrans %}
         </p>
       </div>
       <div class="modal-footer">
@@ -460,7 +460,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">{% trans %}GNUKhata <small style="color:white;"> version 4.25 beta</small>{% endtrans %}</h4>
+        <h4 class="modal-title">{% trans %}GNUKhata <small style="color:white;"> version 4.25 </small>{% endtrans %}</h4>
       </div>
       <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
         <p>
@@ -490,20 +490,13 @@
 
         </p>
         <p>
-          Abhijith Balan <a href="mailto:abhijithb21@openmailbox.org">abhijithb21@openmailbox.org</a><br />
+          Abhijith Balan <a href="mailto:abhijith@dff.org.in">abhijith@dff.org.in</a><br />
           Ark Arjun (Logo designer) <a href="maiito:arkarjun@gmail.com">arkarjun@gmail.com</a><br />
           Bhavesh Bawadhane <a href="mailto:bbhavesh07@gmail.com">bbhavesh07@gmail.com</a><br />
-          Kanchan Palatane<a href= "kanchanpaltane@gmail.com">kanchanpaltane@gmail.com</a><br />
-          Mohd. Talha Pawaty<a href= "mtalha456@gmail.com">mtalha456@gmail.com</a><br />
-          Navin Karkera <a href="mailto:navin@dff.org.in">navin@dff.org.in</a><br />
-          Parabjyot Singh <a href="mailto:parabjyot1996@gmail.com">parabjyot1996@gmail.com</a><br />
-          Pornima Kolte <a href="mailto:pornima@openmailbox.org">pornima@openmailbox.org</a><br />
-          Prajkta Patkar <a href="mailto:prajkta.patkar007@gmail.com">prajkta.patkar007@gmail.com</a><br />
-          Prasad Shegokar" <a href="pvsheg@gmail.com">pvsheg@gmail.com</a><br/>
-          Rahul Chaurasiya<a href="mailto:crahul4133@gmail.com">crahul4133@gmail.com</a><br />
-          Ravindra Lakal<a href="mailto:ravindra.lakal@gmail.com">ravindra.lakal@gmail.com</a><br />
+          Mohd. Talha Pawaty <a href= "mtalha456@gmail.com"> mtalha456@gmail.com</a><br />
+          Prajkta Patkar <a href="mailto:prajakta@dff.org.in">prajakta@dff.org.in</a><br />
+	  Reshma Bhatawadekar <a href="mailto:bhatawadekar1reshma@gmail.com">bhatawadekar1reshma@gmail.com</a><br />
           Rohini Baraskar <a href="mailto:robaraskar@gmail.com">robaraskar@gmail.com</a><br />
-          Sachin Patil <a href="mailto:sachpatil@openmailbox.org">sachpatil@openmailbox.org</a><br/>
           Uma Mahesh <a href="mailto:uma.mahesh@icfoss.in">uma.mahesh@icfoss.in</a><br />
           Vaibhav Kurhe <a href="mailto:vaibspidy@openmailbox.org">vaibspidy@openmailbox.org</a><br />
         </p>
@@ -511,9 +504,7 @@
           For former developers list visit <a href="http://gnukhata.in/#team" target="_blank">{% trans %}gnukhata.in{% endtrans %}</a>
         </p>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}Close{% endtrans %}</button>
-      </div>
+      
     </div>
   </div>
 </div>
