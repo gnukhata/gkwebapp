@@ -342,6 +342,35 @@ if($("#vatorgstflag").val() == '22'){
     }
 }
 
+if($("#vatorgstflag").val() == '29'){
+  console.log("Abdul Kalam: " + $("#add_cussup_tin").val());
+  if ($.trim($("#add_cussup_tan").val())=="") {
+    for (var i = 0; i < $('#gstintable tbody tr').length; i++) {
+      if (($('#gstintable tbody tr:eq('+i+') td:eq(1) input').val())=="" ) {
+           $("#both-blank-alert").alert();
+           $("#both-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+             $("#both-blank-alert").hide();
+           });
+           $("#add_cussup_tin").focus();
+           return false;
+         }
+    }
+  }
+}
+
+if($("#vatorgstflag").val() == '7'){
+  for (var i = 0; i < $('#gstintable tbody tr').length; i++) {
+    if (($('#gstintable tbody tr:eq('+i+') td:eq(1) input').val())=="" ) {
+         $("#gstin-blank-alert").alert();
+         $("#gstin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+           $("#gstin-blank-alert").hide();
+         });
+         $("#add_cussup_tin").focus();
+         return false;
+       }
+  }
+}
+
     if ($.trim($("#add_state").val())=="") {
       $("#state-blank-alert").alert();
       $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
