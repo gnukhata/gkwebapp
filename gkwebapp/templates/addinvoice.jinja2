@@ -217,12 +217,12 @@
 	    <a id="taxapplicablescroll"></a>
 	    <div class="col-md-12">
 	      <div class="col-md-3">
-		<label for="taxapplicabletext" style="font-size:10px;" name="taxflag">{% trans %}Tax Applicable{% endtrans %} : </label>
+		<label for="taxapplicabletext" name="taxflag">{% trans %}Tax Applicable{% endtrans %} : </label>
 		{% if resultgstvat == '29' or resultgstvat == '7' %}
-		  <label id="taxapplicabletext" class="fsize">GST</label>
+		  <label id="taxapplicabletext" class="">GST</label>
 		  <input type="text"  id="taxapplicable" value="7" accesskey="" hidden>
 		{% else %}
-		  <label id="taxapplicabletext" class="fsize">VAT</label>
+		  <label id="taxapplicabletext" >VAT</label>
 		  <input type="text"  id="taxapplicable" value="22" accesskey="" hidden>
 		{% endif %}
 	      </div>
