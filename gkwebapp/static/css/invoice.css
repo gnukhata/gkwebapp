@@ -119,3 +119,6 @@
      border-left-style:solid;
      border-width: 1px;
  }
+ .fsize {
+     font-size:95% !important; 
+ }
