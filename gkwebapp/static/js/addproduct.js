@@ -210,11 +210,19 @@ $("#hsnno").keydown(function(event) {
   if(event.which==13) {
     event.preventDefault();
     if ($(this).val()=="") {
+      if($("#additem option:selected").val() == '7') {
       $("#hsnno-blank-alert").alert();
       $("#hsnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#hsnno-blank-alert").hide();
-    });
-      $("#hsnno").focus();
+      });
+      }
+    else{
+
+      $("#serviceno-blank-alert").alert();
+      $("#serviceno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#serviceno-blank-alert").hide();
+      });
+    }
       return false;
     }
       if ($("#additem option:selected").val()=='7'){
@@ -234,7 +242,7 @@ $("#hsnno").keydown(function(event) {
 	$("#addproddesc").focus().select();
     }
 });
-$("#serviceno").keydown(function(event) {
+/*$("#serviceno").keydown(function(event) {
   if(event.which==13) {
     event.preventDefault();
     if ($(this).val()=="") {
@@ -247,7 +255,7 @@ $("#serviceno").keydown(function(event) {
   }
     $("#product_tax_table tbody tr:first td:eq(0) select").focus();
   }
-});
+});*/
 
 
 
@@ -1025,7 +1033,7 @@ $(document).off("click",".tax_del").on("click", ".tax_del", function() {
   });
   $('#product_tax_table tbody tr:last td:eq(0) select').select();
 });
-$(document).off('keydown', '#igstrate').on('keydown', '#igstrate',function(event) {
+/*$(document).off('keydown', '#igstrate').on('keydown', '#igstrate',function(event) {
   if (event.which==13) {
       event.preventDefault();
       if($("#additem option:selected").val()=='19'){
@@ -1054,7 +1062,7 @@ $(document).off('keydown', '#igstrate').on('keydown', '#igstrate',function(event
 	    $("#adduom").focus();
 	}
     }
-});
+}); */
 /* -----------------------Tax key events end----------------------------------------- */
 $(document).off('keydown', '#openingstock').on('keydown', '#openingstock', function(event) {
   if (event.which == 13) {
@@ -1334,13 +1342,13 @@ else{
     $("#addproddesc").select();
     return false;
   }
-  if($("#serviceno").val()==""){
+  if($("#hsnno").val()==""){
 
       $("#serviceno-blank-alert").alert();
       $("#serviceno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#serviceno-blank-alert").hide();
     });
-      $("#serviceno").focus();
+      $("#hsnno").focus();
       return false;
   }
 }
