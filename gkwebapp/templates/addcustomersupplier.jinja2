@@ -103,7 +103,7 @@
 	      <div class="form-group col-sm-6">
 		<label for="add_cussup_address"> Address:
 		</label><label for="add_cussup_address" style="color:red;font-size: 120%;">*</label>
-	
+
 		<textarea class="form-control" rows="2" cols="40" id="add_cussup_address" aria-describedby="textareahelp"></textarea>
 		<small id="textareahelp" class="form-text text-muted">Press Enter key twice to shift focus to Fax</small>
               </div>
@@ -127,7 +127,7 @@
               <input class="form-control input-sm" type="text" id="add_cussup_tan"></input>
             </div>
 
-	  {% endif %}      
+	  {% endif %}
 	  <div class="form-group"  id ="gstin">
             <label for="gstin">{% trans %}GSTIN:{% endtrans %}</label><label for="add_cussup_gstin" style="color:red;font-size: 120%;">*</label>
 	    <div class ="panel panel-default">
@@ -233,14 +233,14 @@
             <label for="add_cussup_pan">{% trans %}PAN:{% endtrans %}</label>
             <input class="form-control input-sm" type="text" id="add_cussup_pan"></input>
           </div>
-	  
+
           <div class="form-group">
             <label for="add_cussup_tan">{% trans %}TIN:{% endtrans %}</label><label for="add_cussup_tan" style="color:red;font-size: 120%;">*</label>
 
             <input class="form-control input-sm" type="text" id="add_cussup_tan"></input>
-          </div> 
+          </div>
 	  {% endif %}
-	  
+
         </div>
       </div>
       <div id="accModal"  tabindex="-1" class="modal fade " role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
@@ -254,9 +254,10 @@
 	    <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
 
 	      <p>   <font color=" #566573"> {%trans%}
-		This screen let's you create a customer or supplier. The module by default starts with Create Customer/Supplier mode.
+		This screen let's you create a customer or supplier. You can use this module to Edit Customer/Supplier.
 		Enter all the details of a new customer or supplier.
-		Pres Enter to move forward and up arrow to move backward.
+    In Create Customer the mandatory fields are Role, Name, State, Address and TIN/GSTIN.
+		Press Enter to move forward and up arrow to move backward.
 {% endtrans %} </font>
 
               </p>
