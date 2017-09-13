@@ -59,7 +59,7 @@ $(".productclass").hide();
 
     $("#additem").change();
 
-    
+
 
   $("#godownflag").click(function(e){
     if ($(this).is(":checked")) {
@@ -221,12 +221,12 @@ $("#hsnno").keydown(function(event) {
     $("#adduom").focus();
     }
       else {
-	  if($("#igstrate").is(":hidden")){
+	  //if($("#igstrate").is(":hidden")){
 	      $("#product_tax_table tbody tr:first td:eq(0) select").focus();
-	  }
-	  else {
+	  //}
+	  /*else {
 	      $("#igstrate").focus().select();
-	  }
+	  }*/
     }
 
   }
@@ -250,7 +250,7 @@ $("#serviceno").keydown(function(event) {
 });
 
 
-    
+
 $("#adduom").change(function(event) {
   if ($("#adduom option:selected").val()!='') {
     $("#unitaddon").html($("#adduom option:selected").text());
@@ -276,7 +276,7 @@ $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
       event.preventDefault();
       $("#spec_table tbody tr:first td:eq(1) input:first").focus();
     }
-     
+
       else {
 	  $("#product_tax_table tbody tr:first td:eq(0) select").focus();
     }
@@ -318,12 +318,12 @@ $(document).off('keydown', '#addcatselect').on('keydown', '#addcatselect',functi
   if (event.which==13) {
     event.preventDefault();
     $("#addproddesc").focus().select();
-    
+
   }
     else if (event.which == 38 && (document.getElementById('addcatselect').selectedIndex==1||document.getElementById('addcatselect').selectedIndex==0)){
 	$("#additem").focus();
     }
-    
+
 });
 $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
   /* Act on the event */
@@ -1410,7 +1410,7 @@ else{
 
 
     var taxes = []; //Taxes list to store dictionaries created
-   
+
   $("#product_tax_table tbody tr").each(function(){
       var obj = {}; // dict for storing tax details
     if ($.trim($("select option:selected", this).val()) != "") {
@@ -1437,7 +1437,7 @@ else{
             return false;
 	}
     }
-    
+
   var gobj = {}; // Creating a dictionary for storing godown wise opening stock
   $("#godown_ob_table tbody tr").each(function(){
     if ($.trim($(".godown_name",this).val())!="") {
@@ -1463,7 +1463,7 @@ else{
     addformdata.push({name: 'godowns', value: JSON.stringify(gobj)}); //Pushing taxes and specs into addformdata
 
   }
- 
+
   $.ajax({
     url: '/product?type=save',
     type: 'POST',
@@ -1474,7 +1474,7 @@ else{
     beforeSend: function(xhr)
     {
       xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
- 
+
     }
   })
   .done(function(resp) {
@@ -1498,7 +1498,7 @@ else{
     else if (resp["gkstatus"] ==1)
     {
 	$('.modal-backdrop').remove();
-	
+
 	if ($("#additem option:selected").val() == 7){
       $("#duplicate-alert").alert();
       $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
