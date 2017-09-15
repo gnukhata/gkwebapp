@@ -29,7 +29,7 @@
    "Rahul Chaurasiya" <crahul4133@gmail.com>
    "Mohd. Talha Pawaty" <mtalha456@gmail.com>
    "prajkta Patkar" <prajakta@dff.org.in>
-   "Reshma Bhatawadekar" <bhatawadekar1reshma@gmail.com>
+   "Reshma Bhatawadekar" <reshma@dff.org.in>
  */
 // This script is for the mainshell page and loads when the main page of GNUKhata is loaded.
 // Also all the external js libraries we have used is loaded along with the mainshell.
@@ -677,7 +677,7 @@ var userrole1;
 	   if (sessionStorage.invflag==0 && sessionStorage.invsflag==0 && sessionStorage.billflag==0) {
                $('#onlyaccradio').focus().prop('checked', true);
         }
-      
+
 
                     $(".iib").keydown(function(event) {
                         if (event.which==13) {
@@ -687,7 +687,7 @@ var userrole1;
                       }
                     });
 
-                
+
 
        $("#orgprefsave").click(function(event){
          if ($("#invinvsbillradio").is(":checked"))
@@ -1470,7 +1470,7 @@ var userrole1;
   });
 
 
- 
+
   $('#invoice').click(function (e) {// calls base invoice page.
     $("#info").load("/invoice");
   });
