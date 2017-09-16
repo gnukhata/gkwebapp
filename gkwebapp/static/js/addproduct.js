@@ -59,7 +59,7 @@ $(".productclass").hide();
 
     $("#additem").change();
 
-    
+
 
   $("#godownflag").click(function(e){
     if ($(this).is(":checked")) {
@@ -210,23 +210,31 @@ $("#hsnno").keydown(function(event) {
   if(event.which==13) {
     event.preventDefault();
     if ($(this).val()=="") {
+      if($("#additem option:selected").val() == '7') {
       $("#hsnno-blank-alert").alert();
       $("#hsnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#hsnno-blank-alert").hide();
-    });
-      $("#hsnno").focus();
+      });
+      }
+    else{
+
+      $("#serviceno-blank-alert").alert();
+      $("#serviceno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#serviceno-blank-alert").hide();
+      });
+    }
       return false;
     }
       if ($("#additem option:selected").val()=='7'){
     $("#adduom").focus();
     }
       else {
-	  if($("#igstrate").is(":hidden")){
+	  //if($("#igstrate").is(":hidden")){
 	      $("#product_tax_table tbody tr:first td:eq(0) select").focus();
-	  }
-	  else {
+	  //}
+	  /*else {
 	      $("#igstrate").focus().select();
-	  }
+	  }*/
     }
 
   }
@@ -234,7 +242,7 @@ $("#hsnno").keydown(function(event) {
 	$("#addproddesc").focus().select();
     }
 });
-$("#serviceno").keydown(function(event) {
+/*$("#serviceno").keydown(function(event) {
   if(event.which==13) {
     event.preventDefault();
     if ($(this).val()=="") {
@@ -247,10 +255,10 @@ $("#serviceno").keydown(function(event) {
   }
     $("#product_tax_table tbody tr:first td:eq(0) select").focus();
   }
-});
+});*/
 
 
-    
+
 $("#adduom").change(function(event) {
   if ($("#adduom option:selected").val()!='') {
     $("#unitaddon").html($("#adduom option:selected").text());
@@ -276,7 +284,7 @@ $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
       event.preventDefault();
       $("#spec_table tbody tr:first td:eq(1) input:first").focus();
     }
-     
+
       else {
 	  $("#product_tax_table tbody tr:first td:eq(0) select").focus();
     }
@@ -318,12 +326,12 @@ $(document).off('keydown', '#addcatselect').on('keydown', '#addcatselect',functi
   if (event.which==13) {
     event.preventDefault();
     $("#addproddesc").focus().select();
-    
+
   }
     else if (event.which == 38 && (document.getElementById('addcatselect').selectedIndex==1||document.getElementById('addcatselect').selectedIndex==0)){
 	$("#additem").focus();
     }
-    
+
 });
 $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
   /* Act on the event */
@@ -1025,7 +1033,7 @@ $(document).off("click",".tax_del").on("click", ".tax_del", function() {
   });
   $('#product_tax_table tbody tr:last td:eq(0) select').select();
 });
-$(document).off('keydown', '#igstrate').on('keydown', '#igstrate',function(event) {
+/*$(document).off('keydown', '#igstrate').on('keydown', '#igstrate',function(event) {
   if (event.which==13) {
       event.preventDefault();
       if($("#additem option:selected").val()=='19'){
@@ -1054,7 +1062,7 @@ $(document).off('keydown', '#igstrate').on('keydown', '#igstrate',function(event
 	    $("#adduom").focus();
 	}
     }
-});
+}); */
 /* -----------------------Tax key events end----------------------------------------- */
 $(document).off('keydown', '#openingstock').on('keydown', '#openingstock', function(event) {
   if (event.which == 13) {
@@ -1334,13 +1342,13 @@ else{
     $("#addproddesc").select();
     return false;
   }
-  if($("#serviceno").val()==""){
+  if($("#hsnno").val()==""){
 
       $("#serviceno-blank-alert").alert();
       $("#serviceno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#serviceno-blank-alert").hide();
     });
-      $("#serviceno").focus();
+      $("#hsnno").focus();
       return false;
   }
 }
@@ -1410,7 +1418,7 @@ else{
 
 
     var taxes = []; //Taxes list to store dictionaries created
-   
+
   $("#product_tax_table tbody tr").each(function(){
       var obj = {}; // dict for storing tax details
     if ($.trim($("select option:selected", this).val()) != "") {
@@ -1437,7 +1445,7 @@ else{
             return false;
 	}
     }
-    
+
   var gobj = {}; // Creating a dictionary for storing godown wise opening stock
   $("#godown_ob_table tbody tr").each(function(){
     if ($.trim($(".godown_name",this).val())!="") {
@@ -1463,7 +1471,7 @@ else{
     addformdata.push({name: 'godowns', value: JSON.stringify(gobj)}); //Pushing taxes and specs into addformdata
 
   }
- 
+
   $.ajax({
     url: '/product?type=save',
     type: 'POST',
@@ -1474,7 +1482,7 @@ else{
     beforeSend: function(xhr)
     {
       xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
- 
+
     }
   })
   .done(function(resp) {
@@ -1498,7 +1506,7 @@ else{
     else if (resp["gkstatus"] ==1)
     {
 	$('.modal-backdrop').remove();
-	
+
 	if ($("#additem option:selected").val() == 7){
       $("#duplicate-alert").alert();
       $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
