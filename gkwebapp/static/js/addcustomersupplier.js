@@ -315,7 +315,8 @@ else{
   });
   $("#cussup_save").click(function(event) {
       //save event for saving the customer/supplier
-    event.preventDefault();
+      event.preventDefault();
+      var allow = 1;
     var custsupdata=$("#add_cussup option:selected").val(); //select with option either customer or supplier
     // custsupdata = 3 if customer or 19 if supplier
     var groupcode = -1;
@@ -409,6 +410,7 @@ if($("#vatorgstflag").val() == '7'){
 	    var gstin = $.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val());
             var gstnint = parseInt(gstin[0] + gstin[1]);
             if(gstnint > 37 || gstnint < 0){
+		allow = 0;
                 $("#gstin-improper-alert").alert();
                 $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
                     $("#gstin-improper-alert").hide();
@@ -425,94 +427,96 @@ if($("#vatorgstflag").val() == '7'){
 	  custtan = $("#add_cussup_tan").val();
       }
     // ajax call for saving the customer/supplier
-      $.ajax({
-	  url: '/customersuppliers?action=save',
-	  type: 'POST',
-	  dataType: 'json',
-	  async : false,
-	  data: {"custname": $("#add_cussup_name").val(),
-		 "custaddr": $.trim($("#add_cussup_address").val()),
-		 "custphone": $("#add_cussup_phone").val(),
-		 "custemail": $("#add_cussup_email").val(),
-		 "custfax": $("#add_cussup_fax").val(),
-		 "custpan": $("#add_cussup_pan").val(),
-		 "custtan": custtan,
-		 "gstin": JSON.stringify(gobj),
-		 "state" : $("#add_state").val(),
-		 "csflag": $("#add_cussup option:selected").val()
-		},
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken); //attaching the jwt token in the header
-      }
-    })
-    .done(function(resp) {
-      if(resp["gkstatus"] == 0){
-        $.ajax(
-          {
+      if (allow == 1){
+	  $.ajax({
+	      url: '/customersuppliers?action=save',
+	      type: 'POST',
+	      dataType: 'json',
+	      async : false,
+	      data: {"custname": $("#add_cussup_name").val(),
+		     "custaddr": $.trim($("#add_cussup_address").val()),
+		     "custphone": $("#add_cussup_phone").val(),
+		     "custemail": $("#add_cussup_email").val(),
+		     "custfax": $("#add_cussup_fax").val(),
+		     "custpan": $("#add_cussup_pan").val(),
+		     "custtan": custtan,
+		     "gstin": JSON.stringify(gobj),
+		     "state" : $("#add_state").val(),
+		     "csflag": $("#add_cussup option:selected").val()
+		    },
+	      beforeSend: function(xhr)
+	      {
+		  xhr.setRequestHeader('gktoken', sessionStorage.gktoken); //attaching the jwt token in the header
+	      }
+	  })
+	      .done(function(resp) {
+		  if(resp["gkstatus"] == 0){
+		      allow = 0;
+		      $.ajax(
+			  {
 
-            type: "POST",
-            url: "/addaccount",
-            global: false,
-            async: false,
-            datatype: "json",
-            data: {"accountname":$("#add_cussup_name").val(),"openbal":0,"subgroupname":groupcode},
-            beforeSend: function(xhr)
-            {
-              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-            },
-            success: function(resp)
-            {
-              if(resp["gkstatus"]==0)
-              {
-                $("#customersupplier_create").click();
-                if (custsupdata == '3') {
-                  $("#cus-success-alert").alert();
-                  $("#cus-success-alert").fadeTo(2250, 500).slideUp(500, function(){
-                    $("#cus-success-alert").hide();
-                  });
+			      type: "POST",
+			      url: "/addaccount",
+			      global: false,
+			      async: false,
+			      datatype: "json",
+			      data: {"accountname":$("#add_cussup_name").val(),"openbal":0,"subgroupname":groupcode},
+			      beforeSend: function(xhr)
+			      {
+				  xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+			      },
+			      success: function(resp)
+			      {
+				  if(resp["gkstatus"]==0)
+				  {
+				      $("#customersupplier_create").click();
+				      if (custsupdata == '3') {
+					  $("#cus-success-alert").alert();
+					  $("#cus-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+					      $("#cus-success-alert").hide();
+					  });
 
-                }
-                else  {
-                  $("#sup-success-alert").alert();
-                  $("#sup-success-alert").fadeTo(2250, 500).slideUp(500, function(){
-                    $("#sup-success-alert").hide();
-                  });
+				      }
+				      else  {
+					  $("#sup-success-alert").alert();
+					  $("#sup-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+					      $("#sup-success-alert").hide();
+					  });
 
-                }
-                $('#custsupmodal').modal('hide');
-                $('.modal-backdrop').remove();
-                return false;
-              }
-            }
-          }
-        );
-        return false;
+				      }
+				      $('#custsupmodal').modal('hide');
+				      $('.modal-backdrop').remove();
+				      return false;
+				  }
+			      }
+			  }
+		      );
+		      return false;
+		  }
+		  if(resp["gkstatus"] ==1){
+		      // gkstatus 1 implies its a duplicate entry.
+		      $("#add_cussup_name").focus();
+		      $("#cus-duplicate-alert").alert();
+		      $("#cus-duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+			  $("#cus-duplicate-alert").hide();
+		      });
+		      return false;
+		  }
+		  else {
+		      $("#add_cussup").focus();
+		      $("#failure-alert").alert();
+		      $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
+			  $("#failure-alert").hide();
+		      });
+		      return false;
+		  }
+	      })
+	      .fail(function() {
+		  console.log("error");
+	      })
+	      .always(function() {
+		  console.log("complete");
+	      });
       }
-      if(resp["gkstatus"] ==1){
-          // gkstatus 1 implies its a duplicate entry.
-          $("#add_cussup_name").focus();
-          $("#cus-duplicate-alert").alert();
-          $("#cus-duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#cus-duplicate-alert").hide();
-          });
-          return false;
-      }
-      else {
-        $("#add_cussup").focus();
-        $("#failure-alert").alert();
-        $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#failure-alert").hide();
-        });
-        return false;
-      }
-    })
-    .fail(function() {
-      console.log("error");
-    })
-    .always(function() {
-      console.log("complete");
-    });
-    event.stopPropagation(); // stoopping the event for unnecessarily repeating itself
   });
 });
