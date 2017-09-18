@@ -17,9 +17,9 @@ $(document).ready(function() {
     })
     .done(function(resp) {
       var result = resp["gkresult"];
-      $(".hidden-load").show();
+	$(".hidden-load").show();
       $("#edit_cussup").val(result["csflag"]);
-      if(result["csflag"] == 3){
+	if(result["csflag"] == 3){
 	
     	  $("#edit_cussup").val("Customer");
       }
@@ -257,7 +257,7 @@ $(document).ready(function() {
         }
     });
 
-$(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
+    $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
 {
     var curindex1 = $(this).closest('tr').index();
   var nextindex1 = curindex1+1;
@@ -414,7 +414,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       });
       let custtan = "";
       if ($("#edit_cussup_tan").length > 0){
-	  $("#edit_cussup_tan").val();
+	  custtan = $("#edit_cussup_tan").val();
       }
     $.ajax({
       url: '/customersuppliers?action=edit',
