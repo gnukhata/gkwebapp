@@ -45,10 +45,11 @@ $(document).ready(function() {
 	$("#edit_cussup_tan").prop("disabled", true);
 	var rowhtml = $('#gstintable tbody tr:first').html();
 	$('#gstintable tbody').empty();
+	$('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');
 	for(var gstin in result["gstin"]){
-	    $('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');
 	    $('#gstintable tbody tr:last td:eq(0) select option[stateid='+gstin+']').prop("selected", true);
 	    $('#gstintable tbody tr:last td:eq(1) input').val(result["gstin"][gstin]);
+	    $('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');
 	}
 	for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
 	    if (i > 0) {
@@ -247,7 +248,7 @@ $(document).ready(function() {
         var curindex = $(this).closest('tr').index();
         var gstin = $(this).val();
         var gstnint = parseInt(gstin[0] + gstin[1]);
-        if(!($.isNumeric(gstnint)) || gstnint > 37 || gstnint < 0){
+        if(!($.isNumeric(gstnint)) || gstnint > 37 || gstnint < 0 || gstin.length !=15){
             $("#gstin-improper-alert").alert();
             $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#gstin-improper-alert").hide();
@@ -358,7 +359,8 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       return false;
     }
   });
-  $("#cussup_edit_save").click(function(event) {
+    $("#cussup_edit_save").click(function(event) {
+	var allow = 1;
    
     if ($.trim($("#edit_cussup_name").val())=="") {
       $("#name-blank-alert").alert();
@@ -400,7 +402,8 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val())!="") {
 	    var gstin = $.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val());
             var gstnint = parseInt(gstin[0] + gstin[1]);
-            if(!($.isNumeric(gstnint)) || gstnint > 37 || gstnint < 0){
+            if(!($.isNumeric(gstnint)) || gstnint > 37 || gstnint < 0 || gstin.length !=15){
+		allow = 0;
                 $("#gstin-improper-alert").alert();
                 $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
                     $("#gstin-improper-alert").hide();
@@ -416,85 +419,87 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       if ($("#edit_cussup_tan").length > 0){
 	  custtan = $("#edit_cussup_tan").val();
       }
-    $.ajax({
-      url: '/customersuppliers?action=edit',
-      type: 'POST',
-      dataType: 'json',
-      async : false,
-      data: {"custid": $("#edit_cussup_list option:selected").val(),
-	     "custname": $("#edit_cussup_name").val(),
-	     "custaddr": $.trim($("#edit_cussup_address").val()),
-	     "custphone": $("#edit_cussup_phone").val(),
-	     "custemail": $("#edit_cussup_email").val(),
-	     "custfax": $("#edit_cussup_fax").val(),
-	     "custpan": $("#edit_cussup_pan").val(),
-	     "custtan": custtan,
-	     "gstin": JSON.stringify(gobj),
-	     "state"  : $("#edit_state").val(),
-	     "oldcustname" : $("#edit_cussup_list option:selected").text(),
-	     "custsup":$("#edit_cussup").val()
-	     },
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      }
-    })
-    .done(function(resp) {
-      if(resp["gkstatus"] == 0){
-        $("#customersupplier_edit").click();
-        if (resp["custsup"] == 'Customer') {
-          $("#cus-edit-alert").alert();
-          $("#cus-edit-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#cus-edit-alert").hide();
-          });
-          return false;
-        }
-        else  {
-          $("#sup-edit-alert").alert();
-          $("#sup-edit-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#sup-edit-alert").hide();
-          });
-          return false;
-        }
+	if(allow == 1){
+	    $.ajax({
+                url: '/customersuppliers?action=edit',
+                type: 'POST',
+                dataType: 'json',
+                async : false,
+                data: {"custid": $("#edit_cussup_list option:selected").val(),
+                       "custname": $("#edit_cussup_name").val(),
+                       "custaddr": $.trim($("#edit_cussup_address").val()),
+                       "custphone": $("#edit_cussup_phone").val(),
+                       "custemail": $("#edit_cussup_email").val(),
+                       "custfax": $("#edit_cussup_fax").val(),
+                       "custpan": $("#edit_cussup_pan").val(),
+                       "custtan": custtan,
+                       "gstin": JSON.stringify(gobj),
+                       "state"  : $("#edit_state").val(),
+                       "oldcustname" : $("#edit_cussup_list option:selected").text(),
+                       "custsup":$("#edit_cussup").val()
+                      },
+                beforeSend: function(xhr)
+                {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+            })
+                .done(function(resp) {
+                    if(resp["gkstatus"] == 0){
+			allow = 0;
+                        $("#customersupplier_edit").click();
+                        if (resp["custsup"] == 'Customer') {
+                            $("#cus-edit-alert").alert();
+                            $("#cus-edit-alert").fadeTo(2250, 500).slideUp(500, function(){
+                                $("#cus-edit-alert").hide();
+                            });
+                            return false;
+                        }
+                        else  {
+                            $("#sup-edit-alert").alert();
+                            $("#sup-edit-alert").fadeTo(2250, 500).slideUp(500, function(){
+                                $("#sup-edit-alert").hide();
+                            });
+                            return false;
+                        }
 
-      }
-      if(resp["gkstatus"] == 1){
-        if (custsupdat == '3') {
-          $("#edit_cussup_name").focus();
-          $("#cus-duplicate-alert").alert();
-          $("#cus-duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#cus-duplicate-alert").hide();
-          });
-          return false;
-        }
-        else  {
+                    }
+                    if(resp["gkstatus"] == 1){
+                        if (custsupdat == '3') {
+                            $("#edit_cussup_name").focus();
+                            $("#cus-duplicate-alert").alert();
+                            $("#cus-duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+                                $("#cus-duplicate-alert").hide();
+                            });
+                            return false;
+                        }
+                        else  {
 
-          $("#edit_cussup_name").focus();
-          $("#sup-duplicate-alert").alert();
-          $("#sup-duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#sup-duplicate-alert").hide();
-          });
-          return false;
-        }
+                            $("#edit_cussup_name").focus();
+                            $("#sup-duplicate-alert").alert();
+                            $("#sup-duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+                                $("#sup-duplicate-alert").hide();
+                            });
+                            return false;
+                        }
 
-      }
-      else {
-        alert(resp["gkstatus"]);
-        $("#edit_cussup_list").focus();
-        $("#failure-alert").alert();
-        $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#failure-alert").hide();
-        });
-        return false;
-      }
-      })
-    .fail(function() {
-      console.log("error");
-    })
-    .always(function() {
-      console.log("complete");
-    });
-    event.stopPropogation();
+                    }
+                    else {
+                        alert(resp["gkstatus"]);
+                        $("#edit_cussup_list").focus();
+                        $("#failure-alert").alert();
+                        $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
+                            $("#failure-alert").hide();
+                        });
+                        return false;
+                    }
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
+        }
 });
 $("#cussup_delete").click(function(event) {
   event.preventDefault();
