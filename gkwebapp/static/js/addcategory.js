@@ -419,7 +419,7 @@ $(document).ready(function() {
               if ($("#category_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val() == "VAT") {
 		  var selectedtaxstate = $("#category_tax_table tbody tr:eq("+j+") td:eq(1) select option:selected").attr("stateid");
 		  for (let i=j+1; i<=curindex+1;i++){
-		      $('#category_tax_table tbody tr:eq('+i+') td:eq(1) select option[stateid='+selectedtaxstate+']').prop('hidden', true).prop('disabled', true);
+		      $('#category_tax_table tbody tr:eq('+i+') td:eq(1) select option[stateid='+selectedtaxstate+']').remove();
 		  }
 	      }
           }
