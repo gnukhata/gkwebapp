@@ -244,7 +244,7 @@
 	      <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 	      <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
 	      <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
-	      <th class="smvwrap text-center">{% trans %}Tax Amt{% endtrans %}</th>
+	      <th class="smvwrap text-center">{% trans %}Tax Amount{% endtrans %}</th>
 	      <th class="smvwrap text-center">{% trans %}Total{% endtrans %}</th>
 	    </tr>
 	  </thead>
@@ -332,12 +332,12 @@
 	    </tr>
 
 	    <tr>
-	      {% if gkresult["taxname"]=='SGST' %}<th style="white-space: nowrap">{% trans %}Rate{% endtrans %} %</th>{% endif %}
-	      {% if gkresult["taxname"]=='SGST' %}<th>{% trans %}Amt{% endtrans %}</th>{% endif %}
-	      {% if gkresult["taxname"]=='SGST' %}<th style="white-space: nowrap">{% trans %}Rate{% endtrans %} %</th>{% endif %}
-	      {% if gkresult["taxname"]=='SGST' %}<th>{% trans %}Amt{% endtrans %}</th>{% endif %}
-	      {% if gkresult["taxname"]=='IGST' %}<th style="white-space: nowrap">{% trans %}Rate{% endtrans %} %</th>{% endif %}
-	      {% if gkresult["taxname"]=='IGST' %}<th>{% trans %}Amt{% endtrans %}</th>{% endif %}
+	      {% if gkresult["taxname"]=='SGST' %}<th class="text-center" style="white-space: nowrap">{% trans %}Rate{% endtrans %} %</th>{% endif %}
+	      {% if gkresult["taxname"]=='SGST' %}<th class="text-center">{% trans %}Amount{% endtrans %}</th>{% endif %}
+	      {% if gkresult["taxname"]=='SGST' %}<th class="text-center" style="white-space: nowrap">{% trans %}Rate{% endtrans %} %</th>{% endif %}
+	      {% if gkresult["taxname"]=='SGST' %}<th class="text-center">{% trans %}Amount{% endtrans %}</th>{% endif %}
+	      {% if gkresult["taxname"]=='IGST' %}<th class="text-center" style="white-space: nowrap">{% trans %}Rate{% endtrans %} %</th>{% endif %}
+	      {% if gkresult["taxname"]=='IGST' %}<th class="text-center">{% trans %}Amount{% endtrans %}</th>{% endif %}
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -447,7 +447,7 @@
 	  <tbody>
 	    <tr>
 	      <td>
-		<label for="transportationmode" id="transmode">{% trans %}Transportation Mode{% endtrans %} :</label>
+		<label for="transportationmode" id="transmode">{% trans %}Mode of Transportation{% endtrans %} :</label>
 	      </td>
 	      <td>
 		{% if gkresult["transportationmode"] %}{{ gkresult["transportationmode"] }}{% else %}N/A{% endif %}

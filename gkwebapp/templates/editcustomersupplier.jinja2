@@ -63,6 +63,12 @@
       {% trans %}Please Enter TIN!{% endtrans %}
     </div>
 
+    <div class="alert alert-danger" id="gstin-improper-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Improper GSTIN!{% endtrans %}
+
+    </div>
+
     <div class="alert alert-danger" id="both-blank-alert"  aria-live="rude" role="alert" hidden>
 
       {% trans %}Please enter TIN / GSTIN!{% endtrans %}
@@ -183,7 +189,7 @@
                     </select>
                   </td>
                   <td class="col-xs-4">
-                    <input class="form-control input-sm gstin">
+                    <input class="form-control input-sm gstin" maxlength="15">
                   </td>
                   <td class="col-xs-1">
                   </td>

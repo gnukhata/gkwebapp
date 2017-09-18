@@ -54,7 +54,12 @@
 
             {% trans %}Invoice cannot be prior to Devivery Note!{% endtrans %}
           </div>
-	  <form class="form-horizontal" >
+	  <div class="alert alert-danger" id="gstin-improper-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Improper GSTIN!{% endtrans %}
+
+          </div>
+          <form class="form-horizontal" >
 	    <div class="col-md-12">
 	      <div class="col-md-4">
 		<h4>Details of Invoice: </h4>
@@ -205,10 +210,10 @@
 		</div>
 		<div class="form-group form-inline gstinfield">
 		  <label for="gstinconsignee" class="col-sm-4 fsize" >{% trans %}GSTIN{% endtrans %} :</label>
-		  <input type="text" id="gstinconsignee" class="col-sm-8 form-control input-sm" name="gstinconsignee"></input>
+		  <input type="text" id="gstinconsignee" class="col-sm-8 form-control input-sm gstin" name="gstinconsignee" maxlength="15"></input>
 		</div>
 		<div class="form-group form-inline">
-		  <label for="consigneeaddress" class="col-sm-4 fsize">{% trans %}Address :{% endtrans %}</label>
+		  <label for="consigneeaddress" class="col-sm-4 fsize">{% trans %}Consignee Address :{% endtrans %}</label>
 		  <input type="text" id="consigneeaddress" class="col-sm-8 form-control input-sm" name="consigneeaddress"></input>
 		</div>
 
@@ -288,7 +293,7 @@
 		    <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 		    <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
 		    <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
-		    <th class="smvwrap text-center">{% trans %}Tax Amt{% endtrans %}</th>
+		    <th class="smvwrap text-center">{% trans %}Tax Amount{% endtrans %}</th>
 		    <th class="smvwrap text-center">{% trans %}Total{% endtrans %}</th>
 		    <th class="crosswrap"></th>
 		  </tr>
@@ -393,12 +398,12 @@
 			  </tr>
 
 			  <tr>
-			    <th class="sgstfield">{% trans %}Rate{% endtrans %} %</th>
-			    <th class="sgstfield">{% trans %}Amt{% endtrans %}</th>
-			    <th class="sgstfield">{% trans %}Rate{% endtrans %} %</th>
-			    <th class="sgstfield">{% trans %}Amt{% endtrans %}</th>
-			    <th class="igstfield">{% trans %}Rate{% endtrans %} %</th>
-			    <th class="igstfield">{% trans %}Amt{% endtrans %}</th>
+			    <th class="sgstfield text-center">{% trans %}Rate{% endtrans %} %</th>
+			    <th class="sgstfield text-center">{% trans %}Amount{% endtrans %}</th>
+			    <th class="sgstfield text-center">{% trans %}Rate{% endtrans %} %</th>
+			    <th class="sgstfield text-center">{% trans %}Amount{% endtrans %}</th>
+			    <th class="igstfield text-center">{% trans %}Rate{% endtrans %} %</th>
+			    <th class="igstfield text-center">{% trans %}Amount{% endtrans %}</th>
 			  </tr>
 			</thead>
 		      </table>
@@ -509,7 +514,7 @@
 		<div class="row">
 		  <div class="form-group form-inline col-sm-6 nopadding">
 		    <label for="accountno" class="col-sm-5">{% trans %}Account No.{% endtrans %} :</label>
-		    <input type="text" id="accountno" class="lastfield form-control input-sm col-sm-7 nopadding"></input>
+		    <input type="text" id="accountno" class="lastfield form-control numtype input-sm col-sm-7 nopadding"></input>
 		  </div>
 		  <div class="form-group form-inline col-sm-6 nopadding">
 		    <label for="bankname" class="col-sm-5">{% trans %}Bank Name{% endtrans %} :</label>
@@ -531,7 +536,7 @@
 	      <div class="col-sm-6 borderdiv">
 		<div class="row">
 		  <div class="form-inline form-group col-sm-6 nopadding">
-		    <label for="transportationmode" class="col-sm-5" id="transmode">{% trans %}Transportation Mode{% endtrans %} :</label>
+		    <label for="transportationmode" class="col-sm-5" id="transmode">{% trans %}Mode of Transportation{% endtrans %} :</label>
 		    <select type="text" id="transportationmode" class="col-sm-7 lastfield form-control input-sm nopadding">
 		      <option value="Road">{% trans %}Road{% endtrans %}</option>
 		      <option value="Rail">{% trans %}Rail{% endtrans %}</option>

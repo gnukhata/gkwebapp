@@ -6,7 +6,7 @@ $(document).ready(function() {
   $("#category_edit_savespecs").hide();
   $(".category_edit_disable").prop("disabled",true);
   $("#category_edit_name").focus().select();
-  var deletedspecs = [];
+    var deletedspecs = [];
     var deletedtaxs = [];
   $(document).keyup(function(event) {
     if(event.which == 45) {
@@ -320,7 +320,7 @@ $(document).ready(function() {
               if ($("#category_edit_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val() == "VAT") {
 		  var selectedtaxstate = $("#category_edit_tax_table tbody tr:eq("+j+") td:eq(1) select option:selected").attr("stateid");
 		  for (let i=j+1; i<=curindex+1;i++){
-		      $('#category_edit_tax_table tbody tr:eq('+i+') td:eq(1) select option[stateid='+selectedtaxstate+']').prop('hidden', true).prop('disabled', true);
+		      $('#category_edit_tax_table tbody tr:eq('+i+') td:eq(1) select option[stateid='+selectedtaxstate+']').remove();
 		  }
 	      }
           }
