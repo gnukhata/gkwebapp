@@ -243,17 +243,11 @@ $(document).ready(function() {
     $("#cussup_edit_save").focus();
   }
 });
-
-    $(document).off('focus', '.gstin').on('focus', '.gstin', function(event) {
-        event.preventDefault();
-        /* Act on the event */
-        $(".gstin").numeric({ negative: false });
-    });
     $(document).off("focusout",".gstin").on("focusout",".gstin",function(event) {
         var curindex = $(this).closest('tr').index();
         var gstin = $(this).val();
         var gstnint = parseInt(gstin[0] + gstin[1]);
-        if(gstnint > 37){
+        if(gstnint > 37 || gstnint < 0){
             $("#gstin-improper-alert").alert();
             $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#gstin-improper-alert").hide();
@@ -265,7 +259,7 @@ $(document).ready(function() {
 
 $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
 {
-  var curindex1 = $(this).closest('tr').index();
+    var curindex1 = $(this).closest('tr').index();
   var nextindex1 = curindex1+1;
   var previndex1 = curindex1-1;
   var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
@@ -358,7 +352,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     $("#edit_state").prop("disabled", false);
   });
   $(document).keyup(function(event) {
-    if(event.which == 45) {
+      if(event.which == 45) {
       $("#cussup_edit_save").click();
       event.preventDefault();
       return false;
@@ -403,11 +397,25 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       $("#gstintable tbody tr").each(function(){
 	  var curindex1 = $(this).index();
     if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
-      if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val())!="") {
+	if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val())!="") {
+	    var gstin = $.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val());
+            var gstnint = parseInt(gstin[0] + gstin[1]);
+            if(gstnint > 37 || gstnint < 0){
+                $("#gstin-improper-alert").alert();
+                $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#gstin-improper-alert").hide();
+                    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').focus().select();
+                });
+                return false;
+            }
           gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val();
       }
     }
-  });
+      });
+      let custtan = "";
+      if ($("#edit_cussup_tan").length > 0){
+	  $("#edit_cussup_tan").val();
+      }
     $.ajax({
       url: '/customersuppliers?action=edit',
       type: 'POST',
@@ -420,7 +428,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	     "custemail": $("#edit_cussup_email").val(),
 	     "custfax": $("#edit_cussup_fax").val(),
 	     "custpan": $("#edit_cussup_pan").val(),
-	     "custtan": $("#edit_cussup_tan").val(),
+	     "custtan": custtan,
 	     "gstin": JSON.stringify(gobj),
 	     "state"  : $("#edit_state").val(),
 	     "oldcustname" : $("#edit_cussup_list option:selected").text(),

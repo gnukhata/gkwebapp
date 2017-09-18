@@ -129,17 +129,11 @@ $("#add_state").keydown(function(event) {
     $("#cussup_save").focus();
   }
 });
-
-    $(document).off('focus', '.gstin').on('focus', '.gstin', function(event) {
-        event.preventDefault();
-        /* Act on the event */
-        $(".gstin").numeric({ negative: false });
-    });
     $(document).off("focusout",".gstin").on("focusout",".gstin",function(event) {
 	var curindex = $(this).closest('tr').index();
 	var gstin = $(this).val();
 	var gstnint = parseInt(gstin[0] + gstin[1]);
-	if(gstnint > 37){
+	if(gstnint > 37 || gstnint < 0){
 	    $("#gstin-improper-alert").alert();
             $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#gstin-improper-alert").hide();
@@ -411,7 +405,17 @@ if($("#vatorgstflag").val() == '7'){
       $("#gstintable tbody tr").each(function(){
 	  var curindex1 = $(this).index();
     if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
-      if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val())!="") {
+	if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val())!="") {
+	    var gstin = $.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val());
+            var gstnint = parseInt(gstin[0] + gstin[1]);
+            if(gstnint > 37 || gstnint < 0){
+                $("#gstin-improper-alert").alert();
+                $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#gstin-improper-alert").hide();
+                    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').focus().select();
+                });
+                return false;
+            }
           gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val();
       }
     }
