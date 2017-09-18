@@ -244,6 +244,25 @@ $(document).ready(function() {
   }
 });
 
+    $(document).off('focus', '.gstin').on('focus', '.gstin', function(event) {
+        event.preventDefault();
+        /* Act on the event */
+        $(".gstin").numeric({ negative: false });
+    });
+    $(document).off("focusout",".gstin").on("focusout",".gstin",function(event) {
+        var curindex = $(this).closest('tr').index();
+        var gstin = $(this).val();
+        var gstnint = parseInt(gstin[0] + gstin[1]);
+        if(gstnint > 37){
+            $("#gstin-improper-alert").alert();
+            $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#gstin-improper-alert").hide();
+                $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
+            });
+            return false;
+        }
+    });
+
 $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
 {
   var curindex1 = $(this).closest('tr').index();

@@ -54,7 +54,12 @@
 
             {% trans %}Invoice cannot be prior to Devivery Note!{% endtrans %}
           </div>
-	  <form class="form-horizontal" >
+	  <div class="alert alert-danger" id="gstin-improper-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Improper GSTIN!{% endtrans %}
+
+          </div>
+          <form class="form-horizontal" >
 	    <div class="col-md-12">
 	      <div class="col-md-4">
 		<h4>Details of Invoice: </h4>
@@ -205,7 +210,7 @@
 		</div>
 		<div class="form-group form-inline gstinfield">
 		  <label for="gstinconsignee" class="col-sm-4 fsize" >{% trans %}GSTIN{% endtrans %} :</label>
-		  <input type="text" id="gstinconsignee" class="col-sm-8 form-control input-sm" name="gstinconsignee"></input>
+		  <input type="text" id="gstinconsignee" class="col-sm-8 form-control input-sm gstin" name="gstinconsignee" maxlength="15"></input>
 		</div>
 		<div class="form-group form-inline">
 		  <label for="consigneeaddress" class="col-sm-4 fsize">{% trans %}Address :{% endtrans %}</label>

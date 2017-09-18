@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+  Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
 This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
 GNUKhata is Free Software; you can redistribute it and/or modify
@@ -42,7 +42,7 @@ $(document).ready(function() {
             $("#add_cussup").focus();
             return false;
           }
-          event.preventDefault();
+        event.preventDefault();
           $("#add_cussup_name").focus().select();
         }
       });
@@ -130,9 +130,28 @@ $("#add_state").keydown(function(event) {
   }
 });
 
+    $(document).off('focus', '.gstin').on('focus', '.gstin', function(event) {
+        event.preventDefault();
+        /* Act on the event */
+        $(".gstin").numeric({ negative: false });
+    });
+    $(document).off("focusout",".gstin").on("focusout",".gstin",function(event) {
+	var curindex = $(this).closest('tr').index();
+	var gstin = $(this).val();
+	var gstnint = parseInt(gstin[0] + gstin[1]);
+	if(gstnint > 37){
+	    $("#gstin-improper-alert").alert();
+            $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#gstin-improper-alert").hide();
+		$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
+            });
+	    return false;
+        }
+    });
+    
 $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
 {
-  var curindex1 = $(this).closest('tr').index();
+    var curindex1 = $(this).closest('tr').index();
   var nextindex1 = curindex1+1;
   var previndex1 = curindex1-1;
   var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
@@ -145,7 +164,7 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
     else {
       if (numberofstates > 0) {
         if ($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="") {
-          $("#state-blank-alert").alert();
+            $("#state-blank-alert").alert();
           $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#state-blank-alert").hide();
           });

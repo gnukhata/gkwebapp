@@ -1,5 +1,5 @@
 /*
-   Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+  Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
    This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
    GNUKhata is Free Software; you can redistribute it and/or modify
@@ -610,6 +610,24 @@ $(document).ready(function() {
 	} else {
 	    $(this).val(parseFloat($(this).val()).toFixed(2));
 	}
+    });
+    $(document).off('focus', '.gstin').on('focus', '.gstin', function(event) {
+        event.preventDefault();
+        /* Act on the event */
+        $(".gstin").numeric({ negative: false });
+    });
+    $(document).off("focusout",".gstin").on("focusout",".gstin",function(event) {
+        var curindex = $(this).closest('tr').index();
+        var gstin = $(this).val();
+        var gstnint = parseInt(gstin[0] + gstin[1]);
+        if(gstnint > 37){
+            $("#gstin-improper-alert").alert();
+            $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#gstin-improper-alert").hide();
+                $('#gstinconsignee').focus().select();
+            });
+            return false;
+        }
     });
 
     //VAT Table events start here
