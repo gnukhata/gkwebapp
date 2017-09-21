@@ -2,7 +2,7 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
     $(".tax_rate").numeric();
     var taxfieldhtml = $("#category_edit_tax_table tbody").html();
-    var stateshtml = $("#category_tax_table tbody tr:first td:eq(1) select").html();
+    var stateshtml = $("#category_edit_tax_table tbody tr:first td:eq(1) select").html();
   $("#category_edit_savespecs").hide();
   $(".category_edit_disable").prop("disabled",true);
   $("#category_edit_name").focus().select();
