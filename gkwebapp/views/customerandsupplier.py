@@ -25,6 +25,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Sachin Patil" <sachpatil@openmailbox.org>
+'Prajkta Patkar'<prajkta@dff.org.in>
 """
 
 from pyramid.view import view_config
@@ -40,9 +41,11 @@ def showaddcustomersupplier(request):
 	customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
 	suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
 	groups = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist", headers=header)
+	states = requests.get("http://127.0.0.1:6543/state", headers=header)
+	resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
 	debtgroupcode = groups.json()["gkresult"]["Sundry Debtors"]
 	credgroupcode = groups.json()["gkresult"]["Sundry Creditors for Purchase"]
-	return {"customers": customers.json()["gkresult"], "suppliers": suppliers.json()["gkresult"], "debtgroupcode":debtgroupcode, "credgroupcode":credgroupcode}
+	return {"customers": customers.json()["gkresult"], "suppliers": suppliers.json()["gkresult"], "debtgroupcode":debtgroupcode, "credgroupcode":credgroupcode, "states":states.json()["gkresult"],"vatorgstflag":resultgstvat.json()["gkresult"]}
 
 @view_config(route_name="customersuppliers",request_param="action=showaddpopup",renderer="gkwebapp:templates/createcustsuppopup.jinja2")
 def showaddcustomersupplierpopup(request):
@@ -51,16 +54,20 @@ def showaddcustomersupplierpopup(request):
 	customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
 	suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
 	groups = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist", headers=header)
+	states = requests.get("http://127.0.0.1:6543/state", headers=header)
 	debtgroupcode = groups.json()["gkresult"]["Sundry Debtors"]
 	credgroupcode = groups.json()["gkresult"]["Sundry Creditors for Purchase"]
-	return {"gkstatus" : request.params["status"], "customers": customers.json()["gkresult"], "suppliers": suppliers.json()["gkresult"], "debtgroupcode":debtgroupcode, "credgroupcode":credgroupcode}
+	resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+	return {"gkstatus" : request.params["status"], "customers": customers.json()["gkresult"], "suppliers": suppliers.json()["gkresult"], "debtgroupcode":debtgroupcode, "credgroupcode":credgroupcode, "states":states.json()["gkresult"], "vatorgstflag":resultgstvat.json()["gkresult"]}
 
 @view_config(route_name="customersuppliers",request_param="action=showedit",renderer="gkwebapp:templates/editcustomersupplier.jinja2")
 def showeditcustomersupplier(request):
 	header={"gktoken":request.headers["gktoken"]}
 	customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
 	suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
-	return {"customers": customers.json()["gkresult"], "suppliers": suppliers.json()["gkresult"]}
+	states = requests.get("http://127.0.0.1:6543/state", headers=header)
+	resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+	return {"customers": customers.json()["gkresult"], "suppliers": suppliers.json()["gkresult"],"vatorgstflag":resultgstvat.json()["gkresult"] ,"states":states.json()["gkresult"]}
 
 @view_config(route_name="customersuppliers",request_param="action=get",renderer="json")
 def getcustomersupplier(request):
@@ -71,7 +78,7 @@ def getcustomersupplier(request):
 @view_config(route_name="customersuppliers",request_param="action=save",renderer="json")
 def savecustomersupplier(request):
 	header={"gktoken":request.headers["gktoken"]}
-	dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"state":request.params["state"],"custpan":request.params["custpan"],"custtan":request.params["custtan"],"csflag":int(request.params["csflag"])}
+	dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"state":request.params["state"],"custpan":request.params["custpan"],"custtan":request.params["custtan"],"gstin":json.loads(request.params["gstin"]),"csflag":int(request.params["csflag"])}
 	result=requests.post("http://127.0.0.1:6543/customersupplier",data=json.dumps(dataset),headers=header)
 	if result.json()["gkstatus"] == 0:
 		if dataset["csflag"] == 3:
@@ -81,11 +88,11 @@ def savecustomersupplier(request):
 		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
 	return {"gkstatus": result.json()["gkstatus"]}
 
+
 @view_config(route_name="customersuppliers",request_param="action=edit",renderer="json")
 def editcustomersupplier(request):
 	header={"gktoken":request.headers["gktoken"]}
-#	dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"custpan":request.params["custpan"],"state":request.params["state"],"custtan":request.params["custtan"],"csflag":int(request.params["csflag"]),"custid":int(request.params["custid"])}
-	dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"custpan":request.params["custpan"],"state":request.params["state"],"custtan":request.params["custtan"],"custid":int(request.params["custid"])}
+	dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"custpan":request.params["custpan"],"state":request.params["state"],"custtan":request.params["custtan"],"gstin":json.loads(request.params["gstin"]),"custid":int(request.params["custid"])}
 	result=requests.put("http://127.0.0.1:6543/customersupplier",data=json.dumps(dataset),headers=header)
 	if result.json()["gkstatus"] == 0:
 		accs = requests.get("http://127.0.0.1:6543/accounts", headers=header)
@@ -94,7 +101,7 @@ def editcustomersupplier(request):
 				gkdata = {"accountname":request.params["custname"],"openingbal":acc["openingbal"],"accountcode":acc["accountcode"]}
 				resulteditacc = requests.put("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
 				break
-	return {"gkstatus": result.json()["gkstatus"]}
+	return {"gkstatus": result.json()["gkstatus"],"custsup":request.params["custsup"]}
 
 @view_config(route_name="customersuppliers", request_param="action=delete",renderer="json")
 def deletecustomersupplier(request):
@@ -118,7 +125,7 @@ def deletecustomersupplier(request):
 		else:
 			gkdata = {"activity":custdetails["custname"] + " supplier deleted"}
 		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
-	return {"gkstatus":result.json()["gkstatus"]}
+	return {"gkstatus":result.json()["gkstatus"],"csflag":custdetails["csflag"]}
 
 @view_config(route_name='customersuppliers', request_param='action=getallcusts',renderer ='json')
 def getallcusts(request):

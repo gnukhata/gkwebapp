@@ -166,7 +166,7 @@ outline: none;
 					<form id="accountform" method="post"  action="addaccount" class="form-horizontal">
 
 						<div style="margin-bottom: 5px" class="col-xs-12 from-group">
-							<label for="groupname" id="gname">{% trans %}<u>G</u>roup Name{% endtrans %} : </label>
+							<label for="groupname" id="gname">{% trans %}<u>G</u>roup Name{% endtrans %} : </label><label for="groupname" style="color:red;font-size: 120%;">*</label>
 							<select class = "form-control gsselect input-sm" id="groupname"  name = "groupname" accesskey="g">
 								<option value="" disabled selected hidden>{% trans %}Select Group{% endtrans %}</option>
 								{% for grps in gkresult %}
@@ -186,14 +186,14 @@ outline: none;
 
 							<label> <input type="checkbox" id="maccounts" accesskey="t"> {% trans %}Crea<u>t</u>e Multiple Accounts{% endtrans %}</label>
 							<br/>
-							<label for="accountname" id="accname">{% trans %}<u>A</u>ccount Name{% endtrans %} : </label>
+							<label for="accountname" id="accname">{% trans %}<u>A</u>ccount Name{% endtrans %} : </label><label for="accountname" style="color:red;font-size: 120%;">*</label>
 							<input type="text" id="accountname" class="form-control input-sm" name="accountname" accesskey="a"></input>
 							<br/>
 							<label for="openbal" id="obal" hidden>{% trans %}<u>O</u>pening Balance{% endtrans %} : </label>
 							<input id="openbal" name="openbal" value="0.00" style="text-align:right" class=" form-control input-sm" type="text" placeholder="0.00" accesskey="o" hidden/>
 							<br/>
-							<button type="submit" class="btn btn-primary btn-sm" id="submit" name="submit" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
-							<button id="reset" class="btn btn-danger btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+							<button type="submit" class="btn btn-success btn-sm" id="submit" name="submit" accesskey="s"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
+							<button id="reset" class="btn btn-danger btn-sm" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
 
 						</div>
 					</form>

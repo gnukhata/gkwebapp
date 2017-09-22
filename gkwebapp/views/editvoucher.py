@@ -122,9 +122,67 @@ def viewvoucher(request):
 	header={"gktoken":request.headers["gktoken"]}
 	vcode =request.params["id"]
 	gkdata = {"code":int(vcode)}
+	result = requests.get("http://127.0.0.1:6543/transaction?code=%d"%(int(request.params["id"])),headers=header)
+	vc=result.json()["gkresult"]
+	
+	type = vc["vouchertype"]
+	projects = requests.get("http://127.0.0.1:6543/projects", headers=header)
+	if type=="contra" or type=="journal":
+		result1 = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s"%(type), headers=header)
+		if result1.json()["gkstatus"]==0:
+			draccounts=result1.json()["gkresult"]
+			craccounts=result1.json()["gkresult"]
+	elif type=="creditnote" or type=="debitnote" or type=="salesreturn" or type=="purchasereturn":
+		result1 = requests.get("http://127.0.0.1:6543/accountsbyrule?type=journal", headers=header)
+		if result1.json()["gkstatus"]==0:
+			draccounts=result1.json()["gkresult"]
+			craccounts=result1.json()["gkresult"]
+
+	else:
+		drresult = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s&side=Dr"%(type), headers=header)
+		crresult = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s&side=Cr"%(type), headers=header)
+		if drresult.json()["gkstatus"]==0 and crresult.json()["gkstatus"]==0:
+			draccounts=drresult.json()["gkresult"]
+			craccounts=crresult.json()["gkresult"]
+		else:
+			return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)
+
+
+
+	if result.json()["gkstatus"]==0:
+
+		if vc["invid"]!=None:
+			viewinvdata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(vc["invid"]), headers=header)
+			vvi=viewinvdata.json()["gkresult"]
+			vc["vvi"]=vvi
+		if type=="sales" or type=="purchase":
+			invdata = requests.get("http://127.0.0.1:6543/invoice?forvoucher", headers=header)
+			if invdata.json()["gkstatus"]==0:
+				return {"projects":projects.json()["gkresult"],"vtype":type,"voucher":vc,"userrole":result.json()["userrole"],"draccounts":draccounts,"craccounts":craccounts,"invoicedata":invdata.json()["gkresult"]}
+		else:
+
+			return {"projects":projects.json()["gkresult"],"vtype":type,"voucher":vc,"userrole":result.json()["userrole"],"draccounts":draccounts,"craccounts":craccounts,"invoicedata":0}
+	else:
+		return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)
+
+
+@view_config(route_name="viewvoucher",request_param="action=print", renderer="gkwebapp:templates/printvoucher.jinja2")
+def printvoucher(request):
+	header={"gktoken":request.headers["gktoken"]}
+	vcode =request.params["id"]
+	gkdata = {"code":int(vcode)}
 
 	result = requests.get("http://127.0.0.1:6543/transaction?code=%d"%(int(request.params["id"])),headers=header)
 	vc=result.json()["gkresult"]
+	totaldr = 0.00
+	for dr in vc["drs"]:
+		totaldr = float(totaldr) + float(vc["drs"][dr])
+	vc["totaldr"] = "%.2f"%totaldr
+
+	totalcr = 0.00
+	for cr in vc["crs"]:
+		totalcr = float(totalcr) + float(vc["crs"][cr])
+	vc["totalcr"] = "%.2f"%totalcr
 
 	type = vc["vouchertype"]
 	projects = requests.get("http://127.0.0.1:6543/projects", headers=header)
@@ -173,6 +231,11 @@ def editvoucher(request):
 		gkdata={"vouchercode":vdetails["vcode"],"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails["projectcode"])}
 	else:
 		gkdata={"vouchercode":vdetails["vcode"],"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":None}
+	if vdetails["instrumentno"] !="":
+		gkdata["instrumentno"]=vdetails["instrumentno"]
+		gkdata["bankname"]=vdetails["bankname"]
+		gkdata["branchname"]=vdetails["branchname"]
+		gkdata["instrumentdate"]=vdetails["instrumentdate"]
 	if vdetails["vtype"] == "purchase" or vdetails["vtype"] == "sales":
 		if vdetails["invid"] != "":
 			gkdata["invid"] = vdetails["invid"]
@@ -208,7 +271,6 @@ def editvoucher(request):
 		if row["side"]=="Dr":
 			drs[row["accountcode"]]=row["dramount"]
 	header={"gktoken":request.headers["gktoken"]}
-
 	result = requests.put("http://127.0.0.1:6543/transaction",data=json.dumps(gkdata) , headers=header)
 	if result.json()["gkstatus"]==0:
 		return {"gkstatus":True}

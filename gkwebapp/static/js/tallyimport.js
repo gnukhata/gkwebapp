@@ -31,6 +31,7 @@ This script is for the tallyimport page.
 $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $(".modal-backdrop").remove();
+  $("#importlink").focus();
   $("#import").click(function(event) {
     $(".modal").modal('hide');
     $(".modal-backdrop").remove();
@@ -90,12 +91,11 @@ $(document).ready(function() {
       console.log("complete");
     });
 });
+});
 $("#confirm_yes_print").on('shown.bs.modal', function(event) {
   $("#tn_save_noprint").focus();
-
 });
 $("#confirm_yes_print").on('hidden.bs.modal', function(event) {
   $("#invoice_challanno").focus();
 });
-  });
 });

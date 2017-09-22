@@ -57,25 +57,33 @@ margin-bottom: 0px;
 
     <div class="container-fluid  row">
 
-
         <ul class="nav nav-pills nav-tabs " role="tablist">
-          <li class="active nopadding" id="addproduct" role="presentation"><a data-toggle="pill" href="" >{% trans %}Create Product{% endtrans %}</a></li>
+          <li class="active nopadding" id="addproduct" role="presentation"><a id="addProduct" data-toggle="pill" href="" accesskey="1">{% trans %}Create Product / Service{% endtrans %}</a></li>
           {% if numberofproducts > 0 %}
-            <li class="nopadding" id="editproduct" role="presentation"><a data-toggle="pill" href="">{% trans %}Edit Product{% endtrans %}</a></li>
+            <li class="nopadding" id="editproduct" role="presentation"><a id="editProduct" data-toggle="pill" href="" accesskey="2">{% trans %}Edit Product / Service{% endtrans %}</a></li>
           {% endif %}
         </ul>
         <div class='tab-content '>
-          <div class="alert alert-success" id="addsuccess-alert"  aria-live="rude" role="alert" hidden>
+          <div class="alert alert-success" id="addproduct-success-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Product saved successfully.{% endtrans %}
+            {% trans %}Saved successfully.{% endtrans %}
           </div>
-          <div class="alert alert-success" id="editsuccess-alert"  aria-live="rude" role="alert" hidden>
+
+          <div class="alert alert-success" id="editproduct-success-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}Product edited successfully.{% endtrans %}
           </div>
-          <div class="alert alert-success" id="deletesuccess-alert"  aria-live="rude" role="alert" hidden>
+          <div class="alert alert-success" id="editservice-success-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Service edited successfully.{% endtrans %}
+          </div>
+          <div class="alert alert-success" id="deleteproduct-success-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}Product deleted successfully.{% endtrans %}
+          </div>
+          <div class="alert alert-success" id="deleteservice-success-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Service deleted successfully.{% endtrans %}
           </div>
           <div class="alert alert-danger" id="duplicate-unit-alert"  aria-live="rude" role="alert" hidden>
 
@@ -83,15 +91,36 @@ margin-bottom: 0px;
           </div>
           <div class="alert alert-danger" id="duplicate-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Duplicate product under same category.{% endtrans %}
+            {% trans %}Duplicate Product.{% endtrans %}
           </div>
-          <div class="alert alert-info" id="nocategory-alert"  aria-live="rude" role="alert" hidden>
+          <div class="alert alert-danger" id="igst-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please Specify IGST tax.{% endtrans %}
+          </div>
+	  
+          <!-- <div class="alert alert-info" id="nocategory-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}You can create products under categories.{% endtrans %}
+        </div> -->
+          <div class="alert alert-danger" id="item-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please select Item!{% endtrans %}
           </div>
-          <div class="alert alert-danger" id="blank-alert"  aria-live="rude" role="alert" hidden>
+          <div class="alert alert-danger" id="product-blank-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}Product name cannot be blank.{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="hsnno-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}HSN No. cannot be blank.{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="serviceno-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Accounting Code for Services cannot be blank.{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="service-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Service name cannot be blank.{% endtrans %}
           </div>
           <div class="alert alert-danger" id="os-blank-alert"  aria-live="rude" role="alert" hidden>
 
@@ -100,6 +129,10 @@ margin-bottom: 0px;
           <div class="alert alert-danger" id="godown-blank-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}Please select a godown.{% endtrans %}
+          </div>
+	  <div class="alert alert-danger" id="duplicate-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please select a state.{% endtrans %}
           </div>
           <div class="alert alert-danger" id="tax_state-blank-alert"  aria-live="rude" role="alert" hidden>
 
@@ -117,9 +150,17 @@ margin-bottom: 0px;
 
             {% trans %}This tax has already been applied.{% endtrans %}
           </div>
+          <div class="alert alert-danger" id="tax-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please Specify Tax for Product.{% endtrans %}
+          </div>
+	  <div class="alert alert-danger" id="tax-service-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please Specify Tax for Service.{% endtrans %}
+          </div>
           <div class="alert alert-danger" id="cvat-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}CVAT can be applied only once.{% endtrans %}
+            {% trans %}CVAT/IGST can be applied only once.{% endtrans %}
           </div>
           <div class="alert alert-danger" id="uomblank-alert"  aria-live="rude" role="alert" hidden>
 
@@ -135,7 +176,11 @@ margin-bottom: 0px;
           </div>
           <div class="alert alert-danger" id="failure-delete-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Cannot delete product!{% endtrans %}<br>
+            {% trans %}Cannot delete Product!{% endtrans %}<br>
+          </div>
+	  <div class="alert alert-danger" id="failure-service-delete-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Cannot delete Service!{% endtrans %}<br>
           </div>
           <div class="tab-pane active" role="tabpanel" id="productdiv">
           </div>

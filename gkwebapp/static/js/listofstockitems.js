@@ -23,14 +23,25 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Abhijith Balan" <abhijithb21@openmailbox.org>
+"Reshma Bhatawadekar" <bhatawadekar1reshma@gmail.com>
 */
 // This script file is for list of stock items report.
 $(document).ready(function() {
   $(".modal-backdrop").remove();
+
   $(".fixed-table-loading").remove();
 
   $('#latable tbody tr:first-child td:eq(1) a').focus();
   $('#latable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
+
+  if (sessionStorage.vatorgstflag == 22) {
+    $(".type").hide();
+    $(".prdserv").text("Product");
+  }
+  else {
+    $(".type").show();
+    $(".prdserv").text("Product / Service");
+  }
 
   // functions to add remove selected class on focus and blur.
   $(document).off('focus' ,'.libgname').on('focus' ,'.libgname',function() {
@@ -46,13 +57,20 @@ $(document).ready(function() {
   // Button to clear search field.
   $('#laclearfields').click(function(){
     $(".search").children(".form-control").val("");
+    $("#laclearfields").hide();
+		$(".search").children(".form-control").focus();
   });
   // clear search field on ESC key.
   $(".search").children(".form-control").keyup(function(event){
-    if (event.keyCode == 27) {
-      $(this).val("");
-    }
-  });
+  	$("#laclearfields").show();
+      if (event.keyCode == 27) {
+        $(this).val("");
+  			$("#laclearfields").hide();
+      }
+  		else if ($(this).val() == "") {
+  			$("#laclearfields").hide();
+  		}
+    });
 
   var curindex ;
   var nextindex;

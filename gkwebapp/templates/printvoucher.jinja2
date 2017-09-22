@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}List of Categories{% endtrans %}</title>
+    <style type="text/css">
+
+     td {
+  	 font-size: 65%;
+  	 color: black;
+     }
+
+     th {
+  	 font-size: 70%;
+     }
+
+     @page {
+	 size : 21cm 29.7cm;
+	 margin : 10mm 10mm 20mm 10mm
+     }
+     thead{
+	 display: table-header-group;
+     }
+     tfoot{
+	 display: table-footer-group;
+     }
+     .narwrap{
+	 width :10%;
+     }
+     .lngwrap{
+	 width:50%;
+     }
+     .mdwrap{
+	 width:25%;
+     }
+     .vlngwrap{
+	 width:80%;
+     }
+     .totalwrap {
+	 width:28%;
+     }
+     .rightJustified {
+	 text-align: right;
+     }
+
+    </style>
+  </head>
+  <body>
+    <div class="hidden-print row text-center text-primary">
+      <b>{% trans %}To avoid a URL appearing on your print please set 'Title' option to 'blank' in your browser's print settings. Sample setting for{% endtrans %} <a  href="{{request.static_url('gkwebapp:static/images/print.jpg')}}" target="_blank" class="text-danger"><u>{% trans %}Mozilla Firefox{% endtrans %}</u></a>.</b>
+    </div>
+      <div class="row">
+	<div class="col-xs-4 text-left">
+	  <label for="vno">{% trans %}Voucher No{% endtrans %} : </label><label>&nbsp{{voucher["vouchernumber"]}}</label>
+	</div>
+	<div class="col-xs-4 text-center">
+          {% if vtype=="contra" %}
+            <label class="lblec"><i>{% trans %}Contra{% endtrans %}</i></label>
+          {% elif vtype == "payment" %}
+            <label class="lblec"><i>{% trans %}Payment{% endtrans %}</i></label>
+          {% elif vtype == "receipt" %}
+            <label class="lblec"><i>{% trans %}Receipt{% endtrans %}</i></label>
+          {% elif vtype == "journal" %}
+            <label class="lblec"><i>{% trans %}Journal{% endtrans %}</i></label>
+          {% elif vtype == "sales" %}
+            <label class="lblec"><i>{% trans %}Sales{% endtrans %}</i></label>
+          {% elif vtype == "purchase" %}
+            <label class="lblec"><i>{% trans %}Purchase{% endtrans %}</i></label>
+          {% elif vtype == "creditnote" %}
+            <label class="lblec"><i>{% trans %}Credit Note{% endtrans %}</i></label>
+          {% elif vtype == "debitnote" %}
+            <label class="lblec"><i>{% trans %}Debit Note{% endtrans %}</i></label>
+          {% elif vtype == "salesreturn" %}
+            <label class="lblec"><i>{% trans %}Sale Return{% endtrans %}</i></label>
+          {% elif vtype == "purchasereturn" %}
+            <label class="lblec"><i>{% trans %}Purchase Return{% endtrans %}</i></label>
+          {% endif %}
+	</div>
+
+	<div class="col-xs-4 text-right">
+          <label for="vdate">{% trans %}Date{% endtrans %} :</label><label>&nbsp{{voucher['voucherdate'][:2]}}&nbsp-{{voucher['voucherdate'][3:5]}}&nbsp-{{voucher['voucherdate'][6:]}}</label>
+	</div>
+      </div>
+
+    <div class="table-responsive printorgdetails">
+      <table id="latable" class="table table-condensed table-bordered table-striped shadow">
+	<thead>
+          <tr>
+            <th class="lngwrap">
+	      {% trans %}Account Name{% endtrans %}
+            </th>
+            <th class="mdwrap rightJustified">
+	      {% trans %}Dr Amount{% endtrans %}
+            </th>
+            <th class="mdwrap rightJustified">
+	      {% trans %}Cr Amount{% endtrans %}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for dr in voucher["drs"] %}
+            <tr>
+	      <td class="lngwrap">
+                  {% for acc in draccounts %}
+                    {% if dr==acc['accountname'] %}
+		      {{acc['accountname']}}
+                    {% endif %}
+                  {% endfor %}
+	      </td>
+	      <td class="mdwrap text-right">
+                {{voucher["drs"][dr]}}
+	      </td>
+	      <td class="mdwrap">
+	      </td>
+            </tr>
+
+          {% endfor %}
+
+          {% for cr in voucher["crs"] %}
+            <tr>
+	      <td class="lngwrap">
+                  {% for acc in craccounts %}
+                    {% if cr==acc['accountname'] %}
+		      {{acc['accountname']}}
+                    {% endif %}
+
+                  {% endfor %}
+                </select>
+	      </td >
+	      <td class="mdwrap">
+	      </td>
+	      <td class="mdwrap text-right">
+                {{voucher["crs"][cr]}}
+	      </td>
+            </tr>
+
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td class="lngwrap">
+	      <label>{% trans %}Total{% endtrans %}</label>
+            </td>
+            <td class="mdwrap text-right">
+	      {{voucher["totaldr"]}}
+            </td>
+            <td class="mdwrap text-right">
+	      {{voucher["totalcr"]}}
+            </td>
+	    <tr>
+	      <td colspan="3">
+		{% trans %}Narration{% endtrans %} : {{voucher["narration"]}}
+	      </td>
+	    </tr>
+          </tr>
+	  {% if  projects %}
+	    <tr>
+	      <td colspan="3">
+		{% trans %}Project{% endtrans %} :
+        {% for project in projects %}
+          {% if project['projectcode']==voucher["project"] %}
+            {{project['projectname']}}
+          {% endif %}
+        {% endfor %}
+        {% if voucher["project"]==None %}
+          {% trans %}None{% endtrans %}
+        {% endif %}
+	      </td>
+	    </tr>
+          {% endif %}
+        </tfoot>
+      </table>
+
+<!--Invoice Details table for Print Voucher-->
+{% if vtype == "purchase" or  vtype == "sales" %}
+  {% if voucher['invid'] %}
+      <div id="sale-purchase">
+        <div class="col-md-6">
+          <label>{% trans %}Invoice Details{% endtrans %}</label>
+          <div class = "row">
+            <div class="col-xs-12">
+              <table class="stable table-condensed table-bordered table-striped shadow" >
+                <tbody>
+                  <tr>
+                  <th class="mdwrap">{% trans %}Invoice No{% endtrans %} :</th>
+                  {% for invoice in invoicedata %}
+                  {% if voucher['invid']|int== invoice['invid']|int %}
+                  <td>{{invoice['invoiceno']}}</td>
+                  </tr>
+                  <tr>
+                    <th class="mdwrap">{% trans %}INV Date{% endtrans %} :</th>
+                    <td>{{invoice['invoicedate'][:2]}}&nbsp-{{invoice['invoicedate'][3:5]}}&nbsp-{{invoice['invoicedate'][6:]}}</td>
+                  </tr>
+                  <tr>
+                    <th class="mdwrap">{% trans %}Name{% endtrans %} :</th>
+                    <td>{{invoice["custname"]}}</td>
+                  </tr>
+                  <tr>
+                    <th class="mdwrap">{% trans %}INV Total Amount{% endtrans %} :</th>
+                    <td>{{invoice['invoicetotal']}}</td>
+                  </tr>
+                  </div>
+
+                 {% endif %}
+
+                 {% endfor %}
+
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {%endif%}
+      </div>
+
+      <div id="bankdetails">
+      <div class=" col-md-6">
+      <input type="hidden" id="m_vtype" name="m_vtype" value="{{vtype}}">
+      {% if voucher['instrumentno'] != None %}
+        <div id="instrumentmodal" tabindex="-1" role="dialog">
+
+           <label>{% trans %}Bank Details{% endtrans %}</label>
+<input type="hidden" id="bankflag" name="bankflag" value="1">
+            <div class="row">
+                    <div class="col-xs-12">
+<table class="stable table-condensed table-bordered table-striped shadow" >
+<tbody>
+
+                             <tr style="height:10px;">
+                             <td class="mdwrap">{% trans %}Instrument No{% endtrans %} :</td>
+                             <td>{{voucher['instrumentno']}}</td>
+
+                             <td class="mdwrap">{% trans %}Bank Name{% endtrans %} :</td>
+                             <td>{{voucher['bankname']}}</td>
+                             <tr>
+                               <tr>
+                             <td class="mdwrap">{% trans %}Branch Name{% endtrans %} :</td>
+                             <td class="mdwrap">{{voucher['branchname']}}</td>
+                                   <td class="mdwrap">{% trans %}Instrument Date:{% endtrans %}</td>
+                                  <td class="mdwrap">
+                                    <div class="form-inline">
+                                    <div class="form-group">
+                                          {{voucher['instrumentdate'][:2]}}&nbsp-{{voucher['instrumentdate'][3:5]}}&nbsp-{{voucher['instrumentdate'][6:]}}
+                                    </div>
+                                        </div>
+</td>
+
+</tr>
+                            </div>
+
+</tbody>
+</table>
+                     </div>
+                  </div>
+
+        </div>
+        {%endif%}
+      </div>
+
+    <div id="bottombuttons" class="col-md-12">
+<center>
+  <br>
+<br>
+<br>
+      <span style="margin:auto; display:table;">
+  	<button type="button" class="btn btn-sm btn-danger hidden-print" id="loaback" accesskey="k" name="button"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}Bac<u>k</u>{% endtrans %}</button>
+  	<button type="button" class="btn btn-sm btn-info hidden-print" id="loaprint" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
+      </span>
+    </center>
+    </div>
+    <script type="text/javascript">
+     $(document).ready(function() {
+       oninvoice = 0;
+       $("title").html("GNUKhata");
+       $("#loaprint").click(function(event) {
+         window.print();
+       });
+       $("#loaback").click(function(event) {
+	 event.preventDefault();
+	 $("#printvoucherdiv").hide();
+         $("#otherdiv").show();
+	 $('.modal-backdrop').show();
+	 $("#printvoucher").focus();
+       });
+     });
+    </script>
+
+  </body>
+</html>

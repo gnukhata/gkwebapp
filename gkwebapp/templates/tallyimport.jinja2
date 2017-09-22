@@ -23,7 +23,7 @@
               Note however that a spreadsheet containing data exported from GNUKhata precisely contains list of accounts and vouchers in two separate sheets.  However if the proper specifications are followed, you can get data from other programs too.
               <br>
               As an example, all you need is to export data from Tally ERP 9 to a spreadsheet in xlsx format.  This can be done through the gateway function of Tally.  For more details on how to export, please refer Tally documentation.<br>
-              Once data is exported to the spreadsheet,  it however has to comply with the import specification given below, which need minor adjustment in the sheets. 
+              Once data is exported to the spreadsheet,  it however has to comply with the import specification given below, which need minor adjustment in the sheets.
               <br>
               <div class = "mygrid-wrapper ">
               <ul>
@@ -106,11 +106,11 @@
                 <div class="form-inline">
                   <label class="btn btn-primary btn-sm" for="my-file-selector">
                     <input name="spreadsheet" accesskey="w" class="input-sm" id="my-file-selector" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" / style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
-                    {% trans %}Bro<u>w</u>se{% endtrans %}
+                    {% trans %}<i class="fa fa-folder-open" aria-hidden="true"></i> Bro<u>w</u>se{% endtrans %}
                   </label>
                   <span class='label label-info' id="upload-file-info"></span>
                   <div class="form-group">
-                    <button type="button" name="button" class="btn btn-sm btn-primary" id="import" accesskey="o">Imp<u>o</u>rt</button>
+                    <button type="button" name="button" class="btn btn-sm btn-primary" id="import" accesskey="o"><i class="fa fa-download" aria-hidden="true"></i>  Imp<u>o</u>rt</button>
                   </div>
                 </div>
               </div>
@@ -128,8 +128,8 @@
                     <p>{% trans %}Are you sure?{% endtrans %}</p>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" id ="tn_save_noprint" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
-                    <button type="button" id="tn_save_yesprint" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
+                    <button type="button" id ="tn_save_noprint" class="btn btn-warning" data-dismiss="modal">{% trans %}<i class="fa fa-times" aria-hidden="true"></i> No{% endtrans %}</button>
+                    <button type="button" id="tn_save_yesprint" data-dismiss="modal" class="btn btn-success">{% trans %}<i class="fa fa-check" aria-hidden="true"></i> Yes{% endtrans %}</button>
                   </div>
                 </div><!-- /.modal-content -->
               </div><!-- /.modal-dialog -->

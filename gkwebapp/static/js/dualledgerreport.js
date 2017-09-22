@@ -99,7 +99,8 @@ $(document).ready(function() {
 
   $("#ledgertable1").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
-    var id = $(this).attr('data-value');
+      var id = $(this).attr('data-value');
+      $("#vouchernumberinput").val(id);
     if (id=="")
     {
       return false;
@@ -364,14 +365,27 @@ $(document).ready(function() {
   });
   $('#lrclearfields').click(function(){
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
+    $("#lrclearfields").hide();
+		$(".search").children(".form-control").focus();
   });
   $('#llclearfields').click(function(){
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
+    $("#llclearfields").hide();
+		$(".search").children(".form-control").focus();
   });
 
   $(".search").children(".form-control").keyup(function(event){
-    if (event.keyCode == 27) {
-      $(this).val("");
-    }
-  });
+		if ($(this).parent(".search").hasClass("pull-left") && $(this).val() !="") {
+			$("#lrclearfields").show();
+		}
+		else {
+			$("#lrclearfields").hide();
+		}
+    if($(this).parent(".search").hasClass("pull-right")&& $(this).val() !="") {
+ 		 $("#llclearfields").show();
+ 		}
+ 		else {
+ 			$("#llclearfields").hide();
+ 		}
+    });
 });

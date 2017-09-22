@@ -27,7 +27,8 @@ Contributors:
 // Check printransfernote js for documentation.
 $(document).ready(function() {
   oninvoice = 1;
-  $("title").html("GNUKhata");
+  $("title").html("");
+    window.scrollTo(0,0);
   $("#invprint").click(function(event) {
     window.print();
   });
@@ -69,4 +70,33 @@ if (window.matchMedia) {
 window.onbeforeprint = beforePrint;
 window.onafterprint = afterPrint;
 }());
+$.ajax({
+        url: '/editorganisation?action=getattachment',
+        type: 'POST',
+        datatype: 'json',
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        },
+        data: {},
+    })
+    .done(function(resp) {
+          var imagesrc = "data:image/png;base64,"+resp["logo"];
+
+
+         if(resp["logo"]){
+        $("#imgbox").attr("src", imagesrc);
+         }
+         else{
+           $("#logo_div").hide();
+         }
+
+        console.log("success");
+    })
+    .fail(function() {
+        console.log("error");
+    })
+    .always(function() {
+        console.log("complete");
+    });
+
 });

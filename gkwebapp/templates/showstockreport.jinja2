@@ -26,7 +26,7 @@
 
   #latable tbody {
       display:block;
-      height: calc(100vh - 18em);
+      height: calc(100vh - 20em);
       overflow-y:scroll;
   }
   #latable thead,#latable tbody tr {
@@ -40,6 +40,10 @@
 
   .rightlist {
     text-align: right;
+  }
+
+  .calign {
+    text-align: center;
   }
 
   </style>
@@ -65,34 +69,37 @@
   <span style="margin:auto; display:table; width: 100%;text-align: center"><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
   <span style="margin:auto; display:table; width: 100%;text-align: center"><i>{% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong> <i>{% trans %}Godown Address{% endtrans %}: </i><strong>{{godownadd}}</strong></span>
   {% endif %}
-  <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="laclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+  <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="laclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
   <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
     <thead class="bg-primary">
       <tr>
-        <th class="col-xs-1" >
+        <th class="col-xs-1 calign" >
           {% trans %}Date{% endtrans %}
         </th>
         {% if godown == "" %}
-        <th class="col-xs-4" >
+        <th class="col-xs-3 calign" >
         {% else %}
-        <th class="col-xs-3" >
+        <th class="col-xs-3 calign" >
         {% endif %}
           {% trans %}Particulars{% endtrans %}
         </th>
-        <th class="col-xs-2" >
-          {% trans %}Trn Type{% endtrans %}
+        <th class="col-xs-2 calign" >
+          {% trans %}Document Type{% endtrans %}
         </th>
-        <th class="col-xs-1" >
-          {% trans %}DC No{% endtrans %}
+        <th class="col-xs-2 calign" >
+          {% trans %}Deli Note No.{% endtrans %}
         </th>
-        <th class="col-xs-1" >
-          {% trans %}INV No{% endtrans %}
+        <th class="col-xs-1 calign" >
+          {% trans %}INV No.{% endtrans %}
         </th>
         {% if godown != "" %}
-        <th class="col-xs-1" >
-          {% trans %}TN No{% endtrans %}
+        <th class="col-xs-1 calign" >
+          {% trans %}TN No.{% endtrans %}
         </th>
         {% endif %}
+        <th class="col-xs-1 calign" >
+          {% trans %}RN No.{% endtrans %}
+        </th>
         <th class="col-xs-1 rightlist" >
           {% trans %}Inward{% endtrans %}
         </th>
@@ -108,25 +115,27 @@
       {% for record in gkresult %}
       {% if record["particulars"] =="opening stock" and record["invno"]=="" and record["dcno"]=="" and record["date"]=="" %}
       <tr>
-        <td class="col-xs-1 " >
+        <td class="col-xs-1 calign" >
         </td>
         {% if godown == "" %}
-        <td class="col-xs-4">
+        <td class="col-xs-3">
         {% else %}
         <td class="col-xs-3">
         {% endif %}
           <d class="libgname text-capitalize" >{{record["particulars"]}}</d>
         </td>
-        <td class="col-xs-2" >
+        <td class="col-xs-2 calign" >
         </td>
-        <td class="col-xs-1" >
+        <td class="col-xs-2 calign" >
         </td>
-        <td class="col-xs-1" >
+        <td class="col-xs-1 calign" >
         </td>
         {% if godown != "" %}
-        <td class="col-xs-1" >
+        <td class="col-xs-1 calign" >
         </td>
         {% endif %}
+        <td class="col-xs-1 calign" >
+        </td>
         <td class="col-xs-1 rightlist">
           {{record["inward"]}}
         </td>
@@ -136,25 +145,27 @@
         </td>
       </tr>
       {% endif %}
-      {% if record["particulars"] !="Total" and (record["dcno"]!="" or record["invno"]!="" or record["tnno"]!="") and record["date"]!="" %}
+      {% if record["particulars"] !="Total" and (record["dcno"]!="" or record["invno"]!="" or record["tnno"]!="" or record["rnno"] != "") and record["date"]!="" %}
       {% if record["dcno"]!= "" %}
       <tr value="{{record["dcid"]}}">
       {% elif record["invno"]!= "" %}
       <tr value="{{record["invid"]}}">
+      {% elif record["rnno"]!= "" %}
+      <tr value="{{record["rnid"]}}">
       {% else %}
       <tr value="{{record["tnid"]}}"> <!-- check once-->
       {% endif %}
-        <td class="col-xs-1 " >
+        <td class="col-xs-1 calign" >
           {{record["date"]}}
         </td>
         {% if godown == "" %}
-        <td class="col-xs-4">
+        <td class="col-xs-3">
         {% else %}
         <td class="col-xs-3">
         {% endif %}
           {{record["particulars"]}}
         </td>
-        <td class="col-xs-2" >
+        <td class="col-xs-2 calign" >
           {% if record["trntype"] == "delchal" %}
               Delivery Note
           {% endif %}
@@ -167,26 +178,33 @@
           {% if record["trntype"] == "transfer note" %}
               Transfer Note
           {% endif %}
+          {% if record["trntype"] == "Rejection Note" %}
+              Rejection Note
+          {% endif %}
 
         </td>
-        <td value="{{record["dcid"]}}" class="col-xs-1" >
+        <td value="{{record["dcid"]}}" class="col-xs-2 calign" >
           {% if record["dcno"]!="" %}
             {{record["dcno"]}}
           {% endif %}
         </td>
-        <td value="{{record["invid"]}}" class="col-xs-1" >
+        <td value="{{record["invid"]}}" class="col-xs-1 calign" >
           {% if record["invno"]!="" %}
             {{record["invno"]}}
           {% endif %}
         </td>
         {% if godown != "" %}
-        <td value="{{record["tnid"]}}" class="col-xs-1" >
+        <td value="{{record["tnid"]}}" class="col-xs-1 calign" >
           {% if record["tnno"] != "" %}
             {{record["tnno"]}}
           {% endif %}
         </td>
         {% endif %}
-
+        <td value="{{record["rnid"]}}" class="col-xs-1 calign" >
+          {% if record["rnno"] != "" %}
+            {{record["rnno"]}}
+          {% endif %}
+        </td>
         <td class="col-xs-1 rightlist">
           {{record["inwardqty"]}}
         </td>
@@ -200,25 +218,27 @@
       {% endif %}
       {% if record["particulars"] =="Total" and record["dcno"]=="" and record["invno"]=="" and record["date"]=="" %}
       <tr>
-        <td class="col-xs-1 " >
+        <td class="col-xs-1 calign" >
         </td>
         {% if godown == "" %}
-        <td class="col-xs-4">
+        <td class="col-xs-3">
         {% else %}
         <td class="col-xs-3">
         {% endif %}
           {{record["particulars"]}}
         </td>
-        <td class="col-xs-2" >
+        <td class="col-xs-2 calign" >
         </td>
-        <td class="col-xs-1" >
+        <td class="col-xs-2 calign" >
         </td>
-        <td class="col-xs-1" >
+        <td class="col-xs-1 calign" >
         </td>
         {% if godown != "" %}
-        <td class="col-xs-1" >
+        <td class="col-xs-1 calign" >
         </td>
         {% endif %}
+        <td class="col-xs-1 calign" >
+        </td>
         <td class="col-xs-1 rightlist">
           {{record["totalinwardqty"]}}
         </td>
@@ -232,11 +252,21 @@
       {% endfor %}
     </tbody>
   </table>
+  <div class="col-xs-12">
+    <small>
+        <b>Deli Note No. : </b> Delivery Note Number, &nbsp
+        <b>INV No. :</b> Invoice Number, &nbsp
+        {% if godown != "" %}
+        <b>TN No. :</b> Transfer Note Number, &nbsp
+        {% endif %}
+        <b>RN No. :</b> Rejection Note Number<br><br>
+    </small>
+</div>
   <span style="margin:auto; display:table;">
     <nbsp><nbsp>
-      <button type="button" class="btn btn-sm btn-danger" id="viewanotherstock" accesskey="w">{% trans %}Vie<u>w</u> Another Stock{% endtrans %}</button>
-    <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">{% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
-      <button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="t">{% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
+      <button type="button" class="btn btn-sm btn-warning" id="viewanotherstock" accesskey="w"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}Vie<u>w</u> Another Product{% endtrans %}</button>
+    <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
+      <button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
   </span>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/showstockreport.js')}}"></script>

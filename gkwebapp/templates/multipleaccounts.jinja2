@@ -135,16 +135,16 @@
           <input type="hidden" name="m_nsgcode" id="m_nsgcode" value="{{gkresult['newsubgroup']}}">
           <div class="form-group">
             <label for="m_gname">{% trans %}Group{% endtrans %} :</label>
-            <input type="text" name="m_gname" class="form-control input-sm " size="30" id="m_gname" value="{{gkresult['groupname']}}" disabled>
+            <input type="text" name="m_gname" class="form-control input-sm " size="35" id="m_gname" value="{{gkresult['groupname']}}" disabled>
 
           </div>
 <div class="form-group pull-right">
 
   <label for="m_sgname" >{% trans %}Sub-Group{% endtrans %} :</label>
   {% if gkresult['subgroupcode']=="New" %}
-  <input type="text" class="vdate form-control input-sm " id="m_sgname" value="{{gkresult['newsubgroup']}}" disabled>
+  <input type="text" class="vdate form-control input-sm " id="m_sgname" size="35" value="{{gkresult['newsubgroup']}}" disabled>
   {% else %}
-  <input type="text" class="vdate form-control input-sm " id="m_sgname" value="{{gkresult['subgroupname']}}" disabled>
+  <input type="text" class="vdate form-control input-sm " id="m_sgname" size="35" value="{{gkresult['subgroupname']}}" disabled>
   {% endif %}
 </div>
 

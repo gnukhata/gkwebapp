@@ -56,7 +56,7 @@
 					</div>
 						</div>
 							<div class="panel-footer">
-							<button id="remove" class="btn btn-danger btn-sm" accesskey="v">{% trans %}Remo<u>v</u>e{% endtrans %}</button>
+							<button id="remove" class="btn btn-danger btn-sm" accesskey="v"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}Remo<u>v</u>e{% endtrans %}</button>
 
 						</div>
 					<div id="m_confirmdel" class="modal fade" tabindex="-1" role="dialog">
@@ -71,8 +71,8 @@
 										<p>{% trans %}Are you sure?{% endtrans %}</p>
 									</div>
 									<div class="modal-footer">
-										<button type="button" id ="m_yes" class="btn btn-warning" data-dismiss="modal">{% trans %}Yes{% endtrans %}</button>
-										<button type="button" id="m_no" data-dismiss="modal" class="btn btn-danger">{% trans %}No{% endtrans %}</button>
+										<button type="button" id="m_no" data-dismiss="modal" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}No{% endtrans %}</button>
+										<button type="button" id ="m_yes" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Yes{% endtrans %}</button>
 									</div>
 								</div><!-- /.modal-content -->
 							</div><!-- /.modal-dialog -->

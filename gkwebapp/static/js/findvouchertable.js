@@ -183,17 +183,25 @@ $("#viewprintableversion").click(function(event) {
 
 $('#fvclearfields').click(function(){
   $(".search").children(".form-control").val("");
+  $("#fvclearfields").hide();
+  $(".search").children(".form-control").focus();
 });
 
 $(".search").children(".form-control").keyup(function(event){
+  $("#fvclearfields").show();
   if (event.keyCode == 27) {
     $(this).val("");
+    $("#fvclearfields").hide();
+  }
+  else if ($(this).val() == "") {
+    $("#fvclearfields").hide();
   }
 });
 
   $("#vtable").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
-    var id = $(this).attr('data-value');
+      var id = $(this).attr('data-value');
+      $("#vouchernumberinput").val(id);
     $("#modalindex").val($(this).index());
     $.ajax(
       {
@@ -220,7 +228,7 @@ $(".search").children(".form-control").keyup(function(event){
             $(".btnfocus:enabled:first").focus();
 
           });
-        
+
           $('#myModal').on('hidden.bs.modal', function (e)
           {
         	  if($("#hideinp").val()==0)

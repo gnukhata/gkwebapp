@@ -3,67 +3,68 @@
 <head>
   <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Ledger{% endtrans %}</title>
   <style type="text/css">
-  .shadow {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  #ledgertable td {
-    font-size: 75%;
-    padding: 4 !important;
-    margin: 4 !important;
-  }
+   .shadow {
+       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   }
+   #ledgertable td {
+       font-size: 75%;
+       padding: 4 !important;
+       margin: 4 !important;
+   }
 
-  #ledgertable th {
-    font-size: 85%;
+   #ledgertable th {
+       font-size: 85%;
 
 
-  }
-  .card-view .title {
-      font-weight: bold;
-      display: inline-block;
-      min-width: 20%;
-      text-align: left !important;
-  }
-  #ledgertable tbody {
-      display:block;
-      height: calc(100vh - 17em);
-      overflow-y:scroll;
-  }
-  #ledgertable thead,#ledgertable tbody tr {
-      display:table;
-      width:100%;
-      table-layout:fixed;
-  }
-  #ledgertable thead {
-      width: calc( 100% - 0.65em )
-  }
-  .ralign{
-    text-align:right;
+   }
+   .card-view .title {
+       font-weight: bold;
+       display: inline-block;
+       min-width: 20%;
+       text-align: left !important;
+   }
+   #ledgertable tbody {
+       display:block;
+       height: calc(100vh - 17em);
+       overflow-y:scroll;
+   }
+   #ledgertable thead,#ledgertable tbody tr {
+       display:table;
+       width:100%;
+       table-layout:fixed;
+   }
+   #ledgertable thead {
+       width: calc( 100% - 0.65em )
+   }
+   .ralign{
+       text-align:right;
 
-  }
-  .cred{
-    color:red;
-  }
-  .calign{
-    text-align:center;
-  }
-  .dtwrap{
-  	width :6%
-  	 }
- .smwrap{
- 	width:4%
- }
- .lngwrap{
- 	width:20%
- }
- .mdwrap{
- 	width:8%
- }
+   }
+   .cred{
+       color:red;
+   }
+   .calign{
+       text-align:center;
+   }
+   .dtwrap{
+       width :6%
+   }
+   .smwrap{
+       width:4%
+   }
+   .lngwrap{
+       width:20%
+   }
+   .mdwrap{
+       width:8%
+   }
 
 
   </style>
 </head>
 <body>
-  <div class="alert alert-danger" id="ua-alert" hidden>
+  <div id="otherdiv">
+    <div class="alert alert-danger" id="ua-alert" hidden>
 
     <strong>{% trans %}Unauthorized to Lock/Unlock Transactions!{% endtrans %}</strong>
   </div>
@@ -84,132 +85,135 @@
   {% endif %}
   <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{ledgerheader["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{ledgerheader["calculateto"]}}</strong></span>
   <span style="margin:auto; display:table;"><i>{% trans %}Ledger Account{% endtrans %}</i> : <strong>{{ledgerheader["accountname"]}}</strong></span>
-
-  <div class="row">
-    <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="lclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
-    <table id="ledgertable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
-      <thead class="bg-primary">
-        <tr>
-          <th class="dtwrap calign" >{% trans %}Date{% endtrans %}</th>
-          <th class="smwrap calign" >{% trans %}V. No.{% endtrans %}</th>
-          <th class="smwrap calign" >{% trans %}Status{% endtrans %}</th>
-          <th class="mdwrap calign">{% trans %}Type{% endtrans %}</th>
-          {% if ledgerheader["projectname"]=="" %}
-          <th class="lngwrap calign">{% trans %}Particulars{% endtrans %}</th>
-          <th class="dtwrap ralign">{% trans %}Debit{% endtrans %}</th>
-          <th class="dtwrap ralign">{% trans %}Credit{% endtrans %}</th>
-          <th class="dtwrap ralign">{% trans %}Balance{% endtrans %}</th>
-          {% else %}
-          <th class="lngwrap calign">{% trans %}Particulars{% endtrans %}</th>
-          <th class="dtwrap ralign">{% trans %}Debit{% endtrans %}</th>
-          <th class="dtwrap ralign">{% trans %}Credit{% endtrans %}</th>
-          {% endif %}
-        </tr>
-      </thead>
-      <tbody>
-        {% for record in records %}
-        <tr  data-value="{{record['vouchercode']}}">
-          <td class="dtwrap calign">
-            {{record['voucherdate']}}
-          </td>
-          {% if record['vouchernumber']=="" %}
-          <td class="smwrap calign">
-            <a class="vno" href="">&nbsp</a>
-          </td>
-          {% else %}
-          <td class="smwrap calign">
-            <a class="vno" href="">{{record['vouchernumber']}}</a>
-          </td>
-          {% endif %}
-          {% if (record['status']) %}
-          <td class="smwrap calign cred">***</td>
-          {% else %}
-          {% if (record['status'])=="" %}
-          <td class="smwrap calign" value="na"></td>
-          {%else%}
-          <td class="smwrap calign cred"> </td>
-          {% endif %}
-          {% endif %}
-          {% if record["vouchertype"]=="" %}
-          <td class="mdwrap calign">&nbsp</td>
-          {% elif (record["vouchertype"]=="purchasereturn")%}
-          <td class="mdwrap calign">{% trans %}Purchase Return{% endtrans %}</td>
-          {% elif (record["vouchertype"]=="salesreturn")%}
-          <td class="mdwrap calign">{% trans %}Sale Return{% endtrans %}</td>
-          {% elif (record["vouchertype"]=="creditnote")%}
-          <td class="mdwrap calign">{% trans %}Credit Note{% endtrans %}</td>
-          {% elif (record["vouchertype"]=="debitnote")%}
-          <td class="mdwrap calign">{% trans %}Debit Note{% endtrans %}</td>
-          {% else %}
-          <td class="mdwrap calign" >
-            {{(record["vouchertype"]).title()}}
-          </td>
-          {% endif %}
-
-          {% if ledgerheader["projectname"]=="" %}
-
-          <td class="lngwrap">
-            {% for pr in record['particulars'] %}
-            {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
-            {% endfor %}
-           {% if record['narration']!="" and narrationflag==true %}
-         <span style="font-size:0.9em">   ({{record['narration']}}) </span>
+    <div class="row">
+      <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="lclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+      <table id="ledgertable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
+	<thead class="bg-primary">
+          <tr>
+            <th class="dtwrap calign" >{% trans %}Date{% endtrans %}</th>
+            <th class="smwrap calign" >{% trans %}V. No.{% endtrans %}</th>
+            <th class="smwrap calign" >{% trans %}Status{% endtrans %}</th>
+            <th class="mdwrap calign">{% trans %}Type{% endtrans %}</th>
+            {% if ledgerheader["projectname"]=="" %}
+              <th class="lngwrap calign">{% trans %}Particulars{% endtrans %}</th>
+              <th class="dtwrap ralign">{% trans %}Debit{% endtrans %}</th>
+              <th class="dtwrap ralign">{% trans %}Credit{% endtrans %}</th>
+              <th class="dtwrap ralign">{% trans %}Balance{% endtrans %}</th>
+            {% else %}
+              <th class="lngwrap calign">{% trans %}Particulars{% endtrans %}</th>
+              <th class="dtwrap ralign">{% trans %}Debit{% endtrans %}</th>
+              <th class="dtwrap ralign">{% trans %}Credit{% endtrans %}</th>
             {% endif %}
-          </td>
-          {%if record["advflag"]==1%}
-          <td class="dtwrap ralign cred">
-            <b>{{record["Dr"]}}</b>
-          </td>
-          <td class="dtwrap ralign cred">
-            <b>{{record["Cr"]}}</b>
-          </td>
-          {%else%}
-          <td class="dtwrap ralign">
-            {{record["Dr"]}}
-          </td>
-          <td class="dtwrap ralign">
-            {{record["Cr"]}}
-          </td>
-          {%endif%}
-          <td class="dtwrap ralign">
-            {{record["balance"]}}
-          </td>
-          {% else %}
-          <td class ="lngwrap">
-            {% for pr in record['particulars'] %}
-            {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
-            {% endfor %}
-            {% if record['narration']!="" and narrationflag==true %}
-           <span style="font-size:0.9em" > ({{record['narration']}}) </span>
-            {% endif %}
-          </td>
-          <td class="dtwrap ralign">
-            {{record["Dr"]}}
-          </td>
-          <td class="dtwrap ralign">
-            {{record["Cr"]}}
-          </td>
-          {% endif %}
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+          </tr>
+	</thead>
+	<tbody>
+          {% for record in records %}
+            <tr  data-value="{{record['vouchercode']}}">
+              <td class="dtwrap calign">
+		{{record['voucherdate']}}
+              </td>
+              {% if record['vouchernumber']=="" %}
+		<td class="smwrap calign">
+		  <a class="vno" href="">&nbsp</a>
+		</td>
+              {% else %}
+		<td class="smwrap calign">
+		  <a class="vno" href="">{{record['vouchernumber']}}</a>
+		</td>
+              {% endif %}
+              {% if (record['status']) %}
+		<td class="smwrap calign cred">***</td>
+              {% else %}
+		{% if (record['status'])=="" %}
+		  <td class="smwrap calign" value="na"></td>
+		{%else%}
+		  <td class="smwrap calign cred"> </td>
+		{% endif %}
+              {% endif %}
+              {% if record["vouchertype"]=="" %}
+		<td class="mdwrap calign">&nbsp</td>
+              {% elif (record["vouchertype"]=="purchasereturn")%}
+		<td class="mdwrap calign">{% trans %}Purchase Return{% endtrans %}</td>
+              {% elif (record["vouchertype"]=="salesreturn")%}
+		<td class="mdwrap calign">{% trans %}Sale Return{% endtrans %}</td>
+              {% elif (record["vouchertype"]=="creditnote")%}
+		<td class="mdwrap calign">{% trans %}Credit Note{% endtrans %}</td>
+              {% elif (record["vouchertype"]=="debitnote")%}
+		<td class="mdwrap calign">{% trans %}Debit Note{% endtrans %}</td>
+              {% else %}
+		<td class="mdwrap calign" >
+		  {{(record["vouchertype"]).title()}}
+		</td>
+              {% endif %}
+
+              {% if ledgerheader["projectname"]=="" %}
+
+		<td class="lngwrap">
+		  {% for pr in record['particulars'] %}
+		    {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
+		  {% endfor %}
+		  {% if record['narration']!="" and narrationflag==true %}
+		    <span style="font-size:0.9em">   ({{record['narration']}}) </span>
+		  {% endif %}
+		</td>
+		{%if record["advflag"]==1%}
+		  <td class="dtwrap ralign cred">
+		    <b>{{record["Dr"]}}</b>
+		  </td>
+		  <td class="dtwrap ralign cred">
+		    <b>{{record["Cr"]}}</b>
+		  </td>
+		{%else%}
+		  <td class="dtwrap ralign">
+		    {{record["Dr"]}}
+		  </td>
+		  <td class="dtwrap ralign">
+		    {{record["Cr"]}}
+		  </td>
+		{%endif%}
+		<td class="dtwrap ralign">
+		  {{record["balance"]}}
+		</td>
+              {% else %}
+		<td class ="lngwrap">
+		  {% for pr in record['particulars'] %}
+		    {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
+		  {% endfor %}
+		  {% if record['narration']!="" and narrationflag==true %}
+		    <span style="font-size:0.9em" > ({{record['narration']}}) </span>
+		  {% endif %}
+		</td>
+		<td class="dtwrap ralign">
+		  {{record["Dr"]}}
+		</td>
+		<td class="dtwrap ralign">
+		  {{record["Cr"]}}
+		</td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+	</tbody>
+      </table>
+    </div>
     <span style="margin:auto; display:table;">
       {% if ledgerrefresh["backflag"]>0 or ledgerrefresh.side %}
-      <button class="btn btn-sm btn-danger" type="button" id="back" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+      <button class="btn btn-sm btn-danger" type="button" id="back" accesskey="b"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}<u>B</u>ack{% endtrans %}</button>
       {% endif %}
-      <button class="btn btn-sm btn-primary" type="button" id="anotherledger" accesskey="v">{% trans %}<u>V</u>iew Another Ledger{% endtrans %}</button>
-      <button class="btn btn-sm btn-primary" type="button" id="dualledger" accesskey="g">{% trans %}Dual Led<u>g</u>ers{% endtrans %}</button>
+      <button class="btn btn-sm btn-warning" type="button" id="anotherledger" accesskey="v"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}<u>V</u>iew Another Ledger{% endtrans %}</button>
+      <button class="btn btn-sm btn-info" type="button" id="dualledger" accesskey="g">{% trans %}Dual Led<u>g</u>ers{% endtrans %}</button>
       <button class="btn btn-sm btn-primary" type="button"  id="drsonly" accesskey="d">{% trans %}Only <u>D</u>rs{% endtrans %}</button>
-      <button class="btn btn-sm btn-primary" type="button"  id="crsonly" accesskey="y">{% trans %}Onl<u>y</u> Crs{% endtrans %}</button>
-      <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">{% trans %}E<u>x</u>port to Spreadsheet</u>{% endtrans %}</button>
-      <button class="btn btn-sm btn-primary" type="button"  id="printledger" accesskey="t">{% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
+      <button class="btn btn-sm btn-info" type="button"  id="crsonly" accesskey="y">{% trans %}Onl<u>y</u> Crs{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet</u>{% endtrans %}</button>
+      <button class="btn btn-sm btn-info" type="button"  id="printledger" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
     </span>
 
 
-  <div id="viewvc">
+    <div id="viewvc">
+    </div>
   </div>
+  <div id="printvoucherdiv" hidden>
+  </div>
+  <input id="vouchernumberinput" type="text" value="0" hidden >
   <input id="hideinp" type="text" value="0" hidden >
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/ledgerreport.js')}}"></script>

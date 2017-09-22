@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Register{% endtrans %}</title>
+  <style type="text/css">
+  .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  #registertable td {
+    font-size: 75%;
+    padding: 4 !important;
+    margin: 4 !important;
+  }
+
+  #registertable th {
+    font-size: 85%;
+  }
+  .card-view .title {
+      font-weight: bold;
+      display: inline-block;
+      min-width: 20%;
+      text-align: left !important;
+  }
+  #registertable tbody {
+      display:block;
+      width: 100%;
+      height: calc(100vh - 17em);
+
+  }
+  #registertable thead,#registertable tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  #registertable thead {
+      width: calc( 100% - 0.10em )
+  }
+  .registertablecss{
+    overflow-y:scroll;
+    overflow-x:scroll;
+  }
+  .ralign{
+    text-align:right;
+
+  }
+  .cred{
+    color:red;
+  }
+  .calign{
+    text-align:center;
+  }
+  .dtwrap{
+  	width :100px
+  	 }
+ .smwrap{
+ 	width:80px
+ }
+ .lngwrap{
+ 	width:560px
+ }
+ .mdwrap{
+ 	width:120px
+ }
+
+
+  </style>
+</head>
+<body>
+  <input type="hidden" id="flag" value={{registerheader["flag"]}}>
+  <input type="hidden" id="calculatefrom" value={{registerheader["calculatefrom"]}} >
+  <input type="hidden" id="calculateto" value={{registerheader["calculateto"]}}>
+  <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{registerheader["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{registerheader["calculateto"]}}</strong></span>
+  {% if registerheader["flag"] == "0" %}
+  <span style="margin:auto; display:table; font-size:120%;"><strong>{% trans %}Sales Register{% endtrans %}</strong></span>
+  {% else %}
+  <span style="margin:auto; display:table; font-size:120%;"><strong>{% trans %}Purchase Register{% endtrans %}</strong></span>
+  {% endif %}
+  <div class="registertablecss">
+  <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="rclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+  <table id="registertable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
+    <thead class="bg-primary">
+        <tr>
+          <th class="smwrap calign" >{% trans %}Sr.No.{% endtrans %}</th>
+          <th class="smwrap calign" >{% trans %}Inv No.{% endtrans %}</th>
+          <th class="dtwrap calign" >{% trans %}Inv Date{% endtrans %}</th>
+          {% if registerheader["flag"] == "0" %}
+          <th class="dtwrap calign">{% trans %}Cust Name{% endtrans %}</th>
+          <th class="dtwrap calign">{% trans %}Cust TIN{% endtrans %}</th>
+	  <th class="dtwrap calign">{% trans %}Cust GSTIN{% endtrans %}</th>
+          {% else %}
+          <th class="dtwrap calign">{% trans %}Suppl Name{% endtrans %}</th>
+          <th class="dtwrap calign">{% trans %}Suppl TIN{% endtrans %}</th>
+	  <th class="dtwrap calign">{% trans %}Suppl GSTIN{% endtrans %}</th>
+          {% endif %}
+          <th class="dtwrap calign">{% trans %}Gross Amt{% endtrans %}</th>
+          <th class="dtwrap calign">{% trans %}TAX Free{% endtrans %}</th>
+          {% for tax in taxcolumns %}
+            <th class="dtwrap calign">{% trans %}Net @ {{tax}}%{% endtrans %}</th>
+          {% endfor %}
+          {% for tax in taxcolumns %}
+            <th class="dtwrap calign">{% trans %}{{tax}}% TAX{% endtrans %}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Description: this is for all rows of invoices" -->
+          {% for record in gkresult %}
+          <tr  data-value="{{record['invid']}}">
+            <td class="smwrap calign">
+              {{record['srno']}}
+            </td>
+            <td class="smwrap calign">
+              {{record['invoiceno']}}
+            </td>
+            <td class="dtwrap calign">
+              {{record['invoicedate']}}
+            </td>
+            <td class="dtwrap calign">
+              {{record['customername']}}
+            </td>
+            <td class="dtwrap calign">
+              {{record['customertin']}}
+            </td>
+	    <td class="dtwrap calign">
+              {{record['custgstin']}}
+            </td>
+            <td class="dtwrap calign">
+              {{record['grossamount']}}
+            </td>
+            <td class="dtwrap calign">
+              {{record['taxfree']}}
+            </td>
+            {% for tax in taxcolumns %}
+            <td class="dtwrap calign">
+            {% if tax in record["tax"] %}
+              {{record['tax'][tax]}}
+            {% else %}
+              0.00
+            {% endif %}
+            </td>
+            {% endfor %}
+            {% for tax in taxcolumns %}
+            <td class="dtwrap calign">
+            {% if tax in record["taxamount"] %}
+              {{record['taxamount'][tax]}}
+            {% else %}
+              0.00
+            {% endif %}
+            </td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+          <!-- Description: This is for last row i.e. Total of transactions -->
+        <tr>
+          <td class="lngwrap calign" colspan="6">
+            <strong> <i>Total </i></strong>
+          </td>
+          <td class="dtwrap calign">
+            {{totalrow['grossamount']}}
+          </td>
+          <td class="dtwrap calign">
+            {{totalrow['taxfree']}}
+          </td>
+          {% for tax in taxcolumns %}
+          <td class="dtwrap calign">
+          {% if tax in totalrow["tax"] %}
+            {{totalrow['tax'][tax]}}
+          {% else %}
+            0.00
+          {% endif %}
+          </td>
+          {% endfor %}
+          {% for tax in taxcolumns %}
+          <td class="dtwrap calign">
+          {% if tax in totalrow["taxamount"] %}
+            {{totalrow['taxamount'][tax]}}
+          {% else %}
+            0.00
+          {% endif %}
+          </td>
+          {% endfor %}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+    <span style="margin:auto; display:table;">
+      <button class="btn btn-sm btn-warning" type="button" id="anotherregister" accesskey="v"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}<u>V</u>iew Another Register{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="exporttospreadsheetregister" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
+    </span>
+
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/registerreport.js')}}"></script>
+</body>
+</html>

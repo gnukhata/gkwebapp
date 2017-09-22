@@ -66,11 +66,11 @@
           <span aria-hidden="true">&times;</span>
         </button> </div>
       <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-       
+
        <p>   <font color=" #566573"> {%trans%}
 Trial Balance can be seen in three formats.
 </br>The Net Trial Balance will provide the closing balances (or current balance as on selected end date). The Gross Trial Balance shows for each account the total Drs and Crs along with Closing Balances, while the Extended version shows all this with Opening Balances.
- </br> Apart from the regular account names and balances, these reports include Group name of each account. 
+ </br> Apart from the regular account names and balances, these reports include Group name of each account.
 </br>The period for this report must begin with the first date of the Financial Year and can end on any date.
 If an account has an adverse balance it is shown in red colour. </br> The difference in Trial Balance, if any, is shown in the last row.
 </br>Drill Down facility is available for all types of Trial Balances. You can double click or press enter key on any row to see the ledger for that account.</br>
@@ -79,17 +79,17 @@ All users can view all types of Trial Balances.
 
         </p>
       </div>
-      
+
     </div>
   </div>
 </div>
       <div class="panel-footer">
-        <button type="button" class="btn btn-sm btn-success" name="button" id="trialbal_view" accesskey="v">{% trans %}<u>V</u>iew{% endtrans %}</button>
-        <button type="button" name="button" class="btn btn-sm btn-danger" id="trialbal_reset" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+        <button type="button" class="btn btn-sm btn-primary" name="button" id="trialbal_view" accesskey="v"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}<u>V</u>iew{% endtrans %}</button>
+        <button type="button" name="button" class="btn btn-sm btn-danger" id="trialbal_reset" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
       </div>
     </div>
   </div>
-  
+
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewtrialbalance.js')}}"></script>
   </body>
 </html>

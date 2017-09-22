@@ -27,13 +27,14 @@
 		height: calc(100vh - 22em);
 		overflow-y:scroll;
 }
- #vtable thead,#vtable tbody tr {
+ #vtable thead tr,#vtable tbody tr {
 		display:table;
 		width:100%;
 		table-layout:fixed;
 }
  #vtable thead {
-		width: calc( 100% - 0.65em )
+   display:block;
+		width: 99%;
 }
 .nopadding{
 	padidng:0 !important;
@@ -48,19 +49,19 @@
 .calign{
 	text-align:center;
 }
-.5width{
+.width5{
   width: 5%;
 }
-.6width{
+.width6{
   width: 6%;
 }
-.10width{
+.width10{
   width: 10%;
 }
-.14width{
+.width14{
   width: 14%;
 }
-.20width{
+.width20{
   width: 20%;
 }
 
@@ -70,93 +71,93 @@
   <input type="hidden" id="urole" name="urole" value="{{userrole}}"></input>
   <input type="hidden" id="modalindex" value=""></input>
  <div id="fevoucherrow" class="row">
-   <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="fvclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+   <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="fvclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
     <table id="vtable" class="table table-condensed table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
       <thead class="bg-primary">
         <tr>
-            <th class="5width">{% trans %}V. No.{% endtrans %}</th>
-            <th class="calign 5width">{% trans %}Status{% endtrans %}</th>
-            <th class="6width">{% trans %}Date{% endtrans %}</th>
-            <th class="10width">{% trans %}Type{% endtrans %}</th>
-            <th class="20width">{% trans %}Dr Accounts{% endtrans %}</th>
-            <th class="20width">{% trans %}Cr Accounts{% endtrans %}</th>
-            <th class="ralign 10width">{% trans %}Dr Amounts{% endtrans %}</th>
-            <th class="ralign 10width">{% trans %}Cr Amounts{% endtrans %}</th>
-            <th class="14width">{% trans %}Narration{% endtrans %}</th>
+            <th class="width5">{% trans %}V. No.{% endtrans %}</th>
+            <th class="calign width5">{% trans %}Status{% endtrans %}</th>
+            <th class="width6">{% trans %}Date{% endtrans %}</th>
+            <th class="width10">{% trans %}Type{% endtrans %}</th>
+            <th class="width20">{% trans %}Dr Accounts{% endtrans %}</th>
+            <th class="width20">{% trans %}Cr Accounts{% endtrans %}</th>
+            <th class="ralign width10">{% trans %}Dr Amounts{% endtrans %}</th>
+            <th class="ralign width10">{% trans %}Cr Amounts{% endtrans %}</th>
+            <th class="width14">{% trans %}Narration{% endtrans %}</th>
 
         </tr>
       </thead>
       <tbody>
         {% for vc in vouchers %}
         <tr  data-value="{{vc['vouchercode']}}">
-            <td class="5width word-wrap:break-word;">
+            <td class="width5 word-wrap:break-word;">
               <a class="vno" href="">{{vc['vouchernumber']}}</a>
             </td>
             {% if (vc['status']) %}
-            <td class="cred calign 5width">***</td>
+            <td class="cred calign width5">***</td>
             {% else %}
-            <td  class="cred calign 5width">&nbsp </td>
+            <td  class="cred calign width5">&nbsp</td>
             {% endif %}
-            <td class="6width">
+            <td class="width6">
               {{vc['voucherdate']}}
             </td>
             {% if vc['vouchertype'] =="contra" %}
-            <td class="10width">
+            <td class="width10">
               {% trans %}Contra{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "payment" %}
-            <td class="10width">
+            <td class="width10">
               {% trans %}Payment{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "receipt" %}
-            <td class="10width">
+            <td class="width10">
               {% trans %}Receipt{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "journal" %}
-            <td class="10width">
+            <td class="width10">
               {% trans %}Journal{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "sales" %}
-            <td class="10width">
+            <td class="width10">
               {% trans %}Sales{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "purchase" %}
-            <td class="10width">
+            <td class="width10">
               {% trans %}Purchase{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "creditnote" %}
-            <td class="10width">
+            <td class="width10">
               {% trans %}Credit Note{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "debitnote" %}
-            <td class="10width">
+            <td class="width10">
               {% trans %}Debit Note{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "salesreturn" %}
-            <td class="10width">
+            <td class="width10">
               {% trans %}Sale Return{% endtrans %}
             </td>
             {% elif vc['vouchertype'] == "purchasereturn" %}
-            <td class="10width">
+            <td class="width10">
               {% trans %}Purchase Return{% endtrans %}
             </td>
             {% endif %}
-            <td class="20width">
+            <td class="width20">
               {{vc["drs"].keys()[0]}}
             </td>
-            <td class="20width">
+            <td class="width20">
               {{vc["crs"].keys()[0]}}
             </td>
-            <td class=" ralign 10width">
+            <td class=" ralign width10">
               {{vc["drs"][vc["drs"].keys()[0]]}}
             </td>
-            <td class="ralign 10width">
+            <td class="ralign width10">
               {{vc["crs"][vc["crs"].keys()[0]]}}
             </td>
               {% if vc['narration']=="" %}
-              <td class="14width">&nbsp</td>
+              <td class="width14">&nbsp</td>
               {% else %}
-              <td class="14width">{{vc['narration']}}</td>
+              <td class="width14">{{vc['narration']}}</td>
               {% endif %}
         </tr>
         {% endfor %}
@@ -169,7 +170,7 @@
   <br>
   <div class="">
     <span style="margin:auto; display:table;">
-      <button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="t">{% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
+      <button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="t">{% trans %}<i class="fa fa-print" aria-hidden="true"></i> View Prin<u>t</u>able Version{% endtrans %}</button>
     </span>
   </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>

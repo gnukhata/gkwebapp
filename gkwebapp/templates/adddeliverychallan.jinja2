@@ -71,7 +71,7 @@
           </div>
             <div class="form-group">
               <label for="deliverychallan_challanno">{% trans %}Note No{% endtrans %} :</label>
-              <input class="form-control input-sm" id="deliverychallan_challanno" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a" value = "{{lastdelchaldata['dcno']}}">
+              <input class="form-control input-sm" id="deliverychallan_challanno" placeholder="{% trans %}Enter Delivery Note No.{% endtrans %}" accesskey="a" value = "{{lastdelchaldata['dcno']}}">
             </div>
             <div class="form-group">
               <label for="deliverychallan_date">{% trans %}Note Date{% endtrans %} :</label>
@@ -243,30 +243,36 @@
      </div>
       <div class="panel-footer">
         <div class="container-fluid">
-
-        <button class="btn btn-success btn-sm" id="deliverychallan_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save anywhere on the current screen">{% trans %}Save{% endtrans %}</button>
-        <button class="btn btn-warning btn-sm" id="deliverychallan_reset" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+        <button class="btn btn-success btn-sm" id="deliverychallan_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save anywhere on the current screen"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}
+Save{% endtrans %}</button>
+        <button class="btn btn-warning btn-sm" id="deliverychallan_reset"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}
+Reset{% endtrans %}</button>
         {% if gkstatus=="out" %}
-        <button id="deliverychallan_saveprint" class="btn btn-primary btn-sm" >{% trans %}Save & Print{% endtrans %}</button>
-        <button id="deliverychallan_addcust" class="btn btn-info btn-sm" accesskey="t">{% trans %}Add Cus<u>t</u>omer{% endtrans %}</button>
+        <button id="deliverychallan_saveprint" class="btn btn-primary btn-sm" ><i class="fa fa-print" aria-hidden="true"></i> {% trans %}
+Save & Print{% endtrans %}</button>
+        <button id="deliverychallan_addcust" class="btn btn-info btn-sm"><i class="fa fa-user-plus" aria-hidden="true"></i> {% trans %}
+Add Customer{% endtrans %}</button>
           {% else %}
-          <button id="deliverychallan_addcust" class="btn btn-info btn-sm" accesskey="s">{% trans %}Add <u>S</u>upplier{% endtrans %}</button>
+          <button id="deliverychallan_addcust" class="btn btn-info btn-sm"><i class="fa fa-user-plus" aria-hidden="true"></i> {% trans %}
+
+Add Supplier{% endtrans %}</button>
        {% endif %}
        <label class="btn btn-primary btn-sm" for="my-file-selector">
          <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
+         <i class="fa fa-paperclip" aria-hidden="true"></i>
          {% trans %}Attac<u>h</u>{% endtrans %}
        </label>
-       <span class='label label-info' id="upload-file-info"></span>
-        {% if gkstatus=="out" %}
+       <span class='label label-info' id="upload-file-info"></span>  
+       <!--    {% if gkstatus=="out" %}
       {% if numberofsalesorders > 0 %}
         <button class="btn btn-default btn-sm" id="viewsalesorder">{% trans %}View Sales Order{% endtrans %}</button>
       {% endif %}
       {% else %}
       {% if numberofpurchaseorders > 0 %}
-      <button class="btn btn-default btn-sm" id="viewpurchaseorder">{% trans %}View Purchase Order{% endtrans %}</button>
+	<button class="btn btn-default btn-sm" id="viewpurchaseorder">{% trans %}<i class="fa fa-eye" aria-hidden="true"></i> View Purchase Order{% endtrans %}</button>
       {% endif %}
-      {% endif %}
-      </div>
+       {% endif %} -->
+	</div>
       </div>
     </div>
     <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">

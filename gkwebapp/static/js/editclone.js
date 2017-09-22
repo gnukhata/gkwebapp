@@ -22,13 +22,52 @@ Contributors:
 "Krishnakant Mane" <kk@gmail.com>
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
+"Reshma Bhatawadekar" <bhatawadekar1reshma@gmail.com>
 */
 
 $(document).ready(function()
 {
+  $("#instrumentbtn2").hide();
+    function getBalance( accountcode, calculateTo ){
+        var bal = '';
+        $.ajax({
+          url: '/showvoucher?type=getclosingbal',
+          type: 'POST',
+          dataType: 'json',
+          async : false,
+          data: {"accountcode": accountcode, "calculateto" : calculateTo, "financialstart" : sessionStorage.yyyymmddyear1},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          }
+        })
+        .done(function(resp) {
+          if (resp["gkstatus"]==0) {
+            bal= resp["gkresult"];
+          }
+          else {
+            bal= '';
+          }
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+        return bal;
+      }
+
+
   if (($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase") && sessionStorage.invflag==1)
   {
-    $(".invhide").show();
+    if ($("#viewinvsel").length > 0){
+      $(".invhide").show();
+    }
+    else {
+      $(".invhide").hide();
+    }
+
     var inv = $("#invsel option:selected").attr("total");
     if ($.trim(inv)!="")
     {
@@ -40,10 +79,7 @@ $(document).ready(function()
     }
 
   }
-  else
-  {
-      $(".invhide").hide();
-  }
+
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   $("#vctable").hide();
@@ -80,6 +116,25 @@ $(document).ready(function()
     if ($.trim(inv)!="")
     {
       $("#invtotal").val(parseFloat(inv).toFixed(2));
+      $(".dramt:first:enabled:visible").val(inv);
+      $(".cramt:eq(1)").val(inv);
+      $("#drtotal:first").val(inv);
+      $("#crtotal:first").val(inv);
+      var value = $('#invsel option:selected').attr("customername");
+      $(".dramt:first").val(parseFloat(inv).toFixed(2));
+      $(".cramt:eq(1)").val(parseFloat(inv).toFixed(2));
+      if (($('#m_vtype').val()=="sales") && sessionStorage.invsflag ==1)
+      {
+      $(".accs:first option").filter(function() {return this.text == value;}).attr('selected', true);
+      var e = jQuery.Event("keydown");
+      e.which = 13; // # Some key code value
+      $(".dramt").trigger(e);
+      }
+      if (($('#vtype').val()=="purchase") && sessionStorage.invsflag ==1)
+     {
+          $(".accs:eq(1) option").filter(function() {return this.text == value;}).attr('selected', true);
+      }
+
     }
     else
     {
@@ -119,7 +174,13 @@ $(document).ready(function()
 
   $("#demovctable").find("input,select,textarea,button").prop("disabled",true);
   $("#vno").prop('disabled', true);
-  $("#invsel").prop('disabled', true);
+  $("#viewdiv").show();
+  $("#viewinvsel").prop('disabled', true);
+  $("#invtotaldiv").prop('disabled', true);
+  $("#editdiv").hide();
+  $("#editinv").hide();
+  $("#invsel").hide();
+  $("#selinvtotal").hide();
   $(".vdate").prop('disabled', true);
   $("#narr").prop('disabled', true);
   $("#project").prop('disabled', true);
@@ -262,7 +323,7 @@ $(document).ready(function()
 
   $("#edit").click(function(event)
   {
-
+      $("#printvoucher").hide();
     ecflag="edit";
     $(".lblec").prepend('<i>Edit </i>');
     if ($("#replaceattach").length) {
@@ -273,25 +334,110 @@ $(document).ready(function()
     $("#save").show();
     $("#removediv").show();
     $("#lock").hide();
+    $(".crdr").prop('disabled', true);
+    $(".accs").prop('disabled', true);
     $("#edit").hide();
     $("#clone").hide();
     $("#delete").hide();
     $("#vno").prop('disabled', true);
+    $(".dramt").prop('disabled', true);
+    $(".cramt").prop('disabled', true);
     $(".ttl").prop('disabled', true);
-    $(".vdate").prop('disabled', false);
-    $("#invsel").prop('disabled', false);
+    $(".vdate").prop('disabled', true);
+    $("#viewdiv").hide();
+    $("#viewinvsel").hide();
+    $("#invtotaldiv").hide();
+    $("#editdiv").show();
+    $("#editinv").show();
+    $("#invsel").show();
+    $("#invsel").prop('disabled', true);
+    if ($('#selinv').length > 0) {
+      $("#invsel").append('<option value ="'+$('#selinv').val()+'">'+$('#viewinvsel').val()+'</option>');
+    }
+    $('#invsel').val($('#selinv').val());
+    $("#selinvtotal").show();
+    $("#selinvtotal").prop('disabled', false);
+    $("#invtotal").val($('#invtotalvvi').val());
     $("#vdate").focus().select();
     $("#vctable").show();
     $("#demovctable").hide();
     $("#narr").prop('disabled', false);
     $("#project").prop('disabled', false);
+    $("#instrumentbtn2").show();
+    if($("#bankflag2").val()==1)
+    {
+      $("#instrumentno").prop('disabled', false);
+      $("#bankname").prop('disabled', false);
+      $("#branchname").prop('disabled', false);
+      $("#instrument_date").prop('disabled', false);
+      $("#instrument_month").prop('disabled', false);
+      $("#instrument_year").prop('disabled', false);
+    }
+
+        $("#instrumentno").prop('disabled', true);
+        $("#bankname").prop('disabled', true);
+        $("#branchname").prop('disabled', true);
+        $("#instrument_date").prop('disabled', true);
+        $("#instrument_month").prop('disabled', true);
+        $("#instrument_year").prop('disabled', true);
+
+
+
+
+
+
+  if($('#vctable tbody tr:first td:eq(1) select option:selected').val()){
+    var curacccode = $('#vctable tbody tr:first td:eq(1) select option:selected').val();
+    var d = new Date();
+    var month = d.getMonth()+1;
+    var day = d.getDate();
+    var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+    $('#vctable tbody tr:first td:eq(2) input').val(getBalance(curacccode, caldata));
+  }
+  if($('#vctable tbody tr:eq(1) td:eq(1) select option:selected').val()){
+    var curacccode = $('#vctable tbody tr:eq(1) td:eq(1) select option:selected').val();
+    var d = new Date();
+    var month = d.getMonth()+1;
+    var day = d.getDate();
+    var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+    $('#vctable tbody tr:eq(1) td:eq(2) input').val(getBalance(curacccode, caldata));
+  }
+  $('#vctable tbody tr:first td:eq(1) select').change(function(event) {
+    var curacccode = $('#vctable tbody tr:first td:eq(1) select option:selected').val();
+    var d = new Date();
+    var month = d.getMonth()+1;
+    var day = d.getDate();
+    var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+    $('#vctable tbody tr:first td:eq(2) input').val(getBalance(curacccode, caldata));
+  });
+  $('#vctable tbody tr:eq(1) td:eq(1) select').change(function(event) {
+    var curacccode = $('#vctable tbody tr:eq(1) td:eq(1) select option:selected').val();
+    var d = new Date();
+    var month = d.getMonth()+1;
+    var day = d.getDate();
+    var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+    $('#vctable tbody tr:eq(1) td:eq(2) input').val(getBalance(curacccode, caldata));
+  });
+
+                $("#vctable tbody tr").each(function() {
+                  var curacccode = $("td:eq(1) select ",this).val();
+
+                    var d = new Date();
+                    var month = d.getMonth()+1;
+                    var day = d.getDate();
+                    var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+                  $("td:eq(2) input",this).val(getBalance(curacccode,caldata));
+
+              });
+
 
   });
 
 
   $("#clone").click(function(event)
   {
-    if ($("#replaceattach").length) {
+      $("#printvoucher").hide();
+      if ($("#replaceattach").length) {
       $("#replaceattach").show();
     }
     else {
@@ -302,12 +448,26 @@ $(document).ready(function()
     $(".lblec").prepend('<i>Cloning </i>');
     $("#lock").hide();
     $("#clone").hide();
+    $(".invhide").show();
     $("#edit").hide();
     $("#delete").hide();
     $(".ttl").prop('disabled', true);
     $("#save").show();
     $("#vno").prop('disabled', false);
+    $("#viewdiv").hide();
+    $("#viewinvsel").hide();
+    $("#invtotaldiv").hide();
+    $("#editdiv").show();
+    $("#editinv").show();
+    $("#invsel").show();
     $("#invsel").prop('disabled', false);
+    if ($('#selinv').length > 0) {
+      $("#invsel").append('<option value ="'+$('#selinv').val()+'">'+$('#viewinvsel').val()+'</option>');
+    }
+    $('#invsel').val($('#selinv').val());
+    $("#selinvtotal").show();
+    $("#selinvtotal").prop('disabled', false);
+    $("#invtotal").val($('#invtotalvvi').val());
     $("#vno").focus().select();
     $("#vctable").show();
     $("#demovctable").hide();
@@ -315,6 +475,58 @@ $(document).ready(function()
     $("#narr").prop('disabled', false);
     $("#project").prop('disabled', false);
     $("#viewattach").hide();
+    $("#instrumentno").val("");
+    $("#instrumentno").prop('disabled', false);
+    $("#bankname").prop('disabled', false);
+    $("#branchname").prop('disabled', false);
+    $("#instrument_date").prop('disabled', false);
+    $("#instrument_month").prop('disabled', false);
+    $("#instrument_year").prop('disabled', false);
+    $("#instrumentbtn2").show();
+      if($('#vctable tbody tr:first td:eq(1) select option:selected').val()){
+        var curacccode = $('#vctable tbody tr:first td:eq(1) select option:selected').val();
+        var d = new Date();
+        var month = d.getMonth()+1;
+        var day = d.getDate();
+        var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+        $('#vctable tbody tr:first td:eq(2) input').val(getBalance(curacccode, caldata));
+      }
+      if($('#vctable tbody tr:eq(1) td:eq(1) select option:selected').val()){
+        var curacccode = $('#vctable tbody tr:eq(1) td:eq(1) select option:selected').val();
+        var d = new Date();
+        var month = d.getMonth()+1;
+        var day = d.getDate();
+        var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+        $('#vctable tbody tr:eq(1) td:eq(2) input').val(getBalance(curacccode, caldata));
+      }
+      $('#vctable tbody tr:first td:eq(1) select').change(function(event) {
+        var curacccode = $('#vctable tbody tr:first td:eq(1) select option:selected').val();
+        var d = new Date();
+        var month = d.getMonth()+1;
+        var day = d.getDate();
+        var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+        $('#vctable tbody tr:first td:eq(2) input').val(getBalance(curacccode, caldata));
+      });
+      $('#vctable tbody tr:eq(1) td:eq(1) select').change(function(event) {
+        var curacccode = $('#vctable tbody tr:eq(1) td:eq(1) select option:selected').val();
+        var d = new Date();
+        var month = d.getMonth()+1;
+        var day = d.getDate();
+        var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+        $('#vctable tbody tr:eq(1) td:eq(2) input').val(getBalance(curacccode, caldata));
+      });
+
+              $("#vctable tbody tr").each(function() {
+                var curacccode = $("td:eq(1) select ",this).val();
+
+                  var d = new Date();
+                  var month = d.getMonth()+1;
+                  var day = d.getDate();
+                  var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+                $("td:eq(2) input",this).val(getBalance(curacccode,caldata));
+
+            });
+
 
   });
   $("#vouchercancel").click(function(event)
@@ -323,10 +535,38 @@ $(document).ready(function()
     $('.modal-backdrop').remove();
     $("tbody tr:eq("+$("#modalindex").val()+")").dblclick();
   });
-
+    $(document).off('click' ,'#printvoucher').on('click' ,'#printvoucher',function(event) {
+	event.preventDefault();
+	$("#otherdiv").hide();
+	$('.modal-backdrop').hide();
+	$("#printvoucherdiv").show();
+	$.ajax({
+          type: "POST",
+          url: "/viewvoucher?action=print",
+          global: false,
+          async: false,
+	  data:{"id":$("#vouchernumberinput").val()},
+          datatype: "text/html",
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+        })
+        .done(function(resp) {
+            $("#printvoucherdiv").html(resp);
+	    $("#loaprint").focus();
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+  });
   $("#viewattach").click(function(event)
   {
-    var vcode = $("#vcode").val();
+      $("#printvoucher").hide();
+      var vcode = $("#vcode").val();
     $.ajax({
       url: '/getattachment',
       type: 'POST',
@@ -548,7 +788,7 @@ $(document).ready(function()
       event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-      $('#vyear').focus().select();
+      $('#vyear').focus();
       event.preventDefault();
     }
   });
@@ -563,7 +803,7 @@ $(document).ready(function()
   });
   $("#invsel").keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-      $('#vyear').focus().select();
+      $('#vyear').focus();
       event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
@@ -653,7 +893,15 @@ $(document).ready(function()
       event.preventDefault();
     }
     if (event.which==13) {
-      $('#save').click();
+      if($("#bankflag").val()=='1' && ecflag=="clone" )
+      {
+
+        $("#instrumentno").focus().select();
+      }
+      else{
+      $('#save').focus();
+      }
+
       event.preventDefault();
     }
   });
@@ -709,6 +957,11 @@ $(document).ready(function()
         }
       });
     }
+
+var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
+var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+$('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
+
     drsum=0;
     $(".dramt").each(function(){
       drsum += +$(this).val();
@@ -720,13 +973,6 @@ $(document).ready(function()
       $('#vctable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
     });
   });
-  $(document).off("keyup",".accs").on("keyup",".accs",function(event){
-    if(event.which==13)
-    {
-      var curindex = $(this).closest('tr').index();
-      $('#vctable tbody tr:eq('+curindex+') input:enabled').select().focus();
-    }
-  });
 
   $(document).off("keyup",".crdr").on("keyup",".crdr",function(event)
   {
@@ -737,7 +983,26 @@ $(document).ready(function()
     }
   });
 
+      $(document).off("keyup",".accs").on("keyup",".accs",function(event){
+        var curindex = $(this).closest('tr').index();
+        var curacccode = $('#vctable tbody tr:eq('+curindex+') td:eq(1) select option:selected').val();
+        var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+        $('#vctable tbody tr:eq('+curindex+') td:eq(2) input').val(getBalance(curacccode, caldata));
+        if(event.which==13 )
+        {
+          event.preventDefault();
+          if ($(this).val()==null) {
+            return false;
+          }
+          var curindex = $(this).closest('tr').index();
+          $('#vctable tbody tr:eq('+curindex+') input:enabled').select().focus(); // focus shifts to the enabled amount box when one hits enter on the accounts select box.
+        }
+      });
   $(document).off("keydown",".accs").on("keydown",".accs",function(event){
+    var curindex = $(this).closest('tr').index();
+    var curacccode = $('#vctable tbody tr:eq('+curindex+') td:eq(1) select option:selected').val();
+    var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+    $('#vctable tbody tr:eq('+curindex+') td:eq(2) input').val(getBalance(curacccode, caldata));
     curindex = $(this).closest('tr').index();
     nextindex = curindex+1;
     previndex = curindex-1;
@@ -763,7 +1028,7 @@ $(document).ready(function()
         }
         else
         {
-          $("#vyear").focus().select();
+          $("#vyear").focus();
 
         }
       }
@@ -805,7 +1070,7 @@ $(document).ready(function()
         }
         else
         {
-          $("#vyear").focus().select();
+          $("#vyear").focus();
 
         }
       }
@@ -904,11 +1169,13 @@ $(document).ready(function()
   });
 
 
+
   $(document).off("keyup",".dramt").on("keyup",".dramt",function(event)
   {
 
     if(event.which==13)
     {
+
       var curindex = $(this).closest('tr').index();
       if($('#vctable tbody tr:eq('+curindex+') td:eq(2) input:enabled').val()=="" || $('#vctable tbody tr:eq('+curindex+') td:eq(2) input:enabled').val()==0){
         return false;
@@ -920,8 +1187,11 @@ $(document).ready(function()
         if(curindex<lastindex)
         {
           var nxtindex = curindex+1
-          if($('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
+          if($('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="NaN"){
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
+            var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
+            var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+            $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
             crsum=0;
             $(".cramt").each(function(){
               crsum += +$(this).val();
@@ -966,10 +1236,13 @@ $(document).ready(function()
               '<select class="form-control input-sm accs">'+
               '</select>'+
               '</td>'+
-              '<td class="col-xs-3">'+
+              '<td class="col-xs-2">'+
+                '<input class="form-control input-sm clbal rightJustified" type="text" value="0.00" disabled>'+
+              '</td>'+
+              '<td class="col-xs-2">'+
               '<input class="form-control input-sm dramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
-              '<td class="col-xs-3">'+
+              '<td class="col-xs-2">'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="0.00">'+
               '</td>'+
               '<td class="col-xs-1"><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
@@ -978,7 +1251,13 @@ $(document).ready(function()
                 $('#vctable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
               $('#vctable tbody tr:last td:eq(1) select').focus();
-              $('#vctable tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
+
+              $('#vctable tbody tr:last td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
+
+                var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
+                var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+                $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
+
               crsum=0;
               $(".cramt").each(function(){
                 crsum += +$(this).val();
@@ -986,6 +1265,7 @@ $(document).ready(function()
               });
             }
           });
+
 
         }
 
@@ -996,8 +1276,11 @@ $(document).ready(function()
         if(curindex<lastindex)
         {
           var nxtindex = curindex+1
-          if($('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
-            $('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val(parseFloat(diff).toFixed(2));
+          if($('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="NaN"){
+            $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
+            var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
+            var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+            $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
             drsum=0;
             $(".dramt").each(function(){
               drsum += +$(this).val();
@@ -1031,11 +1314,14 @@ $(document).ready(function()
               '<td class="col-xs-4">'+
               '<select class="form-control input-sm accs">'+
               '</select>'+
+              '<td class="col-xs-2">'+
+                '<input class="form-control input-sm clbal rightJustified" type="text" value="0.00" disabled>'+
               '</td>'+
-              '<td class="col-xs-3">'+
+              '</td>'+
+              '<td class="col-xs-2">'+
               '<input class="form-control input-sm dramt rightJustified" type="text" value="0.00">'+
               '</td>'+
-              '<td class="col-xs-3">'+
+              '<td class="col-xs-2">'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
               '<td class="col-xs-1"><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
@@ -1044,7 +1330,10 @@ $(document).ready(function()
                 $('#vctable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
               $('#vctable tbody tr:last td:eq(1) select').focus();
-              $('#vctable tbody tr:last td:eq(2) input:enabled').val(parseFloat(diff).toFixed(2));
+              $('#vctable tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
+              var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
+              var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+              $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
@@ -1061,6 +1350,7 @@ $(document).ready(function()
         {
           var nxtindex = curindex+1;
           $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
+
         }
         else
         {
@@ -1074,15 +1364,18 @@ $(document).ready(function()
           }
         }
       }
+
       curindex=null;
       lastindex=null;
     }
+
   });
   $(document).off("keyup",".cramt").on("keyup",".cramt",function(event)
   {
 
     if(event.which==13)
     {
+
       var curindex = $(this).closest('tr').index();
       if($('#vctable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()=="" || $('#vctable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
         return false;
@@ -1094,8 +1387,11 @@ $(document).ready(function()
         if(curindex<lastindex)
         {
           var nxtindex = curindex+1
-          if($('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0){
-            $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
+          if($('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()==0){
+            $('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
+            var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
+            var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+            $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
             crsum=0;
             $(".cramt").each(function(){
               crsum += +$(this).val();
@@ -1140,10 +1436,14 @@ $(document).ready(function()
               '<select class="form-control input-sm accs">'+
               '</select>'+
               '</td>'+
-              '<td class="col-xs-3">'+
+
+              '<td class="col-xs-2">'+
+                '<input class="form-control input-sm clbal rightJustified" type="text" value="0.00" disabled>'+
+              '</td>'+
+              '<td class="col-xs-2">'+
               '<input class="form-control input-sm dramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
-              '<td class="col-xs-3">'+
+              '<td class="col-xs-2">'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="0.00">'+
               '</td>'+
               '<td class="col-xs-1"><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
@@ -1152,7 +1452,10 @@ $(document).ready(function()
                 $('#vctable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
               $('#vctable tbody tr:last td:eq(1) select').focus();
-              $('#vctable tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
+              $('#vctable tbody tr:last td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
+              var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
+              var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+              $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
               crsum=0;
               $(".cramt").each(function(){
                 crsum += +$(this).val();
@@ -1176,7 +1479,7 @@ $(document).ready(function()
         {
           var nxtindex = curindex+1
           if($('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
-            $('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val(diff.toFixed(2));
+            $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(diff.toFixed(2));
             drsum=0;
             $(".dramt").each(function(){
               drsum += +$(this).val();
@@ -1211,10 +1514,13 @@ $(document).ready(function()
               '<select class="form-control input-sm accs">'+
               '</select>'+
               '</td>'+
-              '<td class="col-xs-3">'+
+              '<td class="col-xs-2">'+
+                '<input class="form-control input-sm clbal rightJustified" type="text" value="0.00" disabled>'+
+              '</td>'+
+              '<td class="col-xs-2">'+
               '<input class="form-control input-sm dramt rightJustified" type="text" value="0.00">'+
               '</td>'+
-              '<td class="col-xs-3">'+
+              '<td class="col-xs-2">'+
               '<input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>'+
               '</td>'+
               '<td class="col-xs-1"><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
@@ -1223,7 +1529,10 @@ $(document).ready(function()
                 $('#vctable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
               $('#vctable tbody tr:last td:eq(1) select').focus();
-              $('#vctable tbody tr:last td:eq(2) input:enabled').val(diff.toFixed(2));
+              $('#vctable tbody tr:last td:eq(3) input:enabled').val(diff.toFixed(2));
+              var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
+              var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+              $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
               drsum=0;
               $(".dramt").each(function(){
                 drsum += +$(this).val();
@@ -1255,9 +1564,9 @@ $(document).ready(function()
     }
   });
 
+
   $("#delete").click(function(event) {
     // Act on the event
-
 	  $("#hideinp").val(1);
 	  $('#myModal').modal('hide');
 	  $('#confirm_del').modal('show');
@@ -1440,6 +1749,9 @@ $(document).ready(function()
       }
     details.narration=$('#narr').val();
     details.vtype=$('#m_vtype').val();
+
+
+
     var form_data = new FormData();
     var files = $("#my-edit-file-selector")[0].files
     var filelist = [];
@@ -1473,6 +1785,63 @@ $(document).ready(function()
     }
     if(ecflag=="clone")
     {
+
+            details.instrumentno=""
+            //details.instrumentdate="";
+
+            if($("#instrumentno").val())
+            {
+              console.log("instrumentno");
+              details.instrumentno=$("#instrumentno").val();
+              if(!$("#bankname").val()){
+                $("#bankname-alert").show();
+                $("#bankname-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#bankname-alert").hide();
+                });
+                $('#bankname').focus().select();
+                return false;
+
+              }
+              if(!$("#branchname").val()){
+                $("#branchname-alert").show();
+                $("#branchname-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#branchname-alert").hide();
+                });
+                $('#branchname').focus().select();
+                return false;
+
+              }
+              instrumentdate1=Date.parseExact($("#instrument_date").val()+$("#instrument_month").val()+$("#instrument_year").val(), "ddMMyyyy");
+
+              if(!instrumentdate1){
+                $("#instrdate-alert").show();
+                $("#instrdate-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#instrdate-alert").hide();
+                });
+
+                $('#instrument_date').focus().select();
+                return false;
+              }
+              details.bankname=$("#bankname").val();
+              details.branchname=$("#branchname").val();
+              instrdate=$("#instrument_year").val()+'-'+$("#instrument_month").val()+'-'+$("#instrument_date").val();
+              details.instrumentdate=instrdate;
+            }
+
+                if($("#bankname").val()!="" || $("#branchname").val()!=""  )
+                {
+                  if($("#instrumentno").val()=="")
+                  {
+                    $("#instrumentno-alert").show();
+                    $("#instrumentno-alert").fadeTo(2250, 500).slideUp(500, function(){
+                      $("#instrumentno-alert").hide();
+                    });
+                    $('#instrumentno').focus().select();
+                    return false;
+
+                }
+              }
+
       form_data.append("vdetails",JSON.stringify(details));
       form_data.append("transactions",JSON.stringify(output));
       $.ajax({
@@ -1509,6 +1878,7 @@ $(document).ready(function()
     }
     else if (ecflag=="edit")
     {
+
       if ($("#removeattach").is(":checked")) {
         details.delattach = true
       }
@@ -1516,6 +1886,62 @@ $(document).ready(function()
         details.delattach = false
       }
       details.vcode=$('#vcode').val();
+
+                  details.instrumentno=""
+                  //details.instrumentdate="";
+
+                  if($("#instrumentno").val())
+                  {
+                    console.log("instrumentno");
+                    details.instrumentno=$("#instrumentno").val();
+                    if(!$("#bankname").val()){
+                      $("#bankname-alert").show();
+                      $("#bankname-alert").fadeTo(2250, 500).slideUp(500, function(){
+                        $("#bankname-alert").hide();
+                      });
+                      $('#bankname').focus().select();
+                      return false;
+
+                    }
+                    if(!$("#branchname").val()){
+                      $("#branchname-alert").show();
+                      $("#branchname-alert").fadeTo(2250, 500).slideUp(500, function(){
+                        $("#branchname-alert").hide();
+                      });
+                      $('#branchname').focus().select();
+                      return false;
+
+                    }
+                    instrumentdate1=Date.parseExact($("#instrument_date").val()+$("#instrument_month").val()+$("#instrument_year").val(), "ddMMyyyy");
+
+                    if(!instrumentdate1){
+                      $("#instrdate-alert").show();
+                      $("#instrdate-alert").fadeTo(2250, 500).slideUp(500, function(){
+                        $("#instrdate-alert").hide();
+                      });
+
+                      $('#instrument_date').focus().select();
+                      return false;
+                    }
+                    details.bankname=$("#bankname").val();
+                    details.branchname=$("#branchname").val();
+                    instrdate=$("#instrument_year").val()+'-'+$("#instrument_month").val()+'-'+$("#instrument_date").val();
+                    details.instrumentdate=instrdate;
+                  }
+
+                      if($("#bankflag").val()==1)
+                      {
+                        if($("#instrumentno").val()=="")
+                        {
+                          $("#instrumentno-alert").show();
+                          $("#instrumentno-alert").fadeTo(2250, 500).slideUp(500, function(){
+                            $("#instrumentno-alert").hide();
+                          });
+                          $('#instrumentno').focus().select();
+                          return false;
+
+                      }
+                    }
       form_data.append("vdetails",JSON.stringify(details));
       form_data.append("transactions",JSON.stringify(output));
       $.ajax({
@@ -1550,6 +1976,7 @@ $(document).ready(function()
 
         }
       });
+
     }
 
 
@@ -1559,9 +1986,145 @@ $(document).ready(function()
 
     $(this).parent().hide();
 
-  })
+  });
+
+$("#instrumentno").keydown(function(event) {
+  if (event.which==13) {
+    event.preventDefault();
+    if(!$("#instrumentno").val()){
+
+$("#save").focus();
+$("#bankname").val("");
+$("#branchname").val("");
+$("#instrument_date").val("");
+$("#instrument_month").val("");
+$("#instrument_year").val("");
+    }
+    else{
+    $("#bankname").focus().select();
+    }
+
+  }
+
+});
+$("#bankname").keydown(function(event) {
+  if (event.which==13) {
+    event.preventDefault();
+    if(!$("#bankname").val())
+    {
+      $("#bankname-alert").show();
+      $("#bankname-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#bankname-alert").hide();
+      });
+      $("#bankname").focus();
+
+    }
+    else{
+    $("#branchname").focus().select();
+    }
+
+  }
+  if (event.which==38) {
+    event.preventDefault();
+    $("#instrumentno").focus().select();
+  }
+});
+$("#branchname").keydown(function(event) {
+  if (event.which==13) {
+    event.preventDefault();
+    if(!$("#branchname").val())
+    {
+
+        $("#branchname-alert").show();
+        $("#branchname-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#branchname-alert").hide();
+        });
+        $("#branchname").focus();
+
+    }
+    else{
+    $("#instrument_date").focus().select();
+    }
+
+  }
+  if (event.which==38) {
+    event.preventDefault();
+    $("#bankname").focus().select();
+  }
+});
+$("#instrument_date").numeric();
+$("#instrument_month").numeric();
+$("#instrument_year").numeric();
+$("#instrument_date").keydown(function(event) {
+  if (event.which==13) {
+    event.preventDefault();
+    $("#instrument_month").focus().select();
+  }
+  if (event.which==38) {
+    event.preventDefault();
+    $("#transfernote_no").focus().select();
+  }
+});
+
+$("#instrument_month").keydown(function(event) {
+  if (event.which==13) {
+    event.preventDefault();
+    $("#instrument_year").focus().select();
+  }
+  if (event.which==38) {
+    event.preventDefault();
+    $("#instrument_date").focus().select();
+  }
+});
+$("#instrument_year").keydown(function(event) {
+  if (event.which==13) {
+    event.preventDefault();
+    $("#save").focus().select();
+  }
+  if (event.which==38) {
+    event.preventDefault();
+    $("#instrument_month").focus().select();
+  }
+});
+
+$("#instrument_date").blur(function(event) {
+  $(this).val(pad($(this).val(),2));
+});
+$("#instrument_month").blur(function(event) {
+  $(this).val(pad($(this).val(),2));
+});
+
+$("#instrument_year").blur(function(event) {
+  $(this).val(yearpad($(this).val(),4));
+});
+  $('#instrumentbtn2').click(function(event) {
+      $( "#addbankdetailsdiv" ).show();
+    if($("#bankflag2").val()==1){
+    event.preventDefault();
+    $("#instrumentno").focus();
+    }
+    $('#instrumentbtn2').hide();
+    if($("#bankflag2").val()==1)
+    {
+      $("#instrumentno").prop('disabled', false);
+      $("#bankname").prop('disabled', false);
+      $("#branchname").prop('disabled', false);
+      $("#instrument_date").prop('disabled', false);
+      $("#instrument_month").prop('disabled', false);
+      $("#instrument_year").prop('disabled', false);
+    }
+      else {
+        $("#instrumentno").prop('disabled', true);
+        $("#bankname").prop('disabled', true);
+        $("#branchname").prop('disabled', true);
+        $("#instrument_date").prop('disabled', true);
+        $("#instrument_month").prop('disabled', true);
+        $("#instrument_year").prop('disabled', true);
+
+      }
 
 
+  });
 
 
 

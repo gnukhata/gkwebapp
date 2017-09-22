@@ -164,21 +164,63 @@ $(".del_unbilled_table").off('dblclick','tr').on('dblclick','tr',function(e){
 		$("#show_unbilled_deliveries").click();
 	});
 
-/*  $(".search").children(".form-control").keyup(function(event){
+	$('#del_unbilled_clearfields').click(function(){
+    $(".search").children(".form-control").val("");
+		$("#del_unbilled_clearfields").hide();
+		$(".search").children(".form-control").focus();
+  });
+
+$(".search").children(".form-control").keyup(function(event){
+	$("#del_unbilled_clearfields").show();
     if (event.keyCode == 27) {
       $(this).val("");
+			$("#del_unbilled_clearfields").hide();
     }
+		else if (event.which == 13) {
+			$(".dcno:visible").first().focus();
+		}
+		else if ($(this).val() == "") {
+			$("#del_unbilled_clearfields").hide();
+		}
   });
+
+	//For search data
+	var curindex ;
+  var nextindex;
+  var previndex;
+
+  $(document).off('keydown' ,'.libgname').on('keydown' ,'.libgname',function(event) {
+    curindex = $(this).closest('tr').index();
+    nextindex = curindex+1;
+    previndex = curindex-1;
+    n = $(".libgname").length;
+    if (event.which==40 && nextindex < n)
+    {
+      event.preventDefault();
+      $('#unbill_del_table tbody tr:eq('+nextindex+') td:eq(1) a').focus();
+    }
+    else if (event.which==38)
+    {
+      if(previndex>-1)
+      {
+        event.preventDefault();
+        $('#unbill_del_table tbody tr:eq('+previndex+') td:eq(1) a').focus();
+      }
+    }
+
+  });
+
+
 
 		$("#printbutton").click(function(event) {
 			// this function creates a spreadsheet of the report.
 		event.preventDefault();
 		var orgname = sessionStorage.getItem('orgn');
 		var orgtype = sessionStorage.getItem('orgt');
+		var unbdelstring = '&inputdate='+$("#inputdate").val()+'&inout='+$("#inout").val()+'&del_unbilled_type='+ $("#del_unbilled_type").val();
 		var xhr = new XMLHttpRequest();
-		trialbalancetype = $("#trialbaltype").val();
-
-		xhr.open('GET', '/printtrialbalance?financialstart='+sessionStorage.yyyymmddyear1+'&orgname='+orgname+'&calculateto='+newtodate+'&orgtype='+orgtype+'&trialbalancetype='+trialbalancetype+'&fyend='+sessionStorage.getItem('year2'), true);
+		console.log(unbdelstring);
+		xhr.open('GET', '/deliverychallan?action=unbillspreadsheet&fystart='+sessionStorage.yyyymmddyear1+'&orgname='+orgname+'&orgtype='+orgtype+'&fyend='+sessionStorage.getItem('year2')+unbdelstring, true);
 		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
 		xhr.responseType = 'blob';
 
@@ -194,5 +236,5 @@ $(".del_unbilled_table").off('dblclick','tr').on('dblclick','tr',function(e){
 
 	xhr.send();
 
-});*/
+});
 });

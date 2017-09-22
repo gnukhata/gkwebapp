@@ -1,38 +1,54 @@
 <!DOCTYPE HTML >
 <html>
-<head>
-  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Find-Edit Voucher{% endtrans %}</title>
-  <style media="screen">
-  .shadow {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  .nopadding{
-    padding: 1 !important;
-    margin: 0 !important;
-  }
-  #vct{
-    border: none;
-    box-shadow: none;
-}
-  </style>
-</head>
-<body>
+  <head>
+    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Find-Edit Voucher{% endtrans %}</title>
+    <style media="screen">
+     .shadow {
+	 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+     }
+     .nopadding{
+	 padding: 1 !important;
+	 margin: 0 !important;
+     }
+     #vct{
+	 border: none;
+	 box-shadow: none;
+   height: 25%;
 
+     }
+     table.table-fixedheader, table.table-fixedheader>thead, table.table-fixedheader>tbody, table.table-fixedheader>tfoot, table.table-fixedheader>thead>tr, table.table-fixedheader>tbody>tr, table.table-fixedheader>tfoot>tr, table.table-fixedheader>thead>tr>th, table.table-fixedheader>tbody>tr>td, table.table-fixedheader>tfoot>tr>td {
+       display: block;
+     }
+     table.table-fixedheader>thead>tr:after, table.table-fixedheader>tbody>tr:after, table.table-fixedheader>tfoot>tr:after  {
+       content:' ';
+       display: block;
+       visibility: hidden;
+       clear: both;
+     }
+     table.table-fixedheader>tbody {
+       overflow-y: scroll;
+       height: 20%;
 
-  <div class="alert alert-success" id="success-alert" hidden>
+     }
+    </style>
+  </head>
+  <body>
+    <div id="otherdiv">
 
-    {% trans %}Voucher deleted successfully.{% endtrans %}
-  </div>
+      <div class="alert alert-success" id="success-alert" hidden>
 
-        <div class="alert alert-danger" id="improperdate-alert" hidden>
+	{% trans %}Voucher deleted successfully.{% endtrans %}
+      </div>
 
-          {% trans %}Please enter date in proper format!{% endtrans %}
-        </div>
+      <div class="alert alert-danger" id="improperdate-alert" hidden>
 
-          <div class="alert alert-danger" id="betweendate-alert" hidden>
+        {% trans %}Please enter date in proper format!{% endtrans %}
+      </div>
 
-            {% trans %}Please enter date within the financial year!{% endtrans %}
-          </div>
+      <div class="alert alert-danger" id="betweendate-alert" hidden>
+
+        {% trans %}Please enter date within the financial year!{% endtrans %}
+      </div>
 
       <div class="alert alert-danger" id="ua-alert" hidden>
 
@@ -135,16 +151,20 @@
               <textarea class="form-control" name="narration" id="narration" rows="2" cols="60" placeholder="Narration"></textarea>
             </div>
             <div class="pull-right col-md-3">
-              <button type="submit" class="btn btn-primary" id="submit" name="submit" accesskey="s">{% trans %}<u>S</u>earch{% endtrans %}</button>
-              <button id="reset" class="btn btn-danger" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+              <button type="submit" class="btn btn-primary" id="submit" name="submit" accesskey="s">{% trans %}<i class="fa fa-search" aria-hidden="true"></i> <u>S</u>earch{% endtrans %}</button>
+              <button id="reset" class="btn btn-danger" accesskey="e">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> R<u>e</u>set{% endtrans %}</button>
             </div>
             <input id="hideinp" type="text" value="0" hidden >
           </form>
         </div>
       </div><div id="vct" style="background-color:inherit;"  class="vtab panel nopadding ">
-  </div>
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.autotab.min.js')}}"></script>
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/findeditvoucher.js')}}"></script>
+      </div>
+    </div>
+    <div id="printvoucherdiv" hidden>
+    </div>
+    <input id="vouchernumberinput" type="text" value="0" hidden >
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.autotab.min.js')}}"></script>
+      <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/findeditvoucher.js')}}"></script>
 </body>
 
 </html>

@@ -37,7 +37,7 @@
           <label for="viewbankrecon_accname">{% trans %}Please select an account!{% endtrans %}</label>
         </div>
         <div style="margin-bottom: 5px" class="col-xs-12 from-group">
-          <label for="viewbankrecon_accname">{% trans %}Account Name{% endtrans %} :</label>
+          <label for="viewbankrecon_accname">{% trans %}Account Name{% endtrans %} :</label><label for="viewbankrecon_accname" style="color:red;font-size: 120%;">*</label>
           <select class = "form-control input-sm" id="viewbankrecon_accname"  name = "viewbankrecon_accname" >
             <option value="" disabled selected hidden>{% trans %}Select Account{% endtrans %}</option>
             {% for accs in gkresult %}
@@ -82,21 +82,21 @@
           <span aria-hidden="true">&times;</span>
         </button> </div>
       <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-       
+
        <p>   <font color=" #566573"> {%trans%}
 This screen let's you reconcile your bank accounts.</br>
-Select bank name from the drop down, specify the period for which reconciliation is to be done, to view narrations click on the Narration check box and press Enter key. </br>A new screen opens with a list of records of the specified bank for the specified period with two additional columns. The first is Clearance Date and the second is Memo. Clearance Date is the date of a transaction apearing in the Bank Statement. 
+Select bank name from the drop down, specify the period for which reconciliation is to be done, to view narrations click on the Narration check box and press Enter key. </br>A new screen opens with a list of records of the specified bank for the specified period with two additional columns. The first is Clearance Date and the second is Memo. Clearance Date is the date of a transaction apearing in the Bank Statement.
 {% endtrans %} </font>
 
         </p>
       </div>
-      
+
     </div>
   </div>
 </div>
       <div class="panel-footer">
-        <button class="btn btn-primary btn-sm" id="viewbankrecon_submit" name="view" accesskey="v">{% trans %}<u>V</u>iew{% endtrans %}</button>
-        <button id="viewbankrecon_reset" class="btn btn-danger btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+        <button class="btn btn-primary btn-sm" id="viewbankrecon_submit" name="view" accesskey="v"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}<u>V</u>iew{% endtrans %}</button>
+        <button id="viewbankrecon_reset" class="btn btn-danger btn-sm" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i>  {% trans %}R<u>e</u>set{% endtrans %}</button>
 
       </div>
     </div>

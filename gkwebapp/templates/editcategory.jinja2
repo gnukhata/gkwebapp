@@ -1,5 +1,5 @@
 <style>
-.fixed-edit-table td {
+ .fixed-edit-table td {
     font-size: 75%;
     padding: 4 !important;
     margin: 4 !important;
@@ -48,7 +48,7 @@
       <div class="panel-body">
         <div class="alert alert-danger" id="category-blank-alert"  aria-live="rude" role="alert" hidden>
 
-          <label for="vno">{% trans %}Please enter child category name!{% endtrans %}</label>
+          <label for="vno">{% trans %}Category name cannot be left blank!{% endtrans %}</label>
         </div>
         <form>
           <div class="container-fluid row">
@@ -64,7 +64,7 @@
               </div>
             </div>
             </div>
-          <div id="category_edit_innerdiv" hidden>
+            <div id="category_edit_innerdiv" hidden>
             <div class="row container-fluid">
             <div class="col-md-6">
               <div class="alert alert-danger" id="spec-blank-alert"  aria-live="rude" role="alert" hidden>
@@ -96,8 +96,8 @@
                   <table id="category_edit_spec_table" class="table table-condensed table-bordered fixed-edit-table">
                     <thead class="bg-primary input-sm">
                       <tr>
-                        <th class="col-xs-8">{% trans %}Spec Name{% endtrans %}</th>
-                        <th class="col-xs-3">{% trans %}Type{% endtrans %}</th>
+                        <th class="col-xs-8 text-center">{% trans %}Spec Name{% endtrans %}</th>
+                        <th class="col-xs-3 text-center">{% trans %}Type{% endtrans %}</th>
                         <th class="col-xs-1"></th>
                       </tr>
                     </thead>
@@ -126,33 +126,69 @@
             </div>
             <div class="form-group">
               <div class="panel">
-                <table id="category_edit_tax_table" class="table table-condensed table-bordered fixed-edit-table">
-                  <thead class="bg-primary input-sm">
-                    <tr>
-                      <th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
-                      <th class="col-xs-4 text-center">{% trans %}State{% endtrans %}</th>
-                      <th class="col-xs-3 text-center">{% trans %}Rate%{% endtrans %}</th>
-                      <th class="col-xs-1"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
+                  <input value="{{vatorgstflag}}" id="vatorgstflag" hidden>
+                  <table id="category_edit_tax_table" class="table table-condensed table-bordered fixed-edit-table">
+                    <thead class="bg-primary input-sm">
+                      <tr>
+			<th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
+			<th class="col-xs-4 text-center">{% trans %}State{% endtrans %}</th>
+			<th class="col-xs-3 text-center">{% trans %}Rate %{% endtrans %}</th>
+			<th class="col-xs-1"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+		      <tr value="New">
+			<td class="col-xs-4">
+                          <select class="form-control category_edit_disable input-sm tax_name">
+
+                            <option value="" selected disabled hidden>Select Tax</option>
+                            {% if vatorgstflag =='22' %}
+                              <option value="VAT">VAT</option>
+                              <option value="CVAT">CVAT</option>
+                            {% else %}
+                              <option value="VAT">VAT</option>
+                              <option value="CVAT">CVAT</option>
+			      <option value="IGST">IGST</option>
+                            {% endif%}
+
+                          </select>
+			</td>
+			<td class="col-xs-4">
+                          <select class="form-control input-sm tax_state category_edit_disable" >
+                            <option value="" hidden disabled selected>None</option>
+                            {% for state in states %}
+			      {% for key, value in state.items() %}
+				<option value="{{value}}" stateid="{{key}}">{{value}}</option>
+			      {% endfor %}
+			    {% endfor %}
+                          </select>
+			</td>
+			<td class="col-xs-3">
+                          <input class="form-control input-sm tax_rate text-right numtype category_edit_disable"  placeholder="Rate">
+			</td>
+			<td class="col-xs-1">
+			  <a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+			</td>
+                      </tr>
+                    </tbody>
+                  </table>
+		  <div class="col-xs-12 row">
+		    <small id="taxtospechelp" class="form-text text-muted">{% trans %}Press 'Ctrl + <' on tax name to shift to specification name. {% endtrans %}</small>
+</br>
+<small id="taxtosavehelp" class="form-text text-muted">{% trans %}Press 'Esc' Key on Rate to shift to Save Button.{% endtrans %}</small><br>
+		  </div>
               </div>
             </div>
-            <small id="taxtospechelp" class="form-text text-muted">{% trans %}Press 'Ctrl + <' on tax name to shift to specification name. {% endtrans %}</small>
-</br>
-            <small id="taxtosavehelp" class="form-text text-muted">{% trans %}Press 'Esc' Key on Rate to shift to Save Button.{% endtrans %}</small><br>
           </div>
           </div>
         </div>
         </div>
         <div class="panel-footer" hidden>
           <div class="container-fluid">
-          <button class="btn btn-primary btn-sm" id="category_edit_edit">{% trans %}Edit{% endtrans %}</button>
-          <button class="btn btn-success category_edit_disable btn-sm" id="category_edit_savespecs" disabled data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert key anywhere on the current screen to save{% endtrans %}">{% trans %}Save{% endtrans %}</button>
-          <button class="btn btn-danger btn-sm" id="category_edit_delete">{% trans %}Delete{% endtrans %}</button>
-          <button class="btn btn-warning btn-sm" id="category_edit_reset" accesskey="">{% trans %}Reset{% endtrans %}</button>
+          <button class="btn btn-primary btn-sm" id="category_edit_edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans %}Edit{% endtrans %}</button>
+          <button class="btn btn-success category_edit_disable btn-sm" id="category_edit_savespecs" disabled data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert key anywhere on the current screen to save{% endtrans %}">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i> Save{% endtrans %}</button>
+          <button class="btn btn-danger btn-sm" id="category_edit_delete"><i class="fa fa-trash-o" aria-hidden="true"></i> {% trans %}Delete{% endtrans %}</button>
+          <button class="btn btn-warning btn-sm" id="category_edit_reset" accesskey=""><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
         </div>
         </div>
       </div>
@@ -169,8 +205,8 @@
                 <p>{% trans %}Are you sure?{% endtrans %}</p>
               </div>
               <div class="modal-footer">
-                <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-                <button type="button" id="accdel" data-dismiss="modal" class="btn btn-danger">{% trans %}Delete{% endtrans %}</button>
+                <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}No{% endtrans %}</button>
+                <button type="button" id="accdel" data-dismiss="modal" class="btn btn-danger"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Yes{% endtrans %}</button>
               </div>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->

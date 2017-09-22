@@ -13,6 +13,18 @@
 
       {% trans %}Unit Already Exist!{% endtrans %}
     </div>
+    <div class="alert alert-danger" id="sameUnit-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Unit and Sub Unit cannot be Same!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="conversion-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Please Enter Conversion Rate!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="conversion-rate-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Conversion Rate cannot be Zero!{% endtrans %}
+    </div>
     <div class="alert alert-danger" id="unit-blank-alert"  aria-live="rude" role="alert" hidden>
 
       <label for="vno">{% trans %}Please enter Unit  name!{% endtrans %}</label>
@@ -22,11 +34,11 @@
       <div class="panel-body">
         <form>
           <div class="form-group">
-            <label for="unit_name">{% trans %} Unit Name :{% endtrans %}</label>
+            <label for="unit_name">{% trans %} Unit Name :{% endtrans %}</label><label for="unit_name" style="color:red;font-size: 120%;">*</label>
             <input class="form-control input-sm" id="unit_name" placeholder="{% trans %}Enter Unit name{% endtrans %}">
           </div>
           <div class="form-group">
-            <label for="sub_unit_of">{% trans %}Sub Unit of{% endtrans %}</label>
+            <label for="sub_unit_of">{% trans %}Sub Unit of :{% endtrans %}</label>
             <select class="form-control input-sm" id="sub_unit_of">
               <option value="" selected>None</option>
               {% for unitofmeasurement in gkresult %}
@@ -41,8 +53,8 @@
         </form>
       </div>
       <div class="panel-footer">
-        <button  type="submit" class="btn btn-success btn-sm" id="unit_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}">{% trans %}Save{% endtrans %}</button>
-        <button id="add_unit_reset" class="btn btn-warning btn-sm">{% trans %}Reset{% endtrans %}</button>
+        <button  type="submit" class="btn btn-success btn-sm" id="unit_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}" accesskey="a">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i> S<u>a</u>ve{% endtrans %}</button>
+        <button id="add_unit_reset" class="btn btn-warning btn-sm" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
       </div>
     </div>
 

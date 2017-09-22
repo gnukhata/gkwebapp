@@ -1,20 +1,20 @@
 
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
+  <head>
+    <meta charset="utf-8" />
   <title>{% trans %}GNUKhata {% endtrans %} | </title>
   <link id="bootstrap" href="{{request.static_url('gkwebapp:static/css/Default.min.css')}}" rel="stylesheet" type="text/css">
   <link rel="stylesheet" type="text/css" media="screen" href="{{request.static_url('gkwebapp:static/css/font-awesome.min.css')}}">
   <link href="{{request.static_url('gkwebapp:static/css/mainshellstyle.css')}}" rel="stylesheet" type="text/css">
-<style>
- .bgcolor{
-  	 background-color:#1b2631;
-  }
+  <style>
+   .bgcolor{
+       background-color:#1b2631;
+   }
   </style>
 
-</head>
+  </head>
 
-<body>
+  <body>
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -26,39 +26,42 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href=""><img src="{{request.static_url('gkwebapp:static/images/icon.svg')}}" alt="GNUKhata Icon" style="width:42px;height:42px;margin-top: -11px" /></a>
-        <a class="navbar-brand" style="pointer-events: none;">{% trans %}GNUKhata <em>v4.0</em> {% endtrans %}</a>
+        <a class="navbar-brand" style="pointer-events: none;">{% trans %}GNUKhata <em>v4.25 </em> {% endtrans %}</a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="dropdown closebooks">
+          <li id="masterdropdown" class="dropdown closebooks">
             <a href="" id="master" class="dropdown-toggle mastermenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>M</u>aster{% endtrans %}</a>
             <ul class="dropdown-menu">
               <li><a  class="mastermenu" data-toggle="tab" id="addaccount" href="">{% trans %}Create Account{% endtrans %}</a></li>
               <li><a  class="mastermenu" data-toggle="tab" href="" id="editaccount">{% trans %}Edit Account{% endtrans %}</a></li>
               <li><a class="mastermenu" data-toggle="tab" href="" id="showeditorg">{% trans %}Edit Organisation Particulars{% endtrans %}</a></li>
-              <li><a class="inventorymenu" data-toggle="tab" id="customersupplier" href="">{% trans %}Customer and Supplier{% endtrans %}</a></li>
-              <li><a class="mastermenu" data-toggle="tab" id="showproject" href="">{% trans %}Create & Edit Cost Center{% endtrans %}</a></li>
+
+              <li><a class="mastermenu" data-toggle="tab" id="customersupplier" href="">{% trans %}Customer and Supplier{% endtrans %}</a></li>
+              <li><a class="mastermenu" data-toggle="tab" id="showproject" href="">{% trans %}Cost Center{% endtrans %}</a></li>
+
               <li><a class="mastermenu" data-toggle="tab" id="BRS" href="">{% trans %}Bank Reconciliation Statement{% endtrans %}</a></li>
+              <li><a class="addcategory categoryinmaster " data-toggle="tab" id="categoryinmaster" href="">{% trans %}Category{% endtrans %}</a></li>
+                <li><a  class="productinmaster " data-toggle="tab" id="productinmaster" href="" >Product/Service</a></li>
+
+		<li><a class="uominmaster " data-toggle="tab" id="uominmaster" href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
             </ul>
           </li>
-          <li class="dropdown closebooks inventory_hide">
+          <li id="inventorydropdown" class="dropdown closebooks inventory_hide">
             <a href="" id="inventory" class="dropdown-toggle inventorymenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>I</u>nventory{% endtrans %}</a>
             <ul class="dropdown-menu">
-              <li><a  class="inventorymenu" data-toggle="tab" id="product" href="">Product</a></li>
-              <li><a class="inventorymenu" data-toggle="tab" id="addcategory" href="">{% trans %}Category{% endtrans %}</a></li>
-              <li><a class="inventorymenu" data-toggle="tab" id="addunit" href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
-              <li><a class="inventorymenu" data-toggle="tab" id="deliverychallan" href="">{% trans %}Delivery Note{% endtrans %}</a></li>
-              <li><a  class="inventorymenu" data-toggle="tab" id="invoice" href="">Invoice</a></li>
-              <li><a class="inventorymenu" data-toggle="tab" id="addcashmemo" href="">{% trans %}Cash Memo{% endtrans %}</a></li>
-              <li><a  class="inventorymenu" data-toggle="tab" id="searchcategory" href="">Search Products By Category</a></li>
-              <li><a  class="inventorymenu" data-toggle="tab" id="godown" href="">{% trans %}Godown{% endtrans %}</a></li>
-              <li><a class="inventorymenu" data-toggle="tab" id="createtransfernote" href="">{% trans %}Transfer Note{% endtrans %}</a></li>
-              <li><a class="inventorymenu" data-toggle="tab" id="purchaseorder" href="">{% trans %}Purchase/Sales Order{% endtrans %}</a></li>
+		            <li><a  class="inventorymenu" data-toggle="tab" id="product" href="">Product/Service</a></li>
+                <li><a  class="inventorymenu" data-toggle="tab" id="godown" href="">{% trans %}Godown{% endtrans %}</a></li>
+                <li><a class="inventorymenu addcategory" data-toggle="tab" id="addcategory" href="">{% trans %}Category{% endtrans %}</a></li>
+                <li><a class="inventorymenu" data-toggle="tab" id="addunit" href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
+<!-- <li><a class="inventorymenu" data-toggle="tab" id="purchaseorder" href="">{% trans %}Purchase/Sales Order{% endtrans %}</a></li>  -->
+                <li><a class="inventorymenu" data-toggle="tab" id="deliverychallan" href="">{% trans %}Delivery Note{% endtrans %}</a></li>
+                <li><a class="inventorymenu" data-toggle="tab" id="createtransfernote" href="">{% trans %}Transfer Note{% endtrans %}</a></li>
             </ul>
           </li>
-          <li class="dropdown">
+          <li id="transactiondropdown" class="dropdown">
             <a href="" id="transaction" class="dropdown-toggle transactionmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>V</u>oucher{% endtrans %}</a>
             <ul class="dropdown-menu">
               <li><a class="transactionmenu closebooks" data-toggle="tab" id="showreceipt" href="">{% trans %}Receipt{% endtrans %}</a></li>
@@ -72,9 +75,13 @@
               <li><a class="transactionmenu closebooks" data-toggle="tab" id="showcreditnote" href="">{% trans %}Credit Note{% endtrans %}</a></li>
               <li><a class="transactionmenu closebooks" data-toggle="tab" id="showdebitnote" href="">{% trans %}Debit Note{% endtrans %}</a></li>
               <li><a class="transactionmenu" href="" data-toggle="tab" id="fevoucher">{% trans %}Find/Edit Voucher{% endtrans %}</a></li>
+	      <li><a class="transactionmenu" href="" data-toggle="tab" id="showbillwiseaccounting">{% trans %}Unadjusted Amounts{% endtrans %}</a></li>
+
+	      <li><a  class="transactionmenu invoicemenu" data-toggle="tab" id="invoice" href="">Invoice</a></li>
+	      <li><a class="transactionmenu invoicemenu" data-toggle="tab" id="addcashmemo" href="">{% trans %}Cash Memo{% endtrans %}</a></li>
             </ul>
           </li>
-          <li class="dropdown">
+          <li id="reportdropdown" class="dropdown">
             <a href="" id="report" class="dropdown-toggle reportmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>R</u>eport{% endtrans %}</a>
             <ul class="dropdown-menu">
               <li><a class="reportmenu" href="" data-toggle="tab" id="showviewledger">{% trans %}Ledger{% endtrans %}</a></li>
@@ -86,29 +93,35 @@
               <li class="hideoperator"><a class="reportmenu" href="" data-toggle="tab" id="showprofitloss">{% trans %}Profit & Loss{% endtrans %}</a></li>
               <li><a class="reportmenu" href="" data-toggle="tab" id="listofaccounts">{% trans %}List of Accounts{% endtrans %}</a></li>
               <li><a class="hideoperator hidemanager reportmenu" href="" data-toggle="tab" id="showdeletedvoucher">{% trans %}List of Deleted Vouchers{% endtrans %}</a></li>
+              <li><a class="reportmenu" href="" data-toggle="tab" id="listofusers">List of Users</a></li>
+              <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="showviewregister">{% trans %}Registers{% endtrans %}</a></li>
               <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="showstockreport">{% trans %}Product Report{% endtrans %}</a></li>
               <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="stockonhandreport">{% trans %}Stock on Hand Report{% endtrans %}</a></li>
+              <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="categorywisestockonhandreport">{% trans %}Category Wise Stock on Hand{% endtrans %}</a></li>
               <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listofgodowns">{% trans %}List of Godowns{% endtrans %}</a></li>
-              <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listofcategories">{% trans %}List of Categories{% endtrans %}</a></li>
-              <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listofstockitems">{% trans %}List of Products{% endtrans %}</a></li>
+              <li><a class="reportmenu invsbill" href="" data-toggle="tab" id="listofcategories">{% trans %}List of Categories{% endtrans %}</a></li>
+		<li><a class="reportmenu invsbill" href="" data-toggle="tab" id="listofstockitems">{% trans %}List of Products/Services{% endtrans %}</a></li>
+
+              <li><a class="reportmenu invoicemenu invsbill" href="" data-toggle="tab" id="listofinvoices">{% trans %}List of Invoices{% endtrans %}</a></li>
+              <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listoftransfernotes">{% trans %}List of Transfer Notes{% endtrans %}</a></li>
               <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="show_unbilled_deliveries">{% trans %}Unbilled Deliveries{% endtrans %}</a></li>
               <li><a class="reportmenu hideoperator hidemanager" href="" data-toggle="tab" id="showviewlog">Activity Log</a></li>
             </ul>
           </li>
-          <li class="dropdown">
+          <li id="administrationdropdown" class="dropdown">
             <a href="" id="administration" class="dropdown-toggle administrationmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}A<u>d</u>ministration{% endtrans %}</a>
             <ul class="dropdown-menu">
               <li class="hideoperator closebooks"><a class="administrationmenu" data-toggle="tab" id="createuser" href="">{% trans %}New User{% endtrans %}</a></li>
               <li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="tab" id="REMOVEuser" href="">{% trans %}Remove User{% endtrans %}</a></li>
               <li><a class="administrationmenu" data-toggle="tab" id="showedituser" href="">{% trans %}Change Password{% endtrans %}</a></li>
               <li class="hideoperator hidemanager rollover"><a class="administrationmenu" data-toggle="tab" id="showclosebooks" href="">{% trans %}Close Books/Roll Over{% endtrans %}</a></li>
-              <li class="hideoperator hidemanager rollover"><a class="administrationmenu closebooks" data-toggle="tab" id="act_inv" href="">{% trans %}Activate Inventory{% endtrans %}</a></li>
+              <li class="hideoperator hidemanager "><a class="administrationmenu closebooks" data-toggle="tab" id="orgpref" href="">{% trans %}Organisation Preferences{% endtrans %}</a></li>
               <li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="modal" data-target="#exportdata" id="exportledger" href="">{% trans %}Export Data{% endtrans %}</a></li>
               <li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="tab" id="deleteorg" href="">{% trans %}Delete Organisation{% endtrans %}</a></li>
               <li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="tab" id="tallyimport" href="">{% trans %}Import Data{% endtrans %}</a></li>
             </ul>
           </li>
-          <li class="dropdown">
+          <li id="helpdropdown" class="dropdown">
             <a href="" id="help" class="dropdown-toggle helpmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>H</u>elp{% endtrans %}</a>
             <ul class="dropdown-menu">
               <li><a class="helpmenu" id="manual" target="_blank" href="http://gnukhata.in/manual.pdf">{% trans %}Manual{% endtrans %}</a></li>
@@ -121,14 +134,14 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
         <li id="nt"><a class="newtabmenu" id="newt" target="_blank" href="/">{% trans %}New Ta<u>b</u>{% endtrans%}</a></li>
-          <li class="dropdown">
+          <li id="signoutdropdown" class="dropdown">
             <a href="" id="signout" class="dropdown-toggle signoutmenu"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>S</u>ign Out{% endtrans %}</a>
             <ul class="dropdown-menu">
               <li><a class="signoutmenu" data-toggle="tab" id="logout" href="">{% trans %}Logout{% endtrans %}</a></li>
               <li><a class="signoutmenu" data-toggle="tab" id="changeorg" href="">{% trans %}Change Organisation{% endtrans %}</a></li>
             </ul>
           </li>
-          <li class="dropdown">
+          <li id="themesdropdown" class="dropdown">
             <a href="" id="themes" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Theme{% endtrans %}</a>
             <ul class="dropdown-menu scrollable">
               <li><a class="themesmenu" id="Default" href="">{% trans %}Default{% endtrans %}<span id="Defaultspan"  class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
@@ -150,15 +163,15 @@
               <li><a class="themesmenu" id="Yeti" href="">{% trans %}Yeti{% endtrans %}<span id="Yetispan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
             </ul>
           </li>
-          <li class="dropdown">
+          <li id="langdropdown" class="dropdown">
             <a href="" id="lang" class="dropdown-toggle langmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Lan<u>g</u>uage{% endtrans %}</a>
             <ul class="dropdown-menu">
-              <li><a  class="langmenu" id="mar" href="/locale?language=en">{% trans %}English{% endtrans %}</a></li>
+              <li><a  class="langmenu" id="eng" href="/locale?language=en">{% trans %}English{% endtrans %}</a></li>
               <li><a  class="langmenu" id="mar" href="/locale?language=mr">{% trans %}मराठी{% endtrans %}</a></li>
-              <li><a  class="langmenu" id="mar" href="/locale?language=ml">{% trans %}മലയാളം{% endtrans %}</a></li>
+              <li><a  class="langmenu" id="mal" href="/locale?language=ml">{% trans %}മലയാളം{% endtrans %}</a></li>
             </ul>
           </li>
-          <li class="dropdown">
+          <li id="toolbardropdown" class="dropdown">
             <a href="" id="toolbar" class="dropdown-toggle toolbarmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Toolbar{% endtrans %}</a>
             <ul class="dropdown-menu scrollable">
               <li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="addaccounttb" href="">{% trans %}Create Account{% endtrans %} - F2</a></li>
@@ -179,21 +192,22 @@
               <li><a class="toolbarmenu" data-toggle="tab" id="projectstatementtb" href="">{% trans %}Cost Center Statement{% endtrans %} - CTRL+5</a></li>
               <li><a class="toolbarmenu" data-toggle="tab" id="cashflowtb" href="">{% trans %}Cash Flow{% endtrans %} - CTRL+6</a></li>
               <li><a class="toolbarmenu" data-toggle="tab" id="listofaccountstb" href="">{% trans %}List of Accounts{% endtrans %} - CTRL+7</a></li>
-              <li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="projecttb" href="">{% trans %}Create & Edit Cost Center{% endtrans %} - ALT+C</a></li>
+              <li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="projecttb" href="">{% trans %}Cost Center{% endtrans %} - ALT+C</a></li>
               <li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="brstb" href="">{% trans %}Bank Reconciliation Statement{% endtrans %} - ALT+R</a></li>
               <!--<li class="hideoperator closebooks"><a class="toolbarmenu" data-toggle="tab" id="createusertb" href="">New User - ALT+N</a></li>
               <li class="hideoperator hidemanager"><a class="toolbarmenu" data-toggle="tab" id="REMOVEusertb" href="">Remove User - ALT+U</a></li>
               <li><a class="toolbarmenu" data-toggle="tab" id="changepasswordtb" href="">Change Password - ALT+C</a></li>-->
               <li><a class="toolbarmenu" target="_blank" id="manualtb" href="http://gnukhata.in/manual.pdf">{% trans %}Manual{% endtrans %} - ALT+M</a></li>
               <!--<li><a class="toolbarmenu" data-toggle="tab" id="logouttb" href="">Logout - CTRL+L</a></li>
-              <li><a class="toolbarmenu" data-toggle="tab" id="changeogtb" href="">Change Organisation - CTRL+O</a></li>-->
+		   <li><a class="toolbarmenu" data-toggle="tab" id="changeogtb" href="">Change Organisation - CTRL+O</a></li>-->
             </ul>
-            </li>
+          </li>
 
         </ul>
       </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+    </div><!-- /.container-fluid -->
+  </nav>
+
 <div class="container-fluid hidden-print">
   <ul id="mainshellticker" class="shadow" style="list-style-type: none; padding: 0; overflow: hidden; background-color: rgb(248,248,248); height: 20px; border-radius: 5px;">
     <li style="float: left;"><a data-toggle="tab" style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="orgdata" href=""></a></li>
@@ -208,13 +222,18 @@
 
     </div>
     <div style="padding-top:20px" class="panel-body" >
-          <p>{% trans %}To access Tabs of the Menu Bar press{% endtrans %} "Ctrl + Shift + {% trans %}Underlined Character".{% endtrans %}</p>
+
+      <p>{% trans %}To access Tabs of the Menu Bar press{% endtrans %} "Ctrl + Shift + {% trans %}Underlined Character{% endtrans %}."</p>
           <p>{% trans %}To view Toolbar press  "F1".{% endtrans %}</p>
           <p> {% trans %}To use screen specific shortcuts{% endtrans %} : </p>
-          <p class="shortcut">{% trans %}If using Firefox, press{% endtrans %} "Alt + Shift + {% trans %}the underlined character".{% endtrans %}</p>
+          <p class="shortcut">{% trans %}If using Firefox, press{% endtrans %} "Alt + Shift + {% trans %}the underlined character{% endtrans %}".</p>
           <p class="shortcut">{% trans %}If using Google Chrome, Opera or Internet Explorer, press{% endtrans %} "Alt + {% trans %}the underlined character".{% endtrans %}</p>
           <p class="shortcut">{% trans %}If using older versions of Opera(prior to version 12.1), press{% endtrans %} "Shift + Esc + {% trans %}the underlined character".{% endtrans %}</p>
           <p><a data-toggle="modal" id="shortcutslink" data-target="#gnukhatashortcuts">{% trans %}Shortcuts{% endtrans %}</a> {% trans %}are given in the Toolbar and the Help Tab of the Menu Bar.{% endtrans %}</p>
+	  <p>{% trans %}To access "n"th tab inside a page{% endtrans %} : </p>
+	  <p class="shortcut">{% trans %}If using Firefox, press{% endtrans %} "Alt + Shift + {% trans %}"n" number key{% endtrans %} (n = 1, 2, 3).</p>
+          <p class="shortcut">{% trans %}If using Google Chrome, Opera or Internet Explorer, press{% endtrans %} "Alt + {% trans %}"n" number key{% endtrans %} (n = 1, 2, 3).</p>
+	  <p class="shortcut">{% trans %}If using older versions of Opera(prior to version 12.1), press{% endtrans %} "Shift + Esc +{% trans %}"n" number key{% endtrans %} (n = 1, 2, 3).</p>
       </div>
     </div>
 </div>
@@ -230,8 +249,43 @@
 
           {% trans %}Inventory module activated.{% endtrans %}
         </div>
-        <button type="button" class="btn btn-danger" data-dismiss="modal" id ="inv_no">No</button>
-        <button type="button" class="btn btn-primary" id ="inv_yes">Yes</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id ="inv_no"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}No{% endtrans %}</button>
+        <button type="button" class="btn btn-primary" id ="inv_yes"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Yes{% endtrans %}</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="orgprefmodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="margin-left: auto;margin-right: auto;">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="">Organisation Preferences</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success" id="orgpref-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}Organisation Preferences updated.{% endtrans %}
+        </div>
+
+        <div class="form-group">
+	  <div class="radio">
+	    <label><input type="radio" class="iib" name="orgpref" id="onlyaccradio" aria-label="" checked>&nbsp {% trans %}Accounting only{% endtrans %}.</label>
+        </div>
+	<div class="radio">
+          <label><input type="radio" class="iib" name="orgpref" id="onlyinvsradio" aria-label="">&nbsp {% trans %}Accounting with Invoicing{% endtrans %}.</label>
+        </div>
+	<div class="radio">
+          <label><input type="radio" class="iib" name="orgpref" id="invsbillradio" aria-label="">&nbsp {% trans %}Invoicing with Billwise Accounting{% endtrans %}.</label>
+	</div>
+        <div class="radio">
+                		  <label><input type="radio" class="iib" name="orgpref" id="invinvsbillradio" aria-label=""> &nbsp {% trans %}Inventory with Invoicing and Billwise Accounting{% endtrans %}.</label>
+                		</div>
+
+                	      </div>
+
+        <button type="button" class="btn btn-success" id ="orgprefsave" accesskey="s"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
+	<button type="button" class="btn btn-danger" data-dismiss="modal" id ="inv_no" accesskey="a"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}C<u>a</u>ncel{% endtrans %}</button>
       </div>
 
     </div>
@@ -296,7 +350,10 @@
           {% trans %}Change Organisation{% endtrans %} - CTRL + O
         </p>
         <p>
-          {% trans %}Create & Edit Cost Center/Project{% endtrans %} - ALT + P
+          {% trans %}Project{% endtrans %} - ALT + P
+        </p>
+	<p>
+          {% trans %}Cost Center{% endtrans %} - ALT + C
         </p>
         <p>
           {% trans %}Bank Reconciliation Statement{% endtrans %} - ALT + R
@@ -362,19 +419,7 @@
           {% trans %}Profit & Loss{% endtrans %} - CTRL+9
         </p>
         <p>
-          {% trans %}New User{% endtrans %} - ALT + N
-        </p>
-        <p>
-          {% trans %}Remove User{% endtrans %} - ALT + U
-        </p>
-        <p>
-          {% trans %}Change Password{% endtrans %} - ALT + C
-        </p>
-        <p>
           {% trans %}Close Books/Roll Over{% endtrans %} - ALT + L
-        </p>
-        <p>
-          {% trans %}Delete Organisation{% endtrans %} - ALT + I
         </p>
         <p>
           {% trans %}Manual{% endtrans %} - ALT + M
@@ -384,7 +429,7 @@
         </p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}Close{% endtrans %}</button>
       </div>
     </div>
   </div>
@@ -403,11 +448,11 @@
           {% trans %}You may use a newer version of the same license.{% endtrans %} {% trans %}The libraries used in this software are licensed under their respective{% endtrans %} <a href="http://www.gnu.org/licenses/license-list.html" target="_blank">{% trans %}free software licenses{% endtrans %}</a>.
         </p>
         <p style="margin-top: 30px;">
-            {% trans %}Copyright © Digital Freedom Foundation 2013,2014,2015,2016.{% endtrans %} {% trans %}Visit{% endtrans %} <a href="http://gnukhata.in" target="_blank">{% trans %}gnukhata.in{% endtrans %}</a> {% trans %}for more information.{% endtrans %}
+            {% trans %}Copyright © Digital Freedom Foundation 2013,2014,2015,2016,2017.{% endtrans %} {% trans %}Visit{% endtrans %} <a href="http://gnukhata.in" target="_blank">{% trans %}gnukhata.in{% endtrans %}</a> {% trans %}for more information.{% endtrans %}
         </p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}Close{% endtrans %}</button>
       </div>
     </div>
   </div>
@@ -417,7 +462,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">{% trans %}GNUKhata <small style="color:white;"> version 4.0</small>{% endtrans %}</h4>
+        <h4 class="modal-title">{% trans %}GNUKhata <small style="color:white;"> version 4.25 </small>{% endtrans %}</h4>
       </div>
       <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
         <p>
@@ -428,7 +473,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}Close{% endtrans %}</button>
       </div>
     </div>
   </div>
@@ -447,20 +492,13 @@
 
         </p>
         <p>
-          Abhijith Balan <a href="mailto:abhijithb21@openmailbox.org">abhijithb21@openmailbox.org</a><br />
+          Abhijith Balan <a href="mailto:abhijith@dff.org.in">abhijith@dff.org.in</a><br />
           Ark Arjun (Logo designer) <a href="maiito:arkarjun@gmail.com">arkarjun@gmail.com</a><br />
           Bhavesh Bawadhane <a href="mailto:bbhavesh07@gmail.com">bbhavesh07@gmail.com</a><br />
-          Kanchan Palatane<a href= "kanchanpaltane@gmail.com">kanchanpaltane@gmail.com</a><br />
-          Mohd. Talha Pawaty<a href= "mtalha456@gmail.com">mtalha456@gmail.com</a><br />
-          Navin Karkera <a href="mailto:navin@dff.org.in">navin@dff.org.in</a><br />
-          Parabjyot Singh <a href="mailto:parabjyot1996@gmail.com">parabjyot1996@gmail.com</a><br />
-          Pornima Kolte <a href="mailto:pornima@openmailbox.org">pornima@openmailbox.org</a><br />
-          Prajkta Patkar <a href="mailto:prajkta.patkar007@gmail.com">prajkta.patkar007@gmail.com</a><br />
-          Prasad Shegokar" <a href="pvsheg@gmail.com">pvsheg@gmail.com</a><br/>
-          Rahul Chaurasiya<a href="mailto:crahul4133@gmail.com">crahul4133@gmail.com</a><br />
-          Ravindra Lakal<a href="mailto:ravindra.lakal@gmail.com">ravindra.lakal@gmail.com</a><br />
+          Mohd. Talha Pawaty <a href= "mtalha456@gmail.com"> mtalha456@gmail.com</a><br />
+          Prajkta Patkar <a href="mailto:prajakta@dff.org.in">prajakta@dff.org.in</a><br />
+	  Reshma Bhatawadekar <a href="mailto:bhatawadekar1reshma@gmail.com">bhatawadekar1reshma@gmail.com</a><br />
           Rohini Baraskar <a href="mailto:robaraskar@gmail.com">robaraskar@gmail.com</a><br />
-          Sachin Patil <a href="mailto:sachpatil@openmailbox.org">sachpatil@openmailbox.org</a><br/>
           Uma Mahesh <a href="mailto:uma.mahesh@icfoss.in">uma.mahesh@icfoss.in</a><br />
           Vaibhav Kurhe <a href="mailto:vaibspidy@openmailbox.org">vaibspidy@openmailbox.org</a><br />
         </p>
@@ -468,9 +506,7 @@
           For former developers list visit <a href="http://gnukhata.in/#team" target="_blank">{% trans %}gnukhata.in{% endtrans %}</a>
         </p>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
-      </div>
+
     </div>
   </div>
 </div>
@@ -486,8 +522,8 @@
           <p>{% trans %}Are you sure?{% endtrans %}</p>
         </div>
         <div class="modal-footer">
-          <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-          <button type="button" id="orgdel" data-dismiss="modal" class="btn btn-danger">{% trans %}Delete{% endtrans %}</button>
+          <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}No{% endtrans %}</button>
+          <button type="button" id="orgdel" data-dismiss="modal" class="btn btn-danger"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Yes{% endtrans %}</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -515,7 +551,7 @@
           </dl>
         </div>
         <div class="modal-footer">
-          <button type="button" id="exportbutton" class="btn btn-warning">Export</button>
+          <button type="button" id="exportbutton" class="btn btn-warning"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Export</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

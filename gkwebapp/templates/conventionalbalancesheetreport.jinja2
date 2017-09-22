@@ -51,7 +51,7 @@
   {% elif orgtype=="Non For Profit" and flag=="0" %}
   <span style="margin:auto; display:table;"><strong>{% trans %}Conventional Statement of Affairs{% endtrans %} </strong>{% trans %}as on{% endtrans %} <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
   {% elif flag=="1" %}
-  <span style="margin:auto; display:table;"><strong>Consolidated Balance Sheet of Holding Company {{horgname}} and its {% if slen == 1 %}Subsidiary {% else %}Subsidiaries {% endif %}{% for sorgs in sorgname %} {{sorgs}} {%if loop.index == slen-1 %} & {% elif slen > 2 and loop.index != slen%} , {% endif %}{% endfor %} </strong>{% trans %}as on{% endtrans %} <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
+  <span style="margin:auto; display:table;"><strong>Consolidated Balance Sheet of Holding Company <i>{{horgname}}</i> and its {% if slen == 1 %} Subsidiary {% else %}Subsidiaries {% endif %}{% for sorgs in sorgname %} <i>{{sorgs}}</i> {%if loop.index == slen-1 %} & {% elif slen > 2 and loop.index != slen%} , {% endif %}{% endfor %} </strong>{% trans %}as on{% endtrans %} <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
   {% endif %}
   <input type="text" id="calculateto" value="{{to}}" hidden>
   <div class="row">
@@ -242,16 +242,17 @@
     </div>
   </div>
   <span class="hidden-print" style="margin:auto; display:table;">
-    <button type="button" class="btn btn-sm btn-danger" id="balback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
+    <button type="button" class="btn btn-sm btn-danger" id="balback" accesskey="b">{% trans %}<i class="fa fa-arrow-left" aria-hidden="true"></i> <u>B</u>ack{% endtrans %}</button>
     {% if flag == "0" %}
-    <button type="button" class="btn btn-sm btn-primary" id="sbgbtn" accesskey="g">{% trans %}Show Sub<u>g</u>roups{% endtrans %}</button>
+    <button type="button" class="btn btn-sm btn-info" id="sbgbtn" accesskey="g">{% trans %}Show Sub<u>g</u>roups{% endtrans %}</button>
     <button type="button" class="btn btn-sm btn-primary" id="grpbtn" accesskey="w">{% trans %}Sho<u>w</u> Groups{% endtrans %}</button>
     <button type="button" class="btn btn-sm btn-primary" id="accbtn" accesskey="a">{% trans %}Show All <u>A</u>ccounts{% endtrans %}</button>
-    <button type="button" class="btn btn-sm btn-primary" id="sabutn" accesskey="s">{% trans %}<u>S</u>ources & Applications of Funds{% endtrans %}</button>
+    <button type="button" class="btn btn-sm btn-info" id="sabutn" accesskey="s">{% trans %}<u>S</u>ources & Applications of Funds{% endtrans %}</button>
+
     {% endif %}
-     <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">{% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
-     <button class="btn btn-sm btn-primary" type="button"  id="printconvbalance" accesskey="t">{% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
-     <button class="btn btn-sm btn-primary" type="button"  id="realprintbalance" accesskey="t">{% trans %}Prin<u>t{% endtrans %}</u></button>
+     <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">{% trans %}<i class="fa fa-file-excel-o" aria-hidden="true"></i> E<u>x</u>port to Spreadsheet{% endtrans %}</button>
+     <button class="btn btn-sm btn-info" type="button"  id="printconvbalance" accesskey="t">{% trans %}<i class="fa fa-print" aria-hidden="true"></i> View Prin<u>t</u>able Version{% endtrans %}</button>
+     <button class="btn btn-sm btn-info" type="button"  id="realprintbalance" accesskey="t">{% trans %}<i class="fa fa-print" aria-hidden="true"></i> Prin<u>t{% endtrans %}</u></button>
   </span>
   <input type="hidden" id="ledtodate" value="{{to}}">
   <input type="hidden" id="ledfromdate" value="{{from}}">

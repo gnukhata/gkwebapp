@@ -89,7 +89,7 @@
             <select class = "form-control input-sm" id="editgoddet">
               <option value="disabled" disabled selected hidden>{% trans %}Select Godown{% endtrans %}</option>
               {% for gods in godown %}
-              <option value="{{gods['goid']}}">{{gods["goname"]}}</option>
+              <option value="{{gods['goid']}}" data-godownname="{{gods["goname"]}}" data-godownaddress="{{gods["goaddr"]}}">{{gods["goname"]}} ({{gods["goaddr"]}})</option>
               {% endfor %}
             </select>
           </div>
@@ -113,8 +113,8 @@
         </div>
       </div>
       <div class="panel-footer">
-        <button class="btn btn-primary btn-sm" id="viewstock_submit" name="view" accesskey="v">{% trans %}<u>V</u>iew{% endtrans %}</button>
-        <button id="viewstock_reset" class="btn btn-danger btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+        <button class="btn btn-primary btn-sm" id="viewstock_submit" name="view" accesskey="v">{% trans %}<i class="fa fa-eye" aria-hidden="true"></i> <u>V</u>iew{% endtrans %}</button>
+        <button id="viewstock_reset" class="btn btn-danger btn-sm" accesskey="e">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> R<u>e</u>set{% endtrans %}</button>
 
       </div>
     </div>

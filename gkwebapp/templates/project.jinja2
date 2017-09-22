@@ -130,16 +130,16 @@
         </div>
         <div class="panel-body">
           <form class="form-horizontal" id="prjform">
-            <label id="prjlbl" for="prjname">{% trans %}Pro<u>j</u>ect Name{% endtrans %} : </label>
+            <label id="prjlbl" for="prjname">{% trans %}Pro<u>j</u>ect Name{% endtrans %} : </label><label for="prjname" style="color:red;font-size: 120%;">*</label>
             <input type="text" name="projectname" class="form-control" id="prjname" accesskey="j">
             <br>
             <label id="amtlbl" for="prjamount">{% trans %}Sanc<u>t</u>ioned Amount{% endtrans %} : </label>
             <input class="form-control rightJustified" id="prjamount" name="sanctionedamount" placeholder="0.00" accesskey="t">
             <br>
             {% if not projects %}
-              <button type="submit" class="btn btn-success" accesskey="a">{% trans %}Cre<u>a</u>te{% endtrans %}</button>
+              <button type="submit" class="btn btn-success" accesskey="a">{% trans %}<i class="fa fa-plus" aria-hidden="true"></i> Cre<u>a</u>te{% endtrans %}</button>
             {% else %}
-              <button type="submit" class="btn btn-success" accesskey="a">{% trans %}<u>A</u>dd{% endtrans %}</button>
+              <button type="submit" class="btn btn-success" accesskey="a">{% trans %}<i class="fa fa-plus" aria-hidden="true"></i> <u>A</u>dd{% endtrans %}</button>
             {% endif %}
           </form>
         </div>
@@ -209,8 +209,9 @@
             <p>{% trans %}Are you sure?{% endtrans %}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-            <button type="button" id="prjdel" data-dismiss="modal" class="btn btn-danger">{% trans %}Delete{% endtrans %}</button>
+            <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}<i class="fa fa-times" aria-hidden="true"></i>
+ Cancel{% endtrans %}</button>
+            <button type="button" id="prjdel" data-dismiss="modal" class="btn btn-danger">{% trans %}<i class="fa fa-trash-o" aria-hidden="true"></i> Delete{% endtrans %}</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -233,7 +234,7 @@
             <input class="form-control rightJustified" id="m_prjamount" placeholder="0.00">
           </div>
           <div class="modal-footer">
-            <button type="submit" id="m_edit" data-dismiss="modal" data-backdrop="false" class="btn btn-success" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
+            <button type="submit" id="m_edit" data-dismiss="modal" data-backdrop="false" class="btn btn-success" accesskey="s">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i> <u>S</u>ave{% endtrans %}</button>
           </div>
         </form>
       </div><!-- /.modal-content -->
@@ -248,15 +249,15 @@
           <span aria-hidden="true">&times;</span>
         </button> </div>
       <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-       
+
        <p>   <font color=" #566573"> {%trans%}
 This screen helps you To CREATE AND VIEW Project / Cost Center. </br>
-If yours is a Not For Profit organization and have a on-going project, create a Project and view its receipts and expenditure periodically. If yours is a Profit Making organization create Cost Center and view its performance. Enter Name, Sanctioned or Budgeted Amount and press Enter key. 
+If yours is a Not For Profit organization and have an on-going project, create a Project and view its receipts and expenditure periodically. If yours is a Profit Making organization create Cost Center and view its performance. Enter Name, Sanctioned or Budgeted Amount and press Enter key.
 </br>Single or multiple Projects / Cost Centers can be created. {% endtrans %} </font>
 
         </p>
       </div>
-      
+
     </div>
   </div>
 </div>

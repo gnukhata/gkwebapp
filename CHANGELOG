@@ -1,3 +1,17 @@
+[22-September-2017 Release 4.25]
+* Invoice and Cash Memo are now GST compatible.
+* Provision to add Services.
+* Provision to add HSN/ACS code for Product/Service.
+* Provision to add IGST tax to Product/Service and Category.
+* Provision to add Free Quantity in Invoice/Cash Memo.
+* Sales/Purchase Register.
+* Bill Wise Accounting.
+* New Reports - List of Invoices , List of Transfer Notes and List of Users.
+* List of Products is now List of Products/Services.
+* While creating organisation, instead of enabling/disabling inventory there are four options to choose from. These can be changed later from Organisation Preferences.
+* Provision to Add Bank Details in Vouchers, Invoice and Cash Memo.
+* Printing of Vouchers.
+
 [8-April-2017 Release 4.0 Update]
 * Enhancement in Context sensitive help.
 * Voucher now shows DR/CR along with account balance.

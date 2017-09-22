@@ -68,7 +68,7 @@
   {% endif %}
   <div class="row">
     <div class="table-responsive col-xs-6 nopadding">
-      <button class="btn btn-sm btn-danger pull-left" type="button" style="margin-right: 15px;" id="pllclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+      <button class="btn btn-sm btn-danger pull-left" type="button" style="margin-right: 15px;display:none;" id="pllclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
       <table id="expensetbl" class="shadow fixed-table table table-condensed cashflowtable" data-toggle="table" data-show-toggle="true"  data-search-align="right" data-buttons-align="right" data-search="true">
         <thead class="bg-primary">
           <tr >
@@ -112,7 +112,7 @@
       </table>
     </div>
     <div class="table-responsive col-xs-6 nopadding">
-      <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="plrclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+      <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="plrclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
       <table id="incometbl" class="shadow table fixed-table table-condensed cashflowtable" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
         <thead class="bg-primary">
           <tr >
@@ -154,10 +154,10 @@
 
   </div>
   <span class="hidden-print" style="margin:auto; display:table;">
-    <button type="button" class="btn btn-sm btn-danger" id="pnlback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
-    <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">{% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
-    <button class="btn btn-sm btn-primary" type="button"  id="printpnl" accesskey="t">{% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
-    <button class="btn btn-sm btn-primary" type="button"  id="realprintpnl" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
+    <button type="button" class="btn btn-sm btn-danger" id="pnlback" accesskey="b"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}<u>B</u>ack{% endtrans %}</button>
+    <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
+    <button class="btn btn-sm btn-info" type="button"  id="printpnl" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
+    <button class="btn btn-sm btn-info" type="button"  id="realprintpnl" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
   </span>
   <input type="hidden" id="ledtodate" value="{{to}}">
   <input type="hidden" id="ledfromdate" value="{{from}}">

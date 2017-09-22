@@ -46,7 +46,7 @@
 						{% trans %}Please enter godown name!{% endtrans %}
 					</div>
 					<div class="form-group">
-						<label for="goname">{% trans %}New Name of Godown{% endtrans %} :</label>
+						<label for="goname">{% trans %}New Name of Godown{% endtrans %} :</label><label for="goname" style="color:red;font-size: 120%;">*</label>
 						<input type="text" id="goname" name="goname" class="form-control input-sm" accesskey="g"></input>
 					</div>
 					<div class="alert alert-danger" id="stateblank-alert"  aria-live="rude" role="alert" hidden>
@@ -54,7 +54,7 @@
 						{% trans %}Please enter contact!{% endtrans %}
 					</div>
 					<div class="form-group">
-						<label for="gostate" id="godnstate">{% trans %}State{% endtrans %} : </label>
+						<label for="gostate" id="godnstate">{% trans %}State{% endtrans %} : </label><label for="gostate" style="color:red;font-size: 120%;">*</label>
 						<select id="gostate" class="form-control input-sm tax_state">
 							<option value="" disabled selected hidden>None</option>
 							<option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
@@ -100,11 +100,11 @@
 						{% trans %}Please enter address!{% endtrans %}
 					</div>
 					<div class="form-group">
-						<label for="goaddress">{% trans %}Address{% endtrans %} :</label>
+						<label for="goaddress">{% trans %}Address{% endtrans %} :</label><label for="goaddress" style="color:red;font-size: 120%;">*</label>
 						<textarea id="goaddress" name="goaddress" class="form-control input-sm"></textarea>
+						<small id="gdtextareahelp" class="form-text text-muted">Press 'Enter' Key twice to shift focus to Contact Person.</small>
+						<input type="hidden" id="goid" class="form-control" name="goid" ></input>
 					</div>
-					<small id="gdtextareahelp" class="form-text text-muted">Press Enter Key twice to shift focus to Contact Name.</small>
-					<input type="hidden" id="goid" class="form-control" name="goid" ></input>
 				</div>
 				<div class="col-sm-6 editgodownform" hidden>
 					<div class="form-group">
@@ -128,8 +128,8 @@
 								<p>{% trans %}Are you sure?{% endtrans %}</p>
 							</div>
 							<div class="modal-footer">
-								<button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-								<button type="button" id="goddel" data-dismiss="modal" class="btn btn-danger">{% trans %}Delete{% endtrans %}</button>
+								<button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}No{% endtrans %}</button>
+								<button type="button" id="goddel" data-dismiss="modal" class="btn btn-danger"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Yes{% endtrans %}</button>
 							</div>
 						</div><!-- /.modal-content -->
 					</div><!-- /.modal-dialog -->
@@ -138,10 +138,10 @@
 		</div>
 		<div id="form-footer" class="panel-footer" hidden>
 			<div class="container-fluid">
-				<button type="submit" class="btn btn-success btn-sm" id="egdnsubmit" name="submit">{% trans %}Save{% endtrans %}</button>
-				<button id="reset" class="btn btn-warning btn-sm">{% trans %}Reset{% endtrans %}</button>
-				<button id="delete" class="btn btn-danger btn-sm">{% trans %}Delete{% endtrans %}</button>
-				<button id="edit" class="btn btn-primary btn-sm">{% trans %}Edit{% endtrans %}</button>
+				<button type="submit" class="btn btn-success btn-sm" id="egdnsubmit" name="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
+				<button id="edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans %}Edit{% endtrans %}</button>	
+				<button id="delete" class="btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i> {% trans %}Delete{% endtrans %}</button>
+				<button id="reset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
 			</div>
 		</div>
 	</div>

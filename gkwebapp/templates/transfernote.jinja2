@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>{% trans %}GNUKhata | Transfer Note{% endtrans %}</title>
-</head>
-<body>
-  <div class="container-fluid" >
-    <ul class="nav nav-pills nav-tabs" role="tablist">
-      <li role="presentation" class="active"><a href="" id="transfernote_create" role="tab" data-toggle="tab">{% trans %}Create Transfer Note{% endtrans %}</a></li>
-      <li role="presentation"><a href="" id="transfernote_received" role="tab" data-toggle="tab">{% trans %}Received{% endtrans %}</a></li>
-    </ul>
-    <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="transfernote_div">
+  <head>
+    <meta charset="utf-8">
+    <title>{% trans %}GNUKhata | Transfer Note{% endtrans %}</title>
+  </head>
+  <body>
+    <div class="container-fluid" >
+      <ul class="nav nav-pills nav-tabs" role="tablist">
+	<li role="presentation" class="active"><a href="" id="transfernote_create" role="tab" data-toggle="tab" accesskey="1">{% trans %}Create Transfer Note{% endtrans %}</a></li>
+	<li role="presentation"><a href="" id="transfernote_received" role="tab" data-toggle="tab" accesskey="2">{% trans %}To be acknowledged{% endtrans %}</a></li>
+      </ul>
+      <div class="tab-content">
+	<div role="tabpanel" class="tab-pane active" id="transfernote_div">
+	</div>
       </div>
+
+
     </div>
-
-
-  </div>
-</div>
-<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/transfernote.js')}}"></script>
-</body>
+    </div>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/transfernote.js')}}"></script>
+  </body>
 </html>

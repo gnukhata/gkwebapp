@@ -153,8 +153,12 @@ $(document).ready(function() {
   });
 
   $(document).off("keydown", "#deliverychallan_edit_list").on("keydown", "#deliverychallan_edit_list", function(event) {
-    event.preventDefault();
-    $(".btn:first").focus();
+if(event.which==13)
+{
+
+      event.preventDefault();
+      $(".btn:first").focus();  
+}
   });
 
   $("#viewattach").click(function(event)

@@ -5,7 +5,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -22,17 +22,15 @@ Contributors:
 "Krishnakant Mane" <kk@gmail.com>
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
+"Prajkta Patkar"<prajakta@dff.org.in>
 */
 // This script is for the print page of transfer note.
 $(document).ready(function() {
   oninvoice = 1;
-  $("#subject").focus();// Focus is set to subject field on load.
-  $("title").html("GNUKhata")
-  $("#subject").keydown(function(event) {
-    if (event.which==13) {
+   $("title").html("GNUKhata")
+ 
       $("#notes").focus().select();
-    }
-  });
+    
 
   $("#tnprint").click(function(event) {
     window.print();// Print 
@@ -48,14 +46,9 @@ var beforePrint = function() {
   if (oninvoice==1) {
     $("#printorgnameyear").removeClass('visible-print').addClass('hidden-print');
   }
-    $("#subject").hide();
+    
     $("#notes").hide();
-    if ($("#subject").val()!='') {// if subject is not blank then print it in a label.
-      $("#sublabel").html("Subject : "+$("#subject").val());
-    } else {
-      $("#sublabel").html("");
-    }
-
+    
     if ($("#notes").val()!='') {// same as subject
       $("#notespara").html("<strong>Notes :</strong> "+$("#notes").val());
     } else {
@@ -67,9 +60,7 @@ var afterPrint = function() {
   console.log("afterPrint");
     $("#printorgnameyear").removeClass('hidden-print').addClass('visible-print');
     $("#printyears").removeClass('hidden-print');
-    $("#sublabel").html("Subject :");
     $("#notespara").html("Notes : ");
-    $("#subject").show();
     $("#notes").show();
 };
 

@@ -5,7 +5,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -25,11 +25,25 @@ Contributors:
 */
 // This script is for the product base page.
 $(document).ready(function() {
-  $("#addproduct").click(function(event)
-  {
+    if (sessionStorage.vatorgstflag == '22'){
+	$("#addProduct").text("Create Product");
+	$("#editProduct").text("Edit Product");
+    }
+
+   
+    $("#addproduct").click(function(event){
+	var call;
+      if(sessionStorage.vatorgstflag == '7' || sessionStorage.vatorgstflag == '29'){
+	   call = '/product?type=addtab';
+      }
+
+      else{
+	   call = '/product?type=addtabvat';
+      }
+      
     /* Tab to load add product page. */
     $.ajax({
-      url: '/product?type=addtab',
+      url: call,
       type: 'POST',
       datatype: 'text/html',
       beforeSend: function(xhr)
@@ -52,10 +66,18 @@ $(document).ready(function() {
   });
 
   $("#editproduct").click(function(event)
-  {
+			  {
+      var call;
+      if(sessionStorage.vatorgstflag == '7' || sessionStorage.vatorgstflag == '29'){
+	   call = '/product?type=edittab';
+      }
+
+      else{
+	   call = '/product?type=edittabvat';
+      }
     /* Tab to load edit product page. */
     $.ajax({
-      url: '/product?type=edittab',
+      url: call,
       type: 'POST',
       global: false,
       async: false,

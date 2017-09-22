@@ -81,6 +81,17 @@ $(document).ready(function() {
   $("#deliverychallan_customer").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
+      if ($.trim($('#deliverychallan_customer option:selected').val())=="") {
+        $("#custsup-blank-alert").alert();
+        $("#custsup-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#custsup-blank-alert").hide();
+        });
+        $('#deliverychallan_customer').focus();
+        return false;
+      }
+      else {
+        $("#deliverychallan_consignment").focus().select();
+      }
       if ($("#deliverychallan_godown").length == 0){
     	  $("#deliverychallan_consignment").focus().select();
 
@@ -101,7 +112,17 @@ $(document).ready(function() {
   $("#deliverychallan_date").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#deliverychallan_month").focus().select();
+      if ($('#deliverychallan_date').val()=="") {
+        $("#date-blank-alert").alert();
+        $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#date-blank-alert").hide();
+        });
+        $('#deliverychallan_date').focus();
+        return false;
+      }
+      else {
+        $("#deliverychallan_month").focus().select();
+      }
     }
     if (event.which==38) {
       event.preventDefault();
@@ -111,7 +132,17 @@ $(document).ready(function() {
   $("#deliverychallan_month").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#deliverychallan_year").focus().select();
+      if ($('#deliverychallan_month').val()=="") {
+        $("#date-blank-alert").alert();
+        $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#date-blank-alert").hide();
+        });
+        $('#deliverychallan_month').focus();
+        return false;
+      }
+      else {
+        $("#deliverychallan_year").focus().select();
+      }
     }
     if (event.which==38) {
       event.preventDefault();
@@ -122,7 +153,17 @@ $(document).ready(function() {
   $("#deliverychallan_year").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#deliverychallan_customer").focus().select();
+      if ($('#deliverychallan_year').val()=="") {
+        $("#date-blank-alert").alert();
+        $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#date-blank-alert").hide();
+        });
+        $('#deliverychallan_year').focus();
+        return false;
+      }
+      else {
+          $("#deliverychallan_customer").focus().select();
+      }
     }
     if (event.which==38) {
       event.preventDefault();
@@ -133,7 +174,17 @@ $(document).ready(function() {
   $("#deliverychallan_challanno").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#deliverychallan_date").focus().select();
+      if ($("#deliverychallan_challanno").val()=="") {
+        $("#challanno-blank-alert").alert();
+        $("#challanno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#challanno-blank-alert").hide();
+        });
+        $('#deliverychallan_challanno').focus();
+        return false;
+      }
+      else {
+        $("#deliverychallan_date").focus().select();
+      }
     }
     if (event.which==38) {
       event.preventDefault();
@@ -1034,7 +1085,7 @@ else {
         var datas = {}
       	if ($("#deliverychallan_godown option").length !=0) {
       		datas = {"dcno": $("#deliverychallan_challanno").val(),
-      	            "custid":$("#deliverychallan_customer option:selected").val(),
+      	            "custid":$("# option:selected").val(),
       	            "dcdate":$("#deliverychallan_date").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_year").val(),
       	            "printset":JSON.stringify(printset),
       	            "issuername":$("#deliverychallan_issuername").val(),
@@ -1045,7 +1096,7 @@ else {
       	            } }
       	else {
       		datas = {"dcno": $("#deliverychallan_challanno").val(),
-      	            "custid":$("#deliverychallan_customer option:selected").val(),
+      	            "custid":$("# option:selected").val(),
       	            "dcdate":$("#deliverychallan_date").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_year").val(),
       	            "printset":JSON.stringify(printset),
       	            "issuername":$("#deliverychallan_issuername").val(),

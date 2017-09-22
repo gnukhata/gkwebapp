@@ -52,7 +52,7 @@
 <body>
   <span style="margin:auto; display:table; font-size:120%;"><strong>{% trans %}List of Categories{% endtrans %}</strong></span>
   <small style="margin-bottom: 10px;  display:table;" class="form-text text-muted">This is the columnar view of categories.</small>
-  <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;" id="laclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+  <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="laclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
   <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
     <thead class="bg-primary">
       <tr>
@@ -101,9 +101,9 @@
   </table>
   <span style="margin:auto; display:table;">
     <nbsp><nbsp>
-    <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">{% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
-      <button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="t">{% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
-    <button class="btn btn-sm btn-primary" type="button"  id="tree" accesskey="e">{% trans %}Tree Vi<u>e</u>w{% endtrans %}</button>
+    <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">{% trans %}<i class="fa fa-file-excel-o" aria-hidden="true"></i> E<u>x</u>port to Spreadsheet{% endtrans %}</button>
+      <button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="t">{% trans %}<i class="fa fa-print" aria-hidden="true"></i> View Prin<u>t</u>able Version{% endtrans %}</button>
+    <button class="btn btn-sm btn-primary" type="button"  id="tree" accesskey="e">{% trans %}<i class="fa fa-sitemap" aria-hidden="true"></i> Tree Vi<u>e</u>w{% endtrans %}</button>
   </span>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/listofcategories.js')}}"></script>

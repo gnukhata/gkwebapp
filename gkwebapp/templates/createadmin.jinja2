@@ -96,6 +96,8 @@
 <input type="hidden" class="form-control" value="{{orgname}}" id="orgname" name="orgname"></input>
 <input type="hidden" class="form-control" value="{{orgtype}}" id="orgtype" name="orgtype"></input>
 <input type="hidden" class="form-control" value="{{invflag}}" id="invflag" name="invflag"></input>
+<input type="hidden" class="form-control" value="{{invsflag}}" id="invsflag" name="invsflag"></input>
+<input type="hidden" class="form-control" value="{{billflag}}" id="billflag" name="billflag"></input>
 <input type="hidden" class="form-control" value="{{fromdate}}" id="yearstart" name="yearstart"></input>
 <input type="hidden" class="form-control" value="{{todate}}" id="yearend" name="yearend"></input>
 <br/>
@@ -113,7 +115,7 @@
           <span aria-hidden="true">&times;</span>
         </button> </div>
       <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-       
+
        <p>   <font color=" #566573"> {%trans%}
 
 This screen let's you create an administrator user.
@@ -123,14 +125,14 @@ After this screen the main window will appear.{% endtrans %} </font>
 
         </p>
       </div>
-      
+
     </div>
   </div>
 </div>
 	</div>
-				
 
-	
+
+
 	<div id="spinmodal" tabindex="-1" class="modal text-center fade" role="dialog">
 		<div class="vertical-alignment-helper">
 				<div class="modal-content vertical-align-center">

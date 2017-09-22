@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Unadjusted Accounts{% endtrans %}</title>
+  <style type="text/css">
+   .shadow {
+       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   }
+   .nopadding {
+       padding: 0 !important;
+       margin: 0 !important;
+   }
+   /*
+      Force table width to 100%
+    */
+   table.table-fixedheader {
+       width: 100%;
+   }
+   /*
+      Set table elements to block mode.  (Normally they are inline).
+      This allows a responsive table, such as one where columns can be stacked
+      if the display is narrow.
+    */
+   table.table-fixedheader, table.table-fixedheader>thead, table.table-fixedheader>tbody, table.table-fixedheader>tfoot, table.table-fixedheader>thead>tr, table.table-fixedheader>tbody>tr, table.table-fixedheader>tfoot>tr, table.table-fixedheader>thead>tr>th, table.table-fixedheader>tbody>tr>td, table.table-fixedheader>tfoot>tr>td {
+       display: block;
+   }
+   table.table-fixedheader>thead>tr:after, table.table-fixedheader>tbody>tr:after, table.table-fixedheader>tfoot>tr:after  {
+       content:' ';
+       display: block;
+       visibility: hidden;
+       clear: both;
+   }
+   /*
+      When scrolling the table, actually it is only the tbody portion of the
+      table that scrolls (not the entire table: we want the thead to remain
+      fixed).  We must specify an explicit height for the tbody.  We include
+      100px as a default, but it can be overridden elsewhere.
+
+      Also, we force the scrollbar to always be displayed so that the usable
+      width for the table contents doesn't change (such as becoming narrower
+      when a scrollbar is visible and wider when it is not).
+    */
+   table.table-fixedheader>tbody {
+       overflow-y: scroll;
+
+   }
+   /*
+      We really don't want to scroll the thead contents, but we want to force
+      a scrollbar to be displayed anyway so that the usable width of the thead
+      will exactly match the tbody.
+    */
+   table.table-fixedheader>thead {
+       overflow-y: scroll;
+       height: 26px;
+   }
+   table.table-fixedheader>tfoot {
+       margin-bottom:10px;;
+   }
+   /*
+      For browsers that support it (webkit), we set the background color of
+      the unneeded scrollbar in the thead to make it invisible.  (Setting
+      visiblity: hidden defeats the purpose, as this alters the usable width
+      of the thead.)
+    */
+   table.table-fixedheader>thead::-webkit-scrollbar {
+       background-color: inherit;
+   }
+
+   table.table-fixedheader>tfoot::-webkit-scrollbar {
+       background-color: inherit;
+   }
+
+
+   table.table-fixedheader>thead>tr>th:after, table.table-fixedheader>tbody>tr>td:after, table.table-fixedheader>tfoot>tr>td:after {
+       content:' ';
+       display: table-cell;
+       visibility: hidden;
+       clear: both;
+   }
+
+   /*
+      We want to set <th> and <td> elements to float left.
+      We also must explicitly set the width for each column (both for the <th>
+      and the <td>).  We set to 20% here a default placeholder, but it can be
+      overridden elsewhere.
+    */
+
+   table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.table-fixedheader>tfoot tr td {
+       float: left;
+
+   }
+
+   .shadow {
+       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   }
+   td {
+       font-size: 75%;
+   }
+
+   th {
+       font-size: 75%;
+   }
+
+   #vouchertable thead {
+       width: calc( 100% - 0.65em );
+   }
+
+   #vouchertable tfoot {
+       width: calc( 100% - 0.65em );
+   }
+
+   #vouchertable tbody {
+       display:block;
+       height: calc(100vh - 20.5em);
+       overflow-y:scroll;
+   }
+
+   #invtable thead {
+       width: calc( 100% - 0.65em );
+   }
+
+   #invtable tfoot {
+       width: calc( 100% - 0.65em );
+   }
+
+   #invtable tbody {
+       display:block;
+       height: calc(100vh - 24em);
+       overflow-y:scroll;
+   }
+
+   .card-view .title {
+       font-weight: bold;
+       display: inline-block;
+       min-width: 30%;
+       text-align: left !important;
+   }
+
+   .calign{
+       text-align:center;
+   }
+   .lalign{
+       text-align:left;
+   }
+   .ralign{
+       text-align:right;
+   }
+   .dtwrap{
+       width :18%
+   }
+   .smwrap{
+       width:4%
+   }
+   .lngwrap{
+       width:22%
+   }
+   .mdwrap{
+       width:16%
+   }
+   .vlngwrap{
+       width:76%
+   }
+   .totalwrap {
+       width:34%;
+   }
+   .rightJustified {
+       text-align: right;
+   }
+  </style>
+</head>
+<body>
+  <div class="row">
+    <div class="table-responsive col-sm-5"  style="margin-top:5px;">
+      <input type="text" id="selectedvoucher" hidden value="0.00">
+      <input type="text" id="selectedvoucheramount" hidden value="0.00">
+      <label>Amounts to be adjusted</label>
+      <table id="vouchertable" class="table shadow nopadding table-bordered table-condensed table-fixedheader">
+        <thead class="bg-primary">
+          <tr>
+            <th  class="col-sm-3 text-center">{% trans %}Date{% endtrans %}</th>
+            <th class="col-sm-4 text-center">{% trans %}Voucher No.{% endtrans %}</th>
+            <th class="col-sm-5 text-right">{% trans %}Adjustable Amount{% endtrans %}</th>
+          </tr>
+        </thead>
+	<tbody>
+	  {% if not vouchers %}
+	    <tr><td style="width:100%">No Data Found.</td></tr>
+          {% endif %}
+	  {% for voucher in vouchers %}
+	    <tr  data-value="{{voucher['vouchercode']}}" data-voucheramount="{{voucher['amtadj']}}">
+	      <td class="col-sm-3 text-center" >
+		{{voucher['voucherdate']}}
+              </td>
+              <td class="col-sm-4 text-center" >
+		<a href="" class="vouchernumber">{{voucher['vouchernumber']}}</a>
+              </td>
+              <td class="col-sm-5 text-right">
+		  {{voucher['amtadj']}}
+              </td>
+
+            </tr>
+	  {% endfor %}
+
+        </tbody>
+      </table>
+
+    </div>
+    <div  class="table-responsive col-sm-7"  style="margin-top:5px;">
+
+      <table id="invtable" class="table shadow nopadding table-bordered table-condensed table-fixedheader">
+	<label>Uncleared Invoices</label>
+        <thead class="bg-primary">
+          <tr>
+            <th class="mdwrap calign">
+              {% trans %}Invoice No{% endtrans %}
+            </th>
+            <th class="dtwrap calign">
+              {% trans %}Date{% endtrans %}
+            </th>
+            <th class="lngwrap ralign">
+              {% trans %}Invoice Amount{% endtrans %}
+            </th>
+            <th class="lngwrap ralign">
+              {% trans %}Amount Pending{% endtrans %}
+            </th>
+            <th class="lngwrap ralign">
+              {% trans %}Amount Adjusted{% endtrans %}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if not invoices %}
+            <tr><td style="width:100%">No Data Found.</td></tr>
+          {% endif %}
+	  {% for invoice in invoices %}
+            <tr data-invid="{{invoice['invid']}}">
+              <td class="mdwrap calign" >
+		<div class="form-control">
+		  {{invoice['invoiceno']}}
+                </div>
+              </td>
+              <td class="dtwrap calign">
+		<div class="form-control">
+		  {{invoice['invoicedate']}}
+		</div>
+              </td>
+              <td class="lngwrap ralign" >
+		<div class="form-control">
+		  {{invoice['invoiceamount']}}
+		</div>
+              </td>
+              <td class="lngwrap ralign" data-amountpending="{{invoice['balanceamount']}}">
+				     <div class="form-control">
+				       {{invoice['balanceamount']}}
+				     </div>
+                                   </td>
+                                   <td class="lngwrap ralign" >
+                         <input type="text" class="amountpaid form-control rightJustified numtype" value="0.00">
+                                   </td>
+                           </tr>
+			   {% endfor %}
+                           </tbody>
+                           <tfoot>
+                        <tr>
+                         <td class="totalwrap ralign">
+                           <div class="form-control" disabled>
+                             Total
+                           </div>
+                         </td>
+                         <td class="lngwrap ralign">
+                           <div class="form-control" disabled>
+			     {{totalinv}}
+                           </div>
+                         </td>
+                         <td class="lngwrap ralign">
+                           <div class="form-control" disabled>
+			     {{totalamtpending}}
+                           </div>
+                         </td>
+                         <td class="lngwrap ralign">
+                           <div class="form-control" disabled>
+			     0.00
+                           </div>
+                         </td>
+                        </tr>
+                           </tfoot>
+                         </table>
+                  </div>
+
+
+  </div>
+
+</div>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/unadjustedamount.js')}}"></script>
+</body>
+</html>

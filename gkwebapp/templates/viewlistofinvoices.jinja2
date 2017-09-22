@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}List Of Invoices{% endtrans %}</title>
+      <style media="screen">
+         .shadow {
+         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+         }
+         label {
+         font-size: 90%;
+         }
+      </style>
+   </head>
+   <body>
+      <div style="padding-top:5px" class="container-fluid mainbox col-md-6 col-md-offset-3">
+         <div class="panel shadow">
+            <div class="panel-heading">
+               <h3 class="panel-title">{% trans %}View List of Invoices{% endtrans %}</h3>
+            </div>
+            {% if numberofinvoices %}
+            <div class="panel-body" style="padding-top:5px">
+               <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
+                  <label>{% trans %}Please enter date in proper format!{% endtrans %}</label>
+               </div>
+               <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
+                  <label>{% trans %}Please enter date within the financial year!{% endtrans %}</label>
+               </div>
+               <div class="alert alert-danger" id="compare-date-alert" aria-live="rude" role="alert" hidden>
+                  <label for="viewlist_todate">{% trans %}From date should be smaller or equal to to date !{% endtrans %}</label>
+               </div>
+               <div class="form-group col-xs-12" id="typediv" style="margin-top:10px;">
+                  <label for="invoicetypeselect">{% trans %}Type of Invoice{% endtrans %} :</label>
+                  <select class = "form-control input-sm" id="invoicetypeselect">
+                     <option value="0" selected>{% trans %}All{% endtrans %}</option>
+                     <option value="1">{% trans %}Sales{% endtrans %}</option>
+                     <option value="2">{% trans %}Purchase{% endtrans %}</option>
+                  </select>
+               </div>
+               <div class="col-xs-12" style="margin-top: 10px;">
+                  <div class="col-xs-6">
+                     <label for="viewlist_fromdate">{% trans %}From Date{% endtrans %} :</label>
+                     <div class="form-inline" >
+                        <div class="form-group">
+                           <input type="text" class="viewlist_date form-control input-sm" id="viewlist_fromdate" value="" size="2" maxlength="2" placeholder="DD" accesskey="d" >
+                           <input type="text" id="viewlist_frommonth" class="viewlist_date form-control input-sm" value="" size="2" maxlength="2" placeholder="MM" >
+                           <input type="text" id="viewlist_fromyear" class="viewlist_date form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY" >
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xs-6">
+                     <label for="viewstock_todate">{% trans %}To Date{% endtrans %} :</label>
+                     <div class="form-inline" >
+                        <div class="form-group">
+                           <input type="text" class="viewlist_date form-control input-sm" id="viewlist_todate" value="" size="2" maxlength="2" placeholder="DD" >
+                           <input type="text" id="viewlist_tomonth" class="viewlist_date form-control input-sm" value="" size="2" maxlength="2" placeholder="MM" >
+                           <input type="text" id="viewlist_toyear" class="viewlist_date form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY" >
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="panel-footer">
+               <button class="btn btn-primary btn-sm" id="viewlist_submit" name="view" accesskey="v"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}<u>V</u>iew{% endtrans %}</button>
+               <button id="viewlist_reset" class="btn btn-danger btn-sm" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
+            </div>
+            {% else %}
+            <div class="panel-body">
+               <div class="bg-danger col-xs-12" style="padding:10;">
+                  <label class="text-danger">No Invoices Found</label>
+               </div>
+            </div>
+         </div>
+      </div>
+      {% endif %}
+      </div>
+      </div>
+      <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewlistofinvoices.js')}}"></script>
+   </body>
+</html>

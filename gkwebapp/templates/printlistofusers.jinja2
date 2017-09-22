@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}List of Users{% endtrans %}</title>
+  <style type="text/css">
+  td {
+  	font-size: 65%;
+  	color: black;
+  }
+
+  th {
+  	font-size: 70%;
+  }
+
+  @page {
+    size : 21cm 29.7cm;
+    margin : 10mm 10mm 20mm 10mm
+  }
+  thead{
+    display: table-header-group;
+  }
+  tfoot{
+    display: table-footer-group;
+  }
+  .calign{
+    text-align:center;
+  }
+  .lalign{
+    text-align:left;
+  }
+  .dtwrap{
+    width :6%
+     }
+ .smwrap{
+  width:3%
+ }
+ .smwrap1{
+ width:2.4%
+ }
+
+ .lngwrap{
+  width:16%
+ }
+ .mdwrap{
+  width:8%
+ }
+
+  </style>
+</head>
+<body>
+<span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>{% trans %}List of Users{% endtrans %}</strong></span>
+  <table class="table table-condensed table-bordered table-striped shadow">
+    <thead class="bg-primary">
+      <tr class="visible-print">
+        <th colspan="7" style="text-align:center; font-size:80%;">
+          {% trans %}List of Users{% endtrans %}
+        </th>
+      </tr>
+      <tr>
+        <th class="smwrap1 calign" >
+          {% trans %}Sr.No.{% endtrans %}
+        </th>
+        <th class="dtwrap lalign">
+          {% trans %}User Name{% endtrans %}
+        </th>
+        <th class="dtwrap lalign">
+          {% trans %}User Role{% endtrans %}
+        </th>
+        <th class="lngwrap lalign">
+          {% trans %}Associated Godown(s){% endtrans %}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+
+      {% for record in gkresult %}
+      <tr	value="{{record["userid"]}}">
+        <td class="smwrap1 calign" >
+          {{record["srno"]}}
+        </td>
+        <td class="dtwrap lalign">
+          {{record["username"]}}
+        </td>
+        <td class="dtwrap lalign" >
+          {{record["userrole"]}}
+        </td>
+        <td class="lngwrap lalign" >
+          {% for godown in record["godowns"] %}
+            {% if loop.index == record["noofgodowns"] %}
+              {{godown}}
+            {% else %}
+              {{godown}},
+            {% endif %}
+          {% endfor %}
+        </td>
+      </tr>
+      {% endfor %}
+
+    </tbody>
+  </table>
+  <span style="margin:auto; display:table;">
+    <button type="button" class="btn btn-sm btn-danger hidden-print" id="louback" accesskey="b"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}<u>B</u>ack{% endtrans %}</button>
+    <button type="button" class="btn btn-sm btn-info hidden-print" id="louprint" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
+  </span>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("title").html("GNUKhata")
+      $("#louprint").click(function(event) {
+        window.print();
+      });
+      $("#louback").click(function(event) {
+        $("#listofusers").click();
+      });
+    });
+  </script>
+</body>
+</html>

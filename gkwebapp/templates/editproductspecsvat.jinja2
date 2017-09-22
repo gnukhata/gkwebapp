@@ -1,0 +1,316 @@
+<div class="col-sm-6" style="margin-top: -18;">
+<div class="editpr">
+  <div class="row">
+    <div class="form-group col-sm-11 pd">
+    <label for="editproddesc" class="">{% trans %}New Name of Product{% endtrans %} :</label><label for="editproddesc" style="color:red;font-size: 120%;">*</label>
+<input type='text' class="form-control input-sm" name="editproddesc"  id="editproddesc" value="{{proddesc['productdesc']}}" placeholder="Alphanumeric">
+</div>
+  </div>
+  {% if category|length > 0 %}
+  <div class="row">
+    <div class="form-group col-sm-11" id="categorydiv">
+    <label id="editcatselectlabel" for="editcatselect" class="">{% trans %}Category{% endtrans %} :</label>
+<select class = "form-control input-sm "  name = "catselect" id="editcatselect" >
+  {% if proddesc["categorycode"]== None %}
+  <option value="" selected>{% trans %}None{% endtrans %}</option>
+  {% endif %}
+  {% for cat in category %}
+  {% if cat['categorycode']== proddesc["categorycode"] %}
+  <option value="{{cat['categorycode']}}" selected>{{cat["categoryname"]}}</option>
+  {% else %}
+  <option value="{{cat['categorycode']}}" >{{cat["categoryname"]}}</option>
+  {% endif %}
+  {% endfor %}
+</select>
+</div>
+  </div>
+  {% endif %}
+  <div class="row">
+    <div class="form-group col-sm-11 pds olduom">
+    <label for="edituom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label><label for="edituom" style="color:red;font-size: 120%;">*</label>
+    <select class = "form-control input-sm "  name = "uom" id="edituom" >
+      {% for uom in uom %}
+      {% if uom["uomid"]== proddesc["uomid"] %}
+      <option value="{{uom['uomid']}}" selected>{{uom["unitname"]}}</option>
+      {% else %}
+      <option value="{{uom['uomid']}}">{{uom["unitname"]}}</option>
+      {% endif %}
+      {% endfor %}
+    </select>
+    </div>
+  </div>
+  <div id="extsp" class="row">
+    <input type="text" id="numberofspecs" value="{{prodspecs|length}}" hidden>
+    {% if prodspecs|length > 0 %}
+      <div class="col-sm-11">
+      <div class="panel">
+        <table id="spec_table" class="table table-condensed table-bordered fixed-table">
+          <thead class="bg-primary input-sm">
+            <tr>
+              <th class="col-xs-2 text-center">{% trans %}Specifications{% endtrans %}</th>
+              <th class="col-xs-2 text-center">{% trans %}Value{% endtrans %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for spec in prodspecs %}
+        <tr>
+          <td>
+            <label for="{{spec['spcode']}}" class="">{{spec["attrname"]}}</label>
+            <input type="text" class="spec_name" value="{{spec['spcode']}}" hidden>
+          </td>
+          <td>
+            {% if spec["attrtype"]==0 %}
+
+              <input type="text" class="form-control spec_value spec input-sm" id="{{spec['spcode']}}" placeholder="Alphanumeric" value="{% for pdesc in proddesc['specs'] %}{% if pdesc|int == spec['spcode']|int %}{{proddesc['specs'][pdesc]}}{% endif %}{% endfor %}">
+            {% elif spec["attrtype"]==1 %}
+              <input type="text" class="form-control spec_value spec input-sm numtype" id="{{spec['spcode']}}" placeholder="Numeric" value="{% for pdesc in proddesc['specs'] %}{% if pdesc|int == spec['spcode']|int %}{{proddesc['specs'][pdesc]}}{% endif %}{% endfor %}">
+            {% elif spec["attrtype"]==2 %}
+              <div class="form-inline">
+		<div class="form-group ">
+                  <input type="text" class="form-control input-sm spec specday specdate" size="2" maxlength="2" placeholder="DD" value="{% for pdesc in proddesc['specs'] %}{% if pdesc|int == spec['spcode']|int %}{{proddesc['specs'][pdesc][8]+proddesc['specs'][pdesc][9]}}{% endif %}{% endfor %}">
+		</div>
+		<div class="form-group ">
+                  <input type="text" class="form-control input-sm spec specmonth specdate" size="2" maxlength="2" placeholder="MM" value="{% for pdesc in proddesc['specs'] %}{% if pdesc|int == spec['spcode']|int %}{{proddesc['specs'][pdesc][5]+proddesc['specs'][pdesc][6]}}{% endif %}{% endfor %}">
+		</div>
+		<div class="form-group">
+                  <input type="text" class="form-control input-sm spec specyear specdate" size="4" maxlength="4" placeholder="YYYY" value="{% for pdesc in proddesc['specs'] %}{% if pdesc|int == spec['spcode']|int %}{{proddesc['specs'][pdesc][0]+proddesc['specs'][pdesc][1]+proddesc['specs'][pdesc][2]+proddesc['specs'][pdesc][3]}}{% endif %}{% endfor %}">
+		</div>
+		<input type="text" class="spec_value datevalue" value="{% for pdesc in proddesc['specs'] %}{% if pdesc|int == spec['spcode']|int %}{{proddesc['specs'][pdesc]}}{% endif %}{% endfor %}" hidden>
+            </div>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      </table>
+      </div>
+      </div>
+        {% endif %}
+  </div>
+  </div>
+  </div>
+<div class="col-sm-6" style="margin-top: -67;">
+  <div class="row">
+    <div class="form-group taxdiv">
+    <div class="panel taxinnerdiv">
+    <table id="product_edit_tax_table" class="table table-condensed table-bordered fixed-table">
+      <thead class="bg-primary input-sm">
+        <tr>
+          <th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
+          <th class="col-xs-4 text-center">{% trans %}State{% endtrans %}</th>
+          <th class="col-xs-3 text-center">{% trans %}Rate %{% endtrans %}</th>
+          <th class="col-xs-1"></th>
+          <th class=""></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="blank" value="new">
+          <td class="col-xs-4">
+            <select class="form-control input-sm product_tax_disable tax_name product_new_name">
+              <option value="" selected disable hidden>Select Tax</option>
+              <option value="VAT">VAT</option>
+              <option value="CVAT">CVAT</option>
+            </select>
+          </td>
+          <td class="col-xs-4">
+            <select class="form-control input-sm tax_state product_new_state product_tax_disable" >
+              <option value="">None</option>
+              <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
+              <option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>
+              <option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option>
+              <option value="Assam" stateid="4">Assam</option>
+              <option value="Bihar" stateid="5">Bihar</option>
+              <option value="Chandigarh" stateid="6">Chandigarh</option>
+              <option value="Chhattisgarh" stateid="7">Chhattisgarh</option>
+              <option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option>
+              <option value="Daman and Diu" stateid="9">Daman and Diu</option>
+              <option value="Delhi" stateid="10">Delhi</option>
+              <option value="Goa" stateid="11">Goa</option>
+              <option value="Gujarat" stateid="12">Gujarat</option>
+              <option value="Haryana" stateid="13">Haryana</option>
+              <option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option>
+              <option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option>
+              <option value="Jharkhand" stateid="16">Jharkhand</option>
+              <option value="Karnataka" stateid="17">Karnataka</option>
+              <option value="Kerala" stateid="19">Kerala</option>
+              <option value="Lakshadweep" stateid="20">Lakshadweep</option>
+              <option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option>
+              <option value="Maharashtra" stateid="22">Maharashtra</option>
+              <option value="Manipur" stateid="23">Manipur</option>
+              <option value="Meghalaya" stateid="24">Meghalaya</option>
+              <option value="Mizoram" stateid="25">Mizoram</option>
+              <option value="Nagaland" stateid="26">Nagaland</option>
+              <option value="Odisha" stateid="29">Odisha</option>
+              <option value="Pondicherry" stateid="31">Pondicherry</option>
+              <option value="Punjab" stateid="32">Punjab</option>
+              <option value="Rajasthan" stateid="33">Rajasthan</option>
+              <option value="Sikkim" stateid="34">Sikkim</option>
+              <option value="Tamil Nadu" stateid="35">Tamil Nadu</option>
+              <option value="Telangana" stateid="36">Telangana</option>
+              <option value="Tripura" stateid="37">Tripura</option>
+              <option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option>
+              <option value="Uttarakhand" stateid="39">Uttarakhand</option>
+              <option value="West Bengal" stateid="41">West Bengal</option>
+            </select>
+          </td>
+          <td class="col-xs-3">
+            <input class="form-control input-sm tax_rate text-right product_new_rate numtype product_tax_disable" placeholder="Rate">
+          </td>
+          <td class="col-xs-1 product_tax_disable">
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <small id="taxhelp4" class="form-text text-muted common">Press 'Insert' key from anywhere on the screen to save changes.</small>
+    <div class="collapse" id="moresmall">
+      <small id="taxhelp2" class="form-text text-muted ">Press 'Ctrl + >' to move forward or 'Ctrl + <' to move backward within a row in a table.</small><br/>
+      <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to move backward within a Column in a table.</small>
+        {% if numberofgodowns|int > 0 %}
+          <small  class="form-text text-muted " id="godownmsg">Press 'Esc' key to shift focus from Tax Rate or Tax Name  to Godown Name or from Godown Opening Stock to 'Save' button.</small>
+        {% else %}
+          <small  class="form-text text-muted productclass">Press 'Esc' key to shift focus from Tax Rate or Tax Name  to Opening Stock or from Opening Stock to 'Save' button.</small>
+        {% endif %}
+    </div>
+    <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+  </div>
+  </div>
+  <div id ="noinventory">
+  <div class="row">
+    {% if not godown %}
+    <input type="text" name="godownflag" id="editgodownflag" value="0" hidden>
+    <input type="text" id="editgodownpresence" value="0" hidden>
+    <div class="form-group pds" id ="beforeaddingfirstgodown">
+      <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+      <div class="input-group col-sm-6">
+        <input type='text' class="form-control text-right input-sm" name="openingstock"  id="editopeningstock" value="{{proddesc['openingstock']}}" aria-describedby="unitaddon">
+        <span class="input-group-addon input-sm" id="unitaddon"></span>
+      </div>
+    </div>
+    <div id="newgodownadded" hidden>
+      <div class="form-group">
+        <input type="checkbox" name="godownflag" id="editgodownflag" value="1">
+        <label class="" for="editgodownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
+      </div>
+      <div id="editnogodown" class="form-group pds noinventory">
+        <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+        <div class="input-group col-sm-6">
+          <input type='text' class="form-control text-right input-sm" name="openingstock"  id="editopeningstock" value="{{proddesc['openingstock']}}" aria-describedby="unitaddon">
+          <span class="input-group-addon input-sm" id="unitaddon"></span>
+        </div>
+      </div>
+      <div  id="editopeningstockdiv" class="form-group" hidden>
+        <div class="panel">
+          <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">
+            <thead class="bg-primary input-sm">
+              <tr>
+                <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
+                <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+                <th class="col-xs-1 text-center"></th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr class="editgodownid">
+                  <td class="col-xs-8">
+                    <select class="form-control input-sm editgodown_name">
+                      <option value="" disabled selected hidden>Select Godown</option>
+                      {% for record in godown %}
+                      <option value={{record["goid"]}}>{{record["goname"]}}({{record["goaddr"]}})</option>
+                      {% endfor %}
+                    </select>
+                  </td>
+                  <td class="col-xs-3">
+                    <input class="form-control input-sm editgodown_ob text-right numtype" value="0.00">
+                  </td>
+                  <td class="col-xs-1">
+                  </td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+    {% else %}
+    <input type="text" id="editgodownpresence" value="1" hidden>
+  {% if numberofgodowns==0 %}
+  <div class="form-group">
+    <input type="checkbox" name="godownflag" id="editgodownflag" value="0">
+    <label class="" for="editgodownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
+  </div>
+  <div id="editnogodown" class="form-group pds">
+    <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+    <div class="input-group col-sm-6">
+      <input type='text' class="form-control text-right input-sm" name="openingstock"  id="editopeningstock" value="{{proddesc['openingstock']}}" aria-describedby="unitaddon">
+      <span class="input-group-addon input-sm" id="unitaddon"></span>
+    </div>
+  </div>
+  <div  id="editopeningstockdiv" class="form-group" hidden>
+    <div class="panel">
+      <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">
+        <thead class="bg-primary input-sm">
+          <tr>
+            <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
+            <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+            <th class="col-xs-1 text-center"></th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr class="editgodownid">
+              <td class="col-xs-8">
+                <select class="form-control input-sm editgodown_name">
+                  <option value="" disabled selected hidden>Select Godown</option>
+                  {% for record in godown %}
+                  <option value={{record["goid"]}}>{{record["goname"]}}({{record["goaddr"]}})</option>
+                  {% endfor %}
+                </select>
+              </td>
+              <td class="col-xs-3">
+                <input class="form-control input-sm editgodown_ob text-right numtype" value="0.00">
+              </td>
+              <td class="col-xs-1">
+              </td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% else %}
+  <input type="text" name="godownflag" id="editgodownflag" value="1" hidden>
+  <div  id="editopeningstockdiv" class="form-group">
+    <div class="panel">
+      <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">
+        <thead class="bg-primary input-sm">
+          <tr>
+            <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
+            <th class="col-xs-4 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+            <th class="col-xs-1 text-center"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for record in range(numberofgodowns) %}
+            <tr class="editgodownid">
+              <td class="col-xs-8">
+                <select class="form-control input-sm editgodown_name">
+                  {% for record in godown %}
+                  <option value={{record["goid"]}}>{{record["goname"]}}({{record["goaddr"]}})</option>
+                  {% endfor %}
+                </select>
+              </td>
+              <td class="col-xs-3">
+                <input class="form-control input-sm editgodown_ob text-right numtype" value="0.00">
+              </td>
+              <td class="col-xs-1">
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+  {% endif %}
+    {% endif %}
+  </div>
+</div>
