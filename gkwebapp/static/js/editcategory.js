@@ -2,13 +2,13 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
     $(".tax_rate").numeric();
     var taxfieldhtml = $("#category_edit_tax_table tbody").html();
-    var stateshtml = $("#category_tax_table tbody tr:first td:eq(1) select").html();
+    var stateshtml = $("#category_edit_tax_table tbody tr:first td:eq(1) select").html();
   $("#category_edit_savespecs").hide();
   $(".category_edit_disable").prop("disabled",true);
-  $("#category_edit_name").focus().select();
+    $("#category_edit_name").focus().select();
     var deletedspecs = [];
     var deletedtaxs = [];
-  $(document).keyup(function(event) {
+    $(document).keyup(function(event) {
     if(event.which == 45) {
       if ($("#category_edit_savespecs").is(":enabled")) {
 
@@ -33,9 +33,8 @@ $(document).ready(function() {
             }
           })
           .done(function(resp) {
-            console.log(resp["gkresult"].length);
             if (resp["gkresult"].length>0)
-            {
+              {
               $("#category_edit_innerdiv").hide();
                 $(".panel-footer").hide();
 
@@ -72,9 +71,7 @@ $(document).ready(function() {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
       }
     })
-    .done(function(resp) {
-
-
+	  .done(function(resp) {
 	var result = resp["gkresult"];
       $("#category_edit_name").val(result["categoryname"]);
       $("#category_edit_under").val(result["subcategoryof"]);
@@ -111,11 +108,13 @@ $(document).ready(function() {
 		$('#category_edit_tax_table tbody tr:last td:eq(1) select').prop("disabled", true);
 	    }
 	    $('#category_edit_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);
+	    $(".tax_del:first").hide();
 	}
 	}
 	else {
 	    $('#category_edit_tax_table tbody').empty();
 	    $('#category_edit_tax_table tbody').append(taxfieldhtml);
+	    $(".tax_del:first").hide();
 	}
 	
     })
@@ -400,7 +399,7 @@ $(document).ready(function() {
 
     else if(event.which==190 && event.shiftKey)
     {
-      event.preventDefault();
+	event.preventDefault();
       $('#category_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(2) input').focus().select();
     }
     else if (event.which==188 && event.shiftKey)
