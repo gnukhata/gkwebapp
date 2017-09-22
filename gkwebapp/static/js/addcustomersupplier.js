@@ -32,7 +32,7 @@ $(document).ready(function() {
 
   $("#add_cussup").focus().select();
   $("#add_cussup").keydown(function(event) {
-    if (event.which==13) {
+      if (event.which==13) {
 
 	if ($.trim($("#add_cussup").val())=="") {
             $("#role-blank-alert").alert();
@@ -112,7 +112,7 @@ $("#add_state").keydown(function(event) {
     event.preventDefault();
     $('#gstintable tbody tr:eq('+nextindex+') td:eq(0) select').focus().select();
   }
-  else if (event.which==188 && event.ctrlKey) {
+    else if (event.which==188 && event.ctrlKey) {
     event.preventDefault();
     $('#gstintable tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
   }
@@ -306,13 +306,6 @@ else{
       // click the customer/supplier create tab to reload the current page in tab creating a reset effect
     $("#customersupplier_create").click();
   });
-  $(document).keyup(function(event) {
-    if(event.which == 45) {
-      $("#cussup_save").click();
-      event.preventDefault();
-      return false;
-    }
-  });
   $("#cussup_save").click(function(event) {
       //save event for saving the customer/supplier
       event.preventDefault();
@@ -418,7 +411,7 @@ if($("#vatorgstflag").val() == '7'){
                 });
                 return false;
             }
-          gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val();
+            gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val();
       }
     }
       });

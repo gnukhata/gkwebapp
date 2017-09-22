@@ -719,11 +719,14 @@ $(document).ready(function() {
     });
     var modalpresent = 0;
   $(document).off("keyup").on("keyup", function(event) {
-    if (event.which == 45) {
+      if (event.which == 45) {
 	event.preventDefault();
 	if (modalpresent == 0) {
 	    $("#invoice_save").click();
 	}
+	  else {
+	      $("#cussup_save").click();
+	  }
       return false;
     }
   });
@@ -1900,6 +1903,9 @@ if (event.which == 13) {
                for (i in custs) {
                  $("#invoice_customer").append('<option value="' + custs[i].custid + '" >' + custs[i].custname + '</option>');
                }
+		 $("#invoice_customer option").filter(function() {
+                     return this.text == text1;
+                 }).attr('selected', true).trigger('change'); //Selects the latest added customer/supplier.
 		 $("#invoice_customer").change();
              });
             $("#selectedcustsup").val("");
@@ -2233,26 +2239,26 @@ if (event.which == 13) {
            } else {
              $("#invoice_create").click();
            }
+	     $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
            $("#success-alert").alert();
            $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
                $("#success-alert").hide();
-	       $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
            });
            return false;
          } else if (resp["gkstatus"] == 1) {
+	     $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
            $("#invoice_challanno").focus();
            $("#duplicate-alert").alert();
            $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
                $("#duplicate-alert").hide();
-	       $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
            });
            return false;
          } else {
-           $("#invoice_deliverynote").focus();
+             $("#invoice_deliverynote").focus();
+	     $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
            $("#failure-alert").alert();
            $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {
                $("#failure-alert").hide();
-	       $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
            });
            return false;
          }
