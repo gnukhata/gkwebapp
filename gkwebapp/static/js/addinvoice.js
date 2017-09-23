@@ -41,7 +41,7 @@ $(document).ready(function() {
     } else {
       $(".gstinfield").show();
     }
-
+    
     //Initialising some variables.
     var issuername = "";
     var designation = "";
@@ -886,7 +886,7 @@ $(document).ready(function() {
       }
   });
 
-  $(document).off('change', '.invoice_product_quantity_vat').on('change', '.invoice_product_quantity_vat', function(event) {
+    $(document).off('change', '.invoice_product_quantity_vat').on('change', '.invoice_product_quantity_vat', function(event) {
     event.preventDefault();
       /* Act on the event */
       var curindex = $(this).closest('#invoice_product_table_vat tbody tr').index();
@@ -1537,7 +1537,7 @@ $(document).ready(function() {
           $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').focus();
           return false;
         }
-	  var quantity = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + curindex + ") td:eq(2) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + curindex + ") td:eq(3) input").val());
+	var quantity = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + curindex + ") td:eq(2) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + curindex + ") td:eq(3) input").val());
 	  if (parseFloat(quantity) === 0.00) {
 	      $("#quantity-blank-alert").alert();
 	      $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -1921,7 +1921,8 @@ if (event.which == 13) {
     event.stopPropagation();
     //event.preventDefault();
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
-    if ($.trim($('#invoice_challanno').val()) == "") {
+      if ($.trim($('#invoice_challanno').val()) == "") {
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
       $("#challanno-blank-alert").alert();
       $("#challanno-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
         $("#challanno-blank-alert").hide();
@@ -1930,7 +1931,8 @@ if (event.which == 13) {
       return false;
     }
 
-    if ($.trim($('#invoice_date').val()) == "") {
+      if ($.trim($('#invoice_date').val()) == "") {
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
       $("#date-blank-alert").alert();
       $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
         $("#date-blank-alert").hide();
@@ -1938,7 +1940,8 @@ if (event.which == 13) {
       $('#invoice_date').focus();
       return false;
     }
-    if ($.trim($('#invoice_month').val()) == "") {
+      if ($.trim($('#invoice_month').val()) == "") {
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
       $("#date-blank-alert").alert();
       $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
         $("#date-blank-alert").hide();
@@ -1946,7 +1949,8 @@ if (event.which == 13) {
       $('#invoice_month').focus();
       return false;
     }
-    if ($.trim($('#invoice_year').val()) == "") {
+      if ($.trim($('#invoice_year').val()) == "") {
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
       $("#date-blank-alert").alert();
       $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
         $("#date-blank-alert").hide();
@@ -1954,7 +1958,8 @@ if (event.which == 13) {
       $('#invoice_year').focus();
       return false;
     }
-    if (!Date.parseExact($("#invoice_date").val() + $("#invoice_month").val() + $("#invoice_year").val(), "ddMMyyyy")) {
+      if (!Date.parseExact($("#invoice_date").val() + $("#invoice_month").val() + $("#invoice_year").val(), "ddMMyyyy")) {
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       $("#date-alert").alert();
       $("#date-alert").fadeTo(2250, 500).slideUp(500, function() {
         $("#date-alert").hide();
@@ -1974,7 +1979,8 @@ if (event.which == 13) {
 
     if ($("#invoice_deliverynote option:selected").val() != "") {
 
-      if (Date.parseExact($("#invoice_deliverynote option:selected").attr("dcdate"), "dd-MM-yyyy").compareTo(curdate) == 1) {
+	if (Date.parseExact($("#invoice_deliverynote option:selected").attr("dcdate"), "dd-MM-yyyy").compareTo(curdate) == 1) {
+	    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
         $("#invdc-date-alert").alert();
         $("#invdc-date-alert").fadeTo(2250, 500).slideUp(500, function() {
           $("#invdc-date-alert").hide();
@@ -1984,7 +1990,8 @@ if (event.which == 13) {
       }
     }
 
-    if ($.trim($('#invoice_customer option:selected').val()) == "") {
+      if ($.trim($('#invoice_customer option:selected').val()) == "") {
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
       $("#custsup-blank-alert").alert();
       $("#custsup-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
         $("#custsup-blank-alert").hide();
@@ -1992,6 +1999,15 @@ if (event.which == 13) {
       $('#invoice_customer').focus();
       return false;
     }
+      if ($.trim($('#consigneename').val()) == "" && ($.trim($("#tinconsignee").val()) != "" || $.trim($("#gstinconsignee").val() != "") || $.trim($("#consigneeaddress").val()) != "")) {
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+          $("#consignee-blank-alert").alert();
+          $("#consignee-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#consignee-blank-alert").hide();
+          });
+          $('#consigneename').focus();
+          return false;
+      }
     var tax = {};
     var contents = {};
     var freeqty = {};
@@ -2006,16 +2022,18 @@ if (event.which == 13) {
       var quantity;
       var ppu;
 
-      consignee["consigneename"] = $("#consigneename").val();
-      consignee["tinconsignee"] = $("#tinconsignee").val();
-      consignee["gstinconsignee"] = $("#gstinconsignee").val();
-      consignee["consigneeaddress"] = $("#consigneeaddress").val();
-      consignee["consigneestate"] = $("#consigneestate").val();
-      consignee["consigneestatecode"] = $("#statecodeofconsignee").text();
-      bankdetails["accountno"] = $("#accountno").val();
-      bankdetails["bankname"] = $("#bankname").val();
-      bankdetails["ifsc"] = $("#ifsc").val();
-      bankdetails["branch"] = $("#branch").val();
+      if($("#consigneename").val() != ""){
+	  consignee["consigneename"] = $.trim($("#consigneename").val());
+          consignee["tinconsignee"] = $.trim($("#tinconsignee").val());
+          consignee["gstinconsignee"] = $.trim($("#gstinconsignee").val());
+          consignee["consigneeaddress"] = $.trim($("#consigneeaddress").val());
+          consignee["consigneestate"] = $.trim($("#consigneestate").val());
+          consignee["consigneestatecode"] = $.trim($("#statecodeofconsignee").text());
+      }
+      bankdetails["accountno"] = $.trim($("#accountno").val());
+      bankdetails["bankname"] = $.trim($("#bankname").val());
+      bankdetails["ifsc"] = $.trim($("#ifsc").val());
+      bankdetails["branch"] = $.trim($("#branch").val());
     if ($("#taxapplicable").val() == 22) {
     for (let i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
       productqtys.push(parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()));
@@ -2077,7 +2095,7 @@ if (event.which == 13) {
           $('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(0) select').focus();
           return false;
         }
-	  quantity = parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val()) + parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
+	quantity = parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val()) + parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
 	  if (parseFloat(quantity) === 0.00) {
 	      $("#quantity-blank-alert").alert();
 	      $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
