@@ -1343,8 +1343,8 @@ $(document).ready(function() {
 
          }
 	   else {
-	       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').prop("disabled", true);
-               $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').prop("disabled", true);
+	       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').prop("disabled", true).val("0.00");
+               $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').prop("disabled", true).val("0.00");
 	       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) span').text("");
 	       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) span').text("");
 	   }
@@ -1919,7 +1919,7 @@ if (event.which == 13) {
     });
   });
 
-
+    var allow = 1;
   $("#invoice_save").click(function(event) {
     event.stopPropagation();
     //event.preventDefault();
@@ -2121,16 +2121,16 @@ if (event.which == 13) {
       }
 	if (parseFloat(quantity) > 0) {
 	    let obj = {};
-        ppu = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val();
-        obj[ppu] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val();
-        tax[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val();
+            ppu = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val());
+            obj[ppu] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
+            tax[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val());
         contents[productcode] = obj;
-        items[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val();
-        freeqty[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val();
-	discount[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val();
+            items[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
+            freeqty[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val());
+	    discount[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val());
 	}
     }
-	invoicetotal = $('#invoice_product_table_vat tfoot tr:last td:eq(5) input').val();
+	invoicetotal = $.trim($('#invoice_product_table_vat tfoot tr:last td:eq(5) input').val());
 
     }
 
@@ -2174,7 +2174,7 @@ if (event.which == 13) {
         freeqty[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val();
 	discount[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();
 	}
-	  invoicetotal = $('#total_product_gst').html();
+	  invoicetotal = $.trim($('#total_product_gst').html());
       }
 
     stock["items"] = items;
@@ -2200,7 +2200,7 @@ if (event.which == 13) {
     form_data.append("dcid", $("#invoice_deliverynote option:selected").val());
     form_data.append("custid", $("#invoice_customer option:selected").val());
     form_data.append("invoiceno", $("#invoice_challanno").val());
-    form_data.append("invoicedate", $("#invoice_year").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_date").val());
+      form_data.append("invoicedate", $.trim($("#invoice_year").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_date").val()));
     form_data.append("contents", JSON.stringify(contents));
     form_data.append("tax", JSON.stringify(tax));
     form_data.append("stock", JSON.stringify(stock));
@@ -2222,12 +2222,12 @@ if (event.which == 13) {
     form_data.append("taxflag", $("#taxapplicable").val());
     form_data.append("transportationmode", $("#transportationmode").val());
     form_data.append("vehicleno", $("#vehicleno").val());
-    var dateofsupply = $("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val();
+      var dateofsupply = $.trim($("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val());
     if (dateofsupply == "") {
 	form_data.append("dateofsupply", dateofsupply);
     }
     else {
-	form_data.append("dateofsupply", $("#supply_date").val() + '-' + $("#supply_month").val() + '-' + $("#supply_year").val());
+	form_data.append("dateofsupply", $.trim($("#supply_date").val() + '-' + $("#supply_month").val() + '-' + $("#supply_year").val()));
     }
     form_data.append("reversecharge", $("#reversecharge").val());
     var files = $("#my-file-selector")[0].files;
@@ -2239,57 +2239,60 @@ if (event.which == 13) {
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
     $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function(e) {
-      $.ajax({
-        url: '/invoice?action=save',
-        type: 'POST',
-        global: false,
-        contentType: false,
-        cache: false,
-        processData: false,
-        dataType: 'json',
-        async: false,
-        data: form_data,
-        beforeSend: function(xhr) {
-          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+	if (allow == 1){
+	    $.ajax({
+                url: '/invoice?action=save',
+                type: 'POST',
+                global: false,
+                contentType: false,
+                cache: false,
+                processData: false,
+                dataType: 'json',
+                async: false,
+                data: form_data,
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+            })
+                .done(function(resp) {
+                    if (resp["gkstatus"] == 0) {
+			allow = 0;
+                        if ($("#status").val() == '9') {
+                            $("#invoice_record").click();
+                        } else {
+                            $("#invoice_create").click();
+                        }
+                        $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+                        $("#success-alert").alert();
+                        $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
+                            $("#success-alert").hide();
+                        });
+                        return false;
+                    } else if (resp["gkstatus"] == 1) {
+                        $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+                        $("#invoice_challanno").focus();
+                        $("#duplicate-alert").alert();
+                        $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
+                            $("#duplicate-alert").hide();
+                        });
+                        return false;
+                    } else {
+                        $("#invoice_deliverynote").focus();
+                        $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+                        $("#failure-alert").alert();
+                        $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {
+                            $("#failure-alert").hide();
+                        });
+                        return false;
+                    }
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
         }
-      })
-       .done(function(resp) {
-         if (resp["gkstatus"] == 0) {
-           if ($("#status").val() == '9') {
-             $("#invoice_record").click();
-           } else {
-             $("#invoice_create").click();
-           }
-	     $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-           $("#success-alert").alert();
-           $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
-               $("#success-alert").hide();
-           });
-           return false;
-         } else if (resp["gkstatus"] == 1) {
-	     $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-           $("#invoice_challanno").focus();
-           $("#duplicate-alert").alert();
-           $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
-               $("#duplicate-alert").hide();
-           });
-           return false;
-         } else {
-             $("#invoice_deliverynote").focus();
-	     $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-           $("#failure-alert").alert();
-           $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {
-               $("#failure-alert").hide();
-           });
-           return false;
-         }
-       })
-       .fail(function() {
-         console.log("error");
-       })
-       .always(function() {
-         console.log("complete");
-       });
 
       return false;
     });
