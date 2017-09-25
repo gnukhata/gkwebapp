@@ -1,6 +1,6 @@
 /*
   Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-   This file is part of GNUKhata:A modular,robust and Free Accounting System.
+  This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
    GNUKhata is Free Software; you can redistribute it and/or modify
    it under the terms of the GNU Affero General Public License as
@@ -607,6 +607,12 @@ $(document).ready(function() {
 	event.preventDefault();
 	/* Act on the event */
 	$(".numtype").numeric({ negative: false });
+    });
+
+    $(document).off('focus', '#accountno').on('focus', '#accountno', function(event) {
+        event.preventDefault();
+        /* Act on the event */
+        $("#accountno").numeric({ negative: false });
     });
 
     //When an element of numtype looses focus and is blank it is set to 0.00.
@@ -1794,16 +1800,15 @@ if (event.which == 13) {
     });
 
     //Events for last fields - Bank Details, Reverse charge etc..
-    $(document).off("keydown", ".lastfield").on("keydown", ".lastfield", function(event) {
-	var n = $(".lastfield").length;
-	var f = $('.lastfield');
+    $(document).off("keydown", ".lastfield:visible").on("keydown", ".lastfield:visible", function(event) {
+	var n = $(".lastfield:visible").length;
+	var f = $('.lastfield:visible');
 	if (event.which == 13)
 	{
 	    event.preventDefault();
 	    var nextIndex = f.index(this) + 1;
 	    if(nextIndex < n){
 		f[nextIndex].focus();
-		f[nextIndex].select();
 	    }
 	    else if (nextIndex == n) {
 		$("#invoice_save").click();
@@ -1815,12 +1820,10 @@ if (event.which == 13) {
 		if ($(this).is("select")) {
 		    if ($(this).val() == "Road") {
 			f[previndex].focus();
-			f[previndex].select();
 		    }
 		}
 		else {
 		    f[previndex].focus();
-		    f[previndex].select();
 		}
 	    }
 	    else if (previndex == -1) {
@@ -1999,7 +2002,7 @@ if (event.which == 13) {
       $('#invoice_customer').focus();
       return false;
     }
-      if ($.trim($('#consigneename').val()) == "" && ($.trim($("#tinconsignee").val()) != "" || $.trim($("#gstinconsignee").val() != "") || $.trim($("#consigneeaddress").val()) != "")) {
+      if ($.trim($('#consigneename').val()) == "" && ($.trim($("#tinconsignee").val()) != "" || $.trim($("#gstinconsignee").val() != ""))  && $.trim($("#consigneeaddress").val()) != "") {
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
           $("#consignee-blank-alert").alert();
           $("#consignee-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -2009,7 +2012,7 @@ if (event.which == 13) {
           return false;
       }
     var tax = {};
-    var contents = {};
+      var contents = {};
     var freeqty = {};
     var stock = {};
       var items = {};
@@ -2036,7 +2039,7 @@ if (event.which == 13) {
       bankdetails["branch"] = $.trim($("#branch").val());
     if ($("#taxapplicable").val() == 22) {
     for (let i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
-      productqtys.push(parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()));
+	productqtys.push(parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()));
       if ($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val() == "") {
         $("#product-blank-alert").alert();
         $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -2059,20 +2062,20 @@ if (event.which == 13) {
       productcodes.push($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val());
 
       var productcode = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
-      $.ajax({
+	$.ajax({
         url: '/product?type=prodtax',
         type: 'POST',
         dataType: 'json',
         async: false,
         data: { "productcode": productcode },
         beforeSend: function(xhr) {
-          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
         }
       })
        .done(function(resp) {
          console.log("success");
          if (resp["gkresult"].length == 0) {
-           $("#sometax-alert").alert();
+             $("#sometax-alert").alert();
            $("#sometax-alert").fadeTo(2250, 500).slideUp(500, function() {
              $("#sometax-alert").hide();
            });
