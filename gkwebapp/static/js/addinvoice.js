@@ -2227,7 +2227,7 @@ if (event.which == 13) {
 	form_data.append("dateofsupply", dateofsupply);
     }
     else {
-	form_data.append("dateofsupply", $.trim($("#supply_date").val() + '-' + $("#supply_month").val() + '-' + $("#supply_year").val()));
+	form_data.append("dateofsupply", $.trim($("#supply_year").val() + '-' + $("#supply_month").val() + '-' + $("#supply_date").val()));
     }
     form_data.append("reversecharge", $("#reversecharge").val());
     var files = $("#my-file-selector")[0].files;
