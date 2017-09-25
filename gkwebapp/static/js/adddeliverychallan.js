@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+  Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
 This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
 GNUKhata is Free Software; you can redistribute it and/or modify
@@ -259,17 +259,21 @@ $(document).ready(function() {
     }
   });
 
+    var modalpresent = 0;
+    $(document).off("keyup").on("keyup", function(event) {
+        if (event.which == 45) {
+            event.preventDefault();
+            if (modalpresent == 0) {
+                $("#deliverychallan_save").click();
+            }
+            else {
+                $("#cussup_save").click();
+            }
+            return false;
+        }
+    });
 
-
-  $(document).off("keyup").on("keyup",function(event) {
-    if(event.which == 45) {
-      event.preventDefault();
-      $("#deliverychallan_save").click();
-      return false;
-    }
-  });
-
-  $("#deliverychallan_customer").change(function(event) {
+    $("#deliverychallan_customer").change(function(event) {
     $.ajax({
       url: '/customersuppliers?action=get',
       type: 'POST',
@@ -534,14 +538,12 @@ else {
   });
 
   $("#deliverychallan_addcust").click(function() {
-       console.log($('#deliverychallan_gkstatus').val());
+      var custsup = "";
         if ($("#deliverychallan_gkstatus").val()=='out') {
-          var custsup = "/customersuppliers?action=showaddpopup&status=out"
-         console.log("inside out mine");
+            custsup = "/customersuppliers?action=showaddpopup&status=out";
         }
         if($("#deliverychallan_gkstatus").val()=='in'){
-          var custsup = "/customersuppliers?action=showaddpopup&status=in"
-          console.log("inside in mine");
+            custsup = "/customersuppliers?action=showaddpopup&status=in";
         }
 
      $.ajax(
@@ -566,23 +568,22 @@ else {
            $('#custsupmodal').modal('show');
            $('#custsupmodal').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
            {
-             $('#add_cussup_name').focus();
+               $('#add_cussup_name').focus();
+	       modalpresent = 1;
            });
            $('#custsupmodal').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is closed
-           {
+				 {
+				     modalpresent = 0;
             var text1 = $('#selectedcustsup').val();
            if(text1==''){
              $('#deliverychallan_customer').focus();
              return false;
            }
-           console.log($('#status').val());
            if ($("#status").val()=='9') {
-             var urlcustsup = "/customersuppliers?action=getallsups"
-             console.log("inside in");
+               var urlcustsup = "/customersuppliers?action=getallsups";
            }
            if($("#status").val()=='15'){
-             var urlcustsup = "/customersuppliers?action=getallcusts"
-             console.log("inside out");
+               var urlcustsup = "/customersuppliers?action=getallcusts";
            }
            $.ajax({
              type:"POST",
@@ -603,7 +604,6 @@ else {
                $("#deliverychallan_customer").append('<option value="'+custs[i].custid+'" >'+custs[i].custname+'</option>');
              }
            });
-           console.log($('#selectedcustsup').val());
 
             $("#deliverychallan_customer option").filter(function() {
                  return this.text == text1;

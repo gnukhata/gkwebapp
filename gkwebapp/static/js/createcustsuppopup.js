@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+  Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
 This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
 GNUKhata is Free Software; you can redistribute it and/or modify
@@ -78,7 +78,7 @@ $("#add_state").keydown(function(event) {
           event.preventDefault();
           $("#add_cussup_address").focus().select();
         }
-        if (event.which==38 && $("#add_state option:selected").index()==0)  {
+    if (event.which==38 && $("#add_state option:selected").index()==0)  {
           event.preventDefault();
           $("#add_cussup_phone").focus().select();
         }
@@ -116,10 +116,10 @@ $("#add_state").keydown(function(event) {
         var curindex = $(this).closest('tr').index();
         var gstin = $(this).val();
         var gstnint = parseInt(gstin[0] + gstin[1]);
-        if(!($.isNumeric(gstnint)) || gstnint > 37 || gstnint < 0){
-            $("#gstin-improper-alert").alert();
-            $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#gstin-improper-alert").hide();
+        if(!($.isNumeric(gstnint)) || gstnint > 37 || gstnint < 0 || gstin.length !=15){
+            $("#gstin-improper-alert-modal").alert();
+            $("#gstin-improper-alert-modal").fadeTo(2250, 500).slideUp(500, function(){
+                $("#gstin-improper-alert-modal").hide();
                 $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
             });
             return false;
