@@ -19,11 +19,11 @@
 
               </div>
             </div>
-	    
+
             <div class="row productclass">
-	      
+
 	      {% if not gkresult["category"] %}
-		
+
 		<div class="form-group col-sm-11" >
 		  <small id="txtareahelp" class="form-text text-muted common">{% trans %}If you want to put this product under a category/sub-category, you must create a category first.{% endtrans %}</small>
 		  </div>
@@ -41,7 +41,7 @@
 		  </div>
 		{% endif %}
               </div>
-	    
+
 
               <div class="row">
               <div class="form-group col-sm-11 pd ">
@@ -74,7 +74,7 @@
                 <small id="textareahelp" class="form-text text-muted">{% trans %}Press 'Enter' key to save and 'Esc' key to cancel.{% endtrans %}</small>
               </div>
             </div>
-           
+
 	  </div>
           <div class="col-sm-6 common" id="rightdiv">
 	    <div class="row" style="margin-bottom: 2%;">
@@ -82,7 +82,7 @@
 	    </div>
 	    <div class="row productclass" id="specdiv" hidden>
             </div>
-            
+
             <div class="row">
               <div class="form-group taxclass">
 		<div class="panel taxclass">
@@ -104,6 +104,7 @@
                               <option value="CVAT">CVAT</option>
 			      {%if vatorgstflag=='7' or vatorgstflag=='29' %}
 				<option value="IGST">IGST</option>
+        <option value="CESS">CESS</option>
                             {%endif%}
 			  </select>
 			</td>
@@ -170,15 +171,15 @@
                 </div>
                 <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
               </div>
-	    <!--  
+	    <!--
 		<div class="panel col-xs-8 igsttax nopadding" hidden>
 		    <table id="igst_tax_table" class="table table-condensed table-bordered">
                       <thead class="bg-primary input-sm">
 			<tr>
 			  <th class="col-xs-6 text-center">{% trans %}Tax Name{% endtrans %}</th>
-			  
+
 			  <th class="col-xs-6 text-center">{% trans %}Rate %{% endtrans %}</th>
-			  
+
 			</tr>
                       </thead>
 		      <tbody>
@@ -191,11 +192,11 @@
 			  </td>
 			</tr>
 		      </tbody>
-              	      
+
 		    </table>
 		</div>
 		-->
-		
+
             </div>
             <div class="row noinventory ">
               <div class="row productclass">
