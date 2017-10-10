@@ -67,7 +67,7 @@
   </div>
   {%endif%}
   <div id="extsp" class="row">
-    
+
     <input type="text" id="numberofspecs" value="{{prodspecs|length}}" hidden>
     {% if prodspecs|length > 0 %}
       <div class="col-sm-11">
@@ -113,7 +113,7 @@
 	  </table>
 	</div>
       </div>
-    {% endif %}  
+    {% endif %}
   </div>
   </div>
   </div>
@@ -141,6 +141,7 @@
               <option value="CVAT">CVAT</option>
               {%if vatorgstflag=='7' or vatorgstflag=='29'%}
               <option value="IGST">IGST</option>
+              <option value="CESS">CESS</option>
               {%endif%}
             </select>
           </td>

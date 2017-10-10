@@ -17,12 +17,12 @@ $(document).ready(function() {
     $(".numtype").numeric();
   });
 
-   
+
   if(sessionStorage.invflag==0){
   $(".noinventory").hide();
     $("#taxhelp3").hide();
     $("#taxhelp4").show();
-  
+
   }
 
   $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
@@ -134,7 +134,7 @@ $(document).ready(function() {
         }
         else {
           $("#editproddesc").focus().select();
-          
+
         }
 
 
@@ -290,7 +290,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
 
           $('#product_edit_tax_table tbody tr').remove();
 
-          
+
         for (tax of resp["gkresult"]) {
           $('#product_edit_tax_table tbody').append('<tr value="'+tax["taxid"]+'">'+ taxhtml + '</tr>');
           $('#product_edit_tax_table tbody tr:last td:last').append('<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
@@ -484,11 +484,11 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
     event.preventDefault();
     if ($("#catg").val()){
       $("#editcatselect").focus();
-      
+
     }
     else {
       $("#editproddesc").focus().select();
-      
+
     }
 
     $(".godownflag").show();
@@ -496,7 +496,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
     $(".product_cat_tax_disable").prop('disabled',false);
     $(".product_tax_disable").prop('disabled',false);
     $("#product_edit_tax_table tbody tr").each(function() {
-      if($('td:eq(0) select option:selected', this).val() == 'CVAT' || $('td:eq(0) select option:selected', this).val() =='IGST' ){
+      if($('td:eq(0) select option:selected', this).val() == 'CVAT' || $('td:eq(0) select option:selected', this).val() =='IGST' || $('td:eq(0) select option:selected', this).val() =='CESS' ){
         $('td:eq(1) select', this).prop('disabled', true);
       }
     });
@@ -648,13 +648,16 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
       $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
       event.preventDefault();
     }
-    else if (($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='CVAT' || $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val() =='IGST' ) && event.which==13 ) {
+    else if (($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='CVAT' || $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val() =='IGST' || $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val() =='CESS') && event.which==13 ) {
         event.preventDefault();
         var types = [];
         $('#product_edit_tax_table tbody tr').each(function(){
           if($(".tax_name",this).val()=='IGST') {
           types.push($(".tax_name",this).val());
         }
+        if($(".tax_name",this).val()=='CESS') {
+        types.push($(".tax_name",this).val());
+      }
           if ($(".tax_name",this).val()=='CVAT') {
           types.push($(".tax_name",this).val());
           }
@@ -751,7 +754,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
       if (curindex > 0) {
         for (var i = 1; i < curindex+1; i++) {
           for (var j = 0; j < curindex; j++) {
-            if ($("#product_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "CVAT" || $("#product_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "IGST") {
+            if ($("#product_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "CVAT" || $("#product_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "IGST" || $("#product_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "CESS") {
               i = i + 1;
             }
             selectedtaxstate = $("#product_edit_tax_table tbody tr:eq("+j+") td:eq(1) select option:selected").attr("stateid");
@@ -825,7 +828,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
     var previndex1 = curindex1-1;
     if (event.which==13) {
       event.preventDefault();
-      if ($('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="IGST" && $("#vatorgstflag").val()!='29') {
+      if ($('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="IGST" || $('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="CESS" && $("#vatorgstflag").val()!='29') {
         if ($("#invflag").val()==0){
             $("#epsubmit").focus();
         }
@@ -883,6 +886,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
             '<option value="VAT">VAT</option>'+
             '<option value="CVAT">CVAT</option>'+
             '<option value="IGST">IGST</option>'+
+            '<option value="CESS">CESS</option>'+
           '</select>'+
           '</td>'+
           '<td class="col-xs-4">'+
@@ -935,7 +939,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
           '</td>'+
           '</tr>');
           $(".tax_rate").numeric();
-          if (selectedtaxname == "CVAT" || selectedtaxname == "IGST") {
+          if (selectedtaxname == "CVAT" || selectedtaxname == "IGST" || selectedtaxname == "CESS") {
             $('#product_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedtaxname+']').prop('hidden', true).prop('disabled', true);
           }
           $('#product_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
@@ -1232,15 +1236,19 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
   $("#product_edit_tax_table tbody tr").each(function(index){
         if ($.trim($('#product_edit_tax_table tbody tr:eq('+index+') td:eq(0) select option:selected').val())=="") {
       taxflag=1;
-      
+
       }
 
   if ($.trim($('#product_edit_tax_table tbody tr:eq('+index+') td:eq(0) select option:selected').val())=="IGST") {
   igstflag=1;
   }
-  
+
+  if ($.trim($('#product_edit_tax_table tbody tr:eq('+index+') td:eq(0) select option:selected').val())=="CESS") {
+  igstflag=1;
+  }
+
   });
-  
+
   if(taxflag){
     $("#tax-alert").alert();
     $("#tax-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -1365,7 +1373,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
     event.stopPropagation();
   });
 
-    
+
   $('#epdelete').click(function(event) {
       event.preventDefault();
       var gsflag = $("#gsflag").val();
