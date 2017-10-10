@@ -1306,14 +1306,7 @@ $("#product_edit_tax_table tbody tr:first td:eq(0) select").focus();
         taxes.push(obj);
       }
     });
-    for (tax of existingnonetax) {
-      let obj = {};
-      obj.taxrowid = tax["taxid"];
-      obj.taxname = tax["taxname"];
-      obj.state = tax["state"];
-      obj.taxrate = tax["taxrate"];
-      taxes.push(obj);
-    }
+    
     var obj = {};
     $("#editgodown_ob_table tbody tr").each(function(){
       if ($.trim($(".editgodown_name",this).val())!="") {
