@@ -99,13 +99,12 @@
                       <tr>
 			<td class="col-xs-4">
 			  <select class="form-control input-sm tax_name product_new_name">
-                            <option value="" selected hidden disabled>Select Tax</option>
+			    {%if vatorgstflag=='7' or vatorgstflag=='29' %}
+                              <option value="IGST">GST</option>
+                              <option value="CESS">CESS</option>
+                            {%endif%}
                             <option value="VAT">VAT</option>
                               <option value="CVAT">CVAT</option>
-			      {%if vatorgstflag=='7' or vatorgstflag=='29' %}
-				<option value="IGST">IGST</option>
-        <option value="CESS">CESS</option>
-                            {%endif%}
 			  </select>
 			</td>
 			<td class="col-xs-4">
