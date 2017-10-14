@@ -769,12 +769,17 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
       }
 
 	$('#product_tax_table tbody').append(taxfieldhtml);
-	
+	$('#product_tax_table tbody tr:eq('+nextindex1+') td:last').append(delhtml);
 	$(".tax_rate").numeric();
+        for (let j = 0; j < curindex1 + 1; j++) {
+            var selectedtax = $("#product_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
+            if (selectedtax != "VAT") {
+                for (let i=j+1; i<=curindex1+1;i++){
+                    $('#product_tax_table tbody tr:eq('+i+') td:eq(0) select option[value='+selectedtax+']').remove();
+                }
+            }
+        }
 	$(".tax_name:last").change();
-      if (selectedtaxname == "CVAT" || selectedtaxname == "IGST" || selectedtaxname == "CESS") {
-        $('#product_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedtaxname+']').prop('hidden', true).prop('disabled', true);
-      }
       $('#product_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
     }
   }
