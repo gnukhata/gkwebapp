@@ -41,7 +41,7 @@ $(document).ready(function() {
     } else {
       $(".gstinfield").show();
     }
-    
+
     //Initialising some variables.
     var issuername = "";
     var designation = "";
@@ -421,10 +421,17 @@ $(document).ready(function() {
 		    $("#invoice_customerstate").val(resp["gkresult"]["state"]);  //State of Customer is selected automatically.
 		    $("#invoice_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
 		    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
+        //All GSTINs of this customer are
+		    gstins = resp["gkresult"]["gstin"];
+        if ($("#invoice_customer option:selected").attr("custid") in gstins) {
+      	       $("#gstin").text(resp["gkresult"]["gstin"][$("#invoice_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
+      	}
+      	else {
+      	    $("#gstin").text('');  //If GSTIN is not available it is set as blank.
+      	}
 		    //GSTIN of customer in default state is selected.
 		    $("#gstin").text(resp["gkresult"]["gstin"][$("#invoice_customerstate option:selected").attr("stateid")]);
-		    //All GSTINs of this customer are
-		    gstins = resp["gkresult"]["gstin"];
+
 		    //State Code of Customer State is loaded.
 		    $("#statecodeofcustomer").text($("#invoice_customerstate option:selected").attr("stateid"));
 		    //Consignee State is synced with Customer State.
