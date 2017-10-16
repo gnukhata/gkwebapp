@@ -136,22 +136,23 @@
         <tr class="blank" value="new">
           <td class="col-xs-4">
             <select class="form-control input-sm product_tax_disable tax_name product_new_name">
-              <option value="" selected disable hidden>Select Tax</option>
+              {%if vatorgstflag=='7' or vatorgstflag=='29' %}
+                <option value="IGST">GST</option>
+                <option value="CESS">CESS</option>
+              {%endif%}
               <option value="VAT">VAT</option>
               <option value="CVAT">CVAT</option>
-              {%if vatorgstflag=='7' or vatorgstflag=='29'%}
-              <option value="IGST">IGST</option>
-              <option value="CESS">CESS</option>
-              {%endif%}
             </select>
           </td>
           <td class="col-xs-4">
             <select class="form-control input-sm tax_state product_new_state product_tax_disable" >
+	      
 	      {% for state in states %}
               {% for key, value in state.items() %}
                 <option value="{{value}}" stateid="{{key}}">{{value}}</option>
               {% endfor %}
-                {% endfor %}
+              {% endfor %}
+	      <option value="" stateid="">None</option>
             </select>
           </td>
           <td class="col-xs-3">
