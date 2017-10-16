@@ -85,7 +85,15 @@
 
             <div class="row">
               <div class="form-group taxclass">
-		<div class="panel taxclass">
+		<div class="alert alert-danger" id="tax-name-blank-alert"  aria-live="rude" role="alert" hidden>
+
+                  {% trans %}Please Specify Tax Name.{% endtrans %}
+                </div>
+		<div class="alert alert-danger" id="tax-rate-blank-alert"  aria-live="rude" role="alert" hidden>
+
+                  {% trans %}Please Specify Tax Rate.{% endtrans %}
+                </div>
+                <div class="panel taxclass">
 		  <table id="product_tax_table" class="table table-condensed table-bordered fixed-table common">
                     <thead class="bg-primary input-sm">
                       <tr>
@@ -99,6 +107,7 @@
                       <tr>
 			<td class="col-xs-4">
 			  <select class="form-control input-sm tax_name product_new_name">
+			    <option value="" hidden disabled selected>Select Tax</option>
 			    {%if vatorgstflag=='7' or vatorgstflag=='29' %}
                               <option value="IGST">GST</option>
                               <option value="CESS">CESS</option>
@@ -109,6 +118,7 @@
 			</td>
 			<td class="col-xs-4">
 			  <select class="form-control input-sm tax_state product_new_state" >
+			    <option value="" hidden disabled selected>Select State</option>
                             {% for state in states %}
                               {% for key, value in state.items() %}
                                 <option value="{{value}}" stateid="{{key}}">{{value}}</option>
@@ -117,7 +127,7 @@
                           </select>
                         </td>
                         <td class="col-xs-3">
-			  <input class="form-control input-sm tax_rate text-right product_new_rate numtype"  placeholder="Rate" value="0.00">
+			  <input class="form-control input-sm tax_rate text-right product_new_rate numtype"  value="0.00">
 			</td>
 			<td class="col-xs-1">
 			</td>
