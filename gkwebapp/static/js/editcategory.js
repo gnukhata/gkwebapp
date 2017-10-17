@@ -104,7 +104,7 @@ $(document).ready(function() {
 	    $('#category_edit_tax_table tbody tr:last').attr({value: tax["taxid"]});
 	    $('#category_edit_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
 	    $('#category_edit_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
-	    if(tax["taxname"] == "CVAT" || tax["taxname"] == "IGST"){
+	    if(tax["taxname"] != "VAT"){
 		$('#category_edit_tax_table tbody tr:last td:eq(1) select').prop("disabled", true);
 	    }
 	    $('#category_edit_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);
@@ -116,7 +116,7 @@ $(document).ready(function() {
 	    $('#category_edit_tax_table tbody').append(taxfieldhtml);
 	    $(".tax_del:first").hide();
 	}
-	
+
     })
     .fail(function() {
       console.log("error");
@@ -290,8 +290,34 @@ $(document).ready(function() {
       $('#category_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
       event.preventDefault();
     }
-    else if (($("#category_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='CVAT' || $("#category_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='IGST') && event.which==13 ) {
+    else if (($("#category_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val() !='VAT') && event.which==13 ) {
         event.preventDefault();
+        var types = [];
+        $('#category_edit_tax_table tbody tr').each(function(){
+          if($(".tax_name",this).val()=='IGST') {
+          types.push($(".tax_name",this).val());
+        }
+        if($(".tax_name",this).val()=='CESS') {
+        types.push($(".tax_name",this).val());
+      }
+          if ($(".tax_name",this).val()=='CVAT') {
+          types.push($(".tax_name",this).val());
+          }
+        });
+        types.sort();
+        var duplicatetypes = [];
+        for (var i = 0; i < types.length - 1; i++) {
+          if (types[i + 1] == types[i]) {
+            duplicatetypes.push(types[i]);
+          }
+        }
+        if (duplicatetypes.length > 0) {
+          $("#cvat-alert").alert();
+          $("#cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#cvat-alert").hide();
+          });
+          return false;
+        }
         $('#category_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').prop("disabled", true);
         $('#category_edit_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
     }

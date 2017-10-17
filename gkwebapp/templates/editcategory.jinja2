@@ -124,6 +124,10 @@
 
               {% trans %}Duplicate Tax!{% endtrans %}
             </div>
+            <div class="alert alert-danger" id="cvat-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}CVAT/GST/CESS can be applied only once.{% endtrans %}
+            </div>
             <div class="form-group">
               <div class="panel">
                   <input value="{{vatorgstflag}}" id="vatorgstflag" hidden>
@@ -148,7 +152,8 @@
                             {% else %}
                               <option value="VAT">VAT</option>
                               <option value="CVAT">CVAT</option>
-			      <option value="IGST">IGST</option>
+			      <option value="IGST">GST</option>
+            <option value="CESS">CESS</option>
                             {% endif%}
 
                           </select>
