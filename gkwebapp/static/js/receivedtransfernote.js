@@ -242,10 +242,10 @@ This script is for the Received transfer note page.
   // This function will set the TN as received.
   $("#rec_received").click(function(event) {
     event.preventDefault();
-    $('.modal-backdrop').remove();
-    $('.modal').modal('hide');
-    $('#confirm_yes').modal('show').one('click', '#tn_yes', function (e)
-      {
+//    $('.modal-backdrop').remove();
+//    $('.modal').modal('hide');
+//    $('#confirm_yes').modal('show').one('click', '#tn_yes', function (e)
+  //    {
         if ($.trim($('#received_tn_date').val())=="") {
           $("#date-blank-alert").alert();
           $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -280,7 +280,7 @@ This script is for the Received transfer note page.
         }
         
         
-        var curdate = Date.parseExact($("#received_tn_year").val()+$("#received_tn_month").val()+$("#received_tn_date").val(), "yyyyMMdd")
+      var curdate = Date.parseExact($("#received_tn_year").val()+$("#received_tn_month").val()+$("#received_tn_date").val(), "yyyyMMdd");
         
         
         var receiveddate1 =$("#received_tn_year").val()+'-'+$("#received_tn_month").val()+'-'+$("#received_tn_date").val();
@@ -298,7 +298,7 @@ This script is for the Received transfer note page.
 	  
         } 
         var createdate=$('#rec_transfernote_date').text();
-        var createdateyyyymmdd=createdate[6]+createdate[7]+createdate[8]+createdate[9]+createdate[5]+createdate[3]+createdate[4]+createdate[2]+createdate[0]+createdate[1]
+      var createdateyyyymmdd=createdate[6]+createdate[7]+createdate[8]+createdate[9]+createdate[5]+createdate[3]+createdate[4]+createdate[2]+createdate[0]+createdate[1];
         
 	      
         if(Date.parseExact(receiveddate1,"yyyy-MM-dd").compareTo(Date.parseExact(createdateyyyymmdd,"yyyy-MM-dd"))==-1)
@@ -348,14 +348,14 @@ This script is for the Received transfer note page.
 
           });
 
-      });
+     // });
     $("#confirm_yes").on('shown.bs.modal', function(event) {
       $("#tn_no").focus();
     });
   
-  //  $("#confirm_yes").on('hidden.bs.modal', function(event) {
-   //   $("#rec_tn_list").focus();
-   // });
+    $("#confirm_yes").on('hidden.bs.modal', function(event) {
+      $("#rec_tn_list").focus();
+    });
   });
 
   
