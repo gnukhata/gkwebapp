@@ -196,7 +196,7 @@ This script is for the Received transfer note page.
           
           else  {
 	    var rcdatearray = result["receiveddate"].split(/\s*\-\s*/g)
-	    console.log(rcdatearray)
+	    
             $("#rec_received").hide();
             $("#received_tn_date").val(rcdatearray[0]).prop("disabled", true);
 	    $("#received_tn_month").val(rcdatearray[1]).prop("disabled", true);
@@ -352,9 +352,10 @@ This script is for the Received transfer note page.
     $("#confirm_yes").on('shown.bs.modal', function(event) {
       $("#tn_no").focus();
     });
-    $("#confirm_yes").on('hidden.bs.modal', function(event) {
-      $("#rec_tn_list").focus();
-    });
+  
+  //  $("#confirm_yes").on('hidden.bs.modal', function(event) {
+   //   $("#rec_tn_list").focus();
+   // });
   });
 
   
