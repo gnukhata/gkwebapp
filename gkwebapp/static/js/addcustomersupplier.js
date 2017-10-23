@@ -1,6 +1,6 @@
 /*
   Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-This file is part of GNUKhata:A modular,robust and Free Accounting System.
+  This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
 GNUKhata is Free Software; you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -37,7 +37,7 @@ $(document).ready(function() {
 	if ($.trim($("#add_cussup").val())=="") {
             $("#role-blank-alert").alert();
             $("#role-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-              $("#role-blank-alert").hide();
+		$("#role-blank-alert").hide();
             });
             $("#add_cussup").focus();
             return false;
@@ -292,9 +292,18 @@ else{
     });
   $("#add_cussup_reset").click(function(event) {
       // click the customer/supplier create tab to reload the current page in tab creating a reset effect
-    $("#customersupplier_create").click();
+      $("#customersupplier_create").click();
   });
-  $("#cussup_save").click(function(event) {
+
+    $(document).one("keyup", function(event) {
+        if(event.which == 45) {
+            $("#cussup_save").click();
+            event.preventDefault();
+            return false;
+        }
+    });
+    
+    $("#cussup_save").click(function(event) {
       //save event for saving the customer/supplier
       event.preventDefault();
       var allow = 1;

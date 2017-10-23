@@ -600,11 +600,13 @@ $(document).ready(function() {
             });
             taxes = [];
             $("#category_tax_table tbody tr").each(function() {
-            var obj = {}; // dict for storing tax details
-	    obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
-	    obj.state = $.trim($("td:eq(1) select option:selected", this).val());
-	    obj.taxrate = $.trim($("input", this).val());
-	    taxes.push(obj);
+		var obj = {}; // dict for storing tax details
+		if($("td:eq(0) select option:selected", this).val() != ""){
+		    obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
+                    obj.state = $.trim($("td:eq(1) select option:selected", this).val());
+                    obj.taxrate = $.trim($("input", this).val());
+                    taxes.push(obj);
+		}
         });
             $.ajax({
                     url: '/category?action=save',
