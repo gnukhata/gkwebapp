@@ -214,6 +214,7 @@ $(document).ready(function() {
 	$(this).val(pad($(this).val(), 2));
     });
     $("#invoice_year").blur(function(event) {
+	$(this).val(yearpad($(this).val(), 4));
 	invoicedatestring = $("#invoice_date").val() + $("#invoice_month").val() + $("#invoice_year").val();
 	invoicedate = Date.parseExact(invoicedatestring, "ddMMyyyy");
 	if (invoicedatestring.length == 0) {
@@ -270,7 +271,6 @@ $(document).ready(function() {
 		$("#vathelp").show();
 	    }
 	}
-	$(this).val(yearpad($(this).val(), 4));
     });
 
     //Key Event for Invoice Date Field.
@@ -1928,8 +1928,8 @@ if (event.which == 13) {
 
     var allow = 1;
   $("#invoice_save").click(function(event) {
-    event.stopPropagation();
-    //event.preventDefault();
+      event.preventDefault();
+      event.stopPropagation();
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
       if ($.trim($('#invoice_challanno').val()) == "") {
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
@@ -2031,7 +2031,6 @@ if (event.which == 13) {
       var productqtys = [];
       var quantity;
       var ppu;
-
       if($("#consigneename").val() != ""){
 	  consignee["consigneename"] = $.trim($("#consigneename").val());
           consignee["tinconsignee"] = $.trim($("#tinconsignee").val());
@@ -2130,7 +2129,7 @@ if (event.which == 13) {
 	    let obj = {};
             ppu = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val());
             obj[ppu] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
-            tax[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val());
+            tax[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(6) input").val());
         contents[productcode] = obj;
             items[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
             freeqty[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val());
@@ -2242,7 +2241,6 @@ if (event.which == 13) {
     for (var i = 0; i < files.length; i++) {
 	form_data.append("file" + i, files[i]);
     }
-    event.preventDefault();
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
     $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function(e) {
