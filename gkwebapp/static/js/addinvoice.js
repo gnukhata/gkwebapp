@@ -1773,6 +1773,7 @@ if (event.which == 13) {
 	$(this).val(pad($(this).val(), 2));
     });
     $("#supply_year").blur(function(event) {
+	$(this).val(yearpad($(this).val(), 4));
 	var supplydatestring = $("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val();
 	if ((supplydatestring.length == 8) && (!Date.parseExact(supplydatestring, "ddMMyyyy"))) {
 	    $("#supplydate-alert").alert();
@@ -1803,7 +1804,7 @@ if (event.which == 13) {
 		}
 	    }
 	}
-	$(this).val(yearpad($(this).val(), 4));
+
     });
 
     //Events for last fields - Bank Details, Reverse charge etc..
@@ -1814,6 +1815,9 @@ if (event.which == 13) {
 	{
 	    event.preventDefault();
 	    var nextIndex = f.index(this) + 1;
+	    if($(".lastfield:visible").eq(nextIndex).is(":disabled")) {
+		nextIndex = nextIndex + 3;
+	    }
 	    if(nextIndex < n){
 		f[nextIndex].focus();
 	    }
@@ -1823,6 +1827,10 @@ if (event.which == 13) {
 	}
 	else if (event.which == 38) {
 	    var previndex = f.index(this) - 1;
+	     if($(".lastfield:visible").eq(previndex).is(":disabled")) {
+		previndex = previndex - 3;
+	    }
+	    
 	    if(previndex > -1) {
 		if ($(this).is("select")) {
 		    if ($(this).val() == "Road") {
@@ -1904,7 +1912,7 @@ if (event.which == 13) {
               datatype: "text/json",
               beforeSend: function(xhr) {
                 xhr.setRequestHeader("gktoken", sessionStorage.gktoken);
-              },
+              }
             })
              .done(function(resp) {
                var custs = resp["customers"];
