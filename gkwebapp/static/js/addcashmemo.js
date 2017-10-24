@@ -149,7 +149,7 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
         if (str.length == 1) {
             return str.length < max ? pad("0" + str, max) : str;
         } else {
-            return str
+            return str;
         }
     }
 
@@ -161,7 +161,7 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
         } else if (str.length == 2) {
             return str.length < max ? pad("20" + str, max) : str;
         } else {
-            return str
+            return str;
         }
     }
     $("#invoice_date").blur(function(event) {
@@ -172,6 +172,7 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
     });
 
     $("#invoice_year").blur(function(event) {
+	$(this).val(yearpad($(this).val(), 4));
       invoicedatestring = $("#invoice_date").val() + $("#invoice_month").val() + $("#invoice_year").val();
       invoicedate = Date.parseExact(invoicedatestring, "ddMMyyyy");
       if (invoicedatestring.length == 0) {
@@ -214,7 +215,6 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
 	      $("#vathelp").show();
           }
       }
-      $(this).val(yearpad($(this).val(), 4));
     });
 
     //Key Event for Cash Memo Date Field.
@@ -1011,7 +1011,7 @@ $(document).off("keyup").on("keyup", function(event) {
             var ppu = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val();
             obj[ppu] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val();
             //tax is stored as a dict with key as productcode and value as the tax rate
-            tax[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val();
+            tax[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(6) input").val();
             // nested dictionary with key as product code and value is another dict with key as priceperunit and value is the product quantity
             contents[productcode] = obj;
             items[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val();
