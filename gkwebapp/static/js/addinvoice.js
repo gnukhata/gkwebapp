@@ -63,6 +63,7 @@ $(document).ready(function() {
 	var rowdiscount = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val()).toFixed(2);
 	var taxdetails = $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').data("taxdetails");
 	var taxamount = 0.00;
+	var cessamount = 0.00;
 	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
 	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').is(":disabled") && $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').is(":disabled")) {
 	    rowtaxableamount = rowprice - rowdiscount;
@@ -73,6 +74,7 @@ $(document).ready(function() {
 	var totalcgst = 0.00;
 	var totalsgst = 0.00;
 	var totaligst = 0.00;
+	var totalcess = 0.00;
 	var totaldiscount = 0.00;
 	var totaltaxable = 0.00;
 	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtaxableamount).toFixed(2)); //Taxable amount is displayed.
@@ -80,13 +82,17 @@ $(document).ready(function() {
 	//Checks if TAX is IGST or SGST + CGST. Amount of tax to be applied is then displayed accordingly along with calculated total amount.
 	if (taxdetails["taxname"] == "IGST") {
 	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(12) input').val(parseFloat(taxamount).toFixed(2));
-	    rowtotal = rowtaxableamount + taxamount;
+	    let cessrate = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(10) input').val()).toFixed(2);
+	    cessamount = (rowtaxableamount * cessrate)/100;  //Amount of Cess to be applied is found out.
+	    rowtotal = rowtaxableamount + taxamount + cessamount;
 	    $('#invoice_product_table_total tbody tr:eq(' + curindex + ') td:eq(0) input').val(parseFloat(rowtotal).toFixed(2));
 	}
 	else if (taxdetails["taxname"] == "SGST") {
 	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(taxamount).toFixed(2));
 	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(10) input').val(parseFloat(taxamount).toFixed(2));
-	    rowtotal = rowtaxableamount + (2*taxamount);
+	    let cessrate = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(12) input').val()).toFixed(2);
+            cessamount = (rowtaxableamount * cessrate)/100;  //Amount of Cess to be applied is found out.
+            rowtotal = rowtaxableamount + (2*taxamount) + cessamount;
 	    $('#invoice_product_table_total tbody tr:eq(' + curindex + ') td:eq(0) input').val(parseFloat(rowtotal).toFixed(2));
 	}
 	//Total of discount, taxable amount, tax amounts and total are found out
