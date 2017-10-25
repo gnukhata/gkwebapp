@@ -398,8 +398,9 @@
 			    <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 			    <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
 			    <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}CGST{% endtrans %}</th>
-			    <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}SGST{% endtrans %}</th>
+			    <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}SGST/UTGST{% endtrans %}</th>
 			    <th colspan="2" class="taxwrap text-center igstfield">{% trans %}IGST{% endtrans %}</th>
+			    <th colspan="2" class="taxwrap text-center">{% trans %}CESS{% endtrans %}</th>
 			  </tr>
 
 			  <tr>
@@ -409,6 +410,8 @@
 			    <th class="sgstfield text-center">{% trans %}Amount{% endtrans %}</th>
 			    <th class="igstfield text-center">{% trans %}Rate{% endtrans %} %</th>
 			    <th class="igstfield text-center">{% trans %}Amount{% endtrans %}</th>
+			    <th class="text-center">{% trans %}Rate{% endtrans %} %</th>
+                            <th class="text-center">{% trans %}Amount{% endtrans %}</th>
 			  </tr>
 			</thead>
 		      </table>
@@ -460,8 +463,12 @@
 			      <input type="text" class="invoice_product_igstrate  input-sm text-right form-control numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
 			      <td class="taxcell igstfield"><input type="text" class="invoice_product_igstamount form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled>
 			      </td>
-			  </tr>
-			</tbody>
+			      <td class="taxcell">
+                                <input type="text" class="invoice_product_cessrate  input-sm text-right form-control numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
+                                <td class="taxcell"><input type="text" class="invoice_product_cessamount form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled>
+                                </td>
+                          </tr>
+                        </tbody>
 		      </table>
 		    </div>
 		    <div class="row">
@@ -475,6 +482,7 @@
 
 			    <td colspan="2" class="text-right sgstfield taxwrap"><span id="totalsgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
 			    <td colspan="2" class="text-right igstfield taxwrap" hidden><span id="totaligst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
+			    <td colspan="2" class="text-right taxwrap" hidden><span id="totalcess_product_cess" class="input-group-addon input-sm" size="8"></span></td>
 			</tfoot>
 		      </table>
 		    </div>
