@@ -125,7 +125,9 @@ $("#add_state").keydown(function(event) {
       if ($.trim($("#add_cussup_pan").val()) !="") {
 	 $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:last').focus();
       }
-   //$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
+      else {
+	   $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').focus();
+      }
   }
   else if (event.which==27) {
     event.preventDefault();
@@ -137,9 +139,39 @@ $("#add_state").keydown(function(event) {
 	event.preventDefault();
 	var curindex = $(this).closest('tr').index();
 	var cusstatecode =  $('#gstintable tbody tr:eq('+curindex+') td:eq(0) select option:selected').attr("stateid");
-	$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:first').val(cusstatecode);
+	$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:first').val(cusstatecode); //for state code
+	if ($('#add_cussup_pan').val() != ''){
+	    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val($('#add_cussup_pan').val()).prop("disabled",true); //for pan
+	}
+	else {
+	    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:second').prop("disabled",false);
+	}
 	
+    });
+
+    $(".panno").keydown(function(event) {
+	var curindex = $(this).closest('tr').index();
+	var previndex = curindex-1;
+	if (event.which == 13) {
+	    event.preventDefault();
+	    	console.log("HEloo pan");
+	    if($(this).val() != '') {
+		$(this).next('input').focus().select();
 	
+	    }
+	    else {
+		$("#panno-blank-alert").alert();
+                $("#panno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#panno-blank-alert").hide();
+  		$(this).focus().select();
+              });
+	    }
+	   
+	}
+	/*if (event.which == 38) {
+	    event.preventDefault();
+	    $('#gstintable tbody tr:eq('+previndex+') td:eq(0) input').focus();
+	}*/
     });
     
     $(document).off("focusout",".gstin").on("focusout",".gstin",function(event) {
