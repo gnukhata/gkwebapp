@@ -129,6 +129,13 @@ $("#add_state").keydown(function(event) {
     $("#cussup_save").focus();
   }
 });
+    //
+    $(".gstinstate").change(function(event) {
+	event.preventDefault();
+	$("#statecodeforcussup").text($(".gstinstate option:selected").attr("stateid"));
+	
+    });
+    
     $(document).off("focusout",".gstin").on("focusout",".gstin",function(event) {
 	var curindex = $(this).closest('tr').index();
 	var gstin = $(this).val();
