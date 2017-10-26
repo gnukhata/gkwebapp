@@ -121,8 +121,11 @@ $("#add_state").keydown(function(event) {
     event.preventDefault();
   }
   else if (event.which==13) {
-    event.preventDefault();
-    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
+      event.preventDefault();
+      if ($.trim($("#add_cussup_pan").val()) !="") {
+	 $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:last').focus();
+      }
+   //$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
   }
   else if (event.which==27) {
     event.preventDefault();
@@ -132,7 +135,10 @@ $("#add_state").keydown(function(event) {
     //
     $(".gstinstate").change(function(event) {
 	event.preventDefault();
-	$("#statecodeforcussup").text($(".gstinstate option:selected").attr("stateid"));
+	var curindex = $(this).closest('tr').index();
+	var cusstatecode =  $('#gstintable tbody tr:eq('+curindex+') td:eq(0) select option:selected').attr("stateid");
+	$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:first').val(cusstatecode);
+	
 	
     });
     
