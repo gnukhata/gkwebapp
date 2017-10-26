@@ -251,11 +251,22 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
   $("#add_cussup_pan").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
-	if($("#vatorgstflag").val() == '22' || $("#vatorgstflag").val() == '29'){
-	    $("#add_cussup_tan").focus().select();
+	var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; 
+	var txtpan = $(this).val();
+	if ((txtpan.length != 10 || !txtpan.match(regExp)) && $.trim($("#add_cussup_pan").val())!="") {
+	    $("#pan-incorrect-alert").alert();
+	    $("#pan-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#pan-incorrect-alert").hide();
+	    });
+	    $("#add_cussup_pan").focus();
 	}
 	else {
-	    $(".gstinstate:first").focus();
+	    if($("#vatorgstflag").val() == '22' || $("#vatorgstflag").val() == '29'){
+		$("#add_cussup_tan").focus();
+	    }
+	    else {
+		$(".gstinstate:first").focus();
+	    }
 	}
     }
     if (event.which==38) {
@@ -263,8 +274,6 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       $("#add_cussup_fax").focus().select();
     }
   });
-
-
 
     $("#add_cussup_tan").keydown(function(event) {
     if (event.which==13) {
@@ -363,6 +372,7 @@ if($("#vatorgstflag").val() == '22'){
       $("#add_cussup_address").focus();
       return false;
     }
+	
     var gobj = {}; // Creating a dictionary for storing godown wise opening stock
       $("#gstintable tbody tr").each(function(){
 	  var curindex1 = $(this).index();

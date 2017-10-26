@@ -83,6 +83,13 @@ th {
 		{% trans %}Please enter address!{% endtrans %}
 
 	      </div>
+
+	      <div class="alert alert-danger" id="pan-incorrect-alert"  aria-live="rude" role="alert" hidden>
+
+		{% trans %}Please enter proper PAN!{% endtrans %}
+
+	      </div>
+	      
 	      <div class="alert alert-danger" id="tin-blank-alert"  aria-live="rude" role="alert" hidden>
 
 		{% trans %}Please enter TIN!{% endtrans %}
@@ -155,7 +162,7 @@ th {
 			    </div>
 			    <div class="form-group col-sm-6">
 			      <label for="add_cussup_pan">{% trans %}PAN:{% endtrans %}</label>
-			      <input class="form-control input-sm" type="text" id="add_cussup_pan"></input>
+			      <input class="form-control input-sm" type="text" id="add_cussup_pan" maxlength="10"></input>
 			    </div>
 			  </div>
 
@@ -272,7 +279,7 @@ th {
 		    </div>
 		    <div class="form-group">
 		      <label for="add_cussup_pan">{% trans %}PAN:{% endtrans %}</label>
-		      <input class="form-control input-sm" type="text" id="add_cussup_pan"></input>
+		      <input class="form-control input-sm" type="text" id="add_cussup_pan" maxlength="10"></input>
 		    </div>
 
 		    <div class="form-group">
