@@ -135,7 +135,7 @@ $("#add_state").keydown(function(event) {
     $("#cussup_save").focus();
   }
 });
-    //
+    //Change event on GSTIN State
     $(document).off('change', '.gstinstate').on('change', '.gstinstate', function(event) {
 	event.preventDefault();
 	var curindex = $(this).closest('tr').index();
@@ -153,6 +153,7 @@ $("#add_state").keydown(function(event) {
 	
     });
 
+    //Keydown event on gstin's panno 
     $(document).off("keydown", ".panno").on("keydown", ".panno", function(event) {
 	var curindex = $(this).closest('tr').index();
 	var previndex = curindex-1;
