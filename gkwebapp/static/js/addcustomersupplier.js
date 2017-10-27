@@ -143,7 +143,7 @@ $("#add_state").keydown(function(event) {
 	if (cusstatecode.length == 1){
 	    cusstatecode = "0" + cusstatecode; 
 	}
-	$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:first').val(cusstatecode); //for state code
+	$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val(cusstatecode); //for state code
 	if ($('#add_cussup_pan').val() != ''){
 	    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val($('#add_cussup_pan').val()).prop("disabled",true); //for pan
 	}
@@ -421,7 +421,7 @@ if($("#vatorgstflag").val() == '22'){
       $("#gstintable tbody tr").each(function(){
 	  var curindex1 = $(this).index();
     if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
-gstinstring = $(".statecode").val() + $(".panno").val() + $(".gstin").val();
+	gstinstring = $(".statecode").val() + $(".panno").val() + $(".gstin").val();
 	if(gstinstring != ''){
   	    if(gstinstring.length !=15){
   		$("#gstin-improper-alert").alert();

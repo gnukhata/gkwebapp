@@ -47,8 +47,11 @@ $(document).ready(function() {
 	$('#gstintable tbody').empty();
 	$('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');
 	for(var gstin in result["gstin"]){
+	    var gstinstr = result["gstin"][gstin]; 
 	    $('#gstintable tbody tr:last td:eq(0) select option[stateid='+gstin+']').prop("selected", true);
-	    $('#gstintable tbody tr:last td:eq(1) input').val(result["gstin"][gstin]);
+	    $('#gstintable tbody tr:last td:eq(1) input:eq(0)').val(gstinstr.substring(0, 2));
+	    $('#gstintable tbody tr:last td:eq(1) input:eq(1)').val(gstinstr.substring(2, 12));
+	    $('#gstintable tbody tr:last td:eq(1) input:eq(2)').val(gstinstr.substring(12, 15));
 	    $('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');
 	}
 	for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
@@ -60,7 +63,7 @@ $(document).ready(function() {
 		}
 	    }
 	}
-	$(".gstinstate, .gstin").prop("disabled", true);
+	$(".gstinstate, .statecode, .panno, .gstin").prop("disabled", true);
       $(".panel-footer").show();
       $("#cus_innerdiv").show();
       $("#cussup_edit_save").hide();
