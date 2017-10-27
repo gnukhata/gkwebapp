@@ -105,8 +105,9 @@
 										<label for="organisationstate" id="orgState">{% trans %}State{% endtrans %} :</label>
 									</td>
 									<td>
-			<input type="text" id="state"  value="{{gkresult["orgstate"]}}" hidden></input>
+						  <input type="text" id="state"  value="{{gkresult["orgstate"]}}" hidden></input>
 						 <select id="orgstate" class="form-control input-sm col-sm-8" style="width: 100%">
+							  <option value="" hidden disabled selected>Select State</option>
 							  {% for state in states %}
 							    {% for key, value in state.items() %}
 								<option value="{{value}}" stateid="{{key}}">{{value}}</option>

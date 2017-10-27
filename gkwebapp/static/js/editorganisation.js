@@ -28,8 +28,9 @@ Contributors:
 $(document).ready(function(){
   $("#msspinmodal").modal("hide");
   $(".regdate").autotab('number');
-  $(".fcradate").autotab('number');
-    $("#orgstate").val($("#state").val());
+    $(".fcradate").autotab('number');
+    if($("#state").val() != "" ){
+	$("#orgstate").val($("#state").val());}
   $(".regdate").numeric({negative: false});
   $(".fcradate").numeric({negative: false});
 
