@@ -29,7 +29,7 @@ Contributors:
 
 $(document).ready(function() {
     //All the navigation events where pressing enter shifts focus to the next element and pressing the up arrow key focuses the previous element
-
+  var gstinstring = "";
   $("#add_cussup").focus().select();
   $("#add_cussup").keydown(function(event) {
       if (event.which==13) {
@@ -135,7 +135,7 @@ $("#add_state").keydown(function(event) {
   }
 });
     //
-    $(".gstinstate").change(function(event) {
+    $(document).off('change', '.gstinstate').on('change', '.gstinstate', function(event) {
 	event.preventDefault();
 	var curindex = $(this).closest('tr').index();
 	var cusstatecode =  $('#gstintable tbody tr:eq('+curindex+') td:eq(0) select option:selected').attr("stateid");
@@ -149,12 +149,11 @@ $("#add_state").keydown(function(event) {
 	
     });
 
-    $(".panno").keydown(function(event) {
+    $(document).off("keydown", ".panno").on("keydown", ".panno", function(event) {
 	var curindex = $(this).closest('tr').index();
 	var previndex = curindex-1;
 	if (event.which == 13) {
 	    event.preventDefault();
-	    	console.log("HEloo pan");
 	    if($(this).val() != '') {
 		$(this).next('input').focus().select();
 	
@@ -176,16 +175,15 @@ $("#add_state").keydown(function(event) {
     
     $(document).off("focusout",".gstin").on("focusout",".gstin",function(event) {
 	var curindex = $(this).closest('tr').index();
-	var gstin = $(this).val();
-  if(gstin != ''){
-    var gstnint = parseInt(gstin[0] + gstin[1]);
-  	if(!($.isNumeric(gstnint)) || gstnint > 37 || gstnint < 0 || gstin.length !=15){
-  	    $("#gstin-improper-alert").alert();
-              $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-                  $("#gstin-improper-alert").hide();
-  		$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
-              });
-  	    return false;
+	gstinstring = $(".statecode").val() + $(".panno").val() + $(".gstin").val();
+	if(gstinstring != ''){
+  	    if(gstinstring.length !=15){
+  		$("#gstin-improper-alert").alert();
+		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#gstin-improper-alert").hide();
+  		    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').focus().select();
+		});
+  		return false;
           }
   }
 
