@@ -690,7 +690,7 @@ $(document).ready(function() {
       })
        .done(function(resp) {
          if (resp["gkstatus"] == 0) {
-	   $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['taxrate']).toFixed(2));
+	     $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['tax']['VAT']).toFixed(2));
          }
 	  else if (resp["gkstatus"] == 1) {
 	      $("#notax-alert").alert();
@@ -724,7 +724,7 @@ $(document).ready(function() {
 
      })
      .fail(function() {
-       console.log("error");
+	 console.log("error");
      })
      .always(function() {
        console.log("complete");
@@ -1307,19 +1307,29 @@ $(document).ready(function() {
             }
           })
            .done(function(resp) {
-             if (resp["gkstatus"] == 0) {
-		 $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').data("taxdetails", {taxname: resp["taxname"], taxrate:resp["taxrate"]});
-               if(resp['taxname']=='SGST'){
-                  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(resp['taxrate']).toFixed(2));
-                   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(resp['taxrate']).toFixed(2));
-		   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(0).toFixed(2));
-               }
-               else{
-                   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(resp['taxrate']).toFixed(2));
-		   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(0).toFixed(2));
-                   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(0).toFixed(2));
-               }
-             }
+               if (resp["gkstatus"] == 0) {
+		   $(".trate", ".tname").val(parseFloat(0).toFixed(2)); //Sets all tax fields to zero on change of product
+		   //Loads SGST rate.
+		   if('SGST' in resp['tax']){
+		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(resp['tax']['SGST']).toFixed(2));
+		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(resp['tax']['SGST']).toFixed(2));
+		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(0).toFixed(2));
+		       //Loads CESS rate if avaliable.
+		       if ('CESS' in resp['tax']) {
+			   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val(parseFloat(resp['tax']['CESS']).toFixed(2));
+		       }
+		   }
+		   //Loads IGST rate.
+		   else if('IGST' in resp['tax']){
+		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(resp['tax']['IGST']).toFixed(2));
+		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(0).toFixed(2));
+		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(0).toFixed(2));
+		       //Loads CESS rate.
+		       if ('CESS' in resp['tax']) {
+			   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val(parseFloat(resp['tax']['CESS']).toFixed(2));
+		       }
+		   }
+	       }
 	       else if (resp["gkstatus"] == 1) {
 		   $("#notax-alert").alert();
 		   $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
