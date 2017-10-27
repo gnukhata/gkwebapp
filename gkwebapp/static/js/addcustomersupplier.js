@@ -23,6 +23,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Prajkta Patkar"<prajakta@dff.org.in>
+"Reshma Bhatawadekar<reshma@dff.org.in>"
 */
 
 // This script is for the addcustomer/supplier.jinja2
@@ -139,6 +140,9 @@ $("#add_state").keydown(function(event) {
 	event.preventDefault();
 	var curindex = $(this).closest('tr').index();
 	var cusstatecode =  $('#gstintable tbody tr:eq('+curindex+') td:eq(0) select option:selected').attr("stateid");
+	if (cusstatecode.length == 1){
+	    cusstatecode = "0" + cusstatecode; 
+	}
 	$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:first').val(cusstatecode); //for state code
 	if ($('#add_cussup_pan').val() != ''){
 	    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val($('#add_cussup_pan').val()).prop("disabled",true); //for pan
@@ -163,14 +167,10 @@ $("#add_state").keydown(function(event) {
                 $("#panno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
                   $("#panno-blank-alert").hide();
   		$(this).focus().select();
-              });
+		});
+		return false;
 	    }
-	   
 	}
-	/*if (event.which == 38) {
-	    event.preventDefault();
-	    $('#gstintable tbody tr:eq('+previndex+') td:eq(0) input').focus();
-	}*/
     });
     
     $(document).off("focusout",".gstin").on("focusout",".gstin",function(event) {
@@ -232,7 +232,7 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
   }
   else if (event.ctrlKey && event.which==188) {
     event.preventDefault();
-    $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select').focus();
+    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').focus();
   }
   else if (event.which==190 && event.ctrlKey) {
     event.preventDefault();
@@ -416,7 +416,7 @@ if($("#vatorgstflag").val() == '22'){
       return false;
     }
 	
-    var gobj = {}; // Creating a dictionary for storing godown wise opening stock
+    var gobj = {}; // Creating a dictionary for storing statecode with gstin.
       $("#gstintable tbody tr").each(function(){
 	  var curindex1 = $(this).index();
     if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
@@ -426,13 +426,13 @@ gstinstring = $(".statecode").val() + $(".panno").val() + $(".gstin").val();
   		$("#gstin-improper-alert").alert();
 		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
                     $("#gstin-improper-alert").hide();
-  		    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').focus().select();
+  		    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').focus().select();
 		});
   		return false;
           }
   }
 
-           gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = gstinstring;
+        gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = gstinstring;
     }
       });
       var custtan  = "";
