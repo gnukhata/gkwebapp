@@ -137,6 +137,12 @@ def getappliedtax(request):
     try:
         taxdetails = requests.get("http://127.0.0.1:6543/products?type=pt&productcode=%d&source=%s&destination=%s&taxflag=%d"%(int(request.params["productcode"]),request.params["source"],request.params["destination"],int(request.params["taxflag"])), headers=header)
         data = taxdetails.json()["gkresult"]
+        if data.has_key('VAT'):
+          return{"gkstatus":taxdetails.json()["gkstatus"],"taxname":"VAT","taxrate":data["VAT"]}
+        if data.has_key('SGST'):
+          if data.has_key('CESS'):
+            return{"gkstatus":taxdetails.json()["gkstatus"],"tax":data}
+          return{"gkstatus":taxdetails.json()["gkstatus"],"taxname":"SGST","taxrate":data["SGST"]}
         return{"gkstatus":taxdetails.json()["gkstatus"],"taxname":data["taxname"],"taxrate":data["taxrate"]}
     except:
         return {"gkstatus":1}
