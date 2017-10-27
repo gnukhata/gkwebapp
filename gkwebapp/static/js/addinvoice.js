@@ -2042,16 +2042,17 @@ if (event.which == 13) {
           $('#consigneename').focus();
           return false;
       }
-    var tax = {};
+      var tax = {};
+      var cess = {};
       var contents = {};
-    var freeqty = {};
-    var stock = {};
+      var freeqty = {};
+      var stock = {};
       var items = {};
       var discount = {};
       var consignee = {};
       var bankdetails = {};
       var invoicetotal = 0.00;
-    var productcodes = [];
+      var productcodes = [];
       var productqtys = [];
       var quantity;
       var ppu;
@@ -2154,7 +2155,7 @@ if (event.which == 13) {
             ppu = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val());
             obj[ppu] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
             tax[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(6) input").val());
-        contents[productcode] = obj;
+	    contents[productcode] = obj;
             items[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
             freeqty[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val());
 	    discount[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val());
@@ -2167,83 +2168,84 @@ if (event.which == 13) {
       else if ($("#taxapplicable").val() == 7) {
 	  for (let i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
 	      if ($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select option:selected').val() == "") {
-      $("#product-blank-alert").alert();
-      $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-        $("#product-blank-alert").hide();
-      });
-      $('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select').focus();
-      return false;
-    }
-      quantity = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val());
-	  if (parseFloat(quantity) === 0.00 && $('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select option:selected').attr("gsflag") == '7') {
-	      $("#quantity-blank-alert").alert();
-	      $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		  $("#quantity-blank-alert").hide();
-	      });
-	      $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").focus().select();
-	      return false;
-	  }
-	  if ($("#invoice_deliverynote option:selected").val() != '') {
-	      if ((parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(1) input").attr("data")).toFixed(2))) && $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select option:selected').attr("gsflag") == '7') {
-          $("#quantity-exceed-alert").alert();
-          $("#quantity-exceed-alert").fadeTo(2250, 500).slideUp(500, function() {
-              $("#quantity-exceed-alert").hide();
-          });
-          return false;
-	    }
-	  }
+		  $("#product-blank-alert").alert();
+		  $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		      $("#product-blank-alert").hide();
+		  });
+		  $('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select').focus();
+		  return false;
+	      }
+	      quantity = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val());
+	      if (parseFloat(quantity) === 0.00 && $('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select option:selected').attr("gsflag") == '7') {
+		  $("#quantity-blank-alert").alert();
+		  $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		      $("#quantity-blank-alert").hide();
+		  });
+		  $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").focus().select();
+		  return false;
+	      }
+	      if ($("#invoice_deliverynote option:selected").val() != '') {
+		  if ((parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(1) input").attr("data")).toFixed(2))) && $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select option:selected').attr("gsflag") == '7') {
+		      $("#quantity-exceed-alert").alert();
+		      $("#quantity-exceed-alert").fadeTo(2250, 500).slideUp(500, function() {
+			  $("#quantity-exceed-alert").hide();
+		      });
+		      return false;
+		  }
+	      }
 	      calculategstaxamt(i);
-	  productqtys.push(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()));
+	      productqtys.push(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()));
 	      let obj = {};
-	productcode = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
-        ppu = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val();
-        obj[ppu] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
-        contents[productcode] = obj;
-	    tax[productcode] = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(7) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(9) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(11) input").val());
-        items[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
-        freeqty[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val();
-	discount[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();
-	}
+	      productcode = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
+	      ppu = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val();
+	      obj[ppu] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
+	      contents[productcode] = obj;
+	      tax[productcode] = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(7) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(9) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(11) input").val());
+	      cess[productcode] = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(13) input").val());
+	      items[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
+	      freeqty[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val();
+	      discount[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();
+	  }
 	  invoicetotal = $.trim($('#total_product_gst').html());
       }
-
-    stock["items"] = items;
-
-    if ($("#status").val() == '9') {
-      stock["inout"] = 9;
-      issuername = "";
-      designation = "";
-    } else {
-      stock["inout"] = 15;
-      issuername = $("#invoice_issuer_name").val();
-      designation = $("#invoice_issuer_designation").val();
-      if (issuername == "") {
-        $("#invoice_issuer_name").focus();
-        $("#issuer-blank-alert").alert();
-        $("#issuer-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-          $("#issuer-blank-alert").hide();
-        });
-        return false;
+      stock["items"] = items;
+      if ($("#status").val() == '9') {
+	  stock["inout"] = 9;
+	  issuername = "";
+	  designation = "";
       }
-    }
-    var form_data = new FormData();
-    form_data.append("dcid", $("#invoice_deliverynote option:selected").val());
-    form_data.append("custid", $("#invoice_customer option:selected").val());
-    form_data.append("invoiceno", $("#invoice_challanno").val());
+      else {
+	  stock["inout"] = 15;
+	  issuername = $("#invoice_issuer_name").val();
+	  designation = $("#invoice_issuer_designation").val();
+	  if (issuername == "") {
+	      $("#invoice_issuer_name").focus();
+	      $("#issuer-blank-alert").alert();
+	      $("#issuer-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		  $("#issuer-blank-alert").hide();
+	      });
+	      return false;
+	  }
+      }
+      var form_data = new FormData();
+      form_data.append("dcid", $("#invoice_deliverynote option:selected").val());
+      form_data.append("custid", $("#invoice_customer option:selected").val());
+      form_data.append("invoiceno", $("#invoice_challanno").val());
       form_data.append("invoicedate", $.trim($("#invoice_year").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_date").val()));
-    form_data.append("contents", JSON.stringify(contents));
-    form_data.append("tax", JSON.stringify(tax));
-    form_data.append("stock", JSON.stringify(stock));
-    form_data.append("issuername", issuername);
-    form_data.append("designation", designation);
-    form_data.append("invtotal", invoicetotal);
-    if ($("#status").val() == 9) {
-	form_data.append("taxstate", $("#invoicestate option:selected").val());
-	form_data.append("sourcestate", $("#invoice_customerstate option:selected").val());
-    }
-    else if ($("#status").val() ==  15) {
-	form_data.append("taxstate", $("#invoice_customerstate option:selected").val());
-	form_data.append("sourcestate", $("#invoicestate option:selected").val());
+      form_data.append("contents", JSON.stringify(contents));
+      form_data.append("tax", JSON.stringify(tax));
+      form_data.append("cess", JSON.stringify(cess));
+      form_data.append("stock", JSON.stringify(stock));
+      form_data.append("issuername", issuername);
+      form_data.append("designation", designation);
+      form_data.append("invtotal", invoicetotal);
+      if ($("#status").val() == 9) {
+	  form_data.append("taxstate", $("#invoicestate option:selected").val());
+	  form_data.append("sourcestate", $("#invoice_customerstate option:selected").val());
+      }
+      else if ($("#status").val() ==  15) {
+	  form_data.append("taxstate", $("#invoice_customerstate option:selected").val());
+	  form_data.append("sourcestate", $("#invoicestate option:selected").val());
     }
     form_data.append("freeqty", JSON.stringify(freeqty));
     form_data.append("discount", JSON.stringify(discount));
