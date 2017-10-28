@@ -104,7 +104,12 @@ $("#add_state").keydown(function(event) {
   }
   else if (event.which==13) {
     event.preventDefault();
-    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
+    if ($.trim($("#add_cussup_pan").val()) !="") {
+	 $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:last').focus();
+      }
+      else {
+	   $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').focus();
+      }
   }
   else if (event.which==27) {
     event.preventDefault();
