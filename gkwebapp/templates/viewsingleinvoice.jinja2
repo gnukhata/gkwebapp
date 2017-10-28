@@ -242,7 +242,7 @@
 		    <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 		    <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
 		    {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}CGST{% endtrans %}</th>{% endif %}
-		    {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}SGST{% endtrans %}</th>{% endif %}
+		    {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}SGST/UTGST{% endtrans %}</th>{% endif %}
 		    {% if gkresult["taxname"]=='IGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}IGST{% endtrans %}</th>{% endif %}
 		    <th colspan="2" class="taxwrap text-center">{% trans %}CESS{% endtrans %}</th>
 		  </tr>
