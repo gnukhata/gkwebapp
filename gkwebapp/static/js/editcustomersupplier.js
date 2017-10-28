@@ -286,6 +286,27 @@ $(document).ready(function() {
 	}
 	
     });
+
+    //Keydown event on gstin's panno 
+    $(document).off("keydown", ".panno").on("keydown", ".panno", function(event) {
+	var curindex = $(this).closest('tr').index();
+	var previndex = curindex-1;
+	if (event.which == 13) {
+	    event.preventDefault();
+	    if($(this).val() != '') {
+		$(this).next('input').focus().select();
+	
+	    }
+	    else {
+		$("#panno-blank-alert").alert();
+                $("#panno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#panno-blank-alert").hide();
+  		$(this).focus().select();
+		});
+		return false;
+	    }
+	}
+    });
     
     $(document).off("focusout",".gstin").on("focusout",".gstin",function(event) {
         var curindex = $(this).closest('tr').index();
