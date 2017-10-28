@@ -117,6 +117,24 @@ $("#add_state").keydown(function(event) {
   }
 });
 
+     //Change event on GSTIN State
+    $(document).off('change', '.gstinstate').on('change', '.gstinstate', function(event) {
+	event.preventDefault();
+	var curindex = $(this).closest('tr').index();
+	var cusstatecode =  $('#gstintable tbody tr:eq('+curindex+') td:eq(0) select option:selected').attr("stateid");
+	if (cusstatecode.length == 1){
+	    cusstatecode = "0" + cusstatecode; 
+	}
+	$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val(cusstatecode); //for state code
+	if ($('#add_cussup_pan').val() != ''){
+	    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val($('#add_cussup_pan').val()).prop("disabled",true); //for pan
+	}
+	else {
+	    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:second').prop("disabled",false);
+	}
+	
+    });
+
     $(document).off("focusout",".gstin").on("focusout",".gstin",function(event) {
         var curindex = $(this).closest('tr').index();
         var gstin = $(this).val();
