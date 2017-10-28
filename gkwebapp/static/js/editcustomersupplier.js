@@ -1,8 +1,10 @@
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#edit_cussup_list").focus();
-  $(".panel-footer").hide();
-
+    $(".panel-footer").hide();
+    
+    var gstinstring = "";
+    
   $("#edit_cussup_list").change(function(event) {
     $.ajax({
       url: '/customersuppliers?action=get',
@@ -309,19 +311,18 @@ $(document).ready(function() {
     });
     
     $(document).off("focusout",".gstin").on("focusout",".gstin",function(event) {
-        var curindex = $(this).closest('tr').index();
-        var gstin = $(this).val();
-        if(gstin != ''){
-          var gstnint = parseInt(gstin[0] + gstin[1]);
-          if(!($.isNumeric(gstnint)) || gstnint > 37 || gstnint < 0 || gstin.length !=15){
-              $("#gstin-improper-alert").alert();
-              $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-                  $("#gstin-improper-alert").hide();
-                  $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
-              });
-              return false;
+	var curindex = $(this).closest('tr').index();
+	gstinstring = $(".statecode").val() + $(".panno").val() + $(".gstin").val();
+	if(gstinstring != ''){
+  	    if(gstinstring.length !=15){
+  		$("#gstin-improper-alert").alert();
+		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#gstin-improper-alert").hide();
+  		    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').focus().select();
+		});
+  		return false;
           }
-        }
+  }
 
     });
 
