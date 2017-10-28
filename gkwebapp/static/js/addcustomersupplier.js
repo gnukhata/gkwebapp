@@ -176,7 +176,7 @@ $("#add_state").keydown(function(event) {
     
     $(document).off("focusout",".gstin").on("focusout",".gstin",function(event) {
 	var curindex = $(this).closest('tr').index();
-	gstinstring = $(".statecode").val() + $(".panno").val() + $(".gstin").val();
+	gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val();
 	if(gstinstring != ''){
   	    if(gstinstring.length !=15){
   		$("#gstin-improper-alert").alert();
@@ -421,7 +421,7 @@ if($("#vatorgstflag").val() == '22'){
       $("#gstintable tbody tr").each(function(){
 	  var curindex1 = $(this).index();
     if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
-	gstinstring = $(".statecode").val() + $(".panno").val() + $(".gstin").val();
+	gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
 	if(gstinstring != ''){
   	    if(gstinstring.length !=15){
   		$("#gstin-improper-alert").alert();

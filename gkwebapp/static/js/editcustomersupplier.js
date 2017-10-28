@@ -49,7 +49,7 @@ $(document).ready(function() {
 	$('#gstintable tbody').empty();
 	$('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');
 	for(var gstin in result["gstin"]){
-	    var gstinstr = result["gstin"][gstin]; 
+	    var gstinstr = result["gstin"][gstin];
 	    $('#gstintable tbody tr:last td:eq(0) select option[stateid='+gstin+']').prop("selected", true);
 	    $('#gstintable tbody tr:last td:eq(1) input:eq(0)').val(gstinstr.substring(0, 2));
 	    $('#gstintable tbody tr:last td:eq(1) input:eq(1)').val(gstinstr.substring(2, 12));
@@ -312,7 +312,7 @@ $(document).ready(function() {
     
     $(document).off("focusout",".gstin").on("focusout",".gstin",function(event) {
 	var curindex = $(this).closest('tr').index();
-	gstinstring = $(".statecode").val() + $(".panno").val() + $(".gstin").val();
+	gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val();
 	if(gstinstring != ''){
   	    if(gstinstring.length !=15){
   		$("#gstin-improper-alert").alert();
@@ -452,7 +452,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       $("#gstintable tbody tr").each(function(){
 	  var curindex1 = $(this).index();
     if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
-	gstinstring = $(".statecode").val() + $(".panno").val() + $(".gstin").val();
+	gstinstring =	gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
 	if(gstinstring != ''){
   	    if(gstinstring.length !=15){
   		$("#gstin-improper-alert").alert();
