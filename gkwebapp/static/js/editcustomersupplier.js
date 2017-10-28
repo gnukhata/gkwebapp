@@ -262,7 +262,7 @@ $(document).ready(function() {
 	 $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').focus();
       }
       else {
-	   $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').focus();
+	  $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').focus().select();
       }
   }
   else if (event.which==27) {
@@ -369,7 +369,7 @@ $(document).ready(function() {
   }
   else if (event.ctrlKey && event.which==188) {
     event.preventDefault();
-    $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select').focus();
+    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').focus();
   }
   else if (event.which==190 && event.ctrlKey) {
     event.preventDefault();
@@ -448,27 +448,23 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       $("#edit_cussup_tan").focus();
       return false;
       } */
-      var gobj = {}; // Creating a dictionary for storing godown wise opening stock
+      var gobj = {}; // Creating a dictionary for storing statecode with gstin.
       $("#gstintable tbody tr").each(function(){
 	  var curindex1 = $(this).index();
     if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
-	if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val())!="") {
-	    var gstin = $.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val());
-      if(gstin != '') {
-        var gstnint = parseInt(gstin[0] + gstin[1]);
-        if(!($.isNumeric(gstnint)) || gstnint > 37 || gstnint < 0 || gstin.length !=15){
-allow = 0;
-            $("#gstin-improper-alert").alert();
-            $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#gstin-improper-alert").hide();
-                $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').focus().select();
-            });
-            return false;
-        }
+	gstinstring = $(".statecode").val() + $(".panno").val() + $(".gstin").val();
+	if(gstinstring != ''){
+  	    if(gstinstring.length !=15){
+  		$("#gstin-improper-alert").alert();
+		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#gstin-improper-alert").hide();
+  		    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').focus().select();
+		});
+  		return false;
+          }
+  }
+        gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] =gstinstring;
       }
-          gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val();
-      }
-    }
       });
       let custtan = "";
       if ($("#edit_cussup_tan").length > 0){
