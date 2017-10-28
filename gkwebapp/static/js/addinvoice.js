@@ -1281,12 +1281,17 @@ $(document).ready(function() {
     //GST events start here
     //Change event for Product Name field.
     $(document).off('change', '.product_name_gst').on('change', '.product_name_gst', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    var productcode = $(this).find('option:selected').val();
-    var curindex = $(this).closest('tbody tr').index();
-    var destinationstate = "";
-      var sourcestate = "";
+	event.preventDefault();
+	var productcode = $(this).find('option:selected').val();
+	var curindex = $(this).closest('tbody tr').index();
+	var destinationstate = "";
+	var sourcestate = "";
+
+	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(0).toFixed(2));
+        $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(0).toFixed(2));
+        $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(0).toFixed(2));
+	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val(parseFloat(0).toFixed(2));
+	
       if ($("#status").val() == 9) {
 	  destinationstate = $("#invoicestate option:selected").val();
 	  sourcestate = $("#invoice_customerstate").val();
@@ -1316,7 +1321,6 @@ $(document).ready(function() {
           })
            .done(function(resp) {
                if (resp["gkstatus"] == 0) {
-		   $(".trate", ".tname").val(parseFloat(0).toFixed(2)); //Sets all tax fields to zero on change of product
 		   //Loads SGST rate.
 		   if('SGST' in resp['tax']){
 		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(resp['tax']['SGST']).toFixed(2));
