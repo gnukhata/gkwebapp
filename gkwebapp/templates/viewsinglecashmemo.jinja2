@@ -118,7 +118,8 @@
 		    <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 		    <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
 		    {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}CGST{% endtrans %}</th>{% endif %}
-		    {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}SGST{% endtrans %}</th>{% endif %}
+		    {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}SGST/UTGST{% endtrans %}</th>{% endif %}
+		    <th colspan="2" class="taxwrap text-center">{% trans %}CESS{% endtrans %}</th>
 		  </tr>
 
 		  <tr>
@@ -126,6 +127,8 @@
 		    {% if gkresult["taxname"]=='SGST' %}<th class="text-center">{% trans %}Amount{% endtrans %}</th>{% endif %}
 		    {% if gkresult["taxname"]=='SGST' %}<th class="text-center">{% trans %}Rate{% endtrans %} %</th>{% endif %}
 		    {% if gkresult["taxname"]=='SGST' %}<th class="text-center">{% trans %}Amount{% endtrans %}</th>{% endif %}
+		    <th class="text-center">{% trans %}Rate{% endtrans %} %</th>
+                    <th class="text-center">{% trans %}Amount{% endtrans %}</th>
 		  </tr>
 		</thead>
 	      </table>
@@ -163,6 +166,8 @@
 
 		      {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="taxcell text-right">{{ gkresult["invcontents"][product]["taxrate"] }}</td>{% endif %}
 		      {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="taxcell text-right">{{ gkresult["invcontents"][product]["taxamount"] }}</td>{% endif %}
+		      <td class="taxcell text-right">{{ gkresult["invcontents"][product]["cessrate"] }}</td>
+                      <td class="taxcell text-right">{{ gkresult["invcontents"][product]["cess"] }}</td>
 		  </tr>
 		    {% endfor %}
 		</tbody>
@@ -177,6 +182,7 @@
 		    <td class="text-right smwrap">{{ gkresult["totaltaxablevalue"] }}</td>
 		    {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
 		    {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
+		    <td colspan="2" class="text-right taxwrap">{{ gkresult["totalcessamt"] }}</td>
 		</tfoot>
 	      </table>
 	    </div>

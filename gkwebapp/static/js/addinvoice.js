@@ -22,7 +22,7 @@
    "Krishnakant Mane" <kk@gmail.com>
    "Ishan Masdekar " <imasdekar@dff.org.in>
    "Navin Karkera" <navin@dff.org.in>
-   "Prajkta Patkar"<prajkta.patkar007@gmail.com>
+   "Prajkta Patkar"<prajakta@dff.org.in>
    "Vaibhav Kurhe" <vaibhav.kurhe@gmail.com>
    "Abhijith Balan" <abhijith@dff.org.in>
    "Rohini Baraskar" <robaraskar@gmail.com>
@@ -61,34 +61,39 @@ $(document).ready(function() {
 	var rowqty = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
 	var rowprice = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
 	var rowdiscount = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val()).toFixed(2);
-	var taxdetails = $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').data("taxdetails");
-	var taxamount = 0.00;
 	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
 	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').is(":disabled") && $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').is(":disabled")) {
 	    rowtaxableamount = rowprice - rowdiscount;
 	}
+
 	//Initialising variables for calculating total of Discount, Taxable Amount, Tax Amounts, and Total Amounts.
 	var rowtotal = 0.00;
 	var totalamount = 0.00;
 	var totalcgst = 0.00;
 	var totalsgst = 0.00;
 	var totaligst = 0.00;
+	var totalcess = 0.00;
 	var totaldiscount = 0.00;
 	var totaltaxable = 0.00;
+
 	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtaxableamount).toFixed(2)); //Taxable amount is displayed.
-	taxamount = (rowtaxableamount * taxdetails["taxrate"])/100;  //Amount of tax to be applied is found out.
-	//Checks if TAX is IGST or SGST + CGST. Amount of tax to be applied is then displayed accordingly along with calculated total amount.
-	if (taxdetails["taxname"] == "IGST") {
-	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(12) input').val(parseFloat(taxamount).toFixed(2));
-	    rowtotal = rowtaxableamount + taxamount;
-	    $('#invoice_product_table_total tbody tr:eq(' + curindex + ') td:eq(0) input').val(parseFloat(rowtotal).toFixed(2));
-	}
-	else if (taxdetails["taxname"] == "SGST") {
-	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(taxamount).toFixed(2));
-	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(10) input').val(parseFloat(taxamount).toFixed(2));
-	    rowtotal = rowtaxableamount + (2*taxamount);
-	    $('#invoice_product_table_total tbody tr:eq(' + curindex + ') td:eq(0) input').val(parseFloat(rowtotal).toFixed(2));
-	}
+
+	let sgstrate = $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val();
+	let sgstamount = (rowtaxableamount * sgstrate)/100;  //Amount of SGST to be applied is found out.
+	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(sgstamount).toFixed(2));
+	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(10) input').val(parseFloat(sgstamount).toFixed(2));
+
+	let igstrate = $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val();
+	let igstamount = (rowtaxableamount * igstrate)/100;  //Amount of IGST to be applied is found out.
+	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(12) input').val(parseFloat(igstamount).toFixed(2));
+
+	let cessrate = $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val();
+        let cessamount = (rowtaxableamount * cessrate)/100;  //Amount of Cess to be applied is found out.
+	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(14) input').val(parseFloat(cessamount).toFixed(2));
+
+	rowtotal = rowtaxableamount + 2*sgstamount + igstamount + cessamount; //Sum of Taxable Amount and Tax Amount is found out.
+        $('#invoice_product_table_total tbody tr:eq(' + curindex + ') td:eq(0) input').val(parseFloat(rowtotal).toFixed(2));
+
 	//Total of discount, taxable amount, tax amounts and total are found out
 	for(var i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
 	    totaldiscount = totaldiscount + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val());
@@ -96,14 +101,17 @@ $(document).ready(function() {
 	    totalcgst = totalcgst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(8) input').val());
 	    totalsgst = totalsgst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(10) input').val());
 	    totaligst = totaligst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(12) input').val());
+	    totalcess = totalcess + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(14) input').val());
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
 	}
+
 	//Total of various columns are displayed on the footer.
 	$('#discounttotal_product_gst').text(parseFloat(totaldiscount).toFixed(2));
 	$('#taxablevaluetotal_product_gst').text(parseFloat(totaltaxable).toFixed(2));
 	$('#totalcgst_product_gst').text(parseFloat(totalcgst).toFixed(2));
 	$('#totalsgst_product_gst').text(parseFloat(totalsgst).toFixed(2));
 	$('#totaligst_product_gst').text(parseFloat(totaligst).toFixed(2));
+	$('#totalcess_product_gst').text(parseFloat(totalcess).toFixed(2));
 	$('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
 	$("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
     }
@@ -652,6 +660,7 @@ $(document).ready(function() {
     $(document).off('change', '.product_name_vat').on('change', '.product_name_vat', function(event) {
 	event.preventDefault();
 	/* Act on the event */
+	$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(0).toFixed(2));
 	var productcode = $(this).find('option:selected').val();
 	var curindex = $(this).closest('tbody tr').index();
     var destinationstate = "";
@@ -684,7 +693,12 @@ $(document).ready(function() {
       })
        .done(function(resp) {
          if (resp["gkstatus"] == 0) {
-	   $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['taxrate']).toFixed(2));
+	     if ('VAT' in resp['tax']) {
+		 $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['tax']['VAT']).toFixed(2));
+	     }
+	     else if ('CVAT' in resp['tax']) {
+                 $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['tax']['CVAT']).toFixed(2));
+             }
          }
 	  else if (resp["gkstatus"] == 1) {
 	      $("#notax-alert").alert();
@@ -718,7 +732,7 @@ $(document).ready(function() {
 
      })
      .fail(function() {
-       console.log("error");
+	 console.log("error");
      })
      .always(function() {
        console.log("complete");
@@ -1267,12 +1281,17 @@ $(document).ready(function() {
     //GST events start here
     //Change event for Product Name field.
     $(document).off('change', '.product_name_gst').on('change', '.product_name_gst', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    var productcode = $(this).find('option:selected').val();
-    var curindex = $(this).closest('tbody tr').index();
-    var destinationstate = "";
-      var sourcestate = "";
+	event.preventDefault();
+	var productcode = $(this).find('option:selected').val();
+	var curindex = $(this).closest('tbody tr').index();
+	var destinationstate = "";
+	var sourcestate = "";
+
+	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(0).toFixed(2));
+        $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(0).toFixed(2));
+        $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(0).toFixed(2));
+	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val(parseFloat(0).toFixed(2));
+	
       if ($("#status").val() == 9) {
 	  destinationstate = $("#invoicestate option:selected").val();
 	  sourcestate = $("#invoice_customerstate").val();
@@ -1301,19 +1320,28 @@ $(document).ready(function() {
             }
           })
            .done(function(resp) {
-             if (resp["gkstatus"] == 0) {
-		 $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').data("taxdetails", {taxname: resp["taxname"], taxrate:resp["taxrate"]});
-               if(resp['taxname']=='SGST'){
-                  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(resp['taxrate']).toFixed(2));
-                   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(resp['taxrate']).toFixed(2));
-		   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(0).toFixed(2));
-               }
-               else{
-                   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(resp['taxrate']).toFixed(2));
-		   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(0).toFixed(2));
-                   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(0).toFixed(2));
-               }
-             }
+               if (resp["gkstatus"] == 0) {
+		   //Loads SGST rate.
+		   if('SGST' in resp['tax']){
+		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(resp['tax']['SGST']).toFixed(2));
+		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(resp['tax']['SGST']).toFixed(2));
+		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(0).toFixed(2));
+		       //Loads CESS rate if avaliable.
+		       if ('CESS' in resp['tax']) {
+			   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val(parseFloat(resp['tax']['CESS']).toFixed(2));
+		       }
+		   }
+		   //Loads IGST rate.
+		   else if('IGST' in resp['tax']){
+		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(resp['tax']['IGST']).toFixed(2));
+		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(0).toFixed(2));
+		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(0).toFixed(2));
+		       //Loads CESS rate.
+		       if ('CESS' in resp['tax']) {
+			   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val(parseFloat(resp['tax']['CESS']).toFixed(2));
+		       }
+		   }
+	       }
 	       else if (resp["gkstatus"] == 1) {
 		   $("#notax-alert").alert();
 		   $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -2026,16 +2054,17 @@ if (event.which == 13) {
           $('#consigneename').focus();
           return false;
       }
-    var tax = {};
+      var tax = {};
+      var cess = {};
       var contents = {};
-    var freeqty = {};
-    var stock = {};
+      var freeqty = {};
+      var stock = {};
       var items = {};
       var discount = {};
       var consignee = {};
       var bankdetails = {};
       var invoicetotal = 0.00;
-    var productcodes = [];
+      var productcodes = [];
       var productqtys = [];
       var quantity;
       var ppu;
@@ -2138,7 +2167,7 @@ if (event.which == 13) {
             ppu = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val());
             obj[ppu] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
             tax[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(6) input").val());
-        contents[productcode] = obj;
+	    contents[productcode] = obj;
             items[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
             freeqty[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val());
 	    discount[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val());
@@ -2151,83 +2180,84 @@ if (event.which == 13) {
       else if ($("#taxapplicable").val() == 7) {
 	  for (let i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
 	      if ($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select option:selected').val() == "") {
-      $("#product-blank-alert").alert();
-      $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-        $("#product-blank-alert").hide();
-      });
-      $('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select').focus();
-      return false;
-    }
-      quantity = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val());
-	  if (parseFloat(quantity) === 0.00 && $('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select option:selected').attr("gsflag") == '7') {
-	      $("#quantity-blank-alert").alert();
-	      $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		  $("#quantity-blank-alert").hide();
-	      });
-	      $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").focus().select();
-	      return false;
-	  }
-	  if ($("#invoice_deliverynote option:selected").val() != '') {
-	      if ((parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(1) input").attr("data")).toFixed(2))) && $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select option:selected').attr("gsflag") == '7') {
-          $("#quantity-exceed-alert").alert();
-          $("#quantity-exceed-alert").fadeTo(2250, 500).slideUp(500, function() {
-              $("#quantity-exceed-alert").hide();
-          });
-          return false;
-	    }
-	  }
+		  $("#product-blank-alert").alert();
+		  $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		      $("#product-blank-alert").hide();
+		  });
+		  $('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select').focus();
+		  return false;
+	      }
+	      quantity = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val());
+	      if (parseFloat(quantity) === 0.00 && $('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select option:selected').attr("gsflag") == '7') {
+		  $("#quantity-blank-alert").alert();
+		  $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		      $("#quantity-blank-alert").hide();
+		  });
+		  $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").focus().select();
+		  return false;
+	      }
+	      if ($("#invoice_deliverynote option:selected").val() != '') {
+		  if ((parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(1) input").attr("data")).toFixed(2))) && $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select option:selected').attr("gsflag") == '7') {
+		      $("#quantity-exceed-alert").alert();
+		      $("#quantity-exceed-alert").fadeTo(2250, 500).slideUp(500, function() {
+			  $("#quantity-exceed-alert").hide();
+		      });
+		      return false;
+		  }
+	      }
 	      calculategstaxamt(i);
-	  productqtys.push(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()));
+	      productqtys.push(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()));
 	      let obj = {};
-	productcode = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
-        ppu = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val();
-        obj[ppu] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
-        contents[productcode] = obj;
-	    tax[productcode] = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(7) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(9) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(11) input").val());
-        items[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
-        freeqty[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val();
-	discount[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();
-	}
+	      productcode = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
+	      ppu = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val();
+	      obj[ppu] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
+	      contents[productcode] = obj;
+	      tax[productcode] = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(7) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(9) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(11) input").val());
+	      cess[productcode] = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(13) input").val());
+	      items[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
+	      freeqty[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val();
+	      discount[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();
+	  }
 	  invoicetotal = $.trim($('#total_product_gst').html());
       }
-
-    stock["items"] = items;
-
-    if ($("#status").val() == '9') {
-      stock["inout"] = 9;
-      issuername = "";
-      designation = "";
-    } else {
-      stock["inout"] = 15;
-      issuername = $("#invoice_issuer_name").val();
-      designation = $("#invoice_issuer_designation").val();
-      if (issuername == "") {
-        $("#invoice_issuer_name").focus();
-        $("#issuer-blank-alert").alert();
-        $("#issuer-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-          $("#issuer-blank-alert").hide();
-        });
-        return false;
+      stock["items"] = items;
+      if ($("#status").val() == '9') {
+	  stock["inout"] = 9;
+	  issuername = "";
+	  designation = "";
       }
-    }
-    var form_data = new FormData();
-    form_data.append("dcid", $("#invoice_deliverynote option:selected").val());
-    form_data.append("custid", $("#invoice_customer option:selected").val());
-    form_data.append("invoiceno", $("#invoice_challanno").val());
+      else {
+	  stock["inout"] = 15;
+	  issuername = $("#invoice_issuer_name").val();
+	  designation = $("#invoice_issuer_designation").val();
+	  if (issuername == "") {
+	      $("#invoice_issuer_name").focus();
+	      $("#issuer-blank-alert").alert();
+	      $("#issuer-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		  $("#issuer-blank-alert").hide();
+	      });
+	      return false;
+	  }
+      }
+      var form_data = new FormData();
+      form_data.append("dcid", $("#invoice_deliverynote option:selected").val());
+      form_data.append("custid", $("#invoice_customer option:selected").val());
+      form_data.append("invoiceno", $("#invoice_challanno").val());
       form_data.append("invoicedate", $.trim($("#invoice_year").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_date").val()));
-    form_data.append("contents", JSON.stringify(contents));
-    form_data.append("tax", JSON.stringify(tax));
-    form_data.append("stock", JSON.stringify(stock));
-    form_data.append("issuername", issuername);
-    form_data.append("designation", designation);
-    form_data.append("invtotal", invoicetotal);
-    if ($("#status").val() == 9) {
-	form_data.append("taxstate", $("#invoicestate option:selected").val());
-	form_data.append("sourcestate", $("#invoice_customerstate option:selected").val());
-    }
-    else if ($("#status").val() ==  15) {
-	form_data.append("taxstate", $("#invoice_customerstate option:selected").val());
-	form_data.append("sourcestate", $("#invoicestate option:selected").val());
+      form_data.append("contents", JSON.stringify(contents));
+      form_data.append("tax", JSON.stringify(tax));
+      form_data.append("cess", JSON.stringify(cess));
+      form_data.append("stock", JSON.stringify(stock));
+      form_data.append("issuername", issuername);
+      form_data.append("designation", designation);
+      form_data.append("invtotal", invoicetotal);
+      if ($("#status").val() == 9) {
+	  form_data.append("taxstate", $("#invoicestate option:selected").val());
+	  form_data.append("sourcestate", $("#invoice_customerstate option:selected").val());
+      }
+      else if ($("#status").val() ==  15) {
+	  form_data.append("taxstate", $("#invoice_customerstate option:selected").val());
+	  form_data.append("sourcestate", $("#invoicestate option:selected").val());
     }
     form_data.append("freeqty", JSON.stringify(freeqty));
     form_data.append("discount", JSON.stringify(discount));
