@@ -27,7 +27,29 @@ Contributors:
 
 $(document).ready(function()
 {
-  $("#instrumentbtn2").hide();
+
+    // Following ajax will fetch user data and make changes accordingly.
+  $.ajax({
+    url: '/orgdata',
+    type: 'POST',
+    global: false,
+    async: false,
+    datatype: 'json',
+    beforeSend: function(xhr)
+    {
+      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+    }
+  })
+  .done(function(resp){
+      if(resp["gkresult"]["userrole"]==2){ // If the user role is an Internal Auditor then Lock, Edit, Clone & Delete buttons are hidden.
+	  $("#lock").remove();
+	  $("#edit").remove();
+	  $("#clone").remove();
+	  $("#delete").remove();
+      }
+   });
+
+    $("#instrumentbtn2").hide();
     function getBalance( accountcode, calculateTo ){
         var bal = '';
         $.ajax({
@@ -57,7 +79,6 @@ $(document).ready(function()
         });
         return bal;
       }
-
 
   if (($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase") && sessionStorage.invflag==1)
   {
@@ -612,7 +633,7 @@ $(document).ready(function()
       return str.length < max ? pad("0" + str, max) : str;
     }
     else{
-      return str
+	return str;
     }
   }
   function yearpad (str, max) {
@@ -624,7 +645,7 @@ $(document).ready(function()
       return str.length < max ? pad("20" + str, max) : str;
     }
     else{
-      return str
+	return str;
     }
   }
 
@@ -702,7 +723,7 @@ $(document).ready(function()
       $('#vdate').focus().select();
       return false;
     }
-    var curdate = Date.parseExact($("#vyear").val()+$("#vmonth").val()+$("#vdate").val(), "yyyyMMdd")
+      var curdate = Date.parseExact($("#vyear").val()+$("#vmonth").val()+$("#vdate").val(), "yyyyMMdd");
     if (!curdate.between(financialstart,financialend)) {
       $("#between-date-alert").alert();
       $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -1477,7 +1498,7 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
         diff=crsum-drsum;
         if(curindex<lastindex)
         {
-          var nxtindex = curindex+1
+            var nxtindex = curindex+1;
           if($('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(diff.toFixed(2));
             drsum=0;
