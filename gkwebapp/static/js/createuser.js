@@ -28,7 +28,7 @@ $(document).ready(function(){
   $("#msspinmodal").on('hidden.bs.modal', function(event) {
     $("#name").focus();
   });
-  $("#userrole option[value=3]").hide();
+  //$("#userrole option[value=3]").hide();
   if (sessionStorage.invflag==1) {
     $.ajax(
        {
