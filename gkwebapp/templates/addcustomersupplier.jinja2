@@ -48,6 +48,13 @@
       {% trans %}Please enter proper PAN!{% endtrans %}
 
     </div>
+
+    <div class="alert alert-danger" id="panno-blank-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Please enter proper GSTIN!{% endtrans %}
+
+    </div>
+    
     <div class="alert alert-danger" id="tin-blank-alert"  aria-live="rude" role="alert" hidden>
 
       {% trans %}Please enter TIN!{% endtrans %}
@@ -162,7 +169,14 @@
                       </select>
                     </td>
                     <td class="col-xs-4">
-                      <input class="form-control input-sm gstin" maxlength="15">
+		      <div class="form-inline nopadding">
+			<div class="form-group nopadding">
+			<!-- <input class="form-control input-sm gstin" maxlength="15">-->
+			  <input type="text" class="form-control input-sm nopadding statecode" size="2" maxlength="2" disabled >
+			  <input type="text" class="form-control input-sm nopadding panno" size="10" maxlength="10">
+			  <input type="text" class="form-control input-sm nopadding gstin" size="3" maxlength="3">
+			</div>
+		      </div>
                     </td>
                     <td class="col-xs-1">
                     </td>
