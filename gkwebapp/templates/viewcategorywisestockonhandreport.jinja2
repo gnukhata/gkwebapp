@@ -81,7 +81,7 @@
           <div class="form-group" id="goselect">
             <label for="editgoddet">{% trans %}Godown{% endtrans %} :</label>
             <select class = "form-control input-sm" id="editgoddet">
-            <option value="all" selected>{% trans %}All{% endtrans %}</option>
+            
               {% for gods in godown %}
               <option value="{{gods['goid']}}" data-godownname="{{gods["goname"]}}" data-godownaddress="{{gods["goaddr"]}}">{{gods["goname"]}} ({{gods["goaddr"]}})</option>
 
