@@ -65,7 +65,6 @@
 	    {% endif %}
 	  </select>
 	  
-
           <div class="col-xs-12" style="margin-top: 10px;">
               <div class="col-xs-6">
               <label for="viewstock_todate">{% trans %}As on{% endtrans %} :</label>
@@ -78,30 +77,34 @@
                   <input type="text" id="viewstock_toyear" class="viewstock_date form-control input-sm dis" value="" size="4" maxlength="4" placeholder="YYYY" >
                 </div>
               </div>
-            </div>
+              </div>
           </div>
 
           {% if not godown %}
-          <input type="text" id="godownpresent" value="0" hidden>
-          <input type="checkbox" id="godownflag" value="0" hidden>
+            <input type="text" id="godownpresent" value="0" hidden>
+            <input type="checkbox" id="godownflag" value="0" hidden>
           {% else %}
-          <div id="godownwise_div">
-          {% if userrole == 3 %}
-          <div class="form-group">
-            <input type="text" id="godownpresent" value="1" hidden>
-            <input type="checkbox" id="godownflag" style="margin-top: 20px;" value="1" hidden>
-            <label for="godownflag" hidden>Godown Wise Stock on Hand Report</label>
-          </div>
-          <div class="form-group" id="goselect">
-            <label for="editgoddet">{% trans %}Godown{% endtrans %} :</label>
-            <select class = "form-control input-sm" id="editgoddet">
-              <option value="disabled=""" disabled selected hidden>{% trans %}Select Godown{% endtrans %}</option>
-              {% for gods in godown %}
-              <option value="{{gods['goid']}}" data-godownname="{{gods["goname"]}}" data-godownaddress="{{gods["goaddr"]}}">{{gods["goname"]}} ({{gods["goaddr"]}})</option>
-              {% endfor %}
-            </select>
-          </div>
-          {%else%}
+            <div id="godownwise_div">
+              {% if userrole == 3 %}
+		<div class="form-group">
+		  <input type="text" id="godownpresent" value="1" hidden>
+		  <input type="checkbox" id="godownflag" style="margin-top: 20px;" value="1" hidden>
+		  <label for="godownflag" hidden>Godown Wise Stock on Hand Report</label>
+		</div>
+		<div class="form-group" id="goselect">
+		  <label for="editgoddet">{% trans %}Godown{% endtrans %} :</label>
+		  {#{% if godown|length > 1 %}#}
+		    <select class = "form-control input-sm" id="editgoddet">
+		      <option value="disabled=""" disabled selected hidden>{% trans %}Select Godown{% endtrans %}</option>
+		      {% for gods in godown %}
+			<option value="{{gods['goid']}}" data-godownname="{{gods["goname"]}}" data-godownaddress="{{gods["goaddr"]}}">{{gods["goname"]}} ({{gods["goaddr"]}})</option>
+		      {% endfor %}
+		    </select>
+		  {#{% else %}#}
+		    {#<label id="godwn" data-value="{{godown[0]['goid']}}" data-godownname="{{godown[0]["goname"]}}" data-godownaddress="{{godown[0]["goaddr"]}}" >{{godown[0]["goname"]}} ({{godown[0]["goaddr"]}})</label>#}
+		  {#{% endif %}#}
+		</div>
+          {% else %}
           <div class="form-group">
             <input type="text" id="godownpresent" value="1" hidden>
             <input type="checkbox" id="godownflag" style="margin-top: 20px;" value="0">

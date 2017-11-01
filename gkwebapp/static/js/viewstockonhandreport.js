@@ -193,15 +193,15 @@ $(document).ready(function() {
 			$("#account-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 				$("#account-blank-alert").hide();
 			});
-			$('#viewstock_productname').focus()
+		    $('#viewstock_productname').focus();
 			return false;
 		}
-		if ($("#editgoddet").val()==null && $("#godownflag").val()==1) {
+	    if ($("#editgoddet").val()==null && $("#godownflag").val()==1 /*&& $("#godwn").data("data-value") !=null*/){
 			$("#godown-blank-alert").alert();
 			$("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 				$("#godown-blank-alert").hide();
 			});
-			$('#editgoddet').focus()
+		    $('#editgoddet').focus();
 			return false;
 		}
 
@@ -275,7 +275,7 @@ $(document).ready(function() {
 		// -----------------------end of validations---------------------
 
 		// creating dataset for retrieving report from the server.
-		var dataset = {}
+	    var dataset = {};
 		if ($("#godownflag").val()==0) {
 			if ($("#viewstock_productname").val()==0){
 

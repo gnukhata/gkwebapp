@@ -255,8 +255,21 @@ $(document).ready(function() {
 	else {
 		$("#viewstock_toyear").keydown(function(e){
 			if(e.which==13){
-				e.preventDefault();
-				$("#godownflag").focus().select();
+			    e.preventDefault();
+
+			    if($("#godownwise_div").is(":hidden"))
+				{
+					$('#viewstock_submit').focus().click();
+				}
+			    else {
+				if($("#godownflag").is (":visible")){
+				    
+				    $("#godownflag").focus().select();
+				}
+				else{
+				    $("#editgoddet").focus();   
+				}
+				}
 			}
 			if(e.which==38){
 				e.preventDefault();

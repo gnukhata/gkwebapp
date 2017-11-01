@@ -38,6 +38,15 @@
         <div class="alert alert-danger" id="specs-blank-alert" aria-live="rude" role="alert" hidden>
           <label>{% trans %}Please select a specification!{% endtrans %}</label>
         </div>
+
+	<div class="panel-body">
+	  {% if not gkresult %}
+	    <div class="bg-danger col-xs-12" style="padding:10;">
+	      <label class="text-danger">No Products Found </label>
+	    </div>
+	    
+	</div>
+	{% else %}
         <div style="margin-bottom: 5px" class="col-xs-12 from-group">
           <label for="viewstock_categoryname" style="margin-top: 10px;">{% trans %}Category{% endtrans %} :</label>
           <select class = "form-control input-sm" id="viewstock_categoryname"  name = "categoryname" >
@@ -114,6 +123,7 @@
 
       </div>
     </div>
+    {% endif %}
   </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewcategorywisestockonhandreport.js')}}"></script>
 </body>
