@@ -43,15 +43,28 @@
           <label>{% trans %}Please select a Product or a Godown!{% endtrans %}</label>
         </div>
 
+	<div class="panel-body">
+	  {% if not gkresult %}
+	    <div class="bg-danger col-xs-12" style="padding:10;">
+	      <label class="text-danger">No Products Found </label>
+	    </div>
+	    
+	</div>
+	  {% else %}
+	
         <div style="margin-bottom: 5px" class="col-xs-12 from-group">
           <label for="viewstock_productname" style="margin-top: 10px;">{% trans %}Product{% endtrans %} :</label>
           <select class = "form-control input-sm" id="viewstock_productname"  name = "productname" >
             <option value="" disabled selected hidden>{% trans %}Select Product{% endtrans %}</option>
+	    
             {% for product in gkresult %}
-            <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
+              <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
             {% endfor %}
-            <option value=0 >{% trans %}All Products{% endtrans %}</option>
-          </select>
+	    {% if userrole != 3 %}
+              <option value=0 >{% trans %}All Products{% endtrans %}</option>
+	    {% endif %}
+	  </select>
+	  
 
           <div class="col-xs-12" style="margin-top: 10px;">
               <div class="col-xs-6">
@@ -85,9 +98,7 @@
               <option value="disabled=""" disabled selected hidden>{% trans %}Select Godown{% endtrans %}</option>
               {% for gods in godown %}
               <option value="{{gods['goid']}}" data-godownname="{{gods["goname"]}}" data-godownaddress="{{gods["goaddr"]}}">{{gods["goname"]}} ({{gods["goaddr"]}})</option>
-
               {% endfor %}
-               
             </select>
           </div>
           {%else%}
@@ -120,6 +131,7 @@
       </div>
     </div>
   </div>
+  {%endif%}
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewstockonhandreport.js')}}"></script>
 </body>
 </html>
