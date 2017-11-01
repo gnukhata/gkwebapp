@@ -38,28 +38,27 @@
 				</div>
 				<div class="alert alert-danger" id="connectionfailed"  aria-live="rude" role="alert" hidden>
 
-					{% trans %}Connection Failed.{% endtrans %}
-				</div>
+				  {% trans %}Connection Failed.{% endtrans %}
+				</div>			
+<div align="left">
 <div class="col-xs-12 from-group">
-	<center>
 <div class="img-thumbnail img-circle ">
 
-  <div style="position: relative; padding: 0; cursor: pointer;" type="file">
+ <div style="position: relative; padding: 0; cursor: pointer;" type="file">
  <img class="img-circle"  style="width: 100px; height: 100px;" id="imgbox">
  <canvas id="imgcanvas" hidden></canvas>
 
 
-	</div>
-</center>
+ </div>
 </div>
 </div>
-<center>
-<label class="btn btn-primary btn-sm" for="my-file-selector">
-	<input name="img"  class="input-sm" accesskey="o" id="my-file-selector" type="file" accept="image/*" style="display:none;" onchange="$('#upload-file-info').html('New Logo selected');" >
-	{% trans %}Upload L<u>o</u>go{% endtrans %}
+</div>
+<label style="padding-left: 50px;" class="btn btn-primary btn-sm" for="my-file-selector">
+  <input name="img"  class="input-sm" accesskey="o" id="my-file-selector" type="file" accept="image/*" style="display:none;" onchange="$('#upload-file-info').html('New Logo selected');" >
+ {% trans %}Upload L<u>o</u>go{% endtrans %}
 </label>
 <span class='label label-info' id="upload-file-info"></span>
-</center>
+
 				<form id="editorganisationform" method="post" class="form-inline">
 					<div class="col-xs-6 from-group" >
 						<input type="text" id="orgtype" hidden value="{{gkresult["orgtype"]}}" style="width: 100%"></input>
@@ -224,12 +223,13 @@
 										<label for="organisationmvat" id="orgvatno">{% trans %}VAT Number{% endtrans %} :</label>
 									</td>
 									<td>
-										<input type="text" id="orgmvat" class="form-control input-sm" name="organisationmvat" value="{{gkresult["orgmvat"]}}" style="width: 100%"></input>
+									  <input type="text" id="orgmvat" class="form-control input-sm" name="organisationmvat" value="{{gkresult["orgmvat"]}}" style="width: 100%"></input>
 									</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
+					
  <div id="OrgModal"  tabindex="-1" class="modal fade" role="dialog"style="width:650px; margin-top: 150px; margin-left:325px;;"  aria-hidden="true">
   <div class="modal-dialog bgcolor">
     <div class="modal-content ">
