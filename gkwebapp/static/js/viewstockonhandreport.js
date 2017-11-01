@@ -39,10 +39,10 @@ $(document).ready(function() {
 
 	// Setting default date to financialstart and end.
 
-	var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g)
-	$("#viewstock_todate").val(todatearray[2])
-	$("#viewstock_tomonth").val(todatearray[1])
-	$("#viewstock_toyear").val(todatearray[0])
+    var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g);
+    $("#viewstock_todate").val(todatearray[2]);
+    $("#viewstock_tomonth").val(todatearray[1]);
+    $("#viewstock_toyear").val(todatearray[0]);
 
 	function pad (str, max) { //to add leading zeros in date
 		str = str.toString();
@@ -50,7 +50,7 @@ $(document).ready(function() {
 			return str.length < max ? pad("0" + str, max) : str;
 		}
 		else{
-			return str
+		    return str;
 		}
 	}
 	function yearpad (str, max) { //to add leading 20 or 200 to year
@@ -148,8 +148,14 @@ $(document).ready(function() {
 				{
 					$('#viewstock_submit').focus().click();
 				}
-				else {
-				$("#godownflag").focus().select();
+			    else {
+				if($("#godownflag").is (":visible")){
+				    
+				    $("#godownflag").focus().select();
+				}
+				else{
+				    $("#editgoddet").focus();   
+				}
 				}
 
 			}
@@ -204,7 +210,7 @@ $(document).ready(function() {
 			$("#godprod-all-alert").fadeTo(2250, 500).slideUp(500, function(){
 				$("#godprod-all-alert").hide();
 			});
-			$('#viewstock_productname').focus()
+		    $('#viewstock_productname').focus();
 			return false;
 		}
 
@@ -213,7 +219,7 @@ $(document).ready(function() {
 			$("#godprod-all-alert").fadeTo(2250, 500).slideUp(500, function(){
 				$("#godprod-all-alert").hide();
 			});
-			$('#viewstock_productname').focus()
+		    $('#viewstock_productname').focus();
 			return false;
 		}
 
