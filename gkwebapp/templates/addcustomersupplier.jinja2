@@ -109,7 +109,7 @@
 	      <div class="form-group col-sm-6">
 		<label for="add_state">{% trans %}State:{% endtrans %}</label><label for="add_state" style="color:red;font-size: 120%;">*</label>
 		<select class="form-control input-sm add-state" id="add_state" accesskey="">
-                  <option value="">Select State</option>
+                  <option value="" hidden disabled selected>Select State</option>
                   {% for state in states %}
 		    {% for key, value in state.items() %}
 		      <option value="{{value}}" stateid="{{key}}">{{value}}</option>
