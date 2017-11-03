@@ -67,7 +67,7 @@
 	  
           <div class="col-xs-12" style="margin-top: 10px;">
               <div class="col-xs-6">
-              <label for="viewstock_todate">{% trans %}As on{% endtrans %} :</label>
+		<label for="viewstock_todate">{% trans %}As on{% endtrans %} :</label>
               <div class="form-inline" >
 
                 <div class="form-group">
@@ -101,6 +101,7 @@
 		      {% endfor %}
 		    </select>
 		  {% else %}
+		  </br>
 		    <label id="godwn" data-value="{{godown[0]['goid']}}" data-godownname="{{godown[0]["goname"]}}" data-godownaddress="{{godown[0]["goaddr"]}}" >{{godown[0]["goname"]}} ({{godown[0]["goaddr"]}})</label>
 		  {% endif %}
 		</div>
@@ -116,7 +117,6 @@
               <option value="disabled=""" disabled selected hidden>{% trans %}Select Godown{% endtrans %}</option>
               {% for gods in godown %}
 		<option value="{{gods['goid']}}" data-godownname="{{gods["goname"]}}" data-godownaddress="{{gods["goaddr"]}}">{{gods["goname"]}} ({{gods["goaddr"]}})</option>
-
               {% endfor %}
               <option value="0" data-godownname="" data-godownaddress="">{% trans %}All godowns{% endtrans %}</option>
             </select>

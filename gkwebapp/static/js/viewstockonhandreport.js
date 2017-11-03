@@ -148,7 +148,7 @@ $(document).ready(function() {
 		$("#viewstock_toyear").keydown(function(e){
 			if(e.which==13){
 				e.preventDefault();
-				if($("#godownwise_div").is(":hidden"))
+			    if($("#godownwise_div").is(":hidden"))
 				{
 					$('#viewstock_submit').focus().click();
 				}
@@ -158,7 +158,12 @@ $(document).ready(function() {
 				    $("#godownflag").focus().select();
 				}
 				else{
-				    $("#editgoddet").focus();   
+				    if($("#editgoddet").length>0){ //if there is no select box then view button is triggered.
+					$("#editgoddet").focus();
+				    }
+				    else{
+					$('#viewstock_submit').focus().click();
+				    }
 				}
 				}
 
