@@ -154,12 +154,17 @@ def getproduct(request):
 
 
 
-@view_config(route_name="invoice",request_param="action=showedit",renderer="gkwebapp:templates/editinvoice.jinja2")
-def showeditinvoice(request):
+@view_config(route_name="invoice",request_param="action=showsale",renderer="gkwebapp:templates/viewinvoices_sale.jinja2")
+def showsaleinvoices(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/invoice?inv=all", headers=header)
+    result = requests.get("http://127.0.0.1:6543/invoice?inv=all&type=sale", headers=header)
     return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
 
+@view_config(route_name="invoice",request_param="action=showpurchase",renderer="gkwebapp:templates/viewinvoices_purchase.jinja2")
+def showpurchaseinvoices(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/invoice?inv=all&type=purchase", headers=header)
+    return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
 
 @view_config(route_name="invoice",request_param="action=getinvdetails",renderer="json")
 def getInvoiceDetails(request):

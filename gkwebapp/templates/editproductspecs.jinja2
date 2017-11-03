@@ -136,7 +136,7 @@
         <tr class="blank" value="new">
           <td class="col-xs-4">
             <select class="form-control input-sm product_tax_disable tax_name product_new_name">
-	      <option value="" hidden disabled selected>Select State</option>
+	      <option value="" hidden disabled selected>Select Tax</option>
               {%if vatorgstflag=='7' or vatorgstflag=='29' %}
                 <option value="IGST">GST</option>
                 <option value="CESS">CESS</option>
@@ -293,7 +293,7 @@
         <thead class="bg-primary input-sm">
           <tr>
             <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
-            <th class="col-xs-4 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+            <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
             <th class="col-xs-1 text-center"></th>
           </tr>
         </thead>
