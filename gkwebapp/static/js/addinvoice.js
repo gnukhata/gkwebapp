@@ -158,10 +158,15 @@ $(document).ready(function() {
 
     //Certain fields are hidden in the case of Purchase Invoice. They are shown in Sale Invoice.
     if ($("#status").val() == '15') {  //In/Out flag is saved in a hidden field. 15 is OUT(Sale Invoice) and 9 is IN(Purchase Invoice).
-	$(".invoice_issuer").show();  //Issuer Name is shown in Sale Invoice. Purchase Invoice is only recorded, not created by an organisation.
+	$(".invoice_issuer").show();  //Issuer Name is shown in Sale Invoice. Purchase Invoice is only recorded, not created by an organisation.	
 	$(".fixed-table").removeClass('fixed-tablepurchase');  //CSS class for adjusting style properties.
 	$(".fixed-table").addClass('fixed-tablesale');
     }
+
+    if ($("#status").val() == '9') {  
+	$(".reversepurchase").show();
+    }
+
 
     $(".input-sm:visible").first().focus();  //Focus on the first element when the page loads
     //Preventing characters in numeric fields.
@@ -1850,7 +1855,7 @@ if (event.which == 13) {
 		f[nextIndex].focus();
 	    }
 	    else if (nextIndex == n) {
-		$("#invoice_save").click();
+		$("#rev2radio").focus().click();
 	    }
 	}
 	else if (event.which == 38) {
