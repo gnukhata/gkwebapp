@@ -284,7 +284,7 @@
       </div>
 
       {#For GSTIN#}
-      <div id="addgstinmodal" class="modal modal-lg fade" tabindex="-1" role="dialog">
+      <div id="addgstinmodal" class="modal fade" tabindex="-1" role="dialog">
 	<div class="modal-dialog">
 	  <div class="modal-content">
             <div class="modal-header">
@@ -310,14 +310,14 @@
 		      <table id="gstintable" class="table table-condensed table-bordered fixed-table">
 			<thead class="bg-primary input-sm">
 			  <tr>
-			    <th class="col-xs-7 text-center">{% trans %}State{% endtrans %}</th>
-			    <th class="col-xs-4 text-center">{% trans %}GSTIN{% endtrans %}</th>
+			    <th class="col-xs-6 text-center">{% trans %}State{% endtrans %}</th>
+			    <th class="col-xs-5 text-center">{% trans %}GSTIN{% endtrans %}</th>
 			    <th class="col-xs-1"></th>
 			  </tr>
 			</thead>
 			<tbody>
 			  <tr>
-			    <td class="col-xs-7">
+			    <td class="col-xs-6">
 			      <select class="form-control input-sm gstinstate">
 				<option value="" disabled hidden selected>Select State</option>
 				{% for state in states %}
@@ -327,7 +327,7 @@
 				{% endfor %}
 			      </select>
 			    </td>
-			    <td class="col-xs-4">
+			    <td class="col-xs-5">
 			      <div class="form-inline nopadding">
 				<div class="form-group nopadding">
 				  <input type="text" class="form-control input-sm nopadding statecode" size="2" maxlength="2" disabled >
