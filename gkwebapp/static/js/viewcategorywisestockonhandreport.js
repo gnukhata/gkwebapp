@@ -355,7 +355,8 @@ $(document).ready(function() {
 		if($("#editgoddet").length>0){
 		    dataset = {"categorycode":$("#viewstock_categoryname option:selected").val(), "categoryname": $.trim($("#viewstock_categoryname option:selected").text()), "subcategorycode":$("#viewstock_subcategoryname option:selected").val(), "subcategoryname": $.trim($("#viewstock_subcategoryname option:selected").text()), "speccode":"all", "specname": "all", /*$("#viewstock_specsname option:selected").val(), "specname": $.trim($("#viewstock_specsname option:selected").text()),*/"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":0,"godownflag":1,"goid":$("#editgoddet option:selected").val(),"goname":$("#editgoddet option:selected").data('godownname'), "goaddr":$("#editgoddet option:selected").data('godownaddress')};
 		}
-		else{
+		// Dataset for single Godown.
+		else{   
 		    dataset = {"categorycode":$("#viewstock_categoryname option:selected").val(), "categoryname": $.trim($("#viewstock_categoryname option:selected").text()), "subcategorycode":$("#viewstock_subcategoryname option:selected").val(), "subcategoryname": $.trim($("#viewstock_subcategoryname option:selected").text()), "speccode":"all", "specname": "all", /*$("#viewstock_specsname option:selected").val(), "specname": $.trim($("#viewstock_specsname option:selected").text()),*/"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":0,"godownflag":1,"goid":$("#godwn").data('value'), "goname":$("#godwn").data('godownname'), "goaddr":$("#godwn").data('godownaddress')};
 		}
 	    }

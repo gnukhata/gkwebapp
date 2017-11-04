@@ -306,7 +306,9 @@ $(document).ready(function() {
 			   dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":3,"godownflag":$("#godownflag").val(), "goid":$("#editgoddet option:selected").val(), "goname":$("#editgoddet option:selected").data('godownname'), "goaddr":$("#editgoddet option:selected").data('godownaddress')};
 				    
 			}
+		
 			else{
+			    // Dataset for single Godown.
 			    dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"backflag":3,"godownflag":$("#godownflag").val(), "goid":$("#godwn").data('value'), "goname":$("#godwn").data('godownname'), "goaddr":$("#godwn").data('godownaddress')};
 			}
 		    }
