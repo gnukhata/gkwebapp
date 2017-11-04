@@ -43,7 +43,90 @@ $(document).ready(function(){
     $("#orgaddr").focus().select();
   }
 
-  $('input:visible, textarea').keydown(function(event){
+    //Keydown event start here
+    $("#orgaddr").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgcountry").focus().select();
+    }
+    });
+
+
+    $("#orgcountry").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgstate").focus().select();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#orgaddr").focus().select();
+    }
+    });
+    
+    $("#orgstate").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgcity").focus().select();
+    }
+     if (event.which==38 && $("#add_state option:selected").index()==0)  {
+          event.preventDefault();
+          $("#orgcountry").focus().select();
+        }
+  });
+
+    $("#orgcity").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgstax").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#orgstate").focus().select();
+        }
+    });
+
+    $("#orgstax").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgpan").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#orgcity").focus().select();
+        }
+  });
+
+    // Validation for PAN
+    $("#orgpan").keydown(function(event) {
+    if (event.which==13) {
+	event.preventDefault();
+	var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; 
+	var txtpan = $(this).val();
+	if ((txtpan.length != 10 || !txtpan.match(regExp)) && $.trim($("#orgpan").val())!="") {
+	    $("#pan-incorrect-alert").alert();
+	    $("#pan-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#pan-incorrect-alert").hide();
+	    });
+	    $("#orgpan").focus();
+	}
+	else {
+	    if ($("#orgtype").val()=="Not For Profit"){
+		$("#regday").focus();
+		
+	    }
+	    else {
+		$("#orgmail").focus();
+	    }
+	}
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#orgstax").focus().select();
+    }
+  });
+
+    
+  /**$('input:visible, textarea').keydown(function(event){
     var n =$('input:visible,textarea').length;
     var f= $('input:visible, textarea');
     if (event.which == 13)
@@ -61,7 +144,7 @@ $(document).ready(function(){
         f[prevIndex].focus().select();
       }
     }
-  });
+  });**/
 
   $("#reset").click(function()
   {
