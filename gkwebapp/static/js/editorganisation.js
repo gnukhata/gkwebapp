@@ -30,7 +30,8 @@ $(document).ready(function(){
   $(".regdate").autotab('number');
   $(".fcradate").autotab('number');
 
-   var gstinstring = "";
+    var gstinstring = "";
+    var gstinstate = [];
 
   if(sessionStorage.vatorgstflag == '22' ){
       $(".gstinfield").hide();
@@ -571,6 +572,15 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 
   });
 
+  gstinstate = [];
+        $("#gstintable tbody tr").each(function() {
+            if ($.trim($("input", this).val()) != "") {
+		var obj = {}; // dict for storing state with gstin
+		obj.state = $.trim($("td:eq(0) select option:selected", this).val());
+		obj.gstintring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val();x
+		gstinstate.push(obj);
+	    }
+        });
   $.ajax({
           url: '/editorganisation?action=getattachment',
           type: 'POST',
@@ -593,5 +603,8 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
       .always(function() {
           console.log("complete");
       });
+    $("#gstin_done").click(function(event) {
+        $('#addgstinmodal').modal('hide');
+    });
 
 });
