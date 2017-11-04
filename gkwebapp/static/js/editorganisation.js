@@ -28,7 +28,14 @@ Contributors:
 $(document).ready(function(){
   $("#msspinmodal").modal("hide");
   $(".regdate").autotab('number');
-    $(".fcradate").autotab('number');
+  $(".fcradate").autotab('number');
+
+  if(sessionStorage.vatorgstflag == '22' ){
+      $(".gstinfield").hide();
+      $(".tinfield").show();
+    } else {
+      $(".gstinfield").show();
+    }
     if($("#state").val() != "" ){
 	$("#orgstate").val($("#state").val());}
   $(".regdate").numeric({negative: false});
@@ -43,9 +50,11 @@ $(document).ready(function(){
     $("#orgaddr").focus().select();
   }
 
-    $('#addtaxmodal').on('shown.bs.modal', function() {
-	$("#gstintable tbody").empty();
+    $('#addgstinmodal').on('shown.bs.modal', function() {
+	$("#gstintable tbody tr:first td:eq(0) input").focus();
     });
+
+    
     //Keydown event start here
     $("#orgaddr").keydown(function(event) {
     if (event.which==13) {
@@ -54,7 +63,24 @@ $(document).ready(function(){
     }
     });
 
+     $("#orgregno").keydown(function(event) {
+     if (event.which==13) {
+	 event.preventDefault();
+	 $("#orgfcrano").focus().select();
+     }
+     });
 
+    $("#orgfcrano").keydown(function(event) {
+     if (event.which==13) {
+	 event.preventDefault();
+	 $("#orgaddr").focus().select();
+     }
+     if (event.which==38) {
+	 event.preventDefault();
+	 $("#orgregno").focus().select();
+     }
+    });
+    
     $("#orgcountry").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
@@ -97,6 +123,72 @@ $(document).ready(function(){
           event.preventDefault();
           $("#orgcity").focus().select();
         }
+    });
+
+    $("#regday").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#regmonth").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#orgpan").focus().select();
+        }
+    });
+
+    $("#regmonth").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#regyear").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#regday").focus().select();
+        }
+    });
+
+    $("#regyear").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#fcraregday").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#regmonth").focus().select();
+        }
+    });
+
+    $("#fcraregday").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#fcraregmonth").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#regyear").focus().select();
+        }
+    });
+
+    $("#fcraregmonth").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#fcraregyear").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#fcraregday").focus().select();
+        }
+    });
+
+     $("#fcraregyear").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgemail").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#fcraregmonth").focus().select();
+        }
   });
 
     // Validation for PAN
@@ -134,8 +226,14 @@ $(document).ready(function(){
       $("#orgtelno").focus().select();
     }
      if (event.which==38)  {
-          event.preventDefault();
-          $("#orgpan").focus().select();
+         event.preventDefault();
+	  if ($("#orgtype").val()=="Not For Profit"){
+		$("#fcraregyear").focus();
+		
+	    }
+	    else {
+		$("#orgpan").focus().select();
+	    }
         }
    });
 
@@ -186,8 +284,13 @@ $(document).ready(function(){
 
     $("#orgmvat").keydown(function(event) {
     if (event.which==13) {
-      event.preventDefault();
-      $("#orgmvat").focus().select();
+	event.preventDefault();
+	if($("#vatorgstflag").val() == '7' || $("#vatorgstflag").val() == '29'){
+		$("#orggstin").focus();
+	}
+	else {
+	    $("#submit").focus();
+	}
     }
      if (event.which==38)  {
           event.preventDefault();

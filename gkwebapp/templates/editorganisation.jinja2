@@ -46,8 +46,9 @@
 
 				  {% trans %}Connection Failed.{% endtrans %}
 				</div>			
-				<div align="left">
-				  <div class="col-xs-12 from-group">
+				
+				<div class="col-xs-12 from-group">
+				  <center>
 				    <div class="img-thumbnail img-circle ">
 
 				      <div style="position: relative; padding: 0; cursor: pointer;" type="file">
@@ -56,15 +57,16 @@
 
 
 				      </div>
+				    </center>
 				    </div>
 				  </div>
-				</div>
-				<label style="padding-left: 50px;" class="btn btn-primary btn-sm" for="my-file-selector">
+				  <center>
+				<label class="btn btn-primary btn-sm" for="my-file-selector">
 				  <input name="img"  class="input-sm" accesskey="o" id="my-file-selector" type="file" accept="image/*" style="display:none;" onchange="$('#upload-file-info').html('New Logo selected');" >
 				  {% trans %}Upload L<u>o</u>go{% endtrans %}
 				</label>
 				<span class='label label-info' id="upload-file-info"></span>
-
+				  </center>
 				<form id="editorganisationform" method="post" class="form-inline">
 				  <div class="col-xs-6 from-group" >
 				    <input type="text" id="orgtype" hidden value="{{gkresult["orgtype"]}}" style="width: 100%"></input>
@@ -226,20 +228,20 @@
 					  {% if vatorgstflag=='22' or vatorgstflag=='29' %}
 					    <tr>
 					      <td>
-					      <label for="organisationmvat" id="orgvatno">{% trans %}VAT Number{% endtrans %} :</label>
+					      <label for="organisationmvat" id="orgvatno" class="tinfield">{% trans %}VAT Number{% endtrans %} :</label>
 					    </td>
 					    <td>
-					      <input type="text" id="orgmvat" class="form-control input-sm" name="organisationmvat" value="{{gkresult["orgmvat"]}}" style="width: 100%"></input>
+					      <input type="text" id="orgmvat" class="form-control input-sm tinfield" name="organisationmvat" value="{{gkresult["orgmvat"]}}" style="width: 100%"></input>
 					    </td>
 					    </tr>
 					  {% endif %}
 					  {% if vatorgstflag=='7' or vatorgstflag=='29' %}
 					      <tr>
 						<td>
-						  <label for="organisationgstin" id="orggstinlbl">{% trans %}GSIN{% endtrans %} :</label>
+						  <label for="organisationgstin" id="orggstinlbl" class="gstinfield">{% trans %}GSIN{% endtrans %} :</label>
 					    </td>
 					    <td>
-					      <button class="btn btn-primary btn-sm" type="button" id="orggstin"  data-toggle="modal" data-target="#addgstinmodal"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add GSTIN{% endtrans %}</button>
+					      <button class="btn btn-primary btn-sm gstinfield" type="button" id="orggstin"  data-toggle="modal" data-target="#addgstinmodal"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add GSTIN{% endtrans %}</button>
 					    </td>
 					      </tr>
 					  {% endif %}
@@ -282,7 +284,7 @@
       </div>
 
       {#For GSTIN#}
-      <div id="addgstinmodal" class="modal fade" tabindex="-1" role="dialog">
+      <div id="addgstinmodal" class="modal modal-lg fade" tabindex="-1" role="dialog">
 	<div class="modal-dialog">
 	  <div class="modal-content">
             <div class="modal-header">
