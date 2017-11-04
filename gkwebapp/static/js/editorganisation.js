@@ -43,6 +43,9 @@ $(document).ready(function(){
     $("#orgaddr").focus().select();
   }
 
+    $('#addtaxmodal').on('shown.bs.modal', function() {
+	$("#gstintable tbody").empty();
+    });
     //Keydown event start here
     $("#orgaddr").keydown(function(event) {
     if (event.which==13) {
@@ -115,7 +118,7 @@ $(document).ready(function(){
 		
 	    }
 	    else {
-		$("#orgmail").focus();
+		$("#orgemail").focus();
 	    }
 	}
     }
@@ -125,6 +128,72 @@ $(document).ready(function(){
     }
   });
 
+   $("#orgemail").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgtelno").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#orgpan").focus().select();
+        }
+   });
+
+    $("#orgtelno").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgwebsite").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#orgemail").focus().select();
+        }
+    });
+
+    $("#orgwebsite").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgpincode").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#orgtelno").focus().select();
+        }
+    });
+
+
+    $("#orgpincode").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgfax").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#orgwebsite").focus().select();
+        }
+    });
+
+     $("#orgfax").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgmvat").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#orgpincode").focus().select();
+        }
+     });
+
+    $("#orgmvat").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgmvat").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#orgfax").focus().select();
+        }
+     });
     
   /**$('input:visible, textarea').keydown(function(event){
     var n =$('input:visible,textarea').length;

@@ -57,7 +57,8 @@ def showeditOrg(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/organisation", headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
-    return {"gkresult":result.json()["gkdata"],"gkstatus":result.json()["gkstatus"],"states": states.json()["gkresult"]}
+    resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+    return {"gkresult":result.json()["gkdata"],"gkstatus":result.json()["gkstatus"],"states": states.json()["gkresult"],"vatorgstflag":resultgstvat.json()["gkresult"]}
 
 
 @view_config(route_name="editorganisation", request_param="edit=inventoryactivate",  renderer="json")

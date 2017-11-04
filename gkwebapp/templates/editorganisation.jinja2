@@ -70,9 +70,8 @@
 				    <input type="text" id="orgtype" hidden value="{{gkresult["orgtype"]}}" style="width: 100%"></input>
 				    <table class="table">
 				      <tbody>
-
+					{% if gkresult["orgtype"]=="Not For Profit" %}
 					<tr>
-					  {% if gkresult["orgtype"]=="Not For Profit" %}
 					    <td>
 					      <label for="registrationnumber" id="regno">{% trans %}Registration Number{% endtrans %} :</label>
 					    </td>
@@ -88,7 +87,7 @@
 					    <input type="text" id="orgfcrano" class="form-control input-sm" name="fcranumber" value="{{gkresult["orgfcrano"]}}" style="width: 100%"></input>
 					  </td>
 					</tr>
-					  {%endif%}
+					  {% endif %}
 					  <tr>
 					    <td>
 					      <label for="organisationaddress" id="orgaddress">{% trans %}Address{% endtrans %} :</label>
@@ -181,10 +180,10 @@
 
 					      <label class="sr-only" for="fcraregyear">{% trans %}Enter FCRA Registration Year{% endtrans %}</label>
 					      <input type="text" id="fcraregyear" name="fcraregistrationyear" class="form-control regdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  value="{{gkresult["orgfcradate"][0:4]}}" style="width: 100%"></input>
-					{%endif%}
 					    </td>
 					  </tr>
-					  <tr>
+					{% endif %}
+					<tr>
 					    <td>
 					      <label for="organisationemail" id="orgEmail">{% trans %}Email{% endtrans %} :</label>
 					    </td>
@@ -224,6 +223,7 @@
 					      <input type="text" id="orgfax" class="form-control input-sm" name="organisationfaxnumber" value="{{gkresult["orgfax"]}}" style="width: 100%"></input>
 					    </td>
 					  </tr>
+					  {% if vatorgstflag=='22' or vatorgstflag=='29' %}
 					    <tr>
 					      <td>
 					      <label for="organisationmvat" id="orgvatno">{% trans %}VAT Number{% endtrans %} :</label>
@@ -232,16 +232,17 @@
 					      <input type="text" id="orgmvat" class="form-control input-sm" name="organisationmvat" value="{{gkresult["orgmvat"]}}" style="width: 100%"></input>
 					    </td>
 					    </tr>
-					    {%if vatorgstflag=='7' or vatorgstflag=='29'%}
+					  {% endif %}
+					  {% if vatorgstflag=='7' or vatorgstflag=='29' %}
 					      <tr>
 						<td>
-						  <label for="organisationmvat" id="orgvatno">{% trans %}GSIN{% endtrans %} :</label>
+						  <label for="organisationgstin" id="orggstinlbl">{% trans %}GSIN{% endtrans %} :</label>
 					    </td>
 					    <td>
-					      <button class="btn btn-primary btn-sm" id="orggstin"  data-toggle="modal" data-target="#addgstinmodal"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add GSTIN{% endtrans %}</button>
+					      <button class="btn btn-primary btn-sm" type="button" id="orggstin"  data-toggle="modal" data-target="#addgstinmodal"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add GSTIN{% endtrans %}</button>
 					    </td>
 					      </tr>
-					      {% endif %}
+					  {% endif %}
 				      </tbody>
 				    </table>
 				  </div>
@@ -286,7 +287,7 @@
 	  <div class="modal-content">
             <div class="modal-header">
               <div class="modal-title">
-		{% trans %}GSTIN{% endtrans %}
+		{% trans %}GSTIN{% endtrans %} :
               </div>
             </div>
             <div class="modal-body">
@@ -304,9 +305,6 @@
 	      </div>
               <div class="panel">
 		<div class="panel-body gstinclass">
-                  <div class="form-group"  id ="gstin">
-		    <label for="gstin">{% trans %}GSTIN:{% endtrans %}</label>
-		    <div class ="panel panel-default">
 		      <table id="gstintable" class="table table-condensed table-bordered fixed-table">
 			<thead class="bg-primary input-sm">
 			  <tr>
@@ -353,8 +351,6 @@
 		</div>
 	      </div>
 	    </div>
-	  </div>
-	</div> 
 
 	{#end GSTIN#}
 	
