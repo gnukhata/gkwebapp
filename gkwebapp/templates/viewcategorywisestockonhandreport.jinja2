@@ -89,13 +89,16 @@
           </div>
           <div class="form-group" id="goselect">
             <label for="editgoddet">{% trans %}Godown{% endtrans %} :</label>
-            <select class = "form-control input-sm" id="editgoddet">
-            
+	    {% if godown|length > 1 %}
+              <select class = "form-control input-sm" id="editgoddet">
               {% for gods in godown %}
-              <option value="{{gods['goid']}}" data-godownname="{{gods["goname"]}}" data-godownaddress="{{gods["goaddr"]}}">{{gods["goname"]}} ({{gods["goaddr"]}})</option>
-
+		<option value="{{gods['goid']}}" data-godownname="{{gods["goname"]}}" data-godownaddress="{{gods["goaddr"]}}">{{gods["goname"]}} ({{gods["goaddr"]}})</option>
               {% endfor %}
-            </select>
+              </select>
+	    {% else %}
+	       </br>
+	       <label id="godwn" data-value="{{godown[0]['goid']}}" data-godownname="{{godown[0]["goname"]}}" data-godownaddress="{{godown[0]["goaddr"]}}" >{{godown[0]["goname"]}} ({{godown[0]["goaddr"]}})</label>
+	    {% endif %}
           </div>
           {%else%}
           <div class="form-group">
