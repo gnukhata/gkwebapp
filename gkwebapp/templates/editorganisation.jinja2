@@ -316,6 +316,34 @@
 			  </tr>
 			</thead>
 			<tbody>
+			  {% if gkresult["gstin"] %}
+			  {% for gstin in gkresult["gstin"] %}
+			    {% set gstinstr = gkresult["gstin"][gstin]%}
+			  <tr>
+			    <td class="col-xs-6">
+			      <select stateid="{{ gstin }}" class="form-control input-sm gstinstate">
+				<option value="" disabled hidden selected>Select State</option>
+				{% for state in states %}
+				  {% for key, value in state.items() %}
+				    <option value="{{value}}" stateid="{{key}}">{{value}}</option>
+				  {% endfor %}
+				{% endfor %}
+			      </select>
+			    </td>
+			    <td class="col-xs-5">
+			      <div class="form-inline nopadding">
+				<div class="form-group nopadding">
+				  <input type="text" class="form-control input-sm nopadding statecode" size="2" maxlength="2" value="{{ gstinstr }}" disabled >
+				  <input type="text" class="form-control input-sm nopadding panno" size="10" maxlength="10">
+				  <input type="text" class="form-control input-sm nopadding gstin" size="3" maxlength="3">
+				</div>
+			      </div>
+			    </td>
+			    <td class="col-xs-1">
+			    </td>
+			  </tr>
+			  {% endfor %}
+			  {% else %}
 			  <tr>
 			    <td class="col-xs-6">
 			      <select class="form-control input-sm gstinstate">
@@ -339,6 +367,7 @@
 			    <td class="col-xs-1">
 			    </td>
 			  </tr>
+			  {% endif %}
 			</tbody>
 		      </table>
 		      <div>
