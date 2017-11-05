@@ -2213,7 +2213,7 @@ if (event.which == 13) {
 	      calculategstaxamt(i);
 	      productqtys.push(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()));
 	      let obj = {};
-	      productcode = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
+	      productcreverseode = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
 	      ppu = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val();
 	      obj[ppu] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
 	      contents[productcode] = obj;
@@ -2278,7 +2278,15 @@ if (event.which == 13) {
     else {
 	form_data.append("dateofsupply", $.trim($("#supply_year").val() + '-' + $("#supply_month").val() + '-' + $("#supply_date").val()));
     }
-    form_data.append("reversecharge", $("#reversecharge").val());
+      if ($("#rev1radio").is(":checked")) {
+	  
+          form_data.append("reversecharge", 1);
+        }
+      else if ($("#rev2radio").is(":checked")) {
+	  
+          form_data.append("reversecharge", 0);
+        }
+
     var files = $("#my-file-selector")[0].files;
     var filelist = [];
     for (var i = 0; i < files.length; i++) {

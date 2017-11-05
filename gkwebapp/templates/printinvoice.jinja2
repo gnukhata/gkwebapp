@@ -479,7 +479,7 @@
 		<label for="inv">{% trans %}Reverse Charge{% endtrans %}:</label>
 	      </td>
 	      <td>
-		{% if gkresult["reversecharge"] %}{{ gkresult["reversecharge"] }}{% else %}N/A{% endif %}
+		{% if gkresult["reversecharge"]|int == 1 %}Y{% endif %}
 	      </td>
 	    </tr>
 	  </tbody>
