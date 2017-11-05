@@ -30,8 +30,7 @@ $(document).ready(function(){
   $(".regdate").autotab('number');
   $(".fcradate").autotab('number');
 
-    var gstinstring = "";
-    var gstinstate = [];
+    var gstinstring = ""; // for cocatination of GSTIN.
 
   if(sessionStorage.vatorgstflag == '22' ){
       $(".gstinfield").hide();
@@ -508,6 +507,29 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
         }
       }
     }
+
+
+   var gobj = {}; // Creating a dictionary for storing statecode with gstin.
+   $("#gstintable tbody tr").each(function(){
+       var curindex1 = $(this).index();
+       if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
+	   gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+	   if(gstinstring != ''){
+  	       if(gstinstring.length !=15){
+  		   $("#gstin-improper-alert").alert();
+		   $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+                       $("#gstin-improper-alert").hide();
+  		       $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').focus().select();
+		   });
+  		   return false;
+               }
+	   }
+
+           gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = gstinstring;
+       }
+       
+     });
+    
     var form_data = new FormData();
     form_data.append("orgcity", $("#orgcity").val());
     form_data.append("orgaddr", $("#orgaddr").val());
@@ -520,7 +542,8 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     form_data.append("orgemail",$("#orgemail").val());
     form_data.append("orgpan",$("#orgpan").val());
     form_data.append("orgmvat",$("#orgmvat").val());
-    form_data.append("orgstax",$("#orgstax").val());
+    form_data.append("orgstax",$("#orgstax").val());    
+    form_data.append("gstin",JSON.stringify(gobj)); //for gstin     
     form_data.append("orgregno",regno);
     form_data.append("orgregdate",regdate);
     form_data.append( "orgfcrano",fcrano);
@@ -571,16 +594,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 
 
   });
-
-  gstinstate = [];
-        $("#gstintable tbody tr").each(function() {
-            if ($.trim($("input", this).val()) != "") {
-		var obj = {}; // dict for storing state with gstin
-		obj.state = $.trim($("td:eq(0) select option:selected", this).val());
-		obj.gstintring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val();x
-		gstinstate.push(obj);
-	    }
-        });
+    
   $.ajax({
           url: '/editorganisation?action=getattachment',
           type: 'POST',
