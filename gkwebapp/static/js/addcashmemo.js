@@ -338,7 +338,8 @@ $(document).ready(function() {
                 .always(function() {
                     console.log("complete");
                 });
-	});
+    });
+    $('#invoice_state').change();
 
 
     // if the selected product is changed the tax rate is again retrieved from the database, again using the combination of product code and state

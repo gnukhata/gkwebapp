@@ -337,6 +337,35 @@ $(document).ready(function() {
 	    $(".igstfield").show();
 	}
 	$(".product_name_vat, .product_name_gst").change();
+
+	var gstinstate=$("#invoicestate option:selected").attr("stateid");
+	 $.ajax({
+                    url: '/existingorg?type=getgstin',
+                    type: 'POST',
+                    dataType: 'json',
+                    async: false,
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                    }
+         })
+	.done(function(resp) {
+            if (resp["gkstatus"] == 0) {
+		console.log("success");
+		if (gstinstate in resp["gkresult"]["gstin"]) {
+		    $("#orggstin").text(resp["gkresult"]["gstin"][gstinstate]);
+		}
+		else {
+		    $("#orggstin").text(" ");
+		}
+         	  }
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
+	
     });
     $("#invoicestate").change();
 
