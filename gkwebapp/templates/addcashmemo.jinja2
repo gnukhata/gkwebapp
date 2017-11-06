@@ -122,11 +122,15 @@
   		{% else %}
   		  <label class="form-control" id="taxapplicabletext">VAT</label>
   		  <input type="text"  id="taxapplicable" value="22" accesskey="" hidden>
-  		  {% endif %}
-      </div>
+      {% endif %}
+	    </div>
           </div>
 
-
+	  <div class="col-sm-12">
+	    
+            GSTIN : <label style="font-size: 175%" id="orggstin"></label>
+	    
+	  </div>
 
           {% if gkstatus=="out" %}
 
