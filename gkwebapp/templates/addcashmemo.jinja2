@@ -125,13 +125,11 @@
       {% endif %}
 	    </div>
           </div>
-
-	  <div class="col-sm-12">
-	    
-            GSTIN : <label style="font-size: 175%" id="orggstin"></label>
-	    
+	  {% if resultgstvat != '22' %}
+	    <div class="col-sm-12">
+	      GSTIN : <label style="font-size: 175%" id="orggstin"></label>	    
 	  </div>
-
+	  {% endif %}
           {% if gkstatus=="out" %}
 
             <input type="hidden" id="status" value="15">

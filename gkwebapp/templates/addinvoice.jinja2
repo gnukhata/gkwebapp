@@ -113,10 +113,12 @@
 		  <label class="col-sm-4 fsize" for="statecodeforinvoice">{% trans %}State Code{% endtrans %} :</label>
 		  <label class="col-sm-8 nopadding fsize" id="statecodeforinvoice"></label>
 		</div>
-		<div class="form-group form-inline">
+		{% if resultgstvat != '22' %}
+		  <div class="form-group form-inline invoice_issuer" hidden>
 		  <label class="col-sm-4 fsize" for="orggstin">{% trans %}GSTIN{% endtrans %} :</label>
 		  <label class="col-sm-8 nopadding fsize" id="orggstin"></label>
-		</div>
+		  </div>
+		{% endif %}
 		<div class="form-group form-inline invoice_issuer" hidden>
 		  <label class="col-sm-4 fsize" for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
 		  <input class="form-control input-sm col-sm-8" id="invoice_issuer_name" placeholder="{% trans %}Issuer's name{% endtrans %}" accesskey="a" aria-label="{% trans %}Issuer's Name{% endtrans %}">
