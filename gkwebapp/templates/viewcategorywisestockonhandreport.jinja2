@@ -38,6 +38,15 @@
         <div class="alert alert-danger" id="specs-blank-alert" aria-live="rude" role="alert" hidden>
           <label>{% trans %}Please select a specification!{% endtrans %}</label>
         </div>
+
+	<div class="panel-body">
+	  {% if not gkresult %}
+	    <div class="bg-danger col-xs-12" style="padding:10;">
+	      <label class="text-danger">No Category Found </label>
+	    </div>
+	    
+	</div>
+	{% else %}
         <div style="margin-bottom: 5px" class="col-xs-12 from-group">
           <label for="viewstock_categoryname" style="margin-top: 10px;">{% trans %}Category{% endtrans %} :</label>
           <select class = "form-control input-sm" id="viewstock_categoryname"  name = "categoryname" >
@@ -80,13 +89,15 @@
           </div>
           <div class="form-group" id="goselect">
             <label for="editgoddet">{% trans %}Godown{% endtrans %} :</label>
-            <select class = "form-control input-sm" id="editgoddet">
-            <option value="all" selected>{% trans %}All{% endtrans %}</option>
+	    {% if godown|length > 1 %}
+              <select class = "form-control input-sm" id="editgoddet">
               {% for gods in godown %}
-              <option value="{{gods['goid']}}" data-godownname="{{gods["goname"]}}" data-godownaddress="{{gods["goaddr"]}}">{{gods["goname"]}} ({{gods["goaddr"]}})</option>
-
+		<option value="{{gods['goid']}}" data-godownname="{{gods["goname"]}}" data-godownaddress="{{gods["goaddr"]}}">{{gods["goname"]}} ({{gods["goaddr"]}})</option>
               {% endfor %}
-            </select>
+              </select>
+	    {% else %}
+	       <label id="godwn" data-value="{{godown[0]['goid']}}" data-godownname="{{godown[0]["goname"]}}" data-godownaddress="{{godown[0]["goaddr"]}}" >{{godown[0]["goname"]}} ({{godown[0]["goaddr"]}})</label>
+	    {% endif %}
           </div>
           {%else%}
           <div class="form-group">
@@ -114,6 +125,7 @@
 
       </div>
     </div>
+    {% endif %}
   </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewcategorywisestockonhandreport.js')}}"></script>
 </body>
