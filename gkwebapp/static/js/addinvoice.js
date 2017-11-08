@@ -1855,7 +1855,7 @@ if (event.which == 13) {
 		f[nextIndex].focus();
 	    }
 	    else if (nextIndex == n) {
-		$("#rev2radio").focus().click();
+		$("#invoice_save").focus().click();
 	    }
 	}
 	else if (event.which == 38) {
@@ -1882,6 +1882,13 @@ if (event.which == 13) {
 		    $(".invoice_product_discount_vat:last").focus().select();
 		}
 	    }
+	}
+    });
+
+    $("#rev2radio").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#invoice_save").focus();
 	}
     });
 
@@ -2213,7 +2220,7 @@ if (event.which == 13) {
 	      calculategstaxamt(i);
 	      productqtys.push(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()));
 	      let obj = {};
-	      productcreverseode = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
+	      productcode = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
 	      ppu = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val();
 	      obj[ppu] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
 	      contents[productcode] = obj;
