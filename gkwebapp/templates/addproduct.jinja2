@@ -8,18 +8,22 @@
       <div class="panel-body">
         <form id="addprodform">
           <div class="col-sm-6" >
-            <div class="row">
+	    {% if userrole|int != 3 %}
+              <div class="row" id="serviceproductdiv">
+	    {% else %}
+		<div class="row" hidden id="serviceproductdiv">
+	    {% endif %}
               <div class="form-group col-sm-11 pd">
 
 		<label for="additem">{% trans %}Item Type{% endtrans %} :</label><label for="additem" style="color:red;font-size: 120%;">*</label>
 		<select name="gsflag" class="form-control input-sm" id="additem" accesskey="">
+		  
                   <option value="7" id=sel_product>Product</option>
                   <option value="19" id=sel_service>Service</option>
 		</select>
 
               </div>
             </div>
-
             <div class="row productclass">
 
 	      {% if not gkresult["category"] %}
@@ -83,6 +87,7 @@
 	    <div class="row productclass" id="specdiv" hidden>
             </div>
 
+	    {% if userrole|int != 3 %}
             <div class="row">
               <div class="form-group taxclass">
 		<div class="alert alert-danger" id="tax-name-blank-alert"  aria-live="rude" role="alert" hidden>
@@ -175,6 +180,7 @@
 		-->
 
             </div>
+	    {% endif %}
             <div class="row noinventory ">
               <div class="row productclass">
 		{% if not godown %}
@@ -280,8 +286,10 @@
 	  <div class="container-fluid">
             <button class="btn btn-success btn-sm common" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
             <button id="apreset" class="btn btn-warning btn-sm common" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
-            <button id="addgodown" class="btn btn-info btn-sm productclass" accesskey="a" style="display:none"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}<u>A</u>dd Godown{% endtrans %}</button>
+	    {% if userrole|int != 3 %}
+              <button id="addgodown" class="btn btn-info btn-sm productclass" accesskey="a" style="display:none"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}<u>A</u>dd Godown{% endtrans %}</button>
 	  </div>
+	  {% endif %}
 	</div>
     </div>
   </div>
