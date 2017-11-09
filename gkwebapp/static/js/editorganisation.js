@@ -31,7 +31,18 @@ $(document).ready(function(){
     $(".fcradate").autotab('number');
 
     var gstinstring = ""; // for cocatination of GSTIN.
-
+    	for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
+	    var state = $("#gstintable tbody tr:eq("+i+") td:eq(0) select").attr("stateid");
+	    $("#gstintable tbody tr:eq("+i+") td:eq(0) select option[stateid="+state+"]").prop("selected", true);
+	
+	    var gstinstr =$('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(0)').val();
+	    $('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(0)').val(gstinstr.substring(0, 2));
+	    $('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(1)').val(gstinstr.substring(2, 12));
+	    $('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(2)').val(gstinstr.substring(12, 15));
+	    if (i > 0) {
+		$("#gstintable tbody tr:eq(" + i +") td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+	    }
+	}
   if(sessionStorage.vatorgstflag == '22' ){
       $(".gstinfield").hide();
       $(".tinfield").show();
@@ -55,20 +66,6 @@ $(document).ready(function(){
     // Add GSTIN modal
     $('#addgstinmodal').on('shown.bs.modal', function() {
 	$("#gstintable tbody tr:first td:eq(0) select").focus();
-	
-	for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
-	    var state = $("#gstintable tbody tr:eq("+i+") td:eq(0) select").attr("stateid");
-	    $("#gstintable tbody tr:eq("+i+") td:eq(0) select option[stateid="+state+"]").prop("selected", true);
-	
-	    var gstinstr =$('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(0)').val();
-	    $('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(0)').val(gstinstr.substring(0, 2));
-	    $('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(1)').val(gstinstr.substring(2, 12));
-	    $('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(2)').val(gstinstr.substring(12, 15));
-	    if (i > 0) {
-		$("#gstintable tbody tr:eq(" + i +") td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-	    }
-	}
-	
     });
 
 
