@@ -147,7 +147,12 @@ $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
       $("#spec_table tbody tr:first td:eq(1) input:first").focus();
     }
     else {
-      $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+	if ($("#product_tax_table").length > 0) {
+	  $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+	}
+	else{
+	    $("#godownflag").focus();
+	}
     }
   }
   else if (event.which==32)

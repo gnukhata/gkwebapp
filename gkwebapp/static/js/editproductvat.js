@@ -53,7 +53,12 @@ $(document).ready(function() {
         $("#spec_table tbody tr:first td:eq(1) input:first").focus();
       }
       else {
-        $('#product_edit_tax_table tbody tr:first td:eq(0) select').focus();
+        if ($('#product_edit_tax_table').length > 0) {
+	    $('#product_edit_tax_table tbody tr:first td:eq(0) select').focus();
+	}
+	  else {
+	    $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus();  
+	  }
       }
     }
     if (e.which == 38) {
@@ -856,9 +861,14 @@ $(document).ready(function() {
         if ($("#editgodownflag").is(':visible')) {
             $("#editgodownflag").focus().select();
         }
-      else {
-        $('#product_edit_tax_table tbody tr:last td:eq(2) input').focus().select();
-      }
+	  else {
+	      if ($('#product_edit_tax_table').length > 0) {
+		  $('#product_edit_tax_table tbody tr:last td:eq(2) input').focus().select();
+	      }
+	      else {
+		  $("#edituom").focus();
+	      }
+	  }
       }
       if(previndex>-1 && curindex != 0)
       {

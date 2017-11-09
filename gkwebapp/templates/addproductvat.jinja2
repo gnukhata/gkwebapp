@@ -53,8 +53,9 @@
             <div class="row" id="specdiv" hidden>
         </div>
       </div>
-            <div class="col-sm-6" id="rightdiv">
-             <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#CatModal"></i>
+      <div class="col-sm-6" id="rightdiv">
+        <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#CatModal"></i>
+	{% if userrole|int != 3 %}
               <div class="row">
                 <div class="form-group" style="margin-top: 3%;">
             <div class="panel">
@@ -137,8 +138,9 @@
               {% endif %}	      
             </div>
             <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
-          </div>
-        </div>
+		</div>
+              </div>
+	{% endif %}
         <div class="row noinventory">
           <div class="row  productclass">
             {% if not godown %}
@@ -148,7 +150,7 @@
                 </input>
                 <input type="text" id="godownpresence" value="0" hidden>
                 <label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
-              </div>
+		</div>
                 <div  id="openingstockdiv" class="form-group" hidden>
                   <div class="panel">
                     <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
@@ -165,7 +167,7 @@
                             <select class="form-control input-sm godown_name">
                               <option value="" disabled hidden selected>Select Godown</option>
                               {% for record in godown %}
-                              <option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
+				<option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
                               {% endfor %}
                             </select>
                           </td>
@@ -180,70 +182,70 @@
                   </div>
                 </div>
               </div>
-            <div id="nogodown">
-              <div class="form-group pds col-sm-6">
-                <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
-                <div class="input-group">
-                  <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
-                  <span class="input-group-addon input-sm" id="unitaddon"></span>
-                </div>
+              <div id="nogodown">
+		<div class="form-group pds col-sm-6">
+                  <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+                  <div class="input-group">
+                    <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
+                    <span class="input-group-addon input-sm" id="unitaddon"></span>
+                  </div>
+		</div>
               </div>
-            </div>
-              {% else %}
+            {% else %}
               <div class="form-group col-sm-12">
                 <input type="checkbox" name="godownflag" id="godownflag" value=0>
-              </input>
-              <input type="text" id="godownpresence" value="1" hidden="">
-              <label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
-            </div>
-            <div id="nogodown" class="form-group pds col-sm-6">
-              <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
-              <div class="input-group">
-                <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
-                <span class="input-group-addon input-sm" id="unitaddon"></span>
+		</input>
+		<input type="text" id="godownpresence" value="1" hidden="">
+		<label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
               </div>
-            </div>
-            <div  id="openingstockdiv" class="form-group col-sm-12" hidden>
-              <div class="panel">
-                <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
-                  <thead class="bg-primary input-sm">
-                    <tr>
-                      <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
-                      <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
-                      <th class="col-xs-1"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="col-xs-8">
-                        <select class="form-control input-sm godown_name">
-                          <option value="" disabled hidden selected>Select Godown</option>
-                          {% for record in godown %}
-                          <option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
-                          {% endfor %}
-                        </select>
-                      </td>
-                      <td class="col-xs-3">
-                        <input class="form-control input-sm godown_ob text-right numtype" value="0.00">
-                      </td>
-                      <td class="col-xs-1">
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div id="nogodown" class="form-group pds col-sm-6">
+		<label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+		<div class="input-group">
+                  <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
+                  <span class="input-group-addon input-sm" id="unitaddon"></span>
+		</div>
               </div>
-            </div>
+              <div  id="openingstockdiv" class="form-group col-sm-12" hidden>
+		<div class="panel">
+                  <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
+                    <thead class="bg-primary input-sm">
+                      <tr>
+			<th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
+			<th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+			<th class="col-xs-1"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+			<td class="col-xs-8">
+                          <select class="form-control input-sm godown_name">
+                            <option value="" disabled hidden selected>Select Godown</option>
+                            {% for record in godown %}
+                              <option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
+                            {% endfor %}
+                          </select>
+			</td>
+			<td class="col-xs-3">
+                          <input class="form-control input-sm godown_ob text-right numtype" value="0.00">
+			</td>
+			<td class="col-xs-1">
+			</td>
+                      </tr>
+                    </tbody>
+                  </table>
+		</div>
+              </div>
             {% endif %}
-            </div>
+          </div>
         </div>
       </div>
 	</form>
       </div>
-    <div class="btn-group-sm panel-footer">
-      <div class="container-fluid">
-        <button class="btn btn-success btn-sm" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save">{% trans %}<u>S</u>ave{% endtrans %}</button>
-        <button id="apreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
-        <button id="addgodown" class="btn btn-info btn-sm" accesskey="a" style="display:none">{% trans %}<u>A</u>dd Godown{% endtrans %}</button>
+      <div class="btn-group-sm panel-footer">
+	<div class="container-fluid">
+          <button class="btn btn-success btn-sm" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save">{% trans %}<u>S</u>ave{% endtrans %}</button>
+          <button id="apreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+          {% if userrole|int != 3 %}<button id="addgodown" class="btn btn-info btn-sm" accesskey="a" style="display:none">{% trans %}<u>A</u>dd Godown{% endtrans %}</button>{% endif %}
       </div>
     </div>
     </div>

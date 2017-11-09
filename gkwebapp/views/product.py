@@ -52,7 +52,8 @@ def addProductTabVat(request):
     result1 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
     result2 = requests.get("http://127.0.0.1:6543/godown", headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
-    return{"gkresult":{"category":result.json()["gkresult"],"uom":result1.json()["gkresult"]},"godown":result2.json()["gkresult"],"gkstatus":result.json()["gkstatus"], "states": states.json()["gkresult"]}
+    userrole = requests.get("http://127.0.0.1:6543/user?type=role", headers=header)
+    return{"gkresult":{"category":result.json()["gkresult"],"uom":result1.json()["gkresult"]},"godown":result2.json()["gkresult"],"gkstatus":result.json()["gkstatus"], "states": states.json()["gkresult"], "userrole": userrole.json()["gkresult"]}
 
 
 @view_config(route_name="product",request_param="type=addtab", renderer="gkwebapp:templates/addproduct.jinja2")
@@ -286,7 +287,8 @@ def editProductTabVat(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/products",headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
-    return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"],"vatorgstflag":resultgstvat.json()["gkresult"]}
+    userrole = requests.get("http://127.0.0.1:6543/user?type=role", headers=header)
+    return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"],"vatorgstflag":resultgstvat.json()["gkresult"], "userrole": userrole.json()["gkresult"]}
 
 
 @view_config(route_name="product",request_param="type=details", renderer="gkwebapp:templates/editproductspecs.jinja2")
@@ -321,6 +323,7 @@ def productDetailsVat(request):
     prodspecs={}
     result = requests.get("http://127.0.0.1:6543/products?qty=single&productcode=%d"%(int(request.params['productcode'])),headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+    userrole = requests.get("http://127.0.0.1:6543/user?type=role", headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
 
     if result.json()["gkresult"]["gsflag"]==7:
@@ -333,7 +336,7 @@ def productDetailsVat(request):
         result3 = requests.get("http://127.0.0.1:6543/categories", headers=header)
         result4 = requests.get("http://127.0.0.1:6543/godown", headers=header)
         numberofgodowns = int(result.json()["numberofgodowns"])
-        return{"proddesc":result.json()["gkresult"],"prodspecs":prodspecs,"uom":result2.json()["gkresult"],"category":result3.json()["gkresult"],"godown":result4.json()["gkresult"],"numberofgodowns":numberofgodowns,"gkstatus":result.json()["gkstatus"],"vatorgstflag":resultgstvat.json()["gkresult"], "states": states.json()["gkresult"]}
+        return{"proddesc":result.json()["gkresult"],"prodspecs":prodspecs,"uom":result2.json()["gkresult"],"category":result3.json()["gkresult"],"godown":result4.json()["gkresult"],"numberofgodowns":numberofgodowns,"gkstatus":result.json()["gkstatus"],"vatorgstflag":resultgstvat.json()["gkresult"], "states": states.json()["gkresult"], "userrole": userrole.json()["gkresult"]}
     else:
         return{"proddesc":result.json()["gkresult"],"vatorgstflag":resultgstvat.json()["gkresult"], "states": states.json()["gkresult"]}
 
