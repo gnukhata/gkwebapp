@@ -43,9 +43,9 @@
   <div class="row">
   <div class="form-group col-sm-11 pd ">
     {% if proddesc["gsflag"]==7 %}
-    <label for="edithsn" class="" id="hsnorservnolabel">New HSN No. :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
+    <label for="gscode" class="" id="hsnorservnolabel">New HSN No. :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
     {%else%}
-    <label for="addproddesc" class="" id="hsnorservnolabel">New Accounting Code for Service :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
+    <label for="gscode" class="" id="hsnorservnolabel">New Accounting Code for Service :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
     {%endif%}
     <input type='text' class="form-control input-sm numtype hsn" name="gscode"  id="gscode" value="{{proddesc['gscode']}}">
   </div>
@@ -116,75 +116,77 @@
     {% endif %}
   </div>
   </div>
-  </div>
+</div>
 <div class="col-sm-6" style="margin-top: -67;">
-  <div class="row">
-    <div class="form-group taxdiv">
-      <div class="panel taxinnerdiv">
-    <table id="product_edit_tax_table" class="table table-condensed table-bordered fixed-table">
-      <thead class="bg-primary input-sm">
-        <tr>
-          <th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
-          <th class="col-xs-4 text-center">{% trans %}State{% endtrans %}</th>
-          <th class="col-xs-3 text-center">{% trans %}Rate %{% endtrans %}</th>
-          <th class="col-xs-1"></th>
-          <th class=""></th>
-        </tr>
-      </thead>
-      <input value="{{vatorgstflag}}" id="vatorgstflag" hidden>
-      <tbody>
-        <tr class="blank" value="new">
-          <td class="col-xs-4">
-            <select class="form-control input-sm product_tax_disable tax_name product_new_name">
-	      <option value="" hidden disabled selected>Select Tax</option>
-              {%if vatorgstflag=='7' or vatorgstflag=='29' %}
-                <option value="IGST">GST</option>
-                <option value="CESS">CESS</option>
-              {%endif%}
-              <option value="VAT">VAT</option>
-              <option value="CVAT">CVAT</option>
-            </select>
-          </td>
-          <td class="col-xs-4">
-            <select class="form-control input-sm tax_state product_new_state product_tax_disable" >
-	      <option value="" hidden disabled selected>Select State</option>
-	      {% for state in states %}
-              {% for key, value in state.items() %}
-                <option value="{{value}}" stateid="{{key}}">{{value}}</option>
-              {% endfor %}
-              {% endfor %}
-	      <option value="" stateid="">None</option>
-            </select>
-          </td>
-          <td class="col-xs-3">
-            <input class="form-control input-sm tax_rate text-right product_new_rate numtype product_tax_disable" placeholder="Rate">
-          </td>
-          <td class="col-xs-1 product_tax_disable">
+  {% if userrole|int != 3 %}
+    <div class="row">
+      <div class="form-group taxdiv">
+	<div class="panel taxinnerdiv">
+	  <table id="product_edit_tax_table" class="table table-condensed table-bordered fixed-table">
+	    <thead class="bg-primary input-sm">
+              <tr>
+		<th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
+		<th class="col-xs-4 text-center">{% trans %}State{% endtrans %}</th>
+		<th class="col-xs-3 text-center">{% trans %}Rate %{% endtrans %}</th>
+		<th class="col-xs-1"></th>
+		<th class=""></th>
+              </tr>
+	    </thead>
+	    <input value="{{vatorgstflag}}" id="vatorgstflag" hidden>
+	    <tbody>
+              <tr class="blank" value="new">
+		<td class="col-xs-4">
+		  <select class="form-control input-sm product_tax_disable tax_name product_new_name">
+		    <option value="" hidden disabled selected>Select Tax</option>
+		    {%if vatorgstflag=='7' or vatorgstflag=='29' %}
+                      <option value="IGST">GST</option>
+                      <option value="CESS">CESS</option>
+		    {%endif%}
+		    <option value="VAT">VAT</option>
+		    <option value="CVAT">CVAT</option>
+		  </select>
+		</td>
+		<td class="col-xs-4">
+		  <select class="form-control input-sm tax_state product_new_state product_tax_disable" >
+		    <option value="" hidden disabled selected>Select State</option>
+		    {% for state in states %}
+		      {% for key, value in state.items() %}
+			<option value="{{value}}" stateid="{{key}}">{{value}}</option>
+		      {% endfor %}
+		    {% endfor %}
+		    <option value="" stateid="">None</option>
+		  </select>
+		</td>
+		<td class="col-xs-3">
+		  <input class="form-control input-sm tax_rate text-right product_new_rate numtype product_tax_disable" placeholder="Rate">
+		</td>
+		<td class="col-xs-1 product_tax_disable">
 
-          </td>
-        </tr>
-      </tbody>
-    </table>
-      <input type="text" name="inv" id="invflag" value="1" hidden>
+		</td>
+              </tr>
+	    </tbody>
+	  </table>
+	  <input type="text" name="inv" id="invflag" value="1" hidden>
+	</div>
+	<small id="taxhelp4" class="form-text text-muted common">Press 'Insert' key from anywhere on the screen to save changes.</small>
+	<div class="collapse" id="moresmall">
+	  <small id="taxhelp2" class="form-text text-muted ">Press 'Ctrl + >' to move forward or 'Ctrl + <' to move backward within a row in a table.</small><br/>
+	  <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to move backward within a Column in a table.</small>
+	  {% if  proddesc["gsflag"]==7  %}
+	    {% if numberofgodowns|int > 0 %}
+              <small  class="form-text text-muted " id="godownmsg">Press 'Esc' key to shift focus from Tax Rate or Tax Name  to Godown Name or from Godown Opening Stock to 'Save' button.</small>
+	    {% else %}
+	      <small  class="form-text text-muted productclass">Press 'Esc' key to shift focus from Tax Rate or Tax Name  to Opening Stock or from Opening Stock to 'Save' button.</small>
+	    {% endif %}
+	  {% else %}
+	    <small  class="form-text text-muted serviceclass">Press 'Esc' key to shift focus from Tax Rate or Tax Name to 'Save' button.</small>
+	  {% endif %}
+	</div>
+	<a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+      </div>
     </div>
-    <small id="taxhelp4" class="form-text text-muted common">Press 'Insert' key from anywhere on the screen to save changes.</small>
-    <div class="collapse" id="moresmall">
-      <small id="taxhelp2" class="form-text text-muted ">Press 'Ctrl + >' to move forward or 'Ctrl + <' to move backward within a row in a table.</small><br/>
-      <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to move backward within a Column in a table.</small>
-      {% if  proddesc["gsflag"]==7  %}
-      {% if numberofgodowns|int > 0 %}
-        <small  class="form-text text-muted " id="godownmsg">Press 'Esc' key to shift focus from Tax Rate or Tax Name  to Godown Name or from Godown Opening Stock to 'Save' button.</small>
-      {% else %}
-	<small  class="form-text text-muted productclass">Press 'Esc' key to shift focus from Tax Rate or Tax Name  to Opening Stock or from Opening Stock to 'Save' button.</small>
-      {% endif %}
-      {% else %}
-      <small  class="form-text text-muted serviceclass">Press 'Esc' key to shift focus from Tax Rate or Tax Name to 'Save' button.</small>
-      {% endif %}
-    </div>
-    <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
-    </div>
-  </div>
-    {% if proddesc["gsflag"]==7 %}
+  {% endif %}
+  {% if proddesc["gsflag"]==7 %}
   <div class="row noinventory">
 
     {% if not godown %}

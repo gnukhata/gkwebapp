@@ -36,7 +36,6 @@ $(document).ready(function() {
 $(".serviceclass").hide();
 $(".productclass").hide();
   $(".common").hide();
-
   var godownflag = 0;
     $('.modal-backdrop').remove();
     var taxfieldhtml = $("#product_tax_table tbody").html();
@@ -62,7 +61,6 @@ $(".productclass").hide();
     event.preventDefault();
     $("#smalllink").html('See more. <span class="glyphicon glyphicon-triangle-bottom"></span>');
   });
-  $("#additem").focus().select();
   /*$("#addcatselect").focus();
   if($("#addcatselect").is(':hidden'))
   {
@@ -96,7 +94,13 @@ $(".productclass").hide();
 
     $("#additem").change();
 
-
+if($("#additem").is(':visible'))
+    {
+	$("#additem").focus();
+  }
+    else{
+	$("#addproddesc").focus();
+    }
 
   $("#godownflag").click(function(e){
     if ($(this).is(":checked")) {
@@ -266,12 +270,12 @@ $("#hsnno").keydown(function(event) {
     $("#adduom").focus();
     }
       else {
-	  //if($("#igstrate").is(":hidden")){
+	  if($("#product_tax_table").length > 0){
 	      $("#product_tax_table tbody tr:first td:eq(0) select").focus();
-	  //}
-	  /*else {
-	      $("#igstrate").focus().select();
-	  }*/
+	  }
+	  else {
+	      $("#apsubmit").focus();
+	  }
     }
 
   }
@@ -322,8 +326,28 @@ $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
       $("#spec_table tbody tr:first td:eq(1) input:first").focus();
     }
 
-      else {
-	  $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+	else {
+	    if ($("#product_tax_table tbody").length > 0) {
+		$("#product_tax_table tbody tr:first td:eq(0) select").focus();
+	    }
+	    else{
+		if ($("#additem option:selected").val()=='7'){
+
+      if ($("#godownpresence").val()==0) {
+        $("#openingstock").focus().select();
+      }
+      if ($("#godownpresence").val()==1)
+      {
+        $("#godownflag").focus().select();
+      }
+      if(sessionStorage.invflag==0){
+        $("#apsubmit").focus();
+      }
+    }
+    else{
+      $("#apsubmit").focus();
+    }
+	    }
     }
   }
   else if (event.which==32)
@@ -1230,7 +1254,7 @@ else{
     }
 
   });
-    if(taxes.length == '0'){
+    if(taxes.length == '0' && $("#product_tax_table").length > 0){
 	if($("#additem option:selected").val() == 7){
 	    $("#tax-alert").alert();
             $("#tax-alert").fadeTo(2250, 500).slideUp(500, function(){
