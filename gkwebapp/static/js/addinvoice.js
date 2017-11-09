@@ -325,6 +325,7 @@ $(document).ready(function() {
     //Change Event For State of Origin/Delivery.
     $("#invoicestate").change(function(event) {
 	event.preventDefault();
+	$("#orggstin").text("");
 	$("#statecodeforinvoice").text($("#invoicestate option:selected").attr("stateid"));
 	if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 	    $(".igstfield").hide();
@@ -338,12 +339,13 @@ $(document).ready(function() {
 	}
 	$(".product_name_vat, .product_name_gst").change();
 
-	var gstinstate=$("#invoicestate option:selected").attr("stateid");
+	var gstinstateid=$("#invoicestate option:selected").attr("stateid");
 	 $.ajax({
                     url: '/existingorg?type=getgstin',
                     type: 'POST',
                     dataType: 'json',
                     async: false,
+	            data : {"gstinstate" : gstinstateid},
                     beforeSend: function(xhr) {
                         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
                     }
@@ -351,12 +353,7 @@ $(document).ready(function() {
 	.done(function(resp) {
             if (resp["gkstatus"] == 0) {
 		console.log("success");
-		if (gstinstate in resp["gkresult"]["gstin"]) {
-		    $("#orggstin").text(resp["gkresult"]["gstin"][gstinstate]);
-		}
-		else {
-		    $("#orggstin").text(" ");
-		}
+		$("#orggstin").text(resp["gkresult"]);
          	  }
                 })
                 .fail(function() {
@@ -2290,6 +2287,7 @@ if (event.which == 13) {
       form_data.append("cess", JSON.stringify(cess));
       form_data.append("stock", JSON.stringify(stock));
       form_data.append("issuername", issuername);
+      form_data.append("orgstategstin",$("#orggstin").text() );
       form_data.append("designation", designation);
       form_data.append("invtotal", invoicetotal);
       if ($("#status").val() == 9) {
