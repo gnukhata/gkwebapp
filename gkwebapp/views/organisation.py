@@ -63,8 +63,8 @@ def showeditOrg(request):
 @view_config(route_name="existingorg", request_param="type=getgstin", renderer="json")
 def getorgdata(request):
     header={"gktoken":request.headers["gktoken"]}
-    orgdata = requests.get("http://127.0.0.1:6543/organisation", headers=header)
-    return {"gkstatus": orgdata.json()["gkstatus"],"gkresult": orgdata.json()["gkdata"]}
+    orgdata = requests.get("http://127.0.0.1:6543/organisations?osg=true&statecode=%d"%(int(request.params["gstinstate"])), headers=header)
+    return {"gkstatus": orgdata.json()["gkstatus"],"gkresult": orgdata.json()["gkresult"]}
 
 @view_config(route_name="editorganisation", request_param="edit=inventoryactivate",  renderer="json")
 def inventoryActivate(request):

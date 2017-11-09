@@ -311,12 +311,14 @@ $(document).ready(function() {
         event.preventDefault();
         /* Act on the event */
         $(".product_name_vat").change();
-	var gstinstate=$("#invoice_state option:selected").attr("stateid");
+	$("#orggstin").text("");
+	var gstinstateid=$("#invoice_state option:selected").attr("stateid");
 	 $.ajax({
                     url: '/existingorg?type=getgstin',
                     type: 'POST',
                     dataType: 'json',
                     async: false,
+	            data : {"gstinstate" : gstinstateid},
                     beforeSend: function(xhr) {
                         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
                     }
@@ -324,12 +326,10 @@ $(document).ready(function() {
 	.done(function(resp) {
             if (resp["gkstatus"] == 0) {
 		console.log("success");
-		if (gstinstate in resp["gkresult"]["gstin"]) {
-		    $("#orggstin").text(resp["gkresult"]["gstin"][gstinstate]);
-		}
-		else {
-		    $("#orggstin").text(" ");
-		}
+		
+		$("#orggstin").text(resp["gkresult"]);
+		
+		
          	  }
                 })
                 .fail(function() {
@@ -1129,7 +1129,10 @@ $(document).off("keyup").on("keyup", function(event) {
         form_data.append("taxstate", $("#invoice_state option:selected").val());
         form_data.append("sourcestate", $("#invoice_state option:selected").val());
         form_data.append("taxflag",$("#taxapplicable").val() );
-        form_data.append("freeqty", JSON.stringify(freeqty));
+	
+	form_data.append("orgstategstin",$("#orggstin").text() );
+
+	form_data.append("freeqty", JSON.stringify(freeqty));
         form_data.append("discount", JSON.stringify(discount));
         form_data.append("bankdetails", JSON.stringify(bankdetails));
         $('.modal-backdrop').remove();
