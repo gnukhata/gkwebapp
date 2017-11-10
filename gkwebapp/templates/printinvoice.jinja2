@@ -402,8 +402,8 @@
       </div>
     {% endif %}
     <div class="row pull-right">
-      <label for="totalinvoicevalue" style="font-size:120%">{% trans %}Total Invoice Value{% endtrans %} :</label>
-      <label id="totalinvoicevalue">{{ gkresult["invoicetotal"] }}</label>
+      <label for="totalinvoicevalue" style="font-size:150% !important">{% trans %}Total Invoice Value{% endtrans %} :</label>
+      <label id="totalinvoicevalue" style="font-size:150% !important; font-weight:normal !important">{{ gkresult["invoicetotal"] }}</label>
     </div>
     <br>
     <br>
@@ -474,12 +474,6 @@
 	      </td>
 	      <td>
 		{% if gkresult["dateofsupply"] %}{{ gkresult["dateofsupply"] }}{% else %}N/A{% endif %}
-	      </td>
-	      <td>
-		<label for="inv">{% trans %}Reverse Charge{% endtrans %}:</label>
-	      </td>
-	      <td>
-		{% if gkresult["reversecharge"] %}{{ gkresult["reversecharge"] }}{% else %}N/A{% endif %}
 	      </td>
 	    </tr>
 	  </tbody>
