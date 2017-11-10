@@ -288,6 +288,7 @@
 	<div class="modal-dialog">
 	  <div class="modal-content">
             <div class="modal-header">
+	      <button type="button" class="close" data-dismiss="modal">&times;</button>
               <div class="modal-title">
 		{% trans %}GSTIN{% endtrans %} :
               </div>
@@ -307,7 +308,7 @@
 	      </div>
               <div class="panel">
 		<div class="panel-body gstinclass">
-		      <table id="gstintable" class="table table-condensed table-bordered fixed-table">
+		  <table id="gstintable" class="table table-condensed table-bordered fixed-table">
 			<thead class="bg-primary input-sm">
 			  <tr>
 			    <th class="col-xs-6 text-center">{% trans %}State{% endtrans %}</th>
@@ -365,6 +366,7 @@
 			      </div>
 			    </td>
 			    <td class="col-xs-1">
+			      <a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 			    </td>
 			  </tr>
 			  {% endif %}
