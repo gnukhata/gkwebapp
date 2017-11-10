@@ -122,12 +122,14 @@
   		{% else %}
   		  <label class="form-control" id="taxapplicabletext">VAT</label>
   		  <input type="text"  id="taxapplicable" value="22" accesskey="" hidden>
-  		  {% endif %}
-      </div>
+      {% endif %}
+	    </div>
           </div>
-
-
-
+	  {% if resultgstvat != '22' %}
+	    <div class="col-sm-12 gstinfield">
+	      <label class="gstinfield"> GSTIN : </label><label class="gstinfield" style="font-size: 175%" id="orggstin"></label>	    
+	  </div>
+	  {% endif %}
           {% if gkstatus=="out" %}
 
             <input type="hidden" id="status" value="15">
@@ -376,7 +378,7 @@
             <h4>Bank Details :</h4>
             <tr>
               <td>  <label for="Account Number" class="col-form-label" id="accountnolabel"><h5>{% trans %}Account No. :{% endtrans %}</h5></label></td>
-              <td colspan="2"><input type="text" id="accountno" class="numtype lastfield form-control input-sm" name="accountno" ></input></td>
+              <td colspan="2"><input type="text" id="accountno" class="lastfield form-control input-sm" name="accountno" ></input></td>
 
               <td>  <label for="Bank Name" class=" col-form-label" id="banknamelabel"><h5>{% trans %}Bank Name :{% endtrans %}</h5></label></td>
               <td colspan="2"><input type="text" id="bankname" class="lastfield form-control input-sm" name="bankname" ></input></td>

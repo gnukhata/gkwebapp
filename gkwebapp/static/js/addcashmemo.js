@@ -219,7 +219,8 @@ $(document).ready(function() {
           else {
         $("#taxapplicabletext").text("VAT");
         $("#taxapplicable").val("22");
-        $("#gstproducttable").hide();
+              $("#gstproducttable").hide();
+	      $(".gstinfield").hide();
               $("#invoice_product_table_vat").show();
 	      $("#vathelp").show();
           }
@@ -294,6 +295,11 @@ $(document).ready(function() {
         //being a dynamic generated field the numeric property is added on their focus
         $(".numtype").numeric();
     });
+    $(document).off('focus', '#accountno').on('focus', '#accountno', function(event) {
+        event.preventDefault();
+        /* Act on the event */
+        $("#accountno").numeric({ negative: false });
+    });
     $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
         event.preventDefault();
         /* Act on the event */
@@ -311,7 +317,32 @@ $(document).ready(function() {
         event.preventDefault();
         /* Act on the event */
         $(".product_name_vat").change();
+	$("#orggstin").text("");
+	var gstinstateid=$("#invoice_state option:selected").attr("stateid");
+	 $.ajax({
+                    url: '/existingorg?type=getgstin',
+                    type: 'POST',
+                    dataType: 'json',
+                    async: false,
+	            data : {"gstinstate" : gstinstateid},
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                    }
+         })
+	.done(function(resp) {
+            if (resp["gkstatus"] == 0) {
+		console.log("success");
+		$("#orggstin").text(resp["gkresult"]);
+         	  }
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
     });
+    $('#invoice_state').change();
 
 
     // if the selected product is changed the tax rate is again retrieved from the database, again using the combination of product code and state
@@ -1101,7 +1132,8 @@ $(document).off("keyup").on("keyup", function(event) {
         form_data.append("taxstate", $("#invoice_state option:selected").val());
         form_data.append("sourcestate", $("#invoice_state option:selected").val());
         form_data.append("taxflag",$("#taxapplicable").val() );
-        form_data.append("freeqty", JSON.stringify(freeqty));
+	form_data.append("orgstategstin",$("#orggstin").text() );
+	form_data.append("freeqty", JSON.stringify(freeqty));
         form_data.append("discount", JSON.stringify(discount));
         form_data.append("bankdetails", JSON.stringify(bankdetails));
         $('.modal-backdrop').remove();

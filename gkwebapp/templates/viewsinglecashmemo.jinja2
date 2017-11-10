@@ -15,14 +15,20 @@
   {{ gkresult["sourcestate"] }}
     </div>
     <div class="col-sm-3">
-	<label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
-  {% if gkresult["taxflag"] == 22 %}
+      <label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
+      {% if gkresult["taxflag"] == 22 %}
 	VAT
-  {% else %}
-  GST
-  {% endif %}
-      </div>
+      {% else %}
+	GST
+      {% endif %}
     </div>
+  </div>
+  {% if gkresult["taxflag"] == 7 %}
+    <div class="form-group form-inline col-sm-12">
+      <label for="orgstategstin">{% trans %}GSTIN{% endtrans %} : </label>
+      {% if gkresult["orgstategstin"] %}{{ gkresult["orgstategstin"] }}{% endif %}
+    </div>
+  {% endif %}
   {% if gkresult["taxflag"] == 22 %}
     <div class="col-md-12">
       <br>

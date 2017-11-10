@@ -57,8 +57,14 @@ def showeditOrg(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/organisation", headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
-    return {"gkresult":result.json()["gkdata"],"gkstatus":result.json()["gkstatus"],"states": states.json()["gkresult"]}
+    resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+    return {"gkresult":result.json()["gkdata"],"gkstatus":result.json()["gkstatus"],"states": states.json()["gkresult"],"vatorgstflag":resultgstvat.json()["gkresult"]}
 
+@view_config(route_name="existingorg", request_param="type=getgstin", renderer="json")
+def getorgdata(request):
+    header={"gktoken":request.headers["gktoken"]}
+    orgdata = requests.get("http://127.0.0.1:6543/organisations?osg=true&statecode=%d"%(int(request.params["gstinstate"])), headers=header)
+    return {"gkstatus": orgdata.json()["gkstatus"],"gkresult": orgdata.json()["gkresult"]}
 
 @view_config(route_name="editorganisation", request_param="edit=inventoryactivate",  renderer="json")
 def inventoryActivate(request):
@@ -79,7 +85,7 @@ def oexists(request):
 def editOrganisation(request):
     header={"gktoken":request.headers["gktoken"]}
 
-    gkdata= {"orgcity":request.params["orgcity"],"orgaddr":request.params["orgaddr"],"orgpincode":request.params["orgpincode"],"orgstate":request.params["orgstate"], "orgcountry":request.params["orgcountry"],"orgtelno":request.params["orgtelno"], "orgfax":request.params["orgfax"],"orgwebsite":request.params["orgwebsite"],"orgemail":request.params["orgemail"],"orgpan":request.params["orgpan"],"orgmvat":request.params["orgmvat"],"orgstax":request.params["orgstax"],"orgregno":request.params["orgregno"],"orgregdate":request.params["orgregdate"], "orgfcrano":request.params["orgfcrano"],"orgfcradate":request.params["orgfcradate"]}
+    gkdata= {"orgcity":request.params["orgcity"],"orgaddr":request.params["orgaddr"],"orgpincode":request.params["orgpincode"],"orgstate":request.params["orgstate"], "orgcountry":request.params["orgcountry"],"orgtelno":request.params["orgtelno"], "orgfax":request.params["orgfax"],"orgwebsite":request.params["orgwebsite"],"orgemail":request.params["orgemail"],"orgpan":request.params["orgpan"],"orgmvat":request.params["orgmvat"],"gstin":json.loads(request.params["gstin"]),"orgstax":request.params["orgstax"],"orgregno":request.params["orgregno"],"orgregdate":request.params["orgregdate"], "orgfcrano":request.params["orgfcrano"],"orgfcradate":request.params["orgfcradate"]}
     filelogo={}
     try:
         if request.POST['logo'].file:

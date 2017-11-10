@@ -875,7 +875,6 @@ var userrole1;
       },
       success: function(resp)
       {
-        console.log(resp);
         $('#info').html(resp);
       }
     });
