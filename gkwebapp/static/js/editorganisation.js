@@ -171,9 +171,6 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
   }
 	  if (numberofstates > 0) {
         $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-              if (curindex1 == 0) {
-          $("#gstintable tbody tr:last td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-        }
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
 	$('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[value=""]').prop('selected', true);
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();

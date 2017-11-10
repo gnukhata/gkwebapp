@@ -295,6 +295,11 @@ $(document).ready(function() {
         //being a dynamic generated field the numeric property is added on their focus
         $(".numtype").numeric();
     });
+    $(document).off('focus', '#accountno').on('focus', '#accountno', function(event) {
+        event.preventDefault();
+        /* Act on the event */
+        $("#accountno").numeric({ negative: false });
+    });
     $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
         event.preventDefault();
         /* Act on the event */
