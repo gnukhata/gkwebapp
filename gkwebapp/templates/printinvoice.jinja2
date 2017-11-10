@@ -83,7 +83,7 @@
         {% if org["orgwebsite"]!='' %}
           Website : {{org["orgwebsite"]}}
         {% endif %}
-	{% if gkresult["inoutflag"] == 15 %}
+	{% if gkresult["inoutflag"] == 15 and gkresult["taxflag"] == 7 %}
 	  <div class="form-group form-inline col-sm-12 nopadding">
 	    <label for="orgstategstin">{% trans %}GSTIN{% endtrans %} : </label>
 	    {% if gkresult["orgstategstin"] %}{{ gkresult["orgstategstin"] }}{% endif %}

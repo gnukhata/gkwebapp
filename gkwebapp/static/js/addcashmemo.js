@@ -219,7 +219,8 @@ $(document).ready(function() {
           else {
         $("#taxapplicabletext").text("VAT");
         $("#taxapplicable").val("22");
-        $("#gstproducttable").hide();
+              $("#gstproducttable").hide();
+	      $(".gstinfield").hide();
               $("#invoice_product_table_vat").show();
 	      $("#vathelp").show();
           }
