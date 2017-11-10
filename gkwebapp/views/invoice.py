@@ -224,6 +224,7 @@ def showregisterreport(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/report?type=register&flag=%d&calculatefrom=%s&calculateto=%s"%(int(request.params["flag"]), str(request.params["calculatefrom"]), str(request.params["calculateto"])), headers=header)
     registerheader = {"flag": request.params["flag"], "calculatefrom": request.params["calculatefrom"], "calculateto": request.params["calculateto"]}
+ 
     return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "totalrow": result.json()["totalrow"], "taxcolumns":result.json()["taxcolumns"], "registerheader": registerheader}
 
 @view_config(route_name="invoice",request_param="action=listofinvspreadsheet", renderer="")
@@ -359,16 +360,16 @@ def registerspreadsheet(request):
         sheet.getCell(3,3).stringValue("Suppl. Name").setBold(True)
         sheet.getCell(4,3).stringValue("Suppl. TIN").setBold(True)
         sheet.getCell(5,3).stringValue("Suppl. GSTIN").setBold(True)
-    sheet.getCell(6,3).stringValue("Gross Amt.").setBold(True)
-    sheet.getCell(7,3).stringValue("TAX Free").setBold(True)
+    sheet.getCell(6,3).stringValue("Gross Amt.").setBold(True).setAlignHorizontal("right")
+    sheet.getCell(7,3).stringValue("TAX Free").setBold(True).setAlignHorizontal("right")
     i = 9
     for taxc in taxcolumns:
         sheet.getColumn(i).setWidth("4cm")
-        sheet.getCell(i-1,3).stringValue("Net @" + taxc + "%").setBold(True)
+        sheet.getCell(i-1,3).stringValue("Net @" + taxc + "%").setBold(True).setAlignHorizontal("right")
         i += 1
     for taxc in taxcolumns:
         sheet.getColumn(i).setWidth("4cm")
-        sheet.getCell(i-1,3).stringValue(taxc + "% TAX").setBold(True)
+        sheet.getCell(i-1,3).stringValue(taxc + "% TAX").setBold(True).setAlignHorizontal("right")
         i += 1
     row = 4
     for invoice in result:
@@ -382,38 +383,38 @@ def registerspreadsheet(request):
         else:
             sheet.getCell(5, row).stringValue("")
 
-        sheet.getCell(6, row).stringValue(invoice["grossamount"])
-        sheet.getCell(7, row).stringValue(invoice["taxfree"])
+        sheet.getCell(6, row).stringValue(invoice["grossamount"]).setAlignHorizontal("right")
+        sheet.getCell(7, row).stringValue(invoice["taxfree"]).setAlignHorizontal("right")
         i = 8
         for taxc in taxcolumns:
             if taxc in invoice["tax"]:
-                sheet.getCell(i,row).stringValue(invoice["tax"][taxc])
+                sheet.getCell(i,row).stringValue(invoice["tax"][taxc]).setAlignHorizontal("right")
             else:
-                sheet.getCell(i,row).stringValue("0.00")
+                sheet.getCell(i,row).stringValue("0.00").setAlignHorizontal("right")
             i += 1
         for taxc in taxcolumns:
             if taxc in invoice["taxamount"]:
-                sheet.getCell(i,row).stringValue(invoice["taxamount"][taxc])
+                sheet.getCell(i,row).stringValue(invoice["taxamount"][taxc]).setAlignHorizontal("right")
             else:
-                sheet.getCell(i,row).stringValue("0.00")
+                sheet.getCell(i,row).stringValue("0.00").setAlignHorizontal("right")
             i += 1
         row += 1
-    sheet.getCell(0, row).stringValue("Total").setBold(True)
+    sheet.getCell(0, row).stringValue("Total").setBold(True).setAlignHorizontal("right")
     ods.content.mergeCells(0,row,6,1)
-    sheet.getCell(6, row).stringValue(totalrow["grossamount"]).setBold(True)
-    sheet.getCell(7, row).stringValue(totalrow["taxfree"]).setBold(True)
+    sheet.getCell(6, row).stringValue(totalrow["grossamount"]).setBold(True).setAlignHorizontal("right")
+    sheet.getCell(7, row).stringValue(totalrow["taxfree"]).setBold(True).setAlignHorizontal("right")
     i = 8
     for taxc in taxcolumns:
         if taxc in totalrow["tax"]:
-            sheet.getCell(i,row).stringValue(totalrow["tax"][taxc]).setBold(True)
+            sheet.getCell(i,row).stringValue(totalrow["tax"][taxc]).setBold(True).setAlignHorizontal("right")
         else:
-            sheet.getCell(i,row).stringValue("0.00").setBold(True)
+            sheet.getCell(i,row).stringValue("0.00").setBold(True).setAlignHorizontal("right")
         i += 1
     for taxc in taxcolumns:
         if taxc in totalrow["taxamount"]:
-            sheet.getCell(i,row).stringValue(totalrow["taxamount"][taxc]).setBold(True)
+            sheet.getCell(i,row).stringValue(totalrow["taxamount"][taxc]).setBold(True).setAlignHorizontal("right")
         else:
-            sheet.getCell(i,row).stringValue("0.00").setBold(True)
+            sheet.getCell(i,row).stringValue("0.00").setBold(True).setAlignHorizontal("right")
         i += 1
 
     ods.save("response.ods")

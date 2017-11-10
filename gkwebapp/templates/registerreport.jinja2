@@ -37,7 +37,8 @@
   }
   .registertablecss{
     overflow-y:scroll;
-    overflow-x:scroll;
+      overflow-x:scroll;
+      max-height:100%;
   }
   .ralign{
     text-align:right;
@@ -92,13 +93,13 @@
           <th class="dtwrap calign">{% trans %}Suppl TIN{% endtrans %}</th>
 	  <th class="dtwrap calign">{% trans %}Suppl GSTIN{% endtrans %}</th>
           {% endif %}
-          <th class="dtwrap calign">{% trans %}Gross Amt{% endtrans %}</th>
-          <th class="dtwrap calign">{% trans %}TAX Free{% endtrans %}</th>
+          <th class="dtwrap ralign">{% trans %}Gross Amt{% endtrans %}</th>
+          <th class="dtwrap ralign">{% trans %}TAX Free{% endtrans %}</th>
           {% for tax in taxcolumns %}
-            <th class="dtwrap calign">{% trans %}Net @ {{tax}}%{% endtrans %}</th>
+            <th class="dtwrap ralign">{% trans %}Net @ {{tax}}%{% endtrans %}</th>
           {% endfor %}
           {% for tax in taxcolumns %}
-            <th class="dtwrap calign">{% trans %}{{tax}}% TAX{% endtrans %}</th>
+            <th class="dtwrap ralign">{% trans %}{{tax}}% TAX{% endtrans %}</th>
           {% endfor %}
         </tr>
       </thead>
@@ -124,14 +125,14 @@
 	    <td class="dtwrap calign">
               {{record['custgstin']}}
             </td>
-            <td class="dtwrap calign">
+            <td class="dtwrap ralign">
               {{record['grossamount']}}
             </td>
-            <td class="dtwrap calign">
+            <td class="dtwrap ralign">
               {{record['taxfree']}}
             </td>
             {% for tax in taxcolumns %}
-            <td class="dtwrap calign">
+            <td class="dtwrap ralign">
             {% if tax in record["tax"] %}
               {{record['tax'][tax]}}
             {% else %}
@@ -140,7 +141,7 @@
             </td>
             {% endfor %}
             {% for tax in taxcolumns %}
-            <td class="dtwrap calign">
+            <td class="dtwrap ralign">
             {% if tax in record["taxamount"] %}
               {{record['taxamount'][tax]}}
             {% else %}
@@ -152,17 +153,17 @@
           {% endfor %}
           <!-- Description: This is for last row i.e. Total of transactions -->
         <tr>
-          <td class="lngwrap calign" colspan="6">
+          <td class="lngwrap ralign" colspan="6">
             <strong> <i>Total </i></strong>
           </td>
-          <td class="dtwrap calign">
+          <td class="dtwrap ralign">
             {{totalrow['grossamount']}}
           </td>
-          <td class="dtwrap calign">
+          <td class="dtwrap ralign">
             {{totalrow['taxfree']}}
           </td>
           {% for tax in taxcolumns %}
-          <td class="dtwrap calign">
+          <td class="dtwrap ralign">
           {% if tax in totalrow["tax"] %}
             {{totalrow['tax'][tax]}}
           {% else %}
@@ -171,7 +172,7 @@
           </td>
           {% endfor %}
           {% for tax in taxcolumns %}
-          <td class="dtwrap calign">
+          <td class="dtwrap ralign">
           {% if tax in totalrow["taxamount"] %}
             {{totalrow['taxamount'][tax]}}
           {% else %}
