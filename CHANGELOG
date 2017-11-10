@@ -1,3 +1,15 @@
+[10-November-2017 Release 4.25 Update]
+* GSTIN added in orgnisation details.
+* Validation for PAN and GSTIN added.
+* Organisation GSTIN added in Invoice and cashmemo.
+* Cess added in product.
+* Tax calculated considering cess in Invoice and Cash memo.
+* Cess tax added in Registers.
+* Context sensitive help for bill wise accounting.
+* Provision to add 0 tax in gst for taxfree products.
+* Permissions to godown in-charge modified.
+* Minor bugs solved.	
+	
 [25-September-2017 Release 4.25]
 * Invoice and Cash Memo are now GST compatible.
 * Provision to add Services.
