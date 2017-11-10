@@ -99,12 +99,12 @@ $(document).ready(function() {
   });
 
   $('#viewprintableversion').click(function (e) {
-    var printdata ={}
+      var printdata ={};
     if ($("#godownflag").val()==0) {
-      printdata = {"productcode":$("#productcode").val(),"productdesc":$("#productdesc").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(), "godownflag":$("#godownflag").val(), "goid":"-1", "goname":""}
+	printdata = {"productcode":$("#productcode").val(),"productdesc":$("#productdesc").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(), "godownflag":$("#godownflag").val(), "goid":"-1", "goname":""};
     }
     else {
-      printdata = {"productcode":$("#productcode").val(),"productdesc":$("#productdesc").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(), "godownflag":$("#godownflag").val(), "goid":$("#goid").val(), "goname":$("#goname").val(), "goaddr":$("#goaddr").val()}
+	printdata = {"productcode":$("#productcode").val(),"productdesc":$("#productdesc").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(), "godownflag":$("#godownflag").val(), "goid":$("#goid").val(), "goname":$("#goname").val(), "goaddr":$("#goaddr").val()};
     }
     console.log(printdata);
     $.ajax({
@@ -150,7 +150,7 @@ $(document).ready(function() {
     // get binary data as a response
       var blob = this.response;
       var url = window.URL.createObjectURL(blob);
-      window.location.assign(url)
+	window.location.assign(url);
     }
   };
 
