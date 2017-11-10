@@ -40,15 +40,15 @@ $(document).ready(function() {
 	var sel1 = 0; // flag for focus on combo box
 
 	// Setting default date to financialstart and end.
-	var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
+    var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g);
 	$("#viewstock_fromdate").val(fromdatearray[2]);
 	console.log(fromdatearray[2]);
 	$("#viewstock_frommonth").val(fromdatearray[1]);
 	$("#viewstock_fromyear").val(fromdatearray[0]);
-	var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g)
-	$("#viewstock_todate").val(todatearray[2])
-	$("#viewstock_tomonth").val(todatearray[1])
-	$("#viewstock_toyear").val(todatearray[0])
+    var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g);
+    $("#viewstock_todate").val(todatearray[2]);
+    $("#viewstock_tomonth").val(todatearray[1]);
+    $("#viewstock_toyear").val(todatearray[0]);
 
 	function pad (str, max) { //to add leading zeros in date
 		str = str.toString();
@@ -56,7 +56,7 @@ $(document).ready(function() {
 			return str.length < max ? pad("0" + str, max) : str;
 		}
 		else{
-			return str
+		    return str;
 		}
 	}
 	function yearpad (str, max) { //to add leading 20 or 200 to year
@@ -68,7 +68,7 @@ $(document).ready(function() {
 			return str.length < max ? pad("20" + str, max) : str;
 		}
 		else{
-			return str
+		    return str;
 		}
 	}
 
@@ -212,7 +212,7 @@ $(document).ready(function() {
 			$("#account-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 				$("#account-blank-alert").hide();
 			});
-			$('#viewstock_productname').focus()
+		    $('#viewstock_productname').focus();
 			return false;
 		}
 		if ($("#editgoddet").val()==null && $("#godownflag").val()==1) {
@@ -220,7 +220,7 @@ $(document).ready(function() {
 			$("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 				$("#godown-blank-alert").hide();
 			});
-			$('#editgoddet').focus()
+		    $('#editgoddet').focus();
 			return false;
 		}
 		if ($("#viewstock_fromyear").val()==0 ||$("#viewstock_frommonth").val()==0 ||$("#viewstock_fromdate").val()==0 ) {
@@ -284,12 +284,12 @@ $(document).ready(function() {
 		// -----------------------end of validations---------------------
 
 		// creating dataset for retrieving report from the server.
-		var dataset = {}
+	    var dataset = {};
 		if ($("#godownflag").val()==0) {
-			dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculatefrom":$("#viewstock_fromyear").val()+"-"+$("#viewstock_frommonth").val()+"-"+$("#viewstock_fromdate").val(),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"backflag":0,"godownflag":$("#godownflag").val(),"goid":-1,"goname":""}
+		    dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculatefrom":$("#viewstock_fromyear").val()+"-"+$("#viewstock_frommonth").val()+"-"+$("#viewstock_fromdate").val(),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"backflag":0,"godownflag":$("#godownflag").val(),"goid":-1,"goname":""};
 		}
 		else if ($("#godownflag").val()==1) {
-			dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculatefrom":$("#viewstock_fromyear").val()+"-"+$("#viewstock_frommonth").val()+"-"+$("#viewstock_fromdate").val(),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"backflag":0,"godownflag":$("#godownflag").val(), "goid":$("#editgoddet option:selected").val(), "goname":$("#editgoddet option:selected").data('godownname'), "goaddr":$("#editgoddet option:selected").data('godownaddress')}
+		    dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculatefrom":$("#viewstock_fromyear").val()+"-"+$("#viewstock_frommonth").val()+"-"+$("#viewstock_fromdate").val(),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"backflag":0,"godownflag":$("#godownflag").val(), "goid":$("#editgoddet option:selected").val(), "goname":$("#editgoddet option:selected").data('godownname'), "goaddr":$("#editgoddet option:selected").data('godownaddress')};
 		}
 		$.ajax(
 			{

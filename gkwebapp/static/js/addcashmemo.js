@@ -45,85 +45,94 @@ $(document).ready(function() {
     var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();  //HTML for table displaying totals in GST Product Table.
     var vathtml = $('#invoice_product_table_vat tbody tr:first').html();  //HTML for VAT Product Table row.
 
-//Function to calculate gst tax amount
-  function calculategstaxamt(curindex) {
-//Initialising variables to zero and getting values from various input fileds.
-var rowqty = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
-var rowprice = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
-var rowdiscount = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val()).toFixed(2);
-var taxdetails = $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').data("taxdetails");
-var taxamount = 0.00;
-var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
-if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').is(":disabled") && $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').is(":disabled")) {
-    rowtaxableamount = rowprice - rowdiscount;
-}
+    //Function to calculate gst tax amount
+    function calculategstaxamt(curindex) {
+	//Initialising variables to zero and getting values from various input fileds.
+	var rowqty = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
+	var rowprice = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
+	var rowdiscount = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val()).toFixed(2);
+	var taxamount = 0.00;
+	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
+	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').is(":disabled") && $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').is(":disabled")) {
+	    rowtaxableamount = rowprice - rowdiscount;
+	}
 
-//Initialising variables for calculating total of Discount, Taxable Amount, Tax Amounts, and Total Amounts.
-var rowtotal = 0.00;
-var totalamount = 0.00;
-var totalcgst = 0.00;
-var totalsgst = 0.00;
-var totaldiscount = 0.00;
-var totaltaxable = 0.00;
-$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtaxableamount).toFixed(2));
-taxamount = (rowtaxableamount * taxdetails["taxrate"])/100; //Amount of tax to be applied is found out.
-if (taxdetails["taxname"] == "SGST") {
-  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(taxamount).toFixed(2));
-  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(10) input').val(parseFloat(taxamount).toFixed(2));
-    rowtotal = rowtaxableamount + (2*taxamount);
-    $('#invoice_product_table_total tbody tr:eq(' + curindex + ') td:eq(0) input').val(parseFloat(rowtotal).toFixed(2));
-}
-//Total of discount, taxable amount, tax amounts and total are found out
-for(var i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
-    totaldiscount = totaldiscount + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val());
-    totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(6) input').val());
-    totalcgst = totalcgst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(8) input').val());
-    totalsgst = totalsgst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(10) input').val());
-    totalamount = totalamount + parseFloat($('#invoice_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
-}
-//Total of various columns are displayed on the footer.
-$('#discounttotal_product_gst').text(parseFloat(totaldiscount).toFixed(2));
-$('#taxablevaluetotal_product_gst').text(parseFloat(totaltaxable).toFixed(2));
-$('#totalcgst_product_gst').text(parseFloat(totalcgst).toFixed(2));
-$('#totalsgst_product_gst').text(parseFloat(totalsgst).toFixed(2));
-$('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
-$('#totalinvoicevalue').text(parseFloat(totalamount).toFixed(2));
-  }
+	//Initialising variables for calculating total of Discount, Taxable Amount, Tax Amounts, and Total Amounts.
+	var rowtotal = 0.00;
+	var totalamount = 0.00;
+	var totalcgst = 0.00;
+	var totalsgst = 0.00;
+	var totalcess = 0.00;
+	var totaldiscount = 0.00;
+	var totaltaxable = 0.00;
 
-  //Function to calculate Tax Amount and Total of Discount, Taxable Amount, Tax Amounts and Total Amount.
-  //This is similar to the function above.
-  function calculatevataxamt(curindex) {
-//Initialising variables to zero and getting values from various input fileds.
-var rowqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2);
-var rowprice = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
-var rowdiscount = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
-var rowtaxrate = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val()).toFixed(2);
-var taxamount = 0.00;
-var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
-var rowtotal = 0.00;
-var totalamount = 0.00;
-var totaltax = 0.00;
-var totaldiscount = 0.00;
-var totaltaxable = 0.00;
-$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(rowtaxableamount).toFixed(2)); //Taxable amount is displayed.
-taxamount = (rowtaxableamount * rowtaxrate)/100;  //Amount of tax to be applied is found out.
- $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(taxamount).toFixed(2));
- rowtotal = rowtaxableamount + taxamount;
- $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(rowtotal).toFixed(2));
-//Total of discount, taxable amount, tax amounts and total are found out
-for(var i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
-    totaldiscount = totaldiscount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(4) input').val());
-    totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(5) input').val());
-    totaltax = totaltax + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
-    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
-}
-//Total of various columns are displayed on the footer.
-$('#discounttotal_product_vat').val(parseFloat(totaldiscount).toFixed(2));
-$('#taxablevaluetotal_product_vat').val(parseFloat(totaltaxable).toFixed(2));
-$('#totaltax').val(parseFloat(totaltax).toFixed(2));
-$('#total_product_vat').val(parseFloat(totalamount).toFixed(2));
-$("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
-  }
+	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtaxableamount).toFixed(2));
+	let sgstrate = $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val();
+        let sgstamount = (rowtaxableamount * sgstrate)/100;  //Amount of SGST to be applied is found out.
+        $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(sgstamount).toFixed(2));
+        $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(10) input').val(parseFloat(sgstamount).toFixed(2));
+
+	let cessrate = $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val();
+        let cessamount = (rowtaxableamount * cessrate)/100;  //Amount of Cess to be applied is found out.
+        $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(12) input').val(parseFloat(cessamount).toFixed(2));
+
+	rowtotal = rowtaxableamount + 2*sgstamount + cessamount; //Sum of Taxable Amount and Tax Amount is found out.
+	$('#invoice_product_table_total tbody tr:eq(' + curindex + ') td:eq(0) input').val(parseFloat(rowtotal).toFixed(2));
+	
+	//Total of discount, taxable amount, tax amounts and total are found out
+	for(var i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
+	    totaldiscount = totaldiscount + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val());
+	    totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(6) input').val());
+	    totalcgst = totalcgst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(8) input').val());
+	    totalsgst = totalsgst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(10) input').val());
+	    totalcess = totalcess + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(12) input').val());
+	    totalamount = totalamount + parseFloat($('#invoice_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
+	}
+
+	//Total of various columns are displayed on the footer.
+	$('#discounttotal_product_gst').text(parseFloat(totaldiscount).toFixed(2));
+	$('#taxablevaluetotal_product_gst').text(parseFloat(totaltaxable).toFixed(2));
+	$('#totalcgst_product_gst').text(parseFloat(totalcgst).toFixed(2));
+	$('#totalsgst_product_gst').text(parseFloat(totalsgst).toFixed(2));
+	$('#totalcess_product_gst').text(parseFloat(totalcess).toFixed(2));
+	$('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
+	$('#totalinvoicevalue').text(parseFloat(totalamount).toFixed(2));
+    }
+
+    //Function to calculate Tax Amount and Total of Discount, Taxable Amount, Tax Amounts and Total Amount.
+    //This is similar to the function above.
+    function calculatevataxamt(curindex) {
+	//Initialising variables to zero and getting values from various input fileds.
+	var rowqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2);
+	var rowprice = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
+	var rowdiscount = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
+	var rowtaxrate = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val()).toFixed(2);
+	var taxamount = 0.00;
+	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
+	var rowtotal = 0.00;
+	var totalamount = 0.00;
+	var totaltax = 0.00;
+	var totaldiscount = 0.00;
+	var totaltaxable = 0.00;
+	$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(rowtaxableamount).toFixed(2)); //Taxable amount is displayed.
+	taxamount = (rowtaxableamount * rowtaxrate)/100;  //Amount of tax to be applied is found out.
+	$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(taxamount).toFixed(2));
+	rowtotal = rowtaxableamount + taxamount;
+	$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(rowtotal).toFixed(2));
+	//Total of discount, taxable amount, tax amounts and total are found out
+	for(var i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
+	    totaldiscount = totaldiscount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(4) input').val());
+	    totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(5) input').val());
+	    totaltax = totaltax + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
+	    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
+	}
+	//Total of various columns are displayed on the footer.
+	$('#discounttotal_product_vat').val(parseFloat(totaldiscount).toFixed(2));
+	$('#taxablevaluetotal_product_vat').val(parseFloat(totaltaxable).toFixed(2));
+	$('#totaltax').val(parseFloat(totaltax).toFixed(2));
+	$('#total_product_vat').val(parseFloat(totalamount).toFixed(2));
+	$("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
+    }
 
     $(".invstate").show();
     $(".fixed-table").removeClass('fixed-tablepurchase');
@@ -149,7 +158,7 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
         if (str.length == 1) {
             return str.length < max ? pad("0" + str, max) : str;
         } else {
-            return str
+            return str;
         }
     }
 
@@ -161,7 +170,7 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
         } else if (str.length == 2) {
             return str.length < max ? pad("20" + str, max) : str;
         } else {
-            return str
+            return str;
         }
     }
     $("#invoice_date").blur(function(event) {
@@ -172,6 +181,7 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
     });
 
     $("#invoice_year").blur(function(event) {
+	$(this).val(yearpad($(this).val(), 4));
       invoicedatestring = $("#invoice_date").val() + $("#invoice_month").val() + $("#invoice_year").val();
       invoicedate = Date.parseExact(invoicedatestring, "ddMMyyyy");
       if (invoicedatestring.length == 0) {
@@ -182,7 +192,7 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
           $("#invoice_date").focus().select();
           return false;
       }
-      else if (!invoicedate && invoicedatestring.length == 8) {
+	else if (!invoicedate && invoicedatestring.length == 8) {
           $("#date-alert").alert();
           $("#date-alert").fadeTo(2250, 500).slideUp(500, function() {
         $("#date-alert").hide();
@@ -209,12 +219,12 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
           else {
         $("#taxapplicabletext").text("VAT");
         $("#taxapplicable").val("22");
-        $("#gstproducttable").hide();
+              $("#gstproducttable").hide();
+	      $(".gstinfield").hide();
               $("#invoice_product_table_vat").show();
 	      $("#vathelp").show();
           }
       }
-      $(this).val(yearpad($(this).val(), 4));
     });
 
     //Key Event for Cash Memo Date Field.
@@ -285,6 +295,11 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
         //being a dynamic generated field the numeric property is added on their focus
         $(".numtype").numeric();
     });
+    $(document).off('focus', '#accountno').on('focus', '#accountno', function(event) {
+        event.preventDefault();
+        /* Act on the event */
+        $("#accountno").numeric({ negative: false });
+    });
     $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
         event.preventDefault();
         /* Act on the event */
@@ -302,7 +317,32 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
         event.preventDefault();
         /* Act on the event */
         $(".product_name_vat").change();
+	$("#orggstin").text("");
+	var gstinstateid=$("#invoice_state option:selected").attr("stateid");
+	 $.ajax({
+                    url: '/existingorg?type=getgstin',
+                    type: 'POST',
+                    dataType: 'json',
+                    async: false,
+	            data : {"gstinstate" : gstinstateid},
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                    }
+         })
+	.done(function(resp) {
+            if (resp["gkstatus"] == 0) {
+		console.log("success");
+		$("#orggstin").text(resp["gkresult"]);
+         	  }
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
     });
+    $('#invoice_state').change();
 
 
     // if the selected product is changed the tax rate is again retrieved from the database, again using the combination of product code and state
@@ -331,7 +371,12 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
                 })
                 .done(function(resp) {
                   if (resp["gkstatus"] == 0) {
-         	   $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['taxrate']).toFixed(2));
+         	      if ('VAT' in resp['tax']) {
+                          $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['tax']['VAT']).toFixed(2));
+                      }
+                      else if ('CVAT' in resp['tax']) {
+                          $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['tax']['CVAT']).toFixed(2));
+                      }
                   }
          	  else if (resp["gkstatus"] == 1) {
          	      $("#notax-alert").alert();
@@ -434,15 +479,19 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
         }
     });
 
-          $(document).off('change', '.product_name_gst').on('change', '.product_name_gst', function(event) {
-            event.preventDefault();
-            /* Act on the event */
-            var productcode = $(this).find('option:selected').val();
-            var curindex = $(this).closest('tbody tr').index();
-            var sourcestate=$("#invoice_state option:selected").val();
+    $(document).off('change', '.product_name_gst').on('change', '.product_name_gst', function(event) {
+	event.preventDefault();
+        /* Act on the event */
+	var productcode = $(this).find('option:selected').val();
+	var curindex = $(this).closest('tbody tr').index();
+	var sourcestate=$("#invoice_state option:selected").val();
+	var taxflag=$("#taxapplicable").val();
 
-            var taxflag=$("#taxapplicable").val();
-            if (productcode != "") {
+	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(0).toFixed(2));
+	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(0).toFixed(2));
+	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(0).toFixed(2));
+        
+        if (productcode != "") {
             $.ajax({
                     url: '/invoice?action=getappliedtax',
                     type: 'POST',
@@ -455,14 +504,15 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
                   })
                    .done(function(resp) {
                      if (resp["gkstatus"] == 0) {
-        		 $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').data("taxdetails", {taxname: resp["taxname"], taxrate:resp["taxrate"]});
-                       if(resp['taxname']=='SGST'){
-                          $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(resp['taxrate']).toFixed(2));
-                          $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(resp['taxrate']).toFixed(2));
-                       }
-
-
-                       //$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').prop("disabled", false);
+                         //Loads SGST rate.
+                         if('SGST' in resp['tax']){
+                             $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(resp['tax']['SGST']).toFixed(2));
+                             $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(resp['tax']['SGST']).toFixed(2));
+                             //Loads CESS rate if avaliable.
+                             if ('CESS' in resp['tax']) {
+                                 $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(resp['tax']['CESS']).toFixed(2));
+                             }
+                         }
                      }
                    })
                    .fail(function() {
@@ -472,7 +522,7 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
                      console.log("complete");
                    });
             $.ajax({
-              url: '/invoice?action=getproduct',
+		url: '/invoice?action=getproduct',
               type: 'POST',
               dataType: 'json',
               async: false,
@@ -553,7 +603,7 @@ $("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
   	event.preventDefault();
         $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').focus().select();
       }
-      else if (event.which == 27) {
+	else if (event.which == 27) {
 	  $("#accountno").focus().select();
       }
     });
@@ -891,7 +941,7 @@ else if (event.which == 38) {
 if ($(this).is("select")) {
     if ($(this).val() == "Road") {
   f[previndex].focus();
-  f[previndex].select();
+	f[previndex].select();
     }
 }
 else {
@@ -974,6 +1024,7 @@ $(document).off("keyup").on("keyup", function(event) {
         }
 
         var tax = {};
+	var cess = {};
         var contents = {};
         var stock = {};
         var freeqty = {};
@@ -1011,7 +1062,7 @@ $(document).off("keyup").on("keyup", function(event) {
             var ppu = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val();
             obj[ppu] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val();
             //tax is stored as a dict with key as productcode and value as the tax rate
-            tax[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val();
+            tax[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(6) input").val();
             // nested dictionary with key as product code and value is another dict with key as priceperunit and value is the product quantity
             contents[productcode] = obj;
             items[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val();
@@ -1060,7 +1111,9 @@ $(document).off("keyup").on("keyup", function(event) {
              contents[productcode] = obj;
           items[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
            freeqty[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val();
-           discount[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();
+               discount[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();
+	       tax[productcode] = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(7) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(9) input").val());
+	       cess[productcode] = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(11) input").val());
      	}
      	    invoicetotal = $('#total_product_gst').text();
         stock["items"] = items;
@@ -1073,12 +1126,14 @@ $(document).off("keyup").on("keyup", function(event) {
         form_data.append("invoicedate", $("#invoice_year").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_date").val());
         form_data.append("contents", JSON.stringify(contents));
         form_data.append("tax", JSON.stringify(tax));
+	form_data.append("cess", JSON.stringify(cess));
         form_data.append("stock", JSON.stringify(stock));
         form_data.append("invoicetotal", invoicetotal);
         form_data.append("taxstate", $("#invoice_state option:selected").val());
         form_data.append("sourcestate", $("#invoice_state option:selected").val());
         form_data.append("taxflag",$("#taxapplicable").val() );
-        form_data.append("freeqty", JSON.stringify(freeqty));
+	form_data.append("orgstategstin",$("#orggstin").text() );
+	form_data.append("freeqty", JSON.stringify(freeqty));
         form_data.append("discount", JSON.stringify(discount));
         form_data.append("bankdetails", JSON.stringify(bankdetails));
         $('.modal-backdrop').remove();
@@ -1472,14 +1527,14 @@ $(document).off("keyup").on("keyup", function(event) {
     event.preventDefault();
       /* Act on the event */
 
-      var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
+	var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
     if ($(this).val() == "") {
       $(this).val(0);
     }
       calculategstaxamt(curindex);
   });
-  $(document).off("keydown", ".invoice_product_quantity_gst").on("keydown", ".invoice_product_quantity_gst", function(event) {
-    var curindex = $(this).closest('tr').index();
+    $(document).off("keydown", ".invoice_product_quantity_gst").on("keydown", ".invoice_product_quantity_gst", function(event) {
+      var curindex = $(this).closest('tr').index();
     var nextindex = curindex + 1;
     var previndex = curindex - 1;
 

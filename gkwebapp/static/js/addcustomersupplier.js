@@ -1,6 +1,6 @@
 /*
   Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-This file is part of GNUKhata:A modular,robust and Free Accounting System.
+  This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
 GNUKhata is Free Software; you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -23,13 +23,14 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Prajkta Patkar"<prajakta@dff.org.in>
+"Reshma Bhatawadekar<reshma@dff.org.in>"
 */
 
 // This script is for the addcustomer/supplier.jinja2
 
 $(document).ready(function() {
     //All the navigation events where pressing enter shifts focus to the next element and pressing the up arrow key focuses the previous element
-
+  var gstinstring = "";
   $("#add_cussup").focus().select();
   $("#add_cussup").keydown(function(event) {
       if (event.which==13) {
@@ -37,7 +38,7 @@ $(document).ready(function() {
 	if ($.trim($("#add_cussup").val())=="") {
             $("#role-blank-alert").alert();
             $("#role-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-              $("#role-blank-alert").hide();
+		$("#role-blank-alert").hide();
             });
             $("#add_cussup").focus();
             return false;
@@ -121,28 +122,74 @@ $("#add_state").keydown(function(event) {
     event.preventDefault();
   }
   else if (event.which==13) {
-    event.preventDefault();
-    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
+      event.preventDefault();
+      if ($.trim($("#add_cussup_pan").val()) !="") {
+	 $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:last').focus();
+      }
+      else {
+	   $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').focus();
+      }
   }
   else if (event.which==27) {
     event.preventDefault();
     $("#cussup_save").focus();
   }
 });
-    $(document).off("focusout",".gstin").on("focusout",".gstin",function(event) {
+    //Change event on GSTIN State
+    $(document).off('change', '.gstinstate').on('change', '.gstinstate', function(event) {
+	event.preventDefault();
 	var curindex = $(this).closest('tr').index();
-	var gstin = $(this).val();
-	var gstnint = parseInt(gstin[0] + gstin[1]);
-	if(!($.isNumeric(gstnint)) || gstnint > 37 || gstnint < 0 || gstin.length !=15){
-	    $("#gstin-improper-alert").alert();
-            $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#gstin-improper-alert").hide();
-		$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
-            });
-	    return false;
-        }
+	var cusstatecode =  $('#gstintable tbody tr:eq('+curindex+') td:eq(0) select option:selected').attr("stateid");
+	if (cusstatecode.length == 1){
+	    cusstatecode = "0" + cusstatecode; 
+	}
+	$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val(cusstatecode); //for state code
+	if ($('#add_cussup_pan').val() != ''){
+	    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val($('#add_cussup_pan').val()).prop("disabled",true); //for pan
+	}
+	else {
+	    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').prop("disabled",false);
+	}
+	
+    });
+
+    //Keydown event on gstin's panno 
+    $(document).off("keydown", ".panno").on("keydown", ".panno", function(event) {
+	var curindex = $(this).closest('tr').index();
+	var previndex = curindex-1;
+	if (event.which == 13) {
+	    event.preventDefault();
+	    if($(this).val() != '') {
+		$(this).next('input').focus().select();
+	
+	    }
+	    else {
+		$("#panno-blank-alert").alert();
+                $("#panno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#panno-blank-alert").hide();
+  		$(this).focus().select();
+		});
+		return false;
+	    }
+	}
     });
     
+    $(document).off("change",".gstin").on("change",".gstin",function(event) {
+	var curindex = $(this).closest('tr').index();
+	gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val();
+	if(gstinstring != ''){
+  	    if(gstinstring.length !=15){
+  		$("#gstin-improper-alert").alert();
+		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#gstin-improper-alert").hide();
+  		    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').focus().select();
+		});
+  		return false;
+            }
+  }
+
+    });
+
 $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
 {
     var curindex1 = $(this).closest('tr').index();
@@ -151,30 +198,25 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
   var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
   var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
   if (event.which==13) {
-    event.preventDefault();
+      event.preventDefault();
     if (curindex1 != ($("#gstintable tbody tr").length-1)) {
       $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
     }
-    else {
-      if (numberofstates > 0) {
-        if ($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="") {
-            $("#state-blank-alert").alert();
-          $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#state-blank-alert").hide();
-          });
-          $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select').focus();
-          return false;
-        }
-        if ($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val()=="") {
-          $("#gstin-blank-alert").alert();
-          $("#gstin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#gstin-blank-alert").hide();
-          });
-          $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').focus();
-          return false;
-        }
+      else {
+	  gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+	if(gstinstring != ''){
+  	    if(gstinstring.length !=15){
+  		$("#gstin-improper-alert").alert();
+		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#gstin-improper-alert").hide();
+  		    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').focus().select();
+		});
+  		return false;
+            }
+  }
+	  if (numberofstates > 0) {
         $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-        if (curindex1 == 0) {
+              if (curindex1 == 0) {
           $("#gstintable tbody tr:last td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
         }
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
@@ -201,7 +243,7 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
   }
   else if (event.ctrlKey && event.which==188) {
     event.preventDefault();
-    $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select').focus();
+    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').focus();
   }
   else if (event.which==190 && event.ctrlKey) {
     event.preventDefault();
@@ -263,11 +305,22 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
   $("#add_cussup_pan").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
-	if($("#vatorgstflag").val() == '22' || $("#vatorgstflag").val() == '29'){
-	    $("#add_cussup_tan").focus().select();
+	var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; 
+	var txtpan = $(this).val();
+	if ((txtpan.length != 10 || !txtpan.match(regExp)) && $.trim($("#add_cussup_pan").val())!="") {
+	    $("#pan-incorrect-alert").alert();
+	    $("#pan-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#pan-incorrect-alert").hide();
+	    });
+	    $("#add_cussup_pan").focus();
 	}
 	else {
-	    $(".gstinstate:first").focus();
+	    if($("#vatorgstflag").val() == '22' || $("#vatorgstflag").val() == '29'){
+		$("#add_cussup_tan").focus();
+	    }
+	    else {
+		$(".gstinstate:first").focus();
+	    }
 	}
     }
     if (event.which==38) {
@@ -275,8 +328,6 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       $("#add_cussup_fax").focus().select();
     }
   });
-
-
 
     $("#add_cussup_tan").keydown(function(event) {
     if (event.which==13) {
@@ -304,9 +355,18 @@ else{
     });
   $("#add_cussup_reset").click(function(event) {
       // click the customer/supplier create tab to reload the current page in tab creating a reset effect
-    $("#customersupplier_create").click();
+      $("#customersupplier_create").click();
   });
-  $("#cussup_save").click(function(event) {
+
+    $(document).one("keyup", function(event) {
+        if(event.which == 45) {
+            $("#cussup_save").click();
+            event.preventDefault();
+            return false;
+        }
+    });
+    
+    $("#cussup_save").click(function(event) {
       //save event for saving the customer/supplier
       event.preventDefault();
       var allow = 1;
@@ -349,35 +409,6 @@ if($("#vatorgstflag").val() == '22'){
     }
 }
 
-if($("#vatorgstflag").val() == '29'){
-  console.log("Abdul Kalam: " + $("#add_cussup_tin").val());
-  if ($.trim($("#add_cussup_tan").val())=="") {
-    for (var i = 0; i < $('#gstintable tbody tr').length; i++) {
-      if (($('#gstintable tbody tr:eq('+i+') td:eq(1) input').val())=="" ) {
-           $("#both-blank-alert").alert();
-           $("#both-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-             $("#both-blank-alert").hide();
-           });
-           $("#add_cussup_tin").focus();
-           return false;
-         }
-    }
-  }
-}
-
-if($("#vatorgstflag").val() == '7'){
-  for (var i = 0; i < $('#gstintable tbody tr').length; i++) {
-    if (($('#gstintable tbody tr:eq('+i+') td:eq(1) input').val())=="" ) {
-         $("#gstin-blank-alert").alert();
-         $("#gstin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-           $("#gstin-blank-alert").hide();
-         });
-         $("#add_cussup_tin").focus();
-         return false;
-       }
-  }
-}
-
     if ($.trim($("#add_state").val())=="") {
       $("#state-blank-alert").alert();
       $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -395,24 +426,24 @@ if($("#vatorgstflag").val() == '7'){
       $("#add_cussup_address").focus();
       return false;
     }
-    var gobj = {}; // Creating a dictionary for storing godown wise opening stock
+	
+    var gobj = {}; // Creating a dictionary for storing statecode with gstin.
       $("#gstintable tbody tr").each(function(){
 	  var curindex1 = $(this).index();
     if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
-	if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val())!="") {
-	    var gstin = $.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val());
-            var gstnint = parseInt(gstin[0] + gstin[1]);
-            if(!($.isNumeric(gstnint)) || gstnint > 37 || gstnint < 0 || gstin.length !=15){
-		allow = 0;
-                $("#gstin-improper-alert").alert();
-                $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+	gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+	if(gstinstring != ''){
+  	    if(gstinstring.length !=15){
+  		$("#gstin-improper-alert").alert();
+		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
                     $("#gstin-improper-alert").hide();
-                    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').focus().select();
-                });
-                return false;
-            }
-            gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val();
-      }
+  		    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').focus().select();
+		});
+  		return false;
+          }
+  }
+
+        gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = gstinstring;
     }
       });
       var custtan  = "";

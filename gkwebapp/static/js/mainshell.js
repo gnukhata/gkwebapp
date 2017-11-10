@@ -515,8 +515,13 @@ var userrole1;
        $("#orgpref").remove();
      }
      if(resp["gkresult"]["userrole"]==2) {
-       $("#showviewlog").remove();
-       $("#orgpref").remove();
+	 $("#showviewlog").remove();
+	 $("#orgpref").remove();
+	 $(".mastermenu").remove();
+	 $(".inventorymenu").remove();
+	 $(".administrationmenu").remove();
+	 $(".intauditor").remove();
+	 $("#fevoucher").text("Find Voucher");
      }
      if (resp["gkresult"]["booksclosedflag"]==1) {
        $(".closebooks").remove();
@@ -870,7 +875,6 @@ var userrole1;
       },
       success: function(resp)
       {
-        console.log(resp);
         $('#info').html(resp);
       }
     });

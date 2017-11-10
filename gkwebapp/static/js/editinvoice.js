@@ -30,7 +30,7 @@ Contributors:
 $(document).ready(function() {
     $('.modal-backdrop').remove();
     $('.invoicedate').autotab('number');
-    $("#invselect").focus();
+    $("select:first").focus();
     $("#invoice_editprint").hide();
     var dcno = '';
     var pqty = 0.00;

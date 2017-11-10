@@ -269,8 +269,8 @@ def addmultiaccount(request):
 		gkdata["openingbal"]=acc["openbal"]
 		result = requests.post("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
 		if result.json()["gkstatus"] == 0:
-			gkdata = {"activity":acc["accountname"] + " account created"}
-			resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
+			gkdata2 = {"activity":acc["accountname"] + " account created"}
+			resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata2),headers=header)
 	return {"gkstatus":result.json()["gkstatus"]}
 
 

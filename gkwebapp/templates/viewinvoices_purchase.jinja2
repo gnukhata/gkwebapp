@@ -6,9 +6,9 @@
       <div class="container-fluid row">
 	<div class="row">
 	  <div class="col-sm-6 form-group">
-	    <label for="invselect" id="selectinvoice">{% trans %}List of Invoices{% endtrans %} :</label>
+	    <label for="invselect" id="selectinvoice">{% trans %}List of Purchase Invoices{% endtrans %} :</label>
             <select class = "form-control input-sm wide" name = "productcode" id="invselect" >
-              <option value="" disabled selected hidden>{% trans %}Select Product / Service{% endtrans %}</option>
+              <option value="" disabled selected hidden>{% trans %}Select Invoice{% endtrans %}</option>
               {% for invoice in gkresult %}
 		<option value="{{invoice['invid']}}">{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
               {% endfor %}

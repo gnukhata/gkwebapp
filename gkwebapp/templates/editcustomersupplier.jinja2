@@ -69,6 +69,18 @@
 
     </div>
 
+    <div class="alert alert-danger" id="pan-incorrect-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Please enter proper PAN!{% endtrans %}
+
+    </div>
+
+    <div class="alert alert-danger" id="panno-blank-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Please enter proper GSTIN!{% endtrans %}
+
+    </div>
+
     <div class="alert alert-danger" id="both-blank-alert"  aria-live="rude" role="alert" hidden>
 
       {% trans %}Please enter TIN / GSTIN!{% endtrans %}
@@ -90,7 +102,7 @@
         </div>
         <div class="container-fluid row">
           <div class="form-group col-md-6">
-            <label for="edit_cussup_list">{% trans %}List of Customers & Suppliers :{% endtrans %}</label><label for="edit_cussup_list" style="color:red;font-size: 120%;">*</label>
+            <label for="edit_cussup_list">{% trans %}List of Customers & Suppliers :{% endtrans %}</label>
             <select class="form-control input-sm" id="edit_cussup_list" >
               <option value="" disabled hidden selected>Select Customer/Supplier</option>
               <optgroup label="Customers" id="custgroup">
@@ -125,7 +137,7 @@
               <input class="form-control input-sm"type="email" id="edit_cussup_email">
             </div>
             <div class="form-group hidden-load col-sm-6" hidden>
-              <label for="edit_cussup_phone">{% trans %}Phone No:{% endtrans %}</label>
+              <label for="edit_cussup_phone">{% trans %}Contact Number:{% endtrans %}</label>
               <input class="form-control input-sm" type="text" id="edit_cussup_phone"></input>
             </div>
 	  </div>
@@ -157,17 +169,17 @@
             </div>
             <div class="form-group hidden-load col-sm-6" hidden>
               <label for="edit_cussup_pan">{% trans %}PAN:{% endtrans %}</label>
-              <input class="form-control input-sm" type="text" id="edit_cussup_pan"></input>
+              <input class="form-control input-sm" type="text" id="edit_cussup_pan" maxlength="10"></input>
             </div>
 	  </div>
 	  {% if vatorgstflag != '7' %}
           <div class="form-group hidden-load " hidden>
-            <label for="edit_cussup_tan">{% trans %}TIN:{% endtrans %}</label><label for="edit_cussup_tan" style="color:red;font-size: 120%;">*</label>
+            <label for="edit_cussup_tan">{% trans %}TIN:{% endtrans %}</label>
             <input class="form-control input-sm" type="text" id="edit_cussup_tan"></input>
           </div>
 	  {% endif %}
 	  <div class="form-group hidden-load" hidden>
-            <label for="edit_cussup_gstin">{% trans %}GSTIN:{% endtrans %}</label><label for="edit_cussup_gstin" style="color:red;font-size: 120%;">*</label>
+            <label for="edit_cussup_gstin">{% trans %}GSTIN:{% endtrans %}</label>
             <table id="gstintable" class="table table-condensed table-bordered fixed-table">
               <thead class="bg-primary input-sm">
                 <tr>
@@ -189,7 +201,14 @@
                     </select>
                   </td>
                   <td class="col-xs-4">
-                    <input class="form-control input-sm gstin" maxlength="15">
+		    <div class="form-inline nopadding">
+		      <div class="form-group nopadding">
+			<!-- <input class="form-control input-sm gstin" maxlength="15">-->
+			<input type="text" class="form-control input-sm nopadding statecode" size="2" maxlength="2" disabled >
+			<input type="text" class="form-control input-sm nopadding panno" size="10" maxlength="10">
+			<input type="text" class="form-control input-sm nopadding gstin" size="3" maxlength="3">
+		      </div>
+		    </div>
                   </td>
                   <td class="col-xs-1">
                   </td>
@@ -205,7 +224,7 @@
               <input class="form-control input-sm"type="email" id="edit_cussup_email">
             </div>
             <div class="form-group hidden-load " hidden>
-              <label for="edit_cussup_phone">{% trans %}Phone No:{% endtrans %}</label>
+              <label for="edit_cussup_phone">{% trans %}Contact Number:{% endtrans %}</label>
               <input class="form-control input-sm" type="text" id="edit_cussup_phone"></input>
             </div>
             <div class="form-group hidden-load" hidden>
@@ -264,14 +283,14 @@
           </div>
           <div class="form-group hidden-load " hidden>
             <label for="edit_cussup_pan">{% trans %}PAN:{% endtrans %}</label>
-            <input class="form-control input-sm" type="text" id="edit_cussup_pan"></input>
+            <input class="form-control input-sm" type="text" id="edit_cussup_pan" maxlength="10"></input>
           </div>
           <div class="form-group hidden-load " hidden>
             <label for="edit_cussup_tan">{% trans %}TIN:{% endtrans %}</label>
             <input class="form-control input-sm" type="text" id="edit_cussup_tan"></input>
           </div>
 
-	    
+
 	    {% endif  %}
 
         </div>

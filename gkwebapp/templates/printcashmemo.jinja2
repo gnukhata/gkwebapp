@@ -83,6 +83,12 @@
         {% if org["orgwebsite"]!='' %}
           Website : {{org["orgwebsite"]}}
         {% endif %}
+	{% if gkresult["taxflag"] == 7 %}
+	  <div class="form-group form-inline col-sm-12 nopadding">
+	    <label for="orgstategstin">{% trans %}GSTIN{% endtrans %} : </label>
+	    {% if gkresult["orgstategstin"] %}{{ gkresult["orgstategstin"] }}{% endif %}
+	  </div>
+	{% endif %}
       </div>
 
     </div>
@@ -202,7 +208,7 @@
 	      <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 	      <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
 	      {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}CGST{% endtrans %}</th>{% endif %}
-	      {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}SGST{% endtrans %}</th>{% endif %}
+	      {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}SGST/UTGST{% endtrans %}</th>{% endif %}
 	      <th rowspan="2" class="text-center">Total</th>
 	    </tr>
 
@@ -211,6 +217,8 @@
 	      {% if gkresult["taxname"]=='SGST' %}<th class="text-center">{% trans %}Amount{% endtrans %}</th>{% endif %}
 	      {% if gkresult["taxname"]=='SGST' %}<th class="text-center" style="white-space: nowrap">{% trans %}Rate{% endtrans %} %</th>{% endif %}
 	      {% if gkresult["taxname"]=='SGST' %}<th class="text-center">{% trans %}Amount{% endtrans %}</th>{% endif %}
+	      <th class="text-center">{% trans %}Rate{% endtrans %} %</th>
+              <th class="text-center">{% trans %}Amount{% endtrans %}</th>
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -244,7 +252,8 @@
 
 		{% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="taxcell text-right"><small>{{ gkresult["invcontents"][product]["taxrate"] }}</td></small>{% endif %}
 		{% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="taxcell text-right"><small>{{ gkresult["invcontents"][product]["taxamount"] }}</small></td>{% endif %}
-
+		<td class="text-right"><small>{{ gkresult["invcontents"][product]["cessrate"] }}</small></td>
+                <td class="text-right"><small>{{ gkresult["invcontents"][product]["cess"] }}</small></td>
 		<td class="text-right">{{ gkresult["invcontents"][product]["totalAmount"] }}</td>
 	      </tr>
 	    {% endfor %}
@@ -256,6 +265,7 @@
 	      <td class="text-right smwrap">{{ gkresult["totaltaxablevalue"] }}</td>
 	      {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
 	      {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
+	      <td colspan="2" class="text-right">{{ gkresult["totalcessamt"] }}</td>
 	      <td class="text-right">
 		{{ gkresult["invoicetotal"] }}
 	      </td>

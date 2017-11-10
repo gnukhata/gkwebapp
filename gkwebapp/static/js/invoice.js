@@ -82,12 +82,32 @@ Contributors:
     }
   );
   });
-  $("#invoice_view").click(function() {// calls view invoice page.
+  $("#invoice_view_sale").click(function() {// calls view invoice page.
     $.ajax(
     {
 
     type: "POST",
-    url: "/invoice?action=showedit",
+    url: "/invoice?action=showsale",
+    global: false,
+    async: false,
+    datatype: "text/html",
+    beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+    success: function(resp)
+    {
+      $("#invoice_div").html(resp);
+    }
+    }
+  );
+  });
+  $("#invoice_view_purchase").click(function() {// calls view invoice page.
+    $.ajax(
+    {
+
+    type: "POST",
+    url: "/invoice?action=showpurchase",
     global: false,
     async: false,
     datatype: "text/html",

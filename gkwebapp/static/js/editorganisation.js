@@ -5,7 +5,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -28,8 +28,29 @@ Contributors:
 $(document).ready(function(){
   $("#msspinmodal").modal("hide");
   $(".regdate").autotab('number');
-  $(".fcradate").autotab('number');
+    $(".fcradate").autotab('number');
 
+    var gstinstring = ""; // for cocatination of GSTIN.
+    	for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
+	    var state = $("#gstintable tbody tr:eq("+i+") td:eq(0) select").attr("stateid");
+	    $("#gstintable tbody tr:eq("+i+") td:eq(0) select option[stateid="+state+"]").prop("selected", true);
+	
+	    var gstinstr =$('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(0)').val();
+	    $('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(0)').val(gstinstr.substring(0, 2));
+	    $('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(1)').val(gstinstr.substring(2, 12));
+	    $('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(2)').val(gstinstr.substring(12, 15));
+	    
+		$("#gstintable tbody tr:eq(" + i +") td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+	    
+	}
+  if(sessionStorage.vatorgstflag == '22' ){
+      $(".gstinfield").hide();
+      $(".tinfield").show();
+    } else {
+      $(".gstinfield").show();
+    }
+    if($("#state").val() != "" ){
+	$("#orgstate").val($("#state").val());}
   $(".regdate").numeric({negative: false});
   $(".fcradate").numeric({negative: false});
 
@@ -42,7 +63,401 @@ $(document).ready(function(){
     $("#orgaddr").focus().select();
   }
 
-  $('input:visible, textarea').keydown(function(event){
+    // Add GSTIN modal
+    $('#addgstinmodal').on('shown.bs.modal', function() {
+	$("#gstintable tbody tr:first td:eq(0) select").focus();
+    });
+
+
+$(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(event)
+{
+  var curindex = $(this).closest('tr').index();
+  var nextindex = curindex+1;
+  var previndex = curindex-1;
+  if (event.which==13) {
+      event.preventDefault();
+      if ($.trim($("#orgpan").val()) !="") {
+	 $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:last').focus();
+      }
+      else {
+	   $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').focus();
+      }
+  }
+  else if (event.which==27) {
+    event.preventDefault();
+    $("#gstin_done").focus();
+  }
+});
+
+//Change event on GSTIN State
+    $(document).off('change', '.gstinstate').on('change', '.gstinstate', function(event) {
+	event.preventDefault();
+	var curindex = $(this).closest('tr').index();
+	var cusstatecode =  $('#gstintable tbody tr:eq('+curindex+') td:eq(0) select option:selected').attr("stateid");
+	if (cusstatecode.length == 1){
+	    cusstatecode = "0" + cusstatecode; 
+	}
+	$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val(cusstatecode); //for state code
+	if ($('#orgpan').val() != ''){
+	    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val($('#orgpan').val()).prop("disabled",true); //for pan
+	}
+	else {
+	    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').prop("disabled",false);
+	}
+	
+    });
+
+    //Keydown event on gstin's panno 
+    $(document).off("keydown", ".panno").on("keydown", ".panno", function(event) {
+	var curindex = $(this).closest('tr').index();
+	var previndex = curindex-1;
+	if (event.which == 13) {
+	    event.preventDefault();
+	    if($(this).val() != '') {
+		$(this).next('input').focus().select();
+	
+	    }
+	    else {
+		$("#panno-blank-alert").alert();
+                $("#panno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#panno-blank-alert").hide();
+  		$(this).focus().select();
+		});
+		return false;
+	    }
+	}
+    });
+
+    $(document).off("change",".gstin").on("change",".gstin",function(event) {
+	var curindex = $(this).closest('tr').index();
+	gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val();
+	if(gstinstring != ''){
+  	    if(gstinstring.length !=15){
+  		$("#gstin-improper-alert").alert();
+		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#gstin-improper-alert").hide();
+  		    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').focus().select();
+		});
+  		return false;
+            }
+  }
+
+    });
+
+
+    $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
+{
+    var curindex1 = $(this).closest('tr').index();
+  var nextindex1 = curindex1+1;
+  var previndex1 = curindex1-1;
+  var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
+  var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
+  if (event.which==13) {
+      event.preventDefault();
+    if (curindex1 != ($("#gstintable tbody tr").length-1)) {
+      $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+    }
+      else {
+	  gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+	if(gstinstring != ''){
+  	    if(gstinstring.length !=15){
+  		$("#gstin-improper-alert").alert();
+		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#gstin-improper-alert").hide();
+  		    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').focus().select();
+		});
+  		return false;
+            }
+  }
+	  if (numberofstates > 0) {
+        $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+        $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
+	$('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[value=""]').prop('selected', true);
+        $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+      }
+      else {
+        $("#gstin_done").focus();
+      }
+    }
+  }
+  else if(event.which==190 && event.shiftKey)
+  {
+    event.preventDefault();
+    $('#gstintable tbody tr:eq('+nextindex1+') td:eq(1) input').focus().select();
+  }
+  else if (event.which==188 && event.shiftKey)
+  {
+    if(previndex1>-1)
+    {
+      event.preventDefault();
+      $('#gstintable tbody tr:eq('+previndex1+') td:eq(1) input').focus().select();
+    }
+  }
+  else if (event.ctrlKey && event.which==188) {
+    event.preventDefault();
+    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').focus();
+  }
+  else if (event.which==190 && event.ctrlKey) {
+    event.preventDefault();
+    $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
+  }
+  else if (event.which==27) {
+    event.preventDefault();
+    $("#gstin_done").focus();
+  }
+});
+
+    $(document).off("click",".state_del").on("click", ".state_del", function() {
+  $(this).closest('tr').fadeOut(200, function(){
+    $(this).closest('tr').remove();	 //closest method gives the closest element specified
+    $('#gstintable tbody tr:last td:eq(0) select').focus().select();
+  });
+  $('#gstintable tbody tr:last td:eq(0) select').select();
+});
+    //Keydown event start here
+    $("#orgaddr").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgcountry").focus().select();
+    }
+    });
+
+     $("#orgregno").keydown(function(event) {
+     if (event.which==13) {
+	 event.preventDefault();
+	 $("#orgfcrano").focus().select();
+     }
+     });
+
+    $("#orgfcrano").keydown(function(event) {
+     if (event.which==13) {
+	 event.preventDefault();
+	 $("#orgaddr").focus().select();
+     }
+     if (event.which==38) {
+	 event.preventDefault();
+	 $("#orgregno").focus().select();
+     }
+    });
+    
+    $("#orgcountry").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgstate").focus().select();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#orgaddr").focus().select();
+    }
+    });
+    
+    $("#orgstate").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgcity").focus().select();
+    }
+     if (event.which==38 && $("#add_state option:selected").index()==0)  {
+          event.preventDefault();
+          $("#orgcountry").focus().select();
+        }
+  });
+
+    $("#orgcity").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgstax").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#orgstate").focus().select();
+        }
+    });
+
+    $("#orgstax").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgpan").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#orgcity").focus().select();
+        }
+    });
+
+    $("#regday").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#regmonth").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#orgpan").focus().select();
+        }
+    });
+
+    $("#regmonth").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#regyear").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#regday").focus().select();
+        }
+    });
+
+    $("#regyear").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#fcraregday").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#regmonth").focus().select();
+        }
+    });
+
+    $("#fcraregday").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#fcraregmonth").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#regyear").focus().select();
+        }
+    });
+
+    $("#fcraregmonth").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#fcraregyear").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#fcraregday").focus().select();
+        }
+    });
+
+     $("#fcraregyear").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgemail").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#fcraregmonth").focus().select();
+        }
+  });
+
+    // Validation for PAN
+    $("#orgpan").keydown(function(event) {
+    if (event.which==13) {
+	event.preventDefault();
+	var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; 
+	var txtpan = $(this).val();
+	if ((txtpan.length != 10 || !txtpan.match(regExp)) && $.trim($("#orgpan").val())!="") {
+	    $("#pan-incorrect-alert").alert();
+	    $("#pan-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#pan-incorrect-alert").hide();
+	    });
+	    $("#orgpan").focus();
+	}
+	else {
+	    if ($("#orgtype").val()=="Not For Profit"){
+		$("#regday").focus();
+		
+	    }
+	    else {
+		$("#orgemail").focus();
+	    }
+	}
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#orgstax").focus().select();
+    }
+  });
+
+   $("#orgemail").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgtelno").focus().select();
+    }
+     if (event.which==38)  {
+         event.preventDefault();
+	  if ($("#orgtype").val()=="Not For Profit"){
+		$("#fcraregyear").focus();
+		
+	    }
+	    else {
+		$("#orgpan").focus().select();
+	    }
+        }
+   });
+
+    $("#orgtelno").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgwebsite").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#orgemail").focus().select();
+        }
+    });
+
+    $("#orgwebsite").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgpincode").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#orgtelno").focus().select();
+        }
+    });
+
+
+    $("#orgpincode").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgfax").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#orgwebsite").focus().select();
+        }
+    });
+
+     $("#orgfax").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#orgmvat").focus().select();
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#orgpincode").focus().select();
+        }
+     });
+
+    $("#orgmvat").keydown(function(event) {
+    if (event.which==13) {
+	event.preventDefault();
+	if($("#vatorgstflag").val() == '7' || $("#vatorgstflag").val() == '29'){
+		$("#orggstin").focus();
+	}
+	else {
+	    $("#submit").focus();
+	}
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#orgfax").focus().select();
+        }
+     });
+    
+  /**$('input:visible, textarea').keydown(function(event){
     var n =$('input:visible,textarea').length;
     var f= $('input:visible, textarea');
     if (event.which == 13)
@@ -60,7 +475,7 @@ $(document).ready(function(){
         f[prevIndex].focus().select();
       }
     }
-  });
+  });**/
 
   $("#reset").click(function()
   {
@@ -107,6 +522,29 @@ $(document).ready(function(){
         }
       }
     }
+
+
+   var gobj = {}; // Creating a dictionary for storing statecode with gstin.
+   $("#gstintable tbody tr").each(function(){
+       var curindex1 = $(this).index();
+       if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
+	   gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+	   if(gstinstring != ''){
+  	       if(gstinstring.length !=15){
+  		   $("#gstin-improper-alert").alert();
+		   $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+                       $("#gstin-improper-alert").hide();
+  		       $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').focus().select();
+		   });
+  		   return false;
+               }
+	   }
+
+           gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = gstinstring;
+       }
+       
+     });
+    
     var form_data = new FormData();
     form_data.append("orgcity", $("#orgcity").val());
     form_data.append("orgaddr", $("#orgaddr").val());
@@ -119,7 +557,8 @@ $(document).ready(function(){
     form_data.append("orgemail",$("#orgemail").val());
     form_data.append("orgpan",$("#orgpan").val());
     form_data.append("orgmvat",$("#orgmvat").val());
-    form_data.append("orgstax",$("#orgstax").val());
+    form_data.append("orgstax",$("#orgstax").val());    
+    form_data.append("gstin",JSON.stringify(gobj)); //for gstin     
     form_data.append("orgregno",regno);
     form_data.append("orgregdate",regdate);
     form_data.append( "orgfcrano",fcrano);
@@ -193,5 +632,8 @@ $(document).ready(function(){
       .always(function() {
           console.log("complete");
       });
+    $("#gstin_done").click(function(event) {
+        $('#addgstinmodal').modal('hide');
+    });
 
 });

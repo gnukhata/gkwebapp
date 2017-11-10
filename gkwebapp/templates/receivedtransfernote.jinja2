@@ -1,102 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <style type="text/css">
- td {
-      font-size: 85%;
-      padding: 4 !important;
-      margin: 4 !important;
-    }
- th {
-      font-size: 85%;
-  }
-  .fixed-table tbody {
-      display:block;
-      height: 155px;
-      overflow-y:scroll;
-  }
+  <head>
+    <style type="text/css">
+     td {
+	 font-size: 85%;
+	 padding: 4 !important;
+	 margin: 4 !important;
+     }
+     th {
+	 font-size: 85%;
+     }
+     .fixed-table tbody {
+	 display:block;
+	 height: 155px;
+	 overflow-y:scroll;
+     }
 
-  .fixed-table thead ,.fixed-table tbody tr {
-      display:table;
-      width:100%;
-      table-layout:fixed;
-  }
-  .fixed-table thead {
-      width: calc( 100% - 0.7em )
-  }
-  .nopadding{
-    margin:0 !important;
-    padding:0 !important;
-  }
-  </style>
-</head>
-<body>
-  <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
+     .fixed-table thead ,.fixed-table tbody tr {
+	 display:table;
+	 width:100%;
+	 table-layout:fixed;
+     }
+     .fixed-table thead {
+	 width: calc( 100% - 0.7em )
+     }
+     .nopadding{
+	 margin:0 !important;
+	 padding:0 !important;
+     }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
 
-    <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
+      <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Something went wrong!{% endtrans %}
-    </div>
+	{% trans %}Something went wrong!{% endtrans %}
+      </div>
 
-    <div class="panel shadow transfernote_panel">
-      <div class="panel-body">
-        <div class="col-md-6">
-          <div class="alert alert-danger" id="custsup-blank-alert"  aria-live="rude" role="alert" hidden>
+      <div class="panel shadow transfernote_panel">
+	<div class="panel-body">
+          <div class="col-md-6">
+            <div class="alert alert-danger" id="date-blank-alert"  aria-live="rude" role="alert" hidden>
 
-            <label >{% trans %}Please Enter Date{% endtrans %}</label>
-          </div>
-
-             <div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
-
-            <label >{% trans %}Please enter date in proper format!{% endtrans %}</label>
-          </div>
-
-          <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
-
-            {% trans %}Received date cannot be before Transfer Note Date!{% endtrans %}
-          </div>
-
-          <div class="alert alert-success" id="rec-confirm-alert"  aria-live="rude" role="alert" hidden>
-
-            <label >{% trans %}Transfer Note received! {% endtrans %}</label>
-          </div>
-
-
-          <form>
-            <div class="form-group">
-              <label for="rec_tn_list">{% trans %}Select Transfer Note:{% endtrans %}</label>
-              <select class="form-control input-sm " id="rec_tn_list" accesskey="">
-                <option value="" disabled hidden selected>Select Transfer Note</option>
-                {% for tn in transfernote %}
-                <option value="{{tn['transfernoteid']}}">{{tn["transfernoteno"]}} , {{tn["transfernotedate"]}}</option>
-                {% endfor %}>
-              </select>
-
+              <label >{% trans %}Please Enter Date{% endtrans %}</label>
             </div>
-            <div class="form-group hidden-load" hidden>
-              <label >{% trans %}Transfer Note No:{% endtrans %}</label>  <label id="rec_transfernote_no"></label>
+
+            <div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
+
+              <label >{% trans %}Please enter date in proper format!{% endtrans %}</label>
             </div>
-            <div class="form-group hidden-load" hidden>
-              <label >{% trans %}Date:{% endtrans %}</label> <label id="rec_transfernote_date"></label>
+
+            <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
+
+              {% trans %}Received date cannot be before Transfer Note Date!{% endtrans %}
+            </div>
+
+            <div class="alert alert-success" id="rec-confirm-alert"  aria-live="rude" role="alert" hidden>
+
+              <label >{% trans %}Transfer Note received! {% endtrans %}</label>
+            </div>
+
+
+            <form>
+              <div class="form-group">
+		<label for="rec_tn_list">{% trans %}Select Transfer Note:{% endtrans %}</label>
+		<select class="form-control input-sm " id="rec_tn_list" accesskey="">
+                  <option value="" disabled hidden selected>Select Transfer Note</option>
+                  {% for tn in transfernote %}
+                    <option value="{{tn['transfernoteid']}}">{{tn["transfernoteno"]}} , {{tn["transfernotedate"]}}</option>
+                  {% endfor %}>
+		</select>
+
+              </div>
+              <div class="form-group hidden-load" hidden>
+		<label >{% trans %}Transfer Note No:{% endtrans %}</label>  <label id="rec_transfernote_no"></label>
+              </div>
+              <div class="form-group hidden-load" hidden>
+		<label >{% trans %}Date:{% endtrans %}</label> <label id="rec_transfernote_date"></label>
             </br>
-              </br>
-	      <div class =" row">
-		    <div class="col-sm-6">
-		      <label >{% trans %}Expected Date of Receipt :{% endtrans %}</label> <label id="tn_duedate"></label>
-                    </div>
-		    <div class ="col-sm-6">
-         	      <label >{% trans %}Grace Period :{% endtrans %}</label> <label id="tn_grace"></label>
+            </br>
+	    <div class =" row">
+	      <div class="col-sm-6">
+		<label >{% trans %}Expected Date of Receipt :{% endtrans %}</label> <label id="tn_duedate"></label>
+              </div>
+	      <div class ="col-sm-6">
+         	<label >{% trans %}Grace Period :{% endtrans %}</label> <label id="tn_grace"></label>
 
-		   <small >   <b> days</b></small>
-		    </div>
-
-              </br>
-	      </br>
-
+		<small >   <b> days</b></small>
 	      </div>
-	      <div class="form-group"  >
-       <div class="form-inline">
-              <label for="received_transfernote_date">{% trans %}Date of Receipt:{% endtrans %}</label><label for="received_transfernote_date" style="color:red;font-size: 120%;">*</label>
+
+            </br>
+	    </br>
+
+	    </div>
+	    <div class="form-group"  >
+	      <div class="form-inline">
+		<label for="received_transfernote_date">{% trans %}Date of Receipt:{% endtrans %}</label><label for="received_transfernote_date" style="color:red;font-size: 120%;">*</label>
 
                 <form class="form-inline">
                   <div class="form-group">
@@ -114,124 +114,124 @@
 
               </div>
 
-            <div class="form-group hidden-load" hidden>
-              <div class="panel">
-                <table id="transfernote_product_table" class="table table-condensed table-borderd fixed-table">
-                  <thead class="bg-primary">
-                    <tr>
-                      <th class="col-xs-9">{% trans %}Product{% endtrans %}</th>
-                      <th class="col-xs-3">{% trans %}Quantity{% endtrans %}</th>
+              <div class="form-group hidden-load" hidden>
+		<div class="panel">
+                  <table id="transfernote_product_table" class="table table-condensed table-borderd fixed-table">
+                    <thead class="bg-primary">
+                      <tr>
+			<th class="col-xs-9">{% trans %}Product{% endtrans %}</th>
+			<th class="col-xs-3">{% trans %}Quantity{% endtrans %}</th>
 
-                    </tr>
-                  </thead>
-                  <tbody>
+                      </tr>
+                    </thead>
+                    <tbody>
 
-                  </tbody>
-                </table>
+                    </tbody>
+                  </table>
+		</div>
               </div>
-            </div>
           </div>
 
 
-            <div class="col-md-6" id="rec_transfernote_godown_div">
-              </br>
-         		<table class="table" border="0">
-         		<tbody>
+          <div class="col-md-6" id="rec_transfernote_godown_div">
+            </br>
+            <table class="table" border="0">
+              <tbody>
 
-              		<div class="form-group hidden-load" hidden>
-              <tr>
-					<td>
-                		<label>{% trans %} Number of Packets :{% endtrans %}</label>
-                	</td>
-                	<td>
-                 	<label  id="rec_no_of_packet" ></label>
-                		 </td>
-                		   </tr>
+              	<div class="form-group hidden-load" hidden>
+		  <tr>
+		    <td>
+                      <label>{% trans %} Number of Packets :{% endtrans %}</label>
+                    </td>
+                    <td>
+                      <label  id="rec_no_of_packet" ></label>
+                    </td>
+                  </tr>
               	</div>
 
 
-            <div class="form-group hidden-load" hidden>
-              <tr>
-			<td><label >{% trans %} Dispatch From : {% endtrans %}</label>
-             </td>
-              <td> <label id="rec_tn_from_godown"></label>
-              </td>
-            </div>
-            </tr>
+		<div class="form-group hidden-load" hidden>
+		  <tr>
+		    <td><label >{% trans %} Dispatch From : {% endtrans %}</label>
+		    </td>
+		    <td> <label id="rec_tn_from_godown"></label>
+		    </td>
+		</div>
+		  </tr>
 
-            <div class="form-group hidden-load" hidden>
-              <tr>
-		<td><label >{% trans %} Dispatched To : {% endtrans %}</label>
-              </td>
-              <td> <label id="rec_tn_to_godown"></label>
-              </td>
-            </tr>
-            </div>
+		  <div class="form-group hidden-load" hidden>
+		    <tr>
+		      <td><label >{% trans %} Dispatched To : {% endtrans %}</label>
+		      </td>
+		      <td> <label id="rec_tn_to_godown"></label>
+		      </td>
+		    </tr>
+		  </div>
 
-            <div class="form-group hidden-load" hidden>
+		  <div class="form-group hidden-load" hidden>
 
-            <tr>
-                   <td><label>{% trans %} Mode of Transport : {% endtrans %}</label></td>
-              <td> <label  id="rec_transport_mode"></label></td>
-            </tr>
-            </div>
-
-
-          <div class="form-group hidden-load" hidden>
-            <tr>
-            <td><label>{% trans %} Name of Issuer :{% endtrans %}</label></td>
-             <td> <label  id="rec_name_issuer"></label></td>
-          </tr>
-          </div>
+		    <tr>
+                      <td><label>{% trans %} Mode of Transport : {% endtrans %}</label></td>
+		      <td> <label  id="rec_transport_mode"></label></td>
+		    </tr>
+		  </div>
 
 
-        <div class="form-group hidden-load" hidden>
-          <tr>
-          <td><label >{% trans %} Designation : {% endtrans %}</label></td><td> <label id="rec_designation"></label></td>
-        </tr>
-        </div>
+		  <div class="form-group hidden-load" hidden>
+		    <tr>
+		      <td><label>{% trans %} Name of Issuer :{% endtrans %}</label></td>
+		      <td> <label  id="rec_name_issuer"></label></td>
+		    </tr>
+		  </div>
 
 
-        <div class="form-group hidden-load" hidden>
-        <tr>
-          <td><label >{% trans %} Status : {% endtrans %}</label></td><td> <label id="recstatus"></label></td>
-        </div>
-        </tr>
-      </form>
+		  <div class="form-group hidden-load" hidden>
+		    <tr>
+		      <td><label >{% trans %} Designation : {% endtrans %}</label></td><td> <label id="rec_designation"></label></td>
+		    </tr>
+		  </div>
+
+
+		  <div class="form-group hidden-load" hidden>
+		    <tr>
+		      <td><label >{% trans %} Status : {% endtrans %}</label></td><td> <label id="recstatus"></label></td>
+		  </div>
+		    </tr>
+	    </form>
+	  </div>
+
+	</div>
+	      </tbody>
+	    </table>
+
+	    <div class="panel-footer hidden-load" hidden>
+	      <button id="rec_received" class="btn btn-success btn-sm" >{% trans %}<i class="fa fa-check" aria-hidden="true"></i>Acknowledge{% endtrans %}</button>
+	      <button id="tn_editprint" class="btn btn-primary btn-sm" >{% trans %}<i class="fa fa-print" aria-hidden="true"></i> Print{% endtrans %}</button>
+	    </div>
       </div>
+      <div id="confirm_yes" class="modal fade" tabindex="-1" role="dialog">
+	<div class="vertical-alignment-helper">
+          <div class="modal-dialog modal-sm vertical-align-center">
+            <div class="modal-content">
+              <div class="modal-header">
+
+		<h4 class="modal-title">{% trans %}Received ?{% endtrans %}</h4>
+              </div>
+              <div class="modal-body">
+		<p>{% trans %}Are you sure?{% endtrans %}</p>
+              </div>
+              <div class="modal-footer">
+		<button type="button" id ="tn_no" class="btn btn-warning" data-dismiss="modal">{% trans %}<i class="fa fa-times" aria-hidden="true"></i> No{% endtrans %}</button>
+		<button type="button" id="tn_yes" data-dismiss="modal" class="btn btn-success">{% trans %}<i class="fa fa-check" aria-hidden="true"></i> Yes{% endtrans %}</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+	</div>
+      </div><!-- /.modal -->
+
+
 
     </div>
-    </tbody>
-      </table>
-
-      <div class="panel-footer hidden-load" hidden>
-	<button id="rec_received" class="btn btn-success btn-sm" >{% trans %}<i class="fa fa-check" aria-hidden="true"></i>Acknowledge{% endtrans %}</button>
-    <button id="tn_editprint" class="btn btn-primary btn-sm" >{% trans %}<i class="fa fa-print" aria-hidden="true"></i> Print{% endtrans %}</button>
-      </div>
     </div>
-    <div id="confirm_yes" class="modal fade" tabindex="-1" role="dialog">
-      <div class="vertical-alignment-helper">
-        <div class="modal-dialog modal-sm vertical-align-center">
-          <div class="modal-content">
-            <div class="modal-header">
-
-              <h4 class="modal-title">{% trans %}Received ?{% endtrans %}</h4>
-            </div>
-            <div class="modal-body">
-              <p>{% trans %}Are you sure?{% endtrans %}</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" id ="tn_no" class="btn btn-warning" data-dismiss="modal">{% trans %}<i class="fa fa-times" aria-hidden="true"></i> No{% endtrans %}</button>
-              <button type="button" id="tn_yes" data-dismiss="modal" class="btn btn-success">{% trans %}<i class="fa fa-check" aria-hidden="true"></i> Yes{% endtrans %}</button>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div>
-    </div><!-- /.modal -->
-
-
-
-  </div>
-</div>
-<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/receivedtransfernote.js')}}"></script>
-</body>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/receivedtransfernote.js')}}"></script>
+  </body>
