@@ -139,7 +139,7 @@
 
                 <select class="form-control input-sm" id="tn_from_godown" accesskey="">
                   <option value=""  disabled hidden selected>{% trans %}Select Godown{% endtrans %}</option>
-                  {% for godown in godowns %}
+                  {% for godown in fromgodowns %}
                   <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
                   {% endfor %}
                 </select>
