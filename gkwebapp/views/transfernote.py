@@ -47,7 +47,8 @@ def showcreatetransfernote(request):
                 header={"gktoken":request.headers["gktoken"]}
                 products = requests.get("http://127.0.0.1:6543/products", headers=header)
                 godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
-                return {"products": products.json()["gkresult"],"godowns":godowns.json()["gkresult"]}
+                fromgodowns = requests.get("http://127.0.0.1:6543/godown?value=1", headers=header)
+                return {"products": products.json()["gkresult"],"godowns":godowns.json()["gkresult"],"fromgodowns":fromgodowns.json()["gkresult"]}
 
 
 
