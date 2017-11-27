@@ -195,7 +195,7 @@
 					  </tr>
 					  <tr>
 					    <td>
-					      <label for="telephonenumber" id="telno">{% trans %}Telephone Number{% endtrans %} :</label>
+					      <label for="telephonenumber" id="telno">{% trans %}Contact Number{% endtrans %} :</label>
 					    </td>
 					    <td>
 					      <input type="text" id="orgtelno" class="form-control input-sm" size="11" maxlength="11" name="telephonenumber" value="{{gkresult["orgtelno"]}}" style="width: 100%"></input>
@@ -238,7 +238,7 @@
 					  {% if vatorgstflag=='7' or vatorgstflag=='29' %}
 					      <tr>
 						<td>
-						  <label for="organisationgstin" id="orggstinlbl" class="gstinfield">{% trans %}GSIN{% endtrans %} :</label>
+						  <label for="organisationgstin" id="orggstinlbl" class="gstinfield">{% trans %}GSTIN{% endtrans %} :</label>
 					    </td>
 					    <td>
 					      <button class="btn btn-primary btn-sm gstinfield" type="button" id="orggstin"  data-toggle="modal" data-target="#addgstinmodal"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add GSTIN{% endtrans %}</button>
@@ -262,7 +262,7 @@
 					  <p>   <font color=" #566573"> {%trans%}
 
 					    This screen helps you edit or update organisation particulars.</br>
-					    You can use enter key to navigate forward and up arrow to navigate backword.</br>
+					    You can use enter key to navigate forward and up arrow to navigate backward.</br>
 					    Note that the default tab and shift + tab shortcuts are also available for navigation.
 {% endtrans %} </font>
 
