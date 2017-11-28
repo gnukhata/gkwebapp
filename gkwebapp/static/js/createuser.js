@@ -26,13 +26,18 @@ Contributors:
 $(document).ready(function(){
   $("#msspinmodal").modal("hide");
   $("#msspinmodal").on('hidden.bs.modal', function(event) {
-    $("#name").focus();
+  $("#name").focus();
   });
+    // for reset Button
+    $("#adduser_reset").click(function()
+     {
+       $("a[href ='#user_create']").click();
+     });
+    
   //$("#userrole option[value=3]").hide();
   if (sessionStorage.invflag==1) {
     $.ajax(
        {
-
        type: "POST",
        url: "/godown?type=check",
        global: false,
@@ -190,7 +195,7 @@ $(document).ready(function(){
         if (e.which==13)
         {
           e.preventDefault();
-          $("#adduser_button").click();
+            $("#adduser_button").click();
         }
         if (e.which==38) {
           e.preventDefault();
@@ -321,11 +326,9 @@ $(document).ready(function(){
                 });
               }
             }
-
           }
         );
-
-        e.preventDefault();
+        //e.preventDefault();
       }
     );
   });

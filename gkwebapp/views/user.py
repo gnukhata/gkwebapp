@@ -36,9 +36,42 @@ from pyramid.response import Response
 import os
 from odslib import ODS
 
-@view_config(route_name="showuser", renderer="gkwebapp:templates/createuser.jinja2")
-def showuser(request):
-    return {"gkresult":"0"}
+#view_config(route_name="showuser", renderer="gkwebapp:templates/createuser.jinja2")
+#def showuser(request):
+#    return {"gkresult":"0"}
+
+#User Tab 
+@view_config(route_name="showuser", request_param="type=usertab", renderer="gkwebapp:templates/user.jinja2")
+def newuser(request):
+ 	header={"gktoken":request.headers["gktoken"]}
+ 	result= requests.get("http://127.0.0.1:6543/users", headers=header)
+ 	return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}	
+
+#Call New User Tab Inside User Module
+@view_config(route_name="showuser",request_param="type=addtab", renderer="gkwebapp:templates/createuser.jinja2")
+def createusers(request):
+   header={"gktoken":request.headers["gktoken"]}
+   result = requests.get("http://127.0.0.1:6543/users", headers=header)
+   return {"gkresult":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
+
+#Call edituser Tab Inside User Module
+@view_config(route_name="showuser",request_param="type=edittab", renderer="gkwebapp:templates/edit_createuser.jinja2")
+def editusers(request):
+   header={"gktoken":request.headers["gktoken"]}
+   result = requests.get("http://127.0.0.1:6543/users", headers=header)
+   return {"gkresult":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
+
+#Get Userdetails 
+@view_config(route_name="showuser",request_param="type=getuserdetails", renderer="json")
+def getuserdetails(request):
+	header={"gktoken":request.headers["gktoken"]}
+	userid = int(request.params["userid"])
+	result = requests.get("http://127.0.0.1:6543/users?qty=single&userid=%d"%(userid), headers=header)
+	if(result.json()["gkstatus"] == 0):
+		record = result.json()["gkresult"]
+		resp = {"userid": str(record["userid"]), "usrname" : str(record["username"]), "usrpwd": str(record["userpassword"]), "userrole": str(record["userrole"]), "secquestion": str(record["userquestion"]), "secanswer":str(record["useranswer"])}
+		return {"gkstatus":0, "gkresult":resp}
+	return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="showedituser", renderer="gkwebapp:templates/edituser.jinja2")
 def showedituser(request):
