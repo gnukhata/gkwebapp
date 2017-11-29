@@ -129,7 +129,7 @@ def savesalesorder(request):
 @view_config(route_name="purchaseorder",request_param="action=getuser",renderer="json")
 def getuser(request):
 	header={"gktoken":request.headers["gktoken"]}
-	usern = requests.get("http://127.0.0.1:6543/user", headers=header)
+	usern = requests.get("http://127.0.0.1:6543/users?user=single", headers=header)
 	username = usern.json()["gkresult"]["username"]
 	return {"status":True,"username":username}
 

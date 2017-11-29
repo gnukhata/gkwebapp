@@ -8,9 +8,9 @@ $(document).ready(function() {
         var username = $("#edituser option:selected").text();
         $.ajax({
             type: "POST",
-            url:"/showuser type=getuserdetails",
+            url:"/showuser?type=getuserdetails",
             data:{
-                "userid": userid
+                "userid": $("#edituser option:selected").val()
             },
             global: false,
             async: false,
@@ -20,18 +20,18 @@ $(document).ready(function() {
             },
             success: function(resp) {
                 userdetails = resp["gkresult"];
-                $("#editname").val(userdetails["name"]);
+                $("#editname").val(userdetails["username"]);
                 $("#editname").prop("disabled", true);
-                $("#password").val(userdetails["password"]);
-                $("#password").prop("disabled", true);
+                $("#editpwd").val(userdetails["password"]);
+                $("#editpwd").prop("disabled", true);
                 //$("#editpwdconfirm").val(userdetails[""]);
                 //$("#editpwdconfirm").prop("disabled", true);
-                $("#edituserrole").val(userdetails["userrole"]);
-                $("#edituserrole").prop("disabled", true);
-                $("#editquestion").val(userdetails["question"]);
-                $("#editquestion").prop("disabled", true);
-	        $("#editanswer").val(userdetails["answer"]);
-                $("#editanswer").prop("disabled", true);
+                $("#editrole").val(userdetails["userrole"]);
+                $("#editrole").prop("disabled", true);
+                $("#editsecquest").val(userdetails["question"]);
+                $("#editsecquest").prop("disabled", true);
+	        $("#editsecans").val(userdetails["answer"]);
+                $("#editsecans").prop("disabled", true);
                 $("#userid").val(userdetails["userid"]);
                 $(".edituserform").show();
                 $("#form-footer").show();
@@ -39,12 +39,12 @@ $(document).ready(function() {
                 $("#edit").show();
             }
         });
-    }
+    });
 
 /*//Number Of User
  $.ajax({
             type: "POST",
-            url: "/showuser?type=numOfuser",
+            url: "/showuser?type=list",
             data: {
                 "userid": userid
             },
@@ -55,7 +55,7 @@ $(document).ready(function() {
                 xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
             },
             success: function(resp) {
-		prod = resp["gkresult"];
+		user = resp["gkresult"];
             }
         });
     });
@@ -89,7 +89,7 @@ $("#editname").keydown(function(e){
     	      else {
     	      $("#editpwd").focus();
     	      }
-    	    }
+    	}
  });
     
 //Event for Edit Password
@@ -345,5 +345,5 @@ var userid = $("#edituser option:selected").val();
         });
         e.preventDefault();
 });
-});*/
-    
+});
+*/    

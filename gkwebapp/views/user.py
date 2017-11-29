@@ -43,9 +43,9 @@ from odslib import ODS
 #User Tab 
 @view_config(route_name="showuser", request_param="type=usertab", renderer="gkwebapp:templates/user.jinja2")
 def newuser(request):
- 	header={"gktoken":request.headers["gktoken"]}
- 	result= requests.get("http://127.0.0.1:6543/users", headers=header)
- 	return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}	
+    header={"gktoken":request.headers["gktoken"]}
+    result= requests.get("http://127.0.0.1:6543/users", headers=header)
+    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}    
 
 #Call New User Tab Inside User Module
 @view_config(route_name="showuser",request_param="type=addtab", renderer="gkwebapp:templates/createuser.jinja2")
@@ -64,14 +64,15 @@ def editusers(request):
 #Get Userdetails 
 @view_config(route_name="showuser",request_param="type=getuserdetails", renderer="json")
 def getuserdetails(request):
-	header={"gktoken":request.headers["gktoken"]}
-	userid = int(request.params["userid"])
-	result = requests.get("http://127.0.0.1:6543/users?qty=single&userid=%d"%(userid), headers=header)
-	if(result.json()["gkstatus"] == 0):
-		record = result.json()["gkresult"]
-		resp = {"userid": str(record["userid"]), "usrname" : str(record["username"]), "usrpwd": str(record["userpassword"]), "userrole": str(record["userrole"]), "secquestion": str(record["userquestion"]), "secanswer":str(record["useranswer"])}
-		return {"gkstatus":0, "gkresult":resp}
-	return {"gkstatus":result.json()["gkstatus"]}
+    header={"gktoken":request.headers["gktoken"]}
+    userid = int(request.params["userid"])
+    result = requests.get("http://127.0.0.1:6543/user?userAllData&userid=%d"%(userid), headers=header)
+    if(result.json()["gkstatus"] == 0):
+        record = result.json()["gkresult"]
+        print record
+        resp = {"userid": record["userid"], "username": record["username"], "userrole": record["userrole"], "question": record["userquestion"], "answer": record["useranswer"]}
+        return {"gkstatus":0, "gkresult":resp}
+    return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="showedituser", renderer="gkwebapp:templates/edituser.jinja2")
 def showedituser(request):
