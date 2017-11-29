@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}PURCHASEORDER{% endtrans %}</title>
-<link href="{{request.static_url('gkwebapp:static/css/purchaseorder.css')}}" rel="stylesheet" type="text/css">
+<link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css">
 <body style="padding-right:1%;">
   <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
     <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
@@ -63,23 +63,6 @@
 	    <div class="col-md-12">
 	      <div class="col-md-4">
 		<h4>Details of Purchase Order: </h4>
-		<div class="form-group form-inline" id="deliverynoterow">
-		  <label class="col-sm-4 fsize" for="purchaseorder_deliverynote">{% trans %}Deli. Note No.{% endtrans %} :</label>
-		  <select class="form-control input-sm col-sm-8"  id="purchaseorder_deliverynote">
-                    <option value="" dcno = "" selected>None</option>
-                    {% for deliverynote in deliverynotes %}
-                      {% if gkstatus=="in" %}
-                        {% if deliverynote['csflag']==19 %}
-                          <option value="{{deliverynote['dcid']}}" dcno = "{{deliverynote["dcno"]}}" dcdate="{{deliverynote['dcdate']}}">{{deliverynote["dcno"]}}, {{deliverynote['dcdate']}}, {{deliverynote["custname"]}}</option>
-                        {% endif %}
-                      {% else %}
-                        {% if deliverynote['csflag']==3 %}
-                          <option value="{{deliverynote['dcid']}}" dcno = "{{deliverynote["dcno"]}}" dcdate="{{deliverynote['dcdate']}}">{{deliverynote["dcno"]}}, {{deliverynote['dcdate']}}, {{deliverynote["custname"]}}</option>
-                        {% endif %}
-                      {% endif %}
-                    {% endfor %}
-                  </select>
-		</div>
 		<div class="form-group form-inline">
 		  <label class="col-sm-4 fsize" for="purchaseorder_challanno">{% trans %}Order No{% endtrans %} :</label>
 		  <input class="form-control input-sm col-sm-8" size="15" id="purchaseorder_challanno" maxlength="16" >
@@ -254,11 +237,11 @@
 	      </div>
 	      <div class="alert alert-danger" id="product-blank-alert"  aria-live="rude" role="alert" hidden>
 
-		<label >{% trans %}Please select a product/service!{% endtrans %}</label>
+		<label >{% trans %}Please select a product!{% endtrans %}</label>
 	      </div>
 	      <div class="alert alert-danger" id="product-duplicate-alert"  aria-live="rude" role="alert" hidden>
 
-		<label >{% trans %}A product/service can be selected only once!{% endtrans %}</label>
+		<label >{% trans %}A product can be selected only once!{% endtrans %}</label>
 	      </div>
 	      <div class="alert alert-danger" id="quantity-blank-alert"  aria-live="rude" role="alert" hidden>
 
@@ -268,10 +251,6 @@
 
 		<label >{% trans %}All product quantities cannot be zero!{% endtrans %}</label>
 	      </div>
-	      <div class="alert alert-danger" id="quantity-exceed-alert"  aria-live="rude" role="alert" hidden>
-
-		<label >{% trans %}Quantity cannot be greater than that specified in the delivery note!{% endtrans %}</label>
-	      </div>
 	      <div class="alert alert-danger" id="price-blank-alert"  aria-live="rude" role="alert" hidden>
 
 		<label >{% trans %}Price per unit cannot be empty zero!{% endtrans %}</label>
@@ -280,13 +259,13 @@
 		{% if resultgstvat == '22' %}
 		  <div class="col-sm-12" style="margin-bottom:10px; padding:5;">
 		    <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
-		    <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Purchaseorder. Press 'Esc' key to exit from the table.</small>
+		    <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Purchase Order. Press 'Esc' key to exit from the table.</small>
 		  </div>
 		  <table id="purchaseorder_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase">
 		{% else %}
 		    <div class="col-sm-12" style="margin-bottom:10px; padding:5;" id="vathelp" hidden>
 		      <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
-		      <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Purchaseorder. Press 'Esc' key to exit from the table.</small>
+		      <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Purchase Order. Press 'Esc' key to exit from the table.</small>
 		    </div>
 		    <table id="purchaseorder_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
 		{% endif %}
@@ -384,7 +363,7 @@
 		  <div class="col-sm-12 bg-info" style="margin-bottom:10px; padding:10;">
 		    <div class="row col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
 		    <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
-		    <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Purchaseorder. Press 'Esc' key to exit from the table.</small>
+		    <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Purchase Order. Press 'Esc' key to exit from the table.</small>
 		  </div>
 		  <div class="col-sm-10" style="overflow-x:scroll;">
 		    <div class="row">
@@ -424,7 +403,7 @@
 			    <td class="mdwrap">
 			      <select class="form-control input-sm product_name_gst">
 				<option value="" disabled hidden selected>Select Product</option>
-				{% for product in productsnservices %}
+				{% for product in products %}
 				  <option value="{{product['productcode']}}" gsflag="{{product["gsflag"]}}">{{product["productdesc"]}}</option>
 				{% endfor %}
 			      </select>
@@ -568,7 +547,7 @@
 		  <div class="col-sm-12">
 		    <div class="alert alert-danger" id="supply-date-alert" aria-live="rude" role="alert" hidden>
 
-		      {% trans %}Date of Supply cannot be before Purchaseorder Date!{% endtrans %}
+		      {% trans %}Date of Supply cannot be before Purchase Order Date!{% endtrans %}
 		    </div>
 		    <div class="alert alert-danger" id="supbetween-date-alert" aria-live="rude" role="alert" hidden>
 
@@ -647,11 +626,6 @@
 	</div>
       </div>
     </div>
-
-
-
-
-
     <div id="viewcustsup"></div>
     <input type="hidden" id="selectedcustsup" value="">
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addpurchaseorder.js')}}"></script>
