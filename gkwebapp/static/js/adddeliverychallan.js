@@ -45,7 +45,7 @@ $(document).ready(function() {
       return str.length < max ? pad("0" + str, max) : str;
     }
     else{
-      return str
+	return str;
     }
   }
   function yearpad (str, max) { //to add leading 20 or 200 in the year
@@ -57,7 +57,7 @@ $(document).ready(function() {
       return str.length < max ? pad("20" + str, max) : str;
     }
     else{
-      return str
+	return str;
     }
   }
   $("#deliverychallan_date").blur(function(event) {
@@ -205,14 +205,47 @@ $(document).ready(function() {
 
   $("#deliverychallan_consignment").keydown(function(event) {
     if (event.which==13) {
-      event.preventDefault();
-      $('#deliverychallan_product_table tbody tr:first td:eq(0) select').focus();
+	event.preventDefault();
+	$('#consigneename').focus();
+      //$('#deliverychallan_product_table tbody tr:first td:eq(0) select').focus();
     }
     if (event.which==38 && document.getElementById('deliverychallan_consignment').selectedIndex==0) {
       event.preventDefault();
       $("#deliverychallan_godown").focus().select();
     }
   });
+
+  $("#consigneename").keydown(function(event) {
+    if (event.which==13) {
+	event.preventDefault();
+	$('#consigneestate').focus();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#deliverychallan_consignment").focus().select();
+    }
+  });
+  $("#consigneestate").keydown(function(event) {
+    if (event.which==13) {
+	event.preventDefault();
+	$('#deliverychallan_consigneeaddr').focus();
+    }
+    if (event.which==38 && document.getElementById('consigneestate').selectedIndex==0) {
+      event.preventDefault();
+      $("#consigneename").focus().select();
+    }
+  });
+  $("#deliverychallan_consigneeaddr").keydown(function(event) {
+    if (event.which==13) {
+	event.preventDefault();
+      $('#deliverychallan_product_table tbody tr:first td:eq(0) select').focus();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#consigneestate").focus().select();
+    }
+  });
+    
   $("#deliverychallan_noofpackages").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
@@ -387,7 +420,7 @@ $(document).ready(function() {
       event.preventDefault();
       if (curindex==0) {
         event.preventDefault();
-        $("#deliverychallan_consignment").focus().select();
+        $("#deliverychallan_consigneeaddr").focus().select();
       }
       else {
         $('#deliverychallan_product_table tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
@@ -823,10 +856,10 @@ else {
 
     form_data.append("products", JSON.stringify(products));// a list always needs to be stringified into json before sending it ahead
     form_data.append("dcflag", $("#deliverychallan_consignment option:selected").val());
-    var files = $("#my-file-selector")[0].files
+      var files = $("#my-file-selector")[0].files;
     var filelist = [];
     for (var i = 0; i < files.length; i++) {
-      form_data.append("file"+i,files[i])
+	form_data.append("file"+i,files[i]);
     }
     event.preventDefault();
     $('.modal-backdrop').remove();
