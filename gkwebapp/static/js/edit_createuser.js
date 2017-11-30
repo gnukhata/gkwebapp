@@ -22,21 +22,21 @@ $(document).ready(function() {
                 userdetails = resp["gkresult"];
                 $("#editname").val(userdetails["username"]);
                 $("#editname").prop("disabled", true);
-                $("#editpwd").val(userdetails["password"]);
-                $("#editpwd").prop("disabled", true);
-                //$("#editpwdconfirm").val(userdetails[""]);
-                //$("#editpwdconfirm").prop("disabled", true);
-                $("#editrole").val(userdetails["userrole"]);
-                $("#editrole").prop("disabled", true);
-                $("#editsecquest").val(userdetails["question"]);
-                $("#editsecquest").prop("disabled", true);
-	        $("#editsecans").val(userdetails["answer"]);
-                $("#editsecans").prop("disabled", true);
+		//$("#password").prop(userdetails["password"]);
+		$("#password").prop("disabled",true);
+		$("#passwordconfirm").prop("disabled",true);
+                $("#userrole").val(userdetails["userrole"]);
+                $("#userrole").prop("disabled", true);
+                $("#question").val(userdetails["question"]);
+                $("#question").prop("disabled", true);
+	        $("#answer").val(userdetails["answer"]);
+                $("#answer").prop("disabled", true);
                 $("#userid").val(userdetails["userid"]);
                 $(".edituserform").show();
                 $("#form-footer").show();
                 $("#delete").show();
                 $("#edit").show();
+		console.log(userdetails);
             }
         });
     });
@@ -59,24 +59,25 @@ $(document).ready(function() {
             }
         });
     });
-
+*/
+    
 //For Edit Button
 $("#edit").click(function(event) {
         event.preventDefault();
         $("#edusrsubmit").show();
         $("#editname").prop("disabled", false);
-        $("#editpwd").prop("disabled", false);
-        $("#editpwdconfirm").prop("disabled", false);
-        $("#editrole").prop("disabled", false);
-        $("#editsecquest").prop("disabled", false);
-        $("#editsecans").prop("disabled", false);
+        $("#password").prop("disabled", false);   
+        $("#passwordconfirm").prop("disabled", false);
+        $("#userrole").prop("disabled", false);
+        $("#question").prop("disabled", false);
+        $("#answer").prop("disabled", false);
         $("#edit").hide();
         $("#editname").focus().select();
     });
 
 //Event For New User Name
-$("#editname").keydown(function(e){
-    	if (e.which == 13) {
+    $("#editname").keydown(function(e){
+    	if (e.which==13) {
     	      e.preventDefault();
     	      if ($.trim($("#editname").val())=="") {
     	          $("#blank-alert").alert();
@@ -85,50 +86,113 @@ $("#editname").keydown(function(e){
     	          });
     	          $("#editname").focus();
     	          return false;
-    	        }
-    	      else {
-    	      $("#editpwd").focus();
-    	      }
-    	}
- });
-    
-//Event for Edit Password
-$("#editpwd").keydown(function(e){
-      if (e.which == 13) {
-        e.preventDefault();
-        $("#editpwdconfirm").focus();
-      }
-      else if(e.which == 38) {
-        e.preventdefault();
-        $("#editname").focus();
-      }
+    	          }
+    	          else {
+    	                 $("#password").focus();
+    	               }
+    	    }
     });
 
-//Event For Confirm Password
- $("#editpwdconfirm").keydown(function(e){
+//$("#userrole option[value=3]").hide();
+  if (sessionStorage.invflag==1) {
+    $.ajax(
+       {
+       type: "POST",
+       url: "/godown?type=check",
+       global: false,
+       async: false,
+       datatype: "text/html",
+       beforeSend: function(xhr)
+         {
+           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+         },
+       success: function(resp)
+       {
+         var abc = resp["gkresult"];
+         if (resp["gkresult"].length>0) {
+           $("#userrole option[value=3]").show();
+         }
+       }
+       });
+  }
+  $("#name").focus(function(){
+    $("#msspinmodal").modal("hide");
+  });
+  $('.modal-backdrop').remove();
+  var inselect = 0;
+  $("#userrole").focus(function(){
+    inselect = 1;
+  });
+
+  $(document).off("change","#userrole").on("change","#userrole",function(e){
+    /* Act on the event */
+      var role = $("#userrole option:selected").val();
+    if (role==3){
+      $.ajax(
+         {
+
+         type: "POST",
+         url: "/godown?type=role_list",
+         global: false,
+         async: false,
+         datatype: "text/html",
+         beforeSend: function(xhr)
+           {
+             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+           },
+         success: function(resp)
+         {
+           $("#usertable").html(resp);
+           $("#latable tbody tr:first td:first input").focus().select();
+         }
+         });
+         }
+         else {
+           $("#usertable").html("");
+         }
+  });
+    
+    
+//Event for Edit Password
+   $("#password").keydown(function(e){
       if (e.which==13)
       {
         e.preventDefault();
-        $("#editrole").focus();
+        $("#passwordconfirm").focus();
       }
-      if (e.which==38) {
-        $("#editpwd").focus();
+      if (e.which==38)
+      {
+        e.preventdefault();
+        $("#editname").focus();
+      }
+   });
+
+//Event For Confirm Password
+ $("#passwordconfirm").keydown(function(e){
+     if (e.which==13)
+      {
+        e.preventDefault();
+        $("#userrole").focus();
+      }
+     if (e.which==38)
+      {
+        $("#password").focus();
       }
     });
 
-$("#editpwdconfirm").blur(function(event) {
-        if ($.trim($("#editpwd").val())!=$.trim($("#editpwdconfirm").val())) {
+$("#passwordconfirm").blur(function(event) {
+        if ($.trim($("#password").val())!=$.trim($("#passwordconfirm").val())) {
           $("#checkpassuser-blank-alert").alert();
           $("#checkpassuser-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#checkpassuser-blank-alert").hide();
           });
-          $("#editpwd").focus();
+          $("#password").focus();
           return false;
         }
       });
 
 //Event for User Role
-$(document).off("keydown","#editrole").on("keydown", '#editrole', function(e) {
+$(document).off("keydown","#userrole").on("keydown", '#userrole', function(e) {
 
         if (e.which == 13 || e.which == 9) {
           e.preventDefault();
@@ -136,44 +200,44 @@ $(document).off("keydown","#editrole").on("keydown", '#editrole', function(e) {
            $("#latable tbody tr:first td:first input").focus().select();
          }
          else {
-           $("#editsecquest").focus().select();
+           $("#question").focus().select();
          }
      }
 
       if (e.which==38) {
-        var s1 = $("#editrole option:selected").index();
+        var s1 = $("#userrole option:selected").index();
         if (s1 == 0 || s1 == 1) {
-          $("#editpwdconfirm").focus();
+          $("#passwordconfirm").focus();
         }
       }
     });
 
 //Event for Security Question
-$("#editsecquest").keydown(function(e){
+$("#question").keydown(function(e){
         if (e.which==13)
         {
           e.preventDefault();
-          $("#editsecans").focus();
+            $("#answer").focus().select();
         }
-        if (e.which==38) {
+        else if (e.which==38) {
           e.preventDefault();
-          $("#editrole").focus();
+          $("#userrole").focus();
         }
       });
 
 //Event for Security Answer
 
-$("#editsecans").keydown(function(e){
+$("#answer").keydown(function(e){
         if (e.which==13)
         {
           e.preventDefault();
-            $("#edusrsubmit").click();
+            $("#edusrsubmit").focus().click();
         }
-        if (e.which==38) {
+    if (e.which==38) {
           e.preventDefault();
-          $("#editsecquest").focus();
+          $("#question").focus();
         }
-      });
+});
 
    //To Edit User 
  $("#reset").click(function() {
@@ -187,12 +251,12 @@ $(document).off("click", "#delete").on("click", "#delete", function(event) {
         $('.modal-backdrop').remove();
         $('.modal').modal('hide');
         $('#m_confirmdel').modal('show').on('click', '#usrdel', function(e) {
-
-          if (prod==0) {
+            var user;
+          if (user==0) {
             var userid = $("#edituser option:selected").val();
             $.ajax({
                 type: "POST",
-                url: "/#?type=delete",
+                url: "/deleteuser",
                 global: false,
                 async: false,
                 datatype: "json",
@@ -208,7 +272,7 @@ $(document).off("click", "#delete").on("click", "#delete", function(event) {
                         $("#delsuccess-alert").alert();
                         $("#delsuccess-alert").fadeTo(2250, 500).slideUp(500, function() {
                         $("#delsuccess-alert").hide();
-                        //$("#user").click();
+                        $("#user").click();
                         });
                     } else if (resp["gkstatus"] == 5) {
                         $("#transaction-alert").alert();
@@ -219,7 +283,8 @@ $(document).off("click", "#delete").on("click", "#delete", function(event) {
                     }
 
                 }
-            });}
+            });
+	  }
             else{
               $("#prod-alert").alert();
               $("#prod-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -231,7 +296,6 @@ $(document).off("click", "#delete").on("click", "#delete", function(event) {
         });
 
 
-//
 $('#m_confirmdel').on('shown.bs.modal', function(event) {
             $("#m_cancel").focus();
         });
@@ -259,39 +323,39 @@ $("#edusrsubmit").click(function(e) {
             $("#editname").focus().select();
             return false;
         };
-        if ($.trim($("#editpwd").val()) == "") {
+        if ($.trim($("#password").val()) == "") {
             $("#password-blank-alert").alert();
             $("#password-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
                 $("#password-blank-alert").hide();
             });
-            $("#editpwd").focus().select();
+            $("#password").focus().select();
             return false;
         };
-        if ($.trim($("#editpwdconfirm").val()) == "") {
+        if ($.trim($("#passwordconfirm").val()) == "") {
             $("#checkpassuser-blank-alert").alert();
             $("#checkpassuser-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
                 $("#checkpassuser-blank-alert").hide();
             });
-            $("#editpwdconfirm").focus().select();
+            $("#passwordconfirm").focus().select();
             return false;
         };
 
 
-if ($.trim($("#editsecquest").val()) == "") {
+if ($.trim($("#question").val()) == "") {
             $("#secque-blank-alert").alert();
             $("#secque-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
                 $("#secque-blank-alert").hide();
             });
-            $("#editsecquest").focus().select();
+            $("#question").focus().select();
             return false;
         };
 
-if ($.trim($("#editsecans").val()) == "") {
+if ($.trim($("#answer").val()) == "") {
             $("#secans-blank-alert").alert();
             $("#secans-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
                 $("#secans-blank-alert").hide();
             });
-            $("#editsecans").focus().select();
+            $("#answer").focus().select();
             return false;
         };
 
@@ -300,10 +364,10 @@ if ($.trim($("#editsecans").val()) == "") {
 
 var userid = $("#edituser option:selected").val();
         var username = $("#editname").val();
-        var userpassword = $.trim($("#editpwd").val());
-        var userrole = $("#editrole").val();
-        var userquestion = $("#editsecquest").val();
-        var useranswer = $("#editsecans").val();
+        var userpassword = $.trim($("#password").val());
+        var userrole = $("#userrole").val();
+        var userquestion = $("#question").val();
+        var useranswer = $("#answer").val();
         $.ajax({
             type: "POST",
             url: "/#showuser?type=edituser",
@@ -343,7 +407,7 @@ var userid = $("#edituser option:selected").val();
                 }
             }
         });
-        e.preventDefault();
+       e.preventDefault();
 });
 });
-*/    
+    

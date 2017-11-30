@@ -16,7 +16,8 @@
 	{% trans %}User already exists!{% endtrans %}
       </div>
 
-      <div class="col-xs-12">
+      <div class="container-fluid row">
+      <div class="col-md-6">
 	<div class="form-group">
 	  <label for="edituser">{% trans %}List of Users{% endtrans %} :</label>
 	  <select class = "form-control input-sm" id="edituser">
@@ -27,8 +28,9 @@
 	  </select>
 	</div>
       </div>
+      </div>
       
-      <div class="col-sm-6 edituserform" hidden>
+      <div class="col-md-6 edituserform" hidden>
 	<div class="alert alert-danger" id="blank-alert"  aria-live="rude" role="alert" hidden>
 
 	  {% trans %}Please enter User name!{% endtrans %}
@@ -43,8 +45,8 @@
           {% trans %}Please enter password!{% endtrans %}
         </div>
 	<div class="form-group">
-	  <label for="password" id="editpwd">{% trans %}Pass<u>w</u>ord{% endtrans %} :</label>
-          <input style="border-radius: 4px" name="password" id="editpwd" type="password" class="form-control input-sm" accesskey="w"></input>
+	  <label for="editpwd" id="editpwd">{% trans %}New Pass<u>w</u>ord{% endtrans %} :</label>
+          <input style="border-radius: 4px" name="editpwd" id="password" type="password" class="form-control input-sm" accesskey="w"></input>
 	</div>
 	
 	<div class="alert alert-danger" id="cnfpass-blank-alert"  aria-live="rude" role="alert" hidden>
@@ -56,12 +58,12 @@
           {% trans %}Password doesn't match!{% endtrans %}
         </div>
 	<div class="form-group">
-	  <label for="confirm_password" id="editpwdconfirm">{% trans %}C<u>o</u>nfirm Password{% endtrans %} :</label>
-          <input name="cnfpassword" style="border-radius: 4px" type="password" id="editpwdconfirm" class="form-control input-sm" accesskey="o"></input>
+	  <label for="confirmpwd" id="confirmpwd">{% trans %}C<u>o</u>nfirm New Password{% endtrans %} :</label>
+          <input name="confirmpwd" style="border-radius: 4px" type="password" id="passwordconfirm" class="form-control input-sm" accesskey="o"></input>
 	</div>
       <div class="form-group">
-	<label for="edituserrole" id="editrole">{% trans %}Selec<u>t</u> Role{% endtrans %} :</label>
-        <select name="userrole" style="border-radius: 4px" id="editrole" type="text" class="form-control input-sm" accesskey="t">
+	<label for="editrole" id="editrole">{% trans %}Selec<u>t</u> Role{% endtrans %} :</label>
+        <select name="editrole" style="border-radius: 4px" id="userrole" type="text" class="form-control input-sm" accesskey="t">
           <option value="" disabled selected hidden>{% trans %}Select a role{% endtrans %}</option>
           <option value="0">{% trans %}Manager{% endtrans %}</option>
           <option value="1">{% trans %}Operator{% endtrans %}</option>
@@ -71,13 +73,13 @@
       </div>
       
       <div class="form-group">
-	<label for="editquestion" id="editsecquest">{% trans %}Security <u>Q</u>uestion{% endtrans %} :</label>
-        <input name="userquestion" style="border-radius: 4px" type="text" class="form-control input-sm" placeholder="Security Question" id="editsecquest" accesskey="q"></input>
+	<label for="editsecquest" id="editsecquest">{% trans %}Security <u>Q</u>uestion{% endtrans %} :</label>
+        <input name="editsecquest" style="border-radius: 4px" type="text" class="form-control input-sm" placeholder="Security Question" id="question" accesskey="q"></input>
       </div>
 
       <div class="form-group">
-	<label for="editanswer" id="editsecans">{% trans %}<u>S</u>ecurity Answer{% endtrans %} :</label>
-        <input name="useranswer" style="border-radius: 4px" type="text" class="form-control input-sm" placeholder="Security Answer" id="editsecans" accesskey="s"></input>	
+	<label for="editsecans" id="editsecans">{% trans %}<u>S</u>ecurity Answer{% endtrans %} :</label>
+        <input name="editsecans" style="border-radius: 4px" type="text" class="form-control input-sm" placeholder="Security Answer" id="answer" accesskey="s"></input>	
       </div>
       <div id="m_confirmdel" class="modal fade" tabindex="-1" role="dialog">
 	<div class="vertical-alignment-helper">
@@ -100,6 +102,7 @@
       </div><!-- /.modal -->
      </div>
     </div>
+    
     <div id="form-footer" class="panel-footer" hidden>
       <div class="container-fluid">
 	<button type="submit" class="btn btn-success btn-sm" id="edusrsubmit" name="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
