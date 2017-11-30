@@ -69,11 +69,12 @@
 
             <label for="vno">{% trans %}Please enter mode of transport!{% endtrans %}</label>
           </div>
-            <div class="form-group">
-              <label for="deliverychallan_challanno">{% trans %}Note No{% endtrans %} :</label>
-              <input class="form-control input-sm" id="deliverychallan_challanno" placeholder="{% trans %}Enter Delivery Note No.{% endtrans %}" accesskey="a" value = "{{lastdelchaldata['dcno']}}">
-            </div>
-            <div class="form-group">
+	  <div class="row">
+          <div class="form-group  col-sm-6">
+            <label for="deliverychallan_challanno">{% trans %}Note No{% endtrans %} :</label>
+            <input class="form-control input-sm" id="deliverychallan_challanno" placeholder="{% trans %}Enter Delivery Note No.{% endtrans %}" accesskey="a" value = "{{lastdelchaldata['dcno']}}">
+          </div>
+          <div class="form-group  col-sm-6">
               <label for="deliverychallan_date">{% trans %}Note Date{% endtrans %} :</label>
               <div class="form-inline">
                   <div class="form-group ">
@@ -86,8 +87,10 @@
                     <input type="text" class="form-control input-sm delchaldate" size="4" maxlength="4" placeholder="YYYY" id="deliverychallan_year" accesskey="v" value = "{{lastdelchaldata['dcdate'][6:]}}">
                   </div>
               </div>
-            </div>
-            <div class="form-group">
+          </div>
+	  </div>
+	  <div class="row">
+          <div class="form-group  col-sm-6">
               <label for="deliverychallan_customer">
                 {% if gkstatus=="in" %}
                 {% trans %}Supplier{% endtrans %} :
@@ -107,21 +110,24 @@
                   <option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
                   {% endfor %}
               </select>
+	  </div>
+	  <div class="form-group col-sm-6">
               {% if gkstatus != "in" %}
-                <br>
                 <label for="deliverychallan_customeraddr">
                   {% trans %}Customer Address{% endtrans %} :
                 </label>
-                <input class="form-control input-sm" id="deliverychallan_customeraddr" placeholder="{% trans %}Select Customer to see Address{% endtrans %}" accesskey="" disabled>
+
+		<textarea class="form-control input-sm" rows="2" cols="40" id="deliverychallan_customeraddr" aria-describedby="textareahelp" placeholder="{% trans %}Select Customer to see Address{% endtrans %}" accesskey="" disabled></textarea>
               {% else %}
-                <br>
                 <label for="deliverychallan_supplieraddr">
                   {% trans %}Supplier Address{% endtrans %} :
                 </label>
-                <input class="form-control input-sm" id="deliverychallan_supplieraddr" placeholder="{% trans %}Select Supplier to see Address{% endtrans %}" accesskey="" disabled>
+		<textarea class="form-control input-sm" rows="2" cols="40" id="deliverychallan_supplieraddr" aria-describedby="textareahelp" placeholder="{% trans %}Select Supplier to see Address{% endtrans %}" accesskey="" disabled></textarea>
               {% endif %}
-            </div>
-            <div class="form-group">
+          </div>
+	  </div>
+	  <div class="row">
+            <div class="form-group col-sm-6">
             {%if numberofgodowns > 0 %}
               <label for="deliverychallan_godown">
 
@@ -139,7 +145,7 @@
               </select>
                {% endif %}
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-6">
               <label for="deliverychallan_consignment">Type of transaction:</label>
                 <select class="form-control input-sm" id="deliverychallan_consignment" accesskey="">
                   <option value="1">{% trans %}Approval{% endtrans %}</option>
@@ -155,7 +161,31 @@
                 </select>
               </label>
             </div>
-            {% if gkstatus=="in" %}
+	  </div>
+	  <div class="row">
+	    <div class="form-group col-sm-6">
+	      <label for="consigneename" class="fsize">{% trans %}Consignee Name{% endtrans %} :</label>
+	      <input type="text" id="consigneename" class="col-sm-8 form-control input-sm"></input>
+	    </div>
+	 
+	  <div class="form-group col-sm-6">
+	    <label for="consigneestate" class="fsize">{% trans %}Consignee State{% endtrans %} :</label>
+	    <select class="form-control input-sm" id="consigneestate" >
+              {% for state in states %}
+		{% for key, value in state.items() %}
+		  <option value="{{value}}" stateid="{{key}}">{{value}}</option>
+		{% endfor %}
+	      {% endfor %}
+            </select>
+	  </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="deliverychallan_consigneeaddr">
+              {% trans %}Consignee Address{% endtrans %} :
+            </label>
+	    <input class="form-control input-sm" id="deliverychallan_consigneeaddr" placeholder="" accesskey="">
+	  </div>
+          {% if gkstatus=="in" %}
             <input type="hidden" id="status" value="9">
             {% else %}
             <input type="hidden" id="status" value="15">
