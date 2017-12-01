@@ -990,7 +990,7 @@ else {
       $('#deliverychallan_date').focus().select();
       return false;
     }
-    var curdate = Date.parseExact($("#deliverychallan_year").val()+$("#deliverychallan_month").val()+$("#deliverychallan_date").val(), "yyyyMMdd")
+      var curdate = Date.parseExact($("#deliverychallan_year").val()+$("#deliverychallan_month").val()+$("#deliverychallan_date").val(), "yyyyMMdd");
     if (!curdate.between(financialstart,financialend)) {
       $("#between-date-alert").alert();
       $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -1008,7 +1008,12 @@ else {
       return false;
     }
 
-
+      var consignee = {}; // for consignee details
+     if($("#consigneename").val() != ""){
+	  consignee["consigneename"] = $.trim($("#consigneename").val());
+          consignee["consigneeaddress"] = $.trim($("#deliverychallan_consigneeaddr").val());
+          consignee["consigneestate"] = $.trim($("#consigneestate").val());
+      }
     var products = [];
     for (var i = 0; i < $("#deliverychallan_product_table tbody tr").length; i++) {
       if ($("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()=="") {
@@ -1065,7 +1070,7 @@ else {
       return false;
     }
 
-    var dataset = {}
+      var dataset = {};
 	if ($("#deliverychallan_godown option").length !=0) {
 		dataset = {"custid":$("#deliverychallan_customer option:selected").val(),
 			      "dcno":$("#deliverychallan_challanno").val(),
@@ -1077,7 +1082,8 @@ else {
 			      "designation":$("#deliverychallan_designation").val(),
 			      "goid":$("#deliverychallan_godown option:selected").val(),
 			      "products":JSON.stringify(products),
-			      "dcflag":$("#deliverychallan_consignment option:selected").val()}
+			      "consignee":JSON.stringify(consignee),
+			   "dcflag":$("#deliverychallan_consignment option:selected").val()};
 	}
 	else {
 		dataset = {"custid":$("#deliverychallan_customer option:selected").val(),
@@ -1089,7 +1095,8 @@ else {
 		      "issuername":$("#deliverychallan_issuername").val(),
 		      "designation":$("#deliverychallan_designation").val(),
 		      "products":JSON.stringify(products),
-		      "dcflag":$("#deliverychallan_consignment option:selected").val()}
+		      "consignee":JSON.stringify(consignee),
+			   "dcflag":$("#deliverychallan_consignment option:selected").val()};
 	}
     event.preventDefault();
     $('.modal-backdrop').remove();
@@ -1122,29 +1129,31 @@ else {
             qtytotal += +obj.qty;
             printset.push(obj);
       	}
-        var datas = {}
+            var datas = {};
       	if ($("#deliverychallan_godown option").length !=0) {
       		datas = {"dcno": $("#deliverychallan_challanno").val(),
       	            "custid":$("# option:selected").val(),
       	            "dcdate":$("#deliverychallan_date").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_year").val(),
-      	            "printset":JSON.stringify(printset),
+      		    "printset":JSON.stringify(printset),
+		    "consignee":JSON.stringify(consignee),
       	            "issuername":$("#deliverychallan_issuername").val(),
       	            "designation":$("#deliverychallan_designation").val(),
       	            "goid":$("#deliverychallan_godown option:selected").val(),
       	            "notetype":$("#deliverychallan_consignment option:selected").text(),
       	            "qtytotal":qtytotal
-      	            } }
+      			}; }
       	else {
       		datas = {"dcno": $("#deliverychallan_challanno").val(),
       	            "custid":$("# option:selected").val(),
       	            "dcdate":$("#deliverychallan_date").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_year").val(),
-      	            "printset":JSON.stringify(printset),
+      		    "printset":JSON.stringify(printset),
+		    "consignee":JSON.stringify(consignee),
       	            "issuername":$("#deliverychallan_issuername").val(),
       	            "designation":$("#deliverychallan_designation").val(),
       	            "goid":$("#deliverychallan_godown option:selected").val(),
       	            "notetype":$("#deliverychallan_consignment option:selected").text(),
       	            "qtytotal":qtytotal
-      	            }
+      			};
        }
           $.ajax({ // passing the delivery note details to a page displaying it as a print preview
             url: '/deliverychallan?action=print',
