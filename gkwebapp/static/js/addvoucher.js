@@ -72,7 +72,7 @@ $(document).ready(function() {
   $('.table-fixedheader tfoot').width(percentwid+"%");
   var percentheigth = 100*(($("body").height()-$(".navbar").height()-300)/$("body").height());
   $('.table-fixedheader tbody').height(percentheigth+"%");
-  var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
+    var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g);
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
 
@@ -142,7 +142,7 @@ $(document).off("focusout",".accs, .cramt, .dramt").on("focusout", ".accs, .cram
 });
 $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   event.preventDefault();
-  /* Act on the event */
+    /* Act on the event */
   var inv = $("#invsel option:selected").attr("total");
 
   if ($.trim(inv)!="")
@@ -151,7 +151,8 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   }
   else
   {
-  $("#invtotal").val(parseFloat(0).toFixed(2));
+      $("#invtotal").val(parseFloat(0).toFixed(2));
+      inv = 0;
   }
   var value = $('#invsel option:selected').attr("customername");
   $(".dramt:first").val(parseFloat(inv).toFixed(2));
