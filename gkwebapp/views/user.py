@@ -132,28 +132,14 @@ def removeuser(request):
 @view_config(route_name="deleteuser", renderer="json")
 def deleteuser(request):
     headers={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/users", headers=headers)
-    uname = ""
+    result = requests.get("http://127.0.0.1:6543/user?userAllDatar&userid=%d"%(int(request.params["username"])), headers=headers)
+    uname = result.json()["gkresult"]["username"]
+    
     #urole in terms of integer
-    urole = ""
+    urole = result.json()["gkresult"]["userrole"]
     #urole in terms of string
-    userrole = ""
-    '''here request param username is user id only'''
-    for user in result.json()["gkresult"]:
-        if user["userid"] == int(request.params["username"]):
-            uname = user["username"]
-            urole = int(user["userrole"])
-            break
-    if urole == -1:
-        userrole = "Admin"
-    elif urole == 0:
-        userrole = "Manager"
-    elif urole == 1:
-        userrole = "Operator"
-    elif urole == 2:
-        userrole = "Internal Auditor"
-    elif urole == 3:
-        userrole = "Godown In Charge"
+    userrole = result.json()["gkresult"]["userroleName"]
+    if urole == 3:
         resultgodown = requests.get("http://127.0.0.1:6543/godown?type=byuser&userid=%d"%(int(request.params["username"])), headers=headers)
         resultgodown = resultgodown.json()["gkresult"]
     gkdata={"userid":request.params["username"] }

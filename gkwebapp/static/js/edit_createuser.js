@@ -117,7 +117,6 @@ $("#edit").click(function(event) {
     
 //Event For New User Name
     $("#editname").keydown(function(e){
-	console.log("Wonderful");
     	if (e.which==13) {
     	      e.preventDefault();
     	      if ($.trim($("#editname").val())=="") {
@@ -234,22 +233,13 @@ $("#answer").keydown(function(e){
     });
 
 //Delete User
-
 $(document).off("click", "#delete").on("click", "#delete", function(event) {
-        event.preventDefault();
-        if ($.trim($("#edituser option:selected").text()=="")) { // Validation to check if a user is selected.
-              $("#remove-blank-alert").alert();
-              $("#remove-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-              $("#remove-blank-alert").hide();
-           });
-              $("#editname").focus();
-              return false;
-         }     
+        event.preventDefault();     
         $('.modal-backdrop').remove();
         $('.modal').modal('hide');
-        $('#m_confirmdel').modal('show').on('click', '#userdel', function(e) {
-              //var userid = $("#edituser option:selected").val();
-	    var code = $("#editname option:selected").val();
+        $('#m_confirmdel').modal('show').on('click', '#userdel', function(e)
+	 {
+	    var code = $("#edituser option:selected").text();
             $.ajax({
                 type: "POST",
                 url: "/deleteuser",
