@@ -766,7 +766,7 @@ else {
       $('#deliverychallan_date').focus().select();
       return false;
     }
-    var curdate = Date.parseExact($("#deliverychallan_year").val()+$("#deliverychallan_month").val()+$("#deliverychallan_date").val(), "yyyyMMdd")
+      var curdate = Date.parseExact($("#deliverychallan_year").val()+$("#deliverychallan_month").val()+$("#deliverychallan_date").val(), "yyyyMMdd");
     if (!curdate.between(financialstart,financialend)) {
       $("#between-date-alert").alert();
       $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -784,7 +784,13 @@ else {
       return false;
     }
 
-
+    var consignee = {};
+    if($("#consigneename").val() != ""){
+	  consignee["consigneename"] = $.trim($("#consigneename").val());
+          consignee["consigneeaddress"] = $.trim($("#deliverychallan_consigneeaddr").val());
+          consignee["consigneestate"] = $.trim($("#consigneestate").val());
+      }
+      
     var products = []; // list to store dictionaries containing product details
     for (var i = 0; i < $("#deliverychallan_product_table tbody tr").length; i++) {
         // loop for getting details from each row at a time
@@ -847,6 +853,7 @@ else {
     form_data.append("dcdate", $("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val());
     form_data.append("inout", $("#status").val());
     form_data.append("noofpackages", $('#deliverychallan_noofpackages').val());
+    form_data.append("consignee", JSON.stringify(consignee));
     form_data.append("modeoftransport", $('#deliverychallan_modeoftransport').val());
     form_data.append("issuername", $("#deliverychallan_issuername").val());
     form_data.append("designation", $("#deliverychallan_designation").val());

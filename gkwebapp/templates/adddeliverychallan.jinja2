@@ -179,12 +179,13 @@
             </select>
 	  </div>
 	  </div>
-	  <div class="form-group">
-	    <label for="deliverychallan_consigneeaddr">
-              {% trans %}Consignee Address{% endtrans %} :
-            </label>
-	    <input class="form-control input-sm" id="deliverychallan_consigneeaddr" placeholder="" accesskey="">
-	  </div>
+	    <div class="form-group">
+	      <label for="deliverychallan_consigneeaddr">
+		{% trans %}Consignee Address{% endtrans %} :
+              </label>
+	      <input class="form-control input-sm" id="deliverychallan_consigneeaddr" placeholder="" accesskey="">
+	    </div>
+	  
           {% if gkstatus=="in" %}
             <input type="hidden" id="status" value="9">
             {% else %}
