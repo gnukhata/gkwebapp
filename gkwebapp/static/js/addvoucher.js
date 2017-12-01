@@ -157,14 +157,14 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   var value = $('#invsel option:selected').attr("customername");
   $(".dramt:first").val(parseFloat(inv).toFixed(2));
   $(".cramt:eq(1)").val(parseFloat(inv).toFixed(2));
-  if (($('#vtype').val()=="sales") && sessionStorage.invsflag ==1)
+  if (($('#vtype').val()=="sales" || $('#vtype').val()=="payment") && sessionStorage.invsflag ==1)
   {
   $(".accs:first option").filter(function() {return this.text == value;}).attr('selected', true);
   var e = jQuery.Event("keydown");
   e.which = 13; // # Some key code value
   $(".dramt").trigger(e);
   }
-  if (($('#vtype').val()=="purchase") && sessionStorage.invsflag ==1)
+  if (($('#vtype').val()=="purchase" || $('#vtype').val()=="receipt") && sessionStorage.invsflag ==1)
  {
       $(".accs:eq(1) option").filter(function() {return this.text == value;}).attr('selected', true);
   }
