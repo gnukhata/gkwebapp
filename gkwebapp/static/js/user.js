@@ -37,7 +37,6 @@ $(document).ready(function() {
     {
       $("#user_edit").html(resp);
       $("#user_create").html("");
-      $("#user_list").html("");
     }
     }
   );
@@ -50,6 +49,6 @@ $(document).ready(function() {
     }
     else if(e.target.attributes.href.value=="#user_edit"){
       $("#editname").focus();
-    }
+    } 
   });
 });

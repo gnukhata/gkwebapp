@@ -1,6 +1,7 @@
 //Show UserDetails
 $(document).ready(function() {
     $('.modal-backdrop').remove();
+    $("#edituser").focus();
     $("#edusrsubmit").hide();
     $("#edituser").bind("change", function(e) {
         $("#edusrsubmit").hide();
@@ -36,30 +37,10 @@ $(document).ready(function() {
                 $("#form-footer").show();
                 $("#delete").show();
                 $("#edit").show();
-		console.log(userdetails);
             }
         });
     });
 
-/*//Number Of User
- $.ajax({
-            type: "POST",
-            url: "/showuser?type=list",
-            data: {
-                "userid": userid
-            },
-            global: false,
-            async: false,
-            dataType: "json",
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-            },
-            success: function(resp) {
-		user = resp["gkresult"];
-            }
-        });
-    });
-*/
     
 //For Edit Button
 $("#edit").click(function(event) {
@@ -75,25 +56,7 @@ $("#edit").click(function(event) {
         $("#editname").focus().select();
     });
 
-//Event For New User Name
-    $("#editname").keydown(function(e){
-    	if (e.which==13) {
-    	      e.preventDefault();
-    	      if ($.trim($("#editname").val())=="") {
-    	          $("#blank-alert").alert();
-    	          $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
-    	            $("#blank-alert").hide();
-    	          });
-    	          $("#editname").focus();
-    	          return false;
-    	          }
-    	          else {
-    	                 $("#password").focus();
-    	               }
-    	    }
-    });
-
-//$("#userrole option[value=3]").hide();
+// When "Godown In charge" role is select from userrole will gives Godown List.
   if (sessionStorage.invflag==1) {
     $.ajax(
        {
@@ -115,7 +78,7 @@ $("#edit").click(function(event) {
        }
        });
   }
-  $("#name").focus(function(){
+  $("#editname").focus(function(){
     $("#msspinmodal").modal("hide");
   });
   $('.modal-backdrop').remove();
@@ -124,7 +87,7 @@ $("#edit").click(function(event) {
     inselect = 1;
   });
 
-  $(document).off("change","#userrole").on("change","#userrole",function(e){
+    $("#userrole").change(function(e){
     /* Act on the event */
       var role = $("#userrole option:selected").val();
     if (role==3){
@@ -152,20 +115,38 @@ $("#edit").click(function(event) {
          }
   });
     
+//Event For New User Name
+    $("#editname").keydown(function(e){
+	console.log("Wonderful");
+    	if (e.which==13) {
+    	      e.preventDefault();
+    	      if ($.trim($("#editname").val())=="") {
+    	          $("#blank-alert").alert();
+    	          $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
+    	            $("#blank-alert").hide();
+    	          });
+    	          $("#editname").focus();
+    	          return false;
+    	          }
+    	          else {
+    	                 $("#password").focus();
+    	               }
+    	    }
+    });
+    
     
 //Event for Edit Password
-   $("#password").keydown(function(e){
-      if (e.which==13)
-      {
-        e.preventDefault();
-        $("#passwordconfirm").focus();
-      }
-      if (e.which==38)
-      {
-        e.preventdefault();
-        $("#editname").focus();
-      }
-   });
+    $("#password").keydown(function(e){
+               if (e.which==13)
+               {
+                   e.preventDefault();
+                  $("#passwordconfirm").focus();
+               }
+               if (e.which==38)
+               {
+                  $("#editname").focus();
+               }
+          });
 
 //Event For Confirm Password
  $("#passwordconfirm").keydown(function(e){
@@ -192,7 +173,7 @@ $("#passwordconfirm").blur(function(event) {
       });
 
 //Event for User Role
-$(document).off("keydown","#userrole").on("keydown", '#userrole', function(e) {
+    $("#userrole").keydown(function(e) {
 
         if (e.which == 13 || e.which == 9) {
           e.preventDefault();
@@ -239,6 +220,14 @@ $("#answer").keydown(function(e){
         }
 });
 
+    $("#edituser").keydown(function(e) {
+        if ($(".edituserform").is(':visible')) {
+            if (e.which == 13) {
+                $("#edit").click();
+            }
+        }
+    });
+    
    //To Edit User 
  $("#reset").click(function() {
         $("a[href ='#user_edit']").click();
@@ -248,12 +237,19 @@ $("#answer").keydown(function(e){
 
 $(document).off("click", "#delete").on("click", "#delete", function(event) {
         event.preventDefault();
+        if ($.trim($("#edituser option:selected").text()=="")) { // Validation to check if a user is selected.
+              $("#remove-blank-alert").alert();
+              $("#remove-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#remove-blank-alert").hide();
+           });
+              $("#editname").focus();
+              return false;
+         }     
         $('.modal-backdrop').remove();
         $('.modal').modal('hide');
-        $('#m_confirmdel').modal('show').on('click', '#usrdel', function(e) {
-            var user;
-          if (user==0) {
-            var userid = $("#edituser option:selected").val();
+        $('#m_confirmdel').modal('show').on('click', '#userdel', function(e) {
+              //var userid = $("#edituser option:selected").val();
+	    var code = $("#editname option:selected").val();
             $.ajax({
                 type: "POST",
                 url: "/deleteuser",
@@ -261,7 +257,7 @@ $(document).off("click", "#delete").on("click", "#delete", function(event) {
                 async: false,
                 datatype: "json",
                 data: {
-                    "userid": userid
+		    "username":code
                 },
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -272,7 +268,7 @@ $(document).off("click", "#delete").on("click", "#delete", function(event) {
                         $("#delsuccess-alert").alert();
                         $("#delsuccess-alert").fadeTo(2250, 500).slideUp(500, function() {
                         $("#delsuccess-alert").hide();
-                        $("#user").click();
+                        $("#user_create").click();
                         });
                     } else if (resp["gkstatus"] == 5) {
                         $("#transaction-alert").alert();
@@ -281,19 +277,13 @@ $(document).off("click", "#delete").on("click", "#delete", function(event) {
                         });
                         $("#edituser").focus().select();
                     }
-
-                }
+		}
             });
-	  }
-            else{
-              $("#prod-alert").alert();
-              $("#prod-alert").fadeTo(2250, 500).slideUp(500, function() {
-                  $("#prod-alert").hide();
-              });
-              $("#edituser").focus().select();
-              return false;
-            }
-        });
+            //else{
+                 //$("#edituser").focus().select();
+                 //return false;
+                //}
+          });
 
 
 $('#m_confirmdel').on('shown.bs.modal', function(event) {

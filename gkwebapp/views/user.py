@@ -69,7 +69,6 @@ def getuserdetails(request):
     result = requests.get("http://127.0.0.1:6543/user?userAllData&userid=%d"%(userid), headers=header)
     if(result.json()["gkstatus"] == 0):
         record = result.json()["gkresult"]
-        print record
         resp = {"userid": record["userid"], "username": record["username"], "userrole": record["userrole"], "question": record["userquestion"], "answer": record["useranswer"]}
         return {"gkstatus":0, "gkresult":resp}
     return {"gkstatus":result.json()["gkstatus"]}
