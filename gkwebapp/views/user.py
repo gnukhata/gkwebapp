@@ -69,6 +69,7 @@ def getuserdetails(request):
     result = requests.get("http://127.0.0.1:6543/user?userAllData&userid=%d"%(userid), headers=header)
     if(result.json()["gkstatus"] == 0):
         record = result.json()["gkresult"]
+        print record
         resp = {"userid": record["userid"], "username": record["username"], "userrole": record["userrole"], "question": record["userquestion"], "answer": record["useranswer"]}
         return {"gkstatus":0, "gkresult":resp}
     return {"gkstatus":result.json()["gkstatus"]}
@@ -134,7 +135,6 @@ def deleteuser(request):
     headers={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/user?userAllDatar&userid=%d"%(int(request.params["username"])), headers=headers)
     uname = result.json()["gkresult"]["username"]
-    
     #urole in terms of integer
     urole = result.json()["gkresult"]["userrole"]
     #urole in terms of string
@@ -142,7 +142,7 @@ def deleteuser(request):
     if urole == 3:
         resultgodown = requests.get("http://127.0.0.1:6543/godown?type=byuser&userid=%d"%(int(request.params["username"])), headers=headers)
         resultgodown = resultgodown.json()["gkresult"]
-    gkdata={"userid":request.params["username"] }
+    gkdata={"userid":request.params["username"]}
     result = requests.delete("http://127.0.0.1:6543/users", data=json.dumps(gkdata), headers=headers)
     if result.json()["gkstatus"] == 0:
         if urole == 3:
@@ -154,7 +154,6 @@ def deleteuser(request):
                     godnames += ", "
                 j += 1
             gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted from " + godnames + " godown"}
-
         else:
             gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted"}
         resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=headers)

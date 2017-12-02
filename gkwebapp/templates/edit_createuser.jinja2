@@ -47,23 +47,42 @@
 
 	{% trans %}User already exists!{% endtrans %}
       </div>
+
+      <div class="alert alert-success" id="connectionfailed-alert" hidden>
+
+	{% trans %}Connection Failed.{% endtrans %}
+      </div>
+ 
+      <div class="container-fluid row">
+      <div class="col-md-2" id="selectuserform">
+	<div class="form-group">
+	  <label for="selectuser">{% trans %}Select User{% endtrans %} :</label>
+	  <form action="">
+	    <input type="radio" name="selectuser" value="0"> Manager<br>
+	    <input type="radio" name="selectuser" value="1"> Operator<br>
+	    <input type="radio" name="selectuser" value="2"> Internal Auditor<br>
+	    <input type="radio" name="selectuser" value="3"> Godown In Charge
+	  </form>	  
+	</div>
+      </div>
       
       <div class="container-fluid row">
-      <div class="col-md-6">
+      <div class="col-md-5">
 	<div class="form-group">
 	  <label for="edituser">{% trans %}List of Users{% endtrans %} :</label>
 	  <select class = "form-control input-sm" id="edituser">
 	    <option value="disabled" disabled selected hidden>{% trans %}Select User{% endtrans %}</option>
 	    {% for user in gkresult %}
-	      <option value="{{user['userid']}}">{{user["username"]}} ({{user["userrole"]}})</option>
+	      <option value="{{user['userid']}}">{{user["username"]}} ({{user["userroleName"]}})</option>
 	    {% endfor %}
 	  </select>
 	</div>
       </div>
       </div>
+      
       <div class="container-fluid row">
-	<div class="col-md-6 edituserform" hidden>
-
+	<div class="col-md-5 edituserform" hidden>
+	  
 	<div class="alert alert-danger" id="blank-alert"  aria-live="rude" role="alert" hidden>
 
 	    {% trans %}Please enter User name!{% endtrans %}
@@ -136,7 +155,7 @@
 	</div>
       </div><!-- /.modal -->
       </div>
-      <div class="col-md-6" id="usertable"></div>
+      <div class="col-md-5" id="usertable"></div>
       </div>
     </div>
     

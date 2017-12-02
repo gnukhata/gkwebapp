@@ -239,7 +239,8 @@ $(document).off("click", "#delete").on("click", "#delete", function(event) {
         $('.modal').modal('hide');
         $('#m_confirmdel').modal('show').on('click', '#userdel', function(e)
 	 {
-	    var code = $("#edituser option:selected").text();
+	     var code = $("#edituser option:selected").text();
+	     var usrid = $("#edituser option:selected").val();
             $.ajax({
                 type: "POST",
                 url: "/deleteuser",
@@ -247,7 +248,8 @@ $(document).off("click", "#delete").on("click", "#delete", function(event) {
                 async: false,
                 datatype: "json",
                 data: {
-		    "username":code
+		    
+		    "userid":usrid
                 },
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -260,12 +262,12 @@ $(document).off("click", "#delete").on("click", "#delete", function(event) {
                         $("#delsuccess-alert").hide();
                         $("#user_create").click();
                         });
-                    } else if (resp["gkstatus"] == 5) {
-                        $("#transaction-alert").alert();
-                        $("#transaction-alert").fadeTo(2250, 500).slideUp(500, function() {
-                        $("#transaction-alert").hide();
+                    } else if (resp["gkstatus"] == 3) {
+                        $("#connectionfailed-alert").alert();
+                        $("#connectionfailed-alert").fadeTo(2250, 500).slideUp(500, function() {
+                        $("#connectionfailed-alert").hide();
                         });
-                        $("#edituser").focus().select();
+                        $("#editname").focus().select();
                     }
 		}
             });
