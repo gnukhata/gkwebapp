@@ -102,26 +102,20 @@
 	  </div>
 	  <div class="row">
 	    <div class="form-group col-sm-6">
-	      <label for="consigneename" class="fsize">{% trans %}Consignee Name{% endtrans %} :</label>
-	      <input type="text" id="consigneename" class="col-sm-8 form-control input-sm deliverychallan_edit_disable"></input>
+	      <label for="deliverychallan_edit_consigneename" class="fsize">{% trans %}Consignee Name{% endtrans %} :</label>
+	      <input type="text" id="deliverychallan_edit_consigneename" class="col-sm-8 form-control input-sm deliverychallan_edit_disable"></input>
 	    </div>
 	    
 	    <div class="form-group col-sm-6">
-	      <label for="consigneestate" class="fsize">{% trans %}Consignee State{% endtrans %} :</label>
-	      <select class="form-control input-sm deliverychallan_edit_disable" id="consigneestate" >
-		{% for state in states %}
-		  {% for key, value in state.items() %}
-		    <option value="{{value}}" stateid="{{key}}">{{value}}</option>
-		  {% endfor %}
-		{% endfor %}
-              </select>
+	      <label for="deliverychallan_edit_consigneestate" class="fsize">{% trans %}Consignee State{% endtrans %} :</label>
+	      <input type="text" class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_consigneestate"></input>
 	    </div>
 	  </div>
 	  <div class="form-group">
-	    <label for="deliverychallan_consigneeaddr">
+	    <label for="deliverychallan_edit_consigneeaddr">
 	      {% trans %}Consignee Address{% endtrans %} :
             </label>
-	    <input class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_consigneeaddr" placeholder="" accesskey="">
+	    <input class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_consigneeaddr" placeholder="" accesskey="">
 	  </div>
           </div>
           <div class="col-md-7 deliverychallan_edit_div" id="deliverychallan_edit_product_div" hidden>

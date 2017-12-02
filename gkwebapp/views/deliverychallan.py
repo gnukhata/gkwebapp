@@ -105,6 +105,7 @@ def getdelchal(request):
         inoutflag="in"
     else:
         inoutflag="out"
+    print delchaldata.json()["gkresult"]
     return {"gkstatus": delchaldata.json()["gkstatus"],"delchaldata": delchaldata.json()["gkresult"],"inoutflag":inoutflag}
 
 
