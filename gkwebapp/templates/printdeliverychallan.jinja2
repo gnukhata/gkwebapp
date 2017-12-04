@@ -79,19 +79,27 @@
         </small></h4>
         <hr style="border-color:grey;margin-top:0px; margin-bottom:0px;">
         {% endif %}
-        To,
-        <h4>{{cust["custname"]}}</br><small>{{cust["custaddr"]}},</br>{{cust["state"]}}
-          {% if cust["custphone"]!='' %}
-            <br>Contact No.: {{cust["custphone"]}}
-          {% endif %}
-          {% if cust["custemail"]!='' %}
-            <br>Email : {{cust["custemail"]}}
-          {% endif %}
-        </small></h4>
-	Consignee Details :
-	<h4>{{consignee["consigneename"]}}<br>
-	  <small>{{consignee["consigneeaddress"]}}<br>
-	  {{consignee["consigneestate"]}}</small></h4>
+	<div class="row">
+	  <div class="form-group col-sm-6">
+	    To,
+            <h4>{{cust["custname"]}}</br><small>{{cust["custaddr"]}},</br>{{cust["state"]}}
+              {% if cust["custphone"]!='' %}
+		<br>Contact No.: {{cust["custphone"]}}
+              {% endif %}
+              {% if cust["custemail"]!='' %}
+		<br>Email : {{cust["custemail"]}}
+              {% endif %}
+            </small></h4>
+	  </div>
+	  <div class="form-group col-sm-6">
+	    {% if consignee %}
+	    Consignee Details :
+	    <h4>{{consignee["consigneename"]}}<br>
+	      <small>{{consignee["consigneeaddress"]}},<br>
+		{{consignee["consigneestate"]}}</small></h4>
+	    {% endif %}
+	  </div>
+	</div>
       </div>
       <div class="col-sm-offset-1 col-sm-5">
         <h2 class="text-right">Delivery Note</h2><br>
