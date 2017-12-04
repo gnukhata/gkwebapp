@@ -809,6 +809,12 @@ $(document).ready(function() {
 			$("#invoice_customer").val(resp["delchal"]["delchaldata"]["custid"]);
 			$("#invoice_customer").prop("disabled", true);
 			$("#invoice_customerstate").prop("disabled", true);
+			/**$("#consigneename").val(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]);
+			$("#consigneename").prop("disabled", true);
+			$("#consigneestate").val(resp["delchal"]["delchaldata"]["consignee"]["consigneestate"]);
+			$("#consigneestate").prop("disabled", true);
+			$("#consigneeaddress").val(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]);
+			$("#consigneeaddress").prop("disabled", true);**/
 			$("#invoice_customer").change();
 			$.ajax({
 			    url: '/customersuppliers?action=get',
