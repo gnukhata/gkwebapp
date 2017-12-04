@@ -106,35 +106,35 @@ $(document).ready(function() {
       return bal;
     };
     if($('#vtable tbody tr:first td:eq(1) select option:selected').val()){
-      var curacccode = $('#vtable tbody tr:first td:eq(1) select option:selected').val();
-      var d = new Date();
-      var month = d.getMonth()+1;
-      var day = d.getDate();
-      var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+      let curacccode = $('#vtable tbody tr:first td:eq(1) select option:selected').val();
+      let d = new Date();
+      let month = d.getMonth()+1;
+      let day = d.getDate();
+      let caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
       $('#vtable tbody tr:first td:eq(2) input').val(getBalance(curacccode, caldata));
     }
     if($('#vtable tbody tr:eq(1) td:eq(1) select option:selected').val()){
-      var curacccode = $('#vtable tbody tr:eq(1) td:eq(1) select option:selected').val();
-      var d = new Date();
-      var month = d.getMonth()+1;
-      var day = d.getDate();
-      var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+      let curacccode = $('#vtable tbody tr:eq(1) td:eq(1) select option:selected').val();
+      let d = new Date();
+      let month = d.getMonth()+1;
+      let day = d.getDate();
+      let caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
       $('#vtable tbody tr:eq(1) td:eq(2) input').val(getBalance(curacccode, caldata));
     }
     $('#vtable tbody tr:first td:eq(1) select').change(function(event) {
-      var curacccode = $('#vtable tbody tr:first td:eq(1) select option:selected').val();
-      var d = new Date();
-      var month = d.getMonth()+1;
-      var day = d.getDate();
-      var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+      let curacccode = $('#vtable tbody tr:first td:eq(1) select option:selected').val();
+      let d = new Date();
+      let month = d.getMonth()+1;
+      let day = d.getDate();
+      let caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
       $('#vtable tbody tr:first td:eq(2) input').val(getBalance(curacccode, caldata));
     });
     $('#vtable tbody tr:eq(1) td:eq(1) select').change(function(event) {
-      var curacccode = $('#vtable tbody tr:eq(1) td:eq(1) select option:selected').val();
-      var d = new Date();
-      var month = d.getMonth()+1;
-      var day = d.getDate();
-      var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+      let curacccode = $('#vtable tbody tr:eq(1) td:eq(1) select option:selected').val();
+      let d = new Date();
+      let month = d.getMonth()+1;
+      let day = d.getDate();
+      let caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
       $('#vtable tbody tr:eq(1) td:eq(2) input').val(getBalance(curacccode, caldata));
     });
 $(document).off("focusout",".accs, .cramt, .dramt").on("focusout", ".accs, .cramt, .dramt", function() {
@@ -218,7 +218,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       return str.length < max ? pad("0" + str, max) : str;
     }
     else{
-      return str
+	return str;
     }
   }
   function yearpad (str, max) {
@@ -230,7 +230,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       return str.length < max ? pad("20" + str, max) : str;
     }
     else{
-      return str
+	return str;
     }
   }
   //Formats the number on focusout
@@ -261,7 +261,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       $('#vdate').focus().select();
       return false;
     }
-    var curdate = Date.parseExact($("#vyear").val()+$("#vmonth").val()+$("#vdate").val(), "yyyyMMdd")
+      var curdate = Date.parseExact($("#vyear").val()+$("#vmonth").val()+$("#vdate").val(), "yyyyMMdd");
     if (!curdate.between(financialstart,financialend)) {
       $("#between-date-alert").alert();
       $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -465,7 +465,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 
       }
   });
-    var details = {}
+    var details = {};
   $('#narration').keyup(function(event) {
     if (details.projectcode!="" && event.which==13) {
 
@@ -644,12 +644,12 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       if ($(this).val()==null) {
         return false;
       }
-      var curindex = $(this).closest('tr').index();
+      curindex = $(this).closest('tr').index();
       $('#vtable tbody tr:eq('+curindex+') input:enabled').select().focus(); // focus shifts to the enabled amount box when one hits enter on the accounts select box.
     }
     if (event.which==32) {
       accpopupindex = $(this).closest('tr').index();
-      curselectlength = $(this).length
+	curselectlength = $(this).length;
       $("#popup").click();
     }
    if (event.which==13 && outfocus) {
@@ -664,9 +664,9 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     }
   });
   $(document).off("keydown",".accs").on("keydown",".accs",function(event){
-    curindex = $(this).closest('tr').index();
-    nextindex = curindex+1;
-    previndex = curindex-1;
+    let curindex = $(this).closest('tr').index();
+    let nextindex = curindex+1;
+    let previndex = curindex-1;
     if (event.which==32 || event.which==13) {
       event.preventDefault();
     }
@@ -721,9 +721,9 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     }
   });
   $(document).off("keydown",".crdr").on("keydown",".crdr",function(event){
-    curindex = $(this).closest('tr').index();
-    nextindex = curindex+1;
-    previndex = curindex-1;
+    let curindex = $(this).closest('tr').index();
+    let nextindex = curindex+1;
+    let previndex = curindex-1;
     if(event.which==190 && event.shiftKey)
     {
       $('#vtable tbody tr:eq('+nextindex+') td:eq(0) select').focus();
@@ -749,10 +749,10 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     }
   });
   $(document).off("keydown",".cramt").on("keydown",".cramt",function(event){
-    curindex = $(this).closest('tr').index();
-    lastindex = $("#vtable tbody tr:last").index();
-    nextindex = curindex+1;
-    previndex = curindex-1;
+    let curindex = $(this).closest('tr').index();
+    let lastindex = $("#vtable tbody tr:last").index();
+    let nextindex = curindex+1;
+    let previndex = curindex-1;
     if(event.which==190 && event.shiftKey)
     {
       event.preventDefault();
@@ -779,9 +779,9 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     }
   });
   $(document).off("keydown",".dramt").on("keydown",".dramt",function(event){
-    curindex = $(this).closest('tr').index();
-    nextindex = curindex+1;
-    previndex = curindex-1;
+    let curindex = $(this).closest('tr').index();
+    let nextindex = curindex+1;
+    let previndex = curindex-1;
     //
 
 
@@ -846,7 +846,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
         diff=drsum-crsum;
         if(curindex<lastindex)
         {
-          var nxtindex = curindex+1
+          let nxtindex = curindex+1;
           if($('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="" || $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()==0 || $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="NaN"){
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
             crsum=0;
@@ -922,7 +922,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
         diff=crsum-drsum;
         if(curindex<lastindex)
         {
-          var nxtindex = curindex+1
+            let nxtindex = curindex+1;
           if($('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0 || $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="NaN"){
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
             drsum=0;
@@ -1035,7 +1035,8 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
         crsum += +$(this).val();
         $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
       });
-      var curindex = $(this).closest('tr').index();
+	var curindex = $(this).closest('tr').index();
+	var nxtindex = curindex+1;
       if($('#vtable tbody tr:eq('+curindex+') td:eq(4) input:enabled').val()=="" || $('#vtable tbody tr:eq('+curindex+') td:eq(4) input:enabled').val()==0){
         return false;
       }
@@ -1045,7 +1046,6 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
         diff=drsum-crsum;
         if(curindex<lastindex)
         {
-          var nxtindex = curindex+1
           if($('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="" || $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()==0){
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
             crsum=0;
@@ -1126,7 +1126,6 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
         diff=crsum-drsum;
         if(curindex<lastindex)
         {
-          var nxtindex = curindex+1
           if($('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0 || $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="NaN"){
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(diff.toFixed(2));
             drsum=0;
