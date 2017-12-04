@@ -105,7 +105,6 @@ def getdelchal(request):
         inoutflag="in"
     else:
         inoutflag="out"
-    print delchaldata.json()["gkresult"]
     return {"gkstatus": delchaldata.json()["gkstatus"],"delchaldata": delchaldata.json()["gkresult"],"inoutflag":inoutflag}
 
 
@@ -273,7 +272,7 @@ def deliveryprint(request):
     return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"cust":cust.json()["gkresult"],
     "tableset":tableset,"dcno":request.params["dcno"],"dcdate":request.params["dcdate"],"dcno":request.params["dcno"],
     "issuername":request.params["issuername"],"designation":request.params["designation"],"godown":godowndata,
-    "notetype":request.params["notetype"],"qtytotal":request.params["qtytotal"]}
+            "notetype":request.params["notetype"],"qtytotal":request.params["qtytotal"],"consignee":json.loads(request.params["consignee"])}
 
 @view_config(route_name="show_del_unbilled_report",renderer="gkwebapp:templates/unbilled_deliveries_report.jinja2")
 def show_unbilled_deliveries_report(request):

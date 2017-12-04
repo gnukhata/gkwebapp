@@ -82,12 +82,16 @@
         To,
         <h4>{{cust["custname"]}}</br><small>{{cust["custaddr"]}},</br>{{cust["state"]}}
           {% if cust["custphone"]!='' %}
-          <br>Contact No.: {{cust["custphone"]}}
+            <br>Contact No.: {{cust["custphone"]}}
           {% endif %}
           {% if cust["custemail"]!='' %}
-          <br>Email : {{cust["custemail"]}}
+            <br>Email : {{cust["custemail"]}}
           {% endif %}
         </small></h4>
+	Consignee Details :
+	<h4>{{consignee["consigneename"]}}<br>
+	  <small>{{consignee["consigneeaddress"]}}<br>
+	  {{consignee["consigneestate"]}}</small></h4>
       </div>
       <div class="col-sm-offset-1 col-sm-5">
         <h2 class="text-right">Delivery Note</h2><br>

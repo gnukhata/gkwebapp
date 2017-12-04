@@ -204,8 +204,14 @@ if(event.which==13)
 
 
 $("#deliverychallan_editprint").click(function(event) {
-  printset = [];
-  qtytotal =0;
+ let printset = [];
+    let qtytotal =0;
+    var consignee = {};
+    if($("#deliverychallan_edit_consigneename").val() != ""){
+	  consignee["consigneename"] = $.trim($("#deliverychallan_edit_consigneename").val());
+          consignee["consigneeaddress"] = $.trim($("#deliverychallan_edit_consigneeaddr").val());
+          consignee["consigneestate"] = $.trim($("#deliverychallan_edit_consigneestate").val());
+      }
   for (var i = 0; i < $("#deliverychallan_edit_product_table tbody tr").length; i++) {
     var obj = {};
 
@@ -223,11 +229,12 @@ $("#deliverychallan_editprint").click(function(event) {
     "custid":$("#deliverychallan_edit_customer option:selected").val(),
     "dcdate":$("#deliverychallan_edit_date").val()+'-'+$("#deliverychallan_edit_month").val()+'-'+$("#deliverychallan_edit_year").val(),
     "printset":JSON.stringify(printset),
+    "consignee":JSON.stringify(consignee),
     "issuername":$("#deliverychallan_edit_issuername").val(),
     "designation":$("#deliverychallan_edit_designation").val(),
     "goid":$("#deliverychallan_edit_godown option:selected").val(),
     "notetype":$("#deliverychallan_edit_consignment option:selected").text(),
-    "qtytotal":qtytotal,
+    "qtytotal":qtytotal
     },
     beforeSend: function(xhr)
     {
