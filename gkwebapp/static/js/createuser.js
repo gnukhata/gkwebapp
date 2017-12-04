@@ -309,7 +309,8 @@ $(document).ready(function(){
                 });
               }
               if(resp["gkstatus"]==1)
-              {
+		{
+		    $("#msspinmodal").modal("hide");
                 $("#DuplicateEntry-blank-alert").alert();
                 $("#DuplicateEntry-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
                   $("#DuplicateEntry-blank-alert").hide();
@@ -317,7 +318,8 @@ $(document).ready(function(){
                 });
               }
               if(resp["gkstatus"]==4)
-              {
+		{
+		    $("#msspinmodal").modal("hide");
                 $('#adduser')[0].reset();
                 $("#BadPrivilege-blank-alert").alert();
                 $("#BadPrivilege-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -328,7 +330,6 @@ $(document).ready(function(){
             }
           }
         );
-        //e.preventDefault();
       }
     );
   });

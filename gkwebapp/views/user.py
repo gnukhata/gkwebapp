@@ -77,7 +77,7 @@ def getuserdetails(request):
 @view_config(route_name="showedituser", renderer="gkwebapp:templates/edituser.jinja2")
 def showedituser(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/user", headers=header)
+    result = requests.get("http://127.0.0.1:6543/users", headers=header)
     return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
 
 @view_config(route_name="edituser", renderer="json")

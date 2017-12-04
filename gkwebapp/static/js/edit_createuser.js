@@ -1,7 +1,7 @@
 //Show UserDetails
 $(document).ready(function() {
     $('.modal-backdrop').remove();
-    $("#edituser").focus();
+    $("#all").focus();
     $("#edusrsubmit").hide();
     $("#edituser").bind("change", function(e) {
         $("#edusrsubmit").hide();
@@ -42,8 +42,8 @@ $(document).ready(function() {
     });
 
     
-//For Edit Button
-$("#edit").click(function(event) {
+ //For Edit Button
+ $("#edit").click(function(event) {
         event.preventDefault();
         $("#edusrsubmit").show();
         $("#editname").prop("disabled", false);
@@ -56,7 +56,7 @@ $("#edit").click(function(event) {
         $("#editname").focus().select();
     });
 
-// When "Godown In charge" role is select from userrole will gives Godown List.
+  // When "Godown In charge" role is select from userrole will gives Godown List.
   if (sessionStorage.invflag==1) {
     $.ajax(
        {
@@ -115,7 +115,7 @@ $("#edit").click(function(event) {
          }
   });
     
-//Event For New User Name
+    //Event For New User Name
     $("#editname").keydown(function(e){
     	if (e.which==13) {
     	      e.preventDefault();
@@ -131,10 +131,10 @@ $("#edit").click(function(event) {
     	                 $("#password").focus();
     	               }
     	    }
-    });
+     });
     
     
-//Event for Edit Password
+    //Event for Edit Password
     $("#password").keydown(function(e){
                if (e.which==13)
                {
@@ -147,8 +147,8 @@ $("#edit").click(function(event) {
                }
           });
 
-//Event For Confirm Password
- $("#passwordconfirm").keydown(function(e){
+    //Event For Confirm Password
+    $("#passwordconfirm").keydown(function(e){
      if (e.which==13)
       {
         e.preventDefault();
@@ -160,7 +160,7 @@ $("#edit").click(function(event) {
       }
     });
 
-$("#passwordconfirm").blur(function(event) {
+    $("#passwordconfirm").blur(function(event) {
         if ($.trim($("#password").val())!=$.trim($("#passwordconfirm").val())) {
           $("#checkpassuser-blank-alert").alert();
           $("#checkpassuser-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -169,9 +169,9 @@ $("#passwordconfirm").blur(function(event) {
           $("#password").focus();
           return false;
         }
-      });
+    });
 
-//Event for User Role
+    //Event for User Role
     $("#userrole").keydown(function(e) {
 
         if (e.which == 13 || e.which == 9) {
@@ -192,8 +192,8 @@ $("#passwordconfirm").blur(function(event) {
       }
     });
 
-//Event for Security Question
-$("#question").keydown(function(e){
+   //Event for Security Question
+   $("#question").keydown(function(e){
         if (e.which==13)
         {
           e.preventDefault();
@@ -205,19 +205,18 @@ $("#question").keydown(function(e){
         }
       });
 
-//Event for Security Answer
-
-$("#answer").keydown(function(e){
+   //Event for Security Answer
+   $("#answer").keydown(function(e){
         if (e.which==13)
         {
           e.preventDefault();
-            $("#edusrsubmit").focus().click();
+            $("#edusrsubmit").focus();
         }
     if (e.which==38) {
           e.preventDefault();
           $("#question").focus();
         }
-});
+   });
 
     $("#edituser").keydown(function(e) {
         if ($(".edituserform").is(':visible')) {
@@ -228,12 +227,12 @@ $("#answer").keydown(function(e){
     });
     
    //To Edit User 
- $("#reset").click(function() {
+   $("#reset").click(function() {
         $("a[href ='#user_edit']").click();
     });
 
-//Delete User
-$(document).off("click", "#delete").on("click", "#delete", function(event) {
+   //Delete User
+   $(document).off("click", "#delete").on("click", "#delete", function(event) {
         event.preventDefault();     
         $('.modal-backdrop').remove();
         $('.modal').modal('hide');
@@ -258,10 +257,12 @@ $(document).off("click", "#delete").on("click", "#delete", function(event) {
                         $('.modal-backdrop').remove();
                         $("#delsuccess-alert").alert();
                         $("#delsuccess-alert").fadeTo(2250, 500).slideUp(500, function() {
-                        $("#delsuccess-alert").hide();
-                        $("#user_create").click();
+			    $("#delsuccess-alert").hide();
+			    $("a[href ='#user_create']").click();
                         });
-                    } else if (resp["gkstatus"] == 3) {
+			return false;
+                    }
+		    else if (resp["gkstatus"] == 3) {
                         $("#connectionfailed-alert").alert();
                         $("#connectionfailed-alert").fadeTo(2250, 500).slideUp(500, function() {
                         $("#connectionfailed-alert").hide();
@@ -273,7 +274,7 @@ $(document).off("click", "#delete").on("click", "#delete", function(event) {
           });
 
 
-$('#m_confirmdel').on('shown.bs.modal', function(event) {
+    $('#m_confirmdel').on('shown.bs.modal', function(event) {
             $("#m_cancel").focus();
         });
 
@@ -289,8 +290,8 @@ $('#m_confirmdel').on('shown.bs.modal', function(event) {
       }
     });
 
-//Submit Button Validation
-$("#edusrsubmit").click(function(e) {
+    //Submit Button Validation
+    $("#edusrsubmit").click(function(e) {
 
         if ($.trim($("#editname").val()) == "") {
             $("#username-blank-alert").alert();
@@ -318,7 +319,7 @@ $("#edusrsubmit").click(function(e) {
         };
 
 
-if ($.trim($("#question").val()) == "") {
+    if ($.trim($("#question").val()) == "") {
             $("#secque-blank-alert").alert();
             $("#secque-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
                 $("#secque-blank-alert").hide();
@@ -327,7 +328,7 @@ if ($.trim($("#question").val()) == "") {
             return false;
         };
 
-if ($.trim($("#answer").val()) == "") {
+    if ($.trim($("#answer").val()) == "") {
             $("#secans-blank-alert").alert();
             $("#secans-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
                 $("#secans-blank-alert").hide();
@@ -337,9 +338,9 @@ if ($.trim($("#answer").val()) == "") {
         };
 
 
-//For Edit Data load purpose
+        //For Edit Data load purpose
 
-var userid = $("#edituser option:selected").val();
+        var userid = $("#edituser option:selected").val();
         var username = $("#editname").val();
         var userpassword = $.trim($("#password").val());
         var userrole = $("#userrole").val();
@@ -347,7 +348,7 @@ var userid = $("#edituser option:selected").val();
         var useranswer = $("#answer").val();
         $.ajax({
             type: "POST",
-            url: "/#showuser?type=edituser",
+            url: "/showuser?type=edituser",
             global: false,
             async: false,
             datatype: "json",
@@ -385,6 +386,6 @@ var userid = $("#edituser option:selected").val();
             }
         });
        e.preventDefault();
-});
-});
+    });
+    });
     
