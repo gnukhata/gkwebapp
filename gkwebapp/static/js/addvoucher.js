@@ -1,5 +1,6 @@
 /*
    Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+   Copyright (C) 2017 Digital Freedom Foundation & Accion Labs
    This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
    GNUKhata is Free Software; you can redistribute it and/or modify
@@ -603,6 +604,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     $('#vtable tbody tr:eq('+curindex+') td:eq(2) input').val(getBalance(curacccode, caldata)); // Function that returns balance is called.
     });
     $(".accs").change(); //Change event is triggered so that balance is displayed when the page is loaded.
+    
     $(document).off("keyup",".accs").on("keyup",".accs",function(event){
     var curindex = $(this).closest('tr').index();
     if(event.which==13 && !outfocus)
