@@ -133,7 +133,7 @@ def removeuser(request):
 @view_config(route_name="deleteuser", renderer="json")
 def deleteuser(request):
     headers={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/user?userAllDatar&userid=%d"%(int(request.params["username"])), headers=headers)
+    result = requests.get("http://127.0.0.1:6543/user?userAllData&userid=%d"%(int(request.params["username"])), headers=headers)
     uname = result.json()["gkresult"]["username"]
     #urole in terms of integer
     urole = result.json()["gkresult"]["userrole"]

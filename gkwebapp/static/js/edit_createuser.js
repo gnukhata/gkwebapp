@@ -237,10 +237,9 @@ $(document).off("click", "#delete").on("click", "#delete", function(event) {
         event.preventDefault();     
         $('.modal-backdrop').remove();
         $('.modal').modal('hide');
-        $('#m_confirmdel').modal('show').on('click', '#userdel', function(e)
+        $('#m_confirmdel').modal('show').on('click', '#usrdel', function(e)
 	 {
-	     var code = $("#edituser option:selected").text();
-	     var usrid = $("#edituser option:selected").val();
+	     console.log("User ID");
             $.ajax({
                 type: "POST",
                 url: "/deleteuser",
@@ -249,8 +248,8 @@ $(document).off("click", "#delete").on("click", "#delete", function(event) {
                 datatype: "json",
                 data: {
 		    
-		    "userid":usrid
-                },
+		    "username": $("#edituser option:selected").val()
+	                },
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
                 },
@@ -271,10 +270,6 @@ $(document).off("click", "#delete").on("click", "#delete", function(event) {
                     }
 		}
             });
-            //else{
-                 //$("#edituser").focus().select();
-                 //return false;
-                //}
           });
 
 

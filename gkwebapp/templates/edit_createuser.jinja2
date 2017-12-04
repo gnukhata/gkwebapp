@@ -52,36 +52,44 @@
 
 	{% trans %}Connection Failed.{% endtrans %}
       </div>
- 
-      <div class="container-fluid row">
-      <div class="col-md-2" id="selectuserform">
-	<div class="form-group">
+
+        <div class="row">      
+	<div class="col-md-2" id="selectuserform">
 	  <label for="selectuser">{% trans %}Select User{% endtrans %} :</label>
-	  <form action="">
-	    <input type="radio" name="selectuser" value="0"> Manager<br>
-	    <input type="radio" name="selectuser" value="1"> Operator<br>
-	    <input type="radio" name="selectuser" value="2"> Internal Auditor<br>
-	    <input type="radio" name="selectuser" value="3"> Godown In Charge
-	  </form>	  
+	  <div class="radio">
+            <label><input type="radio" class="iib" name="iib" id="managerradio" aria-label="" value="0" checked>&nbsp {% trans %}Manager{% endtrans %}.</label>
+          </div>
+
+	  <div class="radio">
+            <label><input type="radio" class="iib" name="iib" id="operatorradio" aria-label="" value="1">&nbsp {% trans %}Operator{% endtrans %}.</label>
+          </div>
+
+	  <div class="radio">
+            <label><input type="radio" class="iib" name="iib" id="auditorradio" aria-label="" value="2">&nbsp {% trans %}Internal Auditor{% endtrans %}.</label>
+          </div>
+
+	  <div class="radio">
+            <label><input type="radio" class="iib" name="iib" id="Inchargeradio" aria-label="" value="3">&nbsp {% trans %}Godown In Charge{% endtrans %}.</label>
+          </div>	  
 	</div>
-      </div>
-      
-      <div class="container-fluid row">
-      <div class="col-md-5">
-	<div class="form-group">
-	  <label for="edituser">{% trans %}List of Users{% endtrans %} :</label>
-	  <select class = "form-control input-sm" id="edituser">
-	    <option value="disabled" disabled selected hidden>{% trans %}Select User{% endtrans %}</option>
-	    {% for user in gkresult %}
-	      <option value="{{user['userid']}}">{{user["username"]}} ({{user["userroleName"]}})</option>
-	    {% endfor %}
-	  </select>
-	</div>
-      </div>
-      </div>
-      
-      <div class="container-fluid row">
-	<div class="col-md-5 edituserform" hidden>
+	
+	<div class="col-md-10">
+	  <div class="row">
+	  <div class="col-md-6">
+	    <div class="form-group">
+	      <label for="edituser">{% trans %}List of Users{% endtrans %} :</label>
+	      <select class = "form-control input-sm" id="edituser">
+		<option value="disabled" disabled selected hidden>{% trans %}Select User{% endtrans %}</option>
+		{% for user in gkresult %}
+		  <option value="{{user['userid']}}">{{user["username"]}} ({{user["userroleName"]}})</option>
+                {% endfor %}
+	      </select>
+	   </div>
+	  </div>
+	  </div>
+             
+        <div class="row">
+	<div class="col-md-6 edituserform" hidden>
 	  
 	<div class="alert alert-danger" id="blank-alert"  aria-live="rude" role="alert" hidden>
 
@@ -154,11 +162,12 @@
 	  </div><!-- /.modal-dialog -->
 	</div>
       </div><!-- /.modal -->
+</div>
+      <div class="col-md-6" id="usertable"></div>
       </div>
-      <div class="col-md-5" id="usertable"></div>
-      </div>
-    </div>
-    
+	</div>{# 2nd row (10) #}
+	</div> {# 1st row (12) #}
+    </div> {#panel-body#}
     <div id="form-footer" class="panel-footer" hidden>
       <div class="container-fluid">
 	<button type="submit" class="btn btn-success btn-sm" id="edusrsubmit" name="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
