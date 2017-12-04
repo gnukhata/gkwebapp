@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+  Copyright (C) 2013, 2014, 2015, 2016, 2017 Digital Freedom Foundation
 This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
 GNUKhata is Free Software; you can redistribute it and/or modify
@@ -22,6 +22,7 @@ Contributors:
 "Krishnakant Mane" <kk@gmail.com>
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
+"Reshma Bhatawadekar <reshma_b@riseup.net>"
 */
 
 // This script is for the add adddeliverychallan.jinja2
@@ -215,6 +216,7 @@ $(document).ready(function() {
     }
   });
 
+  //Keyevents for Consignee fields
   $("#consigneename").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
