@@ -1456,7 +1456,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       obj.dramount = $(".dramt", this).val();
       output.push(obj);
     });
-    var details = {} // dictionay containing details other than the table values.
+      var details = {}; // dictionay containing details other than the table values.
     details.vno=$('#vno').val();
     details.vdate=$('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
     details.projectcode=$('#project').val();
@@ -1465,16 +1465,16 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
         details.projectcode=$('#project').val();
       } // returns 1
       else {
-        details.projectcode=""
+          details.projectcode="";
       }
 
     details.narration=$.trim($('#narration').val());
     details.vtype=$('#vtype').val();
     var form_data = new FormData();
-    var files = $("#my-file-selector")[0].files
+      var files = $("#my-file-selector")[0].files;
     var filelist = [];
     for (var i = 0; i < files.length; i++) {
-      form_data.append("file"+i,files[i])
+	form_data.append("file"+i,files[i]);
     }
     if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase"))
       {
@@ -1520,7 +1520,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 	details.invid="" ;
       }
 
-      details.instrumentno=""
+      details.instrumentno="";
       //details.instrumentdate="";
       if($("#instrumentno").val())
       {
@@ -1543,7 +1543,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
           return false;
 
         }
-        instrumentdate1=Date.parseExact($("#instrument_date").val()+$("#instrument_month").val()+$("#instrument_year").val(), "ddMMyyyy");
+        let instrumentdate1=Date.parseExact($("#instrument_date").val()+$("#instrument_month").val()+$("#instrument_year").val(), "ddMMyyyy");
 
         if(!instrumentdate1){
           $("#bankdetails-alert").show();
@@ -1556,7 +1556,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
         }
         details.bankname=$("#bankname").val();
         details.branchname=$("#branchname").val();
-        instrdate=$("#instrument_year").val()+'-'+$("#instrument_month").val()+'-'+$("#instrument_date").val();
+        let instrdate=$("#instrument_year").val()+'-'+$("#instrument_month").val()+'-'+$("#instrument_date").val();
         details.instrumentdate=instrdate;
       }
     form_data.append("vdetails",JSON.stringify(details));
@@ -1905,7 +1905,7 @@ $("#instrumentmodal").modal("show");
         if (event.which==13) {
           event.preventDefault();
                                     //
-                                    instrumentdate1=Date.parseExact($("#instrument_date").val()+$("#instrument_month").val()+$("#instrument_year").val(), "ddMMyyyy");
+                                    let instrumentdate1=Date.parseExact($("#instrument_date").val()+$("#instrument_month").val()+$("#instrument_year").val(), "ddMMyyyy");
 
                                     if(!instrumentdate1){
                                       $("#instrdate-alert").show();
