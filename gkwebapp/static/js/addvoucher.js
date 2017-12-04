@@ -104,39 +104,8 @@ $(document).ready(function() {
         console.log("complete");
       });
       return bal;
-    };
-    if($('#vtable tbody tr:first td:eq(1) select option:selected').val()){
-      let curacccode = $('#vtable tbody tr:first td:eq(1) select option:selected').val();
-      let d = new Date();
-      let month = d.getMonth()+1;
-      let day = d.getDate();
-      let caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
-      $('#vtable tbody tr:first td:eq(2) input').val(getBalance(curacccode, caldata));
-    }
-    if($('#vtable tbody tr:eq(1) td:eq(1) select option:selected').val()){
-      let curacccode = $('#vtable tbody tr:eq(1) td:eq(1) select option:selected').val();
-      let d = new Date();
-      let month = d.getMonth()+1;
-      let day = d.getDate();
-      let caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
-      $('#vtable tbody tr:eq(1) td:eq(2) input').val(getBalance(curacccode, caldata));
-    }
-    $('#vtable tbody tr:first td:eq(1) select').change(function(event) {
-      let curacccode = $('#vtable tbody tr:first td:eq(1) select option:selected').val();
-      let d = new Date();
-      let month = d.getMonth()+1;
-      let day = d.getDate();
-      let caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
-      $('#vtable tbody tr:first td:eq(2) input').val(getBalance(curacccode, caldata));
-    });
-    $('#vtable tbody tr:eq(1) td:eq(1) select').change(function(event) {
-      let curacccode = $('#vtable tbody tr:eq(1) td:eq(1) select option:selected').val();
-      let d = new Date();
-      let month = d.getMonth()+1;
-      let day = d.getDate();
-      let caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
-      $('#vtable tbody tr:eq(1) td:eq(2) input').val(getBalance(curacccode, caldata));
-    });
+  };
+    
 $(document).off("focusout",".accs, .cramt, .dramt").on("focusout", ".accs, .cramt, .dramt", function() {
     curfocusrow = $(this).closest('tr').index();
 });
@@ -308,24 +277,16 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 
   $('#vno').keydown(function(event) {
     if(event.which==13 && $('#vno').val()!=""){
-      navflag =1;
-
-
-      if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invsflag ==1)
+	navflag =1;
+	event.preventDefault();
+      if ($("#invsel").length > 0)
       {
-        if($("#invhide").val()==1)
-       {
         $("#invsel").focus();
-      }
-      else {
-        $('#vdate').focus().select();
-      }
       }
       else
       {
         $('#vdate').focus().select();
       }
-        event.preventDefault();
 
     }
     if (event.which==190 && event.ctrlKey) {
@@ -634,11 +595,16 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     });
   });
 
-  $(document).off("keyup",".accs").on("keyup",".accs",function(event){
+    //Everytime an account is selected its balance is checked and displayed.
+    $(document).off("change",".accs").on("change",".accs",function(event){
+    let curindex = $(this).closest('tr').index();
+    let curacccode = $('#vtable tbody tr:eq('+curindex+') td:eq(1) select option:selected').val();
+    let caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+    $('#vtable tbody tr:eq('+curindex+') td:eq(2) input').val(getBalance(curacccode, caldata)); // Function that returns balance is called.
+    });
+    $(".accs").change(); //Change event is triggered so that balance is displayed when the page is loaded.
+    $(document).off("keyup",".accs").on("keyup",".accs",function(event){
     var curindex = $(this).closest('tr').index();
-    var curacccode = $('#vtable tbody tr:eq('+curindex+') td:eq(1) select option:selected').val();
-    var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
-    $('#vtable tbody tr:eq('+curindex+') td:eq(2) input').val(getBalance(curacccode, caldata));
     if(event.which==13 && !outfocus)
     {
       if ($(this).val()==null) {
