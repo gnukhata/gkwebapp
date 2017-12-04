@@ -43,18 +43,18 @@
    Document off is used to remove an already attached event to an element, so as to make sure that an event is fired only once.
  */
 $(document).ready(function() {
-  $("#msspinmodal").modal("hide");
-  $(".modal-backdrop").remove();
+  $("#msspinmodal").modal("hide");  //Hides a spinner used to indicate that the page is getting loaded.
+  $(".modal-backdrop").remove();  //Removes any backdrop of the spinner.
   if (sessionStorage.invsflag==0)
   {
-    $(".invhide").hide();
+    $(".invhide").hide(); //Hides list of invoices in Receipt, Payment, Sale and Purchase vouchers when invoice flag is set to zero.
   }
   else
   {
-    $(".invhide").show();
+    $(".invhide").show(); //Hides list of invoices in Receipt, Payment, Sale and Purchase vouchers when invoice flag is set to zero.
   }
   if (sessionStorage.orgt=="Profit Making") {
-    $("label[for='project']").html("C<u>o</u>st Center:");
+    $("label[for='project']").html("C<u>o</u>st Center:");  //Label for select combo of projects is set as Cost Center
   }
   $("#vno").focus().select();
   $('.vdate').autotab('number');    //autotab is a library for automatically switching the focus to next input when max allowed characters are filled.
@@ -551,7 +551,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
           if(accountcode==$(".accs", this).val()){
             ccount =ccount +1;
             if (ccount==2) {
-              accountindex = $(this).index();
+              let accountindex = $(this).index();
             }
           }
         });
@@ -1236,7 +1236,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
           if(accountcode==$(".accs", this).val()){
             ccount =ccount +1;
             if (ccount==2) {
-              accountindex = $(this).index();
+              let accountindex = $(this).index();
             }
           }
         });
@@ -1366,7 +1366,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       $('#vdate').focus().select();
       return false;
     }
-    var curdate = Date.parseExact($("#vyear").val()+$("#vmonth").val()+$("#vdate").val(), "yyyyMMdd")
+      var curdate = Date.parseExact($("#vyear").val()+$("#vmonth").val()+$("#vdate").val(), "yyyyMMdd");
     if (!curdate.between(financialstart,financialend)) {
       $("#between-date-alert").alert();
       $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
