@@ -376,7 +376,12 @@ $(document).ready(function() {
 	    }
 	    else {
 		if ($("#invoice_customer").is(":disabled")) {
-		    $("#consigneename").focus().select();  //Focus shifts to Consignee Name as Customer's fields are disabled when delivery note is selected.
+		    if($("#consigneename").is(":disabled")) {
+			$("#gstinconsignee").focus(); //Focus shifts to Consignee GSTIN as Consignee Name field is disabled when delivery note is selected. 
+		    }
+		    else{
+			$("#consigneename").focus().select();  //Focus shifts to Consignee Name as Customer's fields are disabled when delivery note is selected.
+		    }
 		}
 		else {
 		    $("#invoice_customer").focus();  //Focus shifts to Customer.
@@ -406,7 +411,12 @@ $(document).ready(function() {
 	if (event.which == 13) {
 	    event.preventDefault();
 	    if ($("#invoice_customer").is(":disabled")) {
-		$("#consigneename").focus().select();  //Focus shifts to Consignee Name as Customer's fields are disabled when delivery note is selected.
+		if($("#consigneename").is(":disabled")){
+		    $("#gstinconsignee").focus(); //Focus shifts to Consignee GSTIN as Consignee Name field is disabled when delevery note is selected.
+		}
+		else {
+		    $("#consigneename").focus().select();  //Focus shifts to Consignee Name as Customer's fields are disabled when delivery note is selected.
+		}
 	    }
 	    else {
 		$("#invoice_customer").focus();  //Focus shifts to Customer.
@@ -809,12 +819,12 @@ $(document).ready(function() {
 			$("#invoice_customer").val(resp["delchal"]["delchaldata"]["custid"]);
 			$("#invoice_customer").prop("disabled", true);
 			$("#invoice_customerstate").prop("disabled", true);
-			/**$("#consigneename").val(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]);
+			$("#consigneename").val(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]);
 			$("#consigneename").prop("disabled", true);
 			$("#consigneestate").val(resp["delchal"]["delchaldata"]["consignee"]["consigneestate"]);
 			$("#consigneestate").prop("disabled", true);
 			$("#consigneeaddress").val(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]);
-			$("#consigneeaddress").prop("disabled", true);**/
+			$("#consigneeaddress").prop("disabled", true);
 			$("#invoice_customer").change();
 			$.ajax({
 			    url: '/customersuppliers?action=get',
