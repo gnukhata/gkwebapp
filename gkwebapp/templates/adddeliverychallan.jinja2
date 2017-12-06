@@ -140,12 +140,13 @@
               </label>
               <select class="form-control input-sm" id="deliverychallan_godown">
                {% for godown in godowns %}
-                <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
-                {% endfor %}
+                 <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
+               {% endfor %}
               </select>
-               {% endif %}
+            {% endif %}
             </div>
-            <div class="form-group col-sm-6">
+	    {%if numberofgodowns > 0 %}
+              <div class="form-group col-sm-6">
               <label for="deliverychallan_consignment">Type of transaction:</label>
                 <select class="form-control input-sm" id="deliverychallan_consignment" accesskey="">
                   <option value="1">{% trans %}Approval{% endtrans %}</option>
@@ -159,8 +160,26 @@
                   {% endif %}
                   <option value="19">{% trans %}Sample{% endtrans %}</option>
                 </select>
-              </label>
-            </div>
+            </label>
+              </div>
+	    {% else %}
+	      <div class="form-group col-sm-12">
+		<label for="deliverychallan_consignment">Type of transaction:</label>
+                <select class="form-control input-sm" id="deliverychallan_consignment" accesskey="">
+                  <option value="1">{% trans %}Approval{% endtrans %}</option>
+                  <option value="3">{% trans %}Consignment{% endtrans %}</option>
+                  {% if gkstatus=="in" %}
+                    <option value="6">{% trans %}Free Replacement{% endtrans %}</option>
+                    <option value="16">{% trans %}Purchase{% endtrans %}</option>
+                  {% else %}
+                    <option value="6">{% trans %}Free Replacement{% endtrans %}</option>
+                    <option value="4">{% trans %}Sale{% endtrans %}</option>
+                  {% endif %}
+                  <option value="19">{% trans %}Sample{% endtrans %}</option>
+                </select>
+            </label>
+              </div>
+	      {%endif%}
 	  </div>
 	  <div class="row">
 	    <div class="form-group col-sm-6">

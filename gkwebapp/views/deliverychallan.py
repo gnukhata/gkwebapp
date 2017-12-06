@@ -1,6 +1,7 @@
 
 """
-Copyright (C) 2013, 2014, 2015, 2016, 2017 Digital Freedom Foundation
+Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+Copyright (C) 2017 Digital Freedom Foundation & Accion Labs
   This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
   GNUKhata is Free Software; you can redistribute it and/or modify
@@ -264,7 +265,7 @@ def deliveryprint(request):
     header={"gktoken":request.headers["gktoken"]}
     org = requests.get("http://127.0.0.1:6543/organisation", headers=header)
     cust = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(request.params["custid"])), headers=header)
-    if request.params["goid"]:
+    if request.params.has_key("goid"):
         godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
         godowndata = godown.json()["gkresult"]
     else:

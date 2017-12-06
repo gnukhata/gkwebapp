@@ -78,6 +78,7 @@
 	  </div>
 	  <div class="row">
             <div class="form-group col-sm-6">
+	      {% if godowns %}
               <label for="deliverychallan_edit_godown" id="fgolabel">{% trans %}Received At{% endtrans %} :</label>
               <label for="deliverychallan_edit_godown" id="tgolabel">{% trans %}Dispatch From{% endtrans %} :</label>
               <select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_godown" accesskey="">
@@ -86,7 +87,9 @@
                   <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
                 {% endfor %}
               </select>
+	      {% endif %}
             </div>
+	    {% if godowns %}
             <div class="form-group col-sm-6">
               <label for="deliverychallan_edit_consignment">Type of Transaction:</label>
               <select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_consignment" accesskey="">
@@ -99,6 +102,20 @@
               </select>
             </label>
             </div>
+	    {% else %}
+	    <div class="form-group col-sm-12">
+              <label for="deliverychallan_edit_consignment">Type of Transaction:</label>
+              <select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_consignment" accesskey="">
+                <option value="16">{% trans %}Purchase{% endtrans %}</option>
+                <option value="4">{% trans %}Sale{% endtrans %}</option>
+                <option value="1">{% trans %}Approval{% endtrans %}</option>
+                <option value="3">{% trans %}Consignment{% endtrans %}</option>
+                <option value="19">{% trans %}Sample{% endtrans %}</option>
+                <option value="6">{% trans %}Free Replacement{% endtrans %}</option>
+              </select>
+            </label>
+            </div>
+	    {% endif %}
 	  </div>
 	  <div class="row">
 	    <div class="form-group col-sm-6">
