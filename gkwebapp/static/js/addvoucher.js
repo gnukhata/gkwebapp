@@ -113,16 +113,19 @@ $(document).off("focusout",".accs, .cramt, .dramt").on("focusout", ".accs, .cram
 $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   event.preventDefault();
     /* Act on the event */
-  var inv = $("#invsel option:selected").attr("total");
-
+    var inv = $("#invsel option:selected").attr("total");
+    var invbalance = $("#invsel option:selected").attr("balance");
   if ($.trim(inv)!="")
   {
-  $("#invtotal").val(parseFloat(inv).toFixed(2));
+      $("#invtotal").val(parseFloat(inv).toFixed(2));
+      $("#invbalance").val(parseFloat(invbalance).toFixed(2));
   }
   else
   {
       $("#invtotal").val(parseFloat(0).toFixed(2));
+      $("#invbalance").val(parseFloat(0).toFixed(2));
       inv = 0;
+      invbalance = 0;
   }
   var value = $('#invsel option:selected').attr("customername");
   $(".dramt:first").val(parseFloat(inv).toFixed(2));
@@ -1528,7 +1531,10 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
         details.instrumentdate=instrdate;
       }
     form_data.append("vdetails",JSON.stringify(details));
-    form_data.append("transactions",JSON.stringify(output));
+      form_data.append("transactions",JSON.stringify(output));
+      if (($("#vouchertype").val() == "receipt" || $("#vouchertype").val() == "payment") && sessionStorage.invsflag == 1 && numberofcustomers == 1 && $("#invsel option:selected").val() != '') {
+	  let invoicebalance = $("#invbalance").val();
+      }
 
     $("#msspinmodal").modal("show");
     $.ajax({
@@ -1553,7 +1559,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
           $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#success-alert").hide();
             //Modal asking the user if he wants to do bill wise accounting or not?
-            if (($("#vouchertype").val() == "receipt" || $("#vouchertype").val() == "payment") && sessionStorage.billflag == 1 && numberofcustomers == 1) {
+              if (($("#vouchertype").val() == "receipt" || $("#vouchertype").val() == "payment") && sessionStorage.billflag == 1 && numberofcustomers == 1 && $("#invsel option:selected").val() == '') {
               $("#confirm_yes_billwise").modal("show");
               $("#bwno").focus(); //Focus is on "No" when the model opens.
               $(document).off('click', '#bwyes').on('click', '#bwyes', function(event) {
