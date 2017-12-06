@@ -1,8 +1,34 @@
-//Show UserDetails
+/*
+Copyright (C) 2016, 2017 Digital Freedom Foundation & Accion Labs
+  This file is part of GNUKhata:A modular,robust and Free Accounting System.
+
+  GNUKhata is Free Software; you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation; either version 3 of
+  the License, or (at your option) any later version.and old.stockflag = 's'
+
+  GNUKhata is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public
+  License along with GNUKhata (COPYING); if not, write to the
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+  Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+
+
+Contributors:
+"Krishnakant Mane" <kk@gmail.com>
+*/
+
+// This script for edit user.
+
 $(document).ready(function() {
     $('.modal-backdrop').remove();
     $("#all").focus();
 
+    //It is filter out list of user on basis of its role   
     $(document).off('change', '.iib').on('change', '.iib', function(event) {
 	if ($("#managerradio").is(":checked")) {
 	    $("#edituser option[role!='Manager']").prop("hidden", true).prop("disabled", true);
@@ -26,7 +52,6 @@ $(document).ready(function() {
     });
 
     $(document).off('focusin', '.iib').on('focusin', '.iib', function(event) {
-        console.log("Hello");
 	$("#edituser option[id='g']").prop("selected",true);
     });
 
@@ -47,7 +72,8 @@ $(document).ready(function() {
 	    }
 	}
     });
-    
+
+    //This call gives selected user details and hide it.
     $("#edusrsubmit").hide();
     $("#edituser").bind("change", function(e) {
         $("#edusrsubmit").hide();
@@ -89,23 +115,22 @@ $(document).ready(function() {
 		    $("#GodInCharge").hide();
 		    $("#usertable").hide();
 		}
-		if (userdetails["userrole"] == 3){
-		    //console.log(userdetails["godowns"]);
+		/*if (userdetails["userrole"] == 3){
+		    console.log(userdetails["godowns"]);
 		    let i=0;
-		    //console.log("#latable tbody tr:eq('+i+')".attr("value"));
-		    /*for(let i=0; i<$('#latable tbody tr').length; i++){
+		    console.log("#latable tbody tr:eq('+i+')".attr("value"));
+		    for(let i=0; i<$('#latable tbody tr').length; i++){
 	            if($('#latable tbody tr:eq('+i+')').attr("value") in userdetails["godowns"]){
 			('#latable tbody tr td').is(":checked");
 			}
-		   //console.log(($('#latable tbody tr:eq('+i+')').attr("value"));
+		    }
 		}*/
-		}
                }
            });
        });
 
     
- //For Edit Button
+ //when click on Edit Button all data will unhide.
  $("#edit").click(function(event) {
         event.preventDefault();
         $("#edusrsubmit").show();
@@ -167,7 +192,6 @@ $(document).ready(function() {
          success: function(resp)
          {
              $("#usertable").html(resp);
-	     console.log('$("#latable tbody tr:first td:first input")');
            $("#latable tbody tr:first td:first input").focus().select();
          }
          });
@@ -195,7 +219,7 @@ $(document).ready(function() {
      });
 
     
-    //Event For New User Name
+    // Key event For New User Name
     $("#editname").keydown(function(e){
     	if (e.which==13) {
     	      e.preventDefault();
@@ -214,35 +238,35 @@ $(document).ready(function() {
      });
     
     
-    //Event for Edit Password
+    //Key event for Edit Password
     $("#password").keydown(function(e){
                if (e.which==13)
                {
-                   e.preventDefault();
                   $("#passwordconfirm").focus();
                }
                if (e.which==38)
                {
+	          e.preventDefault();
                   $("#editname").focus();
                }
           });
 
-    //Event For Confirm Password
+    //Key event For Confirm Password
     $("#passwordconfirm").keydown(function(e){
-     if (e.which==13)
-      {
-          e.preventDefault();
-	  if($("#userrole").val() == -1) {
-	      $("#question").focus(); 
-	  }
-	  else {
-	   $("#userrole").focus();   
-	  }        
-      }
-     if (e.which==38)
-	{
-        $("#password").focus();
-      }
+	  if(e.which==13)    
+          {
+	     if($("#userrole").val() == -1) {
+		  console.log("Bug");
+	       $("#question").focus(); 
+	    }
+	    else {
+		$("#userrole").focus();   
+	    }        
+          }
+        if(e.which==38){
+	      e.preventDefault();
+              $("#password").focus();
+          }
     });
 
     $("#passwordconfirm").blur(function(event) {
@@ -256,7 +280,7 @@ $(document).ready(function() {
         }
     });
 
-    //Event for User Role
+    //Key event for User Role
     $("#userrole").keydown(function(e) {
         if (e.which == 13 || e.which == 9) {
           e.preventDefault();
@@ -276,7 +300,7 @@ $(document).ready(function() {
       }
     });
 
-   //Event for Security Question
+   //Key event for Security Question
    $("#question").keydown(function(e){
         if (e.which==13)
         {
@@ -294,7 +318,7 @@ $(document).ready(function() {
         }
       });
 
-   //Event for Security Answer
+   //Key event for Security Answer
    $("#answer").keydown(function(e){
         if (e.which==13)
         {
@@ -307,12 +331,12 @@ $(document).ready(function() {
         }
    });
     
-   //To Edit User 
+   //To reset all data  
    $("#reset").click(function() {
         $("a[href ='#user_edit']").click();
     });
 
-   //Delete User
+   //Delete User from oraganization
    $(document).off("click", "#delete").on("click", "#delete", function(event) {
         event.preventDefault();     
         $('.modal-backdrop').remove();
