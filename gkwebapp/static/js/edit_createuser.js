@@ -2,6 +2,52 @@
 $(document).ready(function() {
     $('.modal-backdrop').remove();
     $("#all").focus();
+
+    $(document).off('change', '.iib').on('change', '.iib', function(event) {
+	if ($("#managerradio").is(":checked")) {
+	    $("#edituser option[role!='Manager']").prop("hidden", true).prop("disabled", true);
+	    $("#edituser option[role='Manager']").prop("hidden", false).prop("disabled", false);
+	}
+	else if ($("#operatorradio").is(":checked")) {
+	    $("#edituser option[role!='Operator']").prop("hidden",true).prop("disabled",true);
+	    $("#edituser option[role='Operator']").prop("hidden", false).prop("disabled", false);
+	}
+	else if ($("#auditorradio").is(":checked")) {
+	    $("#edituser option[role!='Internal Auditor']").prop("hidden",true).prop("disabled",true);
+	    $("#edituser option[role='Internal Auditor']").prop("hidden", false).prop("disabled", false);
+	}
+	else if ($("#Inchargeradio").is(":checked")) {
+	    $("#edituser option[role!='Godown In Charge']").prop("hidden", true).prop("disabled", true);
+	    $("#edituser option[role='Godown In Charge']").prop("hidden", false).prop("disabled", false);
+	}
+	else {
+	    $("#edituser option").prop("hidden", false).prop("disabled", false); 
+	}
+    });
+
+    $(document).off('focusin', '.iib').on('focusin', '.iib', function(event) {
+        console.log("Hello");
+	$("#edituser option[id='g']").prop("selected",true);
+    });
+
+    $(document).off('keydown', '.iib').on('keydown', '.iib', function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    if ($("#managerradio").is(":checked")) {
+		$("#edituser").focus();
+	    }
+	    else if ($("#operatorradio").is(":checked")) {
+		$("#edituser").focus();
+	    }
+	    else if ($("#auditorradio").is(":checked")) {
+		$("#edituser").focus();
+	    }
+	    else if ($("#Inchargeradio").is(":checked")) {
+		$("#edituser").focus();
+	    }
+	}
+    });
+    
     $("#edusrsubmit").hide();
     $("#edituser").bind("change", function(e) {
         $("#edusrsubmit").hide();
@@ -23,7 +69,6 @@ $(document).ready(function() {
                 userdetails = resp["gkresult"];
                 $("#editname").val(userdetails["username"]);
                 $("#editname").prop("disabled", true);
-		//$("#password").prop(userdetails["password"]);
 		$("#password").prop("disabled",true);
 		$("#passwordconfirm").prop("disabled",true);
 		$("#userrole").val(userdetails["userrole"]);
@@ -44,10 +89,10 @@ $(document).ready(function() {
 		    $("#GodInCharge").hide();
 		    $("#usertable").hide();
 		}
-		if (userdetails["userrole"]== 3){
-		    console.log(userdetails["godowns"]);
+		if (userdetails["userrole"] == 3){
+		    //console.log(userdetails["godowns"]);
 		    let i=0;
-		    console.log("#latable tbody tr:eq('+i+')".attr("value"));
+		    //console.log("#latable tbody tr:eq('+i+')".attr("value"));
 		    /*for(let i=0; i<$('#latable tbody tr').length; i++){
 	            if($('#latable tbody tr:eq('+i+')').attr("value") in userdetails["godowns"]){
 			('#latable tbody tr td').is(":checked");
@@ -76,8 +121,7 @@ $(document).ready(function() {
 
   // When "Godown In charge" role is select from userrole will gives Godown List.
   if (sessionStorage.invflag==1) {
-    $.ajax(
-       {
+    $.ajax({
        type: "POST",
        url: "/godown?type=check",
        global: false,
@@ -111,7 +155,6 @@ $(document).ready(function() {
     if (role==3){
       $.ajax(
          {
-
          type: "POST",
          url: "/godown?type=role_list",
          global: false,
@@ -123,7 +166,8 @@ $(document).ready(function() {
            },
          success: function(resp)
          {
-           $("#usertable").html(resp);
+             $("#usertable").html(resp);
+	     console.log('$("#latable tbody tr:first td:first input")');
            $("#latable tbody tr:first td:first input").focus().select();
          }
          });
@@ -131,7 +175,25 @@ $(document).ready(function() {
          else {
            $("#usertable").html("");
          }
-  });
+    });
+
+    $("#edituser").keydown(function(e) {
+        if ($(".edituserform").is(':visible')) {
+            if (e.which == 13) {
+		e.preventDefault();
+                $("#edit").click();
+            }
+        }
+    });
+
+    $("#all").keydown(function(e){
+        if (e.which==13)
+        {
+          e.preventDefault();
+            $("#edituser").focus();
+        }
+     });
+
     
     //Event For New User Name
     $("#editname").keydown(function(e){
@@ -169,11 +231,16 @@ $(document).ready(function() {
     $("#passwordconfirm").keydown(function(e){
      if (e.which==13)
       {
-        e.preventDefault();
-        $("#userrole").focus();
+          e.preventDefault();
+	  if($("#userrole").val() == -1) {
+	      $("#question").focus(); 
+	  }
+	  else {
+	   $("#userrole").focus();   
+	  }        
       }
      if (e.which==38)
-      {
+	{
         $("#password").focus();
       }
     });
@@ -191,7 +258,6 @@ $(document).ready(function() {
 
     //Event for User Role
     $("#userrole").keydown(function(e) {
-
         if (e.which == 13 || e.which == 9) {
           e.preventDefault();
          if ($(this).val()==3) {
@@ -218,8 +284,13 @@ $(document).ready(function() {
             $("#answer").focus().select();
         }
         else if (e.which==38) {
-          e.preventDefault();
-          $("#userrole").focus();
+            e.preventDefault();
+	    if($("#userrole").val()== -1){
+		$("#passwordconfirm").focus();
+	    }
+	    else{
+		$("#userrole").focus();
+	    }
         }
       });
 
@@ -235,14 +306,6 @@ $(document).ready(function() {
           $("#question").focus();
         }
    });
-
-    $("#edituser").keydown(function(e) {
-        if ($(".edituserform").is(':visible')) {
-            if (e.which == 13) {
-                $("#edit").click();
-            }
-        }
-    });
     
    //To Edit User 
    $("#reset").click(function() {
@@ -256,7 +319,6 @@ $(document).ready(function() {
         $('.modal').modal('hide');
         $('#m_confirmdel').modal('show').on('click', '#usrdel', function(e)
 	 {
-	     console.log("User ID");
             $.ajax({
                 type: "POST",
                 url: "/deleteuser",
@@ -266,7 +328,7 @@ $(document).ready(function() {
                 data: {
 		    
 		    "username": $("#edituser option:selected").val()
-	                },
+	               },
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
                 },
@@ -287,7 +349,7 @@ $(document).ready(function() {
                         });
                         $("#editname").focus().select();
                     }
-		}
+		 }
             });
           });
 
@@ -356,7 +418,7 @@ $(document).ready(function() {
         };
 
 
-        //For Edit Data load purpose
+        //For Edited Data store.
 
         var userid = $("#edituser option:selected").val();
         var username = $("#editname").val();
@@ -405,5 +467,5 @@ $(document).ready(function() {
         });
        e.preventDefault();
     });
-    });
+ });
     

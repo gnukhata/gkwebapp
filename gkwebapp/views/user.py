@@ -59,6 +59,7 @@ def createusers(request):
 def editusers(request):
    header={"gktoken":request.headers["gktoken"]}
    result = requests.get("http://127.0.0.1:6543/users", headers=header)
+   #print result.json()["gkresult"]
    return {"gkresult":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
 
 #Get Userdetails 
@@ -68,7 +69,7 @@ def getuserdetails(request):
     userid = int(request.params["userid"])
     result = requests.get("http://127.0.0.1:6543/user?userAllData&userid=%d"%(userid), headers=header)
     if(result.json()["gkstatus"] == 0):
-        print result.json()["gkresult"]
+        #print result.json()["gkresult"]
         return {"gkstatus":0, "gkresult":result.json()["gkresult"]}
     return {"gkstatus":result.json()["gkstatus"]}
 
