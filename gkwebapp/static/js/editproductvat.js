@@ -1213,9 +1213,9 @@ $(document).ready(function() {
           else {
             $("#editproduct").click();
           }
-          $("#deletesuccess-alert").alert();
-          $("#deletesuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#deletesuccess-alert").hide();
+          $("#deleteproduct-success-alert").alert();
+          $("#deleteproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#deleteproduct-success-alert").hide();
           });
         }
         else if(resp["gkstatus"] == 5) {
