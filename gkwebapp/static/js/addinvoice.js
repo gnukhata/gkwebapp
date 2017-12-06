@@ -377,7 +377,12 @@ $(document).ready(function() {
 	    else {
 		if ($("#invoice_customer").is(":disabled")) {
 		    if($("#consigneename").is(":disabled")) {
-			$("#gstinconsignee").focus(); //Focus shifts to Consignee GSTIN as Consignee Name field is disabled when delivery note is selected. 
+			if(sessionStorage.vatorgstflag == '22' ){
+			    $("#tinconsignee").focus();
+			}
+			else {
+			    $("#gstinconsignee").focus(); //Focus shifts to Consignee GSTIN as Consignee Name field is disabled when delivery note is selected. 
+			}
 		    }
 		    else{
 			$("#consigneename").focus().select();  //Focus shifts to Consignee Name as Customer's fields are disabled when delivery note is selected.
@@ -820,11 +825,24 @@ $(document).ready(function() {
 			$("#invoice_customer").prop("disabled", true);
 			$("#invoice_customerstate").prop("disabled", true);
 			$("#consigneename").val(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]);
-			$("#consigneename").prop("disabled", true);
+			if(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]){
+			    $("#consigneename").prop("disabled", true);
+			} else {
+			    $("#consigneename").prop("disabled", false);
+			}
 			$("#consigneestate").val(resp["delchal"]["delchaldata"]["consignee"]["consigneestate"]);
-			$("#consigneestate").prop("disabled", true);
+			if(resp["delchal"]["delchaldata"]["consignee"]["consigneestate"]){
+			    $("#consigneestate").prop("disabled", true);
+			} else {
+			    $("#consigneestate").prop("disabled", false);
+			}		
 			$("#consigneeaddress").val(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]);
-			$("#consigneeaddress").prop("disabled", true);
+			if(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]){
+			    $("#consigneeaddress").prop("disabled", true);
+			} else {
+			    $("#consigneeaddress").prop("disabled", false);
+			}
+			
 			$("#invoice_customer").change();
 			$.ajax({
 			    url: '/customersuppliers?action=get',
