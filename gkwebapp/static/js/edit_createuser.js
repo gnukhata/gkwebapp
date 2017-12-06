@@ -26,20 +26,38 @@ $(document).ready(function() {
 		//$("#password").prop(userdetails["password"]);
 		$("#password").prop("disabled",true);
 		$("#passwordconfirm").prop("disabled",true);
-                $("#userrole").val(userdetails["userrole"]);
-                $("#userrole").prop("disabled", true);
-                $("#question").val(userdetails["question"]);
+		$("#userrole").val(userdetails["userrole"]);
+		$("#userrole").prop("disabled", true);
+                $("#question").val(userdetails["userquestion"]);
                 $("#question").prop("disabled", true);
-	        $("#answer").val(userdetails["answer"]);
+	        $("#answer").val(userdetails["useranswer"]);
                 $("#answer").prop("disabled", true);
                 $("#userid").val(userdetails["userid"]);
                 $(".edituserform").show();
                 $("#form-footer").show();
                 $("#delete").show();
                 $("#edit").show();
-            }
-        });
-    });
+		$("#GodInCharge").show();
+		$("#usertable").show();
+		if(userdetails["userrole"]== -1){
+		    $("#delete").hide();
+		    $("#GodInCharge").hide();
+		    $("#usertable").hide();
+		}
+		if (userdetails["userrole"]== 3){
+		    console.log(userdetails["godowns"]);
+		    let i=0;
+		    console.log("#latable tbody tr:eq('+i+')".attr("value"));
+		    /*for(let i=0; i<$('#latable tbody tr').length; i++){
+	            if($('#latable tbody tr:eq('+i+')').attr("value") in userdetails["godowns"]){
+			('#latable tbody tr td').is(":checked");
+			}
+		   //console.log(($('#latable tbody tr:eq('+i+')').attr("value"));
+		}*/
+		}
+               }
+           });
+       });
 
     
  //For Edit Button
