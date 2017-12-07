@@ -1,5 +1,8 @@
 /*
-Copyright (C) 2016, 2017 Digital Freedom Foundation & Accion Labs
+  Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+  This file is part of GNUKhata:A modular,robust and Free Accounting System.
+
+  Copyright (C) 2017 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
   This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
   GNUKhata is Free Software; you can redistribute it and/or modify
@@ -17,7 +20,6 @@ Copyright (C) 2016, 2017 Digital Freedom Foundation & Accion Labs
   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
   Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
 
-
 Contributors:
 "Krishnakant Mane" <kk@gmail.com>
 */
@@ -27,7 +29,6 @@ Contributors:
 $(document).ready(function() {
     $('.modal-backdrop').remove();
     $("#all").focus();
-
     //It is filter out list of user on basis of its role   
     $(document).off('change', '.iib').on('change', '.iib', function(event) {
 	if ($("#managerradio").is(":checked")) {
@@ -115,16 +116,35 @@ $(document).ready(function() {
 		    $("#GodInCharge").hide();
 		    $("#usertable").hide();
 		}
-		/*if (userdetails["userrole"] == 3){
-		    console.log(userdetails["godowns"]);
-		    let i=0;
-		    console.log("#latable tbody tr:eq('+i+')".attr("value"));
-		    for(let i=0; i<$('#latable tbody tr').length; i++){
-	            if($('#latable tbody tr:eq('+i+')').attr("value") in userdetails["godowns"]){
-			('#latable tbody tr td').is(":checked");
-			}
-		    }
-		}*/
+		if (userdetails["userrole"] == 3){
+		    $("#usertable").show();
+		    $.ajax(
+			{
+			    type: "POST",
+			    url: "/godown?type=role_list",
+			    global: false,
+			    async: false,
+			    datatype: "text/html",
+			    beforeSend: function(xhr)
+			    {
+				xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+			    },
+			    success: function(resp)
+			    {
+				$("#usertable").html(resp);
+				for(let i=0; i<$('#latable tbody tr').length; i++){
+				    //console.log(userdetails["godowns"]);
+				    //console.log($('#latable tbody tr:eq('+i+')').attr("value"));
+				    if($('#latable tbody tr:eq('+i+')').attr("value") in userdetails["godowns"]){
+					$('#latable tbody tr:eq('+i+') td input').prop("checked", true);
+				    }
+				}
+			    }
+			});
+		}
+		if (userdetails["userrole"] != 3){
+		     $("#usertable").hide();
+		}
                }
            });
        });
@@ -176,7 +196,7 @@ $(document).ready(function() {
 
     $("#userrole").change(function(e){
     /* Act on the event */
-      var role = $("#userrole option:selected").val();
+	var role = $("#userrole option:selected").val();
     if (role==3){
       $.ajax(
          {
@@ -192,7 +212,7 @@ $(document).ready(function() {
          success: function(resp)
          {
              $("#usertable").html(resp);
-           $("#latable tbody tr:first td:first input").focus().select();
+		 $("#latable tbody tr:first td:first input").focus().select();
          }
          });
          }
@@ -330,6 +350,32 @@ $(document).ready(function() {
           $("#question").focus();
         }
    });
+
+    //Key Event for Select Godown Table.
+
+    $(document).off("keydown",".user_role").on("keydown",".user_role",function(e){
+	if (e.which == 27) {
+	    e.preventDefault();
+	    $("#question").focus();
+	}
+	if (e.which == 13) {
+	    e.preventDefault();
+	    var index = $('.user_role').index(this) + 1;
+            $('.user_role').eq(index).focus();
+	}
+	if (e.which==38) {
+	    e.preventDefault();
+	    var index = $('.user_role').index(this) - 1;
+            $('.user_role').eq(index).focus();
+	}
+    });
+
+    $(document).off("focus",".user_role").on("focus",".user_role",function(e){
+	$(this).closest('tr').addClass('selected');
+    });
+    $(document).off("blur",".user_role").on("blur",".user_role",function(e){
+	$(this).closest('tr').removeClass('selected');
+    });
     
    //To reset all data  
    $("#reset").click(function() {
@@ -439,7 +485,29 @@ $(document).ready(function() {
             });
             $("#answer").focus().select();
             return false;
-        };
+    };
+
+	//Selected Godown
+	var selectedgodowns = [];
+        $('#latable tbody tr').each(function(){
+          if ($(".user_role",this).is(":checked")) {
+              selectedgodowns.push($(this).attr("value"));
+          }
+        });
+
+        if (selectedgodowns.length < 1 && $("#userrole").val() == 3) {
+          $("#select-godowns-alert").alert();
+          $("#select-godowns-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#select-godowns-alert").hide();
+          });
+          $("#latable tbody tr:first td:first input").focus().select();
+          return false;
+
+        }
+
+        var edituserform = $("#edituserform").serializeArray();
+        edituserform.push({name: 'godowns', value: JSON.stringify(selectedgodowns)});
+
 
 
         //For Edited Data store.
