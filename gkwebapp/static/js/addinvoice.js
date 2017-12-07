@@ -489,10 +489,10 @@ $(document).ready(function() {
 		    //State Code of Customer State is loaded.
 		    $("#statecodeofcustomer").text($("#invoice_customerstate option:selected").attr("stateid"));
 		    //Consignee State is synced with Customer State.
-		    if ($("#status").val() == 15) {
+		    /*if ($("#status").val() == 15) {
 			$("#consigneestate").val(resp["gkresult"]["state"]);
 			$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));
-		    }
+		    }*/
 		}
 	    })
 	    .fail(function() {
@@ -512,10 +512,10 @@ $(document).ready(function() {
 	else {
 	    $("#gstin").text('');  //If GSTIN is not available it is set as blank.
 	}
-	if ($("#status").val() == 15) {
-	    $("#consigneestate").val($("#invoice_customerstate option:selected").val());  //Consignee State is synced with customer state.
+/**	if ($("#status").val() == 15) {
+	    //$("#consigneestate").val($("#invoice_customerstate option:selected").val());  //Consignee State is synced with customer state.
       $("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
-	}
+	}**/
 	if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 	    $(".igstfield").hide();
 	    $(".sgstfield").show();
@@ -546,8 +546,8 @@ $(document).ready(function() {
 	event.preventDefault();
 	$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
 	if ($("#status").val() == 15) {
-	    $("#invoice_customerstate").val($("#consigneestate option:selected").val());  //Customer State is synced with state of consignee.
-      $("#statecodeofcustomer").text($("#invoice_customerstate option:selected").attr("stateid"));  //State code is loaded.
+	    //$("#invoice_customerstate").val($("#consigneestate option:selected").val());  //Customer State is synced with state of consignee.
+      //$("#statecodeofcustomer").text($("#invoice_customerstate option:selected").attr("stateid"));  //State code is loaded.
 	    if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
 		$(".igstfield").hide();
 		$(".sgstfield").show();
@@ -845,6 +845,7 @@ $(document).ready(function() {
 			}
 			
 			$("#invoice_customer").change();
+			$("#consigneestate").change();
 			$.ajax({
 			    url: '/customersuppliers?action=get',
 			    type: 'POST',
