@@ -835,6 +835,7 @@ $(document).ready(function() {
 			    $("#consigneestate").prop("disabled", true);
 			} else {
 			    $("#consigneestate").prop("disabled", false);
+			    $("#consigneestate").val("Andaman and Nicobar Islands");
 			}		
 			$("#consigneeaddress").val(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]);
 			if(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]){
