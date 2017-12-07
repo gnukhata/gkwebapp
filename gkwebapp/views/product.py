@@ -127,7 +127,6 @@ def saveproduct(request):
     godowns={}
     goid=0
     goopeningstock=0.00
-    print request.params
     for prd in request.params:
 
         if prd=="type":
