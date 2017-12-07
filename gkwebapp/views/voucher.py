@@ -149,6 +149,18 @@ def addvoucher(request):
 
     result = requests.post("http://127.0.0.1:6543/transaction",data=json.dumps(gkdata) , headers=header)
     if result.json()["gkstatus"]==0:
+        '''
+        When a transaction is successful it is checked if there are any bill adjustments to be made.
+        This happens in the case of Receipt/Payment vouchers.
+        Voucher code returned by core engine is added to details of adjustments and billwise API is called.
+        '''
+        if request.params.has_key('billdetails'):
+            payment = json.loads(request.params["billdetails"])
+            payment["vouchercode"] = result.json()["vouchercode"]
+            payments = []
+            payments.append(payment)
+            billdata = {"adjbills":payments}
+            paymentupdate = requests.post("http://127.0.0.1:6543/billwise",data=json.dumps(billdata),headers = header)
         return {"gkstatus":True,"vouchercode":result.json()["vouchercode"]}
     else:
         return {"gkstatus":False}

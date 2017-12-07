@@ -129,18 +129,25 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   }
   var value = $('#invsel option:selected').attr("customername");
   $(".dramt:first").val(parseFloat(inv).toFixed(2));
-  $(".cramt:eq(1)").val(parseFloat(inv).toFixed(2));
-  if (($('#vtype').val()=="sales" || $('#vtype').val()=="payment") && sessionStorage.invsflag ==1)
-  {
-  $(".accs:first option").filter(function() {return this.text == value;}).attr('selected', true);
-  var e = jQuery.Event("keydown");
-  e.which = 13; // # Some key code value
-  $(".dramt").trigger(e);
+    $(".cramt:eq(1)").val(parseFloat(inv).toFixed(2));
+    if(value){
+	if (($('#vtype').val()=="sales" || $('#vtype').val()=="payment") && sessionStorage.invsflag ==1)
+	{
+	    $('.accs:first option').each(function(index) {
+		if ($(this).text() == value) {
+		    $(this).prop("selected", true);
+		}
+	    });
+	}
+	if (($('#vtype').val()=="purchase" || $('#vtype').val()=="receipt") && sessionStorage.invsflag ==1)
+	{
+	    $('.accs:eq(1) option').each(function(index) {
+		if ($(this).text() == value) {
+		    $(this).prop("selected", true);
+		}
+	    });
   }
-  if (($('#vtype').val()=="purchase" || $('#vtype').val()=="receipt") && sessionStorage.invsflag ==1)
- {
-      $(".accs:eq(1) option").filter(function() {return this.text == value;}).attr('selected', true);
-  }
+    }
 
 });
 
@@ -811,13 +818,13 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       if($('#vtable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()=="" || $('#vtable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()==0){
         return false;
       }
-      var lastindex = $('#vtable tbody tr:last').index();
+	var lastindex = $('#vtable tbody tr:last').index();
+	var nxtindex = curindex+1;
       if(drsum > crsum)
       {
         diff=drsum-crsum;
         if(curindex<lastindex)
         {
-          let nxtindex = curindex+1;
           if($('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="" || $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()==0 || $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="NaN"){
             $('#vtable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
             crsum=0;
@@ -985,7 +992,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       }
       curindex=null;
       lastindex=null;
-       $('#vtable tbody tr:eq('+nextindex+') td:eq(1) select').focus();
+       $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
     }
     if (event.which==13 && outfocus) {
       outfocus=false;
@@ -1235,13 +1242,13 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     var customername = "";
     var customercode = "";
     var numberofcustomers = 0;
-    $(".crdr").each(function() {
+      $(".crdr").each(function() {
+	  var curindex = $(this).closest('tr').index(); //Index helps in identifying the rows.
       //Each row with Credit/Debit entry is scanned
-      if ($(this).val()=="Cr") {
+	if ($(this).val()=="Cr") {
 	//This block is for Credit entries.
 	if ($("#vouchertype").val() == "receipt") {
 	  //This block is for Receipt voucher.
-	  var curindex = $(this).closest('tr').index(); //Index helps in identifying the rows.
 	  //In the AJAX request below, account details are fetched by sending account code.
 	  $.ajax({
 	    url: '/getaccdetails',
@@ -1270,7 +1277,6 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       if ($(this).val()=="Dr") {
 	//This block is for Debit entries. Refer above block for Credit entries for documentation.
 	if ($("#vouchertype").val() == "payment") {
-	  var curindex = $(this).closest('tr').index();
 	  $.ajax({
 	    url: '/getaccdetails',
 	    type: 'POST',
@@ -1427,6 +1433,10 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       obj.dramount = $(".dramt", this).val();
       output.push(obj);
     });
+      var vtotal=0;
+	$(".cramt").each(function(){
+          vtotal += +$(this).val();
+	});
       var details = {}; // dictionay containing details other than the table values.
     details.vno=$('#vno').val();
     details.vdate=$('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
@@ -1452,10 +1462,6 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 	if ($("#invsel").length > 0) {
 	  details.invid = $("#invsel option:selected").val();
 	  var invoicetotal= $("#invsel option:selected").attr("total");
-	var vtotal=0;
-	$(".cramt").each(function(){
-          vtotal += +$(this).val();
-	});
       }
       else {
 	details.invid = "";
@@ -1532,8 +1538,17 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       }
     form_data.append("vdetails",JSON.stringify(details));
       form_data.append("transactions",JSON.stringify(output));
+      //In case of Receipt/Payment vouchers when an invoice is selected Amount Paid is automatically adjusted.
       if (($("#vouchertype").val() == "receipt" || $("#vouchertype").val() == "payment") && sessionStorage.invsflag == 1 && numberofcustomers == 1 && $("#invsel option:selected").val() != '') {
-	  let invoicebalance = $("#invbalance").val();
+	  let billamount = $("#invbalance").val();  // Amount to be adjusted is set to balance of invoice selected.
+	  if(billamount > vtotal) {
+	      billamount = vtotal;  // If balance of invoice is more than voucher amount then amount to be adjusted is set to voucher amount.
+	  }
+	  //A dictionary with invoice id and amount to be adjusted is created.
+	  let billdetails = {};
+	  billdetails["invid"] = parseInt($("#invsel option:selected").val());
+	  billdetails["adjamount"] = billamount;
+	  form_data.append("billdetails",JSON.stringify(billdetails));
       }
 
     $("#msspinmodal").modal("show");
