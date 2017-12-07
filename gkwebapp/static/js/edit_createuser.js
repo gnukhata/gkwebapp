@@ -110,7 +110,7 @@ $(document).ready(function() {
                 $("#delete").show();
                 $("#edit").show();
 		$("#GodInCharge").show();
-		$("#usertable").show();
+		
 		if(userdetails["userrole"]== -1){
 		    $("#delete").hide();
 		    $("#GodInCharge").hide();
@@ -133,8 +133,6 @@ $(document).ready(function() {
 			    {
 				$("#usertable").html(resp);
 				for(let i=0; i<$('#latable tbody tr').length; i++){
-				    //console.log(userdetails["godowns"]);
-				    //console.log($('#latable tbody tr:eq('+i+')').attr("value"));
 				    if($('#latable tbody tr:eq('+i+')').attr("value") in userdetails["godowns"]){
 					$('#latable tbody tr:eq('+i+') td input').prop("checked", true);
 				    }
@@ -152,17 +150,19 @@ $(document).ready(function() {
     
  //when click on Edit Button all data will unhide.
  $("#edit").click(function(event) {
-        event.preventDefault();
-        $("#edusrsubmit").show();
-        $("#editname").prop("disabled", false);
-        $("#password").prop("disabled", false);   
-        $("#passwordconfirm").prop("disabled", false);
-        $("#userrole").prop("disabled", false);
-        $("#question").prop("disabled", false);
-        $("#answer").prop("disabled", false);
-        $("#edit").hide();
-        $("#editname").focus().select();
-    });
+     event.preventDefault();
+     $("#edusrsubmit").show();
+     $("#editname").prop("disabled", false);
+     $("#password").prop("disabled", false);   
+     $("#passwordconfirm").prop("disabled", false);
+     $("#userrole").prop("disabled", false);
+     console.log('#userrole option[value]');
+     $("#usertable").show();
+     $("#question").prop("disabled", false);
+     $("#answer").prop("disabled", false);
+     $("#edit").hide();
+     $("#editname").focus().select();
+ });
 
   // When "Godown In charge" role is select from userrole will gives Godown List.
   if (sessionStorage.invflag==1) {
