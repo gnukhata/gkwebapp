@@ -1568,13 +1568,16 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       },
       success: function(resp)
 	{
-        if(resp.gkstatus){ // if the voucher is saved show an alert and then reset the voucher form and clear all variables.
-          $("#reset").click();
+            if(resp.gkstatus == true){ // if the voucher is saved show an alert and then reset the voucher form and clear all variables.
+		$("#reset").click();
+		if(resp.paymentstatus == true){
+		    $("#success-alert").text("Voucher saved successfully. Amount adjusted to selected invoice.");
+		}
           $("#success-alert").alert();
-          $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#success-alert").hide();
+		$("#success-alert").fadeTo(2250, 500).slideUp(500, function(){		    
+		    $("#success-alert").hide();
             //Modal asking the user if he wants to do bill wise accounting or not?
-              if (($("#vouchertype").val() == "receipt" || $("#vouchertype").val() == "payment") && sessionStorage.billflag == 1 && numberofcustomers == 1 && $("#invsel option:selected").val() == '') {
+              if (($("#vouchertype").val() == "receipt" || $("#vouchertype").val() == "payment") && sessionStorage.billflag == 1 && numberofcustomers == 1 && resp.paymentstatus == false) {
               $("#confirm_yes_billwise").modal("show");
               $("#bwno").focus(); //Focus is on "No" when the model opens.
               $(document).off('click', '#bwyes').on('click', '#bwyes', function(event) {
@@ -1603,7 +1606,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
                   }
                 );
               });
-            }
+              }
           });
         }
         else {
