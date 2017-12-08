@@ -614,10 +614,20 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 
     //Everytime an account is selected its balance is checked and displayed.
     $(document).off("change",".accs").on("change",".accs",function(event){
-    let curindex = $(this).closest('tr').index();
-    let curacccode = $('#vtable tbody tr:eq('+curindex+') td:eq(1) select option:selected').val();
-    let caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
-    $('#vtable tbody tr:eq('+curindex+') td:eq(2) input').val(getBalance(curacccode, caldata)); // Function that returns balance is called.
+	let curindex = $(this).closest('tr').index();
+	let curacccode = $('#vtable tbody tr:eq('+curindex+') td:eq(1) select option:selected').val();
+	let caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+	$('#vtable tbody tr:eq('+curindex+') td:eq(2) input').val(getBalance(curacccode, caldata)); // Function that returns balance is called.
+	if (($('#vtype').val()=="sales" || $('#vtype').val()=="payment") && sessionStorage.invsflag ==1){
+	    if ($("#invsel option:selected").attr("customername") != $(".accs:first option:selected").text()) {
+		$("#invsel").val("");
+	    }
+	}
+	if (($('#vtype').val()=="purchase" || $('#vtype').val()=="receipt") && sessionStorage.invsflag ==1){
+	    if ($("#invsel option:selected").attr("customername") != $(".accs:first option:selected").text()) {
+		$("#invsel").val("");
+	    }
+	}
     });
     $(".accs").change(); //Change event is triggered so that balance is displayed when the page is loaded.
     
