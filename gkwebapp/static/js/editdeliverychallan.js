@@ -35,7 +35,7 @@ $(document).ready(function() {
   $(".deliverychallan_edit_disable").prop("disabled",true);
   $("#deliverychallan_editprint").hide();
   var custsup  =$("#deliverychallan_edit_customer").find('optgroup').clone();
-  var inout ;
+    var inout ;
 
   $("#deliverychallan_edit_list").change(function(event) {
     $.ajax({
@@ -140,10 +140,17 @@ $(document).ready(function() {
       });
       $('#deliverychallan_edit_challanno').val(resp.delchaldata.delchaldata.dcno);
       $('#deliverychallan_edit_godown').val(resp.delchaldata.delchaldata.goid);
-      $('#deliverychallan_edit_consignment').val(resp.delchaldata.delchaldata.dcflag);
-      $('#deliverychallan_edit_consigneename').val(resp.delchaldata.delchaldata.consignee.consigneename);
-      $('#deliverychallan_edit_consigneestate').val(resp.delchaldata.delchaldata.consignee.consigneestate);
-      $('#deliverychallan_edit_consigneeaddr').val(resp.delchaldata.delchaldata.consignee.consigneeaddress);
+	$('#deliverychallan_edit_consignment').val(resp.delchaldata.delchaldata.dcflag);
+	if(resp.delchaldata.delchaldata.consignee) {
+	   $('#deliverychallan_edit_consigneename').val(resp.delchaldata.delchaldata.consignee.consigneename);
+           $('#deliverychallan_edit_consigneestate').val(resp.delchaldata.delchaldata.consignee.consigneestate);
+           $('#deliverychallan_edit_consigneeaddr').val(resp.delchaldata.delchaldata.consignee.consigneeaddress); 
+	} else {
+	   $('#deliverychallan_edit_consigneename').val("");
+           $('#deliverychallan_edit_consigneestate').val("");
+           $('#deliverychallan_edit_consigneeaddr').val(""); 
+	}
+      
       $('#deliverychallan_edit_noofpackages').val(resp.delchaldata.delchaldata.noofpackages);
       $('#deliverychallan_edit_modeoftransport').val(resp.delchaldata.delchaldata.modeoftransport);
       $('#deliverychallan_edit_product_table tbody').empty();
@@ -199,7 +206,7 @@ if(event.which==13)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
       },
-      data: {"dcid": $("#deliverychallan_edit_list option:selected").val()},
+      data: {"dcid": $("#deliverychallan_edit_list option:selected").val()}
     })
     .done(function(resp) {
       var x=window.open();
