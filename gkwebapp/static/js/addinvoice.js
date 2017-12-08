@@ -624,7 +624,17 @@ $(document).ready(function() {
     $("#gstinconsignee").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    $("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
+	    if ($("#taxapplicable").val() == 7) {
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    if($("#consigneeaddress").is(":disabled")){
+			 $(".invoice_product_quantity_gst:first").focus().select();
+		    }
+		    else {
+			$("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
+		    }
+		}
+	
+	    }
 	}
 	else if (event.which == 38) {
 	    if ($("#tinconsignee").is(":visible")) {
