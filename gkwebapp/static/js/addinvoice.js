@@ -54,6 +54,8 @@ $(document).ready(function() {
     var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
     var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();  //HTML for table displaying totals in GST Product Table.
     var vathtml = $('#invoice_product_table_vat tbody tr:first').html();  //HTML for VAT Product Table row.
+    //A dictionary to store GSTINs of a customer.
+    var gstins = {};
 
     //Function to calculate gst tax amount
     function calculategstaxamt(curindex) {
@@ -454,8 +456,6 @@ $(document).ready(function() {
 	}
     });
 
-    //A dictionary to store GSTINs of a customer.
-    var gstins = {};
     //Change Event for Customer.
     $("#invoice_customer").change(function(event) {
 	//AJAX to get details of customer.
@@ -513,7 +513,7 @@ $(document).ready(function() {
 	    $("#gstin").text('');  //If GSTIN is not available it is set as blank.
 	}
 /**	if ($("#status").val() == 15) {
-	    //$("#consigneestate").val($("#invoice_customerstate option:selected").val());  //Consignee State is synced with customer state.
+	    $("#consigneestate").val($("#invoice_customerstate option:selected").val());  //Consignee State is synced with customer state.
       $("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
 	}**/
 	if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
@@ -547,7 +547,12 @@ $(document).ready(function() {
 	$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
 	if ($("#status").val() == 15) {
 	    //$("#invoice_customerstate").val($("#consigneestate option:selected").val());  //Customer State is synced with state of consignee.
-      //$("#statecodeofcustomer").text($("#invoice_customerstate option:selected").attr("stateid"));  //State code is loaded.
+	    //$("#statecodeofcustomer").text($("#invoice_customerstate option:selected").attr("stateid"));  //State code is loaded.
+	    if($("#statecodeofconsignee").text() in gstins) {
+		var custgstin = gstins[$("#statecodeofconsignee").text()];
+		$("#gstin").text(custgstin); // Customer gstin is synced with state code of consignee.
+	    }
+	    
 	    if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
 		$(".igstfield").hide();
 		$(".sgstfield").show();
