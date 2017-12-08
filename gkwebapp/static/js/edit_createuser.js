@@ -78,6 +78,7 @@ $(document).ready(function() {
     $("#edusrsubmit").hide();
     $("#edituser").bind("change", function(e) {
         $("#edusrsubmit").hide();
+	$("#usertable").html("");
         var userid = $("#edituser option:selected").val();
         var username = $("#edituser option:selected").text();
         $.ajax({
@@ -141,13 +142,12 @@ $(document).ready(function() {
 			});
 		}
 		if (userdetails["userrole"] != 3){
-		     $("#usertable").hide();
+		    $("#usertable").hide();
 		}
                }
            });
        });
 
-    
  //when click on Edit Button all data will unhide.
  $("#edit").click(function(event) {
      event.preventDefault();
@@ -156,7 +156,6 @@ $(document).ready(function() {
      $("#password").prop("disabled", false);   
      $("#passwordconfirm").prop("disabled", false);
      $("#userrole").prop("disabled", false);
-     console.log('#userrole option[value]');
      $("#usertable").show();
      $("#question").prop("disabled", false);
      $("#answer").prop("disabled", false);
@@ -260,33 +259,32 @@ $(document).ready(function() {
     
     //Key event for Edit Password
     $("#password").keydown(function(e){
-               if (e.which==13)
-               {
-                  $("#passwordconfirm").focus();
-               }
-               if (e.which==38)
-               {
-	          e.preventDefault();
-                  $("#editname").focus();
-               }
-          });
+	if (e.which==13)
+	{
+	    e.preventDefault();
+	    $("#passwordconfirm").focus();
+	}
+	if (e.which==38)
+	{
+	    $("#editname").focus();
+	}
+    });
 
     //Key event For Confirm Password
     $("#passwordconfirm").keydown(function(e){
-	  if(e.which==13)    
-          {
-	     if($("#userrole").val() == -1) {
-		  console.log("Bug");
-	       $("#question").focus(); 
+	if(e.which==13){
+	    e.preventDefault();
+	    if(userdetails["userrole"] == -1) {
+		$("#question").focus();
 	    }
 	    else {
-		$("#userrole").focus();   
-	    }        
-          }
-        if(e.which==38){
-	      e.preventDefault();
-              $("#password").focus();
-          }
+		$("#userrole").focus();
+	    }
+	}
+	if(e.which==38){
+	    e.preventDefault();
+	    $("#password").focus();
+	}
     });
 
     $("#passwordconfirm").blur(function(event) {
@@ -507,8 +505,6 @@ $(document).ready(function() {
 
         var edituserform = $("#edituserform").serializeArray();
         edituserform.push({name: 'godowns', value: JSON.stringify(selectedgodowns)});
-
-
 
         //For Edited Data store.
 
