@@ -127,9 +127,15 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       inv = 0;
       invbalance = 0;
   }
-  var value = $('#invsel option:selected').attr("customername");
-  $(".dramt:first").val(parseFloat(inv).toFixed(2));
-    $(".cramt:eq(1)").val(parseFloat(inv).toFixed(2));
+    var value = $('#invsel option:selected').attr("customername");
+    if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invsflag ==1) {
+	$(".dramt:first").val(parseFloat(inv).toFixed(2));
+	$(".cramt:eq(1)").val(parseFloat(inv).toFixed(2));
+    }
+    if (($('#vtype').val()=="receipt" || $('#vtype').val()=="payment") && sessionStorage.invsflag ==1) {
+	$(".dramt:first").val(parseFloat(invbalance).toFixed(2));
+	$(".cramt:eq(1)").val(parseFloat(invbalance).toFixed(2));
+    }
     if(value){
 	if (($('#vtype').val()=="sales" || $('#vtype').val()=="payment") && sessionStorage.invsflag ==1)
 	{
