@@ -1549,6 +1549,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 	  billdetails["invid"] = parseInt($("#invsel option:selected").val());
 	  billdetails["adjamount"] = billamount;
 	  form_data.append("billdetails",JSON.stringify(billdetails));
+	  form_data.append("invoice", $("#invsel option:selected").text());
       }
 
     $("#msspinmodal").modal("show");
