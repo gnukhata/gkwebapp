@@ -161,7 +161,11 @@ def addvoucher(request):
             payments.append(payment)
             billdata = {"adjbills":payments}
             paymentupdate = requests.post("http://127.0.0.1:6543/billwise",data=json.dumps(billdata),headers = header)
-        return {"gkstatus":True,"vouchercode":result.json()["vouchercode"]}
+            if paymentupdate.json()["gkstatus"] == 0:
+                return {"gkstatus":True,"vouchercode":result.json()["vouchercode"], "paymentstatus":True}
+            else:
+                return {"gkstatus":True,"vouchercode":result.json()["vouchercode"], "paymentstatus":False}
+        return {"gkstatus":True,"vouchercode":result.json()["vouchercode"], "paymentstatus":True}
     else:
         return {"gkstatus":False}
 
