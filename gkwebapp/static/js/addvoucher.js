@@ -110,23 +110,26 @@ $(document).ready(function() {
 $(document).off("focusout",".accs, .cramt, .dramt").on("focusout", ".accs, .cramt, .dramt", function() {
     curfocusrow = $(this).closest('tr').index();
 });
+    //Change event for the lsit of invoices
 $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   event.preventDefault();
     /* Act on the event */
-    var inv = $("#invsel option:selected").attr("total");
-    var invbalance = $("#invsel option:selected").attr("balance");
+    var inv = $("#invsel option:selected").attr("total"); //Total amount of invoices.
+    var invbalance = $("#invsel option:selected").attr("balance");  //Balance of invoices.
   if ($.trim(inv)!="")
   {
-      $("#invtotal").val(parseFloat(inv).toFixed(2));
-      $("#invbalance").val(parseFloat(invbalance).toFixed(2));
+      $("#invtotal").val(parseFloat(inv).toFixed(2));  //Total amount of invoice is displayed.
+      $("#invbalance").val(parseFloat(invbalance).toFixed(2));  //Balance of invoice is displayed.
   }
   else
-  {
+    {
+	//Total and balance displayed are set to zero when no invoice is selected.
       $("#invtotal").val(parseFloat(0).toFixed(2));
       $("#invbalance").val(parseFloat(0).toFixed(2));
       inv = 0;
       invbalance = 0;
-  }
+    }
+    //Customer/Supplier is picked up from invoice and corresponding account is selected automatically.
     var value = $('#invsel option:selected').attr("customername");
     if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invsflag ==1) {
 	$(".dramt:first").val(parseFloat(inv).toFixed(2));
@@ -618,6 +621,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 	let curacccode = $('#vtable tbody tr:eq('+curindex+') td:eq(1) select option:selected').val();
 	let caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
 	$('#vtable tbody tr:eq('+curindex+') td:eq(2) input').val(getBalance(curacccode, caldata)); // Function that returns balance is called.
+	//If cust/sup account selected is altered then invoice selected is reset.
 	if (($('#vtype').val()=="sales" || $('#vtype').val()=="payment") && sessionStorage.invsflag ==1){
 	    if ($("#invsel option:selected").attr("customername") != $(".accs:first option:selected").text()) {
 		$("#invsel").val("");
