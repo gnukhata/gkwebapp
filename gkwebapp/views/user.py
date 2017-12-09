@@ -55,7 +55,7 @@ def createusers(request):
    return {"gkresult":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
 
 #Call edituser Tab Inside User Module
-@view_config(route_name="showuser",request_param="type=edittab", renderer="gkwebapp:templates/edit_createuser.jinja2")
+@view_config(route_name="showuser",request_param="type=edittab", renderer="gkwebapp:templates/edituser.jinja2")
 def editusers(request):
    header={"gktoken":request.headers["gktoken"]}
    result = requests.get("http://127.0.0.1:6543/users", headers=header)
@@ -73,7 +73,7 @@ def getuserdetails(request):
         return {"gkstatus":0, "gkresult":result.json()["gkresult"]}
     return {"gkstatus":result.json()["gkstatus"]}
 
-@view_config(route_name="showedituser", renderer="gkwebapp:templates/edituser.jinja2")
+@view_config(route_name="showedituser", renderer="gkwebapp:templates/changepassword.jinja2")
 def showedituser(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/users", headers=header)
