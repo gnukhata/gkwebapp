@@ -419,7 +419,11 @@ $(document).ready(function() {
 	    event.preventDefault();
 	    if ($("#invoice_customer").is(":disabled")) {
 		if($("#consigneename").is(":disabled")){
-		    $("#gstinconsignee").focus(); //Focus shifts to Consignee GSTIN as Consignee Name field is disabled when delevery note is selected.
+		    if ($("#taxapplicable").val() == 22) {
+			$("#tinconsignee").focus();
+		    } else {
+			$("#gstinconsignee").focus(); //Focus shifts to Consignee GSTIN as Consignee Name field is disabled when delevery note is selected.
+		    }
 		}
 		else {
 		    $("#consigneename").focus().select();  //Focus shifts to Consignee Name as Customer's fields are disabled when delivery note is selected.
@@ -608,15 +612,32 @@ $(document).ready(function() {
     $("#tinconsignee").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    if ($("#gstinconsignee").is(":visible")) {
+	    /*if ($("#gstinconsignee").is(":visible")) {
 		$("#gstinconsignee").focus().select();  //Focus shifts to GSTIN of Consignee.
-	    }
-	    else {
-		$("#consigneeaddress").focus().select();  //Focus shifts to Address of Consignee.
+		}*/
+	    if ($("#taxapplicable").val() == 22) {
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    if($("#consigneeaddress").is(":disabled")){
+			 $(".invoice_product_quantity_vat:first").focus().select();
+		    }
+		} else {
+			$("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
+		    }
+	
 	    }
 	}
 	else if (event.which == 38) {
-	    $("#consigneestate").focus();  //Focus Shifts to State of Consignee.
+	    if ($("#consigneestate").is(":disabled")){
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    if($("#status").val() == 15){
+			 $("#invoice_issuer_designation").focus().select();
+		    } else {
+			$("#invoicestate").focus().select();
+		    }
+		} 
+	    } else {
+		    $("#consigneestate").focus().select();  //Focus shifts to GSTIN of Consignee.
+	    }
 	}
     });
 
@@ -629,19 +650,25 @@ $(document).ready(function() {
 		    if($("#consigneeaddress").is(":disabled")){
 			 $(".invoice_product_quantity_gst:first").focus().select();
 		    }
-		    else {
+		} else {
 			$("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
-		    }
-		}
-	
+		  }
 	    }
 	}
 	else if (event.which == 38) {
-	    if ($("#tinconsignee").is(":visible")) {
+	    /*if ($("#tinconsignee").is(":visible")) {
 		$("#tinconsignee").focus().select();  //Focus shifts to TIN of Consignee.
-	    }
-	    else {
-		$("#consigneestate").focus().select();  //Focus shifts to GSTIN of Consignee.
+		}*/
+	    if ($("#consigneestate").is(":disabled")){
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    if($("#status").val() == 15){
+			 $("#invoice_issuer_designation").focus().select();
+		    } else {
+			$("#invoicestate").focus().select();
+		    }
+		} 
+	    } else {
+		    $("#consigneestate").focus().select();  //Focus shifts to GSTIN of Consignee.
 	    }
 	}
     });
