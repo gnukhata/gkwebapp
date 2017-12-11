@@ -157,14 +157,30 @@ def getproduct(request):
 @view_config(route_name="invoice",request_param="action=showsale",renderer="gkwebapp:templates/editinvoice.jinja2")
 def showsaleinvoices(request):
     header={"gktoken":request.headers["gktoken"]}
+    inputdate = request.params["inputdate"]
+    gkdata = {"inputdate": inputdate, "type": "invoice"}
     result = requests.get("http://127.0.0.1:6543/billwise?type=pending&invtype=sale", headers=header)
-    return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["invoices"]}
+    unbilled_delnotes = requests.get("http://127.0.0.1:6543/invoice?unbilled_delnotes", data=json.dumps(gkdata), headers=header)
+    suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
+    productsnservices = requests.get("http://127.0.0.1:6543/products", headers=header)
+    products = requests.get("http://127.0.0.1:6543/products?invdc=4", headers=header)
+    states = requests.get("http://127.0.0.1:6543/state", headers=header)
+    resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+    return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["invoices"], "products": products.json()["gkresult"],"productsnservices": productsnservices.json()["gkresult"],"deliverynotes":unbilled_delnotes.json()["gkresult"],"states": states.json()["gkresult"], "resultgstvat":resultgstvat.json()["gkresult"], "suppliers": suppliers.json()["gkresult"], "status":"out"}
 
 @view_config(route_name="invoice",request_param="action=showpurchase",renderer="gkwebapp:templates/editinvoice.jinja2")
 def showpurchaseinvoices(request):
     header={"gktoken":request.headers["gktoken"]}
+    inputdate = request.params["inputdate"]
+    gkdata = {"inputdate": inputdate, "type": "invoice"}
+    unbilled_delnotes = requests.get("http://127.0.0.1:6543/invoice?unbilled_delnotes", data=json.dumps(gkdata), headers=header)
     result = requests.get("http://127.0.0.1:6543/billwise?type=pending&invtype=purchase", headers=header)
-    return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["invoices"]}
+    suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
+    productsnservices = requests.get("http://127.0.0.1:6543/products", headers=header)
+    products = requests.get("http://127.0.0.1:6543/products?invdc=4", headers=header)
+    states = requests.get("http://127.0.0.1:6543/state", headers=header)
+    resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+    return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["invoices"], "products": products.json()["gkresult"],"productsnservices": productsnservices.json()["gkresult"],"deliverynotes":unbilled_delnotes.json()["gkresult"],"states": states.json()["gkresult"], "resultgstvat":resultgstvat.json()["gkresult"], "suppliers": suppliers.json()["gkresult"], "status":"in"}
 
 @view_config(route_name="invoice",request_param="action=getinvdetails",renderer="json")
 def getInvoiceDetails(request):
