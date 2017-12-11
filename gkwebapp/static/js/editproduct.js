@@ -1205,7 +1205,7 @@ $(document).ready(function() {
     var obj = {};
     $("#editgodown_ob_table tbody tr").each(function(){
       if ($.trim($(".editgodown_name",this).val())!="") {
-        if ($.trim($(".editgodown_ob",this).val())!="" && $.trim($(".editgodown_ob",this).val())!= "0.00") {
+          if ($.trim($(".editgodown_ob",this).val())!="") {
           obj[$(".editgodown_name",this).val()] = $(".editgodown_ob",this).val();
         }
       }
