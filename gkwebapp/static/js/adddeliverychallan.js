@@ -1,11 +1,12 @@
 /*
   Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+ Copyright (C) 2017 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
 GNUKhata is Free Software; you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
 published by the Free Software Foundation; either version 3 of
-the License, or (at your option) any later version.and old.stockflag = 's'
+the License, or (at your option) any later version.
 
 GNUKhata is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -22,6 +23,7 @@ Contributors:
 "Krishnakant Mane" <kk@gmail.com>
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
+"Reshma Bhatawadekar <reshma_b@riseup.net>"
 */
 
 // This script is for the add adddeliverychallan.jinja2
@@ -45,7 +47,7 @@ $(document).ready(function() {
       return str.length < max ? pad("0" + str, max) : str;
     }
     else{
-      return str
+	return str;
     }
   }
   function yearpad (str, max) { //to add leading 20 or 200 in the year
@@ -57,7 +59,7 @@ $(document).ready(function() {
       return str.length < max ? pad("20" + str, max) : str;
     }
     else{
-      return str
+	return str;
     }
   }
   $("#deliverychallan_date").blur(function(event) {
@@ -205,14 +207,48 @@ $(document).ready(function() {
 
   $("#deliverychallan_consignment").keydown(function(event) {
     if (event.which==13) {
-      event.preventDefault();
-      $('#deliverychallan_product_table tbody tr:first td:eq(0) select').focus();
+	event.preventDefault();
+	$('#consigneename').focus();
+      //$('#deliverychallan_product_table tbody tr:first td:eq(0) select').focus();
     }
     if (event.which==38 && document.getElementById('deliverychallan_consignment').selectedIndex==0) {
       event.preventDefault();
       $("#deliverychallan_godown").focus().select();
     }
   });
+
+  //Keyevents for Consignee fields
+  $("#consigneename").keydown(function(event) {
+    if (event.which==13) {
+	event.preventDefault();
+	$('#consigneestate').focus();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#deliverychallan_consignment").focus().select();
+    }
+  });
+  $("#consigneestate").keydown(function(event) {
+    if (event.which==13) {
+	event.preventDefault();
+	$('#deliverychallan_consigneeaddr').focus();
+    }
+    if (event.which==38 && document.getElementById('consigneestate').selectedIndex==0) {
+      event.preventDefault();
+      $("#consigneename").focus().select();
+    }
+  });
+  $("#deliverychallan_consigneeaddr").keydown(function(event) {
+    if (event.which==13) {
+	event.preventDefault();
+      $('#deliverychallan_product_table tbody tr:first td:eq(0) select').focus();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#consigneestate").focus().select();
+    }
+  });
+    
   $("#deliverychallan_noofpackages").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
@@ -387,7 +423,7 @@ $(document).ready(function() {
       event.preventDefault();
       if (curindex==0) {
         event.preventDefault();
-        $("#deliverychallan_consignment").focus().select();
+        $("#deliverychallan_consigneeaddr").focus().select();
       }
       else {
         $('#deliverychallan_product_table tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
@@ -733,7 +769,7 @@ else {
       $('#deliverychallan_date').focus().select();
       return false;
     }
-    var curdate = Date.parseExact($("#deliverychallan_year").val()+$("#deliverychallan_month").val()+$("#deliverychallan_date").val(), "yyyyMMdd")
+      var curdate = Date.parseExact($("#deliverychallan_year").val()+$("#deliverychallan_month").val()+$("#deliverychallan_date").val(), "yyyyMMdd");
     if (!curdate.between(financialstart,financialend)) {
       $("#between-date-alert").alert();
       $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -751,7 +787,13 @@ else {
       return false;
     }
 
-
+    var consignee = {};
+    if($("#consigneename").val() != ""){
+	  consignee["consigneename"] = $.trim($("#consigneename").val());
+          consignee["consigneeaddress"] = $.trim($("#deliverychallan_consigneeaddr").val());
+          consignee["consigneestate"] = $.trim($("#consigneestate").val());
+      }
+      
     var products = []; // list to store dictionaries containing product details
     for (var i = 0; i < $("#deliverychallan_product_table tbody tr").length; i++) {
         // loop for getting details from each row at a time
@@ -814,6 +856,7 @@ else {
     form_data.append("dcdate", $("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val());
     form_data.append("inout", $("#status").val());
     form_data.append("noofpackages", $('#deliverychallan_noofpackages').val());
+    form_data.append("consignee", JSON.stringify(consignee));
     form_data.append("modeoftransport", $('#deliverychallan_modeoftransport').val());
     form_data.append("issuername", $("#deliverychallan_issuername").val());
     form_data.append("designation", $("#deliverychallan_designation").val());
@@ -823,10 +866,10 @@ else {
 
     form_data.append("products", JSON.stringify(products));// a list always needs to be stringified into json before sending it ahead
     form_data.append("dcflag", $("#deliverychallan_consignment option:selected").val());
-    var files = $("#my-file-selector")[0].files
+      var files = $("#my-file-selector")[0].files;
     var filelist = [];
     for (var i = 0; i < files.length; i++) {
-      form_data.append("file"+i,files[i])
+	form_data.append("file"+i,files[i]);
     }
     event.preventDefault();
     $('.modal-backdrop').remove();
@@ -950,7 +993,7 @@ else {
       $('#deliverychallan_date').focus().select();
       return false;
     }
-    var curdate = Date.parseExact($("#deliverychallan_year").val()+$("#deliverychallan_month").val()+$("#deliverychallan_date").val(), "yyyyMMdd")
+      var curdate = Date.parseExact($("#deliverychallan_year").val()+$("#deliverychallan_month").val()+$("#deliverychallan_date").val(), "yyyyMMdd");
     if (!curdate.between(financialstart,financialend)) {
       $("#between-date-alert").alert();
       $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -968,7 +1011,12 @@ else {
       return false;
     }
 
-
+      var consignee = {}; // for consignee details
+     if($("#consigneename").val() != ""){
+	  consignee["consigneename"] = $.trim($("#consigneename").val());
+          consignee["consigneeaddress"] = $.trim($("#deliverychallan_consigneeaddr").val());
+          consignee["consigneestate"] = $.trim($("#consigneestate").val());
+      }
     var products = [];
     for (var i = 0; i < $("#deliverychallan_product_table tbody tr").length; i++) {
       if ($("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()=="") {
@@ -1025,7 +1073,7 @@ else {
       return false;
     }
 
-    var dataset = {}
+      var dataset = {};
 	if ($("#deliverychallan_godown option").length !=0) {
 		dataset = {"custid":$("#deliverychallan_customer option:selected").val(),
 			      "dcno":$("#deliverychallan_challanno").val(),
@@ -1037,7 +1085,8 @@ else {
 			      "designation":$("#deliverychallan_designation").val(),
 			      "goid":$("#deliverychallan_godown option:selected").val(),
 			      "products":JSON.stringify(products),
-			      "dcflag":$("#deliverychallan_consignment option:selected").val()}
+			      "consignee":JSON.stringify(consignee),
+			   "dcflag":$("#deliverychallan_consignment option:selected").val()};
 	}
 	else {
 		dataset = {"custid":$("#deliverychallan_customer option:selected").val(),
@@ -1049,7 +1098,8 @@ else {
 		      "issuername":$("#deliverychallan_issuername").val(),
 		      "designation":$("#deliverychallan_designation").val(),
 		      "products":JSON.stringify(products),
-		      "dcflag":$("#deliverychallan_consignment option:selected").val()}
+		      "consignee":JSON.stringify(consignee),
+			   "dcflag":$("#deliverychallan_consignment option:selected").val()};
 	}
     event.preventDefault();
     $('.modal-backdrop').remove();
@@ -1082,29 +1132,31 @@ else {
             qtytotal += +obj.qty;
             printset.push(obj);
       	}
-        var datas = {}
+            var datas = {};
       	if ($("#deliverychallan_godown option").length !=0) {
       		datas = {"dcno": $("#deliverychallan_challanno").val(),
       	            "custid":$("# option:selected").val(),
       	            "dcdate":$("#deliverychallan_date").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_year").val(),
-      	            "printset":JSON.stringify(printset),
+      		    "printset":JSON.stringify(printset),
+		    "consignee":JSON.stringify(consignee),
       	            "issuername":$("#deliverychallan_issuername").val(),
       	            "designation":$("#deliverychallan_designation").val(),
       	            "goid":$("#deliverychallan_godown option:selected").val(),
       	            "notetype":$("#deliverychallan_consignment option:selected").text(),
       	            "qtytotal":qtytotal
-      	            } }
+      			}; }
       	else {
       		datas = {"dcno": $("#deliverychallan_challanno").val(),
       	            "custid":$("# option:selected").val(),
       	            "dcdate":$("#deliverychallan_date").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_year").val(),
-      	            "printset":JSON.stringify(printset),
+      		    "printset":JSON.stringify(printset),
+		    "consignee":JSON.stringify(consignee),
       	            "issuername":$("#deliverychallan_issuername").val(),
       	            "designation":$("#deliverychallan_designation").val(),
       	            "goid":$("#deliverychallan_godown option:selected").val(),
       	            "notetype":$("#deliverychallan_consignment option:selected").text(),
       	            "qtytotal":qtytotal
-      	            }
+      			};
        }
           $.ajax({ // passing the delivery note details to a page displaying it as a print preview
             url: '/deliverychallan?action=print',
