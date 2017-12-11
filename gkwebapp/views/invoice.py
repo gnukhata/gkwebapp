@@ -154,13 +154,13 @@ def getproduct(request):
 
 
 
-@view_config(route_name="invoice",request_param="action=showsale",renderer="gkwebapp:templates/viewinvoices_sale.jinja2")
+@view_config(route_name="invoice",request_param="action=showsale",renderer="gkwebapp:templates/editinvoice.jinja2")
 def showsaleinvoices(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/billwise?type=pending&invtype=sale", headers=header)
     return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["invoices"]}
 
-@view_config(route_name="invoice",request_param="action=showpurchase",renderer="gkwebapp:templates/viewinvoices_purchase.jinja2")
+@view_config(route_name="invoice",request_param="action=showpurchase",renderer="gkwebapp:templates/editinvoice.jinja2")
 def showpurchaseinvoices(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/billwise?type=pending&invtype=purchase", headers=header)
