@@ -136,7 +136,7 @@
 	  </div>
           </div>
           <div class="col-md-7 deliverychallan_edit_div" id="deliverychallan_edit_product_div" hidden>
-
+            <div class="row">
             <div class="panel">
             <table id="deliverychallan_edit_product_table" class="table shadow table-condensed table-bordered fixed-edit-table">
               <thead class="bg-primary">
@@ -168,13 +168,17 @@
               <label for="deliverychallan_edit_designation">{% trans %}Designation{% endtrans %} :</label>
               <input type="text" class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_designation" placeholder="Enter designation">
             </div>
-        </div>
-      </div>
-      <div class="panel-footer" hidden>
-        <div class="container-fluid">
-       <button id="deliverychallan_editprint" class="btn btn-primary btn-sm" >{% trans %}Print{% endtrans %}</button>
-        <button class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">{% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
-      </div>
+	    </div>
+	    <br><br>
+	    <div class="row">
+	      <div class="panel-footer" hidden>
+		<div class="float-right" style="text-align: right;border-radius: 5px 5px 5px 5px !important;">
+		  <button id="deliverychallan_editprint" class="btn btn-primary btn-sm" >{% trans %}Print{% endtrans %}</button>
+		  <button class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">{% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
+		</div>
+	      </div>  
+	    </div>
+          </div>
       </div>
     </div>
 
