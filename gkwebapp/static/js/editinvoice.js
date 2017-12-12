@@ -76,6 +76,20 @@ $(document).ready(function() {
 	}
     });
 
+    $("#invoice_edit").click(function(event){
+	$("#invoice_save").show();
+	$("#invoice_edit").hide();
+	$('input, select:not(#invselect)').prop("disabled", false);
+	$(".firstfield:visible").first().focus();
+    });
+
+    $("#invselect").keydown(function(event){
+	if(event.which == 13){
+	    event.preventDefault();
+	    $("#invoice_edit").click();
+	    
+	}
+    });
 
     $('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
     $('.supplydate').autotab('number');
@@ -212,7 +226,6 @@ $(document).ready(function() {
     }
 
 
-    $(".input-sm:visible").first().focus();  //Focus on the first element when the page loads
     //Preventing characters in numeric fields.
     $("#invoice_date").numeric({ negative: false });
     $("#invoice_month").numeric({ negative: false });
