@@ -32,53 +32,48 @@ $(document).ready(function() {
     $('.invoicedate').autotab('number');
     $("select:first").focus();
     $("#invoice_editprint").hide();
-    var dcno = '';
-    var pqty = 0.00;
-    var ptaxamt = 0.00;
-    var perprice = 0.00;
-    var ptotal = 0.00;
-    var taxrate = 0.00;
-
     $("#invselect").change(function(event) {
         /* Act on the event */
         var invid = $("#invselect option:selected").val();
         if (invid != "") {
 	    $.ajax(
-    {
-
-    type: "POST",
-    url: "/invoice?action=getinvdetails",
-    global: false,
-    async: false,
-    data: {"invid": invid},
-    datatype: "json",
-    beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-      },
-    success: function(resp)
-	{
-	    console.log(resp);
-	$("#invdetailsdiv").html(resp);
-	$("#viewinvfooter").show();
-	if (parseInt($("#attachmentcount").val()) > 0) {
-	$("#viewattach").show();
-    }
-    else {
-	$("#viewattach").hide();
-    }
-	console.log($("#status").val());
-	if ($("#status").val() == '9') {
-	$("#invoice_editprint").hide();
-    }
-    else {
-	$("#invoice_editprint").show();
-    }
-    }
-    }
-  );
-        }
-
+		{
+		    type: "POST",
+		    url: "/invoice?action=getinvdetails",
+		    global: false,
+		    async: false,
+		    data: {"invid": invid},
+		    datatype: "json",
+		    beforeSend: function(xhr)
+		    {
+			xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+		    },
+		    success: function(resp)
+		    {
+			console.log(resp);
+			if(resp.gkstatus == 0){
+			    $("#invdetailsdiv").show();
+			    $('input, select:not(#invselect)').prop("disabled", true);
+			    $("#buttonsdiv").show();
+			    if(parseInt(resp.invoicedata.attachmentcount) > 0){
+				$("#viewattach").show();
+			    }
+			    else {
+				$("#viewattach").hide();
+			    }
+			    if ($("#status").val() == '9') {
+				$("#invoice_editprint").hide();
+			    }
+			    else {
+				$("#invoice_editprint").show();
+			    }
+			}
+		    }
+		});
+	}
+	else{
+	    $("#invdetailsdiv").hide();
+	}
     });
 
 

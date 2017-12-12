@@ -16,7 +16,7 @@
             </select>
 	  </div>
 	</div>
-	<div class="row" id="invdetailsdiv">
+	<div class="row" id="invdetailsdiv" hidden>
 	  <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
 	    <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
 
@@ -655,9 +655,10 @@
 	</div>
       </div>
     </div>
-    <div class="panel-footer ">
+    <div class="panel-footer " id="buttonsdiv" hidden>
       <div class="container-fluid">
-	<button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
+	<button id="invoice_edit" class="btn btn-primary btn-sm" accesskey="t"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans %}Edi<u>t</u>{% endtrans %}</button>
+	<button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save"  style="display:none;"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
 	<button id="invoice_reset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
 	{% if status=="out" %}
 	  <!-- <button id="invoice_saveprint" class="btn btn-primary btn-sm" ><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Save & Print{% endtrans %}</button> -->
@@ -670,7 +671,7 @@
 	  <i class="fa fa-paperclip" aria-hidden="true"></i>
 	  {% trans %}Attac<u>h</u>{% endtrans %}
 	</label>
-	<button class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
+	<button class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h" style="display:none;"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
 	<span class='label label-info' id="upload-file-info"></span>
       </div>
     </div>
