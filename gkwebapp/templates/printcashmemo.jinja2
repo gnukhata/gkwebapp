@@ -59,26 +59,26 @@
 
         <h3>{{org["orgname"]}}</h3>
         {% if org["orgaddr"]!='' %}
-          {{org["orgaddr"]}}
+          {{org["orgaddr"]}},
         {% endif %}
         {% if org["orgcity"]!='' %}
-          , {{org["orgcity"]}}
+           {{org["orgcity"]}}
 	{% endif %}
 	{% if org["orgpincode"] %}
 	  - {{org["orgpincode"]}},
         {% endif %}
         {% if org["orgstate"]!='' %}
-          , {{org["orgstate"]}}.
+           {{org["orgstate"]}}.
         {% endif %}
 	<br>
         {% if org["orgtelno"]!='' %}
-          Contact No.: {{org["orgtelno"]}}
+          Contact No.: {{org["orgtelno"]}},
         {% endif %}
         {% if org["orgemail"]!='' %}
-          Email : {{org["orgemail"]}}
+          Email : {{org["orgemail"]}},
         {% endif %}
         {% if org["orgfax"] %}
-          Fax : {{org["orgfax"]}}
+          Fax : {{org["orgfax"]}},
         {% endif %}
         {% if org["orgwebsite"]!='' %}
           Website : {{org["orgwebsite"]}}
