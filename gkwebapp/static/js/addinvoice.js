@@ -1,5 +1,7 @@
 /*
   Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+  Copyright (C) 2017 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+
   This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
    GNUKhata is Free Software; you can redistribute it and/or modify
@@ -25,6 +27,7 @@
    "Prajkta Patkar"<prajakta@dff.org.in>
    "Vaibhav Kurhe" <vaibhav.kurhe@gmail.com>
    "Abhijith Balan" <abhijith@dff.org.in>
+   "Reshma Bhatawadekar" <reshma_b@riseup.net>"
    "Rohini Baraskar" <robaraskar@gmail.com>
  */
 
@@ -619,11 +622,10 @@ $(document).ready(function() {
 		if ($("#invoice_deliverynote option:selected").val() != '') {
 		    if($("#consigneeaddress").is(":disabled")){
 			 $(".invoice_product_quantity_vat:first").focus().select();
-		    }
-		} else {
+		    } else {
 			$("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
 		    }
-	
+		} 
 	    }
 	}
 	else if (event.which == 38) {
@@ -649,10 +651,10 @@ $(document).ready(function() {
 		if ($("#invoice_deliverynote option:selected").val() != '') {
 		    if($("#consigneeaddress").is(":disabled")){
 			 $(".invoice_product_quantity_gst:first").focus().select();
-		    }
-		} else {
+		    } else {
 			$("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
-		  }
+		    }
+		} 
 	    }
 	}
 	else if (event.which == 38) {
@@ -756,15 +758,15 @@ $(document).ready(function() {
       if ($("#status").val() == 9) {
 	  destinationstate = $("#invoicestate option:selected").val();
 	  sourcestate = $("#invoice_customerstate").val();
-	  if ($("#gstinconsignee").val() != "") {
-	   sourcestate = $("#consigneestate option:selected").val();
+	  if ($("#consigneename").val() != "") {
+	      sourcestate = $("#consigneestate option:selected").val();
 	  }
       }
       else if ($("#status").val() ==  15) {
 	  sourcestate = $("#invoicestate option:selected").val();
 	  destinationstate = $("#invoice_customerstate").val();
-	  if ($("#gstinconsignee").val() != "") {
-	   destinationstate = $("#consigneestate option:selected").val();
+	  if ($("#consigneename").val() != "") {
+	      destinationstate = $("#consigneestate option:selected").val();
 	  }
       }
 	var taxflag=$("#taxapplicable").val();
@@ -1074,8 +1076,12 @@ $(document).ready(function() {
         $('#invoice_product_table_vat tbody tr:eq(' + previndex + ') td:eq(1) input').focus();
       }
       if (curindex == 0) {
-        event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          event.preventDefault();
+	  if($("#consigneeaddress").is(":disabled")) {
+	      $("#tinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1162,8 +1168,12 @@ $(document).ready(function() {
         $('#invoice_product_table_vat tbody tr:eq(' + previndex + ') td:eq(2) input').focus();
       }
       if (curindex == 0) {
-        event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          event.preventDefault();
+	  if($("#consigneeaddress").is(":disabled")) {
+	      $("#tinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1206,7 +1216,11 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          if($("#consigneeaddress").is(":disabled")) {
+	      $("#tinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1250,7 +1264,11 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          if($("#consigneeaddress").is(":disabled")) {
+	      $("#tinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1369,7 +1387,11 @@ $(document).ready(function() {
       }
       if (curindex1 == 0) {
         event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          if($("#consigneeaddress").is(":disabled")) {
+	      $("#tinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 190 && event.ctrlKey) {
@@ -1404,15 +1426,15 @@ $(document).ready(function() {
       if ($("#status").val() == 9) {
 	  destinationstate = $("#invoicestate option:selected").val();
 	  sourcestate = $("#invoice_customerstate").val();
-	  if ($("#gstinconsignee").val() != "") {
+	  if ($("#consigneename").val() != "") {
 	   sourcestate = $("#consigneestate option:selected").val();
 	  }
       }
       else if ($("#status").val() ==  15) {
 	  sourcestate = $("#invoicestate option:selected").val();
 	  destinationstate = $("#invoice_customerstate").val();
-	  if ($("#gstinconsignee").val() != "") {
-	   destinationstate = $("#consigneestate option:selected").val();
+	  if ($("#consigneename").val() != "") {
+	      destinationstate = $("#consigneestate option:selected").val();
 	  }
       }
     var taxflag=$("#taxapplicable").val();
@@ -1618,7 +1640,11 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          if($("#consigneeaddress").is(":disabled")) {
+	      $("#gstinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1715,7 +1741,11 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          if($("#consigneeaddress").is(":disabled")) {
+	      $("#gstinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1758,7 +1788,11 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          if($("#consigneeaddress").is(":disabled")) {
+	      $("#gstinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1849,7 +1883,11 @@ if (event.which == 13) {
       }
       if (curindex1 == 0) {
         event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          if($("#consigneeaddress").is(":disabled")) {
+	      $("#gstinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
