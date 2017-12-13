@@ -151,16 +151,9 @@ $(document).ready(function() {
   $("#prodselect").keydown(function(event) {
 
     if (event.which==13) {
-      event.preventDefault();
-        if ($("#catg").val()){
-          $("#editcatselect").focus();
-        }
-        else {
-          $("#editproddesc").focus().select();
-
-        }
-
-
+	event.preventDefault();
+	$("#editproddesc").focus().select();
+ 
           }
 
   });
@@ -169,12 +162,6 @@ $(document).ready(function() {
       event.preventDefault();
       $("#gscode").focus();
 
-     /*if ($("#editcatselect").is(':disabled')) {
-        $("#gscode").focus();
-      }
-        else {
-          $("#editcatselect").focus();
-        }*/
     }
     if (event.which==38) {
       event.preventDefault();
@@ -509,15 +496,10 @@ $(document).ready(function() {
     $("#addgodown").show();
   }
 
-    event.preventDefault();
-    if ($("#catg").val()){
-      $("#editcatselect").focus();
-
-    }
-    else {
+   event.preventDefault();
       $("#editproddesc").focus().select();
 
-    }
+
 
     $(".godownflag").show();
     catcode= $("#editcatselect option:selected").val();
