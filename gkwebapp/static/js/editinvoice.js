@@ -114,6 +114,8 @@ $(document).ready(function() {
     var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
     var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();  //HTML for table displaying totals in GST Product Table.
     var vathtml = $('#invoice_product_table_vat tbody tr:first').html();  //HTML for VAT Product Table row.
+    //A dictionary to store GSTINs of a customer.
+    var gstins = {};
 
     //Function to calculate gst tax amount
     function calculategstaxamt(curindex) {
@@ -228,6 +230,7 @@ $(document).ready(function() {
     }
 
 
+    $(".input-sm:visible").first().focus();  //Focus on the first element when the page loads
     //Preventing characters in numeric fields.
     $("#invoice_date").numeric({ negative: false });
     $("#invoice_month").numeric({ negative: false });
@@ -386,7 +389,8 @@ $(document).ready(function() {
 	event.preventDefault();
 	$("#orggstin").text("");
 	$("#statecodeforinvoice").text($("#invoicestate option:selected").attr("stateid"));
-	if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
+	if($("#consigneename").val() != ""){
+	  if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
 	    $(".igstfield").hide();
 	    $(".igstfield").css('border','');
 	    $(".sgstfield").show();
@@ -395,7 +399,19 @@ $(document).ready(function() {
 	    $(".sgstfield").hide();
 	    $(".sgstfield").css('border','');
 	    $(".igstfield").show();
+	}  
+	} else {
+	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
+	    $(".igstfield").hide();
+	    $(".igstfield").css('border','');
+	    $(".sgstfield").show();
+	    } else {
+		$(".sgstfield").hide();
+		$(".sgstfield").css('border','');
+		$(".igstfield").show();
+	    }
 	}
+	
 	$(".product_name_vat, .product_name_gst").change();
 
 	var gstinstateid=$("#invoicestate option:selected").attr("stateid");
@@ -435,7 +451,17 @@ $(document).ready(function() {
 	    }
 	    else {
 		if ($("#invoice_customer").is(":disabled")) {
-		    $("#consigneename").focus().select();  //Focus shifts to Consignee Name as Customer's fields are disabled when delivery note is selected.
+		    if($("#consigneename").is(":disabled")) {
+			if(sessionStorage.vatorgstflag == '22' ){
+			    $("#tinconsignee").focus();
+			}
+			else {
+			    $("#gstinconsignee").focus(); //Focus shifts to Consignee GSTIN as Consignee Name field is disabled when delivery note is selected. 
+			}
+		    }
+		    else{
+			$("#consigneename").focus().select();  //Focus shifts to Consignee Name as Customer's fields are disabled when delivery note is selected.
+		    }
 		}
 		else {
 		    $("#invoice_customer").focus();  //Focus shifts to Customer.
@@ -465,7 +491,16 @@ $(document).ready(function() {
 	if (event.which == 13) {
 	    event.preventDefault();
 	    if ($("#invoice_customer").is(":disabled")) {
-		$("#consigneename").focus().select();  //Focus shifts to Consignee Name as Customer's fields are disabled when delivery note is selected.
+		if($("#consigneename").is(":disabled")){
+		    if ($("#taxapplicable").val() == 22) {
+			$("#tinconsignee").focus();
+		    } else {
+			$("#gstinconsignee").focus(); //Focus shifts to Consignee GSTIN as Consignee Name field is disabled when delevery note is selected.
+		    }
+		}
+		else {
+		    $("#consigneename").focus().select();  //Focus shifts to Consignee Name as Customer's fields are disabled when delivery note is selected.
+		}
 	    }
 	    else {
 		$("#invoice_customer").focus();  //Focus shifts to Customer.
@@ -498,10 +533,9 @@ $(document).ready(function() {
 	}
     });
 
-    //A dictionary to store GSTINs of a customer.
-    var gstins = {};
     //Change Event for Customer.
     $("#invoice_customer").change(function(event) {
+	$(".product_name_vat, .product_name_gst").change();
 	//AJAX to get details of customer.
 	$.ajax({
 	    url: '/customersuppliers?action=get',
@@ -517,6 +551,7 @@ $(document).ready(function() {
 		console.log("success");
 		if (resp["gkstatus"] == 0) {
 		    $("#invoice_customerstate").val(resp["gkresult"]["state"]);  //State of Customer is selected automatically.
+		    $("#invoice_customerstate").change();
 		    $("#invoice_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
 		    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
         //All GSTINs of this customer are
@@ -533,10 +568,10 @@ $(document).ready(function() {
 		    //State Code of Customer State is loaded.
 		    $("#statecodeofcustomer").text($("#invoice_customerstate option:selected").attr("stateid"));
 		    //Consignee State is synced with Customer State.
-		    if ($("#status").val() == 15) {
+		    /*if ($("#status").val() == 15) {
 			$("#consigneestate").val(resp["gkresult"]["state"]);
 			$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));
-		    }
+		    }*/
 		}
 	    })
 	    .fail(function() {
@@ -556,10 +591,10 @@ $(document).ready(function() {
 	else {
 	    $("#gstin").text('');  //If GSTIN is not available it is set as blank.
 	}
-	if ($("#status").val() == 15) {
+/**	if ($("#status").val() == 15) {
 	    $("#consigneestate").val($("#invoice_customerstate option:selected").val());  //Consignee State is synced with customer state.
       $("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
-	}
+	}**/
 	if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 	    $(".igstfield").hide();
 	    $(".sgstfield").show();
@@ -590,8 +625,13 @@ $(document).ready(function() {
 	event.preventDefault();
 	$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
 	if ($("#status").val() == 15) {
-	    $("#invoice_customerstate").val($("#consigneestate option:selected").val());  //Customer State is synced with state of consignee.
-      $("#statecodeofcustomer").text($("#invoice_customerstate option:selected").attr("stateid"));  //State code is loaded.
+	    //$("#invoice_customerstate").val($("#consigneestate option:selected").val());  //Customer State is synced with state of consignee.
+	    //$("#statecodeofcustomer").text($("#invoice_customerstate option:selected").attr("stateid"));  //State code is loaded.
+	    if($("#statecodeofconsignee").text() in gstins) {
+		var custgstin = gstins[$("#statecodeofconsignee").text()];
+		$("#gstin").text(custgstin); // Customer gstin is synced with state code of consignee.
+	    }
+	    
 	    if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
 		$(".igstfield").hide();
 		$(".sgstfield").show();
@@ -647,15 +687,31 @@ $(document).ready(function() {
     $("#tinconsignee").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    if ($("#gstinconsignee").is(":visible")) {
+	    /*if ($("#gstinconsignee").is(":visible")) {
 		$("#gstinconsignee").focus().select();  //Focus shifts to GSTIN of Consignee.
-	    }
-	    else {
-		$("#consigneeaddress").focus().select();  //Focus shifts to Address of Consignee.
+		}*/
+	    if ($("#taxapplicable").val() == 22) {
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    if($("#consigneeaddress").is(":disabled")){
+			 $(".invoice_product_quantity_vat:first").focus().select();
+		    } else {
+			$("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
+		    }
+		} 
 	    }
 	}
 	else if (event.which == 38) {
-	    $("#consigneestate").focus();  //Focus Shifts to State of Consignee.
+	    if ($("#consigneestate").is(":disabled")){
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    if($("#status").val() == 15){
+			 $("#invoice_issuer_designation").focus().select();
+		    } else {
+			$("#invoicestate").focus().select();
+		    }
+		} 
+	    } else {
+		    $("#consigneestate").focus().select();  //Focus shifts to GSTIN of Consignee.
+	    }
 	}
     });
 
@@ -663,14 +719,30 @@ $(document).ready(function() {
     $("#gstinconsignee").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    $("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
+	    if ($("#taxapplicable").val() == 7) {
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    if($("#consigneeaddress").is(":disabled")){
+			 $(".invoice_product_quantity_gst:first").focus().select();
+		    } else {
+			$("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
+		    }
+		} 
+	    }
 	}
 	else if (event.which == 38) {
-	    if ($("#tinconsignee").is(":visible")) {
+	    /*if ($("#tinconsignee").is(":visible")) {
 		$("#tinconsignee").focus().select();  //Focus shifts to TIN of Consignee.
-	    }
-	    else {
-		$("#consigneestate").focus().select();  //Focus shifts to GSTIN of Consignee.
+		}*/
+	    if ($("#consigneestate").is(":disabled")){
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    if($("#status").val() == 15){
+			 $("#invoice_issuer_designation").focus().select();
+		    } else {
+			$("#invoicestate").focus().select();
+		    }
+		} 
+	    } else {
+		    $("#consigneestate").focus().select();  //Focus shifts to GSTIN of Consignee.
 	    }
 	}
     });
@@ -758,15 +830,15 @@ $(document).ready(function() {
       if ($("#status").val() == 9) {
 	  destinationstate = $("#invoicestate option:selected").val();
 	  sourcestate = $("#invoice_customerstate").val();
-	  if ($("#gstinconsignee").val() != "") {
-	   sourcestate = $("#consigneestate option:selected").val();
+	  if ($("#consigneename").val() != "") {
+	      sourcestate = $("#consigneestate option:selected").val();
 	  }
       }
       else if ($("#status").val() ==  15) {
 	  sourcestate = $("#invoicestate option:selected").val();
 	  destinationstate = $("#invoice_customerstate").val();
-	  if ($("#gstinconsignee").val() != "") {
-	   destinationstate = $("#consigneestate option:selected").val();
+	  if ($("#consigneename").val() != "") {
+	      destinationstate = $("#consigneestate option:selected").val();
 	  }
       }
 	var taxflag=$("#taxapplicable").val();
@@ -868,7 +940,28 @@ $(document).ready(function() {
 			$("#invoice_customer").val(resp["delchal"]["delchaldata"]["custid"]);
 			$("#invoice_customer").prop("disabled", true);
 			$("#invoice_customerstate").prop("disabled", true);
+			$("#consigneename").val(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]);
+			if(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]){
+			    $("#consigneename").prop("disabled", true);
+			} else {
+			    $("#consigneename").prop("disabled", false);
+			}
+			$("#consigneestate").val(resp["delchal"]["delchaldata"]["consignee"]["consigneestate"]);
+			if(resp["delchal"]["delchaldata"]["consignee"]["consigneestate"]){
+			    $("#consigneestate").prop("disabled", true);
+			} else {
+			    $("#consigneestate").prop("disabled", false);
+			    $("#consigneestate").val("Andaman and Nicobar Islands");
+			}		
+			$("#consigneeaddress").val(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]);
+			if(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]){
+			    $("#consigneeaddress").prop("disabled", true);
+			} else {
+			    $("#consigneeaddress").prop("disabled", false);
+			}
+			
 			$("#invoice_customer").change();
+			$("#consigneestate").change();
 			$.ajax({
 			    url: '/customersuppliers?action=get',
 			    type: 'POST',
@@ -1055,8 +1148,12 @@ $(document).ready(function() {
         $('#invoice_product_table_vat tbody tr:eq(' + previndex + ') td:eq(1) input').focus();
       }
       if (curindex == 0) {
-        event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          event.preventDefault();
+	  if($("#consigneeaddress").is(":disabled")) {
+	      $("#tinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1143,8 +1240,12 @@ $(document).ready(function() {
         $('#invoice_product_table_vat tbody tr:eq(' + previndex + ') td:eq(2) input').focus();
       }
       if (curindex == 0) {
-        event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          event.preventDefault();
+	  if($("#consigneeaddress").is(":disabled")) {
+	      $("#tinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1187,7 +1288,11 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          if($("#consigneeaddress").is(":disabled")) {
+	      $("#tinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1231,7 +1336,11 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          if($("#consigneeaddress").is(":disabled")) {
+	      $("#tinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1350,7 +1459,11 @@ $(document).ready(function() {
       }
       if (curindex1 == 0) {
         event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          if($("#consigneeaddress").is(":disabled")) {
+	      $("#tinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 190 && event.ctrlKey) {
@@ -1385,15 +1498,15 @@ $(document).ready(function() {
       if ($("#status").val() == 9) {
 	  destinationstate = $("#invoicestate option:selected").val();
 	  sourcestate = $("#invoice_customerstate").val();
-	  if ($("#gstinconsignee").val() != "") {
+	  if ($("#consigneename").val() != "") {
 	   sourcestate = $("#consigneestate option:selected").val();
 	  }
       }
       else if ($("#status").val() ==  15) {
 	  sourcestate = $("#invoicestate option:selected").val();
 	  destinationstate = $("#invoice_customerstate").val();
-	  if ($("#gstinconsignee").val() != "") {
-	   destinationstate = $("#consigneestate option:selected").val();
+	  if ($("#consigneename").val() != "") {
+	      destinationstate = $("#consigneestate option:selected").val();
 	  }
       }
     var taxflag=$("#taxapplicable").val();
@@ -1599,7 +1712,11 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          if($("#consigneeaddress").is(":disabled")) {
+	      $("#gstinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1696,7 +1813,11 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          if($("#consigneeaddress").is(":disabled")) {
+	      $("#gstinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1739,7 +1860,11 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          if($("#consigneeaddress").is(":disabled")) {
+	      $("#gstinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1830,7 +1955,11 @@ if (event.which == 13) {
       }
       if (curindex1 == 0) {
         event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          if($("#consigneeaddress").is(":disabled")) {
+	      $("#gstinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -2350,11 +2479,30 @@ if (event.which == 13) {
       form_data.append("designation", designation);
       form_data.append("invtotal", invoicetotal);
       if ($("#status").val() == 9) {
+	 /*let destinationstate = $("#invoicestate option:selected").val();
+	 let sourcestate = $("#invoice_customerstate").val();
+	  if ($("#consigneename").val() != "") {
+	      sourcestate = $("#consigneestate option:selected").val();
+	  }*/
 	  form_data.append("taxstate", $("#invoicestate option:selected").val());
-	  form_data.append("sourcestate", $("#invoice_customerstate option:selected").val());
+	  if ($("#consigneename").val() != "") {
+	      form_data.append("sourcestate", $("#consigneestate option:selected").val());
+	  } else {
+	      form_data.append("sourcestate", $("#invoice_customerstate option:selected").val());
+	  }
+
       }
       else if ($("#status").val() ==  15) {
-	  form_data.append("taxstate", $("#invoice_customerstate option:selected").val());
+	  /*let sourcestate = $("#invoicestate option:selected").val();
+	  let destinationstate = $("#invoice_customerstate").val();
+	  if ($("#consigneename").val() != "") {
+	      destinationstate = $("#consigneestate option:selected").val();
+	      }*/
+	  if ($("#consigneename").val() != "") {
+	      form_data.append("taxstate", $("#consigneestate option:selected").val());
+	  } else {
+	      form_data.append("taxstate", $("#invoice_customerstate option:selected").val());
+	  }
 	  form_data.append("sourcestate", $("#invoicestate option:selected").val());
     }
     form_data.append("freeqty", JSON.stringify(freeqty));
