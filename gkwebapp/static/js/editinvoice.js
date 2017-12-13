@@ -1,5 +1,6 @@
 /*
 Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+Copyright (C) 2017 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
 GNUKhata is Free Software; you can redistribute it and/or modify
@@ -23,6 +24,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Mohd. Talha Pawaty" <mtalha456@gmail.com>
+"Abhijith Balan" <abhijith@dff.org.in>
 */
 
 // This script is for the addinvoice.jinja2
