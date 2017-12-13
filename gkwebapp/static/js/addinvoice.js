@@ -332,7 +332,8 @@ $(document).ready(function() {
 	event.preventDefault();
 	$("#orggstin").text("");
 	$("#statecodeforinvoice").text($("#invoicestate option:selected").attr("stateid"));
-	if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
+	if($("#consigneename").val() != ""){
+	  if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
 	    $(".igstfield").hide();
 	    $(".igstfield").css('border','');
 	    $(".sgstfield").show();
@@ -341,7 +342,19 @@ $(document).ready(function() {
 	    $(".sgstfield").hide();
 	    $(".sgstfield").css('border','');
 	    $(".igstfield").show();
+	}  
+	} else {
+	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
+	    $(".igstfield").hide();
+	    $(".igstfield").css('border','');
+	    $(".sgstfield").show();
+	    } else {
+		$(".sgstfield").hide();
+		$(".sgstfield").css('border','');
+		$(".igstfield").show();
+	    }
 	}
+	
 	$(".product_name_vat, .product_name_gst").change();
 
 	var gstinstateid=$("#invoicestate option:selected").attr("stateid");
@@ -465,6 +478,7 @@ $(document).ready(function() {
 
     //Change Event for Customer.
     $("#invoice_customer").change(function(event) {
+	$(".product_name_vat, .product_name_gst").change();
 	//AJAX to get details of customer.
 	$.ajax({
 	    url: '/customersuppliers?action=get',
@@ -480,6 +494,7 @@ $(document).ready(function() {
 		console.log("success");
 		if (resp["gkstatus"] == 0) {
 		    $("#invoice_customerstate").val(resp["gkresult"]["state"]);  //State of Customer is selected automatically.
+		    $("#invoice_customerstate").change();
 		    $("#invoice_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
 		    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
         //All GSTINs of this customer are
@@ -2407,11 +2422,30 @@ if (event.which == 13) {
       form_data.append("designation", designation);
       form_data.append("invtotal", invoicetotal);
       if ($("#status").val() == 9) {
+	 /*let destinationstate = $("#invoicestate option:selected").val();
+	 let sourcestate = $("#invoice_customerstate").val();
+	  if ($("#consigneename").val() != "") {
+	      sourcestate = $("#consigneestate option:selected").val();
+	  }*/
 	  form_data.append("taxstate", $("#invoicestate option:selected").val());
-	  form_data.append("sourcestate", $("#invoice_customerstate option:selected").val());
+	  if ($("#consigneename").val() != "") {
+	      form_data.append("sourcestate", $("#consigneestate option:selected").val());
+	  } else {
+	      form_data.append("sourcestate", $("#invoice_customerstate option:selected").val());
+	  }
+
       }
       else if ($("#status").val() ==  15) {
-	  form_data.append("taxstate", $("#invoice_customerstate option:selected").val());
+	  /*let sourcestate = $("#invoicestate option:selected").val();
+	  let destinationstate = $("#invoice_customerstate").val();
+	  if ($("#consigneename").val() != "") {
+	      destinationstate = $("#consigneestate option:selected").val();
+	      }*/
+	  if ($("#consigneename").val() != "") {
+	      form_data.append("taxstate", $("#consigneestate option:selected").val());
+	  } else {
+	      form_data.append("taxstate", $("#invoice_customerstate option:selected").val());
+	  }
 	  form_data.append("sourcestate", $("#invoicestate option:selected").val());
     }
     form_data.append("freeqty", JSON.stringify(freeqty));
