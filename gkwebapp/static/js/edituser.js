@@ -490,9 +490,6 @@ $(document).ready(function() {
 	    return false;
 	}
 
-	var edituserform = $("#edituserform").serializeArray();
-        edituserform.push({name: 'godowns', value: JSON.stringify(selectedgodowns)});
-
         //For Edited Data store.
         var userid = $("#edituser option:selected").val();
         var username = $("#editname").val();
@@ -502,7 +499,7 @@ $(document).ready(function() {
         var useranswer = $("#answer").val();
 	$.ajax({
 	    type: "POST",
-            url: "/showuser?type=edituser",
+            url: "/showuser?type=updateuser",
             global: false,
             async: false,
             datatype: "json",
@@ -512,7 +509,8 @@ $(document).ready(function() {
                 "userpassword": userpassword,
                 "userrole": userrole,
                 "userquestion": userquestion,
-                "useranswer": useranswer
+                "useranswer": useranswer,
+		"godowns":selectedgodowns
 	    },
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('gktoken', sessionStorage.gktoken);

@@ -73,6 +73,19 @@ def getuserdetails(request):
         return {"gkstatus":0, "gkresult":result.json()["gkresult"]}
     return {"gkstatus":result.json()["gkstatus"]}
 
+#Edit Data
+@view_config(route_name="showuser",request_param="type=updateuser", renderer="json")
+def addedituser(request):
+    header={"gktoken":request.headers["gktoken"]}
+    goflag = False
+    if int(request.params["userrole"]) == 3:
+        print "with godown"
+        gkdata = {"userid":request.params["userid"],"username":request.params["username"], "userpassword":request.params["userpassword"], "userrole":request.params["userrole"], "userquestion":request.params["userquestion"], "useranswer":request.params["useranswer"], "golist":request.params["godowns"]}
+    else:
+        gkdata = {"userid":request.params["userid"],"username":request.params["username"], "userpassword":request.params["userpassword"], "userrole":request.params["userrole"], "userquestion":request.params["userquestion"], "useranswer":request.params["useranswer"]}
+    result = requests.put("http://127.0.0.1:6543/users?editdata", headers=header, data=json.dumps(gkdata))
+    return {"gkstatus":result.json()["gkstatus"]}
+
 @view_config(route_name="showedituser", renderer="gkwebapp:templates/changepassword.jinja2")
 def showedituser(request):
     header={"gktoken":request.headers["gktoken"]}
@@ -90,7 +103,7 @@ def edituser(request):
 def createuser(request):
     headers={"gktoken":request.headers["gktoken"]}
     goflag = False
-    if int(request.params["userrole"]) == 3:
+    if int(request.params["userrole"]) == 3: 
         gkdata = {"username":request.params["username"],"userpassword":request.params["userpassword"],"userrole":int(request.params["userrole"]),"userquestion":request.params["userquestion"],"useranswer":request.params["useranswer"],"golist":json.loads(request.params["godowns"])}
     else:
         gkdata = {"username":request.params["username"],"userpassword":request.params["userpassword"],"userrole":int(request.params["userrole"]),"userquestion":request.params["userquestion"],"useranswer":request.params["useranswer"]}
