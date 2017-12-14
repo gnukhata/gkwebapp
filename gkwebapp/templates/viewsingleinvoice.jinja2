@@ -68,18 +68,42 @@
 	{{ gkresult["custSupDetails"]["custname"] }}
       </div>
       <div class="form-group form-inline col-sm-12 nopadding">
-  <label>
-    {% if gkresult["inoutflag"] == 9 %}
-      {% trans %}Supplier State{% endtrans %} :
-    {% else %}
-      {% trans %}Customer State{% endtrans %} :
-    {% endif %}
-  </label>
-  {% if gkresult["inoutflag"] == 9 %}{{ gkresult["sourcestate"] }}{% endif %}{% if gkresult["inoutflag"] == 15 %}{{ gkresult["destinationstate"] }}{% endif %}
+	<label>
+	  {% if gkresult["inoutflag"] == 9 %}
+	    {% trans %}Supplier State{% endtrans %} :
+	  {% else %}
+	    {% trans %}Customer State{% endtrans %} :
+	  {% endif %}
+	</label>
+	{% if gkresult["consignee"]["consigneename"] %}
+	  {% if gkresult["inoutflag"] == 9 %}
+	    {{"with consignee purchase"}}
+	    {{ gkresult["custSupDetails"]["custsupstate"] }}
+	  {% endif %}
+	  {% if gkresult["inoutflag"] == 15 %}
+	    {{"with consignee sale"}}
+	    {{ gkresult["custSupDetails"]["custsupstate"]}}
+	  {% endif %}
+	{% else %}
+	  {% if gkresult["inoutflag"] == 9 %}
+	    {{"without consignee purchase"}}
+	    {{ gkresult["sourcestate"] }}
+	  {% endif %}
+	  {% if gkresult["inoutflag"] == 15 %}
+	    {{"without consignee sale"}}
+	    {{ gkresult["destinationstate"] }}
+	  {% endif %}
+	{% endif %}
       </div>
       <div class="form-inline form-group col-sm-12 nopadding">
-  <label for="stcode">{% trans %}State Code{% endtrans %} : </label>
-  {% if gkresult["inoutflag"] == 9 %}{{ gkresult["sourcestatecode"] }}{% endif %}{% if gkresult["inoutflag"] == 15 %}{{ gkresult["taxstatecode"] }}{% endif %}
+	<label for="stcode">{% trans %}State Code{% endtrans %} : </label>
+	{% if gkresult["consignee"]["consigneename"] %}
+	  {% if gkresult["inoutflag"] == 9 %}{{ gkresult["custSupDetails"]["custsupstatecode"] }}{% endif %}
+	  {% if gkresult["inoutflag"] == 15 %}{{ gkresult["custSupDetails"]["custsupstatecode"] }}{% endif %}
+	{% else %}
+	  {% if gkresult["inoutflag"] == 9 %}{{ gkresult["sourcestatecode"] }}{% endif %}
+	  {% if gkresult["inoutflag"] == 15 %}{{ gkresult["taxstatecode"] }}{% endif %}
+        {% endif %}
       </div>
       {% if gkresult["taxflag"] == 22 %}
 	<div class="form-group form-inline col-sm-12 nopadding">

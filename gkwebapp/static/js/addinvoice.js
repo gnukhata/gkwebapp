@@ -883,21 +883,20 @@ $(document).ready(function() {
 			$("#invoice_customer").val(resp["delchal"]["delchaldata"]["custid"]);
 			$("#invoice_customer").prop("disabled", true);
 			$("#invoice_customerstate").prop("disabled", true);
-			$("#consigneename").val(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]);
 			if(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]){
+			    $("#consigneename").val(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]);
 			    $("#consigneename").prop("disabled", true);
 			} else {
 			    $("#consigneename").prop("disabled", false);
 			}
-			$("#consigneestate").val(resp["delchal"]["delchaldata"]["consignee"]["consigneestate"]);
 			if(resp["delchal"]["delchaldata"]["consignee"]["consigneestate"]){
+			    $("#consigneestate").val(resp["delchal"]["delchaldata"]["consignee"]["consigneestate"]);
 			    $("#consigneestate").prop("disabled", true);
 			} else {
-			    $("#consigneestate").prop("disabled", false);
 			    $("#consigneestate").val("Andaman and Nicobar Islands");
 			}		
-			$("#consigneeaddress").val(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]);
 			if(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]){
+			    $("#consigneeaddress").val(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]);
 			    $("#consigneeaddress").prop("disabled", true);
 			} else {
 			    $("#consigneeaddress").prop("disabled", false);
