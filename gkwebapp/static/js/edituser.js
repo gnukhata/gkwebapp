@@ -140,6 +140,7 @@ $(document).ready(function() {
 				for(let i=0; i<$('#latable tbody tr').length; i++){
 				    if($('#latable tbody tr:eq('+i+')').attr("value") in userdetails["godowns"]){
 					$('#latable tbody tr:eq('+i+') td input').prop("checked", true);
+					$('#latable tbody tr td input').prop("disabled", true);
 				    }
 				}
 			    }
@@ -165,6 +166,7 @@ $(document).ready(function() {
 	$("#answer").prop("disabled", false);
 	$("#edit").hide();
 	$("#editname").focus().select();
+	$('#latable tbody tr td input').prop("disabled", false);
     });
     //When "Godown In charge" role is select from userrole will gives Godown List.
     if (sessionStorage.invflag==1) {
