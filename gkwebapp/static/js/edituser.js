@@ -114,11 +114,11 @@ $(document).ready(function() {
                 $("#form-footer").show();
                 $("#delete").show();
                 $("#edit").show();
-		$("#GodInCharge").show();
+		$("#userrolediv").show();
 
 		if(userdetails["userrole"]== -1){
 		    $("#delete").hide();
-		    $("#GodInCharge").hide();
+		    $("#userrolediv").hide();
 		    $("#usertable").hide();
 		}
 		if (userdetails["userrole"] == 3){
@@ -481,6 +481,9 @@ $(document).ready(function() {
 	    }
 	});
 
+	var godowns = {name: 'godowns', value: JSON.stringify(selectedgodowns)};
+	console.log(godowns["value"]);
+
 	if (selectedgodowns.length < 1 && $("#userrole").val() == 3) {
 	    $("#select-godowns-alert").alert();
 	    $("#select-godowns-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -510,7 +513,7 @@ $(document).ready(function() {
                 "userrole": userrole,
                 "userquestion": userquestion,
                 "useranswer": useranswer,
-		"godowns":selectedgodowns
+		"godowns":godowns["value"]
 	    },
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('gktoken', sessionStorage.gktoken);

@@ -79,8 +79,7 @@ def addedituser(request):
     header={"gktoken":request.headers["gktoken"]}
     goflag = False
     if int(request.params["userrole"]) == 3:
-        print "with godown"
-        gkdata = {"userid":request.params["userid"],"username":request.params["username"], "userpassword":request.params["userpassword"], "userrole":request.params["userrole"], "userquestion":request.params["userquestion"], "useranswer":request.params["useranswer"], "golist":request.params["godowns"]}
+        gkdata = {"userid":request.params["userid"],"username":request.params["username"], "userpassword":request.params["userpassword"], "userrole":request.params["userrole"], "userquestion":request.params["userquestion"], "useranswer":request.params["useranswer"], "golist":json.loads(request.params["godowns"])}
     else:
         gkdata = {"userid":request.params["userid"],"username":request.params["username"], "userpassword":request.params["userpassword"], "userrole":request.params["userrole"], "userquestion":request.params["userquestion"], "useranswer":request.params["useranswer"]}
     result = requests.put("http://127.0.0.1:6543/users?editdata", headers=header, data=json.dumps(gkdata))
