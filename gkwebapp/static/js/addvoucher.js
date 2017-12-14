@@ -45,15 +45,27 @@
  */
 $(document).ready(function() {
   $("#msspinmodal").modal("hide");  //Hides a spinner used to indicate that the page is getting loaded.
-  $(".modal-backdrop").remove();  //Removes any backdrop of the spinner.
-  if (sessionStorage.invsflag==0)
-  {
-    $(".invhide").hide(); //Hides list of invoices in Receipt, Payment, Sale and Purchase vouchers when invoice flag is set to zero.
-  }
-  else
-  {
-    $(".invhide").show(); //Hides list of invoices in Receipt, Payment, Sale and Purchase vouchers when invoice flag is set to zero.
-  }
+    $(".modal-backdrop").remove();  //Removes any backdrop of the spinner.
+    if ($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") {
+	$(".billhide").hide();
+	if (sessionStorage.invsflag==0){
+	    $(".invhide").hide(); //Hides list of invoices in Sale and Purchase vouchers when invoice flag is set to zero.
+	}
+	else
+	{
+	    $(".invhide").show(); //Hides list of invoices in Sale and Purchase vouchers when invoice flag is set to zero.
+	}
+    }
+    if ($('#vtype').val()=="receipt" || $('#vtype').val()=="payment") {
+	$(".invhide").hide();
+	if (sessionStorage.billflag==0){
+	    $(".billhide").hide(); //Hides list of invoices in Receipt and Payment vouchers when invoice flag is set to zero.
+	}
+	else
+	{
+	    $(".billhide").show(); //Hides list of invoices in Receipt and Payment vouchers when invoice flag is set to zero.
+	}
+    }
   if (sessionStorage.orgt=="Profit Making") {
     $("label[for='project']").html("C<u>o</u>st Center:");  //Label for select combo of projects is set as Cost Center
   }
@@ -135,12 +147,12 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 	$(".dramt:first").val(parseFloat(inv).toFixed(2));
 	$(".cramt:eq(1)").val(parseFloat(inv).toFixed(2));
     }
-    if (($('#vtype').val()=="receipt" || $('#vtype').val()=="payment") && sessionStorage.invsflag ==1) {
+    if (($('#vtype').val()=="receipt" || $('#vtype').val()=="payment") && sessionStorage.billflag ==1) {
 	$(".dramt:first").val(parseFloat(invbalance).toFixed(2));
 	$(".cramt:eq(1)").val(parseFloat(invbalance).toFixed(2));
     }
     if(value){
-	if (($('#vtype').val()=="sales" || $('#vtype').val()=="payment") && sessionStorage.invsflag ==1)
+	if ((($('#vtype').val()=="sales" && sessionStorage.invsflag ==1)  || ($('#vtype').val()=="payment") && sessionStorage.billflag == 1))
 	{
 	    $('.accs:first option').each(function(index) {
 		if ($(this).text() == value) {
@@ -148,7 +160,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 		}
 	    });
 	}
-	if (($('#vtype').val()=="purchase" || $('#vtype').val()=="receipt") && sessionStorage.invsflag ==1)
+	if (($('#vtype').val()=="purchase" && sessionStorage.invsflag ==1) || ($('#vtype').val()=="receipt" && sessionStorage.billflag == 1))
 	{
 	    $('.accs:eq(1) option').each(function(index) {
 		if ($(this).text() == value) {
@@ -622,12 +634,12 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 	let caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
 	$('#vtable tbody tr:eq('+curindex+') td:eq(2) input').val(getBalance(curacccode, caldata)); // Function that returns balance is called.
 	//If cust/sup account selected is altered then invoice selected is reset.
-	if (($('#vtype').val()=="sales" || $('#vtype').val()=="payment") && sessionStorage.invsflag ==1){
+	if (($('#vtype').val()=="sales" && sessionStorage.invsflag ==1) || ($('#vtype').val()=="payment" && sessionStorage.billflag == 1)){
 	    if ($("#invsel option:selected").attr("customername") != $(".accs:first option:selected").text()) {
 		$("#invsel").val("");
 	    }
 	}
-	if (($('#vtype').val()=="purchase" || $('#vtype').val()=="receipt") && sessionStorage.invsflag ==1){
+	if (($('#vtype').val()=="purchase" && sessionStorage.invsflag ==1) || ($('#vtype').val()=="receipt" && sessionStorage.billflag == 1)){
 	    if ($("#invsel option:selected").attr("customername") != $(".accs:first option:selected").text()) {
 		$("#invsel").val("");
 	    }
@@ -681,7 +693,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       }
       if (curindex==0) {
         event.preventDefault();
-        if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invsflag ==1)
+          if (($('#vtype').val()=="sales" && sessionStorage.invsflag ==1) || ($('#vtype').val()=="purchase" && sessionStorage.billflag == 1))
         {
           $("#invsel").focus();
         }
@@ -697,7 +709,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       event.preventDefault();
       if (curindex==0) {
         event.preventDefault();
-        if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invsflag ==1)
+          if (($('#vtype').val()=="sales" && sessionStorage.invsflag ==1) || ($('#vtype').val()=="purchase" && sessionStorage.billflag == 1))
         {
           $("#invsel").focus();
         }
@@ -1559,7 +1571,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     form_data.append("vdetails",JSON.stringify(details));
       form_data.append("transactions",JSON.stringify(output));
       //In case of Receipt/Payment vouchers when an invoice is selected Amount Paid is automatically adjusted.
-      if (($("#vouchertype").val() == "receipt" || $("#vouchertype").val() == "payment") && sessionStorage.invsflag == 1 && numberofcustomers == 1 && $("#invsel option:selected").val() != '') {
+      if (($("#vouchertype").val() == "receipt" || $("#vouchertype").val() == "payment") && sessionStorage.billflag == 1 && numberofcustomers == 1 && $("#invsel option:selected").val() != '') {
 	  let billamount = $("#invbalance").val();  // Amount to be adjusted is set to balance of invoice selected.
 	  if(billamount > vtotal) {
 	      billamount = vtotal;  // If balance of invoice is more than voucher amount then amount to be adjusted is set to voucher amount.

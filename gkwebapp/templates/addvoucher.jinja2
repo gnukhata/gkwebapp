@@ -209,14 +209,14 @@
 	<div class="form-inline well well-sm ">
           <div class="form-inline ">
             <div class="form-inline">
-              <div class="form-group " style="width:20%;">
+              <div class="form-group " style="width:15%;">
 		<label for="vno">{% trans %}<u>V</u>oucher No.{% endtrans %} :</label><label for="vno" style="color:red;font-size: 120%;">*</label>
 		<div><input type="text" class="form-control input-sm" value="{{lastdetails['vno']}}" name="vno" id="vno" size="10" accesskey="v"></div>
               </div>
 
               {% if invoicedata!=0 %}
 		{% if invoicecount!=0 %}
-		  <div class="form-group invhide " style="width:26%;">
+		  <div class="form-group billhide invhide " style="width:35%;">
 		    <input id="invhide" value="1" hidden="">
 		    <label for="invsel">{% trans %}Select Invoice {% endtrans %} :</label>
             </br>
@@ -231,14 +231,14 @@
               {% endfor %}
             </select>
 		  </div>
-		  <div class="form-group " style="width:17%;" >
+		  <div class="form-group invhide billhide" style="width:15%;" >
 		    <label for="invtotal">{% trans %}Total Invoice Amount {% endtrans %} :</label>
 		    <div>
 		      <input type="text" id="invtotal" class="form-control input-sm" value="0.00" size="15" placeholder="" disabled>
 		    </div>
 		  </div>
 
-		  <div class="form-group " style="width:17%;" >
+		  <div class="form-group billhide" style="width:15%;" >
 		    <label for="invbalance">{% trans %}Invoice Balance Amount {% endtrans %} :</label>
 		    <div>
 		      <input type="text" id="invbalance" class="form-control input-sm" value="0.00" size="15" placeholder="" disabled>
