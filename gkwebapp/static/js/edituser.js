@@ -482,9 +482,8 @@ $(document).ready(function() {
 		selectedgodowns.push($(this).attr("value"));
 	    }
 	});
-
+	//This variable gives list of selected godowns 
 	var godowns = {name: 'godowns', value: JSON.stringify(selectedgodowns)};
-	console.log(godowns["value"]);
 
 	if (selectedgodowns.length < 1 && $("#userrole").val() == 3) {
 	    $("#select-godowns-alert").alert();
@@ -497,6 +496,8 @@ $(document).ready(function() {
 
         //For Edited Data store.
         var userid = $("#edituser option:selected").val();
+	var userroleval = (userdetails["userrole"]);
+	console.log(userroleval);
         var username = $("#editname").val();
         var userpassword = $.trim($("#password").val());
         var userrole = $("#userrole").val();
@@ -515,7 +516,8 @@ $(document).ready(function() {
                 "userrole": userrole,
                 "userquestion": userquestion,
                 "useranswer": useranswer,
-		"godowns":godowns["value"]
+		"godowns":godowns["value"],
+		"userroleval":userroleval
 	    },
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('gktoken', sessionStorage.gktoken);

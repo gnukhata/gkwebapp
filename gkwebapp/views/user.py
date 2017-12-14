@@ -78,7 +78,10 @@ def getuserdetails(request):
 def addedituser(request):
     header={"gktoken":request.headers["gktoken"]}
     goflag = False
-    if int(request.params["userrole"]) == 3:
+    if int(request.params["userroleval"]) == -1:
+        print "Done"
+        gkdata = {"userid":request.params["userid"],"username":request.params["username"], "userpassword":request.params["userpassword"], "userrole":-1, "userquestion":request.params["userquestion"], "useranswer":request.params["useranswer"]}
+    elif int(request.params["userrole"]) == 3:
         gkdata = {"userid":request.params["userid"],"username":request.params["username"], "userpassword":request.params["userpassword"], "userrole":request.params["userrole"], "userquestion":request.params["userquestion"], "useranswer":request.params["useranswer"], "golist":json.loads(request.params["godowns"])}
     else:
         gkdata = {"userid":request.params["userid"],"username":request.params["username"], "userpassword":request.params["userpassword"], "userrole":request.params["userrole"], "userquestion":request.params["userquestion"], "useranswer":request.params["useranswer"]}
