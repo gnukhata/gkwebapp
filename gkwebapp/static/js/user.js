@@ -48,7 +48,7 @@ $(document).ready(function() {
       $("#name").focus();
     }
     else if(e.target.attributes.href.value=="#user_edit"){
-      $("#editname").focus();
+      $("#all").focus();
     } 
   });
 });

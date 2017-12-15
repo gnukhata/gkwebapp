@@ -21,10 +21,10 @@
   Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
 
 Contributors:
-"Krishnakant Mane" <kk@gmail.com>
-"Prajkta Patkar"
-"Abhijeet Balan"
-"Nitesh Chaughule"
+"Krishnakant Mane" <kk@dff.org.in>
+"Prajkta Patkar" <prajakta@dff.org.in>
+"Abhijeet Balan" <abhijith@dff.org.in>
+"Nitesh Chaughule" <nitesh@disroot.org>
 */
 
 // This script for edit user.
@@ -32,7 +32,8 @@ Contributors:
 $(document).ready(function() {
     $('.modal-backdrop').remove();
     $("#all").focus();
-    //It is filter out list of user on basis of its role
+
+    //This change event filter out list of user on basis of its role
     $(document).off('change', '.iib').on('change', '.iib', function(event){
 	if ($("#managerradio").is(":checked")) {
 	    $("#edituser option[role!='Manager']").prop("hidden", true).prop("disabled", true);
@@ -78,7 +79,7 @@ $(document).ready(function() {
 	}
     });
 
-    //This call gives selected user details and hide it.
+    //following ajax will calls selected user details and hide it.
     $("#edusrsubmit").hide();
     $("#edituser").bind("change", function(e) {
 	$("#edusrsubmit").hide();
@@ -121,6 +122,7 @@ $(document).ready(function() {
 		    $("#userrolediv").hide();
 		    $("#usertable").hide();
 		}
+		//This ajax gives the assign list of godowns. 
 		if (userdetails["userrole"] == 3){
 		    $("#usertable").show();
 		    $.ajax(
@@ -168,6 +170,7 @@ $(document).ready(function() {
 	$("#editname").focus().select();
 	$('#latable tbody tr td input').prop("disabled", false);
     });
+    
     //When "Godown In charge" role is select from userrole will gives Godown List.
     if (sessionStorage.invflag==1) {
 	$.ajax({
@@ -524,11 +527,19 @@ $(document).ready(function() {
             },
             success: function(resp) {
 		if (resp["gkstatus"] == 0) {
-                    $("#reset").click();
-                    $("#success-alert").alert();
-                    $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
-                        $("#success-alert").hide();
-                    });
+		    if(userroleval==-1){
+			$("#success-alert").alert();
+			$("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
+			    $("#success-alert").hide();
+			});
+			location.reload(forceGet=true);//After Admin successfully edited hole page refresh.
+		    }else{
+			$("#reset").click();
+			$("#success-alert").alert();
+			$("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
+                            $("#success-alert").hide();
+			});
+		    }
                 } else if (resp["gkstatus"] == 1) {
                     $("#duplicate-alert").alert();
                     $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
