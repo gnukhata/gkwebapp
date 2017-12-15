@@ -634,13 +634,11 @@ $(document).ready(function() {
 		$("#gstinconsignee").focus().select();  //Focus shifts to GSTIN of Consignee.
 		}*/
 	    if ($("#taxapplicable").val() == 22) {
-		if ($("#invoice_deliverynote option:selected").val() != '') {
-		    if($("#consigneeaddress").is(":disabled")){
-			 $(".invoice_product_quantity_vat:first").focus().select();
-		    } else {
-			$("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
-		    }
-		} 
+		if ($("#consigneename").is(":disabled")){
+		   $(".invoice_product_quantity_vat:first").focus().select(); 
+		} else {
+		    $("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
+		}
 	    }
 	}
 	else if (event.which == 38) {
@@ -663,13 +661,18 @@ $(document).ready(function() {
 	if (event.which == 13) {
 	    event.preventDefault();
 	    if ($("#taxapplicable").val() == 7) {
-		if ($("#invoice_deliverynote option:selected").val() != '') {
+		if ($("#consigneename").is(":disabled")){
+		    $(".invoice_product_quantity_gst:first").focus().select();
+		} else {
+		    $("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
+		}
+		/*if ($("#invoice_deliverynote option:selected").val() != '') {
 		    if($("#consigneeaddress").is(":disabled")){
 			 $(".invoice_product_quantity_gst:first").focus().select();
 		    } else {
 			$("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
 		    }
-		} 
+		} */
 	    }
 	}
 	else if (event.which == 38) {
