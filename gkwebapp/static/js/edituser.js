@@ -257,7 +257,6 @@ $(document).ready(function() {
     // Key event For New User Name
     $("#editname").keydown(function(e){
 	if (e.which==13) {
-	    e.preventDefault();
 	    if ($.trim($("#editname").val())=="") {
 		$("#blank-alert").alert();
 		$("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
@@ -286,22 +285,22 @@ $(document).ready(function() {
 	    $("#editname").focus();
 	}
     });
-
-    /*$("#current_password").blur(function(event) {
-	if ($.trim($("#current_password").val())!=$.trim($("#passwordconfirm").val())) {
-	    $("#checkpassuser-blank-alert").alert();
-	    $("#checkpassuser-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#checkpassuser-blank-alert").hide();
-	    });
-	    $("#password").focus();
-	    return false;
-	}
-    });*/
     
     //Key event for Edit Password
     $("#password").keydown(function(e){
 	if (e.which==13){
-	    $("#passwordconfirm").focus();
+	    e.preventDefault();
+	    if ($.trim($("#password").val()) == "") {
+            $("#cnfpass-blank-alert").alert();
+            $("#cnfpass-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+                $("#cnfpass-blank-alert").hide();
+            });
+            $("#password").focus().select();
+            return false;
+            }
+	    else{
+		$("#passwordconfirm").focus();
+	    }
 	}
 	if (e.which==38){
 	    e.preventDefault();
@@ -316,6 +315,14 @@ $(document).ready(function() {
     //Key event For Confirm Password
     $("#passwordconfirm").keydown(function(e){
 	if(e.which==13){
+	    if ($.trim($("#passwordconfirm").val()) == "") {
+		$("#checkpassuser-blank-alert").alert();
+		$("#checkpassuser-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#checkpassuser-blank-alert").hide();
+		});
+		$("#passwordconfirm").focus().select();
+		return false;
+	    };
 	    e.preventDefault();
 	    if(userdetails["userrole"] == -1) {
 		$("#question").focus();
@@ -339,13 +346,13 @@ $(document).ready(function() {
 	    $("#password").focus();
 	    return false;
 	}
-	else if(userdetails["userrole"] == -1){
+	if(userdetails["userrole"] == -1){
 	    if($.trim($("#current_password").val())=="") {
-	    $("#curpass-blank-alert").alert();
-	    $("#curpass-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#curpass-blank-alert").hide();
-	    });
-	    $("#current_password").focus().select();
+		$("#curpass-blank-alert").alert();
+		$("#curpass-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#curpass-blank-alert").hide();
+		});
+		$("#current_password").focus().select();
 	    }
 	}
     });
@@ -373,7 +380,16 @@ $(document).ready(function() {
    $("#question").keydown(function(e){
        if (e.which==13) {
 	   e.preventDefault();
-	   $("#answer").focus().select();
+	   if ($.trim($("#question").val()) == "") {
+	    $("#secque-blank-alert").alert();
+            $("#secque-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+                $("#secque-blank-alert").hide();
+            });
+	       $("#question").focus().select();
+               return false;
+	   }else {
+	       $("#answer").focus().select();
+	   }
        }
        else if (e.which==38) {
 	   e.preventDefault();
@@ -389,12 +405,21 @@ $(document).ready(function() {
    //Key event for Security Answer
     $("#answer").keydown(function(e){
 	if (e.which==13){
+	    if ($.trim($("#answer").val()) == "") {
+	    $("#secans-blank-alert").alert();
+            $("#secans-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+                $("#secans-blank-alert").hide();
+            });
+		$("#answer").focus().select();
+		return false;
+	    };
 	    e.preventDefault();
 	    $("#edusrsubmit").focus();
-	}
-	if (e.which==38) {
-	    e.preventDefault();
-	    $("#question").focus();
+	}else{
+	    if (e.which==38) {
+		e.preventDefault();
+		$("#question").focus();
+	    }
 	}
     });
 
@@ -485,9 +510,9 @@ $(document).ready(function() {
     //Submit Button Validation
     $("#edusrsubmit").click(function(e) {
 	if ($.trim($("#editname").val()) == "") {
-	    $("#username-blank-alert").alert();
-            $("#username-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                $("#username-blank-alert").hide();
+	    $("#blank-alert").alert();
+            $("#blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+                $("#blank-alert").hide();
             });
             $("#editname").focus().select();
             return false;
