@@ -79,14 +79,52 @@ $(document).ready(function() {
 				}
 				$("#invoice_deliverynote").val(resp.invoicedata.dcid);
 			    }
-			    $("#invocie_challanno").val(resp.invoicedata.invoicno);
-			    let invoicedate = resp.invoicedata.invoiceno.split('-');
+			    $("#invoice_challanno").val(resp.invoicedata.invoiceno);
+			    let invoicedate = resp.invoicedata.invoicedate.split('-');
 			    $("#invoice_date").val(invoicedate["0"]);
 			    $("#invoice_month").val(invoicedate["1"]);
 			    $("#invoice_year").val(invoicedate["2"]);
 			    if ($("#status").val() == 15) {
 				$("#invoicestate").val(resp.invoicedata.sourcestate);
 				$("#statecodeforinvoice").val(resp.invoicedata.sourcestatecode);
+				$("#invoice_issuer_name").val(resp.invoicedata.issuername);
+				$("#invoice_issuer_designation").val(resp.invoicedata.designation);
+			    }
+			    else {
+				$("#invoicestate").val(resp.invoicedata.destinationstate);
+				$("#statecodeforinvoice").val(resp.invoicedata.destinationstatecode);
+			    }
+			    if (resp.invoicedata.orgstategstin) {
+				$("#orggstin").text(resp.invoicedata.orgstategstin);
+			    }
+			    $('#invoice_customer option').each(function(index) {
+				if ($(this).text() == resp.invoicedata.custSupDetails.custname) {
+				    $(this).prop("selected", true);
+				}
+			    });
+			    $("#invoice_customerstate").val(resp.invoicedata.custSupDetails.custsupstate);
+			    $("#statecodeofcustomer").text(resp.invoicedata.custSupDetails.custsupstatecode);
+			    $("#invoice_customeraddr").text(resp.invoicedata.custSupDetails.custaddr);
+			    $("#taxapplicable").val(resp.invoicedata.taxflag);
+			    if ($("#taxapplicable").val() == '7') {
+				$("#taxapplicabletext").text('GST');
+				$("#gstin").text(resp.invoicedata.custSupDetails.custgstin);
+			    }
+			    else if ($("#taxapplicable").val() ==  '22') {
+				$("#taxapplicabletext").text('VAT');
+				$("#tin").text(resp.invoicedata.custSupDetails.custtin);
+			    }
+			    if (resp.invoicedata.consignee) {
+				$("#consigneename").val(resp.invoicedata.consignee.consigneename);
+				if ($("#taxapplicable").val() == '22') {
+				    $("#tinconsignee").val(resp.invoicedata.consignee.tinconsignee);
+				}
+				else if ($("#taxapplicable").val() ==  '7') {
+				    $("#gstinconsignee").val(resp.invoicedata.consignee.gstinconsignee);
+				}
+				$("#consigneeaddress").val(resp.invoicedata.consignee.consigneeaddress);
+				$("#consigneestate").val(resp.invoicedata.consignee.consigneestate);
+				$("#statecodeofconsignee").text(resp.invoicedata.consignee.consigneestatecode);
 			    }
 			}
 		    }
