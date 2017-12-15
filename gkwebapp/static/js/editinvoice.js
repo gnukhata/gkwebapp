@@ -34,140 +34,7 @@ $(document).ready(function() {
     $('.invoicedate').autotab('number');
     $("select:first").focus();
     $("#invoice_editprint").hide();
-    $("#invselect").change(function(event) {
-        /* Act on the event */
-        var invid = $("#invselect option:selected").val();
-        if (invid != "") {
-	    $.ajax(
-		{
-		    type: "POST",
-		    url: "/invoice?action=getinvdetails",
-		    global: false,
-		    async: false,
-		    data: {"invid": invid},
-		    datatype: "json",
-		    beforeSend: function(xhr)
-		    {
-			xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-		    },
-		    success: function(resp)
-		    {
-			if(resp.gkstatus == 0){
-			    $("#invdetailsdiv").show();
-			    $('input, select:not(#invselect)').prop("disabled", true);
-			    $("#buttonsdiv").show();
-			    if(parseInt(resp.invoicedata.attachmentcount) > 0){
-				$("#viewattach").show();
-			    }
-			    else {
-				$("#viewattach").hide();
-			    }
-			    if ($("#status").val() == '9') {
-				$("#invoice_editprint").hide();
-			    }
-			    else {
-				$("#invoice_editprint").show();
-			    }
-			    if(resp.invoicedata.dcid){
-				let delchallist = [];
-				$("#invoice_deliverynote option").each(function(){
-				    delchallist.append($(this).val());
-				});
-				if(jQuerry.inArray(resp.invoicedata.dcid, delchallist) == -1){
-				    $("#invoice_deliverynote").append('<option value="' + resp.invoicedata.dcid + '" dcno = "' + resp.invoicedata.dcno + '" dcdate="' + resp.invoicedata.dcdate + '">' + resp.invoicedata.dcid + ', ' + resp.invoicedata.dcdate + ', ' + resp.invoicedata.custSupDetails.custname + '</option>');
-				}
-				$("#invoice_deliverynote").val(resp.invoicedata.dcid);
-			    }
-			    $("#invoice_challanno").val(resp.invoicedata.invoiceno);
-			    let invoicedate = resp.invoicedata.invoicedate.split('-');
-			    $("#invoice_date").val(invoicedate["0"]);
-			    $("#invoice_month").val(invoicedate["1"]);
-			    $("#invoice_year").val(invoicedate["2"]);
-			    $("#invoice_year").blur();
-			    if ($("#status").val() == 15) {
-				$("#invoicestate").val(resp.invoicedata.sourcestate);
-				$("#statecodeforinvoice").text(resp.invoicedata.sourcestatecode);
-				$("#invoice_issuer_name").val(resp.invoicedata.issuername);
-				$("#invoice_issuer_designation").val(resp.invoicedata.designation);
-			    }
-			    else {
-				$("#invoicestate").val(resp.invoicedata.destinationstate);
-				$("#statecodeforinvoice").text(resp.invoicedata.taxstatecode);
-			    }
-			    if (resp.invoicedata.orgstategstin) {
-				$("#orggstin").text(resp.invoicedata.orgstategstin);
-			    }
-			    $('#invoice_customer option').each(function(index) {
-				if ($(this).text() == resp.invoicedata.custSupDetails.custname) {
-				    $(this).prop("selected", true);
-				}
-			    });
-			    $("#invoice_customerstate").val(resp.invoicedata.custSupDetails.custsupstate);
-			    $("#statecodeofcustomer").text(resp.invoicedata.custSupDetails.custsupstatecode);
-			    $("#invoice_customeraddr").text(resp.invoicedata.custSupDetails.custaddr);
-			    $("#taxapplicable").val(resp.invoicedata.taxflag);
-			    if ($("#taxapplicable").val() == '7') {
-				$("#taxapplicabletext").text('GST');
-				$("#gstin").text(resp.invoicedata.custSupDetails.custgstin);
-			    }
-			    else if ($("#taxapplicable").val() ==  '22') {
-				$("#taxapplicabletext").text('VAT');
-				$("#tin").text(resp.invoicedata.custSupDetails.custtin);
-			    }
-			    if (resp.invoicedata.consignee.consigneename) {
-				$("#consigneename").val(resp.invoicedata.consignee.consigneename);
-				if ($("#taxapplicable").val() == '22') {
-				    $("#tinconsignee").val(resp.invoicedata.consignee.tinconsignee);
-				}
-				else if ($("#taxapplicable").val() ==  '7') {
-				    $("#gstinconsignee").val(resp.invoicedata.consignee.gstinconsignee);
-				}
-				$("#consigneeaddress").val(resp.invoicedata.consignee.consigneeaddress);
-				$("#consigneestate").val(resp.invoicedata.consignee.consigneestate);
-				$("#statecodeofconsignee").text(resp.invoicedata.consignee.consigneestatecode);
-			    }
-			    else{
-				$("#consigneename").val("");
-				$("#tinconsignee").val("");
-				$("#gstinconsignee").val("");
-				$("#consigneeaddress").val("");
-				$("#consigneestate").val("Andaman and Nicobar Islands");
-				$("#statecodeofconsignee").text("35");
-			    }
-			}
-		    }
-		});
-	}
-	else{
-	    $("#invdetailsdiv").hide();
-	}
-    });
-
-    $("#invoice_edit").click(function(event){
-	$("#invoice_save").show();
-	$("#invoice_edit").hide();
-	$('input, select:not(#invselect)').prop("disabled", false);
-	$(".firstfield:visible").first().focus();
-    });
-
-    $("#invselect").keydown(function(event){
-	if(event.which == 13){
-	    event.preventDefault();
-	    $("#invoice_edit").click();
-	    
-	}
-    });
-
-    $('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
-    $('.supplydate').autotab('number');
-    if(sessionStorage.vatorgstflag == '22' ){
-      $(".gstinfield").hide();
-      $(".tinfield").show();
-    } else {
-      $(".gstinfield").show();
-    }
-
-    //Initialising some variables.
+     //Initialising some variables.
     var issuername = "";
     var designation = "";
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");  //Start of financial year is saved in a variable.
@@ -181,7 +48,6 @@ $(document).ready(function() {
     var vathtml = $('#invoice_product_table_vat tbody tr:first').html();  //HTML for VAT Product Table row.
     //A dictionary to store GSTINs of a customer.
     var gstins = {};
-
     //Function to calculate gst tax amount
     function calculategstaxamt(curindex) {
 	//Initialising variables to zero and getting values from various input fileds.
@@ -276,6 +142,166 @@ $(document).ready(function() {
 	$('#totaltax').val(parseFloat(totaltax).toFixed(2));
 	$('#total_product_vat').val(parseFloat(totalamount).toFixed(2));
 	$("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
+    }
+    $("#invselect").change(function(event) {
+        /* Act on the event */
+        var invid = $("#invselect option:selected").val();
+        if (invid != "") {
+	    $.ajax(
+		{
+		    type: "POST",
+		    url: "/invoice?action=getinvdetails",
+		    global: false,
+		    async: false,
+		    data: {"invid": invid},
+		    datatype: "json",
+		    beforeSend: function(xhr)
+		    {
+			xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+		    },
+		    success: function(resp)
+		    {
+			if(resp.gkstatus == 0){
+			    $("#invdetailsdiv").show();
+			    $('input, select:not(#invselect)').prop("disabled", true);
+			    $("#buttonsdiv").show();
+			    if(parseInt(resp.invoicedata.attachmentcount) > 0){
+				$("#viewattach").show();
+			    }
+			    else {
+				$("#viewattach").hide();
+			    }
+			    if ($("#status").val() == '9') {
+				$("#invoice_editprint").hide();
+			    }
+			    else {
+				$("#invoice_editprint").show();
+			    }
+			    if(resp.invoicedata.dcid){
+				let delchallist = [];
+				$("#invoice_deliverynote option").each(function(){
+				    delchallist.append($(this).val());
+				});
+				if(jQuerry.inArray(resp.invoicedata.dcid, delchallist) == -1){
+				    $("#invoice_deliverynote").append('<option value="' + resp.invoicedata.dcid + '" dcno = "' + resp.invoicedata.dcno + '" dcdate="' + resp.invoicedata.dcdate + '">' + resp.invoicedata.dcid + ', ' + resp.invoicedata.dcdate + ', ' + resp.invoicedata.custSupDetails.custname + '</option>');
+				}
+				$("#invoice_deliverynote").val(resp.invoicedata.dcid);
+			    }
+			    $("#invoice_challanno").val(resp.invoicedata.invoiceno);
+			    let invoicedate = resp.invoicedata.invoicedate.split('-');
+			    $("#invoice_date").val(invoicedate["0"]);
+			    $("#invoice_month").val(invoicedate["1"]);
+			    $("#invoice_year").val(invoicedate["2"]);
+			    $("#invoice_year").blur();
+			    if ($("#status").val() == 15) {
+				$("#invoicestate").val(resp.invoicedata.sourcestate);
+				$("#statecodeforinvoice").text(resp.invoicedata.sourcestatecode);
+				$("#invoice_issuer_name").val(resp.invoicedata.issuername);
+				$("#invoice_issuer_designation").val(resp.invoicedata.designation);
+			    }
+			    else {
+				$("#invoicestate").val(resp.invoicedata.destinationstate);
+				$("#statecodeforinvoice").text(resp.invoicedata.taxstatecode);
+			    }
+			    if (resp.invoicedata.orgstategstin) {
+				$("#orggstin").text(resp.invoicedata.orgstategstin);
+			    }
+			    $('#invoice_customer option').each(function(index) {
+				if ($(this).text() == resp.invoicedata.custSupDetails.custname) {
+				    $(this).prop("selected", true);
+				}
+			    });
+			    $("#invoice_customerstate").val(resp.invoicedata.custSupDetails.custsupstate);
+			    $("#statecodeofcustomer").text(resp.invoicedata.custSupDetails.custsupstatecode);
+			    $("#invoice_customeraddr").text(resp.invoicedata.custSupDetails.custaddr);
+			    $("#taxapplicable").val(resp.invoicedata.taxflag);
+			    if ($("#taxapplicable").val() == '7') {
+				$("#taxapplicabletext").text('GST');
+				$('#invoice_product_table_gst tbody').empty();
+				$('#invoice_product_table_total tbody').empty();
+				$("#gstin").text(resp.invoicedata.custSupDetails.custgstin);
+				    $.each(resp.invoicedata.invcontents, function(key, value) {
+					$('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
+					$('#invoice_product_table_gst tbody tr:last td:first select').val(key).prop("disabled", true);
+					$('#invoice_product_table_gst tbody tr:last td:eq(1) label').html(value.gscode);
+					$('#invoice_product_table_gst tbody tr:last td:eq(2) input').val(value.qty);
+					$('#invoice_product_table_gst tbody tr:last td:eq(2) input').val(value.qty).attr("data", value.qty);
+					$('#invoice_product_table_gst tbody tr:last td:eq(2) span').text(value.unitname);
+					$('#invoice_product_table_gst tbody tr:last td:eq(3) span').text(value.unitname);
+					$('.invoice_product_quantity_gst').numeric({ negative: false });
+					$('.invoice_product_per_price_gst').numeric({ negative: false });
+					$("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
+					$('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+				    });
+			    }
+			    else if ($("#taxapplicable").val() ==  '22') {
+				$("#taxapplicabletext").text('VAT');
+				$("#tin").text(resp.invoicedata.custSupDetails.custtin);
+				$('#invoice_product_table_vat tbody').empty();
+				 $.each(resp.invoicedata.invcontents, function(key, value) {
+					$('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
+					$('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+					$('#invoice_product_table_vat tbody tr:last td:first select').val(key).prop("disabled", true);
+					$('#invoice_product_table_vat tbody tr:last td:eq(1) input').val(value.qty);
+					$('#invoice_product_table_vat tbody tr:last td:eq(1) input').val(value.qty).attr("data", value.qty);
+					$('#invoice_product_table_vat tbody tr:last td:eq(1) span').text(value.unitname);
+					$('#invoice_product_table_vat tbody tr:last td:eq(2) span').text(value.unitname);
+				    });
+				    $("#invoice_product_table_vat tbody tr:first td:eq(9)").empty();
+			    }
+			    $("#invoice_product_table_total tbody tr:first td:last").empty();
+			    $('input, select:not(#invselect)').prop("disabled", true);
+			    if (resp.invoicedata.consignee.consigneename) {
+				$("#consigneename").val(resp.invoicedata.consignee.consigneename);
+				if ($("#taxapplicable").val() == '22') {
+				    $("#tinconsignee").val(resp.invoicedata.consignee.tinconsignee);
+				}
+				else if ($("#taxapplicable").val() ==  '7') {
+				    $("#gstinconsignee").val(resp.invoicedata.consignee.gstinconsignee);
+				}
+				$("#consigneeaddress").val(resp.invoicedata.consignee.consigneeaddress);
+				$("#consigneestate").val(resp.invoicedata.consignee.consigneestate);
+				$("#statecodeofconsignee").text(resp.invoicedata.consignee.consigneestatecode);
+			    }
+			    else{
+				$("#consigneename").val("");
+				$("#tinconsignee").val("");
+				$("#gstinconsignee").val("");
+				$("#consigneeaddress").val("");
+				$("#consigneestate").val("Andaman and Nicobar Islands");
+				$("#statecodeofconsignee").text("35");
+			    }
+			}
+		    }
+		});
+	}
+	else{
+	    $("#invdetailsdiv").hide();
+	}
+    });
+
+    $("#invoice_edit").click(function(event){
+	$("#invoice_save").show();
+	$("#invoice_edit").hide();
+	$('input, select:not(#invselect)').prop("disabled", false);
+	$(".firstfield:visible").first().focus();
+    });
+
+    $("#invselect").keydown(function(event){
+	if(event.which == 13){
+	    event.preventDefault();
+	    $("#invoice_edit").click();
+	    
+	}
+    });
+
+    $('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
+    $('.supplydate').autotab('number');
+    if(sessionStorage.vatorgstflag == '22' ){
+      $(".gstinfield").hide();
+      $(".tinfield").show();
+    } else {
+      $(".gstinfield").show();
     }
 
     //Delivery Note number select field is hidden when inventory is disabled.
