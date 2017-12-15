@@ -1,6 +1,6 @@
 
 """
-Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+Copyright (C) 2013, 2014, 2015, 2016, 2017 Digital Freedom Foundation
   This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
   GNUKhata is Free Software; you can redistribute it and/or modify
@@ -65,9 +65,12 @@ def showvoucher(request):
         if drresult.json()["gkstatus"]==0 and crresult.json()["gkstatus"]==0:
             if invflag == 1 and (type =="purchase" or type =="sales"):
                 invdata = requests.get("http://127.0.0.1:6543/invoice?forvoucher", headers=header)
-                
                 if invdata.json()["gkstatus"]==0:
                     return render_to_response("gkwebapp:templates/addvoucher.jinja2",{"lastdetails":lastdetails,"draccounts":drresult.json()["gkresult"],"craccounts":crresult.json()["gkresult"],"projects":projects.json()["gkresult"],"vtype":type,"invoicedata":invdata.json()["gkresult"],"invoicecount":len(invdata.json()["gkresult"])},request=request)
+            elif invflag == 1 and (type =="payment" or type =="receipt"):
+                invdata = requests.get("http://127.0.0.1:6543/billwise?type=all", headers=header)
+                if invdata.json()["gkstatus"]==0:
+                    return render_to_response("gkwebapp:templates/addvoucher.jinja2",{"lastdetails":lastdetails,"draccounts":drresult.json()["gkresult"],"craccounts":crresult.json()["gkresult"],"projects":projects.json()["gkresult"],"vtype":type,"invoicedata":invdata.json()["invoices"],"invoicecount":len(invdata.json()["invoices"])},request=request)
             else:
                 return render_to_response("gkwebapp:templates/addvoucher.jinja2",{"lastdetails":lastdetails,"draccounts":drresult.json()["gkresult"],"craccounts":crresult.json()["gkresult"],"projects":projects.json()["gkresult"],"vtype":type,"invoicedata":0},request=request)
 
@@ -146,7 +149,23 @@ def addvoucher(request):
 
     result = requests.post("http://127.0.0.1:6543/transaction",data=json.dumps(gkdata) , headers=header)
     if result.json()["gkstatus"]==0:
-        return {"gkstatus":True,"vouchercode":result.json()["vouchercode"]}
+        '''
+        When a transaction is successful it is checked if there are any bill adjustments to be made.
+        This happens in the case of Receipt/Payment vouchers.
+        Voucher code returned by core engine is added to details of adjustments and billwise API is called.
+        '''
+        if request.params.has_key('billdetails'):
+            payment = json.loads(request.params["billdetails"])
+            payment["vouchercode"] = result.json()["vouchercode"]
+            payments = []
+            payments.append(payment)
+            billdata = {"adjbills":payments}
+            paymentupdate = requests.post("http://127.0.0.1:6543/billwise",data=json.dumps(billdata),headers = header)
+            if paymentupdate.json()["gkstatus"] == 0:
+                return {"gkstatus":True,"vouchercode":result.json()["vouchercode"], "paymentstatus":True, "billdetails":{"amount":payment["adjamount"], "invoice":request.params["invoice"]}}
+            else:
+                return {"gkstatus":True,"vouchercode":result.json()["vouchercode"], "paymentstatus":False}
+        return {"gkstatus":True,"vouchercode":result.json()["vouchercode"], "paymentstatus":False}
     else:
         return {"gkstatus":False}
 
