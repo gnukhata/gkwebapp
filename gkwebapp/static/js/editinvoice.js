@@ -69,6 +69,25 @@ $(document).ready(function() {
 			    else {
 				$("#invoice_editprint").show();
 			    }
+			    if(resp.invoicedata.dcid){
+				let delchallist = [];
+				$("#invoice_deliverynote option").each(function(){
+				    delchallist.append($(this).val());
+				});
+				if(jQuerry.inArray(resp.invoicedata.dcid, delchallist) == -1){
+				    $("#invoice_deliverynote").append('<option value="' + resp.invoicedata.dcid + '" dcno = "' + resp.invoicedata.dcno + '" dcdate="' + resp.invoicedata.dcdate + '">' + resp.invoicedata.dcid + ', ' + resp.invoicedata.dcdate + ', ' + resp.invoicedata.custSupDetails.custname + '</option>');
+				}
+				$("#invoice_deliverynote").val(resp.invoicedata.dcid);
+			    }
+			    $("#invocie_challanno").val(resp.invoicedata.invoicno);
+			    let invoicedate = resp.invoicedata.invoiceno.split('-');
+			    $("#invoice_date").val(invoicedate["0"]);
+			    $("#invoice_month").val(invoicedate["1"]);
+			    $("#invoice_year").val(invoicedate["2"]);
+			    if ($("#status").val() == 15) {
+				$("#invoicestate").val(resp.invoicedata.sourcestate);
+				$("#statecodeforinvoice").val(resp.invoicedata.sourcestatecode);
+			    }
 			}
 		    }
 		});
