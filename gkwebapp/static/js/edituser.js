@@ -32,7 +32,6 @@ Contributors:
 $(document).ready(function() {
     $('.modal-backdrop').remove();
     $("#all").focus();
-
     //This change event filter out list of user on basis of its role
     $(document).off('change', '.iib').on('change', '.iib', function(event){
 	if ($("#managerradio").is(":checked")) {
@@ -56,9 +55,10 @@ $(document).ready(function() {
 	}
     });
 
+    //Key Event for radio buttons. 
     $(document).off('focusin', '.iib').on('focusin', '.iib', function(event) {
 	event.preventDefault();
-	$("#edituser option[id='g']").prop("selected",true);
+	$("#edituser option[id='rolefocus']").prop("selected",true);
     });
 
     $(document).off('keydown', '.iib').on('keydown', '.iib', function(event) {
@@ -104,6 +104,7 @@ $(document).ready(function() {
                 $("#editname").prop("disabled", true);
 		$("#password").prop("disabled",true);
 		$("#passwordconfirm").prop("disabled",true);
+		$("#current_password").prop("disabled",true);
 		$("#userrole").val(userdetails["userrole"]);
 		$("#userrole").prop("disabled", true);
                 $("#question").val(userdetails["userquestion"]);
@@ -121,6 +122,9 @@ $(document).ready(function() {
 		    $("#delete").hide();
 		    $("#userrolediv").hide();
 		    $("#usertable").hide();
+		    $("#curpassdiv").show();
+		}else{
+		    $("#curpassdiv").hide();
 		}
 		//This ajax gives the assign list of godowns. 
 		if (userdetails["userrole"] == 3){
@@ -162,6 +166,7 @@ $(document).ready(function() {
 	$("#editname").prop("disabled", false);
 	$("#password").prop("disabled", false);
 	$("#passwordconfirm").prop("disabled", false);
+	$("#current_password").prop("disabled",false);
 	$("#userrole").prop("disabled", false);
 	$("#usertable").show();
 	$("#question").prop("disabled", false);
@@ -244,6 +249,9 @@ $(document).ready(function() {
                 $("#edit").click();
             }
         }
+	if(e.which == 188 && e.shiftKey) {
+	    $("#all").focus().click();
+	}
     });
     
     // Key event For New User Name
@@ -257,21 +265,51 @@ $(document).ready(function() {
 		});
 		$("#editname").focus();
 		return false;
+	    }else if(userdetails["userrole"] == -1){
+		$("#current_password").focus();
 	    }
 	    else{
 		$("#password").focus();
 	    }
 	}
+	if(e.which==38) {
+	    e.preventDefault();
+	    $("#edituser").focus();
+	}
     });
+
+    $("#current_password").keydown(function(e){
+	if(e.which==13){
+	    $("#password").focus();
+	}
+	if(e.which==38){
+	    $("#editname").focus();
+	}
+    });
+
+    /*$("#current_password").blur(function(event) {
+	if ($.trim($("#current_password").val())!=$.trim($("#passwordconfirm").val())) {
+	    $("#checkpassuser-blank-alert").alert();
+	    $("#checkpassuser-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#checkpassuser-blank-alert").hide();
+	    });
+	    $("#password").focus();
+	    return false;
+	}
+    });*/
     
     //Key event for Edit Password
     $("#password").keydown(function(e){
 	if (e.which==13){
-	    e.preventDefault();
 	    $("#passwordconfirm").focus();
 	}
 	if (e.which==38){
-	    $("#editname").focus();
+	    e.preventDefault();
+	    if(userdetails["userrole"] == -1) {
+		$("#current_password").focus();
+	    }else {
+		$("#editname").focus();
+	    }
 	}
     });
 
@@ -300,6 +338,15 @@ $(document).ready(function() {
 	    });
 	    $("#password").focus();
 	    return false;
+	}
+	else if(userdetails["userrole"] == -1){
+	    if($.trim($("#current_password").val())=="") {
+	    $("#curpass-blank-alert").alert();
+	    $("#curpass-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#curpass-blank-alert").hide();
+	    });
+	    $("#current_password").focus().select();
+	    }
 	}
     });
 
@@ -500,7 +547,6 @@ $(document).ready(function() {
         //For Edited Data store.
         var userid = $("#edituser option:selected").val();
 	var userroleval = (userdetails["userrole"]);
-	console.log(userroleval);
         var username = $("#editname").val();
         var userpassword = $.trim($("#password").val());
         var userrole = $("#userrole").val();

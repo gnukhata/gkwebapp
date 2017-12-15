@@ -87,7 +87,7 @@
 	    <div class="form-group">
 	      <label for="edituser">{% trans %}List of Users{% endtrans %} :</label>
 	      <select class = "form-control input-sm" id="edituser">
-		<option id="g" value="disabled" disabled selected hidden>{% trans %}Select User{% endtrans %}</option>
+		<option id="rolefocus" value="disabled" disabled selected hidden>{% trans %}Select User{% endtrans %}</option>
 		{% for user in gkresult %}
 		  <option role="{{user["userrolename"]}}" value="{{user['userid']}}">{{user["username"]}} ({{user["userrolename"]}})</option>
                 {% endfor %}
@@ -107,6 +107,15 @@
 		<input type="text" id="editname" name="editname" class="form-control input-sm" accesskey="e"></input>
 	      </div>
 
+	      <div class="alert alert-danger" id="curpass-blank-alert" aria-live="rude" role="alert" hidden>
+
+		{% trans %}Please enter current password!{% endtrans %}
+              </div>
+	      <div class="form-group" id="curpassdiv">
+	      <label for="currentpassword" id="currentPassword">{% trans %}Current Pass<u>w</u>ord{% endtrans %} :</label>
+              <input type="password" id="current_password" class="form-control input-sm" name="currentpassWord" style="border-radius:4px"></input>
+	      </div>
+	      
 	      <div class="alert alert-danger" id="password-blank-alert"  aria-live="rude" role="alert" hidden>
 		{% trans %}Please enter password!{% endtrans %}
 	      </div>
