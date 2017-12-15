@@ -52,7 +52,6 @@ $(document).ready(function() {
 		    },
 		    success: function(resp)
 		    {
-			console.log(resp);
 			if(resp.gkstatus == 0){
 			    $("#invdetailsdiv").show();
 			    $('input, select:not(#invselect)').prop("disabled", true);
@@ -84,15 +83,16 @@ $(document).ready(function() {
 			    $("#invoice_date").val(invoicedate["0"]);
 			    $("#invoice_month").val(invoicedate["1"]);
 			    $("#invoice_year").val(invoicedate["2"]);
+			    $("#invoice_year").blur();
 			    if ($("#status").val() == 15) {
 				$("#invoicestate").val(resp.invoicedata.sourcestate);
-				$("#statecodeforinvoice").val(resp.invoicedata.sourcestatecode);
+				$("#statecodeforinvoice").text(resp.invoicedata.sourcestatecode);
 				$("#invoice_issuer_name").val(resp.invoicedata.issuername);
 				$("#invoice_issuer_designation").val(resp.invoicedata.designation);
 			    }
 			    else {
 				$("#invoicestate").val(resp.invoicedata.destinationstate);
-				$("#statecodeforinvoice").val(resp.invoicedata.destinationstatecode);
+				$("#statecodeforinvoice").text(resp.invoicedata.taxstatecode);
 			    }
 			    if (resp.invoicedata.orgstategstin) {
 				$("#orggstin").text(resp.invoicedata.orgstategstin);
@@ -114,7 +114,7 @@ $(document).ready(function() {
 				$("#taxapplicabletext").text('VAT');
 				$("#tin").text(resp.invoicedata.custSupDetails.custtin);
 			    }
-			    if (resp.invoicedata.consignee) {
+			    if (resp.invoicedata.consignee.consigneename) {
 				$("#consigneename").val(resp.invoicedata.consignee.consigneename);
 				if ($("#taxapplicable").val() == '22') {
 				    $("#tinconsignee").val(resp.invoicedata.consignee.tinconsignee);
@@ -125,6 +125,14 @@ $(document).ready(function() {
 				$("#consigneeaddress").val(resp.invoicedata.consignee.consigneeaddress);
 				$("#consigneestate").val(resp.invoicedata.consignee.consigneestate);
 				$("#statecodeofconsignee").text(resp.invoicedata.consignee.consigneestatecode);
+			    }
+			    else{
+				$("#consigneename").val("");
+				$("#tinconsignee").val("");
+				$("#gstinconsignee").val("");
+				$("#consigneeaddress").val("");
+				$("#consigneestate").val("Andaman and Nicobar Islands");
+				$("#statecodeofconsignee").text("35");
 			    }
 			}
 		    }
