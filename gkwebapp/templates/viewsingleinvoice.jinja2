@@ -77,20 +77,16 @@
 	</label>
 	{% if gkresult["consignee"]["consigneename"] %}
 	  {% if gkresult["inoutflag"] == 9 %}
-	    {{"with consignee purchase"}}
 	    {{ gkresult["custSupDetails"]["custsupstate"] }}
 	  {% endif %}
 	  {% if gkresult["inoutflag"] == 15 %}
-	    {{"with consignee sale"}}
 	    {{ gkresult["custSupDetails"]["custsupstate"]}}
 	  {% endif %}
 	{% else %}
 	  {% if gkresult["inoutflag"] == 9 %}
-	    {{"without consignee purchase"}}
 	    {{ gkresult["sourcestate"] }}
 	  {% endif %}
 	  {% if gkresult["inoutflag"] == 15 %}
-	    {{"without consignee sale"}}
 	    {{ gkresult["destinationstate"] }}
 	  {% endif %}
 	{% endif %}

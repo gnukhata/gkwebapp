@@ -573,7 +573,7 @@ $(document).ready(function() {
 	    if($("#statecodeofconsignee").text() in gstins) {
 		var custgstin = gstins[$("#statecodeofconsignee").text()];
 		$("#gstin").text(custgstin); // Customer gstin is synced with state code of consignee.
-	    }
+	    } else {$("#gstin").text("");}
 	    
 	    if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
 		$(".igstfield").hide();
@@ -884,22 +884,13 @@ $(document).ready(function() {
 			$("#invoice_customer").prop("disabled", true);
 			$("#invoice_customerstate").prop("disabled", true);
 			if(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]){
-			    $("#consigneename").val(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]);
-			    $("#consigneename").prop("disabled", true);
+			    $("#consigneename").val(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]).prop("disabled", true);
+			    $("#consigneestate").val(resp["delchal"]["delchaldata"]["consignee"]["consigneestate"]).prop("disabled", true);
+			    $("#consigneeaddress").val(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]).prop("disabled", true);			    
 			} else {
-			    $("#consigneename").prop("disabled", false);
-			}
-			if(resp["delchal"]["delchaldata"]["consignee"]["consigneestate"]){
-			    $("#consigneestate").val(resp["delchal"]["delchaldata"]["consignee"]["consigneestate"]);
-			    $("#consigneestate").prop("disabled", true);
-			} else {
-			    $("#consigneestate").val("Andaman and Nicobar Islands");
-			}		
-			if(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]){
-			    $("#consigneeaddress").val(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]);
-			    $("#consigneeaddress").prop("disabled", true);
-			} else {
-			    $("#consigneeaddress").prop("disabled", false);
+			    $("#consigneename").val("").prop("disabled", false);
+			    $("#consigneestate").val("Andaman and Nicobar Islands").prop("disabled", false);
+			    $("#consigneeaddress").val("").prop("disabled", false);
 			}
 			
 			$("#invoice_customer").change();
