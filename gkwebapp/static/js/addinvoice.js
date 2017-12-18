@@ -532,12 +532,8 @@ $(document).ready(function() {
 	       $("#gstin").text(gstins[$("#invoice_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
 	}
 	else {
-	    $("#gstin").text('');  //If GSTIN is not available it is set as blank.
+	    $("#gstin").text("");  //If GSTIN is not available it is set as blank.
 	}
-/**	if ($("#status").val() == 15) {
-	    $("#consigneestate").val($("#invoice_customerstate option:selected").val());  //Consignee State is synced with customer state.
-      $("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
-	}**/
 	if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 	    $(".igstfield").hide();
 	    $(".sgstfield").show();
@@ -568,8 +564,6 @@ $(document).ready(function() {
 	event.preventDefault();
 	$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
 	if ($("#status").val() == 15) {
-	    //$("#invoice_customerstate").val($("#consigneestate option:selected").val());  //Customer State is synced with state of consignee.
-	    //$("#statecodeofcustomer").text($("#invoice_customerstate option:selected").attr("stateid"));  //State code is loaded.
 	    if($("#statecodeofconsignee").text() in gstins) {
 		var custgstin = gstins[$("#statecodeofconsignee").text()];
 		$("#gstin").text(custgstin); // Customer gstin is synced with state code of consignee.
@@ -666,19 +660,9 @@ $(document).ready(function() {
 		} else {
 		    $("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
 		}
-		/*if ($("#invoice_deliverynote option:selected").val() != '') {
-		    if($("#consigneeaddress").is(":disabled")){
-			 $(".invoice_product_quantity_gst:first").focus().select();
-		    } else {
-			$("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
-		    }
-		} */
 	    }
 	}
 	else if (event.which == 38) {
-	    /*if ($("#tinconsignee").is(":visible")) {
-		$("#tinconsignee").focus().select();  //Focus shifts to TIN of Consignee.
-		}*/
 	    if ($("#consigneestate").is(":disabled")){
 		if ($("#invoice_deliverynote option:selected").val() != '') {
 		    if($("#status").val() == 15){
@@ -895,8 +879,6 @@ $(document).ready(function() {
 			    $("#consigneestate").val("Andaman and Nicobar Islands").prop("disabled", false);
 			    $("#consigneeaddress").val("").prop("disabled", false);
 			}
-			
-			$("#invoice_customer").change();
 			$("#consigneestate").change();
 			$.ajax({
 			    url: '/customersuppliers?action=get',
@@ -912,6 +894,7 @@ $(document).ready(function() {
 				console.log("success");
 				if (resp["gkstatus"] == 0) {
 				    $("#invoice_customerstate").val(resp["gkresult"]["state"]);
+				    $("#invoice_customer").change();
 				    $("#invoice_supplierstate").val(resp["gkresult"]["state"]);
 				    $("#invoice_customeraddr").val(resp["gkresult"]["custaddr"]);
 				    $("#invoice_supplieraddr").val(resp["gkresult"]["custaddr"]);
