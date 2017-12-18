@@ -41,6 +41,7 @@ $(document).ready(function() {
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");  //End of financial year is saved in a variable.
     var invoicedatestring = "";
     var invoicedate = "";
+    var alertflag = false;
     var gstdate = Date.parseExact('01072017', "ddMMyyyy");
     //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
     var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
@@ -180,9 +181,9 @@ $(document).ready(function() {
 			    if(resp.invoicedata.dcid){
 				let delchallist = [];
 				$("#invoice_deliverynote option").each(function(){
-				    delchallist.append($(this).val());
+				    delchallist.push($(this).val());
 				});
-				if(jQuerry.inArray(resp.invoicedata.dcid, delchallist) == -1){
+				if($.inArray(resp.invoicedata.dcid, delchallist) == -1){
 				    $("#invoice_deliverynote").append('<option value="' + resp.invoicedata.dcid + '" dcno = "' + resp.invoicedata.dcno + '" dcdate="' + resp.invoicedata.dcdate + '">' + resp.invoicedata.dcid + ', ' + resp.invoicedata.dcdate + ', ' + resp.invoicedata.custSupDetails.custname + '</option>');
 				}
 				$("#invoice_deliverynote").val(resp.invoicedata.dcid);
@@ -251,6 +252,7 @@ $(document).ready(function() {
 			    }
 			    $("#invoice_product_table_total tbody tr:first td:last").empty();
 			    $('input, select:not(#invselect)').prop("disabled", true);
+			    $(".product_name_vat, .product_name_gst").change();
 			    if (resp.invoicedata.consignee.consigneename) {
 				$("#consigneename").val(resp.invoicedata.consignee.consigneename);
 				if ($("#taxapplicable").val() == '22') {
@@ -502,7 +504,6 @@ $(document).ready(function() {
 		$(".igstfield").show();
 	    }
 	}
-	
 	$(".product_name_vat, .product_name_gst").change();
 
 	var gstinstateid=$("#invoicestate option:selected").attr("stateid");
@@ -953,7 +954,7 @@ $(document).ready(function() {
                  $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['tax']['CVAT']).toFixed(2));
              }
          }
-	  else if (resp["gkstatus"] == 1) {
+	  else if (resp["gkstatus"] == 1 && alertflag == true) {
 	      $("#notax-alert").alert();
 	      $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
 		  $("#notax-alert").hide();
@@ -1636,7 +1637,7 @@ $(document).ready(function() {
 		       }
 		   }
 	       }
-	       else if (resp["gkstatus"] == 1) {
+	       else if (resp["gkstatus"] == 1 && alertflag==true) {
 		   $("#notax-alert").alert();
 		   $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
 		       $("#notax-alert").hide();
