@@ -90,13 +90,10 @@ $(document).ready(function() {
       }
     }
     if (e.which == 38) {
-      e.preventDefault();
-      if ($("#editcatselect").is(':disabled') || $("#editcatselect").length < 1) {
+      e.preventDefault();{
         $("#editproddesc").focus().select();
       }
-      else {
-        $("#editcatselect").focus();
-      }
+      
     }
   });
   $(document).off('keydown', '#editgodownflag').on('keydown', '#editgodownflag', function(e){
