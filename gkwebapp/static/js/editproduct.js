@@ -117,13 +117,10 @@ $(document).ready(function() {
     }
     if (e.which == 38) {
       e.preventDefault();
-      if ($("#editcatselect").is(':disabled') || $("#editcatselect").length < 1) {
-        $("#editproddesc").focus().select();
-      }
-      else {
+      
         $("#gscode").focus();
       }
-    }
+    
   });
   $(document).off('keydown', '#editgodownflag').on('keydown', '#editgodownflag', function(e){
     if (e.which == 13) {
@@ -176,16 +173,20 @@ $(document).ready(function() {
       $("#epsubmit").click();
     }
   });
-
+/*
   $("#prodselect").keydown(function(event) {
 
     if (event.which==13) {
 	event.preventDefault();
+	if (( $("#editcatselect").is(':disabled'))){
+	    	$("#ditcatselect").focus();
+	}
+	else{	
 	$("#editproddesc").focus().select();
- 
+	}
           }
 
-  });
+  });*/
   $(document).on('keydown', '#editproddesc', function(event) {
     if (event.which==13) {
       event.preventDefault();
@@ -524,12 +525,8 @@ $(document).ready(function() {
     if($("#gsflag").val()=='7' && sessionStorage.invflag == 1){
     $("#addgodown").show();
   }
-
-   event.preventDefault();
-      $("#editproddesc").focus().select();
-
-
-
+        
+      //$("#editproddesc").focus().select();
     $(".godownflag").show();
     catcode= $("#editcatselect option:selected").val();
     $(".product_cat_tax_disable").prop('disabled',false);
@@ -545,6 +542,12 @@ $(document).ready(function() {
     else {
       $("#editcatselectlabel").text('Select Category');
     }
+      if ( $("#editcatselect").is(':disabled')){
+	  $("#editproddesc").focus().select();
+	}
+	else{	
+	$("#editcatselect").focus();
+	}
   });
 
   $(document).off("keydown","#editcatselect").on("keydown","#editcatselect",function(event) {
