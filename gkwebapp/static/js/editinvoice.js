@@ -229,8 +229,12 @@ $(document).ready(function() {
 				    $('.invoice_product_hsncode:eq(' + curindex + ')').html(value.gscode);
 				    $('.invoice_product_quantity_gst:eq(' + curindex + ')').val(value.qty).attr("data", value.qty);
 				    $('.unitaddonqty_gst:eq(' + curindex + '), .unitaddonfreeqty_gst:eq(' + curindex + ')').text(value.uom);
+				    $('.invoice_product_discount_gst:eq(' + curindex + ')').val(value.discount);
+				    $('.invoice_product_taxablevalue_gst:eq(' + curindex + ')').val(value.taxableamount);
+				    //$('.invoice_product_tax_rate_vat:eq(' + curindex + ')').val(value.taxrate);
 				    $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 				    $('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+				    $('.invoice_product_total_gst:eq(' + curindex + ')').val(value.totalAmount);
 				    curindex = curindex + 1;
 				});
 				$('.invoice_product_quantity_gst').numeric({ negative: false });
@@ -243,7 +247,6 @@ $(document).ready(function() {
 				$('#invoice_product_table_vat tbody').empty();
 				let curindex = 0;
 				$.each(resp.invoicedata.invcontents, function(key, value) {
-				    console.log(value);
 				    $('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
 				    $('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 				    $('.product_name_vat:eq(' + curindex + ')').val(key).prop("disabled", true);
@@ -253,7 +256,7 @@ $(document).ready(function() {
 				    $('.invoice_product_discount_vat:eq(' + curindex + ')').val(value.discount);
 				    $('.invoice_product_taxablevalue_vat:eq(' + curindex + ')').val(value.taxableamount);
 				    $('.invoice_product_tax_rate_vat:eq(' + curindex + ')').val(value.taxrate);
-				    $('.invoice_product_total:eq(' + curindex + ')').val(value.totalAmount);
+				    $('.invoice_product_total_vat:eq(' + curindex + ')').val(value.totalAmount);
 				    curindex = curindex + 1;
 				});
 				$("#invoice_product_table_vat tbody tr:first td:eq(9)").empty();
