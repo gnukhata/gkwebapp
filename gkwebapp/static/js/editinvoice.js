@@ -6,7 +6,7 @@ This file is part of GNUKhata:A modular,robust and Free Accounting System.
 GNUKhata is Free Software; you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
 published by the Free Software Foundation; either version 3 of
-the License, or (at your option) any later version.and old.stockflag = 's'
+the License, or (at your option) any later version.
 
 GNUKhata is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -223,17 +223,19 @@ $(document).ready(function() {
 				$("#gstin").text(resp.invoicedata.custSupDetails.custgstin);
 				let curindex = 0;
 				$.each(resp.invoicedata.invcontents, function(key, value) {
+				    console.log(value);
 				    $('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
 				    $('.product_name_gst:eq(' + curindex + ')').val(key).prop("disabled", true);
 				    $('.invoice_product_hsncode:eq(' + curindex + ')').html(value.gscode);
 				    $('.invoice_product_quantity_gst:eq(' + curindex + ')').val(value.qty).attr("data", value.qty);
 				    $('.unitaddonqty_gst:eq(' + curindex + '), .unitaddonfreeqty_gst:eq(' + curindex + ')').text(value.uom);
-				    $('.invoice_product_quantity_gst').numeric({ negative: false });
-				    $('.invoice_product_per_price_gst').numeric({ negative: false });
 				    $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 				    $('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 				    curindex = curindex + 1;
 				});
+				$('.invoice_product_quantity_gst').numeric({ negative: false });
+				$('.invoice_product_per_price_gst').numeric({ negative: false });
+				$("#invoice_product_table_total tbody tr:first td:last").empty();
 			    }
 			    else if ($("#taxapplicable").val() ==  '22') {
 				$("#taxapplicabletext").text('VAT');
@@ -241,18 +243,25 @@ $(document).ready(function() {
 				$('#invoice_product_table_vat tbody').empty();
 				let curindex = 0;
 				$.each(resp.invoicedata.invcontents, function(key, value) {
+				    console.log(value);
 				    $('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
 				    $('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 				    $('.product_name_vat:eq(' + curindex + ')').val(key).prop("disabled", true);
 				    $('.invoice_product_quantity_vat:eq(' + curindex + ')').val(value.qty).attr("data", value.qty);
 				    $('.unitaddonqty_vat:eq(' + curindex + '), .unitaddonfreeqty_vat:eq(' + curindex + ')').text(value.uom);
+				    $('.invoice_product_per_price_vat:eq(' + curindex + ')').val(value.priceperunit);
+				    $('.invoice_product_discount_vat:eq(' + curindex + ')').val(value.discount);
+				    $('.invoice_product_taxablevalue_vat:eq(' + curindex + ')').val(value.taxableamount);
+				    $('.invoice_product_tax_rate_vat:eq(' + curindex + ')').val(value.taxrate);
+				    $('.invoice_product_total:eq(' + curindex + ')').val(value.totalAmount);
 				    curindex = curindex + 1;
 				});
 				$("#invoice_product_table_vat tbody tr:first td:eq(9)").empty();
+				$('.invoice_product_quantity_vat').numeric({ negative: false });
+				$('.invoice_product_per_price_vat').numeric({ negative: false });
 			    }
-			    $("#invoice_product_table_total tbody tr:first td:last").empty();
-			    $('input, select:not(#invselect)').prop("disabled", true);
 			    $(".product_name_vat, .product_name_gst").change();
+			    $('input, select:not(#invselect)').prop("disabled", true);
 			    if (resp.invoicedata.consignee.consigneename) {
 				$("#consigneename").val(resp.invoicedata.consignee.consigneename);
 				if ($("#taxapplicable").val() == '22') {
