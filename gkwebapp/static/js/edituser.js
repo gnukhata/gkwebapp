@@ -99,7 +99,7 @@ $(document).ready(function() {
                 xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
             },
 	    success: function(resp) {
-		userdetails = resp["gkresult"];
+		var userdetails = resp["gkresult"];
                 $("#editname").val(userdetails["username"]);
                 $("#editname").prop("disabled", true);
 		$("#password").prop("disabled",true);
@@ -123,9 +123,14 @@ $(document).ready(function() {
 		    $("#userrolediv").hide();
 		    $("#usertable").hide();
 		    $("#curpassdiv").show();
+		    $("#smalllink").show();
+		       
 		}else{
 		    $("#curpassdiv").hide();
+		    $("#smalllink").hide();
 		}
+
+		
 		//This ajax gives the assign list of godowns. 
 		if (userdetails["userrole"] == 3){
 		    $("#usertable").show();
@@ -164,9 +169,14 @@ $(document).ready(function() {
 	event.preventDefault();
 	$("#edusrsubmit").show();
 	$("#editname").prop("disabled", false);
-	$("#password").prop("disabled", false);
-	$("#passwordconfirm").prop("disabled", false);
 	$("#current_password").prop("disabled",false);
+	if($("#edituser option:selected").attr("role") == "Admin" && $.trim($("#current_password").val()) == "") {
+	    $("#passwordconfirm").prop("disabled", true);
+	    $("#password").prop("disabled", true);
+	}else{
+	    $("#passwordconfirm").prop("disabled", false);
+	    $("#password").prop("disabled", false);
+	}
 	$("#userrole").prop("disabled", false);
 	$("#usertable").show();
 	$("#question").prop("disabled", false);
@@ -175,6 +185,7 @@ $(document).ready(function() {
 	$("#editname").focus().select();
 	$('#latable tbody tr td input').prop("disabled", false);
     });
+    
     
     //When "Godown In charge" role is select from userrole will gives Godown List.
     if (sessionStorage.invflag==1) {
@@ -253,7 +264,7 @@ $(document).ready(function() {
 	    $("#all").focus().click();
 	}
     });
-    
+
     // Key event For New User Name
     $("#editname").keydown(function(e){
 	if (e.which==13) {
@@ -264,21 +275,28 @@ $(document).ready(function() {
 		});
 		$("#editname").focus();
 		return false;
-	    }else if(userdetails["userrole"] == -1){
-		$("#current_password").focus();
+	    }
+	    else if($("#edituser option:selected").attr("role") == "Admin"){
+		$("#question").focus();
 	    }
 	    else{
 		$("#password").focus();
 	    }
 	}
 	if(e.which==38) {
-	    e.preventDefault();
 	    $("#edituser").focus();
 	}
     });
-
+    
     $("#current_password").keydown(function(e){
 	if(e.which==13){
+	    if($("#current_password").val()!=""){
+		$("#passwordconfirm").prop("disabled", false);
+		$("#password").prop("disabled", false);
+	    }else{
+		$("#passwordconfirm").prop("disabled", true);
+		$("#password").prop("disabled", true);
+	    }
 	    $("#password").focus();
 	}
 	if(e.which==38){
@@ -289,22 +307,20 @@ $(document).ready(function() {
     //Key event for Edit Password
     $("#password").keydown(function(e){
 	if (e.which==13){
-	    e.preventDefault();
 	    if ($.trim($("#password").val()) == "") {
-            $("#cnfpass-blank-alert").alert();
-            $("#cnfpass-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                $("#cnfpass-blank-alert").hide();
-            });
-            $("#password").focus().select();
-            return false;
-            }
+		console.log("true");
+		$("#password-blank-alert").alert();
+		$("#password-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#password-blank-alert").hide();
+		});
+		$("#password").focus().select();
+	    }
 	    else{
 		$("#passwordconfirm").focus();
 	    }
 	}
 	if (e.which==38){
-	    e.preventDefault();
-	    if(userdetails["userrole"] == -1) {
+	    if($("#edituser option:selected").attr("role") == "Admin") {
 		$("#current_password").focus();
 	    }else {
 		$("#editname").focus();
@@ -323,8 +339,7 @@ $(document).ready(function() {
 		$("#passwordconfirm").focus().select();
 		return false;
 	    };
-	    e.preventDefault();
-	    if(userdetails["userrole"] == -1) {
+	    if($("#edituser option:selected").attr("role") == "Admin") {
 		$("#question").focus();
 	    }
 	    else {
@@ -346,7 +361,7 @@ $(document).ready(function() {
 	    $("#password").focus();
 	    return false;
 	}
-	if(userdetails["userrole"] == -1){
+	if($("#edituser option:selected").attr("role") == "Admin"){
 	    if($.trim($("#current_password").val())=="") {
 		$("#curpass-blank-alert").alert();
 		$("#curpass-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -377,8 +392,8 @@ $(document).ready(function() {
     });
 
    //Key event for Security Question
-   $("#question").keydown(function(e){
-       if (e.which==13) {
+   $("#question").keydown(function(e) {
+       if (e.which==13){
 	   e.preventDefault();
 	   if ($.trim($("#question").val()) == "") {
 	    $("#secque-blank-alert").alert();
@@ -386,15 +401,14 @@ $(document).ready(function() {
                 $("#secque-blank-alert").hide();
             });
 	       $("#question").focus().select();
-               return false;
 	   }else {
-	       $("#answer").focus().select();
+	       $("#answer").focus();
 	   }
        }
        else if (e.which==38) {
 	   e.preventDefault();
-	   if(userdetails["userrole"] == -1){
-	       $("#passwordconfirm").focus();
+	   if($("#edituser option:selected").attr("role") == "Admin"){
+	       $("#editname").focus();
 	   }
 	   else{
 	       $("#userrole").focus();
@@ -413,11 +427,9 @@ $(document).ready(function() {
 		$("#answer").focus().select();
 		return false;
 	    };
-	    e.preventDefault();
 	    $("#edusrsubmit").focus();
 	}else{
 	    if (e.which==38) {
-		e.preventDefault();
 		$("#question").focus();
 	    }
 	}
@@ -517,7 +529,7 @@ $(document).ready(function() {
             $("#editname").focus().select();
             return false;
 	};
-        if ($.trim($("#password").val()) == "") {
+        /*if ($.trim($("#password").val()) == "") {
             $("#password-blank-alert").alert();
             $("#password-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
                 $("#password-blank-alert").hide();
@@ -532,7 +544,7 @@ $(document).ready(function() {
             });
             $("#passwordconfirm").focus().select();
             return false;
-        };
+        };*/
 	if ($.trim($("#question").val()) == "") {
 	    $("#secque-blank-alert").alert();
             $("#secque-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -557,42 +569,45 @@ $(document).ready(function() {
 		selectedgodowns.push($(this).attr("value"));
 	    }
 	});
-	//This variable gives list of selected godowns 
-	var godowns = {name: 'godowns', value: JSON.stringify(selectedgodowns)};
 
 	if (selectedgodowns.length < 1 && $("#userrole").val() == 3) {
 	    $("#select-godowns-alert").alert();
 	    $("#select-godowns-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#select-godowns-alert").hide();
-	    });
+	    }); 
 	    $("#latable tbody tr:first td:first input").focus().select();
 	    return false;
 	}
 
         //For Edited Data store.
-        var userid = $("#edituser option:selected").val();
-	var userroleval = (userdetails["userrole"]);
-        var username = $("#editname").val();
-        var userpassword = $.trim($("#password").val());
-        var userrole = $("#userrole").val();
-        var userquestion = $("#question").val();
-        var useranswer = $("#answer").val();
+	if ($("#edituser option:selected").attr("role") == "Admin"){
+	    console.log("kamina");
+	}
+	var confirmpassword = $("#passwordconfirm").val();
+	var currentpassword=$.trim($("#current_password").val());
+	var dataset={"userid": $("#edituser option:selected").val(),
+		     "username": $("#editname").val(),
+		     "userpassword":$.trim($("#password").val()),
+		     "userrole": $("#userrole").val(),
+		     "userquestion": $("#question").val(),
+		     "useranswer": $("#answer").val(),
+		     "rolename":($("#edituser option:selected").attr("role") == "Admin")
+		    };
+	if($("#userrole").val()==3){
+	    console.log("hello");
+	    dataset["godowns"]=JSON.stringify(selectedgodowns);
+	    }
+	/*if($("#edituser option:selected").attr("role") == "Admin" && $.trim($("#current_password").val()) == ""){
+	    dataset["userroleval"]=userroleval;
+	    
+	}*/
 	$.ajax({
 	    type: "POST",
             url: "/showuser?type=updateuser",
             global: false,
             async: false,
             datatype: "json",
-            data: {
-		"userid": userid,
-                "username": username,
-                "userpassword": userpassword,
-                "userrole": userrole,
-                "userquestion": userquestion,
-                "useranswer": useranswer,
-		"godowns":godowns["value"],
-		"userroleval":userroleval
-	    },
+            data: dataset,
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
             },
