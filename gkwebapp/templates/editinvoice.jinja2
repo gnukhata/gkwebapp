@@ -18,7 +18,8 @@
 	</div>
 	<div class="row" id="invdetailsdiv" hidden>
 	  <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
-	    <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
+	    <div class="container-fluid row">
+	      <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
 
 	      {% trans %}Invoice updated.{% endtrans %}
 	    </div>
@@ -30,7 +31,6 @@
 
 	      {% trans %}Duplicate invoice no.!{% endtrans %}
 	    </div>
-		<div class="container-fluid row">
 		  <div class="alert alert-danger" id="custsup-blank-alert"  aria-live="rude" role="alert" hidden>
 
 		    <label >
@@ -666,13 +666,13 @@
 	{% else %}
 	  <button id="invoice_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Supplier{% endtrans %}</button>
 	{% endif %}
-	<label class="btn btn-primary btn-sm" for="my-file-selector">
+	<label class="btn btn-primary btn-sm uploadclass" for="my-file-selector">
 	  <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
 	  <i class="fa fa-paperclip" aria-hidden="true"></i>
 	  {% trans %}Attac<u>h</u>{% endtrans %}
 	</label>
-	<button class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h" style="display:none;"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
 	<span class='label label-info' id="upload-file-info"></span>
+	<button class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h" style="display:none;"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
       </div>
     </div>
 

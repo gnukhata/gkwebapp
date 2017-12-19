@@ -34,6 +34,7 @@ $(document).ready(function() {
     $('.invoicedate').autotab('number');
     $("select:first").focus();
     $("#invoice_editprint").hide();
+    $(".uploadclass").hide();
      //Initialising some variables.
     var issuername = "";
     var designation = "";
@@ -2024,6 +2025,7 @@ if (event.which == 13) {
 
     $("#invselect").change(function(event) {
         /* Act on the event */
+	consigneeflag = false;
         var invid = $("#invselect option:selected").val();
         if (invid != "") {
 	    $.ajax(
@@ -2041,7 +2043,6 @@ if (event.which == 13) {
 		    success: function(resp)
 		    {
 			if(resp.gkstatus == 0){
-			    console.log(resp.invoicedata);
 			    $("#invdetailsdiv").show();
 			    $('input, select:not(#invselect)').prop("disabled", true);
 			    $("#buttonsdiv").show();
@@ -2058,6 +2059,7 @@ if (event.which == 13) {
 				$("#invoice_editprint").show();
 			    }
 			    if(resp.invoicedata.dcid){
+				consigneeflag = true;
 				let delchallist = [];
 				$("#invoice_deliverynote option").each(function(){
 				    delchallist.push($(this).val());
@@ -2153,7 +2155,6 @@ if (event.which == 13) {
 				$('.invoice_product_per_price_vat').numeric({ negative: false });
 			    }
 			    if (resp.invoicedata.consignee.consigneename) {
-				consigneeflag = true;
 				$("#consigneename").val(resp.invoicedata.consignee.consigneename);
 				if ($("#taxapplicable").val() == '22') {
 				    $("#tinconsignee").val(resp.invoicedata.consignee.tinconsignee);
@@ -2166,7 +2167,6 @@ if (event.which == 13) {
 				$("#statecodeofconsignee").text(resp.invoicedata.consignee.consigneestatecode);
 			    }
 			    else{
-				consigneeflag = false;
 				$("#consigneename").val("");
 				$("#tinconsignee").val("");
 				$("#gstinconsignee").val("");
@@ -2207,12 +2207,16 @@ if (event.which == 13) {
     $("#invoice_edit").click(function(event){
 	$("#invoice_save").show();
 	$("#invoice_edit").hide();
+	$(".uploadclass").show();
 	$('input, select:not(#invselect)').prop("disabled", false);
 	if($("#invoice_deliverynote option:selected").val() != ""){
 	    $(".custfield, .product_name_gst, .product_name_vat, .invoice_product_quantity_gst, .invoice_product_quantity_vat").prop("disabled", true);
 	}
 	if(consigneeflag == true){
 	    $(".consigneefield").prop("disabled", true);
+	}
+	else {
+	    $(".consigneefield").prop("disabled", false);
 	}
 	$(".firstfield:visible").first().focus();
     });
@@ -2674,11 +2678,13 @@ if (event.which == 13) {
                 .done(function(resp) {
                     if (resp["gkstatus"] == 0) {
 			allow = 0;
+			let originvid = $("#invselect option:selected").val();
                         if ($("#status").val() == '9') {
-                            $("#invoice_record").click();
+                            $("#invoice_view_purchase").click();
                         } else {
-                            $("#invoice_create").click();
+                            $("#invoice_view_sale").click();
                         }
+			$("#invselect").val(originvid).change();
                         $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
                         $("#success-alert").alert();
                         $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
