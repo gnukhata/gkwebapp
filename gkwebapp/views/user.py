@@ -71,6 +71,14 @@ def getuserdetails(request):
         return {"gkstatus":0, "gkresult":result.json()["gkresult"]}
     return {"gkstatus":result.json()["gkstatus"]}
 
+@view_config(route_name="showuser",request_param="type=userloginstatus", renderer="json")
+def UserLoginstatus(request):
+    header = {"gktoken":request.headers["gktoken"]}
+    gkdata = {"username":request.params["username"], "userpassword":request.params["userpassword"]}
+    print gkdata
+    result = requests.post("http://127.0.0.1:6543/users?userloginstatus", data =json.dumps(gkdata), headers=header)
+    return {"gkstatus":result.json()["gkstatus"]}
+
 #Edit Data
 @view_config(route_name="showuser",request_param="type=updateuser", renderer="json")
 def addedituser(request):
@@ -82,13 +90,14 @@ def addedituser(request):
         gkdata["userrole"]=int(request.params["userrole"])
     if request.params.has_key("godowns"):
         gkdata["golist"]=json.loads(request.params["godowns"])
+    print gkdata
     result = requests.put("http://127.0.0.1:6543/users?editdata", headers=header, data=json.dumps(gkdata))
     return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="showedituser", renderer="gkwebapp:templates/changepassword.jinja2")
 def showedituser(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/users", headers=header)
+    result = requests.get("http://127.0.0.1:6543/users?user=single", headers=header)
     return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
 
 @view_config(route_name="edituser", renderer="json")

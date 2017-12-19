@@ -59,6 +59,9 @@
 
 	{% trans %}Please enter current password!{% endtrans %}
       </div>
+      <div class="alert alert-danger" id="curpass-not-valid" aria-live="rude" role="alert" hidden>
+	{% trans %}Please enter valid current password!{% endtrans %}
+      </div>
 
       <div class="alert alert-danger" id="password-blank-alert"  aria-live="rude" role="alert" hidden>
 	{% trans %}Please enter password!{% endtrans %}
@@ -105,7 +108,7 @@
 	      <select class = "form-control input-sm" id="edituser">
 		<option id="rolefocus" value="disabled" disabled selected hidden>{% trans %}Select User{% endtrans %}</option>
 		{% for user in gkresult %}
-		  <option role="{{user["userrolename"]}}" value="{{user['userid']}}">{{user["username"]}} ({{user["userrolename"]}})</option>
+		  <option role="{{user["userrolename"]}}" username="{{user["username"]}}" value="{{user['userid']}}">{{user["username"]}} ({{user["userrolename"]}})</option>
                 {% endfor %}
 	      </select>
 	   </div>

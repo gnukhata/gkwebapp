@@ -37,7 +37,7 @@ $(document).ready(function() {
     {
       var nextIndex = f.index(this) + 1;
       if(nextIndex < n){
-        event.preventDefault()
+          event.preventDefault();
         f[nextIndex].focus();}
     }
     if (event.which==38)
