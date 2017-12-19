@@ -870,7 +870,7 @@ $(document).ready(function() {
 			$("#invoice_customer").val(resp["delchal"]["delchaldata"]["custid"]);
 			$("#invoice_customer").prop("disabled", true);
 			$("#invoice_customerstate").prop("disabled", true);
-			if(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]){
+			if(resp["delchal"]["delchaldata"]["consignee"]){
 			    $("#consigneename").val(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]).prop("disabled", true);
 			    $("#consigneestate").val(resp["delchal"]["delchaldata"]["consignee"]["consigneestate"]).prop("disabled", true);
 			    $("#consigneeaddress").val(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]).prop("disabled", true);			    
