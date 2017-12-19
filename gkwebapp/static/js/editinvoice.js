@@ -41,7 +41,6 @@ $(document).ready(function() {
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");  //End of financial year is saved in a variable.
     var invoicedatestring = "";
     var invoicedate = "";
-    var alertflag = false;
     var consigneeflag = false;
     var gstdate = Date.parseExact('01072017', "ddMMyyyy");
     //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
@@ -352,6 +351,7 @@ $(document).ready(function() {
 		$(".igstfield").show();
 	    }
 	}
+	
 	$(".product_name_vat, .product_name_gst").change();
 
 	var gstinstateid=$("#invoicestate option:selected").attr("stateid");
@@ -529,12 +529,8 @@ $(document).ready(function() {
 	       $("#gstin").text(gstins[$("#invoice_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
 	}
 	else {
-	    $("#gstin").text('');  //If GSTIN is not available it is set as blank.
+	    $("#gstin").text("");  //If GSTIN is not available it is set as blank.
 	}
-/**	if ($("#status").val() == 15) {
-	    $("#consigneestate").val($("#invoice_customerstate option:selected").val());  //Consignee State is synced with customer state.
-      $("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
-	}**/
 	if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 	    $(".igstfield").hide();
 	    $(".sgstfield").show();
@@ -565,12 +561,10 @@ $(document).ready(function() {
 	event.preventDefault();
 	$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
 	if ($("#status").val() == 15) {
-	    //$("#invoice_customerstate").val($("#consigneestate option:selected").val());  //Customer State is synced with state of consignee.
-	    //$("#statecodeofcustomer").text($("#invoice_customerstate option:selected").attr("stateid"));  //State code is loaded.
 	    if($("#statecodeofconsignee").text() in gstins) {
 		var custgstin = gstins[$("#statecodeofconsignee").text()];
 		$("#gstin").text(custgstin); // Customer gstin is synced with state code of consignee.
-	    }
+	    } else {$("#gstin").text("");}
 	    
 	    if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
 		$(".igstfield").hide();
@@ -631,13 +625,11 @@ $(document).ready(function() {
 		$("#gstinconsignee").focus().select();  //Focus shifts to GSTIN of Consignee.
 		}*/
 	    if ($("#taxapplicable").val() == 22) {
-		if ($("#invoice_deliverynote option:selected").val() != '') {
-		    if($("#consigneeaddress").is(":disabled")){
-			 $(".invoice_product_quantity_vat:first").focus().select();
-		    } else {
-			$("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
-		    }
-		} 
+		if ($("#consigneename").is(":disabled")){
+		   $(".invoice_product_quantity_vat:first").focus().select(); 
+		} else {
+		    $("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
+		}
 	    }
 	}
 	else if (event.which == 38) {
@@ -660,19 +652,14 @@ $(document).ready(function() {
 	if (event.which == 13) {
 	    event.preventDefault();
 	    if ($("#taxapplicable").val() == 7) {
-		if ($("#invoice_deliverynote option:selected").val() != '') {
-		    if($("#consigneeaddress").is(":disabled")){
-			 $(".invoice_product_quantity_gst:first").focus().select();
-		    } else {
-			$("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
-		    }
-		} 
+		if ($("#consigneename").is(":disabled")){
+		    $(".invoice_product_quantity_gst:first").focus().select();
+		} else {
+		    $("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
+		}
 	    }
 	}
 	else if (event.which == 38) {
-	    /*if ($("#tinconsignee").is(":visible")) {
-		$("#tinconsignee").focus().select();  //Focus shifts to TIN of Consignee.
-		}*/
 	    if ($("#consigneestate").is(":disabled")){
 		if ($("#invoice_deliverynote option:selected").val() != '') {
 		    if($("#status").val() == 15){
@@ -802,7 +789,7 @@ $(document).ready(function() {
                  $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['tax']['CVAT']).toFixed(2));
              }
          }
-	  else if (resp["gkstatus"] == 1 && alertflag == true) {
+	  else if (resp["gkstatus"] == 1) {
 	      $("#notax-alert").alert();
 	      $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
 		  $("#notax-alert").hide();
@@ -880,27 +867,15 @@ $(document).ready(function() {
 			$("#invoice_customer").val(resp["delchal"]["delchaldata"]["custid"]);
 			$("#invoice_customer").prop("disabled", true);
 			$("#invoice_customerstate").prop("disabled", true);
-			$("#consigneename").val(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]);
-			if(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]){
-			    $("#consigneename").prop("disabled", true);
+			if(resp["delchal"]["delchaldata"]["consignee"]){
+			    $("#consigneename").val(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]).prop("disabled", true);
+			    $("#consigneestate").val(resp["delchal"]["delchaldata"]["consignee"]["consigneestate"]).prop("disabled", true);
+			    $("#consigneeaddress").val(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]).prop("disabled", true);			    
 			} else {
-			    $("#consigneename").prop("disabled", false);
+			    $("#consigneename").val("").prop("disabled", false);
+			    $("#consigneestate").val("Andaman and Nicobar Islands").prop("disabled", false);
+			    $("#consigneeaddress").val("").prop("disabled", false);
 			}
-			$("#consigneestate").val(resp["delchal"]["delchaldata"]["consignee"]["consigneestate"]);
-			if(resp["delchal"]["delchaldata"]["consignee"]["consigneestate"]){
-			    $("#consigneestate").prop("disabled", true);
-			} else {
-			    $("#consigneestate").prop("disabled", false);
-			    $("#consigneestate").val("Andaman and Nicobar Islands");
-			}		
-			$("#consigneeaddress").val(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]);
-			if(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]){
-			    $("#consigneeaddress").prop("disabled", true);
-			} else {
-			    $("#consigneeaddress").prop("disabled", false);
-			}
-			
-			$("#invoice_customer").change();
 			$("#consigneestate").change();
 			$.ajax({
 			    url: '/customersuppliers?action=get',
@@ -916,6 +891,7 @@ $(document).ready(function() {
 				console.log("success");
 				if (resp["gkstatus"] == 0) {
 				    $("#invoice_customerstate").val(resp["gkresult"]["state"]);
+				    $("#invoice_customer").change();
 				    $("#invoice_supplierstate").val(resp["gkresult"]["state"]);
 				    $("#invoice_customeraddr").val(resp["gkresult"]["custaddr"]);
 				    $("#invoice_supplieraddr").val(resp["gkresult"]["custaddr"]);
@@ -951,8 +927,8 @@ $(document).ready(function() {
 					$('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
 					$('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 					$('#invoice_product_table_vat tbody tr:last td:first select').val(key).prop("disabled", true);
-					$('#invoice_product_table_vat tbody tr:last td:eq(1) input').val(value.qty);
-					$('#invoice_product_table_vat tbody tr:last td:eq(1) input').val(value.qty).attr("data", value.qty);
+					$('#invoice_product_table_vat tbody tr:last td:eq(1) input').val(parseFloat(value.qty).toFixed(2));
+					$('#invoice_product_table_vat tbody tr:last td:eq(1) input').val(parseFloat(value.qty).toFixed(2)).attr("data", parseFloat(value.qty).toFixed(2));
 					$('#invoice_product_table_vat tbody tr:last td:eq(1) span').text(value.unitname);
 					$('#invoice_product_table_vat tbody tr:last td:eq(2) span').text(value.unitname);
 				    });
@@ -962,8 +938,8 @@ $(document).ready(function() {
 					$('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
 					$('#invoice_product_table_gst tbody tr:last td:first select').val(key).prop("disabled", true);
 					$('#invoice_product_table_gst tbody tr:last td:eq(1) label').html(value.gscode);
-					$('#invoice_product_table_gst tbody tr:last td:eq(2) input').val(value.qty);
-					$('#invoice_product_table_gst tbody tr:last td:eq(2) input').val(value.qty).attr("data", value.qty);
+					$('#invoice_product_table_gst tbody tr:last td:eq(2) input').val(parseFloat(value.qty).toFixed(2));
+					$('#invoice_product_table_gst tbody tr:last td:eq(2) input').val(parseFloat(value.qty).toFixed(2)).attr("data", parseFloat(value.qty).toFixed(2));
 					$('#invoice_product_table_gst tbody tr:last td:eq(2) span').text(value.unitname);
 					$('#invoice_product_table_gst tbody tr:last td:eq(3) span').text(value.unitname);
 					$('.invoice_product_quantity_gst').numeric({ negative: false });
@@ -1485,7 +1461,7 @@ $(document).ready(function() {
 		       }
 		   }
 	       }
-	       else if (resp["gkstatus"] == 1 && alertflag==true) {
+	       else if (resp["gkstatus"] == 1) {
 		   $("#notax-alert").alert();
 		   $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
 		       $("#notax-alert").hide();
