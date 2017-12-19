@@ -20,7 +20,7 @@
 	  <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
 	    <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
 
-	      {% trans %}Invoice saved.{% endtrans %}
+	      {% trans %}Invoice updated.{% endtrans %}
 	    </div>
 	    <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
 
@@ -297,13 +297,13 @@
 			{% if resultgstvat == '22' %}
 			  <div class="col-sm-12" style="margin-bottom:10px; padding:5;">
 			    <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
-			    <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Invoice. Press 'Esc' key to exit from the table.</small>
+			    <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to update Invoice. Press 'Esc' key to exit from the table.</small>
 			  </div>
 			  <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase">
 			{% else %}
 			    <div class="col-sm-12" style="margin-bottom:10px; padding:5;" id="vathelp" hidden>
 			      <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
-			      <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Invoice. Press 'Esc' key to exit from the table.</small>
+			      <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to update Invoice. Press 'Esc' key to exit from the table.</small>
 			    </div>
 			    <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
 			{% endif %}
@@ -401,7 +401,7 @@
 			  <div class="col-sm-12 bg-info" style="margin-bottom:10px; padding:10;">
 			    <div class="row col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
 			    <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
-			    <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Invoice. Press 'Esc' key to exit from the table.</small>
+			    <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to update Invoice. Press 'Esc' key to exit from the table.</small>
 			  </div>
 			  <div class="col-sm-10" style="overflow-x:scroll;">
 			    <div class="row">
@@ -631,7 +631,7 @@
 		  <div class="modal-content">
 		    <div class="modal-header">
 
-		      <h4 class="modal-title">{% trans %}Save?{% endtrans %}</h4>
+		      <h4 class="modal-title">{% trans %}Update?{% endtrans %}</h4>
 		    </div>
 		    <div class="modal-body">
 		      <p>{% trans %}Are you sure?{% endtrans %}</p>
