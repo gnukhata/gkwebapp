@@ -63,8 +63,11 @@ $(document).ready(function() {
 
     $(document).off('keydown', '.iib').on('keydown', '.iib', function(event) {
 	if (event.which == 13) {
-	    event.preventDefault();
-	    if ($("#managerradio").is(":checked")) {
+	    //event.preventDefault();
+	    if($("#all").is(":checked")){
+		$("#edituser").focus();
+	    }
+	    else if ($("#managerradio").is(":checked")) {
 		$("#edituser").focus();
 	    }
 	    else if ($("#operatorradio").is(":checked")) {
@@ -117,17 +120,17 @@ $(document).ready(function() {
                 $("#delete").show();
                 $("#edit").show();
 		$("#userrolediv").show();
+		$("#pass_link").hide();
 
 		if(userdetails["userrole"]== -1){
 		    $("#delete").hide();
 		    $("#userrolediv").hide();
 		    $("#usertable").hide();
 		    $("#curpassdiv").show();
-		    $("#smalllink").show();
-		       
+		    $("#user_pass").hide();   
 		}else{
 		    $("#curpassdiv").hide();
-		    $("#smalllink").hide();
+		    $("#user_pass").show();
 		}
 
 		
@@ -170,12 +173,14 @@ $(document).ready(function() {
 	$("#edusrsubmit").show();
 	$("#editname").prop("disabled", false);
 	$("#current_password").prop("disabled",false);
+	$("#passwordconfirm").prop("disabled", false);
+	$("#password").prop("disabled", false);
 	if($("#edituser option:selected").attr("role") == "Admin" && $.trim($("#current_password").val()) == "") {
-	    $("#passwordconfirm").prop("disabled", true);
-	    $("#password").prop("disabled", true);
+	    $("#passconfirm_admin").prop("disabled", true);
+	    $("#pass_admin").prop("disabled", true);
 	}else{
-	    $("#passwordconfirm").prop("disabled", false);
-	    $("#password").prop("disabled", false);
+	    $("#passconfirm_admin").prop("disabled", false);
+	    $("#pass_admin").prop("disabled", false);
 	}
 	$("#userrole").prop("disabled", false);
 	$("#usertable").show();
@@ -184,6 +189,9 @@ $(document).ready(function() {
 	$("#edit").hide();
 	$("#editname").focus().select();
 	$('#latable tbody tr td input').prop("disabled", false);
+	if($("#edituser option:selected").attr("role") == "Admin"){
+	    $("#pass_link").show();
+	}
     });
     
     
@@ -245,14 +253,6 @@ $(document).ready(function() {
 	}
     });
 
-    $("#all").keydown(function(e){
-	if (e.which==13)
-	{
-	    e.preventDefault();
-	    $("#edituser").focus();
-	}
-    });
-
     $("#edituser").keydown(function(e) {
         if ($(".edituserform").is(':visible')) {
             if (e.which == 13) {
@@ -261,6 +261,7 @@ $(document).ready(function() {
             }
         }
 	if(e.which == 188 && e.shiftKey) {
+	    e.preventDefault();
 	    $("#all").focus().click();
 	}
     });
@@ -291,24 +292,37 @@ $(document).ready(function() {
     $("#current_password").keydown(function(e){
 	if(e.which==13){
 	    if($("#current_password").val()!=""){
-		$("#passwordconfirm").prop("disabled", false);
-		$("#password").prop("disabled", false);
+		$("#passconfirm_admin").prop("disabled", false);
+		$("#pass_admin").prop("disabled", false);
 	    }else{
-		$("#passwordconfirm").prop("disabled", true);
-		$("#password").prop("disabled", true);
+		$("#passconfirm_admin").prop("disabled", true);
+		$("#pass_admin").prop("disabled", true);
 	    }
-	    $("#password").focus();
+	    $("pass_admin").focus();
 	}
 	if(e.which==38){
 	    $("#editname").focus();
 	}
     });
+
+    /*$("#pass_admin").keydown(function(e){
+	if (e.which == 13){
+	    if ($.trim($("#pass_admin").val()) == "") {
+		$("#password-blank-alert").alert();
+		$("#password-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#password-blank-alert").hide();
+		});
+		$("#pass_admin").focus().select();
+	    }
+	    else{
+		$("#passconfirm_admin").focus();
+	    }
+    }*/
     
     //Key event for Edit Password
     $("#password").keydown(function(e){
 	if (e.which==13){
 	    if ($.trim($("#password").val()) == "") {
-		console.log("true");
 		$("#password-blank-alert").alert();
 		$("#password-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
 		    $("#password-blank-alert").hide();
@@ -529,7 +543,26 @@ $(document).ready(function() {
             $("#editname").focus().select();
             return false;
 	};
-        /*if ($.trim($("#password").val()) == "") {
+	if($("#edituser option:selected").attr("role") == "Admin" && $.trim($("#passwordconfirm").val()) != ""){
+	  if ($.trim($("#pass_admin").val()) == "") {
+            $("#password-blank-alert").alert();
+            $("#password-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+                $("#password-blank-alert").hide();
+            });
+            $("#pass_admin").focus().select();
+            return false;
+        };
+        if ($.trim($("#passconfirm_admin").val()) == "") {
+            $("#checkpassuser-blank-alert").alert();
+            $("#checkpassuser-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+                $("#checkpassuser-blank-alert").hide();
+            });
+            $("#passconfirm_admin").focus().select();
+            return false;
+        };  
+	}
+	else if($("#edituser option:selected").attr("role") != "Admin"){	    
+        if ($.trim($("#password").val()) == "") {
             $("#password-blank-alert").alert();
             $("#password-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
                 $("#password-blank-alert").hide();
@@ -544,7 +577,8 @@ $(document).ready(function() {
             });
             $("#passwordconfirm").focus().select();
             return false;
-        };*/
+        };
+	}
 	if ($.trim($("#question").val()) == "") {
 	    $("#secque-blank-alert").alert();
             $("#secque-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -580,45 +614,39 @@ $(document).ready(function() {
 	}
 
         //For Edited Data store.
-	if ($("#edituser option:selected").attr("role") == "Admin"){
-	    console.log("kamina");
-	}
-	var confirmpassword = $("#passwordconfirm").val();
-	var currentpassword=$.trim($("#current_password").val());
 	var dataset={"userid": $("#edituser option:selected").val(),
 		     "username": $("#editname").val(),
-		     "userpassword":$.trim($("#password").val()),
-		     "userrole": $("#userrole").val(),
 		     "userquestion": $("#question").val(),
-		     "useranswer": $("#answer").val(),
-		     "rolename":($("#edituser option:selected").attr("role") == "Admin")
+		     "useranswer": $("#answer").val()
 		    };
+	if($("#edituser option:selected").attr("role") == "Admin" && $.trim($("#passconfirm_admin").val()) != ""){
+	    dataset["userpassword"]=$("#pass_admin").val();
+	}
+	if($("#edituser option:selected").attr("role") != "Admin" && $.trim($("#passwordconfirm").val()) != ""){
+	    dataset["userpassword"]=$("#passwordconfirm").val();
+	    dataset["userrole"]=$("#userrole").val();
+	}
 	if($("#userrole").val()==3){
-	    console.log("hello");
 	    dataset["godowns"]=JSON.stringify(selectedgodowns);
-	    }
-	/*if($("#edituser option:selected").attr("role") == "Admin" && $.trim($("#current_password").val()) == ""){
-	    dataset["userroleval"]=userroleval;
-	    
-	}*/
+	}
 	$.ajax({
 	    type: "POST",
             url: "/showuser?type=updateuser",
             global: false,
             async: false,
             datatype: "json",
-            data: dataset,
+            data:dataset,
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
             },
             success: function(resp) {
 		if (resp["gkstatus"] == 0) {
-		    if(userroleval==-1){
+		    if($("#edituser option:selected").attr("role") == "Admin"){
 			$("#success-alert").alert();
 			$("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
 			    $("#success-alert").hide();
 			});
-			location.reload(forceGet=true);//After Admin successfully edited hole page refresh.
+			location.reload();//After Admin successfully edited hole page refresh.
 		    }else{
 			$("#reset").click();
 			$("#success-alert").alert();

@@ -59,7 +59,6 @@ def createusers(request):
 def editusers(request):
    header={"gktoken":request.headers["gktoken"]}
    result = requests.get("http://127.0.0.1:6543/users", headers=header)
-   #print result.json()["gkresult"]
    return {"gkresult":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
 
 #Get Userdetails 
@@ -69,21 +68,20 @@ def getuserdetails(request):
     userid = int(request.params["userid"])
     result = requests.get("http://127.0.0.1:6543/user?userAllData&userid=%d"%(userid), headers=header)
     if(result.json()["gkstatus"] == 0):
-        #print result.json()["gkresult"]
         return {"gkstatus":0, "gkresult":result.json()["gkresult"]}
     return {"gkstatus":result.json()["gkstatus"]}
 
 #Edit Data
 @view_config(route_name="showuser",request_param="type=updateuser", renderer="json")
 def addedituser(request):
-    header={"gktoken":request.headers["gktoken"]}
-    goflag = False
-    if (request.params["rolename"]) == true:
-        gkdata = {"userid":request.params["userid"],"username":request.params["username"], "userpassword":"", "userrole":"", "userquestion":request.params["userquestion"], "useranswer":request.params["useranswer"]}
-    if int(request.params["userrole"]) == 3:
-        gkdata = {"userid":request.params["userid"],"username":request.params["username"], "userpassword":request.params["userpassword"], "userrole":request.params["userrole"], "userquestion":request.params["userquestion"], "useranswer":request.params["useranswer"], "golist":json.loads(request.params["godowns"])}
-    else:
-        gkdata = {"userid":request.params["userid"],"username":request.params["username"], "userpassword":request.params["userpassword"], "userrole":request.params["userrole"], "userquestion":request.params["userquestion"], "useranswer":request.params["useranswer"]}
+    header = {"gktoken":request.headers["gktoken"]}
+    gkdata = {"userid":request.params["userid"],"username":request.params["username"],"userquestion":request.params["userquestion"],"useranswer":request.params["useranswer"]}
+    if request.params.has_key("userpassword"):
+        gkdata["userpassword"]=request.params["userpassword"]
+    if request.params.has_key("userrole"):
+        gkdata["userrole"]=int(request.params["userrole"])
+    if request.params.has_key("godowns"):
+        gkdata["golist"]=json.loads(request.params["godowns"])
     result = requests.put("http://127.0.0.1:6543/users?editdata", headers=header, data=json.dumps(gkdata))
     return {"gkstatus":result.json()["gkstatus"]}
 

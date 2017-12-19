@@ -55,6 +55,22 @@
 	<a href="" class="close" aria-label="close">&times;</a>
 	{% trans %} User could not be edited.{% endtrans %}
       </div>
+      <div class="alert alert-danger" id="curpass-blank-alert" aria-live="rude" role="alert" hidden>
+
+	{% trans %}Please enter current password!{% endtrans %}
+      </div>
+
+      <div class="alert alert-danger" id="password-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please enter password!{% endtrans %}
+      </div>
+
+      <div class="alert alert-danger" id="cnfpass-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please re-enter password!{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="checkpassuser-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Password doesn't match!{% endtrans %}
+      </div>
+      
       
       <div class="row">
 	<div class="col-md-2" id="selectuserform">
@@ -107,41 +123,37 @@
 		<input type="text" id="editname" name="editname" class="form-control input-sm" accesskey="e"></input>
 	      </div>
 
-	      <div class="form-group">
-		<a data-toggle="collapse" id="smalllink" href="#moresmall"> Change Password <span class="glyphicon glyphicon-triangle-bottom"></span></a>
-	      </div>
-	      
-	      <div class="collapse" id="moresmall">
-		<div class="alert alert-danger" id="curpass-blank-alert" aria-live="rude" role="alert" hidden>
-
-		{% trans %}Please enter current password!{% endtrans %}
-		</div>
-
-	      <div class="form-group" id="curpassdiv">
-	      <label for="currentpassword" id="currentPassword">{% trans %}Current Pass<u>w</u>ord{% endtrans %} :</label>
-              <input type="password" id="current_password" class="form-control input-sm" name="currentpassWord" style="border-radius:4px"></input>
-	      </div>
-	      </div>
-	      
-	      <div class="alert alert-danger" id="password-blank-alert"  aria-live="rude" role="alert" hidden>
-		{% trans %}Please enter password!{% endtrans %}
-	      </div>
-
+	      <div id="user_pass">
 	      <div class="form-group">
 		<label for="editpwd" id="editpwd">{% trans %}New Pass<u>w</u>ord{% endtrans %} :</label>
 		<input style="border-radius: 4px" name="editpwd" id="password" type="password" class="form-control input-sm" accesskey="w"></input>
-	      </div>
-
-	      <div class="alert alert-danger" id="cnfpass-blank-alert"  aria-live="rude" role="alert" hidden>
-		{% trans %}Please re-enter password!{% endtrans %}
-	      </div>
-	      <div class="alert alert-danger" id="checkpassuser-blank-alert"  aria-live="rude" role="alert" hidden>
-		{% trans %}Password doesn't match!{% endtrans %}
 	      </div>
 	      
 	      <div class="form-group">
 		<label for="confirmpwd" id="confirmpwd">{% trans %}C<u>o</u>nfirm New Password{% endtrans %} :</label>
 		<input name="confirmpwd" style="border-radius: 4px" type="password" id="passwordconfirm" class="form-control input-sm" accesskey="o"></input>
+	      </div>
+	      </div>
+
+	      <div class="form-group" id="pass_link" hidden>
+		<a data-toggle="collapse" id="smalllink" href="#moresmall"> Change Password <span class="glyphicon glyphicon-triangle-bottom"></span></a>
+	      </div>
+	      
+	      <div class="collapse" id="moresmall">
+	      <div class="form-group" id="curpassdiv">
+	      <label for="currentpassword" id="currentPassword">{% trans %}Current Pass<u>w</u>ord{% endtrans %} :</label>
+              <input type="password" id="current_password" class="form-control input-sm" name="currentpassWord" style="border-radius:4px"></input>
+	      </div>
+	      
+	      <div class="form-group">
+		<label for="editpwd" id="editpwd_admin">{% trans %}New Pass<u>w</u>ord{% endtrans %} :</label>
+		<input style="border-radius: 4px" name="editpwd" id="pass_admin" type="password" class="form-control input-sm" accesskey="w"></input>
+	      </div>
+	      
+	      <div class="form-group">
+		<label for="confirmpwd" id="confirmpwd_admin">{% trans %}C<u>o</u>nfirm New Password{% endtrans %} :</label>
+		<input name="confirmpwd" style="border-radius: 4px" type="password" id="passconfirm_admin" class="form-control input-sm" accesskey="o"></input>
+	      </div>
 	      </div>
               
 	      <div class="alert alert-danger" id="role-blank-alert"  aria-live="rude" role="alert" hidden>
