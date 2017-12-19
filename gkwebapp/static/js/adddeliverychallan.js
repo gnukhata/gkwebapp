@@ -856,7 +856,9 @@ else {
     form_data.append("dcdate", $("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val());
     form_data.append("inout", $("#status").val());
     form_data.append("noofpackages", $('#deliverychallan_noofpackages').val());
-    form_data.append("consignee", JSON.stringify(consignee));
+    if($("#consigneename").val() != ""){
+	form_data.append("consignee", JSON.stringify(consignee));
+    }
     form_data.append("modeoftransport", $('#deliverychallan_modeoftransport').val());
     form_data.append("issuername", $("#deliverychallan_issuername").val());
     form_data.append("designation", $("#deliverychallan_designation").val());
@@ -1120,8 +1122,8 @@ else {
     .done(function(resp) {
       if(resp["gkstatus"] == 0){
         if ($("#status").val()=='15') {
-          printset = []; // list containing dict of product details
-          qtytotal =0;
+          let printset = []; // list containing dict of product details
+          let qtytotal =0;
           for (var i = 0; i < $("#deliverychallan_product_table tbody tr").length; i++) {
             var obj = {};// dict containing product details
 

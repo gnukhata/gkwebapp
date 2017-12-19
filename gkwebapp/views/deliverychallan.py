@@ -113,7 +113,7 @@ def getdelchal(request):
 @view_config(route_name="deliverychallan",request_param="action=save",renderer="json")
 def savedelchal(request):
     header={"gktoken":request.headers["gktoken"]}
-    delchaldata = {"custid":int(request.params["custid"]),"dcno":request.params["dcno"],"dcdate":request.params["dcdate"],"dcflag":request.params["dcflag"], "noofpackages":request.params["noofpackages"], "modeoftransport":request.params["modeoftransport"],"consignee":json.loads(request.params["consignee"])}
+    delchaldata = {"custid":int(request.params["custid"]),"dcno":request.params["dcno"],"dcdate":request.params["dcdate"],"dcflag":request.params["dcflag"], "noofpackages":request.params["noofpackages"], "modeoftransport":request.params["modeoftransport"]}
     products = {}
     for  row in json.loads(request.params["products"]):
         products[row["productcode"]] = row["qty"]
@@ -124,6 +124,8 @@ def savedelchal(request):
         delchaldata["issuername"]=request.params["issuername"]
     if request.params.has_key("designation"):
         delchaldata["designation"]=request.params["designation"]
+    if request.params.has_key("consignee"):
+        delchaldata["consignee"]=json.loads(request.params["consignee"])
     try:
         files = {}
         count = 0
