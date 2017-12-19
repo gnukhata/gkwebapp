@@ -930,8 +930,8 @@ $(document).ready(function() {
 					$('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
 					$('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 					$('#invoice_product_table_vat tbody tr:last td:first select').val(key).prop("disabled", true);
-					$('#invoice_product_table_vat tbody tr:last td:eq(1) input').val(value.qty);
-					$('#invoice_product_table_vat tbody tr:last td:eq(1) input').val(value.qty).attr("data", value.qty);
+					$('#invoice_product_table_vat tbody tr:last td:eq(1) input').val(parseFloat(value.qty).toFixed(2));
+					$('#invoice_product_table_vat tbody tr:last td:eq(1) input').val(parseFloat(value.qty).toFixed(2)).attr("data", parseFloat(value.qty).toFixed(2));
 					$('#invoice_product_table_vat tbody tr:last td:eq(1) span').text(value.unitname);
 					$('#invoice_product_table_vat tbody tr:last td:eq(2) span').text(value.unitname);
 				    });
@@ -941,8 +941,8 @@ $(document).ready(function() {
 					$('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
 					$('#invoice_product_table_gst tbody tr:last td:first select').val(key).prop("disabled", true);
 					$('#invoice_product_table_gst tbody tr:last td:eq(1) label').html(value.gscode);
-					$('#invoice_product_table_gst tbody tr:last td:eq(2) input').val(value.qty);
-					$('#invoice_product_table_gst tbody tr:last td:eq(2) input').val(value.qty).attr("data", value.qty);
+					$('#invoice_product_table_gst tbody tr:last td:eq(2) input').val(parseFloat(value.qty).toFixed(2));
+					$('#invoice_product_table_gst tbody tr:last td:eq(2) input').val(parseFloat(value.qty).toFixed(2)).attr("data", parseFloat(value.qty).toFixed(2));
 					$('#invoice_product_table_gst tbody tr:last td:eq(2) span').text(value.unitname);
 					$('#invoice_product_table_gst tbody tr:last td:eq(3) span').text(value.unitname);
 					$('.invoice_product_quantity_gst').numeric({ negative: false });
