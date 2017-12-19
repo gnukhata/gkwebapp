@@ -2064,6 +2064,7 @@ if (event.which == 13) {
 		    success: function(resp)
 		    {
 			if(resp.gkstatus == 0){
+			    console.log(resp.invoicedata);
 			    $("#invdetailsdiv").show();
 			    $('input, select:not(#invselect)').prop("disabled", true);
 			    $("#buttonsdiv").show();
@@ -2130,8 +2131,19 @@ if (event.which == 13) {
 				    $('.invoice_product_hsncode:eq(' + curindex + ')').html(value.gscode);
 				    $('.invoice_product_quantity_gst:eq(' + curindex + ')').val(value.qty).attr("data", value.qty);
 				    $('.unitaddonqty_gst:eq(' + curindex + '), .unitaddonfreeqty_gst:eq(' + curindex + ')').text(value.uom);
+				    $('.invoice_product_per_price_gst:eq(' + curindex + ')').val(value.priceperunit);
 				    $('.invoice_product_discount_gst:eq(' + curindex + ')').val(value.discount);
 				    $('.invoice_product_taxablevalue_gst:eq(' + curindex + ')').val(value.taxableamount);
+				    if(resp.invoicedata.taxname == 'IGST'){
+					$('.invoice_product_igstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate).toFixed(2));
+					$('.invoice_product_igstrate:eq(' + curindex + ')').val(parseFloat(value.taxamount).toFixed(2));
+				    }
+				    else{
+					$('.invoice_product_sgstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate/2).toFixed(2));
+					$('.invoice_product_sgstrate:eq(' + curindex + ')').val(parseFloat(value.taxamount/2).toFixed(2));
+					$('.invoice_product_cgstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate/2).toFixed(2));
+					$('.invoice_product_cgstrate:eq(' + curindex + ')').val(parseFloat(value.taxamount/2).toFixed(2));
+				    }
 				    //$('.invoice_product_tax_rate_vat:eq(' + curindex + ')').val(value.taxrate);
 				    $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 				    $('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
