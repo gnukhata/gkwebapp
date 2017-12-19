@@ -50,7 +50,8 @@ $(document).ready(function() {
       }
     })
     .done(function(resp) {
-      console.log("success");
+	console.log("success");
+	$(".panel-footer").hide();
       if (resp.delchaldata.delchaldata.cancelflag==1)
       {
         $("#cancelmsg").show();
@@ -67,10 +68,11 @@ $(document).ready(function() {
         $("#deliverychallan_edit_delete").show();
       }
       if(resp.delchaldata.delchaldata.attachmentcount > 0){
-        $("#viewattach").show();
+	  $(".panel-footer").show();
+          $("#viewattach").show();
       }
       else{
-        $("#viewattach").hide();
+          $("#viewattach").hide();
       }
       $("#deliverychallan_edit_customer").html(custsup);
       var dcdatearray = resp.delchaldata.delchaldata.dcdate.split(/\s*\-\s*/g);
@@ -125,10 +127,13 @@ $(document).ready(function() {
         if (resp["gkstatus"]==0) {
           $("#deliverychallan_customeraddr").val(resp["gkresult"]["custaddr"]);
           if (resp.gkresult.csflag == 3) {
-            $('#deliverychallan_edit_challtype').val("OUT");
+              $('#deliverychallan_edit_challtype').val("OUT");
+	      $(".panel-footer").show();
+	      $("#deliverychallan_editprint").show();
           }
           else {
-            $('#deliverychallan_edit_challtype').val("IN");
+              $('#deliverychallan_edit_challtype').val("IN");
+	      $("#deliverychallan_editprint").hide();
           }
         }
       })
@@ -174,7 +179,6 @@ $(document).ready(function() {
       });
 
       $(".deliverychallan_edit_div").show();
-      $(".panel-footer").show();
       $("#deliverychallan_edit_edit").show();
       $("#deliverychallan_edit_save").hide();
     })
