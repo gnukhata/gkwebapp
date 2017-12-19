@@ -2197,6 +2197,23 @@ if (event.which == 13) {
 				$("#statecodeofconsignee").text("35");
 			    }
 			    $("#invoicestate").change();
+			    $("#accountno").val(resp.invoicedata.bankdetails.accountno);
+			    $("#bankname").val(resp.invoicedata.bankdetails.bankname);
+			    $("#ifsc").val(resp.invoicedata.bankdetails.ifsc);
+			    $("#transportationmode").val(resp.invoicedata.transportationmode);
+			    $("#vehicleno").val(resp.invoicedata.vehicleno);
+			    let dateofsupply = resp.invoicedata.dateofsupply.split('-');
+			    $("#supply_date").val(dateofsupply["0"]);
+			    $("#supply_month").val(dateofsupply["1"]);
+			    $("#supply_year").val(dateofsupply["2"]);
+			    if (resp.invoicedata.reveresecharge == "1") {
+				$("#rev1radio").prop("checked", true);
+				$("#rev2radio").prop("checked", false);
+			    }
+			    else {
+				$("#rev2radio").prop("checked", true);
+				$("#rev1radio").prop("checked", false);
+			    }
 			    $('input, select:not(#invselect)').prop("disabled", true);
 			}
 		    }
