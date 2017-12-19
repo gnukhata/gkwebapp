@@ -2588,6 +2588,7 @@ if (event.which == 13) {
       form_data.append("dcid", $("#invoice_deliverynote option:selected").val());
       form_data.append("custid", $("#invoice_customer option:selected").val());
       form_data.append("invoiceno", $("#invoice_challanno").val());
+      form_data.append("invid", $("#invselect option:selected").val());
       form_data.append("invoicedate", $.trim($("#invoice_year").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_date").val()));
       form_data.append("contents", JSON.stringify(contents));
       form_data.append("tax", JSON.stringify(tax));
@@ -2657,7 +2658,7 @@ if (event.which == 13) {
     $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function(e) {
 	if (allow == 1){
 	    $.ajax({
-                url: '/invoice?action=save',
+                url: '/invoice?action=update',
                 type: 'POST',
                 global: false,
                 contentType: false,

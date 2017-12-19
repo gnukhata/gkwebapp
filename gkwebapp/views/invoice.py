@@ -114,6 +114,43 @@ def saveinvoice(request):
         return {"gkstatus":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
     else:
         return {"gkstatus":result.json()["gkstatus"]}
+@view_config(route_name="invoice",request_param="action=update",renderer="json")
+def updateinvoice(request):
+    header={"gktoken":request.headers["gktoken"]}
+
+    invoicedata = {"invid":request.params["invid"],"invoiceno":request.params["invoiceno"],"taxstate":request.params["taxstate"],"invoicedate":request.params["invoicedate"],"tax":json.loads(request.params["tax"]), "cess":json.loads(request.params["cess"]),"custid":request.params["custid"],"invoicetotal":request.params["invtotal"], "contents":json.loads(request.params["contents"]),"issuername":request.params["issuername"],"designation":request.params["designation"],"freeqty":json.loads(request.params["freeqty"]), "discount":json.loads(request.params["discount"]), "consignee":json.loads(request.params["consignee"]),"bankdetails":json.loads(request.params["bankdetails"]),"taxflag":request.params["taxflag"],"sourcestate":request.params["sourcestate"],"transportationmode":request.params["transportationmode"], "reversecharge":request.params["reversecharge"], "vehicleno":request.params["vehicleno"],"orgstategstin":request.params["orgstategstin"]}
+    if request.params["dateofsupply"] != "":
+        invoicedata["dateofsupply"] = request.params["dateofsupply"]
+
+    try:
+        files = {}
+        count = 0
+        for i in request.POST.keys():
+            if "file" not in i:
+                continue
+            else:
+                img = request.POST[i].file
+                image = Image.open(img)
+                imgbuffer = cStringIO.StringIO()
+                image.save(imgbuffer, format="JPEG")
+                img_str = base64.b64encode(imgbuffer.getvalue())
+                image.close()
+                files[count] = img_str
+                count += 1
+        if len(files)>0:
+            invoicedata["attachment"] = files
+            invoicedata["attachmentcount"] = len(invoicedata["attachment"])
+    except:
+        print "no attachment found"
+    stock = json.loads(request.params["stock"])
+    if request.params["dcid"]!="":
+        invoicedata["dcid"] = request.params["dcid"]
+    invoicewholedata = {"invoice":invoicedata,"stock":stock}
+    result=requests.put("http://127.0.0.1:6543/invoice",data=json.dumps(invoicewholedata),headers=header)
+    if result.json()["gkstatus"]==0:
+        return {"gkstatus":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
+    else:
+        return {"gkstatus":result.json()["gkstatus"]}
 @view_config(route_name="invoice",request_param="action=getdeliverynote",renderer="json")
 def getdeliverynote(request):
     header={"gktoken":request.headers["gktoken"]}
