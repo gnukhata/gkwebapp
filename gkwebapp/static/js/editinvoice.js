@@ -2197,8 +2197,10 @@ if (event.which == 13) {
 				$("#statecodeofconsignee").text("35");
 			    }
 			    $("#invoicestate").change();
+			    $("#totalinvoicevalue").text(resp.invoicedata.invoicetotal);
 			    $("#accountno").val(resp.invoicedata.bankdetails.accountno);
 			    $("#bankname").val(resp.invoicedata.bankdetails.bankname);
+			    $("#branch").val(resp.invoicedata.bankdetails.branch);
 			    $("#ifsc").val(resp.invoicedata.bankdetails.ifsc);
 			    $("#transportationmode").val(resp.invoicedata.transportationmode);
 			    $("#vehicleno").val(resp.invoicedata.vehicleno);
