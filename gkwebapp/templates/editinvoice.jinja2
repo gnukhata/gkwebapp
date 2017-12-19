@@ -155,7 +155,7 @@
 			      {% trans %}Customer{% endtrans %} :
 			    {% endif %}
 			  </label>
-			  <select class="form-control input-sm col-sm-8 fsize" id="invoice_customer" accesskey="">
+			  <select class="form-control custfield input-sm col-sm-8 fsize" id="invoice_customer" accesskey="">
 			    <option value="" disabled hidden selected>
 			      {% if status=="in" %}
 				{% trans %}Select Supplier{% endtrans %}
@@ -176,7 +176,7 @@
 			      {% trans %}Customer State{% endtrans %}:
 			    {% endif %}
 			  </label>
-			  <select id="invoice_customerstate" class="form-control input-sm col-sm-8">
+			  <select id="invoice_customerstate" class="custfield form-control input-sm col-sm-8">
 			    {% for state in states %}
 			      {% for key, value in state.items() %}
 				<option value="{{value}}" stateid="{{key}}">{{value}}</option>
@@ -211,11 +211,11 @@
 			<h4>Details of Consignee | Shipped to: </h4>
 			<div class="form-group form-inline">
 			  <label for="consigneename" class="col-sm-4 fsize">{% trans %}Name{% endtrans %} :</label>
-			  <input type="text" id="consigneename" class="col-sm-8 form-control input-sm"></input>
+			  <input type="text" id="consigneename" class="consigneefield col-sm-8 form-control input-sm"></input>
 			</div>
 			<div class="form-group form-inline">
 			  <label for="consigneestate" class="col-sm-4 fsize">{% trans %}State{% endtrans %} :</label>
-			  <select class="form-control input-sm col-sm-8" id="consigneestate" >
+			  <select class="consigneefield form-control input-sm col-sm-8" id="consigneestate" >
 			    {% for state in states %}
 			      {% for key, value in state.items() %}
 				<option value="{{value}}" stateid="{{key}}">{{value}}</option>
@@ -237,7 +237,7 @@
 			</div>
 			<div class="form-group form-inline">
 			  <label for="consigneeaddress" class="col-sm-4 fsize">{% trans %}Consignee Address :{% endtrans %}</label>
-			  <input type="text" id="consigneeaddress" class="col-sm-8 form-control input-sm" name="consigneeaddress"></input>
+			  <input type="text" id="consigneeaddress" class="consigneefield col-sm-8 form-control input-sm" name="consigneeaddress"></input>
 			</div>
 
 		      </div>

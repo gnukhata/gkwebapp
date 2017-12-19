@@ -42,6 +42,7 @@ $(document).ready(function() {
     var invoicedatestring = "";
     var invoicedate = "";
     var alertflag = false;
+    var consigneeflag = false;
     var gstdate = Date.parseExact('01072017', "ddMMyyyy");
     //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
     var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
@@ -2125,7 +2126,6 @@ if (event.which == 13) {
 				$("#gstin").text(resp.invoicedata.custSupDetails.custgstin);
 				let curindex = 0;
 				$.each(resp.invoicedata.invcontents, function(key, value) {
-				    console.log(value);
 				    $('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
 				    $('.product_name_gst:eq(' + curindex + ')').val(key).prop("disabled", true);
 				    $('.invoice_product_hsncode:eq(' + curindex + ')').html(value.gscode);
@@ -2177,6 +2177,7 @@ if (event.which == 13) {
 				$('.invoice_product_per_price_vat').numeric({ negative: false });
 			    }
 			    if (resp.invoicedata.consignee.consigneename) {
+				consigneeflag = true;
 				$("#consigneename").val(resp.invoicedata.consignee.consigneename);
 				if ($("#taxapplicable").val() == '22') {
 				    $("#tinconsignee").val(resp.invoicedata.consignee.tinconsignee);
@@ -2189,6 +2190,7 @@ if (event.which == 13) {
 				$("#statecodeofconsignee").text(resp.invoicedata.consignee.consigneestatecode);
 			    }
 			    else{
+				consigneeflag = false;
 				$("#consigneename").val("");
 				$("#tinconsignee").val("");
 				$("#gstinconsignee").val("");
@@ -2230,6 +2232,12 @@ if (event.which == 13) {
 	$("#invoice_save").show();
 	$("#invoice_edit").hide();
 	$('input, select:not(#invselect)').prop("disabled", false);
+	if($("#invoice_deliverynote option:selected").val() != ""){
+	    $(".custfield, .product_name_gst, .product_name_vat, .invoice_product_quantity_gst, .invoice_product_quantity_vat").prop("disabled", true);
+	}
+	if(consigneeflag == true){
+	    $(".consigneefield").prop("disabled", true);
+	}
 	$(".firstfield:visible").first().focus();
     });
 
