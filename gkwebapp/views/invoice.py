@@ -114,6 +114,12 @@ def saveinvoice(request):
         return {"gkstatus":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
     else:
         return {"gkstatus":result.json()["gkstatus"]}
+
+'''
+This is a function to edit an invoice.
+This function receives data regarding invoice, delivery note linked if any and stock details if any.
+The data received is sent to core engine.
+'''
 @view_config(route_name="invoice",request_param="action=update",renderer="json")
 def updateinvoice(request):
     header={"gktoken":request.headers["gktoken"]}

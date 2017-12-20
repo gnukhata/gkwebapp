@@ -2028,10 +2028,13 @@ if (event.which == 13) {
 	}
     });
 
+    // Change event for list of invoices.
     $("#invselect").change(function(event) {
         /* Act on the event */
+	// Consignee flag is set to false.
 	consigneeflag = false;
         var invid = $("#invselect option:selected").val();
+	// If an invoice is selected its details are fetched.
         if (invid != "") {
 	    $.ajax(
 		{
@@ -2048,32 +2051,40 @@ if (event.which == 13) {
 		    success: function(resp)
 		    {
 			if(resp.gkstatus == 0){
+			    // Div that has all fields of invoice is shown.
 			    $("#invdetailsdiv").show();
+			    // All fields are disabled until Edit button is clicked.
 			    $('input, select:not(#invselect)').prop("disabled", true);
+			    // Div with buttons is shown.
 			    $("#buttonsdiv").show();
+			    // Checks if there are any attachments and enables/disables viewattachment function.
 			    if(parseInt(resp.invoicedata.attachmentcount) > 0){
 				$("#viewattach").show();
 			    }
 			    else {
 				$("#viewattach").hide();
 			    }
+			    // Hides print button in purchase.
 			    if ($("#status").val() == '9') {
 				$("#invoice_editprint").hide();
 			    }
 			    else {
 				$("#invoice_editprint").show();
 			    }
+			    // Loads delivery note data if any.
 			    if(resp.invoicedata.dcid){
 				consigneeflag = true;
 				let delchallist = [];
 				$("#invoice_deliverynote option").each(function(){
 				    delchallist.push($(this).val());
 				});
+				// If selected invoice is not in the list it is appended.
 				if($.inArray(resp.invoicedata.dcid, delchallist) == -1){
 				    $("#invoice_deliverynote").append('<option value="' + resp.invoicedata.dcid + '" dcno = "' + resp.invoicedata.dcno + '" dcdate="' + resp.invoicedata.dcdate + '">' + resp.invoicedata.dcid + ', ' + resp.invoicedata.dcdate + ', ' + resp.invoicedata.custSupDetails.custname + '</option>');
 				}
 				$("#invoice_deliverynote").val(resp.invoicedata.dcid);
 			    }
+			    // Loading other details of invoice.
 			    $("#invoice_challanno").val(resp.invoicedata.invoiceno);
 			    let invoicedate = resp.invoicedata.invoicedate.split('-');
 			    $("#invoice_date").val(invoicedate["0"]);
@@ -2102,7 +2113,9 @@ if (event.which == 13) {
 			    $("#statecodeofcustomer").text(resp.invoicedata.custSupDetails.custsupstatecode);
 			    $("#invoice_customeraddr").text(resp.invoicedata.custSupDetails.custaddr);
 			    $("#taxapplicable").val(resp.invoicedata.taxflag);
+			    // Loading tax and proiduct data based on taxflag(VAT or GST)
 			    if ($("#taxapplicable").val() == '7') {
+				// Loading tax and product details when GST is applied.
 				$("#taxapplicabletext").text('GST');
 				$('#invoice_product_table_gst tbody').empty();
 				$('#invoice_product_table_total tbody').empty();
@@ -2127,7 +2140,6 @@ if (event.which == 13) {
 					$('.invoice_product_cgstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate/2).toFixed(2));
 					$('.invoice_product_cgstrate:eq(' + curindex + ')').val(parseFloat(value.taxamount/2).toFixed(2));
 				    }
-				    //$('.invoice_product_tax_rate_vat:eq(' + curindex + ')').val(value.taxrate);
 				    $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 				    $('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 				    $('.invoice_product_total_gst:eq(' + curindex + ')').val(value.totalAmount);
@@ -2138,6 +2150,7 @@ if (event.which == 13) {
 				$("#invoice_product_table_total tbody tr:first td:last").empty();
 			    }
 			    else if ($("#taxapplicable").val() ==  '22') {
+				// Loading tax and product details when VAT is applied.
 				$("#taxapplicabletext").text('VAT');
 				$("#tin").text(resp.invoicedata.custSupDetails.custtin);
 				$('#invoice_product_table_vat tbody').empty();
@@ -2159,6 +2172,7 @@ if (event.which == 13) {
 				$('.invoice_product_quantity_vat').numeric({ negative: false });
 				$('.invoice_product_per_price_vat').numeric({ negative: false });
 			    }
+			    // Loading consignee ddetails if any.
 			    if (resp.invoicedata.consignee.consigneename) {
 				$("#consigneename").val(resp.invoicedata.consignee.consigneename);
 				if ($("#taxapplicable").val() == '22') {
@@ -2180,6 +2194,7 @@ if (event.which == 13) {
 				$("#statecodeofconsignee").text("35");
 			    }
 			    $("#invoicestate").change();
+			    // Loading bank details and other information.
 			    $("#totalinvoicevalue").text(resp.invoicedata.invoicetotal);
 			    $("#accountno").val(resp.invoicedata.bankdetails.accountno);
 			    $("#bankname").val(resp.invoicedata.bankdetails.bankname);
@@ -2199,6 +2214,7 @@ if (event.which == 13) {
 				$("#rev2radio").prop("checked", true);
 				$("#rev1radio").prop("checked", false);
 			    }
+			    // Disabling all fields again.
 			    $('input, select:not(#invselect)').prop("disabled", true);
 			}
 		    }
@@ -2209,6 +2225,7 @@ if (event.which == 13) {
 	}
     });
 
+    // Click event for invoice edit button.
     $("#invoice_edit").click(function(event){
 	$("#invoice_save").show();
 	$("#invoice_edit").hide();
