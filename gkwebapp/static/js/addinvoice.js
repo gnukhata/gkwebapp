@@ -959,6 +959,16 @@ $(document).ready(function() {
 		});
 	}
 	else {
+	    $("#invoice_customer").val("").prop("disabled", false).change();
+	    $("#invoice_customerstate").val("Andaman and Nicobar Islands").prop("disabled", false).change();
+	    $("#invoice_customeraddr").text("");
+	    $("#consigneename").val("").prop("disabled", false);
+	    $("#consigneestate").val("Andaman and Nicobar Islands").prop("disabled", false).change();
+	    $("#gstinconsignee").val("").prop("disabled",false);
+	    $("#consigneeaddress").val("").prop("disabled", false);
+	    $("#supply_date").val("").prop("disabled", false);
+	    $("#supply_month").val("").prop("disabled", false);
+	    $("#supply_year").val("").prop("disabled", false);
 	    $('#invoice_product_table_vat tbody').empty();
 	    $('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
 	    $('#invoice_product_table_gst tbody').empty();
