@@ -964,7 +964,7 @@ $(document).ready(function() {
 	    $('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
 	    $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 	    $(".product_name_gst, .product_name_vat, #invoicestate").change();
-	    $(".custfield, .consigneefield").prop("disabled", false);
+	    $(".custfield, .consigneefield, .supplydate").prop("disabled", false);
 	    $("input.delreset").val("");
 	    $("#invoice_customer").val("").change();
 	    $("#invoice_customerstate option:first").prop("selected", true).change();
@@ -2028,6 +2028,7 @@ if (event.which == 13) {
 	}
     });
 
+    var invoicedata = {};
     // Change event for list of invoices.
     $("#invselect").change(function(event) {
         /* Act on the event */
@@ -2229,10 +2230,11 @@ if (event.which == 13) {
     $("#invoice_edit").click(function(event){
 	$("#invoice_save").show();
 	$("#invoice_edit").hide();
+	$("#invoice_editprint").hide();
 	$(".uploadclass").show();
 	$('input, select:not(#invselect)').prop("disabled", false);
 	if($("#invoice_deliverynote option:selected").val() != ""){
-	    $(".custfield, .product_name_gst, .product_name_vat, .invoice_product_quantity_gst, .invoice_product_quantity_vat").prop("disabled", true);
+	    $(".custfield, .product_name_gst, .product_name_vat, .invoice_product_quantity_gst, .invoice_product_quantity_vat, .supplydate").prop("disabled", true);
 	}
 	if(consigneeflag == true){
 	    $(".consigneefield").prop("disabled", true);
