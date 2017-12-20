@@ -21,7 +21,7 @@
 Contributors:
 "Krishnakant Mane" <kk@dff.org.in>
 "Prajkta Patkar" <prajakta@dff.org.in>
-"Abhijeet Balan" <abhijith@dff.org.in>
+"Abhijith Balan" <abhijith@dff.org.in>
 "Nitesh Chaughule" <nitesh@disroot.org>
 */
 

@@ -124,7 +124,8 @@ $(document).ready(function() {
              orgstatus = resp["gkstatus"];
           }
           if (resp["gkstatus"]==2 || resp["gkstatus"]==4 || resp["gkstatus"]==3)
-          {
+            {
+		$("#msspinmodal").modal("hide");
             $("#badprivilege-alert").alert();
             $("#badprivilege-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#badprivilege-alert").hide();
@@ -162,7 +163,8 @@ $(document).ready(function() {
                 return false;
               }
               if (resp["gkstatus"]==2 || resp["gkstatus"]==4)
-              {
+		{
+		    $("#msspinmodal").modal("hide");
                 $("#badprivilege-alert").alert();
                 $("#badprivilege-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#badprivilege-alert").hide();
@@ -204,7 +206,8 @@ $(document).ready(function() {
                 return false;
               }
               if (resp["gkstatus"]==2 || resp["gkstatus"]==4)
-              {
+		{
+		$("#msspinmodal").modal("hide");
                 $("#badprivilege-alert").alert();
                 $("#badprivilege-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#badprivilege-alert").hide();
@@ -216,6 +219,4 @@ $(document).ready(function() {
       }
 
   });
-
-
 });

@@ -21,7 +21,7 @@
 Contributors:
 "Krishnakant Mane" <kk@dff.org.in>
 "Prajkta Patkar" <prajakta@dff.org.in>
-"Abhijeet Balan" <abhijith@dff.org.in>
+"Abhijith Balan" <abhijith@dff.org.in>
 "Nitesh Chaughule" <nitesh@disroot.org>
 */
 
@@ -81,12 +81,12 @@ $(document).ready(function() {
     });
 
     //following ajax will calls selected user details and hide it.
-    $("#edusrsubmit").hide();
     $("#edituser").bind("change", function(e) {
 	$("#edusrsubmit").hide();
 	$("#usertable").html("");
 	var userid = $("#edituser option:selected").val();
         var username = $("#edituser option:selected").text();
+	if( userid !=""){
 	$.ajax({
 	    type: "POST",
             url:"/showuser?type=getuserdetails",
@@ -133,7 +133,7 @@ $(document).ready(function() {
 		}
 
 		
-		//This ajax gives the assign list of godowns. 
+		//This ajax gives the assign list of godowns for particular user. 
 		if (userdetails["userrole"] == 3){
 		    $("#usertable").show();
 		    $.ajax(
@@ -163,10 +163,11 @@ $(document).ready(function() {
 		    $("#usertable").hide();
 		}
                }
-           });
+        });
+	}
     });
 
-    //when click on Edit Button all data will unhide.
+    //When clicking on Edit Button all fields will be enabled.
     $("#edit").click(function(event) {
 	event.preventDefault();
 	$("#edusrsubmit").show();
@@ -194,7 +195,7 @@ $(document).ready(function() {
     });
     
     
-    //When "Godown In charge" role is select from userrole will gives Godown List.
+    //When "Godown In charge" role is selected from userrole will gives Godown List.
     if (sessionStorage.invflag==1) {
 	$.ajax({
 	    type: "POST",
@@ -288,7 +289,9 @@ $(document).ready(function() {
 	    $("#edituser").focus();
 	}
     });
-
+    
+    //For Admin Userrole
+    //If Current password is correct then only "New password" and "Confirm New Password" fields will be enabled.
     $("#current_password").keydown(function(e){
 	if(e.which==13){
 	    if($("#current_password").val()==""){
@@ -344,16 +347,7 @@ $(document).ready(function() {
 
     $("#passconfirm_admin").keydown(function(e){
 	if(e.which==13){
-	    //check
-	    if($("#passconfirm_admin").val() !="" && $("#pass_admin").val() == ""){
-		$("#password-blank-alert").alert();
-		$("#password-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		    $("#password-blank-alert").hide();
-		});
-		$("#pass_admin").focus();
-		return false;
-	    }
-	    else if($("#passconfirm_admin").val() =="" && $("#pass_admin").val() != ""){
+	    if($("#passconfirm_admin").val() =="" && $("#pass_admin").val() != ""){
 		$("#confpassword-blank-alert").alert();
 		$("#confpassword-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
 		    $("#confpassword-blank-alert").hide();
@@ -370,7 +364,7 @@ $(document).ready(function() {
 		return false;
 	    }
 	    else{
-		$("#question").focus().select();
+		$("#question").focus();
 	    }
 	}
 	if(e.which==38){
@@ -670,7 +664,7 @@ $(document).ready(function() {
 	    return false;
 	};
 
-	//Selected Godown
+	//Selected Godown list.
 	var selectedgodowns = [];
         $('#latable tbody tr').each(function(){
 	    if ($(".user_role",this).is(":checked")) {
@@ -687,7 +681,7 @@ $(document).ready(function() {
 	    return false;
 	}
 
-        //For Edited Data store.
+        //To store Edited Data.
 	var dataset={"userid": $("#edituser option:selected").val(),
 		     "username": $("#editname").val(),
 		     "userquestion": $("#question").val(),
