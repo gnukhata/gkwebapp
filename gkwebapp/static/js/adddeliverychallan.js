@@ -368,6 +368,7 @@ $(document).ready(function() {
         }
       }
     }
+  if (productcode != "") {    
   $.ajax({
     url: '/invoice?action=getproduct',
     type: 'POST',
@@ -393,6 +394,7 @@ $(document).ready(function() {
   .always(function() {
     console.log("complete");
   });
+  }
 });
 
 
