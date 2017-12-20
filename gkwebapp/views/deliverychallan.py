@@ -88,7 +88,7 @@ def showeditpopupdeliverychallan(request):
 @view_config(route_name="deliverychallan",request_param="action=getproducts",renderer="json")
 def getproducts(request):
     header={"gktoken":request.headers["gktoken"]}
-    products = requests.get("http://127.0.0.1:6543/products", headers=header)
+    products = requests.get("http://127.0.0.1:6543/products?invdc=4", headers=header)
     return {"gkstatus": products.json()["gkstatus"],"products": products.json()["gkresult"]}
 
 @view_config(route_name="deliverychallan",request_param="action=getpurchaseorder",renderer="json")
