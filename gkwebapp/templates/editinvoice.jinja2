@@ -155,7 +155,7 @@
 			      {% trans %}Customer{% endtrans %} :
 			    {% endif %}
 			  </label>
-			  <select class="form-control custfield input-sm col-sm-8 fsize" id="invoice_customer" accesskey="">
+			  <select class="form-control custfield input-sm col-sm-8 fsize delreset" id="invoice_customer" accesskey="">
 			    <option value="" disabled hidden selected>
 			      {% if status=="in" %}
 				{% trans %}Select Supplier{% endtrans %}
@@ -176,7 +176,7 @@
 			      {% trans %}Customer State{% endtrans %}:
 			    {% endif %}
 			  </label>
-			  <select id="invoice_customerstate" class="custfield form-control input-sm col-sm-8">
+			  <select id="invoice_customerstate" class="custfield form-control input-sm col-sm-8 delreset">
 			    {% for state in states %}
 			      {% for key, value in state.items() %}
 				<option value="{{value}}" stateid="{{key}}">{{value}}</option>
@@ -211,11 +211,11 @@
 			<h4>Details of Consignee | Shipped to: </h4>
 			<div class="form-group form-inline">
 			  <label for="consigneename" class="col-sm-4 fsize">{% trans %}Name{% endtrans %} :</label>
-			  <input type="text" id="consigneename" class="consigneefield col-sm-8 form-control input-sm"></input>
+			  <input type="text" id="consigneename" class="consigneefield col-sm-8 form-control input-sm delreset"></input>
 			</div>
 			<div class="form-group form-inline">
 			  <label for="consigneestate" class="col-sm-4 fsize">{% trans %}State{% endtrans %} :</label>
-			  <select class="consigneefield form-control input-sm col-sm-8" id="consigneestate" >
+			  <select class="consigneefield form-control input-sm col-sm-8 delreset" id="consigneestate" >
 			    {% for state in states %}
 			      {% for key, value in state.items() %}
 				<option value="{{value}}" stateid="{{key}}">{{value}}</option>
@@ -229,15 +229,15 @@
 			</div>
 			<div class="form-group form-inline tinfield" hidden>
 			  <label for="tinconsignee" class="col-sm-4 fsize">{% trans %}TIN{% endtrans %} :</label>
-			  <input type="text" id="tinconsignee" class="col-sm-8 form-control input-sm" name="tinconsignee"></input>
+			  <input type="text" id="tinconsignee" class="col-sm-8 form-control input-sm delreset" name="tinconsignee"></input>
 			</div>
 			<div class="form-group form-inline gstinfield">
 			  <label for="gstinconsignee" class="col-sm-4 fsize" >{% trans %}GSTIN{% endtrans %} :</label>
-			  <input type="text" id="gstinconsignee" class="col-sm-8 form-control input-sm gstin" name="gstinconsignee" maxlength="15"></input>
+			  <input type="text" id="gstinconsignee" class="col-sm-8 form-control input-sm gstin delreset" name="gstinconsignee" maxlength="15"></input>
 			</div>
 			<div class="form-group form-inline">
 			  <label for="consigneeaddress" class="col-sm-4 fsize">{% trans %}Consignee Address :{% endtrans %}</label>
-			  <input type="text" id="consigneeaddress" class="consigneefield col-sm-8 form-control input-sm" name="consigneeaddress"></input>
+			  <input type="text" id="consigneeaddress" class="consigneefield col-sm-8 form-control input-sm delreset" name="consigneeaddress"></input>
 			</div>
 
 		      </div>

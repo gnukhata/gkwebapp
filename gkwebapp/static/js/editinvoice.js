@@ -964,6 +964,11 @@ $(document).ready(function() {
 	    $('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
 	    $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 	    $(".product_name_gst, .product_name_vat, #invoicestate").change();
+	    $(".custfield, .consigneefield").prop("disabled", false);
+	    $("input.delreset").val("");
+	    $("#invoice_customer").val("").change();
+	    $("#invoice_customerstate option:first").prop("selected", true).change();
+	    $("#consigneestate option:first").prop("selected", true).change();
 	}
     });
 
