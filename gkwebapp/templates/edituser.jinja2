@@ -64,7 +64,7 @@
       </div>
 
       <div class="alert alert-danger" id="password-blank-alert"  aria-live="rude" role="alert" hidden>
-	{% trans %}Please enter password!{% endtrans %}
+	{% trans %}Please enter new password!{% endtrans %}
       </div>
 
       <div class="alert alert-danger" id="cnfpass-blank-alert"  aria-live="rude" role="alert" hidden>
@@ -73,8 +73,31 @@
       <div class="alert alert-danger" id="checkpassuser-blank-alert"  aria-live="rude" role="alert" hidden>
 	{% trans %}Password doesn't match!{% endtrans %}
       </div>
+
+      <div class="alert alert-danger" id="confpassword-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Confirm password is blank!{% endtrans %}
+      </div>
+
+      <div class="alert alert-danger" id="bothpass-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Confirm password and new password are blank!{% endtrans %}
+      </div>
       
-      
+      <div class="alert alert-danger" id="blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please enter User name!{% endtrans %}
+      </div>
+
+      <div class="alert alert-danger" id="secque-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please enter security question!{% endtrans %}
+      </div>
+
+      <div class="alert alert-danger" id="secans-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please enter the answer of security question!{% endtrans %}
+      </div>
+
+      <div class="alert alert-danger"  id="select-godowns-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please Select Godowns!{% endtrans %}
+      </div>
+            
       <div class="row">
 	<div class="col-md-2" id="selectuserform">
 	  <label for="selectuser">{% trans %}Select Role{% endtrans %} :</label>
@@ -98,11 +121,6 @@
 	<div class="col-md-10">
 	  <div class="row">
 	    <div class="col-md-6">
-
-	      <div class="alert alert-danger"  id="select-godowns-alert"  aria-live="rude" role="alert" hidden>
-		{% trans %}Please Select Godowns!{% endtrans %}
-	      </div>
-	      
 	    <div class="form-group">
 	      <label for="edituser">{% trans %}List of Users{% endtrans %} :</label>
 	      <select class = "form-control input-sm" id="edituser">
@@ -117,15 +135,12 @@
 	  
 	  <div class="row">
 	    <div class="col-md-6 edituserform" hidden>
-	      <div class="alert alert-danger" id="blank-alert"  aria-live="rude" role="alert" hidden>
-		{% trans %}Please enter User name!{% endtrans %}
-	      </div>
 
 	      <div class="form-group">
-		<label for="editname">{% trans %}New Name of Us<u>e</u>r{% endtrans %} :</label><label for="editname" style="color:red;font-size: 120%;">*</label>
-		<input type="text" id="editname" name="editname" class="form-control input-sm" accesskey="e"></input>
+		<label for="editname">{% trans %}New Name of Us<u>e</u>r{% endtrans %} :</label></label>
+	  <input type="text" id="editname" name="editname" class="form-control input-sm" accesskey="e"></input>
 	      </div>
-
+	      {#This div (i.e user_pass) is for when user other than Admin#}
 	      <div id="user_pass">
 	      <div class="form-group">
 		<label for="editpwd" id="editpwd">{% trans %}New Pass<u>w</u>ord{% endtrans %} :</label>
@@ -138,6 +153,7 @@
 	      </div>
 	      </div>
 
+	      {#This div (i.e Pass_link) is for user "Admin" #}
 	      <div class="form-group" id="pass_link" hidden>
 		<a data-toggle="collapse" id="smalllink" href="#moresmall"> Change Password <span class="glyphicon glyphicon-triangle-bottom"></span></a>
 	      </div>
@@ -174,25 +190,15 @@
 		</select>
 	      </div>
 
-	      <div class="alert alert-danger" id="secque-blank-alert"  aria-live="rude" role="alert" hidden>
-		{% trans %}Please enter security question!{% endtrans %}
-              </div>
-
 	      <div class="form-group">
 		<label for="editsecquest" id="editsecquest">{% trans %}Security <u>Q</u>uestion{% endtrans %} :</label>
 		<input name="editsecquest" style="border-radius: 4px" type="text" class="form-control input-sm" placeholder="Security Question" id="question" accesskey="q"></input>
 	      </div>
-
-	      <div class="alert alert-danger" id="secans-blank-alert"  aria-live="rude" role="alert" hidden>
-
-		{% trans %}Please enter the answer of security question!{% endtrans %}
-              </div>
-
+	      
 	      <div class="form-group">
 		<label for="editsecans" id="editsecans">{% trans %}<u>S</u>ecurity Answer{% endtrans %} :</label>
 		<input name="editsecans" style="border-radius: 4px" type="text" class="form-control input-sm" placeholder="Security Answer" id="answer" accesskey="s"></input>
 	      </div>
-              {##}
 	      <div id="m_confirmdel" class="modal fade" tabindex="-1" role="dialog">
 		<div class="vertical-alignment-helper">
 		  <div class="modal-dialog modal-sm vertical-align-center">
@@ -215,6 +221,7 @@
 	    </div>
 
 	    <div class="col-md-6" id="usertable"></div>{#List of godowns table#}
+
 	  </div>
 	</div>{# 2nd row (10) #}
       </div> {# 1st row (12) #}

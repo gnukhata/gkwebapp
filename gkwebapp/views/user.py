@@ -36,32 +36,28 @@ from pyramid.response import Response
 import os
 from odslib import ODS
 
-#view_config(route_name="showuser", renderer="gkwebapp:templates/createuser.jinja2")
-#def showuser(request):
-#    return {"gkresult":"0"}
-
-#User Tab 
+#This function calls User Tab 
 @view_config(route_name="showuser", request_param="type=usertab", renderer="gkwebapp:templates/user.jinja2")
 def newuser(request):
     header={"gktoken":request.headers["gktoken"]}
     result= requests.get("http://127.0.0.1:6543/users", headers=header)
     return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}    
 
-#Call New User Tab Inside User Module
+#This function call New User Tab Inside User Module
 @view_config(route_name="showuser",request_param="type=addtab", renderer="gkwebapp:templates/createuser.jinja2")
 def createusers(request):
    header={"gktoken":request.headers["gktoken"]}
    result = requests.get("http://127.0.0.1:6543/users", headers=header)
    return {"gkresult":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
 
-#Call edituser Tab Inside User Module
+#This function call Edituser Tab Inside User Module
 @view_config(route_name="showuser",request_param="type=edittab", renderer="gkwebapp:templates/edituser.jinja2")
 def editusers(request):
    header={"gktoken":request.headers["gktoken"]}
    result = requests.get("http://127.0.0.1:6543/users", headers=header)
    return {"gkresult":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
 
-#Get Userdetails 
+#This function gives Userdetails of selected users 
 @view_config(route_name="showuser",request_param="type=getuserdetails", renderer="json")
 def getuserdetails(request):
     header={"gktoken":request.headers["gktoken"]}
@@ -71,15 +67,15 @@ def getuserdetails(request):
         return {"gkstatus":0, "gkresult":result.json()["gkresult"]}
     return {"gkstatus":result.json()["gkstatus"]}
 
+#This function gives status (i.e valid or not) of current password in edituser 
 @view_config(route_name="showuser",request_param="type=userloginstatus", renderer="json")
 def UserLoginstatus(request):
     header = {"gktoken":request.headers["gktoken"]}
     gkdata = {"username":request.params["username"], "userpassword":request.params["userpassword"]}
-    print gkdata
     result = requests.post("http://127.0.0.1:6543/users?userloginstatus", data =json.dumps(gkdata), headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
 
-#Edit Data
+#This function update user in database 
 @view_config(route_name="showuser",request_param="type=updateuser", renderer="json")
 def addedituser(request):
     header = {"gktoken":request.headers["gktoken"]}
@@ -90,7 +86,6 @@ def addedituser(request):
         gkdata["userrole"]=int(request.params["userrole"])
     if request.params.has_key("godowns"):
         gkdata["golist"]=json.loads(request.params["godowns"])
-    print gkdata
     result = requests.put("http://127.0.0.1:6543/users?editdata", headers=header, data=json.dumps(gkdata))
     return {"gkstatus":result.json()["gkstatus"]}
 

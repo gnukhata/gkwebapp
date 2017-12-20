@@ -1,14 +1,12 @@
 /*
   Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-  This file is part of GNUKhata:A modular,robust and Free Accounting System.
-
   Copyright (C) 2017 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
   This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -29,9 +27,9 @@ Contributors:
 
 // This script for edit user.
 
-$(document).ready(function() {
+$(document).ready(function() {    
     $('.modal-backdrop').remove();
-    $("#all").focus();
+    $("#all").focus().click();
     //This change event filter out list of user on basis of its role
     $(document).off('change', '.iib').on('change', '.iib', function(event){
 	if ($("#managerradio").is(":checked")) {
@@ -55,7 +53,7 @@ $(document).ready(function() {
 	}
     });
 
-    //Key Event for radio buttons. 
+    //focus Event for radio buttons. 
     $(document).off('focusin', '.iib').on('focusin', '.iib', function(event) {
 	event.preventDefault();
 	$("#edituser option[id='rolefocus']").prop("selected",true);
@@ -63,7 +61,7 @@ $(document).ready(function() {
 
     $(document).off('keydown', '.iib').on('keydown', '.iib', function(event) {
 	if (event.which == 13) {
-	    //event.preventDefault();
+	    event.preventDefault();
 	    if($("#all").is(":checked")){
 		$("#edituser").focus();
 	    }
@@ -131,6 +129,7 @@ $(document).ready(function() {
 		}else{
 		    $("#curpassdiv").hide();
 		    $("#user_pass").show();
+		    $("#pass_link").hide();
 		}
 
 		
@@ -269,7 +268,8 @@ $(document).ready(function() {
     // Key event For New User Name
     $("#editname").keydown(function(e){
 	if (e.which==13) {
-	    if ($.trim($("#editname").val())=="") {
+	    e.preventDefault();
+	    if ($("#editname").val()=="") {
 		$("#blank-alert").alert();
 		$("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
 		    $("#blank-alert").hide();
@@ -284,13 +284,19 @@ $(document).ready(function() {
 		$("#password").focus();
 	    }
 	}
-	if(e.which==38) {
+	if (e.which==38) {
 	    $("#edituser").focus();
 	}
     });
 
     $("#current_password").keydown(function(e){
 	if(e.which==13){
+	    if($("#current_password").val()==""){
+		$("#curpass-blank-alert").alert();
+		$("#curpass-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#curpass-blank-alert").hide();
+		});
+	    }
 	    if($("#current_password").val()!=""){
 		$.ajax(
 		    {
@@ -309,7 +315,6 @@ $(document).ready(function() {
 			    $("#passconfirm_admin").prop("disabled", false);
 			    $("#pass_admin").prop("disabled", false);
 			    $("#pass_admin").focus();
-			    console.log("Yes");
 			}
 			else{
 			    $("#passconfirm_admin").prop("disabled", true);
@@ -324,60 +329,112 @@ $(document).ready(function() {
 	    }
 	}
 	if(e.which==38){
-			    $("#editname").focus();
-			}
+	    $("#editname").focus();
+	}
     });
 
-    /*$("#pass_admin").keydown(function(e){
+    $("#pass_admin").keydown(function(e){
 	if (e.which == 13){
-	    if ($.trim($("#pass_admin").val()) == "") {
+	    $("#passconfirm_admin").focus();
+	}
+	if (e.which == 38){
+	    $("#current_password").focus();
+	}
+    });
+
+    $("#passconfirm_admin").keydown(function(e){
+	if(e.which==13){
+	    //check
+	    if($("#passconfirm_admin").val() !="" && $("#pass_admin").val() == ""){
 		$("#password-blank-alert").alert();
 		$("#password-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
 		    $("#password-blank-alert").hide();
 		});
-		$("#pass_admin").focus().select();
+		$("#pass_admin").focus();
+		return false;
+	    }
+	    else if($("#passconfirm_admin").val() =="" && $("#pass_admin").val() != ""){
+		$("#confpassword-blank-alert").alert();
+		$("#confpassword-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#confpassword-blank-alert").hide();
+		});
+		$("#passconfirm_admin").focus();
+		return false;
+	    }
+	    else if($("#passconfirm_admin").val() =="" && $("#pass_admin").val() == "" && $("#current_password").val()!=""){
+		$("#bothpass-blank-alert").alert();
+		$("#bothpass-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#bothpass-blank-alert").hide();
+		});
+		$("#pass_admin").focus();
+		return false;
 	    }
 	    else{
-		$("#passconfirm_admin").focus();
+		$("#question").focus().select();
 	    }
-    }*/
+	}
+	if(e.which==38){
+	    $("#pass_admin").focus();
+	}
+    });
+
+    $("#passconfirm_admin").blur(function(event) {
+	if ($.trim($("#pass_admin").val()) != $.trim($("#passconfirm_admin").val())) {
+	    $("#checkpassuser-blank-alert").alert();
+	    $("#checkpassuser-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#checkpassuser-blank-alert").hide();
+	    });
+	    $("#pass_admin").focus();
+	    return false;
+	}
+	if($("#edituser option:selected").attr("role") == "Admin"){
+	    if($.trim($("#current_password").val())=="") {
+		$("#curpass-blank-alert").alert();
+		$("#curpass-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#curpass-blank-alert").hide();
+		});
+		$("#current_password").focus().select();
+	    }
+	}
+    });
+
     
     //Key event for Edit Password
     $("#password").keydown(function(e){
 	if (e.which==13){
-	    if ($.trim($("#password").val()) == "") {
-		$("#password-blank-alert").alert();
-		$("#password-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		    $("#password-blank-alert").hide();
-		});
-		$("#password").focus().select();
-	    }
-	    else{
-		$("#passwordconfirm").focus();
-	    }
+	    $("#passwordconfirm").focus();
 	}
 	if (e.which==38){
-	    if($("#edituser option:selected").attr("role") == "Admin") {
-		$("#current_password").focus();
-	    }else {
-		$("#editname").focus();
-	    }
+	    $("#editname").focus();
 	}
     });
 
     //Key event For Confirm Password
     $("#passwordconfirm").keydown(function(e){
 	if(e.which==13){
-	    if ($.trim($("#passwordconfirm").val()) == "") {
-		$("#checkpassuser-blank-alert").alert();
-		$("#checkpassuser-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                   $("#checkpassuser-blank-alert").hide();
-               });
-               $("#passwordconfirm").focus().select();
+	    if($("#passwordconfirm").val() !="" && $("#password").val() == ""){
+		$("#password-blank-alert").alert();
+		$("#password-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#password-blank-alert").hide();
+		});
+		$("#password").focus();
 		return false;
-               }
-	     if($("#edituser option:selected").attr("role") == "Admin") {
-		$("#question").focus();
+	    }
+	    else if($("#passwordconfirm").val() =="" && $("#password").val() != ""){
+		$("#confpassword-blank-alert").alert();
+		$("#confpassword-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#confpassword-blank-alert").hide();
+		});
+		$("#passwordconfirm").focus();
+		return false;
+	    }
+	    else if($.trim($("#passwordconfirm").val()) == "" && $("#password").val() =="") {
+		$("#bothpass-blank-alert").alert();
+		$("#bothpass-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+                   $("#bothpass-blank-alert").hide();
+		});
+		$("#password").focus().select();
+		return false;
 	    }
 	    else {
 		$("#userrole").focus();
@@ -397,15 +454,6 @@ $(document).ready(function() {
 	    });
 	    $("#password").focus();
 	    return false;
-	}
-	if($("#edituser option:selected").attr("role") == "Admin"){
-	    if($.trim($("#current_password").val())=="") {
-		$("#curpass-blank-alert").alert();
-		$("#curpass-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#curpass-blank-alert").hide();
-		});
-		$("#current_password").focus().select();
-	    }
 	}
     });
 
@@ -432,17 +480,18 @@ $(document).ready(function() {
    $("#question").keydown(function(e) {
        if (e.which==13){
 	   e.preventDefault();
-	   if ($.trim($("#question").val()) == "") {
-	    $("#secque-blank-alert").alert();
-            $("#secque-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                $("#secque-blank-alert").hide();
-            });
+	   if ($("#question").val() == "") {
+	       $("#secque-blank-alert").alert();
+	       $("#secque-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		   $("#secque-blank-alert").hide();
+	       });
 	       $("#question").focus().select();
+	       return false;
 	   }else {
 	       $("#answer").focus();
 	   }
        }
-       else if (e.which==38) {
+       if (e.which==38) {
 	   e.preventDefault();
 	   if($("#edituser option:selected").attr("role") == "Admin"){
 	       $("#editname").focus();
@@ -498,7 +547,8 @@ $(document).ready(function() {
     });
     
    //To reset all data  
-   $("#reset").click(function() {
+    $("#reset").click(function(event) {
+	event.preventDefault();
         $("a[href ='#user_edit']").click();
     });
 
@@ -536,6 +586,7 @@ $(document).ready(function() {
                         $("#connectionfailed-alert").hide();
                         });
                         $("#editname").focus().select();
+			return false;
                     }
 		}
 	    });
@@ -566,7 +617,7 @@ $(document).ready(function() {
             $("#editname").focus().select();
             return false;
 	};
-	if($("#edituser option:selected").attr("role") == "Admin" && $.trim($("#passwordconfirm").val()) != ""){
+	if($("#edituser option:selected").attr("role") == "Admin" && $.trim($("#passconfirm_admin").val()) != ""){
 	  if ($.trim($("#pass_admin").val()) == "") {
             $("#password-blank-alert").alert();
             $("#password-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -576,9 +627,9 @@ $(document).ready(function() {
             return false;
         };
         if ($.trim($("#passconfirm_admin").val()) == "") {
-            $("#checkpassuser-blank-alert").alert();
-            $("#checkpassuser-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                $("#checkpassuser-blank-alert").hide();
+            $("#confpassword-blank-alert").alert();
+            $("#confpassword-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+                $("#confpassword-blank-alert").hide();
             });
             $("#passconfirm_admin").focus().select();
             return false;
@@ -594,9 +645,9 @@ $(document).ready(function() {
             return false;
         };
         if ($.trim($("#passwordconfirm").val()) == "") {
-            $("#checkpassuser-blank-alert").alert();
-            $("#checkpassuser-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                $("#checkpassuser-blank-alert").hide();
+            $("#confpassword-blank-alert").alert();
+            $("#confpassword-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+                $("#confpassword-blank-alert").hide();
             });
             $("#passwordconfirm").focus().select();
             return false;
