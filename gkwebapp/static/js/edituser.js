@@ -51,12 +51,14 @@ $(document).ready(function() {
 	else {
 	    $("#edituser option").prop("hidden", false).prop("disabled", false); 
 	}
+	$("#edituser").change();
     });
 
     //focus Event for radio buttons. 
     $(document).off('focusin', '.iib').on('focusin', '.iib', function(event) {
 	event.preventDefault();
-	$("#edituser option[id='rolefocus']").prop("selected",true);
+	$("#edituser option:first").prop("selected",true);
+	$("#edituser").change();
     });
 
     $(document).off('keydown', '.iib').on('keydown', '.iib', function(event) {
@@ -165,6 +167,9 @@ $(document).ready(function() {
 		}
                }
         });
+	}
+	else{
+	    $(".edituserform, .panel-footer, #usertable").hide();
 	}
     });
 

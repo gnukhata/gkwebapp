@@ -124,7 +124,7 @@
 	    <div class="form-group">
 	      <label for="edituser">{% trans %}List of Users{% endtrans %} :</label>
 	      <select class = "form-control input-sm" id="edituser">
-		<option id="rolefocus" value="disabled" disabled selected hidden>{% trans %}Select User{% endtrans %}</option>
+		<option value="" disabled selected hidden>{% trans %}Select User{% endtrans %}</option>
 		{% for user in gkresult %}
 		  <option role="{{user["userrolename"]}}" username="{{user["username"]}}" value="{{user['userid']}}">{{user["username"]}} ({{user["userrolename"]}})</option>
                 {% endfor %}
