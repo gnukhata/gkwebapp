@@ -241,7 +241,26 @@ $(document).ready(function() {
   $("#deliverychallan_consigneeaddr").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
-      $('#deliverychallan_product_table tbody tr:first td:eq(0) select').focus();
+	if ($("#consigneename").val() == "" && $("#deliverychallan_consigneeaddr").val() != ""){
+	    $("#consigneename-blank-alert").alert();
+            $("#consigneename-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#consigneename-blank-alert").hide();
+            });
+	    $("#consigneename").focus();
+	    return false;
+	} else {
+	    $('#deliverychallan_product_table tbody tr:first td:eq(0) select').focus();
+	}
+	if ($("#consigneename").val() != "" && $("#deliverychallan_consigneeaddr").val() == ""){
+	    $("#consigneeaddr-blank-alert").alert();
+            $("#consigneeaddr-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#consigneeaddr-blank-alert").hide();
+            });
+	    $("#deliverychallan_consigneeaddr").focus();
+	    return false;
+	} else {
+	    $('#deliverychallan_product_table tbody tr:first td:eq(0) select').focus();
+	}
     }
     if (event.which==38) {
       event.preventDefault();
@@ -349,6 +368,7 @@ $(document).ready(function() {
         }
       }
     }
+  if (productcode != "") {    
   $.ajax({
     url: '/invoice?action=getproduct',
     type: 'POST',
@@ -374,6 +394,7 @@ $(document).ready(function() {
   .always(function() {
     console.log("complete");
   });
+  }
 });
 
 
@@ -787,6 +808,28 @@ else {
       return false;
     }
 
+    //validation for consignee name and consignee address
+    if ($("#consigneename").val() == "" && $("#deliverychallan_consigneeaddr").val() != ""){
+	$("#consigneename-blank-alert").alert();
+        $("#consigneename-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#consigneename-blank-alert").hide();
+        });
+	$("#consigneename").focus();
+	return false;
+    } else {
+	    $('#deliverychallan_product_table tbody tr:first td:eq(0) select').focus();
+	}
+    if ($("#consigneename").val() != "" && $("#deliverychallan_consigneeaddr").val() == ""){
+	$("#consigneeaddr-blank-alert").alert();
+        $("#consigneeaddr-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#consigneeaddr-blank-alert").hide();
+        });
+	$("#deliverychallan_consigneeaddr").focus();
+	return false;
+    } else {
+	$('#deliverychallan_product_table tbody tr:first td:eq(0) select').focus();
+    }
+    
     var consignee = {};
     if($("#consigneename").val() != ""){
 	  consignee["consigneename"] = $.trim($("#consigneename").val());

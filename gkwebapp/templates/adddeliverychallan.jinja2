@@ -61,6 +61,14 @@
 
             {% trans %}Please enter date within the financial year!{% endtrans %}
           </div>
+	  <div class="alert alert-danger" id="consigneename-blank-alert" aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please enter Consignee Name!{% endtrans %}
+          </div>
+	  <div class="alert alert-danger" id="consigneeaddr-blank-alert" aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please enter Consignee Address!{% endtrans %}
+          </div>
           <div class="alert alert-danger" id="noofpackages-blank-alert"  aria-live="rude" role="alert" hidden>
 
             <label for="vno">{% trans %}Please enter Number of Packages!{% endtrans %}</label>
@@ -296,10 +304,10 @@
         <button class="btn btn-success btn-sm" id="deliverychallan_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save anywhere on the current screen"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}
 Save{% endtrans %}</button>
         <button class="btn btn-warning btn-sm" id="deliverychallan_reset"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}
-Reset{% endtrans %}</button>
+	  Reset{% endtrans %}</button>
         {% if gkstatus=="out" %}
-        <button id="deliverychallan_saveprint" class="btn btn-primary btn-sm" ><i class="fa fa-print" aria-hidden="true"></i> {% trans %}
-Save & Print{% endtrans %}</button>
+	  {#<button id="deliverychallan_saveprint" class="btn btn-primary btn-sm" ><i class="fa fa-print" aria-hidden="true"></i> {% trans %}
+	  Save & Print{% endtrans %}</button>#}
         <button id="deliverychallan_addcust" class="btn btn-info btn-sm"><i class="fa fa-user-plus" aria-hidden="true"></i> {% trans %}
 Add Customer{% endtrans %}</button>
           {% else %}
