@@ -119,6 +119,7 @@ $(document).ready(function() {
                 $("#edit").show();
 		$("#userrolediv").show();
 		$("#pass_link").hide();
+		$("#moresmall").hide();
 
 		if(userdetails["userrole"]== -1){
 		    $("#delete").hide();
@@ -544,6 +545,14 @@ $(document).ready(function() {
     $("#reset").click(function(event) {
 	event.preventDefault();
         $("a[href ='#user_edit']").click();
+    });
+
+    $("#smalllink").click(function(event) {
+	event.preventDefault();
+        $("#moresmall").toggle();
+	if ($("#moresmall").is(':visible')){
+	    $("#current_password").focus();
+	}
     });
 
    //Delete User from oraganization
