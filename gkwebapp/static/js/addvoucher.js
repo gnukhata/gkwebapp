@@ -1229,6 +1229,22 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       outfocus=false;
     }
   });
+
+    $("#my-file-selector").change(function(event){
+	var files = $("#my-file-selector")[0].files;
+	var filelist = [];
+	for (let i = 0; i < files.length; i++) {
+	    if (files[i].type != 'image/jpeg') {
+		$("#image-alert").alert();
+		$("#image-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#image-alert").hide();
+		});
+		$('#my-file-selector').focus();
+		return false;
+	    }
+	}
+    });
+    
   /*
   In this voucher form we are not using the form submit functionality since there is no need.
   When one clicks on the save button the validations are done and the voucher is saved.
@@ -1486,7 +1502,15 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     var form_data = new FormData();
       var files = $("#my-file-selector")[0].files;
     var filelist = [];
-    for (var i = 0; i < files.length; i++) {
+      for (var i = 0; i < files.length; i++) {
+	  if (files[i].type != 'image/jpeg') {
+		$("#image-alert").alert();
+		$("#image-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#image-alert").hide();
+		});
+		$('#my-file-selector').focus();
+		return false;
+	    }
 	form_data.append("file"+i,files[i]);
     }
     if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase"))

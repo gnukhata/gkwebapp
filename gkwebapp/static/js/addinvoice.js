@@ -2117,6 +2117,21 @@ if (event.which == 13) {
     });
   });
 
+    $("#my-file-selector").change(function(event){
+	var files = $("#my-file-selector")[0].files;
+	var filelist = [];
+	for (let i = 0; i < files.length; i++) {
+	    if (files[i].type != 'image/jpeg') {
+		$("#image-alert").alert();
+		$("#image-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#image-alert").hide();
+		});
+		$('#my-file-selector').focus();
+		return false;
+	    }
+	}
+    });
+
     var allow = 1;
   $("#invoice_save").click(function(event) {
       event.preventDefault();
@@ -2459,7 +2474,15 @@ if (event.which == 13) {
 
     var files = $("#my-file-selector")[0].files;
     var filelist = [];
-    for (var i = 0; i < files.length; i++) {
+      for (var i = 0; i < files.length; i++) {
+	  if (files[i].type != 'image/jpeg') {
+		$("#image-alert").alert();
+		$("#image-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#image-alert").hide();
+		});
+	      $('#my-file-selector').focus();
+		return false;
+	    }
 	form_data.append("file" + i, files[i]);
     }
     $('.modal-backdrop').remove();
