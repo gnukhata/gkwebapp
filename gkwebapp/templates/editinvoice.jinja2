@@ -661,6 +661,10 @@
     </div>
     <div class="panel-footer " id="buttonsdiv" hidden>
       <div class="container-fluid">
+	<div class="alert alert-danger" id="image-alert"  aria-live="rude" role="alert" hidden>
+
+	  {% trans %}Please upload image in JPEG format!{% endtrans %}
+	</div>
 	<button id="invoice_edit" class="btn btn-primary btn-sm" accesskey="t"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans %}Edi<u>t</u>{% endtrans %}</button>
 	<button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save"  style="display:none;"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
 	<button id="invoice_reset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
