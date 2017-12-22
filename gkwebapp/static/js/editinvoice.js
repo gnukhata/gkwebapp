@@ -2232,7 +2232,7 @@ if (event.which == 13) {
 	$("#invoice_edit").hide();
 	$("#invoice_editprint").hide();
 	$(".uploadclass").show();
-	$('input, select:not(#invselect)').prop("disabled", false);
+	$('input:not(.trate, .tamount), select').prop("disabled", false);
 	if($("#invoice_deliverynote option:selected").val() != ""){
 	    $(".custfield, .product_name_gst, .product_name_vat, .invoice_product_quantity_gst, .invoice_product_quantity_vat, .supplydate").prop("disabled", true);
 	}
