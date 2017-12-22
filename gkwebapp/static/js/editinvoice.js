@@ -2144,6 +2144,7 @@ if (event.which == 13) {
 				    $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 				    $('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 				    $('.invoice_product_total_gst:eq(' + curindex + ')').val(value.totalAmount);
+				    calculategstaxamt(curindex);
 				    curindex = curindex + 1;
 				});
 				$('.invoice_product_quantity_gst').numeric({ negative: false });
@@ -2167,6 +2168,7 @@ if (event.which == 13) {
 				    $('.invoice_product_taxablevalue_vat:eq(' + curindex + ')').val(value.taxableamount);
 				    $('.invoice_product_tax_rate_vat:eq(' + curindex + ')').val(value.taxrate);
 				    $('.invoice_product_total_vat:eq(' + curindex + ')').val(value.totalAmount);
+				    calculatevataxamt(curindex);
 				    curindex = curindex + 1;
 				});
 				$("#invoice_product_table_vat tbody tr:first td:eq(9)").empty();
@@ -2232,7 +2234,7 @@ if (event.which == 13) {
 	$("#invoice_edit").hide();
 	$("#invoice_editprint").hide();
 	$(".uploadclass").show();
-	$('input:not(.trate, .tamount), select').prop("disabled", false);
+	$('input:not(.trate, .tamount, .invoice_product_taxablevalue_vat, .invoice_product_tax_amount_vat, .invoice_product_total, #discounttotal_product_vat, #taxablevaluetotal_product_vat, #totaltax, #total_product_vat), select').prop("disabled", false);
 	if($("#invoice_deliverynote option:selected").val() != ""){
 	    $(".custfield, .product_name_gst, .product_name_vat, .invoice_product_quantity_gst, .invoice_product_quantity_vat, .supplydate").prop("disabled", true);
 	}
