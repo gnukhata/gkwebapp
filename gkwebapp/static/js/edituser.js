@@ -353,25 +353,7 @@ $(document).ready(function() {
 
     $("#passconfirm_admin").keydown(function(e){
 	if(e.which==13){
-	    if($("#passconfirm_admin").val() =="" && $("#pass_admin").val() != ""){
-		$("#confpassword-blank-alert").alert();
-		$("#confpassword-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		    $("#confpassword-blank-alert").hide();
-		});
-		$("#passconfirm_admin").focus();
-		return false;
-	    }
-	    else if($("#passconfirm_admin").val() =="" && $("#pass_admin").val() == "" && $("#current_password").val()!=""){
-		$("#bothpass-blank-alert").alert();
-		$("#bothpass-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		    $("#bothpass-blank-alert").hide();
-		});
-		$("#pass_admin").focus();
-		return false;
-	    }
-	    else{
-		$("#question").focus();
-	    }
+	    $("#question").focus();
 	}
 	if(e.which==38){
 	    $("#pass_admin").focus();
@@ -412,33 +394,7 @@ $(document).ready(function() {
     //Key event For Confirm Password
     $("#passwordconfirm").keydown(function(e){
 	if(e.which==13){
-	    if($("#passwordconfirm").val() !="" && $("#password").val() == ""){
-		$("#password-blank-alert").alert();
-		$("#password-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		    $("#password-blank-alert").hide();
-		});
-		$("#password").focus();
-		return false;
-	    }
-	    else if($("#passwordconfirm").val() =="" && $("#password").val() != ""){
-		$("#confpassword-blank-alert").alert();
-		$("#confpassword-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		    $("#confpassword-blank-alert").hide();
-		});
-		$("#passwordconfirm").focus();
-		return false;
-	    }
-	    else if($.trim($("#passwordconfirm").val()) == "" && $("#password").val() =="") {
-		$("#bothpass-blank-alert").alert();
-		$("#bothpass-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                   $("#bothpass-blank-alert").hide();
-		});
-		$("#password").focus().select();
-		return false;
-	    }
-	    else {
-		$("#userrole").focus();
-	    }
+	    $("#userrole").focus();
 	}
 	if(e.which==38){
 	    e.preventDefault();
