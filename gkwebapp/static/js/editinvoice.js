@@ -2234,7 +2234,7 @@ if (event.which == 13) {
 	$("#invoice_edit").hide();
 	$("#invoice_editprint").hide();
 	$(".uploadclass").show();
-	$('input:not(.trate, .tamount, .invoice_product_taxablevalue_vat, .invoice_product_tax_amount_vat, .invoice_product_total, #discounttotal_product_vat, #taxablevaluetotal_product_vat, #totaltax, #total_product_vat), select').prop("disabled", false);
+	$('input:not(.trate, .tamount, .invoice_product_taxablevalue_vat, .invoice_product_tax_amount_vat, .invoice_product_total, #discounttotal_product_vat, #taxablevaluetotal_product_vat, #totaltax, #total_product_vat, .invoice_product_taxablevalue_gst, .invoice_product_total_gst), select').prop("disabled", false);
 	if($("#invoice_deliverynote option:selected").val() != ""){
 	    $(".custfield, .product_name_gst, .product_name_vat, .invoice_product_quantity_gst, .invoice_product_quantity_vat, .supplydate").prop("disabled", true);
 	}
