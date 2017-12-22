@@ -63,25 +63,20 @@ $(document).ready(function() {
       },
     success: function(resp)
     {
-      $("#user_edit").html(resp);
+	$("#user_edit").html(resp);
 	$("#user_create").html("");
-
     }
-    }
-  );
-  });
+    });
+   });
 
     $("a[href ='#user_create']").click();
-	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-	    if(e.target.attributes.href.value =="#user_create"){
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (event) {
+	event.preventDefault();
+	    if(event.target.attributes.href.value =="#user_create"){
 		$("#name").focus();
 	    }
-	});
-	   /*else if(e.target.attributes.href.value=="#user_edit"){
-		$("#all").focus();
+	else if(event.target.attributes.href.value =="#user_edit"){
+		$("a[href ='#user_edit']").click();
 	    }
 	});
-    $("a[href ='#user_edit']").click(function(event) {
-	$("#all").focus();
-    });*/
 });
