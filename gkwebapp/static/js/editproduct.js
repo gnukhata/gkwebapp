@@ -542,7 +542,7 @@ $(document).ready(function() {
     else {
       $("#editcatselectlabel").text('Select Category');
     }
-      if ( $("#editcatselect").is(':disabled')){
+      if ( $("#editcatselect").is(':disabled') || $("#editcatselect").length == 0 ){
 	  $("#editproddesc").focus().select();
 	}
 	else{	
