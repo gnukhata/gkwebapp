@@ -64,16 +64,24 @@ $(document).ready(function() {
     success: function(resp)
     {
       $("#user_edit").html(resp);
-      $("#user_create").html("");
+	$("#user_create").html("");
+
     }
     }
   );
   });
-    
-  $("a[href ='#user_create']").click();
-  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-    if(e.target.attributes.href.value=="#user_create"){
-      $("#name").focus();
-    }
-  });
+
+    $("a[href ='#user_create']").click();
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+	    if(e.target.attributes.href.value =="#user_create"){
+		$("#name").focus();
+	    }
+	});
+	   /*else if(e.target.attributes.href.value=="#user_edit"){
+		$("#all").focus();
+	    }
+	});
+    $("a[href ='#user_edit']").click(function(event) {
+	$("#all").focus();
+    });*/
 });

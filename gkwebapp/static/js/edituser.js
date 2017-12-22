@@ -29,7 +29,7 @@ Contributors:
 
 $(document).ready(function() {    
     $('.modal-backdrop').remove();
-    $("#all").focus().click();
+    $("#all").focus();
     //This change event filter out list of user on basis of its role
     $(document).off('change', '.iib').on('change', '.iib', function(event){
 	if ($("#managerradio").is(":checked")) {
@@ -266,10 +266,6 @@ $(document).ready(function() {
                 $("#edit").click();
             }
         }
-	if(e.which == 188 && e.shiftKey) {
-	    e.preventDefault();
-	    $("#all").focus().click();
-	}
     });
 
     // Key event For New User Name
@@ -300,6 +296,7 @@ $(document).ready(function() {
     //If Current password is correct then only "New password" and "Confirm New Password" fields will be enabled.
     $("#current_password").keydown(function(e){
 	if(e.which==13){
+	    e.preventDefault();
 	    if($("#current_password").val()==""){
 		$("#curpass-blank-alert").alert();
 		$("#curpass-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -344,6 +341,7 @@ $(document).ready(function() {
 
     $("#pass_admin").keydown(function(e){
 	if (e.which == 13){
+	    e.preventDefault();
 	    $("#passconfirm_admin").focus();
 	}
 	if (e.which == 38){
@@ -353,6 +351,7 @@ $(document).ready(function() {
 
     $("#passconfirm_admin").keydown(function(e){
 	if(e.which==13){
+	    e.preventDefault();
 	    $("#question").focus();
 	}
 	if(e.which==38){
@@ -384,6 +383,7 @@ $(document).ready(function() {
     //Key event for Edit Password
     $("#password").keydown(function(e){
 	if (e.which==13){
+	    e.preventDefault();
 	    $("#passwordconfirm").focus();
 	}
 	if (e.which==38){
@@ -394,6 +394,7 @@ $(document).ready(function() {
     //Key event For Confirm Password
     $("#passwordconfirm").keydown(function(e){
 	if(e.which==13){
+	    e.preventDefault();
 	    $("#userrole").focus();
 	}
 	if(e.which==38){
@@ -461,6 +462,7 @@ $(document).ready(function() {
    //Key event for Security Answer
     $("#answer").keydown(function(e){
 	if (e.which==13){
+	    e.preventDefault();
 	    if ($.trim($("#answer").val()) == "") {
 	    $("#secans-blank-alert").alert();
             $("#secans-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -485,12 +487,12 @@ $(document).ready(function() {
 	}
 	if (e.which == 13) {
 	    e.preventDefault();
-	    var index = $('.user_role').index(this) + 1;
+	    let index = $('.user_role').index(this) + 1;
             $('.user_role').eq(index).focus();
 	}
 	if (e.which==38) {
 	    e.preventDefault();
-	    var index = $('.user_role').index(this) - 1;
+	    let index = $('.user_role').index(this) - 1;
             $('.user_role').eq(index).focus();
 	}
     });
@@ -540,7 +542,8 @@ $(document).ready(function() {
                         $("#delsuccess-alert").alert();
                         $("#delsuccess-alert").fadeTo(2250, 500).slideUp(500, function() {
 			    $("#delsuccess-alert").hide();
-			    $("a[href ='#user_create']").click();
+			    $("a[href ='#user_edit']").click();
+			    $("#all").focus();
                         });
 			return false;
 		    }
@@ -581,42 +584,6 @@ $(document).ready(function() {
             $("#editname").focus().select();
             return false;
 	};
-	if($("#edituser option:selected").attr("role") == "Admin" && $.trim($("#passconfirm_admin").val()) != ""){
-	  if ($.trim($("#pass_admin").val()) == "") {
-            $("#password-blank-alert").alert();
-            $("#password-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                $("#password-blank-alert").hide();
-            });
-            $("#pass_admin").focus().select();
-            return false;
-        };
-        if ($.trim($("#passconfirm_admin").val()) == "") {
-            $("#confpassword-blank-alert").alert();
-            $("#confpassword-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                $("#confpassword-blank-alert").hide();
-            });
-            $("#passconfirm_admin").focus().select();
-            return false;
-        };  
-	}
-	else if($("#edituser option:selected").attr("role") != "Admin"){	    
-        if ($.trim($("#password").val()) == "") {
-            $("#password-blank-alert").alert();
-            $("#password-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                $("#password-blank-alert").hide();
-            });
-            $("#password").focus().select();
-            return false;
-        };
-        if ($.trim($("#passwordconfirm").val()) == "") {
-            $("#confpassword-blank-alert").alert();
-            $("#confpassword-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                $("#confpassword-blank-alert").hide();
-            });
-            $("#passwordconfirm").focus().select();
-            return false;
-        };
-	}
 	if ($.trim($("#question").val()) == "") {
 	    $("#secque-blank-alert").alert();
             $("#secque-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -660,7 +627,7 @@ $(document).ready(function() {
 	if($("#edituser option:selected").attr("role") == "Admin" && $.trim($("#passconfirm_admin").val()) != ""){
 	    dataset["userpassword"]=$("#pass_admin").val();
 	}
-	if($("#edituser option:selected").attr("role") != "Admin" && $.trim($("#passwordconfirm").val()) != ""){
+	if($("#edituser option:selected").attr("role") != "Admin"){
 	    dataset["userpassword"]=$("#passwordconfirm").val();
 	    dataset["userrole"]=$("#userrole").val();
 	}
