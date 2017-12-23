@@ -903,8 +903,10 @@ else {
 	form_data.append("consignee", JSON.stringify(consignee));
     }
     form_data.append("modeoftransport", $('#deliverychallan_modeoftransport').val());
-    form_data.append("issuername", $("#deliverychallan_issuername").val());
-    form_data.append("designation", $("#deliverychallan_designation").val());
+      if ($("#deliverychallan_gkstatus").val() == "out") {
+	  form_data.append("issuername", $("#deliverychallan_issuername").val());
+	  form_data.append("designation", $("#deliverychallan_designation").val());
+      }
     if ($("#deliverychallan_godown option").length!=0){
     	form_data.append("goid", $("#deliverychallan_godown option:selected").val());
     }

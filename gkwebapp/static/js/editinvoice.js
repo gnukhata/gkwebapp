@@ -2111,6 +2111,7 @@ if (event.which == 13) {
 			    // Div that has all fields of invoice is shown.
 			    $("#invdetailsdiv").show();
 			    // All fields are disabled until Edit button is clicked.
+			    $('input, select:not(#invselect)').val("");
 			    $('input, select:not(#invselect)').prop("disabled", true);
 			    // Div with buttons is shown.
 			    $("#buttonsdiv").show();
@@ -2130,7 +2131,31 @@ if (event.which == 13) {
 			    }
 			    // Loads delivery note data if any.
 			    if(resp.invoicedata.dcid){
-				consigneeflag = true;
+				$.ajax({
+				    url: '/invoice?action=getdeliverynote',
+				    type: 'POST',
+				    dataType: 'json',
+				    async: false,
+				    data: { "dcid": resp.invoicedata.dcid },
+				    beforeSend: function(xhr) {
+					xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+				    }
+				})
+				    .done(function(response) {
+					if (resp["gkstatus"] == 0) {
+					    if(response["delchal"]["delchaldata"]["consignee"]){
+						consigneeflag = true;
+					    } else {
+						consigneeflag = false;
+					    }
+					}
+				    })
+				    .fail(function() {
+					console.log("error");
+				    })
+				    .always(function() {
+					console.log("complete");
+				    });
 				let delchallist = [];
 				$("#invoice_deliverynote option").each(function(){
 				    delchallist.push($(this).val());
