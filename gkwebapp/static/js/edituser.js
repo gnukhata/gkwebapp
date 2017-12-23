@@ -627,9 +627,11 @@ $(document).ready(function() {
 	if($("#edituser option:selected").attr("role") == "Admin" && $.trim($("#passconfirm_admin").val()) != ""){
 	    dataset["userpassword"]=$("#pass_admin").val();
 	}
-	if($("#edituser option:selected").attr("role") != "Admin"){
-	    dataset["userpassword"]=$("#passwordconfirm").val();
+	else if($("#edituser option:selected").attr("role") != "Admin"){
 	    dataset["userrole"]=$("#userrole").val();
+	    if($.trim($("#passwordconfirm").val()) != ""){
+		dataset["userpassword"]=$("#password").val();
+	    }
 	}
 	if($("#userrole").val()==3){
 	    dataset["godowns"]=JSON.stringify(selectedgodowns);
@@ -649,9 +651,9 @@ $(document).ready(function() {
 		    if($("#edituser option:selected").attr("role") == "Admin"){
 			$("#success-alert").alert();
 			$("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
+			    location.reload();//After Admin successfully edited hole page refresh.
 			    $("#success-alert").hide();
 			});
-			location.reload();//After Admin successfully edited hole page refresh.
 		    }else{
 			$("#reset").click();
 			$("#success-alert").alert();
