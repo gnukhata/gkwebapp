@@ -2904,7 +2904,7 @@ if (event.which == 13) {
     $("#invoice_date").numeric();
     $("#invoice_month").numeric();
     $("#invoice_year").numeric();
-    $('.invoice_product_quantity_gst, .invoice_product_quantity_vat, ').numeric({ negative: false });
+    $('.invoice_product_quantity_gst, .invoice_product_quantity_vat').numeric({ negative: false });
     $('.invoice_product_per_price').numeric({ negative: false });
     $("#invoice_deliverynote").keydown(function(event) {
         if (event.which == 13) {
