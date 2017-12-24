@@ -2707,7 +2707,7 @@ if (event.which == 13) {
 	    if ($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val() > ($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(2) input').val() * $('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(4) input').val())) {
 	    $("#discount-more-alert").alert();
 	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
-		$(".invoice_product_discount_vat:eq(" + i + ")").focus().select();
+		$(".invoice_product_discount_gst:eq(" + i + ")").focus().select();
 		  $("#discount-more-alert").hide();
 	      });
 	    return false;
@@ -2717,7 +2717,7 @@ if (event.which == 13) {
 	    if ($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val() > $('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(4) input').val()) {
 	    $("#discount-more-alert").alert();
 	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
-		$(".invoice_product_discount_vat:eq(" + i + ")").focus().select();
+		$(".invoice_product_discount_gst:eq(" + i + ")").focus().select();
 		  $("#discount-more-alert").hide();
 	      });
 	    return false;
