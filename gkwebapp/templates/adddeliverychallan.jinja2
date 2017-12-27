@@ -301,19 +301,19 @@
      </div>
       <div class="panel-footer">
         <div class="container-fluid">
-        <button class="btn btn-success btn-sm" id="deliverychallan_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save anywhere on the current screen"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}
-Save{% endtrans %}</button>
-        <button class="btn btn-warning btn-sm" id="deliverychallan_reset"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}
-	  Reset{% endtrans %}</button>
+        <button class="btn btn-success btn-sm" id="deliverychallan_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save anywhere on the current screen" accesskey="s"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}
+	  <u>S</u>ave{% endtrans %}</button>
+        <button class="btn btn-warning btn-sm" id="deliverychallan_reset" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}
+	  R<u>e</u>set{% endtrans %}</button>
         {% if gkstatus=="out" %}
-	  <button id="deliverychallan_saveprint" class="btn btn-primary btn-sm" ><i class="fa fa-print" aria-hidden="true"></i> {% trans %}
-	  Save & Print{% endtrans %}</button>
-        <button id="deliverychallan_addcust" class="btn btn-info btn-sm"><i class="fa fa-user-plus" aria-hidden="true"></i> {% trans %}
-Add Customer{% endtrans %}</button>
+	  <button id="deliverychallan_saveprint" class="btn btn-primary btn-sm" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}
+	    Save & Prin<u>t</u>{% endtrans %}</button>
+        <button id="deliverychallan_addcust" class="btn btn-info btn-sm" accesskey="a"><i class="fa fa-user-plus" aria-hidden="true"></i> {% trans %}
+	  <u>A</u>dd Customer{% endtrans %}</button>
           {% else %}
-          <button id="deliverychallan_addcust" class="btn btn-info btn-sm"><i class="fa fa-user-plus" aria-hidden="true"></i> {% trans %}
+          <button id="deliverychallan_addcust" class="btn btn-info btn-sm" accesskey="a"><i class="fa fa-user-plus" aria-hidden="true"></i> {% trans %}
 
-Add Supplier{% endtrans %}</button>
+	    <u>A</u>dd Supplier{% endtrans %}</button>
        {% endif %}
        <label class="btn btn-primary btn-sm" for="my-file-selector">
          <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
