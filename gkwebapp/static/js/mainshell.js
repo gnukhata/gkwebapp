@@ -412,6 +412,7 @@ var userrole1;
   $('#administrationdropdown').on('shown.bs.dropdown', function () {
     $("#createuser").focus();
   });
+    
   $('#helpdropdown').on('shown.bs.dropdown', function () {
     $("#manual").focus();
   });
@@ -494,6 +495,7 @@ var userrole1;
        $("#listofaccounts").remove();
        $("#showdeletedvoucher").remove();
        $("#createuser").remove();
+       $("#user").remove();
        $("#REMOVEuser").remove();
        $("#showclosebooks").remove();
        $("#deleteorg").remove();
@@ -1221,21 +1223,38 @@ var userrole1;
     );
   });
 
-  $('#createuser').click(function (e) {
+  /*$('#createuser').click(function (e) {
     // calls create user page.
     $("#msspinmodal").modal("show");
     $.ajax({
       url: '/showuser',
       type: 'POST',
       datatype: 'text/html',
-
     })
      .done(function(resp) {
        $("#info").html(resp);
-     })
+     }*/
 
-  });
 
+  $('#user').click(function (e) { // This calls user page.
+    $("#msspinmodal").modal("show");
+      $.ajax({
+      type: 'POST',
+      url: '/showuser?type=usertab',
+      global: false,
+      async: false,
+      datatype: "text/html",
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+      success: function(resp)
+      {
+        $("#info").html(resp);
+      }
+    });
+    });
+    
 
   $("#showdeletedvoucher").click(function (e){
     // shows deleted vouchers report.

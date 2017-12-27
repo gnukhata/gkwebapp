@@ -26,13 +26,18 @@ Contributors:
 $(document).ready(function(){
   $("#msspinmodal").modal("hide");
   $("#msspinmodal").on('hidden.bs.modal', function(event) {
-    $("#name").focus();
+  $("#name").focus();
   });
+    // for reset Button
+    $("#adduser_reset").click(function()
+     {
+       $("a[href ='#user_create']").click();
+     });
+    
   //$("#userrole option[value=3]").hide();
   if (sessionStorage.invflag==1) {
     $.ajax(
        {
-
        type: "POST",
        url: "/godown?type=check",
        global: false,
@@ -190,7 +195,7 @@ $(document).ready(function(){
         if (e.which==13)
         {
           e.preventDefault();
-          $("#adduser_button").click();
+            $("#adduser_button").click();
         }
         if (e.which==38) {
           e.preventDefault();
@@ -304,7 +309,8 @@ $(document).ready(function(){
                 });
               }
               if(resp["gkstatus"]==1)
-              {
+		{
+		    $("#msspinmodal").modal("hide");
                 $("#DuplicateEntry-blank-alert").alert();
                 $("#DuplicateEntry-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
                   $("#DuplicateEntry-blank-alert").hide();
@@ -312,7 +318,8 @@ $(document).ready(function(){
                 });
               }
               if(resp["gkstatus"]==4)
-              {
+		{
+		    $("#msspinmodal").modal("hide");
                 $('#adduser')[0].reset();
                 $("#BadPrivilege-blank-alert").alert();
                 $("#BadPrivilege-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -321,11 +328,8 @@ $(document).ready(function(){
                 });
               }
             }
-
           }
         );
-
-        e.preventDefault();
       }
     );
   });

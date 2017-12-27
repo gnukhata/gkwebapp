@@ -13,7 +13,6 @@
   </style>
 
   </head>
-
   <body>
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
@@ -111,8 +110,7 @@
           <li id="administrationdropdown" class="dropdown">
             <a href="" id="administration" class="dropdown-toggle administrationmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}A<u>d</u>ministration{% endtrans %}</a>
             <ul class="dropdown-menu">
-              <li class="hideoperator closebooks"><a class="administrationmenu" data-toggle="tab" id="createuser" href="">{% trans %}New User{% endtrans %}</a></li>
-              <li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="tab" id="REMOVEuser" href="">{% trans %}Remove User{% endtrans %}</a></li>
+	      <li class="hideoperator closebooks hidemanager"><a class="administrationmenu" data-toggle="tab" id="user" href="">{% trans %}User{% endtrans %}</a></li>
               <li><a class="administrationmenu" data-toggle="tab" id="showedituser" href="">{% trans %}Change Password{% endtrans %}</a></li>
               <li class="hideoperator hidemanager rollover"><a class="administrationmenu" data-toggle="tab" id="showclosebooks" href="">{% trans %}Close Books/Roll Over{% endtrans %}</a></li>
               <li class="hideoperator hidemanager "><a class="administrationmenu closebooks" data-toggle="tab" id="orgpref" href="">{% trans %}Organisation Preferences{% endtrans %}</a></li>
