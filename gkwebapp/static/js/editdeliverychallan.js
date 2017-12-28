@@ -1,3 +1,28 @@
+/*
+  Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+ Copyright (C) 2017 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+This file is part of GNUKhata:A modular,robust and Free Accounting System.
+
+GNUKhata is Free Software; you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation; either version 3 of
+the License, or (at your option) any later version.
+
+GNUKhata is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public
+License along with GNUKhata (COPYING); if not, write to the
+Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+
+
+Contributors:
+"Krishnakant Mane" <kk@gmail.com>
+"Reshma Bhatawadekar <reshma_b@riseup.net>"
+*/
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $('.delchaldate').autotab('number');
@@ -10,7 +35,7 @@ $(document).ready(function() {
   $(".deliverychallan_edit_disable").prop("disabled",true);
   $("#deliverychallan_editprint").hide();
   var custsup  =$("#deliverychallan_edit_customer").find('optgroup').clone();
-  var inout ;
+    var inout ;
 
   $("#deliverychallan_edit_list").change(function(event) {
     $.ajax({
@@ -25,7 +50,8 @@ $(document).ready(function() {
       }
     })
     .done(function(resp) {
-      console.log("success");
+	console.log("success");
+	$(".panel-footer").hide();
       if (resp.delchaldata.delchaldata.cancelflag==1)
       {
         $("#cancelmsg").show();
@@ -42,10 +68,11 @@ $(document).ready(function() {
         $("#deliverychallan_edit_delete").show();
       }
       if(resp.delchaldata.delchaldata.attachmentcount > 0){
-        $("#viewattach").show();
+	  $(".panel-footer").show();
+          $("#viewattach").show();
       }
       else{
-        $("#viewattach").hide();
+          $("#viewattach").hide();
       }
       $("#deliverychallan_edit_customer").html(custsup);
       var dcdatearray = resp.delchaldata.delchaldata.dcdate.split(/\s*\-\s*/g);
@@ -100,10 +127,13 @@ $(document).ready(function() {
         if (resp["gkstatus"]==0) {
           $("#deliverychallan_customeraddr").val(resp["gkresult"]["custaddr"]);
           if (resp.gkresult.csflag == 3) {
-            $('#deliverychallan_edit_challtype').val("OUT");
+              $('#deliverychallan_edit_challtype').val("OUT");
+	      $(".panel-footer").show();
+	      $("#deliverychallan_editprint").show();
           }
           else {
-            $('#deliverychallan_edit_challtype').val("IN");
+              $('#deliverychallan_edit_challtype').val("IN");
+	      $("#deliverychallan_editprint").hide();
           }
         }
       })
@@ -115,7 +145,17 @@ $(document).ready(function() {
       });
       $('#deliverychallan_edit_challanno').val(resp.delchaldata.delchaldata.dcno);
       $('#deliverychallan_edit_godown').val(resp.delchaldata.delchaldata.goid);
-      $('#deliverychallan_edit_consignment').val(resp.delchaldata.delchaldata.dcflag);
+	$('#deliverychallan_edit_consignment').val(resp.delchaldata.delchaldata.dcflag);
+	if(resp.delchaldata.delchaldata.consignee) {
+	   $('#deliverychallan_edit_consigneename').val(resp.delchaldata.delchaldata.consignee.consigneename);
+           $('#deliverychallan_edit_consigneestate').val(resp.delchaldata.delchaldata.consignee.consigneestate);
+           $('#deliverychallan_edit_consigneeaddr').val(resp.delchaldata.delchaldata.consignee.consigneeaddress); 
+	} else {
+	   $('#deliverychallan_edit_consigneename').val("");
+           $('#deliverychallan_edit_consigneestate').val("");
+           $('#deliverychallan_edit_consigneeaddr').val(""); 
+	}
+      
       $('#deliverychallan_edit_noofpackages').val(resp.delchaldata.delchaldata.noofpackages);
       $('#deliverychallan_edit_modeoftransport').val(resp.delchaldata.delchaldata.modeoftransport);
       $('#deliverychallan_edit_product_table tbody').empty();
@@ -139,7 +179,6 @@ $(document).ready(function() {
       });
 
       $(".deliverychallan_edit_div").show();
-      $(".panel-footer").show();
       $("#deliverychallan_edit_edit").show();
       $("#deliverychallan_edit_save").hide();
     })
@@ -171,7 +210,7 @@ if(event.which==13)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
       },
-      data: {"dcid": $("#deliverychallan_edit_list option:selected").val()},
+      data: {"dcid": $("#deliverychallan_edit_list option:selected").val()}
     })
     .done(function(resp) {
       var x=window.open();
@@ -201,8 +240,14 @@ if(event.which==13)
 
 
 $("#deliverychallan_editprint").click(function(event) {
-  printset = [];
-  qtytotal =0;
+ let printset = [];
+    let qtytotal =0;
+    var consignee = {};
+    if($("#deliverychallan_edit_consigneename").val() != ""){
+	  consignee["consigneename"] = $.trim($("#deliverychallan_edit_consigneename").val());
+          consignee["consigneeaddress"] = $.trim($("#deliverychallan_edit_consigneeaddr").val());
+          consignee["consigneestate"] = $.trim($("#deliverychallan_edit_consigneestate").val());
+      }
   for (var i = 0; i < $("#deliverychallan_edit_product_table tbody tr").length; i++) {
     var obj = {};
 
@@ -220,11 +265,12 @@ $("#deliverychallan_editprint").click(function(event) {
     "custid":$("#deliverychallan_edit_customer option:selected").val(),
     "dcdate":$("#deliverychallan_edit_date").val()+'-'+$("#deliverychallan_edit_month").val()+'-'+$("#deliverychallan_edit_year").val(),
     "printset":JSON.stringify(printset),
+    "consignee":JSON.stringify(consignee),
     "issuername":$("#deliverychallan_edit_issuername").val(),
     "designation":$("#deliverychallan_edit_designation").val(),
     "goid":$("#deliverychallan_edit_godown option:selected").val(),
     "notetype":$("#deliverychallan_edit_consignment option:selected").text(),
-    "qtytotal":qtytotal,
+    "qtytotal":qtytotal
     },
     beforeSend: function(xhr)
     {

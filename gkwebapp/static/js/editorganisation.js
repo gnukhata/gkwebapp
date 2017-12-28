@@ -362,6 +362,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 		$("#pan-incorrect-alert").hide();
 	    });
 	    $("#orgpan").focus();
+	    return false;
 	}
 	else {
 	    if ($("#orgtype").val()=="Not For Profit"){
@@ -523,7 +524,15 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
       }
     }
 
-
+   var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; 
+      if (($("#orgpan").val().length != 10 || !$("#orgpan").val().match(regExp)) && $.trim($("#orgpan").val())!="") {
+	  $("#pan-incorrect-alert").alert();
+	    $("#pan-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#pan-incorrect-alert").hide();
+	    });
+	    $("#orgpan").focus();
+	    return false;
+	}
    var gobj = {}; // Creating a dictionary for storing statecode with gstin.
    $("#gstintable tbody tr").each(function(){
        var curindex1 = $(this).index();

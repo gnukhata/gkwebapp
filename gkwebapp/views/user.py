@@ -36,14 +36,63 @@ from pyramid.response import Response
 import os
 from odslib import ODS
 
-@view_config(route_name="showuser", renderer="gkwebapp:templates/createuser.jinja2")
-def showuser(request):
-    return {"gkresult":"0"}
+#This function calls User Tab 
+@view_config(route_name="showuser", request_param="type=usertab", renderer="gkwebapp:templates/user.jinja2")
+def newuser(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result= requests.get("http://127.0.0.1:6543/users", headers=header)
+    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}    
 
-@view_config(route_name="showedituser", renderer="gkwebapp:templates/edituser.jinja2")
+#This function call New User Tab Inside User Module
+@view_config(route_name="showuser",request_param="type=addtab", renderer="gkwebapp:templates/createuser.jinja2")
+def createusers(request):
+   header={"gktoken":request.headers["gktoken"]}
+   result = requests.get("http://127.0.0.1:6543/users", headers=header)
+   return {"gkresult":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
+
+#This function call Edituser Tab Inside User Module
+@view_config(route_name="showuser",request_param="type=edittab", renderer="gkwebapp:templates/edituser.jinja2")
+def editusers(request):
+   header={"gktoken":request.headers["gktoken"]}
+   result = requests.get("http://127.0.0.1:6543/users", headers=header)
+   return {"gkresult":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
+
+#This function gives Userdetails of selected users 
+@view_config(route_name="showuser",request_param="type=getuserdetails", renderer="json")
+def getuserdetails(request):
+    header={"gktoken":request.headers["gktoken"]}
+    userid = int(request.params["userid"])
+    result = requests.get("http://127.0.0.1:6543/user?userAllData&userid=%d"%(userid), headers=header)
+    if(result.json()["gkstatus"] == 0):
+        return {"gkstatus":0, "gkresult":result.json()["gkresult"]}
+    return {"gkstatus":result.json()["gkstatus"]}
+
+#This function gives status (i.e valid or not) of current password in edituser 
+@view_config(route_name="showuser",request_param="type=userloginstatus", renderer="json")
+def UserLoginstatus(request):
+    header = {"gktoken":request.headers["gktoken"]}
+    gkdata = {"username":request.params["username"], "userpassword":request.params["userpassword"]}
+    result = requests.post("http://127.0.0.1:6543/users?userloginstatus", data =json.dumps(gkdata), headers=header)
+    return {"gkstatus":result.json()["gkstatus"]}
+
+#This function update user in database 
+@view_config(route_name="showuser",request_param="type=updateuser", renderer="json")
+def addedituser(request):
+    header = {"gktoken":request.headers["gktoken"]}
+    gkdata = {"userid":request.params["userid"],"username":request.params["username"],"userquestion":request.params["userquestion"],"useranswer":request.params["useranswer"]}
+    if request.params.has_key("userpassword"):
+        gkdata["userpassword"]=request.params["userpassword"]
+    if request.params.has_key("userrole"):
+        gkdata["userrole"]=int(request.params["userrole"])
+    if request.params.has_key("godowns"):
+        gkdata["golist"]=json.loads(request.params["godowns"])
+    result = requests.put("http://127.0.0.1:6543/users?editdata", headers=header, data=json.dumps(gkdata))
+    return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="showedituser", renderer="gkwebapp:templates/changepassword.jinja2")
 def showedituser(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/user", headers=header)
+    result = requests.get("http://127.0.0.1:6543/users?user=single", headers=header)
     return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
 
 @view_config(route_name="edituser", renderer="json")
@@ -57,7 +106,7 @@ def edituser(request):
 def createuser(request):
     headers={"gktoken":request.headers["gktoken"]}
     goflag = False
-    if int(request.params["userrole"]) == 3:
+    if int(request.params["userrole"]) == 3: 
         gkdata = {"username":request.params["username"],"userpassword":request.params["userpassword"],"userrole":int(request.params["userrole"]),"userquestion":request.params["userquestion"],"useranswer":request.params["useranswer"],"golist":json.loads(request.params["godowns"])}
     else:
         gkdata = {"username":request.params["username"],"userpassword":request.params["userpassword"],"userrole":int(request.params["userrole"]),"userquestion":request.params["userquestion"],"useranswer":request.params["useranswer"]}
@@ -99,31 +148,16 @@ def removeuser(request):
 @view_config(route_name="deleteuser", renderer="json")
 def deleteuser(request):
     headers={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/users", headers=headers)
-    uname = ""
+    result = requests.get("http://127.0.0.1:6543/user?userAllData&userid=%d"%(int(request.params["username"])), headers=headers)
+    uname = result.json()["gkresult"]["username"]
     #urole in terms of integer
-    urole = ""
+    urole = result.json()["gkresult"]["userrole"]
     #urole in terms of string
-    userrole = ""
-    '''here request param username is user id only'''
-    for user in result.json()["gkresult"]:
-        if user["userid"] == int(request.params["username"]):
-            uname = user["username"]
-            urole = int(user["userrole"])
-            break
-    if urole == -1:
-        userrole = "Admin"
-    elif urole == 0:
-        userrole = "Manager"
-    elif urole == 1:
-        userrole = "Operator"
-    elif urole == 2:
-        userrole = "Internal Auditor"
-    elif urole == 3:
-        userrole = "Godown In Charge"
+    userrole = result.json()["gkresult"]["userroleName"]
+    if urole == 3:
         resultgodown = requests.get("http://127.0.0.1:6543/godown?type=byuser&userid=%d"%(int(request.params["username"])), headers=headers)
         resultgodown = resultgodown.json()["gkresult"]
-    gkdata={"userid":request.params["username"] }
+    gkdata={"userid":request.params["username"]}
     result = requests.delete("http://127.0.0.1:6543/users", data=json.dumps(gkdata), headers=headers)
     if result.json()["gkstatus"] == 0:
         if urole == 3:
@@ -135,7 +169,6 @@ def deleteuser(request):
                     godnames += ", "
                 j += 1
             gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted from " + godnames + " godown"}
-
         else:
             gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted"}
         resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=headers)

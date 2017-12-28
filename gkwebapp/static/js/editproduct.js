@@ -1,3 +1,32 @@
+/*
+ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+ Copyright (C) 2017 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+This file is part of GNUKhata:A modular,robust and Free Accounting System.
+
+GNUKhata is Free Software; you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation; either version 3 of
+the License, or (at your option) any later version.
+
+GNUKhata is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public
+License along with GNUKhata (COPYING); if not, write to the
+Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+
+
+Contributors:
+"Krishnakant Mane" <kk@gmail.com>
+"Ishan Masdekar " <imasdekar@dff.org.in>
+"Navin Karkera" <navin@dff.org.in>
+"Prajkta Patkar" <prajkta@riseup.net>
+*/
+
+
 $(document).ready(function() {
 
   $('.modal-backdrop').remove();
@@ -88,13 +117,10 @@ $(document).ready(function() {
     }
     if (e.which == 38) {
       e.preventDefault();
-      if ($("#editcatselect").is(':disabled') || $("#editcatselect").length < 1) {
-        $("#editproddesc").focus().select();
-      }
-      else {
+      
         $("#gscode").focus();
       }
-    }
+    
   });
   $(document).off('keydown', '#editgodownflag').on('keydown', '#editgodownflag', function(e){
     if (e.which == 13) {
@@ -147,34 +173,25 @@ $(document).ready(function() {
       $("#epsubmit").click();
     }
   });
-
+/*
   $("#prodselect").keydown(function(event) {
 
     if (event.which==13) {
-      event.preventDefault();
-        if ($("#catg").val()){
-          $("#editcatselect").focus();
-        }
-        else {
-          $("#editproddesc").focus().select();
-
-        }
-
-
+	event.preventDefault();
+	if (( $("#editcatselect").is(':disabled'))){
+	    	$("#ditcatselect").focus();
+	}
+	else{	
+	$("#editproddesc").focus().select();
+	}
           }
 
-  });
+  });*/
   $(document).on('keydown', '#editproddesc', function(event) {
     if (event.which==13) {
       event.preventDefault();
       $("#gscode").focus();
 
-     /*if ($("#editcatselect").is(':disabled')) {
-        $("#gscode").focus();
-      }
-        else {
-          $("#editcatselect").focus();
-        }*/
     }
     if (event.which==38) {
       event.preventDefault();
@@ -508,17 +525,8 @@ $(document).ready(function() {
     if($("#gsflag").val()=='7' && sessionStorage.invflag == 1){
     $("#addgodown").show();
   }
-
-    event.preventDefault();
-    if ($("#catg").val()){
-      $("#editcatselect").focus();
-
-    }
-    else {
-      $("#editproddesc").focus().select();
-
-    }
-
+        
+      //$("#editproddesc").focus().select();
     $(".godownflag").show();
     catcode= $("#editcatselect option:selected").val();
     $(".product_cat_tax_disable").prop('disabled',false);
@@ -534,6 +542,12 @@ $(document).ready(function() {
     else {
       $("#editcatselectlabel").text('Select Category');
     }
+      if ( $("#editcatselect").is(':disabled') || $("#editcatselect").length == 0 ){
+	  $("#editproddesc").focus().select();
+	}
+	else{	
+	$("#editcatselect").focus();
+	}
   });
 
   $(document).off("keydown","#editcatselect").on("keydown","#editcatselect",function(event) {
@@ -1205,7 +1219,7 @@ $(document).ready(function() {
     var obj = {};
     $("#editgodown_ob_table tbody tr").each(function(){
       if ($.trim($(".editgodown_name",this).val())!="") {
-        if ($.trim($(".editgodown_ob",this).val())!="" && $.trim($(".editgodown_ob",this).val())!= "0.00") {
+          if ($.trim($(".editgodown_ob",this).val())!="") {
           obj[$(".editgodown_name",this).val()] = $(".editgodown_ob",this).val();
         }
       }

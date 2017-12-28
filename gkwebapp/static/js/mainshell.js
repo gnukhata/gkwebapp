@@ -412,6 +412,7 @@ var userrole1;
   $('#administrationdropdown').on('shown.bs.dropdown', function () {
     $("#createuser").focus();
   });
+    
   $('#helpdropdown').on('shown.bs.dropdown', function () {
     $("#manual").focus();
   });
@@ -494,6 +495,7 @@ var userrole1;
        $("#listofaccounts").remove();
        $("#showdeletedvoucher").remove();
        $("#createuser").remove();
+       $("#user").remove();
        $("#REMOVEuser").remove();
        $("#showclosebooks").remove();
        $("#deleteorg").remove();
@@ -581,8 +583,10 @@ var userrole1;
   var ortype = sessionStorage.getItem('orgt');
   var styear = sessionStorage.getItem('year1');
   var enyear = sessionStorage.getItem('year2');
-  var orgdata = orname + " (" + ortype + ")"+"\xa0\xa0 <i>"+ username1 +"</i> <i>(</i>" + userrole1 + "<i>)</i>";
+  var orgdata = orname + " (" + ortype + ")";	
+  var userdata = "\xa0\xa0 <i>"+ username1 +"</i> <i>(</i>" + userrole1 + "<i>)</i>";
   var yeardata = "Financial Year : " + styear + " to " + enyear;
+    
   // organisation details are stored in items that are only visible in print.
   $("title").append(orname);
   $("#printorgname").append(orname);
@@ -1190,10 +1194,11 @@ var userrole1;
   });
 
 
-  if(orgdata!=""||yeardata!="")// sets the organisation name, type and year in the status bar below navbar.
+  if(orgdata!=""||yeardata!=""||userdata!="")// sets the organisation name & type, User name & role and year in the status bar below navbar.
     {
       $("#orgdata").html(orgdata);
       $("#yeardata").html(yeardata);
+      $("#userdata").html(userdata); 
     }
   $('#addaccount').click(function (e) {
     // calls add account page.
@@ -1218,21 +1223,38 @@ var userrole1;
     );
   });
 
-  $('#createuser').click(function (e) {
+  /*$('#createuser').click(function (e) {
     // calls create user page.
     $("#msspinmodal").modal("show");
     $.ajax({
       url: '/showuser',
       type: 'POST',
       datatype: 'text/html',
-
     })
      .done(function(resp) {
        $("#info").html(resp);
-     })
+     }*/
 
-  });
 
+  $('#user').click(function (e) { // This calls user page.
+    $("#msspinmodal").modal("show");
+      $.ajax({
+      type: 'POST',
+      url: '/showuser?type=usertab',
+      global: false,
+      async: false,
+      datatype: "text/html",
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+      success: function(resp)
+      {
+        $("#info").html(resp);
+      }
+    });
+    });
+    
 
   $("#showdeletedvoucher").click(function (e){
     // shows deleted vouchers report.
@@ -1625,6 +1647,11 @@ var userrole1;
   $('#orgdata').click(function(){// clicking on organisation name and type in status bar will call edit organisation details page.
     $('#showeditorg').click();
   });
+
+  $('#userdata').click(function(){// clicking on user name and role in status bar will call change password page.
+    $('#showedituser').click();
+  });
+    
   $('#yeardata').click(function(){
     return false;
   });

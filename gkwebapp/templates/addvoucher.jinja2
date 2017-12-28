@@ -108,6 +108,9 @@
 	 max-height: calc(100vh - 212px);
 	 overflow-y: auto;
      }
+     #invsel {
+	 max-width:180px;
+     }
     </style>
   </head>
   <body>
@@ -206,37 +209,42 @@
 	<div class="form-inline well well-sm ">
           <div class="form-inline ">
             <div class="form-inline">
-              <div class="form-group " style="width:25%;">
+              <div class="form-group " style="width:15%;">
 		<label for="vno">{% trans %}<u>V</u>oucher No.{% endtrans %} :</label><label for="vno" style="color:red;font-size: 120%;">*</label>
 		<div><input type="text" class="form-control input-sm" value="{{lastdetails['vno']}}" name="vno" id="vno" size="10" accesskey="v"></div>
               </div>
 
               {% if invoicedata!=0 %}
 		{% if invoicecount!=0 %}
-		  <div class="form-group invhide " style="width:30%;">
+		  <div class="form-group billhide invhide " style="width:35%;">
 		    <input id="invhide" value="1" hidden="">
 		    <label for="invsel">{% trans %}Select Invoice {% endtrans %} :</label>
             </br>
             <select id="invsel" class="form-control input-sm  invoice_no" >
               <option value="" selected total="">{% trans %}None{% endtrans %}</option>
               {% for invoice in invoicedata %}
-		{% if vtype == "purchase" and invoice["csflag"]|int == 19 %}
-                  <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}" invdate={{invoice["invoicedate"]}} >{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
-		{% elif vtype == "sales" and invoice["csflag"]|int == 3 %}
-                  <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}" invdate={{invoice["invoicedate"]}}>{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
+		{% if vtype == "purchase" or vtype == "payment" and invoice["csflag"]|int == 19 %}
+                  <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}" invdate="{{invoice["invoicedate"]}}" balance="{{ invoice['balanceamount'] }}">{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
+		{% elif vtype == "sales" or vtype == "receipt" and invoice["csflag"]|int == 3 %}
+                  <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}" invdate="{{invoice["invoicedate"]}}" balance="{{ invoice['balanceamount'] }}">{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
 		{% endif %}
               {% endfor %}
             </select>
 		  </div>
-		  <div class="form-group " style="width:25%;" >
+		  <div class="form-group invhide billhide" style="width:15%;" >
 		    <label for="invtotal">{% trans %}Total Invoice Amount {% endtrans %} :</label>
 		    <div>
 		      <input type="text" id="invtotal" class="form-control input-sm" value="0.00" size="15" placeholder="" disabled>
 		    </div>
 		  </div>
 
-
-
+		  <div class="form-group billhide" style="width:15%;" >
+		    <label for="invbalance">{% trans %}Invoice Balance Amount {% endtrans %} :</label>
+		    <div>
+		      <input type="text" id="invbalance" class="form-control input-sm" value="0.00" size="15" placeholder="" disabled>
+		    </div>
+		  </div>
+		  
 		{% else %}
 		  <input id="invhide" value="0" hidden="">
 		{% endif %}
