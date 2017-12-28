@@ -1164,67 +1164,72 @@ else {
     })
     .done(function(resp) {
       if(resp["gkstatus"] == 0){
-        if ($("#status").val()=='15') {
-          let printset = []; // list containing dict of product details
-          let qtytotal =0;
-          for (var i = 0; i < $("#deliverychallan_product_table tbody tr").length; i++) {
-            var obj = {};// dict containing product details
-
-            obj.productdesc = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").text();
-            obj.qty = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(1) input").val();
-            obj.unitname = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(1) span").text();
-            /* total of product quantities to be displayed in the delivery note at the very end of product details*/
-            qtytotal += +obj.qty;
-            printset.push(obj);
-      	}
-            var datas = {};
-      	if ($("#deliverychallan_godown option").length !=0) {
-      		datas = {"dcno": $("#deliverychallan_challanno").val(),
-      	            "custid":$("# option:selected").val(),
-      	            "dcdate":$("#deliverychallan_date").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_year").val(),
-      		    "printset":JSON.stringify(printset),
-		    "consignee":JSON.stringify(consignee),
-      	            "issuername":$("#deliverychallan_issuername").val(),
-      	            "designation":$("#deliverychallan_designation").val(),
-      	            "goid":$("#deliverychallan_godown option:selected").val(),
-      	            "notetype":$("#deliverychallan_consignment option:selected").text(),
-      	            "qtytotal":qtytotal
-      			}; }
-      	else {
-      		datas = {"dcno": $("#deliverychallan_challanno").val(),
-      	            "custid":$("# option:selected").val(),
-      	            "dcdate":$("#deliverychallan_date").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_year").val(),
-      		    "printset":JSON.stringify(printset),
-		    "consignee":JSON.stringify(consignee),
-      	            "issuername":$("#deliverychallan_issuername").val(),
-      	            "designation":$("#deliverychallan_designation").val(),
-      	            "goid":$("#deliverychallan_godown option:selected").val(),
-      	            "notetype":$("#deliverychallan_consignment option:selected").text(),
-      	            "qtytotal":qtytotal
-      			};
-       }
-          $.ajax({ // passing the delivery note details to a page displaying it as a print preview
-            url: '/deliverychallan?action=print',
-            type: 'POST',
-            dataType: 'html',
-            data: datas,
-            beforeSend: function(xhr)
-            {
-              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-            }
-          })
-          .done(function(resp) {
-            console.log("success");
-            $('#info').html(resp);
-          })
-          .fail(function() {
-            console.log("error");
-          })
-          .always(function() {
-            console.log("complete");
-          });
+          if ($("#status").val()=='15') {
+	      let printset = []; // list containing dict of product details
+              let qtytotal =0;
+	      var consignee = {};
+	      if($("#consigneename").val() != ""){
+		  consignee["consigneename"] = $.trim($("#consigneename").val());
+		  consignee["consigneeaddress"] = $.trim($("#deliverychallan_consigneeaddr").val());
+		  consignee["consigneestate"] = $.trim($("#consigneestate").val());
+	      }
+	      for (var i = 0; i < $("#deliverychallan_product_table tbody tr").length; i++) {
+		  var obj = {};// dict containing product details
+		  obj.productdesc = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").text();
+		  obj.qty = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(1) input").val();
+		  obj.unitname = $("#deliverychallan_product_table tbody tr:eq("+i+") td:eq(1) span").text();
+		  /* total of product quantities to be displayed in the delivery note at the very end of product details*/
+		  qtytotal += +obj.qty;
+		  printset.push(obj);
+	      }
+	      var datas = {};
+	      if ($("#deliverychallan_godown option").length !=0) {
+		  datas = {"dcno": $("#deliverychallan_challanno").val(),
+			   "custid":$("#deliverychallan_customer option:selected").val(),
+			   "dcdate":$("#deliverychallan_date").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_year").val(),
+			   "printset":JSON.stringify(printset),
+			   "consignee":JSON.stringify(consignee),
+			   "issuername":$("#deliverychallan_issuername").val(),
+			   "designation":$("#deliverychallan_designation").val(),
+			   "goid":$("#deliverychallan_godown option:selected").val(),
+			   "notetype":$("#deliverychallan_consignment option:selected").text(),
+			   "qtytotal":qtytotal
+			  };}
+	      else {
+		  datas = {"dcno": $("#deliverychallan_challanno").val(),
+			   "custid":$("#deliverychallan_customer option:selected").val(),
+			   "dcdate":$("#deliverychallan_date").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_year").val(),
+			   "printset":JSON.stringify(printset),
+			   "consignee":JSON.stringify(consignee),
+			   "issuername":$("#deliverychallan_issuername").val(),
+			   "designation":$("#deliverychallan_designation").val(),
+			   //"goid":$("#deliverychallan_godown option:selected").val(),
+			   "notetype":$("#deliverychallan_consignment option:selected").text(),
+			   "qtytotal":qtytotal
+			  };
+	      }
+	      $.ajax({ // passing the delivery note details to a page displaying it as a print preview
+		  url: '/deliverychallan?action=print',
+		  type: 'POST',
+		  dataType: 'html',
+		  data: datas,
+		  beforeSend: function(xhr)
+		  {
+		      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+		  }
+	      })
+		  .done(function(resp) {
+		      console.log("success");
+		      $('#info').html(resp);
+		  })
+		  .fail(function() {
+		      console.log("error");
+		  })
+		  .always(function() {
+		      console.log("complete");
+		  });
+	  }
       }
-    }
       else if(resp["gkstatus"]==1) {
         $("#deliverychallan_challanno").focus();
         $("#duplicate-alert").alert();
@@ -1248,7 +1253,6 @@ else {
     .always(function() {
       console.log("complete");
     });
-
     return false;
   });
 });
