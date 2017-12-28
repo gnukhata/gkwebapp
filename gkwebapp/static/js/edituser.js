@@ -35,21 +35,68 @@ $(document).ready(function() {
 	if ($("#managerradio").is(":checked")) {
 	    $("#edituser option[role!='Manager']").prop("hidden", true).prop("disabled", true);
 	    $("#edituser option[role='Manager']").prop("hidden", false).prop("disabled", false);
+	    $(".manager").hide();
+	    $(".intauditor").hide();
+	    $(".goincharge").hide();
+	    if($("#edituser option[role ='Manager']").length < 1){
+		$(".manager").show();
+		$("#edituser").hide();
+		$("#txtareahelp").hide();
+	    } else {
+		$("#edituser").show();
+		$("#txtareahelp").show();
+	    }
 	}
 	else if ($("#operatorradio").is(":checked")) {
 	    $("#edituser option[role!='Operator']").prop("hidden",true).prop("disabled",true);
 	    $("#edituser option[role='Operator']").prop("hidden", false).prop("disabled", false);
+	    $(".manager").hide();
+	    $(".intauditor").hide();
+	    $(".goincharge").hide();
+	    if($("#edituser option[role ='Operator']").length < 1){
+		$(".operator").show();
+		$("#edituser").hide();
+		$("#txtareahelp").hide();
+	    } else {
+		$("#edituser").show();
+		$("#txtareahelp").show();    
+	    }
 	}
 	else if ($("#auditorradio").is(":checked")) {
 	    $("#edituser option[role='Internal Auditor']").prop("hidden", false).prop("disabled", false);
 	    $("#edituser option[role!='Internal Auditor']").prop("hidden",true).prop("disabled",true);
+	    $(".manager").hide();
+	    $(".operator").hide();
+	    $(".goincharge").hide();
+	    if($("#edituser option[role ='Internal Auditor']").length < 1){
+		$(".intauditor").show();
+		$("#edituser").hide();
+		$("#txtareahelp").hide();
+	    } else {
+		$("#edituser").show();
+		$("#txtareahelp").show();
+	    }
 	}
 	else if ($("#Inchargeradio").is(":checked")) {
 	    $("#edituser option[role='Godown In Charge']").prop("hidden", false).prop("disabled", false);
 	    $("#edituser option[role!='Godown In Charge']").prop("hidden", true).prop("disabled", true);
+	    $(".manager").hide();
+	    $(".intauditor").hide();
+	    $(".operator").hide();
+	    if($("#edituser option[role ='Godown In Charge']").length < 1){
+		$(".manager").show();
+		$("#edituser").hide();
+		$("#txtareahelp").hide();
+	    } else {
+		$("#edituser").show();
+		$("#txtareahelp").show();
+	    }
 	}
 	else {
-	    $("#edituser option").prop("hidden", false).prop("disabled", false); 
+	    $("#edituser option").prop("hidden", false).prop("disabled", false);
+	    $(".alluser").hide();
+	    $("#edituser").show();
+	    $("#txtareahelp").show();
 	}
 	$("#edituser").change();
     });
