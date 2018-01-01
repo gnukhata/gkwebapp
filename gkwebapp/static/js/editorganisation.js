@@ -221,7 +221,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     $("#orgaddr").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#orgcountry").focus().select();
+      $("#orgcity").focus().select();
     }
     });
 
@@ -246,33 +246,33 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     $("#orgcountry").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#orgstate").focus().select();
+      $("#orgpincode").focus().select();
     }
     if (event.which==38) {
       event.preventDefault();
-      $("#orgaddr").focus().select();
+      $("#orgstate").focus().select();
     }
     });
     
     $("#orgstate").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#orgcity").focus().select();
+      $("#orgcountry").focus().select();
     }
      if (event.which==38 && $("#add_state option:selected").index()==0)  {
           event.preventDefault();
-          $("#orgcountry").focus().select();
+          $("#orgcity").focus().select();
         }
   });
 
     $("#orgcity").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#orgstax").focus().select();
+      $("#orgstate").focus().select();
     }
      if (event.which==38)  {
           event.preventDefault();
-          $("#orgstate").focus().select();
+          $("#orgaddr").focus().select();
         }
     });
 
@@ -386,17 +386,11 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
    $("#orgemail").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#orgtelno").focus().select();
+      $("#orgfax").focus().select();
     }
      if (event.which==38)  {
          event.preventDefault();
-	  if ($("#orgtype").val()=="Not For Profit"){
-		$("#fcraregyear").focus();
-		
-	    }
-	    else {
-		$("#orgpan").focus().select();
-	    }
+	 $("#orgwebsite").focus();
         }
    });
 
@@ -407,18 +401,24 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     }
      if (event.which==38)  {
           event.preventDefault();
-          $("#orgemail").focus().select();
+          $("#orgpincode").focus().select();
         }
     });
 
     $("#orgwebsite").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#orgpincode").focus().select();
+      $("#orgemail").focus().select();
     }
      if (event.which==38)  {
           event.preventDefault();
-          $("#orgtelno").focus().select();
+	 if ($("#orgtype").val()=="Not For Profit"){
+		$("#fcraregyear").focus();
+		
+	    }
+	    else {
+		$("#orgtelno").focus().select();
+	    }
         }
     });
 
@@ -426,22 +426,22 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     $("#orgpincode").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#orgfax").focus().select();
+      $("#orgtelno").focus().select();
     }
      if (event.which==38)  {
           event.preventDefault();
-          $("#orgwebsite").focus().select();
+          $("#orgcountry").focus().select();
         }
     });
 
      $("#orgfax").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#orgmvat").focus().select();
+      $("#orgpan").focus().select();
     }
      if (event.which==38)  {
           event.preventDefault();
-          $("#orgpincode").focus().select();
+          $("#orgemail").focus().select();
         }
      });
 
