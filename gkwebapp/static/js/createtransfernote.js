@@ -290,14 +290,20 @@ $(document).ready(function() {
       }
     })
      .done(function(resp) {
-       if (resp["gkstatus"]==0) {
-         $("#tn_to_godown").html(''); //Empty the dropdown
+	 if (resp["gkstatus"]==0) {
+	     $("#tn_to_godown").html(''); //Empty the dropdown
+	     var golen=resp["godowns"].length;
 	 //Filling the dropdown by appending options. Godown id is set as value of each option and godown name and address are displayed.
          $("#tn_to_godown").append('<option value=""  disabled  hidden selected>Select Godown</option>');
          for (godown of resp["godowns"]) {
            if(godown.goid != $("#tn_from_godown option:selected").val()){
              $("#tn_to_godown").append('<option value="' + godown.goid + '">' +godown.goname+ '('+ godown.goaddr +')' + '</option>');
-           }
+           }else if(golen==1){
+	       if(godown.goid == $("#tn_from_godown option:selected").val()){
+		   $("#tn_to_godown").hide();
+		   $("#nogo").show();
+	       }
+	   }
          }
 	 //Getting list of products in selected godown.
 	 //ID of selected godown is sent to receive a list of products.
