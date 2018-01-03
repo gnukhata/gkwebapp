@@ -35,7 +35,7 @@ $(document).ready(function() {
 	if ($("#managerradio").is(":checked")) {
 	    $("#edituser option[role!='Manager']").prop("hidden", true).prop("disabled", true);
 	    $("#edituser option[role='Manager']").prop("hidden", false).prop("disabled", false);
-	    $(".manager").hide();
+	    $(".operator").hide();
 	    $(".intauditor").hide();
 	    $(".goincharge").hide();
 	    if($("#edituser option[role ='Manager']").length < 1){
@@ -84,7 +84,7 @@ $(document).ready(function() {
 	    $(".intauditor").hide();
 	    $(".operator").hide();
 	    if($("#edituser option[role ='Godown In Charge']").length < 1){
-		$(".manager").show();
+		$(".goincharge").show();
 		$("#edituser").hide();
 		$("#txtareahelp").hide();
 	    } else {
