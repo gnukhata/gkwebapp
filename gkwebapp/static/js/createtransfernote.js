@@ -298,7 +298,9 @@ $(document).ready(function() {
          for (godown of resp["godowns"]) {
            if(godown.goid != $("#tn_from_godown option:selected").val()){
              $("#tn_to_godown").append('<option value="' + godown.goid + '">' +godown.goname+ '('+ godown.goaddr +')' + '</option>');
-           }else if(golen==1){
+           }
+	     //If there is single godown is present and selected in dispatch from field then it gives alert on dispatch to. 
+	     else if(golen==1){
 	       if(godown.goid == $("#tn_from_godown option:selected").val()){
 		   $("#tn_to_godown").hide();
 		   $("#nogo").show();
