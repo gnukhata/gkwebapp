@@ -1740,7 +1740,7 @@ $(document).ready(function() {
 	      return false;
 	  }
 	if ($("#invoice_deliverynote option:selected").val() != '') {
-	    if (parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + curindex + ") td:eq(1) input").attr("data")).toFixed(2))) {
+	    if (parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + curindex + ") td:eq(2) input").attr("data")).toFixed(2))) {
           $("#quantity-exceed-alert").alert();
           $("#quantity-exceed-alert").fadeTo(2250, 500).slideUp(500, function() {
               $("#quantity-exceed-alert").hide();
@@ -2292,7 +2292,6 @@ if (event.which == 13) {
       var invoicetotal = 0.00;
       var productcodes = [];
       var productqtys = [];
-      var quantity;
       var ppu;
       if($("#consigneename").val() != ""){
 	  consignee["consigneename"] = $.trim($("#consigneename").val());
@@ -2367,7 +2366,7 @@ if (event.which == 13) {
           $('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(0) select').focus();
           return false;
         }
-	quantity = parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val()) + parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
+	let quantity = parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val()) + parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
 	  if (parseFloat(quantity) === 0.00) {
 	      $("#quantity-blank-alert").alert();
 	      $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -2385,7 +2384,7 @@ if (event.which == 13) {
 	    return false;
 	}
       if ($("#invoice_deliverynote option:selected").val() != '') {
-	    if (parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").attr("data")).toFixed(2))) {
+	    if (parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").attr("data")).toFixed(2))) {
           $("#quantity-exceed-alert").alert();
           $("#quantity-exceed-alert").fadeTo(2250, 500).slideUp(500, function() {
               $("#quantity-exceed-alert").hide();
@@ -2421,7 +2420,7 @@ if (event.which == 13) {
 		  $('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select').focus();
 		  return false;
 	      }
-	      quantity = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val());
+	      let quantity = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val());
 	      if (parseFloat(quantity) === 0.00 && $('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select option:selected').attr("gsflag") == '7') {
 		  $("#quantity-blank-alert").alert();
 		  $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -2451,7 +2450,7 @@ if (event.which == 13) {
 	    }
 	}
 	      if ($("#invoice_deliverynote option:selected").val() != '') {
-		  if ((parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(1) input").attr("data")).toFixed(2))) && $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select option:selected').attr("gsflag") == '7') {
+		  if ((parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").attr("data")).toFixed(2))) && $('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select option:selected').attr("gsflag") == '7') {
 		      $("#quantity-exceed-alert").alert();
 		      $("#quantity-exceed-alert").fadeTo(2250, 500).slideUp(500, function() {
 			  $("#quantity-exceed-alert").hide();
