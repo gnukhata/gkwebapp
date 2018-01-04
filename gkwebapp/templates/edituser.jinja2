@@ -130,8 +130,20 @@
                 {% endfor %}
 	      </select>
 	      <small id="txtareahelp" class="form-text text-muted">{% trans %}Press "Shift+Tab" keys from List of Users to shift focus to All Users. {% endtrans %}</small>
-	   </div>
-	  </div>
+	      <div class="manager alluser bg-danger col-xs-12" hidden>
+		<label class="text-danger">No Manager found!</label>
+	      </div>
+	      <div class="operator alluser bg-danger col-xs-12" hidden>
+		<label class="text-danger">No Operator found!</label>
+	      </div>
+	      <div class="intauditor alluser bg-danger col-xs-12" hidden>
+		<label class="text-danger">No Internal Auditor found!</label>
+	      </div>
+	      <div class="goincharge alluser bg-danger col-xs-12" hidden>
+		<label class="text-danger">No Godown Incharge found!</label>
+	      </div>
+	    </div>
+	    </div>
 	  </div>
 	  
 	  <div class="row">
