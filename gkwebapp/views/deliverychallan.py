@@ -239,8 +239,8 @@ def unbillspreadsheet(request):
     sheet.getColumn(4).setWidth("5cm")
     sheet.getColumn(5).setWidth("4cm")
     sheet.getCell(0,3).stringValue("Sr. No.").setBold(True).setAlignHorizontal("center")
-    sheet.getCell(1,3).stringValue("Delchal No.").setBold(True).setAlignHorizontal("center")
-    sheet.getCell(2,3).stringValue("Delchal Date").setBold(True).setAlignHorizontal("center")
+    sheet.getCell(1,3).stringValue("Deli. Note No.").setBold(True).setAlignHorizontal("center")
+    sheet.getCell(2,3).stringValue("Deli. Note Date").setBold(True).setAlignHorizontal("center")
     sheet.getCell(3,3).stringValue(title).setBold(True).setAlignHorizontal("center")
     sheet.getCell(4,3).stringValue("Godown Name").setBold(True).setAlignHorizontal("center")
     if del_unbilled_type == "0":
