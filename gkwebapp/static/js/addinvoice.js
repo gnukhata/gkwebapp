@@ -1995,7 +1995,8 @@ if (event.which == 13) {
 
     //GST events end here
 
-  $(document).off("click", ".product_del").on("click", ".product_del", function() {
+    $(document).off("click", ".product_del").on("click", ".product_del", function(event) {
+	event.preventDefault();
   var curindex = $(this).closest('tr').index();
   var nextindex = curindex + 1;
   var previndex = curindex - 1;
