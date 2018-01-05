@@ -512,8 +512,14 @@ $(document).ready(function() {
                              if ('CESS' in resp['tax']) {
                                  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(resp['tax']['CESS']).toFixed(2));
                              }
-                         }
-                     }
+			 }
+		     }
+		       else if (resp["gkstatus"] == 1) {
+			   $("#notax-alert").alert();
+			   $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
+			       $("#notax-alert").hide();
+			   });
+		       }
                    })
                    .fail(function() {
                      console.log("error");

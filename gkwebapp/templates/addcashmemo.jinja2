@@ -22,7 +22,11 @@
     </div>
     <div class="alert alert-danger" id="product-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      <label for="vno">{% trans %}Please select a product!{% endtrans %}</label>
+      <label for="vno">{% trans %}Please select a product/service!{% endtrans %}</label>
+    </div>
+    <div class="alert alert-warning" id="notax-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}You have not entered tax for product(s)!{% endtrans %}
     </div>
     <div class="alert alert-danger" id="product-duplicate-alert"  aria-live="rude" role="alert" hidden>
 
@@ -73,7 +77,6 @@
 
             {% trans %}Please enter date within the financial year!{% endtrans %}
           </div>
-
           <div class="col-md-3">
 
             <div class="form-group">
