@@ -2928,10 +2928,9 @@ if (event.which == 13) {
     event.preventDefault();
     /* Act on the event */
     if ($("#status").val() == '9') {
-      $("#invoice_record").click();
-
+	$("#invoice_view_purchase").click();
     } else {
-      $("#invoice_create").click();
+      $("#invoice_view_sale").click();
     }
   });
     
