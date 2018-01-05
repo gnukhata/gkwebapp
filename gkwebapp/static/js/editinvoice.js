@@ -1189,7 +1189,15 @@ $(document).ready(function() {
     if ($(this).val() == "") {
       $(this).val(0);
     }
-    var curindex = $(this).closest('#invoice_product_table_vat tbody tr').index();
+      var curindex = $(this).closest('#invoice_product_table_vat tbody tr').index();
+      if (parseFloat($(this).val()) == 0) {
+      $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+	      $('.invoice_product_per_price_vat:eq(' + curindex + ')').focus().select();
+          });
+	  return false;
+    }
       calculatevataxamt(curindex);
   });
 
@@ -1199,6 +1207,14 @@ $(document).ready(function() {
     var previndex = curindex - 1;
     if (event.which == 13) {
 	event.preventDefault();
+	if (parseFloat($(this).val()) == 0) {
+      $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+	      $('.invoice_product_per_price_vat:eq(' + curindex + ')').focus().select();
+          });
+	  return false;
+    }
 	$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').focus().select();
     } else if (event.which == 190 && event.shiftKey) {
       event.preventDefault();
@@ -1777,7 +1793,15 @@ $(document).ready(function() {
     if ($(this).val() == "") {
       $(this).val(0);
     }
-    var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
+      var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
+      if (parseFloat($(this).val()) == 0) {
+      $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+	      $('.invoice_product_per_price_gst:eq(' + curindex + ')').focus().select();
+          });
+	  return false;
+    }
       calculategstaxamt(curindex);
   });
 
@@ -1787,6 +1811,14 @@ $(document).ready(function() {
     var previndex = curindex - 1;
     if (event.which == 13) {
 	event.preventDefault();
+	if (parseFloat($(this).val()) == 0) {
+      $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+	      $('.invoice_product_per_price_gst:eq(' + curindex + ')').focus().select();
+          });
+	  return false;
+    }
 	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').focus().select();
     } else if (event.which == 190 && event.shiftKey) {
       event.preventDefault();
@@ -2593,34 +2625,6 @@ if (event.which == 13) {
       productcodes.push($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val());
 
       var productcode = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
-	$.ajax({
-        url: '/product?type=prodtax',
-        type: 'POST',
-        dataType: 'json',
-        async: false,
-        data: { "productcode": productcode },
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-        }
-      })
-       .done(function(resp) {
-         console.log("success");
-         if (resp["gkresult"].length == 0) {
-             $("#sometax-alert").alert();
-           $("#sometax-alert").fadeTo(2250, 500).slideUp(500, function() {
-             $("#sometax-alert").hide();
-           });
-           return false;
-         }
-
-       })
-       .fail(function() {
-         console.log("error");
-       })
-       .always(function() {
-         console.log("complete");
-       });
-
       if ($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(0) select option:selected').val() == "") {
           $("#product-blank-alert").alert();
           $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -2651,6 +2655,14 @@ if (event.which == 13) {
       if ($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val() == "") {
         $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val(0.00);
       }
+	if (parseFloat($('.invoice_product_per_price_vat:eq(' + i + ')').val()) == 0.00) {
+	 $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+	      $('.invoice_product_per_price_vat:eq(' + i + ')').focus().select();
+          });
+	  return false;   
+	}
 	if (parseFloat(parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(4) input').val()).toFixed(2)) > (parseFloat(parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(1) input').val()).toFixed(2)) * parseFloat(parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(3) input').val()).toFixed(2)))) {
 	    $("#discount-more-alert").alert();
 	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -2702,6 +2714,14 @@ if (event.which == 13) {
 		      return false;
 		  }
 	      }
+	      if (parseFloat($('.invoice_product_per_price_gst:eq(' + i + ')').val()) == 0) {
+	 $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+	      $('.invoice_product_per_price_gst:eq(' + i + ')').focus().select();
+          });
+	  return false;   
+	}
 	      if ($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select option:selected').attr("gsflag") == 7) {
 		  if (parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val()).toFixed(2)) > (parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(2) input').val()).toFixed(2)) * parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(4) input').val()).toFixed(2)))) {
 	    $("#discount-more-alert").alert();
