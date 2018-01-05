@@ -732,11 +732,12 @@ $(document).ready(function() {
 	    $(this).val(parseFloat($(this).val()).toFixed(2));
 	}
     });
-    $(document).off("focusout",".gstin").on("focusout",".gstin",function(event) {
+    $(document).off("change",".gstin").on("change",".gstin",function(event) {
         var curindex = $(this).closest('tr').index();
         var gstin = $(this).val();
         var gstnint = parseInt(gstin[0] + gstin[1]);
-        if((!($.isNumeric(gstnint)) || gstnint > 37 || gstnint < 0 || gstin.length !=15)  && gstin != ""){
+        if (gstin != ""){
+	    if(!($.isNumeric(gstnint)) || gstnint > 37 || gstnint < 0 || gstin.length !=15){
             $("#gstin-improper-alert").alert();
             $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#gstin-improper-alert").hide();
@@ -744,6 +745,7 @@ $(document).ready(function() {
             });
             return false;
         }
+	}
     });
 
     //VAT Table events start here

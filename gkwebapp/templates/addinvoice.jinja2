@@ -279,7 +279,7 @@
 	      </div>
 	      <div class="alert alert-danger" id="quantity-exceed-alert"  aria-live="rude" role="alert" hidden>
 
-		<label >{% trans %}Quantity cannot be greater than that specified in the delivery note!{% endtrans %}</label>
+		<label >{% trans %}Sum of Billed Quantity and Free Quantity cannot be greater than Quantity specified in the delivery note!{% endtrans %}</label>
 	      </div>
 	      <div class="alert alert-danger" id="price-blank-alert"  aria-live="rude" role="alert" hidden>
 
@@ -622,7 +622,7 @@
         <div class="container-fluid">
 	  <div class="alert alert-danger" id="image-alert"  aria-live="rude" role="alert" hidden>
 
-	    {% trans %}Please upload image in JPEG format!{% endtrans %}
+	    {% trans %}Please upload image in JPG/JPEG format!{% endtrans %}
 	  </div>
           <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
           <button id="invoice_reset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
@@ -638,7 +638,7 @@
 	    {% trans %}Attac<u>h</u>{% endtrans %}
 	  </label>
 	  <span class='label label-info' id="upload-file-info"></span>
-	  <small class="form-text text-danger text-muted">(JPEG images only.)</small>
+	  <small class="form-text text-danger text-muted">(JPG/JPEG images only.)</small>
         </div>
       </div>
     </div>
