@@ -254,6 +254,7 @@ def unbillspreadsheet(request):
         sheet.getCell(4, row).stringValue(deliverychallan["goname"]).setAlignHorizontal("center")
         if del_unbilled_type == "0":
             sheet.getCell(5, row).stringValue(deliverychallan["dcflag"]).setAlignHorizontal("center")
+        row += 1
     ods.save("response.ods")
     repFile = open("response.ods")
     rep = repFile.read()
