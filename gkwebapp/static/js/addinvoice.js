@@ -1196,7 +1196,15 @@ $(document).ready(function() {
     if ($(this).val() == "") {
       $(this).val(0);
     }
-    var curindex = $(this).closest('#invoice_product_table_vat tbody tr').index();
+      var curindex = $(this).closest('#invoice_product_table_vat tbody tr').index();
+      if (parseFloat($(this).val()) == 0) {
+      $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+	      $('.invoice_product_per_price_vat :eq(' + curindex + ')').focus();
+          });
+	  return false;
+    }
       calculatevataxamt(curindex);
   });
 
@@ -1784,7 +1792,15 @@ $(document).ready(function() {
     if ($(this).val() == "") {
       $(this).val(0);
     }
-    var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
+      var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
+      if (parseFloat($(this).val()) == 0) {
+      $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+	      $('.invoice_product_per_price_gst:eq(' + curindex + ')').focus();
+          });
+	  return false;
+    }
       calculategstaxamt(curindex);
   });
 
