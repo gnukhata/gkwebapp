@@ -62,7 +62,7 @@ width:3%
 }
 
 .smwrap1{
-width:1.7%
+width:1.8%
 }
 
 .mdwrap{
@@ -97,8 +97,8 @@ width:22%
 			<thead class="bg-primary">
 				<tr>
 					<th class="smwrap1 calign">{% trans %}Sr.No.{% endtrans %}</th>
-					<th class="smwrap calign">{% trans %}DelChal No.{% endtrans %}</th>
-					<th class="mdwrap calign">{% trans %}Delchal Date{% endtrans %}</th>
+					<th class="mdwrap calign">{% trans %}Deli. Note No.{% endtrans %}</th>
+					<th class="mdwrap calign">{% trans %}Deli. Note Date{% endtrans %}</th>
 					{% if inout == "9" %}
 					<th class="ewrap calign">{% trans %}Supplier Name{% endtrans %}</th>
 					{% elif inout == "15" %}
@@ -116,7 +116,7 @@ width:22%
 					<td class="smwrap1 calign">
 						{{record['srno']}}
 					</td>
-					<td class="smwrap calign">
+					<td class="mdwrap calign">
 						<a class="dcno" href="">{{record['dcno']}}</a>
 					</td>
 					<td class="mdwrap calign">
