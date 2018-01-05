@@ -2143,7 +2143,7 @@ if (event.which == 13) {
 			    // Div that has all fields of invoice is shown.
 			    $("#invdetailsdiv").show();
 			    // All fields are disabled until Edit button is clicked.
-			    $('input:not(#status), select:not(#invselect)').val("");
+			    $('input:not(#status, #taxapplicable), select:not(#invselect)').val("");
 			    $('input, select:not(#invselect)').prop("disabled", true);
 			    // Div with buttons is shown.
 			    $("#buttonsdiv").show();
