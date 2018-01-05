@@ -721,7 +721,7 @@ $(document).ready(function() {
       $(this).val(0);
     }
 	var curindex = $(this).closest('#invoice_product_table_vat tbody tr').index();
-	if ($(this).val() > ($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val() * $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val())) {
+	if (parseFloat(parseFloat($(this).val()).toFixed(2)) > (parseFloat(parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2)) * parseFloat(parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2)))) {
 	    $("#discount-more-alert").alert();
 	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
 		$(".invoice_product_discount_vat:eq(" + curindex + ")").focus().select();
@@ -738,7 +738,7 @@ $(document).ready(function() {
     var previndex = curindex - 1;
     if (event.which == 13) {
 	event.preventDefault();
-	if ($(this).val() > ($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val() * $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val())) {
+	if (parseFloat(parseFloat($(this).val()).toFixed(2)) > (parseFloat(parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2)) * parseFloat(parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2)))) {
 	    $("#discount-more-alert").alert();
 	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
 		$(".invoice_product_discount_vat:eq(" + curindex + ")").focus().select();
@@ -1071,7 +1071,7 @@ $(document).off("keyup").on("keyup", function(event) {
         	      $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").focus().select();
         	      return false;
         	  }
-	    if ($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(4) input').val() > ($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(1) input').val() * $('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(3) input').val())) {
+	    if (parseFloat(parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(4) input').val()).toFixed(2)) > (parseFloat(parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(1) input').val()).toFixed(2)) * parseFloat(parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(3) input').val()).toFixed(2)))) {
 	    $("#discount-more-alert").alert();
 	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
 		$(".invoice_product_discount_vat:eq(" + i + ")").focus().select();
@@ -1119,7 +1119,7 @@ $(document).off("keyup").on("keyup", function(event) {
 	      return false;
 	  }
 	       if ($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select option:selected').attr("gsflag") == 7) {
-	    if ($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val() > ($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(2) input').val() * $('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(4) input').val())) {
+	    if (parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val()).toFixed(2)) > (parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(2) input').val()).toFixed(2)) * parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(4) input').val()).toFixed(2)))) {
 	    $("#discount-more-alert").alert();
 	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
 		$(".invoice_product_discount_vat:eq(" + i + ")").focus().select();
@@ -1129,7 +1129,7 @@ $(document).off("keyup").on("keyup", function(event) {
 	    }
 	}
 	else{
-	    if ($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val() > $('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(4) input').val()) {
+	    if (parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val()).toFixed(2)) > parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(4) input').val()).toFixed(2))) {
 	    $("#discount-more-alert").alert();
 	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
 		$(".invoice_product_discount_vat:eq(" + i + ")").focus().select();
@@ -1614,7 +1614,7 @@ $(document).off("keyup").on("keyup", function(event) {
     $(document).off("change", ".invoice_product_discount_gst").on("change", ".invoice_product_discount_gst", function(event) {
 	var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
 	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select option:selected').attr("gsflag") == 7) {
-	    if ($(this).val() > ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').val() * $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val())) {
+	    if (parseFloat(parseFloat($(this).val()).toFixed(2)) > (parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2)) * parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2)))) {
 	    $("#discount-more-alert").alert();
 	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
 		$(".invoice_product_discount_gst:eq(" + curindex + ")").focus().select();
@@ -1624,7 +1624,7 @@ $(document).off("keyup").on("keyup", function(event) {
 	    }
 	}
 	else{
-	    if ($(this).val() > $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()) {
+	    if (parseFloat(parseFloat($(this).val()).toFixed(2)) > parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2))) {
 	    $("#discount-more-alert").alert();
 	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
 		$(".invoice_product_discount_gst:eq(" + curindex + ")").focus().select();
@@ -1666,7 +1666,7 @@ $(document).off("keyup").on("keyup", function(event) {
     	      return false;
     	  }
 	  if ($('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select option:selected').attr("gsflag") == 7) {
-	    if ($(this).val() > ($('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(2) input').val() * $('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(4) input').val())) {
+	    if (parseFloat(parseFloat($(this).val()).toFixed(2)) > (parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(2) input').val()).toFixed(2)) * parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(4) input').val()).toFixed(2)))) {
 	    $("#discount-more-alert").alert();
 	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
 		$(".invoice_product_discount_vat:eq(" + curindex1 + ")").focus().select();
@@ -1676,7 +1676,7 @@ $(document).off("keyup").on("keyup", function(event) {
 	    }
 	}
 	else{
-	    if ($(this).val() > $('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(4) input').val()) {
+	    if (parseFloat(parseFloat($(this).val()).toFixed(2)) > parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(4) input').val()).toFixed(2))) {
 	    $("#discount-more-alert").alert();
 	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
 		$(".invoice_product_discount_vat:eq(" + curindex1 + ")").focus().select();
