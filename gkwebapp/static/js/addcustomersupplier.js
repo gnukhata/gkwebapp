@@ -196,7 +196,6 @@ $("#add_state").keydown(function(event) {
 
     $(document).off("keydown",".gstin").on("keydown",".gstin",function(event){
 	var curindex1 = $(this).closest('tr').index();
-    console.log(curindex1);
   var nextindex1 = curindex1+1;
   var previndex1 = curindex1-1;
   var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
@@ -204,7 +203,7 @@ $("#add_state").keydown(function(event) {
   if (event.which==13) {
       event.preventDefault();
       gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
-      if($(".gstin").val()==""){
+      if($(".gstin").val()=="" && $(".panno").val()==""){
 	  $("#cussup_save").focus();
       }
       else if ($(".gstin").val() !="" && curindex1 != ($("#gstintable tbody tr").length-1)) {
