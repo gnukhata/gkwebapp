@@ -1364,7 +1364,7 @@ $(document).ready(function() {
 	calculatevataxamt(curindex1);
       if (curindex1 != ($("#invoice_product_table_vat tbody tr").length - 1)) {//Not a last row.
         $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
-      } else if ($("#invoice_deliverynote option:selected").val() == '' && $('#invoice_product_table_vat tbody tr:eq(' + curindex1 + ') td:eq(0) select option:visible').length >= 2){//Last row along with additional conditions.
+      } else {//Last row along with additional conditions.
         if ($('#invoice_product_table_vat tbody tr:eq(' + curindex1 + ') td:eq(0) select option:selected').val() == "") {
           $("#product-blank-alert").alert();
           $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -1382,6 +1382,15 @@ $(document).ready(function() {
 	      $("#invoice_product_table_vat tbody tr:eq(" + curindex1 + ") td:eq(1) input").focus().select();
 	      return false;
 	  }
+	  if ($("#invoice_deliverynote option:selected").val() != '') {
+	    if (parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#invoice_product_table_vat tbody tr:eq(" + curindex1 + ") td:eq(1) input").attr("data")).toFixed(2))) {
+          $("#quantity-exceed-alert").alert();
+          $("#quantity-exceed-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#quantity-exceed-alert").hide();
+          });
+          return false;
+	    }
+	  if ($('#invoice_product_table_vat tbody tr:eq(' + curindex1 + ') td:eq(0) select option:visible').length >= 2){
 	$('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
 	  $('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 	  for (let i = 0; i <= curindex1; i++) {
@@ -1391,21 +1400,13 @@ $(document).ready(function() {
 	  $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
 	  $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);
 	  $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
-      }
-	else if ($("#invoice_deliverynote option:selected").val() != '') {
-	    if (parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#invoice_product_table_vat tbody tr:eq(" + curindex1 + ") td:eq(1) input").attr("data")).toFixed(2))) {
-          $("#quantity-exceed-alert").alert();
-          $("#quantity-exceed-alert").fadeTo(2250, 500).slideUp(500, function() {
-              $("#quantity-exceed-alert").hide();
-          });
-          return false;
-	    }
-	    $("#accountno").focus().select();
-	}
+	  }
       else {
           $("#accountno").focus().select();
       }
-    } else if (event.which == 190 && event.shiftKey) {
+      }
+      }
+    }else if (event.which == 190 && event.shiftKey) {
       event.preventDefault();
       $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(4) input').focus().select();
     } else if (event.which == 188 && event.shiftKey) {
