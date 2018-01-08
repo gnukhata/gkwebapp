@@ -33,14 +33,14 @@ $(document).ready(function() {
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   // Setting default date to financialstart and end.
-  var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
-  $("#viewbankrecon_fromdate").val(fromdatearray[2])
-  $("#viewbankrecon_frommonth").val(fromdatearray[1])
-  $("#viewbankrecon_fromyear").val(fromdatearray[0])
-  var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g)
-  $("#viewbankrecon_todate").val(todatearray[2])
-  $("#viewbankrecon_tomonth").val(todatearray[1])
-  $("#viewbankrecon_toyear").val(todatearray[0])
+    var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g);
+    $("#viewbankrecon_fromdate").val(fromdatearray[2]);
+    $("#viewbankrecon_frommonth").val(fromdatearray[1]);
+    $("#viewbankrecon_fromyear").val(fromdatearray[0]);
+    var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g);
+    $("#viewbankrecon_todate").val(todatearray[2]);
+    $("#viewbankrecon_tomonth").val(todatearray[1]);
+    $("#viewbankrecon_toyear").val(todatearray[0]);
 
   function pad (str, max) { //to add leading zeros in date
     str = str.toString();
@@ -48,7 +48,7 @@ $(document).ready(function() {
       return str.length < max ? pad("0" + str, max) : str;
     }
     else{
-      return str
+	return str;
     }
   }
   function yearpad (str, max) {//to add leading 20 or 200 to year
@@ -60,7 +60,7 @@ $(document).ready(function() {
       return str.length < max ? pad("20" + str, max) : str;
     }
     else{
-      return str
+	return str;
     }
   }
 
@@ -122,7 +122,7 @@ $(document).ready(function() {
       $("#account-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#account-blank-alert").hide();
       });
-      $('#viewbankrecon_accname').focus()
+	$('#viewbankrecon_accname').focus();
       return false;
     }
     if ($("#viewbankrecon_fromyear").val()==0 ||$("#viewbankrecon_frommonth").val()==0 ||$("#viewbankrecon_fromdate").val()==0 ) {
