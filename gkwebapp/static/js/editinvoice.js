@@ -43,6 +43,7 @@ $(document).ready(function() {
     var invoicedatestring = "";
     var invoicedate = "";
     var consigneeflag = false;
+    var delchalproducts = [];
     var gstdate = Date.parseExact('01072017', "ddMMyyyy");
     //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
     var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
@@ -1828,7 +1829,7 @@ $(document).ready(function() {
     var previndex = curindex - 1;
     if (event.which == 13) {
 	event.preventDefault();
-	if (parseFloat($(this).val() && parseFloat($('.invoice_product_quantity_gst:eq(' + curindex + ')').val()) > 0) == 0) {
+	if (parseFloat($(this).val()) == 0 && parseFloat($('.invoice_product_quantity_gst:eq(' + curindex + ')').val()) > 0) {
       $("#price-blank-alert").alert();
           $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
               $("#price-blank-alert").hide();
@@ -2194,9 +2195,9 @@ if (event.which == 13) {
 			    else {
 				$("#invoice_editprint").show();
 			    }
-			    var delchalproducts;
 			    // Loads delivery note data if any.
 			    if(resp.invoicedata.dcid){
+				delchalproducts = [];
 				$.ajax({
 				    url: '/invoice?action=getdeliverynote',
 				    type: 'POST',
