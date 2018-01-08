@@ -155,14 +155,16 @@ $("#add_state").keydown(function(event) {
 	
     });
 
+    var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+    var panno=$(this).val();
     //Keydown event on gstin's panno 
     $(document).off("keydown", ".panno").on("keydown", ".panno", function(event) {
 	var curindex = $(this).closest('tr').index();
 	var previndex = curindex-1;
-	var panno=$(this).val();
+	//var panno=$(this).val();
 	if (event.which == 13) {
 	    event.preventDefault();
-	    var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+	    //var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
 	    if ((panno.length != 10 || !panno.match(regExp)) && $.trim($(".panno").val())!="") {
 		$("#gstin-improper-alert").alert();
 		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -176,23 +178,6 @@ $("#add_state").keydown(function(event) {
 	    }
 	}
     });
-    
-    /*$(document).off("change", ".gstin").on("change", ".gstin", function(event) {
-	var curindex = $(this).closest('tr').index();
-	gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val();
-	console.log(gstinstring);
-	if(gstinstring != ''){
-  	    if(gstinstring.length !=15){
-  		$("#gstin-improper-alert").alert();
-		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-                    $("#gstin-improper-alert").hide();
-  		    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').focus().select();
-		});
-  		return false;
-            }
-	}
-
-    });*/
 
     $(document).off("keydown",".gstin").on("keydown",".gstin",function(event){
 	var curindex1 = $(this).closest('tr').index();
@@ -356,7 +341,7 @@ else{
    }
     if (event.which==38) {
       event.preventDefault();
-      $("#add_cussup_pan").focus().select();
+      $("#add_cussup_an").focus().select();
     }
     });
   $("#add_cussup_reset").click(function(event) {
@@ -377,7 +362,46 @@ else{
       var allow = 1;
     var custsupdata=$("#add_cussup option:selected").val(); //select with option either customer or supplier
     // custsupdata = 3 if customer or 19 if supplier
-    var groupcode = -1;
+	var groupcode = -1;
+	var cuss_pan = $("#add_cussup_pan").val();
+        var panno1= $(".panno").val();
+	console.log(panno1);
+	var regExp1 = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+    
+	if ((cuss_pan.length != 10 || !cuss_pan.match(regExp1)) && cuss_pan !="") {
+	    $("#pan-incorrect-alert").alert();
+	    $("#pan-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#pan-incorrect-alert").hide();
+	    });
+	    $("#add_cussup_pan").focus();
+	    return false;
+	}
+
+	if((panno1.length != 10 || !panno1.match(regExp1)) && panno1 !="") {
+	    $("#gstin-improper-alert").alert();
+	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-alert").hide();
+	    });
+	    $(".panno").focus();
+	    return false;
+	}
+	else if(panno1 !="" && $(".gstin").val() ==""){
+	    $("#gstin-improper-alert").alert();
+	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-alert").hide();
+	    });
+	    $(".gstin").focus();
+	    return false;
+	}
+	/*else if(panno1 !="" && $(".gstin").val() !="" && gstinstring != 15){
+	    $("#gstin-improper-alert").alert();
+	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-alert").hide();
+	    });
+	    $(".gstin").focus();
+	    return false;
+	}*/
+	
     if (custsupdata == '3'){
       groupcode = $("#debtgroupcode").val();
     }
@@ -385,12 +409,13 @@ else{
       groupcode = $("#credgroupcode").val();
     }
     //validations to check if none of the required fields are left blank
+	    
     if ($.trim($("#add_cussup option:selected").val())=="") {
       $("#cussup-blank-alert").alert();
       $("#cussup-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#cussup-blank-alert").hide();
       });
-      $("#add_cussup").focus();
+      $(".gstinstate").focus();
       return false;
     }
 
