@@ -1199,14 +1199,14 @@ $(document).ready(function() {
       $(this).val(0);
     }
       var curindex = $(this).closest('#invoice_product_table_vat tbody tr').index();
-      if (parseFloat($(this).val()) == 0) {
-      $("#price-blank-alert").alert();
+      if (parseFloat($(this).val()) == 0 && parseFloat($('.invoice_product_quantity_vat:eq(' + curindex + ')').val()) > 0) {
+	  $("#price-blank-alert").alert();
           $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
               $("#price-blank-alert").hide();
 	      $('.invoice_product_per_price_vat:eq(' + curindex + ')').focus().select();
           });
 	  return false;
-    }
+      }
       calculatevataxamt(curindex);
   });
 
@@ -1216,11 +1216,10 @@ $(document).ready(function() {
     var previndex = curindex - 1;
     if (event.which == 13) {
 	event.preventDefault();
-	if (parseFloat($(this).val()) == 0) {
+	if (parseFloat($(this).val()) == 0 && parseFloat($('.invoice_product_quantity_vat:eq(' + curindex + ')').val()) > 0) {
       $("#price-blank-alert").alert();
           $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
               $("#price-blank-alert").hide();
-	      $('.invoice_product_per_price_vat:eq(' + curindex + ')').focus().select();
           });
 	  return false;
     }
@@ -1353,6 +1352,13 @@ $(document).ready(function() {
           });
           return false;
 	    }
+	  if (parseFloat($('.invoice_product_per_price_vat:eq(' + curindex1 + ')').val()) == 0 && parseFloat($('.invoice_product_quantity_vat:eq(' + curindex1 + ')').val()) > 0) {
+      $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+          });
+	  return false;
+    }
 	}
     calculatevataxamt(curindex1);
 
@@ -1397,6 +1403,14 @@ $(document).ready(function() {
           });
           return false;
 	    }
+	  }
+	  if (parseFloat($('.invoice_product_per_price_vat:eq(' + curindex1 + ')').val()) == 0 && parseFloat($('.invoice_product_quantity_vat:eq(' + curindex1 + ')').val()) > 0) {
+      $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+          });
+	  return false;
+    }
 	  if ($('#invoice_product_table_vat tbody tr:eq(' + curindex1 + ') td:eq(0) select option:visible').length >= 2){
 	$('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
 	  $('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
@@ -1410,7 +1424,6 @@ $(document).ready(function() {
 	  }
       else {
           $("#accountno").focus().select();
-      }
       }
       }
     }else if (event.which == 190 && event.shiftKey) {
@@ -1804,7 +1817,7 @@ $(document).ready(function() {
       $(this).val(0);
     }
       var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
-      if (parseFloat($(this).val()) == 0) {
+      if (parseFloat($(this).val()) == 0 && parseFloat($('.invoice_product_quantity_gst:eq(' + curindex + ')').val()) > 0) {
       $("#price-blank-alert").alert();
           $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
               $("#price-blank-alert").hide();
@@ -1821,7 +1834,7 @@ $(document).ready(function() {
     var previndex = curindex - 1;
     if (event.which == 13) {
 	event.preventDefault();
-	if (parseFloat($(this).val()) == 0) {
+	if (parseFloat($(this).val()) == 0 && parseFloat($('.invoice_product_quantity_gst:eq(' + curindex + ')').val()) > 0) {
       $("#price-blank-alert").alert();
           $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
               $("#price-blank-alert").hide();
@@ -1888,6 +1901,13 @@ $(document).ready(function() {
 	    return false;
 	    }
 	}
+	if (parseFloat($('.invoice_product_per_price_gst:eq(' + curindex + ')').val()) == 0 && parseFloat($('.invoice_product_quantity_gst:eq(' + curindex + ')').val()) > 0) {
+      $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+          });
+	  return false;
+    }
 	calculategstaxamt(curindex);
     });
 
@@ -1948,6 +1968,13 @@ if (event.which == 13) {
 	    return false;
 	    }
 	}
+	if (parseFloat($('.invoice_product_per_price_gst:eq(' + curindex1 + ')').val()) == 0 && parseFloat($('.invoice_product_quantity_gst:eq(' + curindex1 + ')').val()) > 0) {
+      $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+          });
+	  return false;
+    }
 	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select option:visible').length >= 2){
 	    $('#invoice_product_table_gst tbody').append('<tr>' + gsthtml + '</tr>');
 	    $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
@@ -2384,7 +2411,7 @@ if (event.which == 13) {
 	      $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").focus().select();
 	      return false;
 	  }
-	if (parseFloat($('.invoice_product_per_price_vat:eq(' + i + ')').val()) == 0.00) {
+	if (parseFloat($('.invoice_product_per_price_vat:eq(' + i + ')').val()) == 0.00 && parseFloat($('.invoice_product_quantity_vat:eq(' + i + ')').val()) > 0) {
 	 $("#price-blank-alert").alert();
           $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
               $("#price-blank-alert").hide();
@@ -2457,7 +2484,7 @@ if (event.which == 13) {
 	    }
 	}
 	else{
-	    if (parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val().toFixed(2))) > parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(4) input').val()).toFixed(2))) {
+	    if (parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val()).toFixed(2)) > parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(4) input').val()).toFixed(2))) {
 	    $("#discount-more-alert").alert();
 	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
 		$(".invoice_product_discount_vat:eq(" + i + ")").focus().select();
@@ -2475,7 +2502,7 @@ if (event.which == 13) {
 		      return false;
 		  }
 	      }
-	      if (parseFloat($('.invoice_product_per_price_gst:eq(' + i + ')').val()) == 0) {
+	      if (parseFloat($('.invoice_product_per_price_gst:eq(' + i + ')').val()) == 0 && parseFloat($('.invoice_product_quantity_gst:eq(' + i + ')').val()) > 0) {
 	 $("#price-blank-alert").alert();
           $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
               $("#price-blank-alert").hide();
