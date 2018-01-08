@@ -2229,7 +2229,7 @@ if (event.which == 13) {
 				});
 				// If selected invoice is not in the list it is appended.
 				if($.inArray(resp.invoicedata.dcid, delchallist) == -1){
-				    $("#invoice_deliverynote").append('<option value="' + resp.invoicedata.dcid + '" dcno = "' + resp.invoicedata.dcno + '" dcdate="' + resp.invoicedata.dcdate + '">' + resp.invoicedata.dcid + ', ' + resp.invoicedata.dcdate + ', ' + resp.invoicedata.custSupDetails.custname + '</option>');
+				    $("#invoice_deliverynote").append('<option disabled hidden value="' + resp.invoicedata.dcid + '" dcno = "' + resp.invoicedata.dcno + '" dcdate="' + resp.invoicedata.dcdate + '">' + resp.invoicedata.dcid + ', ' + resp.invoicedata.dcdate + ', ' + resp.invoicedata.custSupDetails.custname + '</option>');
 				}
 				$("#invoice_deliverynote").val(resp.invoicedata.dcid);
 			    }
