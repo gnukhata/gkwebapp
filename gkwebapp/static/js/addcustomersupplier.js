@@ -156,15 +156,14 @@ $("#add_state").keydown(function(event) {
     });
 
     var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
-    var panno=$(this).val();
+    var panno="";
     //Keydown event on gstin's panno 
     $(document).off("keydown", ".panno").on("keydown", ".panno", function(event) {
 	var curindex = $(this).closest('tr').index();
 	var previndex = curindex-1;
-	//var panno=$(this).val();
-	if (event.which == 13) {
+	panno = $(this).val();
+	if (event.which == 13 || event.which ==9) {
 	    event.preventDefault();
-	    //var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
 	    if ((panno.length != 10 || !panno.match(regExp)) && $.trim($(".panno").val())!="") {
 		$("#gstin-improper-alert").alert();
 		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -294,7 +293,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     }
   });
   $("#add_cussup_pan").keydown(function(event) {
-    if (event.which==13) {
+    if (event.which==13 || event.which==9) {
 	event.preventDefault();
 	var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; 
 	var txtpan = $(this).val();
@@ -393,14 +392,14 @@ else{
 	    $(".gstin").focus();
 	    return false;
 	}
-	/*else if(panno1 !="" && $(".gstin").val() !="" && gstinstring != 15){
+	else if(gstinstring != "" && gstinstring != 15){
 	    $("#gstin-improper-alert").alert();
 	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#gstin-improper-alert").hide();
 	    });
-	    $(".gstin").focus();
+	    $(".panno").focus();
 	    return false;
-	}*/
+	}
 	
     if (custsupdata == '3'){
       groupcode = $("#debtgroupcode").val();
