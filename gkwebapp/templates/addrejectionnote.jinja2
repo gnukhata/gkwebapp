@@ -107,7 +107,7 @@
 		</label>
 		<input class="form-control input-sm" id="rejectionnote_customer" placeholder="None" accesskey="" disabled>
 	      </div>
-	      <div class="col-xs-6">
+	      <div class="col-xs-6 tinfield">
 		<label for="rejectionnote_customer">
 		  {% if gkstatus=="out" %}
 		    {% trans %}Supplier TIN{% endtrans %} :
@@ -116,6 +116,15 @@
 		  {% endif %}
 		</label>
 		<input class="form-control input-sm" id="rejectionnote_customertin" placeholder="None" accesskey="" disabled>                           </div>
+		<div class="col-xs-6 gstinfield">
+		  <label for="rejectionnote_customer">
+		    {% if gkstatus=="out" %}
+		      {% trans %}Supplier GSTIN{% endtrans %} :
+		    {% else %}
+		      {% trans %}Customer GSTIN{% endtrans %} :
+		    {% endif %}
+		  </label>
+		  <input class="form-control input-sm" id="rejectionnote_customertin" placeholder="None" accesskey="" disabled>                         </div>
 	    </div>
 	  </div>
 	  <div class="form-group">

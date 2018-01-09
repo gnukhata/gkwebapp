@@ -22,6 +22,13 @@ Contributors: "Bhavesh Bawadhane" <bbhavesh07@gmail.com> */
 $(document).ready(function() {
     $('.modal-backdrop').remove();
     $('.rndate').autotab('number');
+    if(sessionStorage.vatorgstflag == '22' ){
+      $(".gstinfield").hide();
+      $(".tinfield").show();
+    } else {
+	$(".gstinfield").show();
+	$(".tinfield").hide();
+    }
     $("#rejectionnote_invoice").focus();
     $("#rejectionnote_date").numeric();
     $("#rejectionnote_month").numeric();
