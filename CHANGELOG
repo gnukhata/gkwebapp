@@ -1,3 +1,17 @@
+[09 January 2018 Release 4.50]
+* Edit facility for Invoice.
+* Edit facility for User(Admin Only).
+* Consgnee details can be added in Delivery Note.
+* Fixed bugs in interface for creating Invoice, Cash memo and Delivery Note.
+* Fixed save and print in Delivery Note.
+* Fix for View Invoice and Print of Invoice.
+* Fixed alignment in Print of Cash Memo.
+* Consignee details get loaded from Delivery Note.
+* List of unpaid invoices in Add Receipt/Payment Voucher interface.
+* Amount Paid in Invoice gets automatically updated in Receipt/Payment Voucher if Invoice is selected.
+* Fixed export to spreadsheet and modified labels in Unbilled Deliveries report.
+* Clicking on username in ticker takes user to change password page.
+
 [10-November-2017 Release 4.25 Update]
 * GSTIN added in orgnisation details.
 * Validation for PAN and GSTIN added.
