@@ -226,6 +226,14 @@
 					      <input type="text" id="orgmvat" class="form-control input-sm tinfield" name="organisationmvat" value="{{gkresult["orgmvat"]}}" style="width: 100%"></input>
 					    </td>
 					    </tr>
+					    <tr>
+					      <td>
+						<label for="organisationstaxnumber" id="orgstaxnumber">{% trans %}Service Tax Number{% endtrans %} :</label>
+					      </td>
+					      <td>
+						<input type="text" id="orgstax" class="form-control input-sm" name="organisationstaxnumber" value="{{gkresult["orgstax"]}}" style="width: 100%"></input>
+					      </td>
+					    </tr>
 					  {% endif %}
 					  {% if vatorgstflag=='7' or vatorgstflag=='29' %}
 					      <tr>

@@ -451,12 +451,14 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     $("#orgmvat").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
-	if($("#vatorgstflag").val() == '7' || $("#vatorgstflag").val() == '29'){
-		$("#orggstin").focus();
+	if($("#vatorgstflag").val() == '7'){
+	    $("#orggstin").focus();
+	} else {
+	    $("#orgstax").focus();
 	}
-	else {
+	/*else {
 	    $("#submit").focus();
-	}
+	}*/
     }
      if (event.which==38)  {
           event.preventDefault();
