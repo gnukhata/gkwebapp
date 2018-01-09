@@ -276,17 +276,6 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
         }
     });
 
-    $("#orgstax").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#orgpan").focus().select();
-    }
-     if (event.which==38)  {
-          event.preventDefault();
-          $("#orgcity").focus().select();
-        }
-    });
-
     $("#regday").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
@@ -451,20 +440,29 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     $("#orgmvat").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
-	if($("#vatorgstflag").val() == '7'){
-	    $("#orggstin").focus();
-	} else {
-	    $("#orgstax").focus();
-	}
-	/*else {
-	    $("#submit").focus();
-	}*/
+	$("#orgstax").focus();
     }
      if (event.which==38)  {
           event.preventDefault();
           $("#orgpan").focus().select();
         }
-     });
+    });
+
+    $("#orgstax").keydown(function(event) {
+    if (event.which==13) {
+	event.preventDefault();
+	if($("#vatorgstflag").val() == '29'){
+	    $("#orggstin").focus();
+	} else {
+	    $("#submit").focus();
+	}
+      
+    }
+     if (event.which==38)  {
+          event.preventDefault();
+          $("#orgmvat").focus().select();
+        }
+    });
     
   /**$('input:visible, textarea').keydown(function(event){
     var n =$('input:visible,textarea').length;
