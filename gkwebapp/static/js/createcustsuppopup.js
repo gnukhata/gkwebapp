@@ -290,9 +290,9 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
   });
     
   $("#add_cussup_pan").keydown(function(event) {
-    if (event.which==13) {
+      if (event.which==13 || event.which==9) {
       event.preventDefault();
-     var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; //regEx for PAN
+	var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; //regEx for PAN
 	var txtpan = $(this).val();
 	if ((txtpan.length != 10 || !txtpan.match(regExp)) && $.trim($("#add_cussup_pan").val())!="") {
 	    $("#pan-incorrect-alert").alert();
@@ -369,8 +369,21 @@ else{
 
   $("#cussup_save").click(function(event) {
       //save event for saving the customer/supplier
-    event.preventDefault();
-
+      event.preventDefault();
+      //Validation on PAN
+        var cuss_pan = $("#add_cussup_pan").val();
+        var panno1= $(".panno").val();
+	var regExp1 = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+    
+	if ((cuss_pan.length != 10 || !cuss_pan.match(regExp1)) && cuss_pan !="") {
+	    $("#pan-incorrect-alert").alert();
+	    $("#pan-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#pan-incorrect-alert").hide();
+	    });
+	    $("#add_cussup_pan").focus();
+	    return false;
+	}
+      
     var custsupval;
     if ($("#deliverychallan_gkstatus").val()=='in' || $('#status').val()=='9') {
       custsupval= 19;
