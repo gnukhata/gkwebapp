@@ -429,8 +429,10 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
   });
   $('#gstintable tbody tr:last td:eq(0) select').select();
 });
-  $("#edit_cussup_reset").click(function(event) {
-    $("#customersupplier_edit").click();
+    $("#edit_cussup_reset").click(function(event) {
+	let selectedcustsup = $("#edit_cussup_list").val(); //Current Customer/Supplier.
+	$("#customersupplier_edit").click();  //Trigger click event of Edit Customer/Supplier.
+	$("#edit_cussup_list").val(selectedcustsup).change(); //Select Current Customer/Supplier and trigger change event.
   });
   $("#edit_cussup_btn").click(function(event) {
     $("#edit_cussup_btn").hide();
