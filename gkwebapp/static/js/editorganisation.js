@@ -463,6 +463,15 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
           $("#orgmvat").focus().select();
         }
     });
+
+    // 'Esc' keyevent for shifting focus from GSTIN button to Save button.
+    $("#orggstin").keydown(function(event) {
+    if (event.which==27) {
+	event.preventDefault();
+	    $("#submit").focus(); 
+    }
+   
+    });
     
   /**$('input:visible, textarea').keydown(function(event){
     var n =$('input:visible,textarea').length;
