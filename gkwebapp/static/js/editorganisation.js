@@ -152,22 +152,25 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	
     });
 
-    //Keydown event on gstin's panno 
+    //Keydown event on gstin's panno
+    var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+    var panno="";
     $(document).off("keydown", ".panno").on("keydown", ".panno", function(event) {
 	var curindex = $(this).closest('tr').index();
 	var previndex = curindex-1;
-	if (event.which == 13) {
+	panno = $(this).val();
+	if (event.which == 13 || event.which ==9) {
 	    event.preventDefault();
-	    if($(this).val() != '') {
-		$(this).next('input').focus().select();
-	
-	    }
-	    else {
-		$("#panno-blank-alert").alert();
-                $("#panno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-                  $("#panno-blank-alert").hide();
-  		$(this).focus().select();
+	    if ((panno.length != 10 || !panno.match(regExp)) && panno != "") {
+		console.log("Modal Inside Pan");
+		$("#gstin-improper-modal").alert();
+		$("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#gstin-improper-modal").hide();
 		});
+		$(this).focus().select();
+	    }
+	    else{
+		$(this).next('input').focus().select();
 		return false;
 	    }
 	}
@@ -199,7 +202,10 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
   var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
   if (event.which==13) {
       event.preventDefault();
-    if (curindex1 != ($("#gstintable tbody tr").length-1)) {
+      if($(".gstin").val()=="" && $(".panno").val()==""){
+	  $("#gstin_done").focus();
+      }
+      else if (curindex1 != ($("#gstintable tbody tr").length-1)) {
       $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
     }
       else {
@@ -540,6 +546,9 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     $("#showeditorg").click();
   });
 
+    $("#gstin_done").click(function(event) {
+        $('#addgstinmodal').modal('hide');
+    });
 
   $(document).off("click", "#submit").on("click", "#submit", function(event){
     event.preventDefault();
@@ -698,8 +707,4 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
       .always(function() {
           console.log("complete");
       });
-    $("#gstin_done").click(function(event) {
-        $('#addgstinmodal').modal('hide');
-    });
-
 });
