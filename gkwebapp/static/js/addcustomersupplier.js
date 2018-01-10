@@ -360,11 +360,11 @@ else{
       $("#customersupplier_create").click();
   });
 
-    $(document).one("keyup", function(event) {
+    $(document).off("keyup").on("keyup", function(event) {
         if(event.which == 45) {
+	    event.preventDefault();
+	    console.log("Helllo Insert");
             $("#cussup_save").click();
-            event.preventDefault();
-            return false;
         }
     });
     
