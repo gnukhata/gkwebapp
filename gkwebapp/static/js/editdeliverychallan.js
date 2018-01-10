@@ -1,6 +1,7 @@
 /*
   Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
- Copyright (C) 2017 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+
 This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
 GNUKhata is Free Software; you can redistribute it and/or modify
@@ -21,6 +22,11 @@ Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
 
 Contributors:
 "Krishnakant Mane" <kk@gmail.com>
+"Ishan Masdekar" <imasdekar@dff.org.in>
+"Navin Karkera" <navin@openmailbox.org>
+"Abhijith Balan" <abhijithb21@openmailbox.org.in>
+"Bhavesh Bhawadhane" <bbhavesh07@gmail.com>
+"Prajkta Patkar" <prajkta.patkar007@gmail.com>
 "Reshma Bhatawadekar <reshma_b@riseup.net>"
 */
 $(document).ready(function() {

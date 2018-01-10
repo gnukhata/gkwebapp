@@ -1,11 +1,13 @@
 /*
 Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+
   This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -28,8 +30,8 @@ $(document).ready(function() {
   $(".fixed-table-loading").remove();
   $('#ledgertable1 tbody tr:first-child td:eq(1) a').focus();
   $('#ledgertable1 tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
-  var rcindex = 0
-  var pyindex = 0
+    var rcindex = 0;
+    var pyindex = 0;
   if (sessionStorage.orgt=="Profit Making") { // changing headings and messages depending on type of organisation.
     $("#prjnamelbl2").html("Cost Center: ");
     $("#prjnamelbl3").html("Cost Center: ");
