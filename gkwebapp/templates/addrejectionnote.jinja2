@@ -42,11 +42,11 @@
 		  <option value="" dcno = "" >None</option>
 		  {% for invoice in invoices %}
 		    {% if gkstatus=="out" %}
-		      {% if invoice['csflag']==19 %}
+		      {% if invoice['custsupdetail']['csflag']==19 %}
 			<option value="{{invoice['invid']}}" data-invoiceno = "{{invoice["invoiceno"]}}" data-invoicedate="{{invoice['invoicedate']}}">{{invoice["invoiceno"]}}, {{invoice['invoicedate']}}, {{invoice["custname"]}}</option>
 		      {% endif %}
 		    {% else %}
-		      {% if invoice['csflag']==3 %}
+		      {% if invoice['custsupdetail']['csflag']==3 %}
 			<option value="{{invoice['invid']}}" data-invoiceno = "{{invoice["invoiceno"]}}" data-invoicedate="{{invoice['invoicedate']}}">{{invoice["invoiceno"]}}, {{invoice['invoicedate']}}, {{invoice["custname"]}}</option>
 		      {% endif %}
 		    {% endif %}
