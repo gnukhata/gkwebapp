@@ -138,26 +138,29 @@ $("#add_state").keydown(function(event) {
 	
     });
 
+    var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+    var panno="";
     //Keydown event on gstin's panno 
     $(document).off("keydown", ".panno").on("keydown", ".panno", function(event) {
 	var curindex = $(this).closest('tr').index();
 	var previndex = curindex-1;
-	if (event.which == 13) {
+	panno = $(this).val();
+	if (event.which == 13 || event.which ==9) {
 	    event.preventDefault();
-	    if($(this).val() != '') {
-		$(this).next('input').focus().select();
-	
-	    }
-	    else {
-		$("#panno-blank-alert").alert();
-                $("#panno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-                  $("#panno-blank-alert").hide();
-  		$(this).focus().select();
+	    if ((panno.length != 10 || !panno.match(regExp)) && $.trim($(".panno").val())!="") {
+		$("#gstin-improper-alert").alert();
+		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#gstin-improper-alert").hide();
 		});
+		$(this).focus().select();
+	    }
+	    else{
+		$(this).next('input').focus().select();
 		return false;
 	    }
 	}
     });
+
 
     $(document).off("change",".gstin").on("change",".gstin",function(event) {
 	var curindex = $(this).closest('tr').index();
@@ -171,8 +174,7 @@ $("#add_state").keydown(function(event) {
 		});
   		return false;
           }
-  }
-
+	}
     });
 
 $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
@@ -184,11 +186,14 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
     var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
   if (event.which==13) {
       event.preventDefault();
-    if (curindex1 != ($("#gstintable tbody tr").length-1)) {
-      $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
-    }
+      gstinstring = gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+      if($(".gstin").val()=="" && $(".panno").val()==""){
+	  $("#cussup_save").focus();
+      }
+      else if (curindex1 != ($("#gstintable tbody tr").length-1)) {
+	  $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+      }
       else {
-	  gstinstring = gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
 	if(gstinstring != ''){
   	    if(gstinstring.length !=15){
   		$("#gstin-improper-alert").alert();
@@ -197,8 +202,8 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
   		    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').focus().select();
 		});
   		return false;
-          }
-  }
+            }
+	}
       if (numberofstates > 0) {
 
         $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
@@ -290,7 +295,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
   });
     
   $("#add_cussup_pan").keydown(function(event) {
-      if (event.which==13 || event.which==9) {
+      if (event.which==13) {
       event.preventDefault();
 	var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; //regEx for PAN
 	var txtpan = $(this).val();
@@ -370,7 +375,8 @@ else{
   $("#cussup_save").click(function(event) {
       //save event for saving the customer/supplier
       event.preventDefault();
-      //Validation on PAN
+      //Validation for PAN
+        var allow = 1;
         var cuss_pan = $("#add_cussup_pan").val();
         var panno1= $(".panno").val();
 	var regExp1 = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
@@ -429,18 +435,44 @@ else{
       var gobj = {}; // Creating a dictionary for storing statecode with gstin.
       $("#gstintable tbody tr").each(function(){
 	  var curindex1 = $(this).index();
+	  var panno1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
     if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
 	gstinstring = gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
-	if(gstinstring != ''){
-  	    if(gstinstring.length !=15){
-  		$("#gstin-improper-alert").alert();
+	
+	if((panno1.length != 10 || !panno1.match(regExp1)) && panno1 !="" ) {
+	    console.log("No!!!");
+	    $("#gstin-improper-alert").alert();
+	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-alert").hide();
+		$(".gstin").focus();
+	    });
+	    allow = 0;
+	    return false;
+	}
+	else if(panno1 !="" && $(".gstin").val() ==""){
+	    console.log("Yes");
+	    $("#gstin-improper-alert").alert();
+	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-alert").hide();
+		$(".gstin").focus();
+	    });
+	    allow = 0;
+	    return false;
+	}
+	else if(gstinstring != ""){
+	    console.log(gstinstring);
+	    if(gstinstring.length != 15){
+		console.log("String Length Not working");
+		$("#gstin-improper-alert").alert();
 		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-                    $("#gstin-improper-alert").hide();
-  		    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').focus().select();
+		    $("#gstin-improper-alert").hide();
+		    $(".gstin").focus();
 		});
-  		return false;
-          }
-  }
+		allow = 0;
+		return false;
+	    }
+	}
+
 
         gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = gstinstring;
     }
@@ -449,7 +481,8 @@ else{
       if ($("#add_cussup_tan").length > 0) {
 	  custtan = $("#add_cussup_tan").val();
       }
-    // ajax call for saving the customer/supplier
+      // ajax call for saving the customer/supplier
+      if(allow == 1){
       $.ajax({
 	  url: '/customersuppliers?action=save',
 	  type: 'POST',
@@ -470,9 +503,10 @@ else{
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken); //attaching the jwt token in the header
       }
-    })
+      })
     .done(function(resp) {
-      if(resp["gkstatus"] == 0){
+	if(resp["gkstatus"] == 0){
+	    allow ==0;
         $.ajax(
           {
 
@@ -543,6 +577,7 @@ else{
     .always(function() {
       console.log("complete");
     });
+      }
     event.stopPropagation(); // stoopping the event for unnecessarily repeating itself
   });
 });

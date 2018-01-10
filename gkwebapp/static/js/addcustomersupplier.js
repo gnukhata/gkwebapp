@@ -184,7 +184,7 @@ $("#add_state").keydown(function(event) {
   var previndex1 = curindex1-1;
   var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
   var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
-  if (event.which==13 || event.which==9) {
+  if (event.which==13 || event.which ==9) {
       event.preventDefault();
       gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
       if($(".gstin").val()=="" && $(".panno").val()==""){
@@ -293,7 +293,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     }
   });
   $("#add_cussup_pan").keydown(function(event) {
-    if (event.which==13 || event.which==9) {
+    if (event.which==13) {
 	event.preventDefault();
 	var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; 
 	var txtpan = $(this).val();
@@ -358,13 +358,15 @@ else{
     $("#cussup_save").click(function(event) {
       //save event for saving the customer/supplier
       event.preventDefault();
-      var allow = 1;
-    var custsupdata=$("#add_cussup option:selected").val(); //select with option either customer or supplier
+	var allow = 1;
+	var custsupdata=$("#add_cussup option:selected").val(); //select with option either customer or supplier
     // custsupdata = 3 if customer or 19 if supplier
 	var groupcode = -1;
 	var cuss_pan = $("#add_cussup_pan").val();
-        var panno1= $(".panno").val();
+        var panno1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
 	var regExp1 = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+	var curindex1 = $(this).closest('tr').index();
+	gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
     
 	if ((cuss_pan.length != 10 || !cuss_pan.match(regExp1)) && cuss_pan !="") {
 	    $("#pan-incorrect-alert").alert();
@@ -373,34 +375,6 @@ else{
 	    });
 	    $("#add_cussup_pan").focus();
 	    return false;
-	}
-
-	if((panno1.length != 10 || !panno1.match(regExp1)) && panno1 !="") {
-	    $("#gstin-improper-alert").alert();
-	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#gstin-improper-alert").hide();
-	    });
-	    $(".panno").focus();
-	    return false;
-	}
-	/*else if(panno1 !="" && $(".gstin").val() ==""){
-	    $("#gstin-improper-alert").alert();
-	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#gstin-improper-alert").hide();
-	    });
-	    $(".gstin").focus();
-	    return false;
-	}*/
-	else if(panno1 !="" && $(".gstin").val() !="" && gstinstring != ""){
-	    if(gstinstring.length != 15){
-		console.log("String Length Not working");
-		$("#gstin-improper-alert").alert();
-		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#gstin-improper-alert").hide();
-		});
-		$(".panno").focus();
-		return false;
-	    }
 	}
 
     if (custsupdata == '3'){
@@ -461,18 +435,43 @@ if($("#vatorgstflag").val() == '22'){
     var gobj = {}; // Creating a dictionary for storing statecode with gstin.
       $("#gstintable tbody tr").each(function(){
 	  var curindex1 = $(this).index();
+	  var panno1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
     if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
 	gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
-	if(gstinstring != ''){
-  	    if(gstinstring.length !=15){
-  		$("#gstin-improper-alert").alert();
+	
+	if((panno1.length != 10 || !panno1.match(regExp1)) && panno1 !="" ) {
+	    console.log("No!!!");
+	    $("#gstin-improper-alert").alert();
+	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-alert").hide();
+		$(".gstin").focus();
+	    });
+	    allow = 0;
+	    return false;
+	}
+	else if(panno1 !="" && $(".gstin").val() ==""){
+	    console.log("Yes");
+	    $("#gstin-improper-alert").alert();
+	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-alert").hide();
+		$(".gstin").focus();
+	    });
+	    allow = 0;
+	    return false;
+	}
+	else if(gstinstring != ""){
+	    console.log(gstinstring);
+	    if(gstinstring.length != 15){
+		console.log("String Length Not working");
+		$("#gstin-improper-alert").alert();
 		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-                    $("#gstin-improper-alert").hide();
-  		    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').focus().select();
+		    $("#gstin-improper-alert").hide();
+		    $(".gstin").focus();
 		});
-  		return false;
-          }
-  }
+		allow = 0;
+		return false;
+	    }
+	}
 
         gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = gstinstring;
     }
