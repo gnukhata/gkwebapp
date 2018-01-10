@@ -360,11 +360,11 @@ else{
       $("#customersupplier_create").click();
   });
 
-    $(document).one("keyup", function(event) {
+    $(document).off("keyup").on("keyup", function(event) {
         if(event.which == 45) {
+	    event.preventDefault();
+	    console.log("Helllo Insert");
             $("#cussup_save").click();
-            event.preventDefault();
-            return false;
         }
     });
     
@@ -453,7 +453,8 @@ if($("#vatorgstflag").val() == '22'){
 	  custtan = $("#add_cussup_tan").val();
       }
     // ajax call for saving the customer/supplier
-      if (allow == 1){
+	if (allow == 1){
+	    var csflag = $("#add_cussup option:selected").val();
 	  $.ajax({
 	      url: '/customersuppliers?action=save',
 	      type: 'POST',
@@ -496,6 +497,7 @@ if($("#vatorgstflag").val() == '22'){
 				  if(resp["gkstatus"]==0)
 				  {
 				      $("#customersupplier_create").click();
+				      $("#add_cussup").val(csflag);
 				      if (custsupdata == '3') {
 					  $("#cus-success-alert").alert();
 					  $("#cus-success-alert").fadeTo(2250, 500).slideUp(500, function(){
