@@ -27,18 +27,18 @@ Contributors:
 */
 // This script is for base page of invoice.
 (document).ready(function() {
-  today = new Date();
-  year = today.getFullYear();
-  month = today.getMonth();
+  var today = new Date();
+  var year = today.getFullYear();
+  var month = today.getMonth();
   month += 1;
-  date = today.getDate();
+  var date = today.getDate();
   if (month < 10) {
     month = "0" + month;
   }
   if(date < 10) {
     date = "0" + date;
   }
-  wholedate = year + "-" + month + "-" + date;
+  var wholedate = year + "-" + month + "-" + date;
 
   $("#invoice_record").click(function() { // calls record invoice page i.e purchase invoice.
     $.ajax(
@@ -84,14 +84,14 @@ Contributors:
   });
   $("#invoice_view_sale").click(function() {// calls view invoice page.
     $.ajax(
-    {
-
-    type: "POST",
-    url: "/invoice?action=showsale",
-    global: false,
-    async: false,
-    datatype: "text/html",
-    beforeSend: function(xhr)
+	{
+	    type: "POST",
+	    url: "/invoice?action=showsale",
+	    global: false,
+	    async: false,
+	    data: {"inputdate": wholedate},
+	    datatype: "text/html",
+	    beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
       },
@@ -104,12 +104,12 @@ Contributors:
   });
   $("#invoice_view_purchase").click(function() {// calls view invoice page.
     $.ajax(
-    {
-
-    type: "POST",
-    url: "/invoice?action=showpurchase",
-    global: false,
-    async: false,
+	{
+	    type: "POST",
+	    url: "/invoice?action=showpurchase",
+	    global: false,
+	    async: false,
+	    data: {"inputdate": wholedate},
     datatype: "text/html",
     beforeSend: function(xhr)
       {

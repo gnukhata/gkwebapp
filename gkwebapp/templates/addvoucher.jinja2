@@ -173,6 +173,10 @@
       <div class="alert alert-danger" id="bankdetails-alert" aria-live="rude" role="alert" hidden>
 	{% trans %}Enter Complete Bank Details!{% endtrans %}
       </div>
+      <div class="alert alert-danger" id="image-alert"  aria-live="rude" role="alert" hidden>
+
+	{% trans %}Please upload image in JPG/JPEG format!{% endtrans %}
+      </div>
 
 
       <form id="voucher" name="voucher">
@@ -401,6 +405,7 @@
               </label>
 
               <span class='label label-info' id="upload-file-info"></span>
+	      <small class="form-text text-danger text-muted">(JPG/JPEG images only.)</small>
             </div>
           </div>
           <div class="form-group pull-left col-md-6">

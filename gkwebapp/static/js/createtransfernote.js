@@ -62,6 +62,19 @@ $(document).ready(function() {
     }
   });
 
+    //If No godowns to select then alert message will display.
+    var fromgod =$("#tn_from_godown option").length;
+    var togod =$("#tn_to_godown option").length;
+    if(fromgod==1 && togod==1){
+	$("#nogo").show(); 
+	$("#tn_from_godown").hide();
+	$("#tn_to_godown").hide();
+    }else{
+	$("#tn_from_godown").show();
+	$("#tn_to_godown").show();
+    }
+    
+
   $("#tn_date").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
@@ -85,8 +98,11 @@ $(document).ready(function() {
   });
   $("#tn_year").keydown(function(event) {
     if (event.which==13) {
-      event.preventDefault();
-      $("#tn_from_godown").focus().select();
+	event.preventDefault();
+	if(fromgod==1 && togod==1){
+	    $('#transfernote_product_table tbody tr:first td:eq(0) select').focus();
+	}
+	$("#tn_from_godown").focus().select();
     }
     if (event.which==38) {
       event.preventDefault();
@@ -290,8 +306,8 @@ $(document).ready(function() {
       }
     })
      .done(function(resp) {
-       if (resp["gkstatus"]==0) {
-         $("#tn_to_godown").html(''); //Empty the dropdown
+	 if (resp["gkstatus"]==0) {
+	     $("#tn_to_godown").html(''); //Empty the dropdown
 	 //Filling the dropdown by appending options. Godown id is set as value of each option and godown name and address are displayed.
          $("#tn_to_godown").append('<option value=""  disabled  hidden selected>Select Godown</option>');
          for (godown of resp["godowns"]) {

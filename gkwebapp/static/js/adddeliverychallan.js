@@ -676,6 +676,20 @@ else {
    );
    });
 
+    $("#my-file-selector").change(function(event){
+	var files = $("#my-file-selector")[0].files;
+	var filelist = [];
+	for (let i = 0; i < files.length; i++) {
+	    if (files[i].type != 'image/jpeg') {
+		$("#image-alert").alert();
+		$("#image-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#image-alert").hide();
+		});
+		$('#my-file-selector').focus();
+		return false;
+	    }
+	}
+    });
    $("#viewpurchaseorder").click(function(event) {
      /* Act on the event */
      event.stopPropagation();
@@ -903,8 +917,10 @@ else {
 	form_data.append("consignee", JSON.stringify(consignee));
     }
     form_data.append("modeoftransport", $('#deliverychallan_modeoftransport').val());
-    form_data.append("issuername", $("#deliverychallan_issuername").val());
-    form_data.append("designation", $("#deliverychallan_designation").val());
+      if ($("#deliverychallan_gkstatus").val() == "out") {
+	  form_data.append("issuername", $("#deliverychallan_issuername").val());
+	  form_data.append("designation", $("#deliverychallan_designation").val());
+      }
     if ($("#deliverychallan_godown option").length!=0){
     	form_data.append("goid", $("#deliverychallan_godown option:selected").val());
     }
@@ -913,7 +929,15 @@ else {
     form_data.append("dcflag", $("#deliverychallan_consignment option:selected").val());
       var files = $("#my-file-selector")[0].files;
     var filelist = [];
-    for (var i = 0; i < files.length; i++) {
+      for (let i = 0; i < files.length; i++) {
+	  if (files[i].type != 'image/jpeg') {
+		$("#image-alert").alert();
+		$("#image-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#image-alert").hide();
+		});
+		$('#my-file-selector').focus();
+		return false;
+	    }
 	form_data.append("file"+i,files[i]);
     }
     event.preventDefault();
