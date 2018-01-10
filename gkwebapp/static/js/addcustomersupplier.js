@@ -363,7 +363,6 @@ else{
     $(document).off("keyup").on("keyup", function(event) {
         if(event.which == 45) {
 	    event.preventDefault();
-	    console.log("Helllo Insert");
             $("#cussup_save").click();
         }
     });
