@@ -210,7 +210,8 @@ def exportLedger(request):
         accountList.column_dimensions["B"].width = 30
         gsResult = requests.get("http://127.0.0.1:6543/groupsubgroups",headers=header)
         groupList = gsResult.json()["gkresult"]
-        cellCounter = 1
+        ob = accountList.cell(row=1,column=2,value= "Opening Balance")
+        cellCounter = 2
         for group in groupList:
             g = accountList.cell(row=cellCounter,column=1,value=group["groupname"])
             g.font = Font(name=g.font.name,bold=True)
@@ -245,17 +246,18 @@ def exportLedger(request):
         vchResult = requests.get("http://127.0.0.1:6543/transaction?searchby=date&from=%s&to=%s"%(yearStart,yearEnd),headers=header)
         vchList = vchResult.json()["gkresult"] 
         rowCounter = crRowCounter = counter = mCounter= 1
-        Voucher.column_dimensions["B"].width =10
-        Voucher.column_dimensions["D"].width = 30
+        #  1= Date, 2 = Particulars 5 = vchtype 6 = vchno 7 = debit 8 = credit
+        Voucher.column_dimensions["A"].width = 10
+        Voucher.column_dimensions["B"].width = 40
         Voucher.column_dimensions["E"].width = 10
-        Voucher.column_dimensions["F"].width = 30
+        Voucher.column_dimensions["F"].width = 10
         Voucher.column_dimensions["G"].width = 10
-        Voucher.column_dimensions["H"].width = 40
+        Voucher.column_dimensions["H"].width = 10
         for v in vchList:
-            Voucher.cell(row=rowCounter,column=1,value=v["vouchernumber"])
-            Voucher.cell(row=rowCounter,column=2,value=v["voucherdate"])
-            Voucher.cell(row=rowCounter,column=3,value=v["vouchertype"])
-            Voucher.cell(row=rowCounter,column=8,value=v["narration"])
+            Voucher.cell(row=rowCounter,column=1,value=v["voucherdate"])
+            Voucher.cell(row=rowCounter,column=5,value=v["vouchertype"])
+            Voucher.cell(row=rowCounter,column=6,value=v["voucherno"])
+            #Voucher.cell(row=rowCounter,column=8,value=v["narration"])
             Crs = v["crs"]
             Drs = v["drs"]
             for k in Drs.keys():
