@@ -147,7 +147,8 @@ $("#add_state").keydown(function(event) {
 	panno = $(this).val();
 	if (event.which == 13 || event.which ==9) {
 	    event.preventDefault();
-	    if ((panno.length != 10 || !panno.match(regExp)) && $.trim($(".panno").val())!="") {
+	    if ((panno.length != 10 || !panno.match(regExp)) && panno !="") {
+		console.log("inside PAN No alert");
 		$("#gstin-improper-alert").alert();
 		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		    $("#gstin-improper-alert").hide();
@@ -167,6 +168,7 @@ $("#add_state").keydown(function(event) {
 	gstinstring = gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val();
 	if(gstinstring != ''){
   	    if(gstinstring.length !=15){
+		console.log("Change Event on GSTIN");
   		$("#gstin-improper-alert").alert();
 		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
                     $("#gstin-improper-alert").hide();
@@ -187,7 +189,7 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
   if (event.which==13) {
       event.preventDefault();
       gstinstring = gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
-      if($(".gstin").val()=="" && $(".panno").val()==""){
+      if($(".gstin").val()=="" && $(".panno").val()=="" || $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() == ""){
 	  $("#cussup_save").focus();
       }
       else if (curindex1 != ($("#gstintable tbody tr").length-1)) {

@@ -330,7 +330,7 @@ $(document).ready(function() {
 	panno = $(this).val();
 	if (event.which == 13 || event.which == 9) {
 	    event.preventDefault();
-	    if ((panno.length != 10 || !panno.match(regExp)) && $.trim($(".panno").val())!="") {
+	    if ((panno.length != 10 || !panno.match(regExp)) && panno !="") {
 		console.log("Ho Ka!!!!");
 		$("#gstin-improper-alert").alert();
 		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -371,7 +371,7 @@ $(document).ready(function() {
   var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
   if (event.which==13 || event.which==9) {
       event.preventDefault();
-      if($(".gstin").val()=="" && $(".panno").val()==""){
+      if($(".gstin").val()=="" && $(".panno").val()=="" || $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() == ""){
 	  $("#cussup_edit_save").focus();
       }
       else if ($(".gstin").val()=="" && curindex1 != ($("#gstintable tbody tr").length-1)) {

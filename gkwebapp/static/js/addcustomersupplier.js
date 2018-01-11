@@ -164,7 +164,8 @@ $("#add_state").keydown(function(event) {
 	panno = $(this).val();
 	if (event.which == 13 || event.which ==9) {
 	    event.preventDefault();
-	    if ((panno.length != 10 || !panno.match(regExp)) && $.trim($(".panno").val())!="") {
+	    if ((panno.length != 10 || !panno.match(regExp)) && panno !="" ) {
+		console.log("PAN VAlidation");
 		$("#gstin-improper-alert").alert();
 		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		    $("#gstin-improper-alert").hide();
@@ -178,6 +179,23 @@ $("#add_state").keydown(function(event) {
 	}
     });
 
+    $(document).off("change",".gstin").on("change",".gstin",function(event) {
+	var curindex = $(this).closest('tr').index();
+	gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:xeq('+curindex+') td:eq(1) input:eq(2)').val();
+	if(gstinstring != ''){
+  	    if(gstinstring.length !=15){
+		console.log("Kdhi re!!!");
+  		$("#gstin-improper-alert").alert();
+		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#gstin-improper-alert").hide();
+  		    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').focus().select();
+		});
+  		return false;
+          }
+  }
+
+    });
+    
     $(document).off("keydown",".gstin").on("keydown",".gstin",function(event){
 	var curindex1 = $(this).closest('tr').index();
   var nextindex1 = curindex1+1;
@@ -187,7 +205,7 @@ $("#add_state").keydown(function(event) {
   if (event.which==13 || event.which ==9) {
       event.preventDefault();
       gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
-      if($(".gstin").val()=="" && $(".panno").val()==""){
+      if($(".gstin").val()=="" && $(".panno").val()=="" || $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() == ""){
 	  $("#cussup_save").focus();
       }
       else if ($(".gstin").val() !="" && curindex1 != ($("#gstintable tbody tr").length-1)) {

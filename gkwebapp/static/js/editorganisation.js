@@ -128,10 +128,10 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	   $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').focus();
       }
   }
-  else if (event.which==27) {
+  /*else if (event.which==27) {
     event.preventDefault();
     $("#gstin_done").focus();
-  }
+  }*/
 });
 
 //Change event on GSTIN State
@@ -196,30 +196,30 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
 {
     var curindex1 = $(this).closest('tr').index();
-  var nextindex1 = curindex1+1;
-  var previndex1 = curindex1-1;
-  var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
-  var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
+    var nextindex1 = curindex1+1;
+    var previndex1 = curindex1-1;
+    var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
+    var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
+    gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
   if (event.which==13) {
       event.preventDefault();
-      if($(".gstin").val()=="" && $(".panno").val()==""){
+      if($(".gstin").val()=="" && $(".panno").val()=="" || $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() == ""){
 	  $("#gstin_done").focus();
       }
       else if (curindex1 != ($("#gstintable tbody tr").length-1)) {
       $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
-    }
+      }
       else {
-	  gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
 	if(gstinstring != ''){
   	    if(gstinstring.length !=15){
-  		$("#gstin-improper-alert").alert();
-		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-                    $("#gstin-improper-alert").hide();
+  		$("#gstin-improper-modal").alert();
+		$("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#gstin-improper-modal").hide();
   		    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').focus().select();
 		});
   		return false;
             }
-  }
+	}
 	  if (numberofstates > 0) {
         $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
@@ -252,10 +252,10 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     event.preventDefault();
     $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
   }
-  else if (event.which==27) {
+  /*else if (event.which==27) {
     event.preventDefault();
     $("#gstin_done").focus();
-  }
+  }*/
 });
 
     $(document).off("click",".state_del").on("click", ".state_del", function() {
@@ -547,12 +547,46 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
   });
 
     $("#gstin_done").click(function(event) {
-        $('#addgstinmodal').modal('hide');
+	var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+	var curindex1 = $(this).index();
+	var panno1= $(".panno").val();
+	if((panno1.length != 10 || !panno1.match(regExp)) && panno1 !="" ) {
+	    console.log("No!!!");
+	    $("#gstin-improper-modal").alert();
+	    $("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-modal").hide();
+		$(".gstin").focus();
+	    });
+	    return false;
+	}
+	else if(panno1 !="" && $(".gstin").val() ==""){
+	    console.log("Yes");
+	    $("#gstin-improper-modal").alert();
+	    $("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-modal").hide();
+		$(".gstin").focus();
+	    });
+	    return false;
+	}
+	else if(gstinstring != ""){
+	    console.log(gstinstring);
+	    if(gstinstring.length != 15){
+		console.log("String Length Not working");
+		$("#gstin-improper-modal").alert();
+		$("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#gstin-improper-modal").hide();
+		    $(".gstin").focus();
+		});
+		return false;
+	    }
+	}else{
+            $('#addgstinmodal').modal('hide');	    
+	}
     });
 
   $(document).off("click", "#submit").on("click", "#submit", function(event){
     event.preventDefault();
-
+    var allow =1;
     var regdate="";
     var fcraregdate="";
     var regno="";
@@ -602,9 +636,10 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
    var gobj = {}; // Creating a dictionary for storing statecode with gstin.
    $("#gstintable tbody tr").each(function(){
        var curindex1 = $(this).index();
+       var panno1= $(".panno").val();
        if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
 	   gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
-	   if(gstinstring != ''){
+	   /*if(gstinstring != ''){
   	       if(gstinstring.length !=15){
   		   $("#gstin-improper-alert").alert();
 		   $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -613,12 +648,43 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 		   });
   		   return false;
                }
+	       }*/
+	   if((panno1.length != 10 || !panno1.match(regExp)) && panno1 !="" ) {
+	       console.log("No!!!");
+	       $("#gstin-improper-alert").alert();
+	       $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		   $("#gstin-improper-alert").hide();
+		   $("#orggstin").focus();
+	       });
+	       allow =0;
+	       return false;
 	   }
-
+	   else if(panno1 !="" && $(".gstin").val() ==""){
+	       console.log("Yes");
+	       $("#gstin-improper-alert").alert();
+	       $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		   $("#gstin-improper-alert").hide();
+		   $("#orggstin").focus();
+	       });
+	       allow = 0;
+	       return false;
+	   }
+	   else if(gstinstring != ""){
+	       console.log(gstinstring);
+	       if(gstinstring.length != 15){
+		   console.log("String Length Not working");
+		   $("#gstin-improper-alert").alert();
+		   $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		       $("#gstin-improper-alert").hide();
+		       $("#orggstin").focus();
+		   });
+		   allow = 0;
+		   return false;
+	       }
+	   }
            gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = gstinstring;
        }
-       
-     });
+   });
     
     var form_data = new FormData();
     form_data.append("orgcity", $("#orgcity").val());
@@ -644,7 +710,8 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
       var file = $("#my-file-selector")[0].files[0];
       form_data.append("logo",file);
     }
-
+      
+  if(allow == 1){ 
   $("#msspinmodal").modal("show");
     $.ajax({
       type: 'POST',
@@ -681,10 +748,9 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
         }
       }
     });
-
-
-  });
-
+  //}
+ //});
+  
   $.ajax({
           url: '/editorganisation?action=getattachment',
           type: 'POST',
@@ -707,4 +773,6 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
       .always(function() {
           console.log("complete");
       });
+  }
+  });
 });
