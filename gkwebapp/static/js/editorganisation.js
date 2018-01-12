@@ -76,7 +76,7 @@ $(document).ready(function(){
   });
 
     var curindex = $(this).closest('tr').index();
-    var gstinstring = ""; // for cocatination of GSTIN.
+var gstinstring = ""; // for cocatination of GSTIN.
     	for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
 	    var state = $("#gstintable tbody tr:eq("+i+") td:eq(0) select").attr("stateid");
 	    $("#gstintable tbody tr:eq("+i+") td:eq(0) select option[stateid="+state+"]").prop("selected", true);
@@ -85,11 +85,7 @@ $(document).ready(function(){
 	    $('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(0)').val(gstinstr.substring(0, 2));
 	    $('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(1)').val(gstinstr.substring(2, 12));
 	    $('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(2)').val(gstinstr.substring(12, 15));
-	    if(i == 0){
-		$("#gstintable tbody tr:eq(" + i +") td:last");/*.append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');*/
-	    }else{
-		$("#gstintable tbody tr:eq(" + i +") td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-	    }
+	    $("#gstintable tbody tr:eq(" + i +") td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 	}
   if(sessionStorage.vatorgstflag == '22' ){
       $(".gstinfield").hide();
@@ -263,12 +259,15 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 });
 
     $(document).off("click",".state_del").on("click", ".state_del", function() {
-  $(this).closest('tr').fadeOut(200, function(){
-    $(this).closest('tr').remove();	 //closest method gives the closest element specified
-    $('#gstintable tbody tr:last td:eq(0) select').focus().select();
-  });
-  $('#gstintable tbody tr:last td:eq(0) select').select();
-});
+	$(this).closest('tr').fadeOut(200, function(){
+	    $(this).closest('tr').remove();//closest method gives the closest element specified
+	    if($('#gstintable tbody tr').length == 0){
+		$('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+	    }
+	    $('#gstintable tbody tr:last td:eq(0) select').focus().select();
+	});
+	$('#gstintable tbody tr:last td:eq(0) select').select();
+    });
     //Keydown event start here
     $("#orgaddr").keydown(function(event) {
     if (event.which==13) {
