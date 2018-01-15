@@ -33,9 +33,10 @@ Contributors:
 $(document).ready(function() {
     //All the navigation events where pressing enter shifts focus to the next element and pressing the up arrow key focuses the previous element
     var gstinstring = "";
-
-   for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
-	$("#gstintable tbody tr:eq(" + i +") td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+    // append remove button to all gstin field added.
+    for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
+	//$("#gstintable tbody tr:eq(0) td:last").append('<a href="#" class="state_del"><i class="fa fa-refresh" aria-hidden="true"></i></a>');
+	$("#gstintable tbody tr:last td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
     }
     
   $("#add_cussup").focus().select();
@@ -170,7 +171,6 @@ $("#add_state").keydown(function(event) {
 	if (event.which == 13 || event.which ==9) {
 	    event.preventDefault();
 	    if ((panno.length != 10 || !panno.match(regExp)) && panno !="" ) {
-		console.log("PAN VAlidation");
 		$("#gstin-improper-alert").alert();
 		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		    $("#gstin-improper-alert").hide();
@@ -186,10 +186,9 @@ $("#add_state").keydown(function(event) {
 
     $(document).off("change",".gstin").on("change",".gstin",function(event) {
 	var curindex = $(this).closest('tr').index();
-	gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:xeq('+curindex+') td:eq(1) input:eq(2)').val();
+	gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val();
 	if(gstinstring != ''){
   	    if(gstinstring.length !=15){
-		console.log("Kdhi re!!!");
   		$("#gstin-improper-alert").alert();
 		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
                     $("#gstin-improper-alert").hide();
@@ -208,7 +207,7 @@ $("#add_state").keydown(function(event) {
   var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
  var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
 	panno = $(this).val();
-  if (event.which==13 || event.which ==9) {
+  if (event.which==13) {
       event.preventDefault();
       gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
       if($(".gstin").val()=="" && $(".panno").val()=="" /*|| $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() == ""*/){
@@ -220,7 +219,6 @@ $("#add_state").keydown(function(event) {
       else {
 	if(gstinstring != ''){
   	    if(gstinstring.length !=15){
-		console.log("ok!");
   		$("#gstin-improper-alert").alert();
 		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
                     $("#gstin-improper-alert").hide();
@@ -230,10 +228,7 @@ $("#add_state").keydown(function(event) {
             }
 	}
 	  if (numberofstates > 0) {
-        $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-              /*if (curindex1 == 0) { 
-		  $("#gstintable tbody tr:last td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-              }*/
+              $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
 	$('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[value=""]').prop('selected', true);
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
@@ -466,9 +461,9 @@ if($("#vatorgstflag").val() == '22'){
 	  var panno1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
     if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
 	gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
-	
+
+	//Validation for GSTIN on save button 
 	if((panno1.length != 10 || !panno1.match(regExp1)) && panno1 !="" ) {
-	    console.log("No!!!");
 	    $("#gstin-improper-alert").alert();
 	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#gstin-improper-alert").hide();
@@ -478,7 +473,6 @@ if($("#vatorgstflag").val() == '22'){
 	    return false;
 	}
 	else if(panno1 !="" && $(".gstin").val() ==""){
-	    console.log("Yes");
 	    $("#gstin-improper-alert").alert();
 	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#gstin-improper-alert").hide();
@@ -488,9 +482,7 @@ if($("#vatorgstflag").val() == '22'){
 	    return false;
 	}
 	else if(gstinstring != ""){
-	    console.log(gstinstring);
 	    if(gstinstring.length != 15){
-		console.log("String Length Not working");
 		$("#gstin-improper-alert").alert();
 		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		    $("#gstin-improper-alert").hide();

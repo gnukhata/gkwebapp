@@ -86,8 +86,8 @@ var gstinstring = ""; // for cocatination of GSTIN.
 	    $('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(1)').val(gstinstr.substring(2, 12));
 	    $('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(2)').val(gstinstr.substring(12, 15));
 	    $("#gstintable tbody tr:eq(" + i +") td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-	    //<i class="fa fa-refresh" aria-hidden="true"></i>
 	}
+    
   if(sessionStorage.vatorgstflag == '22' ){
       $(".gstinfield").hide();
       $(".tinfield").show();
@@ -128,10 +128,6 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	   $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').focus();
       }
   }
-  /*else if (event.which==27) {
-    event.preventDefault();
-    $("#gstin_done").focus();
-  }*/
 });
 
 //Change event on GSTIN State
@@ -161,8 +157,8 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	panno = $(this).val();
 	if (event.which == 13 || event.which ==9) {
 	    event.preventDefault();
+	    //Validation for PAN inside GSTIN.
 	    if ((panno.length != 10 || !panno.match(regExp)) && panno != "") {
-		console.log("Modal Inside Pan");
 		$("#gstin-improper-modal").alert();
 		$("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
 		    $("#gstin-improper-modal").hide();
@@ -181,7 +177,6 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val();
 	if(gstinstring != ''){
   	    if(gstinstring.length !=15){
-		console.log("Inside Modal");
   		$("#gstin-improper-modal").alert();
 		$("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
                     $("#gstin-improper-modal").hide();
@@ -204,7 +199,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
   if (event.which==13) {
       event.preventDefault();
-      if($(".gstin").val()=="" && $(".panno").val()=="" /*|| $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() == ""*/){
+      if($(".gstin").val()=="" && $(".panno").val()==""){
 	  $("#gstin_done").focus();
       }
       else if (curindex1 != ($("#gstintable tbody tr").length-1)) {
@@ -546,12 +541,12 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     $("#showeditorg").click();
   });
 
+    //Validation for GSTIN on Done Button inside Add GSTIN.
     $("#gstin_done").click(function(event) {
 	var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
 	var curindex1 = $(this).index();
 	var panno1= $(".panno").val();
 	if((panno1.length != 10 || !panno1.match(regExp)) && panno1 !="" ) {
-	    console.log("No!!!");
 	    $("#gstin-improper-modal").alert();
 	    $("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
 		$("#gstin-improper-modal").hide();
@@ -560,7 +555,6 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	    return false;
 	}
 	else if(panno1 !="" && $(".gstin").val() ==""){
-	    console.log("Yes");
 	    $("#gstin-improper-modal").alert();
 	    $("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
 		$("#gstin-improper-modal").hide();
@@ -569,9 +563,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	    return false;
 	}
 	else if(gstinstring != ""){
-	    console.log(gstinstring);
 	    if(gstinstring.length != 15){
-		console.log("String Length Not working");
 		$("#gstin-improper-modal").alert();
 		$("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
 		    $("#gstin-improper-modal").hide();
@@ -580,16 +572,8 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 		return false;
 	    }
 	}
-	console.log("Modal Hide");
         $('#addgstinmodal').modal('hide');	    
     });
-
-    //For Reset Button in GSTIN Modal.
-    $("#gstinmod_reset").click(function(){
-	//$("#showeditorg").click();
-	$("#orggstin").click();
-    });
-
 
   $(document).off("click", "#submit").on("click", "#submit", function(event){
     event.preventDefault();
@@ -646,18 +630,8 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
        var panno1= $(".panno").val();
        if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
 	   gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
-	   /*if(gstinstring != ''){
-  	       if(gstinstring.length !=15){
-  		   $("#gstin-improper-alert").alert();
-		   $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-                       $("#gstin-improper-alert").hide();
-  		       $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').focus().select();
-		   });
-  		   return false;
-               }
-	       }*/
+	   //Validation for GSTIN on Save Button.
 	   if((panno1.length != 10 || !panno1.match(regExp)) && panno1 !="" ) {
-	       console.log("No!!!");
 	       $("#gstin-improper-alert").alert();
 	       $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		   $("#gstin-improper-alert").hide();
@@ -667,7 +641,6 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	       return false;
 	   }
 	   else if(panno1 !="" && $(".gstin").val() ==""){
-	       console.log("Yes");
 	       $("#gstin-improper-alert").alert();
 	       $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		   $("#gstin-improper-alert").hide();
@@ -677,9 +650,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	       return false;
 	   }
 	   else if(gstinstring != ""){
-	       console.log(gstinstring);
 	       if(gstinstring.length != 15){
-		   console.log("String Length Not working");
 		   $("#gstin-improper-alert").alert();
 		   $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		       $("#gstin-improper-alert").hide();
