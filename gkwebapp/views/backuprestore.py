@@ -201,7 +201,7 @@ def tallyImport(request):
 
 @view_config(route_name="exportledger", renderer="")
 def exportLedger(request):
-    try:
+   # try:
         header={"gktoken":request.headers["gktoken"]}
         gkwb = Workbook()
         accountList = gkwb.active
@@ -243,16 +243,26 @@ def exportLedger(request):
         Voucher.title = "Vouchers List"
         yearStart = str(request.params["yearstart"])
         yearEnd = str(request.params["yearend"])
-        vchResult = requests.get("http://127.0.0.1:6543/transaction?searchby=date&from=%s&to=%s"%(yearStart,yearEnd),headers=header)
+        vchResult = requests.get("http://127.0.0.1:6543/transaction?getdataby=date&from=%s&to=%s"%(yearStart,yearEnd),headers=header)
         vchList = vchResult.json()["gkresult"] 
         rowCounter = crRowCounter = counter = mCounter= 1
         #  1= Date, 2 = Particulars 5 = vchtype 6 = vchno 7 = debit 8 = credit
-        Voucher.column_dimensions["A"].width = 10
+        Voucher.column_dimensions["A"].width = 15
         Voucher.column_dimensions["B"].width = 40
         Voucher.column_dimensions["E"].width = 10
         Voucher.column_dimensions["F"].width = 10
         Voucher.column_dimensions["G"].width = 10
         Voucher.column_dimensions["H"].width = 10
+
+        Voucher.cell(row=rowCounter,column=1,value="Date")
+        Voucher.cell(row=rowCounter,column=2,value="Particulars")
+        Voucher.cell(row=rowCounter,column=5,value="Type")
+        Voucher.cell(row=rowCounter,column=6,value= "Voucher No.")
+        Voucher.cell(row=rowCounter,column=7,value="Debit")
+        Voucher.cell(row=rowCounter,column=8,value= "Credit")
+        rowCounter = rowCounter + 1
+        
+ 
         for v in vchList:
             Voucher.cell(row=rowCounter,column=1,value=v["voucherdate"])
             Voucher.cell(row=rowCounter,column=5,value=v["vouchertype"])
@@ -260,6 +270,22 @@ def exportLedger(request):
             #Voucher.cell(row=rowCounter,column=8,value=v["narration"])
             Crs = v["crs"]
             Drs = v["drs"]
+            for k in Drs:
+                Voucher.cell(row=rowCounter,column=2,value=k)
+                Voucher.cell(row=rowCounter,column=7,value="%.2f"%float(Drs[k]))
+                rowCounter = rowCounter + 1
+            for k in Crs:
+                Voucher.cell(row=rowCounter,column=2,value=k)
+                Voucher.cell(row=rowCounter,column=8,value="%.2f"%float(Crs[k]))
+                rowCounter = rowCounter + 1
+                #print "this is rowcounter %d"%(rowCounter)
+                
+                a = Voucher.cell(row=rowCounter,column=2,value=v["narration"])
+                a.font = Font(italic=True , size = 10)
+                rowCounter = rowCounter + 1
+                #print "narration printed at %d"%(rowCounter)
+
+        """    
             for k in Drs.keys():
                 if k.find("+") == -1:
                     Voucher.cell(row=rowCounter,column=4,value=k)
@@ -295,7 +321,7 @@ def exportLedger(request):
             if rowCounter > crRowCounter:
                 crRowCounter = rowCounter
             else:
-                rowCounter = crRowCounter
+                rowCounter = crRowCounter """
 
         gkwb.save(filename = "AllLedger.xlsx")
         AllLedgerfile = open("AllLedger.xlsx","r")
@@ -304,6 +330,6 @@ def exportLedger(request):
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(bf),'Content-Disposition': 'attachment; filename=AllLedger.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
         os.remove("AllLedger.xlsx")
         return Response(bf, headerlist=headerList.items())
-    except:
-        print "file not found"
-        return {"gkstatus":3}
+   # except:
+   #     print "file not found"
+   #     return {"gkstatus":3}
