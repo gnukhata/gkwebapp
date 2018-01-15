@@ -86,6 +86,7 @@ var gstinstring = ""; // for cocatination of GSTIN.
 	    $('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(1)').val(gstinstr.substring(2, 12));
 	    $('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(2)').val(gstinstr.substring(12, 15));
 	    $("#gstintable tbody tr:eq(" + i +") td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+	    //<i class="fa fa-refresh" aria-hidden="true"></i>
 	}
   if(sessionStorage.vatorgstflag == '22' ){
       $(".gstinfield").hide();
@@ -252,16 +253,12 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     event.preventDefault();
     $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
   }
-  /*else if (event.which==27) {
-    event.preventDefault();
-    $("#gstin_done").focus();
-  }*/
 });
 
     $(document).off("click",".state_del").on("click", ".state_del", function() {
 	$(this).closest('tr').fadeOut(200, function(){
 	    $(this).closest('tr').remove();//closest method gives the closest element specified
-	    if($('#gstintable tbody tr').length == 0){
+	    if($('#gstintable tbody tr').length == 0){// After deleting 0th row gives field to adding new gstin.
 		$('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
 	    }
 	    $('#gstintable tbody tr:last td:eq(0) select').focus().select();

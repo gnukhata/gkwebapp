@@ -32,7 +32,12 @@ Contributors:
 
 $(document).ready(function() {
     //All the navigation events where pressing enter shifts focus to the next element and pressing the up arrow key focuses the previous element
-  var gstinstring = "";
+    var gstinstring = "";
+
+   for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
+	$("#gstintable tbody tr:eq(" + i +") td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+    }
+    
   $("#add_cussup").focus().select();
   $("#add_cussup").keydown(function(event) {
       if (event.which==13) {
@@ -226,9 +231,9 @@ $("#add_state").keydown(function(event) {
 	}
 	  if (numberofstates > 0) {
         $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-              if (curindex1 == 0) {
-          $("#gstintable tbody tr:last td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-        }
+              /*if (curindex1 == 0) { 
+		  $("#gstintable tbody tr:last td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+              }*/
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
 	$('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[value=""]').prop('selected', true);
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
@@ -266,8 +271,11 @@ $("#add_state").keydown(function(event) {
 });
 $(document).off("click",".state_del").on("click", ".state_del", function() {
   $(this).closest('tr').fadeOut(200, function(){
-    $(this).closest('tr').remove();	 //closest method gives the closest element specified
-    $('#gstintable tbody tr:last td:eq(0) select').focus().select();
+      $(this).closest('tr').remove();	 //closest method gives the closest element specified
+      if($('#gstintable tbody tr').length == 0){  // After deleting 0th row gives field to adding new gstin.
+	  $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+      }
+      $('#gstintable tbody tr:last td:eq(0) select').focus().select();
   });
   $('#gstintable tbody tr:last td:eq(0) select').select();
 });

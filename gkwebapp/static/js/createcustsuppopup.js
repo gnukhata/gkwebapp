@@ -32,6 +32,9 @@ Contributors:
 $(document).ready(function() {
     $("#add_cussup_name").focus();
     var gstinstring = "";
+    for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
+	$("#gstintable tbody tr:eq(" + i +") td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+    }
 
   $("#add_cussup_name").keydown(function(event) {
     if (event.which==13) {
@@ -186,7 +189,7 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
   var previndex1 = curindex1-1;
   var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
     var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
-  if (event.which==13 || event.which == 9) {
+  if (event.which==13) {
       event.preventDefault();
       gstinstring = gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
       if($(".gstin").val()=="" && $(".panno").val()=="" /*|| $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() == ""*/){
@@ -209,9 +212,9 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
       if (numberofstates > 0) {
 
         $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-        if (curindex1 == 0) {
+        /*if (curindex1 == 0) {
           $("#gstintable tbody tr:last td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-        }
+        }*/
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
 	$('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[value=""]').prop('selected', true);
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
@@ -249,7 +252,10 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
 });
 $(document).off("click",".state_del").on("click", ".state_del", function() {
   $(this).closest('tr').fadeOut(200, function(){
-    $(this).closest('tr').remove();	 //closest method gives the closest element specified
+      $(this).closest('tr').remove();	 //closest method gives the closest element specified
+      if($('#gstintable tbody tr').length == 0){  // After deleting 0th row gives field to adding new gstin.
+	  $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+      }
     $('#gstintable tbody tr:last td:eq(0) select').focus().select();
   });
   $('#gstintable tbody tr:last td:eq(0) select').select();
