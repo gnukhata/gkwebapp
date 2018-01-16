@@ -79,138 +79,138 @@ def tallyImport(request):
    """
     #First we will get list of existing groups and subgroups for this organisation.
     #we will of course lead the workbook from the request.
-   # try:
-    header={"gktoken":request.headers["gktoken"]}
-    xlsxfile = request.POST['xlsxfile'].file
-    wbTally = load_workbook(xlsxfile)
-    wbTally._active_sheet_index = 0
-    accountSheet = wbTally.active
-    accountList = tuple(accountSheet.rows)
-    gsResult = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist",headers=header)
-    groups = gsResult.json()["gkresult"]
-    curgrpid = None
-    parentgroupid = None
-    for accRow in accountList:
-        if accRow[0].value == None:
-            continue
-        if accRow[0].font.b:
-            curgrpid = groups[accRow[0].value.strip()]
-            parentgroupid = groups[accRow[0].value.strip()]
-            continue
-        if accRow[0].font.b == False and accRow[0].font.i == False:
-            if groups.has_key(accRow[0].value):
+    try:
+        header={"gktoken":request.headers["gktoken"]}
+        xlsxfile = request.POST['xlsxfile'].file
+        wbTally = load_workbook(xlsxfile)
+        wbTally._active_sheet_index = 0
+        accountSheet = wbTally.active
+        accountList = tuple(accountSheet.rows)
+        gsResult = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist",headers=header)
+        groups = gsResult.json()["gkresult"]
+        curgrpid = None
+        parentgroupid = None
+        for accRow in accountList:
+            if accRow[0].value == None:
+                continue
+            if accRow[0].font.b:
                 curgrpid = groups[accRow[0].value.strip()]
-            else:
-                newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
-                curgrpid = newsub.json()["gkresult"]
-        if accRow[0].font.i:
+                parentgroupid = groups[accRow[0].value.strip()]
+                continue
+            if accRow[0].font.b == False and accRow[0].font.i == False:
+                if groups.has_key(accRow[0].value):
+                    curgrpid = groups[accRow[0].value.strip()]
+                else:
+                    newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
+                    curgrpid = newsub.json()["gkresult"]
+            if accRow[0].font.i:
 
-            if len(accRow)>2:
-                if accRow[1].value==None and accRow[2].value==None:
-                    newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
-                    continue
-                if accRow[1].value==None:
-                    newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[2].value}),headers=header)
-                    continue
-                if accRow[2].value==None:
+                if len(accRow)>2:
+                    if accRow[1].value==None and accRow[2].value==None:
+                        newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
+                        continue
+                    if accRow[1].value==None:
+                        newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[2].value}),headers=header)
+                        continue
+                    if accRow[2].value==None:
+                        newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
+                        continue
+
+                if len(accRow)==2:
                     newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
+
+        #the dictionary thus returned will have
+        #accountname as key and accountcode as value.
+        acclist = requests.get("http://127.0.0.1:6543/accounts?acclist",headers=header)
+        accounts = acclist.json()["gkresult"]
+        Wsheets = wbTally.worksheets
+        # When data is imported from GNUKhata exported file
+        if Wsheets[1].title == "Vouchers List":
+            gVchList =tuple(Wsheets[1].rows) 
+            for gVch in gVchList:
+                if gVch[1].value == None and gVch[2].value == None:
                     continue
-
-            if len(accRow)==2:
-                newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
-
-    #the dictionary thus returned will have
-    #accountname as key and accountcode as value.
-    acclist = requests.get("http://127.0.0.1:6543/accounts?acclist",headers=header)
-    accounts = acclist.json()["gkresult"]
-    Wsheets = wbTally.worksheets
-    # When data is imported from GNUKhata exported file
-    if Wsheets[1].title == "Vouchers List":
-        gVchList =tuple(Wsheets[1].rows) 
-        for gVch in gVchList:
-            if gVch[1].value == None and gVch[2].value == None:
-                continue
-            voucherno = gVch[0].value
-            voucherdt = gVch[1].value
-            vdates = voucherdt.split('-')
-            voucherDt = vdates[2]+'/'+vdates[1]+'/'+vdates[0]
-            vouchertype = gVch[2].value
-            drs = {}
-            crs = {}
-            if (gVch[3].value) == "(as per details)":
-                try:
-                    Vindex = gVchList.index(gVch) + 1
-                    while gVchList[Vindex][3].value != None:
-                        drs[accounts[gVchList[Vindex][3].value]] = gVchList[Vindex][4].value
-                        Vindex = Vindex + 1 
-                except IndexError:
-                    pass       
-            else:
-                drs[accounts[gVch[3].value]] = gVch[4].value
-
-            if (gVch[5].value) == "(as per details)":
-                Vindex = gVchList.index(gVch) + 1
-                while gVchList[Vindex][5].value != None: 
-                    crs[accounts[gVchList[Vindex][5].value]] = gVchList[Vindex][6].value
-                    Vindex = Vindex + 1
-            else:
-                crs[accounts[gVch[5].value]] = gVch[6].value
-            narration = gVch[7].value
-            result = {"voucherdate":voucherDt,"vouchernumber":gVch[0].value,"vouchertype":gVch[2].value,"drs":drs,"crs":crs,"narration":gVch[7].value}
-            gNewvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps(result),headers=header)
-        return {"gkstatus":0}   
-
-    else:
-        gVchList =tuple(Wsheets[1].rows)
-        currentRowIndex = 0
-        print " Now to import"
-        for gVch in gVchList:
-            drs = {}
-            crs = {}
-            narrations = ""
-            if gVch[0].value == None:
-                continue
-            if gVch[0].value == "Date":
-                continue
-            if gVch[0].value != None and  gVch[0].value != "Date":
-                print "Found voucher"
-                voucherdt = str(gVch[0].value)
-                print voucherdt
-                voucherDt = voucherdt[0:4]+'/'+voucherdt[5:7]+'/'+voucherdt[8:10]
-                print voucherDt
-                '''
-                voucherdt = str(gVch[0].value)
-                print voucherdt
-                voucherdt = voucherdt.split("-")
-                print voucherdt
-                voucherDt = voucherdt[2]+'/'+voucherdt[1]+'/'+voucherdt[0]
-                print voucherDt'''
-                voucherType = (gVch[4].value).lower().replace(" ","")
-                if gVch[6].value != None:
-                        drs[accounts[gVch[1].value ]] =  str(gVch[6].value)
-                if gVch[7].value != None:
-                        crs[accounts[gVch[1].value ]] =  str(gVch[7].value)
-                gVch = gVchList[gVchList.index(gVch)+1 ]
-                while gVch[0].value == None:
-                    if gVch[6].value != None:
-                        drs[accounts[gVch[1].value ]] =  str(gVch[6].value)
-                    if gVch[7].value != None:
-                        crs[accounts[gVch[1].value ]] =  str(gVch[7].value)
-                    if gVch[6].value == None and gVch[7].value == None:
-                        narrations  = gVch[1].value
+                voucherno = gVch[0].value
+                voucherdt = gVch[1].value
+                vdates = voucherdt.split('-')
+                voucherDt = vdates[2]+'/'+vdates[1]+'/'+vdates[0]
+                vouchertype = gVch[2].value
+                drs = {}
+                crs = {}
+                if (gVch[3].value) == "(as per details)":
                     try:
-                        gVch = gVchList[gVchList.index(gVch)+1]
+                        Vindex = gVchList.index(gVch) + 1
+                        while gVchList[Vindex][3].value != None:
+                            drs[accounts[gVchList[Vindex][3].value]] = gVchList[Vindex][4].value
+                            Vindex = Vindex + 1 
                     except IndexError:
-                        break
-                print " Creating dictionary"
-                result = {"voucherdate":voucherDt,"vouchertype":voucherType,"drs":drs,"crs":crs,"narration":narrations}
-                gNewvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps(result),headers=header)
-                #print gNewvch.json()["gkstatus"]
+                        pass       
+                else:
+                    drs[accounts[gVch[3].value]] = gVch[4].value
 
-        return {"gkstatus":0}   
-#except:
-#    print "file not found"
-#    return {"gkstatus":3}
+                if (gVch[5].value) == "(as per details)":
+                    Vindex = gVchList.index(gVch) + 1
+                    while gVchList[Vindex][5].value != None: 
+                        crs[accounts[gVchList[Vindex][5].value]] = gVchList[Vindex][6].value
+                        Vindex = Vindex + 1
+                else:
+                    crs[accounts[gVch[5].value]] = gVch[6].value
+                narration = gVch[7].value
+                result = {"voucherdate":voucherDt,"vouchernumber":gVch[0].value,"vouchertype":gVch[2].value,"drs":drs,"crs":crs,"narration":gVch[7].value}
+                gNewvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps(result),headers=header)
+            return {"gkstatus":0}   
+
+        else:
+            gVchList =tuple(Wsheets[1].rows)
+            currentRowIndex = 0
+            print " Now to import"
+            for gVch in gVchList:
+                drs = {}
+                crs = {}
+                narrations = ""
+                if gVch[0].value == None:
+                    continue
+                if gVch[0].value == "Date":
+                    continue
+                if gVch[0].value != None and  gVch[0].value != "Date":
+                    print "Found voucher"
+                    voucherdt = str(gVch[0].value)
+                    print voucherdt
+                    voucherDt = voucherdt[0:4]+'/'+voucherdt[5:7]+'/'+voucherdt[8:10]
+                    print voucherDt
+                    '''
+                    voucherdt = str(gVch[0].value)
+                    print voucherdt
+                    voucherdt = voucherdt.split("-")
+                    print voucherdt
+                    voucherDt = voucherdt[2]+'/'+voucherdt[1]+'/'+voucherdt[0]
+                    print voucherDt'''
+                    voucherType = (gVch[4].value).lower().replace(" ","")
+                    if gVch[6].value != None:
+                            drs[accounts[gVch[1].value ]] =  str(gVch[6].value)
+                    if gVch[7].value != None:
+                            crs[accounts[gVch[1].value ]] =  str(gVch[7].value)
+                    gVch = gVchList[gVchList.index(gVch)+1 ]
+                    while gVch[0].value == None:
+                        if gVch[6].value != None:
+                            drs[accounts[gVch[1].value ]] =  str(gVch[6].value)
+                        if gVch[7].value != None:
+                            crs[accounts[gVch[1].value ]] =  str(gVch[7].value)
+                        if gVch[6].value == None and gVch[7].value == None:
+                            narrations  = gVch[1].value
+                        try:
+                            gVch = gVchList[gVchList.index(gVch)+1]
+                        except IndexError:
+                            break
+                    print " Creating dictionary"
+                    result = {"voucherdate":voucherDt,"vouchertype":voucherType,"drs":drs,"crs":crs,"narration":narrations}
+                    gNewvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps(result),headers=header)
+                    #print gNewvch.json()["gkstatus"]
+
+            return {"gkstatus":0}   
+    except:
+        print "file not found"
+        return {"gkstatus":3}
 
 @view_config(route_name="exportledger", renderer="")
 def exportLedger(request):
