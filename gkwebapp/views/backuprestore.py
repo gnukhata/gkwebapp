@@ -163,7 +163,6 @@ def tallyImport(request):
         else:
             gVchList =tuple(Wsheets[1].rows)
             currentRowIndex = 0
-            print " Now to import"
             for gVch in gVchList:
                 drs = {}
                 crs = {}
@@ -173,18 +172,8 @@ def tallyImport(request):
                 if gVch[0].value == "Date":
                     continue
                 if gVch[0].value != None and  gVch[0].value != "Date":
-                    print "Found voucher"
                     voucherdt = str(gVch[0].value)
-                    print voucherdt
                     voucherDt = voucherdt[0:4]+'/'+voucherdt[5:7]+'/'+voucherdt[8:10]
-                    print voucherDt
-                    '''
-                    voucherdt = str(gVch[0].value)
-                    print voucherdt
-                    voucherdt = voucherdt.split("-")
-                    print voucherdt
-                    voucherDt = voucherdt[2]+'/'+voucherdt[1]+'/'+voucherdt[0]
-                    print voucherDt'''
                     voucherType = (gVch[4].value).lower().replace(" ","")
                     if gVch[6].value != None:
                             drs[accounts[gVch[1].value ]] =  str(gVch[6].value)
@@ -202,11 +191,8 @@ def tallyImport(request):
                             gVch = gVchList[gVchList.index(gVch)+1]
                         except IndexError:
                             break
-                    print " Creating dictionary"
                     result = {"voucherdate":voucherDt,"vouchertype":voucherType,"drs":drs,"crs":crs,"narration":narrations}
                     gNewvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps(result),headers=header)
-                    #print gNewvch.json()["gkstatus"]
-
             return {"gkstatus":0}   
     except:
         print "file not found"
@@ -214,14 +200,13 @@ def tallyImport(request):
 
 @view_config(route_name="exportledger", renderer="")
 def exportLedger(request):
-   # try:
+    try:
         header={"gktoken":request.headers["gktoken"]}
         gkwb = Workbook()
         accountList = gkwb.active
         accountList.title = "Account List"
         accountList.column_dimensions["A"].width = 80
         accountList.column_dimensions["B"].width = 30
-        # 
         gsResult = requests.get("http://127.0.0.1:6543/groupsubgroups",headers=header)
         groupList = gsResult.json()["gkresult"]
         ob = accountList.cell(row=1,column=2,value= "Opening Balance")
@@ -308,6 +293,6 @@ def exportLedger(request):
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(bf),'Content-Disposition': 'attachment; filename=AllLedger.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
         os.remove("AllLedger.xlsx")
         return Response(bf, headerlist=headerList.items())
-   # except:
-   #     print "file not found"
-   #     return {"gkstatus":3}
+    except:
+        print "file not found"
+        return {"gkstatus":3}
