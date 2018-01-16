@@ -175,9 +175,16 @@ def tallyImport(request):
             if gVch[0].value != None and  gVch[0].value != "Date":
                 print "Found voucher"
                 voucherdt = str(gVch[0].value)
-                voucherdt = voucherdt.split("/")
-                voucherDt = voucherdt[2]+'/'+voucherdt[1]+'/'+voucherdt[0]
+                print voucherdt
+                voucherDt = voucherdt[0:4]+'/'+voucherdt[5:7]+'/'+voucherdt[8:10]
                 print voucherDt
+                '''
+                voucherdt = str(gVch[0].value)
+                print voucherdt
+                voucherdt = voucherdt.split("-")
+                print voucherdt
+                voucherDt = voucherdt[2]+'/'+voucherdt[1]+'/'+voucherdt[0]
+                print voucherDt'''
                 voucherType = (gVch[4].value).lower().replace(" ","")
                 if gVch[6].value != None:
                         drs[accounts[gVch[1].value ]] =  str(gVch[6].value)
@@ -198,7 +205,7 @@ def tallyImport(request):
                 print " Creating dictionary"
                 result = {"voucherdate":voucherDt,"vouchertype":voucherType,"drs":drs,"crs":crs,"narration":narrations}
                 gNewvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps(result),headers=header)
-                print gNewch.json()["gkstatus"]
+                #print gNewvch.json()["gkstatus"]
 
         return {"gkstatus":0}   
 #except:
