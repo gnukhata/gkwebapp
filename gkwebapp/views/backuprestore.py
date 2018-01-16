@@ -281,11 +281,10 @@ def exportLedger(request):
                 Voucher.cell(row=rowCounter,column=8,value="%.2f"%float(Crs[k]))
                 rowCounter = rowCounter + 1
                 # write narration after all particular details is wrote , font style & size is set different for better presentation
+            if v["narration"] !="":   
                 a = Voucher.cell(row=rowCounter,column=2,value=v["narration"])
                 a.font = Font(italic=True , size = 10)
-                rowCounter = rowCounter + 1
-            # incremented rowcounter to start new transaction details on next row.    
-
+                rowCounter = rowCounter + 1      
         gkwb.save(filename = "AllLedger.xlsx")
         AllLedgerfile = open("AllLedger.xlsx","r")
         bf = AllLedgerfile.read()
