@@ -182,7 +182,65 @@ $(".search").children(".form-control").keyup(function(event){
 		else if ($(this).val() == "") {
 			$("#del_unbilled_clearfields").hide();
 		}
-  });
+});
+
+    //Outword deliveries.
+    var new_date_input = $("#inputdate").attr("value");
+    var del_unbilled_type = $("#del_unbilled_type").attr("value");
+    $("#inwarddel").click(function(event) {
+	$.ajax(
+	{
+        type: "POST",
+        url: "/show_del_unbilled_report",
+        global: false,
+        async: false,
+        data: {"inputdate": new_date_input, "inout":"15", "del_unbilled_type":del_unbilled_type},
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        }
+      })
+      .done(function(resp) {
+        $("#info").html(resp);
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+
+    });
+
+    //Inword deliveries.
+    new_date_input = $("#inputdate").attr("value");
+    del_unbilled_type = $("#del_unbilled_type").attr("value");
+    $("#outwarddel").click(function(event) {
+	$.ajax(
+	{
+        type: "POST",
+        url: "/show_del_unbilled_report",
+        global: false,
+        async: false,
+        data: {"inputdate": new_date_input, "inout":"9", "del_unbilled_type":del_unbilled_type},
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        }
+      })
+      .done(function(resp) {
+        $("#info").html(resp);
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+
+    });
 
 	//For search data
 	var curindex ;
