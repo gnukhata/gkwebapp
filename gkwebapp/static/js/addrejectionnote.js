@@ -22,13 +22,6 @@ Contributors: "Bhavesh Bawadhane" <bbhavesh07@gmail.com> */
 $(document).ready(function() {
     $('.modal-backdrop').remove();
     $('.rndate').autotab('number');
-    if(sessionStorage.vatorgstflag == '22' ){
-      $(".gstinfield").hide();
-      $(".tinfield").show();
-    } else {
-	$(".gstinfield").show();
-	$(".tinfield").hide();
-    }
     $("#rejectionnote_invoice").focus();
     $("#rejectionnote_date").numeric();
     $("#rejectionnote_month").numeric();
@@ -274,6 +267,7 @@ $(document).ready(function() {
 			$("#rejectionnote_customer").val(resp["delchal"]["custname"]);
 			$("#rejectionnote_customeraddr").val(resp["delchal"]["custaddr"]);
 			$("#rejectionnote_customertin").val(resp["delchal"]["custtin"]);
+			$("#rejectionnote_customergstin").val(resp["delchal"]["gstin"]);
 			if(resp["delchal"]["dcflag"] == 1){
 			    $("#rejectionnote_consignment").val("Approval");
 			}
@@ -357,6 +351,7 @@ $(document).ready(function() {
 				    $("#rejectionnote_customer").val(resp["gkresult"]["custname"]);
 				    $("#rejectionnote_customeraddr").val(resp["gkresult"]["custaddr"]);
 				    $("#rejectionnote_customertin").val(resp["gkresult"]["custtan"]);
+				    $("#rejectionnote_customergstin").val(resp["gkresult"]["custgstin"]);
 				}
 			    })
 			    .fail(function() {

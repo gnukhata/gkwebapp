@@ -43,11 +43,11 @@
 		  {% for invoice in invoices %}
 		    {% if gkstatus=="out" %}
 		      {% if invoice['custsupdetail']['csflag']==19 %}
-			<option value="{{invoice['invid']}}" data-invoiceno = "{{invoice["invoiceno"]}}" data-invoicedate="{{invoice['invoicedate']}}">{{invoice["invoiceno"]}}, {{invoice['invoicedate']}}, {{invoice["custname"]}}</option>
+			<option value="{{invoice['invid']}}" data-invoiceno = "{{invoice["invoiceno"]}}" data-invoicedate="{{invoice['invoicedate']}}">{{invoice["invoiceno"]}}, {{invoice['invoicedate']}}, {{invoice["custsupdetail"]["custname"]}}</option>
 		      {% endif %}
 		    {% else %}
 		      {% if invoice['custsupdetail']['csflag']==3 %}
-			<option value="{{invoice['invid']}}" data-invoiceno = "{{invoice["invoiceno"]}}" data-invoicedate="{{invoice['invoicedate']}}">{{invoice["invoiceno"]}}, {{invoice['invoicedate']}}, {{invoice["custname"]}}</option>
+			<option value="{{invoice['invid']}}" data-invoiceno = "{{invoice["invoiceno"]}}" data-invoicedate="{{invoice['invoicedate']}}">{{invoice["invoiceno"]}}, {{invoice['invoicedate']}}, {{invoice["custsupdetail"]["custname"]}}</option>
 		      {% endif %}
 		    {% endif %}
 		  {% endfor %}
@@ -124,7 +124,7 @@
 		      {% trans %}Customer GSTIN{% endtrans %} :
 		    {% endif %}
 		  </label>
-		  <input class="form-control input-sm" id="rejectionnote_customertin" placeholder="None" accesskey="" disabled>                         </div>
+		  <input class="form-control input-sm" id="rejectionnote_customergstin" placeholder="None" accesskey="" disabled>                         </div>
 	    </div>
 	  </div>
 	  <div class="form-group">
