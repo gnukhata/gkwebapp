@@ -32,6 +32,48 @@ $(document).ready(function(){
   $("#msspinmodal").modal("hide");
   $(".regdate").autotab('number');
     $(".fcradate").autotab('number');
+    function pad (str, max) { //to add leading zeros in date
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("0" + str, max) : str;
+    }
+    else{
+	return str;
+    }
+  }
+  function yearpad (str, max) { //to add leading 20 or 200 in the year
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("200" + str, max) : str;
+    }
+    else if (str.length==2) {
+      return str.length < max ? pad("20" + str, max) : str;
+    }
+    else{
+	return str;
+    }
+  }
+
+  $("#regday").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#regmonth").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+
+  $("#regyear").blur(function(event) {
+    $(this).val(yearpad($(this).val(),4));
+  });
+  $("#fcraregday").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#fcraregmonth").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+
+  $("#fcraregyear").blur(function(event) {
+    $(this).val(yearpad($(this).val(),4));
+  });
 
     var gstinstring = ""; // for cocatination of GSTIN.
     	for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
