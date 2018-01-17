@@ -184,17 +184,30 @@ $(".search").children(".form-control").keyup(function(event){
 		}
 });
 
-    //Outword deliveries.
+    /*Following ajax will excute when "View Outword deliveries" or "View Inword deliveries" Button click.
+      and it will gives the "Outward deliveries report" or "Inward deliveries report" depending on selected Period and Type of delivery*/
+    
     var new_date_input = $("#inputdate").attr("value");
     var del_unbilled_type = $("#del_unbilled_type").attr("value");
-    $("#inwarddel").click(function(event) {
+    var inout = $("#inout").attr("value");
+    $(".inoutdel").click(function(event) {
+	if(inout == "9"){
+	    inout = "15";
+	}else if(inout == "15"){
+	    inout = "9";
+	}
+	if(del_unbilled_type == "Purchase"){ 
+	    del_unbilled_type = "Sale";
+	}else if(del_unbilled_type == "Sale"){
+	    del_unbilled_type = "Purchase";
+	}
 	$.ajax(
 	{
         type: "POST",
         url: "/show_del_unbilled_report",
         global: false,
         async: false,
-        data: {"inputdate": new_date_input, "inout":"15", "del_unbilled_type":del_unbilled_type},
+        data: {"inputdate": new_date_input, "inout":inout, "del_unbilled_type":del_unbilled_type},
         datatype: "text/html",
         beforeSend: function(xhr)
         {
@@ -212,36 +225,7 @@ $(".search").children(".form-control").keyup(function(event){
       });
 
     });
-
-    //Inword deliveries.
-    new_date_input = $("#inputdate").attr("value");
-    del_unbilled_type = $("#del_unbilled_type").attr("value");
-    $("#outwarddel").click(function(event) {
-	$.ajax(
-	{
-        type: "POST",
-        url: "/show_del_unbilled_report",
-        global: false,
-        async: false,
-        data: {"inputdate": new_date_input, "inout":"9", "del_unbilled_type":del_unbilled_type},
-        datatype: "text/html",
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        }
-      })
-      .done(function(resp) {
-        $("#info").html(resp);
-      })
-      .fail(function() {
-        console.log("error");
-      })
-      .always(function() {
-        console.log("complete");
-      });
-
-    });
-
+    
 	//For search data
 	var curindex ;
   var nextindex;
