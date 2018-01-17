@@ -43,6 +43,7 @@ $(document).ready(function() {
     var invoicedatestring = "";
     var invoicedate = "";
     var consigneeflag = false;
+    var editflag = false;
     var delchalproducts = [];
     var gstdate = Date.parseExact('01072017', "ddMMyyyy");
     //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
@@ -110,6 +111,8 @@ $(document).ready(function() {
 	$('#totalcess_product_gst').text(parseFloat(totalcess).toFixed(2));
 	$('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
 	$("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
+	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
+	$("#totalinvtax").text(parseFloat(totalcgst + totalsgst + totaligst + totalcess).toFixed(2));
     }
 
     //Function to calculate Tax Amount and Total of Discount, Taxable Amount, Tax Amounts and Total Amount.
@@ -145,6 +148,9 @@ $(document).ready(function() {
 	$('#totaltax').val(parseFloat(totaltax).toFixed(2));
 	$('#total_product_vat').val(parseFloat(totalamount).toFixed(2));
 	$("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
+	$("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
+	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
+	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));
     }
     $('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
     $('.supplydate').autotab('number');
@@ -786,10 +792,10 @@ $(document).ready(function() {
       })
        .done(function(resp) {
          if (resp["gkstatus"] == 0) {
-	     if ('VAT' in resp['tax']) {
+	     if ('VAT' in resp['tax'] && editflag == false) {
 		 $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['tax']['VAT']).toFixed(2));
 	     }
-	     else if ('CVAT' in resp['tax']) {
+	     else if ('CVAT' in resp['tax'] && editflag == false) {
                  $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['tax']['CVAT']).toFixed(2));
              }
          }
@@ -1502,7 +1508,7 @@ $(document).ready(function() {
            .done(function(resp) {
                if (resp["gkstatus"] == 0) {
 		   //Loads SGST rate.
-		   if('SGST' in resp['tax']){
+		   if('SGST' in resp['tax']  && editflag == false){
 		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(resp['tax']['SGST']).toFixed(2));
 		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(resp['tax']['SGST']).toFixed(2));
 		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(0).toFixed(2));
@@ -1512,7 +1518,7 @@ $(document).ready(function() {
 		       }
 		   }
 		   //Loads IGST rate.
-		   else if('IGST' in resp['tax']){
+		   else if('IGST' in resp['tax'] && editflag == false){
 		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(resp['tax']['IGST']).toFixed(2));
 		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(0).toFixed(2));
 		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(0).toFixed(2));
@@ -2166,6 +2172,7 @@ if (event.which == 13) {
         /* Act on the event */
 	// Consignee flag is set to false.
 	consigneeflag = false;
+	editflag = true;
         var invid = $("#invselect option:selected").val();
 	// If an invoice is selected its details are fetched.
         if (invid != "") {
@@ -2337,6 +2344,7 @@ if (event.which == 13) {
 				    $('.invoice_product_discount_vat:eq(' + curindex + ')').val(value.discount);
 				    $('.invoice_product_taxablevalue_vat:eq(' + curindex + ')').val(value.taxableamount);
 				    $('.invoice_product_tax_rate_vat:eq(' + curindex + ')').val(value.taxrate);
+				    $('.invoice_product_tax_amount_vat:eq(' + curindex + ')').val(value.taxamount);
 				    $('.invoice_product_total_vat:eq(' + curindex + ')').val(value.totalAmount);
 				    if (delchalproducts[key]) {
 					$('.product_name_vat:eq(' + curindex + ')').addClass("delchalfield");
@@ -2375,6 +2383,8 @@ if (event.which == 13) {
 			    $("#invoicestate").change();
 			    // Loading bank details and other information.
 			    $("#totalinvoicevalue").text(resp.invoicedata.invoicetotal);
+			    $("#taxableamount").text(parseFloat(resp.invoicedata.totaltaxablevalue).toFixed(2));
+			    $("#totalinvtax").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
 			    $("#accountno").val(resp.invoicedata.bankdetails.accountno);
 			    $("#bankname").val(resp.invoicedata.bankdetails.bankname);
 			    $("#branch").val(resp.invoicedata.bankdetails.branch);
@@ -2406,6 +2416,7 @@ if (event.which == 13) {
 
     // Click event for invoice edit button.
     $("#invoice_edit").click(function(event){
+	editflag = false;
 	$("#invoice_save").show();
 	$("#invoice_edit").hide();
 	$("#invoice_editprint").hide();
