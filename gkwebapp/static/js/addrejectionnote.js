@@ -26,6 +26,13 @@ $(document).ready(function() {
     $("#rejectionnote_date").numeric();
     $("#rejectionnote_month").numeric();
     $("#rejectionnote_year").numeric();
+    if(sessionStorage.vatorgstflag == '22' ){
+      $(".gstinfield").hide();
+      $(".tinfield").show();
+    } else {
+	$(".gstinfield").show();
+	$(".tinfield").hide();
+    }
     $('.rejectionnote_product_rejected_quantity').numeric({ negative: false});
     $('.numtype').numeric({ negative: false});
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
@@ -264,10 +271,21 @@ $(document).ready(function() {
 									   '</tr>');
 			    $('#rejectionnote_product_table tbody tr:eq(' + $(this).closest("tr").index() + ') td:eq(1) input').val(parseFloat(value.qty).toFixed(2));
 			});
+			if(resp["delchal"]["taxflag"] == 7){
+			    $(".gstinfield").show();
+			    $(".tinfield").hide();
+			} else {
+			    $(".tinfield").show();
+			    $(".gstinfield").hide();
+			}
 			$("#rejectionnote_customer").val(resp["delchal"]["custname"]);
 			$("#rejectionnote_customeraddr").val(resp["delchal"]["custaddr"]);
-			$("#rejectionnote_customertin").val(resp["delchal"]["custtin"]);
-			$("#rejectionnote_customergstin").val(resp["delchal"]["gstin"]);
+			if(resp["delchal"]["taxflag"] == 7){
+			    $("#rejectionnote_customergstin").val(resp["delchal"]["custgstin"]);
+			} else {
+			    $("#rejectionnote_customertin").val(resp["delchal"]["custtin"]);
+			}
+			
 			if(resp["delchal"]["dcflag"] == 1){
 			    $("#rejectionnote_consignment").val("Approval");
 			}
@@ -351,7 +369,7 @@ $(document).ready(function() {
 				    $("#rejectionnote_customer").val(resp["gkresult"]["custname"]);
 				    $("#rejectionnote_customeraddr").val(resp["gkresult"]["custaddr"]);
 				    $("#rejectionnote_customertin").val(resp["gkresult"]["custtan"]);
-				    $("#rejectionnote_customergstin").val(resp["gkresult"]["custgstin"]);
+				    $("#rejectionnote_customergstin").val(resp["gkresult"]["gstin"]);
 				}
 			    })
 			    .fail(function() {
