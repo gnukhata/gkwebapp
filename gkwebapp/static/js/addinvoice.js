@@ -282,6 +282,8 @@ $(document).ready(function() {
 		$(".tinfield").hide();
 		$("#gstproducttable").show();  //Shows GST Product table.
 		$(".gstinfield").show();
+		$(".vatfield").hide();
+		$(".gstfield").show();
 	    }
 	    else {
 		$("#taxapplicabletext").text("VAT");
@@ -291,6 +293,8 @@ $(document).ready(function() {
 		$("#invoice_product_table_vat").show();
 		$(".tinfield").show();
 		$("#vathelp").show();
+		$(".gstfield").hide();
+		$(".vatfield").show();
 	    }
 	}
     });
