@@ -100,10 +100,10 @@
 					  </tr>
 					  <tr>
 					    <td>
-					      <label for="organisationcountry" id="orgCountry">{% trans %}Country{% endtrans %} :</label>
+					      <label for="organisationcity" id="orgCity">{% trans %}City{% endtrans %} :</label>
 					    </td>
 					    <td>
-					      <input type="text" id="orgcountry" class="form-control input-sm" name="organisationcountry" value="{{gkresult["orgcountry"]}}" style="width: 100%"></input>
+					      <input type="text" id="orgcity" class="form-control input-sm" name="organisationcity" value="{{gkresult["orgcity"]}}" style="width: 100%"></input>
 					    </td>
 					  </tr>
 					  <tr>
@@ -125,26 +125,26 @@
 					  </tr>
 					  <tr>
 					    <td>
-					      <label for="organisationcity" id="orgCity">{% trans %}City{% endtrans %} :</label>
+					      <label for="organisationcountry" id="orgCountry">{% trans %}Country{% endtrans %} :</label>
 					    </td>
 					    <td>
-					      <input type="text" id="orgcity" class="form-control input-sm" name="organisationcity" value="{{gkresult["orgcity"]}}" style="width: 100%"></input>
-					    </td>
-					  </tr>
-					  <tr>
-					    <td>
-					      <label for="organisationstaxnumber" id="orgstaxnumber">{% trans %}Service Tax Number{% endtrans %} :</label>
-					    </td>
-					    <td>
-					      <input type="text" id="orgstax" class="form-control input-sm" name="organisationstaxnumber" value="{{gkresult["orgstax"]}}" style="width: 100%"></input>
+					      <input type="text" id="orgcountry" class="form-control input-sm" name="organisationcountry" value="{{gkresult["orgcountry"]}}" style="width: 100%"></input>
 					    </td>
 					  </tr>
 					  <tr>
 					    <td>
-					      <label for="organisationpannumber" id="orgpanno">{% trans %}Permanent Account Number{% endtrans %} :</label>
+					      <label for="organisationpincode" id="orgpostalcode">{% trans %}Postal Code{% endtrans %} :</label>
 					    </td>
 					    <td>
-					      <input type="text" id="orgpan" class="form-control input-sm" name="organisationpannumber" value="{{gkresult["orgpan"]}}" style="width: 100%" maxlength="10"></input>
+					      <input type="text" id="orgpincode" class="form-control input-sm" name="organisationpincode" value="{{gkresult["orgpincode"]}}" style="width: 100%"></input>
+					    </td>
+					  </tr>
+					  <tr>
+					    <td>
+					      <label for="telephonenumber" id="telno">{% trans %}Contact Number{% endtrans %} :</label>
+					    </td>
+					    <td>
+					      <input type="text" id="orgtelno" class="form-control input-sm" size="11" maxlength="11" name="telephonenumber" value="{{gkresult["orgtelno"]}}" style="width: 100%"></input>
 					    </td>
 					  </tr>
 				      </tbody>
@@ -186,45 +186,37 @@
 					  </tr>
 					{% endif %}
 					<tr>
-					    <td>
-					      <label for="organisationemail" id="orgEmail">{% trans %}Email{% endtrans %} :</label>
-					    </td>
-					    <td>
-					      <input type="text" id="orgemail" class="form-control input-sm" name="organisationemail" value="{{gkresult["orgemail"]}}" style="width: 100%"></input>
-					    </td>
-					  </tr>
-					  <tr>
-					    <td>
-					      <label for="telephonenumber" id="telno">{% trans %}Contact Number{% endtrans %} :</label>
-					    </td>
-					    <td>
-					      <input type="text" id="orgtelno" class="form-control input-sm" size="11" maxlength="11" name="telephonenumber" value="{{gkresult["orgtelno"]}}" style="width: 100%"></input>
-					    </td>
-					  </tr>
-					  <tr>
-					    <td>
-					      <label for="organisationwebsite" id="orgWebsite">{% trans %}Website{% endtrans %} :</label>
-					    </td>
-					    <td>
-					      <input type="text" id="orgwebsite" class="form-control input-sm" name="organisationwebsite" value="{{gkresult["orgwebsite"]}}" style="width: 100%"></input>
-					    </td>
-					  </tr>
-					  <tr>
-					    <td>
-					      <label for="organisationpincode" id="orgpostalcode">{% trans %}Postal Code{% endtrans %} :</label>
-					    </td>
-					    <td>
-					      <input type="text" id="orgpincode" class="form-control input-sm" name="organisationpincode" value="{{gkresult["orgpincode"]}}" style="width: 100%"></input>
-					    </td>
-					  </tr>
-					  <tr>
-					    <td>
-					      <label for="organisationfax" id="orgfaxno">{% trans %}Fax Number{% endtrans %} :</label>
-					    </td>
-					    <td>
-					      <input type="text" id="orgfax" class="form-control input-sm" name="organisationfaxnumber" value="{{gkresult["orgfax"]}}" style="width: 100%"></input>
-					    </td>
-					  </tr>
+					  <td>
+					    <label for="organisationwebsite" id="orgWebsite">{% trans %}Website{% endtrans %} :</label>
+					  </td>
+					  <td>
+					    <input type="text" id="orgwebsite" class="form-control input-sm" name="organisationwebsite" value="{{gkresult["orgwebsite"]}}" style="width: 100%"></input>
+					  </td>
+					</tr>
+					<tr>
+					  <td>
+					    <label for="organisationemail" id="orgEmail">{% trans %}Email{% endtrans %} :</label>
+					  </td>
+					  <td>
+					    <input type="text" id="orgemail" class="form-control input-sm" name="organisationemail" value="{{gkresult["orgemail"]}}" style="width: 100%"></input>
+					  </td>
+					</tr>
+					<tr>
+					  <td>
+					    <label for="organisationfax" id="orgfaxno">{% trans %}Fax Number{% endtrans %} :</label>
+					  </td>
+					  <td>
+					    <input type="text" id="orgfax" class="form-control input-sm" name="organisationfaxnumber" value="{{gkresult["orgfax"]}}" style="width: 100%"></input>
+					  </td>
+					</tr>
+					<tr>
+					  <td>
+					    <label for="organisationpannumber" id="orgpanno">{% trans %}PAN{% endtrans %} :</label>
+					  </td>
+					  <td>
+					    <input type="text" id="orgpan" class="form-control input-sm" name="organisationpannumber" value="{{gkresult["orgpan"]}}" style="width: 100%" maxlength="10"></input>
+					  </td>
+					</tr>
 					  {% if vatorgstflag=='22' or vatorgstflag=='29' %}
 					    <tr>
 					      <td>
@@ -233,6 +225,14 @@
 					    <td>
 					      <input type="text" id="orgmvat" class="form-control input-sm tinfield" name="organisationmvat" value="{{gkresult["orgmvat"]}}" style="width: 100%"></input>
 					    </td>
+					    </tr>
+					    <tr>
+					      <td>
+						<label for="organisationstaxnumber" id="orgstaxnumber">{% trans %}Service Tax Number{% endtrans %} :</label>
+					      </td>
+					      <td>
+						<input type="text" id="orgstax" class="form-control input-sm" name="organisationstaxnumber" value="{{gkresult["orgstax"]}}" style="width: 100%"></input>
+					      </td>
 					    </tr>
 					  {% endif %}
 					  {% if vatorgstflag=='7' or vatorgstflag=='29' %}
@@ -274,8 +274,8 @@
 				  </div>
 				  <div class="container-fluid">
 				    <div class="col-xs-2 col-xs-offset-5">
-				      <button type="submit" class="btn btn-success btn-sm" id="submit" name="submit" accesskey="s"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
-				      <button id="reset" class="btn btn-warning btn-sm" accesskey="r"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}<u>R</u>eset{% endtrans %}</button>
+				      <button type="submit" class="btn btn-success btn-sm" id="submit" name="submit" accesskey="v"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Sa<u>v</u>e{% endtrans %}</button>
+				      <button id="reset" class="btn btn-warning btn-sm" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
 				    </div>
 				  </div>
 				</form>
