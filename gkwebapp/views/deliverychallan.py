@@ -198,7 +198,7 @@ def unbillspreadsheet(request):
     elif del_unbilled_type == "Purchase":
         del_unbilled_type = "16"
         deltype = "Delivery Type : Purchase"
-        merge = "5"
+        merge = 5
     gkdata = {"inputdate": inputdate, "del_unbilled_type": del_unbilled_type}
     new_inputdate = datetime.strftime(datetime.strptime(str(inputdate),"%Y-%m-%d").date(),'%d-%m-%Y')
     inout = request.params["inout"]
