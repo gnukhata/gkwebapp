@@ -324,6 +324,7 @@ $(document).ready(function() {
     $(document).off("change", "#rejectionnote_deliverynote").on("change", "#rejectionnote_deliverynote", function(event) {
 	if ($("#rejectionnote_deliverynote option:selected").val() != '') {
 	    $("#rejectionnote_invoice option[value='']").prop("selected", true);
+	    console.log($("#rejectionnote_deliverynote option:selected").val());
 	    $.ajax({
 		url: '/invoice?action=getdeliverynote',
 		type: 'POST',
@@ -369,7 +370,6 @@ $(document).ready(function() {
 				    $("#rejectionnote_customer").val(resp["gkresult"]["custname"]);
 				    $("#rejectionnote_customeraddr").val(resp["gkresult"]["custaddr"]);
 				    $("#rejectionnote_customertin").val(resp["gkresult"]["custtan"]);
-				    $("#rejectionnote_customergstin").val(resp["gkresult"]["gstin"]);
 				}
 			    })
 			    .fail(function() {
@@ -518,7 +518,7 @@ $(document).ready(function() {
 	    return false;
 	}
 	var curdate1= new Date($("#rejectionnote_year").val(), $("#rejectionnote_month").val()-1, $("#rejectionnote_date").val());
-	if($("#rejectionnote_invoice option:selected")){
+	if($("#rejectionnote_invoice option:selected").val() != ""){
 	    var invdatearray = $("#rejectionnote_invoice option:selected").data("invoicedate").split(/\s*\-\s*/g);
 	    var invdate = new Date(invdatearray[2], invdatearray[1]-1, invdatearray[0]);
 	    if (curdate1 < invdate) {

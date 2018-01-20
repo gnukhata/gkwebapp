@@ -39,7 +39,6 @@ def showaddrejectionnote(request):
 	header={"gktoken":request.headers["gktoken"]}
 	unbilled_delnotes = requests.get("http://127.0.0.1:6543/invoice?unbilled_delnotes", data=json.dumps({"inputdate": time.strftime("%Y-%m-%d"), "type":"rejectionnote"}), headers=header)
 	nonrejectedinv = requests.get("http://127.0.0.1:6543/invoice?type=nonrejected", data=json.dumps({"inputdate": time.strftime("%Y-%m-%d")}), headers=header)
-	print nonrejectedinv.json()["gkresult"]
 	return {"gkstatus": request.params["status"], "invoices": nonrejectedinv.json()["gkresult"], "deliverynotes":unbilled_delnotes.json()["gkresult"]}
 
 @view_config(route_name="rejectionnote",request_param="action=showview",renderer="gkwebapp:templates/viewrejectionnote.jinja2")
