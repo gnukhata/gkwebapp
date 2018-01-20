@@ -1001,6 +1001,14 @@ $(document).ready(function() {
 	}
     });
 
+
+    $('#invoice_product_table_total tbody').on('scroll', function () {
+	$('#invoice_product_table_gst tbody').scrollTop($(this).scrollTop());
+    });
+    $('#invoice_product_table_gst tbody').on('scroll', function () {
+	$('#invoice_product_table_total tbody').scrollTop($(this).scrollTop());
+    });
+    
 //VAT events start here
   $(document).off("keydown", ".product_name_vat").on("keydown", ".product_name_vat", function(event) {
     var curindex = $(this).closest('tr').index();
