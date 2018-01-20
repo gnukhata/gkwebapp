@@ -526,40 +526,50 @@
 	      {% endif %}
 	    </div>
 	    <div class="col-sm-12" style="margin-top: 0.5cm">
-	      <div class="row">
-		<div class="form-group form-inline col-sm-4 pull-right">
-		  <label for="taxableamount" style="font-size:130% !important;">{% trans %}Taxable Amount{% endtrans %} :</label>
-		  <label id="taxableamount" style="font-size:130% !important; font-weight:normal !important"></label>
+	      <div class="col-sm-8">
+		<div class="row">
+		  <div class="form-group form-inline col-sm-4">
+		    <label for="taxableamount" style="font-size:130% !important;">{% trans %}Taxable Amount{% endtrans %} :</label>
+		    <label id="taxableamount" style="font-size:130% !important; font-weight:normal !important"></label>
+		  </div>
+		</div>
+		<div class="row gstfield">
+		  <div class="form-group sgstfield form-inline col-sm-4">
+		    <label for="totalsgtax" style="font-size:130% !important;">{% trans %}Total SGST{% endtrans %} :</label>
+		    <label id="totalsgtax" style="font-size:130% !important; font-weight:normal !important"></label>
+		  </div>
+		  <div class="form-group sgstfield form-inline col-sm-4">
+		    <label for="totalcgtax" style="font-size:130% !important;">{% trans %}Total CGST{% endtrans %} :</label>
+		    <label id="totalcgtax" style="font-size:130% !important; font-weight:normal !important"></label>
+		  </div>
+		  <div class="form-group igstfield form-inline col-sm-4">
+		    <label for="totaligtax" style="font-size:130% !important;">{% trans %}Total IGST{% endtrans %} :</label>
+		    <label id="totaligtax" style="font-size:130% !important; font-weight:normal !important"></label>
+		  </div>
+		  <div class="form-group form-inline col-sm-4">
+		    <label for="totalinvcess" style="font-size:130% !important;">{% trans %}Total CESS{% endtrans %} :</label>
+		    <label id="totalinvcess" style="font-size:130% !important; font-weight:normal !important"></label>
+		  </div>
+		</div>
+		<div class="row vatfield">
+		  <div class="form-group form-inline col-sm-4">
+		    <label for="totalinvtax" style="font-size:130% !important;">{% trans %}Total Tax{% endtrans %} :</label>
+		    <label id="totalinvtax" style="font-size:130% !important; font-weight:normal !important"></label>
+		  </div>
 		</div>
 	      </div>
-	      <div class="row sgstfield gstfield">
-		<div class="form-group form-inline col-sm-4 pull-right">
-		  <label for="totalsgtax" style="font-size:130% !important;">{% trans %}Total SGST{% endtrans %} :</label>
-		  <label id="totalsgtax" style="font-size:130% !important; font-weight:normal !important"></label>
+	      <div class="col-sm-4">
+		<div class="row">
+		  <div class="form-group form-inline">
+		    <label for="totalinvdiscount" style="font-size:130% !important;">{% trans %}Total Discount{% endtrans %} :</label>
+		    <label id="totalinvdiscount" style="font-size:130% !important; font-weight:normal !important"></label>
+		  </div>
 		</div>
-	      </div>
-	      <div class="row sgstfield gstfield">
-		<div class="form-group form-inline col-sm-4 pull-right">
-		  <label for="totalcgtax" style="font-size:130% !important;">{% trans %}Total CGST{% endtrans %} :</label>
-		  <label id="totalcgtax" style="font-size:130% !important; font-weight:normal !important"></label>
-		</div>
-	      </div>
-	      <div class="row igstfield gstfield">
-		<div class="form-group form-inline col-sm-4 pull-right">
-		  <label for="totaligtax" style="font-size:130% !important;">{% trans %}Total IGST{% endtrans %} :</label>
-		  <label id="totaligtax" style="font-size:130% !important; font-weight:normal !important"></label>
-		</div>
-	      </div>
-	      <div class="row vatfield">
-		<div class="form-group form-inline col-sm-4 pull-right">
-		  <label for="totalinvtax" style="font-size:130% !important;">{% trans %}Total Tax{% endtrans %} :</label>
-		  <label id="totalinvtax" style="font-size:130% !important; font-weight:normal !important"></label>
-		</div>
-	      </div>
-	      <div class="row">
-		<div class="form-group form-inline col-sm-4 pull-right">
-		  <label for="totalinvoicevalue" style="font-size:130% !important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
-		  <label id="totalinvoicevalue" style="font-size:130% !important; font-weight:normal !important"></label>
+		<div class="row">
+		  <div class="form-group form-inline">
+		    <label for="totalinvoicevalue" style="font-size:130% !important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
+		    <label id="totalinvoicevalue" style="font-size:130% !important; font-weight:normal !important"></label>
+		  </div>
 		</div>
 	      </div>
 	    </div>

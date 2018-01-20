@@ -40,9 +40,11 @@ $(document).ready(function() {
     $('.supplydate').autotab('number');
     if(sessionStorage.vatorgstflag == '22' ){
       $(".gstinfield").hide();
-      $(".tinfield").show();
+	$(".tinfield").show();
+	$(".gstfield").hide();
     } else {
-      $(".gstinfield").show();
+	$(".gstinfield").show();
+	$(".vatfield").hide();
     }
 
     //Initialising some variables.
@@ -120,7 +122,11 @@ $(document).ready(function() {
 	$('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
 	$("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
 	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
-	$("#totalinvtax").text(parseFloat(totalcgst + totalsgst + totaligst + totalcess).toFixed(2));
+	$("#totalsgtax").text(parseFloat(totalsgst).toFixed(2));
+	$("#totalcgtax").text(parseFloat(totalcgst).toFixed(2));
+	$("#totaligtax").text(parseFloat(totaligst).toFixed(2));
+	$("#totalinvcess").text(parseFloat(totalcess).toFixed(2));
+	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
     }
 
     //Function to calculate Tax Amount and Total of Discount, Taxable Amount, Tax Amounts and Total Amount.
@@ -158,6 +164,7 @@ $(document).ready(function() {
 	$("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
 	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
 	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));
+	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
     }
 
     //Delivery Note number select field is hidden when inventory is disabled.
@@ -364,7 +371,7 @@ $(document).ready(function() {
 	}
 	
 	$(".product_name_vat, .product_name_gst").change();
-
+	
 	var gstinstateid=$("#invoicestate option:selected").attr("stateid");
 	 $.ajax({
                     url: '/existingorg?type=getgstin',
@@ -553,7 +560,7 @@ $(document).ready(function() {
 	$(".product_name_vat, .product_name_gst").change();
     });
     $("#invoice_customerstate").change();
-
+    
     //Key down event for Customer State.
     $("#invoice_customerstate").keydown(function(event) {
 	if (event.which == 13) {
@@ -590,6 +597,11 @@ $(document).ready(function() {
     });
     $("#consigneestate").change();
 
+    if(sessionStorage.vatorgstflag == '22' ){
+	    $(".gstfield").hide();
+	} else {
+	    $(".vatfield").hide();
+	}
     //Key down event for Consignee Name.
     $("#consigneename").keydown(function(event) {
 	if (event.which == 13) {
