@@ -52,6 +52,7 @@ var userrole1;
       $('.inventorymenu').hide();
       $('.invsbill').hide();
       $("#customersupplier").hide();
+      $("#showviewregister").hide();
       $(".inventory_hide").hide();
       $("#showbillwiseaccounting").hide();
       $(".invoicemenu").hide();
@@ -64,6 +65,7 @@ var userrole1;
         $(".uominmaster").show();
         $(".inventorymenu").hide();
         $('.inventory_hide').hide();
+	$("#showviewregister").show();
         $("#showbillwiseaccounting").hide();
     }
 
@@ -74,7 +76,8 @@ var userrole1;
       $(".uominmaster").show();
       $("#showbillwiseaccounting").show();
       $('.inventorymenu').hide();
-    	$('.inventory_hide').hide();
+      $('.inventory_hide').hide();
+      $("#showviewregister").show();
     }
 
     if(sessionStorage.invflag==1 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
@@ -82,6 +85,7 @@ var userrole1;
       $('.invsbill').show();
       $("#customersupplier").show();
       $('.inventory_hide').show();
+      $("#showviewregister").show();
       $("#showbillwiseaccounting").show();
       $(".productinmaster").hide();
       $(".categoryinmaster").hide();
